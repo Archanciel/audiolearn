@@ -49,6 +49,12 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+
+        // Required minimum API level for MultiDex support
+        minSdkVersion 21  // If your minSdkVersion is less than 21, you will need MultiDex library as a dependency
+
+        // Enabling MultiDex
+        multiDexEnabled true
     }
 
     buildTypes {
