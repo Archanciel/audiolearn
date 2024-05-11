@@ -539,32 +539,6 @@ void main() {
       // Cleanup the temporary directory
       await tempDir.delete(recursive: true);
     });
-    test('ClassNotContainedInJsonFileException', () {
-      // Prepare a temporary file
-      File tempFile = File('temp.json');
-      tempFile.writeAsStringSync(jsonEncode({'test': 'data'}));
-
-      try {
-        // Try to load a MyClass instance from the temporary file, which
-        // should throw an exception
-        JsonDataService.loadFromFile(
-            jsonPathFileName: 'temp.json', type: Audio);
-      } catch (e) {
-        expect(e, isA<ClassNotContainedInJsonFileException>());
-      } finally {
-        tempFile.deleteSync(); // Clean up the temporary file
-      }
-    });
-    test('ClassNotSupportedByToJsonDataServiceException', () {
-      // Create a class not supported by JsonDataService
-
-      try {
-        // Try to encode an instance of UnsupportedClass, which should throw an exception
-        JsonDataService.encodeJson(UnsupportedClass());
-      } catch (e) {
-        expect(e, isA<ClassNotSupportedByToJsonDataServiceException>());
-      }
-    });
     test('saveToFile and loadFromFile for one Comment instance', () async {
       // Create a temporary directory to store the serialized SortingItem
       // object
@@ -598,6 +572,32 @@ void main() {
 
       // Cleanup the temporary directory
       DirUtil.deleteDirIfExist(testPathStr);
+    });
+    test('ClassNotContainedInJsonFileException', () {
+      // Prepare a temporary file
+      File tempFile = File('temp.json');
+      tempFile.writeAsStringSync(jsonEncode({'test': 'data'}));
+
+      try {
+        // Try to load a MyClass instance from the temporary file, which
+        // should throw an exception
+        JsonDataService.loadFromFile(
+            jsonPathFileName: 'temp.json', type: Audio);
+      } catch (e) {
+        expect(e, isA<ClassNotContainedInJsonFileException>());
+      } finally {
+        tempFile.deleteSync(); // Clean up the temporary file
+      }
+    });
+    test('ClassNotSupportedByToJsonDataServiceException', () {
+      // Create a class not supported by JsonDataService
+
+      try {
+        // Try to encode an instance of UnsupportedClass, which should throw an exception
+        JsonDataService.encodeJson(UnsupportedClass());
+      } catch (e) {
+        expect(e, isA<ClassNotSupportedByToJsonDataServiceException>());
+      }
     });
   });
   group('JsonDataService list', () {
