@@ -287,6 +287,8 @@
   "audioPlayedInThisOrderTooltip": "Les audios sont joués dans cet ordre.",
   "playableAudioDialogSortDescriptionTooltipBottomDownloadBefore": "Les audios au bas de l'écran ont été téléchargés avant les audios en haut de l'écran.",
   "playableAudioDialogSortDescriptionTooltipBottomDownloadAfter": "Les audios au bas de l'écran ont été téléchargés après les audios en haut de l'écran.",
+  "playableAudioDialogSortDescriptionTooltipBottomUploadBefore": "Les vidéos des audios au bas de l'écran ont été mises en ligne avant les vidéos des audios en haut de l'écran.",
+  "playableAudioDialogSortDescriptionTooltipBottomUploadAfter": "Les vidéos des audios au bas de l'écran ont été mises en ligne après les vidéos des audios en haut de l'écran.",
   "playableAudioDialogSortDescriptionTooltipTopDurationBigger": "La durée des audios en haut de l'écran est supérieure à la durée des audios au bas de l'écran.",
   "playableAudioDialogSortDescriptionTooltipTopDurationSmaller": "La durée des audios en haut de l'écran est inférieure à la durée des audios au bas de l'écran.",
   "playableAudioDialogSortDescriptionTooltipTopRemainingDurationBigger": "La durée écoutable restante des audios en haut de l'écran est supérieure à la durée écoutable restante des audios au bas de l'écran.",
