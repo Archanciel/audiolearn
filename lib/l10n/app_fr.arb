@@ -1,4 +1,5 @@
 {
+  "@@locale": "fr",
   "appBarTitleDownloadAudio": "Télécharg. Audio",
   "downloadAudioScreen": "Écran Télécharger Audio",
   "appBarTitleAudioPlayer": "Lire Audio",
