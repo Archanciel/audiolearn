@@ -1,5 +1,10 @@
+import 'package:audiolearn/constants.dart';
+import 'package:audiolearn/models/playlist.dart';
+import 'package:audiolearn/services/json_data_service.dart';
 import 'package:audiolearn/services/settings_data_service.dart';
+import 'package:audiolearn/utils/dir_util.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:path/path.dart' as path;
 
 import 'package:audiolearn/viewmodels/audio_download_vm.dart';
 import 'package:audiolearn/viewmodels/warning_message_vm.dart';
@@ -13,8 +18,7 @@ void main() {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: SettingsDataService(
-            sharedPreferences: MockSharedPreferences(),
-            isTest: true),
+            sharedPreferences: MockSharedPreferences(), isTest: true),
       );
 
       String videoDescription = '''Ma chaîne YouTube principale
@@ -100,4 +104,94 @@ void main() {
       expect(chapters, expectedChapters);
     });
   });
+  group('AudioDownloadVM update playlist json file', () {
+    test('Check playlist download path', () async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        deleteSubDirectoriesAsWell: true,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}audio_download_vm_update_playlists",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      String playListOneName = "audio_learn_test_download_2_small_videos";
+
+      // Load Playlist from the file
+      Playlist loadedPlaylistOne = loadPlaylist(playListOneName);
+      expect(loadedPlaylistOne.downloadPath,
+          "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\previous_audio\\playlist_downloaded\\audio_learn_test_download_2_small_videos");
+
+      String playListTwoName = "audio_player_view_2_shorts_test";
+
+      // Load Playlist from the file
+      Playlist loadedPlaylistTwo = loadPlaylist(playListTwoName);
+      expect(loadedPlaylistTwo.downloadPath,
+          "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\other_audio\\playlist_downloaded\\audio_player_view_2_shorts_test");
+
+      String playListThreeName = "local_3";
+
+      // Load Playlist from the file
+      Playlist loadedPlaylistThree = loadPlaylist(playListThreeName);
+      expect(loadedPlaylistThree.downloadPath,
+          "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\previous_audio\\playlist_downloaded\\local_3");
+
+      WarningMessageVM warningMessageVM = WarningMessageVM();
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+        isTest: true,
+      );
+
+      // necessary, otherwise audioDownloadVM won't be able to load
+      // the existing playlists and the test will fail
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+        isTest: true,
+      );
+
+      // Update the playlist json files
+      audioDownloadVM.loadExistingPlaylists();
+      audioDownloadVM.updatePlaylistJsonFiles();
+
+      // reLoad Playlist from the file and check that the
+      // download path was updated correctly
+      loadedPlaylistOne = loadPlaylist(playListOneName);
+      expect(loadedPlaylistOne.downloadPath,
+          "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio\\audio_learn_test_download_2_small_videos");
+
+      // reLoad Playlist from the file and check that the
+      // download path was updated correctly
+      loadedPlaylistTwo = loadPlaylist(playListTwoName);
+      expect(loadedPlaylistTwo.downloadPath,
+          "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio\\audio_player_view_2_shorts_test");
+
+      // reLoad Playlist from the file and check that the
+      // download path was updated correctly
+      loadedPlaylistThree = loadPlaylist(playListThreeName);
+      expect(loadedPlaylistThree.downloadPath,
+          "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio\\local_3");
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
+    });
+  });
+}
+
+Playlist loadPlaylist(String playListOneName) {
+  return JsonDataService.loadFromFile(
+      jsonPathFileName:
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$playListOneName${path.separator}$playListOneName.json",
+      type: Playlist);
 }
