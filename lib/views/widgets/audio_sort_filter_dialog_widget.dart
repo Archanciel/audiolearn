@@ -1042,10 +1042,6 @@ class _AudioSortFilterDialogWidgetState
             _startDownloadDateTime = pickedDate;
             controller.text =
                 DateFormat('dd-MM-yyyy').format(_startDownloadDateTime!);
-
-            // now clicking on Enter works since the
-            // Checkbox is not focused anymore
-            _audioTitleSearchSentenceFocusNode.requestFocus();
           },
         ),
         SizedBox(
