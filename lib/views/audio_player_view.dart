@@ -36,7 +36,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
   final double _audioIconSizeLarge = 80;
   late double _audioPlaySpeed;
 
-  final bool _wasSortFilterAudioSettingsApplied = false;
+  // final bool _wasSortFilterAudioSettingsApplied = false;
 
   @override
   initState() {

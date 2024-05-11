@@ -309,9 +309,6 @@ void main() {
       Directory tempDir = await Directory.systemTemp.createTemp('AudioTest');
       String filePath = path.join(tempDir.path, 'playlist.json');
 
-      const String testFromPlaylistTitle = 'testFromPlaylist1ID';
-      const String testToPlaylistTitle = 'testToPlaylist1ID';
-
       // Create a Playlist with 2 Audio instances
       Playlist testPlaylist = Playlist(
         id: 'testPlaylist1ID',
@@ -739,7 +736,6 @@ void main() {
       File(jsonPath).deleteSync();
     });
     test('loadListFromFile() for Audio list file not exist', () {
-      // Create an Audio instance
       // Load the list from the file
       List<Audio> loadedList = JsonDataService.loadListFromFile(
           jsonPathFileName: jsonPath, type: Audio);
@@ -748,7 +744,7 @@ void main() {
       expect(loadedList.length, 0);
     });
     test('saveListToFile() and loadListFromFile() for Playlist list', () {
-      // Create an Audio instance
+      // Create an Playlist instance
       Playlist testPlaylistOne = Playlist(
         id: 'testPlaylistID1',
         title: 'Test Playlist One',
@@ -906,13 +902,56 @@ void main() {
       File(jsonPath).deleteSync();
     });
     test('loadListFromFile() for Playlist list file not exist', () {
-      // Create an Audio instance
       // Load the list from the file
       List<Audio> loadedList = JsonDataService.loadListFromFile(
           jsonPathFileName: jsonPath, type: Playlist);
 
       // Check if the loaded list matches the original list
       expect(loadedList.length, 0);
+    });
+    test('saveListToFile() and loadListFromFile() for Comment list', () {
+      // Create an Comment instance
+      Comment testCommentOne = Comment(
+        playlistId: 'testPlaylistID1',
+        audioFileName: 'testAudioFileName1',
+        title: 'Test Title 1',
+        content: 'Test Content 1',
+        audioPositionSeconds: 0,
+        creationDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+      );
+
+      Comment testCommentTwo = Comment(
+        playlistId: 'testPlaylistID2',
+        audioFileName: 'testAudioFileName2',
+        title: 'Test Title 2',
+        content: 'Test Content 2',
+        audioPositionSeconds: 0,
+        creationDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+      );
+
+      // Prepare test data
+      List<Comment> testList = [testCommentOne, testCommentTwo];
+
+      // Save the list to a file
+      JsonDataService.saveListToFile(
+          data: testList, jsonPathFileName: jsonPath);
+
+      // Load the list from the file
+      List<Comment> loadedList = JsonDataService.loadListFromFile(
+          jsonPathFileName: jsonPath, type: Comment);
+
+      // Check if the loaded list matches the original list
+      expect(loadedList.length, testList.length);
+
+      for (int i = 0; i < loadedList.length; i++) {
+        compareDeserializedWithOriginalComment(
+          deserializedComment: loadedList[i],
+          originalComment: testList[i],
+        );
+      }
+
+      // Clean up the test file
+      File(jsonPath).deleteSync();
     });
   });
 }

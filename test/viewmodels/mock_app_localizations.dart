@@ -471,18 +471,6 @@ class MockAppLocalizations extends AppLocalizations {
   String get enclosingPlaylistLabel => 'Enclosing playlist';
 
   @override
-  String audioNotMovedFromToPlaylist(
-      Object audioTitle, Object fromPlaylistTitle, Object toPlaylistTitle) {
-    return 'Audio "$audioTitle" NOT moved from playlist "$fromPlaylistTitle" to playlist "$toPlaylistTitle" since it is already present in the destination playlist.';
-  }
-
-  @override
-  String audioNotCopiedFromToPlaylist(
-      Object audioTitle, Object fromPlaylistTitle, Object toPlaylistTitle) {
-    return 'Audio "$audioTitle" NOT copied from playlist "$fromPlaylistTitle" to playlist "$toPlaylistTitle" since it is already present in the destination playlist.';
-  }
-
-  @override
   String audioMovedFromLocalPlaylistToLocalPlaylist(
       Object audioTitle, Object fromPlaylistTitle, Object toPlaylistTitle) {
     return 'Audio "$audioTitle" moved from local playlist "$fromPlaylistTitle" to local playlist "$toPlaylistTitle".';
@@ -516,12 +504,6 @@ class MockAppLocalizations extends AppLocalizations {
   String audioMovedFromYoutubePlaylistToYoutubePlaylist(
       Object audioTitle, Object fromPlaylistTitle, Object toPlaylistTitle) {
     return 'Audio "$audioTitle" moved from Youtube playlist "$fromPlaylistTitle" to Youtube playlist "$toPlaylistTitle".';
-  }
-
-  @override
-  String audioCopiedFromToPlaylist(
-      Object audioTitle, Object fromPlaylistTitle, Object toPlaylistTitle) {
-    return 'Audio "$audioTitle" copied from playlist "$fromPlaylistTitle" to playlist "$toPlaylistTitle".';
   }
 
   @override
@@ -651,9 +633,6 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get setAudioPlaySpeedTooltip => 'Set audio play speed';
-
-  @override
-  String get excludeFullyPlayedAudios => 'Exclude fully played audios';
 
   @override
   String get increaseAudioVolumeIconButtonTooltip => 'Increase audio volume';

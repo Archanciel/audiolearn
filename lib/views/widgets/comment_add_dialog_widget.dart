@@ -1,13 +1,9 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
 
 import '../../constants.dart';
 import '../../views/screen_mixin.dart';
-import '../../viewmodels/theme_provider_vm.dart';
 
 class CommentAddDialogWidget extends StatefulWidget {
   const CommentAddDialogWidget({
@@ -37,8 +33,6 @@ class _CommentAddDialogWidgetState extends State<CommentAddDialogWidget>
 
   @override
   Widget build(BuildContext context) {
-    ThemeProviderVM themeProviderVM = Provider.of<ThemeProviderVM>(context);
-
     FocusScope.of(context).requestFocus(
       _focusNodePlaylistRootPath,
     );

@@ -2153,60 +2153,6 @@ void main() {
       return; // next test code no more applicable to sort/filter dialog
 // TODO: complete the test
       // Now tap on the Apply button
-      await tester.tap(find.byKey(const Key('applySortFilterButton')));
-      await tester.pumpAndSettle();
-
-      // Reopen the popup menu
-      await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-      await tester.pumpAndSettle();
-
-      // find the Save sort/filter options to playlist menu item and tap on it
-      await tester.tap(find.byKey(
-          const Key('save_sort_and_filter_audio_settings_in_playlist_item')));
-      await tester.pumpAndSettle();
-
-      // Now tap the Apply options automatically checkbox so that
-      // the sort/filter options are applied when obtaining the
-      // list of audios to play
-      await tester.tap(find
-          .byKey(const Key('saveSortFilterOptionsAutomaticApplicationKey')));
-      await tester.pumpAndSettle();
-
-      // Now tap on the Save button
-      await tester.tap(
-          find.byKey(const Key('saveSortFilterOptionsToPlaylistSaveButton')));
-      await tester.pumpAndSettle();
-
-      await tester.tap(find.text('$toSelectAudioTitle\n20:32'));
-      await tester.pumpAndSettle();
-
-      // Obtain all the Text widgets of the dialog
-      final Iterable<Widget> textWidgets = tester.widgetList(find.byType(Text));
-
-      // Extract the text data from the Text widgets
-      final List<String> texts =
-          textWidgets.map((Widget w) => (w as Text).data!).toList();
-
-      final List<String> dialogTexts = texts.sublist(10, 13);
-
-      // Define the expected text order
-      final List<String> expectedTextOrder = [
-        "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-        "La résilience insulaire par Fiona Roche",
-        "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
-      ];
-
-      // Vérifiez que l'ordre des textes est correct
-      expect(dialogTexts, equals(expectedTextOrder));
-
-      // Click on the Cancel button to close the dialog
-      await tester.tap(find.text('Cancel'));
-      await tester.pumpAndSettle();
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
     testWidgets(
         'Menu Clear sort/filter parameters history execution verifying that the confirm dialog is displayed in the play audio view.',

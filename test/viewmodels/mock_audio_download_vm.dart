@@ -8,8 +8,6 @@ import 'package:audiolearn/viewmodels/warning_message_vm.dart';
 /// YoutubeExplode to get a Youtube playlist in order to obtain
 /// the playlist title is not possible.
 class MockAudioDownloadVM extends AudioDownloadVM {
-  final List<Playlist> _playlistLst = [];
-
   String _youtubePlaylistTitle = '';
   set youtubePlaylistTitle(String youtubePlaylistTitle) {
     _youtubePlaylistTitle = youtubePlaylistTitle;
