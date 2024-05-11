@@ -1,3 +1,5 @@
+import 'package:audiolearn/models/comment.dart';
+import 'package:audiolearn/utils/dir_util.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'dart:convert';
 import 'dart:io';
@@ -563,6 +565,40 @@ void main() {
         expect(e, isA<ClassNotSupportedByToJsonDataServiceException>());
       }
     });
+    test('saveToFile and loadFromFile for one Comment instance', () async {
+      // Create a temporary directory to store the serialized SortingItem
+      // object
+      String testPathStr =
+          '$kPlaylistDownloadRootPathWindowsTest\\audiolearn_test_comment';
+      const String commentFilePathName =
+          '$kPlaylistDownloadRootPathWindowsTest\\audiolearn_test_comment\\comment.json';
+      await DirUtil.createDirIfNotExist(pathStr: testPathStr);
+
+      Comment testComment = Comment(
+        playlistId: 'testPlaylistID',
+        audioFileName: 'testAudioFileName',
+        title: 'Test Title',
+        content: 'Test Content',
+        audioPositionSeconds: 0,
+        creationDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+      );
+
+      // Save Comment to a file
+      JsonDataService.saveToFile(model: testComment, path: commentFilePathName);
+
+      // Load Comment from the file
+      Comment loadedCommentItem = JsonDataService.loadFromFile(
+          jsonPathFileName: commentFilePathName, type: Comment);
+
+      // Compare original and loaded SortingItem
+      compareDeserializedWithOriginalComment(
+        deserializedComment: loadedCommentItem,
+        originalComment: testComment,
+      );
+
+      // Cleanup the temporary directory
+      DirUtil.deleteDirIfExist(testPathStr);
+    });
   });
   group('JsonDataService list', () {
     test('saveListToFile() ClassNotSupportedByToJsonDataServiceException', () {
@@ -1023,6 +1059,20 @@ void compareDeserializedWithOriginalSortingItem({
   expect(
       deserializedSortingItem.sortingOption, originalSortingItem.sortingOption);
   expect(deserializedSortingItem.isAscending, originalSortingItem.isAscending);
+}
+
+void compareDeserializedWithOriginalComment({
+  required Comment deserializedComment,
+  required Comment originalComment,
+}) {
+  expect(deserializedComment.playlistId, originalComment.playlistId);
+  expect(deserializedComment.audioFileName, originalComment.audioFileName);
+  expect(deserializedComment.title, originalComment.title);
+  expect(deserializedComment.content, originalComment.content);
+  expect(deserializedComment.audioPositionSeconds,
+      originalComment.audioPositionSeconds);
+  expect(deserializedComment.creationDateTime.toIso8601String(),
+      originalComment.creationDateTime.toIso8601String());
 }
 
 void compareDeserializedWithOriginalAudioSortFilterParameters({

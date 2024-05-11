@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:audiolearn/models/comment.dart';
+
 import '../models/audio.dart';
 import '../models/playlist.dart';
 import 'sort_filter_parameters.dart';
@@ -64,7 +66,7 @@ class ProblemInJsonFileException implements Exception {
 
   ProblemInJsonFileException({
     required String jsonPathFileName,
-  })  : _jsonPathFileName = jsonPathFileName;
+  }) : _jsonPathFileName = jsonPathFileName;
 
   @override
   String toString() {
@@ -80,6 +82,7 @@ class JsonDataService {
     SortingItem: (jsonDataMap) => SortingItem.fromJson(jsonDataMap),
     AudioSortFilterParameters: (jsonDataMap) =>
         AudioSortFilterParameters.fromJson(jsonDataMap),
+    Comment: (jsonDataMap) => Comment.fromJson(jsonDataMap),
   };
 
   // typedef ToJsonFunction<T> = Map<String, dynamic> Function(T model);
@@ -89,6 +92,7 @@ class JsonDataService {
     SortingItem: (sortingItem) => sortingItem.toJson(),
     AudioSortFilterParameters: (audioSortFilterParameters) =>
         audioSortFilterParameters.toJson(),
+    Comment: (model) => model.toJson(),
   };
 
   static void saveToFile({
