@@ -183,9 +183,9 @@ void main() {
           true);
 
       // Cleanup the test data directory
-      // if (directory.existsSync()) {
-      //   directory.deleteSync(recursive: true);
-      // }
+      if (directory.existsSync()) {
+        directory.deleteSync(recursive: true);
+      }
     });
     test(
         'Test initial, modified, saved and loaded values with 2 AudioSortFilterParameters in collections',
@@ -452,9 +452,9 @@ void main() {
           true);
 
       // Cleanup the test data directory
-      // if (directory.existsSync()) {
-      //   directory.deleteSync(recursive: true);
-      // }
+      if (directory.existsSync()) {
+        directory.deleteSync(recursive: true);
+      }
     });
     test(
         'Test initial, modified, saved and loaded values with empty AudioSortFilterParameters collections',
@@ -499,9 +499,9 @@ void main() {
           true);
 
       // Cleanup the test data directory
-      // if (directory.existsSync()) {
-      //   directory.deleteSync(recursive: true);
-      // }
+      if (directory.existsSync()) {
+        directory.deleteSync(recursive: true);
+      }
     });
   });
 }
