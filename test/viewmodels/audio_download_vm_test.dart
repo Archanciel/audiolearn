@@ -105,7 +105,7 @@ void main() {
     });
   });
   group('AudioDownloadVM update playlist json file', () {
-    test('Check playlist download path', () async {
+    test('Check that playlist download path is correctly updated', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
