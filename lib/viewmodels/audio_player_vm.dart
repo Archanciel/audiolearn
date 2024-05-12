@@ -286,6 +286,8 @@ class AudioPlayerVM extends ChangeNotifier {
     );
 
     if (nextAudio == null) {
+      // the case if the current audio is the last playable audio of the
+      // playlist
       return false;
     }
 
@@ -690,13 +692,15 @@ class AudioPlayerVM extends ChangeNotifier {
   /// skipToEndAndPlay() is executed after the user clicked
   /// the second time on the >| icon button.
   Future<void> playNextAudio() async {
+    // since the current audio is no longer playing, the isPaused
+    // attribute is set to true
     _currentAudio!.isPaused = true;
 
     // set to false since the audio playing position is set to
     // audio end
     _currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd = false;
 
-    updateAndSaveCurrentAudio();
+    updateAndSaveCurrentAudio(forceSave: true);
 
     if (await _setNextNotPlayedAudio()) {
       await playFromCurrentAudioFile();
@@ -705,6 +709,9 @@ class AudioPlayerVM extends ChangeNotifier {
     }
   }
 
+  /// When the method is called in case of the audio is at end,
+  /// the {forceSave} parameter is set to true in order to save
+  /// the current audio position to the end of audio position.
   void updateAndSaveCurrentAudio({
     bool forceSave = false,
   }) {
