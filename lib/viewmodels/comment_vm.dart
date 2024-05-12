@@ -15,27 +15,13 @@ import '../utils/dir_util.dart';
 class CommentVM extends ChangeNotifier {
   CommentVM();
 
-  void addComment({
-    required Comment comment,
-    required Audio commentedAudio,
-  }) {
-    String playListDir = commentedAudio.enclosingPlaylist!.downloadPath;
-
-    loadOrCreateCommentFile(
-      playListDir: playListDir,
-      audioFileName: commentedAudio.audioFileName,
-    );
-    ;
-    // Add comment to the database
-    notifyListeners();
-  }
-
-  Future<List<Comment>> loadOrCreateCommentFile({
+  Future<List<Comment>> loadOrCreateEmptyCommentFile({
     required String playListDir,
     required String audioFileName,
   }) async {
-    String commentFileName = audioFileName.replaceAll('.mp3', '.json');
-    String playlistCommentPath = "$playListDir${path.separator}$kCommentDirName";
+    String commentFileName = _createCommentFileName(audioFileName);
+    String playlistCommentPath =
+        "$playListDir${path.separator}$kCommentDirName";
     String commentFilePathName =
         "$playlistCommentPath${path.separator}$commentFileName";
     File commentFile = File(commentFilePathName);
@@ -63,4 +49,32 @@ class CommentVM extends ChangeNotifier {
 
     return commentLst;
   }
+
+  Future<void> addComment({
+    required Comment comment,
+    required Audio commentedAudio,
+  }) async {
+    String playListDir = commentedAudio.enclosingPlaylist!.downloadPath;
+
+    List<Comment> commentLst = await loadOrCreateEmptyCommentFile(
+      playListDir: playListDir,
+      audioFileName: commentedAudio.audioFileName,
+    );
+
+    commentLst.add(comment);
+
+    String commentFilePathName =
+        "$playListDir${path.separator}$kCommentDirName${path.separator}${_createCommentFileName(commentedAudio.audioFileName)}";
+
+    JsonDataService.saveListToFile(
+      data: commentLst,
+      jsonPathFileName: commentFilePathName,
+    );
+
+    // Add comment to the database
+    notifyListeners();
+  }
+
+  String _createCommentFileName(String audioFileName) =>
+      audioFileName.replaceAll('.mp3', '.json');
 }

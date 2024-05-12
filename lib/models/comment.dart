@@ -1,6 +1,4 @@
 class Comment {
-  String playlistId;
-  String audioFileName;
   String title;
   String content;
   int audioPositionSeconds;
@@ -8,8 +6,6 @@ class Comment {
   DateTime lastUpdateDateTime;
 
   Comment({
-    required this.playlistId,
-    required this.audioFileName,
     required this.title,
     required this.content,
     required this.audioPositionSeconds,
@@ -19,8 +15,6 @@ class Comment {
   /// This constructor requires all instance variables. It is used
   /// by the fromJson factory constructor.
   Comment.fullConstructor({
-    required this.playlistId,
-    required this.audioFileName,
     required this.title,
     required this.content,
     required this.audioPositionSeconds,
@@ -30,8 +24,6 @@ class Comment {
 
   factory Comment.fromJson(Map<String, dynamic> json) {
     return Comment.fullConstructor(
-      playlistId: json['playlistId'],
-      audioFileName: json['audioFileName'],
       title: json['title'],
       content: json['content'],
       audioPositionSeconds: json['audioPositionSeconds'],
@@ -40,11 +32,9 @@ class Comment {
     );
   }
 
-  // Method: converts an instance of Playlist to a JSON object
+  // Method: converts an instance of Comment to a JSON object
   Map<String, dynamic> toJson() {
     return {
-      'playlistId': playlistId,
-      'audioFileName': audioFileName,
       'title': title,
       'content': content,
       'audioPositionSeconds': audioPositionSeconds,

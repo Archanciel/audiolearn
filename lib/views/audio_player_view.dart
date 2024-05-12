@@ -326,27 +326,23 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
               onPressed: (!areAudioButtonsEnabled)
                   ? null // Disable the button if no audio selected
                   : () {
+                      Comment commentOne = Comment(
+                        title: 'Bonne explication',
+                        content:
+                            'Janco justifie pourquoi il est important de prendre en compte les ordres de grandeur pour comprendre le changement climatique.',
+                        audioPositionSeconds: 300,
+                        creationDateTime: DateTime.now(),
+                      );
+                      Comment commentTwo = Comment(
+                        title: 'Energie nuclaire',
+                        content:
+                            'Janco justifie pourquoi les énergies renouvelables ne peuvent pas remplacer l’énergie nucléaire.',
+                        audioPositionSeconds: 500,
+                        creationDateTime: DateTime.now(),
+                      );
                       List<Comment> commentLst = [
-                        Comment(
-                          playlistId: 'q8q736',
-                          audioFileName:
-                              "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12",
-                          title: 'Bonne explication',
-                          content:
-                              'Janco justifie pourquoi il est important de prendre en compte les ordres de grandeur pour comprendre le changement climatique.',
-                          audioPositionSeconds: 300,
-                          creationDateTime: DateTime.now(),
-                        ),
-                        Comment(
-                          playlistId: 'wu813t8uwrep',
-                          audioFileName:
-                              "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12",
-                          title: 'Energie nuclaire',
-                          content:
-                              'Janco justifie pourquoi les énergies renouvelables ne peuvent pas remplacer l’énergie nucléaire.',
-                          audioPositionSeconds: 500,
-                          creationDateTime: DateTime.now(),
-                        ),
+                        commentOne,
+                        commentTwo,
                       ];
                       showDialog<void>(
                         context: context,
