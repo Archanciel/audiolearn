@@ -127,8 +127,10 @@ class DirUtil {
 
   /// Delete the directory {pathStr}, the files it contains and
   /// its subdirectories.
-  static void deleteDirIfExist(String pathStr) {
-    final Directory directory = Directory(pathStr);
+  static void deleteDirAndSubDirsIfExist({
+    required String rootPath,
+  }) {
+    final Directory directory = Directory(rootPath);
 
     if (directory.existsSync()) {
       try {

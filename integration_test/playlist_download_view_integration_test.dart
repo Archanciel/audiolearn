@@ -5964,7 +5964,9 @@ void main() {
       }
 
       // Now manually delete the urgent_actus playlist directory
-      DirUtil.deleteDirIfExist(urgentActusyoutubeplaylistpath);
+      DirUtil.deleteDirAndSubDirsIfExist(
+        rootPath: urgentActusyoutubeplaylistpath,
+      );
 
       // *** Execute Updating playlist JSON file menu item
 
@@ -6112,7 +6114,9 @@ void main() {
       }
 
       // Now manually delete the urgent_actus playlist directory
-      DirUtil.deleteDirIfExist(urgentActusyoutubeplaylistpath);
+      DirUtil.deleteDirAndSubDirsIfExist(
+        rootPath: urgentActusyoutubeplaylistpath,
+      );
 
       // *** Execute Updating playlist JSON file menu item
 
@@ -9696,8 +9700,7 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
   });
-  group('App settings set speed test', () {
-  });
+  group('App settings set speed test', () {});
 }
 
 void verifyAudioMenuItemsState({

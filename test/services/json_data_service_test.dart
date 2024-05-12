@@ -568,7 +568,9 @@ void main() {
       );
 
       // Cleanup the temporary directory
-      DirUtil.deleteDirIfExist(testPathStr);
+      DirUtil.deleteDirAndSubDirsIfExist(
+        rootPath: testPathStr,
+      );
     });
     test('ClassNotContainedInJsonFileException', () {
       // Prepare a temporary file
