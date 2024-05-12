@@ -49,7 +49,9 @@ void main() {
               jsonPathFileName:
                   "$kPlaylistDownloadRootPathWindowsTest${path.separator}local${path.separator}$kCommentDirName${path.separator}240110-181805-Really short video 23-07-01.json",
               type: Comment),
-          throwsA(isA<ClassNotContainedInJsonFileException>()));
+          throwsA(predicate((e) =>
+              e is ClassNotContainedInJsonFileException &&
+              e.toString().contains('Class Comment not stored in'))));
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
