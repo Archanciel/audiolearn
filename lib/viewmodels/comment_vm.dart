@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:audiolearn/constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:path/path.dart' as path;
 
@@ -8,6 +9,9 @@ import '../models/comment.dart';
 import '../services/json_data_service.dart';
 import '../utils/dir_util.dart';
 
+/// This VM (View Model) class is part of the MVVM architecture.
+///
+/// This class manages the audio player obtained from the
 class CommentVM extends ChangeNotifier {
   CommentVM();
 
@@ -31,7 +35,7 @@ class CommentVM extends ChangeNotifier {
     required String audioFileName,
   }) async {
     String commentFileName = audioFileName.replaceAll('.mp3', '.json');
-    String playlistCommentPath = "$playListDir${path.separator}comments";
+    String playlistCommentPath = "$playListDir${path.separator}$kCommentDirName";
     String commentFilePathName =
         "$playlistCommentPath${path.separator}$commentFileName";
     File commentFile = File(commentFilePathName);
