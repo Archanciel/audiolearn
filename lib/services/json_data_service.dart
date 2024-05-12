@@ -176,6 +176,10 @@ class JsonDataService {
     if (File(jsonPathFileName).existsSync()) {
       String jsonStr = File(jsonPathFileName).readAsStringSync();
 
+      if (jsonStr.isEmpty) {
+        return [];
+      }
+      
       try {
         return decodeJsonList(jsonStr, type);
       } on StateError {
