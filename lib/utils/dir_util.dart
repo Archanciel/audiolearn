@@ -143,6 +143,36 @@ class DirUtil {
     }
   }
 
+  static void deleteFilesAndSubDirsOfDir({
+    required String rootPath,
+  }) {
+    // Create a Directory object from the path
+    final Directory directory = Directory(rootPath);
+
+    // Check if the directory exists
+    if (directory.existsSync()) {
+      try {
+        // List all contents of the directory
+        List<FileSystemEntity> entities = directory.listSync(recursive: false);
+
+        for (FileSystemEntity entity in entities) {
+          // Check if the entity is a file and delete it
+          if (entity is File) {
+            entity.deleteSync();
+          }
+          // Check if the entity is a directory and delete it recursively
+          else if (entity is Directory) {
+            entity.deleteSync(recursive: true);
+          }
+        }
+      } catch (e) {
+        print('Failed to delete subdirectories or files: $e');
+      }
+    } else {
+      print('The directory does not exist.');
+    }
+  }
+
   /// Delete all the files in the {rootPath} directory and its
   /// subdirectories. If {deleteSubDirectoriesAsWell} is true,
   /// the subdirectories and sub subdirectories of {rootPath} are

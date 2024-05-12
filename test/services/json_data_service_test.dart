@@ -546,8 +546,6 @@ void main() {
       await DirUtil.createDirIfNotExist(pathStr: testPathStr);
 
       Comment testComment = Comment(
-        playlistId: 'testPlaylistID',
-        audioFileName: 'testAudioFileName',
         title: 'Test Title',
         content: 'Test Content',
         audioPositionSeconds: 0,
@@ -587,6 +585,37 @@ void main() {
       } finally {
         tempFile.deleteSync(); // Clean up the temporary file
       }
+    });
+
+    test('loadFomFile on empty file', () {
+      // Prepare a temporary file
+      String fileName = 'temp.json';
+      File tempEmptyJsonFile = File(fileName);
+      tempEmptyJsonFile.writeAsStringSync("");
+
+      // Try to load a MyClass instance from the temporary file, which
+      // should throw an exception
+      expect(
+          () => JsonDataService.loadFromFile(
+              jsonPathFileName: fileName, type: Comment),
+          throwsA(predicate((e) =>
+              e is ClassNotContainedInJsonFileException &&
+              e.toString().contains(fileName))));
+    });
+    test('loadFomFile on empty file', () {
+      // Prepare a temporary file
+      String fileName = 'temp.json';
+      File tempEmptyJsonFile = File(fileName);
+      tempEmptyJsonFile.writeAsStringSync("");
+
+      // Try to load a MyClass instance from the temporary file, which
+      // should throw an exception
+      expect(
+          () => JsonDataService.loadFromFile(
+              jsonPathFileName: fileName, type: Comment),
+          throwsA(predicate((e) =>
+              e is ClassNotContainedInJsonFileException &&
+              e.toString().contains(fileName))));
     });
     test('ClassNotSupportedByToJsonDataServiceException', () {
       // Create a class not supported by JsonDataService
@@ -914,8 +943,6 @@ void main() {
     test('saveListToFile() and loadListFromFile() for Comment list', () {
       // Create an Comment instance
       Comment testCommentOne = Comment(
-        playlistId: 'testPlaylistID1',
-        audioFileName: 'testAudioFileName1',
         title: 'Test Title 1',
         content: 'Test Content 1',
         audioPositionSeconds: 0,
@@ -923,8 +950,6 @@ void main() {
       );
 
       Comment testCommentTwo = Comment(
-        playlistId: 'testPlaylistID2',
-        audioFileName: 'testAudioFileName2',
         title: 'Test Title 2',
         content: 'Test Content 2',
         audioPositionSeconds: 0,
@@ -954,6 +979,19 @@ void main() {
 
       // Clean up the test file
       File(jsonPath).deleteSync();
+    });
+    test('loadListFomFile on empty file', () {
+      // Prepare a temporary file
+      String fileName = 'temp.json';
+      File tempEmptyJsonFile = File(fileName);
+      tempEmptyJsonFile.writeAsStringSync("");
+
+      // Try to load a MyClass instance from the temporary file, which
+      // should throw an exception
+      expect(
+          JsonDataService.loadListFromFile(
+              jsonPathFileName: fileName, type: Comment),
+          []);
     });
   });
 }
@@ -1106,8 +1144,6 @@ void compareDeserializedWithOriginalComment({
   required Comment deserializedComment,
   required Comment originalComment,
 }) {
-  expect(deserializedComment.playlistId, originalComment.playlistId);
-  expect(deserializedComment.audioFileName, originalComment.audioFileName);
   expect(deserializedComment.title, originalComment.title);
   expect(deserializedComment.content, originalComment.content);
   expect(deserializedComment.audioPositionSeconds,
