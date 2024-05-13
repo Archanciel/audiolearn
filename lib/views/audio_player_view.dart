@@ -335,8 +335,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                       Audio currentAudio = globalAudioPlayerVM.currentAudio!;
                       List<Comment> commentLst = await commentVM
                           .loadExistingCommentFileOrCreateEmptyCommentFile(
-                        playListDir: currentAudio.enclosingPlaylist!.downloadPath,
-                        audioFileName: currentAudio.audioFileName,
+                        commentedAudio: currentAudio,
                       );
                       showDialog<void>(
                         context: context,

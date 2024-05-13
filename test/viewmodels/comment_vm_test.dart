@@ -36,6 +36,11 @@ void main() {
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
+      Audio audio = createAudio(
+        playlistTitle: 'local',
+        audioFileName: '240110-181805-Really short video 23-07-01.mp3',
+      );
+
       CommentVM commentVM = CommentVM();
 
       // calling loadOrCreateCommentFile in situation where comment file
@@ -43,10 +48,7 @@ void main() {
 
       List<Comment> commentLst =
           await commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
-        playListDir:
-            "$kPlaylistDownloadRootPathWindowsTest${path.separator}local",
-        audioFileName: '240110-181805-Really short video 23-07-01.mp3',
-      );
+              commentedAudio: audio);
 
       // the returned Commentlist should be empty
       expect(commentLst.length, 0);
@@ -72,10 +74,7 @@ void main() {
 
       commentLst =
           await commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
-        playListDir:
-            "$kPlaylistDownloadRootPathWindowsTest${path.separator}local",
-        audioFileName: '240110-181805-Really short video 23-07-01.mp3',
-      );
+              commentedAudio: audio);
 
       // the returned Commentlist should be empty
       expect(commentLst.length, 0);
@@ -103,30 +102,11 @@ void main() {
 
       CommentVM commentVM = CommentVM();
 
-      Playlist playlist = Playlist(
-        id: "PLzwWSJNcZTMSVHGopMEjlfR7i5qtqbW99",
-        url:
-            "https://youtube.com/playlist?list=PLzwWSJNcZTMSVHGopMEjlfR7i5qtqbW99&si=9KC7VsVt5JIUvNYN",
-        title: 'S8 audio',
-        playlistType: PlaylistType.youtube,
-        playlistQuality: PlaylistQuality.voice,
+      Audio audio = createAudio(
+        playlistTitle: 'S8 audio',
+        audioFileName:
+            "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
       );
-
-      playlist.downloadPath =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio";
-
-      Audio audio = Audio(
-          enclosingPlaylist: playlist,
-          originalVideoTitle:
-              "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-          compactVideoDescription: '',
-          videoUrl: 'https://example.com/video1',
-          audioDownloadDateTime: DateTime(2023, 3, 17, 12, 34, 6),
-          videoUploadDate: DateTime(2023, 4, 12),
-          audioPlaySpeed: 1.25);
-
-      audio.audioFileName =
-          "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3";
 
       Comment testCommentOne = Comment(
         title: 'Test Title',
@@ -143,9 +123,7 @@ void main() {
 
       List<Comment> commentLst =
           await commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
-        playListDir: playlist.downloadPath,
-        audioFileName: audio.audioFileName,
-      );
+              commentedAudio: audio);
 
       // the returned Commentlist should have one element
       expect(commentLst.length, 1);
@@ -170,9 +148,7 @@ void main() {
 
       commentLst =
           await commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
-        playListDir: playlist.downloadPath,
-        audioFileName: audio.audioFileName,
-      );
+              commentedAudio: audio);
 
       // the returned Commentlist should have two elements
       expect(commentLst.length, 2);
@@ -202,30 +178,11 @@ void main() {
 
       CommentVM commentVM = CommentVM();
 
-      Playlist playlist = Playlist(
-        id: "PLzwWSJNcZTMSVHGopMEjlfR7i5qtqbW99",
-        url:
-            "https://youtube.com/playlist?list=PLzwWSJNcZTMSVHGopMEjlfR7i5qtqbW99&si=9KC7VsVt5JIUvNYN",
-        title: 'local_comment',
-        playlistType: PlaylistType.youtube,
-        playlistQuality: PlaylistQuality.voice,
+      Audio audio = createAudio(
+        playlistTitle: 'local_comment',
+        audioFileName:
+            "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
       );
-
-      playlist.downloadPath =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}local_comment";
-
-      Audio audio = Audio(
-          enclosingPlaylist: playlist,
-          originalVideoTitle:
-              "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-          compactVideoDescription: '',
-          videoUrl: 'https://example.com/video1',
-          audioDownloadDateTime: DateTime(2023, 3, 17, 12, 34, 6),
-          videoUploadDate: DateTime(2023, 4, 12),
-          audioPlaySpeed: 1.25);
-
-      audio.audioFileName =
-          "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3";
 
       Comment testCommentOne = Comment(
         title: 'Test Title',
@@ -242,9 +199,7 @@ void main() {
 
       List<Comment> commentLst =
           await commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
-        playListDir: playlist.downloadPath,
-        audioFileName: audio.audioFileName,
-      );
+              commentedAudio: audio);
 
       // the returned Commentlist should have one element
       expect(commentLst.length, 1);
@@ -273,31 +228,11 @@ void main() {
 
       CommentVM commentVM = CommentVM();
 
-      Playlist playlist = Playlist(
-        id: "PLzwWSJNcZTMSVHGopMEjlfR7i5qtqbW99",
-        url:
-            "https://youtube.com/playlist?list=PLzwWSJNcZTMSVHGopMEjlfR7i5qtqbW99&si=9KC7VsVt5JIUvNYN",
-        title: 'local_delete_comment',
-        playlistType: PlaylistType.youtube,
-        playlistQuality: PlaylistQuality.voice,
+      Audio audio = createAudio(
+        playlistTitle: 'local_delete_comment',
+        audioFileName:
+            "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
       );
-
-      playlist.downloadPath =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}local_delete_comment";
-
-      Audio audio = Audio(
-          enclosingPlaylist: playlist,
-          originalVideoTitle:
-              "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-          compactVideoDescription: '',
-          videoUrl: 'https://example.com/video1',
-          audioDownloadDateTime: DateTime(2023, 3, 17, 12, 34, 6),
-          videoUploadDate: DateTime(2023, 4, 12),
-          audioPlaySpeed: 1.25);
-
-      audio.audioFileName =
-          "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3";
-
       // deleting comment
 
       await commentVM.deleteComment(
@@ -309,9 +244,7 @@ void main() {
 
       List<Comment> commentLst =
           await commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
-        playListDir: playlist.downloadPath,
-        audioFileName: audio.audioFileName,
-      );
+              commentedAudio: audio);
 
       // the returned Commentlist should have one element
       expect(commentLst.length, 1);
@@ -327,9 +260,7 @@ void main() {
 
       commentLst =
           await commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
-        playListDir: playlist.downloadPath,
-        audioFileName: audio.audioFileName,
-      );
+              commentedAudio: audio);
 
       // the returned Commentlist should have one element
       expect(commentLst.length, 0);
@@ -355,38 +286,17 @@ void main() {
 
       CommentVM commentVM = CommentVM();
 
-      Playlist playlist = Playlist(
-        id: "PLzwWSJNcZTMSVHGopMEjlfR7i5qtqbW99",
-        url:
-            "https://youtube.com/playlist?list=PLzwWSJNcZTMSVHGopMEjlfR7i5qtqbW99&si=9KC7VsVt5JIUvNYN",
-        title: 'local_delete_comment',
-        playlistType: PlaylistType.youtube,
-        playlistQuality: PlaylistQuality.voice,
+      Audio audio = createAudio(
+        playlistTitle: 'local_delete_comment',
+        audioFileName:
+            "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
       );
-
-      playlist.downloadPath =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}local_delete_comment";
-
-      Audio audio = Audio(
-          enclosingPlaylist: playlist,
-          originalVideoTitle:
-              "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-          compactVideoDescription: '',
-          videoUrl: 'https://example.com/video1',
-          audioDownloadDateTime: DateTime(2023, 3, 17, 12, 34, 6),
-          videoUploadDate: DateTime(2023, 4, 12),
-          audioPlaySpeed: 1.25);
-
-      audio.audioFileName =
-          "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3";
 
       // modifying comment
 
       List<Comment> commentLst =
           await commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
-        playListDir: playlist.downloadPath,
-        audioFileName: audio.audioFileName,
-      );
+              commentedAudio: audio);
 
       Comment commentToModify = commentLst[0];
 
@@ -403,9 +313,7 @@ void main() {
 
       commentLst =
           await commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
-        playListDir: playlist.downloadPath,
-        audioFileName: audio.audioFileName,
-      );
+              commentedAudio: audio);
 
       // the returned Commentlist should have one element
       expect(commentLst.length, 2);
@@ -429,4 +337,35 @@ void validateComment(Comment actualComment, Comment expectedComment) {
   expect(
       actualComment.audioPositionSeconds, expectedComment.audioPositionSeconds);
   expect(actualComment.creationDateTime, expectedComment.creationDateTime);
+}
+
+Audio createAudio({
+  required String playlistTitle,
+  required String audioFileName,
+}) {
+  Playlist playlist = Playlist(
+    id: "PLzwWSJNcZTMSVHGopMEjlfR7i5qtqbW99",
+    url:
+        "https://youtube.com/playlist?list=PLzwWSJNcZTMSVHGopMEjlfR7i5qtqbW99&si=9KC7VsVt5JIUvNYN",
+    title: playlistTitle,
+    playlistType: PlaylistType.youtube,
+    playlistQuality: PlaylistQuality.voice,
+  );
+
+  playlist.downloadPath =
+      "$kPlaylistDownloadRootPathWindowsTest${path.separator}$playlistTitle";
+
+  Audio audio = Audio(
+      enclosingPlaylist: playlist,
+      originalVideoTitle:
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+      compactVideoDescription: '',
+      videoUrl: 'https://example.com/video1',
+      audioDownloadDateTime: DateTime(2023, 3, 17, 12, 34, 6),
+      videoUploadDate: DateTime(2023, 4, 12),
+      audioPlaySpeed: 1.25);
+
+  audio.audioFileName = audioFileName;
+
+  return audio;
 }

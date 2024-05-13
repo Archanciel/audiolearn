@@ -17,12 +17,11 @@ class CommentVM extends ChangeNotifier {
   CommentVM();
 
   Future<List<Comment>> loadExistingCommentFileOrCreateEmptyCommentFile({
-    required String playListDir,
-    required String audioFileName,
+    required Audio commentedAudio,
   }) async {
-    String commentFileName = _createCommentFileName(audioFileName);
+    String commentFileName = _createCommentFileName(commentedAudio.audioFileName);
     String playlistCommentPath =
-        "$playListDir${path.separator}$kCommentDirName";
+        "${commentedAudio.enclosingPlaylist!.downloadPath}${path.separator}$kCommentDirName";
     String commentFilePathName =
         "$playlistCommentPath${path.separator}$commentFileName";
     File commentFile = File(commentFilePathName);
@@ -59,8 +58,7 @@ class CommentVM extends ChangeNotifier {
 
     List<Comment> commentLst =
         await loadExistingCommentFileOrCreateEmptyCommentFile(
-      playListDir: playListDir,
-      audioFileName: commentedAudio.audioFileName,
+      commentedAudio: commentedAudio,
     );
 
     commentLst.add(comment);
@@ -85,8 +83,7 @@ class CommentVM extends ChangeNotifier {
 
     List<Comment> commentLst =
         await loadExistingCommentFileOrCreateEmptyCommentFile(
-      playListDir: playListDir,
-      audioFileName: commentedAudio.audioFileName,
+      commentedAudio: commentedAudio,
     );
 
     commentLst.remove(
@@ -115,8 +112,7 @@ class CommentVM extends ChangeNotifier {
 
     List<Comment> commentLst =
         await loadExistingCommentFileOrCreateEmptyCommentFile(
-      playListDir: playListDir,
-      audioFileName: commentedAudio.audioFileName,
+      commentedAudio: commentedAudio,
     );
 
     Comment oldComment = commentLst.firstWhere(
