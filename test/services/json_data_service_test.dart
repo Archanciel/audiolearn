@@ -549,7 +549,6 @@ void main() {
         title: 'Test Title',
         content: 'Test Content',
         audioPositionSeconds: 0,
-        creationDateTime: DateTime(2023, 3, 24, 20, 5, 32),
       );
 
       // Save Comment to a file
@@ -946,14 +945,12 @@ void main() {
         title: 'Test Title 1',
         content: 'Test Content 1',
         audioPositionSeconds: 0,
-        creationDateTime: DateTime(2023, 3, 24, 20, 5, 32),
       );
 
       Comment testCommentTwo = Comment(
         title: 'Test Title 2',
         content: 'Test Content 2',
         audioPositionSeconds: 0,
-        creationDateTime: DateTime(2023, 3, 24, 20, 5, 32),
       );
 
       // Prepare test data

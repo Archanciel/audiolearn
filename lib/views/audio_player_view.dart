@@ -6,10 +6,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../constants.dart';
 import '../models/audio.dart';
 import '../models/comment.dart';
+import '../models/playlist.dart';
 import '../services/sort_filter_parameters.dart';
 import '../services/settings_data_service.dart';
 import '../utils/duration_expansion.dart';
 import '../viewmodels/audio_player_vm.dart';
+import '../viewmodels/comment_vm.dart';
 import '../viewmodels/playlist_list_vm.dart';
 import '../viewmodels/warning_message_vm.dart';
 import '../viewmodels/theme_provider_vm.dart';
@@ -325,25 +327,17 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
               iconSize: kUpDownButtonSize - 15,
               onPressed: (!areAudioButtonsEnabled)
                   ? null // Disable the button if no audio selected
-                  : () {
-                      Comment commentOne = Comment(
-                        title: 'Bonne explication',
-                        content:
-                            'Janco justifie pourquoi il est important de prendre en compte les ordres de grandeur pour comprendre le changement climatique.',
-                        audioPositionSeconds: 300,
-                        creationDateTime: DateTime.now(),
+                  : () async {
+                      CommentVM commentVM = Provider.of<CommentVM>(
+                        context,
+                        listen: false,
                       );
-                      Comment commentTwo = Comment(
-                        title: 'Energie nuclaire',
-                        content:
-                            'Janco justifie pourquoi les énergies renouvelables ne peuvent pas remplacer l’énergie nucléaire.',
-                        audioPositionSeconds: 500,
-                        creationDateTime: DateTime.now(),
+                      Audio currentAudio = globalAudioPlayerVM.currentAudio!;
+                      List<Comment> commentLst = await commentVM
+                          .loadExistingCommentFileOrCreateEmptyCommentFile(
+                        playListDir: currentAudio.enclosingPlaylist!.downloadPath,
+                        audioFileName: currentAudio.audioFileName,
                       );
-                      List<Comment> commentLst = [
-                        commentOne,
-                        commentTwo,
-                      ];
                       showDialog<void>(
                         context: context,
                         builder: (context) => CommentListAddDialogWidget(

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:audiolearn/viewmodels/comment_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -166,6 +167,8 @@ class MainApp extends StatelessWidget with ScreenMixin {
     // not necessary
     // globalAudioPlayerVM.setCurrentAudioFromSelectedPlaylist();
 
+    CommentVM commentVM = CommentVM(   );
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => audioDownloadVM),
@@ -186,6 +189,7 @@ class MainApp extends StatelessWidget with ScreenMixin {
         ),
         ChangeNotifierProvider(create: (_) => expandablePlaylistListVM),
         ChangeNotifierProvider(create: (_) => warningMessageVM),
+        ChangeNotifierProvider(create: (_) => commentVM)
       ],
       child: Consumer2<ThemeProviderVM, LanguageProviderVM>(
         builder: (context, themeProvider, languageProvider, child) {

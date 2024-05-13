@@ -132,7 +132,6 @@ void main() {
         title: 'Test Title',
         content: 'Test Content',
         audioPositionSeconds: 0,
-        creationDateTime: DateTime(2023, 3, 24, 20, 5, 32),
       );
 
       await commentVM.addComment(
@@ -160,7 +159,6 @@ void main() {
         title: 'Test Title 2',
         content: 'Test Content 2',
         audioPositionSeconds: 2,
-        creationDateTime: DateTime(2023, 3, 26, 0, 5, 32),
       );
 
       await commentVM.addComment(
@@ -233,7 +231,6 @@ void main() {
         title: 'Test Title',
         content: 'Test Content',
         audioPositionSeconds: 0,
-        creationDateTime: DateTime(2023, 3, 24, 20, 5, 32),
       );
 
       await commentVM.addComment(
@@ -385,12 +382,13 @@ void main() {
 
       // modifying comment
 
-      Comment commentToModify = Comment(
-        title: 'Test Title',
-        content: 'Test Content',
-        audioPositionSeconds: 0,
-        creationDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+      List<Comment> commentLst =
+          await commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
+        playListDir: playlist.downloadPath,
+        audioFileName: audio.audioFileName,
       );
+
+      Comment commentToModify = commentLst[0];
 
       commentToModify.title = "New title";
       commentToModify.content = "New content";
@@ -403,7 +401,7 @@ void main() {
 
       // now loading the comment list from the comment file
 
-      List<Comment> commentLst =
+      commentLst =
           await commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
         playListDir: playlist.downloadPath,
         audioFileName: audio.audioFileName,

@@ -1,18 +1,22 @@
+import '../utils/date_time_util.dart';
+
 class Comment {
   String id;
   String title;
   String content;
   int audioPositionSeconds;
   final DateTime creationDateTime;
-  DateTime lastUpdateDateTime;
+  late DateTime lastUpdateDateTime;
 
   Comment({
     required this.title,
     required this.content,
     required this.audioPositionSeconds,
-    required this.creationDateTime,
   })  : id = "${title}_${audioPositionSeconds.toString()}",
-        lastUpdateDateTime = creationDateTime;
+        creationDateTime =
+            DateTimeUtil.getDateTimeLimitedToSeconds(DateTime.now()) {
+    lastUpdateDateTime = creationDateTime;
+  }
 
   /// This constructor requires all instance variables. It is used
   /// by the fromJson factory constructor.
