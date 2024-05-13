@@ -15,7 +15,7 @@ import '../utils/dir_util.dart';
 class CommentVM extends ChangeNotifier {
   CommentVM();
 
-  Future<List<Comment>> loadOrCreateEmptyCommentFile({
+  Future<List<Comment>> loadExistingCommentFileOrCreateEmptyCommentFile({
     required String playListDir,
     required String audioFileName,
   }) async {
@@ -56,7 +56,8 @@ class CommentVM extends ChangeNotifier {
   }) async {
     String playListDir = commentedAudio.enclosingPlaylist!.downloadPath;
 
-    List<Comment> commentLst = await loadOrCreateEmptyCommentFile(
+    List<Comment> commentLst =
+        await loadExistingCommentFileOrCreateEmptyCommentFile(
       playListDir: playListDir,
       audioFileName: commentedAudio.audioFileName,
     );
@@ -72,6 +73,32 @@ class CommentVM extends ChangeNotifier {
     );
 
     // Add comment to the database
+    notifyListeners();
+  }
+
+  Future<void> deleteComment({
+    required Comment comment,
+    required Audio commentedAudio,
+  }) async {
+    String playListDir = commentedAudio.enclosingPlaylist!.downloadPath;
+
+    List<Comment> commentLst =
+        await loadExistingCommentFileOrCreateEmptyCommentFile(
+      playListDir: playListDir,
+      audioFileName: commentedAudio.audioFileName,
+    );
+
+    commentLst.remove(comment);
+
+    String commentFilePathName =
+        "$playListDir${path.separator}$kCommentDirName${path.separator}${_createCommentFileName(commentedAudio.audioFileName)}";
+
+    JsonDataService.saveListToFile(
+      data: commentLst,
+      jsonPathFileName: commentFilePathName,
+    );
+
+    // Delete comment from the database
     notifyListeners();
   }
 

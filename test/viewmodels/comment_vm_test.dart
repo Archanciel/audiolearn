@@ -20,7 +20,7 @@ void main() {
 
   group('CommentVM test', () {
     test(
-        'loadOrCreateCommentFile comment file not exist, then exist, but is empty',
+        'load or create comment file comment file not exist, then exist, but is empty',
         () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -40,7 +40,8 @@ void main() {
       // calling loadOrCreateCommentFile in situation where comment file
       // does not exist
 
-      List<Comment> commentLst = await commentVM.loadOrCreateEmptyCommentFile(
+      List<Comment> commentLst =
+          await commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
         playListDir:
             "$kPlaylistDownloadRootPathWindowsTest${path.separator}local",
         audioFileName: '240110-181805-Really short video 23-07-01.mp3',
@@ -52,7 +53,7 @@ void main() {
       String createdCommentFilePathName =
           "$kPlaylistDownloadRootPathWindowsTest${path.separator}local${path.separator}$kCommentDirName${path.separator}240110-181805-Really short video 23-07-01.json";
 
-      // the comment file should havve been created
+      // the comment file should have been created
       expect(File(createdCommentFilePathName).existsSync(), true);
 
       // check that due to the fact that the comment file is empty,
@@ -68,7 +69,8 @@ void main() {
       // now calling again loadOrCreateCommentFile in situation where an
       // empty comment file exists
 
-      commentLst = await commentVM.loadOrCreateEmptyCommentFile(
+      commentLst =
+          await commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
         playListDir:
             "$kPlaylistDownloadRootPathWindowsTest${path.separator}local",
         audioFileName: '240110-181805-Really short video 23-07-01.mp3',
@@ -82,7 +84,7 @@ void main() {
       DirUtil.deleteFilesAndSubDirsOfDir(
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
-    test('addComment where comment file not exist', () async {
+    test('addComment on not exist comment file, then add new comment on same file', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesAndSubDirsOfDir(
@@ -123,7 +125,7 @@ void main() {
       audio.audioFileName =
           "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3";
 
-      Comment testComment = Comment(
+      Comment testCommentOne = Comment(
         title: 'Test Title',
         content: 'Test Content',
         audioPositionSeconds: 0,
@@ -131,13 +133,14 @@ void main() {
       );
 
       await commentVM.addComment(
-        comment: testComment,
+        comment: testCommentOne,
         commentedAudio: audio,
       );
 
       // now loading the comment list from the comment file
 
-      List<Comment> commentLst = await commentVM.loadOrCreateEmptyCommentFile(
+      List<Comment> commentLst =
+          await commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
         playListDir: playlist.downloadPath,
         audioFileName: audio.audioFileName,
       );
@@ -146,11 +149,36 @@ void main() {
       expect(commentLst.length, 1);
 
       // checking the content of the comment
-      expect(commentLst[0].title, testComment.title);
-      expect(commentLst[0].content, testComment.content);
-      expect(
-          commentLst[0].audioPositionSeconds, testComment.audioPositionSeconds);
-      expect(commentLst[0].creationDateTime, testComment.creationDateTime);
+      validateComment(commentLst[0], testCommentOne);
+
+      // now, adding a new comment to the same file
+
+      Comment testCommentTwo = Comment(
+        title: 'Test Title 2',
+        content: 'Test Content 2',
+        audioPositionSeconds: 2,
+        creationDateTime: DateTime(2023, 3, 26, 0, 5, 32),
+      );
+
+      await commentVM.addComment(
+        comment: testCommentTwo,
+        commentedAudio: audio,
+      );
+
+      // now loading the comment list from the comment file
+
+      commentLst =
+          await commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
+        playListDir: playlist.downloadPath,
+        audioFileName: audio.audioFileName,
+      );
+
+      // the returned Commentlist should have two elements
+      expect(commentLst.length, 2);
+
+      // checking the content of the comments
+      validateComment(commentLst[0], testCommentOne);
+      validateComment(commentLst[1], testCommentTwo);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -158,10 +186,84 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
     test('addComment on empty comment file', () async {
-      expect(true, false);
-    });
-    test('addComment on not empty comment file', () async {
-      expect(true, false);
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesAndSubDirsOfDir(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_test",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      CommentVM commentVM = CommentVM();
+
+      Playlist playlist = Playlist(
+        id: "PLzwWSJNcZTMSVHGopMEjlfR7i5qtqbW99",
+        url:
+            "https://youtube.com/playlist?list=PLzwWSJNcZTMSVHGopMEjlfR7i5qtqbW99&si=9KC7VsVt5JIUvNYN",
+        title: 'local_comment',
+        playlistType: PlaylistType.youtube,
+        playlistQuality: PlaylistQuality.voice,
+      );
+
+      playlist.downloadPath =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}local_comment";
+
+      Audio audio = Audio(
+          enclosingPlaylist: playlist,
+          originalVideoTitle:
+              "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          compactVideoDescription: '',
+          videoUrl: 'https://example.com/video1',
+          audioDownloadDateTime: DateTime(2023, 3, 17, 12, 34, 6),
+          videoUploadDate: DateTime(2023, 4, 12),
+          audioPlaySpeed: 1.25);
+
+      audio.audioFileName =
+          "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3";
+
+      Comment testCommentOne = Comment(
+        title: 'Test Title',
+        content: 'Test Content',
+        audioPositionSeconds: 0,
+        creationDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+      );
+
+      await commentVM.addComment(
+        comment: testCommentOne,
+        commentedAudio: audio,
+      );
+
+      // now loading the comment list from the comment file
+
+      List<Comment> commentLst =
+          await commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
+        playListDir: playlist.downloadPath,
+        audioFileName: audio.audioFileName,
+      );
+
+      // the returned Commentlist should have one element
+      expect(commentLst.length, 1);
+
+      // checking the content of the comment
+      validateComment(commentLst[0], testCommentOne);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesAndSubDirsOfDir(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
   });
+}
+
+void validateComment(Comment actualComment, Comment expectedComment) {
+  expect(actualComment.title, expectedComment.title);
+  expect(actualComment.content, expectedComment.content);
+  expect(
+      actualComment.audioPositionSeconds, expectedComment.audioPositionSeconds);
+  expect(actualComment.creationDateTime, expectedComment.creationDateTime);
 }
