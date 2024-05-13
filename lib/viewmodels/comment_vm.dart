@@ -7,6 +7,7 @@ import 'package:path/path.dart' as path;
 import '../models/audio.dart';
 import '../models/comment.dart';
 import '../services/json_data_service.dart';
+import '../utils/date_time_util.dart';
 import '../utils/dir_util.dart';
 
 /// This VM (View Model) class is part of the MVVM architecture.
@@ -77,7 +78,7 @@ class CommentVM extends ChangeNotifier {
   }
 
   Future<void> deleteComment({
-    required Comment comment,
+    required String commentId,
     required Audio commentedAudio,
   }) async {
     String playListDir = commentedAudio.enclosingPlaylist!.downloadPath;
@@ -88,7 +89,11 @@ class CommentVM extends ChangeNotifier {
       audioFileName: commentedAudio.audioFileName,
     );
 
-    commentLst.remove(comment);
+    commentLst.remove(
+      commentLst.firstWhere(
+        (element) => element.id == commentId,
+      ),
+    );
 
     String commentFilePathName =
         "$playListDir${path.separator}$kCommentDirName${path.separator}${_createCommentFileName(commentedAudio.audioFileName)}";
@@ -99,6 +104,38 @@ class CommentVM extends ChangeNotifier {
     );
 
     // Delete comment from the database
+    notifyListeners();
+  }
+
+  Future<void> modifyComment({
+    required Comment modifiedComment,
+    required Audio commentedAudio,
+  }) async {
+    String playListDir = commentedAudio.enclosingPlaylist!.downloadPath;
+
+    List<Comment> commentLst =
+        await loadExistingCommentFileOrCreateEmptyCommentFile(
+      playListDir: playListDir,
+      audioFileName: commentedAudio.audioFileName,
+    );
+
+    Comment oldComment = commentLst.firstWhere(
+      (element) => element.id == modifiedComment.id,
+    );
+
+    oldComment.title = modifiedComment.title;
+    oldComment.content = modifiedComment.content;
+    oldComment.audioPositionSeconds = modifiedComment.audioPositionSeconds;
+    oldComment.lastUpdateDateTime = DateTimeUtil.getDateTimeLimitedToSeconds(DateTime.now());
+
+    String commentFilePathName =
+        "$playListDir${path.separator}$kCommentDirName${path.separator}${_createCommentFileName(commentedAudio.audioFileName)}";
+
+    JsonDataService.saveListToFile(
+      data: commentLst,
+      jsonPathFileName: commentFilePathName,
+    );
+
     notifyListeners();
   }
 
