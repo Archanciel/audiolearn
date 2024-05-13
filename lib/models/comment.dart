@@ -1,4 +1,5 @@
 class Comment {
+  String id;
   String title;
   String content;
   int audioPositionSeconds;
@@ -10,11 +11,13 @@ class Comment {
     required this.content,
     required this.audioPositionSeconds,
     required this.creationDateTime,
-  }) : lastUpdateDateTime = creationDateTime;
+  })  : id = "${title}_${audioPositionSeconds.toString()}",
+        lastUpdateDateTime = creationDateTime;
 
   /// This constructor requires all instance variables. It is used
   /// by the fromJson factory constructor.
   Comment.fullConstructor({
+    required this.id,
     required this.title,
     required this.content,
     required this.audioPositionSeconds,
@@ -24,6 +27,7 @@ class Comment {
 
   factory Comment.fromJson(Map<String, dynamic> json) {
     return Comment.fullConstructor(
+      id: json['id'],
       title: json['title'],
       content: json['content'],
       audioPositionSeconds: json['audioPositionSeconds'],
@@ -35,6 +39,7 @@ class Comment {
   // Method: converts an instance of Comment to a JSON object
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'title': title,
       'content': content,
       'audioPositionSeconds': audioPositionSeconds,
