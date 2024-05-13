@@ -463,8 +463,9 @@ Future<void> main() async {
   // String testPath =
   //     "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\temp";
   List<String> oldFilePathLst = DirUtil.listPathFileNamesInSubDirs(
-    path: rootPath,
+    rootPath: rootPath,
     extension: 'json',
+    excludeDirName: kCommentDirName,
   );
 
   for (String oldFilePath in oldFilePathLst

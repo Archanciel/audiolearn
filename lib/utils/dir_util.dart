@@ -298,22 +298,31 @@ class DirUtil {
   }
 
   static List<String> listPathFileNamesInSubDirs({
-    required String path,
+    required String rootPath,
     required String extension,
+    String? excludeDirName, // Default directory name to exclude
   }) {
     List<String> pathFileNameList = [];
 
-    final dir = Directory(path);
-    final pattern = RegExp(r'\.' + RegExp.escape(extension) + r'$');
+    final Directory dir = Directory(rootPath);
+    final RegExp pattern = RegExp(r'\.' + RegExp.escape(extension) + r'$');
+    RegExp? excludePattern;
+
+    if (excludeDirName != null) {
+      excludePattern = RegExp(RegExp.escape(excludeDirName) + r'[/\\]');
+    }
 
     for (FileSystemEntity entity
         in dir.listSync(recursive: true, followLinks: false)) {
       if (entity is File && pattern.hasMatch(entity.path)) {
-        // Check if the file is not directly in the path itself
-        String relativePath = entity.path
-            .replaceFirst(RegExp(RegExp.escape(path) + r'[/\\]?'), '');
-        if (relativePath.contains(Platform.pathSeparator)) {
-          pathFileNameList.add(entity.path);
+        // Check if the file's path does not contain the excluded directory name
+        if (excludePattern == null || !excludePattern.hasMatch(entity.path)) {
+          // Check if the file is not directly in the root path
+          String relativePath = entity.path
+              .replaceFirst(RegExp(RegExp.escape(rootPath) + r'[/\\]?'), '');
+          if (relativePath.contains(Platform.pathSeparator)) {
+            pathFileNameList.add(entity.path);
+          }
         }
       }
     }
@@ -457,7 +466,7 @@ class DirUtil {
 
 Future<void> main() async {
   List<String> fileNames = DirUtil.listPathFileNamesInSubDirs(
-    path: 'C:\\Users\\Jean-Pierre\\Downloads\\Audio\\',
+    rootPath: 'C:\\Users\\Jean-Pierre\\Downloads\\Audio\\',
     extension: 'json',
   );
 

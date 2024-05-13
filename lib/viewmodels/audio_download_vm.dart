@@ -1,3 +1,4 @@
+import 'package:audiolearn/constants.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:io';
@@ -101,8 +102,9 @@ class AudioDownloadVM extends ChangeNotifier {
     _listOfPlaylist = [];
 
     List<String> playlistPathFileNameLst = DirUtil.listPathFileNamesInSubDirs(
-      path: _playlistsRootPath,
+      rootPath: _playlistsRootPath,
       extension: 'json',
+      excludeDirName: kCommentDirName,
     );
 
     try {
