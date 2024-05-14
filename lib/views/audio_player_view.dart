@@ -5,13 +5,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../constants.dart';
 import '../models/audio.dart';
-import '../models/comment.dart';
-import '../models/playlist.dart';
 import '../services/sort_filter_parameters.dart';
 import '../services/settings_data_service.dart';
 import '../utils/duration_expansion.dart';
 import '../viewmodels/audio_player_vm.dart';
-import '../viewmodels/comment_vm.dart';
 import '../viewmodels/playlist_list_vm.dart';
 import '../viewmodels/warning_message_vm.dart';
 import '../viewmodels/theme_provider_vm.dart';
@@ -104,10 +101,10 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
 
   @override
   Widget build(BuildContext context) {
-    AudioPlayerVM globalAudioPlayerVM = Provider.of<AudioPlayerVM>(
-      context,
-      listen: false,
-    );
+    // AudioPlayerVM globalAudioPlayerVM = Provider.of<AudioPlayerVM>(
+    //   context,
+    //   listen: false,
+    // );
 
     PlaylistListVM playlistListVMlistenFalse = Provider.of<PlaylistListVM>(
       context,
@@ -327,7 +324,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
               iconSize: kUpDownButtonSize - 15,
               onPressed: (!areAudioButtonsEnabled)
                   ? null // Disable the button if no audio selected
-                  : () async {
+                  : () {
                       showDialog<void>(
                         context: context,
                         builder: (context) => const CommentListAddDialogWidget(),
@@ -528,7 +525,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
             IconButton(
               key: const Key('audioPlayerViewSkipToStartButton'),
               iconSize: _audioIconSizeMedium,
-              onPressed: () => globalAudioPlayerVM.skipToStart(),
+              onPressed: () async => await globalAudioPlayerVM.skipToStart(),
               icon: const Icon(Icons.skip_previous),
             ),
             Expanded(
@@ -571,7 +568,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
               child: IconButton(
                 key: const Key('audioPlayerViewSkipToEndButton'),
                 iconSize: _audioIconSizeMedium,
-                onPressed: () => globalAudioPlayerVM.skipToEndAndPlay(),
+                onPressed: () async => await globalAudioPlayerVM.skipToEndAndPlay(),
                 icon: const Icon(Icons.skip_next),
               ),
             ),
@@ -618,8 +615,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                     min: 0.0,
                     max: maxDuration,
                     value: sliderValue,
-                    onChanged: (double value) {
-                      globalAudioPlayerVM.goToAudioPlayPosition(
+                    onChanged: (double value) async {
+                      await globalAudioPlayerVM.goToAudioPlayPosition(
                         durationPosition: Duration(seconds: value.toInt()),
                       );
                     },
@@ -659,8 +656,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                           child: IconButton(
                             key: const Key('audioPlayerViewRewind1mButton'),
                             iconSize: _audioIconSizeMedium,
-                            onPressed: () =>
-                                globalAudioPlayerVM.changeAudioPlayPosition(
+                            onPressed: () async =>
+                                await globalAudioPlayerVM.changeAudioPlayPosition(
                               positiveOrNegativeDuration:
                                   const Duration(minutes: -1),
                             ),
@@ -671,8 +668,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                           child: IconButton(
                             key: const Key('audioPlayerViewRewind10sButton'),
                             iconSize: _audioIconSizeMedium,
-                            onPressed: () =>
-                                globalAudioPlayerVM.changeAudioPlayPosition(
+                            onPressed: () async =>
+                                await globalAudioPlayerVM.changeAudioPlayPosition(
                               positiveOrNegativeDuration:
                                   const Duration(seconds: -10),
                             ),
@@ -683,8 +680,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                           child: IconButton(
                             key: const Key('audioPlayerViewForward10sButton'),
                             iconSize: _audioIconSizeMedium,
-                            onPressed: () =>
-                                globalAudioPlayerVM.changeAudioPlayPosition(
+                            onPressed: () async =>
+                                await globalAudioPlayerVM.changeAudioPlayPosition(
                               positiveOrNegativeDuration:
                                   const Duration(seconds: 10),
                             ),
@@ -695,8 +692,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                           child: IconButton(
                             key: const Key('audioPlayerViewForward1mButton'),
                             iconSize: _audioIconSizeMedium,
-                            onPressed: () =>
-                                globalAudioPlayerVM.changeAudioPlayPosition(
+                            onPressed: () async =>
+                                await globalAudioPlayerVM.changeAudioPlayPosition(
                               positiveOrNegativeDuration:
                                   const Duration(minutes: 1),
                             ),
