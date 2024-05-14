@@ -13,14 +13,14 @@ import '../../views/screen_mixin.dart';
 import 'help_dialog_widget.dart';
 
 class AudioSetSpeedDialogWidget extends StatefulWidget {
-  double audioPlaySpeed;
+  final double audioPlaySpeed;
 
-  bool displayApplyToExistingPlaylistCheckbox;
-  bool displayApplyToAudioAlreadyDownloadedCheckbox;
-  bool updateCurrentPlayAudioSpeed;
-  List<HelpItem> helpItemsLst;
+  final bool displayApplyToExistingPlaylistCheckbox;
+  final bool displayApplyToAudioAlreadyDownloadedCheckbox;
+  final bool updateCurrentPlayAudioSpeed;
+  final List<HelpItem> helpItemsLst;
 
-  AudioSetSpeedDialogWidget({
+  const AudioSetSpeedDialogWidget({
     super.key,
     required this.audioPlaySpeed,
     required this.updateCurrentPlayAudioSpeed,

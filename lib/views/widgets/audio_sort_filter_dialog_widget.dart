@@ -22,17 +22,24 @@ enum CalledFrom {
   audioPlayerViewAudioMenu,
 }
 
+enum DateTimeType {
+  startDownloadDateTime,
+  endDownloadDateTime,
+  startUploadDateTime,
+  endUploadDateTime,
+}
+
 class AudioSortFilterDialogWidget extends StatefulWidget {
   final List<Audio> selectedPlaylistAudioLst;
-  String audioSortFilterParametersName;
-  AudioSortFilterParameters audioSortFilterParameters;
-  AudioSortFilterParameters audioSortPlaylistFilterParameters;
+  final String audioSortFilterParametersName;
+  final AudioSortFilterParameters audioSortFilterParameters;
+  final AudioSortFilterParameters audioSortPlaylistFilterParameters;
   final AudioLearnAppViewType audioLearnAppViewType;
   final FocusNode focusNode;
   final WarningMessageVM warningMessageVM;
   final CalledFrom calledFrom;
 
-  AudioSortFilterDialogWidget({
+  const AudioSortFilterDialogWidget({
     super.key,
     required this.selectedPlaylistAudioLst,
     this.audioSortFilterParametersName = '',
@@ -51,6 +58,7 @@ class AudioSortFilterDialogWidget extends StatefulWidget {
 
 class _AudioSortFilterDialogWidgetState
     extends State<AudioSortFilterDialogWidget> with ScreenMixin {
+  late AudioSortFilterParameters _audioSortFilterParameters;
   late InputDecoration _dialogTextFieldDecoration;
 
   late final List<String> _audioTitleFilterSentencesLst = [];
@@ -118,6 +126,7 @@ class _AudioSortFilterDialogWidgetState
   void initState() {
     super.initState();
 
+    _audioSortFilterParameters = widget.audioSortFilterParameters;
     _dialogTextFieldDecoration = getDialogTextFieldInputDecoration();
 
     // Add this line to request focus on the TextField after the build
@@ -195,7 +204,7 @@ class _AudioSortFilterDialogWidgetState
         .addAll(audioSortDefaultFilterParameters.filterSentenceLst);
     _ignoreCase = audioSortDefaultFilterParameters.ignoreCase;
     _searchInVideoCompactDescription =
-        widget.audioSortFilterParameters.searchAsWellInVideoCompactDescription;
+        _audioSortFilterParameters.searchAsWellInVideoCompactDescription;
     _isAnd = (audioSortDefaultFilterParameters.sentencesCombination ==
         SentencesCombination.AND);
     _isOr = !_isAnd;
@@ -304,7 +313,7 @@ class _AudioSortFilterDialogWidgetState
       _audioSortOptionButtonIconColor = kDarkAndLightDisabledIconColor;
     }
 
-    widget.audioSortFilterParameters = audioSortFilterParameters;
+    _audioSortFilterParameters = audioSortFilterParameters;
   }
 
   void _initializeHistoricalAudioSortFilterParamsLeftIconColors() {
@@ -721,7 +730,7 @@ class _AudioSortFilterDialogWidgetState
             onPressed: () {
               _updateWidgetAudioSortFilterParameters();
 
-              if (widget.audioSortFilterParameters ==
+              if (_audioSortFilterParameters ==
                   AudioSortFilterParameters
                       .createDefaultAudioSortFilterParameters()) {
                 // here, the user clicks on the Delete button without
@@ -735,7 +744,7 @@ class _AudioSortFilterDialogWidgetState
                 // here, the user deletes an historical sort/filter parameter
                 if (!playlistListVM
                     .clearAudioSortFilterSettingsSearchHistoryElement(
-                        widget.audioSortFilterParameters)) {
+                        _audioSortFilterParameters)) {
                   // here, the sort/filter parameter to delete was not present
                   // in the historical sort/filter parameters list
                   widget.warningMessageVM
@@ -871,7 +880,7 @@ class _AudioSortFilterDialogWidgetState
   ) {
     if (_historicalAudioSortFilterParametersIndex > 0) {
       playlistListVM.clearAudioSortFilterSettingsSearchHistoryElement(
-          widget.audioSortFilterParameters);
+          _audioSortFilterParameters);
     } else {
       widget.warningMessageVM.sortFilterSaveAsName = '';
     }
@@ -984,28 +993,36 @@ class _AudioSortFilterDialogWidgetState
           dateIconButtondKey: const Key('startDownloadDateIconButton'),
           textFieldKey: const Key('startDownloadDateTextField'),
           context: context,
+          dateTimeType: DateTimeType.startDownloadDateTime,
           controller: _startDownloadDateTimeController,
+          dateTime: _startDownloadDateTime ?? now,
           label: AppLocalizations.of(context)!.startDownloadDate,
         ),
         _buildLabelDateIconTextField(
           dateIconButtondKey: const Key('endDownloadDateIconButton'),
           textFieldKey: const Key('endDownloadDateTextField'),
           context: context,
+          dateTimeType: DateTimeType.endDownloadDateTime,
           controller: _endDownloadDateTimeController,
+          dateTime: _endDownloadDateTime ?? now,
           label: AppLocalizations.of(context)!.endDownloadDate,
         ),
         _buildLabelDateIconTextField(
           dateIconButtondKey: const Key('startUploadDateIconButton'),
           textFieldKey: const Key('startUploadDateTextField'),
           context: context,
+          dateTimeType: DateTimeType.startUploadDateTime,
           controller: _startUploadDateTimeController,
+          dateTime: _startUploadDateTime ?? now,
           label: AppLocalizations.of(context)!.startUploadDate,
         ),
         _buildLabelDateIconTextField(
           dateIconButtondKey: const Key('endUploadDateIconButton'),
           textFieldKey: const Key('endUploadDateTextField'),
           context: context,
+          dateTimeType: DateTimeType.endUploadDateTime,
           controller: _endUploadDateTimeController,
+          dateTime: _endUploadDateTime ?? now,
           label: AppLocalizations.of(context)!.endUploadDate,
         ),
       ],
@@ -1016,7 +1033,9 @@ class _AudioSortFilterDialogWidgetState
     required Key dateIconButtondKey,
     required Key textFieldKey,
     required BuildContext context,
+    required DateTimeType dateTimeType, 
     required TextEditingController controller,
+    required DateTime dateTime,
     required String label,
   }) {
     DateTime now = DateTime.now();
@@ -1039,9 +1058,9 @@ class _AudioSortFilterDialogWidgetState
             );
 
             // Add this check
-            _startDownloadDateTime = pickedDate;
+            _setDateTime(dateTimeType, pickedDate ?? now);
             controller.text =
-                DateFormat('dd-MM-yyyy').format(_startDownloadDateTime!);
+                DateFormat('dd-MM-yyyy').format(dateTime);
           },
         ),
         SizedBox(
@@ -1058,6 +1077,23 @@ class _AudioSortFilterDialogWidgetState
     );
   }
 
+  void _setDateTime(DateTimeType dateTimeType, DateTime dateTime) {
+    switch (dateTimeType) {
+      case DateTimeType.startDownloadDateTime:
+        _startDownloadDateTime = dateTime;
+        break;
+      case DateTimeType.endDownloadDateTime:
+        _endDownloadDateTime = dateTime;
+        break;
+      case DateTimeType.startUploadDateTime:
+        _startUploadDateTime = dateTime;
+        break;
+      case DateTimeType.endUploadDateTime:
+        _endUploadDateTime = dateTime;
+        break;
+    }
+  }
+  
   Widget _buildAudioStateCheckboxes(
     BuildContext context,
   ) {
@@ -1649,18 +1685,18 @@ class _AudioSortFilterDialogWidgetState
     List<Audio> filteredAndSortedAudioLst =
         _audioSortFilterService.filterAndSortAudioLst(
       audioLst: widget.selectedPlaylistAudioLst,
-      audioSortFilterParameters: widget.audioSortFilterParameters,
+      audioSortFilterParameters: _audioSortFilterParameters,
     );
 
     return [
       filteredAndSortedAudioLst,
-      widget.audioSortFilterParameters,
+      _audioSortFilterParameters,
       sortFilterParametersSaveAsUniqueName,
     ];
   }
 
   void _updateWidgetAudioSortFilterParameters() {
-    widget.audioSortFilterParameters = AudioSortFilterParameters(
+    _audioSortFilterParameters = AudioSortFilterParameters(
       selectedSortItemLst: _selectedSortingItemLst,
       filterSentenceLst: _audioTitleFilterSentencesLst,
       sentencesCombination:

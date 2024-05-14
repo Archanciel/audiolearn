@@ -18,7 +18,7 @@ import 'comment_add_dialog_widget.dart';
 class CommentListAddDialogWidget extends StatefulWidget {
   final List<Comment> commentsLst;
 
-  CommentListAddDialogWidget({
+  const CommentListAddDialogWidget({
     super.key,
     required this.commentsLst,
   });
