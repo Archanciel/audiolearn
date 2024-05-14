@@ -15,7 +15,7 @@ enum AudioLearnAppViewType {
 }
 
 const String kApplicationName = "Audio Learn";
-const String kApplicationVersion = '1.0.15';
+const String kApplicationVersion = '1.0.17';
 const String kApplicationPath = "/storage/emulated/0/Download/audiolearn";
 const String kApplicationPathTest = "/storage/emulated/0/Download/audiolearn";
 const String kPlaylistDownloadRootPath =
@@ -53,6 +53,8 @@ const String kPlaylistDownloadRootPathWindowsTest =
 
 const String kTranslationFileDirWindows =
     "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\lib\\l10n";
+
+const String kCommentDirName = 'comments';
 
 // this constant enables to download a playlist in the emulator in which
 // pasting a URL is not possible. The constant is used in

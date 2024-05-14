@@ -159,27 +159,26 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                         },
                         iconSize: kSmallestButtonWidth,
                       ),
-                      Consumer<AudioPlayerVM>(
-                        builder: (context, globalAudioPlayerVM, child) {
-                          return IconButton(
-                            // Play/Pause button
-                            onPressed: () async {
-                              globalAudioPlayerVM.isPlaying
-                                  ? await globalAudioPlayerVM.pause()
-                                  : await _playFromCommPosition(
-                                      commentVMlistenFalse:
-                                          commentVMlistenFalse,
-                                    );
-                            },
-                            icon: Icon(globalAudioPlayerVM.isPlaying
-                                ? Icons.pause
-                                : Icons.play_arrow),
-                            iconSize: kUpDownButtonSize - 10,
-                            constraints:
-                                const BoxConstraints(), // Ensure the button
-                                //                         takes minimal space
-                          );
+                      IconButton(
+                        // Play/Pause button
+                        onPressed: () async {
+                          globalAudioPlayerVM.isPlaying
+                              ? await globalAudioPlayerVM.pause()
+                              : await _playFromCommPosition(
+                                  commentVMlistenFalse: commentVMlistenFalse,
+                                );
                         },
+                        icon: Consumer<AudioPlayerVM>(
+                          builder: (context, globalAudioPlayerVM, child) {
+                            return Icon(globalAudioPlayerVM.isPlaying
+                                ? Icons.pause
+                                : Icons.play_arrow);
+                          },
+                        ),
+                        iconSize: kUpDownButtonSize - 10,
+                        constraints:
+                            const BoxConstraints(), // Ensure the button
+                        //                         takes minimal space
                       ),
                     ],
                   ),
