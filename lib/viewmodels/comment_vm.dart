@@ -14,6 +14,13 @@ import '../utils/dir_util.dart';
 ///
 /// This class manages the audio player obtained from the
 class CommentVM extends ChangeNotifier {
+  Duration _currentCommentAudioPosition = Duration.zero;
+  Duration get currentCommentAudioPosition => _currentCommentAudioPosition;
+  set currentCommentAudioPosition(Duration value) {
+    _currentCommentAudioPosition = value;
+    notifyListeners();
+  }
+
   CommentVM();
 
   List<Comment> loadExistingCommentFileOrCreateEmptyCommentFile({

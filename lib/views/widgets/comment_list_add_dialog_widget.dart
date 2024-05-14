@@ -4,23 +4,25 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants.dart';
+import '../../models/audio.dart';
 import '../../models/comment.dart';
 import '../../services/settings_data_service.dart';
+import '../../viewmodels/comment_vm.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 import '../screen_mixin.dart';
-import 'comment_add_dialog_widget.dart';
+import 'comment_add_edit_dialog_widget.dart';
 
 /// This widget displays a dialog with the list of positionned
 /// comment added to the current audio.
 ///
-/// Additionally, it displays a button to add a new positionned
+/// When a comment is clicked, this opens a dialog to edit the
 /// comment.
+///
+/// Additionally, a button 'plus' is displayed to add a new
+/// positionned comment.
 class CommentListAddDialogWidget extends StatefulWidget {
-  final List<Comment> commentsLst;
-
   const CommentListAddDialogWidget({
     super.key,
-    required this.commentsLst,
   });
 
   @override
@@ -31,6 +33,21 @@ class CommentListAddDialogWidget extends StatefulWidget {
 class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
     with ScreenMixin {
   final FocusNode _focusNodeDialog = FocusNode();
+  late List<Comment> _commentsLst;
+
+  @override
+  void initState() {
+    super.initState();
+
+    CommentVM commentVM = Provider.of<CommentVM>(
+      context,
+      listen: false,
+    );
+    Audio currentAudio = globalAudioPlayerVM.currentAudio!;
+    _commentsLst = commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
+      commentedAudio: currentAudio,
+    );
+  }
 
   @override
   void dispose() {
@@ -43,14 +60,11 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
   Widget build(BuildContext context) {
     ThemeProviderVM themeProviderVM = Provider.of<ThemeProviderVM>(context);
 
-    int number = 1;
-    int helpItemsLstLength = widget.commentsLst.length;
-
     // Required so that clicking on Enter closes the dialog
     FocusScope.of(context).requestFocus(
       _focusNodeDialog,
     );
-    
+
     return KeyboardListener(
       // Using FocusNode to enable clicking on Enter to close
       // the dialog
@@ -90,7 +104,7 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
                 onPressed: () {
                   showDialog<void>(
                     context: context,
-                    builder: (context) => CommentAddDialogWidget(),
+                    builder: (context) => const CommentAddEditDialogWidget(),
                   );
                 },
               ),
@@ -101,28 +115,43 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
-              for (Comment comment in widget.commentsLst) ...[
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: Row(
+              for (Comment comment in _commentsLst) ...[
+                GestureDetector(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 2),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                comment.title,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 12),
                         child: Text(
-                          (helpItemsLstLength > 1)
-                              ? "${number++}. ${comment.title}"
-                              : "${comment.title}",
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
+                          comment.content,
                         ),
                       ),
                     ],
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: Text(comment.content),
+                  onTap: () {
+                    showDialog<void>(
+                      context: context,
+                      builder: (context) => CommentAddEditDialogWidget(
+                        comment: comment,
+                      ),
+                    );
+                  },
                 ),
               ],
             ],

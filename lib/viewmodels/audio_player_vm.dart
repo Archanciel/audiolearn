@@ -249,7 +249,7 @@ class AudioPlayerVM extends ChangeNotifier {
   ///
   /// If the `audioPausedDateTime` is null, indicating that the audio has not been paused,
   /// the audio player's position will not be adjusted.
-  Future<void> _setCurrentAudioPosition() async {
+  Future<void> _rewindAudioPositionBasedOnPauseDuration() async {
     DateTime? audioPausedDateTime = _currentAudio!.audioPausedDateTime;
 
     if (audioPausedDateTime != null) {
@@ -407,7 +407,9 @@ class AudioPlayerVM extends ChangeNotifier {
   }
 
   /// Method called when the user clicks on the audio play icon
-  Future<void> playFromCurrentAudioFile() async {
+  Future<void> playFromCurrentAudioFile({
+    bool rewindAudioPositionBasedOnPauseDuration = true,
+  }) async {
     if (_currentAudio == null) {
       // the case if the AudioPlayerView is opened directly by
       // dragging to it or clicking on the title or sub title
@@ -432,7 +434,9 @@ class AudioPlayerVM extends ChangeNotifier {
 
     // Check if the file exists before attempting to play it
     if (File(audioFilePathName).existsSync()) {
-      await _setCurrentAudioPosition();
+      if (rewindAudioPositionBasedOnPauseDuration) {
+        await _rewindAudioPositionBasedOnPauseDuration();
+      }
 
       await _audioPlayerPlugin!.play(DeviceFileSource(
           audioFilePathName)); // <-- Directly using play method
