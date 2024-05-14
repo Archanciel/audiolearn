@@ -2,6 +2,9 @@
 
 import 'package:intl/intl.dart';
 
+/// WARNING: these methods are callable on a Duration instance only
+/// if utils/duration_expansion.dart is imported.
+///
 /// Add format methods to the Duration class.
 extension DurationExpansion on Duration {
   static final NumberFormat numberFormatTwoInt = NumberFormat('00');
@@ -18,6 +21,8 @@ extension DurationExpansion on Duration {
     return "$minusStr${inHours.abs()}:${numberFormatTwoInt.format(durationMinute.abs())}";
   }
 
+  /// WARNING: this method is callable on a Duration instance only
+  /// if utils/duration_expansion.dart is imported.
   String HHmmss() {
     int durationMinute = inMinutes.remainder(60);
     int durationSecond = inSeconds.remainder(60);
@@ -30,6 +35,9 @@ extension DurationExpansion on Duration {
     return "$minusStr${inHours.abs()}:${numberFormatTwoInt.format(durationMinute.abs())}:${numberFormatTwoInt.format(durationSecond.abs())}";
   }
 
+  /// WARNING: this method is callable on a Duration instance only
+  /// if utils/duration_expansion.dart is imported.
+  ///
   /// Returns the Duration formatted as dd:HH:mm
   String ddHHmm() {
     int durationMinute = inMinutes.remainder(60);
@@ -45,10 +53,19 @@ extension DurationExpansion on Duration {
     return "$minusStr${numberFormatTwoInt.format(durationDay.abs())}:${numberFormatTwoInt.format(durationHour.abs())}:${numberFormatTwoInt.format(durationMinute.abs())}";
   }
 
+  /// WARNING: this method is callable on a Duration instance only
+  /// if utils/duration_expansion.dart is imported.
+  ///
   /// Return Duration formatted as HH:mm:ss if the hours are > 0,
   /// else as mm:ss.
   ///
   /// Example: 1:45:24 or 45:24 if 0:45:24.
+  ///
+  /// Here's an example of how to use this method:
+  ///
+  /// Text(
+  ///   globalAudioPlayerVM.currentAudioPosition.HHmmssZeroHH(),
+  /// )
   String HHmmssZeroHH() {
     String twoDigits(int n) => n.toString().padLeft(2, '0');
     String hours = '';
