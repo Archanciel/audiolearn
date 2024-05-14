@@ -34,7 +34,6 @@ class _AudioPlayableListDialogWidgetState
   // the dialog
   final FocusNode _focusNodeDialog = FocusNode();
 
-  Audio? _selectedAudio;
   bool _excludeFullyPlayedAudios = false;
 
   final ScrollController _scrollController = ScrollController();
