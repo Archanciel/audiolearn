@@ -125,6 +125,17 @@ class DirUtil {
     }
   }
 
+  static void createDirIfNotExistSync({
+    required String pathStr,
+  }) async {
+    final Directory directory = Directory(pathStr);
+    bool directoryExists = directory.existsSync();
+
+    if (!directoryExists) {
+      directory.createSync(recursive: true);
+    }
+  }
+
   /// Delete the directory {pathStr}, the files it contains and
   /// its subdirectories.
   static void deleteDirAndSubDirsIfExist({

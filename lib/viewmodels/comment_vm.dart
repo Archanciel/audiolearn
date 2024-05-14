@@ -16,10 +16,11 @@ import '../utils/dir_util.dart';
 class CommentVM extends ChangeNotifier {
   CommentVM();
 
-  Future<List<Comment>> loadExistingCommentFileOrCreateEmptyCommentFile({
+  List<Comment> loadExistingCommentFileOrCreateEmptyCommentFile({
     required Audio commentedAudio,
-  }) async {
-    String commentFileName = _createCommentFileName(commentedAudio.audioFileName);
+  }) {
+    String commentFileName =
+        _createCommentFileName(commentedAudio.audioFileName);
     String playlistCommentPath =
         "${commentedAudio.enclosingPlaylist!.downloadPath}${path.separator}$kCommentDirName";
     String commentFilePathName =
@@ -37,7 +38,7 @@ class CommentVM extends ChangeNotifier {
       );
     } else {
       // Create the comment file
-      await DirUtil.createDirIfNotExist(
+      DirUtil.createDirIfNotExistSync(
         pathStr: playlistCommentPath,
       );
 
@@ -50,14 +51,13 @@ class CommentVM extends ChangeNotifier {
     return commentLst;
   }
 
-  Future<void> addComment({
+  void addComment({
     required Comment comment,
     required Audio commentedAudio,
-  }) async {
+  }) {
     String playListDir = commentedAudio.enclosingPlaylist!.downloadPath;
 
-    List<Comment> commentLst =
-        await loadExistingCommentFileOrCreateEmptyCommentFile(
+    List<Comment> commentLst = loadExistingCommentFileOrCreateEmptyCommentFile(
       commentedAudio: commentedAudio,
     );
 
@@ -75,14 +75,13 @@ class CommentVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> deleteComment({
+  void deleteComment({
     required String commentId,
     required Audio commentedAudio,
-  }) async {
+  }) {
     String playListDir = commentedAudio.enclosingPlaylist!.downloadPath;
 
-    List<Comment> commentLst =
-        await loadExistingCommentFileOrCreateEmptyCommentFile(
+    List<Comment> commentLst = loadExistingCommentFileOrCreateEmptyCommentFile(
       commentedAudio: commentedAudio,
     );
 
@@ -104,14 +103,13 @@ class CommentVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> modifyComment({
+  void modifyComment({
     required Comment modifiedComment,
     required Audio commentedAudio,
-  }) async {
+  }) {
     String playListDir = commentedAudio.enclosingPlaylist!.downloadPath;
 
-    List<Comment> commentLst =
-        await loadExistingCommentFileOrCreateEmptyCommentFile(
+    List<Comment> commentLst = loadExistingCommentFileOrCreateEmptyCommentFile(
       commentedAudio: commentedAudio,
     );
 
@@ -122,7 +120,8 @@ class CommentVM extends ChangeNotifier {
     oldComment.title = modifiedComment.title;
     oldComment.content = modifiedComment.content;
     oldComment.audioPositionSeconds = modifiedComment.audioPositionSeconds;
-    oldComment.lastUpdateDateTime = DateTimeUtil.getDateTimeLimitedToSeconds(DateTime.now());
+    oldComment.lastUpdateDateTime =
+        DateTimeUtil.getDateTimeLimitedToSeconds(DateTime.now());
 
     String commentFilePathName =
         "$playListDir${path.separator}$kCommentDirName${path.separator}${_createCommentFileName(commentedAudio.audioFileName)}";

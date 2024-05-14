@@ -328,20 +328,9 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
               onPressed: (!areAudioButtonsEnabled)
                   ? null // Disable the button if no audio selected
                   : () async {
-                      CommentVM commentVM = Provider.of<CommentVM>(
-                        context,
-                        listen: false,
-                      );
-                      Audio currentAudio = globalAudioPlayerVM.currentAudio!;
-                      List<Comment> commentLst = await commentVM
-                          .loadExistingCommentFileOrCreateEmptyCommentFile(
-                        commentedAudio: currentAudio,
-                      );
                       showDialog<void>(
                         context: context,
-                        builder: (context) => CommentListAddDialogWidget(
-                          commentsLst: commentLst,
-                        ),
+                        builder: (context) => const CommentListAddDialogWidget(),
                       );
                     },
             ),

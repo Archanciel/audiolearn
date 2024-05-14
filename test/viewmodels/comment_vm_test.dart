@@ -47,7 +47,7 @@ void main() {
       // does not exist
 
       List<Comment> commentLst =
-          await commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
+          commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
               commentedAudio: audio);
 
       // the returned Commentlist should be empty
@@ -72,9 +72,8 @@ void main() {
       // now calling again loadOrCreateCommentFile in situation where an
       // empty comment file exists
 
-      commentLst =
-          await commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
-              commentedAudio: audio);
+      commentLst = commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
+          commentedAudio: audio);
 
       // the returned Commentlist should be empty
       expect(commentLst.length, 0);
@@ -114,7 +113,7 @@ void main() {
         audioPositionSeconds: 0,
       );
 
-      await commentVM.addComment(
+      commentVM.addComment(
         comment: testCommentOne,
         commentedAudio: audio,
       );
@@ -122,7 +121,7 @@ void main() {
       // now loading the comment list from the comment file
 
       List<Comment> commentLst =
-          await commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
+          commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
               commentedAudio: audio);
 
       // the returned Commentlist should have one element
@@ -139,16 +138,15 @@ void main() {
         audioPositionSeconds: 2,
       );
 
-      await commentVM.addComment(
+      commentVM.addComment(
         comment: testCommentTwo,
         commentedAudio: audio,
       );
 
       // now loading the comment list from the comment file
 
-      commentLst =
-          await commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
-              commentedAudio: audio);
+      commentLst = commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
+          commentedAudio: audio);
 
       // the returned Commentlist should have two elements
       expect(commentLst.length, 2);
@@ -190,7 +188,7 @@ void main() {
         audioPositionSeconds: 0,
       );
 
-      await commentVM.addComment(
+      commentVM.addComment(
         comment: testCommentOne,
         commentedAudio: audio,
       );
@@ -198,7 +196,7 @@ void main() {
       // now loading the comment list from the comment file
 
       List<Comment> commentLst =
-          await commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
+          commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
               commentedAudio: audio);
 
       // the returned Commentlist should have one element
@@ -235,7 +233,7 @@ void main() {
       );
       // deleting comment
 
-      await commentVM.deleteComment(
+      commentVM.deleteComment(
         commentId: "Test Title_0",
         commentedAudio: audio,
       );
@@ -243,7 +241,7 @@ void main() {
       // now loading the comment list from the comment file
 
       List<Comment> commentLst =
-          await commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
+          commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
               commentedAudio: audio);
 
       // the returned Commentlist should have one element
@@ -251,16 +249,15 @@ void main() {
 
       // deleting the remaining comment
 
-      await commentVM.deleteComment(
+      commentVM.deleteComment(
         commentId: "Test Title 2_2",
         commentedAudio: audio,
       );
 
       // now loading the comment list from the comment file
 
-      commentLst =
-          await commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
-              commentedAudio: audio);
+      commentLst = commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
+          commentedAudio: audio);
 
       // the returned Commentlist should have one element
       expect(commentLst.length, 0);
@@ -295,7 +292,7 @@ void main() {
       // modifying comment
 
       List<Comment> commentLst =
-          await commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
+          commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
               commentedAudio: audio);
 
       Comment commentToModify = commentLst[0];
@@ -304,16 +301,15 @@ void main() {
       commentToModify.content = "New content";
       commentToModify.audioPositionSeconds = 20;
 
-      await commentVM.modifyComment(
+      commentVM.modifyComment(
         modifiedComment: commentToModify,
         commentedAudio: audio,
       );
 
       // now loading the comment list from the comment file
 
-      commentLst =
-          await commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
-              commentedAudio: audio);
+      commentLst = commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
+          commentedAudio: audio);
 
       // the returned Commentlist should have one element
       expect(commentLst.length, 2);
