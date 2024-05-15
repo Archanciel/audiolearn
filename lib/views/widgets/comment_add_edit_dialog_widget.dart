@@ -171,7 +171,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                         onPressed: () async {
                           globalAudioPlayerVM.isPlaying
                               ? await globalAudioPlayerVM.pause()
-                              : await _playFromCommPosition(
+                              : await _playFromCommentPosition(
                                   commentVMlistenFalse: commentVMlistenFalse,
                                 );
                         },
@@ -246,7 +246,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
     Navigator.of(context).pop();
   }
 
-  Future<void> _playFromCommPosition({
+  Future<void> _playFromCommentPosition({
     required CommentVM commentVMlistenFalse,
   }) async {
     await globalAudioPlayerVM.modifyAudioPlayerPluginPosition(
