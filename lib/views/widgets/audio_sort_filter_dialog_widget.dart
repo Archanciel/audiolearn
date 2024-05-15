@@ -1281,7 +1281,7 @@ class _AudioSortFilterDialogWidgetState
               key: const Key('search_history_delete_all_button'),
               onPressed: _historicalAudioSortFilterParametersLst.isNotEmpty
                   ? () =>
-                      tapSearchHistoryDeleteAllIconButton(buttonStateManager)
+                      _tapSearchHistoryDeleteAllIconButton(buttonStateManager)
                   : null, // required in order to be able to test if the
               //             IconButton is disabled or not
               padding: const EdgeInsets.all(0),
@@ -1334,11 +1334,9 @@ class _AudioSortFilterDialogWidgetState
     setState(() {});
   }
 
-  void tapSearchHistoryDeleteAllIconButton(
+  void _tapSearchHistoryDeleteAllIconButton(
     ButtonStateManager buttonStateManager,
   ) {
-    // Using FocusNode to enable clicking on Enter to close
-    // the dialog
     showDialog<void>(
       context: context,
       builder: (BuildContext context) {
