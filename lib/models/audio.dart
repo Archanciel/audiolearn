@@ -267,7 +267,7 @@ class Audio {
   }
 
   @override
-  int get hashCode => videoUrl.hashCode;
+  int get hashCode => audioFileName.hashCode;
 
   String get filePathName {
     return '${enclosingPlaylist!.downloadPath}${Platform.pathSeparator}$audioFileName';
