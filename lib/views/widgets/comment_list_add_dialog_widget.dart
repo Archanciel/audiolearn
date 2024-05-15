@@ -35,6 +35,7 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
     with ScreenMixin {
   final FocusNode _focusNodeDialog = FocusNode();
   late Audio _currentAudio;
+  Comment? _playingComment;
 
   @override
   void initState() {
@@ -90,6 +91,7 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
               message:
                   AppLocalizations.of(context)!.addPositionedCommentTooltip,
               child: IconButton(
+                // add comment icon button
                 key: const Key('addPositionedCommentIconButtonKey'),
                 icon: IconTheme(
                   data: (themeProviderVM.currentTheme == AppTheme.dark
@@ -148,21 +150,32 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
                                 SizedBox(
                                   width: kSmallIconButtonWidth,
                                   child: IconButton(
-                                    // Play/Pause button
+                                    // Play/Pause icon button
                                     onPressed: () async {
-                                      globalAudioPlayerVM.isPlaying
+                                      // this logic enables that when we
+                                      // click on the play button of a comment,
+                                      // if an other comment is playing, it is
+                                      // paused
+                                      (_playingComment != null &&
+                                              _playingComment == comment &&
+                                              globalAudioPlayerVM.isPlaying)
                                           ? await globalAudioPlayerVM.pause()
                                           : await _playFromCommentPosition(
-                                              commentVM: commentVM,
+                                              comment: comment,
                                             );
                                     },
                                     icon: Consumer<AudioPlayerVM>(
                                       builder: (context, globalAudioPlayerVM,
                                           child) {
-                                        return Icon(
-                                            globalAudioPlayerVM.isPlaying
-                                                ? Icons.pause
-                                                : Icons.play_arrow);
+                                        // this logic avoids that when the
+                                        // user clicks on the play button of a
+                                        // comment, the play button of the
+                                        // other comment are updated to 'pause'
+                                        return Icon((_playingComment != null &&
+                                                _playingComment == comment &&
+                                                globalAudioPlayerVM.isPlaying)
+                                            ? Icons.pause
+                                            : Icons.play_arrow);
                                       },
                                     ),
                                     iconSize: kSmallestButtonWidth,
@@ -174,11 +187,18 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
                                 SizedBox(
                                   width: kSmallestButtonWidth,
                                   child: IconButton(
+                                    // delete comment icon button
                                     key: const Key('deleteCommentIconButton'),
-                                    onPressed: () => commentVM.deleteComment(
-                                      commentId: comment.id,
-                                      commentedAudio: _currentAudio,
-                                    ),
+                                    onPressed: () async {
+                                      commentVM.deleteComment(
+                                        commentId: comment.id,
+                                        commentedAudio: _currentAudio,
+                                      );
+
+                                      if (globalAudioPlayerVM.isPlaying) {
+                                        await globalAudioPlayerVM.pause();
+                                      }
+                                    },
                                     icon: const Icon(
                                       Icons.clear,
                                     ),
@@ -197,7 +217,11 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
                           ),
                         ],
                       ),
-                      onTap: () {
+                      onTap: () async {
+                        if (globalAudioPlayerVM.isPlaying) {
+                          await globalAudioPlayerVM.pause();
+                        }
+
                         showDialog<void>(
                           context: context,
                           // instanciating CommentAddEditDialogWidget with
@@ -233,10 +257,12 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
   }
 
   Future<void> _playFromCommentPosition({
-    required CommentVM commentVM,
+    required Comment comment,
   }) async {
+    _playingComment = comment;
+
     await globalAudioPlayerVM.modifyAudioPlayerPluginPosition(
-      commentVM.currentCommentAudioPosition,
+      Duration(seconds: comment.audioPositionSeconds),
     );
 
     await globalAudioPlayerVM.playFromCurrentAudioFile(

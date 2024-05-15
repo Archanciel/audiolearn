@@ -51,4 +51,16 @@ class Comment {
       'lastUpdateDateTime': lastUpdateDateTime.toIso8601String(),
     };
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+
+    return other is Comment && other.id == id;
+  }
+
+  @override
+  int get hashCode => id.hashCode;
 }
