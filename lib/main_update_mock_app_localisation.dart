@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+/// https://chat.openai.com/share/1ca44f12-88f4-4d9d-9620-73447d16012d
 void main() async {
   // Simulated content of an ARB file as a JSON string, including a parameterized string
   // String arbContent = '''
@@ -45,6 +46,9 @@ void main() async {
   // Insert the generated class into the file
   await insertIntoFile(filePath, dartClass);
 
+  // Now format the file
+  await Process.run('dart', ['format', filePath]);
+
   print('Localization class has been inserted into $filePath');
 }
 
@@ -70,6 +74,9 @@ String generateLocalizationClass(Map<String, dynamic> arbData) {
           matches.map((m) => 'Object ${m.group(1)}').join(', ');
       String formattedString =
           value.replaceAllMapped(exp, (m) => '\${${m.group(1)}}');
+
+      // Correctly escape double quotes inside the string
+      formattedString = formattedString.replaceAll('"', '\\"');
 
       sb.writeln('  @override');
       sb.writeln('  String $methodName($methodParameters,) =>');
