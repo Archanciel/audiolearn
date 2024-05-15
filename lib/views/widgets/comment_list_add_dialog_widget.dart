@@ -7,6 +7,7 @@ import '../../constants.dart';
 import '../../models/audio.dart';
 import '../../models/comment.dart';
 import '../../services/settings_data_service.dart';
+import '../../viewmodels/audio_player_vm.dart';
 import '../../viewmodels/comment_vm.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 import '../screen_mixin.dart';
@@ -54,6 +55,10 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
   @override
   Widget build(BuildContext context) {
     ThemeProviderVM themeProviderVM = Provider.of<ThemeProviderVM>(context);
+
+    // Retrieve the screen width using MediaQuery
+    double maxDropdownWidth =
+        computeMaxDialogListItemWidth(context) - kSmallIconButtonWidth;
 
     // Required so that clicking on Enter closes the dialog
     FocusScope.of(context).requestFocus(
@@ -126,14 +131,58 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
                           Padding(
                             padding: const EdgeInsets.only(bottom: 2),
                             child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Expanded(
-                                  child: Text(
-                                    comment.title,
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
+                                  child: SizedBox(
+                                    width: maxDropdownWidth,
+                                    child: Text(
+                                      key: const Key('commentTitleKey'),
+                                      comment.title,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: kSmallIconButtonWidth,
+                                  child: IconButton(
+                                    // Play/Pause button
+                                    onPressed: () async {
+                                      globalAudioPlayerVM.isPlaying
+                                          ? await globalAudioPlayerVM.pause()
+                                          : await _playFromCommentPosition(
+                                              commentVM: commentVM,
+                                            );
+                                    },
+                                    icon: Consumer<AudioPlayerVM>(
+                                      builder: (context, globalAudioPlayerVM,
+                                          child) {
+                                        return Icon(
+                                            globalAudioPlayerVM.isPlaying
+                                                ? Icons.pause
+                                                : Icons.play_arrow);
+                                      },
+                                    ),
+                                    iconSize: kSmallestButtonWidth,
+                                    constraints:
+                                        const BoxConstraints(), // Ensure the button
+                                    //                         takes minimal space
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: kSmallestButtonWidth,
+                                  child: IconButton(
+                                    key: const Key('deleteCommentIconButton'),
+                                    onPressed: () => commentVM.deleteComment(
+                                      commentId: comment.id,
+                                      commentedAudio: _currentAudio,
+                                    ),
+                                    icon: const Icon(
+                                      Icons.clear,
+                                    ),
+                                    iconSize: kSmallestButtonWidth - 5,
                                   ),
                                 ),
                               ],
@@ -142,6 +191,7 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
                           Padding(
                             padding: const EdgeInsets.only(bottom: 12),
                             child: Text(
+                              key: const Key('commentTextKey'),
                               comment.content,
                             ),
                           ),
@@ -179,6 +229,18 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
           ),
         ],
       ),
+    );
+  }
+
+  Future<void> _playFromCommentPosition({
+    required CommentVM commentVM,
+  }) async {
+    await globalAudioPlayerVM.modifyAudioPlayerPluginPosition(
+      commentVM.currentCommentAudioPosition,
+    );
+
+    await globalAudioPlayerVM.playFromCurrentAudioFile(
+      rewindAudioPositionBasedOnPauseDuration: false,
     );
   }
 }
