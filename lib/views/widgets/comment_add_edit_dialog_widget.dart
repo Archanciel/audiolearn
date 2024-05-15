@@ -32,7 +32,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
   final TextEditingController titleController = TextEditingController();
   final TextEditingController commentController = TextEditingController();
   final FocusNode _focusNodeDialog = FocusNode();
-  final FocusNode _focusNodePlaylistRootPath = FocusNode();
+  final FocusNode _focusNodeCommentTitle = FocusNode();
 
   @override
   void initState() {
@@ -62,7 +62,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
   @override
   void dispose() {
     _focusNodeDialog.dispose();
-    _focusNodePlaylistRootPath.dispose();
+    _focusNodeCommentTitle.dispose();
     titleController.dispose();
     commentController.dispose();
 
@@ -72,7 +72,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
   @override
   Widget build(BuildContext context) {
     FocusScope.of(context).requestFocus(
-      _focusNodePlaylistRootPath,
+      _focusNodeCommentTitle,
     );
 
     CommentVM commentVMlistenFalse = Provider.of<CommentVM>(
@@ -110,12 +110,13 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                   decoration: getDialogTextFieldInputDecoration(
                     hintText: AppLocalizations.of(context)!.commentTitle,
                   ),
-                  focusNode: _focusNodePlaylistRootPath,
+                  focusNode: _focusNodeCommentTitle,
                 ),
               ),
               const SizedBox(height: 10),
               // Multiline TextField for Comments
               TextField(
+                key: const Key('commentContentTextField'),
                 controller: commentController,
                 minLines: 2,
                 maxLines: 3,
@@ -241,7 +242,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
     if (globalAudioPlayerVM.isPlaying) {
       await globalAudioPlayerVM.pause();
     }
-    
+
     Navigator.of(context).pop();
   }
 
