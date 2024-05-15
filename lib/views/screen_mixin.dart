@@ -489,4 +489,14 @@ mixin ScreenMixin {
       },
     );
   }
+
+  double computeMaxDialogListItemWidth(BuildContext context) {
+    // Retrieve the screen width using MediaQuery
+    double screenWidth = MediaQuery.of(context).size.width;
+    
+    // Set a reasonable proportion of the screen width for the dropdown items
+    double maxDropdownWidth = screenWidth * 0.57;
+    
+    return maxDropdownWidth;
+  }
 }

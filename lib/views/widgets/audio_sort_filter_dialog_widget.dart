@@ -1620,10 +1620,7 @@ class _AudioSortFilterDialogWidgetState
     BuildContext context,
   ) {
     // Retrieve the screen width using MediaQuery
-    double screenWidth = MediaQuery.of(context).size.width;
-
-    // Set a reasonable proportion of the screen width for the dropdown items
-    double maxDropdownWidth = screenWidth * 0.57;
+    double maxDropdownWidth = computeMaxDialogListItemWidth(context);
 
     return SortingOption.values.where((SortingOption value) {
       // Exclude certain options based on the app view type
