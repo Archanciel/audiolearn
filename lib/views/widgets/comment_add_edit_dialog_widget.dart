@@ -157,7 +157,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                       ),
                       IconButton(
                         // Forward 1 second button
-                        icon: Icon(Icons.fast_forward),
+                        icon: const Icon(Icons.fast_forward),
                         onPressed: () async {
                           await modifyCommentPosition(
                             commentVMlistenFalse: commentVMlistenFalse,

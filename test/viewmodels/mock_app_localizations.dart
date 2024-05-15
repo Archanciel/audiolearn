@@ -1012,5 +1012,5 @@ class MockAppLocalizations extends AppLocalizations {
   String deleteCommentConfirnBody(
     Object title,
   ) =>
-      "Deleting comment \"${title}\".";
+      "Deleting comment \"$title\".";
 }

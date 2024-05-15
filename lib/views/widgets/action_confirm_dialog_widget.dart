@@ -35,6 +35,7 @@ class _ActionConfirmDialogWidgetState extends State<ActionConfirmDialogWidget>
     with ScreenMixin {
   final FocusNode _focusNodeDialog = FocusNode();
 
+  @override
   dispose() {
     _focusNodeDialog.dispose();
 
