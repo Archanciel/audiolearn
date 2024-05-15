@@ -104,6 +104,8 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
                 onPressed: () {
                   showDialog<void>(
                     context: context,
+                    // instanciating CommentAddEditDialogWidget without
+                    // passing a comment opens it in 'add' mode
                     builder: (context) => const CommentAddEditDialogWidget(),
                   );
                 },
@@ -147,6 +149,8 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
                   onTap: () {
                     showDialog<void>(
                       context: context,
+                      // instanciating CommentAddEditDialogWidget with
+                      // passing a comment opens it in 'edit' mode
                       builder: (context) => CommentAddEditDialogWidget(
                         comment: comment,
                       ),
@@ -159,7 +163,7 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
         ),
         actions: <Widget>[
           TextButton(
-            key: const Key('audioInfoOkButtonKey'),
+            key: const Key('closeButtonKey'),
             child: Text(
               AppLocalizations.of(context)!.closeTextButton,
               style: (themeProviderVM.currentTheme == AppTheme.dark)
