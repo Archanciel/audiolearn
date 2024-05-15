@@ -285,9 +285,9 @@ mixin ScreenMixin {
   }) {
     return InputDecoration(
       hintText: hintText,
-      border: OutlineInputBorder(),
+      border: const OutlineInputBorder(),
       isDense: true,
-      contentPadding: EdgeInsets.symmetric(vertical: 2.0, horizontal: 8.0),
+      contentPadding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 8.0),
     );
   }
 
