@@ -998,4 +998,7 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get commentDialogTitle => "Comment";
+
+  @override
+  String get update => "Update";
 }

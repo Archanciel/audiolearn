@@ -15,11 +15,12 @@ import '../../utils/duration_expansion.dart';
 /// widget constructor. Else, the widget is in add mode.
 class CommentAddEditDialogWidget extends StatefulWidget {
   final Comment? comment;
+  final bool isAddMode;
 
   const CommentAddEditDialogWidget({
     super.key,
     this.comment,
-  });
+  }) : isAddMode = comment == null;
 
   @override
   State<CommentAddEditDialogWidget> createState() =>
@@ -194,25 +195,54 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
         ),
         actions: [
           TextButton(
-            onPressed: () {
-              // Logique de confirmation (sauvegarder les commentaires, etc.)
-              print('Titre: ${titleController.text}');
-              print('Commentaire: ${commentController.text}');
-              Navigator.of(context).pop();
-            },
             child: Text(
-              AppLocalizations.of(context)!.add,
+              widget.isAddMode
+                  ? AppLocalizations.of(context)!.add
+                  : AppLocalizations.of(context)!.update,
             ),
+            onPressed: () async {
+              if (widget.isAddMode) {
+                commentVMlistenFalse.addComment(
+                  comment: Comment(
+                    title: titleController.text,
+                    content: commentController.text,
+                    audioPositionSeconds: commentVMlistenFalse
+                        .currentCommentAudioPosition.inSeconds,
+                  ),
+                  commentedAudio: globalAudioPlayerVM.currentAudio!,
+                );
+              } else {
+                Comment commentToModify = widget.comment!;
+
+                commentToModify.title = titleController.text;
+                commentToModify.content = commentController.text;
+                commentToModify.audioPositionSeconds =
+                    commentVMlistenFalse.currentCommentAudioPosition.inSeconds;
+
+                commentVMlistenFalse.modifyComment(
+                  modifiedComment: commentToModify,
+                  commentedAudio: globalAudioPlayerVM.currentAudio!,
+                );
+              }
+
+              await _closeDialog(context);
+            },
           ),
           TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
             child: Text(AppLocalizations.of(context)!.cancelButton),
+            onPressed: () async => await _closeDialog(context),
           ),
         ],
       ),
     );
+  }
+
+  Future<void> _closeDialog(BuildContext context) async {
+    if (globalAudioPlayerVM.isPlaying) {
+      await globalAudioPlayerVM.pause();
+    }
+    
+    Navigator.of(context).pop();
   }
 
   Future<void> _playFromCommPosition({
