@@ -29,7 +29,7 @@ void main() async {
         clipboardDataTrimmed.endsWith('}')) {
       arbContent = clipboardData;
     } else {
-      arbContent = "{${clipboardData}}";
+      arbContent = "{$clipboardData}";
     }
   }
 
