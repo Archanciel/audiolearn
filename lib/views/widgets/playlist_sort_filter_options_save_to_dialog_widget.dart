@@ -31,21 +31,12 @@ class _PlaylistSortFilterOptionsSaveToDialogWidgetState
   bool _isAutomaticApplicationChecked = false;
 
   @override
-  void initState() {
-    super.initState();
-
-    // Add this line to request focus on the TextField after the build
-    // method has been called
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      // Required so that clicking on Enter closes the dialog
-      FocusScope.of(context).requestFocus(
-        _focusNodeDialog,
-      );
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    // Required so that clicking on Enter closes the dialog
+    FocusScope.of(context).requestFocus(
+      _focusNodeDialog,
+    );
+
     ThemeProviderVM themeProviderVM = Provider.of<ThemeProviderVM>(context);
     String viewNameTranslatedLabelStr = '';
 
