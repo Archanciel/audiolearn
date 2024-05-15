@@ -196,6 +196,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
         ),
         actions: [
           TextButton(
+            key: const Key('addOrUpdateCommentTextButton'),
             child: Text(
               widget.isAddMode
                   ? AppLocalizations.of(context)!.add
@@ -230,6 +231,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
             },
           ),
           TextButton(
+            key: const Key('cancelTextButton'),
             child: Text(AppLocalizations.of(context)!.cancelButton),
             onPressed: () async => await _closeDialog(context),
           ),
