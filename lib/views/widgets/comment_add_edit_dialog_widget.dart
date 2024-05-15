@@ -37,20 +37,25 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
   void initState() {
     super.initState();
 
-    CommentVM commentVMlistenFalse = Provider.of<CommentVM>(
-      context,
-      listen: false,
-    );
+    // Important to set the current comment audio position after the
+    // build method has been executed since the commentVM notifies
+    // listeners when the currentCommentAudioPosition is set.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      CommentVM commentVM = Provider.of<CommentVM>(
+        context,
+        listen: false,
+      );
 
-    if (widget.comment != null) {
-      titleController.text = widget.comment!.title;
-      commentController.text = widget.comment!.content;
-      commentVMlistenFalse.currentCommentAudioPosition =
-          Duration(seconds: widget.comment!.audioPositionSeconds);
-    } else {
-      commentVMlistenFalse.currentCommentAudioPosition =
-          globalAudioPlayerVM.currentAudioPosition;
-    }
+      if (widget.comment != null) {
+        titleController.text = widget.comment!.title;
+        commentController.text = widget.comment!.content;
+        commentVM.currentCommentAudioPosition =
+            Duration(seconds: widget.comment!.audioPositionSeconds);
+      } else {
+        commentVM.currentCommentAudioPosition =
+            globalAudioPlayerVM.currentAudioPosition;
+      }
+    });
   }
 
   @override
