@@ -33,20 +33,15 @@ class CommentListAddDialogWidget extends StatefulWidget {
 class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
     with ScreenMixin {
   final FocusNode _focusNodeDialog = FocusNode();
-  late List<Comment> _commentsLst;
+  late Audio _currentAudio;
 
   @override
   void initState() {
     super.initState();
 
-    CommentVM commentVM = Provider.of<CommentVM>(
-      context,
-      listen: false,
-    );
-    Audio currentAudio = globalAudioPlayerVM.currentAudio!;
-    _commentsLst = commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
-      commentedAudio: currentAudio,
-    );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _currentAudio = globalAudioPlayerVM.currentAudio!;
+    });
   }
 
   @override
@@ -114,52 +109,60 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
           ],
         ),
         actionsPadding: kDialogActionsPadding,
-        content: SingleChildScrollView(
-          child: ListBody(
-            children: <Widget>[
-              for (Comment comment in _commentsLst) ...[
-                GestureDetector(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 2),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: Text(
-                                comment.title,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
+        content: Consumer<CommentVM>(
+          builder: (context, commentVM, child) {
+            List<Comment> commentsLst =
+                commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
+              commentedAudio: _currentAudio,
+            );
+            return SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  for (Comment comment in commentsLst) ...[
+                    GestureDetector(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 2),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    comment.title,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ),
-                              ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 12),
+                            child: Text(
+                              comment.content,
+                            ),
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 12),
-                        child: Text(
-                          comment.content,
-                        ),
-                      ),
-                    ],
-                  ),
-                  onTap: () {
-                    showDialog<void>(
-                      context: context,
-                      // instanciating CommentAddEditDialogWidget with
-                      // passing a comment opens it in 'edit' mode
-                      builder: (context) => CommentAddEditDialogWidget(
-                        comment: comment,
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ],
-          ),
+                      onTap: () {
+                        showDialog<void>(
+                          context: context,
+                          // instanciating CommentAddEditDialogWidget with
+                          // passing a comment opens it in 'edit' mode
+                          builder: (context) => CommentAddEditDialogWidget(
+                            comment: comment,
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ],
+              ),
+            );
+          },
         ),
         actions: <Widget>[
           TextButton(
