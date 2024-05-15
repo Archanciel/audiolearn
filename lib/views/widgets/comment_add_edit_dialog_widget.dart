@@ -129,7 +129,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    globalAudioPlayerVM.currentAudio!.validVideoTitle,
+                    globalAudioPlayerVM.currentAudio?.validVideoTitle ?? '',
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
