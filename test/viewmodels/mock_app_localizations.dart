@@ -1,4 +1,3 @@
-
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// This mock class is necessary in order to define two getters
@@ -976,19 +975,23 @@ class MockAppLocalizations extends AppLocalizations {
       "If only the second checkbox is checked, the playback speed will not be modified for audios that will be downloaded later in existing playlists. However, as mentioned previously, new playlists will use the newly defined playback speed for all downloaded audios.";
 
   @override
-  String get alreadyDownloadedAudiosPlaylistHelpTitle => "Already Downloaded Audios";
+  String get alreadyDownloadedAudiosPlaylistHelpTitle =>
+      "Already Downloaded Audios";
 
   @override
-  String get alreadyDownloadedAudiosPlaylistHelpContent => "Selecting the checkbox allows you to change the playback speed for playlist audio files already present on the device.";
+  String get alreadyDownloadedAudiosPlaylistHelpContent =>
+      "Selecting the checkbox allows you to change the playback speed for playlist audio files already present on the device.";
 
   @override
-  String get commentsIconButtonTooltip => "Show or insert comments at specific points in the audio.";
+  String get commentsIconButtonTooltip =>
+      "Show or insert comments at specific points in the audio.";
 
   @override
   String get commentsDialogTitle => "Comment";
 
   @override
-  String get addPositionedCommentTooltip => "Add a comment at the current position in the audio.";
+  String get addPositionedCommentTooltip =>
+      "Add a comment at the current position in the audio.";
 
   @override
   String get commentTitle => "Title";
@@ -1001,4 +1004,13 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get update => "Update";
+
+  @override
+  String get deleteCommentConfirnTitle => "Delete comment";
+
+  @override
+  String deleteCommentConfirnBody(
+    Object title,
+  ) =>
+      "Deleting comment \"${title}\".";
 }

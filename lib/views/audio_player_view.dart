@@ -327,7 +327,12 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                   : () {
                       showDialog<void>(
                         context: context,
-                        builder: (context) => const CommentListAddDialogWidget(),
+                        // passing the current audio to the dialog instead
+                        // of initializing a private _currentAudio variable
+                        // in the dialog avoid integr test problems 
+                        builder: (context) => CommentListAddDialogWidget(
+                          currentAudio: globalAudioPlayerVM.currentAudio!,
+                        ),
                       );
                     },
             ),

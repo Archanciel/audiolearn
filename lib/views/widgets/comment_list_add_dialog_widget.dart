@@ -11,6 +11,7 @@ import '../../viewmodels/audio_player_vm.dart';
 import '../../viewmodels/comment_vm.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 import '../screen_mixin.dart';
+import 'action_confirm_dialog_widget.dart';
 import 'comment_add_edit_dialog_widget.dart';
 
 /// This widget displays a dialog with the list of positionned
@@ -22,8 +23,11 @@ import 'comment_add_edit_dialog_widget.dart';
 /// Additionally, a button 'plus' is displayed to add a new
 /// positionned comment.
 class CommentListAddDialogWidget extends StatefulWidget {
+  final Audio currentAudio;
+
   const CommentListAddDialogWidget({
     super.key,
+    required this.currentAudio,
   });
 
   @override
@@ -34,17 +38,7 @@ class CommentListAddDialogWidget extends StatefulWidget {
 class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
     with ScreenMixin {
   final FocusNode _focusNodeDialog = FocusNode();
-  late Audio _currentAudio;
   Comment? _playingComment;
-
-  @override
-  void initState() {
-    super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _currentAudio = globalAudioPlayerVM.currentAudio!;
-    });
-  }
 
   @override
   void dispose() {
@@ -120,7 +114,7 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
           builder: (context, commentVM, child) {
             List<Comment> commentsLst =
                 commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
-              commentedAudio: _currentAudio,
+              commentedAudio: widget.currentAudio,
             );
             return SingleChildScrollView(
               child: ListBody(
@@ -190,14 +184,8 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
                                     // delete comment icon button
                                     key: const Key('deleteCommentIconButton'),
                                     onPressed: () async {
-                                      commentVM.deleteComment(
-                                        commentId: comment.id,
-                                        commentedAudio: _currentAudio,
-                                      );
-
-                                      if (globalAudioPlayerVM.isPlaying) {
-                                        await globalAudioPlayerVM.pause();
-                                      }
+                                      await _confirmDeleteComment(
+                                          commentVM, comment);
                                     },
                                     icon: const Icon(
                                       Icons.clear,
@@ -254,6 +242,32 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
         ],
       ),
     );
+  }
+
+  Future<void> _confirmDeleteComment(
+    CommentVM commentVM,
+    Comment comment,
+  ) async {
+    showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return ActionConfirmDialogWidget(
+          actionFunction: commentVM.deleteCommentParmsNotNamed,
+          actionFunctionArgs: [
+            comment.id,
+            widget.currentAudio,
+          ],
+          dialogTitle: AppLocalizations.of(context)!
+              .deleteCommentConfirnTitle,
+          dialogContent: AppLocalizations.of(context)!
+              .deleteCommentConfirnBody(comment.title),
+        );
+      },
+    );
+
+    if (globalAudioPlayerVM.isPlaying) {
+      await globalAudioPlayerVM.pause();
+    }
   }
 
   Future<void> _playFromCommentPosition({
