@@ -2267,7 +2267,7 @@ void main() {
       expect(find.text('Comments'), findsOneWidget);
 
       // Now tap on the Add comment icon button to open the add
-      // comment dialog
+      // edit comment dialog
       await tester
           .tap(find.byKey(const Key('addPositionedCommentIconButtonKey')));
       await tester.pumpAndSettle();
@@ -2286,6 +2286,7 @@ void main() {
 
       // Check the font size of the TextField
       expect(textStyle.fontSize, 16);
+      
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
