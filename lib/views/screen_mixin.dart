@@ -287,7 +287,8 @@ mixin ScreenMixin {
       hintText: hintText,
       border: const OutlineInputBorder(),
       isDense: true,
-      contentPadding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 8.0),
+      contentPadding:
+          const EdgeInsets.symmetric(vertical: 2.0, horizontal: 8.0),
     );
   }
 
@@ -404,11 +405,15 @@ mixin ScreenMixin {
     required String label,
     required TextEditingController controller,
     FocusNode? textFieldFocusNode,
+    bool isCursorAtStart = true,
   }) {
-    // Set the cursor position at the start of the TextField
-    controller.value = controller.value.copyWith(
-      selection: const TextSelection.collapsed(offset: 0),
-    );
+    if (isCursorAtStart) {
+      // Set the cursor position at the start of the TextField,
+      // otherwise the cursor is at the end of the TextField.
+      controller.value = controller.value.copyWith(
+        selection: const TextSelection.collapsed(offset: 0),
+      );
+    }
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5.0),
       child: Row(
@@ -423,6 +428,7 @@ mixin ScreenMixin {
           Expanded(
             child: TextField(
               key: valueTextFieldWidgetKey,
+              style: kDialogTextFieldStyle,
               controller: controller,
               decoration: getDialogTextFieldInputDecoration(),
               focusNode: textFieldFocusNode,

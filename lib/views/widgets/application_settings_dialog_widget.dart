@@ -159,6 +159,7 @@ class _ApplicationSettingsDialogWidgetState
                 label: AppLocalizations.of(context)!.playlistRootpathLabel,
                 controller: _playlistRootpathTextEditingController,
                 textFieldFocusNode: _focusNodePlaylistRootPath,
+                isCursorAtStart: false,
               ),
             ],
           ),
