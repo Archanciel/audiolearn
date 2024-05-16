@@ -120,50 +120,56 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
       _audioPlaySpeed = globalAudioPlayerVM.currentAudio!.audioPlaySpeed;
     }
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        buildWarningMessageVMConsumer(
-          context: context,
-        ),
-
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            _buildSetAudioVolumeIconButton(
-              context: context,
-              areAudioButtonsEnabled: areAudioButtonsEnabled,
-            ),
-            const SizedBox(
-              width: kRowButtonGroupWidthSeparator,
-            ),
-            _buildSetAudioSpeedTextButton(
-              context: context,
-              areAudioButtonsEnabled: areAudioButtonsEnabled,
-            ),
-            _buildCommentsIconButton(
-              context: context,
-              areAudioButtonsEnabled: areAudioButtonsEnabled,
-            ),
-            _buildAudioPopupMenuButton(
-              context: context,
-              playlistListVMlistenFalse: playlistListVMlistenFalse,
-              warningMessageVMlistenFalse: Provider.of<WarningMessageVM>(
-                context,
-                listen: false,
+      children: [
+        Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              buildWarningMessageVMConsumer(
+                context: context,
               ),
-            ),
-          ],
-        ),
-        // const SizedBox(height: 10.0),
-        _buildPlayButton(),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            _buildStartEndButtonsWithTitle(),
-            _buildAudioSlider(),
-            _buildPositionButtons(),
-          ],
+          
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  _buildSetAudioVolumeIconButton(
+                    context: context,
+                    areAudioButtonsEnabled: areAudioButtonsEnabled,
+                  ),
+                  const SizedBox(
+                    width: kRowButtonGroupWidthSeparator,
+                  ),
+                  _buildSetAudioSpeedTextButton(
+                    context: context,
+                    areAudioButtonsEnabled: areAudioButtonsEnabled,
+                  ),
+                  _buildCommentsIconButton(
+                    context: context,
+                    areAudioButtonsEnabled: areAudioButtonsEnabled,
+                  ),
+                  _buildAudioPopupMenuButton(
+                    context: context,
+                    playlistListVMlistenFalse: playlistListVMlistenFalse,
+                    warningMessageVMlistenFalse: Provider.of<WarningMessageVM>(
+                      context,
+                      listen: false,
+                    ),
+                  ),
+                ],
+              ),
+              // const SizedBox(height: 10.0),
+              _buildPlayButton(),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  _buildStartEndButtonsWithTitle(),
+                  _buildAudioSlider(),
+                  _buildPositionButtons(),
+                ],
+              ),
+            ],
+          ),
         ),
       ],
     );
