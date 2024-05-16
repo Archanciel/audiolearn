@@ -29,8 +29,8 @@ class CommentAddEditDialogWidget extends StatefulWidget {
 
 class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
     with ScreenMixin {
-  final TextEditingController titleController = TextEditingController();
-  final TextEditingController commentController = TextEditingController();
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _commentController = TextEditingController();
   final FocusNode _focusNodeDialog = FocusNode();
   final FocusNode _focusNodeCommentTitle = FocusNode();
 
@@ -48,8 +48,8 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
       );
 
       if (widget.comment != null) {
-        titleController.text = widget.comment!.title;
-        commentController.text = widget.comment!.content;
+        _titleController.text = widget.comment!.title;
+        _commentController.text = widget.comment!.content;
         commentVM.currentCommentAudioPosition =
             Duration(seconds: widget.comment!.audioPositionSeconds);
       } else {
@@ -63,8 +63,8 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
   void dispose() {
     _focusNodeDialog.dispose();
     _focusNodeCommentTitle.dispose();
-    titleController.dispose();
-    commentController.dispose();
+    _titleController.dispose();
+    _commentController.dispose();
 
     super.dispose();
   }
@@ -105,7 +105,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                 height: kDialogTextFieldHeight,
                 child: TextField(
                   key: const Key('commentTitleTextField'),
-                  controller: titleController,
+                  controller: _titleController,
                   style: kDialogTextFieldStyle,
                   decoration: getDialogTextFieldInputDecoration(
                     hintText: AppLocalizations.of(context)!.commentTitle,
@@ -117,7 +117,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
               // Multiline TextField for Comments
               TextField(
                 key: const Key('commentContentTextField'),
-                controller: commentController,
+                controller: _commentController,
                 minLines: 2,
                 maxLines: 3,
                 decoration: getDialogTextFieldInputDecoration(
@@ -206,8 +206,8 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
               if (widget.isAddMode) {
                 commentVMlistenFalse.addComment(
                   comment: Comment(
-                    title: titleController.text,
-                    content: commentController.text,
+                    title: _titleController.text,
+                    content: _commentController.text,
                     audioPositionSeconds: commentVMlistenFalse
                         .currentCommentAudioPosition.inSeconds,
                   ),
@@ -216,8 +216,8 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
               } else {
                 Comment commentToModify = widget.comment!;
 
-                commentToModify.title = titleController.text;
-                commentToModify.content = commentController.text;
+                commentToModify.title = _titleController.text;
+                commentToModify.content = _commentController.text;
                 commentToModify.audioPositionSeconds =
                     commentVMlistenFalse.currentCommentAudioPosition.inSeconds;
 
