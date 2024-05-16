@@ -242,10 +242,10 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
 
   Future<void> _closeDialog(BuildContext context) async {
     if (globalAudioPlayerVM.isPlaying) {
-      await globalAudioPlayerVM.pause();
+      globalAudioPlayerVM.pause().then((value) => Navigator.of(context).pop());
+    } else {
+      Navigator.of(context).pop();
     }
-
-    Navigator.of(context).pop();
   }
 
   Future<void> _playFromCommentPosition({
