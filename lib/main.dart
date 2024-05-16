@@ -167,7 +167,7 @@ class MainApp extends StatelessWidget with ScreenMixin {
     // not necessary
     // globalAudioPlayerVM.setCurrentAudioFromSelectedPlaylist();
 
-    CommentVM commentVM = CommentVM(   );
+    CommentVM commentVM = CommentVM();
 
     return MultiProvider(
       providers: [
