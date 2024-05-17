@@ -343,6 +343,11 @@ class AudioPlayerVM extends ChangeNotifier {
         }
 
         _audioPlayerPlugin!.onPlayerComplete.listen((event) async {
+          // fixing the bug when the audio is at end the smartphone did
+          // not start the next playable audio. This happens on S20, but
+          // not on S8.
+          _currentAudioPosition = _currentAudioTotalDuration;
+
           // Play next audio when current audio finishes.
           await playNextAudio();
         });
@@ -723,14 +728,6 @@ class AudioPlayerVM extends ChangeNotifier {
     // audio. Must not be located after the if which can return
     // without saving the audio position. This would cause the
     // play icon's appearance to be wrong.
-
-    if (forceSave) {
-      // fixing the bug when the audio is at end the smartphone did
-      // not start the next playable audio. This happens on S20, but
-      // not on S8.
-      _currentAudioPosition = _currentAudioTotalDuration;
-    }
-
     _currentAudio!.audioPositionSeconds = _currentAudioPosition.inSeconds;
 
     DateTime now = DateTime.now();
@@ -744,9 +741,6 @@ class AudioPlayerVM extends ChangeNotifier {
         return;
       }
     }
-
-    // print(
-    //     'updateAndSaveCurrentAudio() at $_lastCurrentAudioSaveDateTime currentAudio!.audioPositionSeconds: ${_currentAudio!.audioPositionSeconds}');
 
     Playlist? currentAudioPlaylist = _currentAudio!.enclosingPlaylist;
     JsonDataService.saveToFile(
