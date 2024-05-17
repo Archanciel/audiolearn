@@ -235,15 +235,17 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
                   ).deleteAudioFromPlaylistAswell(audio: audio);
                   break;
                 case AudioPopupMenuAction.audioComment:
-                  showDialog<void>(
-                    context: context,
-                    // passing the current audio to the dialog instead
-                    // of initializing a private _currentAudio variable
-                    // in the dialog avoid integr test problems
-                    builder: (context) => CommentListAddDialogWidget(
-                      currentAudio: audio,
-                    ),
-                  );
+                  audioGlobalPlayerVM.setCurrentAudio(audio).then((value) {
+                    showDialog<void>(
+                      context: context,
+                      // passing the current audio to the dialog instead
+                      // of initializing a private _currentAudio variable
+                      // in the dialog avoid integr test problems
+                      builder: (context) => CommentListAddDialogWidget(
+                        currentAudio: audio,
+                      ),
+                    );
+                  });
                   break;
                 default:
                   break;
