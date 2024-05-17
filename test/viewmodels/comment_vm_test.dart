@@ -14,10 +14,6 @@ import 'package:audiolearn/viewmodels/comment_vm.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-
-  const String testSettingsDir =
-      '$kPlaylistDownloadRootPathWindowsTest\\audiolearn_test_settings';
-
   group('CommentVM test', () {
     test(
         'load or create comment file comment file not exist, then exist, but is empty',
