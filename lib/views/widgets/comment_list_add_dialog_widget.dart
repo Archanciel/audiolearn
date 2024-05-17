@@ -201,7 +201,11 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
                         ],
                       ),
                       onTap: () async {
-                        if (globalAudioPlayerVM.isPlaying) {
+                        if (globalAudioPlayerVM.isPlaying &&
+                            _playingComment != comment) {
+                          // if the user clicks on a comment while another
+                          // comment is playing, the playing comment is paused.
+                          // Otherwise, the edited comment keeps playing.
                           await globalAudioPlayerVM.pause();
                         }
 
