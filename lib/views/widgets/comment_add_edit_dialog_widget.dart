@@ -228,14 +228,14 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                 );
               }
 
-              await _closeDialogAndReOpenCommentListAddDialog(context);
+              _closeDialogAndReOpenCommentListAddDialog(context);
             },
           ),
           TextButton(
             key: const Key('cancelTextButton'),
             child: Text(AppLocalizations.of(context)!.cancelButton),
             onPressed: () async =>
-                await _closeDialogAndReOpenCommentListAddDialog(context),
+                _closeDialogAndReOpenCommentListAddDialog(context),
           ),
         ],
       ),
@@ -245,14 +245,10 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
   /// Since before opening the CommentAddEditDialogWidget its caller, the
   /// CommentListAddDialogWidget, was closed, the caller dialog must be
   /// re-opened in order to display the updated list of comments.
-  Future<void> _closeDialogAndReOpenCommentListAddDialog(
+  void _closeDialogAndReOpenCommentListAddDialog(
     BuildContext context,
-  ) async {
-    if (globalAudioPlayerVM.isPlaying) {
-      globalAudioPlayerVM.pause().then((value) => Navigator.of(context).pop());
-    } else {
-      Navigator.of(context).pop();
-    }
+  ) {
+    Navigator.of(context).pop();
 
     showDialog<void>(
       context: context,
@@ -263,6 +259,10 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
         currentAudio: globalAudioPlayerVM.currentAudio!,
       ),
     );
+
+    if (globalAudioPlayerVM.isPlaying) {
+      globalAudioPlayerVM.pause();
+    }
   }
 
   Future<void> _playFromCommentPosition({
