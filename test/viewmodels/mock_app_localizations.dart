@@ -1013,4 +1013,7 @@ class MockAppLocalizations extends AppLocalizations {
     Object title,
   ) =>
       "Deleting comment \"$title\".";
+
+  @override
+  String get commentMenu => "Audio comments ...";
 }

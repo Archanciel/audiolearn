@@ -334,5 +334,6 @@
   "commentDialogTitle": "Commentaire",
   "update": "Mettre à jour",
   "deleteCommentConfirnTitle": "Suppression de commentaire",
-  "deleteCommentConfirnBody": "Supptimer le commentaire \"{title}\"."
+  "deleteCommentConfirnBody": "Supptimer le commentaire \"{title}\".",
+  "commentMenu": "Commentaires audio ..."
 }
