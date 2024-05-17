@@ -614,13 +614,6 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      // calling getUpToDateSelectablePlaylists() loads all the
-      // playlist json files from the app dir and so enables
-      // expandablePlaylistListVM to know which playlists are
-      // selected and which are not
-      List<Playlist> selectablePlaylistLst =
-          playlistListVM.getUpToDateSelectablePlaylists();
-
       // Obtaining the audio from which to obtain the next playable
       // audio
       List<Audio> playableAudioLst = playlistListVM

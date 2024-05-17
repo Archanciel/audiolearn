@@ -41,7 +41,7 @@ const Duration pageTransitionDuration = Duration(milliseconds: 20);
 const Curve pageTransitionCurve = Curves.ease;
 
 class MyHomePage extends StatefulWidget {
-  SettingsDataService settingsDataService;
+  final SettingsDataService settingsDataService;
 
   MyHomePage({
     super.key,
