@@ -332,5 +332,6 @@
   "commentDialogTitle": "Comment",
   "update": "Update",
   "deleteCommentConfirnTitle": "Delete comment",
-  "deleteCommentConfirnBody": "Deleting comment \"{title}\"."
+  "deleteCommentConfirnBody": "Deleting comment \"{title}\".",
+  "commentMenu": "Audio comments ..."
 }

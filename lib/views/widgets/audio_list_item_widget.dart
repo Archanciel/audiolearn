@@ -15,6 +15,7 @@ import '../../constants.dart';
 import '../../viewmodels/warning_message_vm.dart';
 import '../screen_mixin.dart';
 import 'audio_info_dialog_widget.dart';
+import 'comment_list_add_dialog_widget.dart';
 import 'playlist_one_selectable_dialog_widget.dart';
 import 'audio_file_rename_dialog_widget.dart';
 
@@ -27,6 +28,7 @@ enum AudioPopupMenuAction {
   copyAudioToPlaylist,
   deleteAudio,
   deleteAudioFromPlaylistAswell,
+  audioComment,
 }
 
 /// This widget is used in the PlaylistDownloadView ListView which
@@ -88,6 +90,11 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
                 key: const Key('popup_menu_display_audio_info'),
                 value: AudioPopupMenuAction.displayAudioInfo,
                 child: Text(AppLocalizations.of(context)!.displayAudioInfo),
+              ),
+              PopupMenuItem<AudioPopupMenuAction>(
+                key: const Key('popup_menu_Audio_comment'),
+                value: AudioPopupMenuAction.audioComment,
+                child: Text(AppLocalizations.of(context)!.commentMenu),
               ),
               PopupMenuItem<AudioPopupMenuAction>(
                 key: const Key('popup_menu_rename_audio_file'),
@@ -226,6 +233,17 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
                     context,
                     listen: false,
                   ).deleteAudioFromPlaylistAswell(audio: audio);
+                  break;
+                case AudioPopupMenuAction.audioComment:
+                  showDialog<void>(
+                    context: context,
+                    // passing the current audio to the dialog instead
+                    // of initializing a private _currentAudio variable
+                    // in the dialog avoid integr test problems
+                    builder: (context) => CommentListAddDialogWidget(
+                      currentAudio: audio,
+                    ),
+                  );
                   break;
                 default:
                   break;

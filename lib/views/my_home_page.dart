@@ -140,6 +140,9 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
       AppBarApplicationRightPopupMenuWidget(themeProvider: themeProviderVM),
     ];
 
+    bool isKeyboardDisplayed =
+        (_currentIndex == 1 && MediaQuery.of(context).viewInsets.bottom != 0);
+
     return Scaffold(
       appBar: AppBar(
         title: _appBarTitleWidgetLst[_currentIndex],
@@ -150,12 +153,17 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
         actions: appBarApplicationActionLst,
       ),
       resizeToAvoidBottomInset: true,
-      body: Column(
-        children: [
-          _buildPageView(_screenWidgetLst[_currentIndex]),
-          _buildBottomScreenIconButtonRow(audioGlobalPlayerVM, themeProviderVM),
-        ],
-      ),
+      body: (_currentIndex == 1 && isKeyboardDisplayed)
+          // checking if keyboard is displayed is only valid on audio player
+          // view
+          ? const SizedBox()
+          : Column(
+              children: [
+                _buildPageView(_screenWidgetLst[_currentIndex]),
+                _buildBottomScreenIconButtonRow(
+                    audioGlobalPlayerVM, themeProviderVM),
+              ],
+            ),
     );
   }
 

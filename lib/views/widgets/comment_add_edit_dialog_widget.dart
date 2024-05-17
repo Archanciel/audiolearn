@@ -9,6 +9,7 @@ import '../../viewmodels/audio_player_vm.dart';
 import '../../viewmodels/comment_vm.dart';
 import '../../views/screen_mixin.dart';
 import '../../utils/duration_expansion.dart';
+import 'comment_list_add_dialog_widget.dart';
 
 /// This widget displays a dialog to add or edit a comment.
 /// The edit mode is activated when a comment is passed to the
@@ -227,25 +228,41 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                 );
               }
 
-              await _closeDialog(context);
+              await _closeDialogAndReOpenCommentListAddDialog(context);
             },
           ),
           TextButton(
             key: const Key('cancelTextButton'),
             child: Text(AppLocalizations.of(context)!.cancelButton),
-            onPressed: () async => await _closeDialog(context),
+            onPressed: () async =>
+                await _closeDialogAndReOpenCommentListAddDialog(context),
           ),
         ],
       ),
     );
   }
 
-  Future<void> _closeDialog(BuildContext context) async {
+  /// Since before opening the CommentAddEditDialogWidget its caller, the
+  /// CommentListAddDialogWidget, was closed, the caller dialog must be
+  /// re-opened in order to display the updated list of comments.
+  Future<void> _closeDialogAndReOpenCommentListAddDialog(
+    BuildContext context,
+  ) async {
     if (globalAudioPlayerVM.isPlaying) {
       globalAudioPlayerVM.pause().then((value) => Navigator.of(context).pop());
     } else {
       Navigator.of(context).pop();
     }
+
+    showDialog<void>(
+      context: context,
+      // passing the current audio to the dialog instead
+      // of initializing a private _currentAudio variable
+      // in the dialog avoid integr test problems
+      builder: (context) => CommentListAddDialogWidget(
+        currentAudio: globalAudioPlayerVM.currentAudio!,
+      ),
+    );
   }
 
   Future<void> _playFromCommentPosition({

@@ -15,6 +15,7 @@ import '../viewmodels/theme_provider_vm.dart';
 import 'screen_mixin.dart';
 import 'widgets/action_confirm_dialog_widget.dart';
 import 'widgets/audios_playable_list_dialog_widget.dart';
+import 'widgets/comment_add_edit_dialog_widget.dart';
 import 'widgets/playlist_sort_filter_options_save_to_dialog_widget.dart';
 import 'widgets/audio_set_speed_dialog_widget.dart';
 import 'widgets/audio_sort_filter_dialog_widget.dart';
@@ -129,7 +130,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
               buildWarningMessageVMConsumer(
                 context: context,
               ),
-          
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -331,14 +332,21 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
               onPressed: (!areAudioButtonsEnabled)
                   ? null // Disable the button if no audio selected
                   : () {
+                      // showDialog<void>(
+                      //   context: context,
+                      //   // passing the current audio to the dialog instead
+                      //   // of initializing a private _currentAudio variable
+                      //   // in the dialog avoid integr test problems
+                      //   builder: (context) => CommentListAddDialogWidget(
+                      //     currentAudio: globalAudioPlayerVM.currentAudio!,
+                      //   ),
+                      // );
                       showDialog<void>(
                         context: context,
-                        // passing the current audio to the dialog instead
-                        // of initializing a private _currentAudio variable
-                        // in the dialog avoid integr test problems 
-                        builder: (context) => CommentListAddDialogWidget(
-                          currentAudio: globalAudioPlayerVM.currentAudio!,
-                        ),
+                        // instanciating CommentAddEditDialogWidget without
+                        // passing a comment opens it in 'add' mode
+                        builder: (context) =>
+                            const CommentAddEditDialogWidget(),
                       );
                     },
             ),
@@ -579,7 +587,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
               child: IconButton(
                 key: const Key('audioPlayerViewSkipToEndButton'),
                 iconSize: _audioIconSizeMedium,
-                onPressed: () async => await globalAudioPlayerVM.skipToEndAndPlay(),
+                onPressed: () async =>
+                    await globalAudioPlayerVM.skipToEndAndPlay(),
                 icon: const Icon(Icons.skip_next),
               ),
             ),
@@ -667,8 +676,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                           child: IconButton(
                             key: const Key('audioPlayerViewRewind1mButton'),
                             iconSize: _audioIconSizeMedium,
-                            onPressed: () async =>
-                                await globalAudioPlayerVM.changeAudioPlayPosition(
+                            onPressed: () async => await globalAudioPlayerVM
+                                .changeAudioPlayPosition(
                               positiveOrNegativeDuration:
                                   const Duration(minutes: -1),
                             ),
@@ -679,8 +688,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                           child: IconButton(
                             key: const Key('audioPlayerViewRewind10sButton'),
                             iconSize: _audioIconSizeMedium,
-                            onPressed: () async =>
-                                await globalAudioPlayerVM.changeAudioPlayPosition(
+                            onPressed: () async => await globalAudioPlayerVM
+                                .changeAudioPlayPosition(
                               positiveOrNegativeDuration:
                                   const Duration(seconds: -10),
                             ),
@@ -691,8 +700,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                           child: IconButton(
                             key: const Key('audioPlayerViewForward10sButton'),
                             iconSize: _audioIconSizeMedium,
-                            onPressed: () async =>
-                                await globalAudioPlayerVM.changeAudioPlayPosition(
+                            onPressed: () async => await globalAudioPlayerVM
+                                .changeAudioPlayPosition(
                               positiveOrNegativeDuration:
                                   const Duration(seconds: 10),
                             ),
@@ -703,8 +712,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                           child: IconButton(
                             key: const Key('audioPlayerViewForward1mButton'),
                             iconSize: _audioIconSizeMedium,
-                            onPressed: () async =>
-                                await globalAudioPlayerVM.changeAudioPlayPosition(
+                            onPressed: () async => await globalAudioPlayerVM
+                                .changeAudioPlayPosition(
                               positiveOrNegativeDuration:
                                   const Duration(minutes: 1),
                             ),
