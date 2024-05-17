@@ -149,6 +149,7 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
             settingsDataService: widget.settingsDataService),
         actions: appBarApplicationActionLst,
       ),
+      resizeToAvoidBottomInset: true,
       body: Column(
         children: [
           _buildPageView(_screenWidgetLst[_currentIndex]),
