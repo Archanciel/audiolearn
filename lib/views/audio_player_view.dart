@@ -332,21 +332,14 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
               onPressed: (!areAudioButtonsEnabled)
                   ? null // Disable the button if no audio selected
                   : () {
-                      // showDialog<void>(
-                      //   context: context,
-                      //   // passing the current audio to the dialog instead
-                      //   // of initializing a private _currentAudio variable
-                      //   // in the dialog avoid integr test problems
-                      //   builder: (context) => CommentListAddDialogWidget(
-                      //     currentAudio: globalAudioPlayerVM.currentAudio!,
-                      //   ),
-                      // );
                       showDialog<void>(
                         context: context,
-                        // instanciating CommentAddEditDialogWidget without
-                        // passing a comment opens it in 'add' mode
-                        builder: (context) =>
-                            const CommentAddEditDialogWidget(),
+                        // passing the current audio to the dialog instead
+                        // of initializing a private _currentAudio variable
+                        // in the dialog avoid integr test problems
+                        builder: (context) => CommentListAddDialogWidget(
+                          currentAudio: globalAudioPlayerVM.currentAudio!,
+                        ),
                       );
                     },
             ),
