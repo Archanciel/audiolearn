@@ -98,12 +98,7 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
                   ),
                 ),
                 onPressed: () {
-                  showDialog<void>(
-                    context: context,
-                    // instanciating CommentAddEditDialogWidget without
-                    // passing a comment opens it in 'add' mode
-                    builder: (context) => const CommentAddEditDialogWidget(),
-                  );
+                  _closeDialogAndOpenCommentAddEditDialog(context: context);
                 },
               ),
             ),
@@ -210,13 +205,9 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
                           await globalAudioPlayerVM.pause();
                         }
 
-                        showDialog<void>(
+                        _closeDialogAndOpenCommentAddEditDialog(
                           context: context,
-                          // instanciating CommentAddEditDialogWidget with
-                          // passing a comment opens it in 'edit' mode
-                          builder: (context) => CommentAddEditDialogWidget(
-                            comment: comment,
-                          ),
+                          comment: comment,
                         );
                       },
                     ),
@@ -244,6 +235,24 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
     );
   }
 
+  /// In order to avoid keyboard opening and closing continuously after
+  /// opening the CommentAddEditDialogWidget, the current dialog must be
+  /// closed before opening the CommentAddEditDialogWidget.
+  void _closeDialogAndOpenCommentAddEditDialog({
+    required BuildContext context,
+    Comment? comment,
+  }) {
+    Navigator.of(context).pop();
+    showDialog<void>(
+      context: context,
+      // instanciating CommentAddEditDialogWidget without
+      // passing a comment opens it in 'add' mode
+      builder: (context) => CommentAddEditDialogWidget(
+        comment: comment,
+      ),
+    );
+  }
+
   Future<void> _confirmDeleteComment(
     CommentVM commentVM,
     Comment comment,
@@ -257,8 +266,7 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
             comment.id,
             widget.currentAudio,
           ],
-          dialogTitle: AppLocalizations.of(context)!
-              .deleteCommentConfirnTitle,
+          dialogTitle: AppLocalizations.of(context)!.deleteCommentConfirnTitle,
           dialogContent: AppLocalizations.of(context)!
               .deleteCommentConfirnBody(comment.title),
         );
