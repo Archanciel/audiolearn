@@ -102,13 +102,13 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
 
   @override
   Widget build(BuildContext context) {
-    final PlaylistListVM playlistListVMlistenFalse =
+    PlaylistListVM playlistListVMlistenFalse =
         Provider.of<PlaylistListVM>(
       context,
       listen: false,
     );
 
-    final bool areAudioButtonsEnabled =
+    bool areAudioButtonsEnabled =
         playlistListVMlistenFalse.areButtonsApplicableToAudioEnabled;
 
     if (globalAudioPlayerVM.currentAudio == null) {
