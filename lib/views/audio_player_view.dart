@@ -173,23 +173,17 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     final bool isKeyboardVisible =
         MediaQuery.of(context).viewInsets.bottom != 0;
 
-    if (isKeyboardVisible) {
-      return Column(
-        children: [
-          SingleChildScrollView(
-            child: viewContent,
-          ),
-        ],
-      );
-    } else {
-      return Column(
-        children: [
-          Expanded(
-            child: viewContent,
-          ),
-        ],
-      );
-    }
+    return Column(
+      children: [
+        isKeyboardVisible
+            ? SingleChildScrollView(
+                child: viewContent,
+              )
+            : Expanded(
+                child: viewContent,
+              )
+      ],
+    );
   }
 
   Widget _buildSetAudioVolumeIconButton({
