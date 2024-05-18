@@ -102,11 +102,6 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
 
   @override
   Widget build(BuildContext context) {
-    // AudioPlayerVM globalAudioPlayerVM = Provider.of<AudioPlayerVM>(
-    //   context,
-    //   listen: false,
-    // );
-
     PlaylistListVM playlistListVMlistenFalse = Provider.of<PlaylistListVM>(
       context,
       listen: false,
