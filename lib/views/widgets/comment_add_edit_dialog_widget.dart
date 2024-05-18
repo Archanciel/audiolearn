@@ -243,11 +243,16 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
   }
 
   /// Since before opening the CommentAddEditDialogWidget its caller, the
-  /// CommentListAddDialogWidget, was closed, the caller dialog must be
+  /// CommentListAddDialogWidget, was closed, this caller dialog must be
   /// re-opened in order to display the updated list of comments.
   void _closeDialogAndReOpenCommentListAddDialog(
     BuildContext context,
   ) {
+    // Closing first the current CommentAddEditDialogWidget dialog (... pop())
+    // and then opening the CommentListAddDialogWidget dialog before pausing
+    // the audio without using await on pause method avoids that if the audio
+    // is playing when we close the CommentAddEditDialogWidget, the
+    // CommentAddEditDialogWidget is re-opened !
     Navigator.of(context).pop();
 
     showDialog<void>(
