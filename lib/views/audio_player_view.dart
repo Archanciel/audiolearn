@@ -1,6 +1,5 @@
 import 'package:audiolearn/views/widgets/comment_list_add_dialog_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -41,13 +40,15 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
   @override
   initState() {
     super.initState();
+
+    // Used in relation of audioplayers
     WidgetsBinding.instance.addObserver(this);
-    // writeToLogFile(message: '_AudioPlayerViewState.initState() AudioPlayerView opened');
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+
     super.dispose();
   }
 
@@ -93,7 +94,6 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
         //                         integr test to be ok even if the
         //                         test app is not the active Windows
         //                         app.
-
         break;
       default:
         break;
@@ -102,12 +102,13 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
 
   @override
   Widget build(BuildContext context) {
-    PlaylistListVM playlistListVMlistenFalse = Provider.of<PlaylistListVM>(
+    final PlaylistListVM playlistListVMlistenFalse =
+        Provider.of<PlaylistListVM>(
       context,
       listen: false,
     );
 
-    bool areAudioButtonsEnabled =
+    final bool areAudioButtonsEnabled =
         playlistListVMlistenFalse.areButtonsApplicableToAudioEnabled;
 
     if (globalAudioPlayerVM.currentAudio == null) {
