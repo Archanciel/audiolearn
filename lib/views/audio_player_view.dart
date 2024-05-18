@@ -120,60 +120,76 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     } else {
       _audioPlaySpeed = globalAudioPlayerVM.currentAudio!.audioPlaySpeed;
     }
-    return Column(
-      children: [
-        SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              buildWarningMessageVMConsumer(
-                context: context,
-              ),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  _buildSetAudioVolumeIconButton(
-                    context: context,
-                    areAudioButtonsEnabled: areAudioButtonsEnabled,
-                  ),
-                  const SizedBox(
-                    width: kRowButtonGroupWidthSeparator,
-                  ),
-                  _buildSetAudioSpeedTextButton(
-                    context: context,
-                    areAudioButtonsEnabled: areAudioButtonsEnabled,
-                  ),
-                  _buildCommentsIconButton(
-                    context: context,
-                    areAudioButtonsEnabled: areAudioButtonsEnabled,
-                  ),
-                  _buildAudioPopupMenuButton(
-                    context: context,
-                    playlistListVMlistenFalse: playlistListVMlistenFalse,
-                    warningMessageVMlistenFalse: Provider.of<WarningMessageVM>(
-                      context,
-                      listen: false,
-                    ),
-                  ),
-                ],
+    Widget viewContent = Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        buildWarningMessageVMConsumer(
+          context: context,
+        ),
+
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            _buildSetAudioVolumeIconButton(
+              context: context,
+              areAudioButtonsEnabled: areAudioButtonsEnabled,
+            ),
+            const SizedBox(
+              width: kRowButtonGroupWidthSeparator,
+            ),
+            _buildSetAudioSpeedTextButton(
+              context: context,
+              areAudioButtonsEnabled: areAudioButtonsEnabled,
+            ),
+            _buildCommentsIconButton(
+              context: context,
+              areAudioButtonsEnabled: areAudioButtonsEnabled,
+            ),
+            _buildAudioPopupMenuButton(
+              context: context,
+              playlistListVMlistenFalse: playlistListVMlistenFalse,
+              warningMessageVMlistenFalse: Provider.of<WarningMessageVM>(
+                context,
+                listen: false,
               ),
-              // const SizedBox(height: 10.0),
-              _buildPlayButton(),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  _buildStartEndButtonsWithTitle(),
-                  _buildAudioSlider(),
-                  _buildPositionButtons(),
-                ],
-              ),
-            ],
-          ),
+            ),
+          ],
+        ),
+        // const SizedBox(height: 10.0),
+        _buildPlayButton(),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            _buildStartEndButtonsWithTitle(),
+            _buildAudioSlider(),
+            _buildPositionButtons(),
+          ],
         ),
       ],
     );
+
+    final bool isKeyboardVisible =
+        MediaQuery.of(context).viewInsets.bottom != 0;
+
+    if (isKeyboardVisible) {
+      return Column(
+        children: [
+          SingleChildScrollView(
+            child: viewContent,
+          ),
+        ],
+      );
+    } else {
+      return Column(
+        children: [
+          Expanded(
+            child: viewContent,
+          ),
+        ],
+      );
+    }
   }
 
   Widget _buildSetAudioVolumeIconButton({
