@@ -46,7 +46,10 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     // null due to the app's state being reset (like during hot restarts),
     // the AudioPlayerView still have a reference to the last known audio
     // object.
-    _currentAudioForHotRestart = globalAudioPlayerVM.currentAudio!;
+    if (globalAudioPlayerVM.currentAudio != null) {
+      _currentAudioForHotRestart = globalAudioPlayerVM.currentAudio!;
+    }
+
     // Used in relation of audioplayers
     WidgetsBinding.instance.addObserver(this);
   }
@@ -108,8 +111,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
 
   @override
   Widget build(BuildContext context) {
-    PlaylistListVM playlistListVMlistenFalse =
-        Provider.of<PlaylistListVM>(
+    PlaylistListVM playlistListVMlistenFalse = Provider.of<PlaylistListVM>(
       context,
       listen: false,
     );
@@ -350,7 +352,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                         // of initializing a private _currentAudio variable
                         // in the dialog avoid integr test problems
                         builder: (context) => CommentListAddDialogWidget(
-                          currentAudio: globalAudioPlayerVM.currentAudio ?? _currentAudioForHotRestart,
+                          currentAudio: globalAudioPlayerVM.currentAudio ??
+                              _currentAudioForHotRestart,
                         ),
                       );
                     },
