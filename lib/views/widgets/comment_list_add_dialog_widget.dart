@@ -180,6 +180,7 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
@@ -195,67 +196,77 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
                 ),
               ),
             ),
-            SizedBox(
-              width: kSmallIconButtonWidth,
-              child: IconButton(
-                // Play/Pause icon button
-                onPressed: () async {
-                  // this logic enables that when we
-                  // click on the play button of a comment,
-                  // if an other comment is playing, it is
-                  // paused
-                  (_playingComment != null &&
-                          _playingComment == comment &&
-                          globalAudioPlayerVM.isPlaying)
-                      ? await globalAudioPlayerVM.pause()
-                      : await _playFromCommentPosition(
-                          comment: comment,
-                        );
-                },
-                icon: Consumer<AudioPlayerVM>(
-                  builder: (context, globalAudioPlayerVM, child) {
-                    // this logic avoids that when the
-                    // user clicks on the play button of a
-                    // comment, the play button of the
-                    // other comment are updated to 'pause'
-                    return Icon((_playingComment != null &&
-                            _playingComment == comment &&
-                            globalAudioPlayerVM.isPlaying)
-                        ? Icons.pause
-                        : Icons.play_arrow);
-                  },
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  width: kSmallestButtonWidth,
+                  child: IconButton(
+                    // Play/Pause icon button
+                    onPressed: () async {
+                      // this logic enables that when we
+                      // click on the play button of a comment,
+                      // if an other comment is playing, it is
+                      // paused
+                      (_playingComment != null &&
+                              _playingComment == comment &&
+                              globalAudioPlayerVM.isPlaying)
+                          ? await globalAudioPlayerVM.pause()
+                          : await _playFromCommentPosition(
+                              comment: comment,
+                            );
+                    },
+                    icon: Consumer<AudioPlayerVM>(
+                      builder: (context, globalAudioPlayerVM, child) {
+                        // this logic avoids that when the
+                        // user clicks on the play button of a
+                        // comment, the play button of the
+                        // other comment are updated to 'pause'
+                        return Icon((_playingComment != null &&
+                                _playingComment == comment &&
+                                globalAudioPlayerVM.isPlaying)
+                            ? Icons.pause
+                            : Icons.play_arrow);
+                      },
+                    ),
+                    iconSize: kSmallestButtonWidth,
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(), // Ensure the button
+                    //                                      takes minimal space
+                  ),
                 ),
-                iconSize: kSmallestButtonWidth,
-                padding: EdgeInsets.zero,
-                constraints: const BoxConstraints(), // Ensure the button
-                //                                      takes minimal space
-              ),
-            ),
-            SizedBox(
-              width: kSmallestButtonWidth,
-              child: IconButton(
-                // delete comment icon button
-                key: const Key('deleteCommentIconButton'),
-                onPressed: () async {
-                  await _confirmDeleteComment(commentVM, comment);
-                },
-                icon: const Icon(
-                  Icons.clear,
+                SizedBox(
+                  width: kSmallestButtonWidth,
+                  child: IconButton(
+                    // delete comment icon button
+                    key: const Key('deleteCommentIconButton'),
+                    onPressed: () async {
+                      await _confirmDeleteComment(commentVM, comment);
+                    },
+                    icon: const Icon(
+                      Icons.clear,
+                    ),
+                    iconSize: kSmallestButtonWidth - 5,
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(), // Ensure the button
+                    //                                      takes minimal space
+                  ),
                 ),
-                iconSize: kSmallestButtonWidth - 5,
-                padding: EdgeInsets.zero,
-                constraints: const BoxConstraints(), // Ensure the button
-                //                                      takes minimal space
-              ),
+              ],
             ),
           ],
         ),
-        Text(
-          // comment position Text
-          key: const Key('commentPositionKey'),
-          style: TextStyle(fontSize: 13),
-          Duration(seconds: comment.audioPositionSeconds).HHmmssZeroHH(),
-          
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(
+              // comment position Text
+              key: const Key('commentPositionKey'),
+              style: TextStyle(fontSize: 13),
+              Duration(seconds: comment.audioPositionSeconds).HHmmssZeroHH(),
+            ),
+            const SizedBox(width: 11),
+          ],
         ),
       ],
     );
