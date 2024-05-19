@@ -175,7 +175,10 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
   }
 
   Widget _buildCommentTitlePlusIconsAndPosition(
-      double maxDropdownWidth, Comment comment, CommentVM commentVM) {
+    double maxDropdownWidth,
+    Comment comment,
+    CommentVM commentVM,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
