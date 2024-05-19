@@ -1,3 +1,4 @@
+import 'package:audiolearn/utils/duration_expansion.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -121,78 +122,12 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(bottom: 2),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: SizedBox(
-                                    width: maxDropdownWidth,
-                                    child: Text(
-                                      key: const Key('commentTitleKey'),
-                                      comment.title,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: kSmallIconButtonWidth,
-                                  child: IconButton(
-                                    // Play/Pause icon button
-                                    onPressed: () async {
-                                      // this logic enables that when we
-                                      // click on the play button of a comment,
-                                      // if an other comment is playing, it is
-                                      // paused
-                                      (_playingComment != null &&
-                                              _playingComment == comment &&
-                                              globalAudioPlayerVM.isPlaying)
-                                          ? await globalAudioPlayerVM.pause()
-                                          : await _playFromCommentPosition(
-                                              comment: comment,
-                                            );
-                                    },
-                                    icon: Consumer<AudioPlayerVM>(
-                                      builder: (context, globalAudioPlayerVM,
-                                          child) {
-                                        // this logic avoids that when the
-                                        // user clicks on the play button of a
-                                        // comment, the play button of the
-                                        // other comment are updated to 'pause'
-                                        return Icon((_playingComment != null &&
-                                                _playingComment == comment &&
-                                                globalAudioPlayerVM.isPlaying)
-                                            ? Icons.pause
-                                            : Icons.play_arrow);
-                                      },
-                                    ),
-                                    iconSize: kSmallestButtonWidth,
-                                    constraints:
-                                        const BoxConstraints(), // Ensure the button
-                                    //                         takes minimal space
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: kSmallestButtonWidth,
-                                  child: IconButton(
-                                    // delete comment icon button
-                                    key: const Key('deleteCommentIconButton'),
-                                    onPressed: () async {
-                                      await _confirmDeleteComment(
-                                          commentVM, comment);
-                                    },
-                                    icon: const Icon(
-                                      Icons.clear,
-                                    ),
-                                    iconSize: kSmallestButtonWidth - 5,
-                                  ),
-                                ),
-                              ],
-                            ),
+                            child: _buildCommentTitlePlusIconsAndPosition(
+                                maxDropdownWidth, comment, commentVM),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(bottom: 12),
+                            // comment content Text
                             child: Text(
                               key: const Key('commentTextKey'),
                               comment.content,
@@ -236,6 +171,88 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildCommentTitlePlusIconsAndPosition(
+      double maxDropdownWidth, Comment comment, CommentVM commentVM) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: SizedBox(
+                width: maxDropdownWidth,
+                // comment title Text
+                child: Text(
+                  key: const Key('commentTitleKey'),
+                  comment.title,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: kSmallIconButtonWidth,
+              child: IconButton(
+                // Play/Pause icon button
+                onPressed: () async {
+                  // this logic enables that when we
+                  // click on the play button of a comment,
+                  // if an other comment is playing, it is
+                  // paused
+                  (_playingComment != null &&
+                          _playingComment == comment &&
+                          globalAudioPlayerVM.isPlaying)
+                      ? await globalAudioPlayerVM.pause()
+                      : await _playFromCommentPosition(
+                          comment: comment,
+                        );
+                },
+                icon: Consumer<AudioPlayerVM>(
+                  builder: (context, globalAudioPlayerVM, child) {
+                    // this logic avoids that when the
+                    // user clicks on the play button of a
+                    // comment, the play button of the
+                    // other comment are updated to 'pause'
+                    return Icon((_playingComment != null &&
+                            _playingComment == comment &&
+                            globalAudioPlayerVM.isPlaying)
+                        ? Icons.pause
+                        : Icons.play_arrow);
+                  },
+                ),
+                iconSize: kSmallestButtonWidth,
+                constraints: const BoxConstraints(), // Ensure the button
+                //                         takes minimal space
+              ),
+            ),
+            SizedBox(
+              width: kSmallestButtonWidth,
+              child: IconButton(
+                // delete comment icon button
+                key: const Key('deleteCommentIconButton'),
+                onPressed: () async {
+                  await _confirmDeleteComment(commentVM, comment);
+                },
+                icon: const Icon(
+                  Icons.clear,
+                ),
+                iconSize: kSmallestButtonWidth - 5,
+              ),
+            ),
+          ],
+        ),
+        Text(
+          // comment position Text
+          key: const Key('commentPositionKey'),
+          style: TextStyle(fontSize: 13),
+          Duration(seconds: comment.audioPositionSeconds).HHmmssZeroHH(),
+        ),
+      ],
     );
   }
 
