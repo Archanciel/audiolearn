@@ -382,7 +382,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
     AudioPlayerVM audioGlobalPlayerVM,
     Audio audio,
   ) {
-    Widget iconContent;
+    CircleAvatar circleAvatar;
 
     if (audio.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd) {
       // if (audio.audioPositionSeconds > 0 &&
@@ -406,19 +406,23 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
         playOrPauseIcon = const Icon(Icons.pause);
       }
 
-      iconContent = formatIconBackAnfForGroundColor(
+      circleAvatar = formatIconBackAndForGroundColor(
         context: context,
         iconToFormat: playOrPauseIcon,
-        isIconHighlighted: true,
+        isIconHighlighted: true, // since audio is playing or paused
+        //                          at a certain position the icon
+        //                          is highlighted
       );
     } else {
       // the audio is not playing or paused at a certain position
       // (i.e. its position is zero or its position is at the end
       // of the audio file)
-      iconContent = formatIconBackAnfForGroundColor(
+      circleAvatar = formatIconBackAndForGroundColor(
         context: context,
         iconToFormat: const Icon(Icons.play_arrow),
-        isIconHighlighted: false,
+        isIconHighlighted: false, // since audio at position zero
+        //                           or end, the icon is not 
+        //                           highlighted
       );
     }
 
@@ -443,7 +447,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
       },
       child: SizedBox(
         width: 45, // Adjust this width based on the size of your largest icon
-        child: Center(child: iconContent),
+        child: Center(child: circleAvatar),
       ),
     );
   }

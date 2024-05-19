@@ -493,29 +493,31 @@ mixin ScreenMixin {
   double computeMaxDialogListItemWidth(BuildContext context) {
     // Retrieve the screen width using MediaQuery
     double screenWidth = MediaQuery.of(context).size.width;
-    
+
     // Set a reasonable proportion of the screen width for the dropdown items
     double maxDropdownWidth = screenWidth * 0.57;
-    
+
     return maxDropdownWidth;
   }
 
-  Widget formatIconBackAnfForGroundColor({
+  CircleAvatar formatIconBackAndForGroundColor({
     required BuildContext context,
     required Icon iconToFormat,
     required bool isIconHighlighted,
+    double iconSize = 18.0,
+    double radius = 10.0,
   }) {
-    Widget iconContent; // This will hold the content of the play button
+    CircleAvatar circleAvatar; // This will hold the content of the play button
 
     if (isIconHighlighted) {
-      iconContent = CircleAvatar(
+      circleAvatar = CircleAvatar(
         backgroundColor:
             kDarkAndLightEnabledIconColor, // background color of the circle
-        radius: 10,
+        radius: radius,
         child: Icon(
           iconToFormat.icon,
           color: Colors.white, // icon color
-          size: 18, // icon size
+          size: iconSize, // icon size
         ),
       );
     } else {
@@ -530,17 +532,17 @@ mixin ScreenMixin {
         backgroundColor = Colors.white;
       }
 
-      iconContent = CircleAvatar(
+      circleAvatar = CircleAvatar(
         backgroundColor: backgroundColor, // background color of the circle
         radius: 12, // you can adjust the size
-        child: const Icon(
-          Icons.play_arrow,
+        child: Icon(
+          iconToFormat.icon,
           color: kDarkAndLightEnabledIconColor, // icon color
           size: 24, // icon size
         ),
       );
     }
 
-    return iconContent;
+    return circleAvatar;
   }
 }
