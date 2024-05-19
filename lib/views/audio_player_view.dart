@@ -35,21 +35,11 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
   final double _audioIconSizeMedium = 40;
   final double _audioIconSizeLarge = 80;
   late double _audioPlaySpeed;
-
-  late Audio _currentAudioForHotRestart;
   // final bool _wasSortFilterAudioSettingsApplied = false;
 
   @override
   initState() {
     super.initState();
-
-    // This ensures that if the globalAudioPlayerVM.currentAudio becomes
-    // null due to the app's state being reset (like during hot restarts),
-    // the AudioPlayerView still have a reference to the last known audio
-    // object.
-    if (globalAudioPlayerVM.currentAudio != null) {
-      _currentAudioForHotRestart = globalAudioPlayerVM.currentAudio!;
-    }
 
     // Used in relation of audioplayers
     WidgetsBinding.instance.addObserver(this);
@@ -336,7 +326,11 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
   }) {
     return Consumer3<ThemeProviderVM, AudioPlayerVM, CommentVM>(
       builder: (context, themeProviderVM, audioPlayerVM, commentVM, child) {
-        Audio? currentAudio = audioPlayerVM.currentAudio;
+        Audio? currentAudio;
+
+        if (areAudioButtonsEnabled) {
+          currentAudio = audioPlayerVM.currentAudio;
+        }
 
         return Tooltip(
           message: AppLocalizations.of(context)!.commentsIconButtonTooltip,
@@ -345,7 +339,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
             child: IconButton(
               key: const Key('commentsIconButton'),
               icon: Icon(Icons.bookmark_outline_outlined,
-                  color: (currentAudio != null &&
+                  color: (areAudioButtonsEnabled &&
+                          currentAudio != null &&
                           commentVM
                               .loadExistingCommentFileOrCreateEmptyCommentFile(
                                   commentedAudio: currentAudio)
@@ -362,8 +357,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                         // of initializing a private _currentAudio variable
                         // in the dialog avoid integr test problems
                         builder: (context) => CommentListAddDialogWidget(
-                          currentAudio: audioPlayerVM.currentAudio ??
-                              _currentAudioForHotRestart,
+                          currentAudio: audioPlayerVM.currentAudio!,
                         ),
                       );
                     },
