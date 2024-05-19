@@ -9,6 +9,7 @@ import '../services/sort_filter_parameters.dart';
 import '../services/settings_data_service.dart';
 import '../utils/duration_expansion.dart';
 import '../viewmodels/audio_player_vm.dart';
+import '../viewmodels/comment_vm.dart';
 import '../viewmodels/playlist_list_vm.dart';
 import '../viewmodels/warning_message_vm.dart';
 import '../viewmodels/theme_provider_vm.dart';
@@ -333,16 +334,25 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     required BuildContext context,
     required bool areAudioButtonsEnabled,
   }) {
-    return Consumer<ThemeProviderVM>(
-      builder: (context, themeProviderVM, child) {
+    return Consumer3<ThemeProviderVM, AudioPlayerVM, CommentVM>(
+      builder: (context, themeProviderVM, audioPlayerVM, commentVM, child) {
+        Audio? currentAudio = audioPlayerVM.currentAudio;
+
         return Tooltip(
           message: AppLocalizations.of(context)!.commentsIconButtonTooltip,
           child: SizedBox(
             width: kSmallButtonWidth,
             child: IconButton(
               key: const Key('commentsIconButton'),
-              icon: const Icon(Icons.bookmark_outline_outlined),
-              iconSize: kUpDownButtonSize - 15,
+              icon: Icon(Icons.bookmark_outline_outlined,
+                  color: (currentAudio != null &&
+                          commentVM
+                              .loadExistingCommentFileOrCreateEmptyCommentFile(
+                                  commentedAudio: currentAudio)
+                              .isNotEmpty)
+                      ? kDarkAndLightEnabledIconColor
+                      : kDarkAndLightDisabledIconColor),
+              iconSize: kUpDownButtonSize - 21,
               onPressed: (!areAudioButtonsEnabled)
                   ? null // Disable the button if no audio selected
                   : () {
@@ -352,7 +362,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                         // of initializing a private _currentAudio variable
                         // in the dialog avoid integr test problems
                         builder: (context) => CommentListAddDialogWidget(
-                          currentAudio: globalAudioPlayerVM.currentAudio ??
+                          currentAudio: audioPlayerVM.currentAudio ??
                               _currentAudioForHotRestart,
                         ),
                       );
