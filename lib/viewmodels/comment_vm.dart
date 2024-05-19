@@ -73,13 +73,27 @@ class CommentVM extends ChangeNotifier {
     String commentFilePathName =
         "$playListDir${path.separator}$kCommentDirName${path.separator}${_createCommentFileName(commentedAudio.audioFileName)}";
 
-    JsonDataService.saveListToFile(
-      data: commentLst,
-      jsonPathFileName: commentFilePathName,
+    sortAndSaveCommentLst(
+      commentLst:  commentLst,
+      commentFilePathName:  commentFilePathName,
     );
 
     // Add comment to the database
     notifyListeners();
+  }
+
+  void sortAndSaveCommentLst({
+    required List<Comment> commentLst,
+    required String commentFilePathName,
+  }) {
+    commentLst.sort(
+      (a, b) => a.audioPositionSeconds.compareTo(b.audioPositionSeconds),
+    );
+
+    JsonDataService.saveListToFile(
+      data: commentLst,
+      jsonPathFileName: commentFilePathName,
+    );
   }
 
   /// this method is uniquely used as a parameter for the application confirm
@@ -145,9 +159,9 @@ class CommentVM extends ChangeNotifier {
     String commentFilePathName =
         "$playListDir${path.separator}$kCommentDirName${path.separator}${_createCommentFileName(commentedAudio.audioFileName)}";
 
-    JsonDataService.saveListToFile(
-      data: commentLst,
-      jsonPathFileName: commentFilePathName,
+    sortAndSaveCommentLst(
+      commentLst:  commentLst,
+      commentFilePathName:  commentFilePathName,
     );
 
     notifyListeners();

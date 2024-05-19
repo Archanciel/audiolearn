@@ -32,7 +32,6 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
     with ScreenMixin {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _commentController = TextEditingController();
-  final FocusNode _focusNodeDialog = FocusNode();
   final FocusNode _focusNodeCommentTitle = FocusNode();
 
   @override
@@ -62,7 +61,6 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
 
   @override
   void dispose() {
-    _focusNodeDialog.dispose();
     _focusNodeCommentTitle.dispose();
     _titleController.dispose();
     _commentController.dispose();
@@ -81,164 +79,151 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
       listen: false,
     );
 
-    return KeyboardListener(
-      // Using FocusNode to enable clicking on Enter to close
-      // the dialog
-      focusNode: _focusNodeDialog,
-      onKeyEvent: (event) {
-        if (event is KeyDownEvent) {
-          if (event.logicalKey == LogicalKeyboardKey.enter ||
-              event.logicalKey == LogicalKeyboardKey.numpadEnter) {
-            // executing the same code as in the 'Save' TextButton
-            // onPressed callback
-            Navigator.of(context).pop();
-          }
-        }
-      },
-      child: AlertDialog(
-        title: Text(AppLocalizations.of(context)!.commentDialogTitle),
-        content: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // TextField for Title
-              SizedBox(
-                height: kDialogTextFieldHeight,
-                child: TextField(
-                  key: const Key('commentTitleTextField'),
-                  controller: _titleController,
-                  style: kDialogTextFieldStyle,
-                  decoration: getDialogTextFieldInputDecoration(
-                    hintText: AppLocalizations.of(context)!.commentTitle,
-                  ),
-                  focusNode: _focusNodeCommentTitle,
-                ),
-              ),
-              const SizedBox(height: 10),
-              // Multiline TextField for Comments
-              TextField(
-                key: const Key('commentContentTextField'),
-                controller: _commentController,
-                minLines: 2,
-                maxLines: 3,
+    // Since it is necessary that Enter can be used in comment text field
+    // to add a new line, using KeyListener and FocusNode must be avoided.
+    return AlertDialog(
+      title: Text(AppLocalizations.of(context)!.commentDialogTitle),
+      content: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // TextField for Title
+            SizedBox(
+              height: kDialogTextFieldHeight,
+              child: TextField(
+                key: const Key('commentTitleTextField'),
+                controller: _titleController,
+                style: kDialogTextFieldStyle,
                 decoration: getDialogTextFieldInputDecoration(
-                  hintText: AppLocalizations.of(context)!.commentText,
+                  hintText: AppLocalizations.of(context)!.commentTitle,
                 ),
+                focusNode: _focusNodeCommentTitle,
               ),
-              const SizedBox(height: 30),
-              // Non-editable Text for Audio File Details
-              // Audio Playback Controls
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    globalAudioPlayerVM.currentAudio?.validVideoTitle ?? '',
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      IconButton(
-                        // Rewind 1 second button
-                        icon: const Icon(Icons.fast_rewind),
-                        onPressed: () async {
-                          await modifyCommentPosition(
-                            commentVMlistenFalse: commentVMlistenFalse,
-                            secondChange: -1,
-                          );
-                        },
-                        iconSize: kSmallestButtonWidth,
-                      ),
-                      Consumer<CommentVM>(
-                        builder: (context, commentVM, child) {
-                          return Text(
-                            commentVM.currentCommentAudioPosition
-                                .HHmmssZeroHH(),
-                          );
-                        },
-                      ),
-                      IconButton(
-                        // Forward 1 second button
-                        icon: const Icon(Icons.fast_forward),
-                        onPressed: () async {
-                          await modifyCommentPosition(
-                            commentVMlistenFalse: commentVMlistenFalse,
-                            secondChange: 1,
-                          );
-                        },
-                        iconSize: kSmallestButtonWidth,
-                      ),
-                      IconButton(
-                        // Play/Pause button
-                        onPressed: () async {
-                          globalAudioPlayerVM.isPlaying
-                              ? await globalAudioPlayerVM.pause()
-                              : await _playFromCommentPosition(
-                                  commentVMlistenFalse: commentVMlistenFalse,
-                                );
-                        },
-                        icon: Consumer<AudioPlayerVM>(
-                          builder: (context, globalAudioPlayerVM, child) {
-                            return Icon(globalAudioPlayerVM.isPlaying
-                                ? Icons.pause
-                                : Icons.play_arrow);
-                          },
-                        ),
-                        iconSize: kUpDownButtonSize - 10,
-                        constraints:
-                            const BoxConstraints(), // Ensure the button
-                        //                         takes minimal space
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-        actions: [
-          TextButton(
-            key: const Key('addOrUpdateCommentTextButton'),
-            child: Text(
-              widget.isAddMode
-                  ? AppLocalizations.of(context)!.add
-                  : AppLocalizations.of(context)!.update,
             ),
-            onPressed: () async {
-              if (widget.isAddMode) {
-                commentVMlistenFalse.addComment(
-                  comment: Comment(
-                    title: _titleController.text,
-                    content: _commentController.text,
-                    audioPositionSeconds: commentVMlistenFalse
-                        .currentCommentAudioPosition.inSeconds,
-                  ),
-                  commentedAudio: globalAudioPlayerVM.currentAudio!,
-                );
-              } else {
-                Comment commentToModify = widget.comment!;
-
-                commentToModify.title = _titleController.text;
-                commentToModify.content = _commentController.text;
-                commentToModify.audioPositionSeconds =
-                    commentVMlistenFalse.currentCommentAudioPosition.inSeconds;
-
-                commentVMlistenFalse.modifyComment(
-                  modifiedComment: commentToModify,
-                  commentedAudio: globalAudioPlayerVM.currentAudio!,
-                );
-              }
-
-              _closeDialogAndReOpenCommentListAddDialog(context);
-            },
-          ),
-          TextButton(
-            key: const Key('cancelTextButton'),
-            child: Text(AppLocalizations.of(context)!.cancelButton),
-            onPressed: () async =>
-                _closeDialogAndReOpenCommentListAddDialog(context),
-          ),
-        ],
+            const SizedBox(height: 10),
+            // Multiline TextField for Comments
+            TextField(
+              key: const Key('commentContentTextField'),
+              controller: _commentController,
+              minLines: 2,
+              maxLines: 3,
+              decoration: getDialogTextFieldInputDecoration(
+                hintText: AppLocalizations.of(context)!.commentText,
+              ),
+            ),
+            const SizedBox(height: 30),
+            // Non-editable Text for Audio File Details
+            // Audio Playback Controls
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  globalAudioPlayerVM.currentAudio?.validVideoTitle ?? '',
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      // Rewind 1 second button
+                      icon: const Icon(Icons.fast_rewind),
+                      onPressed: () async {
+                        await modifyCommentPosition(
+                          commentVMlistenFalse: commentVMlistenFalse,
+                          secondChange: -1,
+                        );
+                      },
+                      iconSize: kSmallestButtonWidth,
+                    ),
+                    Consumer<CommentVM>(
+                      builder: (context, commentVM, child) {
+                        return Text(
+                          commentVM.currentCommentAudioPosition
+                              .HHmmssZeroHH(),
+                        );
+                      },
+                    ),
+                    IconButton(
+                      // Forward 1 second button
+                      icon: const Icon(Icons.fast_forward),
+                      onPressed: () async {
+                        await modifyCommentPosition(
+                          commentVMlistenFalse: commentVMlistenFalse,
+                          secondChange: 1,
+                        );
+                      },
+                      iconSize: kSmallestButtonWidth,
+                    ),
+                    IconButton(
+                      // Play/Pause button
+                      onPressed: () async {
+                        globalAudioPlayerVM.isPlaying
+                            ? await globalAudioPlayerVM.pause()
+                            : await _playFromCommentPosition(
+                                commentVMlistenFalse: commentVMlistenFalse,
+                              );
+                      },
+                      icon: Consumer<AudioPlayerVM>(
+                        builder: (context, globalAudioPlayerVM, child) {
+                          return Icon(globalAudioPlayerVM.isPlaying
+                              ? Icons.pause
+                              : Icons.play_arrow);
+                        },
+                      ),
+                      iconSize: kUpDownButtonSize - 10,
+                      constraints:
+                          const BoxConstraints(), // Ensure the button
+                      //                         takes minimal space
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
+      actions: [
+        TextButton(
+          key: const Key('addOrUpdateCommentTextButton'),
+          child: Text(
+            widget.isAddMode
+                ? AppLocalizations.of(context)!.add
+                : AppLocalizations.of(context)!.update,
+          ),
+          onPressed: () async {
+            if (widget.isAddMode) {
+              commentVMlistenFalse.addComment(
+                comment: Comment(
+                  title: _titleController.text,
+                  content: _commentController.text,
+                  audioPositionSeconds: commentVMlistenFalse
+                      .currentCommentAudioPosition.inSeconds,
+                ),
+                commentedAudio: globalAudioPlayerVM.currentAudio!,
+              );
+            } else {
+              Comment commentToModify = widget.comment!;
+    
+              commentToModify.title = _titleController.text;
+              commentToModify.content = _commentController.text;
+              commentToModify.audioPositionSeconds =
+                  commentVMlistenFalse.currentCommentAudioPosition.inSeconds;
+    
+              commentVMlistenFalse.modifyComment(
+                modifiedComment: commentToModify,
+                commentedAudio: globalAudioPlayerVM.currentAudio!,
+              );
+            }
+    
+            _closeDialogAndReOpenCommentListAddDialog(context);
+          },
+        ),
+        TextButton(
+          key: const Key('cancelTextButton'),
+          child: Text(AppLocalizations.of(context)!.cancelButton),
+          onPressed: () async =>
+              _closeDialogAndReOpenCommentListAddDialog(context),
+        ),
+      ],
     );
   }
 
