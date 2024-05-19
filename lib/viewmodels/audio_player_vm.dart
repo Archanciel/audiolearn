@@ -597,6 +597,7 @@ class AudioPlayerVM extends ChangeNotifier {
     // necessary so that the audio position is stored on the
     // audio
     _currentAudio!.audioPositionSeconds = _currentAudioPosition.inSeconds;
+    _currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd = false;
 
     await modifyAudioPlayerPluginPosition(_currentAudioPosition);
 
