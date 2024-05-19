@@ -55,16 +55,15 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
   String? _selectedSortFilterParametersName;
 
-  //request permission from initStateMethod
-  @override
-  void initState() {
-    super.initState();
-    // enabling to download a playlist in the emulator in which
-    // pasting a URL is not possible
-    // if (kPastedPlaylistUrl.isNotEmpty) {
-    //   _playlistUrlController.text = kPastedPlaylistUrl;
-    // }
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // enabling to download a playlist in the emulator in which
+  //   // pasting a URL is not possible
+  //   // if (kPastedPlaylistUrl.isNotEmpty) {
+  //   //   _playlistUrlController.text = kPastedPlaylistUrl;
+  //   // }
+  // }
 
   @override
   void dispose() {
