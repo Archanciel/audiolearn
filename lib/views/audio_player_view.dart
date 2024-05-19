@@ -35,12 +35,18 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
   final double _audioIconSizeLarge = 80;
   late double _audioPlaySpeed;
 
+  late Audio _currentAudioForHotRestart;
   // final bool _wasSortFilterAudioSettingsApplied = false;
 
   @override
   initState() {
     super.initState();
 
+    // This ensures that if the globalAudioPlayerVM.currentAudio becomes
+    // null due to the app's state being reset (like during hot restarts),
+    // the AudioPlayerView still have a reference to the last known audio
+    // object.
+    _currentAudioForHotRestart = globalAudioPlayerVM.currentAudio!;
     // Used in relation of audioplayers
     WidgetsBinding.instance.addObserver(this);
   }
@@ -344,7 +350,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                         // of initializing a private _currentAudio variable
                         // in the dialog avoid integr test problems
                         builder: (context) => CommentListAddDialogWidget(
-                          currentAudio: globalAudioPlayerVM.currentAudio!,
+                          currentAudio: globalAudioPlayerVM.currentAudio ?? _currentAudioForHotRestart,
                         ),
                       );
                     },
