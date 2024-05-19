@@ -226,8 +226,9 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
                   },
                 ),
                 iconSize: kSmallestButtonWidth,
+                padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(), // Ensure the button
-                //                         takes minimal space
+                //                                      takes minimal space
               ),
             ),
             SizedBox(
@@ -242,6 +243,9 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
                   Icons.clear,
                 ),
                 iconSize: kSmallestButtonWidth - 5,
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(), // Ensure the button
+                //                                      takes minimal space
               ),
             ),
           ],
@@ -251,6 +255,7 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
           key: const Key('commentPositionKey'),
           style: TextStyle(fontSize: 13),
           Duration(seconds: comment.audioPositionSeconds).HHmmssZeroHH(),
+          
         ),
       ],
     );
