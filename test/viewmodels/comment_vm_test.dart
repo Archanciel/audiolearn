@@ -105,7 +105,7 @@ void main() {
       Comment testCommentOne = Comment(
         title: 'Test Title',
         content: 'Test Content',
-        audioPositionSeconds: 0,
+        audioPositionSeconds: 300,
       );
 
       commentVM.addComment(
@@ -130,7 +130,7 @@ void main() {
       Comment testCommentTwo = Comment(
         title: 'Test Title 2',
         content: 'Test Content 2',
-        audioPositionSeconds: 2,
+        audioPositionSeconds: 20,
       );
 
       commentVM.addComment(
@@ -146,9 +146,11 @@ void main() {
       // the returned Commentlist should have two elements
       expect(commentLst.length, 2);
 
-      // checking the content of the comments
-      validateComment(commentLst[0], testCommentOne);
-      validateComment(commentLst[1], testCommentTwo);
+      // checking the content of the comments. Since the comments are
+      // sorted by audioPositionSeconds, the first comment should be
+      // testCommentTwo and the second testCommentOne
+      validateComment(commentLst[0], testCommentTwo);
+      validateComment(commentLst[1], testCommentOne);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -239,13 +241,18 @@ void main() {
           commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
               commentedAudio: audio);
 
-      // the returned Commentlist should have one element
-      expect(commentLst.length, 1);
+      // the returned Commentlist should have two elements
+      expect(commentLst.length, 2);
 
       // deleting the remaining comment
 
       commentVM.deleteComment(
         commentId: "Test Title 2_2",
+        commentedAudio: audio,
+      );
+
+      commentVM.deleteComment(
+        commentId: "number 3_8",
         commentedAudio: audio,
       );
 
@@ -290,11 +297,11 @@ void main() {
           commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
               commentedAudio: audio);
 
-      Comment commentToModify = commentLst[0];
+      Comment commentToModify = commentLst[1];
 
-      commentToModify.title = "New title";
-      commentToModify.content = "New content";
-      commentToModify.audioPositionSeconds = 20;
+      commentToModify.title = "New title modified";
+      commentToModify.content = "New content modified";
+      commentToModify.audioPositionSeconds = 40;
 
       commentVM.modifyComment(
         modifiedComment: commentToModify,
@@ -306,11 +313,11 @@ void main() {
       commentLst = commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
           commentedAudio: audio);
 
-      // the returned Commentlist should have one element
-      expect(commentLst.length, 2);
+      // the returned Commentlist should have three element
+      expect(commentLst.length, 3);
 
-      validateComment(commentLst[0], commentToModify);
-      expect(commentLst[0].lastUpdateDateTime,
+      validateComment(commentLst[2], commentToModify);
+      expect(commentLst[2].lastUpdateDateTime,
           DateTimeUtil.getDateTimeLimitedToSeconds(DateTime.now()));
 
       // Purge the test playlist directory so that the created test
