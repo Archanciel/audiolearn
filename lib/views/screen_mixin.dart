@@ -499,4 +499,48 @@ mixin ScreenMixin {
     
     return maxDropdownWidth;
   }
+
+  Widget formatIconBackAnfForGroundColor({
+    required BuildContext context,
+    required Icon iconToFormat,
+    required bool isIconHighlighted,
+  }) {
+    Widget iconContent; // This will hold the content of the play button
+
+    if (isIconHighlighted) {
+      iconContent = CircleAvatar(
+        backgroundColor:
+            kDarkAndLightEnabledIconColor, // background color of the circle
+        radius: 10,
+        child: Icon(
+          iconToFormat.icon,
+          color: Colors.white, // icon color
+          size: 18, // icon size
+        ),
+      );
+    } else {
+      // the audio is neither playing nor paused. It is at position
+      // zero, i.e. if it was not played ... or at the end position,
+      // i.e. if it was played until the end and stopped.
+      Color backgroundColor;
+
+      if (Theme.of(context).brightness == Brightness.dark) {
+        backgroundColor = Colors.black;
+      } else {
+        backgroundColor = Colors.white;
+      }
+
+      iconContent = CircleAvatar(
+        backgroundColor: backgroundColor, // background color of the circle
+        radius: 12, // you can adjust the size
+        child: const Icon(
+          Icons.play_arrow,
+          color: kDarkAndLightEnabledIconColor, // icon color
+          size: 24, // icon size
+        ),
+      );
+    }
+
+    return iconContent;
+  }
 }

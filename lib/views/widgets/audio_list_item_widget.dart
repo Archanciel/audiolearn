@@ -382,13 +382,14 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
     AudioPlayerVM audioGlobalPlayerVM,
     Audio audio,
   ) {
-    Widget iconContent; // This will hold the content of the play button
+    Widget iconContent;
 
     if (audio.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd) {
       // if (audio.audioPositionSeconds > 0 &&
       //     audio.audioPositionSeconds < audio.audioDuration!.inSeconds) {
       // the audio is paused on a non-zero position and non end
       // position, i.e. if it was played and paused ...
+
       Icon playOrPauseIcon;
 
       if (audio.isPaused) {
@@ -405,36 +406,19 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
         playOrPauseIcon = const Icon(Icons.pause);
       }
 
-      iconContent = CircleAvatar(
-        backgroundColor:
-            kDarkAndLightEnabledIconColor, // background color of the circle
-        radius: 10,
-        child: Icon(
-          playOrPauseIcon.icon,
-          color: Colors.white, // icon color
-          size: 18, // icon size
-        ),
+      iconContent = formatIconBackAnfForGroundColor(
+        context: context,
+        iconToFormat: playOrPauseIcon,
+        isIconHighlighted: true,
       );
     } else {
-      // the audio is neither playing nor paused. It is at position
-      // zero, i.e. if it was not played ... or at the end position,
-      // i.e. if it was played until the end and stopped.
-      Color backgroundColor;
-
-      if (Theme.of(context).brightness == Brightness.dark) {
-        backgroundColor = Colors.black;
-      } else {
-        backgroundColor = Colors.white;
-      }
-
-      iconContent = CircleAvatar(
-        backgroundColor: backgroundColor, // background color of the circle
-        radius: 12, // you can adjust the size
-        child: const Icon(
-          Icons.play_arrow,
-          color: kDarkAndLightEnabledIconColor, // icon color
-          size: 24, // icon size
-        ),
+      // the audio is not playing or paused at a certain position
+      // (i.e. its position is zero or its position is at the end
+      // of the audio file)
+      iconContent = formatIconBackAnfForGroundColor(
+        context: context,
+        iconToFormat: const Icon(Icons.play_arrow),
+        isIconHighlighted: false,
       );
     }
 
