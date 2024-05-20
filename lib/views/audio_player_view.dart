@@ -139,7 +139,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
               context: context,
               areAudioButtonsEnabled: areAudioButtonsEnabled,
             ),
-            _buildCommentsIconButton(
+            _buildCommentsInkWellButton(
               context: context,
               areAudioButtonsEnabled: areAudioButtonsEnabled,
             ),
@@ -321,7 +321,12 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     );
   }
 
-  Widget _buildCommentsIconButton({
+  /// Using InkWell instead of IconButton enables to use CircleAvatar
+  /// as a button. IconButton doesn't allow to use CircleAvatar as a
+  /// button. CircleAvatar is used to display the bookmark icon which
+  /// can be highlighted or not and disabled or not and be enclosed in
+  /// a colored circle. 
+  Widget _buildCommentsInkWellButton({
     required BuildContext context,
     required bool areAudioButtonsEnabled,
   }) {
@@ -382,7 +387,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
           child: SizedBox(
             width: kSmallButtonWidth,
             child: InkWell(
-              key: const Key('commentsIconButton'),
+              key: const Key('commentsInkWellButton'),
               onTap: (!areAudioButtonsEnabled)
                   ? null // Disable the button if no audio selected
                   : () {
