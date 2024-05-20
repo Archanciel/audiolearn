@@ -729,6 +729,11 @@ class AudioPlayerVM extends ChangeNotifier {
     // audio. Must not be located after the if which can return
     // without saving the audio position. This would cause the
     // play icon's appearance to be wrong.
+    if (_currentAudio == null) {
+      return; // the case if "No audio selected" audio title is displayed
+              // and the app becomes inactive
+    }
+
     _currentAudio!.audioPositionSeconds = _currentAudioPosition.inSeconds;
 
     DateTime now = DateTime.now();
