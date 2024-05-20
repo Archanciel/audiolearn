@@ -1149,7 +1149,7 @@ void main() {
       await tester.tap(currentPartiallyPlayedAudioListTileTextWidgetFinder);
       await tester.pumpAndSettle();
 
-      // Now we open the DisplaySelectableAudioListDialogWidget
+      // Now we open the AudioPlayableListDialogWidget
       // and verify the color of the displayed audio titles
 
       await tester.tap(find.text(
