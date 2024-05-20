@@ -132,26 +132,28 @@ class _AudioPlayableListDialogWidgetState
           child: Column(
             mainAxisSize: MainAxisSize.min, // Use minimum space
             children: [
-              ListView.builder(
-                controller: _scrollController,
-                itemCount: playableAudioLst.length,
-                shrinkWrap: true,
-                itemBuilder: (BuildContext context, int index) {
-                  Audio audio = playableAudioLst[index];
-                  return ListTile(
-                    title: GestureDetector(
-                      onTap: () async {
-                        await audioGlobalPlayerVM.setCurrentAudio(audio);
-                        Navigator.of(context).pop();
-                      },
-                      child: _buildAudioTitleTextWidget(
-                        audio,
-                        index,
-                        isDarkTheme,
+              Expanded(
+                child: ListView.builder(
+                  controller: _scrollController,
+                  itemCount: playableAudioLst.length,
+                  shrinkWrap: true,
+                  itemBuilder: (BuildContext context, int index) {
+                    Audio audio = playableAudioLst[index];
+                    return ListTile(
+                      title: GestureDetector(
+                        onTap: () async {
+                          await audioGlobalPlayerVM.setCurrentAudio(audio);
+                          Navigator.of(context).pop();
+                        },
+                        child: _buildAudioTitleTextWidget(
+                          audio,
+                          index,
+                          isDarkTheme,
+                        ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
               _buildBottomTextAndCheckbox(
                 context,
