@@ -504,10 +504,12 @@ mixin ScreenMixin {
     required BuildContext context,
     required Icon iconToFormat,
     required bool isIconHighlighted,
+    bool isIconDisabled = false,
     double iconSize = 18.0,
     double radius = 10.0,
   }) {
     CircleAvatar circleAvatar; // This will hold the content of the play button
+    Color iconNotHighlightedColor = isIconDisabled ? kDarkAndLightDisabledIconColor : kDarkAndLightEnabledIconColor;
 
     if (isIconHighlighted) {
       circleAvatar = CircleAvatar(
@@ -537,7 +539,7 @@ mixin ScreenMixin {
         radius: 12, // you can adjust the size
         child: Icon(
           iconToFormat.icon,
-          color: kDarkAndLightEnabledIconColor, // icon color
+          color: iconNotHighlightedColor, // icon color
           size: 24, // icon size
         ),
       );

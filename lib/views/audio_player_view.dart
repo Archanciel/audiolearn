@@ -35,6 +35,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
   final double _audioIconSizeMedium = 40;
   final double _audioIconSizeLarge = 80;
   late double _audioPlaySpeed;
+
   // final bool _wasSortFilterAudioSettingsApplied = false;
 
   @override
@@ -324,31 +325,65 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     required BuildContext context,
     required bool areAudioButtonsEnabled,
   }) {
-    return Consumer3<ThemeProviderVM, AudioPlayerVM, CommentVM>(
-      builder: (context, themeProviderVM, audioPlayerVM, commentVM, child) {
-        Audio? currentAudio;
+    CircleAvatar circleAvatar;
 
-        if (areAudioButtonsEnabled) {
-          currentAudio = audioPlayerVM.currentAudio;
-        }
+    CommentVM commentVM = Provider.of<CommentVM>(
+      context,
+      listen: true,
+    );
 
+    AudioPlayerVM audioPlayerVM = Provider.of<AudioPlayerVM>(
+      context,
+      listen: true,
+    );
+
+    Audio? currentAudio;
+
+    if (areAudioButtonsEnabled) {
+      currentAudio = audioPlayerVM.currentAudio;
+    }
+
+    if (currentAudio != null) {
+      if (commentVM
+          .loadExistingCommentFileOrCreateEmptyCommentFile(
+              commentedAudio: audioPlayerVM.currentAudio!)
+          .isEmpty) {
+        circleAvatar = formatIconBackAndForGroundColor(
+          context: context,
+          iconToFormat: const Icon(Icons.bookmark_outline_outlined),
+          isIconHighlighted: false, // since no comments are defined
+          //                           for the current audio the icon
+          //                           isn,t highlighted
+        );
+      } else {
+        circleAvatar = formatIconBackAndForGroundColor(
+            context: context,
+            iconToFormat: const Icon(Icons.bookmark_outline_outlined),
+            isIconHighlighted: true, // since comments are defined for
+            //                          the current audio the icon is
+            //                          highlighted
+            iconSize: 15,
+            radius: 11.0);
+      }
+    } else {
+      circleAvatar = formatIconBackAndForGroundColor(
+        context: context,
+        iconToFormat: const Icon(Icons.bookmark_outline_outlined),
+        isIconHighlighted: false,
+        isIconDisabled: true, // since no audio is selected the icon
+        //                       is disabled
+      );
+    }
+
+    return Consumer<ThemeProviderVM>(
+      builder: (context, themeProviderVM, child) {
         return Tooltip(
           message: AppLocalizations.of(context)!.commentsIconButtonTooltip,
           child: SizedBox(
             width: kSmallButtonWidth,
-            child: IconButton(
+            child: InkWell(
               key: const Key('commentsIconButton'),
-              icon: Icon(Icons.bookmark_outline_outlined,
-                  color: (areAudioButtonsEnabled &&
-                          currentAudio != null &&
-                          commentVM
-                              .loadExistingCommentFileOrCreateEmptyCommentFile(
-                                  commentedAudio: currentAudio)
-                              .isNotEmpty)
-                      ? kDarkAndLightEnabledIconColor
-                      : kDarkAndLightDisabledIconColor),
-              iconSize: kUpDownButtonSize - 21,
-              onPressed: (!areAudioButtonsEnabled)
+              onTap: (!areAudioButtonsEnabled)
                   ? null // Disable the button if no audio selected
                   : () {
                       showDialog<void>(
@@ -357,10 +392,11 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                         // of initializing a private _currentAudio variable
                         // in the dialog avoid integr test problems
                         builder: (context) => CommentListAddDialogWidget(
-                          currentAudio: audioPlayerVM.currentAudio!,
+                          currentAudio: currentAudio!,
                         ),
                       );
                     },
+              child: circleAvatar,
             ),
           ),
         );
