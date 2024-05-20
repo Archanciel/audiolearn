@@ -333,6 +333,7 @@ class _AudioPlayableListDialogWidgetState
         style: TextStyle(
           color: audioTitleTextColor,
           backgroundColor: audioTitleBackgroundColor,
+          fontSize: kAudioTitleFontSize,
         ),
       ),
     );
