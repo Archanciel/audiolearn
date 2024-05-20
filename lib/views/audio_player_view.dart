@@ -9,6 +9,7 @@ import '../services/sort_filter_parameters.dart';
 import '../services/settings_data_service.dart';
 import '../utils/duration_expansion.dart';
 import '../viewmodels/audio_player_vm.dart';
+import '../viewmodels/comment_vm.dart';
 import '../viewmodels/playlist_list_vm.dart';
 import '../viewmodels/warning_message_vm.dart';
 import '../viewmodels/theme_provider_vm.dart';
@@ -35,20 +36,11 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
   final double _audioIconSizeLarge = 80;
   late double _audioPlaySpeed;
 
-  late Audio _currentAudioForHotRestart;
   // final bool _wasSortFilterAudioSettingsApplied = false;
 
   @override
   initState() {
     super.initState();
-
-    // This ensures that if the globalAudioPlayerVM.currentAudio becomes
-    // null due to the app's state being reset (like during hot restarts),
-    // the AudioPlayerView still have a reference to the last known audio
-    // object.
-    if (globalAudioPlayerVM.currentAudio != null) {
-      _currentAudioForHotRestart = globalAudioPlayerVM.currentAudio!;
-    }
 
     // Used in relation of audioplayers
     WidgetsBinding.instance.addObserver(this);
@@ -333,17 +325,65 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     required BuildContext context,
     required bool areAudioButtonsEnabled,
   }) {
+    CircleAvatar circleAvatar;
+
+    CommentVM commentVM = Provider.of<CommentVM>(
+      context,
+      listen: true,
+    );
+
+    AudioPlayerVM audioPlayerVM = Provider.of<AudioPlayerVM>(
+      context,
+      listen: true,
+    );
+
+    Audio? currentAudio;
+
+    if (areAudioButtonsEnabled) {
+      currentAudio = audioPlayerVM.currentAudio;
+    }
+
+    if (currentAudio != null) {
+      if (commentVM
+          .loadExistingCommentFileOrCreateEmptyCommentFile(
+              commentedAudio: audioPlayerVM.currentAudio!)
+          .isEmpty) {
+        circleAvatar = formatIconBackAndForGroundColor(
+          context: context,
+          iconToFormat: const Icon(Icons.bookmark_outline_outlined),
+          isIconHighlighted: false, // since no comments are defined
+          //                           for the current audio the icon
+          //                           isn,t highlighted
+        );
+      } else {
+        circleAvatar = formatIconBackAndForGroundColor(
+            context: context,
+            iconToFormat: const Icon(Icons.bookmark_outline_outlined),
+            isIconHighlighted: true, // since comments are defined for
+            //                          the current audio the icon is
+            //                          highlighted
+            iconSize: 15,
+            radius: 11.0);
+      }
+    } else {
+      circleAvatar = formatIconBackAndForGroundColor(
+        context: context,
+        iconToFormat: const Icon(Icons.bookmark_outline_outlined),
+        isIconHighlighted: false,
+        isIconDisabled: true, // since no audio is selected the icon
+        //                       is disabled
+      );
+    }
+
     return Consumer<ThemeProviderVM>(
       builder: (context, themeProviderVM, child) {
         return Tooltip(
           message: AppLocalizations.of(context)!.commentsIconButtonTooltip,
           child: SizedBox(
             width: kSmallButtonWidth,
-            child: IconButton(
+            child: InkWell(
               key: const Key('commentsIconButton'),
-              icon: const Icon(Icons.bookmark_outline_outlined),
-              iconSize: kUpDownButtonSize - 15,
-              onPressed: (!areAudioButtonsEnabled)
+              onTap: (!areAudioButtonsEnabled)
                   ? null // Disable the button if no audio selected
                   : () {
                       showDialog<void>(
@@ -352,11 +392,11 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                         // of initializing a private _currentAudio variable
                         // in the dialog avoid integr test problems
                         builder: (context) => CommentListAddDialogWidget(
-                          currentAudio: globalAudioPlayerVM.currentAudio ??
-                              _currentAudioForHotRestart,
+                          currentAudio: currentAudio!,
                         ),
                       );
                     },
+              child: circleAvatar,
             ),
           ),
         );
