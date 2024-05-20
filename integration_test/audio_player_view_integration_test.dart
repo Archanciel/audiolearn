@@ -1175,7 +1175,7 @@ void main() {
 
       await checkAudioTextColor(
         tester: tester,
-        audioTitle: "Les besoins artificiels par R.Keucheyan",
+        audioTitle: "Really short video",
         expectedTitleTextColor: fullyPlayedAudioTitleColor,
         expectedTitleTextBackgroundColor: null,
       );
@@ -1242,6 +1242,8 @@ void main() {
           .tap(find.byKey(const Key('excludeFullyPlayedAudiosCheckbox')));
       await tester.pumpAndSettle();
 
+      // Verifying that the fully played audio titles are not displayed
+
       expect(
           find.text(
               "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)"),
@@ -1271,6 +1273,11 @@ void main() {
         expectedTitleTextColor: partiallyPlayedAudioTitleTextdColor,
         expectedTitleTextBackgroundColor: null,
       );
+
+      // Tap on Cancel button to close the
+      // DisplaySelectableAudioListDialogWidget
+      await tester.tap(find.text('Cancel'));
+      await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
