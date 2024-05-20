@@ -193,31 +193,14 @@ void main() {
       DirUtil.deleteFilesInDirAndSubDirs(
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
-    testWidgets(
-        'Clicking on audio play button to open AudioPlayerView. Then back to playlist download view and click on pause, then on play again. Check the audio item play/pause icon as well as their color',
-        (
-      WidgetTester tester,
-    ) async {
-      const String audioPlayerSelectedPlaylistTitle =
-          'audio_player_view_2_shorts_test';
-      const String lastDownloadedAudioTitle = 'Really short video';
 
-      await initializeApplicationAndSelectPlaylist(
-        tester: tester,
-        savedTestDataDirName: 'audio_player_view_test',
-        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
-      );
-
-      // Now we want to tap on the previously downloaded audio of the
-      // playlist in order to open the AudioPlayerView displaying
-      // the not yet played audio.
-
-      // First, get the previously downloaded Audio item InkWell widget
-      // finder. The InkWell widget contains the play or pause icon
-      // and tapping on it plays or pauses the audio.
+    Finder validateInkWellButton({
+      required WidgetTester tester,
+      required String audioTitle,
+    }) {
       Finder lastDownloadedAudioListTileInkWellFinder =
           findAudioItemInkWellWidget(
-        lastDownloadedAudioTitle,
+        audioTitle,
       );
 
       // Find the Icon within the InkWell
@@ -243,6 +226,37 @@ void main() {
 
       // Assert CircleAvatar background color
       expect(circleAvatarWidget.backgroundColor, equals(Colors.black));
+
+      return lastDownloadedAudioListTileInkWellFinder;
+    }
+
+    testWidgets(
+        'Clicking on audio play button to open AudioPlayerView. Then back to playlist download view and click on pause, then on play again. Check the audio item play/pause icon as well as their color',
+        (
+      WidgetTester tester,
+    ) async {
+      const String audioPlayerSelectedPlaylistTitle =
+          'audio_player_view_2_shorts_test';
+      const String lastDownloadedAudioTitle = 'Really short video';
+
+      await initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_player_view_test',
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+      );
+
+      // Now we want to tap on the previously downloaded audio of the
+      // playlist in order to open the AudioPlayerView displaying
+      // the not yet played audio.
+
+      // First, get the previously downloaded Audio item InkWell widget
+      // finder. The InkWell widget contains the play or pause icon
+      // and tapping on it plays or pauses the audio.
+
+      Finder lastDownloadedAudioListTileInkWellFinder = validateInkWellButton(
+        tester: tester,
+        audioTitle: lastDownloadedAudioTitle,
+      );
 
       // Now tap on the InkWell to play the audio and draw to the audio
       // player screen
@@ -272,11 +286,11 @@ void main() {
       );
 
       // Find the Icon within the InkWell
-      iconFinder = find.descendant(
+      Finder iconFinder = find.descendant(
         of: lastDownloadedAudioListTileInkWellFinder,
         matching: find.byType(Icon),
       );
-      iconWidget = tester.widget<Icon>(iconFinder);
+      Icon iconWidget = tester.widget<Icon>(iconFinder);
 
       // Assert Icon type
       expect(iconWidget.icon, equals(Icons.pause));
@@ -285,11 +299,11 @@ void main() {
       expect(iconWidget.color, equals(Colors.white));
 
       // Find the CircleAvatar within the InkWell
-      circleAvatarFinder = find.descendant(
+      Finder circleAvatarFinder = find.descendant(
         of: lastDownloadedAudioListTileInkWellFinder,
         matching: find.byType(CircleAvatar),
       );
-      circleAvatarWidget = tester.widget<CircleAvatar>(circleAvatarFinder);
+      CircleAvatar circleAvatarWidget = tester.widget<CircleAvatar>(circleAvatarFinder);
 
       // Assert CircleAvatar background color
       expect(circleAvatarWidget.backgroundColor,
@@ -1119,7 +1133,8 @@ void main() {
     const Color? unplayedAudioTitleTextColor = null;
     const Color partiallyPlayedAudioTitleTextdColor = Colors.blue;
 
-    testWidgets('All, then only no played or partially played, audio displayed', (WidgetTester tester) async {
+    testWidgets('All, then only no played or partially played, audio displayed',
+        (WidgetTester tester) async {
       const String audioPlayerSelectedPlaylistTitle =
           'S8 audio'; // Youtube playlist
       const String currentPartiallyPlayedAudioTitle =
@@ -2198,7 +2213,7 @@ void main() {
         (WidgetTester tester) async {
       const String audioPlayerSelectedPlaylistTitle =
           'S8 audio'; // Youtube playlist
-      const String toSelectAudioTitle =
+      const String audioTitleNotYetCommented =
           "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
 
       await initializeApplicationAndSelectPlaylist(
@@ -2218,13 +2233,15 @@ void main() {
       await tester.pumpAndSettle();
 
       // First, get the ListTile Text widget finder of the audio
-      // to be selected and tap on it
-      await tester.tap(find.text(toSelectAudioTitle));
+      // to be selected and tap on it to go to the AudioPlayerView
+      await tester.tap(find.text(audioTitleNotYetCommented));
       await tester.pumpAndSettle();
 
       // Tap on the comment icon button to open the comment list
       // dialog
-      await tester.tap(find.byKey(const Key('commentsIconButton')));
+      Finder commentInkWellButtonFinder =
+          find.byKey(const Key('commentsInkWellButton'));
+      await tester.tap(commentInkWellButtonFinder);
       await tester.pumpAndSettle();
 
       // Verify that the comment dialog is displayed
@@ -2250,7 +2267,7 @@ void main() {
 
       // Check the font size of the TextField
       expect(textStyle.fontSize, 16);
-      
+
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
