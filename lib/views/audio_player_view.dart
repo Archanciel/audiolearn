@@ -362,8 +362,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
             isIconHighlighted: true, // since comments are defined for
             //                          the current audio the icon is
             //                          highlighted
-            iconSize: 16,
-            radius: 12.0);
+            iconSize: 21.0,
+            radius: 13.0);
       }
     } else {
       circleAvatar = formatIconBackAndForGroundColor(
