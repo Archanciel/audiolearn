@@ -125,14 +125,16 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
                             child: _buildCommentTitlePlusIconsAndPosition(
                                 maxDropdownWidth, comment, commentVM),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 12),
-                            // comment content Text
-                            child: Text(
-                              key: const Key('commentTextKey'),
-                              comment.content,
-                            ),
-                          ),
+                          (comment.content.isNotEmpty)
+                              ? Padding(
+                                  padding: const EdgeInsets.only(bottom: 12),
+                                  // comment content Text
+                                  child: Text(
+                                    key: const Key('commentTextKey'),
+                                    comment.content,
+                                  ),
+                                )
+                              : Container(),
                         ],
                       ),
                       onTap: () async {
