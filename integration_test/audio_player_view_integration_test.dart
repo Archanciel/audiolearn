@@ -2143,7 +2143,8 @@ void main() {
     });
   });
   group('Audio comment tests', () {
-    testWidgets('Manage comments in initially empty playlist.',
+    testWidgets(
+        'Manage comments in initially empty playlist. Copy audio to the empty playlist, add a comment, then edit it and finally delete it.',
         (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
       const String emptyPlaylistTitle = 'Empty'; // Local empty playlist
@@ -2236,23 +2237,92 @@ void main() {
           .tap(find.byKey(const Key('addPositionedCommentIconButtonKey')));
       await tester.pumpAndSettle();
 
-      // Find the TextField using the Key
-      final commentTitleTextFieldFinder = find.byKey(const Key('commentTitleTextField'));
+      // Verify style of title TextField and enter title text
+      String commentTitle = 'Comment title';
+      await checkTextFieldStyleAndEnterText(
+        tester: tester,
+        textFieldKeyStr: 'commentTitleTextField',
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
+        textToEnter: commentTitle,
+      );
 
-      // Ensure that the TextField is found in the widget tree
-      expect(commentTitleTextFieldFinder, findsOneWidget);
+      // Verify style of comment TextField and enter comment text
+      String commentText = 'Comment text';
+      String commentContentTextFieldKeyStr = 'commentContentTextField';
+      await checkTextFieldStyleAndEnterText(
+        tester: tester,
+        textFieldKeyStr: commentContentTextFieldKeyStr,
+        fontSize: 16,
+        fontWeight: FontWeight.normal,
+        textToEnter: commentText,
+      );
 
-      // Retrieve the TextField widget
-      final commentTitleTextField = tester.widget<TextField>(commentTitleTextFieldFinder);
+      // Verify audio title displayed in the comment dialog
+      expect(find.text(audioTitleNotYetCommented), findsOneWidget);
 
-      // Extract the TextStyle used in the TextField
-      final textStyle = commentTitleTextField.style ?? const TextStyle();
+      // Tap three times on the forward one second icon button
+      // to change the comment audio position
+      await tester.tap(find.byKey(const Key('forwardOneSecondIconButton')));
+      await tester.tap(find.byKey(const Key('forwardOneSecondIconButton')));
+      await tester.tap(find.byKey(const Key('forwardOneSecondIconButton')));
+      await tester.pumpAndSettle();
 
-      // Check the font size of the TextField
-      expect(textStyle.fontSize, 16);
+      // Verify the comment audio position displayed in the comment dialog
+      String commentPosition = '0:46';
+      expect(find.text(commentPosition), findsOneWidget);
 
-      // Now enter a title for the comment
-      await tester.enterText(commentTitleTextFieldFinder, 'Comment title');
+      // Tap on the play/pause button to stop playing the audio
+      await tester.tap(find.byKey(const Key('playPauseIconButton')));
+      await tester.pumpAndSettle();
+
+      // Tap on the add/edit comment button to save the comment
+      Finder addOrUpdateCommentTextButton =
+          find.byKey(const Key('addOrUpdateCommentTextButton'));
+
+      // Verify the add/edit comment button text
+      TextButton addEditTextButton =
+          tester.widget<TextButton>(addOrUpdateCommentTextButton);
+      expect((addEditTextButton.child! as Text).data, 'Add');
+
+      // Tap on the add/edit comment button to save the comment
+      await tester.tap(addOrUpdateCommentTextButton);
+      await tester.pumpAndSettle();
+
+      // Verify that the comment list dialog now displays the
+      // added comment
+      expect(find.text(commentTitle), findsOneWidget);
+      expect(find.text(commentText), findsOneWidget);
+      expect(find.text(commentPosition), findsOneWidget);
+
+      // Now tap on the comment title text to edit the comment
+      await tester.tap(find.text(commentTitle));
+      await tester.pumpAndSettle();
+
+      // Verify that the add/edit comment button text is now 'Update'
+      addEditTextButton =
+          tester.widget<TextButton>(addOrUpdateCommentTextButton);
+      expect((addEditTextButton.child! as Text).data, 'Update');
+
+      // Now modify the comment
+
+      final textFieldFinder = find.byKey(Key(commentContentTextFieldKeyStr));
+      const String updatedCommentText = 'Updated comm. text';
+      await tester.enterText(
+        textFieldFinder,
+        updatedCommentText,
+      );
+
+      // Tap on the add/edit comment button to save the updated comment
+      await tester.tap(addOrUpdateCommentTextButton);
+      await tester.pumpAndSettle();
+
+      // Verify that the comment list dialog now displays correctly the
+      // updated comment
+      expect(find.text(commentTitle), findsOneWidget);
+      expect(find.text(commentText), findsNothing);
+      expect(find.text(updatedCommentText), findsOneWidget);
+      expect(find.text(commentPosition), findsOneWidget);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -2260,6 +2330,42 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
   });
+}
+
+Future<void> checkTextFieldStyleAndEnterText({
+  required WidgetTester tester,
+  required String textFieldKeyStr,
+  required int fontSize,
+  required FontWeight fontWeight,
+  required String textToEnter,
+}) async {
+  // Find the TextField using the Key
+  final textFieldFinder = find.byKey(Key(textFieldKeyStr));
+
+  // Retrieve the TextField widget
+  final textField = tester.widget<TextField>(textFieldFinder);
+
+  // Extract the TextStyle used in the TextField
+  final textStyle = textField.style ?? const TextStyle();
+
+  // Check the font size of the TextField
+  expect(textStyle.fontSize, fontSize);
+
+  if (fontWeight == FontWeight.normal) {
+    // Check the font weight of the TextField
+    expect(textStyle.fontWeight, null);
+  } else {
+    // Check the font weight of the TextField
+    expect(textStyle.fontWeight, fontWeight);
+  }
+
+  // Now enter the text to the text field
+  await tester.enterText(
+    textFieldFinder,
+    textToEnter,
+  );
+
+  await tester.pumpAndSettle();
 }
 
 Future<void> copyAudioFromSourceToTargetPlaylist({
@@ -2278,18 +2384,18 @@ Future<void> copyAudioFromSourceToTargetPlaylist({
   // "audio learn test short video one"
 
   // First, find the Audio sublist ListTile Text widget
-  Finder sourceAudioListTileTextWidgetFinder = find.text(audioToCopyTitle);
+  final Finder sourceAudioListTileTextWidgetFinder = find.text(audioToCopyTitle);
 
   // Then obtain the Audio ListTile widget enclosing the Text widget by
   // finding its ancestor
-  Finder sourceAudioListTileWidgetFinder = find.ancestor(
+  final Finder sourceAudioListTileWidgetFinder = find.ancestor(
     of: sourceAudioListTileTextWidgetFinder,
     matching: find.byType(ListTile),
   );
 
   // Now find the leading menu icon button of the Audio ListTile
   // and tap on it
-  Finder sourceAudioListTileLeadingMenuIconButton = find.descendant(
+  final Finder sourceAudioListTileLeadingMenuIconButton = find.descendant(
     of: sourceAudioListTileWidgetFinder,
     matching: find.byIcon(Icons.menu),
   );
@@ -2300,7 +2406,7 @@ Future<void> copyAudioFromSourceToTargetPlaylist({
 
   // Now find the copy audio popup menu item and tap on it
 
-  Finder popupCopyMenuItem =
+  final Finder popupCopyMenuItem =
       find.byKey(const Key("popup_menu_copy_audio_to_playlist"));
 
   await tester.tap(popupCopyMenuItem);
@@ -2308,7 +2414,7 @@ Future<void> copyAudioFromSourceToTargetPlaylist({
 
   // Find the RadioListTile target playlist to which the audio
   // will be copied
-  Finder targetPlaylistRadioListTile = find.byWidgetPredicate(
+  final Finder targetPlaylistRadioListTile = find.byWidgetPredicate(
     (Widget widget) =>
         widget is RadioListTile &&
         widget.title is Text &&
@@ -2334,8 +2440,7 @@ Future<void> selectPlaylist({
   required String playlistToSelectTitle,
 }) async {
   // First, find the source Playlist ListTile Text widget
-  Finder playlistListTileTextWidgetFinder =
-      find.text(playlistToSelectTitle);
+  Finder playlistListTileTextWidgetFinder = find.text(playlistToSelectTitle);
 
   // Then obtain the source Playlist ListTile widget enclosing the Text widget
   // by finding its ancestor

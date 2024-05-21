@@ -92,7 +92,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
               child: TextField(
                 key: const Key('commentTitleTextField'),
                 controller: _titleController,
-                style: kDialogTextFieldStyle,
+                style: kDialogTextFieldBoldStyle,
                 decoration: getDialogTextFieldInputDecoration(
                   hintText: AppLocalizations.of(context)!.commentTitle,
                 ),
@@ -104,6 +104,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
             TextField(
               key: const Key('commentContentTextField'),
               controller: _commentController,
+              style: kDialogTextFieldStyle,
               minLines: 2,
               maxLines: 3,
               decoration: getDialogTextFieldInputDecoration(
@@ -123,6 +124,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     IconButton(
+                      key: const Key('backwardOneSecondIconButton'),
                       // Rewind 1 second button
                       icon: const Icon(Icons.fast_rewind),
                       onPressed: () async {
@@ -135,14 +137,15 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                     ),
                     Consumer<CommentVM>(
                       builder: (context, commentVM, child) {
+                        // Text for the current comment audio position
                         return Text(
-                          commentVM.currentCommentAudioPosition
-                              .HHmmssZeroHH(),
+                          commentVM.currentCommentAudioPosition.HHmmssZeroHH(),
                         );
                       },
                     ),
                     IconButton(
                       // Forward 1 second button
+                      key: const Key('forwardOneSecondIconButton'),
                       icon: const Icon(Icons.fast_forward),
                       onPressed: () async {
                         await modifyCommentPosition(
@@ -154,6 +157,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                     ),
                     IconButton(
                       // Play/Pause button
+                      key: const Key('playPauseIconButton'),
                       onPressed: () async {
                         globalAudioPlayerVM.isPlaying
                             ? await globalAudioPlayerVM.pause()
@@ -169,8 +173,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                         },
                       ),
                       iconSize: kUpDownButtonSize - 10,
-                      constraints:
-                          const BoxConstraints(), // Ensure the button
+                      constraints: const BoxConstraints(), // Ensure the button
                       //                         takes minimal space
                     ),
                   ],
@@ -201,18 +204,18 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
               );
             } else {
               Comment commentToModify = widget.comment!;
-    
+
               commentToModify.title = _titleController.text;
               commentToModify.content = _commentController.text;
               commentToModify.audioPositionSeconds =
                   commentVMlistenFalse.currentCommentAudioPosition.inSeconds;
-    
+
               commentVMlistenFalse.modifyComment(
                 modifiedComment: commentToModify,
                 commentedAudio: globalAudioPlayerVM.currentAudio!,
               );
             }
-    
+
             _closeDialogAndReOpenCommentListAddDialog(context);
           },
         ),

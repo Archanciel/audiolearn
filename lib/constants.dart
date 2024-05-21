@@ -127,6 +127,11 @@ const TextStyle kDialogTextFieldStyle = TextStyle(
   fontSize: 16,
 );
 
+const TextStyle kDialogTextFieldBoldStyle = TextStyle(
+  fontSize: 16,
+  fontWeight: FontWeight.bold,
+);
+
 const double kDialogTextFieldHeight = 32.0;
 
 const double kDialogTextFieldVerticalSeparation = 10.0;
