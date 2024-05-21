@@ -160,7 +160,7 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
         ),
         actions: <Widget>[
           TextButton(
-            key: const Key('closeButtonKey'),
+            key: const Key('closeDialogTextButton'),
             child: Text(
               AppLocalizations.of(context)!.closeTextButton,
               style: (themeProviderVM.currentTheme == AppTheme.dark)

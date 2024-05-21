@@ -1,6 +1,7 @@
 import 'package:audiolearn/models/playlist.dart';
 import 'package:audiolearn/services/json_data_service.dart';
 import 'package:audiolearn/utils/date_time_parser.dart';
+import 'package:audiolearn/views/widgets/comment_list_add_dialog_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -2261,11 +2262,16 @@ void main() {
       // Verify audio title displayed in the comment dialog
       expect(find.text(audioTitleNotYetCommented), findsOneWidget);
 
-      // Tap three times on the forward one second icon button
-      // to change the comment audio position
+      // Tap three times on the forward one second icon button, then
+      // one time on the backward one second icon button and finally
+      // one time on the forward one second icon button to change the
+      // comment audio position
       await tester.tap(find.byKey(const Key('forwardOneSecondIconButton')));
       await tester.tap(find.byKey(const Key('forwardOneSecondIconButton')));
       await tester.tap(find.byKey(const Key('forwardOneSecondIconButton')));
+      await tester.tap(find.byKey(const Key('backwardOneSecondIconButton')));
+      await tester.tap(find.byKey(const Key('forwardOneSecondIconButton')));
+
       await tester.pumpAndSettle();
 
       // Verify the comment audio position displayed in the comment dialog
@@ -2280,7 +2286,7 @@ void main() {
       Finder addOrUpdateCommentTextButton =
           find.byKey(const Key('addOrUpdateCommentTextButton'));
 
-      // Verify the add/edit comment button text
+      // Verify the add/update comment button text
       TextButton addEditTextButton =
           tester.widget<TextButton>(addOrUpdateCommentTextButton);
       expect((addEditTextButton.child! as Text).data, 'Add');
@@ -2291,9 +2297,25 @@ void main() {
 
       // Verify that the comment list dialog now displays the
       // added comment
-      expect(find.text(commentTitle), findsOneWidget);
-      expect(find.text(commentText), findsOneWidget);
-      expect(find.text(commentPosition), findsOneWidget);
+
+      Finder commentListDialogFinder =
+          find.byType(CommentListAddDialogWidget);
+
+      expect(find.descendant(
+            of: commentListDialogFinder,
+            matching: find.text(commentTitle)), findsOneWidget);
+      expect(find.descendant(
+            of: commentListDialogFinder,
+            matching: find.text(commentText)), findsOneWidget);
+
+      // Assuming you have identified the dialog using a key or type
+      // Now use find.descendant to scope the search to the dialog
+      expect(
+          find.descendant(
+            of: commentListDialogFinder,
+            matching: find.text(commentPosition),
+          ),
+          findsOneWidget);
 
       // Now tap on the comment title text to edit the comment
       await tester.tap(find.text(commentTitle));
@@ -2313,16 +2335,81 @@ void main() {
         updatedCommentText,
       );
 
-      // Tap on the add/edit comment button to save the updated comment
+      // Tap on the add/update comment button to save the updated comment
       await tester.tap(addOrUpdateCommentTextButton);
       await tester.pumpAndSettle();
 
       // Verify that the comment list dialog now displays correctly the
       // updated comment
-      expect(find.text(commentTitle), findsOneWidget);
-      expect(find.text(commentText), findsNothing);
-      expect(find.text(updatedCommentText), findsOneWidget);
-      expect(find.text(commentPosition), findsOneWidget);
+
+      commentListDialogFinder =
+          find.byType(CommentListAddDialogWidget);
+      expect(find.descendant(
+            of: commentListDialogFinder,
+            matching: find.text(commentTitle)), findsOneWidget);
+      expect(find.descendant(
+            of: commentListDialogFinder,
+            matching: find.text(commentText)), findsNothing);
+      expect(find.descendant(
+            of: commentListDialogFinder,
+            matching: find.text(updatedCommentText)), findsOneWidget);
+      expect(
+          find.descendant(
+            of: commentListDialogFinder,
+            matching: find.text(commentPosition),
+          ),
+          findsOneWidget);
+
+      // Now close the comment list dialog
+      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+      await tester.pumpAndSettle();
+
+      // Verify that the comment icon button is now highlighted since now
+      // a comment exist for the audio
+      commentInkWellButtonFinder = validateInkWellButton(
+        tester: tester,
+        inkWellButtonKey: 'commentsInkWellButton',
+        expectedIcon: Icons.bookmark_outline_outlined,
+        expectedIconColor: Colors.white,
+        expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
+      );
+
+      // Tap on the comment icon button to re-open the comment list
+      // dialog
+      await tester.tap(commentInkWellButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Now tap on the delete comment icon button to delete the comment
+      await tester.tap(find.byKey(const Key('deleteCommentIconButton')));
+      await tester.pumpAndSettle();
+
+      // Verify the delete comment dialog title
+      expect(find.text('Delete comment'), findsOneWidget);
+
+      // Verify the delete comment dialog message
+      expect(find.text("Deleting comment \"$commentTitle\"."), findsOneWidget);
+
+      // Confirm the deletion of the comment
+      await tester.tap(find.byKey(const Key('confirmButtonKey')));
+      await tester.pumpAndSettle();
+
+      // Verify that the comment list dialog now displays no comment
+      expect(find.descendant(
+            of: commentListDialogFinder,
+            matching: find.text(commentTitle)), findsNothing);
+
+      // Now close the comment list dialog
+      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+
+      // Verify that the comment icon button is enabled but no longer
+      // highlighted since no comment exist for the audio
+      commentInkWellButtonFinder = validateInkWellButton(
+        tester: tester,
+        inkWellButtonKey: 'commentsInkWellButton',
+        expectedIcon: Icons.bookmark_outline_outlined,
+        expectedIconColor: kDarkAndLightEnabledIconColor,
+        expectedIconBackgroundColor: Colors.black,
+      );
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -2384,7 +2471,8 @@ Future<void> copyAudioFromSourceToTargetPlaylist({
   // "audio learn test short video one"
 
   // First, find the Audio sublist ListTile Text widget
-  final Finder sourceAudioListTileTextWidgetFinder = find.text(audioToCopyTitle);
+  final Finder sourceAudioListTileTextWidgetFinder =
+      find.text(audioToCopyTitle);
 
   // Then obtain the Audio ListTile widget enclosing the Text widget by
   // finding its ancestor
