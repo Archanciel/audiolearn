@@ -2,6 +2,7 @@ import 'package:audiolearn/models/playlist.dart';
 import 'package:audiolearn/services/json_data_service.dart';
 import 'package:audiolearn/utils/date_time_parser.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:path/path.dart' as path;
@@ -193,43 +194,6 @@ void main() {
       DirUtil.deleteFilesInDirAndSubDirs(
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
-
-    Finder validateInkWellButton({
-      required WidgetTester tester,
-      required String audioTitle,
-    }) {
-      Finder lastDownloadedAudioListTileInkWellFinder =
-          findAudioItemInkWellWidget(
-        audioTitle,
-      );
-
-      // Find the Icon within the InkWell
-      Finder iconFinder = find.descendant(
-        of: lastDownloadedAudioListTileInkWellFinder,
-        matching: find.byType(Icon),
-      );
-      Icon iconWidget = tester.widget<Icon>(iconFinder);
-
-      // Assert Icon type
-      expect(iconWidget.icon, equals(Icons.play_arrow));
-
-      // Assert Icon color
-      expect(iconWidget.color, equals(kDarkAndLightEnabledIconColor));
-
-      // Find the CircleAvatar within the InkWell
-      Finder circleAvatarFinder = find.descendant(
-        of: lastDownloadedAudioListTileInkWellFinder,
-        matching: find.byType(CircleAvatar),
-      );
-      CircleAvatar circleAvatarWidget =
-          tester.widget<CircleAvatar>(circleAvatarFinder);
-
-      // Assert CircleAvatar background color
-      expect(circleAvatarWidget.backgroundColor, equals(Colors.black));
-
-      return lastDownloadedAudioListTileInkWellFinder;
-    }
-
     testWidgets(
         'Clicking on audio play button to open AudioPlayerView. Then back to playlist download view and click on pause, then on play again. Check the audio item play/pause icon as well as their color',
         (
@@ -249,13 +213,16 @@ void main() {
       // playlist in order to open the AudioPlayerView displaying
       // the not yet played audio.
 
-      // First, get the previously downloaded Audio item InkWell widget
-      // finder. The InkWell widget contains the play or pause icon
-      // and tapping on it plays or pauses the audio.
+      // First, validate the play/pause button of the previously
+      // downloaded Audio item InkWell widget and obtain again the
+      // previously downloaded Audio item InkWell widget finder
 
       Finder lastDownloadedAudioListTileInkWellFinder = validateInkWellButton(
         tester: tester,
         audioTitle: lastDownloadedAudioTitle,
+        expectedIcon: Icons.play_arrow,
+        expectedIconColor: kDarkAndLightEnabledIconColor,
+        expectedIconBackgroundColor: Colors.black,
       );
 
       // Now tap on the InkWell to play the audio and draw to the audio
@@ -279,35 +246,17 @@ void main() {
       await tester.tap(audioPlayerNavButton);
       await tester.pumpAndSettle();
 
-      // First, obtain again the previously downloaded Audio item InkWell
-      // widget finder..
-      lastDownloadedAudioListTileInkWellFinder = findAudioItemInkWellWidget(
-        lastDownloadedAudioTitle,
+      // Again, validate the play/pause button of the previously
+      // downloaded Audio item InkWell widget and obtain again the
+      // previously downloaded Audio item InkWell widget finder
+      lastDownloadedAudioListTileInkWellFinder =
+          lastDownloadedAudioListTileInkWellFinder = validateInkWellButton(
+        tester: tester,
+        audioTitle: lastDownloadedAudioTitle,
+        expectedIcon: Icons.pause,
+        expectedIconColor: Colors.white,
+        expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
       );
-
-      // Find the Icon within the InkWell
-      Finder iconFinder = find.descendant(
-        of: lastDownloadedAudioListTileInkWellFinder,
-        matching: find.byType(Icon),
-      );
-      Icon iconWidget = tester.widget<Icon>(iconFinder);
-
-      // Assert Icon type
-      expect(iconWidget.icon, equals(Icons.pause));
-
-      // Assert Icon color
-      expect(iconWidget.color, equals(Colors.white));
-
-      // Find the CircleAvatar within the InkWell
-      Finder circleAvatarFinder = find.descendant(
-        of: lastDownloadedAudioListTileInkWellFinder,
-        matching: find.byType(CircleAvatar),
-      );
-      CircleAvatar circleAvatarWidget = tester.widget<CircleAvatar>(circleAvatarFinder);
-
-      // Assert CircleAvatar background color
-      expect(circleAvatarWidget.backgroundColor,
-          equals(kDarkAndLightEnabledIconColor));
 
       // Now tap on the InkWell to pause the audio
       await tester.tap(lastDownloadedAudioListTileInkWellFinder);
@@ -316,29 +265,13 @@ void main() {
       // Verify if the play icon is present as well as its color and
       // its enclosing CircleAvatar background color
 
-      // Find the Icon within the InkWell
-      iconFinder = find.descendant(
-        of: lastDownloadedAudioListTileInkWellFinder,
-        matching: find.byType(Icon),
+      lastDownloadedAudioListTileInkWellFinder = validateInkWellButton(
+        tester: tester,
+        audioTitle: lastDownloadedAudioTitle,
+        expectedIcon: Icons.play_arrow,
+        expectedIconColor: Colors.white,
+        expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
       );
-      iconWidget = tester.widget<Icon>(iconFinder);
-
-      // Assert Icon type
-      expect(iconWidget.icon, equals(Icons.play_arrow));
-
-      // Assert Icon color
-      expect(iconWidget.color, equals(Colors.white));
-
-      // Find the CircleAvatar within the InkWell
-      circleAvatarFinder = find.descendant(
-        of: lastDownloadedAudioListTileInkWellFinder,
-        matching: find.byType(CircleAvatar),
-      );
-      circleAvatarWidget = tester.widget<CircleAvatar>(circleAvatarFinder);
-
-      // Assert CircleAvatar background color
-      expect(circleAvatarWidget.backgroundColor,
-          equals(kDarkAndLightEnabledIconColor));
 
       // Now tap on the InkWell to play the previously paused audio
       // and draw to the audio player screen
@@ -356,6 +289,7 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
   });
+
   group('audio info audio state verification', () {
     testWidgets(
         'After starting to play the audio, go back to playlist download view in order to verify audio info and audio play/pause icon type and state.',
@@ -1156,7 +1090,7 @@ void main() {
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
-      // First, get the current parially played Audio ListTile Text
+      // First, get the current partially played Audio ListTile Text
       // widget finder and tap on it
       final Finder currentPartiallyPlayedAudioListTileTextWidgetFinder =
           find.text(currentPartiallyPlayedAudioTitle);
@@ -2209,43 +2143,92 @@ void main() {
     });
   });
   group('Audio comment tests', () {
-    testWidgets('Temporary creating add comment dialog.',
+    testWidgets('Manage comments in initially empty playlist.',
         (WidgetTester tester) async {
-      const String audioPlayerSelectedPlaylistTitle =
-          'S8 audio'; // Youtube playlist
+      const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+      const String emptyPlaylistTitle = 'Empty'; // Local empty playlist
       const String audioTitleNotYetCommented =
           "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
 
       await initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_comment_test',
-        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        selectedPlaylistTitle: emptyPlaylistTitle,
       );
 
-      // Now we want to tap on the first downloaded audio of the
-      // playlist in order to open the AudioPlayerView displaying
+      // Go to the audio player view
+      Finder audioPlayerNavButton =
+          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+      await tester.tap(audioPlayerNavButton);
+      await tester.pumpAndSettle();
+
+      // Verify that the comment icon button is disabled since no
+      // audio is available to be played or commented
+      validateInkWellButton(
+        tester: tester,
+        inkWellButtonKey: 'commentsInkWellButton',
+        expectedIcon: Icons.bookmark_outline_outlined,
+        expectedIconColor: kDarkAndLightDisabledIconColor,
+        expectedIconBackgroundColor: Colors.black,
+      );
+
+      // Now we go back to the PlayListDownloadView in order
+      // to copy an audio in the empty playlist
+      audioPlayerNavButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(audioPlayerNavButton);
+      await tester.pumpAndSettle();
+
+      // Copy an uncommented audio from the Youtube playlist to
+      // the empty playlist
+      await copyAudioFromSourceToTargetPlaylist(
+        tester: tester,
+        sourcePlaylistTitle: youtubePlaylistTitle,
+        targetPlaylistTitle: emptyPlaylistTitle,
+        audioToCopyTitle: audioTitleNotYetCommented,
+      );
+
+      // Now we want to tap on the copied uncommented audio in the
+      // empty playlist in order to open the AudioPlayerView displaying
       // the audio
 
-      // Tap the 'Toggle List' button to avoid displaying the list
-      // of playlists which may hide the audio title we want to
-      // tap on
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      // First, select the empty playlist
+      await selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: emptyPlaylistTitle,
+      );
+
+      // Then, get the ListTile Text widget finder of the uncommented
+      // audio copied in the empty playlist and tap on it to open the
+      // AudioPlayerView
+      Finder audioTitleNotYetCommentedFinder =
+          find.text(audioTitleNotYetCommented);
+      await tester.tap(audioTitleNotYetCommentedFinder);
       await tester.pumpAndSettle();
 
-      // First, get the ListTile Text widget finder of the audio
-      // to be selected and tap on it to go to the AudioPlayerView
-      await tester.tap(find.text(audioTitleNotYetCommented));
-      await tester.pumpAndSettle();
+      // Verify that the comment icon button is now enabled since now
+      // an saudio is available to be played or commented
+      Finder commentInkWellButtonFinder = validateInkWellButton(
+        tester: tester,
+        inkWellButtonKey: 'commentsInkWellButton',
+        expectedIcon: Icons.bookmark_outline_outlined,
+        expectedIconColor: kDarkAndLightEnabledIconColor,
+        expectedIconBackgroundColor: Colors.black,
+      );
 
       // Tap on the comment icon button to open the comment list
       // dialog
-      Finder commentInkWellButtonFinder =
-          find.byKey(const Key('commentsInkWellButton'));
       await tester.tap(commentInkWellButtonFinder);
       await tester.pumpAndSettle();
 
       // Verify that the comment dialog is displayed
       expect(find.text('Comments'), findsOneWidget);
+
+      // Verify that no comment is displayed in the comment list
+      final commentWidget = find.byKey(ValueKey('commentTitleKey'));
+
+      // Assert that no comment widgets are found
+      expect(commentWidget, findsNothing);
 
       // Now tap on the Add comment icon button to open the add
       // edit comment dialog
@@ -2254,19 +2237,22 @@ void main() {
       await tester.pumpAndSettle();
 
       // Find the TextField using the Key
-      final textFieldFinder = find.byKey(const Key('commentTitleTextField'));
+      final commentTitleTextFieldFinder = find.byKey(const Key('commentTitleTextField'));
 
       // Ensure that the TextField is found in the widget tree
-      expect(textFieldFinder, findsOneWidget);
+      expect(commentTitleTextFieldFinder, findsOneWidget);
 
       // Retrieve the TextField widget
-      final textField = tester.widget<TextField>(textFieldFinder);
+      final commentTitleTextField = tester.widget<TextField>(commentTitleTextFieldFinder);
 
       // Extract the TextStyle used in the TextField
-      final textStyle = textField.style ?? const TextStyle();
+      final textStyle = commentTitleTextField.style ?? const TextStyle();
 
       // Check the font size of the TextField
       expect(textStyle.fontSize, 16);
+
+      // Now enter a title for the comment
+      await tester.enterText(commentTitleTextFieldFinder, 'Comment title');
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -2274,6 +2260,146 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
   });
+}
+
+Future<void> copyAudioFromSourceToTargetPlaylist({
+  required WidgetTester tester,
+  required String sourcePlaylistTitle,
+  required String targetPlaylistTitle,
+  required String audioToCopyTitle,
+}) async {
+  // First, select the source playlist
+  await selectPlaylist(
+    tester: tester,
+    playlistToSelectTitle: sourcePlaylistTitle,
+  );
+
+  // Now we want to tap the popup menu of the Audio ListTile
+  // "audio learn test short video one"
+
+  // First, find the Audio sublist ListTile Text widget
+  Finder sourceAudioListTileTextWidgetFinder = find.text(audioToCopyTitle);
+
+  // Then obtain the Audio ListTile widget enclosing the Text widget by
+  // finding its ancestor
+  Finder sourceAudioListTileWidgetFinder = find.ancestor(
+    of: sourceAudioListTileTextWidgetFinder,
+    matching: find.byType(ListTile),
+  );
+
+  // Now find the leading menu icon button of the Audio ListTile
+  // and tap on it
+  Finder sourceAudioListTileLeadingMenuIconButton = find.descendant(
+    of: sourceAudioListTileWidgetFinder,
+    matching: find.byIcon(Icons.menu),
+  );
+
+  // Tap the leading menu icon button to open the popup menu
+  await tester.tap(sourceAudioListTileLeadingMenuIconButton);
+  await tester.pumpAndSettle(); // Wait for popup menu to appear
+
+  // Now find the copy audio popup menu item and tap on it
+
+  Finder popupCopyMenuItem =
+      find.byKey(const Key("popup_menu_copy_audio_to_playlist"));
+
+  await tester.tap(popupCopyMenuItem);
+  await tester.pumpAndSettle(); // Wait for tap action to complete
+
+  // Find the RadioListTile target playlist to which the audio
+  // will be copied
+  Finder targetPlaylistRadioListTile = find.byWidgetPredicate(
+    (Widget widget) =>
+        widget is RadioListTile &&
+        widget.title is Text &&
+        (widget.title as Text).data == targetPlaylistTitle,
+  );
+
+  // Tap the target playlist RadioListTile to select it
+  await tester.tap(targetPlaylistRadioListTile);
+  await tester.pumpAndSettle();
+
+  // Now find the confirm button and tap on it
+  await tester.tap(find.byKey(const Key('confirmButton')));
+  await tester.pumpAndSettle();
+
+  // Now find the ok button of the confirm dialog
+  // and tap on it
+  await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+  await tester.pumpAndSettle();
+}
+
+Future<void> selectPlaylist({
+  required WidgetTester tester,
+  required String playlistToSelectTitle,
+}) async {
+  // First, find the source Playlist ListTile Text widget
+  Finder playlistListTileTextWidgetFinder =
+      find.text(playlistToSelectTitle);
+
+  // Then obtain the source Playlist ListTile widget enclosing the Text widget
+  // by finding its ancestor
+  Finder playlistListTileWidgetFinder = find.ancestor(
+    of: playlistListTileTextWidgetFinder,
+    matching: find.byType(ListTile),
+  );
+
+  // Now find the Checkbox widget located in the Playlist ListTile
+  // and tap on it to select the playlist
+  Finder playlistListTileCheckboxWidgetFinder = find.descendant(
+    of: playlistListTileWidgetFinder,
+    matching: find.byType(Checkbox),
+  );
+
+  // Tap the ListTile Playlist checkbox to select it
+  await tester.tap(playlistListTileCheckboxWidgetFinder);
+  await tester.pumpAndSettle();
+}
+
+Finder validateInkWellButton({
+  required WidgetTester tester,
+  String? audioTitle,
+  String? inkWellButtonKey,
+  required IconData expectedIcon,
+  required Color expectedIconColor,
+  required Color expectedIconBackgroundColor,
+}) {
+  Finder audioListTileInkWellFinder;
+
+  if (inkWellButtonKey != null) {
+    audioListTileInkWellFinder = find.byKey(Key(inkWellButtonKey));
+  } else {
+    audioListTileInkWellFinder = findAudioItemInkWellWidget(
+      audioTitle!,
+    );
+  }
+
+  // Find the Icon within the InkWell
+  Finder iconFinder = find.descendant(
+    of: audioListTileInkWellFinder,
+    matching: find.byType(Icon),
+  );
+  Icon iconWidget = tester.widget<Icon>(iconFinder);
+
+  // Assert Icon type
+  expect(iconWidget.icon, equals(expectedIcon));
+
+  // Assert Icon color
+  expect(iconWidget.color, equals(expectedIconColor));
+
+  // Find the CircleAvatar within the InkWell
+  Finder circleAvatarFinder = find.descendant(
+    of: audioListTileInkWellFinder,
+    matching: find.byType(CircleAvatar),
+  );
+  CircleAvatar circleAvatarWidget =
+      tester.widget<CircleAvatar>(circleAvatarFinder);
+
+  // Assert CircleAvatar background color
+  expect(
+      circleAvatarWidget.backgroundColor, equals(expectedIconBackgroundColor));
+
+  return audioListTileInkWellFinder;
 }
 
 Future<void> goBackToPlaylistdownloadViewToCheckAudioStateAndIcon({
@@ -2370,26 +2496,26 @@ Future<void> goBackToPlaylistdownloadViewToCheckAudioStateAndIcon({
       equals(expectedAudioRightIconSurroundedColor));
 }
 
-Finder findAudioItemInkWellWidget(String lastDownloadedAudioTitle) {
-  // First, get the previously downloaded Audio item ListTile Text
+Finder findAudioItemInkWellWidget(String audioTitle) {
+  // First, get the downloaded Audio item ListTile Text
   // widget finder
-  final Finder lastDownloadedAudioListTileTextWidgetFinder =
-      find.text(lastDownloadedAudioTitle);
+  final Finder audioListTileTextWidgetFinder = find.text(audioTitle);
 
-  // Then obtain the previously downloaded Audio item ListTile
+  // Then obtain the downloaded Audio item ListTile
   // widget enclosing the Text widget by finding its ancestor
-  final Finder lastDownloadedAudioListTileWidgetFinder = find.ancestor(
-    of: lastDownloadedAudioListTileTextWidgetFinder,
+  final Finder audioListTileWidgetFinder = find.ancestor(
+    of: audioListTileTextWidgetFinder,
     matching: find.byType(ListTile),
   );
 
   // Now find the InkWell widget located in the downloaded
   // Audio item ListTile
-  final Finder lastDownloadedAudioListTileInkWellFinder = find.descendant(
-    of: lastDownloadedAudioListTileWidgetFinder,
+  final Finder audioListTileInkWellFinder = find.descendant(
+    of: audioListTileWidgetFinder,
     matching: find.byKey(const Key("play_pause_audio_item_inkwell")),
   );
-  return lastDownloadedAudioListTileInkWellFinder;
+
+  return audioListTileInkWellFinder;
 }
 
 // A custom finder that finds an IconButton with the specified icon data.
