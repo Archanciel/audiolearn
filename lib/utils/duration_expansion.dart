@@ -117,7 +117,10 @@ extension DurationExpansion on Duration {
 
     if (addRemainingOneDigitTenthOfSecond) {
       int remainingOneDigitTenthOfSecond =
-          (inMilliseconds - secondsRounded * 1000).abs() ~/ 100;
+          (inMilliseconds.remainder(60000).abs() - secondsRounded * 1000)
+                  .abs() ~/
+              100;
+          // (inMilliseconds - secondsRounded * 1000).abs() ~/ 100;
       return '$minusStr$hours$twoDigitMinutes:$twoDigitSeconds.$remainingOneDigitTenthOfSecond';
     }
 
