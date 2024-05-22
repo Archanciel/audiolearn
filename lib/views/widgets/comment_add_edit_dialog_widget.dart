@@ -32,6 +32,8 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _commentController = TextEditingController();
   final FocusNode _focusNodeCommentTitle = FocusNode();
+  bool _reducePositionDurationChange = false;
+  bool _backToAllAudios = false;
 
   @override
   void initState() {
@@ -50,7 +52,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
         _titleController.text = widget.comment!.title;
         _commentController.text = widget.comment!.content;
         commentVM.currentCommentAudioPosition =
-            Duration(seconds: widget.comment!.audioPositionSeconds);
+            Duration(milliseconds: widget.comment!.audioPositionInTenthOfSeconds * 100);
       } else {
         commentVM.currentCommentAudioPosition =
             globalAudioPlayerVM.currentAudioPosition;
@@ -123,37 +125,67 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    IconButton(
-                      key: const Key('backwardOneSecondIconButton'),
-                      // Rewind 1 second button
-                      icon: const Icon(Icons.fast_rewind),
-                      onPressed: () async {
-                        await modifyCommentPosition(
-                          commentVMlistenFalse: commentVMlistenFalse,
-                          secondChange: -1,
-                        );
-                      },
-                      iconSize: kSmallestButtonWidth,
+                    SizedBox(
+                      width: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
+                      height: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
+                      child: Checkbox(
+                        key: const Key('reducePositionDurationChangeCheckbox'),
+                        value: _reducePositionDurationChange,
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            _reducePositionDurationChange = newValue ?? false;
+                          });
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      width: 50,
+                      child: IconButton(
+                        key: const Key('backwardOneSecondIconButton'),
+                        // Rewind 1 second button
+                        icon: const Icon(Icons.fast_rewind),
+                        onPressed: () async {
+                          await modifyCommentPosition(
+                            commentVMlistenFalse: commentVMlistenFalse,
+                            millisecondsChange:
+                                _reducePositionDurationChange ? -100 : -1000,
+                          );
+                        },
+                        iconSize: _reducePositionDurationChange
+                            ? kSmallestButtonWidth * 0.8
+                            : kSmallestButtonWidth,
+                      ),
                     ),
                     Consumer<CommentVM>(
                       builder: (context, commentVM, child) {
                         // Text for the current comment audio position
                         return Text(
-                          commentVM.currentCommentAudioPosition.HHmmssZeroHH(),
+                          _reducePositionDurationChange
+                              ? commentVM.currentCommentAudioPosition
+                                  .HHmmssZeroHH(
+                                      addRemainingOneDigitTenthOfSecond: true)
+                              : commentVM.currentCommentAudioPosition
+                                  .HHmmssZeroHH(),
                         );
                       },
                     ),
-                    IconButton(
-                      // Forward 1 second button
-                      key: const Key('forwardOneSecondIconButton'),
-                      icon: const Icon(Icons.fast_forward),
-                      onPressed: () async {
-                        await modifyCommentPosition(
-                          commentVMlistenFalse: commentVMlistenFalse,
-                          secondChange: 1,
-                        );
-                      },
-                      iconSize: kSmallestButtonWidth,
+                    SizedBox(
+                      width: 50,
+                      child: IconButton(
+                        // Forward 1 second button
+                        key: const Key('forwardOneSecondIconButton'),
+                        icon: const Icon(Icons.fast_forward),
+                        onPressed: () async {
+                          await modifyCommentPosition(
+                            commentVMlistenFalse: commentVMlistenFalse,
+                            millisecondsChange:
+                                _reducePositionDurationChange ? 100 : 1000,
+                          );
+                        },
+                        iconSize: _reducePositionDurationChange
+                            ? kSmallestButtonWidth * 0.8
+                            : kSmallestButtonWidth,
+                      ),
                     ),
                     IconButton(
                       // Play/Pause button
@@ -197,8 +229,8 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                 comment: Comment(
                   title: _titleController.text,
                   content: _commentController.text,
-                  audioPositionSeconds: commentVMlistenFalse
-                      .currentCommentAudioPosition.inSeconds,
+                  audioPositionInTenthOfSeconds: commentVMlistenFalse
+                      .currentCommentAudioPosition.inMilliseconds ~/ 100,
                 ),
                 commentedAudio: globalAudioPlayerVM.currentAudio!,
               );
@@ -207,8 +239,9 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
 
               commentToModify.title = _titleController.text;
               commentToModify.content = _commentController.text;
-              commentToModify.audioPositionSeconds =
-                  commentVMlistenFalse.currentCommentAudioPosition.inSeconds;
+              commentToModify.audioPositionInTenthOfSeconds =
+                  commentVMlistenFalse.currentCommentAudioPosition.inMilliseconds ~/
+                      100;
 
               commentVMlistenFalse.modifyComment(
                 modifiedComment: commentToModify,
@@ -271,11 +304,11 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
 
   Future<void> modifyCommentPosition({
     required CommentVM commentVMlistenFalse,
-    required int secondChange,
+    required int millisecondsChange,
   }) async {
     commentVMlistenFalse.currentCommentAudioPosition =
         commentVMlistenFalse.currentCommentAudioPosition +
-            Duration(seconds: secondChange);
+            Duration(milliseconds: millisecondsChange);
 
     await globalAudioPlayerVM.modifyAudioPlayerPluginPosition(
       commentVMlistenFalse.currentCommentAudioPosition,

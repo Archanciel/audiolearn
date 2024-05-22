@@ -66,7 +66,9 @@ extension DurationExpansion on Duration {
   /// Text(
   ///   globalAudioPlayerVM.currentAudioPosition.HHmmssZeroHH(),
   /// )
-  String HHmmssZeroHH() {
+  String HHmmssZeroHH({
+    bool addRemainingOneDigitTenthOfSecond = false,
+  }) {
     String twoDigits(int n) => n.toString().padLeft(2, '0');
     String hours = '';
 
@@ -104,13 +106,19 @@ extension DurationExpansion on Duration {
     // HHmmssZeroHH ensuring durations are correctly rounded
     // (test not performed in DateTimeParser test)'
 
-    String twoDigitSeconds =
-        twoDigits((inMilliseconds.remainder(60000).abs() / 1000).round());
+    int secondsRounded = (inMilliseconds.remainder(60000).abs() / 1000).round();
+    String twoDigitSeconds = twoDigits(secondsRounded);
 
     String minusStr = '';
 
     if (inMicroseconds < 0) {
       minusStr = '-';
+    }
+
+    if (addRemainingOneDigitTenthOfSecond) {
+      int remainingOneDigitTenthOfSecond =
+          (inMilliseconds - secondsRounded * 1000).abs() ~/ 100;
+      return '$minusStr$hours$twoDigitMinutes:$twoDigitSeconds.$remainingOneDigitTenthOfSecond';
     }
 
     return '$minusStr$hours$twoDigitMinutes:$twoDigitSeconds';

@@ -4,15 +4,15 @@ class Comment {
   String id;
   String title;
   String content;
-  int audioPositionSeconds;
+  int audioPositionInTenthOfSeconds;
   final DateTime creationDateTime;
   late DateTime lastUpdateDateTime;
 
   Comment({
     required this.title,
     required this.content,
-    required this.audioPositionSeconds,
-  })  : id = "${title}_${audioPositionSeconds.toString()}",
+    required this.audioPositionInTenthOfSeconds,
+  })  : id = "${title}_${audioPositionInTenthOfSeconds.toString()}",
         creationDateTime =
             DateTimeUtil.getDateTimeLimitedToSeconds(DateTime.now()) {
     lastUpdateDateTime = creationDateTime;
@@ -24,7 +24,7 @@ class Comment {
     required this.id,
     required this.title,
     required this.content,
-    required this.audioPositionSeconds,
+    required this.audioPositionInTenthOfSeconds,
     required this.creationDateTime,
     required this.lastUpdateDateTime,
   });
@@ -34,7 +34,7 @@ class Comment {
       id: json['id'],
       title: json['title'],
       content: json['content'],
-      audioPositionSeconds: json['audioPositionSeconds'],
+      audioPositionInTenthOfSeconds: json['audioPositionInTenthOfSeconds'],
       creationDateTime: DateTime.parse(json['creationDateTime']),
       lastUpdateDateTime: DateTime.parse(json['lastUpdateDateTime']),
     );
@@ -46,7 +46,7 @@ class Comment {
       'id': id,
       'title': title,
       'content': content,
-      'audioPositionSeconds': audioPositionSeconds,
+      'audioPositionInTenthOfSeconds': audioPositionInTenthOfSeconds,
       'creationDateTime': creationDateTime.toIso8601String(),
       'lastUpdateDateTime': lastUpdateDateTime.toIso8601String(),
     };

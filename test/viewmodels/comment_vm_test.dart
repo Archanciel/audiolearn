@@ -105,7 +105,7 @@ void main() {
       Comment testCommentOne = Comment(
         title: 'Test Title',
         content: 'Test Content',
-        audioPositionSeconds: 300,
+        audioPositionInTenthOfSeconds: 3000,
       );
 
       commentVM.addComment(
@@ -130,7 +130,7 @@ void main() {
       Comment testCommentTwo = Comment(
         title: 'Test Title 2',
         content: 'Test Content 2',
-        audioPositionSeconds: 20,
+        audioPositionInTenthOfSeconds: 201,
       );
 
       commentVM.addComment(
@@ -182,7 +182,7 @@ void main() {
       Comment testCommentOne = Comment(
         title: 'Test Title',
         content: 'Test Content',
-        audioPositionSeconds: 0,
+        audioPositionInTenthOfSeconds: 0,
       );
 
       commentVM.addComment(
@@ -301,7 +301,7 @@ void main() {
 
       commentToModify.title = "New title modified";
       commentToModify.content = "New content modified";
-      commentToModify.audioPositionSeconds = 40;
+      commentToModify.audioPositionInTenthOfSeconds = 401;
 
       commentVM.modifyComment(
         modifiedComment: commentToModify,
@@ -332,8 +332,8 @@ void validateComment(Comment actualComment, Comment expectedComment) {
   expect(actualComment.id, expectedComment.id);
   expect(actualComment.title, expectedComment.title);
   expect(actualComment.content, expectedComment.content);
-  expect(
-      actualComment.audioPositionSeconds, expectedComment.audioPositionSeconds);
+  expect(actualComment.audioPositionInTenthOfSeconds,
+      expectedComment.audioPositionInTenthOfSeconds);
   expect(actualComment.creationDateTime, expectedComment.creationDateTime);
 }
 

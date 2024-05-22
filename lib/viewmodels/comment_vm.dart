@@ -74,8 +74,8 @@ class CommentVM extends ChangeNotifier {
         "$playListDir${path.separator}$kCommentDirName${path.separator}${_createCommentFileName(commentedAudio.audioFileName)}";
 
     sortAndSaveCommentLst(
-      commentLst:  commentLst,
-      commentFilePathName:  commentFilePathName,
+      commentLst: commentLst,
+      commentFilePathName: commentFilePathName,
     );
 
     // Add comment to the database
@@ -87,7 +87,8 @@ class CommentVM extends ChangeNotifier {
     required String commentFilePathName,
   }) {
     commentLst.sort(
-      (a, b) => a.audioPositionSeconds.compareTo(b.audioPositionSeconds),
+      (a, b) => a.audioPositionInTenthOfSeconds
+          .compareTo(b.audioPositionInTenthOfSeconds),
     );
 
     JsonDataService.saveListToFile(
@@ -152,7 +153,8 @@ class CommentVM extends ChangeNotifier {
 
     oldComment.title = modifiedComment.title;
     oldComment.content = modifiedComment.content;
-    oldComment.audioPositionSeconds = modifiedComment.audioPositionSeconds;
+    oldComment.audioPositionInTenthOfSeconds =
+        modifiedComment.audioPositionInTenthOfSeconds;
     oldComment.lastUpdateDateTime =
         DateTimeUtil.getDateTimeLimitedToSeconds(DateTime.now());
 
@@ -160,8 +162,8 @@ class CommentVM extends ChangeNotifier {
         "$playListDir${path.separator}$kCommentDirName${path.separator}${_createCommentFileName(commentedAudio.audioFileName)}";
 
     sortAndSaveCommentLst(
-      commentLst:  commentLst,
-      commentFilePathName:  commentFilePathName,
+      commentLst: commentLst,
+      commentFilePathName: commentFilePathName,
     );
 
     notifyListeners();

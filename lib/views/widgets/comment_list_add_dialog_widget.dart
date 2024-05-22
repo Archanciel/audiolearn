@@ -268,7 +268,8 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
               // comment position Text
               key: const Key('commentPositionKey'),
               style: TextStyle(fontSize: 13),
-              Duration(seconds: comment.audioPositionSeconds).HHmmssZeroHH(),
+              Duration(milliseconds: comment.audioPositionInTenthOfSeconds * 100)
+                  .HHmmssZeroHH(),
             ),
             const SizedBox(width: 11),
           ],
@@ -326,7 +327,7 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
     _playingComment = comment;
 
     await globalAudioPlayerVM.modifyAudioPlayerPluginPosition(
-      Duration(seconds: comment.audioPositionSeconds),
+      Duration(milliseconds: comment.audioPositionInTenthOfSeconds * 100),
     );
 
     await globalAudioPlayerVM.playFromCurrentAudioFile(
