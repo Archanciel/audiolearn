@@ -127,14 +127,17 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                     SizedBox(
                       width: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
                       height: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
-                      child: Checkbox(
-                        key: const Key('modifyPositionDurationChangeInTenthOfSeconds'),
-                        value: _modifyPositionDurationChangeInTenthOfSeconds,
-                        onChanged: (bool? newValue) {
-                          setState(() {
-                            _modifyPositionDurationChangeInTenthOfSeconds = newValue ?? false;
-                          });
-                        },
+                      child: Tooltip(
+                        message: AppLocalizations.of(context)!.tenthOfSecondsCheckboxTooltip,
+                        child: Checkbox(
+                          key: const Key('modifyPositionDurationChangeInTenthOfSeconds'),
+                          value: _modifyPositionDurationChangeInTenthOfSeconds,
+                          onChanged: (bool? newValue) {
+                            setState(() {
+                              _modifyPositionDurationChangeInTenthOfSeconds = newValue ?? false;
+                            });
+                          },
+                        ),
                       ),
                     ),
                     SizedBox(

@@ -333,5 +333,6 @@
   "update": "Update",
   "deleteCommentConfirnTitle": "Delete comment",
   "deleteCommentConfirnBody": "Deleting comment \"{title}\".",
-  "commentMenu": "Audio comments ..."
+  "commentMenu": "Audio comments ...",
+  "tenthOfSecondsCheckboxTooltip": "Enable this checkbox to specify the comment position with precision up to a tenth of a second."
 }

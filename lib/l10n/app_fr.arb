@@ -335,5 +335,6 @@
   "update": "Mettre à jour",
   "deleteCommentConfirnTitle": "Suppression de commentaire",
   "deleteCommentConfirnBody": "Supptimer le commentaire \"{title}\".",
-  "commentMenu": "Commentaires de l'audio ..."
+  "commentMenu": "Commentaires de l'audio ...",
+  "tenthOfSecondsCheckboxTooltip": "Activez cette case à cocher pour spécifier la position du commentaire avec une précision allant jusqu'au dixième de seconde."
 }

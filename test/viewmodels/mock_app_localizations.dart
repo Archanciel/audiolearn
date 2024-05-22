@@ -1016,4 +1016,8 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get commentMenu => "Audio comments ...";
+
+  @override
+  String get tenthOfSecondsCheckboxTooltip =>
+      "Enable this checkbox to specify the comment position with precision up to a tenth of second.";
 }
