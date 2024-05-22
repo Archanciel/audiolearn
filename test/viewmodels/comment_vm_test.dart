@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:audiolearn/models/audio.dart';
 import 'package:audiolearn/models/playlist.dart';
-import 'package:audiolearn/services/json_data_service.dart';
 import 'package:audiolearn/utils/date_time_util.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path/path.dart' as path;
@@ -15,9 +14,7 @@ import 'package:audiolearn/viewmodels/comment_vm.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   group('CommentVM test', () {
-    test(
-        'load or create comment file comment file not exist, then exist, but is empty',
-        () async {
+    test('load comments, comment file not exist', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesAndSubDirsOfDir(
@@ -38,12 +35,10 @@ void main() {
 
       CommentVM commentVM = CommentVM();
 
-      // calling loadOrCreateCommentFile in situation where comment file
+      // calling loadAudioComments in situation where comment file
       // does not exist
 
-      List<Comment> commentLst =
-          commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
-              commentedAudio: audio);
+      List<Comment> commentLst = commentVM.loadAudioComments(audio: audio);
 
       // the returned Commentlist should be empty
       expect(commentLst.length, 0);
@@ -51,27 +46,75 @@ void main() {
       String createdCommentFilePathName =
           "$kPlaylistDownloadRootPathWindowsTest${path.separator}local${path.separator}$kCommentDirName${path.separator}240110-181805-Really short video 23-07-01.json";
 
-      // the comment file should have been created
-      expect(File(createdCommentFilePathName).existsSync(), true);
+      // the comment file should not have been created
+      expect(File(createdCommentFilePathName).existsSync(), false);
 
-      // check that due to the fact that the comment file is empty,
-      // the JsonDataService.loadFromFile method throws
-      // ClassNotContainedInJsonFileException
-      expect(
-          () => JsonDataService.loadFromFile(
-              jsonPathFileName: createdCommentFilePathName, type: Comment),
-          throwsA(predicate((e) =>
-              e is ClassNotContainedInJsonFileException &&
-              e.toString().contains(createdCommentFilePathName))));
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesAndSubDirsOfDir(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
+    });
+    test('load comments, comment file exist', () async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesAndSubDirsOfDir(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
 
-      // now calling again loadOrCreateCommentFile in situation where an
-      // empty comment file exists
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_test",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
 
-      commentLst = commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
-          commentedAudio: audio);
+      Audio audio = createAudio(
+        playlistTitle: 'local_delete_comment',
+        audioFileName:
+            "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
+      );
+
+      CommentVM commentVM = CommentVM();
+
+      // calling loadAudioComments in situation where comment file
+      // does not exist
+
+      List<Comment> commentLst = commentVM.loadAudioComments(audio: audio);
 
       // the returned Commentlist should be empty
-      expect(commentLst.length, 0);
+      expect(commentLst.length, 3);
+
+      List<Comment> expectedCommentsLst = [
+        Comment.fullConstructor(
+          id: 'Test Title 2_2',
+          title: 'Test Title 2',
+          content: 'Test Content 2\nline 2\nline 3\nline four\nline 5',
+          audioPositionInTenthOfSeconds: 6,
+          creationDateTime: DateTime.parse('2023-03-26T00:05:32.000'),
+          lastUpdateDateTime: DateTime.parse('2024-05-19T15:23:51.000'),
+        ),
+        Comment.fullConstructor(
+          id: 'number 3_8',
+          title: 'number 3',
+          content:
+              'A complete example showcasing all audioplayers features can be found in our repository. Also check out our live web app.',
+          audioPositionInTenthOfSeconds: 8,
+          creationDateTime: DateTime.parse('2024-05-19T14:49:03.000'),
+          lastUpdateDateTime: DateTime.parse('2024-05-19T14:49:03.000'),
+        ),
+        Comment.fullConstructor(
+          id: 'Test Title_0',
+          title: 'Test Title 1',
+          content: 'Test Content\nline 2\nline 3',
+          audioPositionInTenthOfSeconds: 31,
+          creationDateTime: DateTime.parse('2023-03-24T20:05:32.000'),
+          lastUpdateDateTime: DateTime.parse('2024-05-19T14:46:05.000'),
+        ),
+      ];
+
+      for (int i = 0; i < commentLst.length; i++) {
+        validateComment(commentLst[i], expectedCommentsLst[i]);
+      }
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -110,14 +153,12 @@ void main() {
 
       commentVM.addComment(
         comment: testCommentOne,
-        commentedAudio: audio,
+        audioToComment: audio,
       );
 
       // now loading the comment list from the comment file
 
-      List<Comment> commentLst =
-          commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
-              commentedAudio: audio);
+      List<Comment> commentLst = commentVM.loadAudioComments(audio: audio);
 
       // the returned Commentlist should have one element
       expect(commentLst.length, 1);
@@ -135,13 +176,12 @@ void main() {
 
       commentVM.addComment(
         comment: testCommentTwo,
-        commentedAudio: audio,
+        audioToComment: audio,
       );
 
       // now loading the comment list from the comment file
 
-      commentLst = commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
-          commentedAudio: audio);
+      commentLst = commentVM.loadAudioComments(audio: audio);
 
       // the returned Commentlist should have two elements
       expect(commentLst.length, 2);
@@ -187,14 +227,12 @@ void main() {
 
       commentVM.addComment(
         comment: testCommentOne,
-        commentedAudio: audio,
+        audioToComment: audio,
       );
 
       // now loading the comment list from the comment file
 
-      List<Comment> commentLst =
-          commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
-              commentedAudio: audio);
+      List<Comment> commentLst = commentVM.loadAudioComments(audio: audio);
 
       // the returned Commentlist should have one element
       expect(commentLst.length, 1);
@@ -237,9 +275,7 @@ void main() {
 
       // now loading the comment list from the comment file
 
-      List<Comment> commentLst =
-          commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
-              commentedAudio: audio);
+      List<Comment> commentLst = commentVM.loadAudioComments(audio: audio);
 
       // the returned Commentlist should have two elements
       expect(commentLst.length, 2);
@@ -258,8 +294,7 @@ void main() {
 
       // now loading the comment list from the comment file
 
-      commentLst = commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
-          commentedAudio: audio);
+      commentLst = commentVM.loadAudioComments(audio: audio);
 
       // the returned Commentlist should have one element
       expect(commentLst.length, 0);
@@ -293,9 +328,7 @@ void main() {
 
       // modifying comment
 
-      List<Comment> commentLst =
-          commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
-              commentedAudio: audio);
+      List<Comment> commentLst = commentVM.loadAudioComments(audio: audio);
 
       Comment commentToModify = commentLst[1];
 
@@ -310,8 +343,7 @@ void main() {
 
       // now loading the comment list from the comment file
 
-      commentLst = commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
-          commentedAudio: audio);
+      commentLst = commentVM.loadAudioComments(audio: audio);
 
       // the returned Commentlist should have three element
       expect(commentLst.length, 3);

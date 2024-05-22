@@ -325,7 +325,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
   /// as a button. IconButton doesn't allow to use CircleAvatar as a
   /// button. CircleAvatar is used to display the bookmark icon which
   /// can be highlighted or not and disabled or not and be enclosed in
-  /// a colored circle. 
+  /// a colored circle.
   Widget _buildCommentsInkWellButton({
     required BuildContext context,
     required bool areAudioButtonsEnabled,
@@ -350,8 +350,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
 
     if (currentAudio != null) {
       if (commentVM
-          .loadExistingCommentFileOrCreateEmptyCommentFile(
-              commentedAudio: audioPlayerVM.currentAudio!)
+          .loadAudioComments(audio: audioPlayerVM.currentAudio!)
           .isEmpty) {
         circleAvatar = formatIconBackAndForGroundColor(
           context: context,

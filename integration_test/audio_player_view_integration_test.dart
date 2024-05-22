@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:audiolearn/models/playlist.dart';
 import 'package:audiolearn/services/json_data_service.dart';
 import 'package:audiolearn/utils/date_time_parser.dart';
@@ -2208,6 +2210,12 @@ void main() {
       await tester.tap(audioTitleNotYetCommentedFinder);
       await tester.pumpAndSettle();
 
+      // Ensure that the comment playlist directory does not exist
+      final Directory directory = Directory(
+          "kPlaylistDownloadRootPathWindowsTest${path.separator}$emptyPlaylistTitle${path.separator}comments");
+      
+      expect(directory.existsSync(), false);
+
       // Verify that the comment icon button is now enabled since now
       // an saudio is available to be played or commented
       Finder commentInkWellButtonFinder = validateInkWellButton(
@@ -2298,15 +2306,16 @@ void main() {
       // Verify that the comment list dialog now displays the
       // added comment
 
-      Finder commentListDialogFinder =
-          find.byType(CommentListAddDialogWidget);
+      Finder commentListDialogFinder = find.byType(CommentListAddDialogWidget);
 
-      expect(find.descendant(
-            of: commentListDialogFinder,
-            matching: find.text(commentTitle)), findsOneWidget);
-      expect(find.descendant(
-            of: commentListDialogFinder,
-            matching: find.text(commentText)), findsOneWidget);
+      expect(
+          find.descendant(
+              of: commentListDialogFinder, matching: find.text(commentTitle)),
+          findsOneWidget);
+      expect(
+          find.descendant(
+              of: commentListDialogFinder, matching: find.text(commentText)),
+          findsOneWidget);
 
       // Assuming you have identified the dialog using a key or type
       // Now use find.descendant to scope the search to the dialog
@@ -2342,17 +2351,20 @@ void main() {
       // Verify that the comment list dialog now displays correctly the
       // updated comment
 
-      commentListDialogFinder =
-          find.byType(CommentListAddDialogWidget);
-      expect(find.descendant(
-            of: commentListDialogFinder,
-            matching: find.text(commentTitle)), findsOneWidget);
-      expect(find.descendant(
-            of: commentListDialogFinder,
-            matching: find.text(commentText)), findsNothing);
-      expect(find.descendant(
-            of: commentListDialogFinder,
-            matching: find.text(updatedCommentText)), findsOneWidget);
+      commentListDialogFinder = find.byType(CommentListAddDialogWidget);
+      expect(
+          find.descendant(
+              of: commentListDialogFinder, matching: find.text(commentTitle)),
+          findsOneWidget);
+      expect(
+          find.descendant(
+              of: commentListDialogFinder, matching: find.text(commentText)),
+          findsNothing);
+      expect(
+          find.descendant(
+              of: commentListDialogFinder,
+              matching: find.text(updatedCommentText)),
+          findsOneWidget);
       expect(
           find.descendant(
             of: commentListDialogFinder,
@@ -2394,9 +2406,10 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify that the comment list dialog now displays no comment
-      expect(find.descendant(
-            of: commentListDialogFinder,
-            matching: find.text(commentTitle)), findsNothing);
+      expect(
+          find.descendant(
+              of: commentListDialogFinder, matching: find.text(commentTitle)),
+          findsNothing);
 
       // Now close the comment list dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));

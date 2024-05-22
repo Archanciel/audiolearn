@@ -23,35 +23,22 @@ class CommentVM extends ChangeNotifier {
 
   CommentVM();
 
-  List<Comment> loadExistingCommentFileOrCreateEmptyCommentFile({
-    required Audio commentedAudio,
+  /// If the comment file exists, the list of comments it contains is
+  /// returned. Else, an empty list is returned.
+  List<Comment> loadAudioComments({
+    required Audio audio,
   }) {
-    String commentFileName =
-        _createCommentFileName(commentedAudio.audioFileName);
-    String playlistCommentPath =
-        "${commentedAudio.enclosingPlaylist!.downloadPath}${path.separator}$kCommentDirName";
-    String commentFilePathName =
-        "$playlistCommentPath${path.separator}$commentFileName";
-    File commentFile = File(commentFilePathName);
+    String commentFilePathName =_createCommentFilePathAndFilePathName(audioToComment: audio)[1];
+    File commentFile =
+        File(commentFilePathName);
 
-    // Load the list from the file
     List<Comment> commentLst = [];
 
     if (commentFile.existsSync()) {
-      // Load the comment file
+      // Load the comment list from the json comment file
       commentLst = JsonDataService.loadListFromFile(
         jsonPathFileName: commentFilePathName,
         type: Comment,
-      );
-    } else {
-      // Create the comment file
-      DirUtil.createDirIfNotExistSync(
-        pathStr: playlistCommentPath,
-      );
-
-      JsonDataService.saveListToFile(
-        data: commentLst,
-        jsonPathFileName: commentFilePathName,
       );
     }
 
@@ -60,29 +47,47 @@ class CommentVM extends ChangeNotifier {
 
   void addComment({
     required Comment comment,
-    required Audio commentedAudio,
+    required Audio audioToComment,
   }) {
-    String playListDir = commentedAudio.enclosingPlaylist!.downloadPath;
-
-    List<Comment> commentLst = loadExistingCommentFileOrCreateEmptyCommentFile(
-      commentedAudio: commentedAudio,
+    List<Comment> commentLst = loadAudioComments(
+      audio: audioToComment,
     );
+
+    List<String> commentDirInfo = _createCommentFilePathAndFilePathName(
+      audioToComment: audioToComment,
+    );
+
+    if (commentLst.isEmpty) {
+      // Create the comment dir so that the comment file can be created
+      DirUtil.createDirIfNotExistSync(
+        pathStr: commentDirInfo[0],
+      );
+    }
 
     commentLst.add(comment);
 
-    String commentFilePathName =
-        "$playListDir${path.separator}$kCommentDirName${path.separator}${_createCommentFileName(commentedAudio.audioFileName)}";
-
-    sortAndSaveCommentLst(
+    _sortAndSaveCommentLst(
       commentLst: commentLst,
-      commentFilePathName: commentFilePathName,
+      commentFilePathName: commentDirInfo[1],
     );
 
     // Add comment to the database
     notifyListeners();
   }
 
-  void sortAndSaveCommentLst({
+  List<String> _createCommentFilePathAndFilePathName({
+    required Audio audioToComment,
+  }) {
+    String playlistCommentPath =
+        "${audioToComment.enclosingPlaylist!.downloadPath}${path.separator}$kCommentDirName";
+
+    return [
+      playlistCommentPath,
+      "$playlistCommentPath${path.separator}${_createCommentFileName(audioToComment.audioFileName)}"
+    ];
+  }
+
+  void _sortAndSaveCommentLst({
     required List<Comment> commentLst,
     required String commentFilePathName,
   }) {
@@ -113,10 +118,8 @@ class CommentVM extends ChangeNotifier {
     required String commentId,
     required Audio commentedAudio,
   }) {
-    String playListDir = commentedAudio.enclosingPlaylist!.downloadPath;
-
-    List<Comment> commentLst = loadExistingCommentFileOrCreateEmptyCommentFile(
-      commentedAudio: commentedAudio,
+    List<Comment> commentLst = loadAudioComments(
+      audio: commentedAudio,
     );
 
     commentLst.remove(
@@ -125,12 +128,10 @@ class CommentVM extends ChangeNotifier {
       ),
     );
 
-    String commentFilePathName =
-        "$playListDir${path.separator}$kCommentDirName${path.separator}${_createCommentFileName(commentedAudio.audioFileName)}";
-
     JsonDataService.saveListToFile(
       data: commentLst,
-      jsonPathFileName: commentFilePathName,
+      jsonPathFileName: _createCommentFilePathAndFilePathName(
+          audioToComment: commentedAudio)[1],
     );
 
     // Delete comment from the database
@@ -141,10 +142,8 @@ class CommentVM extends ChangeNotifier {
     required Comment modifiedComment,
     required Audio commentedAudio,
   }) {
-    String playListDir = commentedAudio.enclosingPlaylist!.downloadPath;
-
-    List<Comment> commentLst = loadExistingCommentFileOrCreateEmptyCommentFile(
-      commentedAudio: commentedAudio,
+    List<Comment> commentLst = loadAudioComments(
+      audio: commentedAudio,
     );
 
     Comment oldComment = commentLst.firstWhere(
@@ -158,12 +157,11 @@ class CommentVM extends ChangeNotifier {
     oldComment.lastUpdateDateTime =
         DateTimeUtil.getDateTimeLimitedToSeconds(DateTime.now());
 
-    String commentFilePathName =
-        "$playListDir${path.separator}$kCommentDirName${path.separator}${_createCommentFileName(commentedAudio.audioFileName)}";
-
-    sortAndSaveCommentLst(
+    _sortAndSaveCommentLst(
       commentLst: commentLst,
-      commentFilePathName: commentFilePathName,
+      commentFilePathName: _createCommentFilePathAndFilePathName(
+        audioToComment: commentedAudio,
+      )[1],
     );
 
     notifyListeners();

@@ -108,9 +108,8 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
         actionsPadding: kDialogActionsPadding,
         content: Consumer<CommentVM>(
           builder: (context, commentVM, child) {
-            List<Comment> commentsLst =
-                commentVM.loadExistingCommentFileOrCreateEmptyCommentFile(
-              commentedAudio: widget.currentAudio,
+            List<Comment> commentsLst = commentVM.loadAudioComments(
+              audio: widget.currentAudio,
             );
             return SingleChildScrollView(
               child: ListBody(
@@ -268,7 +267,8 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
               // comment position Text
               key: const Key('commentPositionKey'),
               style: TextStyle(fontSize: 13),
-              Duration(milliseconds: comment.audioPositionInTenthOfSeconds * 100)
+              Duration(
+                      milliseconds: comment.audioPositionInTenthOfSeconds * 100)
                   .HHmmssZeroHH(),
             ),
             const SizedBox(width: 11),

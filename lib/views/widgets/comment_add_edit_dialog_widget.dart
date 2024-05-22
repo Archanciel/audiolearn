@@ -33,7 +33,6 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
   final TextEditingController _commentController = TextEditingController();
   final FocusNode _focusNodeCommentTitle = FocusNode();
   bool _reducePositionDurationChange = false;
-  bool _backToAllAudios = false;
 
   @override
   void initState() {
@@ -51,8 +50,8 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
       if (widget.comment != null) {
         _titleController.text = widget.comment!.title;
         _commentController.text = widget.comment!.content;
-        commentVM.currentCommentAudioPosition =
-            Duration(milliseconds: widget.comment!.audioPositionInTenthOfSeconds * 100);
+        commentVM.currentCommentAudioPosition = Duration(
+            milliseconds: widget.comment!.audioPositionInTenthOfSeconds * 100);
       } else {
         commentVM.currentCommentAudioPosition =
             globalAudioPlayerVM.currentAudioPosition;
@@ -161,6 +160,9 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                         // Text for the current comment audio position
                         return Text(
                           _reducePositionDurationChange
+                          // if the reduce position duration change checkbox
+                          // is checked, the audio position is displayed with
+                          // a tenth of a second value after the seconds value
                               ? commentVM.currentCommentAudioPosition
                                   .HHmmssZeroHH(
                                       addRemainingOneDigitTenthOfSecond: true)
@@ -230,9 +232,10 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                   title: _titleController.text,
                   content: _commentController.text,
                   audioPositionInTenthOfSeconds: commentVMlistenFalse
-                      .currentCommentAudioPosition.inMilliseconds ~/ 100,
+                          .currentCommentAudioPosition.inMilliseconds ~/
+                      100,
                 ),
-                commentedAudio: globalAudioPlayerVM.currentAudio!,
+                audioToComment: globalAudioPlayerVM.currentAudio!,
               );
             } else {
               Comment commentToModify = widget.comment!;
@@ -240,7 +243,8 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
               commentToModify.title = _titleController.text;
               commentToModify.content = _commentController.text;
               commentToModify.audioPositionInTenthOfSeconds =
-                  commentVMlistenFalse.currentCommentAudioPosition.inMilliseconds ~/
+                  commentVMlistenFalse
+                          .currentCommentAudioPosition.inMilliseconds ~/
                       100;
 
               commentVMlistenFalse.modifyComment(
