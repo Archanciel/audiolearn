@@ -160,9 +160,9 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                         // Text for the current comment audio position
                         return Text(
                           _reducePositionDurationChange
-                          // if the reduce position duration change checkbox
-                          // is checked, the audio position is displayed with
-                          // a tenth of a second value after the seconds value
+                            // if the reduce position duration change checkbox
+                            // is checked, the audio position is displayed with
+                            // a tenth of a second value after the seconds value
                               ? commentVM.currentCommentAudioPosition
                                   .HHmmssZeroHH(
                                       addRemainingOneDigitTenthOfSecond: true)
