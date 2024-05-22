@@ -89,7 +89,7 @@ void main() {
           id: 'Test Title 2_2',
           title: 'Test Title 2',
           content: 'Test Content 2\nline 2\nline 3\nline four\nline 5',
-          audioPositionInTenthOfSeconds: 6,
+          audioPositionInTenthOfSeconds: 600,
           creationDateTime: DateTime.parse('2023-03-26T00:05:32.000'),
           lastUpdateDateTime: DateTime.parse('2024-05-19T15:23:51.000'),
         ),
@@ -98,7 +98,7 @@ void main() {
           title: 'number 3',
           content:
               'A complete example showcasing all audioplayers features can be found in our repository. Also check out our live web app.',
-          audioPositionInTenthOfSeconds: 8,
+          audioPositionInTenthOfSeconds: 800,
           creationDateTime: DateTime.parse('2024-05-19T14:49:03.000'),
           lastUpdateDateTime: DateTime.parse('2024-05-19T14:49:03.000'),
         ),
@@ -106,7 +106,7 @@ void main() {
           id: 'Test Title_0',
           title: 'Test Title 1',
           content: 'Test Content\nline 2\nline 3',
-          audioPositionInTenthOfSeconds: 31,
+          audioPositionInTenthOfSeconds: 3100,
           creationDateTime: DateTime.parse('2023-03-24T20:05:32.000'),
           lastUpdateDateTime: DateTime.parse('2024-05-19T14:46:05.000'),
         ),
@@ -334,7 +334,7 @@ void main() {
 
       commentToModify.title = "New title modified";
       commentToModify.content = "New content modified";
-      commentToModify.audioPositionInTenthOfSeconds = 401;
+      commentToModify.audioPositionInTenthOfSeconds = 40100;
 
       commentVM.modifyComment(
         modifiedComment: commentToModify,
