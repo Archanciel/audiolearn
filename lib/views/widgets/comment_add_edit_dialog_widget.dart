@@ -32,7 +32,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _commentController = TextEditingController();
   final FocusNode _focusNodeCommentTitle = FocusNode();
-  bool _reducePositionDurationChange = false;
+  bool _modifyPositionDurationChangeInTenthOfSeconds = false;
 
   @override
   void initState() {
@@ -128,11 +128,11 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                       width: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
                       height: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
                       child: Checkbox(
-                        key: const Key('reducePositionDurationChangeCheckbox'),
-                        value: _reducePositionDurationChange,
+                        key: const Key('modifyPositionDurationChangeInTenthOfSeconds'),
+                        value: _modifyPositionDurationChangeInTenthOfSeconds,
                         onChanged: (bool? newValue) {
                           setState(() {
-                            _reducePositionDurationChange = newValue ?? false;
+                            _modifyPositionDurationChangeInTenthOfSeconds = newValue ?? false;
                           });
                         },
                       ),
@@ -147,10 +147,10 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                           await modifyCommentPosition(
                             commentVMlistenFalse: commentVMlistenFalse,
                             millisecondsChange:
-                                _reducePositionDurationChange ? -100 : -1000,
+                                _modifyPositionDurationChangeInTenthOfSeconds ? -100 : -1000,
                           );
                         },
-                        iconSize: _reducePositionDurationChange
+                        iconSize: _modifyPositionDurationChangeInTenthOfSeconds
                             ? kSmallestButtonWidth * 0.8
                             : kSmallestButtonWidth,
                       ),
@@ -159,10 +159,11 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                       builder: (context, commentVM, child) {
                         // Text for the current comment audio position
                         return Text(
-                          _reducePositionDurationChange
-                            // if the reduce position duration change checkbox
-                            // is checked, the audio position is displayed with
-                            // a tenth of a second value after the seconds value
+                          _modifyPositionDurationChangeInTenthOfSeconds
+                            // if the modify position duration change in tenth
+                            // of seconds checkbox is checked, the audio
+                            // position is displayed with a tenth of a second
+                            // value after the seconds value
                               ? commentVM.currentCommentAudioPosition
                                   .HHmmssZeroHH(
                                       addRemainingOneDigitTenthOfSecond: true)
@@ -181,10 +182,10 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                           await modifyCommentPosition(
                             commentVMlistenFalse: commentVMlistenFalse,
                             millisecondsChange:
-                                _reducePositionDurationChange ? 100 : 1000,
+                                _modifyPositionDurationChangeInTenthOfSeconds ? 100 : 1000,
                           );
                         },
-                        iconSize: _reducePositionDurationChange
+                        iconSize: _modifyPositionDurationChangeInTenthOfSeconds
                             ? kSmallestButtonWidth * 0.8
                             : kSmallestButtonWidth,
                       ),
