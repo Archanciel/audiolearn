@@ -15,6 +15,7 @@ class Audio {
   static DateFormat downloadDateTimePrefixFormatter =
       DateFormat('yyMMdd-HHmmss');
   static DateFormat uploadDateSuffixFormatter = DateFormat('yy-MM-dd');
+  static int fullyListenedBufferSeconds = 15;
 
   // Playlist in which the video is referenced
   Playlist? enclosingPlaylist;
@@ -276,9 +277,9 @@ class Audio {
   /// Returns true if the audio position is greater or equal to
   /// the audio duration minus 15 seconds.
   bool wasFullyListened() {
-    return (audioDuration == null)
+    return (audioDuration == null || audioDuration!.inSeconds < fullyListenedBufferSeconds)
         ? false
-        : (audioPositionSeconds >= audioDuration!.inSeconds - 15);
+        : (audioPositionSeconds >= audioDuration!.inSeconds - fullyListenedBufferSeconds);
   }
 
   bool isPartiallyListened() {

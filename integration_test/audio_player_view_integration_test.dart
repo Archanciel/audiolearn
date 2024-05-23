@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:audiolearn/models/playlist.dart';
 import 'package:audiolearn/services/json_data_service.dart';
 import 'package:audiolearn/utils/date_time_parser.dart';
+import 'package:audiolearn/utils/date_time_util.dart';
 import 'package:audiolearn/views/widgets/comment_list_add_dialog_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -20,7 +21,7 @@ import '../test/util/test_utility.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('play/pause tests', () {
+  group('play/pause/start/end tests', () {
     testWidgets(
         'Clicking on audio title to open AudioPlayerView. Then check play/pause button conversion only.',
         (
@@ -63,7 +64,7 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
     testWidgets(
-        'Clicking on audio title to open AudioPlayerView. Then play audio during 5 seconds and then pause it',
+        'Clicking on audio title to open AudioPlayerView. Then play audio during 5 seconds and then pause it. Then click on |<, and then on |> button',
         (
       WidgetTester tester,
     ) async {
@@ -100,12 +101,32 @@ void main() {
           find.byKey(const Key('audioPlayerViewAudioRemainingDuration')));
       expect(audioRemainingDurationText.data, '0:59');
 
+      verifyAudioDataElementsUpdatedInJsonFile(
+        audioPlayerSelectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        playableAudioLstAudioIndex: 0,
+        audioTitle: lastDownloadedAudioTitle,
+        audioPositionSeconds: 0,
+        isPaused: true,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        audioPausedDateTime: null,
+      );
+
       // Now play the audio and wait 5 seconds
       await tester.tap(find.byIcon(Icons.play_arrow));
       await tester.pumpAndSettle();
 
       await Future.delayed(const Duration(seconds: 5));
       await tester.pumpAndSettle();
+
+      verifyAudioDataElementsUpdatedInJsonFile(
+        audioPlayerSelectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        playableAudioLstAudioIndex: 0,
+        audioTitle: lastDownloadedAudioTitle,
+        audioPositionSeconds: 0,
+        isPaused: false,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: true,
+        audioPausedDateTime: null,
+      );
 
       // Verify if the play button changed to pause button
       Finder pauseIconFinder = find.byIcon(Icons.pause);
@@ -114,6 +135,18 @@ void main() {
       // Now pause the audio and wait 1 second
       await tester.tap(pauseIconFinder);
       await tester.pumpAndSettle();
+
+      DateTime pausedAudioAtDateTime = DateTime.now();
+
+      verifyAudioDataElementsUpdatedInJsonFile(
+        audioPlayerSelectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        playableAudioLstAudioIndex: 0,
+        audioTitle: lastDownloadedAudioTitle,
+        audioPositionSeconds: 5,
+        isPaused: true,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: true,
+        audioPausedDateTime: pausedAudioAtDateTime,
+      );
 
       await Future.delayed(const Duration(seconds: 1));
 
@@ -141,6 +174,35 @@ void main() {
 
       // Verify if the pause button changed back to play button
       expect(find.byIcon(Icons.play_arrow), findsOneWidget);
+
+      // Now go to the end of the audio
+      await tester.tap(find.byKey(const Key('audioPlayerViewSkipToEndButton')));
+      await tester.pumpAndSettle();
+
+      verifyAudioDataElementsUpdatedInJsonFile(
+        audioPlayerSelectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        playableAudioLstAudioIndex: 0,
+        audioTitle: lastDownloadedAudioTitle,
+        audioPositionSeconds: 59,
+        isPaused: true,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        audioPausedDateTime: pausedAudioAtDateTime,
+      );
+
+      // Now go to the start of the audio
+      await tester
+          .tap(find.byKey(const Key('audioPlayerViewSkipToStartButton')));
+      await tester.pumpAndSettle();
+
+      verifyAudioDataElementsUpdatedInJsonFile(
+        audioPlayerSelectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        playableAudioLstAudioIndex: 0,
+        audioTitle: lastDownloadedAudioTitle,
+        audioPositionSeconds: 0,
+        isPaused: true,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        audioPausedDateTime: pausedAudioAtDateTime,
+      );
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -1128,7 +1190,7 @@ void main() {
       await checkAudioTextColor(
         tester: tester,
         audioTitle: "Really short video",
-        expectedTitleTextColor: fullyPlayedAudioTitleColor,
+        expectedTitleTextColor: partiallyPlayedAudioTitleTextdColor,
         expectedTitleTextBackgroundColor: null,
       );
 
@@ -2213,7 +2275,7 @@ void main() {
       // Ensure that the comment playlist directory does not exist
       final Directory directory = Directory(
           "kPlaylistDownloadRootPathWindowsTest${path.separator}$emptyPlaylistTitle${path.separator}comments");
-      
+
       expect(directory.existsSync(), false);
 
       // Verify that the comment icon button is now enabled since now
@@ -2776,6 +2838,71 @@ void verifyAudioPlaySpeedStoredInPlaylistJsonFile(
       loadedSelectedPlaylist
           .playableAudioLst[playableAudioLstAudioIndex].audioPlaySpeed,
       expectedAudioPlaySpeed);
+}
+
+void verifyAudioDataElementsUpdatedInJsonFile({
+  required String audioPlayerSelectedPlaylistTitle,
+  required int playableAudioLstAudioIndex,
+  required String audioTitle,
+  required int audioPositionSeconds,
+  required bool isPaused,
+  required bool isPlayingOrPausedWithPositionBetweenAudioStartAndEnd,
+  required DateTime? audioPausedDateTime,
+}) {
+  final String selectedPlaylistPath = path.join(
+    kPlaylistDownloadRootPathWindowsTest,
+    audioPlayerSelectedPlaylistTitle,
+  );
+
+  final selectedPlaylistFilePathName = path.join(
+    selectedPlaylistPath,
+    '$audioPlayerSelectedPlaylistTitle.json',
+  );
+
+  // Load playlist from the json file
+  Playlist loadedSelectedPlaylist = JsonDataService.loadFromFile(
+    jsonPathFileName: selectedPlaylistFilePathName,
+    type: Playlist,
+  );
+
+  expect(
+      loadedSelectedPlaylist
+          .playableAudioLst[playableAudioLstAudioIndex].validVideoTitle,
+      audioTitle);
+
+  int actualAudioPositionSeconds = loadedSelectedPlaylist
+      .playableAudioLst[playableAudioLstAudioIndex].audioPositionSeconds;
+
+  expect(
+      (actualAudioPositionSeconds - audioPositionSeconds).abs() <= 1, isTrue);
+
+  expect(
+      loadedSelectedPlaylist
+          .playableAudioLst[playableAudioLstAudioIndex].isPaused,
+      isPaused);
+
+  expect(
+      loadedSelectedPlaylist.playableAudioLst[playableAudioLstAudioIndex]
+          .isPlayingOrPausedWithPositionBetweenAudioStartAndEnd,
+      isPlayingOrPausedWithPositionBetweenAudioStartAndEnd);
+
+  if (audioPausedDateTime == null) {
+    expect(
+        loadedSelectedPlaylist
+            .playableAudioLst[playableAudioLstAudioIndex].audioPausedDateTime,
+        audioPausedDateTime);
+  } else {
+    expect(
+        DateTimeUtil.areDateTimesEqualWithinTolerance(
+            dateTimeOne: DateTimeUtil.getDateTimeLimitedToSeconds(
+                loadedSelectedPlaylist
+                    .playableAudioLst[playableAudioLstAudioIndex]
+                    .audioPausedDateTime!),
+            dateTimeTwo:
+                DateTimeUtil.getDateTimeLimitedToSeconds(audioPausedDateTime),
+            toleranceInSeconds: 1),
+        isTrue);
+  }
 }
 
 /// Initializes the application and selects the playlist if

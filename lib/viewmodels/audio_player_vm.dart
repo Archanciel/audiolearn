@@ -446,9 +446,12 @@ class AudioPlayerVM extends ChangeNotifier {
       await _audioPlayerPlugin!.play(DeviceFileSource(
           audioFilePathName)); // <-- Directly using play method
       await _audioPlayerPlugin!.setPlaybackRate(_currentAudio!.audioPlaySpeed);
+
       _currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd =
           true;
       _currentAudio!.isPaused = false;
+      
+      updateAndSaveCurrentAudio(forceSave: true);
 
       notifyListeners();
     }
@@ -574,7 +577,8 @@ class AudioPlayerVM extends ChangeNotifier {
     if (_currentAudioPosition.inSeconds == 0) {
       // situation when the user clicks on |< when the audio
       // position is at audio start. The case if the user clicked
-      // twice on the |< icon.
+      // twice on the |< icon. In this case, the previous audio
+      // is set.
       await _setPreviousAudio();
 
       notifyListeners();
@@ -598,6 +602,7 @@ class AudioPlayerVM extends ChangeNotifier {
     // audio
     _currentAudio!.audioPositionSeconds = _currentAudioPosition.inSeconds;
     _currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd = false;
+    updateAndSaveCurrentAudio(forceSave: true);
 
     await modifyAudioPlayerPluginPosition(_currentAudioPosition);
 
@@ -613,7 +618,7 @@ class AudioPlayerVM extends ChangeNotifier {
     bool isUndoRedo = false,
   }) async {
     if (_currentAudioPosition == _currentAudioTotalDuration) {
-      updateAndSaveCurrentAudio();
+    updateAndSaveCurrentAudio(forceSave: true);
 
       // situation when the user clicks on >| when the audio
       // position is at audio end. This is the case if the user
@@ -650,7 +655,7 @@ class AudioPlayerVM extends ChangeNotifier {
     // audio
     _currentAudio!.audioPositionSeconds = _currentAudioPosition.inSeconds;
     _currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd = false;
-    updateAndSaveCurrentAudio();
+    updateAndSaveCurrentAudio(forceSave: true);
 
     await modifyAudioPlayerPluginPosition(_currentAudioTotalDuration);
 
@@ -690,7 +695,8 @@ class AudioPlayerVM extends ChangeNotifier {
 
     _currentAudioPosition = _currentAudioTotalDuration;
     _currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd = false;
-    // updateAndSaveCurrentAudio();
+
+    updateAndSaveCurrentAudio(forceSave: true);
 
     await modifyAudioPlayerPluginPosition(_currentAudioTotalDuration);
 
@@ -731,7 +737,7 @@ class AudioPlayerVM extends ChangeNotifier {
     // play icon's appearance to be wrong.
     if (_currentAudio == null) {
       return; // the case if "No audio selected" audio title is displayed
-              // and the app becomes inactive
+      // and the app becomes inactive
     }
 
     _currentAudio!.audioPositionSeconds = _currentAudioPosition.inSeconds;
