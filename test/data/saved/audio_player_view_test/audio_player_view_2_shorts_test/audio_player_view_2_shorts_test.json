@@ -59,7 +59,7 @@
             "audioDurationMs": 59000,
             "audioFileName": "231117-002828-morning _ cinematic video 23-07-01.mp3",
             "audioFileSize": 360849,
-            "audioPausedDateTime": "2023-11-17T00:29:30.512845",
+            "audioPausedDateTime": null,
             "audioPlaySpeed": 1.25,
             "audioPositionSeconds": 0,
             "compactVideoDescription": "Jean-Pierre Schnyder\n\nCette vid\u00e9o me sert \u00e0 tester AudioLearn, l'app Android que je d\u00e9veloppe. ...",
