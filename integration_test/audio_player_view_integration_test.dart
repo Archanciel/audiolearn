@@ -1190,7 +1190,7 @@ void main() {
       await checkAudioTextColor(
         tester: tester,
         audioTitle: "Really short video",
-        expectedTitleTextColor: partiallyPlayedAudioTitleTextdColor,
+        expectedTitleTextColor: fullyPlayedAudioTitleColor,
         expectedTitleTextBackgroundColor: null,
       );
 
