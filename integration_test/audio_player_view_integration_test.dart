@@ -7,6 +7,7 @@ import 'package:audiolearn/utils/date_time_util.dart';
 import 'package:audiolearn/views/widgets/comment_list_add_dialog_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_driver/flutter_driver.dart' as driver;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:path/path.dart' as path;
@@ -1196,7 +1197,7 @@ void main() {
 
       await checkAudioTextColor(
         tester: tester,
-        audioTitle: "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+        audioTitle: "morning _ cinematic video",
         expectedTitleTextColor: unplayedAudioTitleTextColor,
         expectedTitleTextBackgroundColor: null,
       );
@@ -1219,8 +1220,7 @@ void main() {
           find.text(
               "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)"),
           findsNothing);
-      expect(
-          find.text("Les besoins artificiels par R.Keucheyan"), findsNothing);
+      expect(find.text("Really short video"), findsNothing);
 
       await checkAudioTextColor(
         tester: tester,
@@ -1229,6 +1229,13 @@ void main() {
         expectedTitleTextColor: currentlyPlayingAudioTitleTextColor,
         expectedTitleTextBackgroundColor:
             currentlyPlayingAudioTitleTextBackgroundColor,
+      );
+
+      await checkAudioTextColor(
+        tester: tester,
+        audioTitle: "morning _ cinematic video",
+        expectedTitleTextColor: unplayedAudioTitleTextColor,
+        expectedTitleTextBackgroundColor: null,
       );
 
       await checkAudioTextColor(
@@ -1249,6 +1256,48 @@ void main() {
       // DisplaySelectableAudioListDialogWidget
       await tester.tap(find.text('Cancel'));
       await tester.pumpAndSettle();
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
+    });
+    testWidgets(
+        'Select first downloaded audio, then verify that displayed audio list is moved down in order to display this audio title',
+        (WidgetTester tester) async {
+      const String audioPlayerSelectedPlaylistTitle =
+          'S8 audio'; // Youtube playlist
+      const String currentNotPlayedAudioTitle =
+          "Les besoins artificiels par R.Keucheyan";
+
+      await initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_player_view_display_audio_list_test',
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+      );
+
+      // Go to the audio player view by tapping on the audio player
+      // icon button
+      Finder audioPlayerNavButton =
+          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+      await tester.tap(audioPlayerNavButton);
+      await tester.pumpAndSettle();
+
+      // The current audio is the first downloaded audio of the playlist
+      // Now we open the AudioPlayableListDialogWidget by tapping on the
+      // audio title
+
+      await tester.tap(find.text("${currentNotPlayedAudioTitle}\n19:05"));
+      await tester.pumpAndSettle();
+
+      // The list has been moved down so that the current audio is
+      // displayed at the botom of the list
+      await checkAudioTextColor(
+        tester: tester,
+        audioTitle: currentNotPlayedAudioTitle,
+        expectedTitleTextColor: currentlyPlayingAudioTitleTextColor,
+        expectedTitleTextBackgroundColor: currentlyPlayingAudioTitleTextBackgroundColor,
+      );
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub

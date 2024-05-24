@@ -37,7 +37,6 @@ class _AudioPlayableListDialogWidgetState
   bool _excludeFullyPlayedAudios = false;
 
   final ScrollController _scrollController = ScrollController();
-  final GlobalKey myKey = GlobalKey();
 
   late int _currentAudioIndex;
 
@@ -89,7 +88,7 @@ class _AudioPlayableListDialogWidgetState
       _focusNodeDialog,
     );
 
-    return KeyboardListener(
+    KeyboardListener keyboardListener = KeyboardListener(
       focusNode: _focusNodeDialog,
       onKeyEvent: (event) async {
         if (event is KeyDownEvent) {
@@ -134,6 +133,7 @@ class _AudioPlayableListDialogWidgetState
             children: [
               Expanded(
                 child: ListView.builder(
+                  key: const Key('audioPlayableListKey'),
                   controller: _scrollController,
                   itemCount: playableAudioLst.length,
                   shrinkWrap: true,
@@ -178,6 +178,10 @@ class _AudioPlayableListDialogWidgetState
         ],
       ),
     );
+
+    _scrollToCurrentAudioItem();
+
+    return keyboardListener;
   }
 
   /// Determines the dialog title tooltip according to the sorting option
@@ -369,7 +373,8 @@ class _AudioPlayableListDialogWidgetState
     } else {
       // The scroll controller isn't attached to any scroll views.
       // Schedule a callback to try again after the next frame.
-      WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToCurrentAudioItem());
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) => _scrollToCurrentAudioItem());
     }
   }
 }
