@@ -77,11 +77,11 @@ void main() {
       CommentVM commentVM = CommentVM();
 
       // calling loadAudioComments in situation where comment file
-      // does not exist
+      // exists and has 3 comments
 
       List<Comment> commentLst = commentVM.loadAudioComments(audio: audio);
 
-      // the returned Commentlist should be empty
+      // the returned Commentlist has 3 comments
       expect(commentLst.length, 3);
 
       List<Comment> expectedCommentsLst = [
@@ -90,6 +90,7 @@ void main() {
           title: 'Test Title 2',
           content: 'Test Content 2\nline 2\nline 3\nline four\nline 5',
           audioPositionInTenthOfSeconds: 600,
+          commentEndAudioPositionInTenthOfSeconds: 1800,
           creationDateTime: DateTime.parse('2023-03-26T00:05:32.000'),
           lastUpdateDateTime: DateTime.parse('2024-05-19T15:23:51.000'),
         ),
@@ -99,6 +100,7 @@ void main() {
           content:
               'A complete example showcasing all audioplayers features can be found in our repository. Also check out our live web app.',
           audioPositionInTenthOfSeconds: 800,
+          commentEndAudioPositionInTenthOfSeconds: 2800,
           creationDateTime: DateTime.parse('2024-05-19T14:49:03.000'),
           lastUpdateDateTime: DateTime.parse('2024-05-19T14:49:03.000'),
         ),
@@ -107,6 +109,7 @@ void main() {
           title: 'Test Title 1',
           content: 'Test Content\nline 2\nline 3',
           audioPositionInTenthOfSeconds: 3100,
+          commentEndAudioPositionInTenthOfSeconds: 5000,
           creationDateTime: DateTime.parse('2023-03-24T20:05:32.000'),
           lastUpdateDateTime: DateTime.parse('2024-05-19T14:46:05.000'),
         ),
@@ -366,6 +369,8 @@ void validateComment(Comment actualComment, Comment expectedComment) {
   expect(actualComment.content, expectedComment.content);
   expect(actualComment.audioPositionInTenthOfSeconds,
       expectedComment.audioPositionInTenthOfSeconds);
+  expect(actualComment.commentEndAudioPositionInTenthOfSeconds,
+      expectedComment.commentEndAudioPositionInTenthOfSeconds);
   expect(actualComment.creationDateTime, expectedComment.creationDateTime);
 }
 

@@ -113,11 +113,10 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
               ),
             ),
             const SizedBox(height: 30),
-            // Non-editable Text for Audio File Details
-            // Audio Playback Controls
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                // Commented audio title
                 Text(
                   globalAudioPlayerVM.currentAudio?.validVideoTitle ?? '',
                 ),
