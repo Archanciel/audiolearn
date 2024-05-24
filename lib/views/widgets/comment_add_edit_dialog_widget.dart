@@ -33,6 +33,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
   final TextEditingController _commentController = TextEditingController();
   final FocusNode _focusNodeCommentTitle = FocusNode();
   bool _modifyPositionDurationChangeInTenthOfSeconds = false;
+  bool _modifyCommentEndPositionDurationChangeInTenthOfSeconds = false;
 
   @override
   void initState() {
@@ -52,8 +53,12 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
         _commentController.text = widget.comment!.content;
         commentVM.currentCommentAudioPosition = Duration(
             milliseconds: widget.comment!.audioPositionInTenthOfSeconds * 100);
+        commentVM.currentCommentEndAudioPosition = Duration(
+            milliseconds: widget.comment!.commentEndAudioPositionInTenthOfSeconds * 100);
       } else {
         commentVM.currentCommentAudioPosition =
+            globalAudioPlayerVM.currentAudioPosition;
+        commentVM.currentCommentEndAudioPosition =
             globalAudioPlayerVM.currentAudioPosition;
       }
     });
@@ -123,95 +128,205 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(
-                      width: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
-                      height: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
-                      child: Tooltip(
-                        message: AppLocalizations.of(context)!.tenthOfSecondsCheckboxTooltip,
-                        child: Checkbox(
-                          key: const Key('modifyPositionDurationChangeInTenthOfSeconds'),
-                          value: _modifyPositionDurationChangeInTenthOfSeconds,
-                          onChanged: (bool? newValue) {
-                            setState(() {
-                              _modifyPositionDurationChangeInTenthOfSeconds = newValue ?? false;
-                            });
-                          },
+                    Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
+                              height: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
+                              child: Tooltip(
+                                message: AppLocalizations.of(context)!
+                                    .tenthOfSecondsCheckboxTooltip,
+                                child: Checkbox(
+                                  key: const Key(
+                                      'modifyPositionDurationChangeInTenthOfSeconds'),
+                                  value:
+                                      _modifyPositionDurationChangeInTenthOfSeconds,
+                                  onChanged: (bool? newValue) {
+                                    setState(() {
+                                      _modifyPositionDurationChangeInTenthOfSeconds =
+                                          newValue ?? false;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 50,
+                              child: IconButton(
+                                key: const Key('backwardOneSecondIconButton'),
+                                // Rewind 1 second button
+                                icon: const Icon(Icons.fast_rewind),
+                                onPressed: () async {
+                                  await _modifyCommentPosition(
+                                    commentVMlistenFalse: commentVMlistenFalse,
+                                    millisecondsChange:
+                                        _modifyPositionDurationChangeInTenthOfSeconds
+                                            ? -100
+                                            : -1000,
+                                  );
+                                },
+                                iconSize:
+                                    _modifyPositionDurationChangeInTenthOfSeconds
+                                        ? kSmallestButtonWidth * 0.8
+                                        : kSmallestButtonWidth,
+                              ),
+                            ),
+                            Consumer<CommentVM>(
+                              builder: (context, commentVM, child) {
+                                // Text for the current comment audio position
+                                return Text(
+                                  _modifyPositionDurationChangeInTenthOfSeconds
+                                      // if the modify position duration change in tenth
+                                      // of seconds checkbox is checked, the audio
+                                      // position is displayed with a tenth of a second
+                                      // value after the seconds value
+                                      ? commentVM.currentCommentAudioPosition
+                                          .HHmmssZeroHH(
+                                              addRemainingOneDigitTenthOfSecond:
+                                                  true)
+                                      : commentVM.currentCommentAudioPosition
+                                          .HHmmssZeroHH(),
+                                );
+                              },
+                            ),
+                            SizedBox(
+                              width: 50,
+                              child: IconButton(
+                                // Forward 1 second button
+                                key: const Key('forwardOneSecondIconButton'),
+                                icon: const Icon(Icons.fast_forward),
+                                onPressed: () async {
+                                  await _modifyCommentPosition(
+                                    commentVMlistenFalse: commentVMlistenFalse,
+                                    millisecondsChange:
+                                        _modifyPositionDurationChangeInTenthOfSeconds
+                                            ? 100
+                                            : 1000,
+                                  );
+                                },
+                                iconSize:
+                                    _modifyPositionDurationChangeInTenthOfSeconds
+                                        ? kSmallestButtonWidth * 0.8
+                                        : kSmallestButtonWidth,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
+                              height: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
+                              child: Tooltip(
+                                message: AppLocalizations.of(context)!
+                                    .tenthOfSecondsCheckboxTooltip,
+                                child: Checkbox(
+                                  key: const Key(
+                                      'modifyCommentEndPositionDurationChangeInTenthOfSeconds'),
+                                  value:
+                                      _modifyCommentEndPositionDurationChangeInTenthOfSeconds,
+                                  onChanged: (bool? newValue) {
+                                    setState(() {
+                                      _modifyCommentEndPositionDurationChangeInTenthOfSeconds =
+                                          newValue ?? false;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 50,
+                              child: IconButton(
+                                key: const Key('backwardCommentEndOneSecondIconButton'),
+                                // Rewind 1 second button
+                                icon: const Icon(Icons.fast_rewind),
+                                onPressed: () async {
+                                  await _modifyCommentEndPosition(
+                                    commentVMlistenFalse: commentVMlistenFalse,
+                                    millisecondsChange:
+                                        _modifyCommentEndPositionDurationChangeInTenthOfSeconds
+                                            ? -100
+                                            : -1000,
+                                  );
+                                },
+                                iconSize:
+                                    _modifyCommentEndPositionDurationChangeInTenthOfSeconds
+                                        ? kSmallestButtonWidth * 0.8
+                                        : kSmallestButtonWidth,
+                              ),
+                            ),
+                            Consumer<CommentVM>(
+                              builder: (context, commentVM, child) {
+                                // Text for the current comment end audio position
+                                return Text(
+                                  _modifyCommentEndPositionDurationChangeInTenthOfSeconds
+                                      // if the modify position duration change in tenth
+                                      // of seconds checkbox is checked, the audio
+                                      // position is displayed with a tenth of a second
+                                      // value after the seconds value
+                                      ? commentVM.currentCommentEndAudioPosition
+                                          .HHmmssZeroHH(
+                                              addRemainingOneDigitTenthOfSecond:
+                                                  true)
+                                      : commentVM.currentCommentEndAudioPosition
+                                          .HHmmssZeroHH(),
+                                );
+                              },
+                            ),
+                            SizedBox(
+                              width: 50,
+                              child: IconButton(
+                                // Forward 1 second button
+                                key: const Key('forwardCommentEndOneSecondIconButton'),
+                                icon: const Icon(Icons.fast_forward),
+                                onPressed: () async {
+                                  await _modifyCommentEndPosition(
+                                    commentVMlistenFalse: commentVMlistenFalse,
+                                    millisecondsChange:
+                                        _modifyCommentEndPositionDurationChangeInTenthOfSeconds
+                                            ? 100
+                                            : 1000,
+                                  );
+                                },
+                                iconSize:
+                                    _modifyCommentEndPositionDurationChangeInTenthOfSeconds
+                                        ? kSmallestButtonWidth * 0.8
+                                        : kSmallestButtonWidth,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                      width: 50,
-                      child: IconButton(
-                        key: const Key('backwardOneSecondIconButton'),
-                        // Rewind 1 second button
-                        icon: const Icon(Icons.fast_rewind),
-                        onPressed: () async {
-                          await modifyCommentPosition(
-                            commentVMlistenFalse: commentVMlistenFalse,
-                            millisecondsChange:
-                                _modifyPositionDurationChangeInTenthOfSeconds ? -100 : -1000,
-                          );
-                        },
-                        iconSize: _modifyPositionDurationChangeInTenthOfSeconds
-                            ? kSmallestButtonWidth * 0.8
-                            : kSmallestButtonWidth,
-                      ),
-                    ),
-                    Consumer<CommentVM>(
-                      builder: (context, commentVM, child) {
-                        // Text for the current comment audio position
-                        return Text(
-                          _modifyPositionDurationChangeInTenthOfSeconds
-                            // if the modify position duration change in tenth
-                            // of seconds checkbox is checked, the audio
-                            // position is displayed with a tenth of a second
-                            // value after the seconds value
-                              ? commentVM.currentCommentAudioPosition
-                                  .HHmmssZeroHH(
-                                      addRemainingOneDigitTenthOfSecond: true)
-                              : commentVM.currentCommentAudioPosition
-                                  .HHmmssZeroHH(),
-                        );
-                      },
-                    ),
-                    SizedBox(
-                      width: 50,
-                      child: IconButton(
-                        // Forward 1 second button
-                        key: const Key('forwardOneSecondIconButton'),
-                        icon: const Icon(Icons.fast_forward),
-                        onPressed: () async {
-                          await modifyCommentPosition(
-                            commentVMlistenFalse: commentVMlistenFalse,
-                            millisecondsChange:
-                                _modifyPositionDurationChangeInTenthOfSeconds ? 100 : 1000,
-                          );
-                        },
-                        iconSize: _modifyPositionDurationChangeInTenthOfSeconds
-                            ? kSmallestButtonWidth * 0.8
-                            : kSmallestButtonWidth,
-                      ),
-                    ),
-                    IconButton(
-                      // Play/Pause button
-                      key: const Key('playPauseIconButton'),
-                      onPressed: () async {
-                        globalAudioPlayerVM.isPlaying
-                            ? await globalAudioPlayerVM.pause()
-                            : await _playFromCommentPosition(
-                                commentVMlistenFalse: commentVMlistenFalse,
-                              );
-                      },
-                      icon: Consumer<AudioPlayerVM>(
-                        builder: (context, globalAudioPlayerVM, child) {
-                          return Icon(globalAudioPlayerVM.isPlaying
-                              ? Icons.pause
-                              : Icons.play_arrow);
-                        },
-                      ),
-                      iconSize: kUpDownButtonSize - 10,
-                      constraints: const BoxConstraints(), // Ensure the button
-                      //                         takes minimal space
+                    Row(
+                      children: [
+                        IconButton(
+                          // Play/Pause button
+                          key: const Key('playPauseIconButton'),
+                          onPressed: () async {
+                            globalAudioPlayerVM.isPlaying
+                                ? await globalAudioPlayerVM.pause()
+                                : await _playFromCommentPosition(
+                                    commentVMlistenFalse: commentVMlistenFalse,
+                                  );
+                          },
+                          icon: Consumer<AudioPlayerVM>(
+                            builder: (context, globalAudioPlayerVM, child) {
+                              return Icon(globalAudioPlayerVM.isPlaying
+                                  ? Icons.pause
+                                  : Icons.play_arrow);
+                            },
+                          ),
+                          iconSize: kUpDownButtonSize - 10,
+                          constraints:
+                              const BoxConstraints(), // Ensure the button
+                          //                         takes minimal space
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -237,6 +352,9 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                   audioPositionInTenthOfSeconds: commentVMlistenFalse
                           .currentCommentAudioPosition.inMilliseconds ~/
                       100,
+                  commentEndAudioPositionInTenthOfSeconds: commentVMlistenFalse
+                          .currentCommentEndAudioPosition.inMilliseconds ~/
+                      100,
                 ),
                 audioToComment: globalAudioPlayerVM.currentAudio!,
               );
@@ -248,6 +366,10 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
               commentToModify.audioPositionInTenthOfSeconds =
                   commentVMlistenFalse
                           .currentCommentAudioPosition.inMilliseconds ~/
+                      100;
+              commentToModify.commentEndAudioPositionInTenthOfSeconds =
+                  commentVMlistenFalse
+                          .currentCommentEndAudioPosition.inMilliseconds ~/
                       100;
 
               commentVMlistenFalse.modifyComment(
@@ -309,7 +431,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
     );
   }
 
-  Future<void> modifyCommentPosition({
+  Future<void> _modifyCommentPosition({
     required CommentVM commentVMlistenFalse,
     required int millisecondsChange,
   }) async {
@@ -319,6 +441,23 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
 
     await globalAudioPlayerVM.modifyAudioPlayerPluginPosition(
       commentVMlistenFalse.currentCommentAudioPosition,
+    );
+
+    await globalAudioPlayerVM.playFromCurrentAudioFile(
+      rewindAudioPositionBasedOnPauseDuration: false,
+    );
+  }
+
+  Future<void> _modifyCommentEndPosition({
+    required CommentVM commentVMlistenFalse,
+    required int millisecondsChange,
+  }) async {
+    commentVMlistenFalse.currentCommentEndAudioPosition =
+        commentVMlistenFalse.currentCommentEndAudioPosition +
+            Duration(milliseconds: millisecondsChange);
+
+    await globalAudioPlayerVM.modifyAudioPlayerPluginPosition(
+      commentVMlistenFalse.currentCommentEndAudioPosition,
     );
 
     await globalAudioPlayerVM.playFromCurrentAudioFile(

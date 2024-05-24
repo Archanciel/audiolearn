@@ -152,6 +152,7 @@ void main() {
         title: 'Test Title',
         content: 'Test Content',
         audioPositionInTenthOfSeconds: 3000,
+        commentEndAudioPositionInTenthOfSeconds: 5000,
       );
 
       commentVM.addComment(
@@ -175,6 +176,7 @@ void main() {
         title: 'Test Title 2',
         content: 'Test Content 2',
         audioPositionInTenthOfSeconds: 201,
+        commentEndAudioPositionInTenthOfSeconds: 501,
       );
 
       commentVM.addComment(
@@ -226,6 +228,7 @@ void main() {
         title: 'Test Title',
         content: 'Test Content',
         audioPositionInTenthOfSeconds: 0,
+        commentEndAudioPositionInTenthOfSeconds: 10,
       );
 
       commentVM.addComment(
@@ -338,6 +341,7 @@ void main() {
       commentToModify.title = "New title modified";
       commentToModify.content = "New content modified";
       commentToModify.audioPositionInTenthOfSeconds = 40100;
+      commentToModify.commentEndAudioPositionInTenthOfSeconds = 48100;
 
       commentVM.modifyComment(
         modifiedComment: commentToModify,

@@ -21,6 +21,12 @@ class CommentVM extends ChangeNotifier {
     notifyListeners();
   }
 
+  Duration _currentCommentEndAudioPosition = Duration.zero;
+  Duration get currentCommentEndAudioPosition => _currentCommentEndAudioPosition;
+  set currentCommentEndAudioPosition(Duration value) {
+    _currentCommentEndAudioPosition = value;
+    notifyListeners();
+  }
   CommentVM();
 
   /// If the comment file exists, the list of comments it contains is
@@ -154,6 +160,8 @@ class CommentVM extends ChangeNotifier {
     oldComment.content = modifiedComment.content;
     oldComment.audioPositionInTenthOfSeconds =
         modifiedComment.audioPositionInTenthOfSeconds;
+    oldComment.commentEndAudioPositionInTenthOfSeconds =
+        modifiedComment.commentEndAudioPositionInTenthOfSeconds;
     oldComment.lastUpdateDateTime =
         DateTimeUtil.getDateTimeLimitedToSeconds(DateTime.now());
 
