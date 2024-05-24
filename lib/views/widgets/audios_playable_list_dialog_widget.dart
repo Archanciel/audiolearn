@@ -283,7 +283,7 @@ class _AudioPlayableListDialogWidgetState
                         _backToAllAudios = true;
                       }
                       _excludeFullyPlayedAudios = newValue;
-                      _scrollToItem();
+                      _scrollToCurrentAudioItem();
                     }
                   });
                   // now clicking on Enter works since the
@@ -339,7 +339,7 @@ class _AudioPlayableListDialogWidgetState
     );
   }
 
-  void _scrollToItem() {
+  void _scrollToCurrentAudioItem() {
     double multiplier = _currentAudioIndex.toDouble();
 
     if (_currentAudioIndex > 300) {
@@ -369,7 +369,7 @@ class _AudioPlayableListDialogWidgetState
     } else {
       // The scroll controller isn't attached to any scroll views.
       // Schedule a callback to try again after the next frame.
-      WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToItem());
+      WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToCurrentAudioItem());
     }
   }
 }
