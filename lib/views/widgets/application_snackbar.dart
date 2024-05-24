@@ -5,13 +5,13 @@ import '../../constants.dart';
 /// This widget extends SnackBar and accept the String snackBar
 /// content as constructor parameter.
 ///
-/// Using AudioLearnSnackBar
+/// Using ApplicationSnackBar
 ///
-/// final AudioLearnSnackBar snackBar =
-///   AudioLearnSnackBar(message: 'Download at music quality');
+/// final ApplicationSnackBar snackBar =
+///   ApplicationSnackBar(message: 'Download at music quality');
 /// ScaffoldMessenger.of(context).showSnackBar(snackBar);
-class AudioLearnSnackBar extends SnackBar {
-  AudioLearnSnackBar({
+class ApplicationSnackBar extends SnackBar {
+  ApplicationSnackBar({
     super.key,
     required String message,
   }) : super(
@@ -22,7 +22,7 @@ class AudioLearnSnackBar extends SnackBar {
               fontSize: 13,
             ),
           ),
-      backgroundColor: kButtonColor,
+          backgroundColor: kButtonColor,
           duration: const Duration(milliseconds: 1500),
         );
 }

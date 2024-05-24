@@ -16,7 +16,7 @@ import '../viewmodels/theme_provider_vm.dart';
 import '../viewmodels/warning_message_vm.dart';
 import 'screen_mixin.dart';
 import 'widgets/add_playlist_dialog_widget.dart';
-import 'widgets/audio_learn_snackbar.dart';
+import 'widgets/application_snackbar.dart';
 import 'widgets/audio_list_item_widget.dart';
 import 'widgets/action_confirm_dialog_widget.dart';
 import 'widgets/playlist_list_item_widget.dart';
@@ -409,7 +409,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                           : AppLocalizations.of(context)!
                               .audioQualityLowSnackBarMessage;
                       ScaffoldMessenger.of(context).showSnackBar(
-                        AudioLearnSnackBar(
+                        ApplicationSnackBar(
                           message: snackBarMessage,
                         ),
                       );
