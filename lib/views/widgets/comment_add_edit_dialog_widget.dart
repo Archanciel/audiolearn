@@ -34,6 +34,9 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
   final FocusNode _focusNodeCommentTitle = FocusNode();
   bool _modifyPositionDurationChangeInTenthOfSeconds = false;
   bool _modifyCommentEndPositionDurationChangeInTenthOfSeconds = false;
+  bool _playButtonWasClicked = true;
+  bool _forwardingCommentEndPositionSituation = false;
+  bool _backwardingCommentEndPositionSituation = false;
 
   @override
   void initState() {
@@ -49,14 +52,26 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
       );
 
       if (widget.comment != null) {
+        // here, we are editing a comment
         _titleController.text = widget.comment!.title;
         _commentController.text = widget.comment!.content;
-        commentVM.currentCommentAudioPosition = Duration(
+        commentVM.currentCommentStartAudioPosition = Duration(
             milliseconds: widget.comment!.audioPositionInTenthOfSeconds * 100);
-        commentVM.currentCommentEndAudioPosition = Duration(
-            milliseconds: widget.comment!.commentEndAudioPositionInTenthOfSeconds * 100);
+        Duration commentEndPosition = Duration(
+            milliseconds:
+                widget.comment!.commentEndAudioPositionInTenthOfSeconds * 100);
+        if (commentEndPosition < globalAudioPlayerVM.currentAudioPosition) {
+          commentVM.currentCommentEndAudioPosition =
+              globalAudioPlayerVM.currentAudioPosition;
+        } else {
+          // the user has positioned the play audio view audio position after
+          // the current comment end audio position in order to increase the
+          // comment end audio position
+          commentVM.currentCommentEndAudioPosition = commentEndPosition;
+        }
       } else {
-        commentVM.currentCommentAudioPosition =
+        // here, we are creating a comment
+        commentVM.currentCommentStartAudioPosition =
             globalAudioPlayerVM.currentAudioPosition;
         commentVM.currentCommentEndAudioPosition =
             globalAudioPlayerVM.currentAudioPosition;
@@ -130,176 +145,10 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                   children: [
                     Column(
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
-                              height: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
-                              child: Tooltip(
-                                message: AppLocalizations.of(context)!
-                                    .tenthOfSecondsCheckboxTooltip,
-                                child: Checkbox(
-                                  key: const Key(
-                                      'modifyPositionDurationChangeInTenthOfSeconds'),
-                                  value:
-                                      _modifyPositionDurationChangeInTenthOfSeconds,
-                                  onChanged: (bool? newValue) {
-                                    setState(() {
-                                      _modifyPositionDurationChangeInTenthOfSeconds =
-                                          newValue ?? false;
-                                    });
-                                  },
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 50,
-                              child: IconButton(
-                                key: const Key('backwardOneSecondIconButton'),
-                                // Rewind 1 second button
-                                icon: const Icon(Icons.fast_rewind),
-                                onPressed: () async {
-                                  await _modifyCommentPosition(
-                                    commentVMlistenFalse: commentVMlistenFalse,
-                                    millisecondsChange:
-                                        _modifyPositionDurationChangeInTenthOfSeconds
-                                            ? -100
-                                            : -1000,
-                                  );
-                                },
-                                iconSize:
-                                    _modifyPositionDurationChangeInTenthOfSeconds
-                                        ? kSmallestButtonWidth * 0.8
-                                        : kSmallestButtonWidth,
-                              ),
-                            ),
-                            Consumer<CommentVM>(
-                              builder: (context, commentVM, child) {
-                                // Text for the current comment audio position
-                                return Text(
-                                  _modifyPositionDurationChangeInTenthOfSeconds
-                                      // if the modify position duration change in tenth
-                                      // of seconds checkbox is checked, the audio
-                                      // position is displayed with a tenth of a second
-                                      // value after the seconds value
-                                      ? commentVM.currentCommentAudioPosition
-                                          .HHmmssZeroHH(
-                                              addRemainingOneDigitTenthOfSecond:
-                                                  true)
-                                      : commentVM.currentCommentAudioPosition
-                                          .HHmmssZeroHH(),
-                                );
-                              },
-                            ),
-                            SizedBox(
-                              width: 50,
-                              child: IconButton(
-                                // Forward 1 second button
-                                key: const Key('forwardOneSecondIconButton'),
-                                icon: const Icon(Icons.fast_forward),
-                                onPressed: () async {
-                                  await _modifyCommentPosition(
-                                    commentVMlistenFalse: commentVMlistenFalse,
-                                    millisecondsChange:
-                                        _modifyPositionDurationChangeInTenthOfSeconds
-                                            ? 100
-                                            : 1000,
-                                  );
-                                },
-                                iconSize:
-                                    _modifyPositionDurationChangeInTenthOfSeconds
-                                        ? kSmallestButtonWidth * 0.8
-                                        : kSmallestButtonWidth,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
-                              height: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
-                              child: Tooltip(
-                                message: AppLocalizations.of(context)!
-                                    .tenthOfSecondsCheckboxTooltip,
-                                child: Checkbox(
-                                  key: const Key(
-                                      'modifyCommentEndPositionDurationChangeInTenthOfSeconds'),
-                                  value:
-                                      _modifyCommentEndPositionDurationChangeInTenthOfSeconds,
-                                  onChanged: (bool? newValue) {
-                                    setState(() {
-                                      _modifyCommentEndPositionDurationChangeInTenthOfSeconds =
-                                          newValue ?? false;
-                                    });
-                                  },
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 50,
-                              child: IconButton(
-                                key: const Key('backwardCommentEndOneSecondIconButton'),
-                                // Rewind 1 second button
-                                icon: const Icon(Icons.fast_rewind),
-                                onPressed: () async {
-                                  await _modifyCommentEndPosition(
-                                    commentVMlistenFalse: commentVMlistenFalse,
-                                    millisecondsChange:
-                                        _modifyCommentEndPositionDurationChangeInTenthOfSeconds
-                                            ? -100
-                                            : -1000,
-                                  );
-                                },
-                                iconSize:
-                                    _modifyCommentEndPositionDurationChangeInTenthOfSeconds
-                                        ? kSmallestButtonWidth * 0.8
-                                        : kSmallestButtonWidth,
-                              ),
-                            ),
-                            Consumer<CommentVM>(
-                              builder: (context, commentVM, child) {
-                                // Text for the current comment end audio position
-                                return Text(
-                                  _modifyCommentEndPositionDurationChangeInTenthOfSeconds
-                                      // if the modify position duration change in tenth
-                                      // of seconds checkbox is checked, the audio
-                                      // position is displayed with a tenth of a second
-                                      // value after the seconds value
-                                      ? commentVM.currentCommentEndAudioPosition
-                                          .HHmmssZeroHH(
-                                              addRemainingOneDigitTenthOfSecond:
-                                                  true)
-                                      : commentVM.currentCommentEndAudioPosition
-                                          .HHmmssZeroHH(),
-                                );
-                              },
-                            ),
-                            SizedBox(
-                              width: 50,
-                              child: IconButton(
-                                // Forward 1 second button
-                                key: const Key('forwardCommentEndOneSecondIconButton'),
-                                icon: const Icon(Icons.fast_forward),
-                                onPressed: () async {
-                                  await _modifyCommentEndPosition(
-                                    commentVMlistenFalse: commentVMlistenFalse,
-                                    millisecondsChange:
-                                        _modifyCommentEndPositionDurationChangeInTenthOfSeconds
-                                            ? 100
-                                            : 1000,
-                                  );
-                                },
-                                iconSize:
-                                    _modifyCommentEndPositionDurationChangeInTenthOfSeconds
-                                        ? kSmallestButtonWidth * 0.8
-                                        : kSmallestButtonWidth,
-                              ),
-                            ),
-                          ],
-                        ),
+                        _buildModifyCommentStartPosition(
+                            context, commentVMlistenFalse),
+                        _buildModifyCommentEndPosition(
+                            context, commentVMlistenFalse),
                       ],
                     ),
                     Row(
@@ -308,15 +157,90 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                           // Play/Pause button
                           key: const Key('playPauseIconButton'),
                           onPressed: () async {
-                            globalAudioPlayerVM.isPlaying
-                                ? await globalAudioPlayerVM.pause()
-                                : await _playFromCommentPosition(
-                                    commentVMlistenFalse: commentVMlistenFalse,
-                                  );
+                            if (globalAudioPlayerVM.isPlaying) {
+                              await globalAudioPlayerVM.pause();
+
+                              // modify the end audio position if the end
+                              // audio position is before or equal to the
+                              // current audio position
+                              if (commentVMlistenFalse
+                                      .currentCommentEndAudioPosition <=
+                                  commentVMlistenFalse
+                                      .currentCommentStartAudioPosition) {
+                                commentVMlistenFalse
+                                        .currentCommentEndAudioPosition =
+                                    globalAudioPlayerVM.currentAudioPosition;
+                              }
+                            } else {
+                              _playButtonWasClicked = true;
+                              _forwardingCommentEndPositionSituation = false;
+                              _backwardingCommentEndPositionSituation = false;
+
+                              await _playFromCommentPosition(
+                                  commentVMlistenFalse: commentVMlistenFalse);
+                            }
                           },
                           icon: Consumer<AudioPlayerVM>(
-                            builder: (context, globalAudioPlayerVM, child) {
-                              return Icon(globalAudioPlayerVM.isPlaying
+                            // Setting the icon as Consumer of AudioPlayerVM
+                            // enables the icon to change according to the
+                            // audio player VM state.
+                            //
+                            // Additionally, the code below ensures that the
+                            // audio player is paused when the current comment
+                            // end audio position is reached.
+                            builder: (context, audioPlayerVMlistenTrue, child) {
+                              if (!_forwardingCommentEndPositionSituation ||
+                                  !_backwardingCommentEndPositionSituation) {
+                                if (commentVMlistenFalse
+                                        .currentCommentEndAudioPosition >
+                                    commentVMlistenFalse
+                                        .currentCommentStartAudioPosition) {
+                                  // situation in which the current comment end
+                                  // audio position was set
+                                  if (audioPlayerVMlistenTrue
+                                          .currentAudioPosition >=
+                                      commentVMlistenFalse
+                                          .currentCommentEndAudioPosition) {
+                                    // here, the audio player reached the
+                                    // current comment end audio position
+                                    if (_playButtonWasClicked) {
+                                      // if the audio player was stopped after
+                                      // reaching the current comment end audio,
+                                      // the user must be able to play the audio
+                                      // again from the current comment audio
+                                      // start position
+                                      _playButtonWasClicked = false;
+                                    } else {
+                                      audioPlayerVMlistenTrue
+                                          .pause()
+                                          .then((_) {
+                                        // enables the user to play the audio again
+                                        // from the current comment audio start
+                                        // position
+                                        _playButtonWasClicked = true;
+                                      });
+                                    }
+                                  }
+                                }
+                              } else {
+                                if (commentVMlistenFalse
+                                        .currentCommentEndAudioPosition >
+                                    commentVMlistenFalse
+                                        .currentCommentStartAudioPosition) {
+                                  // situation in which the current comment end
+                                  // audio position was set
+                                  if (audioPlayerVMlistenTrue
+                                          .currentAudioPosition >=
+                                      commentVMlistenFalse
+                                          .currentCommentEndAudioPosition) {
+                                    // here, the audio player reached the
+                                    // current comment end audio position
+                                    audioPlayerVMlistenTrue.pause().then((value) => null);
+                                  }
+                                }
+                              }
+
+                              return Icon(audioPlayerVMlistenTrue.isPlaying
                                   ? Icons.pause
                                   : Icons.play_arrow);
                             },
@@ -350,7 +274,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                   title: _titleController.text,
                   content: _commentController.text,
                   audioPositionInTenthOfSeconds: commentVMlistenFalse
-                          .currentCommentAudioPosition.inMilliseconds ~/
+                          .currentCommentStartAudioPosition.inMilliseconds ~/
                       100,
                   commentEndAudioPositionInTenthOfSeconds: commentVMlistenFalse
                           .currentCommentEndAudioPosition.inMilliseconds ~/
@@ -365,7 +289,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
               commentToModify.content = _commentController.text;
               commentToModify.audioPositionInTenthOfSeconds =
                   commentVMlistenFalse
-                          .currentCommentAudioPosition.inMilliseconds ~/
+                          .currentCommentStartAudioPosition.inMilliseconds ~/
                       100;
               commentToModify.commentEndAudioPositionInTenthOfSeconds =
                   commentVMlistenFalse
@@ -378,7 +302,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
               );
             }
 
-            _closeDialogAndReOpenCommentListAddDialog(context);
+            await _closeDialogAndReOpenCommentListAddDialog(context);
           },
         ),
         TextButton(
@@ -391,12 +315,179 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
     );
   }
 
+  Row _buildModifyCommentStartPosition(
+      BuildContext context, CommentVM commentVMlistenFalse) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SizedBox(
+          width: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
+          height: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
+          child: Tooltip(
+            message:
+                AppLocalizations.of(context)!.tenthOfSecondsCheckboxTooltip,
+            child: Checkbox(
+              key: const Key('modifyPositionDurationChangeInTenthOfSeconds'),
+              value: _modifyPositionDurationChangeInTenthOfSeconds,
+              onChanged: (bool? newValue) {
+                setState(() {
+                  _modifyPositionDurationChangeInTenthOfSeconds =
+                      newValue ?? false;
+                });
+              },
+            ),
+          ),
+        ),
+        SizedBox(
+          width: 50,
+          child: IconButton(
+            key: const Key('backwardOneSecondIconButton'),
+            // Rewind 1 second button
+            icon: const Icon(Icons.fast_rewind),
+            onPressed: () async {
+              await _modifyCommentStartPosition(
+                commentVMlistenFalse: commentVMlistenFalse,
+                millisecondsChange:
+                    _modifyPositionDurationChangeInTenthOfSeconds
+                        ? -100
+                        : -1000,
+              );
+            },
+            iconSize: _modifyPositionDurationChangeInTenthOfSeconds
+                ? kSmallestButtonWidth * 0.8
+                : kSmallestButtonWidth,
+          ),
+        ),
+        Consumer<CommentVM>(
+          builder: (context, commentVM, child) {
+            // Text for the current comment audio position
+            return Text(
+              _modifyPositionDurationChangeInTenthOfSeconds
+                  // if the modify position duration change in tenth
+                  // of seconds checkbox is checked, the audio
+                  // position is displayed with a tenth of a second
+                  // value after the seconds value
+                  ? commentVM.currentCommentStartAudioPosition
+                      .HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true)
+                  : commentVM.currentCommentStartAudioPosition.HHmmssZeroHH(),
+            );
+          },
+        ),
+        SizedBox(
+          width: 50,
+          child: IconButton(
+            // Forward 1 second button
+            key: const Key('forwardOneSecondIconButton'),
+            icon: const Icon(Icons.fast_forward),
+            onPressed: () async {
+              await _modifyCommentStartPosition(
+                commentVMlistenFalse: commentVMlistenFalse,
+                millisecondsChange:
+                    _modifyPositionDurationChangeInTenthOfSeconds ? 100 : 1000,
+              );
+            },
+            iconSize: _modifyPositionDurationChangeInTenthOfSeconds
+                ? kSmallestButtonWidth * 0.8
+                : kSmallestButtonWidth,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Row _buildModifyCommentEndPosition(
+      BuildContext context, CommentVM commentVMlistenFalse) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SizedBox(
+          width: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
+          height: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
+          child: Tooltip(
+            message:
+                AppLocalizations.of(context)!.tenthOfSecondsCheckboxTooltip,
+            child: Checkbox(
+              key: const Key(
+                  'modifyCommentEndPositionDurationChangeInTenthOfSeconds'),
+              value: _modifyCommentEndPositionDurationChangeInTenthOfSeconds,
+              onChanged: (bool? newValue) {
+                setState(() {
+                  _modifyCommentEndPositionDurationChangeInTenthOfSeconds =
+                      newValue ?? false;
+                });
+              },
+            ),
+          ),
+        ),
+        SizedBox(
+          width: 50,
+          child: IconButton(
+            key: const Key('backwardCommentEndOneSecondIconButton'),
+            // Rewind 1 second button
+            icon: const Icon(Icons.fast_rewind),
+            onPressed: () async {
+              _backwardingCommentEndPositionSituation = true;
+              _forwardingCommentEndPositionSituation = false;
+              await _modifyCommentEndPosition(
+                commentVMlistenFalse: commentVMlistenFalse,
+                millisecondsChange:
+                    _modifyCommentEndPositionDurationChangeInTenthOfSeconds
+                        ? -100
+                        : -1000,
+              );
+            },
+            iconSize: _modifyCommentEndPositionDurationChangeInTenthOfSeconds
+                ? kSmallestButtonWidth * 0.8
+                : kSmallestButtonWidth,
+          ),
+        ),
+        Consumer<CommentVM>(
+          builder: (context, commentVM, child) {
+            // Text for the current comment end audio position
+            return Text(
+              _modifyCommentEndPositionDurationChangeInTenthOfSeconds
+                  // if the modify position duration change in tenth
+                  // of seconds checkbox is checked, the audio
+                  // position is displayed with a tenth of a second
+                  // value after the seconds value
+                  ? commentVM.currentCommentEndAudioPosition
+                      .HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true)
+                  : commentVM.currentCommentEndAudioPosition.HHmmssZeroHH(),
+            );
+          },
+        ),
+        SizedBox(
+          width: 50,
+          child: IconButton(
+            // Forward 1 second button
+            key: const Key('forwardCommentEndOneSecondIconButton'),
+            icon: const Icon(Icons.fast_forward),
+            onPressed: () async {
+              _forwardingCommentEndPositionSituation = true;
+              _backwardingCommentEndPositionSituation = false;
+              await _modifyCommentEndPosition(
+                commentVMlistenFalse: commentVMlistenFalse,
+                millisecondsChange:
+                    _modifyCommentEndPositionDurationChangeInTenthOfSeconds
+                        ? 100
+                        : 1000,
+              );
+            },
+            iconSize: _modifyCommentEndPositionDurationChangeInTenthOfSeconds
+                ? kSmallestButtonWidth * 0.8
+                : kSmallestButtonWidth,
+          ),
+        ),
+      ],
+    );
+  }
+
   /// Since before opening the CommentAddEditDialogWidget its caller, the
   /// CommentListAddDialogWidget, was closed, this caller dialog must be
   /// re-opened in order to display the updated list of comments.
-  void _closeDialogAndReOpenCommentListAddDialog(
+  Future<void> _closeDialogAndReOpenCommentListAddDialog(
     BuildContext context,
-  ) {
+  ) async {
     // Closing first the current CommentAddEditDialogWidget dialog (... pop())
     // and then opening the CommentListAddDialogWidget dialog before pausing
     // the audio without using await on pause method avoids that if the audio
@@ -415,7 +506,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
     );
 
     if (globalAudioPlayerVM.isPlaying) {
-      globalAudioPlayerVM.pause();
+      await globalAudioPlayerVM.pause();
     }
   }
 
@@ -423,7 +514,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
     required CommentVM commentVMlistenFalse,
   }) async {
     await globalAudioPlayerVM.modifyAudioPlayerPluginPosition(
-      commentVMlistenFalse.currentCommentAudioPosition,
+      commentVMlistenFalse.currentCommentStartAudioPosition,
     );
 
     await globalAudioPlayerVM.playFromCurrentAudioFile(
@@ -431,16 +522,16 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
     );
   }
 
-  Future<void> _modifyCommentPosition({
+  Future<void> _modifyCommentStartPosition({
     required CommentVM commentVMlistenFalse,
     required int millisecondsChange,
   }) async {
-    commentVMlistenFalse.currentCommentAudioPosition =
-        commentVMlistenFalse.currentCommentAudioPosition +
+    commentVMlistenFalse.currentCommentStartAudioPosition =
+        commentVMlistenFalse.currentCommentStartAudioPosition +
             Duration(milliseconds: millisecondsChange);
 
     await globalAudioPlayerVM.modifyAudioPlayerPluginPosition(
-      commentVMlistenFalse.currentCommentAudioPosition,
+      commentVMlistenFalse.currentCommentStartAudioPosition,
     );
 
     await globalAudioPlayerVM.playFromCurrentAudioFile(
@@ -456,9 +547,9 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
         commentVMlistenFalse.currentCommentEndAudioPosition +
             Duration(milliseconds: millisecondsChange);
 
-    await globalAudioPlayerVM.modifyAudioPlayerPluginPosition(
-      commentVMlistenFalse.currentCommentEndAudioPosition,
-    );
+      await globalAudioPlayerVM.modifyAudioPlayerPluginPosition(
+        commentVMlistenFalse.currentCommentEndAudioPosition -
+            const Duration(milliseconds: 200));
 
     await globalAudioPlayerVM.playFromCurrentAudioFile(
       rewindAudioPositionBasedOnPauseDuration: false,

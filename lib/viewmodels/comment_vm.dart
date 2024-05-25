@@ -15,18 +15,20 @@ import '../utils/dir_util.dart';
 /// This class manages the audio player obtained from the
 class CommentVM extends ChangeNotifier {
   Duration _currentCommentAudioPosition = Duration.zero;
-  Duration get currentCommentAudioPosition => _currentCommentAudioPosition;
-  set currentCommentAudioPosition(Duration value) {
+  Duration get currentCommentStartAudioPosition => _currentCommentAudioPosition;
+  set currentCommentStartAudioPosition(Duration value) {
     _currentCommentAudioPosition = value;
     notifyListeners();
   }
 
   Duration _currentCommentEndAudioPosition = Duration.zero;
-  Duration get currentCommentEndAudioPosition => _currentCommentEndAudioPosition;
+  Duration get currentCommentEndAudioPosition =>
+      _currentCommentEndAudioPosition;
   set currentCommentEndAudioPosition(Duration value) {
     _currentCommentEndAudioPosition = value;
     notifyListeners();
   }
+
   CommentVM();
 
   /// If the comment file exists, the list of comments it contains is
@@ -34,9 +36,9 @@ class CommentVM extends ChangeNotifier {
   List<Comment> loadAudioComments({
     required Audio audio,
   }) {
-    String commentFilePathName =_createCommentFilePathAndFilePathName(audioToComment: audio)[1];
-    File commentFile =
-        File(commentFilePathName);
+    String commentFilePathName =
+        _createCommentFilePathAndFilePathName(audioToComment: audio)[1];
+    File commentFile = File(commentFilePathName);
 
     List<Comment> commentLst = [];
 

@@ -221,14 +221,21 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
                             );
                     },
                     icon: Consumer<AudioPlayerVM>(
-                      builder: (context, globalAudioPlayerVM, child) {
+                      builder: (context, audioPlayerVMlistenTrue, child) {
+                        if (audioPlayerVMlistenTrue.currentAudioPosition >=
+                            Duration(
+                                milliseconds: comment
+                                    .commentEndAudioPositionInTenthOfSeconds * 100)) {
+                          audioPlayerVMlistenTrue.pause().then((_) {});
+                        }
+
                         // this logic avoids that when the
                         // user clicks on the play button of a
                         // comment, the play button of the
                         // other comment are updated to 'pause'
                         return Icon((_playingComment != null &&
                                 _playingComment == comment &&
-                                globalAudioPlayerVM.isPlaying)
+                                audioPlayerVMlistenTrue.isPlaying)
                             ? Icons.pause
                             : Icons.play_arrow);
                       },
