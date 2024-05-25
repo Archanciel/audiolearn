@@ -35,8 +35,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
   bool _modifyPositionDurationChangeInTenthOfSeconds = false;
   bool _modifyCommentEndPositionDurationChangeInTenthOfSeconds = false;
   bool _playButtonWasClicked = true;
-  bool _forwardingCommentEndPositionSituation = false;
-  bool _backwardingCommentEndPositionSituation = false;
+  bool _modifyingCommentEndPositionSituation = false;
 
   @override
   void initState() {
@@ -160,9 +159,16 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                             if (globalAudioPlayerVM.isPlaying) {
                               await globalAudioPlayerVM.pause();
 
-                              // modify the end audio position if the end
+                              // Modify the end audio position if the end
                               // audio position is before or equal to the
-                              // current audio position
+                              // current audio position.
+                              //
+                              // In the situation when a new comment is
+                              // created, it is useful to set the end audio
+                              // position as the current audio play position
+                              // when the user clicks on the pause button after
+                              // having left the application play the audio
+                              // till the comment end position.
                               if (commentVMlistenFalse
                                       .currentCommentEndAudioPosition <=
                                   commentVMlistenFalse
@@ -173,8 +179,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                               }
                             } else {
                               _playButtonWasClicked = true;
-                              _forwardingCommentEndPositionSituation = false;
-                              _backwardingCommentEndPositionSituation = false;
+                              _modifyingCommentEndPositionSituation = false;
 
                               await _playFromCommentPosition(
                                   commentVMlistenFalse: commentVMlistenFalse);
@@ -189,8 +194,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                             // audio player is paused when the current comment
                             // end audio position is reached.
                             builder: (context, audioPlayerVMlistenTrue, child) {
-                              if (!_forwardingCommentEndPositionSituation ||
-                                  !_backwardingCommentEndPositionSituation) {
+                              if (!_modifyingCommentEndPositionSituation) {
                                 if (commentVMlistenFalse
                                         .currentCommentEndAudioPosition >
                                     commentVMlistenFalse
@@ -426,8 +430,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
             // Rewind 1 second button
             icon: const Icon(Icons.fast_rewind),
             onPressed: () async {
-              _backwardingCommentEndPositionSituation = true;
-              _forwardingCommentEndPositionSituation = false;
+              _modifyingCommentEndPositionSituation = true;
               await _modifyCommentEndPosition(
                 commentVMlistenFalse: commentVMlistenFalse,
                 millisecondsChange:
@@ -463,8 +466,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
             key: const Key('forwardCommentEndOneSecondIconButton'),
             icon: const Icon(Icons.fast_forward),
             onPressed: () async {
-              _forwardingCommentEndPositionSituation = true;
-              _backwardingCommentEndPositionSituation = false;
+              _modifyingCommentEndPositionSituation = true;
               await _modifyCommentEndPosition(
                 commentVMlistenFalse: commentVMlistenFalse,
                 millisecondsChange:
@@ -549,7 +551,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
 
       await globalAudioPlayerVM.modifyAudioPlayerPluginPosition(
         commentVMlistenFalse.currentCommentEndAudioPosition -
-            const Duration(milliseconds: 200));
+            const Duration(milliseconds: 5000)); // 2000 for S8 !
 
     await globalAudioPlayerVM.playFromCurrentAudioFile(
       rewindAudioPositionBasedOnPauseDuration: false,
