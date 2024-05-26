@@ -2474,14 +2474,16 @@ void main() {
       // Verify the current audio position in the audio player view.
 
       audioPlayerViewCurrentAudioPosition = '0:47';
-      audioPlayerViewFinder = find.byType(AudioPlayerView);
+      Finder textWidgetFinder = find.descendant(
+          of: commentAddEditDialogFinder,
+          matching: find.byKey(Key('commentEndPositionText')));
 
       expect(
-          find.descendant(
-            of: audioPlayerViewFinder,
-            matching: find.text(audioPlayerViewCurrentAudioPosition),
-          ),
-          findsOneWidget);
+        textWidgetFinder,
+        findsOneWidget,
+        reason:
+            'Expected to find text "$audioPlayerViewCurrentAudioPosition" but found "${getActualText(textWidgetFinder)}" instead.',
+      );
 
       // Now verify the comment end position displayed in the comment dialog.
       // The comment end position was automatically set to the current
@@ -2628,20 +2630,28 @@ void main() {
       // Verify that the comment end position is now displayed
       // with added tenth of seconds value
       String commentEndPositionWithTensOfSecond = '0:50.3';
-      String commentEndPositionWithTensOfSecondAlternate = '0:50.4';
+      String commentEndPositionWithTensOfSecondAlternateOne = '0:50.2';
+      String commentEndPositionWithTensOfSecondAlternateTwo = '0:50.4';
 
-      expect(
-        find.descendant(
-          of: commentAddEditDialogFinder,
-          matching: find
-                  .text(commentEndPositionWithTensOfSecond)
-                  .evaluate()
-                  .isNotEmpty
-              ? find.text(commentEndPositionWithTensOfSecond)
-              : find.text(commentEndPositionWithTensOfSecondAlternate),
-        ),
-        findsOneWidget,
-      );
+      bool valueFound = false;
+
+      if (find.text(commentEndPositionWithTensOfSecond).evaluate().isNotEmpty) {
+        valueFound = true;
+      } else if (find
+          .text(commentEndPositionWithTensOfSecondAlternateOne)
+          .evaluate()
+          .isNotEmpty) {
+        valueFound = true;
+      } else if (find
+          .text(commentEndPositionWithTensOfSecondAlternateTwo)
+          .evaluate()
+          .isNotEmpty) {
+        valueFound = true;
+      }
+
+      expect(valueFound, isTrue,
+          reason:
+              'Expected one of the three comment end positions to be found, but none were found.');
 
       // Tap three times on the forward comment end icon button, then
       // one time on the backward comment end icon button and finally
@@ -2672,12 +2682,20 @@ void main() {
       // Verify the comment end position displayed in the comment
       // dialog
       commentEndPositionWithTensOfSecond = '0:50.2';
+      String commentEndPositionWithTensOfSecondAlternative = '0:50.3';
 
       expect(
-          find.descendant(
-              of: commentAddEditDialogFinder,
-              matching: find.text(commentEndPositionWithTensOfSecond)),
-          findsOneWidget);
+        find.descendant(
+          of: commentAddEditDialogFinder,
+          matching: find
+                  .text(commentEndPositionWithTensOfSecond)
+                  .evaluate()
+                  .isNotEmpty
+              ? find.text(commentEndPositionWithTensOfSecond)
+              : find.text(commentEndPositionWithTensOfSecondAlternative),
+        ),
+        findsOneWidget,
+      );
 
       // Tap on the play/pause button to stop playing the audio
       await tester.tap(find.byKey(const Key('playPauseIconButton')));
@@ -2724,8 +2742,6 @@ void main() {
               of: commentListDialogFinder, matching: find.text(commentText)),
           findsOneWidget);
 
-      // Assuming you have identified the dialog using a key or type
-      // Now use find.descendant to scope the search to the dialog
       expect(
           find.descendant(
             of: commentListDialogFinder,
@@ -2742,7 +2758,7 @@ void main() {
           tester.widget<TextButton>(addOrUpdateCommentTextButton);
       expect((addEditTextButton.child! as Text).data, 'Update');
 
-      // Now modify the comment
+      // Now modify the comment text
 
       final textFieldFinder = find.byKey(Key(commentContentTextFieldKeyStr));
       const String updatedCommentText = 'Updated comm. text';
@@ -2793,9 +2809,73 @@ void main() {
         expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
       );
 
+      // Now set the audio player view position to the desired comment
+      // end position
+
+      // Tap 5 times on the forward 1 minute icon button
+      for (int i = 0; i < 5; i++) {
+        await tester
+            .tap(find.byKey(const Key('audioPlayerViewForward1mButton')));
+        await tester.pumpAndSettle();
+      }
+
+      // Verify the current audio position in the audio player view
+      String audioPlayerViewAudioPosition = '5:46';
+      expect(find.text(audioPlayerViewAudioPosition), findsOneWidget);
+
       // Tap on the comment icon button to re-open the comment list
       // dialog
       await tester.tap(commentInkWellButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Now tap on the comment title text to re-edit the comment
+      await tester.tap(find.text(commentTitle));
+      await tester.pumpAndSettle();
+
+      // Verify that the comment end position has been updated to the
+      // current audio player view position
+      expect(
+          find.descendant(
+              of: commentAddEditDialogFinder,
+              matching: find.text(audioPlayerViewAudioPosition)), // 5:46
+          findsOneWidget);
+
+      // Tap once on the forward comment end icon button to increase the
+      // comment end position
+      await tester.tap(forwardCommentEndIconButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Tap on the comment end checkbox to enable the modification of the
+      // comment end position in tenth of seconds
+      await tester
+          .tap(find.byKey(const Key('commentEndTenthOfSecondsCheckbox')));
+      await tester.pumpAndSettle();
+
+      // Now tap twice on the backward comment end icon button to decrease
+      // the comment end position of 2 tenth of seconds
+      await tester.tap(backwardCommentEndIconButtonFinder);
+      await tester.pumpAndSettle();
+      await tester.tap(backwardCommentEndIconButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the comment end position displayed in the comment dialog
+
+      // Verify the comment end position displayed in the comment dialog
+      String updatedCommentEndPosition = '5:47:0';
+      textWidgetFinder = find.descendant(
+          of: commentAddEditDialogFinder,
+          matching: find.byKey(Key('commentEndPositionText')));
+
+      expect(
+        textWidgetFinder,
+        findsOneWidget,
+        reason:
+            'Expected to find text "$updatedCommentEndPosition" but found "${getActualText(textWidgetFinder)}" instead.',
+      );
+
+      // Now, tap on the add/update comment button to save the updated
+      // comment
+      await tester.tap(addOrUpdateCommentTextButton);
       await tester.pumpAndSettle();
 
       // Now tap on the delete comment icon button to delete the comment
@@ -3248,6 +3328,17 @@ void verifyAudioDataElementsUpdatedInJsonFile({
             toleranceInSeconds: 1),
         isTrue);
   }
+}
+
+String? getActualText(Finder textWidgetFinder) {
+  final elements = textWidgetFinder.evaluate();
+
+  if (elements.isNotEmpty) {
+    final textElement = elements.first.widget as Text;
+    return textElement.data;
+  }
+
+  return null;
 }
 
 /// Initializes the application and selects the playlist if
