@@ -89,8 +89,8 @@ void main() {
           id: 'Test Title 2_2',
           title: 'Test Title 2',
           content: 'Test Content 2\nline 2\nline 3\nline four\nline 5',
-          audioPositionInTenthOfSeconds: 600,
-          commentEndAudioPositionInTenthOfSeconds: 1800,
+          commentStartPositionInTenthOfSeconds: 600,
+          commentEndPositionInTenthOfSeconds: 1800,
           creationDateTime: DateTime.parse('2023-03-26T00:05:32.000'),
           lastUpdateDateTime: DateTime.parse('2024-05-19T15:23:51.000'),
         ),
@@ -99,8 +99,8 @@ void main() {
           title: 'number 3',
           content:
               'A complete example showcasing all audioplayers features can be found in our repository. Also check out our live web app.',
-          audioPositionInTenthOfSeconds: 800,
-          commentEndAudioPositionInTenthOfSeconds: 2800,
+          commentStartPositionInTenthOfSeconds: 800,
+          commentEndPositionInTenthOfSeconds: 2800,
           creationDateTime: DateTime.parse('2024-05-19T14:49:03.000'),
           lastUpdateDateTime: DateTime.parse('2024-05-19T14:49:03.000'),
         ),
@@ -108,8 +108,8 @@ void main() {
           id: 'Test Title_0',
           title: 'Test Title 1',
           content: 'Test Content\nline 2\nline 3',
-          audioPositionInTenthOfSeconds: 3100,
-          commentEndAudioPositionInTenthOfSeconds: 5000,
+          commentStartPositionInTenthOfSeconds: 3100,
+          commentEndPositionInTenthOfSeconds: 5000,
           creationDateTime: DateTime.parse('2023-03-24T20:05:32.000'),
           lastUpdateDateTime: DateTime.parse('2024-05-19T14:46:05.000'),
         ),
@@ -151,8 +151,8 @@ void main() {
       Comment testCommentOne = Comment(
         title: 'Test Title',
         content: 'Test Content',
-        audioPositionInTenthOfSeconds: 3000,
-        commentEndAudioPositionInTenthOfSeconds: 5000,
+        commentStartPositionInTenthOfSeconds: 3000,
+        commentEndPositionInTenthOfSeconds: 5000,
       );
 
       commentVM.addComment(
@@ -175,8 +175,8 @@ void main() {
       Comment testCommentTwo = Comment(
         title: 'Test Title 2',
         content: 'Test Content 2',
-        audioPositionInTenthOfSeconds: 201,
-        commentEndAudioPositionInTenthOfSeconds: 501,
+        commentStartPositionInTenthOfSeconds: 201,
+        commentEndPositionInTenthOfSeconds: 501,
       );
 
       commentVM.addComment(
@@ -227,8 +227,8 @@ void main() {
       Comment testCommentOne = Comment(
         title: 'Test Title',
         content: 'Test Content',
-        audioPositionInTenthOfSeconds: 0,
-        commentEndAudioPositionInTenthOfSeconds: 10,
+        commentStartPositionInTenthOfSeconds: 0,
+        commentEndPositionInTenthOfSeconds: 10,
       );
 
       commentVM.addComment(
@@ -340,8 +340,8 @@ void main() {
 
       commentToModify.title = "New title modified";
       commentToModify.content = "New content modified";
-      commentToModify.audioPositionInTenthOfSeconds = 40100;
-      commentToModify.commentEndAudioPositionInTenthOfSeconds = 48100;
+      commentToModify.commentStartPositionInTenthOfSeconds = 40100;
+      commentToModify.commentEndPositionInTenthOfSeconds = 48100;
 
       commentVM.modifyComment(
         modifiedComment: commentToModify,
@@ -371,10 +371,10 @@ void validateComment(Comment actualComment, Comment expectedComment) {
   expect(actualComment.id, expectedComment.id);
   expect(actualComment.title, expectedComment.title);
   expect(actualComment.content, expectedComment.content);
-  expect(actualComment.audioPositionInTenthOfSeconds,
-      expectedComment.audioPositionInTenthOfSeconds);
-  expect(actualComment.commentEndAudioPositionInTenthOfSeconds,
-      expectedComment.commentEndAudioPositionInTenthOfSeconds);
+  expect(actualComment.commentStartPositionInTenthOfSeconds,
+      expectedComment.commentStartPositionInTenthOfSeconds);
+  expect(actualComment.commentEndPositionInTenthOfSeconds,
+      expectedComment.commentEndPositionInTenthOfSeconds);
   expect(actualComment.creationDateTime, expectedComment.creationDateTime);
 }
 

@@ -4,17 +4,17 @@ class Comment {
   String id;
   String title;
   String content;
-  int audioPositionInTenthOfSeconds;
-  int commentEndAudioPositionInTenthOfSeconds;
+  int commentStartPositionInTenthOfSeconds;
+  int commentEndPositionInTenthOfSeconds;
   final DateTime creationDateTime;
   late DateTime lastUpdateDateTime;
 
   Comment({
     required this.title,
     required this.content,
-    required this.audioPositionInTenthOfSeconds,
-    this.commentEndAudioPositionInTenthOfSeconds = 0,
-  })  : id = "${title}_${audioPositionInTenthOfSeconds.toString()}",
+    required this.commentStartPositionInTenthOfSeconds,
+    this.commentEndPositionInTenthOfSeconds = 0,
+  })  : id = "${title}_${commentStartPositionInTenthOfSeconds.toString()}",
         creationDateTime =
             DateTimeUtil.getDateTimeLimitedToSeconds(DateTime.now()) {
     lastUpdateDateTime = creationDateTime;
@@ -26,8 +26,8 @@ class Comment {
     required this.id,
     required this.title,
     required this.content,
-    required this.audioPositionInTenthOfSeconds,
-    required this.commentEndAudioPositionInTenthOfSeconds,
+    required this.commentStartPositionInTenthOfSeconds,
+    required this.commentEndPositionInTenthOfSeconds,
     required this.creationDateTime,
     required this.lastUpdateDateTime,
   });
@@ -37,8 +37,10 @@ class Comment {
       id: json['id'],
       title: json['title'],
       content: json['content'],
-      audioPositionInTenthOfSeconds: json['audioPositionInTenthOfSeconds'],
-      commentEndAudioPositionInTenthOfSeconds: json['commentEndAudioPositionInTenthOfSeconds'] ?? 0,
+      commentStartPositionInTenthOfSeconds:
+          json['commentStartPositionInTenthOfSeconds'] ?? json['audioPositionInTenthOfSeconds'],
+      commentEndPositionInTenthOfSeconds:
+          json['commentEndPositionInTenthOfSeconds'] ?? 0,
       creationDateTime: DateTime.parse(json['creationDateTime']),
       lastUpdateDateTime: DateTime.parse(json['lastUpdateDateTime']),
     );
@@ -50,8 +52,9 @@ class Comment {
       'id': id,
       'title': title,
       'content': content,
-      'audioPositionInTenthOfSeconds': audioPositionInTenthOfSeconds,
-      'commentEndAudioPositionInTenthOfSeconds': commentEndAudioPositionInTenthOfSeconds,
+      'commentStartPositionInTenthOfSeconds': commentStartPositionInTenthOfSeconds,
+      'commentEndPositionInTenthOfSeconds':
+          commentEndPositionInTenthOfSeconds,
       'creationDateTime': creationDateTime.toIso8601String(),
       'lastUpdateDateTime': lastUpdateDateTime.toIso8601String(),
     };

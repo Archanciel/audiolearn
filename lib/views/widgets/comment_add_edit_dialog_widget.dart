@@ -32,10 +32,10 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _commentController = TextEditingController();
   final FocusNode _focusNodeCommentTitle = FocusNode();
-  bool _modifyPositionDurationChangeInTenthOfSeconds = false;
-  bool _modifyCommentEndPositionDurationChangeInTenthOfSeconds = false;
+  bool _commentStartPositionChangedInTenthOfSeconds = false;
+  bool _commentEndPositionChangedInTenthOfSeconds = false;
   bool _playButtonWasClicked = true;
-  bool _modifyingCommentEndPositionSituation = false;
+  bool _commentEndPositionIsModified = false;
 
   @override
   void initState() {
@@ -54,25 +54,26 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
         // here, we are editing a comment
         _titleController.text = widget.comment!.title;
         _commentController.text = widget.comment!.content;
-        commentVM.currentCommentStartAudioPosition = Duration(
-            milliseconds: widget.comment!.audioPositionInTenthOfSeconds * 100);
+        commentVM.currentCommentStartPosition = Duration(
+            milliseconds:
+                widget.comment!.commentStartPositionInTenthOfSeconds * 100);
         Duration commentEndPosition = Duration(
             milliseconds:
-                widget.comment!.commentEndAudioPositionInTenthOfSeconds * 100);
+                widget.comment!.commentEndPositionInTenthOfSeconds * 100);
         if (commentEndPosition < globalAudioPlayerVM.currentAudioPosition) {
-          commentVM.currentCommentEndAudioPosition =
+          commentVM.currentCommentEndPosition =
               globalAudioPlayerVM.currentAudioPosition;
         } else {
           // the user has positioned the play audio view audio position after
           // the current comment end audio position in order to increase the
           // comment end audio position
-          commentVM.currentCommentEndAudioPosition = commentEndPosition;
+          commentVM.currentCommentEndPosition = commentEndPosition;
         }
       } else {
         // here, we are creating a comment
-        commentVM.currentCommentStartAudioPosition =
+        commentVM.currentCommentStartPosition =
             globalAudioPlayerVM.currentAudioPosition;
-        commentVM.currentCommentEndAudioPosition =
+        commentVM.currentCommentEndPosition =
             globalAudioPlayerVM.currentAudioPosition;
       }
     });
@@ -144,9 +145,9 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                   children: [
                     Column(
                       children: [
-                        _buildModifyCommentStartPosition(
+                        _buildCommentStartPositionRow(
                             context, commentVMlistenFalse),
-                        _buildModifyCommentEndPosition(
+                        _buildCommentEndPositionRow(
                             context, commentVMlistenFalse),
                       ],
                     ),
@@ -170,16 +171,15 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                               // having left the application play the audio
                               // till the comment end position.
                               if (commentVMlistenFalse
-                                      .currentCommentEndAudioPosition <=
+                                      .currentCommentEndPosition <=
                                   commentVMlistenFalse
-                                      .currentCommentStartAudioPosition) {
-                                commentVMlistenFalse
-                                        .currentCommentEndAudioPosition =
+                                      .currentCommentStartPosition) {
+                                commentVMlistenFalse.currentCommentEndPosition =
                                     globalAudioPlayerVM.currentAudioPosition;
                               }
                             } else {
                               _playButtonWasClicked = true;
-                              _modifyingCommentEndPositionSituation = false;
+                              _commentEndPositionIsModified = false;
 
                               await _playFromCommentPosition(
                                   commentVMlistenFalse: commentVMlistenFalse);
@@ -194,17 +194,17 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                             // audio player is paused when the current comment
                             // end audio position is reached.
                             builder: (context, audioPlayerVMlistenTrue, child) {
-                              if (!_modifyingCommentEndPositionSituation) {
+                              if (!_commentEndPositionIsModified) {
                                 if (commentVMlistenFalse
-                                        .currentCommentEndAudioPosition >
+                                        .currentCommentEndPosition >
                                     commentVMlistenFalse
-                                        .currentCommentStartAudioPosition) {
+                                        .currentCommentStartPosition) {
                                   // situation in which the current comment end
                                   // audio position was set
                                   if (audioPlayerVMlistenTrue
                                           .currentAudioPosition >=
                                       commentVMlistenFalse
-                                          .currentCommentEndAudioPosition) {
+                                          .currentCommentEndPosition) {
                                     // here, the audio player reached the
                                     // current comment end audio position
                                     if (_playButtonWasClicked) {
@@ -215,9 +215,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                                       // start position
                                       _playButtonWasClicked = false;
                                     } else {
-                                      audioPlayerVMlistenTrue
-                                          .pause()
-                                          .then((_) {
+                                      audioPlayerVMlistenTrue.pause().then((_) {
                                         // enables the user to play the audio again
                                         // from the current comment audio start
                                         // position
@@ -228,18 +226,20 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                                 }
                               } else {
                                 if (commentVMlistenFalse
-                                        .currentCommentEndAudioPosition >
+                                        .currentCommentEndPosition >
                                     commentVMlistenFalse
-                                        .currentCommentStartAudioPosition) {
+                                        .currentCommentStartPosition) {
                                   // situation in which the current comment end
                                   // audio position was set
                                   if (audioPlayerVMlistenTrue
                                           .currentAudioPosition >=
                                       commentVMlistenFalse
-                                          .currentCommentEndAudioPosition) {
+                                          .currentCommentEndPosition) {
                                     // here, the audio player reached the
                                     // current comment end audio position
-                                    audioPlayerVMlistenTrue.pause().then((value) => null);
+                                    audioPlayerVMlistenTrue
+                                        .pause()
+                                        .then((value) => null);
                                   }
                                 }
                               }
@@ -277,11 +277,11 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                 comment: Comment(
                   title: _titleController.text,
                   content: _commentController.text,
-                  audioPositionInTenthOfSeconds: commentVMlistenFalse
-                          .currentCommentStartAudioPosition.inMilliseconds ~/
+                  commentStartPositionInTenthOfSeconds: commentVMlistenFalse
+                          .currentCommentStartPosition.inMilliseconds ~/
                       100,
-                  commentEndAudioPositionInTenthOfSeconds: commentVMlistenFalse
-                          .currentCommentEndAudioPosition.inMilliseconds ~/
+                  commentEndPositionInTenthOfSeconds: commentVMlistenFalse
+                          .currentCommentEndPosition.inMilliseconds ~/
                       100,
                 ),
                 audioToComment: globalAudioPlayerVM.currentAudio!,
@@ -291,13 +291,13 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
 
               commentToModify.title = _titleController.text;
               commentToModify.content = _commentController.text;
-              commentToModify.audioPositionInTenthOfSeconds =
+              commentToModify.commentStartPositionInTenthOfSeconds =
                   commentVMlistenFalse
-                          .currentCommentStartAudioPosition.inMilliseconds ~/
+                          .currentCommentStartPosition.inMilliseconds ~/
                       100;
-              commentToModify.commentEndAudioPositionInTenthOfSeconds =
+              commentToModify.commentEndPositionInTenthOfSeconds =
                   commentVMlistenFalse
-                          .currentCommentEndAudioPosition.inMilliseconds ~/
+                          .currentCommentEndPosition.inMilliseconds ~/
                       100;
 
               commentVMlistenFalse.modifyComment(
@@ -319,7 +319,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
     );
   }
 
-  Row _buildModifyCommentStartPosition(
+  Row _buildCommentStartPositionRow(
       BuildContext context, CommentVM commentVMlistenFalse) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -332,10 +332,10 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                 AppLocalizations.of(context)!.tenthOfSecondsCheckboxTooltip,
             child: Checkbox(
               key: const Key('modifyPositionDurationChangeInTenthOfSeconds'),
-              value: _modifyPositionDurationChangeInTenthOfSeconds,
+              value: _commentStartPositionChangedInTenthOfSeconds,
               onChanged: (bool? newValue) {
                 setState(() {
-                  _modifyPositionDurationChangeInTenthOfSeconds =
+                  _commentStartPositionChangedInTenthOfSeconds =
                       newValue ?? false;
                 });
               },
@@ -352,12 +352,12 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
               await _modifyCommentStartPosition(
                 commentVMlistenFalse: commentVMlistenFalse,
                 millisecondsChange:
-                    _modifyPositionDurationChangeInTenthOfSeconds
+                    _commentStartPositionChangedInTenthOfSeconds
                         ? -100
                         : -1000,
               );
             },
-            iconSize: _modifyPositionDurationChangeInTenthOfSeconds
+            iconSize: _commentStartPositionChangedInTenthOfSeconds
                 ? kSmallestButtonWidth * 0.8
                 : kSmallestButtonWidth,
           ),
@@ -366,14 +366,14 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
           builder: (context, commentVM, child) {
             // Text for the current comment audio position
             return Text(
-              _modifyPositionDurationChangeInTenthOfSeconds
+              _commentStartPositionChangedInTenthOfSeconds
                   // if the modify position duration change in tenth
                   // of seconds checkbox is checked, the audio
                   // position is displayed with a tenth of a second
                   // value after the seconds value
-                  ? commentVM.currentCommentStartAudioPosition
+                  ? commentVM.currentCommentStartPosition
                       .HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true)
-                  : commentVM.currentCommentStartAudioPosition.HHmmssZeroHH(),
+                  : commentVM.currentCommentStartPosition.HHmmssZeroHH(),
             );
           },
         ),
@@ -387,10 +387,10 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
               await _modifyCommentStartPosition(
                 commentVMlistenFalse: commentVMlistenFalse,
                 millisecondsChange:
-                    _modifyPositionDurationChangeInTenthOfSeconds ? 100 : 1000,
+                    _commentStartPositionChangedInTenthOfSeconds ? 100 : 1000,
               );
             },
-            iconSize: _modifyPositionDurationChangeInTenthOfSeconds
+            iconSize: _commentStartPositionChangedInTenthOfSeconds
                 ? kSmallestButtonWidth * 0.8
                 : kSmallestButtonWidth,
           ),
@@ -399,7 +399,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
     );
   }
 
-  Row _buildModifyCommentEndPosition(
+  Row _buildCommentEndPositionRow(
       BuildContext context, CommentVM commentVMlistenFalse) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -413,10 +413,10 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
             child: Checkbox(
               key: const Key(
                   'modifyCommentEndPositionDurationChangeInTenthOfSeconds'),
-              value: _modifyCommentEndPositionDurationChangeInTenthOfSeconds,
+              value: _commentEndPositionChangedInTenthOfSeconds,
               onChanged: (bool? newValue) {
                 setState(() {
-                  _modifyCommentEndPositionDurationChangeInTenthOfSeconds =
+                  _commentEndPositionChangedInTenthOfSeconds =
                       newValue ?? false;
                 });
               },
@@ -430,16 +430,16 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
             // Rewind 1 second button
             icon: const Icon(Icons.fast_rewind),
             onPressed: () async {
-              _modifyingCommentEndPositionSituation = true;
+              _commentEndPositionIsModified = true;
               await _modifyCommentEndPosition(
                 commentVMlistenFalse: commentVMlistenFalse,
                 millisecondsChange:
-                    _modifyCommentEndPositionDurationChangeInTenthOfSeconds
+                    _commentEndPositionChangedInTenthOfSeconds
                         ? -100
                         : -1000,
               );
             },
-            iconSize: _modifyCommentEndPositionDurationChangeInTenthOfSeconds
+            iconSize: _commentEndPositionChangedInTenthOfSeconds
                 ? kSmallestButtonWidth * 0.8
                 : kSmallestButtonWidth,
           ),
@@ -448,14 +448,14 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
           builder: (context, commentVM, child) {
             // Text for the current comment end audio position
             return Text(
-              _modifyCommentEndPositionDurationChangeInTenthOfSeconds
+              _commentEndPositionChangedInTenthOfSeconds
                   // if the modify position duration change in tenth
                   // of seconds checkbox is checked, the audio
                   // position is displayed with a tenth of a second
                   // value after the seconds value
-                  ? commentVM.currentCommentEndAudioPosition
+                  ? commentVM.currentCommentEndPosition
                       .HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true)
-                  : commentVM.currentCommentEndAudioPosition.HHmmssZeroHH(),
+                  : commentVM.currentCommentEndPosition.HHmmssZeroHH(),
             );
           },
         ),
@@ -466,16 +466,16 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
             key: const Key('forwardCommentEndOneSecondIconButton'),
             icon: const Icon(Icons.fast_forward),
             onPressed: () async {
-              _modifyingCommentEndPositionSituation = true;
+              _commentEndPositionIsModified = true;
               await _modifyCommentEndPosition(
                 commentVMlistenFalse: commentVMlistenFalse,
                 millisecondsChange:
-                    _modifyCommentEndPositionDurationChangeInTenthOfSeconds
+                    _commentEndPositionChangedInTenthOfSeconds
                         ? 100
                         : 1000,
               );
             },
-            iconSize: _modifyCommentEndPositionDurationChangeInTenthOfSeconds
+            iconSize: _commentEndPositionChangedInTenthOfSeconds
                 ? kSmallestButtonWidth * 0.8
                 : kSmallestButtonWidth,
           ),
@@ -516,7 +516,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
     required CommentVM commentVMlistenFalse,
   }) async {
     await globalAudioPlayerVM.modifyAudioPlayerPluginPosition(
-      commentVMlistenFalse.currentCommentStartAudioPosition,
+      commentVMlistenFalse.currentCommentStartPosition,
     );
 
     await globalAudioPlayerVM.playFromCurrentAudioFile(
@@ -528,12 +528,12 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
     required CommentVM commentVMlistenFalse,
     required int millisecondsChange,
   }) async {
-    commentVMlistenFalse.currentCommentStartAudioPosition =
-        commentVMlistenFalse.currentCommentStartAudioPosition +
+    commentVMlistenFalse.currentCommentStartPosition =
+        commentVMlistenFalse.currentCommentStartPosition +
             Duration(milliseconds: millisecondsChange);
 
     await globalAudioPlayerVM.modifyAudioPlayerPluginPosition(
-      commentVMlistenFalse.currentCommentStartAudioPosition,
+      commentVMlistenFalse.currentCommentStartPosition,
     );
 
     await globalAudioPlayerVM.playFromCurrentAudioFile(
@@ -545,13 +545,13 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
     required CommentVM commentVMlistenFalse,
     required int millisecondsChange,
   }) async {
-    commentVMlistenFalse.currentCommentEndAudioPosition =
-        commentVMlistenFalse.currentCommentEndAudioPosition +
+    commentVMlistenFalse.currentCommentEndPosition =
+        commentVMlistenFalse.currentCommentEndPosition +
             Duration(milliseconds: millisecondsChange);
 
-      await globalAudioPlayerVM.modifyAudioPlayerPluginPosition(
-        commentVMlistenFalse.currentCommentEndAudioPosition -
-            const Duration(milliseconds: 5000)); // 2000 for S8 !
+    await globalAudioPlayerVM.modifyAudioPlayerPluginPosition(
+        commentVMlistenFalse.currentCommentEndPosition -
+            const Duration(milliseconds: 4000));
 
     await globalAudioPlayerVM.playFromCurrentAudioFile(
       rewindAudioPositionBasedOnPauseDuration: false,

@@ -548,7 +548,7 @@ void main() {
       Comment testComment = Comment(
         title: 'Test Title',
         content: 'Test Content',
-        audioPositionInTenthOfSeconds: 0,
+        commentStartPositionInTenthOfSeconds: 0,
       );
 
       // Save Comment to a file
@@ -944,13 +944,13 @@ void main() {
       Comment testCommentOne = Comment(
         title: 'Test Title 1',
         content: 'Test Content 1',
-        audioPositionInTenthOfSeconds: 0,
+        commentStartPositionInTenthOfSeconds: 0,
       );
 
       Comment testCommentTwo = Comment(
         title: 'Test Title 2',
         content: 'Test Content 2',
-        audioPositionInTenthOfSeconds: 0,
+        commentStartPositionInTenthOfSeconds: 0,
       );
 
       // Prepare test data
@@ -1143,8 +1143,8 @@ void compareDeserializedWithOriginalComment({
 }) {
   expect(deserializedComment.title, originalComment.title);
   expect(deserializedComment.content, originalComment.content);
-  expect(deserializedComment.audioPositionInTenthOfSeconds,
-      originalComment.audioPositionInTenthOfSeconds);
+  expect(deserializedComment.commentStartPositionInTenthOfSeconds,
+      originalComment.commentStartPositionInTenthOfSeconds);
   expect(deserializedComment.creationDateTime.toIso8601String(),
       originalComment.creationDateTime.toIso8601String());
 }

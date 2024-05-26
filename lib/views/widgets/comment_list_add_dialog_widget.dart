@@ -222,10 +222,14 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
                     },
                     icon: Consumer<AudioPlayerVM>(
                       builder: (context, audioPlayerVMlistenTrue, child) {
+                        // The code below ensures that the audio player is
+                        // paused when the current comment end audio position
+                        // is reached.
                         if (audioPlayerVMlistenTrue.currentAudioPosition >=
                             Duration(
-                                milliseconds: comment
-                                    .commentEndAudioPositionInTenthOfSeconds * 100)) {
+                                milliseconds:
+                                    comment.commentEndPositionInTenthOfSeconds *
+                                        100)) {
                           audioPlayerVMlistenTrue.pause().then((_) {});
                         }
 
@@ -275,7 +279,8 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
               key: const Key('commentPositionKey'),
               style: TextStyle(fontSize: 13),
               Duration(
-                      milliseconds: comment.audioPositionInTenthOfSeconds * 100)
+                      milliseconds:
+                          comment.commentStartPositionInTenthOfSeconds * 100)
                   .HHmmssZeroHH(),
             ),
             const SizedBox(width: 11),
@@ -334,7 +339,8 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
     _playingComment = comment;
 
     await globalAudioPlayerVM.modifyAudioPlayerPluginPosition(
-      Duration(milliseconds: comment.audioPositionInTenthOfSeconds * 100),
+      Duration(
+          milliseconds: comment.commentStartPositionInTenthOfSeconds * 100),
     );
 
     await globalAudioPlayerVM.playFromCurrentAudioFile(

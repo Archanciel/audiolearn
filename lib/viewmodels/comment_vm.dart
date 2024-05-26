@@ -14,25 +14,24 @@ import '../utils/dir_util.dart';
 ///
 /// This class manages the audio player obtained from the
 class CommentVM extends ChangeNotifier {
-  Duration _currentCommentAudioPosition = Duration.zero;
-  Duration get currentCommentStartAudioPosition => _currentCommentAudioPosition;
-  set currentCommentStartAudioPosition(Duration value) {
-    _currentCommentAudioPosition = value;
+  Duration _currentCommentStartPosition = Duration.zero;
+  Duration get currentCommentStartPosition => _currentCommentStartPosition;
+  set currentCommentStartPosition(Duration value) {
+    _currentCommentStartPosition = value;
     notifyListeners();
   }
 
-  Duration _currentCommentEndAudioPosition = Duration.zero;
-  Duration get currentCommentEndAudioPosition =>
-      _currentCommentEndAudioPosition;
-  set currentCommentEndAudioPosition(Duration value) {
-    _currentCommentEndAudioPosition = value;
+  Duration _currentCommentEndPosition = Duration.zero;
+  Duration get currentCommentEndPosition => _currentCommentEndPosition;
+  set currentCommentEndPosition(Duration value) {
+    _currentCommentEndPosition = value;
     notifyListeners();
   }
 
   CommentVM();
 
   /// If the comment file exists, the list of comments it contains is
-  /// returned. Else, an empty list is returned.
+  /// returned, else, an empty list is returned.
   List<Comment> loadAudioComments({
     required Audio audio,
   }) {
@@ -100,8 +99,8 @@ class CommentVM extends ChangeNotifier {
     required String commentFilePathName,
   }) {
     commentLst.sort(
-      (a, b) => a.audioPositionInTenthOfSeconds
-          .compareTo(b.audioPositionInTenthOfSeconds),
+      (a, b) => a.commentStartPositionInTenthOfSeconds
+          .compareTo(b.commentStartPositionInTenthOfSeconds),
     );
 
     JsonDataService.saveListToFile(
@@ -160,10 +159,10 @@ class CommentVM extends ChangeNotifier {
 
     oldComment.title = modifiedComment.title;
     oldComment.content = modifiedComment.content;
-    oldComment.audioPositionInTenthOfSeconds =
-        modifiedComment.audioPositionInTenthOfSeconds;
-    oldComment.commentEndAudioPositionInTenthOfSeconds =
-        modifiedComment.commentEndAudioPositionInTenthOfSeconds;
+    oldComment.commentStartPositionInTenthOfSeconds =
+        modifiedComment.commentStartPositionInTenthOfSeconds;
+    oldComment.commentEndPositionInTenthOfSeconds =
+        modifiedComment.commentEndPositionInTenthOfSeconds;
     oldComment.lastUpdateDateTime =
         DateTimeUtil.getDateTimeLimitedToSeconds(DateTime.now());
 
