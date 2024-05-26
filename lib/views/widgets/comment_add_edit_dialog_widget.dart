@@ -331,7 +331,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
             message:
                 AppLocalizations.of(context)!.tenthOfSecondsCheckboxTooltip,
             child: Checkbox(
-              key: const Key('modifyPositionDurationChangeInTenthOfSeconds'),
+              key: const Key('commentStartTenthOfSecondsCheckbox'),
               value: _commentStartPositionChangedInTenthOfSeconds,
               onChanged: (bool? newValue) {
                 setState(() {
@@ -345,7 +345,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
         SizedBox(
           width: 50,
           child: IconButton(
-            key: const Key('backwardOneSecondIconButton'),
+            key: const Key('backwardCommentStartIconButton'),
             // Rewind 1 second button
             icon: const Icon(Icons.fast_rewind),
             onPressed: () async {
@@ -381,7 +381,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
           width: 50,
           child: IconButton(
             // Forward 1 second button
-            key: const Key('forwardOneSecondIconButton'),
+            key: const Key('forwardCommentStartIconButton'),
             icon: const Icon(Icons.fast_forward),
             onPressed: () async {
               await _modifyCommentStartPosition(
@@ -412,7 +412,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                 AppLocalizations.of(context)!.tenthOfSecondsCheckboxTooltip,
             child: Checkbox(
               key: const Key(
-                  'modifyCommentEndPositionDurationChangeInTenthOfSeconds'),
+                  'commentEndTenthOfSecondsCheckbox'),
               value: _commentEndPositionChangedInTenthOfSeconds,
               onChanged: (bool? newValue) {
                 setState(() {
@@ -426,7 +426,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
         SizedBox(
           width: 50,
           child: IconButton(
-            key: const Key('backwardCommentEndOneSecondIconButton'),
+            key: const Key('backwardCommentEndIconButton'),
             // Rewind 1 second button
             icon: const Icon(Icons.fast_rewind),
             onPressed: () async {
@@ -463,7 +463,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
           width: 50,
           child: IconButton(
             // Forward 1 second button
-            key: const Key('forwardCommentEndOneSecondIconButton'),
+            key: const Key('forwardCommentEndIconButton'),
             icon: const Icon(Icons.fast_forward),
             onPressed: () async {
               _commentEndPositionIsModified = true;

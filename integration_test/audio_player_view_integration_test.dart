@@ -4,6 +4,7 @@ import 'package:audiolearn/models/playlist.dart';
 import 'package:audiolearn/services/json_data_service.dart';
 import 'package:audiolearn/utils/date_time_parser.dart';
 import 'package:audiolearn/utils/date_time_util.dart';
+import 'package:audiolearn/views/widgets/comment_add_edit_dialog_widget.dart';
 import 'package:audiolearn/views/widgets/comment_list_add_dialog_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -2346,7 +2347,7 @@ void main() {
       expect(find.text('Comments'), findsOneWidget);
 
       // Verify that no comment is displayed in the comment list
-      final commentWidget = find.byKey(ValueKey('commentTitleKey'));
+      final commentWidget = find.byKey(const ValueKey('commentTitleKey'));
 
       // Assert that no comment widgets are found
       expect(commentWidget, findsNothing);
@@ -2381,21 +2382,75 @@ void main() {
       // Verify audio title displayed in the comment dialog
       expect(find.text(audioTitleNotYetCommented), findsOneWidget);
 
-      // Tap three times on the forward one second icon button, then
-      // one time on the backward one second icon button and finally
-      // one time on the forward one second icon button to change the
-      // comment audio position
-      await tester.tap(find.byKey(const Key('forwardOneSecondIconButton')));
-      await tester.tap(find.byKey(const Key('forwardOneSecondIconButton')));
-      await tester.tap(find.byKey(const Key('forwardOneSecondIconButton')));
-      await tester.tap(find.byKey(const Key('backwardOneSecondIconButton')));
-      await tester.tap(find.byKey(const Key('forwardOneSecondIconButton')));
+      // Verify the initial comment position displayed in the
+      // comment start and end positions in the comment dialog
+      String commentStartPosition = '0:43';
+      Finder commentAddEditDialogFinder = find.byType(CommentAddEditDialogWidget);
 
+      expect(
+          find.descendant(
+              of: commentAddEditDialogFinder, matching: find.text(commentStartPosition)),
+          findsExactly(2));
+
+      // Setting the comment start position in seconds ...
+
+      // Tap three times on the forward comment start icon button, then
+      // one time on the backward comment start icon button and finally
+      // one time again on the forward comment start icon button to change
+      // the comment start position. Since the tenth of seconds checkbox
+      // is not checked, the comment start position is changed in seconds.
+      Finder forwardCommentStartIconButtonFinder = find.byKey(const Key('forwardCommentStartIconButton'));
+      const int delayMilliseconds = 500;
+      await tester.tap(forwardCommentStartIconButtonFinder);
+      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
+      await tester.pumpAndSettle();
+      await tester.tap(forwardCommentStartIconButtonFinder);
+      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
+      await tester.pumpAndSettle();
+      await tester.tap(forwardCommentStartIconButtonFinder);
+      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const Key('backwardCommentStartIconButton')));
+      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
+      await tester.pumpAndSettle();
+      await tester.tap(forwardCommentStartIconButtonFinder);
+      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
 
-      // Verify the comment audio position displayed in the comment dialog
-      String commentPosition = '0:46';
-      expect(find.text(commentPosition), findsOneWidget);
+      // Verify the comment start position displayed in the comment
+      // dialog
+      commentStartPosition = '0:46';
+
+      expect(
+          find.descendant(
+              of: commentAddEditDialogFinder, matching: find.text(commentStartPosition)),
+          findsOneWidget);
+
+      // Tap on the play/pause button to stop playing the audio
+      await tester.tap(find.byKey(const Key('playPauseIconButton')));
+      await tester.pumpAndSettle();
+
+      // Now, modifying the comment start position in tenth of
+      // seconds
+
+      // Tap on the tenth of seconds checkbox to enable the
+      // modification of the comment start position in tenth of
+      // seconds
+      await tester.tap(find.byKey(const Key('commentStartTenthOfSecondsCheckbox')));
+      await tester.pumpAndSettle();
+
+      // Verify that the comment start position is now displayed
+      // with added tenth of seconds value
+      String commentStartPositionWithTensOfSecond = '0:46.0';
+
+      expect(
+          find.descendant(
+              of: commentAddEditDialogFinder, matching: find.text(commentStartPositionWithTensOfSecond)),
+          findsOneWidget);
+
+
+
+
 
       // Tap on the play/pause button to stop playing the audio
       await tester.tap(find.byKey(const Key('playPauseIconButton')));
@@ -2433,7 +2488,7 @@ void main() {
       expect(
           find.descendant(
             of: commentListDialogFinder,
-            matching: find.text(commentPosition),
+            matching: find.text(commentStartPosition),
           ),
           findsOneWidget);
 
@@ -2479,7 +2534,7 @@ void main() {
       expect(
           find.descendant(
             of: commentListDialogFinder,
-            matching: find.text(commentPosition),
+            matching: find.text(commentStartPosition),
           ),
           findsOneWidget);
 
