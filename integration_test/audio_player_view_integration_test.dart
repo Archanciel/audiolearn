@@ -2261,7 +2261,7 @@ void main() {
   });
   group('Audio comment tests', () {
     testWidgets(
-        'Manage comments in initially empty playlist. Copy audio to the empty playlist, add a comment, then edit it and finally delete it.',
+        'Manage comments in initially empty playlist. Copy audio to the empty playlist, add a comment, then edit it, define start, then end, comment position and finally delete it.',
         (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
       const String emptyPlaylistTitle = 'Empty'; // Local empty playlist
@@ -2648,6 +2648,7 @@ void main() {
         expectedIconColor: Colors.white,
         expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
       );
+
 
       // Tap on the comment icon button to re-open the comment list
       // dialog
