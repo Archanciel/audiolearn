@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:audiolearn/models/comment.dart';
 import 'package:audiolearn/models/playlist.dart';
 import 'package:audiolearn/services/json_data_service.dart';
 import 'package:audiolearn/utils/date_time_parser.dart';
@@ -2265,7 +2266,7 @@ void main() {
         (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
       const String emptyPlaylistTitle = 'Empty'; // Local empty playlist
-      const String audioTitleNotYetCommented =
+      const String audioToCommentTitle =
           "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
 
       await initializeApplicationAndSelectPlaylist(
@@ -2303,7 +2304,7 @@ void main() {
         tester: tester,
         sourcePlaylistTitle: youtubePlaylistTitle,
         targetPlaylistTitle: emptyPlaylistTitle,
-        audioToCopyTitle: audioTitleNotYetCommented,
+        audioToCopyTitle: audioToCommentTitle,
       );
 
       // Now we want to tap on the copied uncommented audio in the
@@ -2319,14 +2320,13 @@ void main() {
       // Then, get the ListTile Text widget finder of the uncommented
       // audio copied in the empty playlist and tap on it to open the
       // AudioPlayerView
-      Finder audioTitleNotYetCommentedFinder =
-          find.text(audioTitleNotYetCommented);
+      Finder audioTitleNotYetCommentedFinder = find.text(audioToCommentTitle);
       await tester.tap(audioTitleNotYetCommentedFinder);
       await tester.pumpAndSettle();
 
       // Ensure that the comment playlist directory does not exist
       final Directory directory = Directory(
-          "kPlaylistDownloadRootPathWindowsTest${path.separator}$emptyPlaylistTitle${path.separator}comments");
+          "kPlaylistDownloadRootPathWindowsTest${path.separator}$emptyPlaylistTitle${path.separator}$kCommentDirName");
 
       expect(directory.existsSync(), false);
 
@@ -2342,15 +2342,16 @@ void main() {
 
       // Verify the current audio position in the audio player view.
 
-      String audioPlayerViewCurrentAudioPosition = '0:43';
-      Finder audioPlayerViewFinder = find.byType(AudioPlayerView);
+      String expectedAudioPlayerViewCurrentAudioPosition = '0:43';
+      Finder audioPlayerViewAudioPositionFinder =
+          find.byKey(const Key('audioPlayerViewAudioPosition'));
+      String actualAudioPlayerViewCurrentAudioPosition =
+          tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
 
       expect(
-          find.descendant(
-            of: audioPlayerViewFinder,
-            matching: find.text(audioPlayerViewCurrentAudioPosition),
-          ),
-          findsOneWidget);
+        expectedAudioPlayerViewCurrentAudioPosition,
+        actualAudioPlayerViewCurrentAudioPosition,
+      );
 
       // Tap on the comment icon button to open the comment add list
       // dialog
@@ -2394,22 +2395,28 @@ void main() {
       );
 
       // Verify audio title displayed in the comment dialog
-      expect(find.text(audioTitleNotYetCommented), findsOneWidget);
+      expect(find.text(audioToCommentTitle), findsOneWidget);
 
       // Verify the initial comment position displayed in the
       // comment start and end positions in the comment dialog.
       // This position was the audio player view position when
       // the comment dialog was opened.
       String commentStartAndEndInitialPosition =
-          audioPlayerViewCurrentAudioPosition;
-      Finder commentAddEditDialogFinder =
-          find.byType(CommentAddEditDialogWidget);
+          expectedAudioPlayerViewCurrentAudioPosition;
+
+      Finder commentStartTextWidgetFinder =
+          find.byKey(const Key('commentStartPositionText')); // 0:43
+      Finder commentEndTextWidgetFinder =
+          find.byKey(const Key('commentEndPositionText')); // 0:43
 
       expect(
-          find.descendant(
-              of: commentAddEditDialogFinder,
-              matching: find.text(commentStartAndEndInitialPosition)),
-          findsExactly(2));
+        tester.widget<Text>(commentStartTextWidgetFinder).data!,
+        commentStartAndEndInitialPosition, // 0:43
+      );
+      expect(
+        tester.widget<Text>(commentEndTextWidgetFinder).data!,
+        commentStartAndEndInitialPosition, // 0:43
+      );
 
       // Setting the comment start position in seconds ...
 
@@ -2446,56 +2453,44 @@ void main() {
       // Verify the comment start position displayed in the comment
       // dialog
       String commentStartPosition = '0:46';
-
       expect(
-          find.descendant(
-            of: commentAddEditDialogFinder,
-            matching: find.text(commentStartPosition),
-          ),
-          findsOneWidget);
+        tester.widget<Text>(commentStartTextWidgetFinder).data!,
+        commentStartPosition, // 0:46
+      );
 
       // Verify that the comment end position displayed in the comment
       // dialog is not yet modified.
       //
       // The comment end position was automatically set with the current
       // audio position in the audio player view.
-
       expect(
-          find.descendant(
-            of: commentAddEditDialogFinder,
-            matching: find.text(commentStartAndEndInitialPosition),
-          ),
-          findsOneWidget);
+        tester.widget<Text>(commentEndTextWidgetFinder).data!,
+        commentStartAndEndInitialPosition, // 0:43
+      );
+
+      // Let the audio be played during 2 second. As consequence, the
+      // comment end position will be 2 seconds after the set comment
+      // start position.
+      await Future.delayed(const Duration(seconds: 2));
+      await tester.pumpAndSettle();
 
       // Tap on the play/pause button to stop playing the audio
       await tester.tap(find.byKey(const Key('playPauseIconButton')));
       await tester.pumpAndSettle();
-
-      // Verify the current audio position in the audio player view.
-
-      audioPlayerViewCurrentAudioPosition = '0:47';
-      Finder textWidgetFinder = find.descendant(
-          of: commentAddEditDialogFinder,
-          matching: find.byKey(Key('commentEndPositionText')));
-
-      expect(
-        textWidgetFinder,
-        findsOneWidget,
-        reason:
-            'Expected to find text "$audioPlayerViewCurrentAudioPosition" but found "${getActualText(textWidgetFinder)}" instead.',
-      );
 
       // Now verify the comment end position displayed in the comment dialog.
       // The comment end position was automatically set to the current
       // audio position in the audio player view after the user tapped on
       // the play/pause button to stop playing the audio.
 
+      // Obtain the current audio position in the audio player view
+      String audioPlayerViewCurrentAudioPosition =
+          tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
+
       expect(
-          find.descendant(
-            of: commentAddEditDialogFinder,
-            matching: find.text(audioPlayerViewCurrentAudioPosition),
-          ),
-          findsOneWidget);
+        tester.widget<Text>(commentEndTextWidgetFinder).data!,
+        audioPlayerViewCurrentAudioPosition, // 0:48
+      );
 
       // Now, modifying the comment start position in tenth of
       // seconds
@@ -2512,10 +2507,9 @@ void main() {
       String commentStartPositionWithTensOfSecond = '0:46.0';
 
       expect(
-          find.descendant(
-              of: commentAddEditDialogFinder,
-              matching: find.text(commentStartPositionWithTensOfSecond)),
-          findsOneWidget);
+        tester.widget<Text>(commentStartTextWidgetFinder).data!,
+        commentStartPositionWithTensOfSecond, // 0:46.0
+      );
 
       // Tap three times on the forward comment start icon button, then
       // one time on the backward comment start icon button and finally
@@ -2545,13 +2539,17 @@ void main() {
 
       // Verify the comment start position displayed in the comment
       // dialog
-      commentStartPositionWithTensOfSecond = '0:46.1';
+      String expectedCommentStartPositionWithTensOfSecond = '0:46.1';
+      String actualCommentStartPositionWithTensOfSecondStr = tester
+          .widget<Text>(find.byKey(const Key('commentStartPositionText')))
+          .data!;
 
       expect(
-          find.descendant(
-              of: commentAddEditDialogFinder,
-              matching: find.text(commentStartPositionWithTensOfSecond)),
-          findsOneWidget);
+        actualCommentStartPositionWithTensOfSecondStr,
+        expectedCommentStartPositionWithTensOfSecond, // 0:46.1
+        reason:
+            'Expected comment start position not found. Real value: $actualCommentStartPositionWithTensOfSecondStr',
+      );
 
       // Tap on the play/pause button to stop playing the audio
       await tester.tap(find.byKey(const Key('playPauseIconButton')));
@@ -2590,14 +2588,29 @@ void main() {
 
       // Verify the comment end position displayed in the comment
       // dialog
-      String commentEndPosition = '0:50';
+      String expectedCommentEndPositionMin = '0:50';
+      String expectedCommentEndPositionMax = '0:52';
 
+      int actualCommentEndPositionInTenthOfSeconds =
+          DateTimeUtil.convertToTenthsOfSeconds(
+        timeString: tester.widget<Text>(commentEndTextWidgetFinder).data!,
+      );
+
+      int expectedCommentEndPositionTenthSecondsMin = DateTimeUtil.convertToTenthsOfSeconds(
+                timeString: expectedCommentEndPositionMin);
+      int expectedCommentEndPositionTenthSecondsMax = DateTimeUtil.convertToTenthsOfSeconds(
+                timeString: expectedCommentEndPositionMax);
       expect(
-          find.descendant(
-            of: commentAddEditDialogFinder,
-            matching: find.text(commentEndPosition),
-          ),
-          findsOneWidget);
+        actualCommentEndPositionInTenthOfSeconds,
+        allOf(
+          [
+            greaterThanOrEqualTo(expectedCommentEndPositionTenthSecondsMin),
+            lessThanOrEqualTo(expectedCommentEndPositionTenthSecondsMax)
+          ],
+        ),
+        reason:
+            "Expected value between $expectedCommentEndPositionTenthSecondsMin and $expectedCommentEndPositionTenthSecondsMax but obtained $actualCommentEndPositionInTenthOfSeconds",
+      );
 
       // Tap on the play/pause button to stop playing the audio
       await tester.tap(find.byKey(const Key('playPauseIconButton')));
@@ -2606,16 +2619,29 @@ void main() {
       // Verify the current audio position in the audio player view.
       // The audio position correspond to the comment start position
       // in seconds.
+      String expectedAudioPlayerAudioPositionMin = '0:46';
+      String expectedAudioPlayerAudioPositionMax = '0:49';
 
-      audioPlayerViewCurrentAudioPosition = '0:46';
-      audioPlayerViewFinder = find.byType(AudioPlayerView);
+      int actualAudioPlayerAudioPositionInTenthOfSeconds =
+          DateTimeUtil.convertToTenthsOfSeconds(
+        timeString: tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!,
+      );
 
+      int expectedAudioPlayerAudioPositionTenthSecondsMin = DateTimeUtil.convertToTenthsOfSeconds(
+                timeString: expectedAudioPlayerAudioPositionMin);
+      int expectedAudioPlayerAudioPositionTenthSecondsMax = DateTimeUtil.convertToTenthsOfSeconds(
+                timeString: expectedAudioPlayerAudioPositionMax);
       expect(
-          find.descendant(
-            of: audioPlayerViewFinder,
-            matching: find.text(audioPlayerViewCurrentAudioPosition),
-          ),
-          findsOneWidget);
+        actualAudioPlayerAudioPositionInTenthOfSeconds,
+        allOf(
+          [
+            greaterThanOrEqualTo(expectedAudioPlayerAudioPositionTenthSecondsMin),
+            lessThanOrEqualTo(expectedAudioPlayerAudioPositionTenthSecondsMax)
+          ],
+        ),
+        reason:
+            "Expected value between $expectedAudioPlayerAudioPositionTenthSecondsMin and $expectedAudioPlayerAudioPositionTenthSecondsMax but obtained $actualAudioPlayerAudioPositionInTenthOfSeconds",
+      );
 
       // Now, modifying the comment end position in tenth of
       // seconds
@@ -2629,29 +2655,30 @@ void main() {
 
       // Verify that the comment end position is now displayed
       // with added tenth of seconds value
-      String commentEndPositionWithTensOfSecond = '0:50.3';
-      String commentEndPositionWithTensOfSecondAlternateOne = '0:50.2';
-      String commentEndPositionWithTensOfSecondAlternateTwo = '0:50.4';
 
-      bool valueFound = false;
+      expectedCommentEndPositionMin = '0:52.0';
+      expectedCommentEndPositionMax = '0:52.4';
 
-      if (find.text(commentEndPositionWithTensOfSecond).evaluate().isNotEmpty) {
-        valueFound = true;
-      } else if (find
-          .text(commentEndPositionWithTensOfSecondAlternateOne)
-          .evaluate()
-          .isNotEmpty) {
-        valueFound = true;
-      } else if (find
-          .text(commentEndPositionWithTensOfSecondAlternateTwo)
-          .evaluate()
-          .isNotEmpty) {
-        valueFound = true;
-      }
+      actualCommentEndPositionInTenthOfSeconds =
+          DateTimeUtil.convertToTenthsOfSeconds(
+        timeString: tester.widget<Text>(commentEndTextWidgetFinder).data!,
+      );
 
-      expect(valueFound, isTrue,
-          reason:
-              'Expected one of the three comment end positions to be found, but none were found.');
+      expectedCommentEndPositionTenthSecondsMin = DateTimeUtil.convertToTenthsOfSeconds(
+                timeString: expectedCommentEndPositionMin);
+      expectedCommentEndPositionTenthSecondsMax = DateTimeUtil.convertToTenthsOfSeconds(
+                timeString: expectedCommentEndPositionMax);
+      expect(
+        actualCommentEndPositionInTenthOfSeconds,
+        allOf(
+          [
+            greaterThanOrEqualTo(expectedCommentEndPositionTenthSecondsMin),
+            lessThanOrEqualTo(expectedCommentEndPositionTenthSecondsMax)
+          ],
+        ),
+        reason:
+            "Expected value between $expectedCommentEndPositionTenthSecondsMin and $expectedCommentEndPositionTenthSecondsMax but obtained $actualCommentEndPositionInTenthOfSeconds",
+      );
 
       // Tap three times on the forward comment end icon button, then
       // one time on the backward comment end icon button and finally
@@ -2681,21 +2708,32 @@ void main() {
 
       // Verify the comment end position displayed in the comment
       // dialog
-      commentEndPositionWithTensOfSecond = '0:50.2';
-      String commentEndPositionWithTensOfSecondAlternative = '0:50.3';
 
-      expect(
-        find.descendant(
-          of: commentAddEditDialogFinder,
-          matching: find
-                  .text(commentEndPositionWithTensOfSecond)
-                  .evaluate()
-                  .isNotEmpty
-              ? find.text(commentEndPositionWithTensOfSecond)
-              : find.text(commentEndPositionWithTensOfSecondAlternative),
-        ),
-        findsOneWidget,
+      expectedCommentEndPositionMin = '0:52.2';
+      expectedCommentEndPositionMax = '0:52.4';
+
+      String actualCommentEndPositionWizhTenthOfSecondsStr = tester.widget<Text>(commentEndTextWidgetFinder).data!;
+      actualCommentEndPositionInTenthOfSeconds =
+          DateTimeUtil.convertToTenthsOfSeconds(
+        timeString: actualCommentEndPositionWizhTenthOfSecondsStr,
       );
+
+      expectedCommentEndPositionTenthSecondsMin = DateTimeUtil.convertToTenthsOfSeconds(
+                timeString: expectedCommentEndPositionMin);
+      expectedCommentEndPositionTenthSecondsMax = DateTimeUtil.convertToTenthsOfSeconds(
+                timeString: expectedCommentEndPositionMax);
+      expect(
+        actualCommentEndPositionInTenthOfSeconds,
+        allOf(
+          [
+            greaterThanOrEqualTo(expectedCommentEndPositionTenthSecondsMin),
+            lessThanOrEqualTo(expectedCommentEndPositionTenthSecondsMax)
+          ],
+        ),
+        reason:
+            "Expected value between $expectedCommentEndPositionTenthSecondsMin and $expectedCommentEndPositionTenthSecondsMax but obtained $actualCommentEndPositionInTenthOfSeconds",
+      );
+
 
       // Tap on the play/pause button to stop playing the audio
       await tester.tap(find.byKey(const Key('playPauseIconButton')));
@@ -2705,17 +2743,32 @@ void main() {
       // The audio position correspond to the comment start position
       // in seconds.
 
-      audioPlayerViewCurrentAudioPosition = '0:46';
-      audioPlayerViewFinder = find.byType(AudioPlayerView);
+      expectedAudioPlayerAudioPositionMin = '0:48';
+      expectedAudioPlayerAudioPositionMax = '0:49';
 
+      actualAudioPlayerAudioPositionInTenthOfSeconds =
+          DateTimeUtil.convertToTenthsOfSeconds(
+        timeString: tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!,
+      );
+
+      expectedAudioPlayerAudioPositionTenthSecondsMin = DateTimeUtil.convertToTenthsOfSeconds(
+                timeString: expectedAudioPlayerAudioPositionMin);
+      expectedAudioPlayerAudioPositionTenthSecondsMax = DateTimeUtil.convertToTenthsOfSeconds(
+                timeString: expectedAudioPlayerAudioPositionMax);
       expect(
-          find.descendant(
-            of: audioPlayerViewFinder,
-            matching: find.text(audioPlayerViewCurrentAudioPosition),
-          ),
-          findsOneWidget);
+        actualAudioPlayerAudioPositionInTenthOfSeconds,
+        allOf(
+          [
+            greaterThanOrEqualTo(expectedAudioPlayerAudioPositionTenthSecondsMin),
+            lessThanOrEqualTo(expectedAudioPlayerAudioPositionTenthSecondsMax)
+          ],
+        ),
+        reason:
+            "Expected value between $expectedAudioPlayerAudioPositionTenthSecondsMin and $expectedAudioPlayerAudioPositionTenthSecondsMax but obtained $actualAudioPlayerAudioPositionInTenthOfSeconds",
+      );
 
       // Tap on the add/edit comment button to save the comment
+
       Finder addOrUpdateCommentTextButton =
           find.byKey(const Key('addOrUpdateCommentTextButton'));
 
@@ -2762,14 +2815,31 @@ void main() {
 
       final textFieldFinder = find.byKey(Key(commentContentTextFieldKeyStr));
       const String updatedCommentText = 'Updated comm. text';
+
       await tester.enterText(
         textFieldFinder,
         updatedCommentText,
       );
+      await tester.pumpAndSettle();
 
       // Tap on the add/update comment button to save the updated comment
       await tester.tap(addOrUpdateCommentTextButton);
       await tester.pumpAndSettle();
+
+      verifyCommentDataStoredInJsonFile(
+        playlistTitle: emptyPlaylistTitle,
+        audioFileNameNoExt:
+            "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12",
+        commentTitle: commentTitle,
+        commentContent: updatedCommentText,
+        commentStartPositionTenthOfSeconds:
+            DateTimeUtil.convertToTenthsOfSeconds(
+          timeString: actualCommentStartPositionWithTensOfSecondStr,
+        ),
+        commentEndPositionTenthOfSeconds: DateTimeUtil.convertToTenthsOfSeconds(
+          timeString: actualCommentEndPositionWizhTenthOfSecondsStr,
+        ),
+      );
 
       // Verify that the comment list dialog now displays correctly the
       // updated comment
@@ -2820,8 +2890,31 @@ void main() {
       }
 
       // Verify the current audio position in the audio player view
-      String audioPlayerViewAudioPosition = '5:46';
-      expect(find.text(audioPlayerViewAudioPosition), findsOneWidget);
+
+      expectedAudioPlayerAudioPositionMin = '5:48';
+      expectedAudioPlayerAudioPositionMax = '5:49';
+
+      String actualAudioPlayerViewAudioPosition = tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
+      actualAudioPlayerAudioPositionInTenthOfSeconds =
+          DateTimeUtil.convertToTenthsOfSeconds(
+        timeString: actualAudioPlayerViewAudioPosition,
+      );
+
+      expectedAudioPlayerAudioPositionTenthSecondsMin = DateTimeUtil.convertToTenthsOfSeconds(
+                timeString: expectedAudioPlayerAudioPositionMin);
+      expectedAudioPlayerAudioPositionTenthSecondsMax = DateTimeUtil.convertToTenthsOfSeconds(
+                timeString: expectedAudioPlayerAudioPositionMax);
+      expect(
+        actualAudioPlayerAudioPositionInTenthOfSeconds,
+        allOf(
+          [
+            greaterThanOrEqualTo(expectedAudioPlayerAudioPositionTenthSecondsMin),
+            lessThanOrEqualTo(expectedAudioPlayerAudioPositionTenthSecondsMax)
+          ],
+        ),
+        reason:
+            "Expected value between $expectedAudioPlayerAudioPositionTenthSecondsMin and $expectedAudioPlayerAudioPositionTenthSecondsMax but obtained $actualAudioPlayerAudioPositionInTenthOfSeconds",
+      );
 
       // Tap on the comment icon button to re-open the comment list
       // dialog
@@ -2835,10 +2928,9 @@ void main() {
       // Verify that the comment end position has been updated to the
       // current audio player view position
       expect(
-          find.descendant(
-              of: commentAddEditDialogFinder,
-              matching: find.text(audioPlayerViewAudioPosition)), // 5:46
-          findsOneWidget);
+        tester.widget<Text>(commentEndTextWidgetFinder).data!,
+        actualAudioPlayerViewAudioPosition, // 5:46
+      );
 
       // Tap once on the forward comment end icon button to increase the
       // comment end position
@@ -2860,17 +2952,27 @@ void main() {
 
       // Verify the comment end position displayed in the comment dialog
 
-      // Verify the comment end position displayed in the comment dialog
-      String updatedCommentEndPosition = '5:47:0';
-      textWidgetFinder = find.descendant(
-          of: commentAddEditDialogFinder,
-          matching: find.byKey(Key('commentEndPositionText')));
+      String expectedUpdatedCommentEndPositionMin = '5:49.0';
+      String expectedUpdatedCommentEndPositionMax = '5:50.2';
+      int actualUpdatedCommentEndPositionInTenthOfSeconds =
+          DateTimeUtil.convertToTenthsOfSeconds(
+        timeString: tester.widget<Text>(commentEndTextWidgetFinder).data!,
+      );
 
+      int expectedUpdatedCommentEndPositionTenthSecondsMin = DateTimeUtil.convertToTenthsOfSeconds(
+                timeString: expectedUpdatedCommentEndPositionMin);
+      int expectedUpdatedCommentEndPositionTenthSecondsMax = DateTimeUtil.convertToTenthsOfSeconds(
+                timeString: expectedUpdatedCommentEndPositionMax);
       expect(
-        textWidgetFinder,
-        findsOneWidget,
+        actualUpdatedCommentEndPositionInTenthOfSeconds,
+        allOf(
+          [
+            greaterThanOrEqualTo(expectedUpdatedCommentEndPositionTenthSecondsMin),
+            lessThanOrEqualTo(expectedUpdatedCommentEndPositionTenthSecondsMax)
+          ],
+        ),
         reason:
-            'Expected to find text "$updatedCommentEndPosition" but found "${getActualText(textWidgetFinder)}" instead.',
+            "Expected value between $expectedUpdatedCommentEndPositionTenthSecondsMin and $expectedUpdatedCommentEndPositionTenthSecondsMax but obtained $actualUpdatedCommentEndPositionInTenthOfSeconds",
       );
 
       // Now, tap on the add/update comment button to save the updated
@@ -3328,6 +3430,46 @@ void verifyAudioDataElementsUpdatedInJsonFile({
             toleranceInSeconds: 1),
         isTrue);
   }
+}
+
+void verifyCommentDataStoredInJsonFile({
+  required String playlistTitle,
+  required String audioFileNameNoExt,
+  required String commentTitle,
+  required String commentContent,
+  required int commentStartPositionTenthOfSeconds,
+  required int commentEndPositionTenthOfSeconds,
+}) {
+  final String commentPath =
+      "$kPlaylistDownloadRootPathWindowsTest${path.separator}$playlistTitle${path.separator}$kCommentDirName";
+
+  final commentPathFileName = path.join(
+    commentPath,
+    '$audioFileNameNoExt.json',
+  );
+
+  // Load comment from the json file
+  List<Comment> loadedCommentLst = JsonDataService.loadListFromFile(
+    jsonPathFileName: commentPathFileName,
+    type: Comment,
+  );
+
+  Comment loadedComment = loadedCommentLst.first;
+
+  expect(loadedComment.title, commentTitle);
+  expect(loadedComment.content, commentContent);
+  expect(
+    loadedComment.commentStartPositionInTenthOfSeconds,
+    commentStartPositionTenthOfSeconds,
+    reason:
+        "json commentStartPositionInTenthOfSeconds: ${loadedComment.commentStartPositionInTenthOfSeconds}, expected $commentStartPositionTenthOfSeconds",
+  );
+  expect(
+    loadedComment.commentEndPositionInTenthOfSeconds,
+    commentEndPositionTenthOfSeconds,
+    reason:
+        "json commentEndPositionInTenthOfSeconds: ${loadedComment.commentEndPositionInTenthOfSeconds}, expected $commentEndPositionTenthOfSeconds",
+  );
 }
 
 String? getActualText(Finder textWidgetFinder) {
