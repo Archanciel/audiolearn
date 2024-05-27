@@ -2487,6 +2487,9 @@ void main() {
       String audioPlayerViewCurrentAudioPosition =
           tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
 
+      // Verify that the comment end position displayed in the comment
+      // dialog is now the same as the current audio position in the
+      // audio player view.
       expect(
         tester.widget<Text>(commentEndTextWidgetFinder).data!,
         audioPlayerViewCurrentAudioPosition, // 0:48
@@ -2591,25 +2594,11 @@ void main() {
       String expectedCommentEndPositionMin = '0:50';
       String expectedCommentEndPositionMax = '0:52';
 
-      int actualCommentEndPositionInTenthOfSeconds =
-          DateTimeUtil.convertToTenthsOfSeconds(
-        timeString: tester.widget<Text>(commentEndTextWidgetFinder).data!,
-      );
-
-      int expectedCommentEndPositionTenthSecondsMin = DateTimeUtil.convertToTenthsOfSeconds(
-                timeString: expectedCommentEndPositionMin);
-      int expectedCommentEndPositionTenthSecondsMax = DateTimeUtil.convertToTenthsOfSeconds(
-                timeString: expectedCommentEndPositionMax);
-      expect(
-        actualCommentEndPositionInTenthOfSeconds,
-        allOf(
-          [
-            greaterThanOrEqualTo(expectedCommentEndPositionTenthSecondsMin),
-            lessThanOrEqualTo(expectedCommentEndPositionTenthSecondsMax)
-          ],
-        ),
-        reason:
-            "Expected value between $expectedCommentEndPositionTenthSecondsMin and $expectedCommentEndPositionTenthSecondsMax but obtained $actualCommentEndPositionInTenthOfSeconds",
+      verifyPositionBetweenMinMax(
+        tester: tester,
+        textWidgetFinder: commentEndTextWidgetFinder,
+        minPositionTimeStr: expectedCommentEndPositionMin,
+        maxPositionTimeStr: expectedCommentEndPositionMax,
       );
 
       // Tap on the play/pause button to stop playing the audio
@@ -2622,25 +2611,11 @@ void main() {
       String expectedAudioPlayerAudioPositionMin = '0:46';
       String expectedAudioPlayerAudioPositionMax = '0:49';
 
-      int actualAudioPlayerAudioPositionInTenthOfSeconds =
-          DateTimeUtil.convertToTenthsOfSeconds(
-        timeString: tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!,
-      );
-
-      int expectedAudioPlayerAudioPositionTenthSecondsMin = DateTimeUtil.convertToTenthsOfSeconds(
-                timeString: expectedAudioPlayerAudioPositionMin);
-      int expectedAudioPlayerAudioPositionTenthSecondsMax = DateTimeUtil.convertToTenthsOfSeconds(
-                timeString: expectedAudioPlayerAudioPositionMax);
-      expect(
-        actualAudioPlayerAudioPositionInTenthOfSeconds,
-        allOf(
-          [
-            greaterThanOrEqualTo(expectedAudioPlayerAudioPositionTenthSecondsMin),
-            lessThanOrEqualTo(expectedAudioPlayerAudioPositionTenthSecondsMax)
-          ],
-        ),
-        reason:
-            "Expected value between $expectedAudioPlayerAudioPositionTenthSecondsMin and $expectedAudioPlayerAudioPositionTenthSecondsMax but obtained $actualAudioPlayerAudioPositionInTenthOfSeconds",
+      verifyPositionBetweenMinMax(
+        tester: tester,
+        textWidgetFinder: audioPlayerViewAudioPositionFinder,
+        minPositionTimeStr: expectedAudioPlayerAudioPositionMin,
+        maxPositionTimeStr: expectedAudioPlayerAudioPositionMax,
       );
 
       // Now, modifying the comment end position in tenth of
@@ -2659,25 +2634,11 @@ void main() {
       expectedCommentEndPositionMin = '0:52.0';
       expectedCommentEndPositionMax = '0:52.4';
 
-      actualCommentEndPositionInTenthOfSeconds =
-          DateTimeUtil.convertToTenthsOfSeconds(
-        timeString: tester.widget<Text>(commentEndTextWidgetFinder).data!,
-      );
-
-      expectedCommentEndPositionTenthSecondsMin = DateTimeUtil.convertToTenthsOfSeconds(
-                timeString: expectedCommentEndPositionMin);
-      expectedCommentEndPositionTenthSecondsMax = DateTimeUtil.convertToTenthsOfSeconds(
-                timeString: expectedCommentEndPositionMax);
-      expect(
-        actualCommentEndPositionInTenthOfSeconds,
-        allOf(
-          [
-            greaterThanOrEqualTo(expectedCommentEndPositionTenthSecondsMin),
-            lessThanOrEqualTo(expectedCommentEndPositionTenthSecondsMax)
-          ],
-        ),
-        reason:
-            "Expected value between $expectedCommentEndPositionTenthSecondsMin and $expectedCommentEndPositionTenthSecondsMax but obtained $actualCommentEndPositionInTenthOfSeconds",
+      verifyPositionBetweenMinMax(
+        tester: tester,
+        textWidgetFinder: commentEndTextWidgetFinder,
+        minPositionTimeStr: expectedCommentEndPositionMin,
+        maxPositionTimeStr: expectedCommentEndPositionMax,
       );
 
       // Tap three times on the forward comment end icon button, then
@@ -2712,28 +2673,15 @@ void main() {
       expectedCommentEndPositionMin = '0:52.2';
       expectedCommentEndPositionMax = '0:52.4';
 
-      String actualCommentEndPositionWizhTenthOfSecondsStr = tester.widget<Text>(commentEndTextWidgetFinder).data!;
-      actualCommentEndPositionInTenthOfSeconds =
-          DateTimeUtil.convertToTenthsOfSeconds(
-        timeString: actualCommentEndPositionWizhTenthOfSecondsStr,
-      );
+      String actualCommentEndPositionWithTenthOfSecondsStr =
+          tester.widget<Text>(commentEndTextWidgetFinder).data!;
 
-      expectedCommentEndPositionTenthSecondsMin = DateTimeUtil.convertToTenthsOfSeconds(
-                timeString: expectedCommentEndPositionMin);
-      expectedCommentEndPositionTenthSecondsMax = DateTimeUtil.convertToTenthsOfSeconds(
-                timeString: expectedCommentEndPositionMax);
-      expect(
-        actualCommentEndPositionInTenthOfSeconds,
-        allOf(
-          [
-            greaterThanOrEqualTo(expectedCommentEndPositionTenthSecondsMin),
-            lessThanOrEqualTo(expectedCommentEndPositionTenthSecondsMax)
-          ],
-        ),
-        reason:
-            "Expected value between $expectedCommentEndPositionTenthSecondsMin and $expectedCommentEndPositionTenthSecondsMax but obtained $actualCommentEndPositionInTenthOfSeconds",
+      verifyPositionBetweenMinMax(
+        tester: tester,
+        textWidgetFinder: commentEndTextWidgetFinder,
+        minPositionTimeStr: expectedCommentEndPositionMin,
+        maxPositionTimeStr: expectedCommentEndPositionMax,
       );
-
 
       // Tap on the play/pause button to stop playing the audio
       await tester.tap(find.byKey(const Key('playPauseIconButton')));
@@ -2746,25 +2694,11 @@ void main() {
       expectedAudioPlayerAudioPositionMin = '0:48';
       expectedAudioPlayerAudioPositionMax = '0:49';
 
-      actualAudioPlayerAudioPositionInTenthOfSeconds =
-          DateTimeUtil.convertToTenthsOfSeconds(
-        timeString: tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!,
-      );
-
-      expectedAudioPlayerAudioPositionTenthSecondsMin = DateTimeUtil.convertToTenthsOfSeconds(
-                timeString: expectedAudioPlayerAudioPositionMin);
-      expectedAudioPlayerAudioPositionTenthSecondsMax = DateTimeUtil.convertToTenthsOfSeconds(
-                timeString: expectedAudioPlayerAudioPositionMax);
-      expect(
-        actualAudioPlayerAudioPositionInTenthOfSeconds,
-        allOf(
-          [
-            greaterThanOrEqualTo(expectedAudioPlayerAudioPositionTenthSecondsMin),
-            lessThanOrEqualTo(expectedAudioPlayerAudioPositionTenthSecondsMax)
-          ],
-        ),
-        reason:
-            "Expected value between $expectedAudioPlayerAudioPositionTenthSecondsMin and $expectedAudioPlayerAudioPositionTenthSecondsMax but obtained $actualAudioPlayerAudioPositionInTenthOfSeconds",
+      verifyPositionBetweenMinMax(
+        tester: tester,
+        textWidgetFinder: audioPlayerViewAudioPositionFinder,
+        minPositionTimeStr: expectedAudioPlayerAudioPositionMin,
+        maxPositionTimeStr: expectedAudioPlayerAudioPositionMax,
       );
 
       // Tap on the add/edit comment button to save the comment
@@ -2837,7 +2771,7 @@ void main() {
           timeString: actualCommentStartPositionWithTensOfSecondStr,
         ),
         commentEndPositionTenthOfSeconds: DateTimeUtil.convertToTenthsOfSeconds(
-          timeString: actualCommentEndPositionWizhTenthOfSecondsStr,
+          timeString: actualCommentEndPositionWithTenthOfSecondsStr,
         ),
       );
 
@@ -2894,26 +2828,11 @@ void main() {
       expectedAudioPlayerAudioPositionMin = '5:48';
       expectedAudioPlayerAudioPositionMax = '5:49';
 
-      String actualAudioPlayerViewAudioPosition = tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
-      actualAudioPlayerAudioPositionInTenthOfSeconds =
-          DateTimeUtil.convertToTenthsOfSeconds(
-        timeString: actualAudioPlayerViewAudioPosition,
-      );
-
-      expectedAudioPlayerAudioPositionTenthSecondsMin = DateTimeUtil.convertToTenthsOfSeconds(
-                timeString: expectedAudioPlayerAudioPositionMin);
-      expectedAudioPlayerAudioPositionTenthSecondsMax = DateTimeUtil.convertToTenthsOfSeconds(
-                timeString: expectedAudioPlayerAudioPositionMax);
-      expect(
-        actualAudioPlayerAudioPositionInTenthOfSeconds,
-        allOf(
-          [
-            greaterThanOrEqualTo(expectedAudioPlayerAudioPositionTenthSecondsMin),
-            lessThanOrEqualTo(expectedAudioPlayerAudioPositionTenthSecondsMax)
-          ],
-        ),
-        reason:
-            "Expected value between $expectedAudioPlayerAudioPositionTenthSecondsMin and $expectedAudioPlayerAudioPositionTenthSecondsMax but obtained $actualAudioPlayerAudioPositionInTenthOfSeconds",
+      verifyPositionBetweenMinMax(
+        tester: tester,
+        textWidgetFinder: audioPlayerViewAudioPositionFinder,
+        minPositionTimeStr: expectedAudioPlayerAudioPositionMin,
+        maxPositionTimeStr: expectedAudioPlayerAudioPositionMax,
       );
 
       // Tap on the comment icon button to re-open the comment list
@@ -2927,6 +2846,10 @@ void main() {
 
       // Verify that the comment end position has been updated to the
       // current audio player view position
+
+      String actualAudioPlayerViewAudioPosition =
+          tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
+
       expect(
         tester.widget<Text>(commentEndTextWidgetFinder).data!,
         actualAudioPlayerViewAudioPosition, // 5:46
@@ -2953,26 +2876,13 @@ void main() {
       // Verify the comment end position displayed in the comment dialog
 
       String expectedUpdatedCommentEndPositionMin = '5:49.0';
-      String expectedUpdatedCommentEndPositionMax = '5:50.2';
-      int actualUpdatedCommentEndPositionInTenthOfSeconds =
-          DateTimeUtil.convertToTenthsOfSeconds(
-        timeString: tester.widget<Text>(commentEndTextWidgetFinder).data!,
-      );
+      String expectedUpdatedCommentEndPositionMax = '5:50.3';
 
-      int expectedUpdatedCommentEndPositionTenthSecondsMin = DateTimeUtil.convertToTenthsOfSeconds(
-                timeString: expectedUpdatedCommentEndPositionMin);
-      int expectedUpdatedCommentEndPositionTenthSecondsMax = DateTimeUtil.convertToTenthsOfSeconds(
-                timeString: expectedUpdatedCommentEndPositionMax);
-      expect(
-        actualUpdatedCommentEndPositionInTenthOfSeconds,
-        allOf(
-          [
-            greaterThanOrEqualTo(expectedUpdatedCommentEndPositionTenthSecondsMin),
-            lessThanOrEqualTo(expectedUpdatedCommentEndPositionTenthSecondsMax)
-          ],
-        ),
-        reason:
-            "Expected value between $expectedUpdatedCommentEndPositionTenthSecondsMin and $expectedUpdatedCommentEndPositionTenthSecondsMax but obtained $actualUpdatedCommentEndPositionInTenthOfSeconds",
+      verifyPositionBetweenMinMax(
+        tester: tester,
+        textWidgetFinder: commentEndTextWidgetFinder,
+        minPositionTimeStr: expectedUpdatedCommentEndPositionMin,
+        maxPositionTimeStr: expectedUpdatedCommentEndPositionMax,
       );
 
       // Now, tap on the add/update comment button to save the updated
@@ -3019,6 +2929,36 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
   });
+}
+
+/// Verify that the position displayed in the {textWidgetFinder} text
+/// widget is between - or equal to - the minimum and maximum position
+/// time strings.
+void verifyPositionBetweenMinMax({
+  required WidgetTester tester,
+  required Finder textWidgetFinder,
+  required String minPositionTimeStr,
+  required String maxPositionTimeStr,
+}) {
+  int actualPositionTenthOfSeconds = DateTimeUtil.convertToTenthsOfSeconds(
+    timeString: tester.widget<Text>(textWidgetFinder).data!,
+  );
+
+  int expectedMinPositionTenthSeconds =
+      DateTimeUtil.convertToTenthsOfSeconds(timeString: minPositionTimeStr);
+  int expectedMaxPositionTenthSeconds =
+      DateTimeUtil.convertToTenthsOfSeconds(timeString: maxPositionTimeStr);
+  expect(
+    actualPositionTenthOfSeconds,
+    allOf(
+      [
+        greaterThanOrEqualTo(expectedMinPositionTenthSeconds),
+        lessThanOrEqualTo(expectedMaxPositionTenthSeconds)
+      ],
+    ),
+    reason:
+        "Expected value between $expectedMinPositionTenthSeconds and $expectedMaxPositionTenthSeconds but obtained $actualPositionTenthOfSeconds",
+  );
 }
 
 Future<void> checkTextFieldStyleAndEnterText({
