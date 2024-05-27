@@ -159,7 +159,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             _buildStartEndButtonsWithTitle(),
-            _buildAudioSlider(),
+            _buildAudioSliderWithPositionTexts(),
             _buildPositionButtons(),
           ],
         ),
@@ -650,7 +650,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     );
   }
 
-  Widget _buildAudioSlider() {
+  Widget _buildAudioSliderWithPositionTexts() {
     return Consumer<AudioPlayerVM>(
       builder: (context, globalAudioPlayerVM, child) {
         // Obtaining the slider values here (when globalAudioPlayerVM

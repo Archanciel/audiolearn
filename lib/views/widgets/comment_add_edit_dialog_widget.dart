@@ -366,6 +366,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
           builder: (context, commentVM, child) {
             // Text for the current comment audio position
             return Text(
+              key: const Key('commentStartPositionText'),
               _commentStartPositionChangedInTenthOfSeconds
                   // if the modify position duration change in tenth
                   // of seconds checkbox is checked, the audio
