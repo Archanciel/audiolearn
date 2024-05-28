@@ -2928,6 +2928,299 @@ void main() {
       DirUtil.deleteFilesInDirAndSubDirs(
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
+    testWidgets('Add comment to already commented audio. Then play comments',
+        (WidgetTester tester) async {
+      const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+      const String alreadyCommentedAudioTitle =
+          "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
+
+      await initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_comment_test',
+        selectedPlaylistTitle: youtubePlaylistTitle,
+      );
+
+      // Then, get the ListTile Text widget finder of the already commented
+      // audio and tap on it to open the AudioPlayerView
+      Finder alreadyCommentedAudioFinder =
+          find.text(alreadyCommentedAudioTitle);
+      await tester.tap(alreadyCommentedAudioFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the current audio position in the audio player view.
+
+      String expectedAudioPlayerViewCurrentAudioPosition = '1:12:48';
+      Finder audioPlayerViewAudioPositionFinder =
+          find.byKey(const Key('audioPlayerViewAudioPosition'));
+      String actualAudioPlayerViewCurrentAudioPosition =
+          tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
+
+      expect(
+        expectedAudioPlayerViewCurrentAudioPosition,
+        actualAudioPlayerViewCurrentAudioPosition,
+      );
+
+      // Tap on the comment icon button to open the comment add list
+      // dialog
+      Finder commentInkWellButtonFinder = find.byKey(
+        const Key('commentsInkWellButton'),
+      );
+
+      await tester.tap(commentInkWellButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Tap on the Add comment icon button to open the add edit comment
+      // dialog
+      await tester
+          .tap(find.byKey(const Key('addPositionedCommentIconButtonKey')));
+      await tester.pumpAndSettle();
+
+      // Enter comment title text
+      String commentTitle = 'Four';
+      Finder textFieldFinder = find.byKey(const Key('commentTitleTextField'));
+
+      await tester.enterText(
+        textFieldFinder,
+        commentTitle,
+      );
+      await tester.pumpAndSettle();
+
+      // Enter comment text
+      String commentText = 'Fourth comment';
+      Finder commentContentTextFieldFinder =
+          find.byKey(const Key('commentContentTextField'));
+
+      await tester.enterText(
+        commentContentTextFieldFinder,
+        commentText,
+      );
+      await tester.pumpAndSettle();
+
+      // Verify the initial comment position displayed in the
+      // comment start and end positions in the comment dialog.
+      // This position was the audio player view position when
+      // the comment dialog was opened.
+      String commentStartAndEndInitialPosition =
+          expectedAudioPlayerViewCurrentAudioPosition;
+
+      Finder commentStartTextWidgetFinder =
+          find.byKey(const Key('commentStartPositionText')); // 1:12:48
+      Finder commentEndTextWidgetFinder =
+          find.byKey(const Key('commentEndPositionText')); // 1:12:48
+
+      expect(
+        tester.widget<Text>(commentStartTextWidgetFinder).data!,
+        commentStartAndEndInitialPosition, // 1:12:48
+      );
+      expect(
+        tester.widget<Text>(commentEndTextWidgetFinder).data!,
+        commentStartAndEndInitialPosition, // 1:12:48
+      );
+
+      // Setting the comment start position in seconds ...
+
+      // Tap two times on the backward comment start icon button
+      Finder backwardCommentStartIconButtonFinder =
+          find.byKey(const Key('backwardCommentStartIconButton'));
+      const int delayMilliseconds = 500;
+      await tester.tap(backwardCommentStartIconButtonFinder);
+      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
+      await tester.pumpAndSettle();
+
+      await tester.tap(backwardCommentStartIconButtonFinder);
+      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
+      await tester.pumpAndSettle();
+
+      // Verify the comment start position displayed in the comment
+      // dialog
+      String commentStartPosition = '1:12:46';
+      expect(
+        tester.widget<Text>(commentStartTextWidgetFinder).data!,
+        commentStartPosition, // 1:12:46
+      );
+
+      // Verify that the comment end position displayed in the comment
+      // dialog is not yet modified.
+      //
+      // The comment end position was automatically set with the current
+      // audio position in the audio player view.
+      expect(
+        tester.widget<Text>(commentEndTextWidgetFinder).data!,
+        commentStartAndEndInitialPosition, // 1:12:48
+      );
+
+      // Now, forwarding the comment end position in seconds ...
+
+      // Tap four times on the forward comment end icon button
+      Finder forwardCommentEndIconButtonFinder =
+          find.byKey(const Key('forwardCommentEndIconButton'));
+      await tester.tap(forwardCommentEndIconButtonFinder);
+      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
+      await tester.pumpAndSettle();
+
+      await tester.tap(forwardCommentEndIconButtonFinder);
+      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
+      await tester.pumpAndSettle();
+
+      await tester.tap(forwardCommentEndIconButtonFinder);
+      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
+      await tester.pumpAndSettle();
+
+      await tester.tap(forwardCommentEndIconButtonFinder);
+      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
+      await tester.pumpAndSettle();
+
+      // Verify the comment end position displayed in the comment
+      // dialog
+      String expectedCommentEndPositionMin = '1:12:52';
+      String expectedCommentEndPositionMax = '1:12:52';
+
+      verifyPositionBetweenMinMax(
+        tester: tester,
+        textWidgetFinder: commentEndTextWidgetFinder,
+        minPositionTimeStr: expectedCommentEndPositionMin,
+        maxPositionTimeStr: expectedCommentEndPositionMax,
+      );
+
+      // Now, modifying the comment end position in tenth of
+      // seconds
+
+      // Tap on the tenth of seconds checkbox to enable the
+      // modification of the comment end position in tenth of
+      // seconds
+      await tester
+          .tap(find.byKey(const Key('commentEndTenthOfSecondsCheckbox')));
+      await tester.pumpAndSettle();
+
+      await tester.tap(forwardCommentEndIconButtonFinder);
+      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
+      await tester.pumpAndSettle();
+
+      await tester.tap(forwardCommentEndIconButtonFinder);
+      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
+      await tester.pumpAndSettle();
+
+      await tester.tap(forwardCommentEndIconButtonFinder);
+      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
+      await tester.pumpAndSettle();
+
+      await tester.tap(forwardCommentEndIconButtonFinder);
+      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
+      await tester.pumpAndSettle();
+
+      // Verify that the comment end position is now displayed
+      // with added tenth of seconds value
+
+      expectedCommentEndPositionMin = '1:12:52.4';
+      expectedCommentEndPositionMax = '1:12:52.4';
+
+      verifyPositionBetweenMinMax(
+        tester: tester,
+        textWidgetFinder: commentEndTextWidgetFinder,
+        minPositionTimeStr: expectedCommentEndPositionMin,
+        maxPositionTimeStr: expectedCommentEndPositionMax,
+      );
+
+      // Tap on the play/pause button to stop playing the audio
+      await tester.tap(find.byKey(const Key('playPauseIconButton')));
+      await tester.pumpAndSettle();
+
+      // Tap on the add/edit comment button to save the comment
+
+      Finder addOrUpdateCommentTextButton =
+          find.byKey(const Key('addOrUpdateCommentTextButton'));
+
+      // Verify the add/update comment button text
+      TextButton addEditTextButton =
+          tester.widget<TextButton>(addOrUpdateCommentTextButton);
+      expect((addEditTextButton.child! as Text).data, 'Add');
+
+      // Tap on the add/edit comment button to save the comment
+      await tester.tap(addOrUpdateCommentTextButton);
+      await tester.pumpAndSettle();
+
+      // Verify that the comment list dialog now displays the
+      // added comment
+
+      Finder commentListDialogFinder = find.byType(CommentListAddDialogWidget);
+
+      // Find the list body containing the comments
+      final listFinder = find.descendant(
+          of: commentListDialogFinder, matching: find.byType(ListBody));
+
+      // Find all the list items
+      final itemsFinder = find.descendant(
+          of: listFinder, matching: find.byType(GestureDetector));
+
+      // Check the number of items
+      expect(itemsFinder, findsNWidgets(15)); // Assuming there are 4 items
+
+      List<String> expectedTitles = [
+        'One',
+        'Two',
+        'Four',
+        'Three',
+        'I did not thank ChatGPT',
+      ];
+
+      List<String> expectedContents = [
+        'First comment',
+        'Second comment',
+        'Fourth comment',
+        'Third comment',
+        'He explains why ...',
+      ];
+
+      List<String> expectedPositions = [
+        '10:47',
+        '23:47',
+        '1:12:46',
+        '1:16:40',
+        '1:17:12',
+      ];
+
+      // Verify content of each list item
+      int j = 0;
+
+      for (var i = 0; i < 15; i += 3) {
+        final commentTitleFinder = find.descendant(
+          of: itemsFinder.at(i),
+          matching: find.byKey(Key('commentTitleKey')),
+        );
+        final commentContentFinder = find.descendant(
+          of: itemsFinder.at(i),
+          matching: find.byKey(Key('commentTextKey')),
+        );
+        final commentPositionFinder = find.descendant(
+          of: itemsFinder.at(i),
+          matching: find.byKey(Key('commentPositionKey')),
+        );
+
+        // Verify the text in the title, content, and position of each comment
+        expect(
+          tester.widget<Text>(commentTitleFinder).data,
+          expectedTitles[j], // Replace with your expected titles
+        );
+        expect(
+          tester.widget<Text>(commentContentFinder).data,
+          expectedContents[j], // Replace with your expected contents
+        );
+        expect(
+          tester.widget<Text>(commentPositionFinder).data,
+          expectedPositions[j], // Replace with your expected positions
+        );
+
+        j++;
+      }
+
+      // Now close the comment list dialog
+      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
+    });
   });
 }
 
