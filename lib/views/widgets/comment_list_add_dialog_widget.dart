@@ -207,6 +207,7 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
                   width: kSmallestButtonWidth,
                   child: IconButton(
                     // Play/Pause icon button
+                    key: const Key('playPauseIconButton'),
                     onPressed: () async {
                       // this logic enables that when we
                       // click on the play button of a comment,
@@ -225,10 +226,12 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
                         // The code below ensures that the audio player is
                         // paused when the current comment end audio position
                         // is reached.
-                        if (audioPlayerVMlistenTrue.currentAudioPosition >=
-                            Duration(
-                                milliseconds:
-                                    comment.commentEndPositionInTenthOfSeconds *
+                        if (_playingComment != null &&
+                            _playingComment == comment &&
+                            audioPlayerVMlistenTrue.currentAudioPosition >=
+                                Duration(
+                                    milliseconds: comment
+                                            .commentEndPositionInTenthOfSeconds *
                                         100)) {
                           audioPlayerVMlistenTrue.pause().then((_) {});
                         }
@@ -297,7 +300,7 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
     required BuildContext context,
     Comment? comment,
   }) {
-    Navigator.of(context).pop();
+    Navigator.of(context).pop(); // closes the current dialog
     showDialog<void>(
       context: context,
       // instanciating CommentAddEditDialogWidget without
