@@ -497,7 +497,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
     // the audio without using await on pause method avoids that if the audio
     // is playing when we close the CommentAddEditDialogWidget, the
     // CommentAddEditDialogWidget is re-opened !
-    Navigator.of(context).pop();
+    Navigator.of(context).pop(); // close the current dialog
 
     showDialog<void>(
       context: context,
