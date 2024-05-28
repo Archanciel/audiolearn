@@ -3145,11 +3145,11 @@ void main() {
       Finder commentListDialogFinder = find.byType(CommentListAddDialogWidget);
 
       // Find the list body containing the comments
-      final listFinder = find.descendant(
+      final Finder listFinder = find.descendant(
           of: commentListDialogFinder, matching: find.byType(ListBody));
 
       // Find all the list items
-      final itemsFinder = find.descendant(
+      final Finder itemsFinder = find.descendant(
           of: listFinder, matching: find.byType(GestureDetector));
 
       // Check the number of items
@@ -3182,16 +3182,20 @@ void main() {
       // Verify content of each list item
       int j = 0;
 
+      Finder commentTitleFinder;
+      Finder commentContentFinder;
+      Finder commentPositionFinder;
+
       for (var i = 0; i < 15; i += 3) {
-        final commentTitleFinder = find.descendant(
+        commentTitleFinder = find.descendant(
           of: itemsFinder.at(i),
           matching: find.byKey(Key('commentTitleKey')),
         );
-        final commentContentFinder = find.descendant(
+        commentContentFinder = find.descendant(
           of: itemsFinder.at(i),
           matching: find.byKey(Key('commentTextKey')),
         );
-        final commentPositionFinder = find.descendant(
+        commentPositionFinder = find.descendant(
           of: itemsFinder.at(i),
           matching: find.byKey(Key('commentPositionKey')),
         );
@@ -3212,6 +3216,22 @@ void main() {
 
         j++;
       }
+
+      // Now tap on first comment play icon button
+      Finder playIconButtonFinder = find.descendant(
+        of: itemsFinder.at(0),
+        matching: find.byKey(const Key('playPauseIconButton')),
+      );
+
+      await tester.tap(playIconButtonFinder);
+      await tester.pumpAndSettle();
+
+      // fix problem, but should not be necessary
+      await tester.tap(playIconButtonFinder);
+      await tester.pumpAndSettle();
+
+      await Future.delayed(const Duration(seconds: 10));
+      await tester.pumpAndSettle();
 
       // Now close the comment list dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));
