@@ -96,7 +96,7 @@ class _SetValueToTargetDialogWidgetState
         actionsPadding: kDialogActionsPadding,
         content: SizedBox(
           // Solution to the error due to using ListView in
-          //                     an AlertDialog
+          // an AlertDialog
           width: double.maxFinite,
           child: Column(
             mainAxisSize: MainAxisSize.min,
