@@ -2429,25 +2429,20 @@ void main() {
           find.byKey(const Key('forwardCommentStartIconButton'));
       Finder backwardCommentStartIconButtonFinder =
           find.byKey(const Key('backwardCommentStartIconButton'));
-      const int delayMilliseconds = 500;
+
       await tester.tap(forwardCommentStartIconButtonFinder);
-      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
 
       await tester.tap(forwardCommentStartIconButtonFinder);
-      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
 
       await tester.tap(forwardCommentStartIconButtonFinder);
-      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
 
       await tester.tap(backwardCommentStartIconButtonFinder);
-      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
 
       await tester.tap(forwardCommentStartIconButtonFinder);
-      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
 
       // Verify the comment start position displayed in the comment
@@ -2521,23 +2516,18 @@ void main() {
       // is now checked, the comment start position is changed in tenth
       // of seconds.
       await tester.tap(forwardCommentStartIconButtonFinder);
-      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
 
       await tester.tap(forwardCommentStartIconButtonFinder);
-      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
 
       await tester.tap(forwardCommentStartIconButtonFinder);
-      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
 
       await tester.tap(backwardCommentStartIconButtonFinder);
-      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
 
       await tester.tap(backwardCommentStartIconButtonFinder);
-      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
 
       // Verify the comment start position displayed in the comment
@@ -2558,6 +2548,27 @@ void main() {
       await tester.tap(find.byKey(const Key('playPauseIconButton')));
       await tester.pumpAndSettle();
 
+      // Tap on the comment end tenth of seconds checkbox to enable
+      // displaying the comment end position with tenth of seconds
+      Finder commentEndTenthOfSecondsCheckboxFinder =
+          find.byKey(const Key('commentEndTenthOfSecondsCheckbox'));
+      await tester.tap(commentEndTenthOfSecondsCheckboxFinder);
+      await tester.pumpAndSettle();
+
+      String expectedCommentEndPositionWithTensOfSecondMin = '0:48.1';
+      String expectedCommentEndPositionWithTensOfSecondMax = '0:49.2';
+
+      verifyPositionBetweenMinMax(
+        tester: tester,
+        textWidgetFinder: commentEndTextWidgetFinder,
+        minPositionTimeStr: expectedCommentEndPositionWithTensOfSecondMin,
+        maxPositionTimeStr: expectedCommentEndPositionWithTensOfSecondMax,
+      );
+
+      // Reset the comment end modification to seconds
+      await tester.tap(commentEndTenthOfSecondsCheckboxFinder);
+      await tester.pumpAndSettle();
+
       // Now, setting the comment end position in seconds ...
 
       // Tap three times on the forward comment end icon button, then
@@ -2569,46 +2580,45 @@ void main() {
           find.byKey(const Key('forwardCommentEndIconButton'));
       Finder backwardCommentEndIconButtonFinder =
           find.byKey(const Key('backwardCommentEndIconButton'));
+
       await tester.tap(forwardCommentEndIconButtonFinder);
-      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
 
       await tester.tap(forwardCommentEndIconButtonFinder);
-      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
 
       await tester.tap(forwardCommentEndIconButtonFinder);
-      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
 
       await tester.tap(backwardCommentEndIconButtonFinder);
-      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
 
       await tester.tap(forwardCommentEndIconButtonFinder);
-      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
-
-      // Verify the comment end position displayed in the comment
-      // dialog
-      String expectedCommentEndPositionMin = '0:50';
-      String expectedCommentEndPositionMax = '0:52';
-
-      verifyPositionBetweenMinMax(
-        tester: tester,
-        textWidgetFinder: commentEndTextWidgetFinder,
-        minPositionTimeStr: expectedCommentEndPositionMin,
-        maxPositionTimeStr: expectedCommentEndPositionMax,
-      );
 
       // Tap on the play/pause button to stop playing the audio
       await tester.tap(find.byKey(const Key('playPauseIconButton')));
       await tester.pumpAndSettle();
 
+      // Verify the comment end position displayed in the comment
+      // dialog
+
+      String expectedCommentEndPositionWithTensOfSecond =
+          '0:52'; // 0:49:2 + 3 - 1 + 1 seconds
+      String actualCommentEndPositionWithTensOfSecondStr =
+          tester.widget<Text>(commentEndTextWidgetFinder).data!;
+
+      expect(
+        actualCommentEndPositionWithTensOfSecondStr,
+        expectedCommentEndPositionWithTensOfSecond, // 0:52
+        reason:
+            'Expected comment end position not found. Real value: $actualCommentStartPositionWithTensOfSecondStr',
+      );
+
       // Verify the current audio position in the audio player view.
       // The audio position correspond to the comment start position
       // in seconds.
-      String expectedAudioPlayerAudioPositionMin = '0:46';
+      String expectedAudioPlayerAudioPositionMin = '0:48';
       String expectedAudioPlayerAudioPositionMax = '0:49';
 
       verifyPositionBetweenMinMax(
@@ -2624,15 +2634,14 @@ void main() {
       // Tap on the tenth of seconds checkbox to enable the
       // modification of the comment end position in tenth of
       // seconds
-      await tester
-          .tap(find.byKey(const Key('commentEndTenthOfSecondsCheckbox')));
+      await tester.tap(commentEndTenthOfSecondsCheckboxFinder);
       await tester.pumpAndSettle();
 
       // Verify that the comment end position is now displayed
       // with added tenth of seconds value
 
-      expectedCommentEndPositionMin = '0:52.0';
-      expectedCommentEndPositionMax = '0:52.4';
+      String expectedCommentEndPositionMin = '0:52.0';
+      String expectedCommentEndPositionMax = '0:52.1';
 
       verifyPositionBetweenMinMax(
         tester: tester,
@@ -2648,29 +2657,24 @@ void main() {
       // is checked, the comment end position is changed in tenth of
       // seconds.
       await tester.tap(forwardCommentEndIconButtonFinder);
-      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
 
       await tester.tap(forwardCommentEndIconButtonFinder);
-      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
 
       await tester.tap(forwardCommentEndIconButtonFinder);
-      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
 
       await tester.tap(backwardCommentEndIconButtonFinder);
-      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
 
-      await tester.tap(backwardCommentEndIconButtonFinder);
-      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
+      await tester.tap(forwardCommentEndIconButtonFinder);
       await tester.pumpAndSettle();
 
       // Verify the comment end position displayed in the comment
       // dialog
 
-      expectedCommentEndPositionMin = '0:52.2';
+      expectedCommentEndPositionMin = '0:52.1';
       expectedCommentEndPositionMax = '0:52.4';
 
       String actualCommentEndPositionWithTenthOfSecondsStr =
@@ -2862,28 +2866,35 @@ void main() {
 
       // Tap on the comment end checkbox to enable the modification of the
       // comment end position in tenth of seconds
-      await tester
-          .tap(find.byKey(const Key('commentEndTenthOfSecondsCheckbox')));
+      await tester.tap(commentEndTenthOfSecondsCheckboxFinder);
       await tester.pumpAndSettle();
 
       // Now tap twice on the backward comment end icon button to decrease
       // the comment end position of 2 tenth of seconds
       await tester.tap(backwardCommentEndIconButtonFinder);
       await tester.pumpAndSettle();
+
       await tester.tap(backwardCommentEndIconButtonFinder);
       await tester.pumpAndSettle();
 
       // Verify the comment end position displayed in the comment dialog
+      // actualAudioPlayerViewAudioPosition + 1 sec - 2 tenth of seconds
+      int expectedCommentEndPositionInTenthOfSeconds =
+          DateTimeUtil.convertToTenthsOfSeconds(
+                timeString: actualAudioPlayerViewAudioPosition,
+              ) +
+              10 -
+              2;
 
-      String expectedUpdatedCommentEndPositionMin = '5:49.0';
-      String expectedUpdatedCommentEndPositionMax = '5:50.3';
-
-      verifyPositionBetweenMinMax(
-        tester: tester,
-        textWidgetFinder: commentEndTextWidgetFinder,
-        minPositionTimeStr: expectedUpdatedCommentEndPositionMin,
-        maxPositionTimeStr: expectedUpdatedCommentEndPositionMax,
+      int actualCommentEndPositionInTenthOfSeconds =
+          DateTimeUtil.convertToTenthsOfSeconds(
+        timeString: tester.widget<Text>(commentEndTextWidgetFinder).data!,
       );
+
+      expect(
+          actualCommentEndPositionInTenthOfSeconds,
+          inInclusiveRange(expectedCommentEndPositionInTenthOfSeconds - 5,
+              expectedCommentEndPositionInTenthOfSeconds + 4));
 
       // Now, tap on the add/update comment button to save the updated
       // comment
@@ -3023,13 +3034,11 @@ void main() {
       // Tap two times on the backward comment start icon button
       Finder backwardCommentStartIconButtonFinder =
           find.byKey(const Key('backwardCommentStartIconButton'));
-      const int delayMilliseconds = 500;
+
       await tester.tap(backwardCommentStartIconButtonFinder);
-      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
 
       await tester.tap(backwardCommentStartIconButtonFinder);
-      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
 
       // Verify the comment start position displayed in the comment
@@ -3060,27 +3069,21 @@ void main() {
           find.byKey(const Key('backwardCommentEndIconButton'));
 
       await tester.tap(forwardCommentEndIconButtonFinder);
-      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
 
       await tester.tap(forwardCommentEndIconButtonFinder);
-      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
 
       await tester.tap(forwardCommentEndIconButtonFinder);
-      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
 
       await tester.tap(forwardCommentEndIconButtonFinder);
-      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
 
       await tester.tap(backwardCommentEndIconButtonFinder);
-      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
 
       await tester.tap(forwardCommentEndIconButtonFinder);
-      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
 
       // Verify the comment end position displayed in the comment
@@ -3106,27 +3109,21 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.tap(forwardCommentEndIconButtonFinder);
-      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
 
       await tester.tap(forwardCommentEndIconButtonFinder);
-      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
 
       await tester.tap(forwardCommentEndIconButtonFinder);
-      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
 
       await tester.tap(forwardCommentEndIconButtonFinder);
-      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
 
       await tester.tap(backwardCommentEndIconButtonFinder);
-      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
 
       await tester.tap(forwardCommentEndIconButtonFinder);
-      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
 
       // Verify that the comment end position is now displayed
@@ -3308,7 +3305,7 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
     testWidgets(
-        'Add comment near begin to already commented audio. Then play comments',
+        'Add comment near start to already commented audio. Then play comments',
         (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
       const String alreadyCommentedAudioTitle =
@@ -3508,6 +3505,10 @@ void verifyPositionBetweenMinMax({
         "Expected value between $expectedMinPositionTenthSeconds and $expectedMaxPositionTenthSeconds but obtained $actualPositionTenthOfSeconds",
   );
 }
+
+Matcher inInclusiveRange(int min, int max) => predicate(
+    (int value) => value >= min && value <= max,
+    'is in the range [$min, $max]');
 
 Future<void> checkTextFieldStyleAndEnterText({
   required WidgetTester tester,
