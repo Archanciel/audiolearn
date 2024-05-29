@@ -9,6 +9,7 @@ import '../../viewmodels/comment_vm.dart';
 import '../../views/screen_mixin.dart';
 import '../../utils/duration_expansion.dart';
 import 'comment_list_add_dialog_widget.dart';
+import 'set_value_to_target_dialog_widget.dart';
 
 /// This widget displays a dialog to add or edit a comment.
 /// The edit mode is activated when a comment is passed to the
@@ -60,15 +61,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
         Duration commentEndPosition = Duration(
             milliseconds:
                 widget.comment!.commentEndPositionInTenthOfSeconds * 100);
-        if (commentEndPosition < globalAudioPlayerVM.currentAudioPosition) {
-          commentVM.currentCommentEndPosition =
-              globalAudioPlayerVM.currentAudioPosition;
-        } else {
-          // the user has positioned the play audio view audio position after
-          // the current comment end audio position in order to increase the
-          // comment end audio position
-          commentVM.currentCommentEndPosition = commentEndPosition;
-        }
+        commentVM.currentCommentEndPosition = commentEndPosition;
       } else {
         // here, we are creating a comment
         commentVM.currentCommentStartPosition =
@@ -149,6 +142,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                             context, commentVMlistenFalse),
                         _buildCommentEndPositionRow(
                             context, commentVMlistenFalse),
+                        _buildAudioPlayerViewAudioPositionRow(context),
                       ],
                     ),
                     Row(
@@ -352,9 +346,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
               await _modifyCommentStartPosition(
                 commentVMlistenFalse: commentVMlistenFalse,
                 millisecondsChange:
-                    _commentStartPositionChangedInTenthOfSeconds
-                        ? -100
-                        : -1000,
+                    _commentStartPositionChangedInTenthOfSeconds ? -100 : -1000,
               );
             },
             iconSize: _commentStartPositionChangedInTenthOfSeconds
@@ -412,8 +404,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
             message:
                 AppLocalizations.of(context)!.tenthOfSecondsCheckboxTooltip,
             child: Checkbox(
-              key: const Key(
-                  'commentEndTenthOfSecondsCheckbox'),
+              key: const Key('commentEndTenthOfSecondsCheckbox'),
               value: _commentEndPositionChangedInTenthOfSeconds,
               onChanged: (bool? newValue) {
                 setState(() {
@@ -435,9 +426,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
               await _modifyCommentEndPosition(
                 commentVMlistenFalse: commentVMlistenFalse,
                 millisecondsChange:
-                    _commentEndPositionChangedInTenthOfSeconds
-                        ? -100
-                        : -1000,
+                    _commentEndPositionChangedInTenthOfSeconds ? -100 : -1000,
               );
             },
             iconSize: _commentEndPositionChangedInTenthOfSeconds
@@ -472,15 +461,73 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
               await _modifyCommentEndPosition(
                 commentVMlistenFalse: commentVMlistenFalse,
                 millisecondsChange:
-                    _commentEndPositionChangedInTenthOfSeconds
-                        ? 100
-                        : 1000,
+                    _commentEndPositionChangedInTenthOfSeconds ? 100 : 1000,
               );
             },
             iconSize: _commentEndPositionChangedInTenthOfSeconds
                 ? kSmallestButtonWidth * 0.8
                 : kSmallestButtonWidth,
           ),
+        ),
+      ],
+    );
+  }
+
+  Row _buildAudioPlayerViewAudioPositionRow(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Consumer<AudioPlayerVM>(
+          builder: (context, audioPlayerVM, child) {
+            String currentAudioPositionStr =
+                audioPlayerVM.currentAudioPosition.HHmmssZeroHH();
+            return GestureDetector(
+              child: Text(
+                key: const Key('audioPlayerViewAudioPositionText'),
+                currentAudioPositionStr,
+              ),
+              onTap: () async {
+                showDialog<dynamic>(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return SetValueToTargetDialogWidget(
+                      dialogTitle: AppLocalizations.of(context)!.setCommentPosition,
+                      dialogCommentStr: AppLocalizations.of(context)!.commentPositionExplanation,
+                      passedValueFieldLabel: AppLocalizations.of(context)!.commentPosition,
+                      passedValueStr: currentAudioPositionStr,
+                      targetNamesLst: [
+                        AppLocalizations.of(context)!.commentStartPosition,
+                        AppLocalizations.of(context)!.commentEndPosition,
+                      ],
+                    );
+                  },
+                ).then((resultMap) {
+                  if (resultMap is String && resultMap == 'cancel') {
+                    // the case if the Cancel button was pressed
+                    return;
+                  }
+
+                  // Playlist? targetPlaylist = resultMap['selectedPlaylist'];
+
+                  // if (targetPlaylist == null) {
+                  //   // the case if no playlist was selected and
+                  //   // Confirm button was pressed
+                  //   return;
+                  // }
+
+                  bool keepAudioDataInSourcePlaylist =
+                      resultMap['keepAudioDataInSourcePlaylist'];
+
+                  // expandablePlaylistVM.moveAudioToPlaylist(
+                  //   audio: audio,
+                  //   targetPlaylist: targetPlaylist,
+                  //   keepAudioInSourcePlaylistDownloadedAudioLst:
+                  //       keepAudioDataInSourcePlaylist,
+                  // );
+                });
+              },
+            );
+          },
         ),
       ],
     );

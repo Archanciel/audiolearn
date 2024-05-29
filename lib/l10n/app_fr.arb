@@ -336,5 +336,10 @@
   "deleteCommentConfirnTitle": "Suppression de commentaire",
   "deleteCommentConfirnBody": "Supptimer le commentaire \"{title}\".",
   "commentMenu": "Commentaires de l'audio ...",
-  "tenthOfSecondsCheckboxTooltip": "Activer cette case à cocher pour spécifier la position du commentaire avec une précision au dixième de seconde."
+  "tenthOfSecondsCheckboxTooltip": "Activer cette case à cocher pour spécifier la position du commentaire avec une précision au dixième de seconde.",
+  "setCommentPosition": "Définir la position",
+  "commentPosition": "Position (hh:)mm:ss",
+  "commentPositionExplanation": "La position suggérée pour le commentaire correspond au point de lecture actuel de l'audio. Vous pouvez ajuster cette valeur si nécessaire et choisir à quelle position de commentaire elle doit être appliquée.",
+  "commentStartPosition": "Début",
+  "commentEndPosition": "Fin"
 }
