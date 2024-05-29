@@ -2928,7 +2928,8 @@ void main() {
       DirUtil.deleteFilesInDirAndSubDirs(
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
-    testWidgets('Add comment to already commented audio. Then play comments',
+    testWidgets(
+        'Add comment near end to already commented audio. Then play comments',
         (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
       const String alreadyCommentedAudioTitle =
@@ -3051,9 +3052,17 @@ void main() {
 
       // Now, forwarding the comment end position in seconds ...
 
-      // Tap four times on the forward comment end icon button
+      // Tap four times on the forward comment end icon button, then 1 time
+      // backward and 1 time forward
       Finder forwardCommentEndIconButtonFinder =
           find.byKey(const Key('forwardCommentEndIconButton'));
+      Finder backwardCommentEndIconButtonFinder =
+          find.byKey(const Key('backwardCommentEndIconButton'));
+
+      await tester.tap(forwardCommentEndIconButtonFinder);
+      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
+      await tester.pumpAndSettle();
+
       await tester.tap(forwardCommentEndIconButtonFinder);
       await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
@@ -3063,6 +3072,10 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.tap(forwardCommentEndIconButtonFinder);
+      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
+      await tester.pumpAndSettle();
+
+      await tester.tap(backwardCommentEndIconButtonFinder);
       await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
 
@@ -3108,6 +3121,14 @@ void main() {
       await Future.delayed(const Duration(milliseconds: delayMilliseconds));
       await tester.pumpAndSettle();
 
+      await tester.tap(backwardCommentEndIconButtonFinder);
+      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
+      await tester.pumpAndSettle();
+
+      await tester.tap(forwardCommentEndIconButtonFinder);
+      await Future.delayed(const Duration(milliseconds: delayMilliseconds));
+      await tester.pumpAndSettle();
+
       // Verify that the comment end position is now displayed
       // with added tenth of seconds value
 
@@ -3139,9 +3160,6 @@ void main() {
       await tester.tap(addOrUpdateCommentTextButton);
       await tester.pumpAndSettle();
 
-      // Verify that the comment list dialog now displays the
-      // added comment
-
       Finder commentListDialogFinder = find.byType(CommentListAddDialogWidget);
 
       // Find the list body containing the comments
@@ -3154,6 +3172,18 @@ void main() {
 
       // Check the number of items
       expect(itemsFinder, findsNWidgets(15)); // Assuming there are 4 items
+
+      // Now tap on first comment play icon button to ensure you can play
+      // a comment located before the comment you added
+      await playComment(
+        tester: tester,
+        itemsFinder: itemsFinder,
+        itemIndex: 0,
+        typeOnPauseAfterPlay: true,
+      );
+
+      // Verify that the comment list dialog now displays the
+      // added comment
 
       List<String> expectedTitles = [
         'One',
@@ -3217,21 +3247,166 @@ void main() {
         j++;
       }
 
+      // Play comments after playing a previous comment
+
       // Now tap on first comment play icon button
-      Finder playIconButtonFinder = find.descendant(
-        of: itemsFinder.at(0),
-        matching: find.byKey(const Key('playPauseIconButton')),
+      await playComment(
+        tester: tester,
+        itemsFinder: itemsFinder,
+        itemIndex: 0,
+        typeOnPauseAfterPlay: false,
       );
 
-      await tester.tap(playIconButtonFinder);
+      // Now tap on fourth comment play icon button
+      await playComment(
+        tester: tester,
+        itemsFinder: itemsFinder,
+        itemIndex: 9,
+        typeOnPauseAfterPlay: false,
+      );
+
+      // Now tap on second comment play icon button
+      await playComment(
+        tester: tester,
+        itemsFinder: itemsFinder,
+        itemIndex: 3,
+        typeOnPauseAfterPlay: false,
+      );
+
+      // Play comments after pausing a previous comment
+
+      // Now tap on first comment play icon button
+      await playComment(
+        tester: tester,
+        itemsFinder: itemsFinder,
+        itemIndex: 0,
+        typeOnPauseAfterPlay: true,
+      );
+
+      // Now tap on fourth comment play icon button
+      await playComment(
+        tester: tester,
+        itemsFinder: itemsFinder,
+        itemIndex: 9,
+        typeOnPauseAfterPlay: true,
+      );
+
+      // Now tap on second comment play icon button
+      await playComment(
+        tester: tester,
+        itemsFinder: itemsFinder,
+        itemIndex: 3,
+        typeOnPauseAfterPlay: true,
+      );
+
+      // Now close the comment list dialog
+      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
+    });
+    testWidgets(
+        'Add comment near begin to already commented audio. Then play comments',
+        (WidgetTester tester) async {
+      const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+      const String alreadyCommentedAudioTitle =
+          "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
+
+      await initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_comment_test',
+        selectedPlaylistTitle: youtubePlaylistTitle,
+      );
+
+      // Then, get the ListTile Text widget finder of the already commented
+      // audio and tap on it to open the AudioPlayerView
+      Finder alreadyCommentedAudioFinder =
+          find.text(alreadyCommentedAudioTitle);
+      await tester.tap(alreadyCommentedAudioFinder);
       await tester.pumpAndSettle();
 
-      // fix problem, but should not be necessary
-      await tester.tap(playIconButtonFinder);
+      // Tap on |< button to go to the beginning of the audio
+      await tester
+          .tap(find.byKey(const Key('audioPlayerViewSkipToStartButton')));
       await tester.pumpAndSettle();
 
-      await Future.delayed(const Duration(seconds: 10));
+      // Tap 5 times on the forward 1 minute icon button
+      Finder forwardOneMinuteButtonFinder =
+          find.byKey(const Key('audioPlayerViewForward1mButton'));
+
+      for (int i = 0; i < 5; i++) {
+        await tester.tap(forwardOneMinuteButtonFinder);
+        await tester.pumpAndSettle();
+      }
+
+      // Tap on the comment icon button to open the comment add list
+      // dialog
+      Finder commentInkWellButtonFinder = find.byKey(
+        const Key('commentsInkWellButton'),
+      );
+
+      await tester.tap(commentInkWellButtonFinder);
       await tester.pumpAndSettle();
+
+      // Tap on the Add comment icon button to open the add edit comment
+      // dialog
+      await tester
+          .tap(find.byKey(const Key('addPositionedCommentIconButtonKey')));
+      await tester.pumpAndSettle();
+
+      // Enter comment title text
+      String commentTitle = 'New';
+      Finder textFieldFinder = find.byKey(const Key('commentTitleTextField'));
+
+      await tester.enterText(
+        textFieldFinder,
+        commentTitle,
+      );
+      await tester.pumpAndSettle();
+
+      // Enter comment text
+      String commentText = 'New comment';
+      Finder commentContentTextFieldFinder =
+          find.byKey(const Key('commentContentTextField'));
+
+      await tester.enterText(
+        commentContentTextFieldFinder,
+        commentText,
+      );
+      await tester.pumpAndSettle();
+
+      // Tap on the add/edit comment button to save the comment
+
+      Finder addOrUpdateCommentTextButton =
+          find.byKey(const Key('addOrUpdateCommentTextButton'));
+
+      // Tap on the add/edit comment button to save the comment
+      await tester.tap(addOrUpdateCommentTextButton);
+      await tester.pumpAndSettle();
+
+      Finder commentListDialogFinder = find.byType(CommentListAddDialogWidget);
+
+      // Find the list body containing the comments
+      final Finder listFinder = find.descendant(
+          of: commentListDialogFinder, matching: find.byType(ListBody));
+
+      // Find all the list items
+      final Finder itemsFinder = find.descendant(
+          of: listFinder, matching: find.byType(GestureDetector));
+
+      // Check the number of items
+      expect(itemsFinder, findsNWidgets(15)); // Assuming there are 4 items
+
+      // Now tap on first comment play icon button to ensure you can play
+      // a comment located before the comment you added
+      await playComment(
+        tester: tester,
+        itemsFinder: itemsFinder,
+        itemIndex: 9,
+        typeOnPauseAfterPlay: true,
+      );
 
       // Now close the comment list dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));
@@ -3242,6 +3417,46 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
   });
+}
+
+Future<void> playComment({
+  required WidgetTester tester,
+  required Finder itemsFinder,
+  required int itemIndex,
+  required bool typeOnPauseAfterPlay,
+}) async {
+  Finder playIconButtonFinder = find.descendant(
+    of: itemsFinder.at(itemIndex),
+    matching: find.byKey(const Key('playPauseIconButton')),
+  );
+
+  await tester.tap(playIconButtonFinder);
+  await tester.pumpAndSettle();
+
+  Finder iconFinder;
+  for (int i = 0; i < 15; i += 3) {
+    if (i == itemIndex) {
+      iconFinder = find.descendant(
+        of: itemsFinder.at(i),
+        matching: find.byIcon(Icons.pause),
+      );
+      expect(iconFinder, findsOneWidget);
+    } else {
+      iconFinder = find.descendant(
+        of: itemsFinder.at(i),
+        matching: find.byIcon(Icons.play_arrow),
+      );
+      expect(iconFinder, findsOneWidget);
+    }
+  }
+
+  await Future.delayed(const Duration(seconds: 1));
+  await tester.pumpAndSettle();
+
+  if (typeOnPauseAfterPlay) {
+    await tester.tap(playIconButtonFinder);
+    await tester.pumpAndSettle();
+  }
 }
 
 /// Verify that the position displayed in the {textWidgetFinder} text
