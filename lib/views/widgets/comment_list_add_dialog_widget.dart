@@ -356,6 +356,7 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
         rewindAudioPositionBasedOnPauseDuration: false,
       );
     }
+
     await globalAudioPlayerVM.modifyAudioPlayerPluginPosition(
       Duration(
           milliseconds: comment.commentStartPositionInTenthOfSeconds * 100),
