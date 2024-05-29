@@ -17,7 +17,11 @@ class SetValueToTargetDialogWidget extends StatefulWidget {
   final String passedValueStr;
   final String passedValueFieldLabel;
   final List<String> targetNamesLst;
+
+  // If isTargetExclusive is true, only one checkbox can be selected.
+  // If isTargetExclusive is false, multiple checkboxes can be selected.
   final bool isTargetExclusive;
+
   final bool isPassedValueEditable;
 
   const SetValueToTargetDialogWidget({
@@ -48,11 +52,12 @@ class _SetValueToTargetDialogWidgetState
   void initState() {
     super.initState();
 
+    for (int i = 0; i < widget.targetNamesLst.length; i++) {
+      _isCheckboxChecked.add(false);
+    }
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _passedValueTextEditingController.text = widget.passedValueStr;
-      for (int i = 0; i < widget.targetNamesLst.length; i++) {
-        _isCheckboxChecked.add(false);
-      }
     });
   }
 
@@ -74,15 +79,11 @@ class _SetValueToTargetDialogWidgetState
     );
 
     return KeyboardListener(
-      // Using FocusNode to enable clicking on Enter to close
-      // the dialog
       focusNode: _focusNodeDialog,
       onKeyEvent: (event) {
         if (event is KeyDownEvent) {
           if (event.logicalKey == LogicalKeyboardKey.enter ||
               event.logicalKey == LogicalKeyboardKey.numpadEnter) {
-            // executing the same code as in the 'Rename'
-            // TextButton onPressed callback
             Navigator.of(context).pop();
           }
         }
@@ -93,22 +94,33 @@ class _SetValueToTargetDialogWidgetState
           widget.dialogTitle,
         ),
         actionsPadding: kDialogActionsPadding,
-        content: SingleChildScrollView(
-          child: ListBody(
+        content: SizedBox(
+          // Solution to the error due to using ListView in
+          //                     an AlertDialog
+          width: double.maxFinite,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               createTitleCommentRowFunction(
                 titleTextWidgetKey: const Key('setValueToTargetDialogKey'),
                 context: context,
                 commentStr: widget.dialogCommentStr,
               ),
-              createEditableRowFunction(
-                valueTextFieldWidgetKey: const Key('passedValueFieldTextField'),
-                context: context,
-                label: widget.passedValueFieldLabel,
-                controller: _passedValueTextEditingController,
-                textFieldFocusNode: _focusNodePassedValueTextField,
-              ),
-              _createCheckboxColumn(context),
+              (widget.isPassedValueEditable)
+                  ? createEditableRowFunction(
+                      valueTextFieldWidgetKey:
+                          const Key('passedValueFieldTextField'),
+                      context: context,
+                      label: widget.passedValueFieldLabel,
+                      controller: _passedValueTextEditingController,
+                      textFieldFocusNode: _focusNodePassedValueTextField,
+                    )
+                  : createInfoRowFunction(
+                      context: context,
+                      label: '',
+                      value: widget.passedValueFieldLabel,
+                    ),
+              _createCheckboxList(context),
             ],
           ),
         ),
@@ -142,27 +154,28 @@ class _SetValueToTargetDialogWidgetState
     );
   }
 
-  Column _createCheckboxColumn(BuildContext context) {
-    List<Widget> checkBoxes = [];
-    int i = 0;
-    for (String targetName in widget.targetNamesLst) {
-      checkBoxes.add(
-          createCheckboxRowFunction(
-            checkBoxWidgetKey: Key('checkbox${i}Key'),
-            context: context,
-            label: targetName,
-            value: _isCheckboxChecked[i],
-            onChangedFunction: (bool? value) {
-              setState(() {
-                _isCheckboxChecked[i++] = value ?? false;
-              });
-            },
-          ),
-      );
-    }
-
-    return Column(
-      children: checkBoxes,
+  Widget _createCheckboxList(BuildContext context) {
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: widget.targetNamesLst.length,
+      itemBuilder: (BuildContext context, int index) {
+        return createCheckboxRowFunction(
+          checkBoxWidgetKey: Key('checkbox${index}Key'),
+          context: context,
+          label: widget.targetNamesLst[index],
+          value: _isCheckboxChecked[index],
+          onChangedFunction: (bool? value) {
+            setState(() {
+              if (value != null && value && widget.isTargetExclusive) {
+                for (int i = 0; i < _isCheckboxChecked.length; i++) {
+                  _isCheckboxChecked[i] = false;
+                }
+              }
+              _isCheckboxChecked[index] = value ?? false;
+            });
+          },
+        );
+      },
     );
   }
 }
