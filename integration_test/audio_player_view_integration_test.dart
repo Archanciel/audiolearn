@@ -3377,7 +3377,27 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      // Tap on the add/edit comment button to save the comment
+      // Now, set the comment end position in seconds
+
+      Finder forwardCommentEndIconButtonFinder =
+          find.byKey(const Key('forwardCommentEndIconButton'));
+
+      await tester.tap(forwardCommentEndIconButtonFinder);
+      await tester.pumpAndSettle();
+
+      await tester.tap(forwardCommentEndIconButtonFinder);
+      await tester.pumpAndSettle();
+
+      await tester.tap(forwardCommentEndIconButtonFinder);
+      await tester.pumpAndSettle();
+
+      await tester.tap(forwardCommentEndIconButtonFinder);
+      await tester.pumpAndSettle();
+
+      await tester.tap(forwardCommentEndIconButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Saving the comment
 
       Finder addOrUpdateCommentTextButton =
           find.byKey(const Key('addOrUpdateCommentTextButton'));
