@@ -1036,4 +1036,8 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get commentEndPosition => "End";
+
+  @override
+  String get updateCommentStartEndPositionTooltip =>
+      "Update comment start or end position";
 }
