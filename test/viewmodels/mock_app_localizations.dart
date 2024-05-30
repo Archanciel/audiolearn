@@ -1020,4 +1020,20 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get tenthOfSecondsCheckboxTooltip =>
       "Enable this checkbox to specify the comment position with precision up to a tenth of second.";
+
+  @override
+  String get setCommentPosition => "Set comment position";
+
+  @override
+  String get commentPosition => "Position (hh:)mm:ss";
+
+  @override
+  String get commentPositionExplanation =>
+      "The proposed comment position corresponds to the current audio position. Modify it if needed and select to which position it must be applied.";
+
+  @override
+  String get commentStartPosition => "Start";
+
+  @override
+  String get commentEndPosition => "End";
 }

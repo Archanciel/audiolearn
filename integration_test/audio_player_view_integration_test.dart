@@ -2603,14 +2603,14 @@ void main() {
       // Verify the comment end position displayed in the comment
       // dialog
 
-      String expectedCommentEndPositionWithTensOfSecond =
+      String expectedCommentEndPositionSeconds =
           '0:52'; // 0:49:2 + 3 - 1 + 1 seconds
-      String actualCommentEndPositionWithTensOfSecondStr =
+      String actualCommentEndPositionSecondsStr =
           tester.widget<Text>(commentEndTextWidgetFinder).data!;
 
       expect(
-        actualCommentEndPositionWithTensOfSecondStr,
-        expectedCommentEndPositionWithTensOfSecond, // 0:52
+        actualCommentEndPositionSecondsStr,
+        expectedCommentEndPositionSeconds, // 0:52
         reason:
             'Expected comment end position not found. Real value: $actualCommentStartPositionWithTensOfSecondStr',
       );
@@ -2848,15 +2848,28 @@ void main() {
       await tester.tap(find.text(commentTitle));
       await tester.pumpAndSettle();
 
-      // Verify that the comment end position has been updated to the
-      // current audio player view position
+      // Verify that the comment end position has the same value as
+      // when it was saved
 
       String actualAudioPlayerViewAudioPosition =
           tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
 
       expect(
         tester.widget<Text>(commentEndTextWidgetFinder).data!,
-        actualAudioPlayerViewAudioPosition, // 5:46
+        actualCommentEndPositionSecondsStr, // 0:52
+      );
+
+      // Verify that the audio player view audio position displayed
+      // in the comment dialog is the same as the audio player view
+      // audio position
+      Finder commentDialogAudioPositionFinder =
+          find.byKey(const Key('audioPlayerViewAudioPositionText'));
+      String commentDialogAudioPlayerViewAudioPositionText =
+          tester.widget<Text>(commentDialogAudioPositionFinder).data!;
+
+      expect(
+        commentDialogAudioPlayerViewAudioPositionText,
+        actualAudioPlayerViewAudioPosition,
       );
 
       // Tap once on the forward comment end icon button to increase the
@@ -2878,10 +2891,10 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify the comment end position displayed in the comment dialog
-      // actualAudioPlayerViewAudioPosition + 1 sec - 2 tenth of seconds
+      // is equal to the value whwn it was saved + 1 sec - 2 tenth of seconds
       int expectedCommentEndPositionInTenthOfSeconds =
           DateTimeUtil.convertToTenthsOfSeconds(
-                timeString: actualAudioPlayerViewAudioPosition,
+                timeString: actualCommentEndPositionSecondsStr,
               ) +
               10 -
               2;
@@ -2893,8 +2906,21 @@ void main() {
 
       expect(
           actualCommentEndPositionInTenthOfSeconds,
-          inInclusiveRange(expectedCommentEndPositionInTenthOfSeconds - 5,
+          inInclusiveRange(expectedCommentEndPositionInTenthOfSeconds - 1,
               expectedCommentEndPositionInTenthOfSeconds + 4));
+
+      // Verify that the audio player view audio position displayed
+      // in the comment dialog is the same as the audio player view
+      // audio position
+      commentDialogAudioPlayerViewAudioPositionText =
+          tester.widget<Text>(commentDialogAudioPositionFinder).data!;
+      actualAudioPlayerViewAudioPosition =
+          tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
+
+      expect(
+        commentDialogAudioPlayerViewAudioPositionText,
+        actualAudioPlayerViewAudioPosition,
+      );
 
       // Now, tap on the add/update comment button to save the updated
       // comment
