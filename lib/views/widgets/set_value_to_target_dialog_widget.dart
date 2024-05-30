@@ -94,37 +94,32 @@ class _SetValueToTargetDialogWidgetState
           widget.dialogTitle,
         ),
         actionsPadding: kDialogActionsPadding,
-        content: SizedBox(
-          // Solution to the error due to using ListView in
-          // an AlertDialog
-          width: double.maxFinite,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              createTitleCommentRowFunction(
-                titleTextWidgetKey: const Key('setValueToTargetDialogKey'),
-                context: context,
-                commentStr: widget.dialogCommentStr,
-              ),
-              const SizedBox(height: 10),
-              (widget.isPassedValueEditable)
-                  ? createEditableRowFunction(
-                      valueTextFieldWidgetKey:
-                          const Key('passedValueFieldTextField'),
-                      context: context,
-                      label: widget.passedValueFieldLabel,
-                      controller: _passedValueTextEditingController,
-                      textFieldFocusNode: _focusNodePassedValueTextField,
-                    )
-                  : createInfoRowFunction(
-                      context: context,
-                      label: '',
-                      value: widget.passedValueFieldLabel,
-                    ),
-              const SizedBox(height: 10),
-              _createCheckboxList(context),
-            ],
-          ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            createTitleCommentRowFunction(
+              titleTextWidgetKey: const Key('setValueToTargetDialogKey'),
+              context: context,
+              commentStr: widget.dialogCommentStr,
+            ),
+            const SizedBox(height: 10),
+            (widget.isPassedValueEditable)
+                ? createEditableRowFunction(
+                    valueTextFieldWidgetKey:
+                        const Key('passedValueFieldTextField'),
+                    context: context,
+                    label: widget.passedValueFieldLabel,
+                    controller: _passedValueTextEditingController,
+                    textFieldFocusNode: _focusNodePassedValueTextField,
+                  )
+                : createInfoRowFunction(
+                    context: context,
+                    label: '',
+                    value: widget.passedValueFieldLabel,
+                  ),
+            const SizedBox(height: 10),
+            _createCheckboxList(context),
+          ],
         ),
         actions: [
           TextButton(
