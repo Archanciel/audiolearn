@@ -50,7 +50,7 @@ void main() async {
   await Process.run('dart', ['format', filePath]);
 
   // Execute flutter gen-l10n command
-  await Process.run('flutter', ['gen-l10n']);
+  // await Process.run('flutter', ['gen-l10n']); not working !
 
   print('Localization class has been inserted into $filePath');
 }
