@@ -106,6 +106,7 @@ class _SetValueToTargetDialogWidgetState
                 context: context,
                 commentStr: widget.dialogCommentStr,
               ),
+              const SizedBox(height: 10),
               (widget.isPassedValueEditable)
                   ? createEditableRowFunction(
                       valueTextFieldWidgetKey:
@@ -120,6 +121,7 @@ class _SetValueToTargetDialogWidgetState
                       label: '',
                       value: widget.passedValueFieldLabel,
                     ),
+              const SizedBox(height: 10),
               _createCheckboxList(context),
             ],
           ),
@@ -155,27 +157,29 @@ class _SetValueToTargetDialogWidgetState
   }
 
   Widget _createCheckboxList(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: widget.targetNamesLst.length,
-      itemBuilder: (BuildContext context, int index) {
-        return createCheckboxRowFunction(
-          checkBoxWidgetKey: Key('checkbox${index}Key'),
-          context: context,
-          label: widget.targetNamesLst[index],
-          value: _isCheckboxChecked[index],
-          onChangedFunction: (bool? value) {
-            setState(() {
-              if (value != null && value && widget.isTargetExclusive) {
-                for (int i = 0; i < _isCheckboxChecked.length; i++) {
-                  _isCheckboxChecked[i] = false;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List<Widget>.generate(
+        widget.targetNamesLst.length,
+        (int index) {
+          return createCheckboxRowFunction(
+            checkBoxWidgetKey: Key('checkbox${index}Key'),
+            context: context,
+            label: widget.targetNamesLst[index],
+            value: _isCheckboxChecked[index],
+            onChangedFunction: (bool? value) {
+              setState(() {
+                if (value != null && value && widget.isTargetExclusive) {
+                  for (int i = 0; i < _isCheckboxChecked.length; i++) {
+                    _isCheckboxChecked[i] = false;
+                  }
                 }
-              }
-              _isCheckboxChecked[index] = value ?? false;
-            });
-          },
-        );
-      },
+                _isCheckboxChecked[index] = value ?? false;
+              });
+            },
+          );
+        },
+      ),
     );
   }
 }
