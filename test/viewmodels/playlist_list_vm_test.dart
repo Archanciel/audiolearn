@@ -121,28 +121,28 @@ void main() {
       // Testing copy La résilience insulaire par Fiona Roche with
       // play position at start of audio
       testCopyAudioToPlaylist(
-        playlistListVM,
-        sourcePlaylist,
-        0,
-        targetPlaylist,
+        playlistListVM:  playlistListVM,
+        sourcePlaylist:  sourcePlaylist,
+        sourceAudioIndex:  0,
+        targetPlaylist:  targetPlaylist,
       );
 
       // Testing copy Le Secret de la RESILIENCE révélé par Boris Cyrulnik
       // with play position at end of audio
       testCopyAudioToPlaylist(
-        playlistListVM,
-        sourcePlaylist,
-        1,
-        targetPlaylist,
+        playlistListVM:  playlistListVM,
+        sourcePlaylist:  sourcePlaylist,
+        sourceAudioIndex:  1,
+        targetPlaylist:  targetPlaylist,
       );
 
       // Testing copy Ce qui va vraiment sauver notre espèce par Jancovici
       // et Barrau with play position 2 seconds before end of audio
       testCopyAudioToPlaylist(
-        playlistListVM,
-        sourcePlaylist,
-        4,
-        targetPlaylist,
+        playlistListVM:  playlistListVM,
+        sourcePlaylist:  sourcePlaylist,
+        sourceAudioIndex:  4,
+        targetPlaylist:  targetPlaylist,
       );
 
       // Purge the test playlist directory so that the created test
@@ -190,28 +190,28 @@ void main() {
       // Testing move La résilience insulaire par Fiona Roche with
       // play position at start of audio
       testMoveAudioToPlaylist(
-        playlistListVM,
-        sourcePlaylist,
-        0,
-        targetPlaylist,
+        playlistListVM: playlistListVM,
+        sourcePlaylist: sourcePlaylist,
+        sourceAudioIndex: 0,
+        targetPlaylist: targetPlaylist,
       );
 
       // Testing move Le Secret de la RESILIENCE révélé par Boris Cyrulnik
       // with play position at end of audio
       testMoveAudioToPlaylist(
-        playlistListVM,
-        sourcePlaylist,
-        0,
-        targetPlaylist,
+        playlistListVM: playlistListVM,
+        sourcePlaylist: sourcePlaylist,
+        sourceAudioIndex: 0,
+        targetPlaylist: targetPlaylist,
       );
 
-      // Testing move Ce qui va vraiment sauver notre espèce par Jancovici
-      // et Barrau with play position 2 seconds before end of audio
+      // Testing move Jancovici répond aux voeux de Macron pour 2024
+      // play position 2 seconds before end of audio
       testMoveAudioToPlaylist(
-        playlistListVM,
-        sourcePlaylist,
-        2,
-        targetPlaylist,
+        playlistListVM: playlistListVM,
+        sourcePlaylist: sourcePlaylist,
+        sourceAudioIndex: 2,
+        targetPlaylist: targetPlaylist,
       );
 
       // Purge the test playlist directory so that the created test
@@ -806,12 +806,12 @@ void main() {
   });
 }
 
-void testCopyAudioToPlaylist(
-  PlaylistListVM playlistListVM,
-  Playlist sourcePlaylist,
-  int sourceAudioIndex,
-  Playlist targetPlaylist,
-) {
+void testCopyAudioToPlaylist({
+  required PlaylistListVM playlistListVM,
+  required Playlist sourcePlaylist,
+  required int sourceAudioIndex,
+  required Playlist targetPlaylist,
+}) {
   Audio sourceAudio = sourcePlaylist.playableAudioLst[sourceAudioIndex];
 
   playlistListVM.copyAudioToPlaylist(
@@ -850,12 +850,12 @@ void testCopyAudioToPlaylist(
   expect(copiedAudio.movedToPlaylistTitle == null, isTrue);
 }
 
-void testMoveAudioToPlaylist(
-  PlaylistListVM playlistListVM,
-  Playlist sourcePlaylist,
-  int sourceAudioIndex,
-  Playlist targetPlaylist,
-) {
+void testMoveAudioToPlaylist({
+  required PlaylistListVM playlistListVM,
+  required Playlist sourcePlaylist,
+  required int sourceAudioIndex,
+  required Playlist targetPlaylist,
+}) {
   Audio sourceAudio = sourcePlaylist.playableAudioLst[sourceAudioIndex];
 
   playlistListVM.moveAudioToPlaylist(
