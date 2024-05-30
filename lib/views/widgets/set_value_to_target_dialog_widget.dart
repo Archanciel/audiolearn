@@ -128,10 +128,17 @@ class _SetValueToTargetDialogWidgetState
               List<String> resultLst = [
                 _passedValueTextEditingController.text,
               ];
+              bool isAnyCheckboxChecked = false;
+
               for (int i = 0; i < _isCheckboxChecked.length; i++) {
                 if (_isCheckboxChecked[i]) {
                   resultLst.add(i.toString());
+                  isAnyCheckboxChecked = true;
                 }
+              }
+              
+              if (!isAnyCheckboxChecked) {
+                resultLst.add('-1');
               }
               Navigator.of(context).pop(resultLst);
             },

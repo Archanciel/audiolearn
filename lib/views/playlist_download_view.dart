@@ -648,7 +648,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
               // user clicked on Save or Apply or on Delete button
               // on sort and filter dialog opened by editing
               // a sort and filter dropdown menu item
-              if (filterSortAudioAndParmLst == 'delete') {
+              if (filterSortAudioAndParmLst[0] == 'delete') {
                 // user clicked on Delete button
 
                 // selecting the default sort and filter
