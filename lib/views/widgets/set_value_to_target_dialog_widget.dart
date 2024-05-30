@@ -3,12 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
+import '../../viewmodels/warning_message_vm.dart';
 import '../../views/screen_mixin.dart';
 import '../../constants.dart';
-import '../../models/audio.dart';
 import '../../services/settings_data_service.dart';
-import '../../utils/ui_util.dart';
-import '../../viewmodels/audio_download_vm.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 
 class SetValueToTargetDialogWidget extends StatefulWidget {
@@ -128,6 +126,7 @@ class _SetValueToTargetDialogWidgetState
               List<String> resultLst = [
                 _passedValueTextEditingController.text,
               ];
+
               bool isAnyCheckboxChecked = false;
 
               for (int i = 0; i < _isCheckboxChecked.length; i++) {
@@ -136,10 +135,24 @@ class _SetValueToTargetDialogWidgetState
                   isAnyCheckboxChecked = true;
                 }
               }
-              
+
               if (!isAnyCheckboxChecked) {
-                resultLst.add('-1');
+                WarningMessageVM warningMessageVM =
+                    Provider.of<WarningMessageVM>(
+                  context,
+                  listen: false,
+                );
+
+                if (widget.isTargetExclusive) {
+                  warningMessageVM.noUniqueCheckboxSelected();
+                } else {
+                  warningMessageVM.noCheckboxSelected();
+                }
+
+                // the dialog is not closed
+                return;
               }
+
               Navigator.of(context).pop(resultLst);
             },
             child: Text(

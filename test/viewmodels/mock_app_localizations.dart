@@ -1040,4 +1040,12 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get updateCommentStartEndPositionTooltip =>
       "Update comment start or end position";
+
+  @override
+  String get noCheckboxSelectedWarning =>
+      "No checkbox selected. Please select at least one checkbox before clicking 'Ok', or click 'Cancel' to exit.";
+
+  @override
+  String get noUniqueCheckboxSelectedWarning =>
+      "No checkbox selected. Please select one checkbox before clicking 'Ok', or click 'Cancel' to exit.";
 }

@@ -60,6 +60,14 @@ enum WarningMessageType {
   // on the delete button after having selected an historical sort/filter
   // parameter which does  exist in the sort/filter parameter history.
 
+  noCheckboxSelected, // The case if the user clicks
+  // on the ok button of the SetValueToTargetDialogWidget without
+  // having selected at least one checkbox.
+
+  noUniqueCheckboxSelected, // The case if the user clicks
+  // on the ok button of the SetValueToTargetDialogWidget without
+  // having selected a checkbox.
+
   playlistRootPathNotExist, // The case if the user enters a playlist
   // root path which does not exist in the application settings dialog
 
@@ -297,6 +305,22 @@ class WarningMessageVM extends ChangeNotifier {
   void historicalSortFilterParameterWasDeleted() {
     _warningMessageType =
         WarningMessageType.historicalSortFilterParameterWasDeleted;
+
+    // Causes the display warning message widget to be displayed.
+    notifyListeners();
+  }
+
+  void noCheckboxSelected() {
+    _warningMessageType =
+        WarningMessageType.noCheckboxSelected;
+
+    // Causes the display warning message widget to be displayed.
+    notifyListeners();
+  }
+
+  void noUniqueCheckboxSelected() {
+    _warningMessageType =
+        WarningMessageType.noUniqueCheckboxSelected;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();

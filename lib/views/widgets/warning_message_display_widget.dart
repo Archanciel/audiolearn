@@ -309,6 +309,30 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
         });
 
         return const SizedBox.shrink();
+      case WarningMessageType.noCheckboxSelected:
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _displayWarningDialog(
+            context: _context,
+            message: AppLocalizations.of(context)!
+                .noCheckboxSelectedWarning,
+            warningMessageVM: _warningMessageVM,
+            themeProviderVM: themeProviderVM,
+          );
+        });
+
+        return const SizedBox.shrink();
+      case WarningMessageType.noUniqueCheckboxSelected:
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _displayWarningDialog(
+            context: _context,
+            message: AppLocalizations.of(context)!
+                .noUniqueCheckboxSelectedWarning,
+            warningMessageVM: _warningMessageVM,
+            themeProviderVM: themeProviderVM,
+          );
+        });
+
+        return const SizedBox.shrink();
       case WarningMessageType.playlistRootPathNotExist:
         WidgetsBinding.instance.addPostFrameCallback((_) {
           _displayWarningDialog(

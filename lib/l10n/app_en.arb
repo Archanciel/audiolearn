@@ -340,5 +340,7 @@
   "commentPositionExplanation": "The proposed comment position corresponds to the current audio position. Modify it if needed and select to which position it must be applied.",
   "commentStartPosition": "Start",
   "commentEndPosition": "End",
-  "updateCommentStartEndPositionTooltip": "Update comment start or end position"
+  "updateCommentStartEndPositionTooltip": "Update comment start or end position.",
+  "noCheckboxSelectedWarning": "No checkbox selected. Please select at least one checkbox before clicking 'Ok', or click 'Cancel' to exit.",
+  "noUniqueCheckboxSelectedWarning": "No checkbox selected. Please select one checkbox before clicking 'Ok', or click 'Cancel' to exit."
 }
