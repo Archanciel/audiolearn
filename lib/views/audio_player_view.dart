@@ -295,22 +295,18 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                           });
                         }
                       : null,
-                  child: Tooltip(
-                    message:
-                        AppLocalizations.of(context)!.setAudioPlaySpeedTooltip,
-                    child: Text(
-                      '${_audioPlaySpeed.toStringAsFixed(2)}x',
-                      textAlign: TextAlign.center,
-                      style: (areAudioButtonsEnabled)
-                          ? (themeProviderVM.currentTheme == AppTheme.dark)
-                              ? kTextButtonStyleDarkMode
-                              : kTextButtonStyleLightMode
-                          : const TextStyle(
-                              // required to display the button in grey if
-                              // the button is disabled
-                              fontSize: kTextButtonFontSize,
-                            ),
-                    ),
+                  child: Text(
+                    '${_audioPlaySpeed.toStringAsFixed(2)}x',
+                    textAlign: TextAlign.center,
+                    style: (areAudioButtonsEnabled)
+                        ? (themeProviderVM.currentTheme == AppTheme.dark)
+                            ? kTextButtonStyleDarkMode
+                            : kTextButtonStyleLightMode
+                        : const TextStyle(
+                            // required to display the button in grey if
+                            // the button is disabled
+                            fontSize: kTextButtonFontSize,
+                          ),
                   ),
                 ),
               ),
