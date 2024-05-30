@@ -142,7 +142,6 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                             context, commentVMlistenFalse),
                         _buildCommentEndPositionRow(
                             context, commentVMlistenFalse),
-                        _buildAudioPlayerViewAudioPositionRow(context),
                       ],
                     ),
                     Row(
@@ -252,6 +251,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                     ),
                   ],
                 ),
+                _buildAudioPlayerViewAudioPositionRow(context),
               ],
             ),
           ],
@@ -491,9 +491,12 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                   context: context,
                   builder: (BuildContext context) {
                     return SetValueToTargetDialogWidget(
-                      dialogTitle: AppLocalizations.of(context)!.setCommentPosition,
-                      dialogCommentStr: AppLocalizations.of(context)!.commentPositionExplanation,
-                      passedValueFieldLabel: AppLocalizations.of(context)!.commentPosition,
+                      dialogTitle:
+                          AppLocalizations.of(context)!.setCommentPosition,
+                      dialogCommentStr: AppLocalizations.of(context)!
+                          .commentPositionExplanation,
+                      passedValueFieldLabel:
+                          AppLocalizations.of(context)!.commentPosition,
                       passedValueStr: currentAudioPositionStr,
                       targetNamesLst: [
                         AppLocalizations.of(context)!.commentStartPosition,
