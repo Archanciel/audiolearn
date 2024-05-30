@@ -26,7 +26,6 @@ class DateTimeUtil {
   }) {
     // Split the time string into hours, minutes, seconds, and tenths of a second
     List<String> parts = timeString.split(':');
-    Duration duration;
     int hours = 0;
     int minutes = 0;
     int totalTenthsOfSeconds;
