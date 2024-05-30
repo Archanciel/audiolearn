@@ -341,5 +341,6 @@
   "commentPosition": "Position (hh:)mm:ss",
   "commentPositionExplanation": "La position suggérée pour le commentaire correspond au point de lecture actuel de l'audio. Vous pouvez ajuster cette valeur si nécessaire et choisir à quelle position de commentaire elle doit être appliquée.",
   "commentStartPosition": "Début",
-  "commentEndPosition": "Fin"
+  "commentEndPosition": "Fin",
+  "updateCommentStartEndPositionTooltip": "Mettre à jour la position de début ou de fin du commentaire"
 }

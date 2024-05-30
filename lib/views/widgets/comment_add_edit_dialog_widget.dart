@@ -4,8 +4,10 @@ import 'package:provider/provider.dart';
 
 import '../../constants.dart';
 import '../../models/comment.dart';
+import '../../services/settings_data_service.dart';
 import '../../viewmodels/audio_player_vm.dart';
 import '../../viewmodels/comment_vm.dart';
+import '../../viewmodels/theme_provider_vm.dart';
 import '../../views/screen_mixin.dart';
 import '../../utils/duration_expansion.dart';
 import 'comment_list_add_dialog_widget.dart';
@@ -474,6 +476,11 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
   }
 
   Row _buildAudioPlayerViewAudioPositionRow(BuildContext context) {
+    ThemeProviderVM themeProviderVM = Provider.of<ThemeProviderVM>(
+      context,
+      listen: false,
+    );
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -481,54 +488,73 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
           builder: (context, audioPlayerVM, child) {
             String currentAudioPositionStr =
                 audioPlayerVM.currentAudioPosition.HHmmssZeroHH();
-            return GestureDetector(
-              child: Text(
-                key: const Key('audioPlayerViewAudioPositionText'),
-                currentAudioPositionStr,
+            return Tooltip(
+              message: AppLocalizations.of(context)!.updateCommentStartEndPositionTooltip,
+              child: TextButton(
+                key: const Key('setAudioSpeedTextButton'),
+                style: ButtonStyle(
+                  shape: getButtonRoundedShape(
+                    currentTheme: themeProviderVM.currentTheme,
+                    isButtonEnabled: true,
+                    context: context,
+                  ),
+                  padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                    const EdgeInsets.symmetric(
+                        horizontal: kSmallButtonInsidePadding, vertical: 0),
+                  ),
+                  overlayColor: textButtonTapModification, // Tap feedback color
+                ),
+                onPressed: () {
+                  showDialog<dynamic>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return SetValueToTargetDialogWidget(
+                        dialogTitle:
+                            AppLocalizations.of(context)!.setCommentPosition,
+                        dialogCommentStr: AppLocalizations.of(context)!
+                            .commentPositionExplanation,
+                        passedValueFieldLabel:
+                            AppLocalizations.of(context)!.commentPosition,
+                        passedValueStr: currentAudioPositionStr,
+                        targetNamesLst: [
+                          AppLocalizations.of(context)!.commentStartPosition,
+                          AppLocalizations.of(context)!.commentEndPosition,
+                        ],
+                      );
+                    },
+                  ).then((resultMap) {
+                    if (resultMap is String && resultMap == 'cancel') {
+                      // the case if the Cancel button was pressed
+                      return;
+                    }
+
+                    // Playlist? targetPlaylist = resultMap['selectedPlaylist'];
+
+                    // if (targetPlaylist == null) {
+                    //   // the case if no playlist was selected and
+                    //   // Confirm button was pressed
+                    //   return;
+                    // }
+
+                    bool keepAudioDataInSourcePlaylist =
+                        resultMap['keepAudioDataInSourcePlaylist'];
+
+                    // expandablePlaylistVM.moveAudioToPlaylist(
+                    //   audio: audio,
+                    //   targetPlaylist: targetPlaylist,
+                    //   keepAudioInSourcePlaylistDownloadedAudioLst:
+                    //       keepAudioDataInSourcePlaylist,
+                    // );
+                  });
+                },
+                child: Text(
+                  currentAudioPositionStr,
+                  textAlign: TextAlign.center,
+                  style: (themeProviderVM.currentTheme == AppTheme.dark)
+                      ? kTextButtonStyleDarkMode
+                      : kTextButtonStyleLightMode,
+                ),
               ),
-              onTap: () async {
-                showDialog<dynamic>(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return SetValueToTargetDialogWidget(
-                      dialogTitle:
-                          AppLocalizations.of(context)!.setCommentPosition,
-                      dialogCommentStr: AppLocalizations.of(context)!
-                          .commentPositionExplanation,
-                      passedValueFieldLabel:
-                          AppLocalizations.of(context)!.commentPosition,
-                      passedValueStr: currentAudioPositionStr,
-                      targetNamesLst: [
-                        AppLocalizations.of(context)!.commentStartPosition,
-                        AppLocalizations.of(context)!.commentEndPosition,
-                      ],
-                    );
-                  },
-                ).then((resultMap) {
-                  if (resultMap is String && resultMap == 'cancel') {
-                    // the case if the Cancel button was pressed
-                    return;
-                  }
-
-                  // Playlist? targetPlaylist = resultMap['selectedPlaylist'];
-
-                  // if (targetPlaylist == null) {
-                  //   // the case if no playlist was selected and
-                  //   // Confirm button was pressed
-                  //   return;
-                  // }
-
-                  bool keepAudioDataInSourcePlaylist =
-                      resultMap['keepAudioDataInSourcePlaylist'];
-
-                  // expandablePlaylistVM.moveAudioToPlaylist(
-                  //   audio: audio,
-                  //   targetPlaylist: targetPlaylist,
-                  //   keepAudioInSourcePlaylistDownloadedAudioLst:
-                  //       keepAudioDataInSourcePlaylist,
-                  // );
-                });
-              },
             );
           },
         ),

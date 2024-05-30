@@ -339,5 +339,6 @@
   "commentPosition": "Position (hh:)mm:ss",
   "commentPositionExplanation": "The proposed comment position corresponds to the current audio position. Modify it if needed and select to which position it must be applied.",
   "commentStartPosition": "Start",
-  "commentEndPosition": "End"
+  "commentEndPosition": "End",
+  "updateCommentStartEndPositionTooltip": "Update comment start or end position"
 }
