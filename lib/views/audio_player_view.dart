@@ -268,7 +268,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                       isButtonEnabled: areAudioButtonsEnabled,
                       context: context,
                     ),
-                    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                    padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
                       const EdgeInsets.symmetric(
                           horizontal: kSmallButtonInsidePadding, vertical: 0),
                     ),

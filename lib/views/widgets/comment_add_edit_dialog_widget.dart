@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../../constants.dart';
 import '../../models/comment.dart';
 import '../../services/settings_data_service.dart';
+import '../../utils/date_time_util.dart';
 import '../../viewmodels/audio_player_vm.dart';
 import '../../viewmodels/comment_vm.dart';
 import '../../viewmodels/theme_provider_vm.dart';
@@ -253,7 +254,10 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                     ),
                   ],
                 ),
-                _buildAudioPlayerViewAudioPositionRow(context),
+                _buildAudioPlayerViewAudioPositionRow(
+                  context:  context,
+                  commentVMlistenFalse:  commentVMlistenFalse,
+                ),
               ],
             ),
           ],
@@ -316,7 +320,9 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
   }
 
   Row _buildCommentStartPositionRow(
-      BuildContext context, CommentVM commentVMlistenFalse) {
+    BuildContext context,
+    CommentVM commentVMlistenFalse,
+  ) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -475,7 +481,10 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
     );
   }
 
-  Row _buildAudioPlayerViewAudioPositionRow(BuildContext context) {
+  Row _buildAudioPlayerViewAudioPositionRow({
+    required BuildContext context,
+    required CommentVM commentVMlistenFalse,
+  }) {
     ThemeProviderVM themeProviderVM = Provider.of<ThemeProviderVM>(
       context,
       listen: false,
@@ -489,7 +498,8 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
             String currentAudioPositionStr =
                 audioPlayerVM.currentAudioPosition.HHmmssZeroHH();
             return Tooltip(
-              message: AppLocalizations.of(context)!.updateCommentStartEndPositionTooltip,
+              message: AppLocalizations.of(context)!
+                  .updateCommentStartEndPositionTooltip,
               child: TextButton(
                 key: const Key('setAudioSpeedTextButton'),
                 style: ButtonStyle(
@@ -498,14 +508,14 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                     isButtonEnabled: true,
                     context: context,
                   ),
-                  padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                  padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
                     const EdgeInsets.symmetric(
                         horizontal: kSmallButtonInsidePadding, vertical: 0),
                   ),
                   overlayColor: textButtonTapModification, // Tap feedback color
                 ),
                 onPressed: () {
-                  showDialog<dynamic>(
+                  showDialog<List<String>>(
                     context: context,
                     builder: (BuildContext context) {
                       return SetValueToTargetDialogWidget(
@@ -522,29 +532,30 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                         ],
                       );
                     },
-                  ).then((resultMap) {
-                    if (resultMap is String && resultMap == 'cancel') {
+                  ).then((resultStringLst) {
+                    if (resultStringLst == null) {
                       // the case if the Cancel button was pressed
                       return;
                     }
 
-                    // Playlist? targetPlaylist = resultMap['selectedPlaylist'];
+                    String positionStr = resultStringLst[0];
+                    String checkboxIndexStr = resultStringLst[1];
+                    Duration positionDuration = Duration(
+                        milliseconds: DateTimeUtil.convertToTenthsOfSeconds(
+                                timeString: positionStr) *
+                            100);
 
-                    // if (targetPlaylist == null) {
-                    //   // the case if no playlist was selected and
-                    //   // Confirm button was pressed
-                    //   return;
-                    // }
-
-                    bool keepAudioDataInSourcePlaylist =
-                        resultMap['keepAudioDataInSourcePlaylist'];
-
-                    // expandablePlaylistVM.moveAudioToPlaylist(
-                    //   audio: audio,
-                    //   targetPlaylist: targetPlaylist,
-                    //   keepAudioInSourcePlaylistDownloadedAudioLst:
-                    //       keepAudioDataInSourcePlaylist,
-                    // );
+                    if (checkboxIndexStr == '0') {
+                      // the case if the Comment Start Position checkbox was
+                      // checked
+                      commentVMlistenFalse.currentCommentStartPosition =
+                          positionDuration;
+                    } else {
+                      // the case if the Comment End Position checkbox was
+                      // checked
+                      commentVMlistenFalse.currentCommentEndPosition =
+                          positionDuration;
+                    }
                   });
                 },
                 child: Text(

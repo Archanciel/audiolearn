@@ -125,7 +125,15 @@ class _SetValueToTargetDialogWidgetState
           TextButton(
             key: const Key('okButton'),
             onPressed: () {
-              Navigator.of(context).pop();
+              List<String> resultLst = [
+                _passedValueTextEditingController.text,
+              ];
+              for (int i = 0; i < _isCheckboxChecked.length; i++) {
+                if (_isCheckboxChecked[i]) {
+                  resultLst.add(i.toString());
+                }
+              }
+              Navigator.of(context).pop(resultLst);
             },
             child: Text(
               'Ok',
