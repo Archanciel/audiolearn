@@ -766,12 +766,6 @@ class _AudioSortFilterDialogWidgetState
                   widget.warningMessageVM
                       .historicalSortFilterParameterWasDeleted();
 
-                  // removing the deleted sort/filter parameters from the
-                  // sort/filter dialog
-                  setState(() {
-                    _resetSortFilterOptions();
-                  });
-
                   // does not close the sort and filter dialog
                   return;
                 }
@@ -780,9 +774,15 @@ class _AudioSortFilterDialogWidgetState
                 playlistListVM.deleteAudioSortFilterParameters(
                   audioSortFilterParametersName: _sortFilterSaveAsUniqueName,
                 );
+
+                // removing the deleted sort/filter parameters from the
+                // sort/filter dialog
+                setState(() {
+                  _resetSortFilterOptions();
+                });
               }
 
-              Navigator.of(context).pop('delete');
+              Navigator.of(context).pop(['delete']);
             },
             child: Text(
               AppLocalizations.of(context)!.deleteShort,
@@ -1033,7 +1033,7 @@ class _AudioSortFilterDialogWidgetState
     required Key dateIconButtondKey,
     required Key textFieldKey,
     required BuildContext context,
-    required DateTimeType dateTimeType, 
+    required DateTimeType dateTimeType,
     required TextEditingController controller,
     required DateTime dateTime,
     required String label,
@@ -1059,8 +1059,7 @@ class _AudioSortFilterDialogWidgetState
 
             // Add this check
             _setDateTime(dateTimeType, pickedDate ?? now);
-            controller.text =
-                DateFormat('dd-MM-yyyy').format(dateTime);
+            controller.text = DateFormat('dd-MM-yyyy').format(dateTime);
           },
         ),
         SizedBox(
@@ -1093,7 +1092,7 @@ class _AudioSortFilterDialogWidgetState
         break;
     }
   }
-  
+
   Widget _buildAudioStateCheckboxes(
     BuildContext context,
   ) {
