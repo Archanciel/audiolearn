@@ -49,6 +49,9 @@ void main() async {
   // Now format the file
   await Process.run('dart', ['format', filePath]);
 
+  // Execute flutter gen-l10n command
+  await Process.run('flutter', ['gen-l10n']);
+
   print('Localization class has been inserted into $filePath');
 }
 
