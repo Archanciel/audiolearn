@@ -133,7 +133,7 @@ void main() {
       );
 
       // Verify if the play button changed to pause button
-      Finder pauseIconFinder = find.byIcon(Icons.pause);
+      final Finder pauseIconFinder = find.byIcon(Icons.pause);
       expect(pauseIconFinder, findsOneWidget);
 
       // Now pause the audio and wait 1 second
@@ -393,7 +393,7 @@ void main() {
 
       // First, get the lastly downloaded Audio ListTile Text
       // widget finder and tap on it to move to audio player view
-      Finder lastDownloadedAudioListTileTextWidgetFinder =
+      final Finder lastDownloadedAudioListTileTextWidgetFinder =
           find.text(lastDownloadedAudioTitle);
 
       await tester.tap(lastDownloadedAudioListTileTextWidgetFinder);
@@ -417,7 +417,7 @@ void main() {
       );
 
       // Go back to audio player view in order to pause the audio
-      Finder audioPlayerNavButton =
+      final Finder audioPlayerNavButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(audioPlayerNavButton);
       await tester.pumpAndSettle();
@@ -467,7 +467,7 @@ void main() {
 
       // First, get the lastly downloaded Audio ListTile Text
       // widget finder and tap on it to move to audio player view
-      Finder lastDownloadedAudioListTileTextWidgetFinder =
+      final Finder lastDownloadedAudioListTileTextWidgetFinder =
           find.text(lastDownloadedAudioTitle);
 
       await tester.tap(lastDownloadedAudioListTileTextWidgetFinder);
@@ -491,7 +491,7 @@ void main() {
       );
 
       // Go back to audio player view in order to go to end the audio
-      Finder audioPlayerNavButton =
+      final Finder audioPlayerNavButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(audioPlayerNavButton);
       await tester.pumpAndSettle();
@@ -578,7 +578,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify the no selected audio title is displayed
-      Finder noAudioTitleFinder = find.text("No audio selected");
+      final Finder noAudioTitleFinder = find.text("No audio selected");
       expect(noAudioTitleFinder, findsOneWidget);
 
       // Purge the test playlist directory so that the created test
@@ -1281,7 +1281,7 @@ void main() {
 
       // Go to the audio player view by tapping on the audio player
       // icon button
-      Finder audioPlayerNavButton =
+      final Finder audioPlayerNavButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(audioPlayerNavButton);
       await tester.pumpAndSettle();
@@ -2294,7 +2294,7 @@ void main() {
       // Now we go back to the PlayListDownloadView in order
       // to copy an audio in the empty playlist
       audioPlayerNavButton =
-          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      find.byKey(const ValueKey('playlistDownloadViewIconButton'));
       await tester.tap(audioPlayerNavButton);
       await tester.pumpAndSettle();
 
@@ -2320,7 +2320,8 @@ void main() {
       // Then, get the ListTile Text widget finder of the uncommented
       // audio copied in the empty playlist and tap on it to open the
       // AudioPlayerView
-      Finder audioTitleNotYetCommentedFinder = find.text(audioToCommentTitle);
+      final Finder audioTitleNotYetCommentedFinder =
+          find.text(audioToCommentTitle);
       await tester.tap(audioTitleNotYetCommentedFinder);
       await tester.pumpAndSettle();
 
@@ -2343,7 +2344,7 @@ void main() {
       // Verify the current audio position in the audio player view.
 
       String expectedAudioPlayerViewCurrentAudioPosition = '0:43';
-      Finder audioPlayerViewAudioPositionFinder =
+      final Finder audioPlayerViewAudioPositionFinder =
           find.byKey(const Key('audioPlayerViewAudioPosition'));
       String actualAudioPlayerViewCurrentAudioPosition =
           tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
@@ -2404,9 +2405,9 @@ void main() {
       String commentStartAndEndInitialPosition =
           expectedAudioPlayerViewCurrentAudioPosition;
 
-      Finder commentStartTextWidgetFinder =
+      final Finder commentStartTextWidgetFinder =
           find.byKey(const Key('commentStartPositionText')); // 0:43
-      Finder commentEndTextWidgetFinder =
+      final Finder commentEndTextWidgetFinder =
           find.byKey(const Key('commentEndPositionText')); // 0:43
 
       expect(
@@ -2425,9 +2426,9 @@ void main() {
       // one time again on the forward comment start icon button to change
       // the comment start position. Since the tenth of seconds checkbox
       // is not checked, the comment start position is changed in seconds.
-      Finder forwardCommentStartIconButtonFinder =
+      final Finder forwardCommentStartIconButtonFinder =
           find.byKey(const Key('forwardCommentStartIconButton'));
-      Finder backwardCommentStartIconButtonFinder =
+      final Finder backwardCommentStartIconButtonFinder =
           find.byKey(const Key('backwardCommentStartIconButton'));
 
       await tester.tap(forwardCommentStartIconButtonFinder);
@@ -2550,7 +2551,7 @@ void main() {
 
       // Tap on the comment end tenth of seconds checkbox to enable
       // displaying the comment end position with tenth of seconds
-      Finder commentEndTenthOfSecondsCheckboxFinder =
+      final Finder commentEndTenthOfSecondsCheckboxFinder =
           find.byKey(const Key('commentEndTenthOfSecondsCheckbox'));
       await tester.tap(commentEndTenthOfSecondsCheckboxFinder);
       await tester.pumpAndSettle();
@@ -2576,9 +2577,9 @@ void main() {
       // one time again on the forward comment end icon button to change
       // the comment end position. Since the tenth of seconds checkbox
       // is not checked, the comment end position is changed in seconds.
-      Finder forwardCommentEndIconButtonFinder =
+      final Finder forwardCommentEndIconButtonFinder =
           find.byKey(const Key('forwardCommentEndIconButton'));
-      Finder backwardCommentEndIconButtonFinder =
+      final Finder backwardCommentEndIconButtonFinder =
           find.byKey(const Key('backwardCommentEndIconButton'));
 
       await tester.tap(forwardCommentEndIconButtonFinder);
@@ -2707,7 +2708,7 @@ void main() {
 
       // Tap on the add/edit comment button to save the comment
 
-      Finder addOrUpdateCommentTextButton =
+      final Finder addOrUpdateCommentTextButton =
           find.byKey(const Key('addOrUpdateCommentTextButton'));
 
       // Verify the add/update comment button text
@@ -2722,7 +2723,8 @@ void main() {
       // Verify that the comment list dialog now displays the
       // added comment
 
-      Finder commentListDialogFinder = find.byType(CommentListAddDialogWidget);
+      final Finder commentListDialogFinder =
+          find.byType(CommentListAddDialogWidget);
 
       expect(
           find.descendant(
@@ -2782,7 +2784,7 @@ void main() {
       // Verify that the comment list dialog now displays correctly the
       // updated comment
 
-      commentListDialogFinder = find.byType(CommentListAddDialogWidget);
+      // commentListDialogFinder = find.byType(CommentListAddDialogWidget);
       expect(
           find.descendant(
               of: commentListDialogFinder, matching: find.text(commentTitle)),
@@ -2862,14 +2864,22 @@ void main() {
       // Verify that the audio player view audio position displayed
       // in the comment dialog is the same as the audio player view
       // audio position
-      Finder commentDialogAudioPositionFinder =
-          find.byKey(const Key('audioPlayerViewAudioPositionText'));
+      final Finder selectCommentPositionTextButtonFinder =
+          find.byKey(const Key('selectCommentPositionTextButton'));
+
+      // Find the Text child of the TextButton
+      final Finder selectCommentPositionTextFinder = find.descendant(
+        of: selectCommentPositionTextButtonFinder,
+        matching: find.byType(Text),
+      );
+
+      // Verify that the Text widget contains the expected content
       String commentDialogAudioPlayerViewAudioPositionText =
-          tester.widget<Text>(commentDialogAudioPositionFinder).data!;
+          tester.widget<Text>(selectCommentPositionTextFinder).data!;
 
       expect(
         commentDialogAudioPlayerViewAudioPositionText,
-        actualAudioPlayerViewAudioPosition,
+        actualAudioPlayerViewAudioPosition, // 5:49
       );
 
       // Tap once on the forward comment end icon button to increase the
@@ -2891,7 +2901,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify the comment end position displayed in the comment dialog
-      // is equal to the value whwn it was saved + 1 sec - 2 tenth of seconds
+      // is equal to the value when it was saved + 1 sec - 2 tenth of seconds
       int expectedCommentEndPositionInTenthOfSeconds =
           DateTimeUtil.convertToTenthsOfSeconds(
                 timeString: actualCommentEndPositionSecondsStr,
@@ -2912,14 +2922,20 @@ void main() {
       // Verify that the audio player view audio position displayed
       // in the comment dialog is the same as the audio player view
       // audio position
-      commentDialogAudioPlayerViewAudioPositionText =
-          tester.widget<Text>(commentDialogAudioPositionFinder).data!;
+
+      // obtaining again the current audio position in the audio
+      // player view. Since the comment end position was changed,
+      // the audio player view position was also modified.
       actualAudioPlayerViewAudioPosition =
           tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
 
+      // Verify that the Text widget contains the expected content
+      commentDialogAudioPlayerViewAudioPositionText =
+          tester.widget<Text>(selectCommentPositionTextFinder).data!;
+
       expect(
         commentDialogAudioPlayerViewAudioPositionText,
-        actualAudioPlayerViewAudioPosition,
+        actualAudioPlayerViewAudioPosition, // 0:49
       );
 
       // Now, tap on the add/update comment button to save the updated
@@ -2980,27 +2996,29 @@ void main() {
 
       // Then, get the ListTile Text widget finder of the already commented
       // audio and tap on it to open the AudioPlayerView
-      Finder alreadyCommentedAudioFinder =
+      final Finder alreadyCommentedAudioFinder =
           find.text(alreadyCommentedAudioTitle);
       await tester.tap(alreadyCommentedAudioFinder);
       await tester.pumpAndSettle();
 
       // Verify the current audio position in the audio player view.
 
-      String expectedAudioPlayerViewCurrentAudioPosition = '1:12:48';
-      Finder audioPlayerViewAudioPositionFinder =
+      // Get the audio player view audio position
+
+      final Finder audioPlayerViewAudioPositionFinder =
           find.byKey(const Key('audioPlayerViewAudioPosition'));
       String actualAudioPlayerViewCurrentAudioPosition =
           tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
 
+      // Verify that the Text widget contains the expected content
       expect(
-        expectedAudioPlayerViewCurrentAudioPosition,
         actualAudioPlayerViewCurrentAudioPosition,
+        '1:12:48' // initialized in test data ...
       );
 
       // Tap on the comment icon button to open the comment add list
       // dialog
-      Finder commentInkWellButtonFinder = find.byKey(
+      final Finder commentInkWellButtonFinder = find.byKey(
         const Key('commentsInkWellButton'),
       );
 
@@ -3015,7 +3033,8 @@ void main() {
 
       // Enter comment title text
       String commentTitle = 'Four';
-      Finder textFieldFinder = find.byKey(const Key('commentTitleTextField'));
+      final Finder textFieldFinder =
+          find.byKey(const Key('commentTitleTextField'));
 
       await tester.enterText(
         textFieldFinder,
@@ -3025,7 +3044,7 @@ void main() {
 
       // Enter comment text
       String commentText = 'Fourth comment';
-      Finder commentContentTextFieldFinder =
+      final Finder commentContentTextFieldFinder =
           find.byKey(const Key('commentContentTextField'));
 
       await tester.enterText(
@@ -3039,11 +3058,11 @@ void main() {
       // This position was the audio player view position when
       // the comment dialog was opened.
       String commentStartAndEndInitialPosition =
-          expectedAudioPlayerViewCurrentAudioPosition;
+          actualAudioPlayerViewCurrentAudioPosition;
 
-      Finder commentStartTextWidgetFinder =
+      final Finder commentStartTextWidgetFinder =
           find.byKey(const Key('commentStartPositionText')); // 1:12:48
-      Finder commentEndTextWidgetFinder =
+      final Finder commentEndTextWidgetFinder =
           find.byKey(const Key('commentEndPositionText')); // 1:12:48
 
       expect(
@@ -3058,7 +3077,7 @@ void main() {
       // Setting the comment start position in seconds ...
 
       // Tap two times on the backward comment start icon button
-      Finder backwardCommentStartIconButtonFinder =
+      final Finder backwardCommentStartIconButtonFinder =
           find.byKey(const Key('backwardCommentStartIconButton'));
 
       await tester.tap(backwardCommentStartIconButtonFinder);
@@ -3089,9 +3108,9 @@ void main() {
 
       // Tap four times on the forward comment end icon button, then 1 time
       // backward and 1 time forward
-      Finder forwardCommentEndIconButtonFinder =
+      final Finder forwardCommentEndIconButtonFinder =
           find.byKey(const Key('forwardCommentEndIconButton'));
-      Finder backwardCommentEndIconButtonFinder =
+      final Finder backwardCommentEndIconButtonFinder =
           find.byKey(const Key('backwardCommentEndIconButton'));
 
       await tester.tap(forwardCommentEndIconButtonFinder);
@@ -3171,7 +3190,7 @@ void main() {
 
       // Tap on the add/edit comment button to save the comment
 
-      Finder addOrUpdateCommentTextButton =
+      final Finder addOrUpdateCommentTextButton =
           find.byKey(const Key('addOrUpdateCommentTextButton'));
 
       // Verify the add/update comment button text
@@ -3183,7 +3202,8 @@ void main() {
       await tester.tap(addOrUpdateCommentTextButton);
       await tester.pumpAndSettle();
 
-      Finder commentListDialogFinder = find.byType(CommentListAddDialogWidget);
+      final Finder commentListDialogFinder =
+          find.byType(CommentListAddDialogWidget);
 
       // Find the list body containing the comments
       final Finder listFinder = find.descendant(
@@ -3345,7 +3365,7 @@ void main() {
 
       // Then, get the ListTile Text widget finder of the already commented
       // audio and tap on it to open the AudioPlayerView
-      Finder alreadyCommentedAudioFinder =
+      final Finder alreadyCommentedAudioFinder =
           find.text(alreadyCommentedAudioTitle);
       await tester.tap(alreadyCommentedAudioFinder);
       await tester.pumpAndSettle();
@@ -3356,7 +3376,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Tap 5 times on the forward 1 minute icon button
-      Finder forwardOneMinuteButtonFinder =
+      final Finder forwardOneMinuteButtonFinder =
           find.byKey(const Key('audioPlayerViewForward1mButton'));
 
       for (int i = 0; i < 5; i++) {
@@ -3366,7 +3386,7 @@ void main() {
 
       // Tap on the comment icon button to open the comment add list
       // dialog
-      Finder commentInkWellButtonFinder = find.byKey(
+      final Finder commentInkWellButtonFinder = find.byKey(
         const Key('commentsInkWellButton'),
       );
 
@@ -3381,7 +3401,8 @@ void main() {
 
       // Enter comment title text
       String commentTitle = 'New';
-      Finder textFieldFinder = find.byKey(const Key('commentTitleTextField'));
+      final Finder textFieldFinder =
+          find.byKey(const Key('commentTitleTextField'));
 
       await tester.enterText(
         textFieldFinder,
@@ -3391,7 +3412,7 @@ void main() {
 
       // Enter comment text
       String commentText = 'New comment';
-      Finder commentContentTextFieldFinder =
+      final Finder commentContentTextFieldFinder =
           find.byKey(const Key('commentContentTextField'));
 
       await tester.enterText(
@@ -3402,7 +3423,7 @@ void main() {
 
       // Now, set the comment end position in seconds
 
-      Finder forwardCommentEndIconButtonFinder =
+      final Finder forwardCommentEndIconButtonFinder =
           find.byKey(const Key('forwardCommentEndIconButton'));
 
       await tester.tap(forwardCommentEndIconButtonFinder);
@@ -3422,14 +3443,15 @@ void main() {
 
       // Saving the comment
 
-      Finder addOrUpdateCommentTextButton =
+      final Finder addOrUpdateCommentTextButton =
           find.byKey(const Key('addOrUpdateCommentTextButton'));
 
       // Tap on the add/edit comment button to save the comment
       await tester.tap(addOrUpdateCommentTextButton);
       await tester.pumpAndSettle();
 
-      Finder commentListDialogFinder = find.byType(CommentListAddDialogWidget);
+      final Finder commentListDialogFinder =
+          find.byType(CommentListAddDialogWidget);
 
       // Find the list body containing the comments
       final Finder listFinder = find.descendant(
@@ -3464,11 +3486,11 @@ void main() {
 
 Future<void> playComment({
   required WidgetTester tester,
-  required Finder itemsFinder,
+  required final Finder itemsFinder,
   required int itemIndex,
   required bool typeOnPauseAfterPlay,
 }) async {
-  Finder playIconButtonFinder = find.descendant(
+  final Finder playIconButtonFinder = find.descendant(
     of: itemsFinder.at(itemIndex),
     matching: find.byKey(const Key('playPauseIconButton')),
   );
@@ -3507,7 +3529,7 @@ Future<void> playComment({
 /// time strings.
 void verifyPositionBetweenMinMax({
   required WidgetTester tester,
-  required Finder textWidgetFinder,
+  required final Finder textWidgetFinder,
   required String minPositionTimeStr,
   required String maxPositionTimeStr,
 }) {
@@ -3645,18 +3667,19 @@ Future<void> selectPlaylist({
   required String playlistToSelectTitle,
 }) async {
   // First, find the source Playlist ListTile Text widget
-  Finder playlistListTileTextWidgetFinder = find.text(playlistToSelectTitle);
+  final Finder playlistListTileTextWidgetFinder =
+      find.text(playlistToSelectTitle);
 
   // Then obtain the source Playlist ListTile widget enclosing the Text widget
   // by finding its ancestor
-  Finder playlistListTileWidgetFinder = find.ancestor(
+  final Finder playlistListTileWidgetFinder = find.ancestor(
     of: playlistListTileTextWidgetFinder,
     matching: find.byType(ListTile),
   );
 
   // Now find the Checkbox widget located in the Playlist ListTile
   // and tap on it to select the playlist
-  Finder playlistListTileCheckboxWidgetFinder = find.descendant(
+  final Finder playlistListTileCheckboxWidgetFinder = find.descendant(
     of: playlistListTileWidgetFinder,
     matching: find.byType(Checkbox),
   );
@@ -3674,7 +3697,7 @@ Finder validateInkWellButton({
   required Color expectedIconColor,
   required Color expectedIconBackgroundColor,
 }) {
-  Finder audioListTileInkWellFinder;
+  final Finder audioListTileInkWellFinder;
 
   if (inkWellButtonKey != null) {
     audioListTileInkWellFinder = find.byKey(Key(inkWellButtonKey));
@@ -3685,7 +3708,7 @@ Finder validateInkWellButton({
   }
 
   // Find the Icon within the InkWell
-  Finder iconFinder = find.descendant(
+  final Finder iconFinder = find.descendant(
     of: audioListTileInkWellFinder,
     matching: find.byType(Icon),
   );
@@ -3698,7 +3721,7 @@ Finder validateInkWellButton({
   expect(iconWidget.color, equals(expectedIconColor));
 
   // Find the CircleAvatar within the InkWell
-  Finder circleAvatarFinder = find.descendant(
+  final Finder circleAvatarFinder = find.descendant(
     of: audioListTileInkWellFinder,
     matching: find.byType(CircleAvatar),
   );
@@ -3753,7 +3776,7 @@ Future<void> goBackToPlaylistdownloadViewToCheckAudioStateAndIcon({
   await tester.pumpAndSettle(); // Wait for popup menu to appear
 
   // Now find the display audio info popup menu item and tap on it
-  Finder popupDisplayAudioInfoMenuItemFinder =
+  final Finder popupDisplayAudioInfoMenuItemFinder =
       find.byKey(const Key("popup_menu_display_audio_info"));
 
   await tester.tap(popupDisplayAudioInfoMenuItemFinder);
@@ -3775,12 +3798,13 @@ Future<void> goBackToPlaylistdownloadViewToCheckAudioStateAndIcon({
   // First, get the currently listening Audio item InkWell widget
   // finder. The InkWell widget contains the play or pause icon
   // and tapping on it plays or pauses the audio.
-  Finder lastDownloadedAudioListTileInkWellFinder = findAudioItemInkWellWidget(
+  final Finder lastDownloadedAudioListTileInkWellFinder =
+      findAudioItemInkWellWidget(
     audioTitle,
   );
 
   // Find the Icon within the InkWell
-  Finder iconFinder = find.descendant(
+  final Finder iconFinder = find.descendant(
     of: lastDownloadedAudioListTileInkWellFinder,
     matching: find.byType(Icon),
   );
@@ -3794,7 +3818,7 @@ Future<void> goBackToPlaylistdownloadViewToCheckAudioStateAndIcon({
 
   // Find the CircleAvatar within the InkWell which surround the
   // audio right icon
-  Finder circleAvatarFinder = find.descendant(
+  final Finder circleAvatarFinder = find.descendant(
     of: lastDownloadedAudioListTileInkWellFinder,
     matching: find.byType(CircleAvatar),
   );
@@ -3987,7 +4011,7 @@ void verifyCommentDataStoredInJsonFile({
   );
 }
 
-String? getActualText(Finder textWidgetFinder) {
+String? getActualText(final Finder textWidgetFinder) {
   final elements = textWidgetFinder.evaluate();
 
   if (elements.isNotEmpty) {

@@ -501,7 +501,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
               message: AppLocalizations.of(context)!
                   .updateCommentStartEndPositionTooltip,
               child: TextButton(
-                key: const Key('setAudioSpeedTextButton'),
+                key: const Key('selectCommentPositionTextButton'),
                 style: ButtonStyle(
                   shape: getButtonRoundedShape(
                     currentTheme: themeProviderVM.currentTheme,
