@@ -23,7 +23,9 @@ extension DurationExpansion on Duration {
 
   /// WARNING: this method is callable on a Duration instance only
   /// if utils/duration_expansion.dart is imported.
-  String HHmmss() {
+  String HHmmss({
+    bool addRemainingOneDigitTenthOfSecond = false,
+  }) {
     int durationMinute = inMinutes.remainder(60);
     int durationSecond = inSeconds.remainder(60);
     String minusStr = '';
@@ -31,6 +33,15 @@ extension DurationExpansion on Duration {
     if (inMicroseconds < 0) {
       minusStr = '-';
     }
+
+    if (addRemainingOneDigitTenthOfSecond) {
+      // the case when the method is called in the CommentAddEditDialogWidget
+      // when the user is defining a comment position in tenth of seconds
+      int remainingOneDigitTenthOfSecond = inMilliseconds.remainder(1000).abs() ~/
+          100; // the remaining tenth of second
+
+      return "$minusStr${inHours.abs()}:${numberFormatTwoInt.format(durationMinute.abs())}:${numberFormatTwoInt.format(durationSecond.abs())}.$remainingOneDigitTenthOfSecond";
+    } 
 
     return "$minusStr${inHours.abs()}:${numberFormatTwoInt.format(durationMinute.abs())}:${numberFormatTwoInt.format(durationSecond.abs())}";
   }

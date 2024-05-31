@@ -71,6 +71,76 @@ void main() {
       },
     );
   });
+  group('DurationExpansion HHmmss.tenthSec (test not performed in DateTimeParser test)',
+      () {
+    test(
+      'Duration 13 hours 35 minutes 23 seconds 2 tenth of seconds',
+      
+      () {
+        const Duration duration = Duration(hours: 13, minutes: 35, seconds: 23, milliseconds: 200);
+
+        expect(duration.HHmmss(addRemainingOneDigitTenthOfSecond: true), '13:35:23.2');
+      },
+    );
+
+    test(
+      'Duration 3 hours 5 minutes 2 seconds 5 tenth of seconds',
+      () {
+        const Duration duration = Duration(hours: 3, minutes: 5, seconds: 2, milliseconds: 500);
+
+        expect(duration.HHmmss(addRemainingOneDigitTenthOfSecond: true), '3:05:02.5');
+      },
+    );
+
+    test(
+      'Duration 3 hours 5 minutes 0 seconds 3 tenth of seconds',
+      () {
+        const Duration duration = Duration(hours: 3, minutes: 5, milliseconds: 300);
+
+        expect(duration.HHmmss(addRemainingOneDigitTenthOfSecond: true), '3:05:00.3');
+      },
+    );
+
+    test(
+      'Duration -3 hours 5 minutes 2 seconds 1 tenth of seconds',
+      () {
+        final Duration duration = const Duration(milliseconds: 0) -
+            (const Duration(hours: 3, minutes: 5, seconds: 2, milliseconds: 100));
+
+        expect(duration.HHmmss(addRemainingOneDigitTenthOfSecond: true), '-3:05:02.1');
+      },
+    );
+
+    test(
+      'Duration 0 hours 5 minutes 0 seconds 2 tenth of seconds',
+      () {
+        const Duration duration = Duration(minutes: 5, milliseconds: 200);
+
+        expect(duration.HHmmss(addRemainingOneDigitTenthOfSecond: true), '0:05:00.2');
+      },
+    );
+
+    test(
+      'Duration -0 hours 5 minutes 2 seconds 8 tenth of seconds',
+      () {
+        final Duration duration = const Duration(milliseconds: 0) -
+            (const Duration(minutes: 5, seconds: 2, milliseconds: 800));
+
+        expect(duration.HHmmss(addRemainingOneDigitTenthOfSecond: true), '-0:05:02.8');
+      },
+    );
+
+    test(
+      'Duration -0 hours 0 minutes 2 seconds 9 tenth of seconds',
+      () {
+        final Duration duration =
+            const Duration(milliseconds: 0) - (const Duration(seconds: 2, milliseconds: 900));
+
+        expect(duration.HHmmss(addRemainingOneDigitTenthOfSecond: true), '-0:00:02.9');
+      },
+    );
+  });
+
 
   group(
       'DurationExpansion HHmmssZeroHH (test not performed in DateTimeParser test)',
