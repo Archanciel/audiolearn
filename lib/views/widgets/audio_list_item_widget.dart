@@ -57,6 +57,8 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
   Widget build(BuildContext context) {
     final AudioPlayerVM audioGlobalPlayerVM =
         Provider.of<AudioPlayerVM>(context, listen: false);
+    final WarningMessageVM warningMessageVM =
+        Provider.of<WarningMessageVM>(context, listen: false);
 
     return ListTile(
       // generating the audio item left (leading) menu ...
@@ -128,7 +130,10 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
             if (value != null) {
               switch (value) {
                 case AudioPopupMenuAction.openYoutubeVideo:
-                  openUrlInExternalApp(url: audio.videoUrl);
+                  openUrlInExternalApp(
+                    url: audio.videoUrl,
+                    warningMessageVM: warningMessageVM,
+                  );
                   break;
                 case AudioPopupMenuAction.copyYoutubeVideoUrl:
                   Clipboard.setData(ClipboardData(text: audio.videoUrl));
@@ -421,7 +426,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
         context: context,
         iconToFormat: const Icon(Icons.play_arrow),
         isIconHighlighted: false, // since audio at position zero
-        //                           or end, the icon is not 
+        //                           or end, the icon is not
         //                           highlighted
       );
     }

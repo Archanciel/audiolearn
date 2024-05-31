@@ -51,6 +51,9 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
             .alreadyDownloadedAudiosPlaylistHelpContent,
       ),
     ];
+    final WarningMessageVM warningMessageVM =
+        Provider.of<WarningMessageVM>(context, listen: false);
+
     return Consumer<PlaylistListVM>(
       builder: (context, expandablePlaylistListVM, child) {
         return ListTile(
@@ -123,7 +126,10 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                 if (value != null) {
                   switch (value) {
                     case PlaylistPopupMenuAction.openYoutubePlaylist:
-                      openUrlInExternalApp(url: playlist.url);
+                      openUrlInExternalApp(
+                        url: playlist.url,
+                        warningMessageVM: warningMessageVM,
+                      );
                       break;
                     case PlaylistPopupMenuAction.copyYoutubePlaylistUrl:
                       Clipboard.setData(ClipboardData(text: playlist.url));

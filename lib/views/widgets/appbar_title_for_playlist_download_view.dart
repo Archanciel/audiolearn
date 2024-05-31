@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 import '../../constants.dart';
+import '../../viewmodels/warning_message_vm.dart';
 import '../../views/screen_mixin.dart';
 
 /// When the PlaylistDownloadView screen is displayed, the
@@ -18,6 +20,9 @@ class AppBarTitleForPlaylistDownloadView extends StatelessWidget
     // changing the build code to imitate working
     // chatgpt_main_draggable.dart does not eliminate
     // the error !
+    final WarningMessageVM warningMessageVM =
+        Provider.of<WarningMessageVM>(context, listen: false);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -33,6 +38,7 @@ class AppBarTitleForPlaylistDownloadView extends StatelessWidget
           onTap: () async {
             await openUrlInExternalApp(
               url: kYoutubeUrl,
+              warningMessageVM: warningMessageVM,
             );
           },
           child: Image.asset('assets/images/youtube-logo-png-2069.png',

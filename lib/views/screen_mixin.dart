@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -268,15 +269,36 @@ mixin ScreenMixin {
 
   Future<void> openUrlInExternalApp({
     required String url,
+    required WarningMessageVM warningMessageVM,
   }) async {
+    if (await _checkInternetConnection() == false) {
+      warningMessageVM.setError(
+        errorType: ErrorType.noInternet,
+        errorArgOne: 'Could not launch $kYoutubeUrl',
+      );
+      return;
+    }
+
     Uri uri = Uri.parse(url);
+
     if (await canLaunchUrl(uri)) {
       await launchUrl(
         uri,
         mode: LaunchMode.externalApplication,
       );
     } else {
-      throw 'Could not launch $kYoutubeUrl';
+      throw 'Could not launch $url';
+    }
+  }
+
+  Future<bool> _checkInternetConnection() async {
+    List<ConnectivityResult> connectivityResult = await (Connectivity().checkConnectivity());
+
+    if (connectivityResult[0] == ConnectivityResult.mobile ||
+        connectivityResult[0] == ConnectivityResult.wifi) {
+      return true;
+    } else {
+      return false;
     }
   }
 
@@ -509,7 +531,9 @@ mixin ScreenMixin {
     double radius = 10.0,
   }) {
     CircleAvatar circleAvatar; // This will hold the content of the play button
-    Color iconNotHighlightedColor = isIconDisabled ? kDarkAndLightDisabledIconColor : kDarkAndLightEnabledIconColor;
+    Color iconNotHighlightedColor = isIconDisabled
+        ? kDarkAndLightDisabledIconColor
+        : kDarkAndLightEnabledIconColor;
 
     if (isIconHighlighted) {
       circleAvatar = CircleAvatar(
