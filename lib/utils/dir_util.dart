@@ -341,13 +341,21 @@ class DirUtil {
     return pathFileNameList;
   }
 
-  static listFileNamesInDir({
+  /// List all the file names in a directory with a given extension.
+  /// 
+  /// If the directory does not exist, an empty list is returned.
+  static List<String> listFileNamesInDir({
     required String path,
     required String extension,
   }) {
     List<String> fileNameList = [];
 
     final dir = Directory(path);
+
+    if (!dir.existsSync()) {
+      return fileNameList;
+    }
+
     final pattern = RegExp(r'\.' + RegExp.escape(extension) + r'$');
 
     for (FileSystemEntity entity
@@ -385,7 +393,7 @@ class DirUtil {
     return true;
   }
 
-  /// If [targetFileName] is not provided, the moved file will
+  /// If [targetFileName] is not provided, the copied file will
   /// have the same name than the source file name.
   ///
   /// Returns true if the file has been copied, false

@@ -364,6 +364,246 @@ void main() {
       DirUtil.deleteFilesAndSubDirsOfDir(
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
+    test('src comment file exist: moveAudioCommentFileToTargetPlaylist', () async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesAndSubDirsOfDir(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_test",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      CommentVM commentVM = CommentVM();
+
+      Audio audio = createAudio(
+        playlistTitle: 'local_delete_comment',
+        audioFileName:
+            "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
+      );
+
+      String targetPlaylistTitle = 'local';
+      String targetPlaylistPath =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$targetPlaylistTitle";
+
+      List<String> sourceCommentFileNameLst = DirUtil.listFileNamesInDir(
+          path:
+              "${audio.enclosingPlaylist!.downloadPath}${path.separator}$kCommentDirName",
+          extension: 'json');
+      List<String> targetCommentFileNameLst = DirUtil.listFileNamesInDir(
+          path:
+              "$targetPlaylistPath${path.separator}$kCommentDirName",
+          extension: 'json');
+
+      expect(sourceCommentFileNameLst.length, 1);
+      expect(targetCommentFileNameLst.length, 0);
+
+      commentVM.moveAudioCommentFileToTargetPlaylist(
+        targetPlaylistPath: targetPlaylistPath,
+        audio: audio,
+      );
+
+      sourceCommentFileNameLst = DirUtil.listFileNamesInDir(
+          path:
+              "${audio.enclosingPlaylist!.downloadPath}${path.separator}$kCommentDirName",
+          extension: 'json');
+      targetCommentFileNameLst = DirUtil.listFileNamesInDir(
+          path:
+              "$targetPlaylistPath${path.separator}$kCommentDirName",
+          extension: 'json');
+
+      expect(sourceCommentFileNameLst.length, 0);
+      expect(targetCommentFileNameLst.length, 1);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesAndSubDirsOfDir(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
+    });
+    test('src comment file not exist: moveAudioCommentFileToTargetPlaylist', () async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesAndSubDirsOfDir(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_test",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      CommentVM commentVM = CommentVM();
+
+      Audio audio = createAudio(
+        playlistTitle: 'local',
+        audioFileName:
+            "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
+      );
+
+      String targetPlaylistTitle = 'local_comment';
+      String targetPlaylistPath =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$targetPlaylistTitle";
+
+      List<String> sourceCommentFileNameLst = DirUtil.listFileNamesInDir(
+          path:
+              "${audio.enclosingPlaylist!.downloadPath}${path.separator}$kCommentDirName",
+          extension: 'json');
+      List<String> targetCommentFileNameLst = DirUtil.listFileNamesInDir(
+          path:
+              "$targetPlaylistPath${path.separator}$kCommentDirName",
+          extension: 'json');
+
+      expect(sourceCommentFileNameLst.length, 0);
+      expect(targetCommentFileNameLst.length, 0);
+
+      commentVM.moveAudioCommentFileToTargetPlaylist(
+        targetPlaylistPath: targetPlaylistPath,
+        audio: audio,
+      );
+
+      sourceCommentFileNameLst = DirUtil.listFileNamesInDir(
+          path:
+              "${audio.enclosingPlaylist!.downloadPath}${path.separator}$kCommentDirName",
+          extension: 'json');
+      targetCommentFileNameLst = DirUtil.listFileNamesInDir(
+          path:
+              "$targetPlaylistPath${path.separator}$kCommentDirName",
+          extension: 'json');
+
+      expect(sourceCommentFileNameLst.length, 0);
+      expect(targetCommentFileNameLst.length, 0);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesAndSubDirsOfDir(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
+    });
+    test('src comment file exist: copyAudioCommentFileToTargetPlaylist', () async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesAndSubDirsOfDir(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_test",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      CommentVM commentVM = CommentVM();
+
+      Audio audio = createAudio(
+        playlistTitle: 'local_delete_comment',
+        audioFileName:
+            "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
+      );
+
+      String targetPlaylistTitle = 'local';
+      String targetPlaylistPath =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$targetPlaylistTitle";
+
+      List<String> sourceCommentFileNameLst = DirUtil.listFileNamesInDir(
+          path:
+              "${audio.enclosingPlaylist!.downloadPath}${path.separator}$kCommentDirName",
+          extension: 'json');
+      List<String> targetCommentFileNameLst = DirUtil.listFileNamesInDir(
+          path:
+              "$targetPlaylistPath${path.separator}$kCommentDirName",
+          extension: 'json');
+
+      expect(sourceCommentFileNameLst.length, 1);
+      expect(targetCommentFileNameLst.length, 0);
+
+      commentVM.copyAudioCommentFileToTargetPlaylist(
+        targetPlaylistPath: targetPlaylistPath,
+        audio: audio,
+      );
+
+      sourceCommentFileNameLst = DirUtil.listFileNamesInDir(
+          path:
+              "${audio.enclosingPlaylist!.downloadPath}${path.separator}$kCommentDirName",
+          extension: 'json');
+      targetCommentFileNameLst = DirUtil.listFileNamesInDir(
+          path:
+              "$targetPlaylistPath${path.separator}$kCommentDirName",
+          extension: 'json');
+
+      expect(sourceCommentFileNameLst.length, 1);
+      expect(targetCommentFileNameLst.length, 1);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesAndSubDirsOfDir(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
+    });
+    test('src comment file not exist: copyAudioCommentFileToTargetPlaylist', () async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesAndSubDirsOfDir(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_test",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      CommentVM commentVM = CommentVM();
+
+      Audio audio = createAudio(
+        playlistTitle: 'local', // contains no comment file
+        audioFileName:
+            "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
+      );
+
+      String targetPlaylistTitle = 'local_comment'; // contains no comment file
+      String targetPlaylistPath =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$targetPlaylistTitle";
+
+      List<String> sourceCommentFileNameLst = DirUtil.listFileNamesInDir(
+          path:
+              "${audio.enclosingPlaylist!.downloadPath}${path.separator}$kCommentDirName",
+          extension: 'json');
+      List<String> targetCommentFileNameLst = DirUtil.listFileNamesInDir(
+          path:
+              "$targetPlaylistPath${path.separator}$kCommentDirName",
+          extension: 'json');
+
+      expect(sourceCommentFileNameLst.length, 0);
+      expect(targetCommentFileNameLst.length, 0);
+
+      commentVM.copyAudioCommentFileToTargetPlaylist(
+        targetPlaylistPath: targetPlaylistPath,
+        audio: audio,
+      );
+
+      sourceCommentFileNameLst = DirUtil.listFileNamesInDir(
+          path:
+              "${audio.enclosingPlaylist!.downloadPath}${path.separator}$kCommentDirName",
+          extension: 'json');
+      targetCommentFileNameLst = DirUtil.listFileNamesInDir(
+          path:
+              "$targetPlaylistPath${path.separator}$kCommentDirName",
+          extension: 'json');
+
+      expect(sourceCommentFileNameLst.length, 0);
+      expect(targetCommentFileNameLst.length, 0);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesAndSubDirsOfDir(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
+    });
   });
 }
 
