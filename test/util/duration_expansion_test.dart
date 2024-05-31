@@ -220,6 +220,14 @@ void main() {
     );
 
     test(
+      'Duration 0 hours 5 minutes 2 seconds',
+      () {
+        const Duration duration = Duration(minutes: 5, seconds: 2);
+
+        expect(duration.HHmmssZeroHH(), '5:02');
+      },
+    );
+    test(
       'Duration -0 hours 5 minutes 2 seconds',
       () {
         final Duration duration = const Duration(milliseconds: 0) -

@@ -99,23 +99,38 @@ extension DurationExpansion on Duration {
     bool addRemainingOneDigitTenthOfSecond = false,
   }) {
     String twoDigits(int n) => n.toString().padLeft(2, '0');
-    String hours = '';
+    String hoursStr = '';
 
-    if (inHours > 0) {
-      hours = '${twoDigits(inHours)}:';
+    int hoursInt = inHours.abs();
+
+    if (hoursInt > 0) {
+      hoursStr = '$hoursInt:';
     }
 
-    String twoDigitMinutes = twoDigits(inMinutes.remainder(60).abs());
-    String twoDigitSeconds = twoDigits(inSeconds.remainder(60).abs());
+    int remainingMinuteInt = inMinutes.remainder(60).abs();
+
+    String remainingMinutesStr;
+
+    if (hoursInt > 0) {
+      remainingMinutesStr = twoDigits(remainingMinuteInt);
+    } else {
+      if (remainingMinuteInt > 10) {
+        remainingMinutesStr = twoDigits(remainingMinuteInt);
+      } else {
+        remainingMinutesStr = remainingMinuteInt.toString();
+      }
+    }
+
+    String twoDigitSecondsStr = twoDigits(inSeconds.remainder(60).abs());
 
     String minusStr = inMicroseconds < 0 ? '-' : '';
 
     if (addRemainingOneDigitTenthOfSecond) {
       int remainingOneDigitTenthOfSecond =
-          (inMilliseconds.remainder(1000).abs() / 100).floor();
-      return '$minusStr$hours$twoDigitMinutes:$twoDigitSeconds.$remainingOneDigitTenthOfSecond';
+          (inMilliseconds.remainder(1000).abs() ~/ 100);
+      return '$minusStr$hoursStr$remainingMinutesStr:$twoDigitSecondsStr.$remainingOneDigitTenthOfSecond';
     }
 
-    return '$minusStr$hours$twoDigitMinutes:$twoDigitSeconds';
+    return '$minusStr$hoursStr$remainingMinutesStr:$twoDigitSecondsStr';
   }
 }
