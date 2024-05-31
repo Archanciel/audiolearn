@@ -305,6 +305,9 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
     Navigator.of(context).pop(); // closes the current dialog
     showDialog<void>(
       context: context,
+      barrierDismissible:
+          false, // This line prevents the dialog from closing when
+          //        tapping outside the dialog
       // instanciating CommentAddEditDialogWidget without
       // passing a comment opens it in 'add' mode
       builder: (context) => CommentAddEditDialogWidget(

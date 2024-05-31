@@ -82,7 +82,13 @@ class _SetValueToTargetDialogWidgetState
         if (event is KeyDownEvent) {
           if (event.logicalKey == LogicalKeyboardKey.enter ||
               event.logicalKey == LogicalKeyboardKey.numpadEnter) {
-            Navigator.of(context).pop();
+            List<String> resultLst = _createResultList();
+
+            if (resultLst.isEmpty) {
+              return;
+            }
+
+            Navigator.of(context).pop(resultLst);
           }
         }
       },
@@ -125,33 +131,9 @@ class _SetValueToTargetDialogWidgetState
           TextButton(
             key: const Key('okButton'),
             onPressed: () {
-              List<String> resultLst = [
-                _passedValueTextEditingController.text,
-              ];
+              List<String> resultLst = _createResultList();
 
-              bool isAnyCheckboxChecked = false;
-
-              for (int i = 0; i < _isCheckboxChecked.length; i++) {
-                if (_isCheckboxChecked[i]) {
-                  resultLst.add(i.toString());
-                  isAnyCheckboxChecked = true;
-                }
-              }
-
-              if (!isAnyCheckboxChecked) {
-                WarningMessageVM warningMessageVM =
-                    Provider.of<WarningMessageVM>(
-                  context,
-                  listen: false,
-                );
-
-                if (widget.isTargetExclusive) {
-                  warningMessageVM.noUniqueCheckboxSelected();
-                } else {
-                  warningMessageVM.noCheckboxSelected();
-                }
-
-                // the dialog is not closed
+              if (resultLst.isEmpty) {
                 return;
               }
 
@@ -179,6 +161,39 @@ class _SetValueToTargetDialogWidgetState
         ],
       ),
     );
+  }
+
+  List<String> _createResultList() {
+    List<String> resultLst = [
+      _passedValueTextEditingController.text,
+    ];
+
+    bool isAnyCheckboxChecked = false;
+
+    for (int i = 0; i < _isCheckboxChecked.length; i++) {
+      if (_isCheckboxChecked[i]) {
+        resultLst.add(i.toString());
+        isAnyCheckboxChecked = true;
+      }
+    }
+
+    if (!isAnyCheckboxChecked) {
+      WarningMessageVM warningMessageVM = Provider.of<WarningMessageVM>(
+        context,
+        listen: false,
+      );
+
+      if (widget.isTargetExclusive) {
+        warningMessageVM.noUniqueCheckboxSelected();
+      } else {
+        warningMessageVM.noCheckboxSelected();
+      }
+
+      // the dialog is not closed
+      return [];
+    }
+
+    return resultLst;
   }
 
   Widget _createCheckboxList(BuildContext context) {
