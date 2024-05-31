@@ -24,12 +24,12 @@ extension DurationExpansion on Duration {
   /// WARNING: this method is callable on a Duration instance only
   /// if utils/duration_expansion.dart is imported in the code file
   /// where this method is called.
-  /// 
+  ///
   /// Returns the Duration formatted as HH:mm:ss.
-  /// 
+  ///
   /// If the Duration is negative, the minus sign is added to
   /// the formatted Duration.
-  /// 
+  ///
   /// If addRemainingOneDigitTenthOfSecond is true, the Duration
   /// is formatted as HH:mm:ss.t where t is the remaining tenth
   /// of second.
@@ -47,11 +47,12 @@ extension DurationExpansion on Duration {
     if (addRemainingOneDigitTenthOfSecond) {
       // the case when the method is called in the CommentAddEditDialogWidget
       // when the user is defining a comment position in tenth of seconds
-      int remainingOneDigitTenthOfSecond = inMilliseconds.remainder(1000).abs() ~/
-          100; // the remaining tenth of second
+      int remainingOneDigitTenthOfSecond =
+          inMilliseconds.remainder(1000).abs() ~/
+              100; // the remaining tenth of second
 
       return "$minusStr${inHours.abs()}:${numberFormatTwoInt.format(durationMinute.abs())}:${numberFormatTwoInt.format(durationSecond.abs())}.$remainingOneDigitTenthOfSecond";
-    } 
+    }
 
     return "$minusStr${inHours.abs()}:${numberFormatTwoInt.format(durationMinute.abs())}:${numberFormatTwoInt.format(durationSecond.abs())}";
   }
@@ -83,14 +84,14 @@ extension DurationExpansion on Duration {
   /// else as mm:ss.
   ///
   /// Example: 1:45:24 or 45:24 if 0:45:24 or 1:45:24.8 or 45:24.3
-  /// if 0:45:24.3 
+  /// if 0:45:24.3
   ///
   /// Here's an example of how to use this method:
   ///
   /// Text(
   ///   globalAudioPlayerVM.currentAudioPosition.HHmmssZeroHH(),
   /// )
-  /// 
+  ///
   /// If addRemainingOneDigitTenthOfSecond is true, the Duration
   /// is formatted as HH:mm:ss.t where t is the remaining tenth
   /// of second.
@@ -101,37 +102,17 @@ extension DurationExpansion on Duration {
     String hours = '';
 
     if (inHours > 0) {
-      hours = '$inHours:';
-    } else if (inHours == 0) {
-      hours = '';
-    } else {
-      hours = '${inHours.abs()}:';
+      hours = '${twoDigits(inHours)}:';
     }
 
-    String twoDigitMinutes;
+    String twoDigitMinutes = twoDigits(inMinutes.remainder(60).abs());
+    String twoDigitSeconds = twoDigits(inSeconds.remainder(60).abs());
 
-    if (hours.isEmpty) {
-      twoDigitMinutes = inMinutes.remainder(60).abs().toString();
-    } else {
-      twoDigitMinutes = twoDigits(inMinutes.remainder(60).abs());
-    }
-
-    int secondsRounded = (inMilliseconds.remainder(60000).abs() / 1000).round();
-    String twoDigitSeconds = twoDigits(secondsRounded);
-
-    String minusStr = '';
-
-    if (inMicroseconds < 0) {
-      minusStr = '-';
-    }
+    String minusStr = inMicroseconds < 0 ? '-' : '';
 
     if (addRemainingOneDigitTenthOfSecond) {
-      // the case when the method is called in the CommentAddEditDialogWidget
-      // when the user is defining a comment position in tenth of seconds
       int remainingOneDigitTenthOfSecond =
-          (inMilliseconds.remainder(60000).abs() - secondsRounded * 1000)
-                  .abs() ~/
-              100;
+          (inMilliseconds.remainder(1000).abs() / 100).floor();
       return '$minusStr$hours$twoDigitMinutes:$twoDigitSeconds.$remainingOneDigitTenthOfSecond';
     }
 
