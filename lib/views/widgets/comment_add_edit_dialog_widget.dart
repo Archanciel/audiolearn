@@ -481,6 +481,8 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
     );
   }
 
+  /// The row contains the text button which opens a dialog to set the
+  /// current audio position as the comment start or end position.
   Row _buildAudioPlayerViewAudioPositionRow({
     required BuildContext context,
     required CommentVM commentVMlistenFalse,
