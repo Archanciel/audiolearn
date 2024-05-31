@@ -258,6 +258,130 @@ void main() {
     );
   });
   group(
+      'DurationExpansion HHmmssZeroHH.tenthSec (test not performed in DateTimeParser test)',
+      () {
+    test(
+      'Duration 13 hours 35 minutes 23 seconds 1 tenth of seconds',
+      () {
+        const Duration duration = Duration(hours: 13, minutes: 35, seconds: 23, milliseconds: 100);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true), '13:35:23.1');
+      },
+    );
+    test(
+      'Duration 13 hours 35 minutes 23 seconds 9 tenth of seconds',
+      () {
+        const Duration duration = Duration(hours: 13, minutes: 35, seconds: 23, milliseconds: 900);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true), '13:35:23.9');
+      },
+    );
+
+
+    test(
+      'Duration -13 hours 35 minutes 23 seconds',
+      () {
+        final Duration duration = const Duration(microseconds: 0) -
+            const Duration(hours: 13, minutes: 35, seconds: 23);
+
+        expect(duration.HHmmssZeroHH(), '-13:35:23');
+      },
+    );
+
+    test(
+      'Duration 3 hours 5 minutes 2 seconds',
+      () {
+        const Duration duration = Duration(hours: 3, minutes: 5, seconds: 2);
+
+        expect(duration.HHmmssZeroHH(), '3:05:02');
+      },
+    );
+
+    test(
+      'Duration 3 hours 5 minutes 0 seconds',
+      () {
+        const Duration duration = Duration(hours: 3, minutes: 5);
+
+        expect(duration.HHmmssZeroHH(), '3:05:00');
+      },
+    );
+
+    test(
+      'Duration -3 hours 5 minutes 2 seconds',
+      () {
+        final Duration duration = const Duration(milliseconds: 0) -
+            (const Duration(hours: 3, minutes: 5, seconds: 2));
+
+        expect(duration.HHmmssZeroHH(), '-3:05:02');
+      },
+    );
+
+    test(
+      'Duration 0 hours 15 minutes 0 seconds',
+      () {
+        const Duration duration = Duration(minutes: 15);
+
+        expect(duration.HHmmssZeroHH(), '15:00');
+      },
+    );
+
+    test(
+      'Duration 0 hours 5 minutes 0 seconds',
+      () {
+        const Duration duration = Duration(minutes: 5);
+
+        expect(duration.HHmmssZeroHH(), '5:00');
+      },
+    );
+
+    test(
+      'Duration 0 hours 15 minutes 0 seconds',
+      () {
+        const Duration duration = Duration(minutes: 15);
+
+        expect(duration.HHmmssZeroHH(), '15:00');
+      },
+    );
+
+    test(
+      'Duration -0 hours 5 minutes 2 seconds',
+      () {
+        final Duration duration = const Duration(milliseconds: 0) -
+            (const Duration(minutes: 5, seconds: 2));
+
+        expect(duration.HHmmssZeroHH(), '-5:02');
+      },
+    );
+
+    test(
+      'Duration 0 hours 0 minutes 2 seconds',
+      () {
+        const Duration duration = Duration(seconds: 2);
+
+        expect(duration.HHmmssZeroHH(), '0:02');
+      },
+    );
+
+    test(
+      'Duration 0 hours 0 minutes 0 seconds',
+      () {
+        const Duration duration = Duration(seconds: 0);
+
+        expect(duration.HHmmssZeroHH(), '0:00');
+      },
+    );
+
+    test(
+      'Duration -0 hours 0 minutes 2 seconds',
+      () {
+        final Duration duration =
+            const Duration(milliseconds: 0) - (const Duration(seconds: 2));
+
+        expect(duration.HHmmssZeroHH(), '-0:02');
+      },
+    );
+  });
+  group(
       'DurationExpansion HHmmssZeroHH ensuring durations are correctly rounded (test not performed in DateTimeParser test)',
       () {
     test(

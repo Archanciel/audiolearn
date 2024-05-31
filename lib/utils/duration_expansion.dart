@@ -22,7 +22,17 @@ extension DurationExpansion on Duration {
   }
 
   /// WARNING: this method is callable on a Duration instance only
-  /// if utils/duration_expansion.dart is imported.
+  /// if utils/duration_expansion.dart is imported in the code file
+  /// where this method is called.
+  /// 
+  /// Returns the Duration formatted as HH:mm:ss.
+  /// 
+  /// If the Duration is negative, the minus sign is added to
+  /// the formatted Duration.
+  /// 
+  /// If addRemainingOneDigitTenthOfSecond is true, the Duration
+  /// is formatted as HH:mm:ss.t where t is the remaining tenth
+  /// of second.
   String HHmmss({
     bool addRemainingOneDigitTenthOfSecond = false,
   }) {
@@ -47,7 +57,8 @@ extension DurationExpansion on Duration {
   }
 
   /// WARNING: this method is callable on a Duration instance only
-  /// if utils/duration_expansion.dart is imported.
+  /// if utils/duration_expansion.dart is imported in the code file
+  /// where this method is called.
   ///
   /// Returns the Duration formatted as dd:HH:mm
   String ddHHmm() {
@@ -65,18 +76,24 @@ extension DurationExpansion on Duration {
   }
 
   /// WARNING: this method is callable on a Duration instance only
-  /// if utils/duration_expansion.dart is imported.
+  /// if utils/duration_expansion.dart is imported in the code file
+  /// where this method is called.
   ///
   /// Return Duration formatted as HH:mm:ss if the hours are > 0,
   /// else as mm:ss.
   ///
-  /// Example: 1:45:24 or 45:24 if 0:45:24.
+  /// Example: 1:45:24 or 45:24 if 0:45:24 or 1:45:24.8 or 45:24.3
+  /// if 0:45:24.3 
   ///
   /// Here's an example of how to use this method:
   ///
   /// Text(
   ///   globalAudioPlayerVM.currentAudioPosition.HHmmssZeroHH(),
   /// )
+  /// 
+  /// If addRemainingOneDigitTenthOfSecond is true, the Duration
+  /// is formatted as HH:mm:ss.t where t is the remaining tenth
+  /// of second.
   String HHmmssZeroHH({
     bool addRemainingOneDigitTenthOfSecond = false,
   }) {
@@ -98,24 +115,6 @@ extension DurationExpansion on Duration {
     } else {
       twoDigitMinutes = twoDigits(inMinutes.remainder(60).abs());
     }
-
-    // Previously, this version of computing twoDigitSeconds
-    // was used:
-    //
-    // String twoDigitSeconds = twoDigits(inSeconds.remainder(60).abs());
-    //
-    // But this version was incorrect because the seconds were
-    // not rounded which caused errors in the display of the
-    // currently playing audio position or its remaining duration.
-    // Adding the position and the remaining duration of the
-    // currently playing audio gave a duration which was not
-    // equal to the total duration of the audio, but was
-    // 1 second less.
-    //
-    // A lot of usage examples can be found in the unit
-    // duration_expansion_test.dart, group 'DurationExpansion
-    // HHmmssZeroHH ensuring durations are correctly rounded
-    // (test not performed in DateTimeParser test)'
 
     int secondsRounded = (inMilliseconds.remainder(60000).abs() / 1000).round();
     String twoDigitSeconds = twoDigits(secondsRounded);
