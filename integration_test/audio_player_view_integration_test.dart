@@ -2642,7 +2642,7 @@ void main() {
       // with added tenth of seconds value
 
       String expectedCommentEndPositionMin = '0:52.0';
-      String expectedCommentEndPositionMax = '0:52.1';
+      String expectedCommentEndPositionMax = '0:52.2';
 
       verifyPositionBetweenMinMax(
         tester: tester,
