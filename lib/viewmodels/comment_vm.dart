@@ -198,10 +198,12 @@ class CommentVM extends ChangeNotifier {
     // Move the comment file to the target playlist comment directory
     String commentFilePathName = commentDirInfo[1];
 
-    DirUtil.moveFileToDirectoryIfNotExistSync(
-      sourceFilePathName: commentFilePathName,
-      targetDirectoryPath: targetCommentDirPath,
-    );
+    if (File(commentFilePathName).existsSync()) {
+      DirUtil.moveFileToDirectoryIfNotExistSync(
+        sourceFilePathName: commentFilePathName,
+        targetDirectoryPath: targetCommentDirPath,
+      );
+    }
   }
 
   void copyAudioCommentFileToTargetPlaylist({
@@ -223,11 +225,13 @@ class CommentVM extends ChangeNotifier {
     // Copy the comment file to the target playlist comment directory
     String commentFilePathName = commentDirInfo[1];
 
-    DirUtil.copyFileToDirectorySync(
-      sourceFilePathName: commentFilePathName,
-      targetDirectoryPath: targetCommentDirPath,
-      overwriteFileIfExist: false,
-    );
+    if (File(commentFilePathName).existsSync()) {
+      DirUtil.copyFileToDirectorySync(
+        sourceFilePathName: commentFilePathName,
+        targetDirectoryPath: targetCommentDirPath,
+        overwriteFileIfExist: false,
+      );
+    }
   }
 
   String _createCommentFileName(String audioFileName) =>
