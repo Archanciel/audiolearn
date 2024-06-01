@@ -1,5 +1,3 @@
-import 'package:path/path.dart';
-
 class DateTimeUtil {
   static DateTime getDateTimeLimitedToSeconds(DateTime dateTime) {
     return DateTime(
@@ -35,21 +33,31 @@ class DateTimeUtil {
       hours = int.parse(parts[0]);
       minutes = int.parse(parts[1]);
 
-      totalTenthsOfSeconds = computeTenthOfSeconds(parts[2], hours, minutes);
+      totalTenthsOfSeconds = computeTenthOfSeconds(
+        secondsStr: parts[2],
+        hours: hours,
+        minutes: minutes,
+      );
     } else if (parts.length == 2) {
       // Parse minutes and seconds
       minutes = int.parse(parts[0]);
 
-      totalTenthsOfSeconds = computeTenthOfSeconds(parts[1], hours, minutes);
+      totalTenthsOfSeconds = computeTenthOfSeconds(
+          secondsStr: parts[1], hours: hours, minutes: minutes);
     } else {
       // Parse seconds
-      totalTenthsOfSeconds = computeTenthOfSeconds(parts[0], hours, minutes);
+      totalTenthsOfSeconds = computeTenthOfSeconds(
+          secondsStr: parts[0], hours: hours, minutes: minutes);
     }
 
     return totalTenthsOfSeconds;
   }
 
-  static int computeTenthOfSeconds(String secondsStr, int hours, int minutes) {
+  static int computeTenthOfSeconds({
+    required String secondsStr,
+    required int hours,
+    required int minutes,
+  }) {
     List<String> secondsParts = secondsStr.split('.');
 
     int seconds = 0;

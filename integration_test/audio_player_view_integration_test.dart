@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:audiolearn/models/comment.dart';
 import 'package:audiolearn/models/playlist.dart';
@@ -2637,7 +2638,7 @@ void main() {
       // Verify that the comment end position is now displayed
       // with added tenth of seconds value
 
-      String expectedCommentEndPositionMin = '0:52.0';
+      String expectedCommentEndPositionMin = '0:51.8';
       String expectedCommentEndPositionMax = '0:52.2';
 
       verifyPositionBetweenMinMax(
@@ -2716,6 +2717,17 @@ void main() {
       await tester.tap(addOrUpdateCommentTextButton);
       await tester.pumpAndSettle();
 
+      // Verify that the comment was correctly stored in the json file
+      verifyCommentDataStoredInJsonFile(
+        playlistTitle: emptyPlaylistTitle,
+        audioFileNameNoExt:
+            "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12",
+        commentTitle: commentTitle,
+        commentContent: commentText,
+        commentStartPositionTenthOfSecondsStr: actualCommentStartPositionWithTensOfSecondStr,
+        commentEndPositionTenthOfSecondsStr: actualCommentEndPositionWithTenthOfSecondsStr,
+      );
+
       // Verify that the comment list dialog now displays the
       // added comment
 
@@ -2747,6 +2759,22 @@ void main() {
           tester.widget<TextButton>(addOrUpdateCommentTextButton);
       expect((addEditTextButton.child! as Text).data, 'Update');
 
+      // Tap on the tenth of seconds checkbox so that the comment
+      // end position is displayed ending with tenth of seconds
+      await tester.tap(commentEndTenthOfSecondsCheckboxFinder);
+      await tester.pumpAndSettle();
+
+      final Finder updatableCommentEndTextWidgetFinder =
+          find.byKey(const Key('commentEndPositionText')); // 0:43
+
+      String updatableActualCommentEndPositionWithTenthOfSecondsStr =
+          tester.widget<Text>(updatableCommentEndTextWidgetFinder).data!;
+
+      expect(
+        updatableActualCommentEndPositionWithTenthOfSecondsStr, // actual value on comment editing dialog
+        actualCommentEndPositionWithTenthOfSecondsStr, // actual value on comment adding dialog
+      );
+
       // Now modify the comment text
 
       final textFieldFinder = find.byKey(Key(commentContentTextFieldKeyStr));
@@ -2762,19 +2790,15 @@ void main() {
       await tester.tap(addOrUpdateCommentTextButton);
       await tester.pumpAndSettle();
 
+      // Verify that the comment was correctly stored in the json file
       verifyCommentDataStoredInJsonFile(
         playlistTitle: emptyPlaylistTitle,
         audioFileNameNoExt:
             "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12",
         commentTitle: commentTitle,
         commentContent: updatedCommentText,
-        commentStartPositionTenthOfSeconds:
-            DateTimeUtil.convertToTenthsOfSeconds(
-          timeString: actualCommentStartPositionWithTensOfSecondStr,
-        ),
-        commentEndPositionTenthOfSeconds: DateTimeUtil.convertToTenthsOfSeconds(
-          timeString: actualCommentEndPositionWithTenthOfSecondsStr,
-        ),
+        commentStartPositionTenthOfSecondsStr: actualCommentStartPositionWithTensOfSecondStr,
+        commentEndPositionTenthOfSecondsStr: actualCommentEndPositionWithTenthOfSecondsStr,
       );
 
       // Verify that the comment list dialog now displays correctly the
@@ -3972,8 +3996,8 @@ void verifyCommentDataStoredInJsonFile({
   required String audioFileNameNoExt,
   required String commentTitle,
   required String commentContent,
-  required int commentStartPositionTenthOfSeconds,
-  required int commentEndPositionTenthOfSeconds,
+  required String commentStartPositionTenthOfSecondsStr,
+  required String commentEndPositionTenthOfSecondsStr,
 }) {
   final String commentPath =
       "$kPlaylistDownloadRootPathWindowsTest${path.separator}$playlistTitle${path.separator}$kCommentDirName";
@@ -3989,6 +4013,12 @@ void verifyCommentDataStoredInJsonFile({
     type: Comment,
   );
 
+  int commentStartPositionTenthOfSeconds =
+      DateTimeUtil.convertToTenthsOfSeconds(
+          timeString: commentStartPositionTenthOfSecondsStr);
+  int commentEndPositionTenthOfSeconds =
+      DateTimeUtil.convertToTenthsOfSeconds(
+          timeString: commentEndPositionTenthOfSecondsStr);
   Comment loadedComment = loadedCommentLst.first;
 
   expect(loadedComment.title, commentTitle);
@@ -3997,13 +4027,13 @@ void verifyCommentDataStoredInJsonFile({
     loadedComment.commentStartPositionInTenthOfSeconds,
     commentStartPositionTenthOfSeconds,
     reason:
-        "json commentStartPositionInTenthOfSeconds: ${loadedComment.commentStartPositionInTenthOfSeconds}, expected $commentStartPositionTenthOfSeconds",
+        "json commentStartPositionInTenthOfSeconds: ${loadedComment.commentStartPositionInTenthOfSeconds}, expected $commentStartPositionTenthOfSeconds for $commentStartPositionTenthOfSecondsStr",
   );
   expect(
     loadedComment.commentEndPositionInTenthOfSeconds,
     commentEndPositionTenthOfSeconds,
     reason:
-        "json commentEndPositionInTenthOfSeconds: ${loadedComment.commentEndPositionInTenthOfSeconds}, expected $commentEndPositionTenthOfSeconds",
+        "json commentEndPositionInTenthOfSeconds: ${loadedComment.commentEndPositionInTenthOfSeconds}, expected $commentEndPositionTenthOfSeconds for $commentEndPositionTenthOfSecondsStr",
   );
 }
 

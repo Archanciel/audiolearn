@@ -4,7 +4,7 @@ import 'package:audiolearn/utils/date_time_util.dart';
 
 void main() {
   group(
-    'DateTimeUtil.computeTenthOfSeconds()',
+    'DateTimeUtil.convertToTenthsOfSeconds()',
     () {
       test(
         '0 hh, 0 mm, 0 ss no tenth of second',
@@ -68,15 +68,15 @@ void main() {
         },
       );
       test(
-        '0 hh, 5 mm, 40 ss 3 tenth of second',
+        '0 hh, 5 mm, 40 ss 9 tenth of second',
         () {
-          String timeStr = '0:5:40.3';
+          String timeStr = '0:5:40.9';
           int totalTenthsOfSeconds =
               DateTimeUtil.convertToTenthsOfSeconds(timeString: timeStr);
-          int expectedTenthOfSeconds = 3403;
+          int expectedTenthOfSeconds = 3409;
           expect(totalTenthsOfSeconds, expectedTenthOfSeconds);
 
-          timeStr = '5:40.3';
+          timeStr = '5:40.9';
           totalTenthsOfSeconds =
               DateTimeUtil.convertToTenthsOfSeconds(timeString: timeStr);
           expect(totalTenthsOfSeconds, expectedTenthOfSeconds);

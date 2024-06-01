@@ -255,8 +255,8 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                   ],
                 ),
                 _buildAudioPlayerViewAudioPositionRow(
-                  context:  context,
-                  commentVMlistenFalse:  commentVMlistenFalse,
+                  context: context,
+                  commentVMlistenFalse: commentVMlistenFalse,
                 ),
               ],
             ),
@@ -277,12 +277,14 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                 comment: Comment(
                   title: _titleController.text,
                   content: _commentController.text,
-                  commentStartPositionInTenthOfSeconds: commentVMlistenFalse
-                          .currentCommentStartPosition.inMilliseconds ~/
-                      100,
-                  commentEndPositionInTenthOfSeconds: commentVMlistenFalse
-                          .currentCommentEndPosition.inMilliseconds ~/
-                      100,
+                  commentStartPositionInTenthOfSeconds: (commentVMlistenFalse
+                              .currentCommentStartPosition.inMilliseconds /
+                          100)
+                      .round(),
+                  commentEndPositionInTenthOfSeconds: (commentVMlistenFalse
+                              .currentCommentEndPosition.inMilliseconds /
+                          100)
+                      .round(),
                 ),
                 audioToComment: globalAudioPlayerVM.currentAudio!,
               );
@@ -292,13 +294,15 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
               commentToModify.title = _titleController.text;
               commentToModify.content = _commentController.text;
               commentToModify.commentStartPositionInTenthOfSeconds =
-                  commentVMlistenFalse
-                          .currentCommentStartPosition.inMilliseconds ~/
-                      100;
+                  (commentVMlistenFalse
+                              .currentCommentStartPosition.inMilliseconds /
+                          100)
+                      .round();
               commentToModify.commentEndPositionInTenthOfSeconds =
-                  commentVMlistenFalse
-                          .currentCommentEndPosition.inMilliseconds ~/
-                      100;
+                  (commentVMlistenFalse
+                              .currentCommentEndPosition.inMilliseconds /
+                          100)
+                      .round();
 
               commentVMlistenFalse.modifyComment(
                 modifiedComment: commentToModify,
