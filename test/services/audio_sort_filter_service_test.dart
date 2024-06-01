@@ -1,4 +1,5 @@
 import 'package:audiolearn/services/sort_filter_parameters.dart';
+import 'package:audiolearn/viewmodels/comment_vm.dart';
 import 'package:path/path.dart' as path;
 import 'package:flutter_test/flutter_test.dart';
 
@@ -2412,6 +2413,7 @@ void main() {
       playlistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
+        commentVM: CommentVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -3130,6 +3132,7 @@ void main() {
       playlistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
+        commentVM: CommentVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -3343,6 +3346,7 @@ void main() {
       playlistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
+        commentVM: CommentVM(),
         settingsDataService: settingsDataService,
       );
 

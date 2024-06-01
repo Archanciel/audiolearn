@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:audiolearn/viewmodels/comment_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -97,6 +98,7 @@ void main() {
       PlaylistListVM expandablePlaylistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
+        commentVM: CommentVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -353,6 +355,7 @@ void main() {
       PlaylistListVM expandablePlaylistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
+        commentVM: CommentVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -606,6 +609,7 @@ void main() {
       PlaylistListVM expandablePlaylistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
+        commentVM: CommentVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -1066,6 +1070,7 @@ void main() {
       PlaylistListVM expandablePlaylistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
+        commentVM: CommentVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -1515,6 +1520,7 @@ void main() {
       PlaylistListVM expandablePlaylistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
+        commentVM: CommentVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -1690,6 +1696,7 @@ void main() {
       PlaylistListVM expandablePlaylistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
+        commentVM: CommentVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -1835,6 +1842,7 @@ void main() {
       PlaylistListVM expandablePlaylistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
+        commentVM: CommentVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -1983,6 +1991,7 @@ void main() {
       PlaylistListVM expandablePlaylistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
+        commentVM: CommentVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -2184,6 +2193,7 @@ void main() {
       PlaylistListVM expandablePlaylistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
+        commentVM: CommentVM(),
         settingsDataService: settingsDataService,
       );
 

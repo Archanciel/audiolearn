@@ -1,3 +1,4 @@
+import 'package:audiolearn/viewmodels/comment_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -1237,6 +1238,7 @@ Future<void> _createPlaylistDownloadView({
             PlaylistListVM playlistListVM = PlaylistListVM(
               warningMessageVM: warningMessageVM,
               audioDownloadVM: audioDownloadVM,
+              commentVM: CommentVM(),
               settingsDataService: settingsDataService,
             );
 
