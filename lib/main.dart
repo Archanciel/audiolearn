@@ -140,9 +140,12 @@ class MainApp extends StatelessWidget with ScreenMixin {
       isTest: _isTest,
     );
 
+    CommentVM commentVM = CommentVM();
+
     PlaylistListVM expandablePlaylistListVM = PlaylistListVM(
       warningMessageVM: warningMessageVM,
       audioDownloadVM: audioDownloadVM,
+      commentVM: commentVM,
       settingsDataService: _settingsDataService,
     );
 
@@ -166,8 +169,6 @@ class MainApp extends StatelessWidget with ScreenMixin {
 
     // not necessary
     // globalAudioPlayerVM.setCurrentAudioFromSelectedPlaylist();
-
-    CommentVM commentVM = CommentVM();
 
     return MultiProvider(
       providers: [

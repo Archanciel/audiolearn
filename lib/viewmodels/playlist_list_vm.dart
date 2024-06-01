@@ -9,6 +9,7 @@ import '../services/json_data_service.dart';
 import '../services/settings_data_service.dart';
 import '../services/sort_filter_parameters.dart';
 import 'audio_download_vm.dart';
+import 'comment_vm.dart';
 import 'warning_message_vm.dart';
 
 /// This VM (View Model) class is part of the MVVM architecture.
@@ -47,6 +48,7 @@ class PlaylistListVM extends ChangeNotifier {
       _areButtonsApplicableToAudioEnabled;
 
   final AudioDownloadVM _audioDownloadVM;
+  final CommentVM _commentVM;
   final WarningMessageVM _warningMessageVM;
   final SettingsDataService _settingsDataService;
 
@@ -68,9 +70,11 @@ class PlaylistListVM extends ChangeNotifier {
   PlaylistListVM({
     required WarningMessageVM warningMessageVM,
     required AudioDownloadVM audioDownloadVM,
+    required CommentVM commentVM,
     required SettingsDataService settingsDataService,
   })  : _warningMessageVM = warningMessageVM,
         _audioDownloadVM = audioDownloadVM,
+        _commentVM = commentVM,
         _settingsDataService = settingsDataService;
 
   List<Playlist> getUpToDateSelectablePlaylistsExceptExcludedPlaylist({
@@ -745,6 +749,11 @@ class PlaylistListVM extends ChangeNotifier {
         keepAudioInSourcePlaylistDownloadedAudioLst:
             keepAudioInSourcePlaylistDownloadedAudioLst);
 
+    _commentVM.moveAudioCommentFileToTargetPlaylist(
+      audio: audio,
+      targetPlaylistPath: targetPlaylist.downloadPath,
+    );
+
     _removeAudioFromSortedFilteredPlayableAudioList(audio);
 
     notifyListeners();
@@ -757,6 +766,11 @@ class PlaylistListVM extends ChangeNotifier {
     _audioDownloadVM.copyAudioToPlaylist(
       audio: audio,
       targetPlaylist: targetPlaylist,
+    );
+
+    _commentVM.copyAudioCommentFileToTargetPlaylist(
+      audio: audio,
+      targetPlaylistPath: targetPlaylist.downloadPath,
     );
 
     notifyListeners();

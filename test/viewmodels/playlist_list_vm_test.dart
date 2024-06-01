@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:audiolearn/viewmodels/comment_vm.dart';
 import 'package:path/path.dart' as path;
 import 'package:flutter_test/flutter_test.dart';
 
@@ -16,7 +19,7 @@ import '../services/mock_shared_preferences.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Copy/move audio to target playlist', () {
+  group('Copy/move audio + comment file to target playlist', () {
     late PlaylistListVM playlistListVM;
 
     setUp(() async {
@@ -71,6 +74,7 @@ void main() {
       playlistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
+        commentVM: CommentVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -119,30 +123,33 @@ void main() {
       );
 
       // Testing copy La résilience insulaire par Fiona Roche with
-      // play position at start of audio
+      // play position at start of audio and no comment file
       testCopyAudioToPlaylist(
-        playlistListVM:  playlistListVM,
-        sourcePlaylist:  sourcePlaylist,
-        sourceAudioIndex:  0,
-        targetPlaylist:  targetPlaylist,
-      );
+          playlistListVM: playlistListVM,
+          sourcePlaylist: sourcePlaylist,
+          sourceAudioIndex: 0,
+          targetPlaylist: targetPlaylist,
+          hasCommentFile: false);
 
       // Testing copy Le Secret de la RESILIENCE révélé par Boris Cyrulnik
-      // with play position at end of audio
+      // with play position at end of audio and comment file
       testCopyAudioToPlaylist(
-        playlistListVM:  playlistListVM,
-        sourcePlaylist:  sourcePlaylist,
-        sourceAudioIndex:  1,
-        targetPlaylist:  targetPlaylist,
+        playlistListVM: playlistListVM,
+        sourcePlaylist: sourcePlaylist,
+        sourceAudioIndex: 1,
+        targetPlaylist: targetPlaylist,
+        hasCommentFile: true,
       );
 
-      // Testing copy Ce qui va vraiment sauver notre espèce par Jancovici
-      // et Barrau with play position 2 seconds before end of audio
+      // Testing copy Jancovici répond aux voeux de Macron pour 2024
+      // with play position 2 seconds before end of audio and comment
+      // file
       testCopyAudioToPlaylist(
-        playlistListVM:  playlistListVM,
-        sourcePlaylist:  sourcePlaylist,
-        sourceAudioIndex:  4,
-        targetPlaylist:  targetPlaylist,
+        playlistListVM: playlistListVM,
+        sourcePlaylist: sourcePlaylist,
+        sourceAudioIndex: 4,
+        targetPlaylist: targetPlaylist,
+        hasCommentFile: true,
       );
 
       // Purge the test playlist directory so that the created test
@@ -194,6 +201,7 @@ void main() {
         sourcePlaylist: sourcePlaylist,
         sourceAudioIndex: 0,
         targetPlaylist: targetPlaylist,
+        hasCommentFile: false,
       );
 
       // Testing move Le Secret de la RESILIENCE révélé par Boris Cyrulnik
@@ -203,6 +211,7 @@ void main() {
         sourcePlaylist: sourcePlaylist,
         sourceAudioIndex: 0,
         targetPlaylist: targetPlaylist,
+        hasCommentFile: true,
       );
 
       // Testing move Jancovici répond aux voeux de Macron pour 2024
@@ -212,6 +221,7 @@ void main() {
         sourcePlaylist: sourcePlaylist,
         sourceAudioIndex: 2,
         targetPlaylist: targetPlaylist,
+        hasCommentFile: true,
       );
 
       // Purge the test playlist directory so that the created test
@@ -275,6 +285,7 @@ void main() {
       playlistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
+        commentVM: CommentVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -357,6 +368,7 @@ void main() {
       playlistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
+        commentVM: CommentVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -442,6 +454,7 @@ void main() {
       playlistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
+        commentVM: CommentVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -522,6 +535,7 @@ void main() {
       playlistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
+        commentVM: CommentVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -611,6 +625,7 @@ void main() {
       playlistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
+        commentVM: CommentVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -692,6 +707,7 @@ void main() {
       playlistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
+        commentVM: CommentVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -776,6 +792,7 @@ void main() {
       playlistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
+        commentVM: CommentVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -811,6 +828,7 @@ void testCopyAudioToPlaylist({
   required Playlist sourcePlaylist,
   required int sourceAudioIndex,
   required Playlist targetPlaylist,
+  required bool hasCommentFile,
 }) {
   Audio sourceAudio = sourcePlaylist.playableAudioLst[sourceAudioIndex];
 
@@ -848,6 +866,29 @@ void testCopyAudioToPlaylist({
   expect(copiedAudio.movedFromPlaylistTitle == null, isTrue);
 
   expect(copiedAudio.movedToPlaylistTitle == null, isTrue);
+
+  if (hasCommentFile) {
+    String commentFileName =
+        copiedAudio.audioFileName.replaceFirst('.mp3', '.json');
+    String sourceCommentFilePathName = path.join(
+        sourcePlaylist.downloadPath, kCommentDirName, '${commentFileName}');
+    String targetCommentFilePathName = path.join(
+        targetPlaylist.downloadPath, kCommentDirName, '${commentFileName}');
+
+    // Verify that the comment file of the copied audio is still present
+    // in the source playlist directory
+    expect(
+      File(targetCommentFilePathName).existsSync(),
+      isTrue,
+    );
+
+    // Verify that the comment file of the copied audio now present
+    // in the target playlist directory
+    expect(
+      File(targetCommentFilePathName).existsSync(),
+      isTrue,
+    );
+  }
 }
 
 void testMoveAudioToPlaylist({
@@ -855,9 +896,23 @@ void testMoveAudioToPlaylist({
   required Playlist sourcePlaylist,
   required int sourceAudioIndex,
   required Playlist targetPlaylist,
+  required bool hasCommentFile,
 }) {
   Audio sourceAudio = sourcePlaylist.playableAudioLst[sourceAudioIndex];
+    String commentFileName =
+        sourceAudio.audioFileName.replaceFirst('.mp3', '.json');
+    String sourceCommentFilePathName = path.join(
+        sourcePlaylist.downloadPath, kCommentDirName, '${commentFileName}');
 
+  if (hasCommentFile) {
+    // Verify that the comment file of the moved audio is present in the
+    // source playlist directory
+    expect(
+      File(sourceCommentFilePathName).existsSync(),
+      isTrue,
+    );
+  }
+  
   playlistListVM.moveAudioToPlaylist(
     audio: sourceAudio,
     targetPlaylist: targetPlaylist,
@@ -900,6 +955,25 @@ void testMoveAudioToPlaylist({
   expect(movedAudio.copiedFromPlaylistTitle == null, isTrue);
 
   expect(movedAudio.copiedToPlaylistTitle == null, isTrue);
+
+  if (hasCommentFile) {
+    String targetCommentFilePathName = path.join(
+        targetPlaylist.downloadPath, kCommentDirName, '${commentFileName}');
+
+    // Verify that the comment file of the moved audio no longer present
+    // in the source playlist directory
+    expect(
+      File(sourceCommentFilePathName).existsSync(),
+      isFalse,
+    );
+
+    // Verify that the comment file of the moved audio now present
+    // in the target playlist directory
+    expect(
+      File(targetCommentFilePathName).existsSync(),
+      isTrue,
+    );
+  }
 }
 
 bool ensureAudioAreEquals(Audio audio1, Audio audio2) {
