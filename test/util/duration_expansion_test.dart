@@ -443,6 +443,14 @@ void main() {
         expect(duration.HHmmssZeroHH(), '0:03');
       },
     );
+    test(
+      'Duration 0 hours 0 minutes 2999 milliseconds',
+      () {
+        const Duration duration = Duration(milliseconds: 2999);
+
+        expect(duration.HHmmssZeroHH(), '0:03');
+      },
+    );
 
     test(
       'Duration 0 hours 0 minutes 59000 milliseconds',
@@ -600,6 +608,232 @@ void main() {
         const Duration duration = Duration(milliseconds: 7858501);
 
         expect(duration.HHmmssZeroHH(), '2:10:59');
+      },
+    );
+  });
+  group(
+      'DurationExpansion HHmmssZeroHH.tenthSec ensuring durations are correctly rounded (test not performed in DateTimeParser test)',
+      () {
+    test(
+      'Duration 0 hours 0 minutes 2000 milliseconds with tenth of second remaining',
+      () {
+        const Duration duration = Duration(milliseconds: 2000);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true), '0:02.0');
+      },
+    );
+    test(
+      'Duration 0 hours 0 minutes 2499 milliseconds with tenth of second remaining',
+      () {
+        const Duration duration = Duration(milliseconds: 2499);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true), '0:02.5');
+      },
+    );
+    test(
+      'Duration 0 hours 0 minutes -2499 milliseconds with tenth of second remaining',
+      () {
+        Duration duration =
+            const Duration() - const Duration(milliseconds: 2499);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true), '-0:02.5');
+      },
+    );
+    test(
+      'Duration 0 hours 0 minutes 2500 milliseconds with tenth of second remaining',
+      () {
+        const Duration duration = Duration(milliseconds: 2500);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true), '0:02.5');
+      },
+    );
+    test(
+      'Duration 0 hours 0 minutes 2501 milliseconds with tenth of second remaining',
+      () {
+        const Duration duration = Duration(milliseconds: 2501);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true ), '0:02.5');
+      },
+    );
+    test(
+      'Duration 0 hours 0 minutes 2999 milliseconds with tenth of second remaining',
+      () {
+        const Duration duration = Duration(milliseconds: 2999);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true ), '0:03.0');
+      },
+    );
+    test(
+      'Duration 0 hours 0 minutes 2900 milliseconds with tenth of second remaining',
+      () {
+        const Duration duration = Duration(milliseconds: 2900);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true ), '0:02.9');
+      },
+    );
+    test(
+      'Duration 0 hours 0 minutes 2950 milliseconds with tenth of second remaining',
+      () {
+        const Duration duration = Duration(milliseconds: 2950);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true ), '0:03.0');
+      },
+    );
+    test(
+      'Duration 0 hours 0 minutes 59000 milliseconds with tenth of second remaining',
+      () {
+        const Duration duration = Duration(milliseconds: 59000);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true ), '0:59.0');
+      },
+    );
+    test(
+      'Duration 0 hours 0 minutes 58499 milliseconds with tenth of second remaining',
+      () {
+        const Duration duration = Duration(milliseconds: 58499);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true ), '0:58.5');
+      },
+    );
+    test(
+      'Duration 0 hours 0 minutes 58500 milliseconds with tenth of second remaining',
+      () {
+        const Duration duration = Duration(milliseconds: 58500);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true ), '0:58.5');
+      },
+    );
+    test(
+      'Duration 0 hours 0 minutes 58501 milliseconds with tenth of second remaining',
+      () {
+        const Duration duration = Duration(milliseconds: 58501);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true ), '0:58.5');
+      },
+    );
+
+    test(
+      'Duration 0 hours 2 minutes 2000 milliseconds with tenth of second remaining',
+      () {
+        const Duration duration = Duration(milliseconds: 122000);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true ), '2:02.0');
+      },
+    );
+    test(
+      'Duration 0 hours 2 minutes 2499 milliseconds with tenth of second remaining',
+      () {
+        const Duration duration = Duration(milliseconds: 122499);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true ), '2:02.5');
+      },
+    );
+    test(
+      'Duration 0 hours 2 minutes 2500 milliseconds with tenth of second remaining',
+      () {
+        const Duration duration = Duration(milliseconds: 122500);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true ), '2:02.5');
+      },
+    );
+    test(
+      'Duration 0 hours -2 minutes 2500 milliseconds with tenth of second remaining',
+      () {
+        Duration duration =
+            const Duration() - const Duration(milliseconds: 122500);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true ), '-2:02.5');
+      },
+    );
+    test(
+      'Duration 0 hours 2 minutes 2501 milliseconds with tenth of second remaining',
+      () {
+        const Duration duration = Duration(milliseconds: 122501);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true ), '2:02.5');
+      },
+    );
+    test(
+      'Duration 0 hours 10 minutes 59000 milliseconds with tenth of second remaining',
+      () {
+        const Duration duration = Duration(milliseconds: 659000);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true ), '10:59.0');
+      },
+    );
+    test(
+      'Duration 0 hours 10 minutes 58499 milliseconds with tenth of second remaining',
+      () {
+        const Duration duration = Duration(milliseconds: 658499);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true ), '10:58.5');
+      },
+    );
+    test(
+      'Duration 0 hours 10 minutes 58500 milliseconds with tenth of second remaining',
+      () {
+        const Duration duration = Duration(milliseconds: 658500);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true ), '10:58.5');
+      },
+    );
+    test(
+      'Duration 0 hours 10 minutes 58501 milliseconds with tenth of second remaining',
+      () {
+        const Duration duration = Duration(milliseconds: 658501);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true ), '10:58.5');
+      },
+    );
+    test(
+      'Duration 0 hours -10 minutes 58501 milliseconds with tenth of second remaining',
+      () {
+        Duration duration =
+            const Duration() - const Duration(milliseconds: 658501);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true ), '-10:58.5');
+      },
+    );
+
+    test(
+      'Duration 2 hours 10 minutes 59000 milliseconds with tenth of second remaining',
+      () {
+        const Duration duration = Duration(milliseconds: 7859000);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true ), '2:10:59.0');
+      },
+    );
+    test(
+      'Duration 2 hours 10 minutes 58499 milliseconds with tenth of second remaining',
+      () {
+        const Duration duration = Duration(milliseconds: 7858499);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true ), '2:10:58.5');
+      },
+    );
+    test(
+      'Duration 2 hours 10 minutes 58500 milliseconds with tenth of second remaining',
+      () {
+        const Duration duration = Duration(milliseconds: 7858500);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true ), '2:10:58.5');
+      },
+    );
+    test(
+      'Duration -2 hours 10 minutes 58500 milliseconds with tenth of second remaining',
+      () {
+        Duration duration =
+            const Duration() - const Duration(milliseconds: 7858500);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true ), '-2:10:58.5');
+      },
+    );
+    test(
+      'Duration 2 hours 10 minutes 58501 milliseconds with tenth of second remaining',
+      () {
+        const Duration duration = Duration(milliseconds: 7858501);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true), '2:10:58.5');
       },
     );
   });

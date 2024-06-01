@@ -121,16 +121,26 @@ extension DurationExpansion on Duration {
       }
     }
 
-    String twoDigitSecondsStr = twoDigits(inSeconds.remainder(60).abs());
-
     String minusStr = inMicroseconds < 0 ? '-' : '';
 
     if (addRemainingOneDigitTenthOfSecond) {
+      int secondsInt = inSeconds.remainder(60).abs();
       int remainingOneDigitTenthOfSecond =
-          (inMilliseconds.remainder(1000).abs() ~/ 100);
-      return '$minusStr$hoursStr$remainingMinutesStr:$twoDigitSecondsStr.$remainingOneDigitTenthOfSecond';
-    }
+          (inMilliseconds.remainder(1000).abs() / 100).round();
 
-    return '$minusStr$hoursStr$remainingMinutesStr:$twoDigitSecondsStr';
+      if (remainingOneDigitTenthOfSecond == 10) {
+        remainingOneDigitTenthOfSecond = 0;
+        secondsInt++;
+      }
+
+      String twoDigitSecondsStr = twoDigits(secondsInt);
+      return '$minusStr$hoursStr$remainingMinutesStr:$twoDigitSecondsStr.$remainingOneDigitTenthOfSecond';
+    } else {
+      int secondsRounded =
+          (inMilliseconds.remainder(60000).abs() / 1000).round();
+      String twoDigitSecondsStr = twoDigits(secondsRounded).toString();
+
+      return '$minusStr$hoursStr$remainingMinutesStr:$twoDigitSecondsStr';
+    }
   }
 }
