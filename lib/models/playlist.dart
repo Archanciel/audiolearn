@@ -519,6 +519,11 @@ class Playlist {
     return other is Playlist && other.id == id;
   }
 
+  @override
+  int get hashCode {
+    return id.hashCode;
+  }
+  
   void setAudioPlaySpeedToAllPlayableAudios({
     required double audioPlaySpeed,
   }) {

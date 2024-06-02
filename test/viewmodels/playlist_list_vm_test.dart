@@ -870,10 +870,9 @@ void testCopyAudioToPlaylist({
   if (hasCommentFile) {
     String commentFileName =
         copiedAudio.audioFileName.replaceFirst('.mp3', '.json');
-    String sourceCommentFilePathName = path.join(
-        sourcePlaylist.downloadPath, kCommentDirName, '${commentFileName}');
+
     String targetCommentFilePathName = path.join(
-        targetPlaylist.downloadPath, kCommentDirName, '${commentFileName}');
+        targetPlaylist.downloadPath, kCommentDirName, commentFileName);
 
     // Verify that the comment file of the copied audio is still present
     // in the source playlist directory
@@ -902,7 +901,7 @@ void testMoveAudioToPlaylist({
     String commentFileName =
         sourceAudio.audioFileName.replaceFirst('.mp3', '.json');
     String sourceCommentFilePathName = path.join(
-        sourcePlaylist.downloadPath, kCommentDirName, '${commentFileName}');
+        sourcePlaylist.downloadPath, kCommentDirName, commentFileName);
 
   if (hasCommentFile) {
     // Verify that the comment file of the moved audio is present in the
@@ -958,7 +957,7 @@ void testMoveAudioToPlaylist({
 
   if (hasCommentFile) {
     String targetCommentFilePathName = path.join(
-        targetPlaylist.downloadPath, kCommentDirName, '${commentFileName}');
+        targetPlaylist.downloadPath, kCommentDirName, commentFileName);
 
     // Verify that the comment file of the moved audio no longer present
     // in the source playlist directory

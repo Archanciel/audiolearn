@@ -26,6 +26,7 @@ class AudioPlayerView extends StatefulWidget {
   const AudioPlayerView({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _AudioPlayerViewState createState() => _AudioPlayerViewState();
 }
 

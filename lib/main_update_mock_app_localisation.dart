@@ -52,6 +52,7 @@ void main() async {
   // Execute flutter gen-l10n command
   // await Process.run('flutter', ['gen-l10n']); not working !
 
+  // ignore: avoid_print
   print('Localization class has been inserted into $filePath');
 }
 

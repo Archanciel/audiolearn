@@ -292,6 +292,7 @@ class DateTimeParser {
 
     try {
       endDateTime = frenchDateTimeFormat.parse(frenchFormatDateTimeStr);
+    // ignore: empty_catches
     } on FormatException {}
 
     if (endDateTime != null) {
@@ -311,6 +312,7 @@ class DateTimeParser {
 
     try {
       endDateTime = englishDateTimeFormat.parse(englishFormatDateTimeStr);
+    // ignore: empty_catches
     } on FormatException {}
 
     if (endDateTime != null) {

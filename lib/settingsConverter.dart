@@ -2,9 +2,6 @@ import 'dart:io';
 import 'package:audiolearn/services/settings_data_service.dart';
 import 'package:flutter/material.dart';
 
-/// Commando generate the apk:
-///
-/// flutter build apk --release --target=lib/settingsConverter.dart
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
@@ -23,6 +20,7 @@ class JsonModifier extends StatefulWidget {
   const JsonModifier({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _JsonModifierState createState() => _JsonModifierState();
 }
 

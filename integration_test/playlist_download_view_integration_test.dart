@@ -2289,7 +2289,6 @@ void main() {
       ClipboardData? clipboardData =
           await Clipboard.getData(Clipboard.kTextPlain);
       String singleVideoToDownloadUrl = clipboardData?.text ?? '';
-      print('***** Single video URL: $singleVideoToDownloadUrl');
 
       // Enter the single video URL to download into the url text
       // field

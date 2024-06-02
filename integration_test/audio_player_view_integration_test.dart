@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:audiolearn/models/comment.dart';
 import 'package:audiolearn/models/playlist.dart';
@@ -1287,7 +1286,7 @@ void main() {
       // Now we open the AudioPlayableListDialogWidget by tapping on the
       // audio title
 
-      await tester.tap(find.text("${currentNotPlayedAudioTitle}\n19:05"));
+      await tester.tap(find.text("$currentNotPlayedAudioTitle\n19:05"));
       await tester.pumpAndSettle();
 
       // The list has been moved down so that the current audio is
@@ -3282,15 +3281,15 @@ void main() {
       for (var i = 0; i < 15; i += 3) {
         commentTitleFinder = find.descendant(
           of: itemsFinder.at(i),
-          matching: find.byKey(Key('commentTitleKey')),
+          matching: find.byKey(const Key('commentTitleKey')),
         );
         commentContentFinder = find.descendant(
           of: itemsFinder.at(i),
-          matching: find.byKey(Key('commentTextKey')),
+          matching: find.byKey(const Key('commentTextKey')),
         );
         commentPositionFinder = find.descendant(
           of: itemsFinder.at(i),
-          matching: find.byKey(Key('commentPositionKey')),
+          matching: find.byKey(const Key('commentPositionKey')),
         );
 
         // Verify the text in the title, content, and position of each comment

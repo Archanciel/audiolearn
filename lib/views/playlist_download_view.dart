@@ -282,7 +282,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 shape: getButtonRoundedShape(
                   currentTheme: themeProviderVM.currentTheme,
                 ),
-                padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
                   const EdgeInsets.symmetric(
                     horizontal: kSmallButtonInsidePadding,
                     vertical: 0,
@@ -327,7 +327,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                     currentTheme: themeProviderVM.currentTheme,
                     isButtonEnabled: arePlaylistDownloadWidgetsEnabled,
                     context: context),
-                padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
                   const EdgeInsets.symmetric(
                     horizontal: kSmallButtonInsidePadding,
                     vertical: 0,
@@ -389,9 +389,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
               key: const Key('audio_quality_checkbox'),
               materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               visualDensity: VisualDensity.compact,
-              fillColor: MaterialStateColor.resolveWith(
-                (Set<MaterialState> states) {
-                  if (states.contains(MaterialState.disabled)) {
+              fillColor: WidgetStateColor.resolveWith(
+                (Set<WidgetState> states) {
+                  if (states.contains(WidgetState.disabled)) {
                     return Colors.grey.shade800;
                   }
                   return kDarkAndLightEnabledIconColor;
@@ -963,7 +963,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
               isButtonEnabled: isButtonEnabled,
               context: context,
             ),
-            padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+            padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
               const EdgeInsets.symmetric(
                 horizontal: kSmallButtonInsidePadding,
                 vertical: 0,
@@ -1024,7 +1024,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           style: ButtonStyle(
             shape: getButtonRoundedShape(
                 currentTheme: themeProviderVM.currentTheme),
-            padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+            padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
               const EdgeInsets.symmetric(
                   horizontal: kSmallButtonInsidePadding,
                   // necessary to display english text
@@ -1242,7 +1242,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           style: ButtonStyle(
             shape: getButtonRoundedShape(
                 currentTheme: themeProviderVM.currentTheme),
-            padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+            padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
               const EdgeInsets.symmetric(
                 horizontal: kSmallButtonInsidePadding,
                 vertical: 0,

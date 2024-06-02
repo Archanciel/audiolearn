@@ -953,30 +953,6 @@ class PlaylistListVM extends ChangeNotifier {
     _isButtonMovePlaylistEnabled = false;
   }
 
-  // method not used
-  // void _doSelectUniquePlaylist({
-  //   required int playlistIndex,
-  //   required Playlist uniquePlaylist,
-  //   required bool isPlaylistSelected,
-  // }) {
-  //   for (Playlist playlist in _listOfSelectablePlaylists) {
-  //     if (playlist != uniquePlaylist) {
-  //       _audioDownloadVM.updatePlaylistSelection(
-  //         playlist: playlist,
-  //         isPlaylistSelected: false,
-  //       );
-  //     }
-  //   }
-
-  //   _listOfSelectablePlaylists[playlistIndex].isSelected = isPlaylistSelected;
-  //   _isOnePlaylistSelected = isPlaylistSelected;
-  // }
-
-  void _deleteItem(int index) {
-    _listOfSelectablePlaylists.removeAt(index);
-    _isOnePlaylistSelected = false;
-  }
-
   void moveItemUp(int index) {
     int newIndex = (index - 1 + _listOfSelectablePlaylists.length) %
         _listOfSelectablePlaylists.length;

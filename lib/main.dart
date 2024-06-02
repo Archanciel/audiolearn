@@ -37,6 +37,7 @@ Future<void> main(List<String> args) async {
   // Handle deletion of application directory if required
   if (deleteAppDir) {
     DirUtil.deleteAppDirOnEmulatorIfExist();
+    // ignore: avoid_print
     print('***** $kPlaylistDownloadRootPath mp3 files deleted *****');
   }
 

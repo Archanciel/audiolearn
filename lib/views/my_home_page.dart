@@ -43,7 +43,7 @@ const Curve pageTransitionCurve = Curves.ease;
 class MyHomePage extends StatefulWidget {
   final SettingsDataService settingsDataService;
 
-  MyHomePage({
+  const MyHomePage({
     super.key,
     required this.settingsDataService,
   });

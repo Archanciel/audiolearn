@@ -247,6 +247,7 @@ class JsonDataService {
   }) {
     String prettyJson =
         const JsonEncoder.withIndent('  ').convert(json.decode(jsonStr));
+    // ignore: avoid_print
     print('$methodName:\n$prettyJson');
   }
 }

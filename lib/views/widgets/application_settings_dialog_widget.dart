@@ -271,7 +271,7 @@ class _ApplicationSettingsDialogWidgetState
                   style: ButtonStyle(
                     shape: getButtonRoundedShape(
                         currentTheme: themeProviderVM.currentTheme),
-                    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                    padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
                       const EdgeInsets.symmetric(
                           horizontal: kSmallButtonInsidePadding, vertical: 0),
                     ),

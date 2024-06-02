@@ -12,29 +12,29 @@ class AudioSortFilterService {
   }) {
     // Create a list of SortCriteria corresponding to the list of
     // selected sorting options coming from the UI.
-    List<SortCriteria<Audio>> sortCriteriaLst =
+    List<SortCriteria<Audio>> copiedSortCriteriaLst =
         selectedSortItemLst.map((sortingItem) {
       // it is hyper important to copy the SortCriteria because
       // the sortCriteriaForSortingOptionMap is a static map and
       // we don't want to modify its objects, as it is done in the
       // next instruction. If we don't copy the SortCriteria, the
-      // next instruction will modify the objects in the map and
-      // the next time we will use the map, the objects will have
-      // been modified.
-      SortCriteria<Audio> sortCriteria = AudioSortFilterParameters
+      // next instruction will modify the sortOrder parameter of
+      // the objects in the map and the next time we will use the map,
+      // those static objects will have been modified.
+      SortCriteria<Audio> sortCriteriaCopy = AudioSortFilterParameters
           .sortCriteriaForSortingOptionMap[sortingItem.sortingOption]!
           .copy();
 
-      sortCriteria.sortOrder =
+      sortCriteriaCopy.sortOrder =
           sortingItem.isAscending ? sortAscending : sortDescending;
 
-      return sortCriteria;
+      return sortCriteriaCopy;
     }).toList();
 
     // Sorting the audio list by applying the SortCriteria of the
     // sortCriteriaLst
     audioLst.sort((a, b) {
-      for (SortCriteria<Audio> sortCriteria in sortCriteriaLst) {
+      for (SortCriteria<Audio> sortCriteria in copiedSortCriteriaLst) {
         int comparison = sortCriteria
                 .selectorFunction(a)
                 .compareTo(sortCriteria.selectorFunction(b)) *
@@ -43,272 +43,6 @@ class AudioSortFilterService {
       }
       return 0;
     });
-
-    return audioLst;
-  }
-
-  List<Audio> _sortAudioLstByVideoUploadDate({
-    required List<Audio> audioLst,
-    bool asc = true,
-  }) {
-    if (asc) {
-      audioLst.sort((a, b) {
-        if (a.videoUploadDate.isBefore(b.videoUploadDate)) {
-          return -1;
-        } else if (a.videoUploadDate.isAfter(b.videoUploadDate)) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
-    } else {
-      audioLst.sort((a, b) {
-        if (a.videoUploadDate.isBefore(b.videoUploadDate)) {
-          return 1;
-        } else if (a.videoUploadDate.isAfter(b.videoUploadDate)) {
-          return -1;
-        } else {
-          return 0;
-        }
-      });
-    }
-
-    return audioLst;
-  }
-
-  List<Audio> _sortAudioLstByAudioDownloadDateTime({
-    required List<Audio> audioLst,
-    bool asc = true,
-  }) {
-    if (asc) {
-      audioLst.sort((a, b) {
-        if (a.audioDownloadDateTime.isBefore(b.audioDownloadDateTime)) {
-          return -1;
-        } else if (a.audioDownloadDateTime.isAfter(b.audioDownloadDateTime)) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
-    } else {
-      audioLst.sort((a, b) {
-        if (a.audioDownloadDateTime.isBefore(b.audioDownloadDateTime)) {
-          return 1;
-        } else if (a.audioDownloadDateTime.isAfter(b.audioDownloadDateTime)) {
-          return -1;
-        } else {
-          return 0;
-        }
-      });
-    }
-
-    return audioLst;
-  }
-
-  /// Does not sort 'Échapper title' and 'ÉPICURE
-  /// title' correctly !
-  List<Audio> _sortAudioLstByTitle({
-    required List<Audio> audioLst,
-    bool asc = true,
-  }) {
-    if (asc) {
-      audioLst.sort((a, b) {
-        String cleanA = a.validVideoTitle
-            .replaceAll(RegExp(r'[^A-Za-z0-9éèêëîïôœùûüÿç]'), '');
-        String cleanB = b.validVideoTitle
-            .replaceAll(RegExp(r'[^A-Za-z0-9éèêëîïôœùûüÿç]'), '');
-        return cleanA.compareTo(cleanB);
-      });
-    } else {
-      audioLst.sort((a, b) {
-        String cleanA = a.validVideoTitle
-            .replaceAll(RegExp(r'[^A-Za-z0-9éèêëîïôœùûüÿç]'), '');
-        String cleanB = b.validVideoTitle
-            .replaceAll(RegExp(r'[^A-Za-z0-9éèêëîïôœùûüÿç]'), '');
-        return cleanB.compareTo(cleanA);
-      });
-    }
-
-    return audioLst;
-  }
-
-  List<Audio> _sortAudioLstByDuration({
-    required List<Audio> audioLst,
-    bool asc = true,
-  }) {
-    if (asc) {
-      audioLst.sort((a, b) {
-        if (a.audioDuration!.inMilliseconds < b.audioDuration!.inMilliseconds) {
-          return -1;
-        } else if (a.audioDuration!.inMilliseconds >
-            b.audioDuration!.inMilliseconds) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
-    } else {
-      audioLst.sort((a, b) {
-        if (a.audioDuration!.inMilliseconds > b.audioDuration!.inMilliseconds) {
-          return -1;
-        } else if (a.audioDuration!.inMilliseconds <
-            b.audioDuration!.inMilliseconds) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
-    }
-
-    return audioLst;
-  }
-
-  List<Audio> _sortAudioLstByDownloadDuration({
-    required List<Audio> audioLst,
-    bool asc = true,
-  }) {
-    if (asc) {
-      audioLst.sort((a, b) {
-        if (a.audioDownloadDuration!.inMilliseconds <
-            b.audioDownloadDuration!.inMilliseconds) {
-          return -1;
-        } else if (a.audioDownloadDuration!.inMilliseconds >
-            b.audioDownloadDuration!.inMilliseconds) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
-    } else {
-      audioLst.sort((a, b) {
-        if (a.audioDownloadDuration!.inMilliseconds >
-            b.audioDownloadDuration!.inMilliseconds) {
-          return -1;
-        } else if (a.audioDownloadDuration!.inMilliseconds <
-            b.audioDownloadDuration!.inMilliseconds) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
-    }
-
-    return audioLst;
-  }
-
-  List<Audio> _sortAudioLstByDownloadSpeed({
-    required List<Audio> audioLst,
-    required bool asc,
-  }) {
-    if (asc) {
-      audioLst.sort((a, b) {
-        if (a.audioDownloadSpeed < b.audioDownloadSpeed) {
-          return -1;
-        } else if (a.audioDownloadSpeed > b.audioDownloadSpeed) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
-    } else {
-      audioLst.sort((a, b) {
-        if (a.audioDownloadSpeed < b.audioDownloadSpeed) {
-          return 1;
-        } else if (a.audioDownloadSpeed > b.audioDownloadSpeed) {
-          return -1;
-        } else {
-          return 0;
-        }
-      });
-    }
-
-    return audioLst;
-  }
-
-  List<Audio> _sortAudioLstByFileSize({
-    required List<Audio> audioLst,
-    bool asc = true,
-  }) {
-    if (asc) {
-      audioLst.sort((a, b) {
-        if (a.audioFileSize < b.audioFileSize) {
-          return -1;
-        } else if (a.audioFileSize > b.audioFileSize) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
-    } else {
-      audioLst.sort((a, b) {
-        if (a.audioFileSize < b.audioFileSize) {
-          return 1;
-        } else if (a.audioFileSize > b.audioFileSize) {
-          return -1;
-        } else {
-          return 0;
-        }
-      });
-    }
-
-    return audioLst;
-  }
-
-  List<Audio> _sortAudioLstByMusicQuality({
-    required List<Audio> audioLst,
-    bool asc = true,
-  }) {
-    List<Audio> sortedAudioList = [];
-    List<Audio> musicQualityList = [];
-    List<Audio> speechQualityList = [];
-
-    for (Audio audio in audioLst) {
-      if (audio.isAudioMusicQuality) {
-        musicQualityList.add(audio);
-      } else {
-        speechQualityList.add(audio);
-      }
-    }
-
-    if (asc) {
-      sortedAudioList = musicQualityList + speechQualityList;
-    } else {
-      sortedAudioList = speechQualityList + musicQualityList;
-    }
-
-    return sortedAudioList;
-  }
-
-  List<Audio> _sortAudioLstByEnclosingPlaylistTitle({
-    required List<Audio> audioLst,
-    bool asc = true,
-  }) {
-    if (asc) {
-      audioLst.sort((a, b) {
-        return a.enclosingPlaylist!.title.compareTo(b.enclosingPlaylist!.title);
-      });
-    } else {
-      audioLst.sort((a, b) {
-        return b.enclosingPlaylist!.title.compareTo(a.enclosingPlaylist!.title);
-      });
-    }
-
-    return audioLst;
-  }
-
-  List<Audio> _sortAudioLstByVideoUrl({
-    required List<Audio> audioLst,
-    bool asc = true,
-  }) {
-    if (asc) {
-      audioLst.sort((a, b) {
-        return a.videoUrl.compareTo(b.videoUrl);
-      });
-    } else {
-      audioLst.sort((a, b) {
-        return b.videoUrl.compareTo(a.videoUrl);
-      });
-    }
 
     return audioLst;
   }
@@ -549,15 +283,6 @@ class AudioSortFilterService {
     return audioLst.where((audio) {
       return (audio.audioFileSize >= startFileSize) &&
           (audio.audioFileSize <= endFileSize);
-    }).toList();
-  }
-
-  List<Audio> _filterAudioLstByMusicQuality({
-    required List<Audio> audioLst,
-    required bool isMusicQuality,
-  }) {
-    return audioLst.where((audio) {
-      return audio.setAudioToMusicQuality == isMusicQuality;
     }).toList();
   }
 

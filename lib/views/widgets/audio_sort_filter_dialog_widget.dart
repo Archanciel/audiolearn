@@ -52,6 +52,7 @@ class AudioSortFilterDialogWidget extends StatefulWidget {
   });
 
   @override
+  // ignore: library_private_types_in_public_api
   _AudioSortFilterDialogWidgetState createState() =>
       _AudioSortFilterDialogWidgetState();
 }
@@ -422,9 +423,9 @@ class _AudioSortFilterDialogWidgetState
                         ),
                         Checkbox(
                           key: const Key('andCheckbox'),
-                          fillColor: MaterialStateColor.resolveWith(
-                            (Set<MaterialState> states) {
-                              if (states.contains(MaterialState.disabled)) {
+                          fillColor: WidgetStateColor.resolveWith(
+                            (Set<WidgetState> states) {
+                              if (states.contains(WidgetState.disabled)) {
                                 return kDarkAndLightDisabledIconColor;
                               }
                               return kDarkAndLightEnabledIconColor;
@@ -442,9 +443,9 @@ class _AudioSortFilterDialogWidgetState
                         ),
                         Checkbox(
                           key: const Key('orCheckbox'),
-                          fillColor: MaterialStateColor.resolveWith(
-                            (Set<MaterialState> states) {
-                              if (states.contains(MaterialState.disabled)) {
+                          fillColor: WidgetStateColor.resolveWith(
+                            (Set<WidgetState> states) {
+                              if (states.contains(WidgetState.disabled)) {
                                 return kDarkAndLightDisabledIconColor;
                               }
                               return kDarkAndLightEnabledIconColor;
@@ -462,9 +463,9 @@ class _AudioSortFilterDialogWidgetState
                         Text(AppLocalizations.of(context)!.ignoreCase),
                         Checkbox(
                           key: const Key('ignoreCaseCheckbox'),
-                          fillColor: MaterialStateColor.resolveWith(
-                            (Set<MaterialState> states) {
-                              if (states.contains(MaterialState.disabled)) {
+                          fillColor: WidgetStateColor.resolveWith(
+                            (Set<WidgetState> states) {
+                              if (states.contains(WidgetState.disabled)) {
                                 return kDarkAndLightDisabledIconColor;
                               }
                               return kDarkAndLightEnabledIconColor;
@@ -492,9 +493,9 @@ class _AudioSortFilterDialogWidgetState
                               .searchInVideoCompactDescription),
                           Checkbox(
                             key: const Key('searchInVideoCompactDescription'),
-                            fillColor: MaterialStateColor.resolveWith(
-                              (Set<MaterialState> states) {
-                                if (states.contains(MaterialState.disabled)) {
+                            fillColor: WidgetStateColor.resolveWith(
+                              (Set<WidgetState> states) {
+                                if (states.contains(WidgetState.disabled)) {
                                   return kDarkAndLightDisabledIconColor;
                                 }
                                 return kDarkAndLightEnabledIconColor;
@@ -642,9 +643,9 @@ class _AudioSortFilterDialogWidgetState
               ),
               Checkbox(
                 key: const Key('playlistDownloadViewCheckbox'),
-                fillColor: MaterialStateColor.resolveWith(
-                  (Set<MaterialState> states) {
-                    if (states.contains(MaterialState.disabled)) {
+                fillColor: WidgetStateColor.resolveWith(
+                  (Set<WidgetState> states) {
+                    if (states.contains(WidgetState.disabled)) {
                       return kDarkAndLightDisabledIconColor;
                     }
                     return kDarkAndLightEnabledIconColor;
@@ -667,9 +668,9 @@ class _AudioSortFilterDialogWidgetState
               ),
               Checkbox(
                 key: const Key('audioPlayerViewCheckbox'),
-                fillColor: MaterialStateColor.resolveWith(
-                  (Set<MaterialState> states) {
-                    if (states.contains(MaterialState.disabled)) {
+                fillColor: WidgetStateColor.resolveWith(
+                  (Set<WidgetState> states) {
+                    if (states.contains(WidgetState.disabled)) {
                       return kDarkAndLightDisabledIconColor;
                     }
                     return kDarkAndLightEnabledIconColor;
@@ -873,19 +874,7 @@ class _AudioSortFilterDialogWidgetState
       ),
     );
   }
-
-  /// Does not close the sort and filter dialog
-  void _handleActionOnEmptySaveAsSortFilterName(
-    PlaylistListVM playlistListVM,
-  ) {
-    if (_historicalAudioSortFilterParametersIndex > 0) {
-      playlistListVM.clearAudioSortFilterSettingsSearchHistoryElement(
-          _audioSortFilterParameters);
-    } else {
-      widget.warningMessageVM.sortFilterSaveAsName = '';
-    }
-  }
-
+  
   Column _buildAudioDurationFields(
     BuildContext context,
   ) {

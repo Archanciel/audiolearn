@@ -282,7 +282,7 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
             Text(
               // comment position Text
               key: const Key('commentPositionKey'),
-              style: TextStyle(fontSize: 13),
+              style: const TextStyle(fontSize: 13),
               Duration(
                       milliseconds:
                           comment.commentStartPositionInTenthOfSeconds * 100)

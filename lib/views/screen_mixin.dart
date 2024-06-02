@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -31,14 +33,13 @@ mixin ScreenMixin {
   /// Returns the TextButton border based on the [currentTheme]
   /// currently applyed as well as the [isButtonEnabled]
   /// parameter value.
-  MaterialStateProperty<RoundedRectangleBorder> getButtonRoundedShape({
+  WidgetStateProperty<RoundedRectangleBorder> getButtonRoundedShape({
     required AppTheme currentTheme,
     bool isButtonEnabled = true,
     BuildContext? context,
   }) {
-    MaterialStateProperty<RoundedRectangleBorder> buttonRoundedShape =
-        MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
+    WidgetStateProperty<RoundedRectangleBorder> buttonRoundedShape =
+        WidgetStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(kRoundedButtonBorderRadius),
       side: BorderSide(
           color: (isButtonEnabled)
@@ -73,8 +74,8 @@ mixin ScreenMixin {
   // When clicking on TextButton, the color of the button is
   // changed shortly to the color defined in the following
   // property.
-  final MaterialStateProperty<Color> textButtonTapModification =
-      MaterialStateProperty.all(Colors.grey.withOpacity(0.6));
+  final WidgetStateProperty<Color> textButtonTapModification =
+      WidgetStateProperty.all(Colors.grey.withOpacity(0.6));
 
   // Defining custom icon themes for light theme
   final IconThemeData activeScreenIconLightTheme = const IconThemeData(
@@ -99,7 +100,6 @@ mixin ScreenMixin {
 
   static ThemeData themeDataDark = ThemeData.dark().copyWith(
     colorScheme: ThemeData.dark().colorScheme.copyWith(
-          background: Colors.black,
           surface: Colors.black,
         ),
     primaryColor: Colors.black,
@@ -132,10 +132,10 @@ mixin ScreenMixin {
               .copyWith(color: Colors.white),
         ),
     checkboxTheme: ThemeData.dark().checkboxTheme.copyWith(
-          checkColor: MaterialStateProperty.all(
+          checkColor: WidgetStateProperty.all(
             Colors.white, // Set Checkbox fill color
           ),
-          fillColor: MaterialStateProperty.all(
+          fillColor: WidgetStateProperty.all(
             kDarkAndLightEnabledIconColor, // Set Checkbox check color
           ),
         ),
@@ -156,7 +156,6 @@ mixin ScreenMixin {
 
   static ThemeData themeDataLight = ThemeData.light().copyWith(
     colorScheme: ThemeData.light().colorScheme.copyWith(
-          background: Colors.white,
           surface: Colors.white,
         ),
     primaryColor: Colors.white,
@@ -189,10 +188,10 @@ mixin ScreenMixin {
               .copyWith(color: Colors.black),
         ),
     checkboxTheme: ThemeData.light().checkboxTheme.copyWith(
-          checkColor: MaterialStateProperty.all(
+          checkColor: WidgetStateProperty.all(
             Colors.white, // Set Checkbox fill color
           ),
-          fillColor: MaterialStateProperty.all(
+          fillColor: WidgetStateProperty.all(
             kDarkAndLightEnabledIconColor, // Set Checkbox check color
           ),
         ),
@@ -292,7 +291,8 @@ mixin ScreenMixin {
   }
 
   Future<bool> _checkInternetConnection() async {
-    List<ConnectivityResult> connectivityResult = await (Connectivity().checkConnectivity());
+    List<ConnectivityResult> connectivityResult =
+        await (Connectivity().checkConnectivity());
 
     if (connectivityResult[0] == ConnectivityResult.mobile ||
         connectivityResult[0] == ConnectivityResult.wifi) {

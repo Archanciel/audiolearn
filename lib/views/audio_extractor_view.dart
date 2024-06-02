@@ -10,6 +10,7 @@ class AudioExtractorView extends StatefulWidget {
   const AudioExtractorView({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _AudioExtractorViewState createState() => _AudioExtractorViewState();
 }
 
@@ -243,7 +244,7 @@ class _AudioExtractorViewState extends State<AudioExtractorView>
               shape: getButtonRoundedShape(
                 currentTheme: themeProviderVM.currentTheme,
               ),
-              padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+              padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
                 const EdgeInsets.symmetric(
                     horizontal: kSmallButtonInsidePadding, vertical: 0),
               ),
@@ -271,7 +272,7 @@ class _AudioExtractorViewState extends State<AudioExtractorView>
               shape: getButtonRoundedShape(
                 currentTheme: themeProviderVM.currentTheme,
               ),
-              padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+              padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
                 const EdgeInsets.symmetric(
                   horizontal: kSmallButtonInsidePadding,
                   vertical: 0,
