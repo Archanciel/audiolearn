@@ -364,7 +364,9 @@ void main() {
       DirUtil.deleteFilesAndSubDirsOfDir(
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
-    test('src comment file exist: moveAudioCommentFileToTargetPlaylist', () async {
+  });
+  group('CommentVM move and copy comment file test', () {
+    test('move existing src comment file', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesAndSubDirsOfDir(
@@ -424,7 +426,7 @@ void main() {
       DirUtil.deleteFilesAndSubDirsOfDir(
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
-    test('src comment file not exist: moveAudioCommentFileToTargetPlaylist', () async {
+    test('move not existing src comment file', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesAndSubDirsOfDir(
@@ -484,7 +486,7 @@ void main() {
       DirUtil.deleteFilesAndSubDirsOfDir(
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
-    test('src comment file exist: copyAudioCommentFileToTargetPlaylist', () async {
+    test('copy existing src comment file', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesAndSubDirsOfDir(
@@ -544,7 +546,7 @@ void main() {
       DirUtil.deleteFilesAndSubDirsOfDir(
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
-    test('src comment file not exist: copyAudioCommentFileToTargetPlaylist', () async {
+    test('copy not existing src comment file', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesAndSubDirsOfDir(
