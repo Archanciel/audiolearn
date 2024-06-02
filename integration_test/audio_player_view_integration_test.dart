@@ -3726,7 +3726,7 @@ Future<void> playComment({
 
   await tester.tap(playIconButtonFinder);
   await tester.pumpAndSettle();
-  Future.delayed(Duration(milliseconds: 100));
+  Future.delayed(const Duration(milliseconds: 100));
 
   Finder iconFinder;
   for (int i = 0; i < 15; i += 3) {
