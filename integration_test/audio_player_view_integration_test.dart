@@ -3284,13 +3284,14 @@ void main() {
 
       // Verify content of each list item
       Finder itemsFinder = verifyCommentsInCommentListDialog(
-          tester:  tester,
-          commentListDialogFinder:  commentListDialogFinder,
-          expectedTitlesLst:  expectedTitles,
-          expectedContentsLst:  expectedContents,
-          expectedPositionsLst:  expectedPositions,
-          expectedCreationDatesLst:  expectedCreationDates,
-          expectedUpdateDatesLst:  expectedUpdateDates);
+          tester: tester,
+          commentListDialogFinder: commentListDialogFinder,
+          commentsNumber: 5,
+          expectedTitlesLst: expectedTitles,
+          expectedContentsLst: expectedContents,
+          expectedPositionsLst: expectedPositions,
+          expectedCreationDatesLst: expectedCreationDates,
+          expectedUpdateDatesLst: expectedUpdateDates);
 
       // Now tap on first comment play icon button to ensure you can play
       // a comment located before the comment you added
@@ -3524,23 +3525,36 @@ void main() {
       await tester.pumpAndSettle();
 
       // Tap on the comment title text to edit the comment
-      String commentTitle = 'Comment title';
+      String commentTitle = 'I did not thank ChatGPT';
 
       await tester.tap(find.text(commentTitle));
       await tester.pumpAndSettle();
 
+      // Modify comment title
+
+      String modifiedCommentTitle = 'Modified comment';
+      final Finder commentTitleTextFieldFinder =
+          find.byKey(const Key('commentTitleTextField'));
+
+      await tester.enterText(
+        commentTitleTextFieldFinder,
+        modifiedCommentTitle,
+      );
+      await tester.pumpAndSettle();
+
       // Modify comment text
-      String commentText = 'Modified comment';
+
+      String modifiedCcommentText = 'Modified comment';
       final Finder commentContentTextFieldFinder =
           find.byKey(const Key('commentContentTextField'));
 
       await tester.enterText(
         commentContentTextFieldFinder,
-        commentText,
+        modifiedCcommentText,
       );
       await tester.pumpAndSettle();
 
-      // Now save the comment
+      // Now save the updated comment
 
       final Finder addOrUpdateCommentTextButton =
           find.byKey(const Key('addOrUpdateCommentTextButton'));
@@ -3552,26 +3566,54 @@ void main() {
       final Finder commentListDialogFinder =
           find.byType(CommentListAddDialogWidget);
 
-      // Find the list body containing the comments
-      final Finder listFinder = find.descendant(
-          of: commentListDialogFinder, matching: find.byType(ListBody));
+      // Verify that the comment list dialog now displays the
+      // added comment
 
-      // Find all the list items
-      final Finder itemsFinder = find.descendant(
-          of: listFinder, matching: find.byType(GestureDetector));
+      List<String> expectedTitles = [
+        'One',
+        'Two',
+        'Three',
+        modifiedCommentTitle, // updated comment
+      ];
 
-      // Check the number of items
-      expect(
-          itemsFinder,
-          findsNWidgets(
-              15)); // Assuming there are 5 items * 3 GestureDetector per item
+      List<String> expectedContents = [
+        'First comment',
+        'Second comment',
+        'Third comment',
+        modifiedCcommentText, // updated comment
+      ];
 
-      expect(
-          find.descendant(
-            of: commentListDialogFinder,
-            matching: find.text(frenchDateFormat.format(DateTime.now())),
-          ),
-          findsOneWidget);
+      List<String> expectedPositions = [
+        '10:47',
+        '23:47',
+        '1:16:40',
+        '1:17:12', // updated comment
+      ];
+
+      List<String> expectedCreationDates = [
+        '27-05-2024',
+        '28-05-2024',
+        '28-05-2024',
+        '28-05-2024', // updated comment
+      ];
+
+      List<String> expectedUpdateDates = [
+        '29-05-2024',
+        '30-05-2024',
+        '', // Text widget not displayed since update date == creation date
+        frenchDateFormat.format(DateTime.now()), // updated comment
+      ];
+
+      // Verify content of each list item
+      verifyCommentsInCommentListDialog(
+          tester: tester,
+          commentListDialogFinder: commentListDialogFinder,
+          commentsNumber: 4,
+          expectedTitlesLst: expectedTitles,
+          expectedContentsLst: expectedContents,
+          expectedPositionsLst: expectedPositions,
+          expectedCreationDatesLst: expectedCreationDates,
+          expectedUpdateDatesLst: expectedUpdateDates);
 
       // Now close the comment list dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));
@@ -3587,6 +3629,7 @@ void main() {
 Finder verifyCommentsInCommentListDialog({
   required WidgetTester tester,
   required Finder commentListDialogFinder,
+  required int commentsNumber,
   required List<String> expectedTitlesLst,
   required List<String> expectedContentsLst,
   required List<String> expectedPositionsLst,
@@ -3606,10 +3649,8 @@ Finder verifyCommentsInCommentListDialog({
   // Check the number of items
   expect(
       itemsFinder,
-      findsNWidgets(
-          15)); // Assuming there are 5 items * 3 GestureDetector per item
-
-  int j = 0;
+      findsNWidgets(commentsNumber *
+          3)); // commentsNumber items * 3 GestureDetector per item
 
   Finder commentTitleFinder;
   Finder commentContentFinder;
@@ -3617,7 +3658,9 @@ Finder verifyCommentsInCommentListDialog({
   Finder commentCreationDateFinder;
   Finder commentUpdateDateFinder;
 
-  for (var i = 0; i < 15; i += 3) {
+  int expectListIndex = 0;
+
+  for (var i = 0; i < commentsNumber; i += 3) {
     commentTitleFinder = find.descendant(
       of: itemsFinder.at(i),
       matching: find.byKey(const Key('commentTitleKey')),
@@ -3642,29 +3685,29 @@ Finder verifyCommentsInCommentListDialog({
     // Verify the text in the title, content, and position of each comment
     expect(
       tester.widget<Text>(commentTitleFinder).data,
-      expectedTitlesLst[j],
+      expectedTitlesLst[expectListIndex],
     );
     expect(
       tester.widget<Text>(commentContentFinder).data,
-      expectedContentsLst[j],
+      expectedContentsLst[expectListIndex],
     );
     expect(
       tester.widget<Text>(commentPositionFinder).data,
-      expectedPositionsLst[j],
+      expectedPositionsLst[expectListIndex],
     );
     expect(tester.widget<Text>(commentCreationDateFinder).data,
-        expectedCreationDatesLst[j],
-        reason: 'Failure at index $j');
+        expectedCreationDatesLst[expectListIndex],
+        reason: 'Failure at index $expectListIndex');
 
-    if (expectedUpdateDatesLst[j].isNotEmpty) {
+    if (expectedUpdateDatesLst[expectListIndex].isNotEmpty) {
       // if the update date equals the creation date, the Text widget
       // is not displayed
       expect(tester.widget<Text>(commentUpdateDateFinder).data,
-          expectedUpdateDatesLst[j],
-          reason: 'Failure at index $j');
+          expectedUpdateDatesLst[expectListIndex],
+          reason: 'Failure at index $expectListIndex');
     }
 
-    j++;
+    expectListIndex++;
   }
 
   return itemsFinder;
