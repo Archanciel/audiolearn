@@ -121,7 +121,7 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(bottom: 2),
-                            child: _buildCommentTitlePlusIconsAndPosition(
+                            child: _buildCommentTitlePlusIconsAndCommentDatesAndPosition(
                                 maxDropdownWidth, comment, commentVM),
                           ),
                           (comment.content.isNotEmpty)
@@ -175,7 +175,7 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
     );
   }
 
-  Widget _buildCommentTitlePlusIconsAndPosition(
+  Widget _buildCommentTitlePlusIconsAndCommentDatesAndPosition(
     double maxDropdownWidth,
     Comment comment,
     CommentVM commentVM,
@@ -277,18 +277,51 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
           ],
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              // comment position Text
-              key: const Key('commentPositionKey'),
-              style: const TextStyle(fontSize: 13),
-              Duration(
-                      milliseconds:
-                          comment.commentStartPositionInTenthOfSeconds * 100)
-                  .HHmmssZeroHH(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Tooltip(
+                  message: AppLocalizations.of(context)!.commentCreationDateTooltip,
+                  child: Text(
+                    // comment creation date Text
+                    key: const Key('creationDateTimeKey'),
+                    style: const TextStyle(fontSize: 13),
+                    frenchDateFormat.format(comment.creationDateTime),
+                  ),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                (comment.lastUpdateDateTime.day != comment.creationDateTime.day)
+                    ? Tooltip(
+                  message: AppLocalizations.of(context)!.commentUpdateDateTooltip,
+                      child: Text(
+                          // comment update date Text
+                          key: const Key('lastUpdateDateTimeKey'),
+                          style: const TextStyle(fontSize: 13),
+                          frenchDateFormat.format(comment.lastUpdateDateTime),
+                        ),
+                    )
+                    : Container(),
+              ],
             ),
-            const SizedBox(width: 11),
+            Row(
+              children: [
+                Text(
+                  // comment position Text
+                  key: const Key('commentPositionKey'),
+                  style: const TextStyle(fontSize: 13),
+                  Duration(
+                          milliseconds:
+                              comment.commentStartPositionInTenthOfSeconds *
+                                  100)
+                      .HHmmssZeroHH(),
+                ),
+                const SizedBox(width: 11),
+              ],
+            ),
           ],
         ),
       ],
@@ -307,7 +340,7 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
       context: context,
       barrierDismissible:
           false, // This line prevents the dialog from closing when
-          //        tapping outside the dialog
+      //        tapping outside the dialog
       // instanciating CommentAddEditDialogWidget without
       // passing a comment opens it in 'add' mode
       builder: (context) => CommentAddEditDialogWidget(

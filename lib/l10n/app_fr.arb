@@ -344,5 +344,7 @@
   "commentEndPosition": "Fin",
   "updateCommentStartEndPositionTooltip": "Mettre à jour la position de début ou de fin du commentaire.",
   "noCheckboxSelectedWarning": "Aucune case à cocher sélectionnée. Veuillez en sélectionner au moins une avant de cliquer sur 'Ok' ou cliquez sur 'Annuler' pour quitter.",
-  "noUniqueCheckboxSelectedWarning": "Aucune case à cocher sélectionnée. Veuillez en sélectionner une avant de cliquer sur 'Ok' ou cliquez sur 'Annuler' pour quitter."
+  "noUniqueCheckboxSelectedWarning": "Aucune case à cocher sélectionnée. Veuillez en sélectionner une avant de cliquer sur 'Ok' ou cliquez sur 'Annuler' pour quitter.",
+  "commentCreationDateTooltip": "Date de création du commentaire",
+  "commentUpdateDateTooltip": "Date de mise à jour du commentaire"
 }

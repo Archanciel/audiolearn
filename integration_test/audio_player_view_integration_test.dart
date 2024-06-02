@@ -2290,7 +2290,7 @@ void main() {
       // Now we go back to the PlayListDownloadView in order
       // to copy an audio in the empty playlist
       audioPlayerNavButton =
-      find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
       await tester.tap(audioPlayerNavButton);
       await tester.pumpAndSettle();
 
@@ -2672,7 +2672,7 @@ void main() {
       // dialog
 
       expectedCommentEndPositionMin = '0:52.1';
-      expectedCommentEndPositionMax = '0:52.4';
+      expectedCommentEndPositionMax = '0:52.5';
 
       String actualCommentEndPositionWithTenthOfSecondsStr =
           tester.widget<Text>(commentEndTextWidgetFinder).data!;
@@ -2723,8 +2723,10 @@ void main() {
             "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12",
         commentTitle: commentTitle,
         commentContent: commentText,
-        commentStartPositionTenthOfSecondsStr: actualCommentStartPositionWithTensOfSecondStr,
-        commentEndPositionTenthOfSecondsStr: actualCommentEndPositionWithTenthOfSecondsStr,
+        commentStartPositionTenthOfSecondsStr:
+            actualCommentStartPositionWithTensOfSecondStr,
+        commentEndPositionTenthOfSecondsStr:
+            actualCommentEndPositionWithTenthOfSecondsStr,
       );
 
       // Verify that the comment list dialog now displays the
@@ -2746,6 +2748,12 @@ void main() {
           find.descendant(
             of: commentListDialogFinder,
             matching: find.text(commentStartPosition), // 0:46
+          ),
+          findsOneWidget);
+      expect(
+          find.descendant(
+            of: commentListDialogFinder,
+            matching: find.text(frenchDateFormat.format(DateTime.now())),
           ),
           findsOneWidget);
 
@@ -2796,8 +2804,10 @@ void main() {
             "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12",
         commentTitle: commentTitle,
         commentContent: updatedCommentText,
-        commentStartPositionTenthOfSecondsStr: actualCommentStartPositionWithTensOfSecondStr,
-        commentEndPositionTenthOfSecondsStr: actualCommentEndPositionWithTenthOfSecondsStr,
+        commentStartPositionTenthOfSecondsStr:
+            actualCommentStartPositionWithTensOfSecondStr,
+        commentEndPositionTenthOfSecondsStr:
+            actualCommentEndPositionWithTenthOfSecondsStr,
       );
 
       // Verify that the comment list dialog now displays correctly the
@@ -2821,6 +2831,12 @@ void main() {
           find.descendant(
             of: commentListDialogFinder,
             matching: find.text(commentStartPosition),
+          ),
+          findsOneWidget);
+      expect(
+          find.descendant(
+            of: commentListDialogFinder,
+            matching: find.text(frenchDateFormat.format(DateTime.now())),
           ),
           findsOneWidget);
 
@@ -3030,10 +3046,9 @@ void main() {
           tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
 
       // Verify that the Text widget contains the expected content
-      expect(
-        actualAudioPlayerViewCurrentAudioPosition,
-        '1:12:48' // initialized in test data ...
-      );
+      expect(actualAudioPlayerViewCurrentAudioPosition,
+          '1:12:48' // initialized in test data ...
+          );
 
       // Tap on the comment icon button to open the comment add list
       // dialog
@@ -3230,10 +3245,15 @@ void main() {
 
       // Find all the list items
       final Finder itemsFinder = find.descendant(
-          of: listFinder, matching: find.byType(GestureDetector));
+          // 3 GestureDetector per comment item
+          of: listFinder,
+          matching: find.byType(GestureDetector));
 
       // Check the number of items
-      expect(itemsFinder, findsNWidgets(15)); // Assuming there are 4 items
+      expect(
+          itemsFinder,
+          findsNWidgets(
+              15)); // Assuming there are 5 items * 3 GestureDetector per item
 
       // Now tap on first comment play icon button to ensure you can play
       // a comment located before the comment you added
@@ -3250,7 +3270,7 @@ void main() {
       List<String> expectedTitles = [
         'One',
         'Two',
-        'Four',
+        'Four', // created comment
         'Three',
         'I did not thank ChatGPT',
       ];
@@ -3258,7 +3278,7 @@ void main() {
       List<String> expectedContents = [
         'First comment',
         'Second comment',
-        'Fourth comment',
+        'Fourth comment', // created comment
         'Third comment',
         'He explains why ...',
       ];
@@ -3266,9 +3286,25 @@ void main() {
       List<String> expectedPositions = [
         '10:47',
         '23:47',
-        '1:12:46',
+        '1:12:46', // created comment
         '1:16:40',
         '1:17:12',
+      ];
+
+      List<String> expectedCreationdate = [
+        '27-05-2024',
+        '28-05-2024',
+        frenchDateFormat.format(DateTime.now()), // created comment
+        '28-05-2024',
+        '28-05-2024',
+      ];
+
+      List<String> expectedUpdatedate = [
+        '29-05-2024',
+        '30-05-2024',
+        '', // Text widget not displayed since update date == creation date
+        '', // Text widget not displayed since update date == creation date
+        '', // Text widget not displayed since update date == creation date
       ];
 
       // Verify content of each list item
@@ -3277,6 +3313,8 @@ void main() {
       Finder commentTitleFinder;
       Finder commentContentFinder;
       Finder commentPositionFinder;
+      Finder commentCreationDateFinder;
+      Finder commentUpdateDateFinder;
 
       for (var i = 0; i < 15; i += 3) {
         commentTitleFinder = find.descendant(
@@ -3291,20 +3329,39 @@ void main() {
           of: itemsFinder.at(i),
           matching: find.byKey(const Key('commentPositionKey')),
         );
+        commentCreationDateFinder = find.descendant(
+          of: itemsFinder.at(i),
+          matching: find.byKey(const Key('creationDateTimeKey')),
+        );
+        commentUpdateDateFinder = find.descendant(
+          of: itemsFinder.at(i),
+          matching: find.byKey(const Key('lastUpdateDateTimeKey')),
+        );
 
         // Verify the text in the title, content, and position of each comment
         expect(
           tester.widget<Text>(commentTitleFinder).data,
-          expectedTitles[j], // Replace with your expected titles
+          expectedTitles[j],
         );
         expect(
           tester.widget<Text>(commentContentFinder).data,
-          expectedContents[j], // Replace with your expected contents
+          expectedContents[j],
         );
         expect(
           tester.widget<Text>(commentPositionFinder).data,
-          expectedPositions[j], // Replace with your expected positions
+          expectedPositions[j],
         );
+        expect(tester.widget<Text>(commentCreationDateFinder).data,
+            expectedCreationdate[j],
+            reason: 'Failure at index $j');
+
+        if (expectedUpdatedate[j].isNotEmpty) {
+          // if the update date equals the creation date, the Text widget
+          // is not displayed
+          expect(tester.widget<Text>(commentUpdateDateFinder).data,
+              expectedUpdatedate[j],
+              reason: 'Failure at index $j');
+        }
 
         j++;
       }
@@ -3481,7 +3538,10 @@ void main() {
           of: listFinder, matching: find.byType(GestureDetector));
 
       // Check the number of items
-      expect(itemsFinder, findsNWidgets(15)); // Assuming there are 4 items
+      expect(
+          itemsFinder,
+          findsNWidgets(
+              15)); // Assuming there are 5 items * 3 GestureDetector per item
 
       // Now tap on first comment play icon button to ensure you can play
       // a comment located before the comment you added
@@ -3491,6 +3551,92 @@ void main() {
         itemIndex: 9,
         typeOnPauseAfterPlay: true,
       );
+
+      // Now close the comment list dialog
+      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
+    });
+    testWidgets('Update comment created more than 1 day ago',
+        (WidgetTester tester) async {
+      const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+      const String alreadyCommentedAudioTitle =
+          "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
+
+      await initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_comment_test',
+        selectedPlaylistTitle: youtubePlaylistTitle,
+      );
+
+      // Then, get the ListTile Text widget finder of the already commented
+      // audio and tap on it to open the AudioPlayerView
+      final Finder alreadyCommentedAudioFinder =
+          find.text(alreadyCommentedAudioTitle);
+      await tester.tap(alreadyCommentedAudioFinder);
+      await tester.pumpAndSettle();
+
+      // Tap on the comment icon button to open the comment add list
+      // dialog
+      final Finder commentInkWellButtonFinder = find.byKey(
+        const Key('commentsInkWellButton'),
+      );
+
+      await tester.tap(commentInkWellButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Tap on the comment title text to edit the comment
+      String commentTitle = 'Comment title';
+
+      await tester.tap(find.text(commentTitle));
+      await tester.pumpAndSettle();
+
+      // Modify comment text
+      String commentText = 'Modified comment';
+      final Finder commentContentTextFieldFinder =
+          find.byKey(const Key('commentContentTextField'));
+
+      await tester.enterText(
+        commentContentTextFieldFinder,
+        commentText,
+      );
+      await tester.pumpAndSettle();
+
+      // Now save the comment
+
+      final Finder addOrUpdateCommentTextButton =
+          find.byKey(const Key('addOrUpdateCommentTextButton'));
+
+      // Tap on the add/edit comment button to save the comment
+      await tester.tap(addOrUpdateCommentTextButton);
+      await tester.pumpAndSettle();
+
+      final Finder commentListDialogFinder =
+          find.byType(CommentListAddDialogWidget);
+
+      // Find the list body containing the comments
+      final Finder listFinder = find.descendant(
+          of: commentListDialogFinder, matching: find.byType(ListBody));
+
+      // Find all the list items
+      final Finder itemsFinder = find.descendant(
+          of: listFinder, matching: find.byType(GestureDetector));
+
+      // Check the number of items
+      expect(
+          itemsFinder,
+          findsNWidgets(
+              15)); // Assuming there are 5 items * 3 GestureDetector per item
+
+      expect(
+          find.descendant(
+            of: commentListDialogFinder,
+            matching: find.text(frenchDateFormat.format(DateTime.now())),
+          ),
+          findsOneWidget);
 
       // Now close the comment list dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));
@@ -3516,6 +3662,7 @@ Future<void> playComment({
 
   await tester.tap(playIconButtonFinder);
   await tester.pumpAndSettle();
+  Future.delayed(Duration(milliseconds: 100));
 
   Finder iconFinder;
   for (int i = 0; i < 15; i += 3) {
@@ -4015,9 +4162,8 @@ void verifyCommentDataStoredInJsonFile({
   int commentStartPositionTenthOfSeconds =
       DateTimeUtil.convertToTenthsOfSeconds(
           timeString: commentStartPositionTenthOfSecondsStr);
-  int commentEndPositionTenthOfSeconds =
-      DateTimeUtil.convertToTenthsOfSeconds(
-          timeString: commentEndPositionTenthOfSecondsStr);
+  int commentEndPositionTenthOfSeconds = DateTimeUtil.convertToTenthsOfSeconds(
+      timeString: commentEndPositionTenthOfSecondsStr);
   Comment loadedComment = loadedCommentLst.first;
 
   expect(loadedComment.title, commentTitle);

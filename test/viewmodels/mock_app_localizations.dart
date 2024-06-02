@@ -1048,4 +1048,10 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get noUniqueCheckboxSelectedWarning =>
       "No checkbox selected. Please select one checkbox before clicking 'Ok', or click 'Cancel' to exit.";
+
+  @override
+  String get commentCreationDateTooltip => "Comment creation date";
+
+  @override
+  String get commentUpdateDateTooltip => "Comment last update date";
 }

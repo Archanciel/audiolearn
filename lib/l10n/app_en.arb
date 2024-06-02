@@ -342,5 +342,7 @@
   "commentEndPosition": "End",
   "updateCommentStartEndPositionTooltip": "Update comment start or end position.",
   "noCheckboxSelectedWarning": "No checkbox selected. Please select at least one checkbox before clicking 'Ok', or click 'Cancel' to exit.",
-  "noUniqueCheckboxSelectedWarning": "No checkbox selected. Please select one checkbox before clicking 'Ok', or click 'Cancel' to exit."
+  "noUniqueCheckboxSelectedWarning": "No checkbox selected. Please select one checkbox before clicking 'Ok', or click 'Cancel' to exit.",
+  "commentCreationDateTooltip": "Comment creation date",
+  "commentUpdateDateTooltip": "Comment last update date"
 }
