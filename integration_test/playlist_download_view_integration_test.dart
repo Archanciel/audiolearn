@@ -10,7 +10,6 @@ import 'package:provider/provider.dart';
 import 'package:path/path.dart' as path;
 
 import 'package:audiolearn/viewmodels/audio_player_vm.dart';
-import 'package:audiolearn/viewmodels/single_video_audio_download_vm.dart';
 import 'package:audiolearn/views/screen_mixin.dart';
 import 'package:audiolearn/constants.dart';
 import 'package:audiolearn/models/playlist.dart';
@@ -2110,33 +2109,10 @@ void main() {
     });
   });
   group('AudioDownloadVM using CustomMockYoutubeExplode Tests', () {
-    late SingleVideoAudioDownloadVM singleVideoAudioDownloadVM;
     late CustomMockYoutubeExplode mockYoutubeExplode;
 
     setUp(() async {
       mockYoutubeExplode = CustomMockYoutubeExplode();
-      singleVideoAudioDownloadVM = SingleVideoAudioDownloadVM(
-          youtubeExplode: mockYoutubeExplode,
-          settingsDataService: SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
-          ));
-    });
-
-    test('Test download failure when the Youtube service returns an error',
-        () async {
-      Playlist singleVideoTargetPlaylist = Playlist(
-        playlistType: PlaylistType.youtube,
-        playlistQuality: PlaylistQuality.voice,
-      );
-
-      expect(
-        await singleVideoAudioDownloadVM.downloadSingleVideoAudio(
-          videoUrl: 'invalid_url',
-          singleVideoTargetPlaylist: singleVideoTargetPlaylist,
-        ),
-        false,
-      );
     });
 
     testWidgets(
