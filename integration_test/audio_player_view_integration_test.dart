@@ -3239,31 +3239,6 @@ void main() {
       final Finder commentListDialogFinder =
           find.byType(CommentListAddDialogWidget);
 
-      // Find the list body containing the comments
-      final Finder listFinder = find.descendant(
-          of: commentListDialogFinder, matching: find.byType(ListBody));
-
-      // Find all the list items
-      final Finder itemsFinder = find.descendant(
-          // 3 GestureDetector per comment item
-          of: listFinder,
-          matching: find.byType(GestureDetector));
-
-      // Check the number of items
-      expect(
-          itemsFinder,
-          findsNWidgets(
-              15)); // Assuming there are 5 items * 3 GestureDetector per item
-
-      // Now tap on first comment play icon button to ensure you can play
-      // a comment located before the comment you added
-      await playComment(
-        tester: tester,
-        itemsFinder: itemsFinder,
-        itemIndex: 0,
-        typeOnPauseAfterPlay: true,
-      );
-
       // Verify that the comment list dialog now displays the
       // added comment
 
@@ -3291,7 +3266,7 @@ void main() {
         '1:17:12',
       ];
 
-      List<String> expectedCreationdate = [
+      List<String> expectedCreationDates = [
         '27-05-2024',
         '28-05-2024',
         frenchDateFormat.format(DateTime.now()), // created comment
@@ -3299,7 +3274,7 @@ void main() {
         '28-05-2024',
       ];
 
-      List<String> expectedUpdatedate = [
+      List<String> expectedUpdateDates = [
         '29-05-2024',
         '30-05-2024',
         '', // Text widget not displayed since update date == creation date
@@ -3308,63 +3283,23 @@ void main() {
       ];
 
       // Verify content of each list item
-      int j = 0;
+      Finder itemsFinder = verifyCommentsInCommentListDialog(
+          tester:  tester,
+          commentListDialogFinder:  commentListDialogFinder,
+          expectedTitlesLst:  expectedTitles,
+          expectedContentsLst:  expectedContents,
+          expectedPositionsLst:  expectedPositions,
+          expectedCreationDatesLst:  expectedCreationDates,
+          expectedUpdateDatesLst:  expectedUpdateDates);
 
-      Finder commentTitleFinder;
-      Finder commentContentFinder;
-      Finder commentPositionFinder;
-      Finder commentCreationDateFinder;
-      Finder commentUpdateDateFinder;
-
-      for (var i = 0; i < 15; i += 3) {
-        commentTitleFinder = find.descendant(
-          of: itemsFinder.at(i),
-          matching: find.byKey(const Key('commentTitleKey')),
-        );
-        commentContentFinder = find.descendant(
-          of: itemsFinder.at(i),
-          matching: find.byKey(const Key('commentTextKey')),
-        );
-        commentPositionFinder = find.descendant(
-          of: itemsFinder.at(i),
-          matching: find.byKey(const Key('commentPositionKey')),
-        );
-        commentCreationDateFinder = find.descendant(
-          of: itemsFinder.at(i),
-          matching: find.byKey(const Key('creationDateTimeKey')),
-        );
-        commentUpdateDateFinder = find.descendant(
-          of: itemsFinder.at(i),
-          matching: find.byKey(const Key('lastUpdateDateTimeKey')),
-        );
-
-        // Verify the text in the title, content, and position of each comment
-        expect(
-          tester.widget<Text>(commentTitleFinder).data,
-          expectedTitles[j],
-        );
-        expect(
-          tester.widget<Text>(commentContentFinder).data,
-          expectedContents[j],
-        );
-        expect(
-          tester.widget<Text>(commentPositionFinder).data,
-          expectedPositions[j],
-        );
-        expect(tester.widget<Text>(commentCreationDateFinder).data,
-            expectedCreationdate[j],
-            reason: 'Failure at index $j');
-
-        if (expectedUpdatedate[j].isNotEmpty) {
-          // if the update date equals the creation date, the Text widget
-          // is not displayed
-          expect(tester.widget<Text>(commentUpdateDateFinder).data,
-              expectedUpdatedate[j],
-              reason: 'Failure at index $j');
-        }
-
-        j++;
-      }
+      // Now tap on first comment play icon button to ensure you can play
+      // a comment located before the comment you added
+      await playComment(
+        tester: tester,
+        itemsFinder: itemsFinder,
+        itemIndex: 0,
+        typeOnPauseAfterPlay: true,
+      );
 
       // Play comments after playing a previous comment
 
@@ -3647,6 +3582,92 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
   });
+}
+
+Finder verifyCommentsInCommentListDialog({
+  required WidgetTester tester,
+  required Finder commentListDialogFinder,
+  required List<String> expectedTitlesLst,
+  required List<String> expectedContentsLst,
+  required List<String> expectedPositionsLst,
+  required List<String> expectedCreationDatesLst,
+  required List<String> expectedUpdateDatesLst,
+}) {
+  // Find the list body containing the comments
+  final Finder listFinder = find.descendant(
+      of: commentListDialogFinder, matching: find.byType(ListBody));
+
+  // Find all the list items
+  final Finder itemsFinder = find.descendant(
+      // 3 GestureDetector per comment item
+      of: listFinder,
+      matching: find.byType(GestureDetector));
+
+  // Check the number of items
+  expect(
+      itemsFinder,
+      findsNWidgets(
+          15)); // Assuming there are 5 items * 3 GestureDetector per item
+
+  int j = 0;
+
+  Finder commentTitleFinder;
+  Finder commentContentFinder;
+  Finder commentPositionFinder;
+  Finder commentCreationDateFinder;
+  Finder commentUpdateDateFinder;
+
+  for (var i = 0; i < 15; i += 3) {
+    commentTitleFinder = find.descendant(
+      of: itemsFinder.at(i),
+      matching: find.byKey(const Key('commentTitleKey')),
+    );
+    commentContentFinder = find.descendant(
+      of: itemsFinder.at(i),
+      matching: find.byKey(const Key('commentTextKey')),
+    );
+    commentPositionFinder = find.descendant(
+      of: itemsFinder.at(i),
+      matching: find.byKey(const Key('commentPositionKey')),
+    );
+    commentCreationDateFinder = find.descendant(
+      of: itemsFinder.at(i),
+      matching: find.byKey(const Key('creationDateTimeKey')),
+    );
+    commentUpdateDateFinder = find.descendant(
+      of: itemsFinder.at(i),
+      matching: find.byKey(const Key('lastUpdateDateTimeKey')),
+    );
+
+    // Verify the text in the title, content, and position of each comment
+    expect(
+      tester.widget<Text>(commentTitleFinder).data,
+      expectedTitlesLst[j],
+    );
+    expect(
+      tester.widget<Text>(commentContentFinder).data,
+      expectedContentsLst[j],
+    );
+    expect(
+      tester.widget<Text>(commentPositionFinder).data,
+      expectedPositionsLst[j],
+    );
+    expect(tester.widget<Text>(commentCreationDateFinder).data,
+        expectedCreationDatesLst[j],
+        reason: 'Failure at index $j');
+
+    if (expectedUpdateDatesLst[j].isNotEmpty) {
+      // if the update date equals the creation date, the Text widget
+      // is not displayed
+      expect(tester.widget<Text>(commentUpdateDateFinder).data,
+          expectedUpdateDatesLst[j],
+          reason: 'Failure at index $j');
+    }
+
+    j++;
+  }
+
+  return itemsFinder;
 }
 
 Future<void> playComment({
