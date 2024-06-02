@@ -556,7 +556,7 @@ class AudioDownloadVM extends ChangeNotifier {
   }
 
   /// Is not private since it is defined in MockAudioDownloadVM
-  notifyDownloadError({
+  void notifyDownloadError({
     required ErrorType errorType,
     String? errorArgOne,
     String? errorArgTwo,
