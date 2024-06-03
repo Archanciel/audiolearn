@@ -129,7 +129,7 @@ class _SetValueToTargetDialogWidgetState
         ),
         actions: [
           TextButton(
-            key: const Key('okButton'),
+            key: const Key('setValueToTargetOkButton'),
             onPressed: () {
               List<String> resultLst = _createResultList();
 
@@ -147,7 +147,7 @@ class _SetValueToTargetDialogWidgetState
             ),
           ),
           TextButton(
-            key: const Key('cancelButton'),
+            key: const Key('setValueToTargetCancelButton'),
             onPressed: () {
               Navigator.of(context).pop();
             },

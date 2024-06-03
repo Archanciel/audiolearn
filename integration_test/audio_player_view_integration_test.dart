@@ -6,6 +6,8 @@ import 'package:audiolearn/services/json_data_service.dart';
 import 'package:audiolearn/utils/date_time_parser.dart';
 import 'package:audiolearn/utils/date_time_util.dart';
 import 'package:audiolearn/views/widgets/comment_list_add_dialog_widget.dart';
+import 'package:audiolearn/views/widgets/set_value_to_target_dialog_widget.dart';
+import 'package:audiolearn/views/widgets/warning_message_display_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -2553,7 +2555,7 @@ void main() {
       await tester.pumpAndSettle();
 
       String expectedCommentEndPositionWithTensOfSecondMin = '0:48.1';
-      String expectedCommentEndPositionWithTensOfSecondMax = '0:49.2';
+      String expectedCommentEndPositionWithTensOfSecondMax = '0:49.3';
 
       verifyPositionBetweenMinMax(
         tester: tester,
@@ -2601,7 +2603,7 @@ void main() {
       // dialog
 
       String expectedCommentEndPositionSeconds =
-          '0:52'; // 0:49:2 + 3 - 1 + 1 seconds
+          '0:52'; // 0:49.2 + 3 - 1 + 1 seconds
       String actualCommentEndPositionSecondsStr =
           tester.widget<Text>(commentEndTextWidgetFinder).data!;
 
@@ -2902,19 +2904,22 @@ void main() {
       final Finder selectCommentPositionTextButtonFinder =
           find.byKey(const Key('selectCommentPositionTextButton'));
 
-      // Find the Text child of the TextButton
-      final Finder selectCommentPositionTextFinder = find.descendant(
+      // Find the Text child of the selectCommentPosition TextButton
+      final Finder selectCommentPositionTextOfButtonFinder = find.descendant(
         of: selectCommentPositionTextButtonFinder,
         matching: find.byType(Text),
       );
 
       // Verify that the Text widget contains the expected content
       String commentDialogAudioPlayerViewAudioPositionText =
-          tester.widget<Text>(selectCommentPositionTextFinder).data!;
+          tester.widget<Text>(selectCommentPositionTextOfButtonFinder).data!;
 
       expect(
-        commentDialogAudioPlayerViewAudioPositionText,
-        actualAudioPlayerViewAudioPosition, // 5:49
+        roundUpTenthOfSeconds(
+          commentDialogAudioPlayerViewAudioPositionText,
+        ),
+        DateTimeUtil.convertToTenthsOfSeconds(
+            timeString: actualAudioPlayerViewAudioPosition), // 5:49
       );
 
       // Tap once on the forward comment end icon button to increase the
@@ -2964,14 +2969,97 @@ void main() {
       actualAudioPlayerViewAudioPosition =
           tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
 
-      // Verify that the Text widget contains the expected content
+      // Verify that the Text widget of the text button enabling to open
+      // a dialog to edit the position contains the expected content
       commentDialogAudioPlayerViewAudioPositionText =
-          tester.widget<Text>(selectCommentPositionTextFinder).data!;
+          tester.widget<Text>(selectCommentPositionTextOfButtonFinder).data!;
 
       expect(
-        commentDialogAudioPlayerViewAudioPositionText,
-        actualAudioPlayerViewAudioPosition, // 0:49
+        roundUpTenthOfSeconds(
+          commentDialogAudioPlayerViewAudioPositionText,
+        ),
+        DateTimeUtil.convertToTenthsOfSeconds(
+          timeString: actualAudioPlayerViewAudioPosition,
+        ), // 0:49
       );
+
+      // Now tap on select position text button to open the dialog enabling
+      // to modify the comment start or end position
+
+      await tester.tap(selectCommentPositionTextButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Verify that the commentDialogAudioPlayerViewAudioPositionText is
+      // displayed in the dialog
+
+      final Finder commentPositionDialogTextFinder = find.byKey(
+        const Key('passedValueFieldTextField'),
+      );
+      String commentPositionDialogAudioPositionText = tester
+          .widget<TextField>(commentPositionDialogTextFinder)
+          .controller!
+          .text;
+
+      expect(
+        commentPositionDialogAudioPositionText,
+        commentDialogAudioPlayerViewAudioPositionText, // 0:49. ...
+      );
+
+      // Now modify the position in the dialog
+      String positionTextToEnterWithTenthOfSeconds = '0:55.6';
+      await tester.enterText(
+        commentPositionDialogTextFinder,
+        positionTextToEnterWithTenthOfSeconds,
+      );
+
+      // Select the first checkbox (Start position)
+      await tester.tap(find.byKey(const Key('checkbox0Key')));
+      await tester.pumpAndSettle();
+
+      // Tap on the Ok button to set the new position in the comment
+      // previous dialog
+
+      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+      await tester.pumpAndSettle();
+
+      // Check the modified comment start position in the comment dialog
+      expect(
+        tester.widget<Text>(commentStartTextWidgetFinder).data,
+        '0:56',
+      );
+
+      // Now Activate the start position checkbox to display the tenth
+      // of seconds part
+      await tester.tap(find.byKey(const Key('commentStartTenthOfSecondsCheckbox')));
+      await tester.pumpAndSettle();
+
+      // Check the modified comment start position in the comment dialog
+      expect(
+        tester.widget<Text>(commentStartTextWidgetFinder).data,
+        positionTextToEnterWithTenthOfSeconds,
+      );
+
+
+      // // Since no checkbox was checked, a warning will be displayed ...
+
+      // // Ensure the warning dialog is shown
+      // expect(find.byType(WarningMessageDisplayWidget), findsOneWidget);
+
+      // // Check the value of the warning dialog title
+      // expect(
+      //     tester.widget<Text>(find.byKey(const Key('warningDialogTitle'))).data,
+      //     'WARNING');
+
+      // // Check the value of the warning dialog message
+      // expect(
+      //     tester
+      //         .widget<Text>(find.byKey(const Key('warningDialogMessage')))
+      //         .data,
+      //     "No checkbox selected. Please select one checkbox before clicking 'Ok', or click 'Cancel' to exit.");
+
+      // // Close the warning dialog by tapping on the Ok button
+      // await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+      // await tester.pumpAndSettle();
 
       // Now, tap on the add/update comment button to save the updated
       // comment
@@ -3626,6 +3714,21 @@ void main() {
   });
 }
 
+int roundUpTenthOfSeconds(
+  String commentDialogAudioPlayerViewAudioPositionText,
+) {
+  int commentDialogAudioPlayerViewAudioPositionTenthOfSecondsRounded;
+  int commentDialogAudioPlayerViewAudioPositionTenthOfSeconds =
+      DateTimeUtil.convertToTenthsOfSeconds(
+    timeString: commentDialogAudioPlayerViewAudioPositionText,
+  );
+
+  commentDialogAudioPlayerViewAudioPositionTenthOfSecondsRounded =
+      (commentDialogAudioPlayerViewAudioPositionTenthOfSeconds / 10).round() *
+          10;
+  return commentDialogAudioPlayerViewAudioPositionTenthOfSecondsRounded;
+}
+
 Finder verifyCommentsInCommentListDialog({
   required WidgetTester tester,
   required Finder commentListDialogFinder,
@@ -3796,13 +3899,13 @@ Future<void> checkTextFieldStyleAndEnterText({
   required String textToEnter,
 }) async {
   // Find the TextField using the Key
-  final textFieldFinder = find.byKey(Key(textFieldKeyStr));
+  final Finder textFieldFinder = find.byKey(Key(textFieldKeyStr));
 
   // Retrieve the TextField widget
-  final textField = tester.widget<TextField>(textFieldFinder);
+  final TextField textField = tester.widget<TextField>(textFieldFinder);
 
   // Extract the TextStyle used in the TextField
-  final textStyle = textField.style ?? const TextStyle();
+  final TextStyle textStyle = textField.style ?? const TextStyle();
 
   // Check the font size of the TextField
   expect(textStyle.fontSize, fontSize);

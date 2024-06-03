@@ -502,7 +502,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
         Consumer<AudioPlayerVM>(
           builder: (context, audioPlayerVM, child) {
             String currentAudioPositionStr =
-                audioPlayerVM.currentAudioPosition.HHmmssZeroHH();
+                audioPlayerVM.currentAudioPosition.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true);
             return Tooltip(
               message: AppLocalizations.of(context)!
                   .updateCommentStartEndPositionTooltip,

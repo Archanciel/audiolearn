@@ -98,7 +98,6 @@ extension DurationExpansion on Duration {
   String HHmmssZeroHH({
     bool addRemainingOneDigitTenthOfSecond = false,
   }) {
-    String twoDigits(int n) => n.toString().padLeft(2, '0');
     String hoursStr = '';
 
     int hoursInt = inHours.abs();
@@ -114,11 +113,7 @@ extension DurationExpansion on Duration {
     if (hoursInt > 0) {
       remainingMinutesStr = twoDigits(remainingMinuteInt);
     } else {
-      if (remainingMinuteInt > 10) {
-        remainingMinutesStr = twoDigits(remainingMinuteInt);
-      } else {
         remainingMinutesStr = remainingMinuteInt.toString();
-      }
     }
 
     String minusStr = inMicroseconds < 0 ? '-' : '';
@@ -142,5 +137,13 @@ extension DurationExpansion on Duration {
 
       return '$minusStr$hoursStr$remainingMinutesStr:$twoDigitSecondsStr';
     }
+  }
+
+  String twoDigits(int n) {
+    if (n >= 10) {
+      return "$n";
+    }
+    
+    return "0$n";
   }
 }

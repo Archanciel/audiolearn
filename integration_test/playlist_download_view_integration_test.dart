@@ -427,9 +427,9 @@ void main() {
       expect(find.byType(WarningMessageDisplayWidget), findsOneWidget);
 
       // Check the value of the warning dialog title
-      Text warningDialogTitle =
+      Text warningDialogTitleText =
           tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'WARNING');
+      expect(warningDialogTitleText.data, 'WARNING');
 
       // Check the value of the warning dialog message
       Text warningDialogMessage =
@@ -534,9 +534,9 @@ void main() {
       expect(find.byType(WarningMessageDisplayWidget), findsOneWidget);
 
       // Check the value of the warning dialog title
-      warningDialogTitle =
+      warningDialogTitleText =
           tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'WARNING');
+      expect(warningDialogTitleText.data, 'WARNING');
 
       // Check the value of the warning dialog message
       warningDialogMessage =
