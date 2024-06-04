@@ -522,6 +522,9 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                 ),
                 onPressed: () {
                   showDialog<List<String>>(
+                    barrierDismissible:
+                        false, // This line prevents the dialog from closing when
+                    //            tapping outside the dialog
                     context: context,
                     builder: (BuildContext context) {
                       return SetValueToTargetDialogWidget(
@@ -577,7 +580,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                         // displayed withwitha tenth of a second format
                         if (checkboxIndexStr == '0') {
                           _commentStartPositionChangedInTenthOfSeconds = true;
-                        } else if (checkboxIndexStr == '1'){
+                        } else if (checkboxIndexStr == '1') {
                           _commentEndPositionChangedInTenthOfSeconds = true;
                         }
                       }
@@ -614,6 +617,9 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
 
     showDialog<void>(
       context: context,
+      barrierDismissible:
+          false, // This line prevents the dialog from closing when
+      //            tapping outside the dialog
       // passing the current audio to the dialog instead
       // of initializing a private _currentAudio variable
       // in the dialog avoid integr test problems

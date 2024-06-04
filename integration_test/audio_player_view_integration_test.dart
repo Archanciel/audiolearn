@@ -5,6 +5,7 @@ import 'package:audiolearn/models/playlist.dart';
 import 'package:audiolearn/services/json_data_service.dart';
 import 'package:audiolearn/utils/date_time_parser.dart';
 import 'package:audiolearn/utils/date_time_util.dart';
+import 'package:audiolearn/views/widgets/comment_add_edit_dialog_widget.dart';
 import 'package:audiolearn/views/widgets/comment_list_add_dialog_widget.dart';
 import 'package:audiolearn/views/widgets/set_value_to_target_dialog_widget.dart';
 import 'package:audiolearn/views/widgets/warning_message_display_widget.dart';
@@ -3976,7 +3977,7 @@ void main() {
           "No checkbox selected. Please select one checkbox before clicking 'Ok', or click 'Cancel' to exit.");
 
       // Simulate a tap outside the dialog.
-      await tester.tapAt(Offset(0, 0)); // Adjust the coordinates as necessary.
+      await tester.tapAt(const Offset(0, 0));
       await tester.pumpAndSettle();
 
       // Close the define position dialog by tapping on the Cancel button
@@ -4038,16 +4039,37 @@ void main() {
       await tester.tap(openDefinePositionDialogTextButtonFinder);
       await tester.pumpAndSettle();
 
-      // Simulate a tap outside the dialog.
-      await tester.tapAt(Offset(0, 0)); // Adjust the coordinates as necessary.
+      // Simulate a tap outside the define position dialog to verify that
+      // the dialog can not be closed by error if the user type outside it
+      await tester.tapAt(const Offset(0, 0));
       await tester.pumpAndSettle();
 
-      // Verify the dialog is closed.
-      expect(find.byType(SetValueToTargetDialogWidget), findsNothing);
+      // Verify that the dialog is not closed
+      expect(find.byType(SetValueToTargetDialogWidget), findsOneWidget);
 
-      // Tap on the add/edit comment button to save the comment
-      await tester.tap(find.byKey(const Key('addOrUpdateCommentTextButton')));
+      // Close the define position dialog by tapping on the Cancel button
+      await tester.tap(find.byKey(const Key('setValueToTargetCancelButton')));
       await tester.pumpAndSettle();
+
+      // Simulate a tap outside the add/edit comment dialog to verify that
+      // the dialog can not be closed by error if the user type outside it
+      await tester.tapAt(const Offset(0, 0));
+      await tester.pumpAndSettle();
+
+      // Verify that the dialog is not closed
+      expect(find.byType(CommentAddEditDialogWidget), findsOneWidget);
+      
+      // Tap on the cancel comment button to close the dialog
+      await tester.tap(find.byKey(const Key('cancelTextButton')));
+      await tester.pumpAndSettle();
+
+      // Simulate a tap outside the list comment dialog to verify that
+      // the dialog can not be closed by error if the user type outside it
+      await tester.tapAt(const Offset(0, 0));
+      await tester.pumpAndSettle();
+
+      // Verify that the dialog is not closed
+      expect(find.byType(CommentListAddDialogWidget), findsOneWidget);
 
       // Now close the comment list dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));
