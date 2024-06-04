@@ -3667,41 +3667,46 @@ void main() {
       await tester.tap(find.text(commentTitle));
       await tester.pumpAndSettle();
 
-      // Now tap on select position text button to open the dialog enabling
-      // to modify the comment start or end position
+      // Now tap on select position text button to open the define position
+      // dialog enabling to modify the comment start or end position
 
-      final Finder selectCommentPositionTextButtonFinder =
+      final Finder openDefinePositionDialogTextButtonFinder =
           find.byKey(const Key('selectCommentPositionTextButton'));
 
-      await tester.tap(selectCommentPositionTextButtonFinder);
+      await tester.tap(openDefinePositionDialogTextButtonFinder);
       await tester.pumpAndSettle();
 
-      // Verify that the commentDialogAudioPlayerViewAudioPositionText is
-      // displayed in the dialog
+      // Verify that the Audio Player View current audio position text is
+      // displayed in the define position dialog
 
-      final Finder commentSetPositionDialogFinder =
-          find.byType(SetValueToTargetDialogWidget);
-
-      final Finder commentPositionDialogEditTextFinder = find.descendant(
-          of: commentSetPositionDialogFinder, matching: find.byType(TextField),);
-
-      final Finder commentPositionDialogTextFinder = find.byKey(
+      // This finder obtained by its key does not enable to change the
+      // value of the TextField
+      final Finder definePositionDialogReadTextFinder = find.byKey(
         const Key('passedValueFieldTextField'),
       );
-      String commentPositionDialogAudioPositionText = tester
-          .widget<TextField>(commentPositionDialogTextFinder)
-          .controller!
-          .text;
 
       expect(
-        commentPositionDialogAudioPositionText,
+        tester
+            .widget<TextField>(definePositionDialogReadTextFinder)
+            .controller!
+            .text,
         '1:12:48.0',
+      );
+
+      Finder definePositionDialogFinder =
+          find.byType(SetValueToTargetDialogWidget);
+
+      // This finder obtained as descendant of its enclosing dialog does
+      // able to change the value of the TextField
+      Finder definePositionDialogEditTextFinder = find.descendant(
+        of: definePositionDialogFinder,
+        matching: find.byType(TextField),
       );
 
       // Now modify the position in the dialog
       String positionTextToEnterWithTenthOfSeconds = '0:55.6';
       tester
-          .widget<TextField>(commentPositionDialogEditTextFinder)
+          .widget<TextField>(definePositionDialogEditTextFinder)
           .controller!
           .text = positionTextToEnterWithTenthOfSeconds;
       await tester.pumpAndSettle();
@@ -3716,21 +3721,162 @@ void main() {
       await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
       await tester.pumpAndSettle();
 
-      // Check the modified comment start position in the comment dialog
+      // Check the modified comment start position in the comment dialog.
+      // The position is displayed in format with tenth of seconds since
+      // the position sended by the define position dialog was formatted
+      // with tenth of seconds
 
-      final Finder commentStartTextWidgetFinder =
+      Finder commentStartTextWidgetFinder =
           find.byKey(const Key('commentStartPositionText')); // 1:12:48
-      final Finder commentEndTextWidgetFinder =
-          find.byKey(const Key('commentEndPositionText')); // 1:12:48
       expect(
         tester.widget<Text>(commentStartTextWidgetFinder).data,
         '0:55.6',
       );
 
-      // Check the modified comment start position in the comment dialog
+      // Now reopen the define position dialog to set the comment start
+      // position to a value not formatted with tenth of seconds
+
+      await tester.tap(openDefinePositionDialogTextButtonFinder);
+      await tester.pumpAndSettle();
+
+      // This finder obtained as descendant of its enclosing dialog does
+      // able to change the value of the TextField
+      definePositionDialogFinder = find.byType(SetValueToTargetDialogWidget);
+      definePositionDialogEditTextFinder = find.descendant(
+        of: definePositionDialogFinder,
+        matching: find.byType(TextField),
+      );
+
+      // Now modify the position in the dialog with no tenth of seconds
+      String positionTextToEnterInSeconds = '0:58';
+      tester
+          .widget<TextField>(definePositionDialogEditTextFinder)
+          .controller!
+          .text = positionTextToEnterInSeconds;
+      await tester.pumpAndSettle();
+
+      // Select the first checkbox (Start position)
+      await tester.tap(find.byKey(const Key('checkbox0Key')));
+      await tester.pumpAndSettle();
+
+      // Tap on the Ok button to set the new position in the comment
+      // previous dialog
+
+      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+      await tester.pumpAndSettle();
+
+      // Check the modified comment start position in the comment dialog.
+      // The position is displayed in format with tenth of seconds since
+      // when opening the define position dialog, the tenth of seconds
+      // checkbox was checked
+
+      commentStartTextWidgetFinder =
+          find.byKey(const Key('commentStartPositionText')); // 1:12:48
+
       expect(
         tester.widget<Text>(commentStartTextWidgetFinder).data,
-        positionTextToEnterWithTenthOfSeconds,
+        "$positionTextToEnterInSeconds.0", // 0:58.0
+      );
+
+      // Now click on the start position checkbox to disable displaying
+      // the tenth of seconds part
+      await tester
+          .tap(find.byKey(const Key('commentStartTenthOfSecondsCheckbox')));
+      await tester.pumpAndSettle();
+
+      // Now reopen the define position dialog to set again the comment
+      // start position to a value not formatted with tenth of seconds.
+      // This time, the seconds only format will remain in the comment
+      // start position field.
+
+      await tester.tap(openDefinePositionDialogTextButtonFinder);
+      await tester.pumpAndSettle();
+
+      // This finder obtained as descendant of its enclosing dialog does
+      // able to change the value of the TextField
+      definePositionDialogFinder = find.byType(SetValueToTargetDialogWidget);
+      definePositionDialogEditTextFinder = find.descendant(
+        of: definePositionDialogFinder,
+        matching: find.byType(TextField),
+      );
+
+      // Now modify the position in the dialog with no tenth of seconds
+      positionTextToEnterInSeconds = '0:59';
+      tester
+          .widget<TextField>(definePositionDialogEditTextFinder)
+          .controller!
+          .text = positionTextToEnterInSeconds;
+      await tester.pumpAndSettle();
+
+      // Select the first checkbox (Start position)
+      await tester.tap(find.byKey(const Key('checkbox0Key')));
+      await tester.pumpAndSettle();
+
+      // Tap on the Ok button to set the new position in the comment
+      // previous dialog
+
+      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+      await tester.pumpAndSettle();
+
+      // Check the modified comment start position in the comment dialog.
+      // The position is displayed in seconds only format since when
+      // the define position dialog was opened, the tenth of seconds
+      // checkbox was not checked
+
+      commentStartTextWidgetFinder =
+          find.byKey(const Key('commentStartPositionText')); // 1:12:48
+
+      expect(
+        tester.widget<Text>(commentStartTextWidgetFinder).data,
+        '0:59',
+      );
+
+      // Now reopen the define position dialog to set again the comment
+      // start position to a value formatted with tenth of seconds,
+      // but with a 0 tenth of seconds part. This time, the seconds only
+      // format will remain in the comment start position field since
+      // the tenth of seconds part is 0.
+
+      await tester.tap(openDefinePositionDialogTextButtonFinder);
+      await tester.pumpAndSettle();
+
+      // This finder obtained as descendant of its enclosing dialog does
+      // able to change the value of the TextField
+      definePositionDialogFinder = find.byType(SetValueToTargetDialogWidget);
+      definePositionDialogEditTextFinder = find.descendant(
+        of: definePositionDialogFinder,
+        matching: find.byType(TextField),
+      );
+
+      // Now modify the position in the dialog with no tenth of seconds
+      positionTextToEnterWithTenthOfSeconds = '0:57.0';
+      tester
+          .widget<TextField>(definePositionDialogEditTextFinder)
+          .controller!
+          .text = positionTextToEnterWithTenthOfSeconds;
+      await tester.pumpAndSettle();
+
+      // Select the first checkbox (Start position)
+      await tester.tap(find.byKey(const Key('checkbox0Key')));
+      await tester.pumpAndSettle();
+
+      // Tap on the Ok button to set the new position in the comment
+      // previous dialog
+
+      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+      await tester.pumpAndSettle();
+
+      // Check the modified comment start position in the comment dialog.
+      // The position is displayed in seconds only format since ther
+      // passed value was formatted with tenth of seconds, but with a
+      // 0 tenth of seconds part.
+
+      commentStartTextWidgetFinder =
+          find.byKey(const Key('commentStartPositionText')); // 1:12:48
+
+      expect(
+        tester.widget<Text>(commentStartTextWidgetFinder).data,
+        '0:57',
       );
 
       // // Since no checkbox was checked, a warning will be displayed ...
