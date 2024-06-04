@@ -2983,84 +2983,6 @@ void main() {
         ), // 0:49
       );
 
-      // Now tap on select position text button to open the dialog enabling
-      // to modify the comment start or end position
-
-      await tester.tap(selectCommentPositionTextButtonFinder);
-      await tester.pumpAndSettle();
-
-      // Verify that the commentDialogAudioPlayerViewAudioPositionText is
-      // displayed in the dialog
-
-      final Finder commentPositionDialogTextFinder = find.byKey(
-        const Key('passedValueFieldTextField'),
-      );
-      String commentPositionDialogAudioPositionText = tester
-          .widget<TextField>(commentPositionDialogTextFinder)
-          .controller!
-          .text;
-
-      expect(
-        commentPositionDialogAudioPositionText,
-        commentDialogAudioPlayerViewAudioPositionText, // 0:49. ...
-      );
-
-      // Now modify the position in the dialog
-      String positionTextToEnterWithTenthOfSeconds = '0:55.6';
-      await tester.enterText(
-        commentPositionDialogTextFinder,
-        positionTextToEnterWithTenthOfSeconds,
-      );
-
-      // Select the first checkbox (Start position)
-      await tester.tap(find.byKey(const Key('checkbox0Key')));
-      await tester.pumpAndSettle();
-
-      // Tap on the Ok button to set the new position in the comment
-      // previous dialog
-
-      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
-      await tester.pumpAndSettle();
-
-      // Check the modified comment start position in the comment dialog
-      expect(
-        tester.widget<Text>(commentStartTextWidgetFinder).data,
-        '0:56',
-      );
-
-      // Now Activate the start position checkbox to display the tenth
-      // of seconds part
-      await tester.tap(find.byKey(const Key('commentStartTenthOfSecondsCheckbox')));
-      await tester.pumpAndSettle();
-
-      // Check the modified comment start position in the comment dialog
-      expect(
-        tester.widget<Text>(commentStartTextWidgetFinder).data,
-        positionTextToEnterWithTenthOfSeconds,
-      );
-
-
-      // // Since no checkbox was checked, a warning will be displayed ...
-
-      // // Ensure the warning dialog is shown
-      // expect(find.byType(WarningMessageDisplayWidget), findsOneWidget);
-
-      // // Check the value of the warning dialog title
-      // expect(
-      //     tester.widget<Text>(find.byKey(const Key('warningDialogTitle'))).data,
-      //     'WARNING');
-
-      // // Check the value of the warning dialog message
-      // expect(
-      //     tester
-      //         .widget<Text>(find.byKey(const Key('warningDialogMessage')))
-      //         .data,
-      //     "No checkbox selected. Please select one checkbox before clicking 'Ok', or click 'Cancel' to exit.");
-
-      // // Close the warning dialog by tapping on the Ok button
-      // await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      // await tester.pumpAndSettle();
-
       // Now, tap on the add/update comment button to save the updated
       // comment
       await tester.tap(addOrUpdateCommentTextButton);
@@ -3702,6 +3624,147 @@ void main() {
           expectedPositionsLst: expectedPositions,
           expectedCreationDatesLst: expectedCreationDates,
           expectedUpdateDatesLst: expectedUpdateDates);
+
+      // Now close the comment list dialog
+      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
+    });
+    testWidgets('Using current audio position dialog to set comment positions',
+        (WidgetTester tester) async {
+      const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+      const String alreadyCommentedAudioTitle =
+          "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
+
+      await initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_comment_test',
+        selectedPlaylistTitle: youtubePlaylistTitle,
+      );
+
+      // Then, get the ListTile Text widget finder of the already commented
+      // audio and tap on it to open the AudioPlayerView
+      final Finder alreadyCommentedAudioFinder =
+          find.text(alreadyCommentedAudioTitle);
+      await tester.tap(alreadyCommentedAudioFinder);
+      await tester.pumpAndSettle();
+
+      // Tap on the comment icon button to open the comment add list
+      // dialog
+      final Finder commentInkWellButtonFinder = find.byKey(
+        const Key('commentsInkWellButton'),
+      );
+
+      await tester.tap(commentInkWellButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Tap on the comment title text to edit the comment
+      String commentTitle = 'I did not thank ChatGPT';
+
+      await tester.tap(find.text(commentTitle));
+      await tester.pumpAndSettle();
+
+      // Now tap on select position text button to open the dialog enabling
+      // to modify the comment start or end position
+
+      final Finder selectCommentPositionTextButtonFinder =
+          find.byKey(const Key('selectCommentPositionTextButton'));
+
+      await tester.tap(selectCommentPositionTextButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Verify that the commentDialogAudioPlayerViewAudioPositionText is
+      // displayed in the dialog
+
+      final Finder commentSetPositionDialogFinder =
+          find.byType(SetValueToTargetDialogWidget);
+
+      final Finder commentPositionDialogEditTextFinder = find.descendant(
+          of: commentSetPositionDialogFinder, matching: find.byType(TextField),);
+
+      final Finder commentPositionDialogTextFinder = find.byKey(
+        const Key('passedValueFieldTextField'),
+      );
+      String commentPositionDialogAudioPositionText = tester
+          .widget<TextField>(commentPositionDialogTextFinder)
+          .controller!
+          .text;
+
+      expect(
+        commentPositionDialogAudioPositionText,
+        '1:12:48.0',
+      );
+
+      // Now modify the position in the dialog
+      String positionTextToEnterWithTenthOfSeconds = '0:55.6';
+      tester
+          .widget<TextField>(commentPositionDialogEditTextFinder)
+          .controller!
+          .text = positionTextToEnterWithTenthOfSeconds;
+      await tester.pumpAndSettle();
+
+      // Select the first checkbox (Start position)
+      await tester.tap(find.byKey(const Key('checkbox0Key')));
+      await tester.pumpAndSettle();
+
+      // Tap on the Ok button to set the new position in the comment
+      // previous dialog
+
+      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+      await tester.pumpAndSettle();
+
+      // Check the modified comment start position in the comment dialog
+
+      final Finder commentStartTextWidgetFinder =
+          find.byKey(const Key('commentStartPositionText')); // 1:12:48
+      final Finder commentEndTextWidgetFinder =
+          find.byKey(const Key('commentEndPositionText')); // 1:12:48
+      expect(
+        tester.widget<Text>(commentStartTextWidgetFinder).data,
+        '0:55.6',
+      );
+
+      // Check the modified comment start position in the comment dialog
+      expect(
+        tester.widget<Text>(commentStartTextWidgetFinder).data,
+        positionTextToEnterWithTenthOfSeconds,
+      );
+
+      // // Since no checkbox was checked, a warning will be displayed ...
+
+      // // Ensure the warning dialog is shown
+      // expect(find.byType(WarningMessageDisplayWidget), findsOneWidget);
+
+      // // Check the value of the warning dialog title
+      // expect(
+      //     tester.widget<Text>(find.byKey(const Key('warningDialogTitle'))).data,
+      //     'WARNING');
+
+      // // Check the value of the warning dialog message
+      // expect(
+      //     tester
+      //         .widget<Text>(find.byKey(const Key('warningDialogMessage')))
+      //         .data,
+      //     "No checkbox selected. Please select one checkbox before clicking 'Ok', or click 'Cancel' to exit.");
+
+      // // Close the warning dialog by tapping on the Ok button
+      // await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+      // await tester.pumpAndSettle();
+
+      // Now, tap on the add/update comment button to save the updated
+      // comment
+
+      // Now save the updated comment
+
+      final Finder addOrUpdateCommentTextButton =
+          find.byKey(const Key('addOrUpdateCommentTextButton'));
+
+      // Tap on the add/edit comment button to save the comment
+      await tester.tap(addOrUpdateCommentTextButton);
+      await tester.pumpAndSettle();
 
       // Now close the comment list dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));

@@ -501,8 +501,8 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
       children: [
         Consumer<AudioPlayerVM>(
           builder: (context, audioPlayerVM, child) {
-            String currentAudioPositionStr =
-                audioPlayerVM.currentAudioPosition.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true);
+            String currentAudioPositionStr = audioPlayerVM.currentAudioPosition
+                .HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true);
             return Tooltip(
               message: AppLocalizations.of(context)!
                   .updateCommentStartEndPositionTooltip,
@@ -561,6 +561,26 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                       // checked
                       commentVMlistenFalse.currentCommentEndPosition =
                           positionDuration;
+                    }
+
+                    // Updating the changed position display format to
+                    // the format of the provided position
+                    int pointPosition = positionStr.indexOf('.');
+
+                    if (pointPosition != -1) {
+                      // the case if the position is formatted with a tenth
+                      // of a second value (e.g. 00:00:00.0)
+                      if (positionStr.substring(
+                              pointPosition + 1, positionStr.length) !=
+                          '0') {
+                        // in this situation, the changed position is
+                        // displayed withwitha tenth of a second format
+                        if (checkboxIndexStr == '0') {
+                          _commentStartPositionChangedInTenthOfSeconds = true;
+                        } else if (checkboxIndexStr == '1'){
+                          _commentEndPositionChangedInTenthOfSeconds = true;
+                        }
+                      }
                     }
                   });
                 },
