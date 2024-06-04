@@ -3905,6 +3905,8 @@ void main() {
       await tester.tap(find.byKey(const Key('checkbox1Key')));
       await tester.pumpAndSettle();
 
+      // Tap outside the define position dialog to test if this Cancel it
+
       // Tap on the Ok button to set the new position in the comment
       // previous dialog
 
@@ -3920,13 +3922,6 @@ void main() {
         tester.widget<Text>(commentEndTextWidgetFinder).data,
         '1:15:45.3',
       );
-
-
-
-
-
-
-
 
       // Now reopen the define position dialog to set the comment end
       // start position to a value formatted with tenth of seconds.
@@ -3959,7 +3954,8 @@ void main() {
       // Since no checkbox was checked, a warning will be displayed ...
 
       // Ensure the warning dialog is shown
-      final Finder warningMessageDisplayDialogFinder = find.byType(WarningMessageDisplayWidget);
+      final Finder warningMessageDisplayDialogFinder =
+          find.byType(WarningMessageDisplayWidget);
       expect(warningMessageDisplayDialogFinder, findsOneWidget);
 
       // Check the value of the warning dialog title
@@ -3979,13 +3975,75 @@ void main() {
               .data,
           "No checkbox selected. Please select one checkbox before clicking 'Ok', or click 'Cancel' to exit.");
 
-      // Close the warning dialog by tapping on the Ok button
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+      // Simulate a tap outside the dialog.
+      await tester.tapAt(Offset(0, 0)); // Adjust the coordinates as necessary.
       await tester.pumpAndSettle();
 
       // Close the define position dialog by tapping on the Cancel button
       await tester.tap(find.byKey(const Key('setValueToTargetCancelButton')));
       await tester.pumpAndSettle();
+
+      // Tap on the add/edit comment button to save the comment
+      await tester.tap(find.byKey(const Key('addOrUpdateCommentTextButton')));
+      await tester.pumpAndSettle();
+
+      // Now close the comment list dialog
+      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
+    });
+    testWidgets('Simulate tapping outside the comment related dialogs',
+        (WidgetTester tester) async {
+      const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+      const String alreadyCommentedAudioTitle =
+          "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
+
+      await initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_comment_test',
+        selectedPlaylistTitle: youtubePlaylistTitle,
+      );
+
+      // Then, get the ListTile Text widget finder of the already commented
+      // audio and tap on it to open the AudioPlayerView
+      final Finder alreadyCommentedAudioFinder =
+          find.text(alreadyCommentedAudioTitle);
+      await tester.tap(alreadyCommentedAudioFinder);
+      await tester.pumpAndSettle();
+
+      // Tap on the comment icon button to open the comment add list
+      // dialog
+      final Finder commentInkWellButtonFinder = find.byKey(
+        const Key('commentsInkWellButton'),
+      );
+
+      await tester.tap(commentInkWellButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Tap on the comment title text to edit the comment
+      String commentTitle = 'I did not thank ChatGPT';
+
+      await tester.tap(find.text(commentTitle));
+      await tester.pumpAndSettle();
+
+      // Now tap on select position text button to open the define position
+      // dialog enabling to modify the comment start or end position
+
+      final Finder openDefinePositionDialogTextButtonFinder =
+          find.byKey(const Key('selectCommentPositionTextButton'));
+
+      await tester.tap(openDefinePositionDialogTextButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Simulate a tap outside the dialog.
+      await tester.tapAt(Offset(0, 0)); // Adjust the coordinates as necessary.
+      await tester.pumpAndSettle();
+
+      // Verify the dialog is closed.
+      expect(find.byType(SetValueToTargetDialogWidget), findsNothing);
 
       // Tap on the add/edit comment button to save the comment
       await tester.tap(find.byKey(const Key('addOrUpdateCommentTextButton')));
