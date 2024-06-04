@@ -3105,9 +3105,9 @@ void main() {
           actualAudioPlayerViewCurrentAudioPosition;
 
       final Finder commentStartTextWidgetFinder =
-          find.byKey(const Key('commentStartPositionText')); // 1:12:48
+          find.byKey(const Key('commentStartPositionText'));
       final Finder commentEndTextWidgetFinder =
-          find.byKey(const Key('commentEndPositionText')); // 1:12:48
+          find.byKey(const Key('commentEndPositionText'));
 
       expect(
         tester.widget<Text>(commentStartTextWidgetFinder).data!,
@@ -3727,7 +3727,7 @@ void main() {
       // with tenth of seconds
 
       Finder commentStartTextWidgetFinder =
-          find.byKey(const Key('commentStartPositionText')); // 1:12:48
+          find.byKey(const Key('commentStartPositionText'));
       expect(
         tester.widget<Text>(commentStartTextWidgetFinder).data,
         '0:55.6',
@@ -3771,7 +3771,7 @@ void main() {
       // checkbox was checked
 
       commentStartTextWidgetFinder =
-          find.byKey(const Key('commentStartPositionText')); // 1:12:48
+          find.byKey(const Key('commentStartPositionText'));
 
       expect(
         tester.widget<Text>(commentStartTextWidgetFinder).data,
@@ -3824,7 +3824,7 @@ void main() {
       // checkbox was not checked
 
       commentStartTextWidgetFinder =
-          find.byKey(const Key('commentStartPositionText')); // 1:12:48
+          find.byKey(const Key('commentStartPositionText'));
 
       expect(
         tester.widget<Text>(commentStartTextWidgetFinder).data,
@@ -3872,44 +3872,123 @@ void main() {
       // 0 tenth of seconds part.
 
       commentStartTextWidgetFinder =
-          find.byKey(const Key('commentStartPositionText')); // 1:12:48
+          find.byKey(const Key('commentStartPositionText'));
 
       expect(
         tester.widget<Text>(commentStartTextWidgetFinder).data,
         '0:57',
       );
 
-      // // Since no checkbox was checked, a warning will be displayed ...
+      // Now reopen the define position dialog to set the comment end
+      // start position to a value formatted with tenth of seconds.
 
-      // // Ensure the warning dialog is shown
-      // expect(find.byType(WarningMessageDisplayWidget), findsOneWidget);
+      await tester.tap(openDefinePositionDialogTextButtonFinder);
+      await tester.pumpAndSettle();
 
-      // // Check the value of the warning dialog title
-      // expect(
-      //     tester.widget<Text>(find.byKey(const Key('warningDialogTitle'))).data,
-      //     'WARNING');
+      // This finder obtained as descendant of its enclosing dialog does
+      // able to change the value of the TextField
+      definePositionDialogFinder = find.byType(SetValueToTargetDialogWidget);
+      definePositionDialogEditTextFinder = find.descendant(
+        of: definePositionDialogFinder,
+        matching: find.byType(TextField),
+      );
 
-      // // Check the value of the warning dialog message
-      // expect(
-      //     tester
-      //         .widget<Text>(find.byKey(const Key('warningDialogMessage')))
-      //         .data,
-      //     "No checkbox selected. Please select one checkbox before clicking 'Ok', or click 'Cancel' to exit.");
+      // Now modify the position in the dialog with no tenth of seconds
+      positionTextToEnterWithTenthOfSeconds = '1:15:45.3';
+      tester
+          .widget<TextField>(definePositionDialogEditTextFinder)
+          .controller!
+          .text = positionTextToEnterWithTenthOfSeconds;
+      await tester.pumpAndSettle();
 
-      // // Close the warning dialog by tapping on the Ok button
-      // await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      // await tester.pumpAndSettle();
+      // Select the second checkbox (End position)
+      await tester.tap(find.byKey(const Key('checkbox1Key')));
+      await tester.pumpAndSettle();
 
-      // Now, tap on the add/update comment button to save the updated
-      // comment
+      // Tap on the Ok button to set the new position in the comment
+      // previous dialog
 
-      // Now save the updated comment
+      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+      await tester.pumpAndSettle();
 
-      final Finder addOrUpdateCommentTextButton =
-          find.byKey(const Key('addOrUpdateCommentTextButton'));
+      // Check the modified comment end position in the comment dialog.
+
+      final Finder commentEndTextWidgetFinder =
+          find.byKey(const Key('commentEndPositionText'));
+
+      expect(
+        tester.widget<Text>(commentEndTextWidgetFinder).data,
+        '1:15:45.3',
+      );
+
+
+
+
+
+
+
+
+      // Now reopen the define position dialog to set the comment end
+      // start position to a value formatted with tenth of seconds.
+
+      await tester.tap(openDefinePositionDialogTextButtonFinder);
+      await tester.pumpAndSettle();
+
+      // This finder obtained as descendant of its enclosing dialog does
+      // able to change the value of the TextField
+      definePositionDialogFinder = find.byType(SetValueToTargetDialogWidget);
+      definePositionDialogEditTextFinder = find.descendant(
+        of: definePositionDialogFinder,
+        matching: find.byType(TextField),
+      );
+
+      // Now modify the position in the dialog with no tenth of seconds
+      positionTextToEnterWithTenthOfSeconds = '1:15:45.9';
+      tester
+          .widget<TextField>(definePositionDialogEditTextFinder)
+          .controller!
+          .text = positionTextToEnterWithTenthOfSeconds;
+      await tester.pumpAndSettle();
+
+      // Tap on the Ok button to set the new position in the comment
+      // previous dialog
+
+      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+      await tester.pumpAndSettle();
+
+      // Since no checkbox was checked, a warning will be displayed ...
+
+      // Ensure the warning dialog is shown
+      final Finder warningMessageDisplayDialogFinder = find.byType(WarningMessageDisplayWidget);
+      expect(warningMessageDisplayDialogFinder, findsOneWidget);
+
+      // Check the value of the warning dialog title
+      Text warningDialogTitle =
+          tester.widget(find.byKey(const Key('warningDialogTitle')));
+      expect(warningDialogTitle.data, 'WARNING');
+
+      // Check the value of the warning dialog title
+      expect(
+          tester.widget<Text>(find.byKey(const Key('warningDialogTitle'))).data,
+          'WARNING');
+
+      // Check the value of the warning dialog message
+      expect(
+          tester
+              .widget<Text>(find.byKey(const Key('warningDialogMessage')))
+              .data,
+          "No checkbox selected. Please select one checkbox before clicking 'Ok', or click 'Cancel' to exit.");
+
+      // Close the warning dialog by tapping on the Ok button
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+      await tester.pumpAndSettle();
+
+      // Close the define position dialog by tapping on the Cancel button
+      await tester.tap(find.byKey(const Key('setValueToTargetCancelButton')));
+      await tester.pumpAndSettle();
 
       // Tap on the add/edit comment button to save the comment
-      await tester.tap(addOrUpdateCommentTextButton);
+      await tester.tap(find.byKey(const Key('addOrUpdateCommentTextButton')));
       await tester.pumpAndSettle();
 
       // Now close the comment list dialog
