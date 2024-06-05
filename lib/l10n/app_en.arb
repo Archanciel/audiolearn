@@ -283,7 +283,7 @@
   "errorInPlaylistJsonFile": "File \"{filePathName}\" contains an invalid data definition. Try finding the problem in order to correct it before executing again the operation.",
   "updatePlaylistJsonFilesMenuTooltip": "If one or several playlist directories containing or not audios were manually added or deleted in the application data root directory or if audios were manually deleted from one or several playlist directories, this functionality updates the playlist JSON files as well as the application settings JSON file in order to reflect the changes in the application screens.",
   "updatePlaylistPlayableAudioListTooltip": "If audios were manually deleted from one or several playlist directories, this functionality updates the playlist JSON files to reflect the changes in the application screens.",
-  "audioPlayedInThisOrderTooltip": "Audios are played in this order.",
+  "audioPlayedInThisOrderTooltip": "Audios are played in this order. By default, the last downloaded audios are at the bottom of the list.",
   "playableAudioDialogSortDescriptionTooltipBottomDownloadBefore": "Audios at the bottom were downloaded before those at the top.",
   "playableAudioDialogSortDescriptionTooltipBottomDownloadAfter": "Audios at the bottom were downloaded after those at the top.",
   "playableAudioDialogSortDescriptionTooltipBottomUploadBefore": "Videos at the bottom were uploaded before those at the top.",
