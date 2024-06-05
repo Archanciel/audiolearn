@@ -89,6 +89,9 @@ class AudioPlayerVM extends ChangeNotifier {
 
   DateTime _currentAudioLastSaveDateTime = DateTime.now();
 
+  bool get isDisposed => _disposed;
+  bool _disposed = false;
+
   final List<Command> _undoList = [];
   final List<Command> _redoList = [];
 
@@ -100,6 +103,8 @@ class AudioPlayerVM extends ChangeNotifier {
 
   @override
   void dispose() {
+    _disposed = true;
+
     if (_audioPlayerPlugin != null) {
       _audioPlayerPlugin!.dispose();
     }
@@ -111,6 +116,8 @@ class AudioPlayerVM extends ChangeNotifier {
   /// method enables audio player view integr test to be ok even
   /// if the test app is not the active Windows app.
   void disposeAudioPlayer() {
+    _disposed = true;
+
     if (_audioPlayerPlugin != null) {
       _audioPlayerPlugin!.dispose();
     }
@@ -146,7 +153,7 @@ class AudioPlayerVM extends ChangeNotifier {
 
     updateAndSaveCurrentAudio(forceSave: true);
 
-    notifyListeners();
+    notifyListenersSafely();
   }
 
   /// Method called when the user clicks on the audio title or sub
@@ -163,7 +170,7 @@ class AudioPlayerVM extends ChangeNotifier {
     updateAndSaveCurrentAudio(forceSave: true);
     _clearUndoRedoLists();
 
-    notifyListeners();
+    notifyListenersSafely();
   }
 
   /// Method called when the user clicks on the audio title or sub
@@ -317,43 +324,52 @@ class AudioPlayerVM extends ChangeNotifier {
       _audioPlayerPlugin!.dispose();
     }
 
-    _audioPlayerPlugin = AudioPlayer();
+    if (!_disposed) {
+      _audioPlayerPlugin = AudioPlayer();
 
-    // Assuming filePath is the full path to your audio file
-    String audioFilePathName = _currentAudio?.filePathName ?? '';
+      // Assuming filePath is the full path to your audio file
+      String audioFilePathName = _currentAudio?.filePathName ?? '';
 
-    // Check if the file exists before attempting to play it
-    if (audioFilePathName.isNotEmpty && File(audioFilePathName).existsSync()) {
-      _audioPlayerPlugin!.onDurationChanged.listen((duration) {
-        _currentAudioTotalDuration = duration;
-        notifyListeners();
-      });
-
-      _audioPlayerPlugin!
-          .setVolume(_currentAudio?.audioPlayVolume ?? kAudioDefaultPlayVolume);
-
-      _audioPlayerPlugin!.onPositionChanged.listen((position) {
-        if (_audioPlayerPlugin!.state == PlayerState.playing) {
-          // this test avoids that when selecting another audio
-          // the selected audio position is set to 0 since the
-          // passed position value of an AudioPlayer not playing
-          // is 0 !
-          _currentAudioPosition = position;
-          updateAndSaveCurrentAudio();
-        }
-
-        _audioPlayerPlugin!.onPlayerComplete.listen((event) async {
-          // fixing the bug when the audio is at end the smartphone did
-          // not start the next playable audio. This happens on S20, but
-          // not on S8.
-          _currentAudioPosition = _currentAudioTotalDuration;
-
-          // Play next audio when current audio finishes.
-          await playNextAudio();
+      // Check if the file exists before attempting to play it
+      if (audioFilePathName.isNotEmpty &&
+          File(audioFilePathName).existsSync()) {
+        _audioPlayerPlugin!.onDurationChanged.listen((duration) {
+          _currentAudioTotalDuration = duration;
+          notifyListenersSafely();
         });
 
-        notifyListeners();
-      });
+        _audioPlayerPlugin!.setVolume(
+            _currentAudio?.audioPlayVolume ?? kAudioDefaultPlayVolume);
+
+        _audioPlayerPlugin!.onPositionChanged.listen((position) {
+          if (_audioPlayerPlugin!.state == PlayerState.playing) {
+            // this test avoids that when selecting another audio
+            // the selected audio position is set to 0 since the
+            // passed position value of an AudioPlayer not playing
+            // is 0 !
+            _currentAudioPosition = position;
+            updateAndSaveCurrentAudio();
+          }
+
+          _audioPlayerPlugin!.onPlayerComplete.listen((event) async {
+            // fixing the bug when the audio is at end the smartphone did
+            // not start the next playable audio. This happens on S20, but
+            // not on S8.
+            _currentAudioPosition = _currentAudioTotalDuration;
+
+            // Play next audio when current audio finishes.
+            await playNextAudio();
+          });
+
+          notifyListenersSafely();
+        });
+      }
+    }
+  }
+
+  void notifyListenersSafely() {
+    if (!_disposed) {
+      notifyListeners();
     }
   }
 
@@ -450,10 +466,10 @@ class AudioPlayerVM extends ChangeNotifier {
       _currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd =
           true;
       _currentAudio!.isPaused = false;
-      
+
       updateAndSaveCurrentAudio(forceSave: true);
 
-      notifyListeners();
+      notifyListenersSafely();
     }
   }
 
@@ -466,7 +482,7 @@ class AudioPlayerVM extends ChangeNotifier {
     }
 
     updateAndSaveCurrentAudio(forceSave: true);
-    notifyListeners();
+    notifyListenersSafely();
   }
 
   /// Method called when the user clicks on the '<<' or '>>'
@@ -522,7 +538,7 @@ class AudioPlayerVM extends ChangeNotifier {
     // is updated
     updateAndSaveCurrentAudio(forceSave: true);
 
-    notifyListeners();
+    notifyListenersSafely();
   }
 
   /// Method called when the user clicks on the audio slider.
@@ -556,7 +572,7 @@ class AudioPlayerVM extends ChangeNotifier {
 
     await modifyAudioPlayerPluginPosition(durationPosition);
 
-    notifyListeners();
+    notifyListenersSafely();
   }
 
   /// Method to be redefined in AudioPlayerVMTestVersion in order
@@ -581,7 +597,7 @@ class AudioPlayerVM extends ChangeNotifier {
       // is set.
       await _setPreviousAudio();
 
-      notifyListeners();
+      notifyListenersSafely();
 
       return;
     }
@@ -606,7 +622,7 @@ class AudioPlayerVM extends ChangeNotifier {
 
     await modifyAudioPlayerPluginPosition(_currentAudioPosition);
 
-    notifyListeners();
+    notifyListenersSafely();
   }
 
   /// Method not used for the moment
@@ -618,14 +634,14 @@ class AudioPlayerVM extends ChangeNotifier {
     bool isUndoRedo = false,
   }) async {
     if (_currentAudioPosition == _currentAudioTotalDuration) {
-    updateAndSaveCurrentAudio(forceSave: true);
+      updateAndSaveCurrentAudio(forceSave: true);
 
       // situation when the user clicks on >| when the audio
       // position is at audio end. This is the case if the user
       // clicks twice on the >| icon.
       await _setNextNotPlayedAudio();
 
-      notifyListeners();
+      notifyListenersSafely();
 
       return;
     }
@@ -659,7 +675,7 @@ class AudioPlayerVM extends ChangeNotifier {
 
     await modifyAudioPlayerPluginPosition(_currentAudioTotalDuration);
 
-    notifyListeners();
+    notifyListenersSafely();
   }
 
   /// Method called when the user clicks on the >| icon,
@@ -700,7 +716,7 @@ class AudioPlayerVM extends ChangeNotifier {
 
     await modifyAudioPlayerPluginPosition(_currentAudioTotalDuration);
 
-    notifyListeners();
+    notifyListenersSafely();
   }
 
   /// Method called when _audioPlayer.onPlayerComplete happens,
@@ -721,7 +737,7 @@ class AudioPlayerVM extends ChangeNotifier {
     if (await _setNextNotPlayedAudio()) {
       await playFromCurrentAudioFile();
 
-      notifyListeners();
+      notifyListenersSafely();
     }
   }
 
@@ -845,14 +861,14 @@ class AudioPlayerVM extends ChangeNotifier {
     await _audioPlayerPlugin!.setPlaybackRate(speed);
     updateAndSaveCurrentAudio(forceSave: true);
 
-    notifyListeners();
+    notifyListenersSafely();
   }
 
   // void _executeCommand(Command command) {
   //   command.execute();
   //   _undoList.add(command);
   //   // redoList.clear();
-  //   notifyListeners();
+  //   notifyListenersSafely();
   // }
 
   void undo() {
@@ -860,7 +876,7 @@ class AudioPlayerVM extends ChangeNotifier {
       Command command = _undoList.removeLast();
       command.undo();
       _redoList.add(command);
-      notifyListeners();
+      notifyListenersSafely();
     }
   }
 
@@ -869,7 +885,7 @@ class AudioPlayerVM extends ChangeNotifier {
       Command command = _redoList.removeLast();
       command.redo();
       _undoList.add(command);
-      notifyListeners();
+      notifyListenersSafely();
     }
   }
 
