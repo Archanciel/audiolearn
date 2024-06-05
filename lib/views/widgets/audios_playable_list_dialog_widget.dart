@@ -132,27 +132,29 @@ class _AudioPlayableListDialogWidgetState
             mainAxisSize: MainAxisSize.min, // Use minimum space
             children: [
               Expanded(
-                child: ListView.builder(
-                  key: const Key('audioPlayableListKey'),
-                  controller: _scrollController,
-                  itemCount: playableAudioLst.length,
-                  shrinkWrap: true,
-                  itemBuilder: (BuildContext context, int index) {
-                    Audio audio = playableAudioLst[index];
-                    return ListTile(
-                      title: GestureDetector(
-                        onTap: () async {
-                          await audioGlobalPlayerVM.setCurrentAudio(audio);
-                          Navigator.of(context).pop();
-                        },
-                        child: _buildAudioTitleTextWidget(
-                          audio,
-                          index,
-                          isDarkTheme,
+                child: SingleChildScrollView(
+                  child: ListView.builder(
+                    key: const Key('audioPlayableListKey'),
+                    controller: _scrollController,
+                    itemCount: playableAudioLst.length,
+                    shrinkWrap: true,
+                    itemBuilder: (BuildContext context, int index) {
+                      Audio audio = playableAudioLst[index];
+                      return ListTile(
+                        title: GestureDetector(
+                          onTap: () async {
+                            await audioGlobalPlayerVM.setCurrentAudio(audio);
+                            Navigator.of(context).pop();
+                          },
+                          child: _buildAudioTitleTextWidget(
+                            audio,
+                            index,
+                            isDarkTheme,
+                          ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
               ),
               _buildBottomTextAndCheckbox(
