@@ -133,6 +133,9 @@ class _AudioPlayableListDialogWidgetState
             children: [
               Expanded(
                 child: SingleChildScrollView(
+                  // If the last downloaded audio is the current paused audio,
+                  // improves displaying the 2 listenable audios on S8. Without
+                  // it, only the last downloaded audio is displayed
                   child: ListView.builder(
                     key: const Key('audioPlayableListKey'),
                     controller: _scrollController,
