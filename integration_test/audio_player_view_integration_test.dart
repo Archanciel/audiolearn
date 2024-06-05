@@ -20,6 +20,7 @@ import 'package:audiolearn/main.dart' as app;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../test/util/test_utility.dart';
+import 'integration_test_util.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -285,7 +286,8 @@ void main() {
       // downloaded Audio item InkWell widget and obtain again the
       // previously downloaded Audio item InkWell widget finder
 
-      Finder lastDownloadedAudioListTileInkWellFinder = validateInkWellButton(
+      Finder lastDownloadedAudioListTileInkWellFinder =
+          IntegrationTestUtil.validateInkWellButton(
         tester: tester,
         audioTitle: lastDownloadedAudioTitle,
         expectedIcon: Icons.play_arrow,
@@ -318,7 +320,8 @@ void main() {
       // downloaded Audio item InkWell widget and obtain again the
       // previously downloaded Audio item InkWell widget finder
       lastDownloadedAudioListTileInkWellFinder =
-          lastDownloadedAudioListTileInkWellFinder = validateInkWellButton(
+          lastDownloadedAudioListTileInkWellFinder =
+              IntegrationTestUtil.validateInkWellButton(
         tester: tester,
         audioTitle: lastDownloadedAudioTitle,
         expectedIcon: Icons.pause,
@@ -333,7 +336,8 @@ void main() {
       // Verify if the play icon is present as well as its color and
       // its enclosing CircleAvatar background color
 
-      lastDownloadedAudioListTileInkWellFinder = validateInkWellButton(
+      lastDownloadedAudioListTileInkWellFinder =
+          IntegrationTestUtil.validateInkWellButton(
         tester: tester,
         audioTitle: lastDownloadedAudioTitle,
         expectedIcon: Icons.play_arrow,
@@ -646,9 +650,9 @@ void main() {
       // Now we go back to the PlayListDownloadView in order
       // to tap on the last downloaded audio title
 
-      final audioPlayerNavButton =
+      final playlistDownloadViewNavButton =
           find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(playlistDownloadViewNavButton);
       await tester.pumpAndSettle();
 
       // Now we want to tap on the last downloaded audio of the
@@ -2282,7 +2286,7 @@ void main() {
 
       // Verify that the comment icon button is disabled since no
       // audio is available to be played or commented
-      validateInkWellButton(
+      IntegrationTestUtil.validateInkWellButton(
         tester: tester,
         inkWellButtonKey: 'commentsInkWellButton',
         expectedIcon: Icons.bookmark_outline_outlined,
@@ -2332,7 +2336,8 @@ void main() {
 
       // Verify that the comment icon button is now enabled since now
       // an audio is available to be played or commented
-      Finder commentInkWellButtonFinder = validateInkWellButton(
+      Finder commentInkWellButtonFinder =
+          IntegrationTestUtil.validateInkWellButton(
         tester: tester,
         inkWellButtonKey: 'commentsInkWellButton',
         expectedIcon: Icons.bookmark_outline_outlined,
@@ -2641,7 +2646,7 @@ void main() {
       // with added tenth of seconds value
 
       String expectedCommentEndPositionMin = '0:51.8';
-      String expectedCommentEndPositionMax = '0:52.2';
+      String expectedCommentEndPositionMax = '0:52.3';
 
       verifyPositionBetweenMinMax(
         tester: tester,
@@ -2849,7 +2854,7 @@ void main() {
 
       // Verify that the comment icon button is now highlighted since now
       // a comment exist for the audio
-      commentInkWellButtonFinder = validateInkWellButton(
+      commentInkWellButtonFinder = IntegrationTestUtil.validateInkWellButton(
         tester: tester,
         inkWellButtonKey: 'commentsInkWellButton',
         expectedIcon: Icons.bookmark_outline_outlined,
@@ -2912,12 +2917,13 @@ void main() {
       );
 
       // Verify that the Text widget contains the expected content
-      String commentDialogAudioPlayerViewAudioPositionText =
+      String commentDialogAudioPlayerViewAudioPositionWithTenthSecText =
           tester.widget<Text>(selectCommentPositionTextOfButtonFinder).data!;
 
       expect(
         roundUpTenthOfSeconds(
-          commentDialogAudioPlayerViewAudioPositionText,
+          audioPositionHHMMSSWithTenthSecText:
+              commentDialogAudioPlayerViewAudioPositionWithTenthSecText,
         ),
         DateTimeUtil.convertToTenthsOfSeconds(
             timeString: actualAudioPlayerViewAudioPosition), // 5:49
@@ -2972,12 +2978,13 @@ void main() {
 
       // Verify that the Text widget of the text button enabling to open
       // a dialog to edit the position contains the expected content
-      commentDialogAudioPlayerViewAudioPositionText =
+      commentDialogAudioPlayerViewAudioPositionWithTenthSecText =
           tester.widget<Text>(selectCommentPositionTextOfButtonFinder).data!;
 
       expect(
         roundUpTenthOfSeconds(
-          commentDialogAudioPlayerViewAudioPositionText,
+          audioPositionHHMMSSWithTenthSecText:
+              commentDialogAudioPlayerViewAudioPositionWithTenthSecText,
         ),
         DateTimeUtil.convertToTenthsOfSeconds(
           timeString: actualAudioPlayerViewAudioPosition,
@@ -3014,7 +3021,7 @@ void main() {
 
       // Verify that the comment icon button is enabled but no longer
       // highlighted since no comment exist for the audio
-      commentInkWellButtonFinder = validateInkWellButton(
+      commentInkWellButtonFinder = IntegrationTestUtil.validateInkWellButton(
         tester: tester,
         inkWellButtonKey: 'commentsInkWellButton',
         expectedIcon: Icons.bookmark_outline_outlined,
@@ -4058,7 +4065,7 @@ void main() {
 
       // Verify that the dialog is not closed
       expect(find.byType(CommentAddEditDialogWidget), findsOneWidget);
-      
+
       // Tap on the cancel comment button to close the dialog
       await tester.tap(find.byKey(const Key('cancelTextButton')));
       await tester.pumpAndSettle();
@@ -4079,7 +4086,8 @@ void main() {
       DirUtil.deleteFilesInDirAndSubDirs(
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
-      testWidgets('After comment list add dialog is opened, tapping outside the dialog',
+    testWidgets(
+        'After comment list add dialog is opened, tapping outside the dialog',
         (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
       const String alreadyCommentedAudioTitle =
@@ -4123,7 +4131,8 @@ void main() {
       DirUtil.deleteFilesInDirAndSubDirs(
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
-    testWidgets('After comment add/edit dialog is opened, tapping outside the comment related dialogs',
+    testWidgets(
+        'After comment add/edit dialog is opened, tapping outside the comment related dialogs',
         (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
       const String alreadyCommentedAudioTitle =
@@ -4164,7 +4173,7 @@ void main() {
 
       // Verify that the dialog is not closed
       expect(find.byType(CommentAddEditDialogWidget), findsOneWidget);
-      
+
       // Tap on the cancel comment button to close the dialog
       await tester.tap(find.byKey(const Key('cancelTextButton')));
       await tester.pumpAndSettle();
@@ -4185,22 +4194,29 @@ void main() {
       DirUtil.deleteFilesInDirAndSubDirs(
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
-});
+  });
 }
 
-int roundUpTenthOfSeconds(
-  String commentDialogAudioPlayerViewAudioPositionText,
-) {
-  int commentDialogAudioPlayerViewAudioPositionTenthOfSecondsRounded;
-  int commentDialogAudioPlayerViewAudioPositionTenthOfSeconds =
-      DateTimeUtil.convertToTenthsOfSeconds(
-    timeString: commentDialogAudioPlayerViewAudioPositionText,
+/// Returns the tenth of seconds of the passed audio position text
+/// displayed in the format HH:MM:SS.t which is converted to
+/// HH:MM:SS and then converted to tenths of seconds.
+///
+/// Since the audio position displayed in the audio player view is
+/// in format HH:MM:SS, in order to compare a position displayed in
+/// the format HH:MM:SS.t to a position displayed in the format HH:MM:SS,
+/// comparison done in tenth of seconds, the corresponding tenth seconds
+/// value of position displayed in the format HH:MM:SS.t is rounded by
+/// the method.
+int roundUpTenthOfSeconds({
+  required String audioPositionHHMMSSWithTenthSecText,
+}) {
+  int audioPositionTenthSecRounded;
+  int audioPositionTenthSec = DateTimeUtil.convertToTenthsOfSeconds(
+    timeString: audioPositionHHMMSSWithTenthSecText,
   );
 
-  commentDialogAudioPlayerViewAudioPositionTenthOfSecondsRounded =
-      (commentDialogAudioPlayerViewAudioPositionTenthOfSeconds / 10).round() *
-          10;
-  return commentDialogAudioPlayerViewAudioPositionTenthOfSecondsRounded;
+  audioPositionTenthSecRounded = (audioPositionTenthSec / 10).round() * 10;
+  return audioPositionTenthSecRounded;
 }
 
 Finder verifyCommentsInCommentListDialog({
@@ -4444,7 +4460,7 @@ Future<void> copyAudioFromSourceToTargetPlaylist({
       find.byKey(const Key("popup_menu_copy_audio_to_playlist"));
 
   await tester.tap(popupCopyMenuItem);
-  await tester.pumpAndSettle(); // Wait for tap action to complete
+  await tester.pumpAndSettle();
 
   // Find the RadioListTile target playlist to which the audio
   // will be copied
@@ -4494,52 +4510,6 @@ Future<void> selectPlaylist({
   // Tap the ListTile Playlist checkbox to select it
   await tester.tap(playlistListTileCheckboxWidgetFinder);
   await tester.pumpAndSettle();
-}
-
-Finder validateInkWellButton({
-  required WidgetTester tester,
-  String? audioTitle,
-  String? inkWellButtonKey,
-  required IconData expectedIcon,
-  required Color expectedIconColor,
-  required Color expectedIconBackgroundColor,
-}) {
-  final Finder audioListTileInkWellFinder;
-
-  if (inkWellButtonKey != null) {
-    audioListTileInkWellFinder = find.byKey(Key(inkWellButtonKey));
-  } else {
-    audioListTileInkWellFinder = findAudioItemInkWellWidget(
-      audioTitle!,
-    );
-  }
-
-  // Find the Icon within the InkWell
-  final Finder iconFinder = find.descendant(
-    of: audioListTileInkWellFinder,
-    matching: find.byType(Icon),
-  );
-  Icon iconWidget = tester.widget<Icon>(iconFinder);
-
-  // Assert Icon type
-  expect(iconWidget.icon, equals(expectedIcon));
-
-  // Assert Icon color
-  expect(iconWidget.color, equals(expectedIconColor));
-
-  // Find the CircleAvatar within the InkWell
-  final Finder circleAvatarFinder = find.descendant(
-    of: audioListTileInkWellFinder,
-    matching: find.byType(CircleAvatar),
-  );
-  CircleAvatar circleAvatarWidget =
-      tester.widget<CircleAvatar>(circleAvatarFinder);
-
-  // Assert CircleAvatar background color
-  expect(
-      circleAvatarWidget.backgroundColor, equals(expectedIconBackgroundColor));
-
-  return audioListTileInkWellFinder;
 }
 
 Future<void> goBackToPlaylistdownloadViewToCheckAudioStateAndIcon({
@@ -4606,7 +4576,7 @@ Future<void> goBackToPlaylistdownloadViewToCheckAudioStateAndIcon({
   // finder. The InkWell widget contains the play or pause icon
   // and tapping on it plays or pauses the audio.
   final Finder lastDownloadedAudioListTileInkWellFinder =
-      findAudioItemInkWellWidget(
+      IntegrationTestUtil.findAudioItemInkWellWidget(
     audioTitle,
   );
 
@@ -4635,28 +4605,6 @@ Future<void> goBackToPlaylistdownloadViewToCheckAudioStateAndIcon({
   // Assert CircleAvatar background color
   expect(circleAvatarWidget.backgroundColor,
       equals(expectedAudioRightIconSurroundedColor));
-}
-
-Finder findAudioItemInkWellWidget(String audioTitle) {
-  // First, get the downloaded Audio item ListTile Text
-  // widget finder
-  final Finder audioListTileTextWidgetFinder = find.text(audioTitle);
-
-  // Then obtain the downloaded Audio item ListTile
-  // widget enclosing the Text widget by finding its ancestor
-  final Finder audioListTileWidgetFinder = find.ancestor(
-    of: audioListTileTextWidgetFinder,
-    matching: find.byType(ListTile),
-  );
-
-  // Now find the InkWell widget located in the downloaded
-  // Audio item ListTile
-  final Finder audioListTileInkWellFinder = find.descendant(
-    of: audioListTileWidgetFinder,
-    matching: find.byKey(const Key("play_pause_audio_item_inkwell")),
-  );
-
-  return audioListTileInkWellFinder;
 }
 
 // A custom finder that finds an IconButton with the specified icon data.

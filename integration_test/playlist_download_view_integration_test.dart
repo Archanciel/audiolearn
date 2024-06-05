@@ -30,6 +30,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../test/util/test_utility.dart';
 import '../test/viewmodels/custom_mock_youtube_explode.dart';
 import '../test/viewmodels/mock_audio_download_vm.dart';
+import 'integration_test_util.dart';
 
 void main() {
   const String youtubePlaylistId = 'PLzwWSJNcZTMTSAE8iabVB6BCAfFGHHfah';
@@ -277,7 +278,7 @@ void main() {
           find.byKey(const Key("popup_menu_delete_playlist"));
 
       await tester.tap(popupDeletePlaylistMenuItem);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Now verifying the confirm dialog message
 
@@ -883,7 +884,7 @@ void main() {
           find.byKey(const Key("popup_menu_delete_playlist"));
 
       await tester.tap(popupDeletePlaylistMenuItem);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Now verifying the confirm dialog message
 
@@ -2260,7 +2261,7 @@ void main() {
           find.byKey(const Key("popup_copy_youtube_video_url"));
 
       await tester.tap(popupCopyVideoUrlMenuItem);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       ClipboardData? clipboardData =
           await Clipboard.getData(Clipboard.kTextPlain);
@@ -2558,7 +2559,7 @@ void main() {
   });
   group('Copy or move audio test', () {
     testWidgets(
-        'Copy audio twice. Second copy is refused with warning. Then 3rd time copy and click on cancel button',
+        'Copy (+ check comment) audio twice. Second copy is refused with warning. Then 3rd time copy and click on cancel button',
         (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -2656,7 +2657,7 @@ void main() {
           find.byKey(const Key("popup_menu_copy_audio_to_playlist"));
 
       await tester.tap(popupCopyMenuItem);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Check the value of the select one playlist AlertDialog
       // dialog title
@@ -2708,6 +2709,30 @@ void main() {
 
       expect(selectedPlaylistTextField.controller!.text,
           youtubeAudioSourcePlaylistTitle);
+
+      // Now verifying that the source audio still access to its
+      // comments
+
+      // First, tap on the source audio ListTile to open the
+      // audio player view
+      await tester.tap(sourceAudioListTileWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // Verify that the comment icon button is highlighted. This indiquates
+      // that a comment exist for the audio
+      IntegrationTestUtil.validateInkWellButton(
+        tester: tester,
+        inkWellButtonKey: 'commentsInkWellButton',
+        expectedIcon: Icons.bookmark_outline_outlined,
+        expectedIconColor: Colors.white,
+        expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
+      );
+
+      // Return to the Playlist Download View
+      final playlistDownloadViewNavButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(playlistDownloadViewNavButton);
+      await tester.pumpAndSettle();
 
       // Now verifying that the source playlist directory still
       // contains the audio file copied to the target playlist
@@ -2788,7 +2813,7 @@ void main() {
           find.byKey(const Key("popup_menu_display_audio_info"));
 
       await tester.tap(popupDisplayAudioInfoMenuItemFinder);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Now verifying the display audio info audio copied dialog
       // elements
@@ -2816,11 +2841,33 @@ void main() {
 
       expect(copiedToPlaylistTitleTextWidget.data, '');
 
-      // Now find the ok button of the confirm warning dialog
+      // Now find the ok button of the audio info dialog
       // and tap on it
       await tester.tap(find.byKey(const Key('audioInfoOkButtonKey')));
       await tester.pumpAndSettle();
 
+      // Now verifying that the target audio can access to its copied
+      // comments
+
+      // First, tap on the source audio ListTile to open the
+      // audio player view
+      await tester.tap(targetAudioListTileWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // Verify that the comment icon button is highlighted. This indiquates
+      // that a comment exist for the audio
+      IntegrationTestUtil.validateInkWellButton(
+        tester: tester,
+        inkWellButtonKey: 'commentsInkWellButton',
+        expectedIcon: Icons.bookmark_outline_outlined,
+        expectedIconColor: Colors.white,
+        expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
+      );
+
+      // Return to the Playlist Download View
+      await tester.tap(playlistDownloadViewNavButton);
+      await tester.pumpAndSettle();
+      
       // Then, we try to copy a second time the audio already copied
       // to the target playlist in order to verify that a warning is
       // displayed informing that the audio was not copied because it
@@ -2880,7 +2927,7 @@ void main() {
           find.byKey(const Key("popup_menu_copy_audio_to_playlist"));
 
       await tester.tap(popupCopyMenuItem);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Check the value of the select one playlist AlertDialog
       // dialog title
@@ -2956,7 +3003,7 @@ void main() {
           find.byKey(const Key("popup_menu_copy_audio_to_playlist"));
 
       await tester.tap(popupCopyMenuItem);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Check the value of the select one playlist AlertDialog
       // dialog title
@@ -3118,7 +3165,7 @@ void main() {
           find.byKey(const Key("popup_menu_copy_audio_to_playlist"));
 
       await tester.tap(popupCopyMenuItem);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Check the value of the select one playlist AlertDialog
       // dialog title
@@ -3250,7 +3297,7 @@ void main() {
           find.byKey(const Key("popup_menu_display_audio_info"));
 
       await tester.tap(popupDisplayAudioInfoMenuItemFinder);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Now verifying the display audio info audio copied dialog
       // elements
@@ -3278,7 +3325,7 @@ void main() {
 
       expect(copiedToPlaylistTitleTextWidget.data, '');
 
-      // Now find the ok button of the confirm warning dialog
+      // Now find the ok button of the audio info dialog
       // and tap on it
       await tester.tap(find.byKey(const Key('audioInfoOkButtonKey')));
       await tester.pumpAndSettle();
@@ -3342,7 +3389,7 @@ void main() {
           find.byKey(const Key("popup_menu_move_audio_to_playlist"));
 
       await tester.tap(popupCopyMenuItem);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Check the value of the select one playlist AlertDialog
       // dialog title
@@ -3418,7 +3465,7 @@ void main() {
           find.byKey(const Key("popup_menu_move_audio_to_playlist"));
 
       await tester.tap(popupCopyMenuItem);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Check the value of the select one playlist AlertDialog
       // dialog title
@@ -3580,7 +3627,7 @@ void main() {
           find.byKey(const Key("popup_menu_copy_audio_to_playlist"));
 
       await tester.tap(popupCopyMenuItem);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Check the value of the select one playlist AlertDialog
       // dialog title
@@ -3712,7 +3759,7 @@ void main() {
           find.byKey(const Key("popup_menu_delete_audio"));
 
       await tester.tap(popupDisplayAudioInfoMenuItemFinder);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Now verify that the target playlist directory no longer
       // contains the audio file copied from the source playlist
@@ -3781,7 +3828,7 @@ void main() {
           find.byKey(const Key("popup_menu_move_audio_to_playlist"));
 
       await tester.tap(popupCopyMenuItem);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Check the value of the select one playlist AlertDialog
       // dialog title
@@ -3937,7 +3984,7 @@ void main() {
           find.byKey(const Key("popup_menu_copy_audio_to_playlist"));
 
       await tester.tap(popupCopyMenuItem);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Check the value of the select one playlist AlertDialog
       // dialog title
@@ -4069,7 +4116,7 @@ void main() {
           find.byKey(const Key("popup_menu_delete_audio"));
 
       await tester.tap(popupDisplayAudioInfoMenuItemFinder);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Now verify that the target playlist directory no longer
       // contains the audio file copied from the source playlist
@@ -4138,7 +4185,7 @@ void main() {
           find.byKey(const Key("popup_menu_copy_audio_to_playlist"));
 
       await tester.tap(popupCopyMenuItem);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Check the value of the select one playlist AlertDialog
       // dialog title
@@ -4197,7 +4244,7 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
     testWidgets(
-        'Move audio from Youtube to local playlist, then move it back, then remove it, then remove it back',
+        'Move (+ check comment) audio from Youtube to local playlist, then move it back, then remove it, then remove it back',
         (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -4293,7 +4340,7 @@ void main() {
           find.byKey(const Key("popup_menu_move_audio_to_playlist"));
 
       await tester.tap(popupMoveMenuItem);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Check the value of the select one playlist AlertDialog
       // dialog title
@@ -4426,7 +4473,7 @@ void main() {
           find.byKey(const Key("popup_menu_display_audio_info"));
 
       await tester.tap(popupDisplayAudioInfoMenuItemFinder);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Now verifying the display audio info audio moved dialog
       // elements
@@ -4453,10 +4500,28 @@ void main() {
 
       expect(movedToPlaylistTitleTextWidget.data, '');
 
-      // Now find the ok button of the confirm warning dialog
+      // Now find the ok button of the audio info dialog
       // and tap on it
       await tester.tap(find.byKey(const Key('audioInfoOkButtonKey')));
       await tester.pumpAndSettle();
+
+      // Now verifying that the target audio can access to its copied
+      // comments
+
+      // First, tap on the source audio ListTile to open the
+      // audio player view
+      await tester.tap(targetAudioListTileWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // Verify that the comment icon button is highlighted. This indiquates
+      // that a comment exist for the audio
+      IntegrationTestUtil.validateInkWellButton(
+        tester: tester,
+        inkWellButtonKey: 'commentsInkWellButton',
+        expectedIcon: Icons.bookmark_outline_outlined,
+        expectedIconColor: Colors.white,
+        expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
+      );
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -4560,7 +4625,7 @@ void main() {
           find.byKey(const Key("popup_menu_move_audio_to_playlist"));
 
       await tester.tap(popupMoveMenuItem);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Check the value of the select one playlist AlertDialog
       // dialog title
@@ -4717,7 +4782,7 @@ void main() {
           find.byKey(const Key("popup_menu_copy_audio_to_playlist"));
 
       await tester.tap(popupCopyMenuItem);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Check the value of the select one playlist AlertDialog
       // dialog title
@@ -4852,7 +4917,7 @@ void main() {
           find.byKey(const Key("popup_menu_copy_audio_to_playlist"));
 
       await tester.tap(localSourceAudioPopupCopyMenuItem);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Find the RadioListTile target playlist to which the audio
       // will be copied
@@ -4984,7 +5049,7 @@ void main() {
           find.byKey(const Key("popup_menu_delete_audio_from_playlist_aswell"));
 
       await tester.tap(popupDisplayAudioInfoMenuItemFinder);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Now verifying the deleted audio was physically deleted from
       // the playlist directory. No warning was displayed.
@@ -5112,7 +5177,7 @@ void main() {
           find.byKey(const Key("popup_menu_move_audio_to_playlist"));
 
       await tester.tap(popupMoveMenuItem);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Check the value of the select one playlist AlertDialog
       // dialog title
@@ -5234,7 +5299,7 @@ void main() {
           find.byKey(const Key("popup_menu_move_audio_to_playlist"));
 
       await tester.tap(localSourceAudioPopupMoveMenuItem);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Find the RadioListTile target playlist to which the audio
       // will be moved
@@ -5353,7 +5418,7 @@ void main() {
           find.byKey(const Key("popup_menu_delete_audio_from_playlist_aswell"));
 
       await tester.tap(popupDisplayAudioInfoMenuItemFinder);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Now verifying the deleted audio was physically deleted from
       // the playlist directory. No warning was displayed.
@@ -5493,7 +5558,7 @@ void main() {
           find.byKey(const Key("popup_menu_update_playable_audio_list"));
 
       await tester.tap(popupUpdatePlayableAudioListPlaylistMenuItem);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Now verifying the warning dialog
 
@@ -5644,7 +5709,7 @@ void main() {
           find.byKey(const Key("popup_menu_update_playable_audio_list"));
 
       await tester.tap(popupUpdatePlayableAudioListPlaylistMenuItem);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Now verifying the warning dialog
 
@@ -6757,7 +6822,7 @@ void main() {
           find.byKey(const Key("popup_menu_delete_audio"));
 
       await tester.tap(popupCopyMenuItem);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Now verifying the selected playlist TextField still
       // contains the title of the source playlist
@@ -6918,7 +6983,7 @@ void main() {
           find.byKey(const Key("popup_menu_delete_audio_from_playlist_aswell"));
 
       await tester.tap(popupCopyMenuItem);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Now verifying the selected playlist TextField still
       // contains the title of the source playlist
@@ -7138,7 +7203,7 @@ void main() {
           find.byKey(const Key("popup_menu_delete_audio_from_playlist_aswell"));
 
       await tester.tap(popupDeleteAudioFromPlaylistAsWellMenuItem);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Ensure the warning dialog is shown
       expect(find.byType(WarningMessageDisplayWidget), findsOneWidget);
@@ -7396,7 +7461,7 @@ void main() {
           find.byKey(const Key("popup_menu_delete_playlist"));
 
       await tester.tap(popupDeletePlaylistMenuItem);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Now verifying the confirm dialog message
 
@@ -7569,7 +7634,7 @@ void main() {
           find.byKey(const Key("popup_menu_delete_playlist"));
 
       await tester.tap(popupDeletePlaylistMenuItem);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Now find the cancel button of the delete playlist confirm
       // dialog and tap on it
@@ -7734,7 +7799,7 @@ void main() {
           find.byKey(const Key("popup_menu_delete_playlist"));
 
       await tester.tap(popupDeletePlaylistMenuItem);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Now verifying the confirm dialog message
 
@@ -7906,7 +7971,7 @@ void main() {
           find.byKey(const Key("popup_menu_delete_playlist"));
 
       await tester.tap(popupDeletePlaylistMenuItem);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Now find the cancel button of the delete playlist confirm
       // dialog and tap on it
@@ -8090,7 +8155,7 @@ void main() {
           find.byKey(const Key("popup_menu_delete_playlist"));
 
       await tester.tap(popupDeletePlaylistMenuItem);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Now verifying the confirm dialog message
 
@@ -8261,7 +8326,7 @@ void main() {
           find.byKey(const Key("popup_menu_delete_playlist"));
 
       await tester.tap(popupDeletePlaylistMenuItem);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Now verifying the confirm dialog message
 
@@ -8872,7 +8937,7 @@ void main() {
           find.byKey(const Key("popup_menu_delete_playlist"));
 
       await tester.tap(popupDeletePlaylistMenuItem);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Now verifying the confirm dialog message
 
@@ -9010,7 +9075,7 @@ void main() {
           find.byKey(const Key("popup_menu_delete_playlist"));
 
       await tester.tap(popupDeletePlaylistMenuItem);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       // Now verifying the confirm dialog message
 
@@ -9161,7 +9226,7 @@ void main() {
           find.byKey(const Key("popup_menu_delete_audio"));
 
       await tester.tap(popupCopyMenuItem);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       TestUtility.verifyWidgetIsEnabled(
         tester: tester,
@@ -9299,7 +9364,7 @@ void main() {
           find.byKey(const Key("popup_menu_delete_audio"));
 
       await tester.tap(popupCopyMenuItem);
-      await tester.pumpAndSettle(); // Wait for tap action to complete
+      await tester.pumpAndSettle();
 
       TestUtility.verifyWidgetIsEnabled(
         tester: tester,
@@ -9972,7 +10037,7 @@ Future<void> verifyAudioInfoDialogElements({
       find.byKey(const Key("popup_menu_display_audio_info"));
 
   await tester.tap(popupDisplayAudioInfoMenuItemFinder);
-  await tester.pumpAndSettle(); // Wait for tap action to complete
+  await tester.pumpAndSettle();
 
   // Now verifying the display audio info audio copied dialog
   // elements
