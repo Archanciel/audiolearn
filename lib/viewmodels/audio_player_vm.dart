@@ -158,7 +158,7 @@ class AudioPlayerVM extends ChangeNotifier {
 
   /// Method called when the user clicks on the audio title or sub
   /// title or when he clicks on a play icon or when he selects an
-  /// audio in the AudioOneSelectableDialogWidget displayed by
+  /// audio in the AudioPlayableListDialogWidget displayed by
   /// clicking on the audio title on the AudioPlayerView or by
   /// long pressing on the >| button.
   ///
@@ -749,15 +749,17 @@ class AudioPlayerVM extends ChangeNotifier {
   void updateAndSaveCurrentAudio({
     bool forceSave = false,
   }) {
-    // necessary so that the audio position is stored on the
-    // audio. Must not be located after the if which can return
-    // without saving the audio position. This would cause the
-    // play icon's appearance to be wrong.
     if (_currentAudio == null) {
       return; // the case if "No audio selected" audio title is displayed
-      // and the app becomes inactive
+      //         and the app becomes inactive
     }
 
+    // necessary so that the audio position is stored on the
+    // audio saved in the playlist json file. Must not be located
+    // after the if which sava the audio every 30 seconds and so
+    // can cause the method to return without saving the audio
+    // position. This would cause the play icon's appearance to
+    // be wrong.
     _currentAudio!.audioPositionSeconds = _currentAudioPosition.inSeconds;
 
     DateTime now = DateTime.now();
