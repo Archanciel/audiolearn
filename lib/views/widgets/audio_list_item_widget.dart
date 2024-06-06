@@ -173,7 +173,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
                   break;
                 case AudioPopupMenuAction.moveAudioToPlaylist:
                   PlaylistListVM expandablePlaylistVM =
-                      getAndInitializeExpandablePlaylistListVM(context);
+                      _getAndInitializeExpandablePlaylistListVM(context);
 
                   showDialog<dynamic>(
                     context: context,
@@ -210,7 +210,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
                   break;
                 case AudioPopupMenuAction.copyAudioToPlaylist:
                   PlaylistListVM expandablePlaylistVM =
-                      getAndInitializeExpandablePlaylistListVM(context);
+                      _getAndInitializeExpandablePlaylistListVM(context);
 
                   showDialog<dynamic>(
                     context: context,
@@ -261,7 +261,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
       ),
       title: GestureDetector(
         onTap: () async {
-          await dragToAudioPlayerView(
+          await _dragToAudioPlayerView(
               audioGlobalPlayerVM); // dragging to the AudioPlayerView screen
         },
         child: Text(audio.validVideoTitle,
@@ -269,7 +269,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
       ),
       subtitle: GestureDetector(
         onTap: () async {
-          await dragToAudioPlayerView(
+          await _dragToAudioPlayerView(
               audioGlobalPlayerVM); // dragging to the AudioPlayerView screen
         },
         child: Text(
@@ -302,7 +302,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
   /// Method called when the user clicks on the audio list item.
   /// This switches to the AudioPlayerView screen without playing
   /// the clicked audio.
-  Future<void> dragToAudioPlayerView(AudioPlayerVM audioGlobalPlayerVM) async {
+  Future<void> _dragToAudioPlayerView(AudioPlayerVM audioGlobalPlayerVM) async {
     await audioGlobalPlayerVM.setCurrentAudio(audio);
     await audioGlobalPlayerVM.goToAudioPlayPosition(
       durationPosition: Duration(
@@ -316,7 +316,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
     onPageChangedFunction(ScreenMixin.AUDIO_PLAYER_VIEW_DRAGGABLE_INDEX);
   }
 
-  PlaylistListVM getAndInitializeExpandablePlaylistListVM(
+  PlaylistListVM _getAndInitializeExpandablePlaylistListVM(
       BuildContext context) {
     PlaylistListVM expandablePlaylistVM =
         Provider.of<PlaylistListVM>(context, listen: false);
