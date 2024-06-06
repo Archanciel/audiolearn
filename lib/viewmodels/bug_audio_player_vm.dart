@@ -352,6 +352,11 @@ class AudioPlayerVM extends ChangeNotifier {
           }
 
           _audioPlayerPlugin!.onPlayerComplete.listen((event) async {
+            // fixing the bug when the audio is at end the smartphone did
+            // not start the next playable audio. This happens on S20, but
+            // not on S8.
+            _currentAudioPosition = _currentAudioTotalDuration;
+
             // Play next audio when current audio finishes.
             await playNextAudio();
           });
