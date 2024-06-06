@@ -25,9 +25,9 @@ import 'integration_test_util.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('play/pause/start/end tests', () {
+  group('Play/pause/start/end tests, clicking on audio title to open AudioPlayerView.', () {
     testWidgets(
-        'Clicking on audio title to open AudioPlayerView. Then check play/pause button conversion only.',
+        'Then check play/pause button conversion only.',
         (
       WidgetTester tester,
     ) async {
@@ -68,7 +68,7 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
     testWidgets(
-        'Clicking on audio title to open AudioPlayerView. Then play audio during 5 seconds and then pause it. Then click on |<, and then on |> button',
+        'Then play audio during 5 seconds and then pause it. Then click on |<, and then on |> button',
         (
       WidgetTester tester,
     ) async {
@@ -214,7 +214,7 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
     testWidgets(
-        'Clicking on audio title to open AudioPlayerView. Then click on play button to finish playing the first downloaded audio and start playing the last downloaded audio, ignoring the 2 precendent audios already fully played.',
+        'Then click on play button to finish playing the first downloaded audio and start playing the last downloaded audio, ignoring the 2 precendent audios already fully played.',
         (
       WidgetTester tester,
     ) async {
@@ -264,7 +264,7 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
     testWidgets(
-        'Clicking on audio play button to open AudioPlayerView. Then back to playlist download view and click on pause, then on play again. Check the audio item play/pause icon as well as their color',
+        'Then back to playlist download view and click on pause, then on play again. Check the audio item play/pause icon as well as their color',
         (
       WidgetTester tester,
     ) async {
