@@ -214,12 +214,12 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
     testWidgets(
-        'Click on play button to finish playing the first downloaded audio and start playing the last downloaded audio, ignoring the 2 precendent audios already fully played.',
+        'Click on play button to finish playing the audio downloaded before the last downloaded audio and start playing the last downloaded audio.',
         (
       WidgetTester tester,
     ) async {
       const String audioPlayerSelectedPlaylistTitle = 'S8 audio';
-      const String firstDownloadedAudioTitle =
+      const String previousEndDownloadedAudioTitle =
           'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau';
 
       await initializeApplicationAndSelectPlaylist(
@@ -227,6 +227,77 @@ void main() {
         savedTestDataDirName: 'audio_player_view_first_to_last_audio_test',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
       );
+
+      // Now we want to tap on the first downloaded audio of the
+      // playlist in order to open the AudioPlayerView displaying
+      // the audio
+
+      // First, get the first downloaded Audio ListTile Text
+      // widget finder and tap on it
+      final Finder firstDownloadedAudioListTileTextWidgetFinder =
+          find.text(previousEndDownloadedAudioTitle);
+
+      await tester.tap(firstDownloadedAudioListTileTextWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // Now we tap on the play button in order to finish
+      // playing the first downloaded audio and start playing
+      // the last downloaded audio of the playlist. The 2
+      // audios in between are ignored since they are already
+      // fully played.
+
+      await tester.tap(find.byIcon(Icons.play_arrow));
+      await tester.pumpAndSettle();
+
+      await Future.delayed(const Duration(seconds: 5));
+      await tester.pumpAndSettle();
+
+      // Click on the pause button
+      await tester.tap(find.byIcon(Icons.pause));
+      await tester.pumpAndSettle();
+
+      // Verify the last downloaded played audio title
+      expect(
+          find.text(
+              '3 fois où Aurélien Barrau tire à balles réelles sur les riches\n8:50'),
+          findsOneWidget);
+
+      // Ensure that the bug corrected on AudioPlayerVM on 06-06-2024
+      // no longer happens. This bug impacted the application during
+      // 3 weeks before it was discovered !!!!
+      final Finder audioPlayerViewAudioPositionFinder =
+          find.byKey(const Key('audioPlayerViewAudioPosition'));
+
+      verifyPositionBetweenMinMax(
+        tester: tester,
+        textWidgetFinder: audioPlayerViewAudioPositionFinder,
+        minPositionTimeStr: '0:03',
+        maxPositionTimeStr: '0:06',
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
+    });
+    testWidgets(
+        'Click on play button to finish playing the first downloaded audio and start playing the last downloaded audio, ignoring the 2 precendent audios already fully played.',
+        (
+      WidgetTester tester,
+    ) async {
+      const String audioPlayerSelectedPlaylistTitle = 'S8 audio';
+      const String firstDownloadedAudioTitle =
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
+
+      await initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_player_view_first_to_last_audio_test',
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+      );
+
+      // Click on playlist toggle button to hide the playlist list
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
 
       // Now we want to tap on the first downloaded audio of the
       // playlist in order to open the AudioPlayerView displaying
@@ -267,12 +338,12 @@ void main() {
       // 3 weeks before it was discovered !!!!
       final Finder audioPlayerViewAudioPositionFinder =
           find.byKey(const Key('audioPlayerViewAudioPosition'));
-      String actualAudioPlayerViewCurrentAudioPosition =
-          tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
 
-      expect(
-        actualAudioPlayerViewCurrentAudioPosition,
-        '0:05',
+      verifyPositionBetweenMinMax(
+        tester: tester,
+        textWidgetFinder: audioPlayerViewAudioPositionFinder,
+        minPositionTimeStr: '0:03',
+        maxPositionTimeStr: '0:06',
       );
 
       // Purge the test playlist directory so that the created test
