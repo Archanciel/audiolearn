@@ -53,7 +53,7 @@ void main() async {
   // await Process.run('flutter', ['gen-l10n']); not working !
 
   // ignore: avoid_print
-  print('Localization class has been inserted into $filePath');
+  print('Localization methods have been inserted into $filePath');
 }
 
 String generateLocalizationClass(Map<String, dynamic> arbData) {
