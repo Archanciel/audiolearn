@@ -277,7 +277,7 @@ void main() {
     test(
       'Duration 0 hours 0 minutes 52.5 seconds',
       () {
-        final Duration duration = (const Duration(milliseconds: 52500));
+        const Duration duration = (Duration(milliseconds: 52500));
 
         expect(duration.HHmmssZeroHH(), '0:53');
         expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true), '0:52.5');
@@ -904,7 +904,7 @@ void main() {
     test(
       'Duration 0 hours 0 minutes 52.5 seconds',
       () {
-        final Duration duration = (const Duration(milliseconds: 52500));
+        const Duration duration = (Duration(milliseconds: 52500));
 
         expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true), '0:52.5');
         expect(duration.HHmmssZeroHH(), '0:53');
