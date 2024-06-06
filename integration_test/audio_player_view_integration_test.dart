@@ -27,7 +27,7 @@ void main() {
 
   group('Play/pause/start/end tests, clicking on audio title to open AudioPlayerView.', () {
     testWidgets(
-        'Then check play/pause button conversion only.',
+        'Check play/pause button conversion only.',
         (
       WidgetTester tester,
     ) async {
@@ -68,7 +68,7 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
     testWidgets(
-        'Then play audio during 5 seconds and then pause it. Then click on |<, and then on |> button',
+        'Play audio during 5 seconds and then pause it. Then click on |<, and then on |> button',
         (
       WidgetTester tester,
     ) async {
@@ -214,7 +214,7 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
     testWidgets(
-        'Then click on play button to finish playing the first downloaded audio and start playing the last downloaded audio, ignoring the 2 precendent audios already fully played.',
+        'Click on play button to finish playing the first downloaded audio and start playing the last downloaded audio, ignoring the 2 precendent audios already fully played.',
         (
       WidgetTester tester,
     ) async {
@@ -264,7 +264,7 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
     testWidgets(
-        'Then back to playlist download view and click on pause, then on play again. Check the audio item play/pause icon as well as their color',
+        'Back to playlist download view and click on pause, then on play again. Check the audio item play/pause icon as well as their color',
         (
       WidgetTester tester,
     ) async {
