@@ -25,10 +25,10 @@ import 'integration_test_util.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Play/pause/start/end tests, clicking on audio title to open AudioPlayerView.', () {
-    testWidgets(
-        'Check play/pause button conversion only.',
-        (
+  group(
+      'Play/pause/start/end tests, clicking on audio title to open AudioPlayerView.',
+      () {
+    testWidgets('Check play/pause button conversion only.', (
       WidgetTester tester,
     ) async {
       const String audioPlayerSelectedPlaylistTitle =
@@ -252,11 +252,28 @@ void main() {
       await Future.delayed(const Duration(seconds: 5));
       await tester.pumpAndSettle();
 
+      // Click on the pause button
+      await tester.tap(find.byIcon(Icons.pause));
+      await tester.pumpAndSettle();
+
       // Verify the last downloaded played audio title
       expect(
           find.text(
               '3 fois où Aurélien Barrau tire à balles réelles sur les riches\n8:50'),
           findsOneWidget);
+
+      // Ensure that the bug corrected on AudioPlayerVM on 06-06-2024
+      // no longer happens. This bug impacted the application during
+      // 3 weeks before it was discovered !!!!
+      final Finder audioPlayerViewAudioPositionFinder =
+          find.byKey(const Key('audioPlayerViewAudioPosition'));
+      String actualAudioPlayerViewCurrentAudioPosition =
+          tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
+
+      expect(
+        actualAudioPlayerViewCurrentAudioPosition,
+        '0:05',
+      );
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
