@@ -1054,4 +1054,7 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get commentUpdateDateTooltip => "Comment last update date";
+
+  @override
+  String get playlistCommentMenu => "Comments of playlist audios ...";
 }
