@@ -5,7 +5,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants.dart';
-import '../../models/audio.dart';
 import '../../models/comment.dart';
 import '../../models/playlist.dart';
 import '../../services/settings_data_service.dart';
