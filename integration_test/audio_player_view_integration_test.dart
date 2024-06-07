@@ -233,12 +233,12 @@ void main() {
       // downloaded audio of the playlist in order to open the
       // AudioPlayerView displaying the audio.
 
-      // First, get the before last downloaded audio ListTile Text
+      // First, get the previous end downloaded audio ListTile Text
       // widget finder and tap on it
-      final Finder firstDownloadedAudioListTileTextWidgetFinder =
+      final Finder previousEndDownloadedAudioListTileTextWidgetFinder =
           find.text(previousEndDownloadedAudioTitle);
 
-      await tester.tap(firstDownloadedAudioListTileTextWidgetFinder);
+      await tester.tap(previousEndDownloadedAudioListTileTextWidgetFinder);
       await tester.pumpAndSettle();
 
       // Now we tap on the play button in order to finish
@@ -289,6 +289,7 @@ void main() {
       const String previousEndDownloadedAudioTitle =
           'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau';
       const String lastDownloadedAudioTitle = '3 fois où Aurélien Barrau tire à balles réelles sur les riches\n8:50';
+      const String playlistDownloadViewlastDownloadedAudioTitle = '3 fois où Aurélien Barrau tire à balles réelles sur les riches';
 
       await initializeApplicationAndSelectPlaylist(
         tester: tester,
@@ -296,16 +297,53 @@ void main() {
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
       );
 
-      // Now we want to tap on the audio downloaded before the last
-      // downloaded audio of the playlist in order to open the
-      // AudioPlayerView displaying the audio.
-
-      // First, get the before last downloaded audio ListTile Text
+      // First, we modify the audio position of the last downloaded audio
+      // of the playlist. First, get the last downloaded audio ListTile Text
       // widget finder and tap on it
-      final Finder firstDownloadedAudioListTileTextWidgetFinder =
+      final Finder playlistDownloadViewLastDownloadedAudioListTileTextWidgetFinder =
+          find.text(playlistDownloadViewlastDownloadedAudioTitle);
+
+      await tester.tap(playlistDownloadViewLastDownloadedAudioListTileTextWidgetFinder);
+      await tester.pumpAndSettle();
+      
+      // Tapping 5 times on the forward 1 minute icon button. Now, the last
+      // downloaded audio of the playlist is partially listened.
+      for (int i = 0; i < 5; i++) {
+        await tester
+            .tap(find.byKey(const Key('audioPlayerViewForward1mButton')));
+        await tester.pumpAndSettle();
+      }
+
+      // Playing the audio during 1 second. Clicking on the play button
+      // rewind the audio of 30 seconds since the audio was not listened
+      // during more than 1 hour
+
+      await tester.tap(find.byIcon(Icons.play_arrow));
+      await tester.pumpAndSettle();
+
+      await Future.delayed(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
+
+      // Click on the pause button to stop the last downloaded audio
+      await tester.tap(find.byIcon(Icons.pause));
+      await tester.pumpAndSettle();
+
+      // Now we want to tap on the audio downloaded before the last
+      // downloaded audio of the playlist in order to start playing
+      // it.
+
+      // First, go back to the playlist download view.
+      final Finder audioPlayerNavButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(audioPlayerNavButton);
+      await tester.pumpAndSettle();
+
+      // Then, get the previous end downloaded audio ListTile Text
+      // widget finder and tap on it
+      final Finder previousEndDownloadedAudioListTileTextWidgetFinder =
           find.text(previousEndDownloadedAudioTitle);
 
-      await tester.tap(firstDownloadedAudioListTileTextWidgetFinder);
+      await tester.tap(previousEndDownloadedAudioListTileTextWidgetFinder);
       await tester.pumpAndSettle();
 
       // Now we tap on the play button in order to finish
@@ -338,8 +376,8 @@ void main() {
       verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '0:03',
-        maxPositionTimeStr: '0:06',
+        minPositionTimeStr: '4:34',
+        maxPositionTimeStr: '4:37',
       );
 
       // Purge the test playlist directory so that the created test
