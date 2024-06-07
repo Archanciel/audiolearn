@@ -376,8 +376,8 @@ void main() {
       verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '4:34',
-        maxPositionTimeStr: '4:37',
+        minPositionTimeStr: '5:03',
+        maxPositionTimeStr: '5:07',
       );
 
       // Purge the test playlist directory so that the created test
@@ -449,6 +449,115 @@ void main() {
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
         minPositionTimeStr: '0:03',
         maxPositionTimeStr: '0:06',
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
+    });
+    testWidgets(
+        '4-Click on play button to finish playing the first downloaded audio and start playing the partially listened last downloaded audio, ignoring the 2 precendent audios already fully played.',
+        (
+      WidgetTester tester,
+    ) async {
+      const String audioPlayerSelectedPlaylistTitle = 'S8 audio';
+      const String firstDownloadedAudioTitle =
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
+      const String lastDownloadedAudioTitle = '3 fois où Aurélien Barrau tire à balles réelles sur les riches\n8:50';
+      const String playlistDownloadViewlastDownloadedAudioTitle = '3 fois où Aurélien Barrau tire à balles réelles sur les riches';
+
+      await initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_player_view_first_to_last_audio_test',
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+      );
+
+      // Click on playlist toggle button to hide the playlist list
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // First, we modify the audio position of the last downloaded audio
+      // of the playlist. First, get the last downloaded audio ListTile Text
+      // widget finder and tap on it
+      final Finder playlistDownloadViewLastDownloadedAudioListTileTextWidgetFinder =
+          find.text(playlistDownloadViewlastDownloadedAudioTitle);
+
+      await tester.tap(playlistDownloadViewLastDownloadedAudioListTileTextWidgetFinder);
+      await tester.pumpAndSettle();
+      
+      // Tapping 5 times on the forward 1 minute icon button. Now, the last
+      // downloaded audio of the playlist is partially listened.
+      for (int i = 0; i < 5; i++) {
+        await tester
+            .tap(find.byKey(const Key('audioPlayerViewForward1mButton')));
+        await tester.pumpAndSettle();
+      }
+
+      // Playing the audio during 1 second. Clicking on the play button
+      // rewind the audio of 30 seconds since the audio was not listened
+      // during more than 1 hour
+
+      await tester.tap(find.byIcon(Icons.play_arrow));
+      await tester.pumpAndSettle();
+
+      await Future.delayed(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
+
+      // Click on the pause button to stop the last downloaded audio
+      await tester.tap(find.byIcon(Icons.pause));
+      await tester.pumpAndSettle();
+
+      // Now we want to tap on the first downloaded audio of the
+      // playlist in order to start playing it.
+
+      // First, go back to the playlist download view.
+      final Finder audioPlayerNavButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(audioPlayerNavButton);
+      await tester.pumpAndSettle();
+
+      // Then, get the first downloaded Audio ListTile Text
+      // widget finder and tap on it
+      final Finder firstDownloadedAudioListTileTextWidgetFinder =
+          find.text(firstDownloadedAudioTitle);
+
+      await tester.tap(firstDownloadedAudioListTileTextWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // Now we tap on the play button in order to finish
+      // playing the first downloaded audio and start playing
+      // the last downloaded audio of the playlist. The 2
+      // audios in between are ignored since they are already
+      // fully played.
+
+      await tester.tap(find.byIcon(Icons.play_arrow));
+      await tester.pumpAndSettle();
+
+      await Future.delayed(const Duration(seconds: 5));
+      await tester.pumpAndSettle();
+
+      // Click on the pause button
+      await tester.tap(find.byIcon(Icons.pause));
+      await tester.pumpAndSettle();
+
+      // Verify the last downloaded played audio title
+      expect(
+          find.text(
+              lastDownloadedAudioTitle),
+          findsOneWidget);
+
+      // Ensure that the bug corrected on AudioPlayerVM on 06-06-2024
+      // no longer happens. This bug impacted the application during
+      // 3 weeks before it was discovered !!!!
+      final Finder audioPlayerViewAudioPositionFinder =
+          find.byKey(const Key('audioPlayerViewAudioPosition'));
+
+      verifyPositionBetweenMinMax(
+        tester: tester,
+        textWidgetFinder: audioPlayerViewAudioPositionFinder,
+        minPositionTimeStr: '5:03',
+        maxPositionTimeStr: '5:07',
       );
 
       // Purge the test playlist directory so that the created test
