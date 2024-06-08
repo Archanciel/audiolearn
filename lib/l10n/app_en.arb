@@ -28,7 +28,6 @@
   "ytPlaylistLinkLabel": "Youtube Playlist Link",
   "ytPlaylistLinkHintText": "Enter a Youtube playlist link",
   "addPlaylist": "Add",
-  "renameAudioFileButton": "Rename",
   "downloadSingleVideoAudio": "One",
   "downloadSelectedPlaylist": "Playlist",
   "stopDownload": "Stop",
@@ -177,9 +176,14 @@
   "addLocalPlaylistDialogTitle": "Add Local Playlist",
   "renameAudioFileDialogTitle": "Rename Audio File",
   "renameAudioFileDialogComment": "Renaming audio file in order to improve their playing order.",
+  "renameAudioFileLabel": "File name",
+  "renameAudioFileButton": "Rename",
+  "modifyAudioTitleDialogTitle": "Modify Audio Title",
+  "modifyAudioTitleDialogComment": "Modify the audio title to identify it more easily during listening.",
+  "modifyAudioTitleLabel": "Title",
+  "modifyAudioTitleButton": "Modify",
   "youtubePlaylistUrlLabel": "Youtube playlist URL",
   "localPlaylistTitleLabel": "Local playlist title",
-  "renameAudioFileLabel": "Audio file name",
   "playlistTypeLabel": "Playlist type",
   "playlistTypeYoutube": "Youtube",
   "playlistTypeLocal": "Local",
@@ -345,5 +349,6 @@
   "noUniqueCheckboxSelectedWarning": "No checkbox selected. Please select one checkbox before clicking 'Ok', or click 'Cancel' to exit.",
   "commentCreationDateTooltip": "Comment creation date",
   "commentUpdateDateTooltip": "Comment last update date",
-  "playlistCommentMenu": "Comments of playlist audios ..."
+  "playlistCommentMenu": "Comments of playlist audios ...",
+  "modifyAudioTitle": "Modify audio title ..."
 }

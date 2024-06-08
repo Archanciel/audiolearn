@@ -28,7 +28,6 @@
   "ytPlaylistLinkLabel": "Lien Playlist Youtube",
   "ytPlaylistLinkHintText": "Entrez un lien playlist Youtube",
   "addPlaylist": "Ajout",
-  "renameAudioFileButton": "Renommer",
   "downloadSingleVideoAudio": "Un",
   "downloadSelectedPlaylist": "Playlist",
   "stopDownload": "Stop",
@@ -177,9 +176,14 @@
   "addLocalPlaylistDialogTitle": "Ajouter une playlist locale",
   "renameAudioFileDialogTitle": "Renommer le fichier audio",
   "renameAudioFileDialogComment": "Renommer le fichier audio afin d'améliorer son ordre d'écoute.",
+  "renameAudioFileLabel": "Nom",
+  "renameAudioFileButton": "Renommer",
+  "modifyAudioTitleDialogTitle": "Modifier le titre de l'audio",
+  "modifyAudioTitleDialogComment": "Modifier le titre de l'audio afin de l'identifier plus facilement lors de l'écoute.",
+  "modifyAudioTitleLabel": "Titre",
+  "modifyAudioTitleButton": "Modifier",
   "youtubePlaylistUrlLabel": "URL de la playlist Youtube",
   "localPlaylistTitleLabel": "Titre de la playlist locale",
-  "renameAudioFileLabel": "Nom du fichier audio",
   "playlistTypeLabel": "Type de playlist",
   "playlistTypeYoutube": "Youtube",
   "playlistTypeLocal": "Locale",
@@ -347,5 +351,6 @@
   "noUniqueCheckboxSelectedWarning": "Aucune case à cocher sélectionnée. Veuillez en sélectionner une avant de cliquer sur 'Ok' ou cliquez sur 'Annuler' pour quitter.",
   "commentCreationDateTooltip": "Date de création du commentaire",
   "commentUpdateDateTooltip": "Date de mise à jour du commentaire",
-  "playlistCommentMenu": "Commentaires des audios de la playlist ..."
+  "playlistCommentMenu": "Commentaires des audios de la playlist ...",
+  "modifyAudioTitle": "Modifier le titre de l'audio ..."
 }

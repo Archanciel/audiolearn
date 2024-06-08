@@ -17,7 +17,7 @@ import '../screen_mixin.dart';
 import 'audio_info_dialog_widget.dart';
 import 'comment_list_add_dialog_widget.dart';
 import 'playlist_one_selectable_dialog_widget.dart';
-import 'audio_file_rename_dialog_widget.dart';
+import 'audio_modification_dialog_widget.dart';
 
 enum AudioPopupMenuAction {
   openYoutubeVideo,
@@ -29,6 +29,7 @@ enum AudioPopupMenuAction {
   deleteAudio,
   deleteAudioFromPlaylistAswell,
   audioComment,
+  modifyAudioTitle,
 }
 
 /// This widget is used in the PlaylistDownloadView ListView which
@@ -104,6 +105,11 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
                 child: Text(AppLocalizations.of(context)!.renameAudioFile),
               ),
               PopupMenuItem<AudioPopupMenuAction>(
+                key: const Key('popup_menu_modify_audio_title'),
+                value: AudioPopupMenuAction.modifyAudioTitle,
+                child: Text(AppLocalizations.of(context)!.modifyAudioTitle),
+              ),
+              PopupMenuItem<AudioPopupMenuAction>(
                 key: const Key('popup_menu_move_audio_to_playlist'),
                 value: AudioPopupMenuAction.moveAudioToPlaylist,
                 child: Text(AppLocalizations.of(context)!.moveAudioToPlaylist),
@@ -165,8 +171,20 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
                   showDialog<void>(
                     context: context,
                     builder: (BuildContext context) {
-                      return AudioFileRenameDialogWidget(
+                      return AudioModificationDialogWidget(
                         audio: audio,
+                        audioModificationType: AudioModificationType.renameAudioFile,
+                      );
+                    },
+                  );
+                  break;
+                case AudioPopupMenuAction.modifyAudioTitle:
+                  showDialog<void>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AudioModificationDialogWidget(
+                        audio: audio,
+                        audioModificationType: AudioModificationType.modifyAudioTitle,
                       );
                     },
                   );

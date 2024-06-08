@@ -1057,4 +1057,17 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get playlistCommentMenu => "Comments of playlist audios ...";
+
+  @override
+  String get modifyAudioTitleDialogTitle => "Modify Audio Title";
+
+  @override
+  String get modifyAudioTitleDialogComment =>
+      "Improving or translating audio title ...";
+
+  @override
+  String get modifyAudioTitleLabel => "Audio title";
+
+  @override
+  String get modifyAudioTitleButton => "Modify";
 }
