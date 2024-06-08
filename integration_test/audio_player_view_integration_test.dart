@@ -1707,19 +1707,21 @@ void main() {
       final Finder fifthDownloadedPartiallyPlayedAudioListTileTextWidgetFinder =
           find.text(fifthDownloadedPartiallyPlayedAudioTitle);
 
-      await tester.tap(fifthDownloadedPartiallyPlayedAudioListTileTextWidgetFinder);
+      await tester
+          .tap(fifthDownloadedPartiallyPlayedAudioListTileTextWidgetFinder);
       await tester.pumpAndSettle();
 
       // Now we open the AudioPlayableListDialogWidget
       // and verify the color of the displayed audio titles
 
-      await tester.tap(find.text(
-          '$fifthDownloadedPartiallyPlayedAudioTitle\n6:29'));
+      await tester
+          .tap(find.text('$fifthDownloadedPartiallyPlayedAudioTitle\n6:29'));
       await tester.pumpAndSettle();
 
       await checkAudioTextColor(
         tester: tester,
-        audioTitle: "La sagesse ancestrale au service de la transition - Barrau & Bellet",
+        audioTitle:
+            "La sagesse ancestrale au service de la transition - Barrau & Bellet",
         expectedTitleTextColor: fullyPlayedAudioTitleColor,
         expectedTitleTextBackgroundColor: null,
       );
@@ -1733,8 +1735,7 @@ void main() {
 
       await checkAudioTextColor(
         tester: tester,
-        audioTitle:
-            "Jancovici démonte les avantages du numérique chez Orange",
+        audioTitle: "Jancovici démonte les avantages du numérique chez Orange",
         expectedTitleTextColor: fullyPlayedAudioTitleColor,
         expectedTitleTextBackgroundColor: null,
       );
@@ -1748,8 +1749,7 @@ void main() {
 
       await checkAudioTextColor(
         tester: tester,
-        audioTitle:
-            fifthDownloadedPartiallyPlayedAudioTitle,
+        audioTitle: fifthDownloadedPartiallyPlayedAudioTitle,
         expectedTitleTextColor: currentlyPlayingAudioTitleTextColor,
         expectedTitleTextBackgroundColor:
             currentlyPlayingAudioTitleTextBackgroundColor,
@@ -1769,13 +1769,12 @@ void main() {
       expect(find.text("Really short video"), findsNothing);
 
       expect(
-          find.text(
-              "Jancovici démonte les avantages du numérique chez Orange"),
+          find.text("Jancovici démonte les avantages du numérique chez Orange"),
           findsNothing);
 
       // Checking the color of the displayed audio titles
 
-         await checkAudioTextColor(
+      await checkAudioTextColor(
         tester: tester,
         audioTitle: "Manger de la viande à notre époque par Aurélien Barrau",
         expectedTitleTextColor: partiallyPlayedAudioTitleTextdColor,
@@ -1791,8 +1790,7 @@ void main() {
 
       await checkAudioTextColor(
         tester: tester,
-        audioTitle:
-            fifthDownloadedPartiallyPlayedAudioTitle,
+        audioTitle: fifthDownloadedPartiallyPlayedAudioTitle,
         expectedTitleTextColor: currentlyPlayingAudioTitleTextColor,
         expectedTitleTextBackgroundColor:
             currentlyPlayingAudioTitleTextBackgroundColor,
@@ -1827,7 +1825,7 @@ void main() {
         (WidgetTester tester) async {
       const String audioPlayerSelectedPlaylistTitle =
           'S8 audio'; // Youtube playlist
-      const String currentNotPlayedAudioTitle =
+      const String firstDownloadedNotPlayedAudioTitle =
           "Les besoins artificiels par R.Keucheyan";
 
       await initializeApplicationAndSelectPlaylist(
@@ -1836,28 +1834,66 @@ void main() {
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
       );
 
-      // Go to the audio player view by tapping on the audio player
-      // icon button
-      final Finder audioPlayerNavButton =
-          find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      // Scrolling down the audios list in order to display the first
+      // downloaded audio title
+
+      // Find the list view using the key
+      final listFinder = find.byKey(const Key('audio_list'));
+
+      // Ensure the list view is present in the widget tree
+      expect(listFinder, findsOneWidget);
+
+      // Perform the scroll action
+      await tester.drag(listFinder, const Offset(0, -1000));
       await tester.pumpAndSettle();
 
-      // The current audio is the first downloaded audio of the playlist
+      // Now type on the first downloaded audio title in order to
+      // open the AudioPlayerView displaying the audio
+      await tester
+          .tap(find.text(firstDownloadedNotPlayedAudioTitle));
+      await tester.pumpAndSettle();
+
       // Now we open the AudioPlayableListDialogWidget by tapping on the
       // audio title
-
-      await tester.tap(find.text("$currentNotPlayedAudioTitle\n19:05"));
+      await tester.tap(find.text("$firstDownloadedNotPlayedAudioTitle\n19:05"));
       await tester.pumpAndSettle();
 
       // The list has been moved down so that the current audio is
       // displayed at the botom of the list
       await checkAudioTextColor(
         tester: tester,
-        audioTitle: currentNotPlayedAudioTitle,
+        audioTitle: firstDownloadedNotPlayedAudioTitle,
         expectedTitleTextColor: currentlyPlayingAudioTitleTextColor,
         expectedTitleTextBackgroundColor:
             currentlyPlayingAudioTitleTextBackgroundColor,
+      );
+
+      await checkAudioTextColor(
+        tester: tester,
+        audioTitle: "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+        expectedTitleTextColor: unplayedAudioTitleTextColor,
+        expectedTitleTextBackgroundColor: null,
+      );
+
+      await checkAudioTextColor(
+        tester: tester,
+        audioTitle: "La résilience insulaire par Fiona Roche",
+        expectedTitleTextColor: partiallyPlayedAudioTitleTextdColor,
+        expectedTitleTextBackgroundColor: null,
+      );
+
+      await checkAudioTextColor(
+        tester: tester,
+        audioTitle: "Really short video",
+        expectedTitleTextColor: fullyPlayedAudioTitleColor,
+        expectedTitleTextBackgroundColor: null,
+      );
+
+      await checkAudioTextColor(
+        tester: tester,
+        audioTitle: "morning _ cinematic video",
+        expectedTitleTextColor: unplayedAudioTitleTextColor,
+        expectedTitleTextBackgroundColor: null,
       );
 
       // Purge the test playlist directory so that the created test
@@ -5282,8 +5318,7 @@ void verifyAudioDataElementsUpdatedInJsonFile({
   int actualAudioPositionSeconds = loadedSelectedPlaylist
       .playableAudioLst[playableAudioLstAudioIndex].audioPositionSeconds;
 
-  expect(
-      (actualAudioPositionSeconds - audioPositionSeconds).abs() <= 1, isTrue,
+  expect((actualAudioPositionSeconds - audioPositionSeconds).abs() <= 1, isTrue,
       reason:
           "Expected audioPositionSeconds: $audioPositionSeconds, actual: $actualAudioPositionSeconds");
 
