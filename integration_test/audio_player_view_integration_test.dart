@@ -1683,7 +1683,7 @@ void main() {
         (WidgetTester tester) async {
       const String audioPlayerSelectedPlaylistTitle =
           'S8 audio'; // Youtube playlist
-      const String currentPartiallyPlayedAudioTitle =
+      const String fifthDownloadedPartiallyPlayedAudioTitle =
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau";
 
       await initializeApplicationAndSelectPlaylist(
@@ -1692,7 +1692,7 @@ void main() {
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
       );
 
-      // Now we want to tap on the first downloaded audio of the
+      // Now we want to tap on the fifth downloaded audio of the
       // playlist in order to open the AudioPlayerView displaying
       // the audio
 
@@ -1702,57 +1702,57 @@ void main() {
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
-      // First, get the current partially played Audio ListTile Text
-      // widget finder and tap on it
-      final Finder currentPartiallyPlayedAudioListTileTextWidgetFinder =
-          find.text(currentPartiallyPlayedAudioTitle);
+      // First, get the fifth downloadedand partially played audio
+      // ListTile Text widget finder and tap on it
+      final Finder fifthDownloadedPartiallyPlayedAudioListTileTextWidgetFinder =
+          find.text(fifthDownloadedPartiallyPlayedAudioTitle);
 
-      await tester.tap(currentPartiallyPlayedAudioListTileTextWidgetFinder);
+      await tester.tap(fifthDownloadedPartiallyPlayedAudioListTileTextWidgetFinder);
       await tester.pumpAndSettle();
 
       // Now we open the AudioPlayableListDialogWidget
       // and verify the color of the displayed audio titles
 
       await tester.tap(find.text(
-          'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n6:29'));
+          '$fifthDownloadedPartiallyPlayedAudioTitle\n6:29'));
       await tester.pumpAndSettle();
 
       await checkAudioTextColor(
         tester: tester,
-        audioTitle:
-            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+        audioTitle: "La sagesse ancestrale au service de la transition - Barrau & Bellet",
         expectedTitleTextColor: fullyPlayedAudioTitleColor,
         expectedTitleTextBackgroundColor: null,
       );
 
       await checkAudioTextColor(
         tester: tester,
-        audioTitle:
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-        expectedTitleTextColor: currentlyPlayingAudioTitleTextColor,
-        expectedTitleTextBackgroundColor:
-            currentlyPlayingAudioTitleTextBackgroundColor,
+        audioTitle: "Manger de la viande à notre époque par Aurélien Barrau",
+        expectedTitleTextColor: partiallyPlayedAudioTitleTextdColor,
+        expectedTitleTextBackgroundColor: null,
       );
 
       await checkAudioTextColor(
         tester: tester,
-        audioTitle: "Really short video",
+        audioTitle:
+            "Jancovici démonte les avantages du numérique chez Orange",
         expectedTitleTextColor: fullyPlayedAudioTitleColor,
         expectedTitleTextBackgroundColor: null,
       );
 
       await checkAudioTextColor(
         tester: tester,
-        audioTitle: "morning _ cinematic video",
+        audioTitle: "Quand Aurélien Barrau va dans une école de management",
         expectedTitleTextColor: unplayedAudioTitleTextColor,
         expectedTitleTextBackgroundColor: null,
       );
 
       await checkAudioTextColor(
         tester: tester,
-        audioTitle: "La résilience insulaire par Fiona Roche",
-        expectedTitleTextColor: partiallyPlayedAudioTitleTextdColor,
-        expectedTitleTextBackgroundColor: null,
+        audioTitle:
+            fifthDownloadedPartiallyPlayedAudioTitle,
+        expectedTitleTextColor: currentlyPlayingAudioTitleTextColor,
+        expectedTitleTextBackgroundColor:
+            currentlyPlayingAudioTitleTextBackgroundColor,
       );
 
       // Now we tap the Exclude fully played audio checkbox
@@ -1760,18 +1760,39 @@ void main() {
           .tap(find.byKey(const Key('excludeFullyPlayedAudiosCheckbox')));
       await tester.pumpAndSettle();
 
-      // Verifying that the fully played audio titles are not displayed
+      // Verifying that the fully played audio titles iare not displayed
 
       expect(
           find.text(
-              "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)"),
+              "La sagesse ancestrale au service de la transition - Barrau & Bellet"),
           findsNothing);
       expect(find.text("Really short video"), findsNothing);
+
+      expect(
+          find.text(
+              "Jancovici démonte les avantages du numérique chez Orange"),
+          findsNothing);
+
+      // Checking the color of the displayed audio titles
+
+         await checkAudioTextColor(
+        tester: tester,
+        audioTitle: "Manger de la viande à notre époque par Aurélien Barrau",
+        expectedTitleTextColor: partiallyPlayedAudioTitleTextdColor,
+        expectedTitleTextBackgroundColor: null,
+      );
+
+      await checkAudioTextColor(
+        tester: tester,
+        audioTitle: "Quand Aurélien Barrau va dans une école de management",
+        expectedTitleTextColor: unplayedAudioTitleTextColor,
+        expectedTitleTextBackgroundColor: null,
+      );
 
       await checkAudioTextColor(
         tester: tester,
         audioTitle:
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+            fifthDownloadedPartiallyPlayedAudioTitle,
         expectedTitleTextColor: currentlyPlayingAudioTitleTextColor,
         expectedTitleTextBackgroundColor:
             currentlyPlayingAudioTitleTextBackgroundColor,
@@ -1780,13 +1801,6 @@ void main() {
       await checkAudioTextColor(
         tester: tester,
         audioTitle: "morning _ cinematic video",
-        expectedTitleTextColor: unplayedAudioTitleTextColor,
-        expectedTitleTextBackgroundColor: null,
-      );
-
-      await checkAudioTextColor(
-        tester: tester,
-        audioTitle: "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
         expectedTitleTextColor: unplayedAudioTitleTextColor,
         expectedTitleTextBackgroundColor: null,
       );
