@@ -1026,23 +1026,8 @@ class AudioDownloadVM extends ChangeNotifier {
       int removedPlayableAudioNumber =
           correspondingOriginalPlaylist.updatePlayableAudioLst();
 
-      // update validVideoTitle of the playlists audios. This is useful
-      // when the method computing the validVideoTitle has been improved
-      bool isAnAudioValidVideoTitleChanged = false;
-
-      for (Audio audio in correspondingOriginalPlaylist.downloadedAudioLst) {
-        String reCreatedValidVideoTitle =
-            Audio.createValidVideoTitle(audio.originalVideoTitle);
-
-        if (reCreatedValidVideoTitle != audio.validVideoTitle) {
-          audio.validVideoTitle = reCreatedValidVideoTitle;
-          isAnAudioValidVideoTitleChanged = true;
-        }
-      }
-
       if (isPlaylistDownloadPathUpdated ||
-          removedPlayableAudioNumber > 0 ||
-          isAnAudioValidVideoTitleChanged) {
+          removedPlayableAudioNumber > 0) {
         JsonDataService.saveToFile(
           model: playlist,
           path: playlist.getPlaylistDownloadFilePathName(),
