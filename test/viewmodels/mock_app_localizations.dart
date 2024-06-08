@@ -1070,4 +1070,7 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get modifyAudioTitleButton => "Modify";
+
+  @override
+  String get modifyAudioTitle => "Modify audio title ...";
 }

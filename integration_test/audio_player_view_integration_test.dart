@@ -573,8 +573,6 @@ void main() {
     ) async {
       const String audioPlayerSelectedPlaylistTitle = 'local';
       const String previouslyPartiallyListenedAudioTitle =
-          '3 fois où Aurélien Barrau tire à balles réelles sur les riches\n8:50';
-      const String playlistDownloadViewPreviouslyPartiallyListenedAudioTitle =
           '3 fois où Aurélien Barrau tire à balles réelles sur les riches';
 
       await initializeApplicationAndSelectPlaylist(
@@ -583,45 +581,14 @@ void main() {
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
       );
 
-      // Playing the previously partially listened audio. First, get the
-      // audio ListTile Text widget finder and tap on it to open the
-      // AudioPlayerView displaying the audio.
-      final Finder
-          playlistDownloadViewPreviouslyPartiallyListenedAudioListTileTextWidgetFinder =
-          find.text(playlistDownloadViewPreviouslyPartiallyListenedAudioTitle);
-
-      await tester.tap(
-          playlistDownloadViewPreviouslyPartiallyListenedAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle();
-
-      Finder audioPlayerViewAudioPositionFinder =
-          find.byKey(const Key('audioPlayerViewAudioPosition'));
-
-      expect(tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!,
-          '1:41');
-
-      // Playing the audio during 1 second. Clicking on the play button
-      // rewind the audio of 30 seconds since the audio was not listened
-      // during more than 1 hour
-
-      await tester.tap(find.byIcon(Icons.play_arrow));
-      await tester.pumpAndSettle();
-
-      await Future.delayed(const Duration(seconds: 1));
-      await tester.pumpAndSettle();
-
-      // Click on the pause button to stop the last downloaded audio
-      await tester.tap(find.byIcon(Icons.pause));
-      await tester.pumpAndSettle();
-
-      // Verify the played audio title
-      expect(find.text(previouslyPartiallyListenedAudioTitle), findsOneWidget);
-
-      verifyPositionBetweenMinMax(
+      await applyRewindTesting(
         tester: tester,
-        textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '1:11',
-        maxPositionTimeStr: '1:12',
+        audioPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        audioToListenTitle: previouslyPartiallyListenedAudioTitle,
+        audioDurationStr: '8:50',
+        audioPositionBeforePlayingStr: '1:41',
+        expectedMinPositionTimeStr: '1:11',
+        expectedMaxPositionTimeStr: '1:12',
       );
 
       // Purge the test playlist directory so that the created test
@@ -636,8 +603,6 @@ void main() {
     ) async {
       const String audioPlayerSelectedPlaylistTitle = 'local';
       const String previouslyPartiallyListenedAudioTitle =
-          '3 fois où Aurélien Barrau tire à balles réelles sur les riches\n8:50';
-      const String playlistDownloadViewPreviouslyPartiallyListenedAudioTitle =
           '3 fois où Aurélien Barrau tire à balles réelles sur les riches';
 
       await initializeApplicationAndSelectPlaylist(
@@ -646,69 +611,15 @@ void main() {
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
       );
 
-      DateTime audioModifiedDateTime = DateTime.now().subtract(
-        const Duration(seconds: 1800),
-      );
-
-      modifyAudioPausedDateTimeInPlaylistJsonFile(
-        playlistTitle: audioPlayerSelectedPlaylistTitle,
-        playableAudioLstAudioIndex: 1,
-        modifiedAudioPausedDateTime: audioModifiedDateTime,
-      );
-
-      // Execute Updating playlist JSON file menu item so that all
-      // playlists, including the playlist containing the modified audio
-      // paused date time, are reloaded.
-
-      // open the popup menu
-      await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-      await tester.pumpAndSettle();
-
-      // find the update playlist JSON file menu item and tap on it
-      await tester
-          .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
-      await tester.pumpAndSettle();
-
-      // Playing the previously partially listened audio. First, get the
-      // audio ListTile Text widget finder and tap on it to open the
-      // AudioPlayerView displaying the audio.
-
-      final Finder
-          playlistDownloadViewPreviouslyPartiallyListenedAudioListTileTextWidgetFinder =
-          find.text(playlistDownloadViewPreviouslyPartiallyListenedAudioTitle);
-
-      await tester.tap(
-          playlistDownloadViewPreviouslyPartiallyListenedAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle();
-
-      Finder audioPlayerViewAudioPositionFinder =
-          find.byKey(const Key('audioPlayerViewAudioPosition'));
-
-      expect(tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!,
-          '1:41');
-
-      // Playing the audio during 1 second. Clicking on the play button
-      // rewind the audio of 20 seconds since the audio was not listened
-      // during one half hour
-
-      await tester.tap(find.byIcon(Icons.play_arrow));
-      await tester.pumpAndSettle();
-
-      await Future.delayed(const Duration(seconds: 1));
-      await tester.pumpAndSettle();
-
-      // Click on the pause button to stop the last downloaded audio
-      await tester.tap(find.byIcon(Icons.pause));
-      await tester.pumpAndSettle();
-
-      // Verify the played audio title
-      expect(find.text(previouslyPartiallyListenedAudioTitle), findsOneWidget);
-
-      verifyPositionBetweenMinMax(
+      await applyRewindTesting(
         tester: tester,
-        textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '1:21',
-        maxPositionTimeStr: '1:22',
+        audioPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        audioToListenTitle: previouslyPartiallyListenedAudioTitle,
+        audioDurationStr: '8:50',
+        audioPausedDateTimeSec: 1800,
+        audioPositionBeforePlayingStr: '1:41',
+        expectedMinPositionTimeStr: '1:21',
+        expectedMaxPositionTimeStr: '1:22',
       );
 
       // Purge the test playlist directory so that the created test
@@ -723,8 +634,6 @@ void main() {
     ) async {
       const String audioPlayerSelectedPlaylistTitle = 'local';
       const String previouslyPartiallyListenedAudioTitle =
-          '3 fois où Aurélien Barrau tire à balles réelles sur les riches\n8:50';
-      const String playlistDownloadViewPreviouslyPartiallyListenedAudioTitle =
           '3 fois où Aurélien Barrau tire à balles réelles sur les riches';
 
       await initializeApplicationAndSelectPlaylist(
@@ -733,69 +642,15 @@ void main() {
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
       );
 
-      DateTime audioModifiedDateTime = DateTime.now().subtract(
-        const Duration(seconds: 1),
-      );
-
-      modifyAudioPausedDateTimeInPlaylistJsonFile(
-        playlistTitle: audioPlayerSelectedPlaylistTitle,
-        playableAudioLstAudioIndex: 1,
-        modifiedAudioPausedDateTime: audioModifiedDateTime,
-      );
-
-      // Execute Updating playlist JSON file menu item so that all
-      // playlists, including the playlist containing the modified audio
-      // paused date time, are reloaded.
-
-      // open the popup menu
-      await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-      await tester.pumpAndSettle();
-
-      // find the update playlist JSON file menu item and tap on it
-      await tester
-          .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
-      await tester.pumpAndSettle();
-
-      // Playing the previously partially listened audio. First, get the
-      // audio ListTile Text widget finder and tap on it to open the
-      // AudioPlayerView displaying the audio.
-
-      final Finder
-          playlistDownloadViewPreviouslyPartiallyListenedAudioListTileTextWidgetFinder =
-          find.text(playlistDownloadViewPreviouslyPartiallyListenedAudioTitle);
-
-      await tester.tap(
-          playlistDownloadViewPreviouslyPartiallyListenedAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle();
-
-      Finder audioPlayerViewAudioPositionFinder =
-          find.byKey(const Key('audioPlayerViewAudioPosition'));
-
-      expect(tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!,
-          '1:41');
-
-      // Playing the audio during 1 second. Clicking on the play button
-      // rewind the audio of 20 seconds since the audio was not listened
-      // during one half hour
-
-      await tester.tap(find.byIcon(Icons.play_arrow));
-      await tester.pumpAndSettle();
-
-      await Future.delayed(const Duration(seconds: 1));
-      await tester.pumpAndSettle();
-
-      // Click on the pause button to stop the last downloaded audio
-      await tester.tap(find.byIcon(Icons.pause));
-      await tester.pumpAndSettle();
-
-      // Verify the played audio title
-      expect(find.text(previouslyPartiallyListenedAudioTitle), findsOneWidget);
-
-      verifyPositionBetweenMinMax(
+      await applyRewindTesting(
         tester: tester,
-        textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '1:39',
-        maxPositionTimeStr: '1:40',
+        audioPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        audioToListenTitle: previouslyPartiallyListenedAudioTitle,
+        audioDurationStr: '8:50',
+        audioPausedDateTimeSec: 1,
+        audioPositionBeforePlayingStr: '1:41',
+        expectedMinPositionTimeStr: '1:39',
+        expectedMaxPositionTimeStr: '1:40',
       );
 
       // Purge the test playlist directory so that the created test
@@ -1849,8 +1704,7 @@ void main() {
 
       // Now type on the first downloaded audio title in order to
       // open the AudioPlayerView displaying the audio
-      await tester
-          .tap(find.text(firstDownloadedNotPlayedAudioTitle));
+      await tester.tap(find.text(firstDownloadedNotPlayedAudioTitle));
       await tester.pumpAndSettle();
 
       // Now we open the AudioPlayableListDialogWidget by tapping on the
@@ -4786,6 +4640,86 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
   });
+}
+
+Future<void> applyRewindTesting({
+  required WidgetTester tester,
+  required String audioPlaylistTitle,
+  required String audioToListenTitle,
+  required String audioDurationStr,
+  int audioPausedDateTimeSec = 0,
+  required String audioPositionBeforePlayingStr,
+  required String expectedMinPositionTimeStr,
+  required String expectedMaxPositionTimeStr,
+}) async {
+  DateTime audioModifiedDateTime = DateTime.now().subtract(
+    Duration(seconds: audioPausedDateTimeSec),
+  );
+
+  if (audioPausedDateTimeSec > 0) {
+    // Modify the audio paused date time in the playlist JSON file
+    modifyAudioPausedDateTimeInPlaylistJsonFile(
+      playlistTitle: audioPlaylistTitle,
+      playableAudioLstAudioIndex: 1,
+      modifiedAudioPausedDateTime: audioModifiedDateTime,
+    );
+
+    // After having modified the audio paused date time, execute
+    // 'Updating playlist JSON file' menu item so that all playlists,
+    // including the playlist containing the modified audio paused date
+    // time, are reloaded.
+
+    // open the popup menu
+    await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+    await tester.pumpAndSettle();
+
+    // find the update playlist JSON file menu item and tap on it
+    await tester.tap(find.byKey(const Key('update_playlist_json_dialog_item')));
+    await tester.pumpAndSettle();
+  }
+
+  // Playing the audio. First, get the audio ListTile Text widget finder
+  // and tap on it to open the AudioPlayerView displaying the audio.
+
+  final Finder audioToListenTitleTextWidgetFinder =
+      find.text(audioToListenTitle);
+
+  await tester.tap(audioToListenTitleTextWidgetFinder);
+  await tester.pumpAndSettle();
+
+  Finder audioPlayerViewAudioPositionFinder =
+      find.byKey(const Key('audioPlayerViewAudioPosition'));
+
+  expect(
+    tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!,
+    audioPositionBeforePlayingStr,
+  );
+
+  // Playing the audio during 1 second. Clicking on the play button
+  // rewind the audio of n seconds depending on how long the audio was
+  // not listened.
+
+  await tester.tap(find.byIcon(Icons.play_arrow));
+  await tester.pumpAndSettle();
+
+  await Future.delayed(const Duration(seconds: 1));
+  await tester.pumpAndSettle();
+
+  // Click on the pause button to stop the last downloaded audio
+  await tester.tap(find.byIcon(Icons.pause));
+  await tester.pumpAndSettle();
+
+  // Verify the played audio title
+  String audioToListenTitleWithDuration =
+      '$audioToListenTitle\n$audioDurationStr';
+  expect(find.text(audioToListenTitleWithDuration), findsOneWidget);
+
+  verifyPositionBetweenMinMax(
+    tester: tester,
+    textWidgetFinder: audioPlayerViewAudioPositionFinder,
+    minPositionTimeStr: expectedMinPositionTimeStr,
+    maxPositionTimeStr: expectedMaxPositionTimeStr,
+  );
 }
 
 /// Returns the tenth of seconds of the passed audio position text
