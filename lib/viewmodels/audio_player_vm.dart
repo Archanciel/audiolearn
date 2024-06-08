@@ -274,6 +274,7 @@ class AudioPlayerVM extends ChangeNotifier {
 
       int newPositionSeconds =
           _currentAudio!.audioPositionSeconds - rewindSeconds;
+          
       // Ensure the new position is not negative
       _currentAudioPosition = Duration(
           seconds: newPositionSeconds.clamp(

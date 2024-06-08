@@ -686,6 +686,7 @@ void main() {
         tester: tester,
         audioPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         audioToListenTitle: previouslyPartiallyListenedAudioTitle,
+        audioToListenIndex: 1,
         audioDurationStr: '8:50',
         audioPositionBeforePlayingStr: '1:41',
         expectedMinPositionTimeStr: '1:11',
@@ -716,8 +717,9 @@ void main() {
         tester: tester,
         audioPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         audioToListenTitle: previouslyPartiallyListenedAudioTitle,
+        audioToListenIndex: 1,
         audioDurationStr: '8:50',
-        audioPausedDateTimeSec: 1800,
+        audioPausedDateTimeSecBeforeNowModification: 1800,
         audioPositionBeforePlayingStr: '1:41',
         expectedMinPositionTimeStr: '1:21',
         expectedMaxPositionTimeStr: '1:22',
@@ -747,11 +749,138 @@ void main() {
         tester: tester,
         audioPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         audioToListenTitle: previouslyPartiallyListenedAudioTitle,
+        audioToListenIndex: 1,
         audioDurationStr: '8:50',
-        audioPausedDateTimeSec: 1,
+        audioPausedDateTimeSecBeforeNowModification: 1,
         audioPositionBeforePlayingStr: '1:41',
         expectedMinPositionTimeStr: '1:39',
         expectedMaxPositionTimeStr: '1:40',
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
+    });
+    testWidgets(
+        'Fully listened audio > 1 h ago, rewind position after clicking on play button.',
+        (
+      WidgetTester tester,
+    ) async {
+      const String audioPlayerSelectedPlaylistTitle = 'local';
+      const String fullyListenedAudioTitle =
+          'Quand Aurélien Barrau va dans une école de management';
+
+      await initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_player_view_play_rewind',
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+      );
+
+      await applyRewindTesting(
+        tester: tester,
+        audioPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        audioToListenTitle: fullyListenedAudioTitle,
+        audioToListenIndex: 0,
+        audioDurationStr: '17:59',
+        audioPositionBeforePlayingStr: '17:59',
+        expectedMinPositionTimeStr: '17:29',
+        expectedMaxPositionTimeStr: '17:30',
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
+    });
+    testWidgets(
+        'Fully listened audio < 1 h && > 2 sec ago, rewind position after clicking on play button.',
+        (
+      WidgetTester tester,
+    ) async {
+      const String audioPlayerSelectedPlaylistTitle = 'local';
+      const String fullyListenedAudioTitle =
+          'Quand Aurélien Barrau va dans une école de management';
+
+      await initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_player_view_play_rewind',
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+      );
+
+      await applyRewindTesting(
+        tester: tester,
+        audioPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        audioToListenTitle: fullyListenedAudioTitle,
+        audioToListenIndex: 0,
+        audioDurationStr: '17:59',
+        audioPausedDateTimeSecBeforeNowModification: 1800,
+        audioPositionBeforePlayingStr: '17:59',
+        expectedMinPositionTimeStr: '17:39',
+        expectedMaxPositionTimeStr: '17:40',
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
+    });
+    testWidgets(
+        'Fully listened audio < 2 sec ago, rewind position after clicking on play button.',
+        (
+      WidgetTester tester,
+    ) async {
+      const String audioPlayerSelectedPlaylistTitle = 'local';
+      const String fullyListenedAudioTitle =
+          'Quand Aurélien Barrau va dans une école de management';
+
+      await initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_player_view_play_rewind',
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+      );
+
+      await applyRewindTesting(
+        tester: tester,
+        audioPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        audioToListenTitle: fullyListenedAudioTitle,
+        audioToListenIndex: 0,
+        audioDurationStr: '17:59',
+        audioPausedDateTimeSecBeforeNowModification: 1,
+        audioPositionBeforePlayingStr: '17:59',
+        expectedMinPositionTimeStr: '17:57',
+        expectedMaxPositionTimeStr: '17:58',
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
+    });
+    testWidgets(
+        'Fully listened audio with audioPausedDateTime == null, rewind position after clicking on play button.',
+        (
+      WidgetTester tester,
+    ) async {
+      const String audioPlayerSelectedPlaylistTitle = 'local_2';
+      const String fullyListenedAudioTitle =
+          'Quand Aurélien Barrau va dans une école de management';
+
+      await initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_player_view_play_rewind',
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+      );
+
+      await applyRewindTesting(
+        tester: tester,
+        audioPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        audioToListenTitle: fullyListenedAudioTitle,
+        audioToListenIndex: 0,
+        audioDurationStr: '17:59',
+        audioPositionBeforePlayingStr: '17:59',
+        expectedMinPositionTimeStr: '17:59',
+        expectedMaxPositionTimeStr: '17:59',
       );
 
       // Purge the test playlist directory so that the created test
@@ -4650,21 +4779,22 @@ Future<void> applyRewindTesting({
   required WidgetTester tester,
   required String audioPlaylistTitle,
   required String audioToListenTitle,
+  required int audioToListenIndex,
   required String audioDurationStr,
-  int audioPausedDateTimeSec = 0,
+  int audioPausedDateTimeSecBeforeNowModification = 0,
   required String audioPositionBeforePlayingStr,
   required String expectedMinPositionTimeStr,
   required String expectedMaxPositionTimeStr,
 }) async {
   DateTime audioModifiedDateTime = DateTime.now().subtract(
-    Duration(seconds: audioPausedDateTimeSec),
+    Duration(seconds: audioPausedDateTimeSecBeforeNowModification),
   );
 
-  if (audioPausedDateTimeSec > 0) {
+  if (audioPausedDateTimeSecBeforeNowModification > 0) {
     // Modify the audio paused date time in the playlist JSON file
     modifyAudioPausedDateTimeInPlaylistJsonFile(
       playlistTitle: audioPlaylistTitle,
-      playableAudioLstAudioIndex: 1,
+      playableAudioLstAudioIndex: audioToListenIndex,
       modifiedAudioPausedDateTime: audioModifiedDateTime,
     );
 
@@ -4710,8 +4840,12 @@ Future<void> applyRewindTesting({
   await tester.pumpAndSettle();
 
   // Click on the pause button to stop the last downloaded audio
-  await tester.tap(find.byIcon(Icons.pause));
-  await tester.pumpAndSettle();
+  Finder pauseIconButtonFinder = find.byIcon(Icons.pause);
+
+  if (pauseIconButtonFinder.evaluate().isNotEmpty) {
+    await tester.tap(pauseIconButtonFinder);
+    await tester.pumpAndSettle();
+  }
 
   // Verify the played audio title
   String audioToListenTitleWithDuration =
