@@ -33,6 +33,10 @@ void main() async {
     }
   }
 
+  // Remove the trailing comma if it exists. The case if a section
+  // located not at end of the arb file was copied in the clipboard.
+  arbContent = arbContent.replaceFirst(',}', '}');
+
   // Parsing the ARB content into a Map
   Map<String, dynamic> arbData = json.decode(arbContent);
 
@@ -53,7 +57,7 @@ void main() async {
   // await Process.run('flutter', ['gen-l10n']); not working !
 
   // ignore: avoid_print
-  print('Localization methods have been inserted into $filePath');
+  print('${arbData.length} localization methods have been inserted into $filePath');
 }
 
 String generateLocalizationClass(Map<String, dynamic> arbData) {
