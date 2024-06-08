@@ -539,8 +539,7 @@ class AudioDownloadVM extends ChangeNotifier {
       (entry) => entry == audio,
     );
 
-    // ensuring that the modifyed audio title is valid ...
-    playlistAudio.validVideoTitle = Audio.createValidVideoTitle(modifiedAudioTitle);
+    playlistAudio.validVideoTitle = modifiedAudioTitle;
 
     JsonDataService.saveToFile(
       model: enclosingPlaylist,
