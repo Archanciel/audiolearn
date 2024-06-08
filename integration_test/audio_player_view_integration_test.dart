@@ -567,98 +567,6 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
     testWidgets(
-        'Partially listened audio > 1 h ago, rewind position after clicking on play button.',
-        (
-      WidgetTester tester,
-    ) async {
-      const String audioPlayerSelectedPlaylistTitle = 'local';
-      const String previouslyPartiallyListenedAudioTitle =
-          '3 fois où Aurélien Barrau tire à balles réelles sur les riches';
-
-      await initializeApplicationAndSelectPlaylist(
-        tester: tester,
-        savedTestDataDirName: 'audio_player_view_first_to_last_audio_test',
-        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
-      );
-
-      await applyRewindTesting(
-        tester: tester,
-        audioPlaylistTitle: audioPlayerSelectedPlaylistTitle,
-        audioToListenTitle: previouslyPartiallyListenedAudioTitle,
-        audioDurationStr: '8:50',
-        audioPositionBeforePlayingStr: '1:41',
-        expectedMinPositionTimeStr: '1:11',
-        expectedMaxPositionTimeStr: '1:12',
-      );
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
-    });
-    testWidgets(
-        'Partially listened audio < 1 h && > 2 sec ago, rewind position after clicking on play button.',
-        (
-      WidgetTester tester,
-    ) async {
-      const String audioPlayerSelectedPlaylistTitle = 'local';
-      const String previouslyPartiallyListenedAudioTitle =
-          '3 fois où Aurélien Barrau tire à balles réelles sur les riches';
-
-      await initializeApplicationAndSelectPlaylist(
-        tester: tester,
-        savedTestDataDirName: 'audio_player_view_first_to_last_audio_test',
-        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
-      );
-
-      await applyRewindTesting(
-        tester: tester,
-        audioPlaylistTitle: audioPlayerSelectedPlaylistTitle,
-        audioToListenTitle: previouslyPartiallyListenedAudioTitle,
-        audioDurationStr: '8:50',
-        audioPausedDateTimeSec: 1800,
-        audioPositionBeforePlayingStr: '1:41',
-        expectedMinPositionTimeStr: '1:21',
-        expectedMaxPositionTimeStr: '1:22',
-      );
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
-    });
-    testWidgets(
-        'Partially listened audio < 2 sec ago, rewind position after clicking on play button.',
-        (
-      WidgetTester tester,
-    ) async {
-      const String audioPlayerSelectedPlaylistTitle = 'local';
-      const String previouslyPartiallyListenedAudioTitle =
-          '3 fois où Aurélien Barrau tire à balles réelles sur les riches';
-
-      await initializeApplicationAndSelectPlaylist(
-        tester: tester,
-        savedTestDataDirName: 'audio_player_view_first_to_last_audio_test',
-        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
-      );
-
-      await applyRewindTesting(
-        tester: tester,
-        audioPlaylistTitle: audioPlayerSelectedPlaylistTitle,
-        audioToListenTitle: previouslyPartiallyListenedAudioTitle,
-        audioDurationStr: '8:50',
-        audioPausedDateTimeSec: 1,
-        audioPositionBeforePlayingStr: '1:41',
-        expectedMinPositionTimeStr: '1:39',
-        expectedMaxPositionTimeStr: '1:40',
-      );
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
-    });
-    testWidgets(
         'Back to playlist download view and click on pause, then on play again. Check the audio item play/pause icon as well as their color',
         (
       WidgetTester tester,
@@ -749,6 +657,102 @@ void main() {
       // AudioPlayerView screen will not be successful !
       await Future.delayed(const Duration(seconds: 2));
       await tester.pumpAndSettle();
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
+    });
+  });
+  group(
+      'Play with rewind audio position',
+      () {
+    testWidgets(
+        'Partially listened audio > 1 h ago, rewind position after clicking on play button.',
+        (
+      WidgetTester tester,
+    ) async {
+      const String audioPlayerSelectedPlaylistTitle = 'local';
+      const String previouslyPartiallyListenedAudioTitle =
+          '3 fois où Aurélien Barrau tire à balles réelles sur les riches';
+
+      await initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_player_view_play_rewind',
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+      );
+
+      await applyRewindTesting(
+        tester: tester,
+        audioPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        audioToListenTitle: previouslyPartiallyListenedAudioTitle,
+        audioDurationStr: '8:50',
+        audioPositionBeforePlayingStr: '1:41',
+        expectedMinPositionTimeStr: '1:11',
+        expectedMaxPositionTimeStr: '1:12',
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
+    });
+    testWidgets(
+        'Partially listened audio < 1 h && > 2 sec ago, rewind position after clicking on play button.',
+        (
+      WidgetTester tester,
+    ) async {
+      const String audioPlayerSelectedPlaylistTitle = 'local';
+      const String previouslyPartiallyListenedAudioTitle =
+          '3 fois où Aurélien Barrau tire à balles réelles sur les riches';
+
+      await initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_player_view_play_rewind',
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+      );
+
+      await applyRewindTesting(
+        tester: tester,
+        audioPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        audioToListenTitle: previouslyPartiallyListenedAudioTitle,
+        audioDurationStr: '8:50',
+        audioPausedDateTimeSec: 1800,
+        audioPositionBeforePlayingStr: '1:41',
+        expectedMinPositionTimeStr: '1:21',
+        expectedMaxPositionTimeStr: '1:22',
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
+    });
+    testWidgets(
+        'Partially listened audio < 2 sec ago, rewind position after clicking on play button.',
+        (
+      WidgetTester tester,
+    ) async {
+      const String audioPlayerSelectedPlaylistTitle = 'local';
+      const String previouslyPartiallyListenedAudioTitle =
+          '3 fois où Aurélien Barrau tire à balles réelles sur les riches';
+
+      await initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_player_view_play_rewind',
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+      );
+
+      await applyRewindTesting(
+        tester: tester,
+        audioPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        audioToListenTitle: previouslyPartiallyListenedAudioTitle,
+        audioDurationStr: '8:50',
+        audioPausedDateTimeSec: 1,
+        audioPositionBeforePlayingStr: '1:41',
+        expectedMinPositionTimeStr: '1:39',
+        expectedMaxPositionTimeStr: '1:40',
+      );
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
