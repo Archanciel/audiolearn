@@ -132,32 +132,27 @@ class _AudioPlayableListDialogWidgetState
             mainAxisSize: MainAxisSize.min, // Use minimum space
             children: [
               Expanded(
-                child: SingleChildScrollView(
-                  // If the last downloaded audio is the current paused audio,
-                  // improves displaying the 2 listenable audios on S8. Without
-                  // it, only the last downloaded audio is displayed
-                  child: ListView.builder(
-                    key: const Key('audioPlayableListKey'),
-                    controller: _scrollController,
-                    itemCount: playableAudioLst.length,
-                    shrinkWrap: true,
-                    itemBuilder: (BuildContext context, int index) {
-                      Audio audio = playableAudioLst[index];
-                      return ListTile(
-                        title: GestureDetector(
-                          onTap: () async {
-                            await audioGlobalPlayerVM.setCurrentAudio(audio);
-                            Navigator.of(context).pop();
-                          },
-                          child: _buildAudioTitleTextWidget(
-                            audio,
-                            index,
-                            isDarkTheme,
-                          ),
+                child: ListView.builder(
+                  key: const Key('audioPlayableListKey'),
+                  controller: _scrollController,
+                  itemCount: playableAudioLst.length,
+                  shrinkWrap: true,
+                  itemBuilder: (BuildContext context, int index) {
+                    Audio audio = playableAudioLst[index];
+                    return ListTile(
+                      title: GestureDetector(
+                        onTap: () async {
+                          await audioGlobalPlayerVM.setCurrentAudio(audio);
+                          Navigator.of(context).pop();
+                        },
+                        child: _buildAudioTitleTextWidget(
+                          audio,
+                          index,
+                          isDarkTheme,
                         ),
-                      );
-                    },
-                  ),
+                      ),
+                    );
+                  },
                 ),
               ),
               _buildBottomTextAndCheckbox(
@@ -349,6 +344,14 @@ class _AudioPlayableListDialogWidgetState
   }
 
   void _scrollToCurrentAudioItem() {
+    if (_currentAudioIndex <= 4) {
+      // this avoids scrolling down when the currenz audio is
+      // in the top part of the audio list. Without that, the
+      // list is unusefully scrolled down and the user has to scroll
+      // up to see top audios
+      return;
+    }
+    
     double multiplier = _currentAudioIndex.toDouble();
 
     if (_currentAudioIndex > 300) {
