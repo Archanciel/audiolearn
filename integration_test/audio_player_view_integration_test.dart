@@ -888,6 +888,37 @@ void main() {
       DirUtil.deleteFilesInDirAndSubDirs(
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
+    testWidgets(
+        'Not listened audio with audioPausedDateTime == null, rewind position after clicking on play button.',
+        (
+      WidgetTester tester,
+    ) async {
+      const String audioPlayerSelectedPlaylistTitle = 'local_3';
+      const String fullyListenedAudioTitle =
+          'Quand Aurélien Barrau va dans une école de management';
+
+      await initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_player_view_play_rewind',
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+      );
+
+      await applyRewindTesting(
+        tester: tester,
+        audioPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        audioToListenTitle: fullyListenedAudioTitle,
+        audioToListenIndex: 0,
+        audioDurationStr: '17:59',
+        audioPositionBeforePlayingStr: '0:00',
+        expectedMinPositionTimeStr: '0:00',
+        expectedMaxPositionTimeStr: '0:01',
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
+    });
   });
 
   group('audio info audio state verification', () {
