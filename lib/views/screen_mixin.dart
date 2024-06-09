@@ -420,6 +420,53 @@ mixin ScreenMixin {
     );
   }
 
+/// Create a row with a Text label and an editabe TextField. The width
+/// proportion of the label and the TextField is identical.
+  Widget createEditableRowFunction({
+    Key? valueTextFieldWidgetKey, // key set to the TextField widget
+    // containing the value
+    required BuildContext context,
+    required String label,
+    required TextEditingController controller,
+    FocusNode? textFieldFocusNode,
+    bool isCursorAtStart = true,
+  }) {
+    if (isCursorAtStart) {
+      // Set the cursor position at the start of the TextField,
+      // otherwise the cursor is at the end of the TextField.
+      controller.value = controller.value.copyWith(
+        selection: const TextSelection.collapsed(offset: 0),
+      );
+    }
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Text(
+              label,
+              style: kDialogLabelStyle,
+            ),
+          ),
+          Expanded(
+            child: TextField(
+              key: valueTextFieldWidgetKey,
+              style: kDialogTextFieldStyle,
+              controller: controller,
+              decoration: getDialogTextFieldInputDecoration(),
+              focusNode: textFieldFocusNode,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+/// Create a row with a Text label and an editabe TextField. The width
+/// proportion of the label and the TextField can be adjusted by setting
+/// the flexValue parameter. The flexValue parameter is set to 6 for the
+/// modify title dialog and to 4 for the rename file dialog.
 Widget createFlexibleEditableRowFunction({
   Key? valueTextFieldWidgetKey, // key set to the TextField widget
   //                               containing the value
@@ -443,7 +490,7 @@ Widget createFlexibleEditableRowFunction({
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Flexible(
-          flex: 1, // 1
+          flex: 1,
           child: Text(
             label,
             style: kDialogLabelStyle,
@@ -451,7 +498,7 @@ Widget createFlexibleEditableRowFunction({
         ),
         const SizedBox(width: 5.0),
         Flexible(
-          flex: flexValue, // 7 for modify title, 5 for rename file
+          flex: flexValue,
           child: TextField(
             key: valueTextFieldWidgetKey,
             style: kDialogTextFieldStyle,
