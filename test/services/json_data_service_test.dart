@@ -1017,8 +1017,8 @@ AudioSortFilterParameters createAudioSortFilterParameters() {
     downloadDateEndRange: DateTime(2023, 3, 24, 20, 5, 32),
     uploadDateStartRange: DateTime(2023, 2, 4, 20, 5, 32),
     uploadDateEndRange: DateTime(2023, 3, 4, 20, 5, 32),
-    fileSizeStartRangeByte: 100000,
-    fileSizeEndRangeByte: 200000,
+    fileSizeStartRangeMB: 0.1,
+    fileSizeEndRangeMB: 20.235,
     durationStartRangeSec: 1000,
     durationEndRangeSec: 2000,
   );
@@ -1239,13 +1239,13 @@ void compareDeserializedWithOriginalAudioSortFilterParameters({
   );
 
   expect(
-    deserializedAudioSortFilterParameters.fileSizeStartRangeByte,
-    originalAudioSortFilterParameters.fileSizeStartRangeByte,
+    deserializedAudioSortFilterParameters.fileSizeStartRangeMB,
+    originalAudioSortFilterParameters.fileSizeStartRangeMB,
   );
 
   expect(
-    deserializedAudioSortFilterParameters.fileSizeEndRangeByte,
-    originalAudioSortFilterParameters.fileSizeEndRangeByte,
+    deserializedAudioSortFilterParameters.fileSizeEndRangeMB,
+    originalAudioSortFilterParameters.fileSizeEndRangeMB,
   );
 
   expect(

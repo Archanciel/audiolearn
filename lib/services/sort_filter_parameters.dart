@@ -251,8 +251,8 @@ class AudioSortFilterParameters {
       uploadDateEndRange: json['uploadDateEndRange'] == null
           ? null
           : DateTime.parse(json['uploadDateEndRange']),
-      fileSizeStartRangeMB: json['fileSizeStartRangeMB'] ?? 0,
-      fileSizeEndRangeMB: json['fileSizeEndRangeMB'] ?? 0,
+      fileSizeStartRangeMB: json['fileSizeStartRangeMB'] ?? 0.0,
+      fileSizeEndRangeMB: json['fileSizeEndRangeMB'] ?? 0.0,
       durationStartRangeSec: json['durationStartRangeSec'],
       durationEndRangeSec: json['durationEndRangeSec'],
     );
