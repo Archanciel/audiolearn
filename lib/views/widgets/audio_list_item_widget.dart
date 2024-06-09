@@ -170,10 +170,14 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
                 case AudioPopupMenuAction.renameAudioFile:
                   showDialog<void>(
                     context: context,
+                    barrierDismissible:
+                        false, // This line prevents the dialog from closing when
+                    //            tapping outside the dialog
                     builder: (BuildContext context) {
                       return AudioModificationDialogWidget(
                         audio: audio,
-                        audioModificationType: AudioModificationType.renameAudioFile,
+                        audioModificationType:
+                            AudioModificationType.renameAudioFile,
                       );
                     },
                   );
@@ -181,10 +185,14 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
                 case AudioPopupMenuAction.modifyAudioTitle:
                   showDialog<void>(
                     context: context,
+                    barrierDismissible:
+                        false, // This line prevents the dialog from closing when
+                    //            tapping outside the dialog
                     builder: (BuildContext context) {
                       return AudioModificationDialogWidget(
                         audio: audio,
-                        audioModificationType: AudioModificationType.modifyAudioTitle,
+                        audioModificationType:
+                            AudioModificationType.modifyAudioTitle,
                       );
                     },
                   );
