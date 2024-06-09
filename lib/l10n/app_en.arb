@@ -176,7 +176,7 @@
   "addLocalPlaylistDialogTitle": "Add Local Playlist",
   "renameAudioFileDialogTitle": "Rename Audio File",
   "renameAudioFileDialogComment": "Renaming audio file in order to improve their playing order.",
-  "renameAudioFileLabel": "File name",
+  "renameAudioFileLabel": "Name",
   "renameAudioFileButton": "Rename",
   "modifyAudioTitleDialogTitle": "Modify Audio Title",
   "modifyAudioTitleDialogComment": "Modify the audio title to identify it more easily during listening.",
