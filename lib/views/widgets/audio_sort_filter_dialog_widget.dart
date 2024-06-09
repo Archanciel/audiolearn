@@ -894,6 +894,7 @@ class _AudioSortFilterDialogWidgetState
               context: context,
               controller: _startAudioDurationController,
               label: AppLocalizations.of(context)!.start,
+              labelSize: 43.0,
             ),
             const SizedBox(width: 10),
             _buildLabelTextField(
@@ -901,6 +902,7 @@ class _AudioSortFilterDialogWidgetState
               context: context,
               controller: _endAudioDurationController,
               label: AppLocalizations.of(context)!.end,
+              labelSize: 30.0,
             ),
           ],
         ),
@@ -927,6 +929,7 @@ class _AudioSortFilterDialogWidgetState
               context: context,
               controller: _startFileSizeController,
               label: AppLocalizations.of(context)!.start,
+              labelSize: 43.0,
             ),
             const SizedBox(width: 10),
             _buildLabelTextField(
@@ -934,6 +937,7 @@ class _AudioSortFilterDialogWidgetState
               context: context,
               controller: _endFileSizeController,
               label: AppLocalizations.of(context)!.end,
+              labelSize: 30.0,
             ),
           ],
         ),
@@ -946,20 +950,21 @@ class _AudioSortFilterDialogWidgetState
     required BuildContext context,
     required TextEditingController controller,
     required String label,
+    required double labelSize,
   }) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SizedBox(
-          width: 40,
+          width: labelSize,
           child: Text(
             label,
             style: kDialogLabelStyle,
           ),
         ),
         SizedBox(
-          width: 80,
+          width: 70,
           child: TextField(
             key: key,
             style: kDialogTextFieldStyle,

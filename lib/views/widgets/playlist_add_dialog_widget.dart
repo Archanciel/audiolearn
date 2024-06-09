@@ -101,7 +101,7 @@ class _PlaylistAddDialogWidgetState extends State<PlaylistAddDialogWidget>
                       label:
                           AppLocalizations.of(context)!.youtubePlaylistUrlLabel,
                       value: widget.playlistUrl)
-                  : createEditableRowFunction(
+                  : createFlexibleEditableRowFunction(
                       // displaying the local playlist title TextField
                       valueTextFieldWidgetKey:
                           const Key('playlistLocalTitleConfirmDialogTextField'),
@@ -110,6 +110,7 @@ class _PlaylistAddDialogWidgetState extends State<PlaylistAddDialogWidget>
                           AppLocalizations.of(context)!.localPlaylistTitleLabel,
                       controller: _localPlaylistTitleTextEditingController,
                       textFieldFocusNode: _focusNodeLocalPlaylistTitle,
+                      flexValue: 3,
                     ),
               createCheckboxRowFunction(
                 // displaying music quality checkbox
