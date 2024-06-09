@@ -420,7 +420,7 @@ mixin ScreenMixin {
     );
   }
 
-Widget createEditableRowFunction({
+Widget createFlexibleEditableRowFunction({
   Key? valueTextFieldWidgetKey, // key set to the TextField widget
   //                               containing the value
   required BuildContext context,
@@ -428,6 +428,7 @@ Widget createEditableRowFunction({
   required TextEditingController controller,
   FocusNode? textFieldFocusNode,
   bool isCursorAtStart = true,
+  required int flexValue,
 }) {
   if (isCursorAtStart) {
     // Set the cursor position at the start of the TextField,
@@ -450,7 +451,7 @@ Widget createEditableRowFunction({
         ),
         const SizedBox(width: 5.0),
         Flexible(
-          flex: 5, // 7 for modify title, 5 for rename file
+          flex: flexValue, // 7 for modify title, 5 for rename file
           child: TextField(
             key: valueTextFieldWidgetKey,
             style: kDialogTextFieldStyle,

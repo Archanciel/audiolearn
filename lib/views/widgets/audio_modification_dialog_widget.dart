@@ -79,6 +79,7 @@ class _AudioModificationDialogWidgetState
     String commentStr;
     String labelStr;
     String modificationButtonStr;
+    int flexibleValue;
 
     switch (widget.audioModificationType) {
       case AudioModificationType.renameAudioFile:
@@ -87,6 +88,7 @@ class _AudioModificationDialogWidgetState
         labelStr = AppLocalizations.of(context)!.renameAudioFileLabel;
         modificationButtonStr =
             AppLocalizations.of(context)!.renameAudioFileButton;
+        flexibleValue = 5;
         break;
       case AudioModificationType.modifyAudioTitle:
         titleStr = AppLocalizations.of(context)!.modifyAudioTitleDialogTitle;
@@ -95,6 +97,7 @@ class _AudioModificationDialogWidgetState
         labelStr = AppLocalizations.of(context)!.modifyAudioTitleLabel;
         modificationButtonStr =
             AppLocalizations.of(context)!.modifyAudioTitleButton;
+        flexibleValue = 7;
         break;
     }
 
@@ -108,7 +111,7 @@ class _AudioModificationDialogWidgetState
               event.logicalKey == LogicalKeyboardKey.numpadEnter) {
             // executing the same code as in the audioModification
             // TextButton onPressed callback
-              _handleAudioModification(context);
+            _handleAudioModification(context);
             Navigator.of(context).pop();
           }
         }
@@ -128,13 +131,14 @@ class _AudioModificationDialogWidgetState
                 context: context,
                 commentStr: commentStr,
               ),
-              createEditableRowFunction(
+              createFlexibleEditableRowFunction(
                 valueTextFieldWidgetKey:
                     const Key('audioModificationTextField'),
                 context: context,
                 label: labelStr,
                 controller: _audioModificationTextEditingController,
                 textFieldFocusNode: _focusNodeAudioModificationTextField,
+                flexValue: flexibleValue,
               ),
             ],
           ),
