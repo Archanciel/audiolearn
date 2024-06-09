@@ -75,6 +75,9 @@ class SettingsDataService {
 
   final Map<String, AudioSortFilterParameters>
       _namedAudioSortFilterParametersMap = {};
+
+  // this map contains the named AudioSortFilterParameters. The
+  // AudioSortFilterParameters by default is named 'default'
   Map<String, AudioSortFilterParameters>
       get namedAudioSortFilterParametersMap =>
           _namedAudioSortFilterParametersMap;
