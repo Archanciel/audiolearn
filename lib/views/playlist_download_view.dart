@@ -15,7 +15,7 @@ import '../viewmodels/playlist_list_vm.dart';
 import '../viewmodels/theme_provider_vm.dart';
 import '../viewmodels/warning_message_vm.dart';
 import 'screen_mixin.dart';
-import 'widgets/add_playlist_dialog_widget.dart';
+import 'widgets/playlist_add_dialog_widget.dart';
 import 'widgets/application_snackbar.dart';
 import 'widgets/audio_list_item_widget.dart';
 import 'widgets/action_confirm_dialog_widget.dart';
@@ -1255,7 +1255,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             showDialog<bool>(
               context: context,
               builder: (BuildContext context) {
-                return AddPlaylistDialogWidget(
+                return PlaylistAddDialogWidget(
                   playlistUrl: playlistUrl,
                 );
               },
