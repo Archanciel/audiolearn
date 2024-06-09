@@ -8,6 +8,9 @@ import '../../views/screen_mixin.dart';
 import '../../services/settings_data_service.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 
+/// Dialog widget that allows the user to save the sort and
+/// filter options to a playlist so that they can be applied
+/// when the playlist is opened.
 class PlaylistSortFilterOptionsSaveToDialogWidget extends StatefulWidget {
   final String playlistTitle;
   final AudioLearnAppViewType applicationViewType;
