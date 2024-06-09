@@ -1254,6 +1254,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             final String playlistUrl = _playlistUrlController.text.trim();
             showDialog<bool>(
               context: context,
+              barrierDismissible:
+                  false, // This line prevents the dialog from closing when
+              //            tapping outside the dialog
               builder: (BuildContext context) {
                 return PlaylistAddDialogWidget(
                   playlistUrl: playlistUrl,
