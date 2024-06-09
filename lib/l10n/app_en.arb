@@ -57,7 +57,7 @@
   "endDownloadDate": "End downl date",
   "startUploadDate": "Start upl date",
   "endUploadDate": "End upl date",
-  "fileSizeRange": "File size range (bytes)",
+  "fileSizeRange": "File size range (MB)",
   "start": "Start",
   "end": "End",
   "audioDurationRange": "Audio duration range (hh:mm)",

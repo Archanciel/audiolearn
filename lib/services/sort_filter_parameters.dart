@@ -199,8 +199,8 @@ class AudioSortFilterParameters {
   final DateTime? downloadDateEndRange;
   final DateTime? uploadDateStartRange;
   final DateTime? uploadDateEndRange;
-  final int fileSizeStartRangeByte;
-  final int fileSizeEndRangeByte;
+  final double fileSizeStartRangeMB;
+  final double fileSizeEndRangeMB;
   final int durationStartRangeSec;
   final int durationEndRangeSec;
 
@@ -218,8 +218,8 @@ class AudioSortFilterParameters {
     this.downloadDateEndRange,
     this.uploadDateStartRange,
     this.uploadDateEndRange,
-    this.fileSizeStartRangeByte = 0,
-    this.fileSizeEndRangeByte = 0,
+    this.fileSizeStartRangeMB = 0,
+    this.fileSizeEndRangeMB = 0,
     this.durationStartRangeSec = 0,
     this.durationEndRangeSec = 0,
   });
@@ -251,8 +251,8 @@ class AudioSortFilterParameters {
       uploadDateEndRange: json['uploadDateEndRange'] == null
           ? null
           : DateTime.parse(json['uploadDateEndRange']),
-      fileSizeStartRangeByte: json['fileSizeStartRangeByte'],
-      fileSizeEndRangeByte: json['fileSizeEndRangeByte'],
+      fileSizeStartRangeMB: json['fileSizeStartRangeMB'] ?? 0,
+      fileSizeEndRangeMB: json['fileSizeEndRangeMB'] ?? 0,
       durationStartRangeSec: json['durationStartRangeSec'],
       durationEndRangeSec: json['durationEndRangeSec'],
     );
@@ -274,8 +274,8 @@ class AudioSortFilterParameters {
       'downloadDateEndRange': downloadDateEndRange?.toIso8601String(),
       'uploadDateStartRange': uploadDateStartRange?.toIso8601String(),
       'uploadDateEndRange': uploadDateEndRange?.toIso8601String(),
-      'fileSizeStartRangeByte': fileSizeStartRangeByte,
-      'fileSizeEndRangeByte': fileSizeEndRangeByte,
+      'fileSizeStartRangeMB': fileSizeStartRangeMB,
+      'fileSizeEndRangeMB': fileSizeEndRangeMB,
       'durationStartRangeSec': durationStartRangeSec,
       'durationEndRangeSec': durationEndRangeSec,
     };
@@ -300,8 +300,8 @@ class AudioSortFilterParameters {
         other.downloadDateEndRange == downloadDateEndRange &&
         other.uploadDateStartRange == uploadDateStartRange &&
         other.uploadDateEndRange == uploadDateEndRange &&
-        other.fileSizeStartRangeByte == fileSizeStartRangeByte &&
-        other.fileSizeEndRangeByte == fileSizeEndRangeByte &&
+        other.fileSizeStartRangeMB == fileSizeStartRangeMB &&
+        other.fileSizeEndRangeMB == fileSizeEndRangeMB &&
         other.durationStartRangeSec == durationStartRangeSec &&
         other.durationEndRangeSec == durationEndRangeSec;
   }
@@ -322,8 +322,8 @@ class AudioSortFilterParameters {
       downloadDateEndRange,
       uploadDateStartRange,
       uploadDateEndRange,
-      fileSizeStartRangeByte,
-      fileSizeEndRangeByte,
+      fileSizeStartRangeMB,
+      fileSizeEndRangeMB,
       durationStartRangeSec,
       durationEndRangeSec,
     );
@@ -346,8 +346,8 @@ class AudioSortFilterParameters {
       downloadDateEndRange: downloadDateEndRange,
       uploadDateStartRange: uploadDateStartRange,
       uploadDateEndRange: uploadDateEndRange,
-      fileSizeStartRangeByte: fileSizeStartRangeByte,
-      fileSizeEndRangeByte: fileSizeEndRangeByte,
+      fileSizeStartRangeMB: fileSizeStartRangeMB,
+      fileSizeEndRangeMB: fileSizeEndRangeMB,
       durationStartRangeSec: durationStartRangeSec,
       durationEndRangeSec: durationEndRangeSec,
     );

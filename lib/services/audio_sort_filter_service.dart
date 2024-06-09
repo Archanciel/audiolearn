@@ -226,12 +226,12 @@ class AudioSortFilterService {
       );
     }
 
-    if (audioSortFilterParameters.fileSizeStartRangeByte != 0 &&
-        audioSortFilterParameters.fileSizeEndRangeByte != 0) {
+    if (audioSortFilterParameters.fileSizeStartRangeMB != 0 &&
+        audioSortFilterParameters.fileSizeEndRangeMB != 0) {
       filteredAudios = _filterAudioLstByAudioFileSize(
         audioLst: filteredAudios,
-        startFileSize: audioSortFilterParameters.fileSizeStartRangeByte,
-        endFileSize: audioSortFilterParameters.fileSizeEndRangeByte,
+        startFileSizeMB: audioSortFilterParameters.fileSizeStartRangeMB,
+        endFileSizeMB: audioSortFilterParameters.fileSizeEndRangeMB,
       );
     }
 
@@ -277,12 +277,12 @@ class AudioSortFilterService {
 
   List<Audio> _filterAudioLstByAudioFileSize({
     required List<Audio> audioLst,
-    required int startFileSize,
-    required int endFileSize,
+    required double startFileSizeMB,
+    required double endFileSizeMB,
   }) {
     return audioLst.where((audio) {
-      return (audio.audioFileSize >= startFileSize) &&
-          (audio.audioFileSize <= endFileSize);
+      return (audio.audioFileSize >= startFileSizeMB * 1000000) &&
+          (audio.audioFileSize <= endFileSizeMB * 1000000);
     }).toList();
   }
 
