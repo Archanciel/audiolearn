@@ -148,6 +148,7 @@ class AudioInfoDialogWidget extends StatelessWidget with ScreenMixin {
                       ? frenchDateTimeFormat.format(audio.audioPausedDateTime!)
                       : ''),
               createInfoRowFunction(
+                valueTextWidgetKey: const Key('audioFileNameKey'),
                   context: context,
                   label: AppLocalizations.of(context)!.audioFileNameLabel,
                   value: audio.audioFileName),

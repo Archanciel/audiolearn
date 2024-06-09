@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:audiolearn/viewmodels/comment_vm.dart';
+import 'package:audiolearn/views/widgets/audio_modification_dialog_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -2867,7 +2868,7 @@ void main() {
       // Return to the Playlist Download View
       await tester.tap(playlistDownloadViewNavButton);
       await tester.pumpAndSettle();
-      
+
       // Then, we try to copy a second time the audio already copied
       // to the target playlist in order to verify that a warning is
       // displayed informing that the audio was not copied because it
@@ -4717,6 +4718,15 @@ void main() {
       app.main(['test']);
       await tester.pumpAndSettle();
 
+      // First, set the application language to French
+      // Tap the appbar leading popup menu button
+      await tester.tap(find.byKey(const Key('appBarRightPopupMenu')));
+      await tester.pumpAndSettle();
+
+      // Select French
+      await tester.tap(find.byKey(const Key('appBarMenuFrench')));
+      await tester.pumpAndSettle();
+
       // *** First test part: Copy audio from Youtube to local
       // playlist
 
@@ -5110,6 +5120,15 @@ void main() {
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       app.main(['test']);
+      await tester.pumpAndSettle();
+
+      // First, set the application language to French
+      // Tap the appbar leading popup menu button
+      await tester.tap(find.byKey(const Key('appBarRightPopupMenu')));
+      await tester.pumpAndSettle();
+
+      // Select French
+      await tester.tap(find.byKey(const Key('appBarMenuFrench')));
       await tester.pumpAndSettle();
 
       // *** First test part: Copy audio from Youtube to local
@@ -9751,6 +9770,116 @@ void main() {
     });
   });
   group('App settings set speed test', () {});
+  group('Rename audio file test', () {
+    testWidgets('Not existing new name', (WidgetTester tester) async {
+      const String youtubePlaylistTitle =
+          'audio_player_view_2_shorts_test'; // Youtube playlist
+      const String audioTitle = "morning _ cinematic video";
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: '2_youtube_2_local_playlists_integr_test_data',
+        selectedPlaylistTitle: youtubePlaylistTitle,
+      );
+
+      // Now we want to tap the popup menu of the audio ListTile
+      // "morning _ cinematic video"
+
+      // First, find the audio sublist ListTile Text widget
+
+      final Finder audioListTileTextWidgetFinder = find.text(audioTitle);
+
+      // Then obtain the audio ListTile widget enclosing the Text widget by
+      // finding its ancestor
+      final Finder audioListTileWidgetFinder = find.ancestor(
+        of: audioListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the leading menu icon button of the audio ListTile
+      // and tap on it
+      final Finder audioListTileLeadingMenuIconButton = find.descendant(
+        of: audioListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(audioListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle(); // Wait for popup menu to appear
+
+      // Now find the rename audio file popup menu item and tap on it
+      final Finder popupCopyMenuItem =
+          find.byKey(const Key("popup_menu_rename_audio_file"));
+
+      await tester.tap(popupCopyMenuItem);
+      await tester.pumpAndSettle();
+
+      // Verify that the rename audio file dialog is displayed
+      expect(find.byType(AudioModificationDialogWidget), findsOneWidget);
+
+      // Verify the dialog title
+      expect(find.text('Rename Audio File'), findsOneWidget);
+
+      // Now enter the new file name
+
+      // Find the TextField using the Key
+      final Finder textFieldFinder =
+          find.byKey(Key('audioModificationTextField'));
+
+      // Retrieve the TextField widget
+      final TextField textField = tester.widget<TextField>(textFieldFinder);
+
+      // Verify the initial value of the TextField
+      expect(textField.controller!.text,
+          '231117-002828-morning _ cinematic video 23-07-01.mp3');
+
+      const String newFileName = 'new file name.mp3';
+      await tester.enterText(
+        textFieldFinder,
+        newFileName,
+      );
+
+      await tester.pumpAndSettle();
+
+      // Now tap the rename button
+      await tester.tap(find.byKey(const Key('audioModificationButton')));
+      await tester.pumpAndSettle();
+
+      // Verify that the renamed file exists
+      final String renamedAudioFilePath =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubePlaylistTitle${path.separator}$newFileName";
+      expect(File(renamedAudioFilePath).existsSync(), true);
+
+      // Check the new file name in the audio info dialog
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(audioListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle(); // Wait for popup menu to appear
+
+      // Now find the popup menu item and tap on it
+      final Finder popupDisplayAudioInfoMenuItemFinder =
+          find.byKey(const Key("popup_menu_display_audio_info"));
+
+      await tester.tap(popupDisplayAudioInfoMenuItemFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the audio new file name
+
+      final Text audioFileNameTitleTextWidget = tester
+          .widget<Text>(find.byKey(const Key('audioFileNameKey')));
+
+      expect(audioFileNameTitleTextWidget.data,
+          newFileName);
+
+      // Tap the close button of the audio info dialog
+      await tester.tap(find.byKey(const Key('audioInfoOkButtonKey')));
+      
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
+    });
+  });
 }
 
 void verifyAudioMenuItemsState({

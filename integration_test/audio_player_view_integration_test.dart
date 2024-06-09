@@ -36,7 +36,7 @@ void main() {
           'audio_player_view_2_shorts_test';
       const String lastDownloadedAudioTitle = 'morning _ cinematic video';
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_player_view_test',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -77,7 +77,7 @@ void main() {
           'audio_player_view_2_shorts_test';
       const String lastDownloadedAudioTitle = 'morning _ cinematic video';
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_player_view_test',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -225,7 +225,7 @@ void main() {
       const String lastDownloadedAudioTitle =
           '3 fois où Aurélien Barrau tire à balles réelles sur les riches\n8:50';
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_player_view_first_to_last_audio_test',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -292,7 +292,7 @@ void main() {
       const String playlistDownloadViewlastDownloadedAudioTitle =
           '3 fois où Aurélien Barrau tire à balles réelles sur les riches';
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_player_view_first_to_last_audio_test',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -394,7 +394,7 @@ void main() {
       const String firstDownloadedAudioTitle =
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_player_view_first_to_last_audio_test',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -469,7 +469,7 @@ void main() {
       const String playlistDownloadViewlastDownloadedAudioTitle =
           '3 fois où Aurélien Barrau tire à balles réelles sur les riches';
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_player_view_first_to_last_audio_test',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -575,7 +575,7 @@ void main() {
           'audio_player_view_2_shorts_test';
       const String lastDownloadedAudioTitle = 'Really short video';
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_player_view_test',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -676,7 +676,7 @@ void main() {
       const String previouslyPartiallyListenedAudioTitle =
           '3 fois où Aurélien Barrau tire à balles réelles sur les riches';
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_player_view_play_rewind',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -707,7 +707,7 @@ void main() {
       const String previouslyPartiallyListenedAudioTitle =
           '3 fois où Aurélien Barrau tire à balles réelles sur les riches';
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_player_view_play_rewind',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -739,7 +739,7 @@ void main() {
       const String previouslyPartiallyListenedAudioTitle =
           '3 fois où Aurélien Barrau tire à balles réelles sur les riches';
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_player_view_play_rewind',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -771,7 +771,7 @@ void main() {
       const String fullyListenedAudioTitle =
           'Quand Aurélien Barrau va dans une école de management';
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_player_view_play_rewind',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -802,7 +802,7 @@ void main() {
       const String fullyListenedAudioTitle =
           'Quand Aurélien Barrau va dans une école de management';
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_player_view_play_rewind',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -834,7 +834,7 @@ void main() {
       const String fullyListenedAudioTitle =
           'Quand Aurélien Barrau va dans une école de management';
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_player_view_play_rewind',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -866,7 +866,7 @@ void main() {
       const String fullyListenedAudioTitle =
           'Quand Aurélien Barrau va dans une école de management';
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_player_view_play_rewind',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -897,7 +897,7 @@ void main() {
       const String fullyListenedAudioTitle =
           'Quand Aurélien Barrau va dans une école de management';
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_player_view_play_rewind',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -931,7 +931,7 @@ void main() {
           'audio_player_view_2_shorts_test';
       const String lastDownloadedAudioTitle = 'morning _ cinematic video';
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_player_view_test',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -1017,7 +1017,7 @@ void main() {
           'audio_player_view_2_shorts_test';
       const String lastDownloadedAudioTitle = 'morning _ cinematic video';
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_player_view_test',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -1087,7 +1087,7 @@ void main() {
       const String audioPlayerSelectedPlaylistTitle =
           'audio_player_view_no_sel_audio_test';
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_player_view_test',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -1123,7 +1123,7 @@ void main() {
     testWidgets(
         'Opening AudioPlayerView by clicking on AudioPlayerView icon button in situation where no playlist is selected.',
         (WidgetTester tester) async {
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_player_view_no_playlist_selected_test',
         selectedPlaylistTitle: null, // no playlist selected
@@ -1161,7 +1161,7 @@ void main() {
       const String firstDownloadedAudioTitle =
           'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau';
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_play_speed_bug_fix_test_data',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -1256,7 +1256,7 @@ void main() {
       const String firstDownloadedAudioTitle =
           'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau';
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_play_speed_bug_fix_test_data',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -1337,7 +1337,7 @@ void main() {
       const String firstDownloadedAudioTitle =
           'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau';
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_play_speed_bug_fix_test_data',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -1417,7 +1417,7 @@ void main() {
       const String firstDownloadedAudioTitle =
           'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau';
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_play_speed_bug_fix_test_data',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -1476,7 +1476,7 @@ void main() {
       const String firstDownloadedAudioTitle =
           'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau';
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_player_view_first_to_last_audio_test',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -1562,7 +1562,7 @@ void main() {
       const String firstDownloadedAudioTitle =
           'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau';
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_play_speed_bug_fix_test_data',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -1647,7 +1647,7 @@ void main() {
       const String lastDownloadedAudioTitle =
           "La résilience insulaire par Fiona Roche\n13:35";
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName:
             'audio_play_skip_to_next_and_last_unread_audio_test',
@@ -1705,7 +1705,7 @@ void main() {
       const String fifthDownloadedPartiallyPlayedAudioTitle =
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau";
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_player_view_display_audio_list_test',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -1847,7 +1847,7 @@ void main() {
       const String firstDownloadedNotPlayedAudioTitle =
           "Les besoins artificiels par R.Keucheyan";
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_player_view_display_audio_list_test',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -1928,7 +1928,7 @@ void main() {
       const String toSelectAudioTitle =
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_player_vm_play_position_undo_redo_test',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -1991,7 +1991,7 @@ void main() {
       const String toSelectAudioTitle =
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_player_vm_play_position_undo_redo_test',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -2055,7 +2055,7 @@ void main() {
       const String toSelectAudioTitle =
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_player_vm_play_position_undo_redo_test',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -2118,7 +2118,7 @@ void main() {
       const String toSelectAudioTitle =
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_player_vm_play_position_undo_redo_test',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -2180,7 +2180,7 @@ void main() {
       const String toSelectAudioTitle =
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_player_vm_play_position_undo_redo_test',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -2243,7 +2243,7 @@ void main() {
       const String toSelectAudioTitle =
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_player_vm_play_position_undo_redo_test',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -2308,7 +2308,7 @@ void main() {
       const String toSelectAudioTitle =
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_player_vm_play_position_undo_redo_test',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -2379,7 +2379,7 @@ void main() {
       const String toSelectAudioTitle =
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_player_vm_play_position_undo_redo_test',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -2451,7 +2451,7 @@ void main() {
       const String toSelectAudioTitle =
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_player_vm_play_position_undo_redo_test',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -2521,7 +2521,7 @@ void main() {
       const String toSelectAudioTitle =
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_player_vm_play_position_undo_redo_test',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -2590,7 +2590,7 @@ void main() {
       const String toSelectAudioTitle =
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_player_vm_play_position_undo_redo_test',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -2661,7 +2661,7 @@ void main() {
       const String toSelectAudioTitle =
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_player_vm_play_position_undo_redo_test',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -2735,7 +2735,7 @@ void main() {
       const String toSelectAudioTitle =
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName:
             'audio_player_view_sort_filter_partially_played_play_test',
@@ -2805,7 +2805,7 @@ void main() {
       const String toSelectAudioTitle =
           "Quand Aurélien Barrau va dans une école de management";
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'sort_filter_test',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -2881,7 +2881,7 @@ void main() {
       const String audioToCommentTitle =
           "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_comment_test',
         selectedPlaylistTitle: emptyPlaylistTitle,
@@ -3650,7 +3650,7 @@ void main() {
       const String alreadyCommentedAudioTitle =
           "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_comment_test',
         selectedPlaylistTitle: youtubePlaylistTitle,
@@ -3996,7 +3996,7 @@ void main() {
       const String alreadyCommentedAudioTitle =
           "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_comment_test',
         selectedPlaylistTitle: youtubePlaylistTitle,
@@ -4129,7 +4129,7 @@ void main() {
       const String alreadyCommentedAudioTitle =
           "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_comment_test',
         selectedPlaylistTitle: youtubePlaylistTitle,
@@ -4256,7 +4256,7 @@ void main() {
       const String alreadyCommentedAudioTitle =
           "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_comment_test',
         selectedPlaylistTitle: youtubePlaylistTitle,
@@ -4618,7 +4618,7 @@ void main() {
       const String alreadyCommentedAudioTitle =
           "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_comment_test',
         selectedPlaylistTitle: youtubePlaylistTitle,
@@ -4702,7 +4702,7 @@ void main() {
       const String alreadyCommentedAudioTitle =
           "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_comment_test',
         selectedPlaylistTitle: youtubePlaylistTitle,
@@ -4747,7 +4747,7 @@ void main() {
       const String alreadyCommentedAudioTitle =
           "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
 
-      await initializeApplicationAndSelectPlaylist(
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_comment_test',
         selectedPlaylistTitle: youtubePlaylistTitle,
@@ -5508,93 +5508,6 @@ String? getActualText(final Finder textWidgetFinder) {
   }
 
   return null;
-}
-
-/// Initializes the application and selects the playlist if
-/// [selectedPlaylistTitle] is not null.
-Future<void> initializeApplicationAndSelectPlaylist({
-  required WidgetTester tester,
-  String? savedTestDataDirName,
-  String? selectedPlaylistTitle,
-}) async {
-  // Purge the test playlist directory if it exists so that the
-  // playlist list is empty
-  DirUtil.deleteFilesInDirAndSubDirs(
-    rootPath: kPlaylistDownloadRootPathWindowsTest,
-    deleteSubDirectoriesAsWell: true,
-  );
-
-  if (savedTestDataDirName != null) {
-    // Copy the test initial audio data to the app dir
-    DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-      sourceRootPath:
-          "$kDownloadAppTestSavedDataDir${path.separator}$savedTestDataDirName",
-      destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
-    );
-  }
-
-  final SettingsDataService settingsDataService = SettingsDataService(
-    sharedPreferences: await SharedPreferences.getInstance(),
-    isTest: true,
-  );
-
-  // load settings from file which does not exist. This
-  // will ensure that the default playlist root path is set
-  await settingsDataService.loadSettingsFromFile(
-      settingsJsonPathFileName: "temp\\wrong.json");
-
-  // Load the settings from the json file. This is necessary
-  // otherwise the ordered playlist titles will remain empty
-  // and the playlist list will not be filled with the
-  // playlists available in the download app test dir
-  await settingsDataService.loadSettingsFromFile(
-      settingsJsonPathFileName:
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
-
-  await app.main(['test']);
-  await tester.pumpAndSettle();
-
-  // Tap the 'Toggle List' button to show the list. If the list
-  // is not opened, checking that a ListTile with the title of
-  // the playlist was added to the list will fail
-  await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-  await tester.pumpAndSettle();
-
-  if (selectedPlaylistTitle != null) {
-    // Find the ListTile Playlist containing the playlist which
-    // contains the audio to play
-
-    // First, find the Playlist ListTile Text widget
-    final Finder audioPlayerSelectedPlaylistFinder =
-        find.text(selectedPlaylistTitle);
-
-    // Then obtain the Playlist ListTile widget enclosing the Text
-    // widget by finding its ancestor
-    final Finder selectedPlaylistListTileWidgetFinder = find.ancestor(
-      of: audioPlayerSelectedPlaylistFinder,
-      matching: find.byType(ListTile),
-    );
-
-    // Now find the Checkbox widget located in the Playlist ListTile
-    // and tap on it to select the playlist
-    final Finder selectedPlaylistCheckboxWidgetFinder = find.descendant(
-      of: selectedPlaylistListTileWidgetFinder,
-      matching: find.byType(Checkbox),
-    );
-
-    // Retrieve the Checkbox widget
-    final Checkbox checkbox =
-        tester.widget<Checkbox>(selectedPlaylistCheckboxWidgetFinder);
-
-    // Tap on the playlist checkbox to select it if it is not
-    // already selected
-    if (checkbox.value == null || !checkbox.value!) {
-      // Tap the ListTile Playlist checkbox to select it
-      // so that the playlist audios are listed
-      await tester.tap(selectedPlaylistCheckboxWidgetFinder);
-      await tester.pumpAndSettle();
-    }
-  }
 }
 
 Duration parseDuration(String hhmmString) {

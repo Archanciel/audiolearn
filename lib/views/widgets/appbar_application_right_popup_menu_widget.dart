@@ -26,6 +26,7 @@ class AppBarApplicationRightPopupMenuWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<AppBarPopupMenu>(
+      key: const Key('appBarRightPopupMenu'),
       onSelected: (AppBarPopupMenu value) {
         switch (value) {
           case AppBarPopupMenu.en:
