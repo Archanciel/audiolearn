@@ -88,7 +88,7 @@ class _AudioModificationDialogWidgetState
         labelStr = AppLocalizations.of(context)!.renameAudioFileLabel;
         modificationButtonStr =
             AppLocalizations.of(context)!.renameAudioFileButton;
-        flexibleValue = 5;
+        flexibleValue = 4;
         break;
       case AudioModificationType.modifyAudioTitle:
         titleStr = AppLocalizations.of(context)!.modifyAudioTitleDialogTitle;
@@ -97,7 +97,7 @@ class _AudioModificationDialogWidgetState
         labelStr = AppLocalizations.of(context)!.modifyAudioTitleLabel;
         modificationButtonStr =
             AppLocalizations.of(context)!.modifyAudioTitleButton;
-        flexibleValue = 7;
+        flexibleValue = 6;
         break;
     }
 

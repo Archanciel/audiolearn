@@ -153,13 +153,14 @@ class _ApplicationSettingsDialogWidgetState
                   ],
                 ),
               ),
-              createEditableRowFunction(
+              createFlexibleEditableRowFunction(
                 valueTextFieldWidgetKey: const Key('playlistRootpathTextField'),
                 context: context,
                 label: AppLocalizations.of(context)!.playlistRootpathLabel,
                 controller: _playlistRootpathTextEditingController,
                 textFieldFocusNode: _focusNodePlaylistRootPath,
                 isCursorAtStart: false,
+                flexValue: 2,
               ),
             ],
           ),
