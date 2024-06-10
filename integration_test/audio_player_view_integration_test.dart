@@ -4579,11 +4579,6 @@ void main() {
           tester.widget(find.byKey(const Key('warningDialogTitle')));
       expect(warningDialogTitle.data, 'WARNING');
 
-      // Check the value of the warning dialog title
-      expect(
-          tester.widget<Text>(find.byKey(const Key('warningDialogTitle'))).data,
-          'WARNING');
-
       // Check the value of the warning dialog message
       expect(
           tester

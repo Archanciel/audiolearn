@@ -21,6 +21,10 @@ enum WarningMessageType {
   // button or if the String pasted to the url text field
   // is not a valid Youtube playlist url.
 
+  renameFileNameAlreadyUsed, // The case if the file name proposed
+  // for renaming an audio file is the name of an existing
+  // file.
+
   playlistWithUrlAlreadyInListOfPlaylists, // User clicked on Add
   // button but the playlist with this url was already downloaded.
 
@@ -222,6 +226,16 @@ class WarningMessageVM extends ChangeNotifier {
   set invalidPlaylistUrl(String invalidPlaylistUrl) {
     _invalidPlaylistUrl = invalidPlaylistUrl;
     _warningMessageType = WarningMessageType.invalidPlaylistUrl;
+
+    // Causes the display warning message widget to be displayed.      // Causes the display warning message widget to be displayed.
+    notifyListeners();
+  }
+
+  String _renameFileNameAlreadyUsed = '';
+  String get renameFileNameAlreadyUsed => _renameFileNameAlreadyUsed;
+  set renameFileNameAlreadyUsed(String invalidRenameFileName) {
+    _renameFileNameAlreadyUsed = invalidRenameFileName;
+    _warningMessageType = WarningMessageType.renameFileNameAlreadyUsed;
 
     // Causes the display warning message widget to be displayed.      // Causes the display warning message widget to be displayed.
     notifyListeners();

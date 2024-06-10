@@ -178,6 +178,20 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
         });
 
         return const SizedBox.shrink();
+      case WarningMessageType.renameFileNameAlreadyUsed:
+        String fileName = _warningMessageVM.renameFileNameAlreadyUsed;
+
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _displayWarningDialog(
+            context: _context,
+            message:
+                AppLocalizations.of(context)!.renameFileNameAlreadyUsed(fileName),
+            warningMessageVM: _warningMessageVM,
+            themeProviderVM: themeProviderVM,
+          );
+        });
+
+        return const SizedBox.shrink();
       case WarningMessageType.playlistWithUrlAlreadyInListOfPlaylists:
         String playlistUrl = _playlistUrlController?.text ?? '';
         String playlistTitle = _warningMessageVM.playlistAlreadyDownloadedTitle;

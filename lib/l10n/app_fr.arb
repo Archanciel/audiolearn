@@ -91,6 +91,13 @@
       "url": {}
     }
   },
+"renameFileNameAlreadyUsed": "Le nom de fichier \"{fileName}\" est déjà utilisé par un autre fichier dans le même répertoire et ne peut donc pas être réutilisé.",
+  "@renameFileNameAlreadyUsed": {
+    "description": "Warning announcing that the playlist with invalid URL was not added.",
+    "placeholders": {
+      "fileName": {}
+    }
+  },
   "playlistWithUrlAlreadyInListOfPlaylists": "La playlist \"{title}\" avec l'URL \"{url}\" est déjà dans la liste des playlists et ne sera donc pas recrée.",
   "@playlistWithUrlAlreadyInListOfPlaylists": {
     "description": "Avertissement annonçant que la playlist avec l'URL {url} est déjà dans la liste des playlists.",

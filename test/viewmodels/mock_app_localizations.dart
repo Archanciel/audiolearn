@@ -1073,4 +1073,10 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get modifyAudioTitle => "Modify audio title ...";
+
+  @override
+  String renameFileNameAlreadyUsed(
+    Object fileName,
+  ) =>
+      "The file name \"${fileName}\" already exists in the same directory and cannot be used.";
 }

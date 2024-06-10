@@ -504,7 +504,17 @@ class AudioDownloadVM extends ChangeNotifier {
     required Audio audio,
     required String modifiedAudioFileName,
   }) {
+    // the case if the user clicked on modify button without
+    // having modified the audio file name
     if (audio.audioFileName == modifiedAudioFileName) {
+      return;
+    }
+
+    if (File(
+            '${audio.enclosingPlaylist!.downloadPath}${Platform.pathSeparator}$modifiedAudioFileName')
+        .existsSync()) {
+      warningMessageVM.renameFileNameAlreadyUsed = modifiedAudioFileName;
+
       return;
     }
 
@@ -1025,8 +1035,7 @@ class AudioDownloadVM extends ChangeNotifier {
       int removedPlayableAudioNumber =
           correspondingOriginalPlaylist.updatePlayableAudioLst();
 
-      if (isPlaylistDownloadPathUpdated ||
-          removedPlayableAudioNumber > 0) {
+      if (isPlaylistDownloadPathUpdated || removedPlayableAudioNumber > 0) {
         JsonDataService.saveToFile(
           model: playlist,
           path: playlist.getPlaylistDownloadFilePathName(),

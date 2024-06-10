@@ -95,7 +95,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
                 child: Text(AppLocalizations.of(context)!.displayAudioInfo),
               ),
               PopupMenuItem<AudioPopupMenuAction>(
-                key: const Key('popup_menu_Audio_comment'),
+                key: const Key('popup_menu_audio_comment'),
                 value: AudioPopupMenuAction.audioComment,
                 child: Text(AppLocalizations.of(context)!.commentMenu),
               ),
