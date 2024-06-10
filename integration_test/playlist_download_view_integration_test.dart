@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:audiolearn/viewmodels/comment_vm.dart';
 import 'package:audiolearn/views/widgets/audio_modification_dialog_widget.dart';
+import 'package:audiolearn/views/widgets/comment_list_add_dialog_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -9770,7 +9771,7 @@ void main() {
     });
   });
   group('App settings set speed test', () {});
-  group('Rename audio file test', () {
+  group('Rename audio file test and verify comment access', () {
     testWidgets('Not existing new name', (WidgetTester tester) async {
       const String youtubePlaylistTitle =
           'audio_player_view_2_shorts_test'; // Youtube playlist
@@ -9782,21 +9783,45 @@ void main() {
         selectedPlaylistTitle: youtubePlaylistTitle,
       );
 
+      // Before renaming the audio file, we verify that the audio has
+      // a comment
+
+      // First, find the audio sublist ListTile Text widget
+
+      Finder audioListTileTextWidgetFinder = find.text(audioTitle);
+
+      // Then obtain the audio ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      Finder audioListTileWidgetFinder = find.ancestor(
+        of: audioListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // The audio file we will rename has a comment linked to this
+      // file name. Once this file is renamed, the comment will no
+      // longer be accessible. Before renaming the file, verify
+      // the comment exist ...
+      await checkAudioComment(
+        tester: tester,
+        audioListTileWidgetFinder: audioListTileWidgetFinder,
+        expectedCommentTitle: 'Not accessible later',
+      );
+
       // Now we want to tap the popup menu of the audio ListTile
       // "morning _ cinematic video"
 
       // First, find the audio sublist ListTile Text widget
 
-      final Finder audioListTileTextWidgetFinder = find.text(audioTitle);
+      audioListTileTextWidgetFinder = find.text(audioTitle);
 
-      // Then obtain the audio ListTile widget enclosing the Text widget by
-      // finding its ancestor
-      final Finder audioListTileWidgetFinder = find.ancestor(
+      // Then obtain the audio ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      audioListTileWidgetFinder = find.ancestor(
         of: audioListTileTextWidgetFinder,
         matching: find.byType(ListTile),
       );
 
-      // Now find the leading menu icon button of the audio ListTile
+      // Find the leading menu icon button of the audio ListTile
       // and tap on it
       final Finder audioListTileLeadingMenuIconButton = find.descendant(
         of: audioListTileWidgetFinder,
@@ -9833,7 +9858,7 @@ void main() {
       expect(textField.controller!.text,
           '231117-002828-morning _ cinematic video 23-07-01.mp3');
 
-      const String newFileName = 'new file name.mp3';
+      const String newFileName = '240610-Renamed video 23-07-01.mp3';
       await tester.enterText(
         textFieldFinder,
         newFileName,
@@ -9865,21 +9890,84 @@ void main() {
 
       // Verify the audio new file name
 
-      final Text audioFileNameTitleTextWidget = tester
-          .widget<Text>(find.byKey(const Key('audioFileNameKey')));
+      final Text audioFileNameTitleTextWidget =
+          tester.widget<Text>(find.byKey(const Key('audioFileNameKey')));
 
-      expect(audioFileNameTitleTextWidget.data,
-          newFileName);
+      expect(audioFileNameTitleTextWidget.data, newFileName);
 
-      // Tap the close button of the audio info dialog
+      // Tap the Ok button to close the audio info dialog
       await tester.tap(find.byKey(const Key('audioInfoOkButtonKey')));
-      
+      await tester.pumpAndSettle();
+
+      // The renamed audio can now access to a comment defined for the
+      // new audio file name (this is a test situation !). Now we verify
+      // that this comment is accessible as well as that the old comment
+      // is no longer accessible
+      await checkAudioComment(
+        tester: tester,
+        audioListTileWidgetFinder: audioListTileWidgetFinder,
+        expectedCommentTitle: 'Comment for the renamed audio file',
+        notAccessibleCommentTitle: 'Not accessible later',
+      );
+
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
   });
+}
+
+Future<void> checkAudioComment({
+  required WidgetTester tester,
+  required Finder audioListTileWidgetFinder,
+  required String expectedCommentTitle,
+  String? notAccessibleCommentTitle,
+}) async {
+  // Tap on the ListTile to open the audio player view on the
+  // passed audio finder
+  await tester.tap(audioListTileWidgetFinder);
+  await tester.pumpAndSettle();
+
+  // Tap on the comment icon button to open the comment add list
+  // dialog
+  final Finder commentInkWellButtonFinder = find.byKey(
+    const Key('commentsInkWellButton'),
+  );
+
+  await tester.tap(commentInkWellButtonFinder);
+  await tester.pumpAndSettle();
+
+  // Verify that the expectedCommentTitle is listed
+
+  Finder commentListDialogFinder = find.byType(CommentListAddDialogWidget);
+
+  expect(
+      find.descendant(
+          of: commentListDialogFinder,
+          matching: find.text(expectedCommentTitle)),
+      findsOneWidget);
+
+  // If the notAccessibleCommentTitle is not null, verify that it is
+  // not listed
+  if (notAccessibleCommentTitle != null) {
+    expect(
+        find.descendant(
+            of: commentListDialogFinder,
+            matching: find.text(notAccessibleCommentTitle)),
+        findsNothing);
+  }
+
+  // Close the comment list dialog
+  await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+  await tester.pumpAndSettle();
+
+  // Tap on the playlist download view button to return to the
+  // playlist download view
+  final playlistDownloadViewNavButton =
+      find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+  await tester.tap(playlistDownloadViewNavButton);
+  await tester.pumpAndSettle();
 }
 
 void verifyAudioMenuItemsState({

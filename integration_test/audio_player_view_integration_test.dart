@@ -3430,7 +3430,6 @@ void main() {
       // Verify that the comment list dialog now displays correctly the
       // updated comment
 
-      // commentListDialogFinder = find.byType(CommentListAddDialogWidget);
       expect(
           find.descendant(
               of: commentListDialogFinder, matching: find.text(commentTitle)),
