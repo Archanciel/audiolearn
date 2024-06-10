@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:io';
 import 'package:path/path.dart' as path;
-import 'package:shared_preferences/shared_preferences.dart';
 
 // importing youtube_explode_dart as yt enables to name the app Model
 // playlist class as Playlist so it does not conflict with
