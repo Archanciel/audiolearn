@@ -226,7 +226,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
                     bool keepAudioDataInSourcePlaylist =
                         resultMap['keepAudioDataInSourcePlaylist'];
 
-                    expandablePlaylistVM.moveAudioToPlaylist(
+                    expandablePlaylistVM.moveAudioAndCommentToPlaylist(
                       audio: audio,
                       targetPlaylist: targetPlaylist,
                       keepAudioInSourcePlaylistDownloadedAudioLst:

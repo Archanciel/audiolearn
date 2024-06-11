@@ -738,7 +738,7 @@ class PlaylistListVM extends ChangeNotifier {
     return AudioSortFilterParameters.createDefaultAudioSortFilterParameters();
   }
 
-  void moveAudioToPlaylist({
+  void moveAudioAndCommentToPlaylist({
     required Audio audio,
     required Playlist targetPlaylist,
     required bool keepAudioInSourcePlaylistDownloadedAudioLst,

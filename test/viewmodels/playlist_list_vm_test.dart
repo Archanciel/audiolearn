@@ -85,7 +85,7 @@ void main() {
       playlistListVM.getUpToDateSelectablePlaylists();
     });
 
-    test('copyAudioToPlaylist copies audio to playlist', () {
+    test('copyAudioToPlaylist copies audio and its comments to playlist', () {
       const String sourcePlaylistTitle = 'S8 audio';
 
       final sourcePlaylistPath = path.join(
@@ -157,7 +157,7 @@ void main() {
       DirUtil.deleteFilesInDirAndSubDirs(
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
-    test('moveAudioToPlaylist moves audio to playlist', () {
+    test('moveAudioToPlaylist moves audio and its comments to playlist', () {
       const String sourcePlaylistTitle = 'S8 audio';
 
       final sourcePlaylistPath = path.join(
@@ -195,8 +195,8 @@ void main() {
       );
 
       // Testing move La résilience insulaire par Fiona Roche with
-      // play position at start of audio
-      testMoveAudioToPlaylist(
+      // play position at start of audio, no comments
+      testMoveAudioAndCommentToPlaylist(
         playlistListVM: playlistListVM,
         sourcePlaylist: sourcePlaylist,
         sourceAudioIndex: 0,
@@ -205,8 +205,8 @@ void main() {
       );
 
       // Testing move Le Secret de la RESILIENCE révélé par Boris Cyrulnik
-      // with play position at end of audio
-      testMoveAudioToPlaylist(
+      // with play position at end of audio and comment file
+      testMoveAudioAndCommentToPlaylist(
         playlistListVM: playlistListVM,
         sourcePlaylist: sourcePlaylist,
         sourceAudioIndex: 0,
@@ -216,7 +216,7 @@ void main() {
 
       // Testing move Jancovici répond aux voeux de Macron pour 2024
       // play position 2 seconds before end of audio
-      testMoveAudioToPlaylist(
+      testMoveAudioAndCommentToPlaylist(
         playlistListVM: playlistListVM,
         sourcePlaylist: sourcePlaylist,
         sourceAudioIndex: 2,
@@ -890,7 +890,7 @@ void testCopyAudioToPlaylist({
   }
 }
 
-void testMoveAudioToPlaylist({
+void testMoveAudioAndCommentToPlaylist({
   required PlaylistListVM playlistListVM,
   required Playlist sourcePlaylist,
   required int sourceAudioIndex,
@@ -898,10 +898,10 @@ void testMoveAudioToPlaylist({
   required bool hasCommentFile,
 }) {
   Audio sourceAudio = sourcePlaylist.playableAudioLst[sourceAudioIndex];
-    String commentFileName =
-        sourceAudio.audioFileName.replaceFirst('.mp3', '.json');
-    String sourceCommentFilePathName = path.join(
-        sourcePlaylist.downloadPath, kCommentDirName, commentFileName);
+  String commentFileName =
+      sourceAudio.audioFileName.replaceFirst('.mp3', '.json');
+  String sourceCommentFilePathName =
+      path.join(sourcePlaylist.downloadPath, kCommentDirName, commentFileName);
 
   if (hasCommentFile) {
     // Verify that the comment file of the moved audio is present in the
@@ -911,8 +911,8 @@ void testMoveAudioToPlaylist({
       isTrue,
     );
   }
-  
-  playlistListVM.moveAudioToPlaylist(
+
+  playlistListVM.moveAudioAndCommentToPlaylist(
     audio: sourceAudio,
     targetPlaylist: targetPlaylist,
     keepAudioInSourcePlaylistDownloadedAudioLst: true,
