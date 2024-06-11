@@ -1,3 +1,6 @@
+import 'package:audiolearn/models/audio.dart';
+import 'package:audiolearn/models/playlist.dart';
+import 'package:audiolearn/services/json_data_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -162,5 +165,53 @@ class IntegrationTestUtil {
         await tester.pumpAndSettle();
       }
     }
+  }
+
+  static Future<void>
+      modifyAudioPausedDateTimeInPlaylistJsonFileAndUpgradePlaylists({
+    required WidgetTester tester,
+    required String playlistTitle,
+    required int playableAudioLstAudioIndex,
+    required DateTime modifiedAudioPausedDateTime,
+  }) async {
+    final String selectedPlaylistPath = path.join(
+      kPlaylistDownloadRootPathWindowsTest,
+      playlistTitle,
+    );
+
+    final selectedPlaylistFilePathName = path.join(
+      selectedPlaylistPath,
+      '$playlistTitle.json',
+    );
+
+    // Load playlist from the json file
+    Playlist loadedSelectedPlaylist = JsonDataService.loadFromFile(
+      jsonPathFileName: selectedPlaylistFilePathName,
+      type: Playlist,
+    );
+
+    Audio audioToModify =
+        loadedSelectedPlaylist.playableAudioLst[playableAudioLstAudioIndex];
+
+    audioToModify.audioPausedDateTime = modifiedAudioPausedDateTime;
+
+    // Save the modified playlist to the json file
+    JsonDataService.saveToFile(
+      model: loadedSelectedPlaylist,
+      path: selectedPlaylistFilePathName,
+    );
+
+    // After having modified the audio paused date time, execute
+    // 'Updating playlist JSON file' menu item so that all playlists,
+    // including the playlist containing the modified audio paused date
+    // time, are reloaded.
+
+    // open the popup menu
+    await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+    await tester.pumpAndSettle();
+
+    // find the update playlist JSON file menu item and tap on it
+    await tester.tap(find.byKey(const Key('update_playlist_json_dialog_item')));
+    await tester.pumpAndSettle();
   }
 }
