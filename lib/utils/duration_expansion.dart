@@ -94,7 +94,8 @@ extension DurationExpansion on Duration {
   ///
   /// If addRemainingOneDigitTenthOfSecond is true, the Duration
   /// is formatted as HH:mm:ss.t where t is the remaining tenth
-  /// of second.
+  /// of second. Else, the .t tenth of seconds is rounded to the
+  /// nearest second. 0:52.4 --> 0:52, 0:52.5 --> 0:53.
   String HHmmssZeroHH({
     bool addRemainingOneDigitTenthOfSecond = false,
   }) {

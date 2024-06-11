@@ -102,4 +102,86 @@ void main() {
       );
     },
   );
+  group(
+    'DateTimeUtil.convertTimeWithTenthOfSecToTimeWithSec()',
+    () {
+      test(
+        '0:52.4',
+        () {
+          const String timeStr = '0:52.4';
+          expect(
+            DateTimeUtil.convertTimeWithTenthOfSecToTimeWithSec(
+                timeWithTenthOfSecondsStr: timeStr),
+            '0:52',
+          );
+        },
+      );
+      test(
+        '0:52.5',
+        () {
+          const String timeStr = '0:52.5';
+          expect(
+            DateTimeUtil.convertTimeWithTenthOfSecToTimeWithSec(
+                timeWithTenthOfSecondsStr: timeStr),
+            '0:53',
+          );
+        },
+      );
+      test(
+        '1:45:24.4',
+        () {
+          const String timeStr = '1:45:24.4';
+          expect(
+            DateTimeUtil.convertTimeWithTenthOfSecToTimeWithSec(
+                timeWithTenthOfSecondsStr: timeStr),
+            '1:45:24',
+          );
+        },
+      );
+      test(
+        '1:45:24.5',
+        () {
+          const String timeStr = '1:45:24.5';
+          expect(
+            DateTimeUtil.convertTimeWithTenthOfSecToTimeWithSec(
+                timeWithTenthOfSecondsStr: timeStr),
+            '1:45:25',
+          );
+        },
+      );
+      test(
+        '1:45:24.0',
+        () {
+          const String timeStr = '1:45:24.0';
+          expect(
+            DateTimeUtil.convertTimeWithTenthOfSecToTimeWithSec(
+                timeWithTenthOfSecondsStr: timeStr),
+            '1:45:24',
+          );
+        },
+      );
+      test(
+        '0:0:0.4',
+        () {
+          const String timeStr = '0:0:0.4';
+          expect(
+            DateTimeUtil.convertTimeWithTenthOfSecToTimeWithSec(
+                timeWithTenthOfSecondsStr: timeStr),
+            '0:00',
+          );
+        },
+      );
+      test(
+        '0:0:0.5',
+        () {
+          const String timeStr = '0:0:0.5';
+          expect(
+            DateTimeUtil.convertTimeWithTenthOfSecToTimeWithSec(
+                timeWithTenthOfSecondsStr: timeStr),
+            '0:01',
+          );
+        },
+      );
+    },
+  );
 }

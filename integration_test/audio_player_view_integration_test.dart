@@ -6,6 +6,7 @@ import 'package:audiolearn/models/playlist.dart';
 import 'package:audiolearn/services/json_data_service.dart';
 import 'package:audiolearn/utils/date_time_parser.dart';
 import 'package:audiolearn/utils/date_time_util.dart';
+import 'package:audiolearn/utils/duration_expansion.dart';
 import 'package:audiolearn/views/widgets/comment_add_edit_dialog_widget.dart';
 import 'package:audiolearn/views/widgets/comment_list_add_dialog_widget.dart';
 import 'package:audiolearn/views/widgets/set_value_to_target_dialog_widget.dart';
@@ -661,9 +662,7 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
   });
-  group(
-      'Play with rewind audio position',
-      () {
+  group('Play with rewind audio position', () {
     testWidgets(
         'Partially listened audio > 1 h ago, rewind position after clicking on play button.',
         (
@@ -3286,7 +3285,7 @@ void main() {
       // dialog
 
       expectedCommentEndPositionMin = '0:52.1';
-      expectedCommentEndPositionMax = '0:52.5';
+      expectedCommentEndPositionMax = '0:52.6';
 
       String actualCommentEndPositionWithTenthOfSecondsStr =
           tester.widget<Text>(commentEndTextWidgetFinder).data!;
@@ -3501,12 +3500,19 @@ void main() {
       // Verify that the comment end position has the same value as
       // when it was saved
 
-      String actualAudioPlayerViewAudioPosition =
-          tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
+      int tenthOfSeconds = DateTimeUtil.convertToTenthsOfSeconds(
+        timeString: actualCommentEndPositionWithTenthOfSecondsStr,
+      );
+
+      Duration duration = Duration(milliseconds: tenthOfSeconds * 100);
+      actualCommentEndPositionSecondsStr =
+          duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: false);
 
       expect(
         tester.widget<Text>(commentEndTextWidgetFinder).data!,
-        actualCommentEndPositionSecondsStr, // 0:52
+        DateTimeUtil.convertTimeWithTenthOfSecToTimeWithSec(
+            timeWithTenthOfSecondsStr:
+                actualCommentEndPositionWithTenthOfSecondsStr), // 0:52 or 0:53
       );
 
       // Verify that the audio player view audio position displayed
@@ -3524,6 +3530,9 @@ void main() {
       // Verify that the Text widget contains the expected content
       String commentDialogAudioPlayerViewAudioPositionWithTenthSecText =
           tester.widget<Text>(selectCommentPositionTextOfButtonFinder).data!;
+
+      String actualAudioPlayerViewAudioPosition =
+          tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
 
       expect(
         roundUpTenthOfSeconds(

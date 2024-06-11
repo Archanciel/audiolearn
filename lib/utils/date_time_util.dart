@@ -1,3 +1,5 @@
+import 'package:audiolearn/utils/duration_expansion.dart';
+
 class DateTimeUtil {
   static DateTime getDateTimeLimitedToSeconds(DateTime dateTime) {
     return DateTime(
@@ -79,5 +81,24 @@ class DateTimeUtil {
     );
 
     return (duration.inMilliseconds / 100).round();
+  }
+
+  /// Converts a time string with tenths of a second to a time
+  /// string with seconds.
+  ///
+  /// Example: 1:45:24.4 -> 1:45:24, 1:45:24.5 -> 1:45:25
+  ///          0:52.4 -> 0:52, 0:52.5 -> 0:53
+  static String convertTimeWithTenthOfSecToTimeWithSec({
+    required String timeWithTenthOfSecondsStr,
+  }) {
+    int tenthOfSeconds = DateTimeUtil.convertToTenthsOfSeconds(
+      timeString: timeWithTenthOfSecondsStr,
+    );
+
+    Duration duration = Duration(milliseconds: tenthOfSeconds * 100);
+    String timeWithSecondsOnlyStr =
+        duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: false);
+
+    return timeWithSecondsOnlyStr;
   }
 }

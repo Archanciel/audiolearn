@@ -3,8 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:audiolearn/utils/duration_expansion.dart';
 
 void main() {
-  group('DurationExpansion HHmmss (test not performed in DateTimeParser test)',
-      () {
+  group('DurationExpansion HHmmss', () {
     test(
       'Duration 13 hours 35 minutes 23 seconds',
       () {
@@ -71,9 +70,7 @@ void main() {
       },
     );
   });
-  group(
-      'DurationExpansion HHmmss.tenthSec (test not performed in DateTimeParser test)',
-      () {
+  group('DurationExpansion HHmmss.tenthSec', () {
     test(
       'Duration 13 hours 35 minutes 23 seconds 2 tenth of seconds',
       () {
@@ -152,9 +149,7 @@ void main() {
     );
   });
 
-  group(
-      'DurationExpansion HHmmssZeroHH (test not performed in DateTimeParser test)',
-      () {
+  group('DurationExpansion HHmmssZeroHH', () {
     test(
       'Duration 13 hours 35 minutes 23 seconds',
       () {
@@ -280,13 +275,12 @@ void main() {
         const Duration duration = (Duration(milliseconds: 52500));
 
         expect(duration.HHmmssZeroHH(), '0:53');
-        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true), '0:52.5');
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true),
+            '0:52.5');
       },
     );
   });
-  group(
-      'DurationExpansion HHmmssZeroHH.tenthSec (test not performed in DateTimeParser test)',
-      () {
+  group('DurationExpansion HHmmssZeroHH.tenthSec', () {
     test(
       'Duration 13 hours 35 minutes 23 seconds 1 tenth of seconds',
       () {
@@ -438,7 +432,7 @@ void main() {
     );
   });
   group(
-      'DurationExpansion HHmmssZeroHH ensuring durations are correctly rounded (test not performed in DateTimeParser test)',
+      'DurationExpansion HHmmssZeroHH ensuring durations are correctly rounded',
       () {
     test(
       'Duration 0 hours 0 minutes 2000 milliseconds',
@@ -650,7 +644,7 @@ void main() {
     );
   });
   group(
-      'DurationExpansion HHmmssZeroHH.tenthSec ensuring durations are correctly rounded (test not performed in DateTimeParser test)',
+      'DurationExpansion HHmmssZeroHH.tenthSec ensuring durations are correctly rounded',
       () {
     test(
       'Duration 0 hours 0 minutes 2000 milliseconds with tenth of second remaining',
@@ -906,8 +900,31 @@ void main() {
       () {
         const Duration duration = (Duration(milliseconds: 52500));
 
-        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true), '0:52.5');
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true),
+            '0:52.5');
         expect(duration.HHmmssZeroHH(), '0:53');
+      },
+    );
+  });
+  group(
+      'DurationExpansion HHmmssZeroHH oh Duration containing tenth of seconds ensuring durations are correctly rounded',
+      () {
+    test(
+      'Duration 0:52.4',
+      () {
+        const Duration duration = Duration(seconds: 52, milliseconds: 400);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: false),
+            '0:52');
+      },
+    );
+    test(
+      'Duration 0:52.5',
+      () {
+        const Duration duration = Duration(seconds: 52, milliseconds: 500);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: false),
+            '0:53');
       },
     );
   });
