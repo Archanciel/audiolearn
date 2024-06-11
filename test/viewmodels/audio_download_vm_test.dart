@@ -191,69 +191,7 @@ void main() {
     });
   });
   group('AudioDownloadVM rename audio file', () {
-    test('New name not exist', () async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true, 
-      );
-
-      // Copy the test initial audio data to the app dir
-      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-        sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}audio_download_vm_modify_audio",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
-      );
-      WarningMessageVM warningMessageVM = WarningMessageVM();
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-        isTest: true,
-      );
-
-      // necessary, otherwise audioDownloadVM won't be able to load
-      // the existing playlists and the test will fail
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
-
-      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
-        warningMessageVM: warningMessageVM,
-        settingsDataService: settingsDataService,
-        isTest: true,
-      );
-
-      audioDownloadVM.loadExistingPlaylists();
-
-      Audio audioToRename = audioDownloadVM.listOfPlaylist[0].downloadedAudioLst[0];
-
-      const String newFileName = "new_name.mp3";
-      audioDownloadVM.renameAudioFile(
-        audio: audioToRename,
-        modifiedAudioFileName: newFileName,
-      );
-
-      // Verify that the renamed file exists
-      const String playListName = "audio_player_view_2_shorts_test";
-      final String renamedAudioFilePath =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$playListName${path.separator}$newFileName";
-      expect(File(renamedAudioFilePath).existsSync(), true);
-
-      // Load Playlist from the file
-      Playlist loadedPlaylist = loadPlaylist(playListName);
-
-      // Verify that the audio file name was not changed
-      // (playabeAudioLst and downloadedAudioLst contain the
-      // same audios, but in inverse order)
-      expect(loadedPlaylist.playableAudioLst[1].audioFileName, newFileName);
-      expect(loadedPlaylist.downloadedAudioLst[0].audioFileName, newFileName);
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
-    });
-    test('New name exist', () async {
+    test('File with new name not exist', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -287,15 +225,80 @@ void main() {
 
       audioDownloadVM.loadExistingPlaylists();
 
-      Audio audioToRename = audioDownloadVM.listOfPlaylist[0].downloadedAudioLst[0];
+      Audio audioToRename = audioDownloadVM
+          .listOfPlaylist[0].downloadedAudioLst[0]; // Really short video
 
-      const String fileNameOfExistingFile = "231117-002828-morning _ cinematic video 23-07-01.mp3";
+      const String newFileName = "new_name.mp3";
+      audioDownloadVM.renameAudioFile(
+        audio: audioToRename,
+        modifiedAudioFileName: newFileName,
+      );
+
+      // Verify that the renamed file exists
+      const String playListName = "audio_player_view_2_shorts_test";
+      final String renamedAudioFilePath =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$playListName${path.separator}$newFileName";
+      expect(File(renamedAudioFilePath).existsSync(), true);
+
+      // Load Playlist from the file
+      Playlist loadedPlaylist = loadPlaylist(playListName);
+
+      // Verify that the audio file name was changed
+      // (playabeAudioLst and downloadedAudioLst contain the
+      // same audios, but in inverse order)
+      expect(loadedPlaylist.playableAudioLst[1].audioFileName, newFileName);
+      expect(loadedPlaylist.downloadedAudioLst[0].audioFileName, newFileName);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
+    });
+    test('File with new name exist', () async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        deleteSubDirectoriesAsWell: true,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}audio_download_vm_modify_audio",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+      WarningMessageVM warningMessageVM = WarningMessageVM();
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+        isTest: true,
+      );
+
+      // necessary, otherwise audioDownloadVM won't be able to load
+      // the existing playlists and the test will fail
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+        isTest: true,
+      );
+
+      audioDownloadVM.loadExistingPlaylists();
+
+      Audio audioToRename = audioDownloadVM
+          .listOfPlaylist[0].downloadedAudioLst[0]; // Really short video
+
+      const String fileNameOfExistingFile =
+          "231117-002828-morning _ cinematic video 23-07-01.mp3";
       audioDownloadVM.renameAudioFile(
         audio: audioToRename,
         modifiedAudioFileName: fileNameOfExistingFile,
       );
 
-      // Verify that the renamed file exists
+      // Verify that the not renamed file exists
       const String playListName = "audio_player_view_2_shorts_test";
       final String renamedAudioFilePath =
           "$kPlaylistDownloadRootPathWindowsTest${path.separator}$playListName${path.separator}$fileNameOfExistingFile";
@@ -307,8 +310,72 @@ void main() {
       // Verify that the audio file name was not changed
       // (playabeAudioLst and downloadedAudioLst contain the
       // same audios, but in inverse order)
-      expect(loadedPlaylist.playableAudioLst[1].audioFileName, '231117-002826-Really short video 23-07-01.mp3');
-      expect(loadedPlaylist.downloadedAudioLst[0].audioFileName, '231117-002826-Really short video 23-07-01.mp3');
+      expect(loadedPlaylist.playableAudioLst[1].audioFileName,
+          '231117-002826-Really short video 23-07-01.mp3');
+      expect(loadedPlaylist.downloadedAudioLst[0].audioFileName,
+          '231117-002826-Really short video 23-07-01.mp3');
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
+    });
+  });
+  group('AudioDownloadVM modify audio title', () {
+    test('Modify audio title', () async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        deleteSubDirectoriesAsWell: true,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}audio_download_vm_modify_audio",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+      WarningMessageVM warningMessageVM = WarningMessageVM();
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+        isTest: true,
+      );
+
+      // necessary, otherwise audioDownloadVM won't be able to load
+      // the existing playlists and the test will fail
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+        isTest: true,
+      );
+
+      audioDownloadVM.loadExistingPlaylists();
+
+      Audio audioToModify = audioDownloadVM
+          .listOfPlaylist[0].downloadedAudioLst[0]; // Really short video
+      final String initialAudioTitle = audioToModify.validVideoTitle;
+
+      const String newAudioTitle = "This video is very short";
+      audioDownloadVM.modifyAudioTitle(
+        audio: audioToModify,
+        modifiedAudioTitle: newAudioTitle,
+      );
+
+      // Load Playlist from the file
+      const String playListName = "audio_player_view_2_shorts_test";
+      Playlist loadedPlaylist = loadPlaylist(playListName);
+
+      // Verify that the audio title was changed in the playable
+      // audio list only (playabeAudioLst and downloadedAudioLst
+      // contain the same audios, but in inverse order)
+      expect(loadedPlaylist.playableAudioLst[1].validVideoTitle, newAudioTitle);
+      expect(
+          loadedPlaylist.downloadedAudioLst[0].validVideoTitle, initialAudioTitle);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
