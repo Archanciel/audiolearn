@@ -1078,5 +1078,5 @@ class MockAppLocalizations extends AppLocalizations {
   String renameFileNameAlreadyUsed(
     Object fileName,
   ) =>
-      "The file name \"${fileName}\" already exists in the same directory and cannot be used.";
+      "The file name \"$fileName\" already exists in the same directory and cannot be used.";
 }
