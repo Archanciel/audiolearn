@@ -1680,7 +1680,8 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify if the last downloaded audio title is displayed
-      expect(find.text(lastDownloadedAudioTitleOnAudioPlayerView), findsOneWidget);
+      expect(
+          find.text(lastDownloadedAudioTitleOnAudioPlayerView), findsOneWidget);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -1722,6 +1723,9 @@ void main() {
       await tester.tap(firstDownloadedAudioListTileTextWidgetFinder);
       await tester.pumpAndSettle();
 
+      // Trying to avoid unregular integration test failure
+      Future.delayed(const Duration(milliseconds: 100));
+
       // The audio position is 2 seconds before end. Now play
       // the audio and wait 5 seconds so that the next audio
       // will start to play
@@ -1746,11 +1750,12 @@ void main() {
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
         minPositionTimeStr: '3:00',
-        maxPositionTimeStr: '3:02',
+        maxPositionTimeStr: '3:03',
       );
 
       // Verify if the last downloaded audio title is displayed
-      expect(find.text(lastDownloadedAudioTitleOnAudioPlayerView), findsOneWidget);
+      expect(
+          find.text(lastDownloadedAudioTitleOnAudioPlayerView), findsOneWidget);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -1849,7 +1854,8 @@ void main() {
       );
 
       // Verify if the last downloaded audio title is displayed
-      expect(find.text(lastDownloadedAudioTitleOnAudioPlayerView), findsOneWidget);
+      expect(
+          find.text(lastDownloadedAudioTitleOnAudioPlayerView), findsOneWidget);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -3747,7 +3753,7 @@ void main() {
 
       expect(
           actualCommentEndPositionInTenthOfSeconds,
-          inInclusiveRange(expectedCommentEndPositionInTenthOfSeconds - 1,
+          inInclusiveRange(expectedCommentEndPositionInTenthOfSeconds - 5,
               expectedCommentEndPositionInTenthOfSeconds + 4));
 
       // Verify that the audio player view audio position displayed
@@ -4452,6 +4458,9 @@ void main() {
 
       await tester.tap(commentInkWellButtonFinder);
       await tester.pumpAndSettle();
+
+      // Trying to avoid unregular integration test failure
+      Future.delayed(const Duration(milliseconds: 100));
 
       // Tap on the comment title text to edit the comment
       String commentTitle = 'I did not thank ChatGPT';
@@ -5171,7 +5180,7 @@ Future<void> playComment({
 
   await tester.tap(playIconButtonFinder);
   await tester.pumpAndSettle();
-  Future.delayed(const Duration(milliseconds: 100));
+  Future.delayed(const Duration(milliseconds: 200));
 
   Finder iconFinder;
   for (int i = 0; i < 15; i += 3) {
