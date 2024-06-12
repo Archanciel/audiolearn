@@ -81,7 +81,7 @@ String generateLocalizationClass(Map<String, dynamic> arbData) {
       String methodParameters =
           matches.map((m) => 'Object ${m.group(1)}').join(', ');
       String formattedString =
-          value.replaceAllMapped(exp, (m) => '\${${m.group(1)}}');
+          value.replaceAllMapped(exp, (m) => '\$${m.group(1)}');
 
       // Correctly escape double quotes inside the string
       formattedString = formattedString.replaceAll('"', '\\"');
