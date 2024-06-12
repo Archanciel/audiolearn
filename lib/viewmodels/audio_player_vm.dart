@@ -274,14 +274,25 @@ class AudioPlayerVM extends ChangeNotifier {
 
       int newPositionSeconds =
           _currentAudio!.audioPositionSeconds - rewindSeconds;
-          
+
       // Ensure the new position is not negative
       _currentAudioPosition = Duration(
           seconds: newPositionSeconds.clamp(
               0, _currentAudio!.audioDuration!.inSeconds));
-
-      await _audioPlayerPlugin!.seek(_currentAudioPosition);
     }
+
+    /// Must be called even if rewiding was not necessary. For example,
+    /// if the user change the position of a not yet played audio and then
+    /// plays an audio previously downloaded, once this audio ends, the
+    /// not yet played audio starts playing not at the changed position,
+    /// but at the start position if this instruction located inside the
+    /// if block.
+    /// 
+    /// This test checks this bug fix:
+    /// 
+    /// testWidgets('User modify the position of next fully unread audio
+    /// also the last downloaded audio of the playlist.').
+    await _audioPlayerPlugin!.seek(_currentAudioPosition);
   }
 
   /// Method called by skipToEndNoPlay() if the audio is positioned

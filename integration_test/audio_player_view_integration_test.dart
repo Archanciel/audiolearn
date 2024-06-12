@@ -1641,7 +1641,7 @@ void main() {
           'S8 audio'; // Youtube playlist
       const String firstDownloadedAudioTitle =
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
-      const String lastDownloadedAudioTitle =
+      const String lastDownloadedAudioTitleOnAudioPlayerView =
           "La résilience insulaire par Fiona Roche\n13:35";
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
@@ -1680,7 +1680,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify if the last downloaded audio title is displayed
-      expect(find.text(lastDownloadedAudioTitle), findsOneWidget);
+      expect(find.text(lastDownloadedAudioTitleOnAudioPlayerView), findsOneWidget);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -1694,7 +1694,7 @@ void main() {
           'S8 audio'; // Youtube playlist
       const String firstDownloadedAudioTitle =
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
-      const String lastDownloadedAudioTitle =
+      const String lastDownloadedAudioTitleOnAudioPlayerView =
           "La résilience insulaire par Fiona Roche\n13:35";
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
@@ -1750,7 +1750,106 @@ void main() {
       );
 
       // Verify if the last downloaded audio title is displayed
-      expect(find.text(lastDownloadedAudioTitle), findsOneWidget);
+      expect(find.text(lastDownloadedAudioTitleOnAudioPlayerView), findsOneWidget);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
+    });
+    testWidgets(
+        'User modify the position of next fully unread audio also the last downloaded audio of the playlist.',
+        (WidgetTester tester) async {
+      const String audioPlayerSelectedPlaylistTitle =
+          'S8 audio'; // Youtube playlist
+      const String firstDownloadedAudioTitle =
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
+      const String lastDownloadedAudioTitle =
+          "La résilience insulaire par Fiona Roche";
+      const String lastDownloadedAudioTitleOnAudioPlayerView =
+          "$lastDownloadedAudioTitle\n13:35";
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName:
+              'audio_play_skip_to_next_and_last_unread_audio_test',
+          selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle);
+
+      // Now, before playing the first downloaded audio, we want to
+      // modify the position of the last downloaded audio of the
+      // playlist so that it is partially played. Then, we will tap
+      // on the first downloaded audio in order to open the start
+      // playing it.
+
+      // Tap the 'Toggle List' button to avoid displaying the list
+      // of playlists which may hide the audio title we want to
+      // tap on
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // First, get the ListTile Text widget finder of the
+      // last downloaded audio and tap on it to open the audio
+      // player view.
+      final Finder toSelectAudioListTileTextWidgetFinder =
+          find.text(lastDownloadedAudioTitle);
+
+      await tester.tap(toSelectAudioListTileTextWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // check the current audio's position
+      expect(find.text('0:00'), findsOneWidget);
+
+      // change the current audio's play position
+
+      await tester.tap(find.byKey(const Key('audioPlayerViewForward1mButton')));
+      await tester.pumpAndSettle();
+
+      // check the current audio's changed position
+      expect(find.text('1:00'), findsOneWidget);
+
+      // Now, go back to the playlist download view
+      final Finder audioPlayerNavButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(audioPlayerNavButton);
+      await tester.pumpAndSettle();
+
+      // Then, get the first downloaded Audio ListTile Text
+      // widget finder and tap on it
+      final Finder firstDownloadedAudioListTileTextWidgetFinder =
+          find.text(firstDownloadedAudioTitle);
+
+      await tester.tap(firstDownloadedAudioListTileTextWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // The audio position is 2 seconds before end. Now play
+      // the audio and wait 5 seconds so that the next audio
+      // will start to play
+
+      Finder playIconFinder = find.byIcon(Icons.play_arrow);
+      await tester.tap(playIconFinder);
+      await tester.pumpAndSettle();
+
+      await Future.delayed(const Duration(seconds: 5));
+      await tester.pumpAndSettle();
+
+      // Tap on pause button to pause the audio
+      await tester.tap(find.byIcon(Icons.pause));
+      await tester.pumpAndSettle();
+
+      // Verify the last downloaded audio position
+
+      Finder audioPlayerViewAudioPositionFinder =
+          find.byKey(const Key('audioPlayerViewAudioPosition'));
+
+      verifyPositionBetweenMinMax(
+        tester: tester,
+        textWidgetFinder: audioPlayerViewAudioPositionFinder,
+        minPositionTimeStr: '1:00',
+        maxPositionTimeStr: '1:03',
+      );
+
+      // Verify if the last downloaded audio title is displayed
+      expect(find.text(lastDownloadedAudioTitleOnAudioPlayerView), findsOneWidget);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -2019,7 +2118,7 @@ void main() {
       await tester.tap(toSelectAudioListTileTextWidgetFinder);
       await tester.pumpAndSettle();
 
-      // check the current audio's changed position
+      // check the current audio's position
       expect(find.text('10:00'), findsOneWidget);
 
       // change the current audio's play position
@@ -2082,7 +2181,7 @@ void main() {
       await tester.tap(toSelectAudioListTileTextWidgetFinder);
       await tester.pumpAndSettle();
 
-      // check the current audio's changed position
+      // check the current audio's position
       expect(find.text('10:00'), findsOneWidget);
 
       // change the current audio's play position
@@ -2146,7 +2245,7 @@ void main() {
       await tester.tap(toSelectAudioListTileTextWidgetFinder);
       await tester.pumpAndSettle();
 
-      // check the current audio's changed position
+      // check the current audio's position
       expect(find.text('10:00'), findsOneWidget);
 
       // change the current audio's play position
@@ -2209,7 +2308,7 @@ void main() {
       await tester.tap(toSelectAudioListTileTextWidgetFinder);
       await tester.pumpAndSettle();
 
-      // check the current audio's changed position
+      // check the current audio's position
       expect(find.text('10:00'), findsOneWidget);
 
       // change the current audio's play position
@@ -2271,7 +2370,7 @@ void main() {
       await tester.tap(toSelectAudioListTileTextWidgetFinder);
       await tester.pumpAndSettle();
 
-      // check the current audio's changed position
+      // check the current audio's position
       expect(find.text('10:00'), findsOneWidget);
 
       // change the current audio's play position to audio start
@@ -2334,7 +2433,7 @@ void main() {
       await tester.tap(toSelectAudioListTileTextWidgetFinder);
       await tester.pumpAndSettle();
 
-      // check the current audio's changed position
+      // check the current audio's position
       expect(find.text('10:00'), findsOneWidget);
 
       // change the current audio's play position to audio end

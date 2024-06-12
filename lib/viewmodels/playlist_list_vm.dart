@@ -971,7 +971,8 @@ class PlaylistListVM extends ChangeNotifier {
   }
 
   /// Returns the audio contained in the playableAudioLst which
-  /// has been downloaded right after the current audio.
+  /// has been downloaded after the current audio and is not fully
+  /// played.
   Audio? getSubsequentlyDownloadedNotFullyPlayedAudio({
     required Audio currentAudio,
   }) {
@@ -984,7 +985,9 @@ class PlaylistListVM extends ChangeNotifier {
 
     // If sort and filter parameters were saved in the playlist json
     // file with automatic options application set to true, then the
-    // returned audio list is sorted and filtered. Otherwise, the
+    // audio list returned by
+    // getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters()
+    // is sorted and filtered. Otherwise, the
     // returned audio list is the full playable audio list of the
     // selected playlist sorted by audio download date descending
     // (the de3fault sorting).
