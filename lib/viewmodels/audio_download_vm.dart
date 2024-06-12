@@ -955,7 +955,7 @@ class AudioDownloadVM extends ChangeNotifier {
   void deleteAudioMp3({
     required Audio audio,
   }) {
-    DirUtil.deleteFileIfExist(audio.filePathName);
+    DirUtil.deleteFileIfExist(pathFileName:  audio.filePathName);
 
     // since the audio mp3 file has been deleted, the audio is no
     // longer in the playlist playable audio list
@@ -973,7 +973,7 @@ class AudioDownloadVM extends ChangeNotifier {
   void deleteAudioFromPlaylistAswell({
     required Audio audio,
   }) {
-    DirUtil.deleteFileIfExist(audio.filePathName);
+    DirUtil.deleteFileIfExist(pathFileName:  audio.filePathName);
 
     Playlist? enclosingPlaylist = audio.enclosingPlaylist;
 

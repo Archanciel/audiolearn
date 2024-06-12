@@ -215,7 +215,9 @@ class DirUtil {
     }
   }
 
-  static void deleteFileIfExist(String pathFileName) {
+  static void deleteFileIfExist({
+    required String pathFileName,
+  }) {
     final File file = File(pathFileName);
 
     if (file.existsSync()) {
@@ -344,7 +346,7 @@ class DirUtil {
   }
 
   /// List all the file names in a directory with a given extension.
-  /// 
+  ///
   /// If the directory does not exist, an empty list is returned.
   static List<String> listFileNamesInDir({
     required String path,
