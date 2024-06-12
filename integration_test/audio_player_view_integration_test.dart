@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:audiolearn/models/audio.dart';
 import 'package:audiolearn/models/comment.dart';
 import 'package:audiolearn/models/playlist.dart';
 import 'package:audiolearn/services/json_data_service.dart';
@@ -1632,9 +1631,11 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
   });
-  group('skip to next audio ignoring already listened audios tests.', () {
+  group(
+      'From first downloaded audio, skip to next not fully played audio ignoring 5 already fully listened audios tests.',
+      () {
     testWidgets(
-        'The next unread audio is also the last downloaded audio of the playlist.',
+        'Next fully unread audio also the last downloaded audio of the playlist.',
         (WidgetTester tester) async {
       const String audioPlayerSelectedPlaylistTitle =
           'S8 audio'; // Youtube playlist
@@ -1677,6 +1678,76 @@ void main() {
 
       await Future.delayed(const Duration(seconds: 5));
       await tester.pumpAndSettle();
+
+      // Verify if the last downloaded audio title is displayed
+      expect(find.text(lastDownloadedAudioTitle), findsOneWidget);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
+    });
+    testWidgets(
+        'Next partially played audio also the last downloaded audio of the playlist.',
+        (WidgetTester tester) async {
+      const String audioPlayerSelectedPlaylistTitle =
+          'S8 audio'; // Youtube playlist
+      const String firstDownloadedAudioTitle =
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
+      const String lastDownloadedAudioTitle =
+          "La résilience insulaire par Fiona Roche\n13:35";
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName:
+              'audio_play_skip_to_next_and_last_unread_audio_test',
+          selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+          replacePlaylistJsonFileName: 'S8 audio.saved');
+
+      // Now we want to tap on the first downloaded audio of the
+      // playlist in order to open the AudioPlayerView displaying
+      // the audio
+
+      // Tap the 'Toggle List' button to avoid displaying the list
+      // of playlists which may hide the audio title we want to
+      // tap on
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // First, get the first downloaded Audio ListTile Text
+      // widget finder and tap on it
+      final Finder firstDownloadedAudioListTileTextWidgetFinder =
+          find.text(firstDownloadedAudioTitle);
+
+      await tester.tap(firstDownloadedAudioListTileTextWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // The audio position is 2 seconds before end. Now play
+      // the audio and wait 5 seconds so that the next audio
+      // will start to play
+
+      Finder playIconFinder = find.byIcon(Icons.play_arrow);
+      await tester.tap(playIconFinder);
+      await tester.pumpAndSettle();
+
+      await Future.delayed(const Duration(seconds: 5));
+      await tester.pumpAndSettle();
+
+      // Tap on pause button to pause the audio
+      await tester.tap(find.byIcon(Icons.pause));
+      await tester.pumpAndSettle();
+
+      // Verify the last downloaded audio position
+
+      Finder audioPlayerViewAudioPositionFinder =
+          find.byKey(const Key('audioPlayerViewAudioPosition'));
+
+      verifyPositionBetweenMinMax(
+        tester: tester,
+        textWidgetFinder: audioPlayerViewAudioPositionFinder,
+        minPositionTimeStr: '3:00',
+        maxPositionTimeStr: '3:02',
+      );
 
       // Verify if the last downloaded audio title is displayed
       expect(find.text(lastDownloadedAudioTitle), findsOneWidget);
@@ -4823,7 +4894,7 @@ Future<void> applyRewindTesting({
 
   if (audioPausedDateTimeSecBeforeNowModification > 0) {
     // Modify the audio paused date time in the playlist JSON file
-    await IntegrationTestUtil.modifyAudioPausedDateTimeInPlaylistJsonFileAndUpgradePlaylists(
+    await IntegrationTestUtil.modifyAudioInPlaylistJsonFileAndUpgradePlaylists(
       tester: tester,
       playlistTitle: audioPlaylistTitle,
       playableAudioLstAudioIndex: audioToListenIndex,

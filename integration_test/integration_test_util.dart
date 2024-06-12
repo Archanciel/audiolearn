@@ -86,6 +86,7 @@ class IntegrationTestUtil {
     required WidgetTester tester,
     String? savedTestDataDirName,
     String? selectedPlaylistTitle,
+    String? replacePlaylistJsonFileName,
   }) async {
     // Purge the test playlist directory if it exists so that the
     // playlist list is empty
@@ -103,6 +104,20 @@ class IntegrationTestUtil {
       );
     }
 
+    if (replacePlaylistJsonFileName != null) {
+      // Copy the test initial audio data to the app dir
+      final String playlistPath = "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}";
+      final String playlistJsonFileName = '$selectedPlaylistTitle.json';
+      DirUtil.deleteFileIfExist(
+        pathFileName:
+            '$playlistPath$playlistJsonFileName',
+      );
+
+      DirUtil.renameFile(
+          fileToRenameFilePathName:
+              "$playlistPath$replacePlaylistJsonFileName",
+          newFileName: playlistJsonFileName);
+    }
     final SettingsDataService settingsDataService = SettingsDataService(
       sharedPreferences: await SharedPreferences.getInstance(),
       isTest: true,
@@ -167,12 +182,12 @@ class IntegrationTestUtil {
     }
   }
 
-  static Future<void>
-      modifyAudioPausedDateTimeInPlaylistJsonFileAndUpgradePlaylists({
+  static Future<void> modifyAudioInPlaylistJsonFileAndUpgradePlaylists({
     required WidgetTester tester,
     required String playlistTitle,
     required int playableAudioLstAudioIndex,
-    required DateTime modifiedAudioPausedDateTime,
+    DateTime? modifiedAudioPausedDateTime,
+    int modifiedAudioPositionSeconds = 0,
   }) async {
     final String selectedPlaylistPath = path.join(
       kPlaylistDownloadRootPathWindowsTest,
@@ -193,7 +208,14 @@ class IntegrationTestUtil {
     Audio audioToModify =
         loadedSelectedPlaylist.playableAudioLst[playableAudioLstAudioIndex];
 
-    audioToModify.audioPausedDateTime = modifiedAudioPausedDateTime;
+    if (modifiedAudioPausedDateTime != null) {
+      audioToModify.audioPausedDateTime = modifiedAudioPausedDateTime;
+    }
+
+    if (modifiedAudioPositionSeconds != 0) {
+      audioToModify.audioPositionSeconds = modifiedAudioPositionSeconds;
+      audioToModify.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd = true;
+    }
 
     // Save the modified playlist to the json file
     JsonDataService.saveToFile(
