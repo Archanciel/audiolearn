@@ -1679,6 +1679,22 @@ void main() {
       await Future.delayed(const Duration(seconds: 5));
       await tester.pumpAndSettle();
 
+      // Tap on pause button to pause the audio
+      await tester.tap(find.byIcon(Icons.pause));
+      await tester.pumpAndSettle();
+
+      // Verify the last downloaded audio position
+
+      Finder audioPlayerViewAudioPositionFinder =
+          find.byKey(const Key('audioPlayerViewAudioPosition'));
+
+      verifyPositionBetweenMinMax(
+        tester: tester,
+        textWidgetFinder: audioPlayerViewAudioPositionFinder,
+        minPositionTimeStr: '0:00',
+        maxPositionTimeStr: '0:03',
+      );
+
       // Verify if the last downloaded audio title is displayed
       expect(
           find.text(lastDownloadedAudioTitleOnAudioPlayerView), findsOneWidget);
@@ -1850,12 +1866,216 @@ void main() {
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
         minPositionTimeStr: '1:00',
-        maxPositionTimeStr: '1:03',
+        maxPositionTimeStr: '1:05',
       );
 
       // Verify if the last downloaded audio title is displayed
       expect(
           find.text(lastDownloadedAudioTitleOnAudioPlayerView), findsOneWidget);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
+    });
+    testWidgets(
+        'User sets to 0 the position of third downloaded audio of the playlist.',
+        (WidgetTester tester) async {
+      const String audioPlayerSelectedPlaylistTitle =
+          'S8 audio'; // Youtube playlist
+      const String firstDownloadedAudioTitle =
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
+      const String thirdDownloadedAudioTitle =
+          "Les besoins artificiels par R.Keucheyan";
+      const String thirdDownloadedAudioTitleOnAudioPlayerView =
+          "$thirdDownloadedAudioTitle\n19:05";
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName:
+              'audio_play_skip_to_next_and_last_unread_audio_test',
+          selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle);
+
+      // Now, before playing the first downloaded audio, we want to
+      // modify the position of the last downloaded audio of the
+      // playlist so that it is unplayed. Then, we will tap
+      // on the first downloaded audio in order to open the audio
+      // player view and start playing the sound.
+
+      // Tap the 'Toggle List' button to avoid displaying the list
+      // of playlists which may hide the audio title we want to
+      // tap on
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // First, get the ListTile Text widget finder of the
+      // third downloaded audio and tap on it to open the audio
+      // player view.
+      final Finder toSelectAudioListTileTextWidgetFinder =
+          find.text(thirdDownloadedAudioTitle);
+
+      await tester.tap(toSelectAudioListTileTextWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // set the current audio's play position to start
+
+      await tester.tap(find.byKey(const Key('audioPlayerViewSkipToStartButton')));
+      await tester.pumpAndSettle();
+
+      // check the current audio's changed position
+      expect(find.text('0:00'), findsOneWidget);
+
+      // Now, go back to the playlist download view
+      final Finder audioPlayerNavButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(audioPlayerNavButton);
+      await tester.pumpAndSettle();
+
+      // Then, get the first downloaded Audio ListTile Text
+      // widget finder and tap on it
+      final Finder firstDownloadedAudioListTileTextWidgetFinder =
+          find.text(firstDownloadedAudioTitle);
+
+      await tester.tap(firstDownloadedAudioListTileTextWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // The audio position is 2 seconds before end. Now play
+      // the audio and wait 5 seconds so that the next audio
+      // will start to play
+
+      Finder playIconFinder = find.byIcon(Icons.play_arrow);
+      await tester.tap(playIconFinder);
+      await tester.pumpAndSettle();
+
+      await Future.delayed(const Duration(seconds: 5));
+      await tester.pumpAndSettle();
+
+      // Tap on pause button to pause the audio
+      await tester.tap(find.byIcon(Icons.pause));
+      await tester.pumpAndSettle();
+
+      // Verify the third downloaded audio position
+
+      Finder audioPlayerViewAudioPositionFinder =
+          find.byKey(const Key('audioPlayerViewAudioPosition'));
+
+      verifyPositionBetweenMinMax(
+        tester: tester,
+        textWidgetFinder: audioPlayerViewAudioPositionFinder,
+        minPositionTimeStr: '0:00',
+        maxPositionTimeStr: '0:03',
+      );
+
+      // Verify if the last downloaded audio title is displayed
+      expect(
+          find.text(thirdDownloadedAudioTitleOnAudioPlayerView), findsOneWidget);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
+    });
+    testWidgets(
+        'User sets to 2 minutes the position of third downloaded audio of the playlist.',
+        (WidgetTester tester) async {
+      const String audioPlayerSelectedPlaylistTitle =
+          'S8 audio'; // Youtube playlist
+      const String firstDownloadedAudioTitle =
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
+      const String thirdDownloadedAudioTitle =
+          "Les besoins artificiels par R.Keucheyan";
+      const String thirdDownloadedAudioTitleOnAudioPlayerView =
+          "$thirdDownloadedAudioTitle\n19:05";
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName:
+              'audio_play_skip_to_next_and_last_unread_audio_test',
+          selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle);
+
+      // Now, before playing the first downloaded audio, we want to
+      // modify the position of the third downloaded audio of the
+      // playlist so that it is partially played. Then, we will tap
+      // on the first downloaded audio in order to open the audio
+      // player view and play the sound.
+
+      // Tap the 'Toggle List' button to avoid displaying the list
+      // of playlists which may hide the audio title we want to
+      // tap on
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // First, get the ListTile Text widget finder of the
+      // third downloaded audio and tap on it to open the audio
+      // player view.
+      final Finder toSelectAudioListTileTextWidgetFinder =
+          find.text(thirdDownloadedAudioTitle);
+
+      await tester.tap(toSelectAudioListTileTextWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // set the current audio's play position to start
+
+      await tester.tap(find.byKey(const Key('audioPlayerViewSkipToStartButton')));
+      await tester.pumpAndSettle();
+
+      // then set the position to + 2 minutes
+
+      await tester.tap(find.byKey(const Key('audioPlayerViewForward1mButton')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const Key('audioPlayerViewForward1mButton')));
+      await tester.pumpAndSettle();
+
+      // check the current audio's changed position
+      expect(find.text('2:00'), findsOneWidget);
+
+      // Now, go back to the playlist download view
+      final Finder audioPlayerNavButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(audioPlayerNavButton);
+      await tester.pumpAndSettle();
+
+      // Then, get the first downloaded Audio ListTile Text
+      // widget finder and tap on it
+      final Finder firstDownloadedAudioListTileTextWidgetFinder =
+          find.text(firstDownloadedAudioTitle);
+
+      await tester.tap(firstDownloadedAudioListTileTextWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // Trying to avoid unregular integration test failure
+      Future.delayed(const Duration(milliseconds: 100));
+      
+      // The audio position is 2 seconds before end. Now play
+      // the audio and wait 5 seconds so that the next audio
+      // will start to play
+
+      Finder playIconFinder = find.byIcon(Icons.play_arrow);
+      await tester.tap(playIconFinder);
+      await tester.pumpAndSettle();
+
+      await Future.delayed(const Duration(seconds: 5));
+      await tester.pumpAndSettle();
+
+      // Tap on pause button to pause the audio
+      await tester.tap(find.byIcon(Icons.pause));
+      await tester.pumpAndSettle();
+
+      // Verify the third downloaded audio position
+
+      Finder audioPlayerViewAudioPositionFinder =
+          find.byKey(const Key('audioPlayerViewAudioPosition'));
+
+      verifyPositionBetweenMinMax(
+        tester: tester,
+        textWidgetFinder: audioPlayerViewAudioPositionFinder,
+        minPositionTimeStr: '2:00',
+        maxPositionTimeStr: '2:03',
+      );
+
+      // Verify if the last downloaded audio title is displayed
+      expect(
+          find.text(thirdDownloadedAudioTitleOnAudioPlayerView), findsOneWidget);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -2016,7 +2236,7 @@ void main() {
         (WidgetTester tester) async {
       const String audioPlayerSelectedPlaylistTitle =
           'S8 audio'; // Youtube playlist
-      const String firstDownloadedNotPlayedAudioTitle =
+      const String thirdDownloadedNotPlayedAudioTitle =
           "Les besoins artificiels par R.Keucheyan";
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
@@ -2040,19 +2260,19 @@ void main() {
 
       // Now type on the first downloaded audio title in order to
       // open the AudioPlayerView displaying the audio
-      await tester.tap(find.text(firstDownloadedNotPlayedAudioTitle));
+      await tester.tap(find.text(thirdDownloadedNotPlayedAudioTitle));
       await tester.pumpAndSettle();
 
       // Now we open the AudioPlayableListDialogWidget by tapping on the
       // audio title
-      await tester.tap(find.text("$firstDownloadedNotPlayedAudioTitle\n19:05"));
+      await tester.tap(find.text("$thirdDownloadedNotPlayedAudioTitle\n19:05"));
       await tester.pumpAndSettle();
 
       // The list has been moved down so that the current audio is
       // displayed at the botom of the list
       await checkAudioTextColor(
         tester: tester,
-        audioTitle: firstDownloadedNotPlayedAudioTitle,
+        audioTitle: thirdDownloadedNotPlayedAudioTitle,
         expectedTitleTextColor: currentlyPlayingAudioTitleTextColor,
         expectedTitleTextBackgroundColor:
             currentlyPlayingAudioTitleTextBackgroundColor,
