@@ -52,8 +52,8 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
   Widget build(BuildContext context) {
     ThemeProviderVM themeProviderVM = Provider.of<ThemeProviderVM>(context);
 
-    // Retrieve the screen width using MediaQuery
-    double maxDropdownWidth =
+    // Retrieves the screen width using MediaQuery
+    double maxCommentTitleWidth =
         computeMaxDialogListItemWidth(context) - kSmallIconButtonWidth;
 
     // Required so that clicking on Enter closes the dialog
@@ -121,8 +121,12 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(bottom: 2),
-                            child: _buildCommentTitlePlusIconsAndCommentDatesAndPosition(
-                                maxDropdownWidth, comment, commentVM),
+                            child:
+                                _buildCommentTitlePlusIconsAndCommentDatesAndPosition(
+                              maxCommentTitleWidth: maxCommentTitleWidth,
+                              comment: comment,
+                              commentVM: commentVM,
+                            ),
                           ),
                           (comment.content.isNotEmpty)
                               ? Padding(
@@ -175,11 +179,11 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
     );
   }
 
-  Widget _buildCommentTitlePlusIconsAndCommentDatesAndPosition(
-    double maxDropdownWidth,
-    Comment comment,
-    CommentVM commentVM,
-  ) {
+  Widget _buildCommentTitlePlusIconsAndCommentDatesAndPosition({
+    required double maxCommentTitleWidth,
+    required Comment comment,
+    required CommentVM commentVM,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
@@ -189,7 +193,7 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
           children: [
             Expanded(
               child: SizedBox(
-                width: maxDropdownWidth,
+                width: maxCommentTitleWidth,
                 // comment title Text
                 child: Text(
                   key: const Key('commentTitleKey'),
@@ -283,7 +287,8 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Tooltip(
-                  message: AppLocalizations.of(context)!.commentCreationDateTooltip,
+                  message:
+                      AppLocalizations.of(context)!.commentCreationDateTooltip,
                   child: Text(
                     // comment creation date Text
                     key: const Key('creationDateTimeKey'),
@@ -296,14 +301,15 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
                 ),
                 (comment.lastUpdateDateTime.day != comment.creationDateTime.day)
                     ? Tooltip(
-                  message: AppLocalizations.of(context)!.commentUpdateDateTooltip,
-                      child: Text(
+                        message: AppLocalizations.of(context)!
+                            .commentUpdateDateTooltip,
+                        child: Text(
                           // comment update date Text
                           key: const Key('lastUpdateDateTimeKey'),
                           style: const TextStyle(fontSize: 13),
                           frenchDateFormat.format(comment.lastUpdateDateTime),
                         ),
-                    )
+                      )
                     : Container(),
               ],
             ),
