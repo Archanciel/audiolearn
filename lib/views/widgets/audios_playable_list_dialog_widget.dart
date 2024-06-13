@@ -61,6 +61,10 @@ class _AudioPlayableListDialogWidgetState
         Provider.of<AudioPlayerVM>(context, listen: false);
     Audio? currentAudio = audioGlobalPlayerVM.currentAudio;
 
+    // Retrieves the screen width using MediaQuery
+    double maxListItemWidth =
+        computeMaxDialogListItemWidth(context);
+
     List<Audio> playableAudioLst;
 
     if (_excludeFullyPlayedAudios) {
@@ -146,9 +150,10 @@ class _AudioPlayableListDialogWidgetState
                           Navigator.of(context).pop();
                         },
                         child: _buildAudioTitleTextWidget(
-                          audio,
-                          index,
-                          isDarkTheme,
+                          maxAudioTitleWidth: maxListItemWidth,
+                          audio: audio,
+                          audioIndex: index,
+                          isDarkTheme: isDarkTheme,
                         ),
                       ),
                     );
@@ -305,15 +310,16 @@ class _AudioPlayableListDialogWidgetState
   /// Builds the text widget for the audio title. The text color
   /// is different according to the audio status (not yet listened,
   /// currently listening, fully or partially listened).
-  Widget _buildAudioTitleTextWidget(
-    Audio audio,
-    int index,
-    bool isDarkTheme,
-  ) {
+  Widget _buildAudioTitleTextWidget({
+    required double maxAudioTitleWidth,
+    required Audio audio,
+    required int audioIndex,
+    required bool isDarkTheme,
+  }) {
     Color? audioTitleTextColor;
     Color? audioTitleBackgroundColor;
 
-    if (index == _currentAudioIndex) {
+    if (audioIndex == _currentAudioIndex) {
       audioTitleTextColor = Colors.white;
       audioTitleBackgroundColor = Colors.blue;
     } else if (audio.wasFullyListened()) {
@@ -330,6 +336,7 @@ class _AudioPlayableListDialogWidgetState
     }
 
     return SizedBox(
+      width: maxAudioTitleWidth,
       height: _itemHeight,
       child: Text(
         audio.validVideoTitle,
@@ -351,7 +358,7 @@ class _AudioPlayableListDialogWidgetState
       // up to see top audios
       return;
     }
-    
+
     double multiplier = _currentAudioIndex.toDouble();
 
     if (_currentAudioIndex > 300) {
