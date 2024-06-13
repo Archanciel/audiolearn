@@ -245,6 +245,7 @@ class _PlaylistOneSelectableDialogWidgetState
                 child: Text(
                   AppLocalizations.of(context)!.keepAudioEntryInSourcePlaylist,
                   style: TextStyle(
+                    fontSize: kListDialogBottomTextFontSize,
                     color: isDarkTheme ? Colors.white : Colors.black,
                   ),
                 ),

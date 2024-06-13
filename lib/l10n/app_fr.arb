@@ -271,7 +271,7 @@
   "setAudioPlaySpeedDialogTitle": "Vitesse de lecture",
   "setAudioPlaySpeedTooltip": "Définir la vitesse de lecture de l'audio.",
   "exclude": "Exclure les audios ",
-  "fullyPlayed": "entièrement joués",
+  "fullyPlayed": "terminés",
   "audios": "",
   "increaseAudioVolumeIconButtonTooltip": "Augmenter le volume audio. Le bouton est désactivé lorsque le volume maximum est atteint.",
   "decreaseAudioVolumeIconButtonTooltip": "Diminuer le volume audio. Le bouton est désactivé lorsque le volume minimum est atteint.",

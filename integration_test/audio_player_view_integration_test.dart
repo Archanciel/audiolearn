@@ -1919,7 +1919,8 @@ void main() {
 
       // set the current audio's play position to start
 
-      await tester.tap(find.byKey(const Key('audioPlayerViewSkipToStartButton')));
+      await tester
+          .tap(find.byKey(const Key('audioPlayerViewSkipToStartButton')));
       await tester.pumpAndSettle();
 
       // check the current audio's changed position
@@ -1967,8 +1968,8 @@ void main() {
       );
 
       // Verify if the last downloaded audio title is displayed
-      expect(
-          find.text(thirdDownloadedAudioTitleOnAudioPlayerView), findsOneWidget);
+      expect(find.text(thirdDownloadedAudioTitleOnAudioPlayerView),
+          findsOneWidget);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -2016,7 +2017,8 @@ void main() {
 
       // set the current audio's play position to start
 
-      await tester.tap(find.byKey(const Key('audioPlayerViewSkipToStartButton')));
+      await tester
+          .tap(find.byKey(const Key('audioPlayerViewSkipToStartButton')));
       await tester.pumpAndSettle();
 
       // then set the position to + 2 minutes
@@ -2045,7 +2047,7 @@ void main() {
 
       // Trying to avoid unregular integration test failure
       Future.delayed(const Duration(milliseconds: 100));
-      
+
       // The audio position is 2 seconds before end. Now play
       // the audio and wait 5 seconds so that the next audio
       // will start to play
@@ -2074,8 +2076,8 @@ void main() {
       );
 
       // Verify if the last downloaded audio title is displayed
-      expect(
-          find.text(thirdDownloadedAudioTitleOnAudioPlayerView), findsOneWidget);
+      expect(find.text(thirdDownloadedAudioTitleOnAudioPlayerView),
+          findsOneWidget);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -2166,12 +2168,27 @@ void main() {
             currentlyPlayingAudioTitleTextBackgroundColor,
       );
 
+      await checkAudioTextColor(
+        tester: tester,
+        audioTitle:
+            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+        expectedTitleTextColor: fullyPlayedAudioTitleColor,
+        expectedTitleTextBackgroundColor: null,
+      );
+
+      await checkAudioTextColor(
+        tester: tester,
+        audioTitle: "morning _ cinematic video",
+        expectedTitleTextColor: unplayedAudioTitleTextColor,
+        expectedTitleTextBackgroundColor: null,
+      );
+
       // Now we tap the Exclude fully played audio checkbox
       await tester
           .tap(find.byKey(const Key('excludeFullyPlayedAudiosCheckbox')));
       await tester.pumpAndSettle();
 
-      // Verifying that the fully played audio titles iare not displayed
+      // Verifying that the fully played audio titles are not displayed
 
       expect(
           find.text(
@@ -2181,6 +2198,10 @@ void main() {
 
       expect(
           find.text("Jancovici démonte les avantages du numérique chez Orange"),
+          findsNothing);
+
+      expect(
+          find.text("3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)"),
           findsNothing);
 
       // Checking the color of the displayed audio titles
@@ -2221,6 +2242,20 @@ void main() {
         expectedTitleTextBackgroundColor: null,
       );
 
+      await checkAudioTextColor(
+        tester: tester,
+        audioTitle: "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+        expectedTitleTextColor: unplayedAudioTitleTextColor,
+        expectedTitleTextBackgroundColor: null,
+      );
+
+      await checkAudioTextColor(
+        tester: tester,
+        audioTitle: "Les besoins artificiels par R.Keucheyan",
+        expectedTitleTextColor: unplayedAudioTitleTextColor,
+        expectedTitleTextBackgroundColor: null,
+      );
+
       // Tap on Cancel button to close the
       // DisplaySelectableAudioListDialogWidget
       await tester.tap(find.text('Cancel'));
@@ -2258,7 +2293,7 @@ void main() {
       await tester.drag(listFinder, const Offset(0, -1000));
       await tester.pumpAndSettle();
 
-      // Now type on the first downloaded audio title in order to
+      // Now type on the third downloaded audio title in order to
       // open the AudioPlayerView displaying the audio
       await tester.tap(find.text(thirdDownloadedNotPlayedAudioTitle));
       await tester.pumpAndSettle();
@@ -2303,6 +2338,14 @@ void main() {
         tester: tester,
         audioTitle: "morning _ cinematic video",
         expectedTitleTextColor: unplayedAudioTitleTextColor,
+        expectedTitleTextBackgroundColor: null,
+      );
+
+      await checkAudioTextColor(
+        tester: tester,
+        audioTitle:
+            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+        expectedTitleTextColor: fullyPlayedAudioTitleColor,
         expectedTitleTextBackgroundColor: null,
       );
 

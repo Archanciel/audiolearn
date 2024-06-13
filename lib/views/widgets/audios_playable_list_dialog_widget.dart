@@ -136,15 +136,13 @@ class _AudioPlayableListDialogWidgetState
             mainAxisSize: MainAxisSize.min, // Use minimum space
             children: [
               Expanded(
-                child: ListView.builder(
+                child: SingleChildScrollView(
                   key: const Key('audioPlayableListKey'),
                   controller: _scrollController,
-                  itemCount: playableAudioLst.length,
-                  shrinkWrap: true,
-                  itemBuilder: (BuildContext context, int index) {
-                    Audio audio = playableAudioLst[index];
-                    return ListTile(
-                      title: GestureDetector(
+                  child: ListBody(
+                    children: playableAudioLst.map((audio) {
+                      int index = playableAudioLst.indexOf(audio);
+                      return GestureDetector(
                         onTap: () async {
                           await audioGlobalPlayerVM.setCurrentAudio(audio);
                           Navigator.of(context).pop();
@@ -155,9 +153,9 @@ class _AudioPlayableListDialogWidgetState
                           audioIndex: index,
                           isDarkTheme: isDarkTheme,
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    }).toList(),
+                  ),
                 ),
               ),
               _buildBottomTextAndCheckbox(
@@ -258,6 +256,7 @@ class _AudioPlayableListDialogWidgetState
                 text: TextSpan(
                   // Default text style for the entire block
                   style: TextStyle(
+                    fontSize: kListDialogBottomTextFontSize,
                     color: isDarkTheme ? Colors.white : Colors.black,
                   ),
                   children: <TextSpan>[
