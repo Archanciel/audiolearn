@@ -140,7 +140,7 @@ class AudioDownloadVM extends ChangeNotifier {
     String localPlaylistTitle = '',
     required PlaylistQuality playlistQuality,
   }) async {
-    return addPlaylistCallableByMock(
+    return addPlaylistCallableAlsoByMock(
       playlistUrl: playlistUrl,
       localPlaylistTitle: localPlaylistTitle,
       playlistQuality: playlistQuality,
@@ -177,7 +177,7 @@ class AudioDownloadVM extends ChangeNotifier {
   /// will be modified in only one place and will be
   /// applied to the MockAudioDownloadVM as well and so
   /// will tested by the integration test.
-  Future<Playlist?> addPlaylistCallableByMock({
+  Future<Playlist?> addPlaylistCallableAlsoByMock({
     String playlistUrl = '',
     String localPlaylistTitle = '',
     required PlaylistQuality playlistQuality,
@@ -226,8 +226,8 @@ class AudioDownloadVM extends ChangeNotifier {
     } else if (!playlistUrl.contains('list=')) {
       // the case if the url is a video url and the user
       // clicked on the Add button instead of the Download
-      // button or if the String pasted to the url text field
-      // is not a valid Youtube playlist url.
+      // single video audio button or if the String pasted to
+      // the url text field is not a valid Youtube playlist url.
       warningMessageVM.invalidPlaylistUrl = playlistUrl;
 
       return null;
@@ -273,6 +273,12 @@ class AudioDownloadVM extends ChangeNotifier {
       } else {
         // the method is called by MockAudioDownloadVM.addPlaylist()
         playlistTitle = mockYoutubePlaylistTitle;
+      }
+
+      if (playlistTitle.contains(',')) {
+        warningMessageVM.invalidYoutubePlaylistTitle = playlistTitle;
+
+        return null;
       }
 
       int playlistIndex = _listOfPlaylist
@@ -955,7 +961,7 @@ class AudioDownloadVM extends ChangeNotifier {
   void deleteAudioMp3({
     required Audio audio,
   }) {
-    DirUtil.deleteFileIfExist(pathFileName:  audio.filePathName);
+    DirUtil.deleteFileIfExist(pathFileName: audio.filePathName);
 
     // since the audio mp3 file has been deleted, the audio is no
     // longer in the playlist playable audio list
@@ -973,7 +979,7 @@ class AudioDownloadVM extends ChangeNotifier {
   void deleteAudioFromPlaylistAswell({
     required Audio audio,
   }) {
-    DirUtil.deleteFileIfExist(pathFileName:  audio.filePathName);
+    DirUtil.deleteFileIfExist(pathFileName: audio.filePathName);
 
     Playlist? enclosingPlaylist = audio.enclosingPlaylist;
 

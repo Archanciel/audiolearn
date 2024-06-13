@@ -234,8 +234,9 @@ class PlaylistListVM extends ChangeNotifier {
     return _listOfSelectablePlaylists;
   }
 
-  /// Returns true if the playlist was added, false otherwise.
-  Future<bool> addPlaylist({
+  /// Returns true if the playlist was added, false otherwise and null
+  /// if the local playlist title is invalid.
+  Future<dynamic> addPlaylist({
     String playlistUrl = '',
     String localPlaylistTitle = '',
     required PlaylistQuality playlistQuality,
@@ -257,6 +258,12 @@ class PlaylistListVM extends ChangeNotifier {
         // the playlist must be added.
       }
     } else if (localPlaylistTitle.isNotEmpty) {
+      if (localPlaylistTitle.contains(',')) {
+        _warningMessageVM.invalidLocalPlaylistTitle = localPlaylistTitle;
+
+        return null;
+      }
+      
       try {
         final Playlist playlistWithThisTitleAlreadyDownloaded =
             _listOfSelectablePlaylists

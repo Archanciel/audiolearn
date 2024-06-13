@@ -36,7 +36,7 @@ class MockAudioDownloadVM extends AudioDownloadVM {
     // AudioDownloadVM addPlaylist method. The {mockYoutubePlaylistTitle}
     // is passed to the method in order to indicate that the method
     // is called by the MockAudioDownloadVM.
-    Playlist? addedPlaylist = await addPlaylistCallableByMock(
+    Playlist? addedPlaylist = await addPlaylistCallableAlsoByMock(
       playlistUrl: playlistUrl,
       localPlaylistTitle: localPlaylistTitle,
       playlistQuality: playlistQuality,
@@ -63,7 +63,7 @@ class MockAudioDownloadVM extends AudioDownloadVM {
           .firstWhere((audio) => audio.videoUrl == videoUrl);
 
       String existingAudioFileName = existingSingleVideoAudio.audioFileName;
-      
+
       notifyDownloadError(
         errorType: ErrorType.downloadAudioFileAlreadyOnAudioDirectory,
         errorArgOne: existingSingleVideoAudio.validVideoTitle,

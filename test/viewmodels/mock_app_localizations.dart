@@ -1079,4 +1079,16 @@ class MockAppLocalizations extends AppLocalizations {
     Object fileName,
   ) =>
       "The file name \"$fileName\" already exists in the same directory and cannot be used.";
+
+  @override
+  String invalidLocalPlaylistTitle(
+    Object playlistTitle,
+  ) =>
+      "This local playlist title \"$playlistTitle\" can not contain commas. Commas are replaced by colons.";
+
+  @override
+  String invalidYoutubePlaylistTitle(
+    Object playlistTitle,
+  ) =>
+      "This Youtube playlist title \"$playlistTitle\" can not contain commas. Commas are replaced by colons.";
 }

@@ -359,5 +359,17 @@
   "commentCreationDateTooltip": "Date de création du commentaire",
   "commentUpdateDateTooltip": "Date de mise à jour du commentaire",
   "playlistCommentMenu": "Commentaires des audios de la playlist ...",
-  "modifyAudioTitle": "Modifier le titre de l'audio ..."
+  "modifyAudioTitle": "Modifier le titre de l'audio ...",
+  "invalidLocalPlaylistTitle": "Le titre de la playlist locale \"{playlistTitle}\" ne peut contenir aucune virgule. Corrigez le titre et rééssayez ...",
+  "@invalidLocalPlaylistTitle": {
+    "placeholders": {
+      "playlistTitle": {}
+    }
+  },
+  "invalidYoutubePlaylistTitle": "Le titre de la playlist Youtube \"{playlistTitle}\" ne peut contenir aucune virgule. Corrigez le titre et rééssayez ...",
+  "@invalidYoutubePlaylistTitle": {
+    "placeholders": {
+      "playlistTitle": {}
+    }
+  }
 }

@@ -21,6 +21,12 @@ enum WarningMessageType {
   // button or if the String pasted to the url text field
   // is not a valid Youtube playlist url.
 
+  invalidLocalPlaylistTitle, // The case if local playlist title
+  // contains one or more commas.
+
+  invalidYoutubePlaylistTitle, // The case if Youtube playlist title
+  // contains one or more commas.
+
   renameFileNameAlreadyUsed, // The case if the file name proposed
   // for renaming an audio file is the name of an existing
   // file.
@@ -226,6 +232,26 @@ class WarningMessageVM extends ChangeNotifier {
   set invalidPlaylistUrl(String invalidPlaylistUrl) {
     _invalidPlaylistUrl = invalidPlaylistUrl;
     _warningMessageType = WarningMessageType.invalidPlaylistUrl;
+
+    // Causes the display warning message widget to be displayed.      // Causes the display warning message widget to be displayed.
+    notifyListeners();
+  }
+
+  String _invalidLocalPlaylistTitle = '';
+  String get invalidLocalPlaylistTitle => _invalidLocalPlaylistTitle;
+  set invalidLocalPlaylistTitle(String invalidLocalPlaylistTitle) {
+    _invalidLocalPlaylistTitle = invalidLocalPlaylistTitle;
+    _warningMessageType = WarningMessageType.invalidLocalPlaylistTitle;
+
+    // Causes the display warning message widget to be displayed.      // Causes the display warning message widget to be displayed.
+    notifyListeners();
+  }
+
+  String _invalidYoutubePlaylistTitle = '';
+  String get invalidYoutubePlaylistTitle => _invalidYoutubePlaylistTitle;
+  set invalidYoutubePlaylistTitle(String invalidYoutubePlaylistTitle) {
+    _invalidYoutubePlaylistTitle = invalidYoutubePlaylistTitle;
+    _warningMessageType = WarningMessageType.invalidYoutubePlaylistTitle;
 
     // Causes the display warning message widget to be displayed.      // Causes the display warning message widget to be displayed.
     notifyListeners();

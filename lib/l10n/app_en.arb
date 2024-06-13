@@ -357,5 +357,17 @@
   "commentCreationDateTooltip": "Comment creation date",
   "commentUpdateDateTooltip": "Comment last update date",
   "playlistCommentMenu": "Comments of playlist audios ...",
-  "modifyAudioTitle": "Modify audio title ..."
+  "modifyAudioTitle": "Modify audio title ...",
+  "invalidLocalPlaylistTitle": "The local playlist title \"{playlistTitle}\" can not contain any comma. Please correct the title and retry ...",
+  "@invalidLocalPlaylistTitle": {
+    "placeholders": {
+      "playlistTitle": {}
+    }
+  },
+  "invalidYoutubePlaylistTitle": "The Youtube playlist title \"{playlistTitle}\" can not contain any comma. Please correct the title and retry ...",
+  "@invalidYoutubePlaylistTitle": {
+    "placeholders": {
+      "playlistTitle": {}
+    }
+  }
 }
