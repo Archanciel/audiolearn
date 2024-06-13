@@ -263,7 +263,7 @@ class PlaylistListVM extends ChangeNotifier {
 
         return null;
       }
-      
+
       try {
         final Playlist playlistWithThisTitleAlreadyDownloaded =
             _listOfSelectablePlaylists
@@ -301,9 +301,11 @@ class PlaylistListVM extends ChangeNotifier {
       _updateAndSavePlaylistOrder();
 
       notifyListeners();
-    }
 
-    return true;
+      return true;
+    } else {
+      return false;
+    }
   }
 
   void toggleList() {
