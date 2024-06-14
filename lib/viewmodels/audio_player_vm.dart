@@ -539,6 +539,11 @@ class AudioPlayerVM extends ChangeNotifier {
     // audio
     _currentAudio!.audioPositionSeconds = newAudioPosition.inSeconds;
 
+    // setting the audio paused date time to now avoid that if you play the
+    // audio after having changed its position by clicking on << or >>
+    // button, the audio is rewinded maybe half a minute ...
+    _currentAudio!.audioPausedDateTime = DateTime.now();
+
     await modifyAudioPlayerPluginPosition(_currentAudioPosition);
 
     // now, when clicking on position buttons, the playlist.json file
@@ -555,8 +560,8 @@ class AudioPlayerVM extends ChangeNotifier {
   /// {isUndoRedo} is true when the method is called by the
   /// AudioPlayerVM undo or redo methods as well as when the
   /// method is called after clicking on the audio title in
-  /// theIn this case, the method does not add a
-  /// command to the undo list.
+  /// theIn this case, the method does not add a command to
+  /// the undo list.
   Future<void> goToAudioPlayPosition({
     required Duration durationPosition,
     bool isUndoRedo = false,
@@ -576,6 +581,11 @@ class AudioPlayerVM extends ChangeNotifier {
     // necessary so that the audio position is stored on the
     // audio
     _currentAudio!.audioPositionSeconds = _currentAudioPosition.inSeconds;
+
+    // setting the audio paused date time to now avoid that if you play the
+    // audio after having changed the position clicking on the slider, the
+    // audio is rewinded maybe half a minute ...
+    _currentAudio!.audioPausedDateTime = DateTime.now();
 
     await modifyAudioPlayerPluginPosition(durationPosition);
 
