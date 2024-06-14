@@ -170,23 +170,10 @@ void main() {
           .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
       await tester.pumpAndSettle();
 
-      // Ensure the warning dialog is shown
-      expect(find.byType(WarningMessageDisplayWidget), findsOneWidget);
-
-      // Check the value of the warning dialog title
-      Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'WARNING');
-
-      // Check the value of the warning dialog message
-      Text warningDialogMessage =
-          tester.widget(find.byKey(const Key('warningDialogMessage')));
-      expect(warningDialogMessage.data,
-          'Playlist "$youtubeNewPlaylistTitle" of audio quality added at end of list of playlists.');
-
-      // Close the warning dialog by tapping on the Ok button
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
+      await checkWarningDialog(
+          tester: tester,
+          playlistTitle: youtubeNewPlaylistTitle,
+          isMusicQuality: false);
 
       // Ensure the URL TextField was emptied
       urlTextField =
@@ -427,23 +414,10 @@ void main() {
           .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
       await tester.pumpAndSettle();
 
-      // Ensure the warning dialog is shown
-      expect(find.byType(WarningMessageDisplayWidget), findsOneWidget);
-
-      // Check the value of the warning dialog title
-      Text warningDialogTitleText =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitleText.data, 'WARNING');
-
-      // Check the value of the warning dialog message
-      Text warningDialogMessage =
-          tester.widget(find.byKey(const Key('warningDialogMessage')));
-      expect(warningDialogMessage.data,
-          'Playlist "$youtubeNewPlaylistTitle" of audio quality added at end of list of playlists.');
-
-      // Close the warning dialog by tapping on the Ok button
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
+      await checkWarningDialog(
+          tester: tester,
+          playlistTitle: youtubeNewPlaylistTitle,
+          isMusicQuality: false);
 
       // Ensure the URL TextField was emptied
       urlTextField =
@@ -538,12 +512,12 @@ void main() {
       expect(find.byType(WarningMessageDisplayWidget), findsOneWidget);
 
       // Check the value of the warning dialog title
-      warningDialogTitleText =
+      Text warningDialogTitleText =
           tester.widget(find.byKey(const Key('warningDialogTitle')));
       expect(warningDialogTitleText.data, 'WARNING');
 
       // Check the value of the warning dialog message
-      warningDialogMessage =
+      Text warningDialogMessage =
           tester.widget(find.byKey(const Key('warningDialogMessage')));
       expect(warningDialogMessage.data,
           'Playlist "$youtubeNewPlaylistTitle" with this URL "$youtubePlaylistUrl" is already in the list of playlists and so won\'t be recreated.');
@@ -1077,7 +1051,8 @@ void main() {
       await tester.pumpAndSettle();
 
       // Correct the invalid title removing the comma
-      String correctedLocalPlaylistTitle = invalidLocalPlaylistTitle.replaceAll(',', '');
+      String correctedLocalPlaylistTitle =
+          invalidLocalPlaylistTitle.replaceAll(',', '');
       await tester.enterText(
         find.byKey(const Key('playlistLocalTitleConfirmDialogTextField')),
         correctedLocalPlaylistTitle,
