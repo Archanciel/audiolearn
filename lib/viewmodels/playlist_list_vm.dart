@@ -295,8 +295,6 @@ class PlaylistListVM extends ChangeNotifier {
     );
 
     if (addedPlaylist != null) {
-      // if addedPlaylist is null, it means that the
-      // passed url is not a valid playlist url
       _listOfSelectablePlaylists.add(addedPlaylist);
       _updateAndSavePlaylistOrder();
 
@@ -304,6 +302,10 @@ class PlaylistListVM extends ChangeNotifier {
 
       return true;
     } else {
+      // If addedPlaylist is null, it means that the passed
+      // url is not a valid playlist url. It is useful to not
+      // delete the invalid url so that the user can analyse
+      // why this url is invalid.
       return false;
     }
   }

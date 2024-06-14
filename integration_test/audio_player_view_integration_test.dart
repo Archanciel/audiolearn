@@ -2201,7 +2201,8 @@ void main() {
           findsNothing);
 
       expect(
-          find.text("3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)"),
+          find.text(
+              "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)"),
           findsNothing);
 
       // Checking the color of the displayed audio titles
@@ -4363,6 +4364,8 @@ void main() {
           expectedPositionsLst: expectedPositions,
           expectedCreationDatesLst: expectedCreationDates,
           expectedUpdateDatesLst: expectedUpdateDates);
+
+      Future.delayed(const Duration(milliseconds: 200));
 
       // Now tap on first comment play icon button to ensure you can play
       // a comment located before the comment you added

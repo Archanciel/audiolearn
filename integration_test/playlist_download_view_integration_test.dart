@@ -1788,10 +1788,10 @@ void main() {
       await tester.tap(find.byKey(const Key('warningDialogOkButton')));
       await tester.pumpAndSettle();
 
-      // Ensure the URL TextField was emptied
+      // Ensure the URL TextField was not emptied
       urlTextField =
           tester.widget(find.byKey(const Key('playlistUrlTextField')));
-      expect(urlTextField.controller!.text, '');
+      expect(urlTextField.controller!.text, invalidYoutubePlaylistUrl);
 
       // The list of Playlist's should have zero item now
       expect(find.byType(ListTile), findsNothing);
@@ -1924,10 +1924,10 @@ void main() {
       await tester.tap(find.byKey(const Key('warningDialogOkButton')));
       await tester.pumpAndSettle();
 
-      // Ensure the URL TextField was emptied
+      // Ensure the URL TextField was not emptied
       urlTextField =
           tester.widget(find.byKey(const Key('playlistUrlTextField')));
-      expect(urlTextField.controller!.text, '');
+      expect(urlTextField.controller!.text, invalidYoutubePlaylistUrl);
 
       // The list of Playlist's should have zero item now
       expect(find.byType(ListTile), findsNothing);
