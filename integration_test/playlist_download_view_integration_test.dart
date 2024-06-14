@@ -770,22 +770,11 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure the warning dialog is shown
-      expect(find.byType(WarningMessageDisplayWidget), findsOneWidget);
-
-      // Check the value of the warning dialog title
-      Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'WARNING');
-
-      // Check the value of the warning dialog message
-      Text warningDialogMessage =
-          tester.widget(find.byKey(const Key('warningDialogMessage')));
-      expect(warningDialogMessage.data,
-          'Playlist "$localPlaylistTitle" of music quality added at end of list of playlists.');
-
-      // Close the warning dialog by tapping on the Ok button
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
+      await checkWarningDialog(
+        tester: tester,
+        playlistTitle: localPlaylistTitle,
+        isMusicQuality: true,
+      );
 
       // The list of Playlist's should have one item now
       expect(find.byType(ListTile), findsOneWidget);
@@ -1021,6 +1010,91 @@ void main() {
       // Close the warning dialog by tapping on the Ok button
       await tester.tap(find.byKey(const Key('warningDialogOkButton')));
       await tester.pumpAndSettle();
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
+    });
+    testWidgets('Add local playlist with invalid title containing a comma',
+        (tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        deleteSubDirectoriesAsWell: true,
+      );
+
+      const String invalidLocalPlaylistTitle = 'local, with comma';
+
+      app.main(['test']);
+      await tester.pumpAndSettle();
+
+      // Tap the 'Toggle List' button to show the list. If the list
+      // is not opened, checking that a ListTile with the title of
+      // the playlist was added to the list will fail
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // The playlist list and audio list should exist now but be
+      // empty (no ListTile widgets)
+      expect(find.byType(ListView), findsNWidgets(2));
+      expect(find.byType(ListTile), findsNothing);
+
+      // Open the add playlist dialog by tapping the add playlist
+      // button
+      await tester.tap(find.byKey(const Key('addPlaylistButton')));
+      await tester.pumpAndSettle();
+
+      // Enter the title of the local playlist
+      await tester.enterText(
+        find.byKey(const Key('playlistLocalTitleConfirmDialogTextField')),
+        invalidLocalPlaylistTitle,
+      );
+
+      // Confirm the addition by tapping the confirmation button in
+      // the AlertDialog
+      await tester
+          .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
+      await tester.pumpAndSettle();
+
+      // Ensure the warning dialog is shown
+      expect(find.byType(WarningMessageDisplayWidget), findsOneWidget);
+
+      // Check the value of the warning dialog title
+      Text warningDialogTitle =
+          tester.widget(find.byKey(const Key('warningDialogTitle')));
+      expect(warningDialogTitle.data, 'WARNING');
+
+      // Check the value of the warning dialog message
+      Text warningDialogMessage =
+          tester.widget(find.byKey(const Key('warningDialogMessage')));
+      expect(warningDialogMessage.data,
+          "The local playlist title \"$invalidLocalPlaylistTitle\" can not contain any comma. Please correct the title and retry ...");
+
+      // Close the warning dialog by tapping on the Ok button
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+      await tester.pumpAndSettle();
+
+      // Correct the invalid title removing the comma
+      String correctedLocalPlaylistTitle = invalidLocalPlaylistTitle.replaceAll(',', '');
+      await tester.enterText(
+        find.byKey(const Key('playlistLocalTitleConfirmDialogTextField')),
+        correctedLocalPlaylistTitle,
+      );
+
+      // Confirm the addition by tapping the confirmation button in
+      // the AlertDialog
+      await tester
+          .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
+      await tester.pumpAndSettle();
+
+      // Ensure the warning dialog is shown
+      await checkWarningDialog(
+        tester: tester,
+        playlistTitle: correctedLocalPlaylistTitle,
+        isMusicQuality: false,
+      );
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -10201,6 +10275,31 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
   });
+}
+
+Future<void> checkWarningDialog({
+  required WidgetTester tester,
+  required String playlistTitle,
+  required bool isMusicQuality,
+}) async {
+  // Ensure the warning dialog is shown
+  expect(find.byType(WarningMessageDisplayWidget), findsOneWidget);
+
+  // Check the value of the warning dialog title
+  Text warningDialogTitle =
+      tester.widget(find.byKey(const Key('warningDialogTitle')));
+  expect(warningDialogTitle.data, 'WARNING');
+
+  // Check the value of the warning dialog message
+  Text warningDialogMessage =
+      tester.widget(find.byKey(const Key('warningDialogMessage')));
+
+  expect(warningDialogMessage.data,
+      'Playlist "$playlistTitle" of ${isMusicQuality ? 'music' : 'audio'} quality added at end of list of playlists.');
+
+  // Close the warning dialog by tapping on the Ok button
+  await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+  await tester.pumpAndSettle();
 }
 
 Future<void> checkAudioCommentInAudioPlayerView({
