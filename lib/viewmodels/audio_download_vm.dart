@@ -276,6 +276,15 @@ class AudioDownloadVM extends ChangeNotifier {
       }
 
       if (playlistTitle.contains(',')) {
+        // A playlist title containing one or several commas can not
+        // be handled by the application due to the fact that when
+        // this playlist title will be added in the  playlist ordered
+        // title list of the SettingsDataService, since the elements
+        // of this list are separated by a comma, the playlist title
+        // containing on or more commas will be divided in two or more
+        // titles which will then not be findable in the playlist
+        // directory. For this reason, adding such a playlist is refused
+        // by the method.
         warningMessageVM.invalidYoutubePlaylistTitle = playlistTitle;
 
         return null;
