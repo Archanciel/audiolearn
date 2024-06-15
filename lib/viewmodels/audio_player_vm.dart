@@ -287,9 +287,9 @@ class AudioPlayerVM extends ChangeNotifier {
     /// not yet played audio starts playing not at the changed position,
     /// but at the start position if this instruction located inside the
     /// if block.
-    /// 
+    ///
     /// This test checks this bug fix:
-    /// 
+    ///
     /// testWidgets('User modify the position of next fully unread audio
     /// also the last downloaded audio of the playlist.').
     await _audioPlayerPlugin!.seek(_currentAudioPosition);
@@ -556,12 +556,31 @@ class AudioPlayerVM extends ChangeNotifier {
   /// Method called when the user clicks on the audio slider.
   ///
   /// {durationPosition} is the new audio position.
+  Future<void> slideToAudioPlayPosition({
+    required Duration durationPosition,
+    bool isUndoRedo = false,
+  }) async {
+    // setting the audio paused date time to now avoid that if you play the
+    // audio after having changed the position clicking on the slider, the
+    // audio is rewinded maybe half a minute ...
+    _currentAudio!.audioPausedDateTime = DateTime.now();
+
+    await goToAudioPlayPosition(
+      durationPosition: durationPosition,
+    );
+  }
+
+  /// Method called after clicking on the audio title or when
+  /// the user clicks on the audio slider. Also called when
+  /// clicking on the undo or redo buttons.
+  ///
+  /// {durationPosition} is the new audio position.
   ///
   /// {isUndoRedo} is true when the method is called by the
   /// AudioPlayerVM undo or redo methods as well as when the
-  /// method is called after clicking on the audio title in
-  /// theIn this case, the method does not add a command to
-  /// the undo list.
+  /// method is called after clicking on the audio title. In
+  /// this case, the method does not add a command to the
+  /// undo list.
   Future<void> goToAudioPlayPosition({
     required Duration durationPosition,
     bool isUndoRedo = false,
@@ -581,11 +600,6 @@ class AudioPlayerVM extends ChangeNotifier {
     // necessary so that the audio position is stored on the
     // audio
     _currentAudio!.audioPositionSeconds = _currentAudioPosition.inSeconds;
-
-    // setting the audio paused date time to now avoid that if you play the
-    // audio after having changed the position clicking on the slider, the
-    // audio is rewinded maybe half a minute ...
-    _currentAudio!.audioPausedDateTime = DateTime.now();
 
     await modifyAudioPlayerPluginPosition(durationPosition);
 

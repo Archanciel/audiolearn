@@ -338,6 +338,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
       //                   command which would activate the undo
       //                   icon button
     );
+    
     // dragging to the AudioPlayerView screen
     onPageChangedFunction(ScreenMixin.AUDIO_PLAYER_VIEW_DRAGGABLE_INDEX);
   }

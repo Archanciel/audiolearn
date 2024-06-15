@@ -688,7 +688,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                     max: maxDuration,
                     value: sliderValue,
                     onChanged: (double value) async {
-                      await globalAudioPlayerVM.goToAudioPlayPosition(
+                      await globalAudioPlayerVM.slideToAudioPlayPosition(
                         durationPosition: Duration(seconds: value.toInt()),
                       );
                     },

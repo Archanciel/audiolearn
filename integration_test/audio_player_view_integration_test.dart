@@ -314,9 +314,7 @@ void main() {
         await tester.pumpAndSettle();
       }
 
-      // Playing the audio during 1 second. Clicking on the play button
-      // rewind the audio of 30 seconds since the audio was not listened
-      // during more than 1 hour
+      // Playing the audio during 1 second.
 
       await tester.tap(find.byIcon(Icons.play_arrow));
       await tester.pumpAndSettle();
@@ -373,8 +371,8 @@ void main() {
       verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '5:03',
-        maxPositionTimeStr: '5:07',
+        minPositionTimeStr: '5:00',
+        maxPositionTimeStr: '5:03',
       );
 
       // Purge the test playlist directory so that the created test
@@ -495,9 +493,7 @@ void main() {
         await tester.pumpAndSettle();
       }
 
-      // Playing the audio during 1 second. Clicking on the play button
-      // rewind the audio of 30 seconds since the audio was not listened
-      // during more than 1 hour
+      // Playing the audio during 1 second.
 
       await tester.tap(find.byIcon(Icons.play_arrow));
       await tester.pumpAndSettle();
@@ -554,8 +550,8 @@ void main() {
       verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '5:02',
-        maxPositionTimeStr: '5:07',
+        minPositionTimeStr: '5:00',
+        maxPositionTimeStr: '5:03',
       );
 
       // Purge the test playlist directory so that the created test
