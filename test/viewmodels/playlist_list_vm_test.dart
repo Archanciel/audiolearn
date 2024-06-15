@@ -155,7 +155,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest, deleteSubDirectoriesAsWell: true);
     });
     test('moveAudioToPlaylist moves audio and its comments to playlist', () {
       const String sourcePlaylistTitle = 'S8 audio';
@@ -227,7 +227,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest, deleteSubDirectoriesAsWell: true);
     });
   });
   group('Obtain next playable audio', () {
@@ -312,7 +312,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest, deleteSubDirectoriesAsWell: true);
     });
     test(
         'Next playable audio when current audio is last downloaded audio which is not fully played',
@@ -398,7 +398,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest, deleteSubDirectoriesAsWell: true);
     });
     test(
         'Next playable audio when current audio is last downloaded audio which is fully played',
@@ -483,7 +483,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest, deleteSubDirectoriesAsWell: true);
     });
     test('Next playable audio is last downloaded audio', () async {
       // Purge the test playlist directory if it exists so that the
@@ -565,7 +565,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest, deleteSubDirectoriesAsWell: true);
     });
   });
   group('Obtain list of playable audios', () {
@@ -651,7 +651,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest, deleteSubDirectoriesAsWell: true);
     });
     test(
         'Playlist has several not fully played audios. Last downloaded audio is fully played.',
@@ -740,7 +740,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest, deleteSubDirectoriesAsWell: true);
     });
     test('Playlist has no not fully played audios', () async {
       // Purge the test playlist directory if it exists so that the
@@ -818,7 +818,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest, deleteSubDirectoriesAsWell: true);
     });
   });
   group('Add invalid paylist', () {
@@ -902,7 +902,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest, deleteSubDirectoriesAsWell: true);
     });
   });
 }
