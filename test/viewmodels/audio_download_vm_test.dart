@@ -105,6 +105,12 @@ void main() {
       );
 
       expect(chapters, expectedChapters);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
   });
   group('AudioDownloadVM update playlist json file', () {
@@ -187,7 +193,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
   });
   group('AudioDownloadVM rename audio file', () {
@@ -252,7 +259,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
     test('File with new name exist', () async {
       // Purge the test playlist directory if it exists so that the
@@ -318,7 +326,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
   });
   group('AudioDownloadVM modify audio title', () {
@@ -374,13 +383,14 @@ void main() {
       // audio list only (playabeAudioLst and downloadedAudioLst
       // contain the same audios, but in inverse order)
       expect(loadedPlaylist.playableAudioLst[1].validVideoTitle, newAudioTitle);
-      expect(
-          loadedPlaylist.downloadedAudioLst[0].validVideoTitle, initialAudioTitle);
+      expect(loadedPlaylist.downloadedAudioLst[0].validVideoTitle,
+          initialAudioTitle);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
   });
 }
