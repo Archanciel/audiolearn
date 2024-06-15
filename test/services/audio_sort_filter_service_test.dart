@@ -2354,6 +2354,13 @@ void main() {
           equals(expectedResultForFilterSortTitleDesc
               .map((audio) => audio.validVideoTitle)
               .toList()));
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        deleteSubDirectoriesAsWell: true,
+      );
     });
   });
   group("filter sort audio by multiple filter and multiple SortingOption's",
@@ -2424,6 +2431,13 @@ void main() {
       playlistListVM.getUpToDateSelectablePlaylists();
 
       audioSortFilterService = AudioSortFilterService();
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        deleteSubDirectoriesAsWell: true,
+      );
     });
     test(
         'filter by one word in audio title and sort by download date descending and duration ascending',
@@ -3357,6 +3371,13 @@ void main() {
       playlistListVM.getUpToDateSelectablePlaylists();
 
       audioSortFilterService = AudioSortFilterService();
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        deleteSubDirectoriesAsWell: true,
+      );
     });
     test(
         'filter by no word in audio title or video compact description and sort by download date descending',
