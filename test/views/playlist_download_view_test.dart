@@ -64,7 +64,8 @@ void main() async {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
 
     testWidgets('should toggle list on press', (WidgetTester tester) async {
@@ -131,7 +132,8 @@ void main() async {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
 
     testWidgets('check buttons enabled after item selected',
@@ -247,7 +249,8 @@ void main() async {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
 
     testWidgets(
@@ -384,7 +387,8 @@ void main() async {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
 
     testWidgets('check buttons disabled after item unselected',
@@ -532,7 +536,8 @@ void main() async {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
 
     testWidgets('ensure only one checkbox is selectable',
@@ -631,7 +636,8 @@ void main() async {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
 
     // The Delete button does not exist on the
@@ -816,7 +822,8 @@ void main() async {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
 
     testWidgets('select and move down twice before last item',
@@ -916,7 +923,8 @@ void main() async {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
     testWidgets('select and move down twice over last item',
         (WidgetTester tester) async {
@@ -1015,7 +1023,8 @@ void main() async {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
 
     testWidgets('select and move up item', (WidgetTester tester) async {
@@ -1112,7 +1121,8 @@ void main() async {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
 
     testWidgets('select and move up twice first item',
@@ -1212,7 +1222,8 @@ void main() async {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
   });
 }
