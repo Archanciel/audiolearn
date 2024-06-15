@@ -38,7 +38,7 @@ void main() {
       // change the current audio's play position
 
       int forwardChangePosition = 100;
-      audioPlayerVM.changeAudioPlayPosition(
+      await audioPlayerVM.changeAudioPlayPosition(
           positiveOrNegativeDuration: Duration(seconds: forwardChangePosition));
 
       // obtain the current audio's changed position
@@ -74,7 +74,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
     test('Test single undo/redo of backward position change', () async {
       AudioPlayerVM audioPlayerVM = await createAudioPlayerVM();
@@ -95,7 +96,7 @@ void main() {
       // change the current audio's play position
 
       int backwardChangePosition = -100;
-      audioPlayerVM.changeAudioPlayPosition(
+      await audioPlayerVM.changeAudioPlayPosition(
           positiveOrNegativeDuration:
               Duration(seconds: backwardChangePosition));
 
@@ -132,7 +133,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
     test(
         'Test single undo/redo of multiple forward and backward position changes',
@@ -155,17 +157,17 @@ void main() {
       // change three times the current audio's play position
 
       int forwardChangePositionOne = 100;
-      audioPlayerVM.changeAudioPlayPosition(
+      await audioPlayerVM.changeAudioPlayPosition(
           positiveOrNegativeDuration:
               Duration(seconds: forwardChangePositionOne));
 
       int backwardChangePositionOne = -60;
-      audioPlayerVM.changeAudioPlayPosition(
+      await audioPlayerVM.changeAudioPlayPosition(
           positiveOrNegativeDuration:
               Duration(seconds: backwardChangePositionOne));
 
       int forwardChangePositionTwo = 80;
-      audioPlayerVM.changeAudioPlayPosition(
+      await audioPlayerVM.changeAudioPlayPosition(
           positiveOrNegativeDuration:
               Duration(seconds: forwardChangePositionTwo));
 
@@ -209,7 +211,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
     test(
         'Test multiple undo/redo of multiple forward and backward position changes',
@@ -232,17 +235,17 @@ void main() {
       // change three times the current audio's play position
 
       int forwardChangePositionOne = 100;
-      audioPlayerVM.changeAudioPlayPosition(
+      await audioPlayerVM.changeAudioPlayPosition(
           positiveOrNegativeDuration:
               Duration(seconds: forwardChangePositionOne));
 
       int backwardChangePositionOne = -60;
-      audioPlayerVM.changeAudioPlayPosition(
+      await audioPlayerVM.changeAudioPlayPosition(
           positiveOrNegativeDuration:
               Duration(seconds: backwardChangePositionOne));
 
       int forwardChangePositionTwo = 80;
-      audioPlayerVM.changeAudioPlayPosition(
+      await audioPlayerVM.changeAudioPlayPosition(
           positiveOrNegativeDuration:
               Duration(seconds: forwardChangePositionTwo));
 
@@ -296,7 +299,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
     test(
         'Test insert a new command between multiple undo/redo of multiple forward and backward position changes',
@@ -320,17 +324,17 @@ void main() {
       // change three times the current audio's play position
 
       int forwardChangePositionOne = 100;
-      audioPlayerVM.changeAudioPlayPosition(
+      await audioPlayerVM.changeAudioPlayPosition(
           positiveOrNegativeDuration:
               Duration(seconds: forwardChangePositionOne)); // 700
 
       int backwardChangePositionOne = -60;
-      audioPlayerVM.changeAudioPlayPosition(
+      await audioPlayerVM.changeAudioPlayPosition(
           positiveOrNegativeDuration:
               Duration(seconds: backwardChangePositionOne)); // 640
 
       int forwardChangePositionTwo = 80;
-      audioPlayerVM.changeAudioPlayPosition(
+      await audioPlayerVM.changeAudioPlayPosition(
           positiveOrNegativeDuration:
               Duration(seconds: forwardChangePositionTwo)); // 720
 
@@ -349,7 +353,7 @@ void main() {
 
       // enter a new command
       int forwardChangePositionThree = 125;
-      audioPlayerVM.changeAudioPlayPosition(
+      await audioPlayerVM.changeAudioPlayPosition(
           // 765
           positiveOrNegativeDuration:
               Duration(seconds: forwardChangePositionThree));
@@ -393,7 +397,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
   });
   group('AudioPlayerVM goToAudioPlayPosition undo/redo', () {
@@ -450,7 +455,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
     test('Test single undo/redo of backward slider position change', () async {
       AudioPlayerVM audioPlayerVM = await createAudioPlayerVM();
@@ -508,7 +514,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
     test(
         'Test single undo/redo of multiple forward and backward slider position changes',
@@ -576,7 +583,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
     test(
         'Test multiple undo/redo of multiple forward and backward slider position changes',
@@ -657,7 +665,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
     test(
         'Test insert a new slider command between multiple undo/redo of multiple forward and backward slider position changes',
@@ -748,7 +757,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
     test(
         "Test insert a new slider command after first undo forward slider position change, then perform one undo before one redo. This test could not be done in the AudioPlayerView integration test because the moving the slider to a new position is not possible in the integration test.",
@@ -810,7 +820,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
     test(
         "Test insert a new slider command after first undo forward slider position change, then perform two undo's before one redo in order to redo the new slider backward command. This test could not be done in the AudioPlayerView integration test because the moving the slider to a new position is not possible in the integration test.",
@@ -876,7 +887,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
   });
   group('AudioPlayerVM bug', () {
@@ -919,7 +931,7 @@ void main() {
       // change the current audio's play position minus 1 minute
 
       int backwardChangePositionOneMinute = -60;
-      audioPlayerVM.changeAudioPlayPosition(
+      await audioPlayerVM.changeAudioPlayPosition(
           positiveOrNegativeDuration:
               Duration(seconds: backwardChangePositionOneMinute));
 
@@ -940,7 +952,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
     test(
         'Test bug single undo/redo of sliding backward to 3 seconds and then going 10 seconds backward',
@@ -981,7 +994,7 @@ void main() {
       // change the current audio's play position minus 1 minute
 
       int backwardChangePositionTenSeconds = -10;
-      audioPlayerVM.changeAudioPlayPosition(
+      await audioPlayerVM.changeAudioPlayPosition(
           positiveOrNegativeDuration:
               Duration(seconds: backwardChangePositionTenSeconds));
 
@@ -1002,7 +1015,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
     test(
         'Test bug single undo/redo of sliding forward to 20 minutes 25 seconds and then going 1 minute forward',
@@ -1036,7 +1050,7 @@ void main() {
       // change the current audio's play position plus 1 minute
 
       int backwardChangePositionOneMinute = 60;
-      audioPlayerVM.changeAudioPlayPosition(
+      await audioPlayerVM.changeAudioPlayPosition(
           positiveOrNegativeDuration:
               Duration(seconds: backwardChangePositionOneMinute));
 
@@ -1058,7 +1072,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
     test(
         'Test bug single undo/redo of sliding forward to 20 minutes 25 seconds and then going 10 seconds forward',
@@ -1092,7 +1107,7 @@ void main() {
       // change the current audio's play position plus 1 minute
 
       int forwardChangePositionTenSeconds = 10;
-      audioPlayerVM.changeAudioPlayPosition(
+      await audioPlayerVM.changeAudioPlayPosition(
           positiveOrNegativeDuration:
               Duration(seconds: forwardChangePositionTenSeconds));
 
@@ -1114,7 +1129,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
   });
   group('AudioPlayerVM skipToStart undo/redo', () {
@@ -1166,7 +1182,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
     test(
         'Test multiple undo/redo of multiple forward and skipToStart position change',
@@ -1196,7 +1213,7 @@ void main() {
       // to 100 seconds
 
       int forwardChangePosition = 100;
-      audioPlayerVM.changeAudioPlayPosition(
+      await audioPlayerVM.changeAudioPlayPosition(
           positiveOrNegativeDuration: Duration(seconds: forwardChangePosition));
 
       // obtain the current audio's changed position
@@ -1257,7 +1274,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
   });
   group('AudioPlayerVM skipToEndAndPlay undo/redo', () {
@@ -1311,7 +1329,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
     test(
         'Test multiple undo/redo of multiple forward and skipToEnd position change',
@@ -1346,7 +1365,7 @@ void main() {
 
       int backwardChangePosition = -100;
 
-      audioPlayerVM.changeAudioPlayPosition(
+      await audioPlayerVM.changeAudioPlayPosition(
           positiveOrNegativeDuration:
               Duration(seconds: backwardChangePosition));
 
@@ -1413,7 +1432,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
   });
   group('AudioPlayerVM skipToEndNoPlay (method not used) undo/redo', () {
@@ -1467,7 +1487,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
     test(
         'Test multiple undo/redo of multiple forward and skipToEnd position change',
@@ -1502,7 +1523,7 @@ void main() {
 
       int backwardChangePosition = -100;
 
-      audioPlayerVM.changeAudioPlayPosition(
+      await audioPlayerVM.changeAudioPlayPosition(
           positiveOrNegativeDuration:
               Duration(seconds: backwardChangePosition));
 
@@ -1569,7 +1590,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
   });
 }
@@ -1625,10 +1647,10 @@ Future<SettingsDataService> initializeTestDataAndLoadSettingsDataService({
     );
   }
 
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-        isTest: true,
-      );
+  SettingsDataService settingsDataService = SettingsDataService(
+    sharedPreferences: MockSharedPreferences(),
+    isTest: true,
+  );
 
   // Load the settings from the json file. This is necessary
   // otherwise the ordered playlist titles will remain empty
