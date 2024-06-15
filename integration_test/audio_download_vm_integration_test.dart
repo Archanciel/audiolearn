@@ -70,6 +70,12 @@ void main() {
       expect(audioDownloadVM.downloadProgress, 0.0);
       expect(audioDownloadVM.lastSecondDownloadSpeed, 0);
       expect(audioDownloadVM.isHighQuality, false);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
 
     testWidgets('Playlist 2 short audios: playlist dir not exist',
@@ -80,7 +86,8 @@ void main() {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
@@ -172,7 +179,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
     testWidgets(
         'Playlist 2 short audios: playlist 1st audio was already downloaded and was deleted',
@@ -183,7 +191,8 @@ void main() {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
 
       await DirUtil.createDirIfNotExist(pathStr: globalTestPlaylistDir);
 
@@ -328,7 +337,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
   });
   group('Download short audio of 1 single video', () {
@@ -347,7 +357,8 @@ void main() {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
 
       await DirUtil.createDirIfNotExist(pathStr: localTestPlaylistDir);
 
@@ -462,7 +473,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
     testWidgets('Local playlist containing one audio',
         (WidgetTester tester) async {
@@ -479,7 +491,8 @@ void main() {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
 
       await DirUtil.createDirIfNotExist(pathStr: localTestPlaylistDir);
 
@@ -603,7 +616,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,          
+          deleteSubDirectoriesAsWell: true);
     });
   });
   group('Download recreated playlist with short audios', () {
@@ -623,7 +637,8 @@ void main() {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
 
       await DirUtil.createDirIfNotExist(pathStr: globalTestPlaylistDir);
 
@@ -801,7 +816,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          deleteSubDirectoriesAsWell: true);
     });
   });
 }
