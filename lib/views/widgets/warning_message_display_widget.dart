@@ -184,8 +184,8 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           _displayWarningDialog(
             context: _context,
-            message:
-                AppLocalizations.of(context)!.invalidLocalPlaylistTitle(playlistTitle),
+            message: AppLocalizations.of(context)!
+                .invalidLocalPlaylistTitle(playlistTitle),
             warningMessageVM: _warningMessageVM,
             themeProviderVM: themeProviderVM,
           );
@@ -198,8 +198,8 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           _displayWarningDialog(
             context: _context,
-            message:
-                AppLocalizations.of(context)!.invalidYoutubePlaylistTitle(playlistTitle),
+            message: AppLocalizations.of(context)!
+                .invalidYoutubePlaylistTitle(playlistTitle),
             warningMessageVM: _warningMessageVM,
             themeProviderVM: themeProviderVM,
           );
@@ -212,8 +212,8 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           _displayWarningDialog(
             context: _context,
-            message:
-                AppLocalizations.of(context)!.renameFileNameAlreadyUsed(fileName),
+            message: AppLocalizations.of(context)!
+                .renameFileNameAlreadyUsed(fileName),
             warningMessageVM: _warningMessageVM,
             themeProviderVM: themeProviderVM,
           );
@@ -355,8 +355,7 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           _displayWarningDialog(
             context: _context,
-            message: AppLocalizations.of(context)!
-                .noCheckboxSelectedWarning,
+            message: AppLocalizations.of(context)!.noCheckboxSelectedWarning,
             warningMessageVM: _warningMessageVM,
             themeProviderVM: themeProviderVM,
           );
@@ -367,8 +366,8 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           _displayWarningDialog(
             context: _context,
-            message: AppLocalizations.of(context)!
-                .noUniqueCheckboxSelectedWarning,
+            message:
+                AppLocalizations.of(context)!.noUniqueCheckboxSelectedWarning,
             warningMessageVM: _warningMessageVM,
             themeProviderVM: themeProviderVM,
           );
@@ -732,8 +731,8 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
           ),
           actions: [
             TextButton(
+              key: const Key('warningDialogOkButton'),
               child: Text(
-                key: const Key('warningDialogOkButton'),
                 'Ok',
                 style: (themeProviderVM.currentTheme == AppTheme.dark)
                     ? kTextButtonStyleDarkMode
