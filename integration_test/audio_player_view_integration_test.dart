@@ -3350,6 +3350,90 @@ void main() {
     });
   });
   group('Audio comment tests', () {
+    group('Playing audio comment', () {
+      testWidgets(
+          'Playing from CommentAddEditDialogWidget comment on audio paused more than 1 hour ago. Verifying no rewind is performed.',
+          (WidgetTester tester) async {
+        const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+        const String alreadyCommentedAudioTitle =
+            "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
+
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'audio_comment_test',
+          selectedPlaylistTitle: youtubePlaylistTitle,
+        );
+
+        // Then, get the ListTile Text widget finder of the already commented
+        // audio and tap on it to open the AudioPlayerView
+        final Finder alreadyCommentedAudioFinder =
+            find.text(alreadyCommentedAudioTitle);
+        await tester.tap(alreadyCommentedAudioFinder);
+        await tester.pumpAndSettle();
+
+        // Tap on the comment icon button to open the comment add list
+        // dialog
+        final Finder commentInkWellButtonFinder = find.byKey(
+          const Key('commentsInkWellButton'),
+        );
+
+        await tester.tap(commentInkWellButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Tap on the comment title text to edit the comment
+        String commentTitle = 'I did not thank ChatGPT';
+
+        await tester.tap(find.text(commentTitle));
+        await tester.pumpAndSettle();
+
+        // Tap on the play/pause icon button to play the audio from the
+        // comment
+        await tester.tap(find.byKey(const Key('playPauseIconButton')));
+        await tester.pumpAndSettle();
+
+        await Future.delayed(const Duration(milliseconds: 1000));
+        await tester.pumpAndSettle();
+
+        // Tap on the play/pause icon button to pause the audio
+        await tester.tap(find.byKey(const Key('playPauseIconButton')));
+        await tester.pumpAndSettle();
+
+        // Find the Text child of the selectCommentPosition TextButton
+
+        final Finder selectCommentPositionTextButtonFinder =
+            find.byKey(const Key('selectCommentPositionTextButton'));
+
+        final Finder selectCommentPositionTextOfButtonFinder = find.descendant(
+          of: selectCommentPositionTextButtonFinder,
+          matching: find.byType(Text),
+        );
+
+        // Verify that the Text widget contains the expected content
+
+        String selectCommentPositionTextOfButton =
+            tester.widget<Text>(selectCommentPositionTextOfButtonFinder).data!;
+
+        // Ensure the audio position was not rewinded
+        expect(
+          selectCommentPositionTextOfButton
+              .contains('1:17:12'),
+          true,
+        );
+
+        // Tap on the cancel comment button to close the comment
+        await tester.tap(find.byKey(const Key('cancelTextButton')));
+        await tester.pumpAndSettle();
+
+        // Now close the comment list dialog
+        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+    });
     testWidgets(
         'Manage comments in initially empty playlist. Copy audio to the empty playlist, add a comment, then edit it, define start, then end, comment position and finally delete it.',
         (WidgetTester tester) async {
@@ -4742,7 +4826,202 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets('Using current audio position dialog to set comment positions',
+    testWidgets('3 dialogs opened, tapping outside the comment related dialogs',
+        (WidgetTester tester) async {
+      const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+      const String alreadyCommentedAudioTitle =
+          "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_comment_test',
+        selectedPlaylistTitle: youtubePlaylistTitle,
+      );
+
+      // Then, get the ListTile Text widget finder of the already commented
+      // audio and tap on it to open the AudioPlayerView
+      final Finder alreadyCommentedAudioFinder =
+          find.text(alreadyCommentedAudioTitle);
+      await tester.tap(alreadyCommentedAudioFinder);
+      await tester.pumpAndSettle();
+
+      // Tap on the comment icon button to open the comment add list
+      // dialog
+      final Finder commentInkWellButtonFinder = find.byKey(
+        const Key('commentsInkWellButton'),
+      );
+
+      await tester.tap(commentInkWellButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Tap on the comment title text to edit the comment
+      String commentTitle = 'I did not thank ChatGPT';
+
+      await tester.tap(find.text(commentTitle));
+      await tester.pumpAndSettle();
+
+      // Now tap on select position text button to open the define position
+      // dialog enabling to modify the comment start or end position
+
+      final Finder openDefinePositionDialogTextButtonFinder =
+          find.byKey(const Key('selectCommentPositionTextButton'));
+
+      await tester.tap(openDefinePositionDialogTextButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Simulate a tap outside the define position dialog to verify that
+      // the dialog can not be closed by error if the user type outside it
+      await tester.tapAt(const Offset(0, 0));
+      await tester.pumpAndSettle();
+
+      // Verify that the dialog is not closed
+      expect(find.byType(SetValueToTargetDialogWidget), findsOneWidget);
+
+      // Close the define position dialog by tapping on the Cancel button
+      await tester.tap(find.byKey(const Key('setValueToTargetCancelButton')));
+      await tester.pumpAndSettle();
+
+      // Simulate a tap outside the add/edit comment dialog to verify that
+      // the dialog can not be closed by error if the user type outside it
+      await tester.tapAt(const Offset(0, 0));
+      await tester.pumpAndSettle();
+
+      // Verify that the dialog is not closed
+      expect(find.byType(CommentAddEditDialogWidget), findsOneWidget);
+
+      // Tap on the cancel comment button to close the dialog
+      await tester.tap(find.byKey(const Key('cancelTextButton')));
+      await tester.pumpAndSettle();
+
+      // Simulate a tap outside the list comment dialog to verify that
+      // the dialog can not be closed by error if the user type outside it
+      await tester.tapAt(const Offset(0, 0));
+      await tester.pumpAndSettle();
+
+      // Verify that the dialog is not closed
+      expect(find.byType(CommentListAddDialogWidget), findsOneWidget);
+
+      // Now close the comment list dialog
+      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets(
+        'After comment list add dialog is opened, tapping outside the dialog',
+        (WidgetTester tester) async {
+      const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+      const String alreadyCommentedAudioTitle =
+          "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_comment_test',
+        selectedPlaylistTitle: youtubePlaylistTitle,
+      );
+
+      // Then, get the ListTile Text widget finder of the already commented
+      // audio and tap on it to open the AudioPlayerView
+      final Finder alreadyCommentedAudioFinder =
+          find.text(alreadyCommentedAudioTitle);
+      await tester.tap(alreadyCommentedAudioFinder);
+      await tester.pumpAndSettle();
+
+      // Tap on the comment icon button to open the comment add list
+      // dialog
+      final Finder commentInkWellButtonFinder = find.byKey(
+        const Key('commentsInkWellButton'),
+      );
+
+      await tester.tap(commentInkWellButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Simulate a tap outside the comment list add dialog to verify that
+      // the dialog can not be closed by error if the user type outside it
+      await tester.tapAt(const Offset(0, 0));
+      await tester.pumpAndSettle();
+
+      // Verify that the dialog is not closed
+      expect(find.byType(CommentListAddDialogWidget), findsOneWidget);
+
+      // Now close the comment list dialog
+      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets(
+        'After comment add/edit dialog is opened, tapping outside the comment related dialogs',
+        (WidgetTester tester) async {
+      const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+      const String alreadyCommentedAudioTitle =
+          "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_comment_test',
+        selectedPlaylistTitle: youtubePlaylistTitle,
+      );
+
+      // Then, get the ListTile Text widget finder of the already commented
+      // audio and tap on it to open the AudioPlayerView
+      final Finder alreadyCommentedAudioFinder =
+          find.text(alreadyCommentedAudioTitle);
+      await tester.tap(alreadyCommentedAudioFinder);
+      await tester.pumpAndSettle();
+
+      // Tap on the comment icon button to open the comment add list
+      // dialog
+      final Finder commentInkWellButtonFinder = find.byKey(
+        const Key('commentsInkWellButton'),
+      );
+
+      await tester.tap(commentInkWellButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Tap on the comment title text to edit the comment
+      String commentTitle = 'I did not thank ChatGPT';
+
+      await tester.tap(find.text(commentTitle));
+      await tester.pumpAndSettle();
+
+      // Simulate a tap outside the add/edit comment dialog to verify that
+      // the dialog can not be closed by error if the user type outside it
+      await tester.tapAt(const Offset(0, 0));
+      await tester.pumpAndSettle();
+
+      // Verify that the dialog is not closed
+      expect(find.byType(CommentAddEditDialogWidget), findsOneWidget);
+
+      // Tap on the cancel comment button to close the dialog
+      await tester.tap(find.byKey(const Key('cancelTextButton')));
+      await tester.pumpAndSettle();
+
+      // Simulate a tap outside the list comment dialog to verify that
+      // the dialog can not be closed by error if the user type outside it
+      await tester.tapAt(const Offset(0, 0));
+      await tester.pumpAndSettle();
+
+      // Verify that the dialog is not closed
+      expect(find.byType(CommentListAddDialogWidget), findsOneWidget);
+
+      // Now close the comment list dialog
+      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets(
+        'MUST BE LAST TEST ! Using current audio position dialog to set comment positions',
         (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
       const String alreadyCommentedAudioTitle =
@@ -5082,7 +5361,13 @@ void main() {
               .data,
           "No checkbox selected. Please select one checkbox before clicking 'Ok', or click 'Cancel' to exit.");
 
-      // Simulate a tap outside the dialog.
+      // Close the warning dialog by tapping on the Ok button
+      // Fucking shit: does not work. I lost so many hours trying to fix
+      // ce putain de problème de merde ...
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+      await tester.pumpAndSettle();
+
+      // Simulate a tap outside the dialog
       await tester.tapAt(const Offset(0, 0));
       await tester.pumpAndSettle();
 
@@ -5093,200 +5378,6 @@ void main() {
       // Tap on the add/edit comment button to save the comment
       await tester.tap(find.byKey(const Key('addOrUpdateCommentTextButton')));
       await tester.pumpAndSettle();
-
-      // Now close the comment list dialog
-      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
-      );
-    });
-    testWidgets('3 dialogs opened, tapping outside the comment related dialogs',
-        (WidgetTester tester) async {
-      const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
-      const String alreadyCommentedAudioTitle =
-          "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
-
-      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-        tester: tester,
-        savedTestDataDirName: 'audio_comment_test',
-        selectedPlaylistTitle: youtubePlaylistTitle,
-      );
-
-      // Then, get the ListTile Text widget finder of the already commented
-      // audio and tap on it to open the AudioPlayerView
-      final Finder alreadyCommentedAudioFinder =
-          find.text(alreadyCommentedAudioTitle);
-      await tester.tap(alreadyCommentedAudioFinder);
-      await tester.pumpAndSettle();
-
-      // Tap on the comment icon button to open the comment add list
-      // dialog
-      final Finder commentInkWellButtonFinder = find.byKey(
-        const Key('commentsInkWellButton'),
-      );
-
-      await tester.tap(commentInkWellButtonFinder);
-      await tester.pumpAndSettle();
-
-      // Tap on the comment title text to edit the comment
-      String commentTitle = 'I did not thank ChatGPT';
-
-      await tester.tap(find.text(commentTitle));
-      await tester.pumpAndSettle();
-
-      // Now tap on select position text button to open the define position
-      // dialog enabling to modify the comment start or end position
-
-      final Finder openDefinePositionDialogTextButtonFinder =
-          find.byKey(const Key('selectCommentPositionTextButton'));
-
-      await tester.tap(openDefinePositionDialogTextButtonFinder);
-      await tester.pumpAndSettle();
-
-      // Simulate a tap outside the define position dialog to verify that
-      // the dialog can not be closed by error if the user type outside it
-      await tester.tapAt(const Offset(0, 0));
-      await tester.pumpAndSettle();
-
-      // Verify that the dialog is not closed
-      expect(find.byType(SetValueToTargetDialogWidget), findsOneWidget);
-
-      // Close the define position dialog by tapping on the Cancel button
-      await tester.tap(find.byKey(const Key('setValueToTargetCancelButton')));
-      await tester.pumpAndSettle();
-
-      // Simulate a tap outside the add/edit comment dialog to verify that
-      // the dialog can not be closed by error if the user type outside it
-      await tester.tapAt(const Offset(0, 0));
-      await tester.pumpAndSettle();
-
-      // Verify that the dialog is not closed
-      expect(find.byType(CommentAddEditDialogWidget), findsOneWidget);
-
-      // Tap on the cancel comment button to close the dialog
-      await tester.tap(find.byKey(const Key('cancelTextButton')));
-      await tester.pumpAndSettle();
-
-      // Simulate a tap outside the list comment dialog to verify that
-      // the dialog can not be closed by error if the user type outside it
-      await tester.tapAt(const Offset(0, 0));
-      await tester.pumpAndSettle();
-
-      // Verify that the dialog is not closed
-      expect(find.byType(CommentListAddDialogWidget), findsOneWidget);
-
-      // Now close the comment list dialog
-      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
-      );
-    });
-    testWidgets(
-        'After comment list add dialog is opened, tapping outside the dialog',
-        (WidgetTester tester) async {
-      const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
-      const String alreadyCommentedAudioTitle =
-          "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
-
-      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-        tester: tester,
-        savedTestDataDirName: 'audio_comment_test',
-        selectedPlaylistTitle: youtubePlaylistTitle,
-      );
-
-      // Then, get the ListTile Text widget finder of the already commented
-      // audio and tap on it to open the AudioPlayerView
-      final Finder alreadyCommentedAudioFinder =
-          find.text(alreadyCommentedAudioTitle);
-      await tester.tap(alreadyCommentedAudioFinder);
-      await tester.pumpAndSettle();
-
-      // Tap on the comment icon button to open the comment add list
-      // dialog
-      final Finder commentInkWellButtonFinder = find.byKey(
-        const Key('commentsInkWellButton'),
-      );
-
-      await tester.tap(commentInkWellButtonFinder);
-      await tester.pumpAndSettle();
-
-      // Simulate a tap outside the comment list add dialog to verify that
-      // the dialog can not be closed by error if the user type outside it
-      await tester.tapAt(const Offset(0, 0));
-      await tester.pumpAndSettle();
-
-      // Verify that the dialog is not closed
-      expect(find.byType(CommentListAddDialogWidget), findsOneWidget);
-
-      // Now close the comment list dialog
-      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
-      );
-    });
-    testWidgets(
-        'After comment add/edit dialog is opened, tapping outside the comment related dialogs',
-        (WidgetTester tester) async {
-      const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
-      const String alreadyCommentedAudioTitle =
-          "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
-
-      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-        tester: tester,
-        savedTestDataDirName: 'audio_comment_test',
-        selectedPlaylistTitle: youtubePlaylistTitle,
-      );
-
-      // Then, get the ListTile Text widget finder of the already commented
-      // audio and tap on it to open the AudioPlayerView
-      final Finder alreadyCommentedAudioFinder =
-          find.text(alreadyCommentedAudioTitle);
-      await tester.tap(alreadyCommentedAudioFinder);
-      await tester.pumpAndSettle();
-
-      // Tap on the comment icon button to open the comment add list
-      // dialog
-      final Finder commentInkWellButtonFinder = find.byKey(
-        const Key('commentsInkWellButton'),
-      );
-
-      await tester.tap(commentInkWellButtonFinder);
-      await tester.pumpAndSettle();
-
-      // Tap on the comment title text to edit the comment
-      String commentTitle = 'I did not thank ChatGPT';
-
-      await tester.tap(find.text(commentTitle));
-      await tester.pumpAndSettle();
-
-      // Simulate a tap outside the add/edit comment dialog to verify that
-      // the dialog can not be closed by error if the user type outside it
-      await tester.tapAt(const Offset(0, 0));
-      await tester.pumpAndSettle();
-
-      // Verify that the dialog is not closed
-      expect(find.byType(CommentAddEditDialogWidget), findsOneWidget);
-
-      // Tap on the cancel comment button to close the dialog
-      await tester.tap(find.byKey(const Key('cancelTextButton')));
-      await tester.pumpAndSettle();
-
-      // Simulate a tap outside the list comment dialog to verify that
-      // the dialog can not be closed by error if the user type outside it
-      await tester.tapAt(const Offset(0, 0));
-      await tester.pumpAndSettle();
-
-      // Verify that the dialog is not closed
-      expect(find.byType(CommentListAddDialogWidget), findsOneWidget);
 
       // Now close the comment list dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));
