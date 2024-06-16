@@ -6,8 +6,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:path/path.dart' as path;
 
 void main() {
-  TestWidgetsFlutterBinding.ensureInitialized();
-
   group('DirUtil test)', () {
     test(
       'replacing "/storage/emulated/0/Download/audiolear" by "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio"',

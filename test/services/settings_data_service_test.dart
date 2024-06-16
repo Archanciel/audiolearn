@@ -12,8 +12,6 @@ import 'mock_shared_preferences.dart';
 enum UnsupportedSettingsEnum { unsupported }
 
 void main() {
-  TestWidgetsFlutterBinding.ensureInitialized();
-
   const String testSettingsDir =
       '$kPlaylistDownloadRootPathWindowsTest\\audiolearn_test_settings';
 
@@ -483,7 +481,7 @@ void main() {
       final SettingsDataService loadedSettings = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
       );
-      
+
       await loadedSettings.loadSettingsFromFile(
         settingsJsonPathFileName: testSettingsPathFileName,
       );

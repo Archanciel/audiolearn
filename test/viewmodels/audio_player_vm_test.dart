@@ -16,8 +16,6 @@ import '../services/mock_shared_preferences.dart';
 import 'audio_player_vm_test_version.dart';
 
 void main() {
-  TestWidgetsFlutterBinding.ensureInitialized();
-
   group('AudioPlayerVM changeAudioPlayPosition undo/redo', () {
     test('Test single undo/redo of forward position change', () async {
       AudioPlayerVM audioPlayerVM = await createAudioPlayerVM();

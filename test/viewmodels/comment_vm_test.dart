@@ -12,7 +12,6 @@ import 'package:audiolearn/utils/dir_util.dart';
 import 'package:audiolearn/viewmodels/comment_vm.dart';
 
 void main() {
-  TestWidgetsFlutterBinding.ensureInitialized();
   group('CommentVM test', () {
     test('load comments, comment file not exist', () async {
       // Purge the test playlist directory if it exists so that the
@@ -397,8 +396,7 @@ void main() {
               "${audio.enclosingPlaylist!.downloadPath}${path.separator}$kCommentDirName",
           extension: 'json');
       List<String> targetCommentFileNameLst = DirUtil.listFileNamesInDir(
-          path:
-              "$targetPlaylistPath${path.separator}$kCommentDirName",
+          path: "$targetPlaylistPath${path.separator}$kCommentDirName",
           extension: 'json');
 
       expect(sourceCommentFileNameLst.length, 1);
@@ -414,8 +412,7 @@ void main() {
               "${audio.enclosingPlaylist!.downloadPath}${path.separator}$kCommentDirName",
           extension: 'json');
       targetCommentFileNameLst = DirUtil.listFileNamesInDir(
-          path:
-              "$targetPlaylistPath${path.separator}$kCommentDirName",
+          path: "$targetPlaylistPath${path.separator}$kCommentDirName",
           extension: 'json');
 
       expect(sourceCommentFileNameLst.length, 0);
@@ -457,8 +454,7 @@ void main() {
               "${audio.enclosingPlaylist!.downloadPath}${path.separator}$kCommentDirName",
           extension: 'json');
       List<String> targetCommentFileNameLst = DirUtil.listFileNamesInDir(
-          path:
-              "$targetPlaylistPath${path.separator}$kCommentDirName",
+          path: "$targetPlaylistPath${path.separator}$kCommentDirName",
           extension: 'json');
 
       expect(sourceCommentFileNameLst.length, 0);
@@ -474,8 +470,7 @@ void main() {
               "${audio.enclosingPlaylist!.downloadPath}${path.separator}$kCommentDirName",
           extension: 'json');
       targetCommentFileNameLst = DirUtil.listFileNamesInDir(
-          path:
-              "$targetPlaylistPath${path.separator}$kCommentDirName",
+          path: "$targetPlaylistPath${path.separator}$kCommentDirName",
           extension: 'json');
 
       expect(sourceCommentFileNameLst.length, 0);
@@ -517,8 +512,7 @@ void main() {
               "${audio.enclosingPlaylist!.downloadPath}${path.separator}$kCommentDirName",
           extension: 'json');
       List<String> targetCommentFileNameLst = DirUtil.listFileNamesInDir(
-          path:
-              "$targetPlaylistPath${path.separator}$kCommentDirName",
+          path: "$targetPlaylistPath${path.separator}$kCommentDirName",
           extension: 'json');
 
       expect(sourceCommentFileNameLst.length, 1);
@@ -534,8 +528,7 @@ void main() {
               "${audio.enclosingPlaylist!.downloadPath}${path.separator}$kCommentDirName",
           extension: 'json');
       targetCommentFileNameLst = DirUtil.listFileNamesInDir(
-          path:
-              "$targetPlaylistPath${path.separator}$kCommentDirName",
+          path: "$targetPlaylistPath${path.separator}$kCommentDirName",
           extension: 'json');
 
       expect(sourceCommentFileNameLst.length, 1);
@@ -577,8 +570,7 @@ void main() {
               "${audio.enclosingPlaylist!.downloadPath}${path.separator}$kCommentDirName",
           extension: 'json');
       List<String> targetCommentFileNameLst = DirUtil.listFileNamesInDir(
-          path:
-              "$targetPlaylistPath${path.separator}$kCommentDirName",
+          path: "$targetPlaylistPath${path.separator}$kCommentDirName",
           extension: 'json');
 
       expect(sourceCommentFileNameLst.length, 0);
@@ -594,8 +586,7 @@ void main() {
               "${audio.enclosingPlaylist!.downloadPath}${path.separator}$kCommentDirName",
           extension: 'json');
       targetCommentFileNameLst = DirUtil.listFileNamesInDir(
-          path:
-              "$targetPlaylistPath${path.separator}$kCommentDirName",
+          path: "$targetPlaylistPath${path.separator}$kCommentDirName",
           extension: 'json');
 
       expect(sourceCommentFileNameLst.length, 0);

@@ -32,12 +32,11 @@ class MockAppLocalizationsDelegate
 }
 
 void main() async {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   group(
       'Testing expandable playlist list located in PlaylistDownloadView functions',
       () {
-    setUp(() {
-      TestWidgetsFlutterBinding.ensureInitialized();
-    });
     testWidgets(
         'should render ListView widget, not using MyApp but ListView widget',
         (WidgetTester tester) async {

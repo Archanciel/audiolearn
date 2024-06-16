@@ -15,8 +15,6 @@ import 'package:audiolearn/services/audio_sort_filter_service.dart';
 import 'mock_shared_preferences.dart';
 
 void main() {
-  TestWidgetsFlutterBinding.ensureInitialized();
-
   final Audio audioOne = Audio.fullConstructor(
     enclosingPlaylist: null,
     movedFromPlaylistTitle: null,

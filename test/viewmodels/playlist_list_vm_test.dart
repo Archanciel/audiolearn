@@ -17,8 +17,6 @@ import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
 import '../services/mock_shared_preferences.dart';
 
 void main() {
-  TestWidgetsFlutterBinding.ensureInitialized();
-
   group('Copy/move audio + comment file to target playlist', () {
     late PlaylistListVM playlistListVM;
 
