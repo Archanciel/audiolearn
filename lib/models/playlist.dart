@@ -123,9 +123,6 @@ class Playlist {
       }
     }
 
-    playlist.applyAutomaticallySortFilterParmsForPlaylistDownloadView =
-        json['applySortFilterParmsForPlaylistDownloadView'] ?? false;
-
     // Deserialize the Audio instances in the
     // playableAudioLst
     if (json['playableAudioLst'] != null) {
@@ -135,9 +132,6 @@ class Playlist {
         playlist.playableAudioLst.add(audio);
       }
     }
-
-    playlist.applyAutomaticallySortFilterParmsForAudioPlayerView =
-        json['applySortFilterParmsForAudioPlayerView'] ?? false;
 
     return playlist;
   }
