@@ -193,7 +193,7 @@ class DirUtil {
   /// deleted.
   static void deleteFilesInDirAndSubDirs({
     required String rootPath,
-    bool deleteSubDirectoriesAsWell = false,
+    bool deleteSubDirectoriesAsWell = true,
   }) {
     final Directory directory = Directory(rootPath);
 

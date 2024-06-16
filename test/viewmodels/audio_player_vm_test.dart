@@ -74,8 +74,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     test('Test single undo/redo of backward position change', () async {
       AudioPlayerVM audioPlayerVM = await createAudioPlayerVM();
@@ -133,8 +133,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     test(
         'Test single undo/redo of multiple forward and backward position changes',
@@ -211,8 +211,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     test(
         'Test multiple undo/redo of multiple forward and backward position changes',
@@ -299,8 +299,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     test(
         'Test insert a new command between multiple undo/redo of multiple forward and backward position changes',
@@ -397,8 +397,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
   });
   group('AudioPlayerVM goToAudioPlayPosition undo/redo', () {
@@ -455,8 +455,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     test('Test single undo/redo of backward slider position change', () async {
       AudioPlayerVM audioPlayerVM = await createAudioPlayerVM();
@@ -514,8 +514,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     test(
         'Test single undo/redo of multiple forward and backward slider position changes',
@@ -583,8 +583,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     test(
         'Test multiple undo/redo of multiple forward and backward slider position changes',
@@ -665,8 +665,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     test(
         'Test insert a new slider command between multiple undo/redo of multiple forward and backward slider position changes',
@@ -757,8 +757,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     test(
         "Test insert a new slider command after first undo forward slider position change, then perform one undo before one redo. This test could not be done in the AudioPlayerView integration test because the moving the slider to a new position is not possible in the integration test.",
@@ -820,8 +820,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     test(
         "Test insert a new slider command after first undo forward slider position change, then perform two undo's before one redo in order to redo the new slider backward command. This test could not be done in the AudioPlayerView integration test because the moving the slider to a new position is not possible in the integration test.",
@@ -887,8 +887,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
   });
   group('AudioPlayerVM bug', () {
@@ -952,8 +952,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     test(
         'Test bug single undo/redo of sliding backward to 3 seconds and then going 10 seconds backward',
@@ -1015,8 +1015,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     test(
         'Test bug single undo/redo of sliding forward to 20 minutes 25 seconds and then going 1 minute forward',
@@ -1072,8 +1072,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     test(
         'Test bug single undo/redo of sliding forward to 20 minutes 25 seconds and then going 10 seconds forward',
@@ -1129,8 +1129,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
   });
   group('AudioPlayerVM skipToStart undo/redo', () {
@@ -1182,8 +1182,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     test(
         'Test multiple undo/redo of multiple forward and skipToStart position change',
@@ -1274,8 +1274,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
   });
   group('AudioPlayerVM skipToEndAndPlay undo/redo', () {
@@ -1329,8 +1329,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     test(
         'Test multiple undo/redo of multiple forward and skipToEnd position change',
@@ -1432,8 +1432,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
   });
   group('AudioPlayerVM skipToEndNoPlay (method not used) undo/redo', () {
@@ -1487,8 +1487,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     test(
         'Test multiple undo/redo of multiple forward and skipToEnd position change',
@@ -1590,8 +1590,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
   });
 }

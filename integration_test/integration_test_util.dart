@@ -92,7 +92,6 @@ class IntegrationTestUtil {
     // playlist list is empty
     DirUtil.deleteFilesInDirAndSubDirs(
       rootPath: kPlaylistDownloadRootPathWindowsTest,
-      deleteSubDirectoriesAsWell: true,
     );
 
     if (savedTestDataDirName != null) {
@@ -106,16 +105,15 @@ class IntegrationTestUtil {
 
     if (replacePlaylistJsonFileName != null) {
       // Copy the test initial audio data to the app dir
-      final String playlistPath = "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}";
+      final String playlistPath =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}";
       final String playlistJsonFileName = '$selectedPlaylistTitle.json';
       DirUtil.deleteFileIfExist(
-        pathFileName:
-            '$playlistPath$playlistJsonFileName',
+        pathFileName: '$playlistPath$playlistJsonFileName',
       );
 
       DirUtil.renameFile(
-          fileToRenameFilePathName:
-              "$playlistPath$replacePlaylistJsonFileName",
+          fileToRenameFilePathName: "$playlistPath$replacePlaylistJsonFileName",
           newFileName: playlistJsonFileName);
     }
     final SettingsDataService settingsDataService = SettingsDataService(

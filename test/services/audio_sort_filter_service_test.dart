@@ -2359,7 +2359,6 @@ void main() {
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
     });
   });
@@ -2373,7 +2372,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -2436,7 +2434,6 @@ void main() {
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
     });
     test(
@@ -2536,7 +2533,6 @@ void main() {
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
     });
     test(
@@ -2634,7 +2630,6 @@ void main() {
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
     });
     test(
@@ -2713,7 +2708,6 @@ void main() {
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
     });
     test(
@@ -2798,7 +2792,6 @@ void main() {
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
     });
     test(
@@ -2890,7 +2883,6 @@ void main() {
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
     });
     test(
@@ -2986,7 +2978,6 @@ void main() {
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
     });
     test(
@@ -3086,7 +3077,6 @@ void main() {
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
     });
   });
@@ -3099,7 +3089,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -3223,7 +3212,6 @@ void main() {
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
     });
     test('filter audios avoiding fully listened audios', () {
@@ -3264,7 +3252,6 @@ void main() {
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
     });
     test('filter audios getting only fully listened audios', () {
@@ -3300,7 +3287,6 @@ void main() {
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
     });
   });
@@ -3313,7 +3299,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -3376,7 +3361,6 @@ void main() {
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
     });
     test(
@@ -3472,7 +3456,6 @@ void main() {
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
     });
   });

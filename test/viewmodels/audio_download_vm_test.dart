@@ -109,8 +109,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
   });
   group('AudioDownloadVM update playlist json file', () {
@@ -119,7 +119,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -193,8 +192,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
   });
   group('AudioDownloadVM rename audio file', () {
@@ -203,7 +202,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -259,15 +257,14 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     test('File with new name exist', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -326,8 +323,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
   });
   group('AudioDownloadVM modify audio title', () {
@@ -336,7 +333,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -389,8 +385,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
   });
 }

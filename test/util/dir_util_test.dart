@@ -16,7 +16,6 @@ void main() {
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
           rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true,
         );
 
         // Copy the test initial audio data to the app dir
@@ -43,7 +42,6 @@ void main() {
         // Cleanup the test data directory
         DirUtil.deleteFilesInDirAndSubDirs(
           rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true,
         );
       },
     );
@@ -54,7 +52,6 @@ void main() {
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
           rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true,
         );
 
         // Copy the test initial audio data to the app dir
@@ -81,7 +78,6 @@ void main() {
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
           rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true,
         );
 
         // Copy the test initial audio data to the app dir
@@ -109,7 +105,6 @@ void main() {
         // Cleanup the test data directory
         DirUtil.deleteFilesInDirAndSubDirs(
           rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true,
         );
       },
     );

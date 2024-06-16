@@ -61,7 +61,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Since we have to use a mock AudioDownloadVM to add the
@@ -298,15 +297,14 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets('Add with comma titled Youtube playlist', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Since we have to use a mock AudioDownloadVM to add the
@@ -442,8 +440,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets('Add Youtube playlist and then add it again with same URL',
         (tester) async {
@@ -451,7 +449,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Since we have to use a mock AudioDownloadVM to add the
@@ -679,8 +676,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
 
     /// The objective of this integration test is to ensure that
@@ -693,7 +690,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Since we have to use a mock AudioDownloadVM to add the
@@ -815,8 +811,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets('Add and then delete local playlist with empty playlist URL',
         (tester) async {
@@ -824,7 +820,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       const String localPlaylistTitle = 'audio_learn_local_playlist_test';
@@ -1037,8 +1032,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets(
         'Add local playlist with title equal to previously created local playlist',
@@ -1047,7 +1042,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       const String localPlaylistTitle = 'audio_learn_local_playlist_test';
@@ -1136,8 +1130,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets('Add local playlist with invalid title containing a comma',
         (tester) async {
@@ -1145,7 +1139,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       const String invalidLocalPlaylistTitle = 'local, with comma';
@@ -1223,8 +1216,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets(
         'Add local playlist with title equal to previously created Youtube playlist',
@@ -1233,7 +1226,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Since we have to use a mock AudioDownloadVM to add the
@@ -1370,8 +1362,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets(
         'Open the add playlist dialog to add a local playlist and then click on Cancel button',
@@ -1380,7 +1372,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       const String localPlaylistTitle = 'audio_learn_local_playlist_test';
@@ -1455,8 +1446,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
 
     /// The objective of this integration test is to ensure that
@@ -1470,7 +1461,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       app.main(['test']);
@@ -1524,15 +1514,14 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets('Select then unselect local playlist', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       const String localPlaylistTitle = 'audio_learn_local_playlist_test';
@@ -1674,8 +1663,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
 
     testWidgets(
@@ -1685,7 +1674,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Since we have to use a mock AudioDownloadVM to add the
@@ -1855,8 +1843,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets('Add Youtube playlist with invalid URL containing list=',
         (tester) async {
@@ -1864,7 +1852,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Since we have to use a mock AudioDownloadVM to add the
@@ -2003,15 +1990,14 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets('Add Youtube playlist with invalid URL', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Since we have to use a mock AudioDownloadVM to add the
@@ -2140,15 +2126,14 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets('Download single video audio with invalid URL', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -2315,8 +2300,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
   });
   group('AudioDownloadVM using CustomMockYoutubeExplode Tests', () {
@@ -2333,7 +2318,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -2572,8 +2556,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
   });
   group('Settings update test', () {
@@ -2582,7 +2566,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -2765,8 +2748,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
   });
   group('Copy or move audio test', () {
@@ -2777,7 +2760,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -3276,8 +3258,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets(
         'Copy audio and then move it to same target playlist: the move is refused with warning. Then 3rd time move to another playlist and click on cancel button',
@@ -3286,7 +3268,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -3740,8 +3721,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets(
         'Copy audio to target playlist and then delete it from target playlist. Then move it to same target playlist.',
@@ -3750,7 +3731,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -4098,8 +4078,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets(
         'Copy audio to target playlist and then delete it from target playlist. Then copy it again to same target playlist.',
@@ -4108,7 +4088,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -4456,8 +4435,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets(
         'Move (+ check comment) audio from Youtube to local playlist, then move it back, then remove it, then remove it back',
@@ -4466,7 +4445,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -4742,8 +4720,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets(
         'Move audio from Youtube to local playlist unchecking keep audio in source playlist checkbox. This displays a warning',
@@ -4752,7 +4730,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -4889,8 +4866,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
   });
   group('Delete copied or moved audio test', () {
@@ -4901,7 +4878,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -5296,8 +5272,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets(
         'Delete audio first moved from Youtube to local playlist, then moved from local to other Youtube playlist. The audio is then deleted from the other Youtube playlist with no warning being displayed.',
@@ -5306,7 +5282,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -5675,8 +5650,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
   });
   group(
@@ -5688,7 +5663,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -5832,8 +5806,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets('Manually delete audios in local playlist directory.',
         (tester) async {
@@ -5841,7 +5815,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -5984,8 +5957,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
   });
   group(
@@ -5998,7 +5971,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -6145,8 +6117,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets(
         'Manually delete Youtube playlist directory after adding it manually.',
@@ -6155,7 +6127,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -6277,8 +6248,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets(
         'Manually delete Youtube playlist directory with playlist expanded list closed after adding it manually.',
@@ -6287,7 +6258,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -6429,8 +6399,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets(
         'With Playlist list displayed, execute update playlist json file after deleting all files in app audio dir and verify audio menu state. Do same after re-adding app audio dir files.',
@@ -6439,7 +6409,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -6504,8 +6473,8 @@ void main() {
 
       // Now delete all the files in the app audio directory
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
 
       // Here, the audio menu is still displayed ...
 
@@ -6561,8 +6530,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets(
         'With Playlist list not displayed, execute update playlist json file after deleting all files in app audio dir and verify audio menu state. Do same after re-adding app audio dir files.',
@@ -6571,7 +6540,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -6642,8 +6610,8 @@ void main() {
 
       // Now delete all the files in the app audio directory
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
 
       // Here, the audio menu is still displayed ...
 
@@ -6699,8 +6667,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets(
         'With Playlist list displayed and selected playlist empty, execute update playlist json file after deleting all files in app audio dir and verify audio menu state. Do same after re-adding app audio dir files.',
@@ -6709,7 +6677,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -6774,8 +6741,8 @@ void main() {
 
       // Now delete all the files in the app audio directory
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
 
       // Here, the audio menu is still displayed ...
 
@@ -6831,8 +6798,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets(
         'With Playlist list not displayed and selected playlist empty, execute update playlist json file after deleting all files in app audio dir and verify audio menu state. Do same after re-adding app audio dir files.',
@@ -6841,7 +6808,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -6912,8 +6878,8 @@ void main() {
 
       // Now delete all the files in the app audio directory
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
 
       // Here, the audio menu is still displayed ...
 
@@ -6969,8 +6935,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
   });
   group('Delete unique audio test', () {
@@ -6981,7 +6947,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -7132,8 +7097,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets(
         'Delete unique audio from playlist as well and then switch to AudioPlayerView screen.',
@@ -7142,7 +7107,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -7294,8 +7258,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
   });
   group('Bug fix tests', () {
@@ -7305,7 +7269,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -7358,8 +7321,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets(
         'Verifying execution of "Delete audio from playlist as well" playlist menu item',
@@ -7368,7 +7331,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -7528,8 +7490,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets('Click on download at musical quality checkbox bug fix',
         (tester) async {
@@ -7537,7 +7499,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -7628,8 +7589,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
   });
   group('Delete existing playlist test', () {
@@ -7638,7 +7599,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -7804,15 +7764,14 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets('Cancel delete selected Youtube playlist', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -7971,15 +7930,14 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets('Delete selected local playlist', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -8144,15 +8102,14 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets('Cancel delete selected local playlist', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -8310,8 +8267,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets(
         'Delete non selected Youtube playlist while another Youtube playlist is selected',
@@ -8320,7 +8277,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -8483,8 +8439,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets(
         'Delete non selected Youtube playlist while a local playlist is selected',
@@ -8493,7 +8449,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -8669,8 +8624,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
   });
   group('PlaylistDownloadView buttons state test', () {
@@ -8680,7 +8635,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -8721,15 +8675,14 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets('Select a local playlist with no audio', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -8825,15 +8778,14 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets('Select a Youtube playlist with no audio', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -8929,15 +8881,14 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets('Select a local playlist with audio', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -9024,15 +8975,14 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets('Select a Youtube playlist with audio', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -9119,15 +9069,14 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets('Delete a Youtube playlist with audios', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -9260,15 +9209,14 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets('Delete a local playlist with 1 audio', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -9399,15 +9347,14 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets('Delete a unique audio in a local playlist', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -9536,15 +9483,14 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets('Delete a unique audio in a Youtube playlist', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -9675,8 +9621,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
   });
   group('Sort/filter test', () {
@@ -9687,7 +9633,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -9760,8 +9705,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets(
         'Sort filter audio dialog button clear sort/filter parameters history typing verifying that bthe warning is displayed in the play audio view.',
@@ -9770,7 +9715,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -9956,8 +9900,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
   });
   group('App settings test', () {
@@ -9968,7 +9912,6 @@ void main() {
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
-        deleteSubDirectoriesAsWell: true,
       );
 
       // Copy the test initial audio data to the app dir
@@ -10020,8 +9963,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
   });
   group('App settings set speed test', () {});
@@ -10169,8 +10112,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
     testWidgets(
         'Existing new name. The new file name is the name of an existing file in the same directory',
@@ -10309,8 +10252,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
   });
   group('Modify audio title test and verify comment display change', () {
@@ -10453,8 +10396,8 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-          deleteSubDirectoriesAsWell: true);
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
   });
 }
