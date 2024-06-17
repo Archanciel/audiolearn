@@ -23,21 +23,21 @@ import 'comment_add_edit_dialog_widget.dart';
 ///
 /// Additionally, a button 'plus' is displayed to add a new
 /// positionned comment.
-class CommentPlaylistDialogWidget extends StatefulWidget {
+class PlaylistCommentDialogWidget extends StatefulWidget {
   final Playlist currentPlaylist;
 
-  const CommentPlaylistDialogWidget({
+  const PlaylistCommentDialogWidget({
     super.key,
     required this.currentPlaylist,
   });
 
   @override
-  State<CommentPlaylistDialogWidget> createState() =>
-      _CommentPlaylistDialogWidgetState();
+  State<PlaylistCommentDialogWidget> createState() =>
+      _PlaylistCommentDialogWidgetState();
 }
 
-class _CommentPlaylistDialogWidgetState extends State<CommentPlaylistDialogWidget>
-    with ScreenMixin {
+class _PlaylistCommentDialogWidgetState
+    extends State<PlaylistCommentDialogWidget> with ScreenMixin {
   final FocusNode _focusNodeDialog = FocusNode();
   Comment? _playingComment;
 
@@ -109,7 +109,8 @@ class _CommentPlaylistDialogWidgetState extends State<CommentPlaylistDialogWidge
         content: Consumer<CommentVM>(
           builder: (context, commentVM, child) {
             List<Comment> commentsLst = commentVM.loadAudioComments(
-              audio: widget.currentPlaylist.playableAudioLst[widget.currentPlaylist.currentOrPastPlayableAudioIndex],
+              audio: widget.currentPlaylist.playableAudioLst[
+                  widget.currentPlaylist.currentOrPastPlayableAudioIndex],
             );
             return SingleChildScrollView(
               child: ListBody(
@@ -121,8 +122,9 @@ class _CommentPlaylistDialogWidgetState extends State<CommentPlaylistDialogWidge
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(bottom: 2),
-                            child: _buildCommentTitlePlusIconsAndCommentDatesAndPosition(
-                                maxDropdownWidth, comment, commentVM),
+                            child:
+                                _buildCommentTitlePlusIconsAndCommentDatesAndPosition(
+                                    maxDropdownWidth, comment, commentVM),
                           ),
                           (comment.content.isNotEmpty)
                               ? Padding(
@@ -283,7 +285,8 @@ class _CommentPlaylistDialogWidgetState extends State<CommentPlaylistDialogWidge
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Tooltip(
-                  message: AppLocalizations.of(context)!.commentCreationDateTooltip,
+                  message:
+                      AppLocalizations.of(context)!.commentCreationDateTooltip,
                   child: Text(
                     // comment creation date Text
                     key: const Key('creationDateTimeKey'),
@@ -296,14 +299,15 @@ class _CommentPlaylistDialogWidgetState extends State<CommentPlaylistDialogWidge
                 ),
                 (comment.lastUpdateDateTime.day != comment.creationDateTime.day)
                     ? Tooltip(
-                  message: AppLocalizations.of(context)!.commentUpdateDateTooltip,
-                      child: Text(
+                        message: AppLocalizations.of(context)!
+                            .commentUpdateDateTooltip,
+                        child: Text(
                           // comment update date Text
                           key: const Key('lastUpdateDateTimeKey'),
                           style: const TextStyle(fontSize: 13),
                           frenchDateFormat.format(comment.lastUpdateDateTime),
                         ),
-                    )
+                      )
                     : Container(),
               ],
             ),

@@ -11,7 +11,7 @@ import '../../viewmodels/playlist_list_vm.dart';
 import '../../viewmodels/warning_message_vm.dart';
 import '../screen_mixin.dart';
 import 'action_confirm_dialog_widget.dart';
-import 'comment_playlist_dialog_widget.dart';
+import 'playlist_comment_dialog_widget.dart';
 import 'playlist_info_dialog_widget.dart';
 import 'audio_set_speed_dialog_widget.dart';
 
@@ -97,11 +97,12 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                     child:
                         Text(AppLocalizations.of(context)!.displayPlaylistInfo),
                   ),
-              PopupMenuItem<PlaylistPopupMenuAction>(
-                key: const Key('popup_menu_Audio_comment'),
-                value: PlaylistPopupMenuAction.playlistComment,
-                child: Text(AppLocalizations.of(context)!.playlistCommentMenu),
-              ),
+                  PopupMenuItem<PlaylistPopupMenuAction>(
+                    key: const Key('popup_menu_Audio_comment'),
+                    value: PlaylistPopupMenuAction.playlistComment,
+                    child:
+                        Text(AppLocalizations.of(context)!.playlistCommentMenu),
+                  ),
                   PopupMenuItem<PlaylistPopupMenuAction>(
                     key: const Key('popup_menu_update_playable_audio_list'),
                     value: PlaylistPopupMenuAction.updatePlaylistPlayableAudios,
@@ -154,20 +155,20 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                         },
                       );
                       break;
-                case PlaylistPopupMenuAction.playlistComment:
-                  // audioGlobalPlayerVM.setCurrentAudio(audio).then((value) {
-                    showDialog<void>(
-                      context: context,
-                      // passing the current audio to the dialog instead
-                      // of initializing a private _currentAudio variable
-                      // in the dialog avoid integr test problems
-                      builder: (context) => CommentPlaylistDialogWidget(
-                        currentPlaylist: playlist,
-                      ),
-                    );
-                  // }
-                  // );
-                  break;
+                    case PlaylistPopupMenuAction.playlistComment:
+                      // audioGlobalPlayerVM.setCurrentAudio(audio).then((value) {
+                      showDialog<void>(
+                        context: context,
+                        // passing the current audio to the dialog instead
+                        // of initializing a private _currentAudio variable
+                        // in the dialog avoid integr test problems
+                        builder: (context) => PlaylistCommentDialogWidget(
+                          currentPlaylist: playlist,
+                        ),
+                      );
+                      // }
+                      // );
+                      break;
                     case PlaylistPopupMenuAction.updatePlaylistPlayableAudios:
                       int removedPlayableAudioNumber =
                           expandablePlaylistListVM.updatePlayableAudioLst(
