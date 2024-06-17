@@ -3428,6 +3428,7 @@ void main() {
 
         // Now close the comment list dialog
         await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.pumpAndSettle();
 
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
@@ -4397,6 +4398,7 @@ void main() {
 
       // Now close the comment list dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+      await tester.pumpAndSettle();
 
       // Verify that the comment icon button is enabled but no longer
       // highlighted since no comment exist for the audio
@@ -4756,6 +4758,7 @@ void main() {
 
       // Now close the comment list dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+      await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -4891,6 +4894,7 @@ void main() {
 
       // Now close the comment list dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+      await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -5104,6 +5108,7 @@ void main() {
 
       // Now close the comment list dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+      await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -5150,6 +5155,7 @@ void main() {
 
       // Now close the comment list dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+      await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -5214,6 +5220,7 @@ void main() {
 
       // Now close the comment list dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+      await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -5582,6 +5589,7 @@ void main() {
 
       // Now close the comment list dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+      await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
