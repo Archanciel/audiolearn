@@ -8,6 +8,7 @@ import 'package:audiolearn/utils/date_time_util.dart';
 import 'package:audiolearn/utils/duration_expansion.dart';
 import 'package:audiolearn/views/widgets/comment_add_edit_dialog_widget.dart';
 import 'package:audiolearn/views/widgets/comment_list_add_dialog_widget.dart';
+import 'package:audiolearn/views/widgets/playlist_comment_dialog_widget.dart';
 import 'package:audiolearn/views/widgets/set_value_to_target_dialog_widget.dart';
 import 'package:audiolearn/views/widgets/warning_message_display_widget.dart';
 import 'package:flutter/material.dart';
@@ -3516,6 +3517,113 @@ void main() {
         );
 
         // Tap on the Close button to close the comment list add dialog
+        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.pumpAndSettle();
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+      testWidgets(
+          'Playing from PlaylistCommentDialogWidget a comment on audio paused more than 1 hour ago.',
+          (WidgetTester tester) async {
+        const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+        const String alreadyCommentedAudioTitle =
+            "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
+
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'audio_comment_test',
+          selectedPlaylistTitle: youtubePlaylistTitle,
+        );
+
+        // Find the playlist whose audios are commented
+
+        // First, find the Playlist ListTile Text widget
+        final Finder playlistWithCommentedAudioListTileTextWidgetFinder =
+            find.text(youtubePlaylistTitle);
+
+        // Then obtain the Playlist ListTile widget enclosing the Text widget
+        // by finding its ancestor
+        final Finder playlistWithCommentedAudioListTileWidgetFinder =
+            find.ancestor(
+          of: playlistWithCommentedAudioListTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now find the leading menu icon button of the playlist and tap on it
+        final Finder playlistListTileLeadingMenuIconButton = find.descendant(
+          of: playlistWithCommentedAudioListTileWidgetFinder,
+          matching: find.byIcon(Icons.menu),
+        );
+
+        // Tap the leading menu icon button to open the popup menu
+        await tester.tap(playlistListTileLeadingMenuIconButton);
+        await tester.pumpAndSettle(); // Wait for popup menu to appear
+
+        // Now find the playlist comment popup menu item and tap on it
+        // to open the PlaylistCommentDialogWidget
+        final Finder popupDeletePlaylistMenuItem =
+            find.byKey(const Key("popup_menu_playlist_audio_comments"));
+
+        await tester.tap(popupDeletePlaylistMenuItem);
+        await tester.pumpAndSettle();
+
+        // Find the comment list add dialog widget
+        final Finder commentListDialogFinder =
+            find.byType(PlaylistCommentDialogWidget);
+
+        // Find the list body containing the comments
+        final Finder listFinder = find.descendant(
+            of: commentListDialogFinder, matching: find.byType(ListBody));
+
+        // Find all the list items
+        final Finder itemsFinder = find.descendant(
+            // 3 GestureDetector per comment item
+            of: listFinder,
+            matching: find.byType(GestureDetector));
+
+        int gestureDectectorNumberByCommentLine = 3;
+
+        // Since there are 3 GestureDetector per comment item, we need to
+        // multiply the comment line index by 3 to get the right index
+        int itemFinderIndex = 2 * gestureDectectorNumberByCommentLine;
+
+        final Finder playIconButtonFinder = find.descendant(
+          of: itemsFinder.at(itemFinderIndex),
+          matching: find.byKey(const Key('playPauseIconButton')),
+        );
+
+        // Tap on the play/pause icon button to play the audio from the
+        // comment
+        await tester.tap(playIconButtonFinder);
+        await tester.pumpAndSettle();
+
+        await Future.delayed(const Duration(milliseconds: 500));
+        await tester.pumpAndSettle();
+
+        // Tap on the play/pause icon button to pause the audio
+        await tester.tap(playIconButtonFinder);
+        await tester.pumpAndSettle();
+
+        // The Audio Player View is not opened in this situation !!!
+
+        // final Finder audioPlayerViewAudioPositionFinder =
+        //     find.byKey(const Key('audioPlayerViewAudioPosition'));
+        // String actualAudioPlayerViewCurrentAudioPosition =
+        //     tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
+
+        // // Ensure the audio position was not rewinded
+        // expect(
+        //   actualAudioPlayerViewCurrentAudioPosition,
+        //   '1:16:40',
+        //   reason:
+        //       'Audio Player View audio position value is $actualAudioPlayerViewCurrentAudioPosition',
+        // );
+
+        // Tap on the Close button to close the playlist comment dialog
         await tester.tap(find.byKey(const Key('closeDialogTextButton')));
         await tester.pumpAndSettle();
 

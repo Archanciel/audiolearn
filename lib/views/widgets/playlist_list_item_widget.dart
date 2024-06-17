@@ -98,7 +98,7 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                         Text(AppLocalizations.of(context)!.displayPlaylistInfo),
                   ),
                   PopupMenuItem<PlaylistPopupMenuAction>(
-                    key: const Key('popup_menu_Audio_comment'),
+                    key: const Key('popup_menu_playlist_audio_comments'),
                     value: PlaylistPopupMenuAction.playlistComment,
                     child:
                         Text(AppLocalizations.of(context)!.playlistCommentMenu),
