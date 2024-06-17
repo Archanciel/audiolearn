@@ -8312,7 +8312,7 @@ void main() {
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
-      // Find the playlist to select ListTile
+      // Find the playlist to obtain its ListTile
 
       // First, find the Playlist ListTile Text widget
       final Finder youtubePlaylistToSelectListTileTextWidgetFinder =
@@ -8483,7 +8483,7 @@ void main() {
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
-      // Find the playlist to select ListTile
+      // Find the playlist to obtain its ListTile
 
       // First, find the Playlist ListTile Text widget
       final Finder localPlaylistToSelectListTileTextWidgetFinder =
