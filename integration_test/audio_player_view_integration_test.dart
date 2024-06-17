@@ -21,6 +21,13 @@ import 'package:audiolearn/utils/dir_util.dart';
 import '../test/util/test_utility.dart';
 import 'integration_test_util.dart';
 
+enum AudioPositionModification {
+  backward10sec,
+  backward1min,
+  forward10sec,
+  forward1min,
+}
+
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
@@ -665,7 +672,7 @@ void main() {
       );
     });
   });
-  group('Play with rewind audio position', () {
+  group('Test play with or without rewind audio position', () {
     testWidgets(
         'Partially listened audio > 1 h ago, rewind position after clicking on play button.',
         (
@@ -690,6 +697,138 @@ void main() {
         audioPositionBeforePlayingStr: '1:41',
         expectedMinPositionTimeStr: '1:11',
         expectedMaxPositionTimeStr: '1:12',
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets(
+        'Partially listened audio > 1 h ago, click on << 10 sec and test rthat ewinding position after clicking on play button does not happen.',
+        (
+      WidgetTester tester,
+    ) async {
+      const String audioPlayerSelectedPlaylistTitle = 'local';
+      const String previouslyPartiallyListenedAudioTitle =
+          '3 fois où Aurélien Barrau tire à balles réelles sur les riches';
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_player_view_play_rewind',
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+      );
+
+      await applyRewindExcludedTesting(
+        tester: tester,
+        audioPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        audioToListenTitle: previouslyPartiallyListenedAudioTitle,
+        audioToListenIndex: 1,
+        audioDurationStr: '8:50',
+        audioPositionModification: AudioPositionModification.backward10sec,
+        audioPositionBeforePlayingStr: '1:31',
+        expectedMinPositionTimeStr: '1:31',
+        expectedMaxPositionTimeStr: '1:32',
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets(
+        'Partially listened audio > 1 h ago, click on << 1 min and test rthat ewinding position after clicking on play button does not happen.',
+        (
+      WidgetTester tester,
+    ) async {
+      const String audioPlayerSelectedPlaylistTitle = 'local';
+      const String previouslyPartiallyListenedAudioTitle =
+          '3 fois où Aurélien Barrau tire à balles réelles sur les riches';
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_player_view_play_rewind',
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+      );
+
+      await applyRewindExcludedTesting(
+        tester: tester,
+        audioPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        audioToListenTitle: previouslyPartiallyListenedAudioTitle,
+        audioToListenIndex: 1,
+        audioDurationStr: '8:50',
+        audioPositionModification: AudioPositionModification.backward1min,
+        audioPositionBeforePlayingStr: '0:41',
+        expectedMinPositionTimeStr: '0:41',
+        expectedMaxPositionTimeStr: '0:42',
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets(
+        'Partially listened audio > 1 h ago, click on >> 10 sec and test rthat ewinding position after clicking on play button does not happen.',
+        (
+      WidgetTester tester,
+    ) async {
+      const String audioPlayerSelectedPlaylistTitle = 'local';
+      const String previouslyPartiallyListenedAudioTitle =
+          '3 fois où Aurélien Barrau tire à balles réelles sur les riches';
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_player_view_play_rewind',
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+      );
+
+      await applyRewindExcludedTesting(
+        tester: tester,
+        audioPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        audioToListenTitle: previouslyPartiallyListenedAudioTitle,
+        audioToListenIndex: 1,
+        audioDurationStr: '8:50',
+        audioPositionModification: AudioPositionModification.forward10sec,
+        audioPositionBeforePlayingStr: '1:51',
+        expectedMinPositionTimeStr: '1:51',
+        expectedMaxPositionTimeStr: '1:52',
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets(
+        'Partially listened audio > 1 h ago, click on >> 1 min and test rthat ewinding position after clicking on play button does not happen.',
+        (
+      WidgetTester tester,
+    ) async {
+      const String audioPlayerSelectedPlaylistTitle = 'local';
+      const String previouslyPartiallyListenedAudioTitle =
+          '3 fois où Aurélien Barrau tire à balles réelles sur les riches';
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_player_view_play_rewind',
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+      );
+
+      await applyRewindExcludedTesting(
+        tester: tester,
+        audioPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        audioToListenTitle: previouslyPartiallyListenedAudioTitle,
+        audioToListenIndex: 1,
+        audioDurationStr: '8:50',
+        audioPositionModification: AudioPositionModification.forward1min,
+        audioPositionBeforePlayingStr: '2:41',
+        expectedMinPositionTimeStr: '2:41',
+        expectedMaxPositionTimeStr: '2:42',
       );
 
       // Purge the test playlist directory so that the created test
@@ -5600,6 +5739,11 @@ void main() {
   });
 }
 
+/// The conditional {audioPausedDateTimeSecBeforeNowModification}
+/// parameter is useful to simulate the case where the audio was
+/// paused n seconds before now. This is useful to test the rewind
+/// feature of the audio player which depends on the time between
+/// now and the last time the audio was paused.
 Future<void> applyRewindTesting({
   required WidgetTester tester,
   required String audioPlaylistTitle,
@@ -5611,12 +5755,13 @@ Future<void> applyRewindTesting({
   required String expectedMinPositionTimeStr,
   required String expectedMaxPositionTimeStr,
 }) async {
-  DateTime audioModifiedDateTime = DateTime.now().subtract(
-    Duration(seconds: audioPausedDateTimeSecBeforeNowModification),
-  );
-
   if (audioPausedDateTimeSecBeforeNowModification > 0) {
-    // Modify the audio paused date time in the playlist JSON file
+    // Modifing the audio paused date time in the playlist JSON file
+
+    DateTime audioModifiedDateTime = DateTime.now().subtract(
+      Duration(seconds: audioPausedDateTimeSecBeforeNowModification),
+    );
+
     await IntegrationTestUtil.modifyAudioInPlaylistJsonFileAndUpgradePlaylists(
       tester: tester,
       playlistTitle: audioPlaylistTitle,
@@ -5633,6 +5778,115 @@ Future<void> applyRewindTesting({
 
   await tester.tap(audioToListenTitleTextWidgetFinder);
   await tester.pumpAndSettle();
+
+  Finder audioPlayerViewAudioPositionFinder =
+      find.byKey(const Key('audioPlayerViewAudioPosition'));
+
+  expect(
+    tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!,
+    audioPositionBeforePlayingStr,
+  );
+
+  // Playing the audio during 1 second. Clicking on the play button
+  // rewind the audio of n seconds depending on how long the audio was
+  // not listened.
+
+  await tester.tap(find.byIcon(Icons.play_arrow));
+  await tester.pumpAndSettle();
+
+  await Future.delayed(const Duration(seconds: 1));
+  await tester.pumpAndSettle();
+
+  // Click on the pause button to stop the last downloaded audio
+  Finder pauseIconButtonFinder = find.byIcon(Icons.pause);
+
+  if (pauseIconButtonFinder.evaluate().isNotEmpty) {
+    await tester.tap(pauseIconButtonFinder);
+    await tester.pumpAndSettle();
+  }
+
+  // Verify the played audio title
+  String audioToListenTitleWithDuration =
+      '$audioToListenTitle\n$audioDurationStr';
+  expect(find.text(audioToListenTitleWithDuration), findsOneWidget);
+
+  verifyPositionBetweenMinMax(
+    tester: tester,
+    textWidgetFinder: audioPlayerViewAudioPositionFinder,
+    minPositionTimeStr: expectedMinPositionTimeStr,
+    maxPositionTimeStr: expectedMaxPositionTimeStr,
+  );
+}
+
+
+/// The conditional {audioPausedDateTimeSecBeforeNowModification}
+/// parameter is useful to simulate the case where the audio was
+/// paused n seconds before now. This is useful to test the rewind
+/// feature of the audio player which depends on the time between
+/// now and the last time the audio was paused.
+Future<void> applyRewindExcludedTesting({
+  required WidgetTester tester,
+  required String audioPlaylistTitle,
+  required String audioToListenTitle,
+  required int audioToListenIndex,
+  required String audioDurationStr,
+  int audioPausedDateTimeSecBeforeNowModification = 0,
+  required AudioPositionModification audioPositionModification,
+  required String audioPositionBeforePlayingStr,
+  required String expectedMinPositionTimeStr,
+  required String expectedMaxPositionTimeStr,
+}) async {
+  if (audioPausedDateTimeSecBeforeNowModification > 0) {
+    // Modifing the audio paused date time in the playlist JSON file
+
+    DateTime audioModifiedDateTime = DateTime.now().subtract(
+      Duration(seconds: audioPausedDateTimeSecBeforeNowModification),
+    );
+
+    await IntegrationTestUtil.modifyAudioInPlaylistJsonFileAndUpgradePlaylists(
+      tester: tester,
+      playlistTitle: audioPlaylistTitle,
+      playableAudioLstAudioIndex: audioToListenIndex,
+      modifiedAudioPausedDateTime: audioModifiedDateTime,
+    );
+  }
+
+  // Playing the audio. First, get the audio ListTile Text widget finder
+  // and tap on it to open the AudioPlayerView displaying the audio.
+
+  final Finder audioToListenTitleTextWidgetFinder =
+      find.text(audioToListenTitle);
+
+  await tester.tap(audioToListenTitleTextWidgetFinder);
+  await tester.pumpAndSettle();
+
+  await Future.delayed(const Duration(milliseconds: 100));
+  await tester.pumpAndSettle();
+
+  switch (audioPositionModification) {
+    case AudioPositionModification.backward10sec:
+      await tester.tap(find.byKey(const Key('audioPlayerViewRewind10sButton')));
+      await tester.pumpAndSettle();
+
+      break;
+    case AudioPositionModification.backward1min:
+      await tester.tap(find.byKey(const Key('audioPlayerViewRewind1mButton')));
+      await tester.pumpAndSettle();
+
+      break;
+    case AudioPositionModification.forward10sec:
+      await tester.tap(find.byKey(const Key('audioPlayerViewForward10sButton')));
+      await tester.pumpAndSettle();
+
+      break;
+    case AudioPositionModification.forward1min:
+      await tester.tap(find.byKey(const Key('audioPlayerViewForward1mButton')));
+      await tester.pumpAndSettle();
+
+      break;
+    default:
+      break;
+  } 
 
   Finder audioPlayerViewAudioPositionFinder =
       find.byKey(const Key('audioPlayerViewAudioPosition'));
