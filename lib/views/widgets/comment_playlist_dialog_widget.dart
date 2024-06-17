@@ -380,14 +380,14 @@ class _CommentPlaylistDialogWidgetState extends State<CommentPlaylistDialogWidge
     _playingComment = comment;
 
     if (!globalAudioPlayerVM.isPlaying) {
-      // this fixes a problem when the audio player does not play a
-      // comment when the user clicks on the play button of an other
-      // comment. In such a situation, the user had to click twice or
-      // three times on the other comment play button to play it if
-      // the other comment was positioned before the previously played
-      // comment. If the other comment was positioned after the previously
-      // played comment, then the user had to click only once on the play
-      // button of the other comment to play it.
+      // This fixes a problem when a playing comment was paused and
+      // then the user clicked on the play button of an other comment.
+      // In such a situation, the user had to click twice or three
+      // times on the other comment play button to play it if the other
+      // comment was positioned before the previously played comment.
+      // If the other comment was positioned after the previously played
+      // comment, then the user had to click only once on the play button
+      // of the other comment to play it.
       await globalAudioPlayerVM.playFromCurrentAudioFile(
         rewindAudioPositionBasedOnPauseDuration: false,
       );

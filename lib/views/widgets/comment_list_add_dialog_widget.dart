@@ -386,7 +386,7 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
     _playingComment = comment;
 
     if (!globalAudioPlayerVM.isPlaying) {
-      // this fixes a problem when a playing comment was paused and
+      // This fixes a problem when a playing comment was paused and
       // then the user clicked on the play button of an other comment.
       // In such a situation, the user had to click twice or three
       // times on the other comment play button to play it if the other
