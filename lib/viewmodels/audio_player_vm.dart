@@ -285,13 +285,12 @@ class AudioPlayerVM extends ChangeNotifier {
     /// if the user change the position of a not yet played audio and then
     /// plays an audio previously downloaded, once this audio ends, the
     /// not yet played audio starts playing not at the changed position,
-    /// but at the start position if this instruction located inside the
-    /// if block.
+    /// but at the start position if this instruction was located inside
+    /// the previous if block.
     ///
     /// This test checks this bug fix:
     ///
-    /// testWidgets('User modify the position of next fully unread audio
-    /// also the last downloaded audio of the playlist.').
+    /// testWidgets('User modifies the position of next fully unread audio which is also the last downloaded audio of the playlist.').
     await _audioPlayerPlugin!.seek(_currentAudioPosition);
   }
 

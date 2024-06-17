@@ -1802,7 +1802,7 @@ void main() {
       );
     });
     testWidgets(
-        'User modify the position of next fully unread audio also the last downloaded audio of the playlist.',
+        'User modifies the position of next fully unread audio which is also the last downloaded audio of the playlist.',
         (WidgetTester tester) async {
       const String audioPlayerSelectedPlaylistTitle =
           'S8 audio'; // Youtube playlist
