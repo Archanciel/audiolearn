@@ -566,7 +566,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                 onPressed: (() async {
                   globalAudioPlayerVM.isPlaying
                       ? await globalAudioPlayerVM.pause()
-                      : await globalAudioPlayerVM.playFromCurrentAudioFile();
+                      : await globalAudioPlayerVM.playCurrentAudio();
                 }),
                 icon: Icon(globalAudioPlayerVM.isPlaying
                     ? Icons.pause
@@ -730,7 +730,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                             iconSize: _audioIconSizeMedium,
                             onPressed: () async => await globalAudioPlayerVM
                                 .changeAudioPlayPosition(
-                              positiveOrNegativeDuration:
+                              posNegPositionDurationChange:
                                   const Duration(minutes: -1),
                             ),
                             icon: const Icon(Icons.fast_rewind),
@@ -742,7 +742,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                             iconSize: _audioIconSizeMedium,
                             onPressed: () async => await globalAudioPlayerVM
                                 .changeAudioPlayPosition(
-                              positiveOrNegativeDuration:
+                              posNegPositionDurationChange:
                                   const Duration(seconds: -10),
                             ),
                             icon: const Icon(Icons.fast_rewind),
@@ -754,7 +754,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                             iconSize: _audioIconSizeMedium,
                             onPressed: () async => await globalAudioPlayerVM
                                 .changeAudioPlayPosition(
-                              positiveOrNegativeDuration:
+                              posNegPositionDurationChange:
                                   const Duration(seconds: 10),
                             ),
                             icon: const Icon(Icons.fast_forward),
@@ -766,7 +766,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                             iconSize: _audioIconSizeMedium,
                             onPressed: () async => await globalAudioPlayerVM
                                 .changeAudioPlayPosition(
-                              positiveOrNegativeDuration:
+                              posNegPositionDurationChange:
                                   const Duration(minutes: 1),
                             ),
                             icon: const Icon(Icons.fast_forward),
@@ -783,7 +783,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                         child: GestureDetector(
                           onTap: () =>
                               globalAudioPlayerVM.changeAudioPlayPosition(
-                            positiveOrNegativeDuration:
+                            posNegPositionDurationChange:
                                 const Duration(minutes: -1),
                           ),
                           child: const Text(
@@ -797,7 +797,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                         child: GestureDetector(
                           onTap: () =>
                               globalAudioPlayerVM.changeAudioPlayPosition(
-                            positiveOrNegativeDuration:
+                            posNegPositionDurationChange:
                                 const Duration(seconds: -10),
                           ),
                           child: const Text(
@@ -811,7 +811,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                         child: GestureDetector(
                           onTap: () =>
                               globalAudioPlayerVM.changeAudioPlayPosition(
-                            positiveOrNegativeDuration:
+                            posNegPositionDurationChange:
                                 const Duration(seconds: 10),
                           ),
                           child: const Text(
@@ -825,7 +825,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                         child: GestureDetector(
                           onTap: () =>
                               globalAudioPlayerVM.changeAudioPlayPosition(
-                            positiveOrNegativeDuration:
+                            posNegPositionDurationChange:
                                 const Duration(minutes: 1),
                           ),
                           child: const Text(

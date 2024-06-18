@@ -434,7 +434,7 @@ class AudioPlayerVM extends ChangeNotifier {
   }
 
   /// Method called when the user clicks on the audio play icon
-  Future<void> playFromCurrentAudioFile({
+  Future<void> playCurrentAudio({
     bool rewindAudioPositionBasedOnPauseDuration = true,
   }) async {
     if (_currentAudio == null) {
@@ -501,13 +501,15 @@ class AudioPlayerVM extends ChangeNotifier {
   /// undo or redo methods. In this case, the method does not add a
   /// command to the undo list.
   Future<void> changeAudioPlayPosition({
-    required Duration positiveOrNegativeDuration,
+    required Duration posNegPositionDurationChange,
     bool isUndoRedo = false,
   }) async {
+    // Total duration of audio
     Duration currentAudioDuration =
         _currentAudio!.audioDuration ?? Duration.zero;
+
     Duration newAudioPosition =
-        _currentAudioPosition + positiveOrNegativeDuration;
+        _currentAudioPosition + posNegPositionDurationChange;
 
     // Check if the new audio position is within the audio duration.
     // If not, set the audio position to the beginning or the end
@@ -774,7 +776,7 @@ class AudioPlayerVM extends ChangeNotifier {
     updateAndSaveCurrentAudio(forceSave: true);
 
     if (await _setNextNotPlayedAudio()) {
-      await playFromCurrentAudioFile();
+      await playCurrentAudio();
 
       notifyListenersSafely();
     }

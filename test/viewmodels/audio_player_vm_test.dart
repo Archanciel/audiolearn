@@ -37,7 +37,8 @@ void main() {
 
       int forwardChangePosition = 100;
       await audioPlayerVM.changeAudioPlayPosition(
-          positiveOrNegativeDuration: Duration(seconds: forwardChangePosition));
+          posNegPositionDurationChange:
+              Duration(seconds: forwardChangePosition));
 
       // obtain the current audio's changed position
       Duration currentAudioChangedPosition = audioPlayerVM.currentAudioPosition;
@@ -95,7 +96,7 @@ void main() {
 
       int backwardChangePosition = -100;
       await audioPlayerVM.changeAudioPlayPosition(
-          positiveOrNegativeDuration:
+          posNegPositionDurationChange:
               Duration(seconds: backwardChangePosition));
 
       // obtain the current audio's changed position
@@ -156,17 +157,17 @@ void main() {
 
       int forwardChangePositionOne = 100;
       await audioPlayerVM.changeAudioPlayPosition(
-          positiveOrNegativeDuration:
+          posNegPositionDurationChange:
               Duration(seconds: forwardChangePositionOne));
 
       int backwardChangePositionOne = -60;
       await audioPlayerVM.changeAudioPlayPosition(
-          positiveOrNegativeDuration:
+          posNegPositionDurationChange:
               Duration(seconds: backwardChangePositionOne));
 
       int forwardChangePositionTwo = 80;
       await audioPlayerVM.changeAudioPlayPosition(
-          positiveOrNegativeDuration:
+          posNegPositionDurationChange:
               Duration(seconds: forwardChangePositionTwo));
 
       // obtain the current audio's changed position
@@ -234,17 +235,17 @@ void main() {
 
       int forwardChangePositionOne = 100;
       await audioPlayerVM.changeAudioPlayPosition(
-          positiveOrNegativeDuration:
+          posNegPositionDurationChange:
               Duration(seconds: forwardChangePositionOne));
 
       int backwardChangePositionOne = -60;
       await audioPlayerVM.changeAudioPlayPosition(
-          positiveOrNegativeDuration:
+          posNegPositionDurationChange:
               Duration(seconds: backwardChangePositionOne));
 
       int forwardChangePositionTwo = 80;
       await audioPlayerVM.changeAudioPlayPosition(
-          positiveOrNegativeDuration:
+          posNegPositionDurationChange:
               Duration(seconds: forwardChangePositionTwo));
 
       // obtain the current audio's changed position
@@ -323,17 +324,17 @@ void main() {
 
       int forwardChangePositionOne = 100;
       await audioPlayerVM.changeAudioPlayPosition(
-          positiveOrNegativeDuration:
+          posNegPositionDurationChange:
               Duration(seconds: forwardChangePositionOne)); // 700
 
       int backwardChangePositionOne = -60;
       await audioPlayerVM.changeAudioPlayPosition(
-          positiveOrNegativeDuration:
+          posNegPositionDurationChange:
               Duration(seconds: backwardChangePositionOne)); // 640
 
       int forwardChangePositionTwo = 80;
       await audioPlayerVM.changeAudioPlayPosition(
-          positiveOrNegativeDuration:
+          posNegPositionDurationChange:
               Duration(seconds: forwardChangePositionTwo)); // 720
 
       // obtain the current audio's changed position
@@ -353,7 +354,7 @@ void main() {
       int forwardChangePositionThree = 125;
       await audioPlayerVM.changeAudioPlayPosition(
           // 765
-          positiveOrNegativeDuration:
+          posNegPositionDurationChange:
               Duration(seconds: forwardChangePositionThree));
 
       // obtain the current audio's position after
@@ -930,7 +931,7 @@ void main() {
 
       int backwardChangePositionOneMinute = -60;
       await audioPlayerVM.changeAudioPlayPosition(
-          positiveOrNegativeDuration:
+          posNegPositionDurationChange:
               Duration(seconds: backwardChangePositionOneMinute));
 
       // obtain the current audio's changed position (0 second)
@@ -993,7 +994,7 @@ void main() {
 
       int backwardChangePositionTenSeconds = -10;
       await audioPlayerVM.changeAudioPlayPosition(
-          positiveOrNegativeDuration:
+          posNegPositionDurationChange:
               Duration(seconds: backwardChangePositionTenSeconds));
 
       // obtain the current audio's changed position (0 second)
@@ -1049,7 +1050,7 @@ void main() {
 
       int backwardChangePositionOneMinute = 60;
       await audioPlayerVM.changeAudioPlayPosition(
-          positiveOrNegativeDuration:
+          posNegPositionDurationChange:
               Duration(seconds: backwardChangePositionOneMinute));
 
       // obtain the current audio's changed position (audio duration)
@@ -1106,7 +1107,7 @@ void main() {
 
       int forwardChangePositionTenSeconds = 10;
       await audioPlayerVM.changeAudioPlayPosition(
-          positiveOrNegativeDuration:
+          posNegPositionDurationChange:
               Duration(seconds: forwardChangePositionTenSeconds));
 
       // obtain the current audio's changed position (audio duration)
@@ -1212,7 +1213,8 @@ void main() {
 
       int forwardChangePosition = 100;
       await audioPlayerVM.changeAudioPlayPosition(
-          positiveOrNegativeDuration: Duration(seconds: forwardChangePosition));
+          posNegPositionDurationChange:
+              Duration(seconds: forwardChangePosition));
 
       // obtain the current audio's changed position
       currentAudioChangedPosition = audioPlayerVM.currentAudioPosition;
@@ -1364,7 +1366,7 @@ void main() {
       int backwardChangePosition = -100;
 
       await audioPlayerVM.changeAudioPlayPosition(
-          positiveOrNegativeDuration:
+          posNegPositionDurationChange:
               Duration(seconds: backwardChangePosition));
 
       // obtain the current audio's changed position
@@ -1522,7 +1524,7 @@ void main() {
       int backwardChangePosition = -100;
 
       await audioPlayerVM.changeAudioPlayPosition(
-          positiveOrNegativeDuration:
+          posNegPositionDurationChange:
               Duration(seconds: backwardChangePosition));
 
       // obtain the current audio's changed position

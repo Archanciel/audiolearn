@@ -394,7 +394,7 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
       // If the other comment was positioned after the previously played
       // comment, then the user had to click only once on the play button
       // of the other comment to play it.
-      await globalAudioPlayerVM.playFromCurrentAudioFile(
+      await globalAudioPlayerVM.playCurrentAudio(
         rewindAudioPositionBasedOnPauseDuration: false,
       );
     }
@@ -404,7 +404,7 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
           milliseconds: comment.commentStartPositionInTenthOfSeconds * 100),
     );
 
-    await globalAudioPlayerVM.playFromCurrentAudioFile(
+    await globalAudioPlayerVM.playCurrentAudio(
       rewindAudioPositionBasedOnPauseDuration: false,
     );
   }

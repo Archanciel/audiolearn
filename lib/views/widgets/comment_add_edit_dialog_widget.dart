@@ -640,7 +640,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
       commentVMlistenFalse.currentCommentStartPosition,
     );
 
-    await globalAudioPlayerVM.playFromCurrentAudioFile(
+    await globalAudioPlayerVM.playCurrentAudio(
       rewindAudioPositionBasedOnPauseDuration: false,
     );
   }
@@ -657,7 +657,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
       commentVMlistenFalse.currentCommentStartPosition,
     );
 
-    await globalAudioPlayerVM.playFromCurrentAudioFile(
+    await globalAudioPlayerVM.playCurrentAudio(
       rewindAudioPositionBasedOnPauseDuration: false,
     );
   }
@@ -674,7 +674,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
         commentVMlistenFalse.currentCommentEndPosition -
             const Duration(milliseconds: 4000));
 
-    await globalAudioPlayerVM.playFromCurrentAudioFile(
+    await globalAudioPlayerVM.playCurrentAudio(
       rewindAudioPositionBasedOnPauseDuration: false,
     );
   }
