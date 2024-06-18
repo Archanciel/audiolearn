@@ -706,7 +706,7 @@ void main() {
       );
     });
     testWidgets(
-        'Partially listened audio > 1 h ago, click on << 10 sec and test rthat ewinding position after clicking on play button does not happen.',
+        'Partially listened audio > 1 h ago, click on << 10 sec and test that rewinding position after clicking on play button does not happen.',
         (
       WidgetTester tester,
     ) async {
@@ -739,7 +739,7 @@ void main() {
       );
     });
     testWidgets(
-        'Partially listened audio > 1 h ago, click on << 1 min and test rthat ewinding position after clicking on play button does not happen.',
+        'Partially listened audio > 1 h ago, click on << 1 min and test that rewinding position after clicking on play button does not happen.',
         (
       WidgetTester tester,
     ) async {
@@ -772,7 +772,7 @@ void main() {
       );
     });
     testWidgets(
-        'Partially listened audio > 1 h ago, click on >> 10 sec and test rthat ewinding position after clicking on play button does not happen.',
+        'Partially listened audio > 1 h ago, click on >> 10 sec and test that rewinding position after clicking on play button does not happen.',
         (
       WidgetTester tester,
     ) async {
@@ -805,7 +805,7 @@ void main() {
       );
     });
     testWidgets(
-        'Partially listened audio > 1 h ago, click on >> 1 min and test rthat ewinding position after clicking on play button does not happen.',
+        'Partially listened audio > 1 h ago, click on >> 1 min and test that rewinding position after clicking on play button does not happen.',
         (
       WidgetTester tester,
     ) async {
