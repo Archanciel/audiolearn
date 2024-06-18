@@ -234,4 +234,21 @@ class IntegrationTestUtil {
     await tester.tap(find.byKey(const Key('update_playlist_json_dialog_item')));
     await tester.pumpAndSettle();
   }
+
+  static void expectWithSuccessMessage({
+    required dynamic actual,
+    required dynamic matcher, 
+    String? reason,
+    String? successMessage,
+    dynamic skip,
+  }) {
+    try {
+      expect(actual, matcher, reason: reason, skip: skip);
+      if (successMessage != null) {
+        print(successMessage);
+      }
+    } catch (e) {
+      rethrow; // Rethrow the exception if the expectation fails
+    }
+  }
 }
