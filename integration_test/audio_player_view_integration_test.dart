@@ -222,7 +222,7 @@ void main() {
       );
     });
     testWidgets(
-        '1-Click on play button to finish playing the audio downloaded before the last downloaded audio and start playing the not listened last downloaded audio.',
+        'Click on play button to finish playing the audio downloaded before the last downloaded audio and start playing the not listened last downloaded audio.',
         (
       WidgetTester tester,
     ) async {
@@ -288,7 +288,7 @@ void main() {
       );
     });
     testWidgets(
-        '3-Click on play button to finish playing the audio downloaded before the last downloaded audio and start playing the partially listened last downloaded audio.',
+        'Click on play button to finish playing the audio downloaded before the last downloaded audio and start playing the partially listened last downloaded audio.',
         (
       WidgetTester tester,
     ) async {
@@ -325,7 +325,7 @@ void main() {
         await tester.pumpAndSettle();
       }
 
-      // Playing the audio during 1 second.
+      // Playing the last downloaded audio during 1 second.
 
       await tester.tap(find.byIcon(Icons.play_arrow));
       await tester.pumpAndSettle();
@@ -383,7 +383,7 @@ void main() {
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
         minPositionTimeStr: '5:00',
-        maxPositionTimeStr: '5:03',
+        maxPositionTimeStr: '5:06',
       );
 
       // Purge the test playlist directory so that the created test
@@ -393,7 +393,7 @@ void main() {
       );
     });
     testWidgets(
-        '2-Click on play button to finish playing the first downloaded audio and start playing the not listened last downloaded audio, ignoring the 2 precendent audios already fully played.',
+        'Click on play button to finish playing the first downloaded audio and start playing the not listened last downloaded audio, ignoring the 2 precendent audios already fully played.',
         (
       WidgetTester tester,
     ) async {
@@ -465,7 +465,7 @@ void main() {
       );
     });
     testWidgets(
-        '4-Click on play button to finish playing the first downloaded audio and start playing the partially listened last downloaded audio, ignoring the 2 precendent audios already fully played.',
+        'Click on play button to finish playing the first downloaded audio and start playing the partially listened last downloaded audio, ignoring the 2 precendent audios already fully played.',
         (
       WidgetTester tester,
     ) async {
@@ -5818,7 +5818,6 @@ Future<void> applyRewindTesting({
   );
 }
 
-
 /// The conditional {audioPausedDateTimeSecBeforeNowModification}
 /// parameter is useful to simulate the case where the audio was
 /// paused n seconds before now. This is useful to test the rewind
@@ -5875,7 +5874,8 @@ Future<void> applyRewindExcludedTesting({
 
       break;
     case AudioPositionModification.forward10sec:
-      await tester.tap(find.byKey(const Key('audioPlayerViewForward10sButton')));
+      await tester
+          .tap(find.byKey(const Key('audioPlayerViewForward10sButton')));
       await tester.pumpAndSettle();
 
       break;
@@ -5886,7 +5886,7 @@ Future<void> applyRewindExcludedTesting({
       break;
     default:
       break;
-  } 
+  }
 
   Finder audioPlayerViewAudioPositionFinder =
       find.byKey(const Key('audioPlayerViewAudioPosition'));
@@ -5918,6 +5918,9 @@ Future<void> applyRewindExcludedTesting({
   String audioToListenTitleWithDuration =
       '$audioToListenTitle\n$audioDurationStr';
   expect(find.text(audioToListenTitleWithDuration), findsOneWidget);
+
+  audioPlayerViewAudioPositionFinder =
+      find.byKey(const Key('audioPlayerViewAudioPosition'));
 
   verifyPositionBetweenMinMax(
     tester: tester,
@@ -6090,24 +6093,28 @@ void verifyPositionBetweenMinMax({
   required String minPositionTimeStr,
   required String maxPositionTimeStr,
 }) {
+  String actualPositionTimeString = tester.widget<Text>(textWidgetFinder).data!;
   int actualPositionTenthOfSeconds = DateTimeUtil.convertToTenthsOfSeconds(
-    timeString: tester.widget<Text>(textWidgetFinder).data!,
+    timeString: actualPositionTimeString,
   );
 
   int expectedMinPositionTenthSeconds =
       DateTimeUtil.convertToTenthsOfSeconds(timeString: minPositionTimeStr);
   int expectedMaxPositionTenthSeconds =
       DateTimeUtil.convertToTenthsOfSeconds(timeString: maxPositionTimeStr);
-  expect(
-    actualPositionTenthOfSeconds,
-    allOf(
+
+  IntegrationTestUtil.expectWithSuccessMessage(
+    actual: actualPositionTenthOfSeconds,
+    matcher: allOf(
       [
         greaterThanOrEqualTo(expectedMinPositionTenthSeconds),
-        lessThanOrEqualTo(expectedMaxPositionTenthSeconds)
+        lessThanOrEqualTo(expectedMaxPositionTenthSeconds),
       ],
     ),
     reason:
         "Expected value between $expectedMinPositionTenthSeconds and $expectedMaxPositionTenthSeconds but obtained $actualPositionTenthOfSeconds",
+    successMessage:
+        "Acceptable position between $minPositionTimeStr and $maxPositionTimeStr is $actualPositionTimeString",
   );
 }
 

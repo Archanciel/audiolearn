@@ -89,11 +89,14 @@ class AudioPlayerVM extends ChangeNotifier {
 
   DateTime _currentAudioLastSaveDateTime = DateTime.now();
 
-  bool get isDisposed => _disposed;
-  bool _disposed = false;
+  bool get isDisposed => _wasAudioPlayerPluginDisposed;
+  bool _wasAudioPlayerPluginDisposed = false;
 
   final List<Command> _undoList = [];
   final List<Command> _redoList = [];
+
+  bool _wasPlayerCompleteExecuted = false;
+  int _onPlayerComplete = 0;
 
   AudioPlayerVM({
     required PlaylistListVM playlistListVM,
@@ -103,7 +106,7 @@ class AudioPlayerVM extends ChangeNotifier {
 
   @override
   void dispose() {
-    _disposed = true;
+    _wasAudioPlayerPluginDisposed = true;
 
     if (_audioPlayerPlugin != null) {
       _audioPlayerPlugin!.dispose();
@@ -116,7 +119,7 @@ class AudioPlayerVM extends ChangeNotifier {
   /// method enables audio player view integr test to be ok even
   /// if the test app is not the active Windows app.
   void disposeAudioPlayer() {
-    _disposed = true;
+    _wasAudioPlayerPluginDisposed = true;
 
     if (_audioPlayerPlugin != null) {
       _audioPlayerPlugin!.dispose();
@@ -226,6 +229,8 @@ class AudioPlayerVM extends ChangeNotifier {
     _clearUndoRedoLists();
 
     initializeAudioPlayerPlugin();
+
+    await modifyAudioPlayerPluginPosition(_currentAudioPosition);
   }
 
   /// Adjusts the playback start position of the current audio based on the elapsed
@@ -264,12 +269,20 @@ class AudioPlayerVM extends ChangeNotifier {
           DateTime.now().difference(audioPausedDateTime).inSeconds;
       int rewindSeconds = 0;
 
-      if (pausedDurationSecs < 60) {
-        rewindSeconds = 2;
-      } else if (pausedDurationSecs < 3600) {
-        rewindSeconds = 20;
-      } else {
-        rewindSeconds = 30;
+      // Reason why pausedDurationSecs <= 1:
+      //
+      // when the user clicks on << or >> button, the audio paused
+      // DateTime is set to now. This avoids that when the user clicks
+      // on the play icon, the audio is rewinded maybe half a minute if
+      // the audio was paused 1 hour ago...
+      if (pausedDurationSecs > 1) {
+        if (pausedDurationSecs < 60) {
+          rewindSeconds = 2;
+        } else if (pausedDurationSecs < 3600) {
+          rewindSeconds = 20;
+        } else {
+          rewindSeconds = 30;
+        }
       }
 
       int newPositionSeconds =
@@ -333,9 +346,13 @@ class AudioPlayerVM extends ChangeNotifier {
   void initializeAudioPlayerPlugin() {
     if (_audioPlayerPlugin != null) {
       _audioPlayerPlugin!.dispose();
+      _wasPlayerCompleteExecuted = false;
+      _onPlayerComplete = 0;
     }
 
-    if (!_disposed) {
+    if (!_wasAudioPlayerPluginDisposed) {
+      // this is not related to the
+      //                                       previous dispose instruction
       _audioPlayerPlugin = AudioPlayer();
 
       // Assuming filePath is the full path to your audio file
@@ -344,13 +361,15 @@ class AudioPlayerVM extends ChangeNotifier {
       // Check if the file exists before attempting to play it
       if (audioFilePathName.isNotEmpty &&
           File(audioFilePathName).existsSync()) {
+        _audioPlayerPlugin!.setVolume(
+            _currentAudio?.audioPlayVolume ?? kAudioDefaultPlayVolume);
+
+        // setting audio player plugin listeners
+
         _audioPlayerPlugin!.onDurationChanged.listen((duration) {
           _currentAudioTotalDuration = duration;
           notifyListenersSafely();
         });
-
-        _audioPlayerPlugin!.setVolume(
-            _currentAudio?.audioPlayVolume ?? kAudioDefaultPlayVolume);
 
         _audioPlayerPlugin!.onPositionChanged.listen((position) {
           if (_audioPlayerPlugin!.state == PlayerState.playing) {
@@ -361,20 +380,27 @@ class AudioPlayerVM extends ChangeNotifier {
             _currentAudioPosition = position;
             updateAndSaveCurrentAudio();
           }
-
-          _audioPlayerPlugin!.onPlayerComplete.listen((event) async {
-            // Play next audio when current audio finishes.
-            await playNextAudio();
-          });
-
-          notifyListenersSafely();
         });
+
+        _audioPlayerPlugin!.onPlayerComplete.listen((event) async {
+          print(
+              'Audio player plugin calls playNextAudio() onPlayerComplete. ${++_onPlayerComplete}');
+          if (!_wasPlayerCompleteExecuted) {
+            // Ensure this runs only once
+            _wasPlayerCompleteExecuted = true;
+
+            // Pay next audio when current audio finishes.
+            await playNextAudio();
+          }
+        });
+
+        notifyListenersSafely();
       }
     }
   }
 
   void notifyListenersSafely() {
-    if (!_disposed) {
+    if (!_wasAudioPlayerPluginDisposed) {
       notifyListeners();
     }
   }
@@ -765,7 +791,7 @@ class AudioPlayerVM extends ChangeNotifier {
     // This should fix the problem when the application plays an audio
     // till its end and due to a problem of the audioplayer plugin, the
     // next audio is not playxed. When reopening the smartphone after
-    // a long time, the audio is not positioned at tjhe end of the audio.
+    // a long time, the audio is not positioned at the end of the audio.
     _currentAudio!.audioPositionSeconds =
         _currentAudio!.audioDuration!.inSeconds;
 
@@ -776,7 +802,12 @@ class AudioPlayerVM extends ChangeNotifier {
     updateAndSaveCurrentAudio(forceSave: true);
 
     if (await _setNextNotPlayedAudio()) {
-      await playCurrentAudio();
+      await playCurrentAudio(
+        // it makes sense that if the next played is partially played,
+        // it is rewinded according to the time elapsed since it was
+        // paused.
+        rewindAudioPositionBasedOnPauseDuration: true,
+      );
 
       notifyListenersSafely();
     }
