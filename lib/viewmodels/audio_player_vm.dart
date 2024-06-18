@@ -95,9 +95,6 @@ class AudioPlayerVM extends ChangeNotifier {
   final List<Command> _undoList = [];
   final List<Command> _redoList = [];
 
-  bool _wasPlayerCompleteExecuted = false;
-  int _onPlayerComplete = 0;
-
   AudioPlayerVM({
     required PlaylistListVM playlistListVM,
   }) : _playlistListVM = playlistListVM {
@@ -346,8 +343,6 @@ class AudioPlayerVM extends ChangeNotifier {
   void initializeAudioPlayerPlugin() {
     if (_audioPlayerPlugin != null) {
       _audioPlayerPlugin!.dispose();
-      _wasPlayerCompleteExecuted = false;
-      _onPlayerComplete = 0;
     }
 
     if (!_wasAudioPlayerPluginDisposed) {
@@ -383,15 +378,8 @@ class AudioPlayerVM extends ChangeNotifier {
         });
 
         _audioPlayerPlugin!.onPlayerComplete.listen((event) async {
-          print(
-              'Audio player plugin calls playNextAudio() onPlayerComplete. ${++_onPlayerComplete}');
-          if (!_wasPlayerCompleteExecuted) {
-            // Ensure this runs only once
-            _wasPlayerCompleteExecuted = true;
-
-            // Pay next audio when current audio finishes.
-            await playNextAudio();
-          }
+          // Pay next audio when current audio finishes.
+          await playNextAudio();
         });
 
         notifyListenersSafely();
