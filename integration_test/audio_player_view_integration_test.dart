@@ -3403,7 +3403,7 @@ void main() {
       await tester.tap(find.byKey(const Key('filterFullyListenedCheckbox')));
       await tester.pumpAndSettle();
 
-      // Now tap the Fully listened checkbox in order to exclude
+      // Now tap the Not listened checkbox in order to exclude
       // those audios from the sort/filter list
       await tester.tap(find.byKey(const Key('filterNotListenedCheckbox')));
       await tester.pumpAndSettle();
@@ -3670,8 +3670,6 @@ void main() {
           'Playing from PlaylistCommentDialogWidget a comment on audio paused more than 1 hour ago.',
           (WidgetTester tester) async {
         const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
-        const String alreadyCommentedAudioTitle =
-            "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
 
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
@@ -3729,6 +3727,8 @@ void main() {
 
         // Since there are 3 GestureDetector per comment item, we need to
         // multiply the comment line index by 3 to get the right index
+        // of "Interview de Chat GPT  - IA, intelligence, philosophie,
+        // géopolitique, post-vérité..."
         int itemFinderIndex = 2 * gestureDectectorNumberByCommentLine;
 
         final Finder playIconButtonFinder = find.descendant(
