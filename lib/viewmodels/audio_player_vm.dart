@@ -89,9 +89,6 @@ class AudioPlayerVM extends ChangeNotifier {
 
   DateTime _currentAudioLastSaveDateTime = DateTime.now();
 
-  bool get isDisposed => _wasAudioPlayerPluginDisposed;
-  bool _wasAudioPlayerPluginDisposed = false;
-
   final List<Command> _undoList = [];
   final List<Command> _redoList = [];
 
@@ -103,24 +100,11 @@ class AudioPlayerVM extends ChangeNotifier {
 
   @override
   void dispose() {
-    _wasAudioPlayerPluginDisposed = true;
-
     if (_audioPlayerPlugin != null) {
       _audioPlayerPlugin!.dispose();
     }
 
     super.dispose();
-  }
-
-  /// Calling this method instead of the AudioPlayerVM dispose()
-  /// method enables audio player view integr test to be ok even
-  /// if the test app is not the active Windows app.
-  void disposeAudioPlayer() {
-    _wasAudioPlayerPluginDisposed = true;
-
-    if (_audioPlayerPlugin != null) {
-      _audioPlayerPlugin!.dispose();
-    }
   }
 
   bool isCurrentAudioVolumeMax() {
@@ -153,7 +137,7 @@ class AudioPlayerVM extends ChangeNotifier {
 
     updateAndSaveCurrentAudio(forceSave: true);
 
-    notifyListenersSafely();
+    notifyListeners();
   }
 
   /// Method called when the user clicks on the audio title or sub
@@ -170,7 +154,7 @@ class AudioPlayerVM extends ChangeNotifier {
     updateAndSaveCurrentAudio(forceSave: true);
     _clearUndoRedoLists();
 
-    notifyListenersSafely();
+    notifyListeners();
   }
 
   /// Method called when the user clicks on the audio title or sub
@@ -306,16 +290,20 @@ class AudioPlayerVM extends ChangeNotifier {
 
   /// Method called by skipToEndNoPlay() if the audio is positioned
   /// at end and by playNextAudio().
+  ///
+  /// Returns true if a next not fully played audio was found, false
+  /// otherwise.
   Future<bool> _setNextNotPlayedAudio() async {
     Audio? nextAudio;
 
-    nextAudio = _playlistListVM.getSubsequentlyDownloadedNotFullyPlayedAudio(
+    nextAudio = _playlistListVM
+        .getNextSubsequentlyDownloadedOrSortFilteredNotFullyPlayedAudio(
       currentAudio: _currentAudio!,
     );
 
     if (nextAudio == null) {
       // the case if the current audio is the last playable audio of the
-      // playlist
+      // sort/filter or not playlist playableAudioLst.
       return false;
     }
 
@@ -345,51 +333,42 @@ class AudioPlayerVM extends ChangeNotifier {
       _audioPlayerPlugin!.dispose();
     }
 
-    if (!_wasAudioPlayerPluginDisposed) {
-      // this is not related to the
-      //                                       previous dispose instruction
-      _audioPlayerPlugin = AudioPlayer();
+    // this is not related to the previous dispose instruction
+    _audioPlayerPlugin = AudioPlayer();
 
-      // Assuming filePath is the full path to your audio file
-      String audioFilePathName = _currentAudio?.filePathName ?? '';
+    // Assuming filePath is the full path to your audio file
+    String audioFilePathName = _currentAudio?.filePathName ?? '';
 
-      // Check if the file exists before attempting to play it
-      if (audioFilePathName.isNotEmpty &&
-          File(audioFilePathName).existsSync()) {
-        _audioPlayerPlugin!.setVolume(
-            _currentAudio?.audioPlayVolume ?? kAudioDefaultPlayVolume);
+    // Check if the file exists before attempting to play it
+    if (audioFilePathName.isNotEmpty && File(audioFilePathName).existsSync()) {
+      _audioPlayerPlugin!
+          .setVolume(_currentAudio?.audioPlayVolume ?? kAudioDefaultPlayVolume);
 
-        // setting audio player plugin listeners
+      // setting audio player plugin listeners
 
-        _audioPlayerPlugin!.onDurationChanged.listen((duration) {
-          _currentAudioTotalDuration = duration;
-          notifyListenersSafely();
-        });
+      _audioPlayerPlugin!.onDurationChanged.listen((duration) {
+        _currentAudioTotalDuration = duration;
+        notifyListeners();
+      });
 
-        _audioPlayerPlugin!.onPositionChanged.listen((position) {
-          if (_audioPlayerPlugin!.state == PlayerState.playing) {
-            // this test avoids that when selecting another audio
-            // the selected audio position is set to 0 since the
-            // passed position value of an AudioPlayer not playing
-            // is 0 !
-            _currentAudioPosition = position;
-            updateAndSaveCurrentAudio();
-          }
-        });
+      _audioPlayerPlugin!.onPositionChanged.listen((position) {
+        if (_audioPlayerPlugin!.state == PlayerState.playing) {
+          // this test avoids that when selecting another audio
+          // the selected audio position is set to 0 since the
+          // passed position value of an AudioPlayer not playing
+          // is 0 !
+          _currentAudioPosition = position;
+          updateAndSaveCurrentAudio();
+          notifyListeners();
+        }
+      });
 
-        _audioPlayerPlugin!.onPlayerComplete.listen((event) async {
-          // Pay next audio when current audio finishes.
-          await playNextAudio();
-        });
-
-        notifyListenersSafely();
-      }
-    }
-  }
-
-  void notifyListenersSafely() {
-    if (!_wasAudioPlayerPluginDisposed) {
-      notifyListeners();
+      _audioPlayerPlugin!.onPlayerComplete.listen((event) async {
+        // Play next audio when current audio is finished. If a next
+        // audio is played, notifyListeners() is called in
+        // playNextAudio().
+        await playNextAudio();
+      });
     }
   }
 
@@ -489,7 +468,7 @@ class AudioPlayerVM extends ChangeNotifier {
 
       updateAndSaveCurrentAudio(forceSave: true);
 
-      notifyListenersSafely();
+      notifyListeners();
     }
   }
 
@@ -502,7 +481,7 @@ class AudioPlayerVM extends ChangeNotifier {
     }
 
     updateAndSaveCurrentAudio(forceSave: true);
-    notifyListenersSafely();
+    notifyListeners();
   }
 
   /// Method called when the user clicks on the '<<' or '>>'
@@ -565,7 +544,7 @@ class AudioPlayerVM extends ChangeNotifier {
     // is updated
     updateAndSaveCurrentAudio(forceSave: true);
 
-    notifyListenersSafely();
+    notifyListeners();
   }
 
   /// Method called when the user clicks on the audio slider.
@@ -618,7 +597,7 @@ class AudioPlayerVM extends ChangeNotifier {
 
     await modifyAudioPlayerPluginPosition(durationPosition);
 
-    notifyListenersSafely();
+    notifyListeners();
   }
 
   /// Method to be redefined in AudioPlayerVMTestVersion in order
@@ -643,7 +622,7 @@ class AudioPlayerVM extends ChangeNotifier {
       // is set.
       await _setPreviousAudio();
 
-      notifyListenersSafely();
+      notifyListeners();
 
       return;
     }
@@ -670,7 +649,7 @@ class AudioPlayerVM extends ChangeNotifier {
 
     await modifyAudioPlayerPluginPosition(_currentAudioPosition);
 
-    notifyListenersSafely();
+    notifyListeners();
   }
 
   /// Method not used for the moment
@@ -689,7 +668,7 @@ class AudioPlayerVM extends ChangeNotifier {
       // clicks twice on the >| icon.
       await _setNextNotPlayedAudio();
 
-      notifyListenersSafely();
+      notifyListeners();
 
       return;
     }
@@ -723,7 +702,7 @@ class AudioPlayerVM extends ChangeNotifier {
 
     await modifyAudioPlayerPluginPosition(_currentAudioTotalDuration);
 
-    notifyListenersSafely();
+    notifyListeners();
   }
 
   /// Method called when the user clicks on the >| icon,
@@ -764,7 +743,7 @@ class AudioPlayerVM extends ChangeNotifier {
 
     await modifyAudioPlayerPluginPosition(_currentAudioTotalDuration);
 
-    notifyListenersSafely();
+    notifyListeners();
   }
 
   /// Method called when _audioPlayer.onPlayerComplete happens,
@@ -797,7 +776,7 @@ class AudioPlayerVM extends ChangeNotifier {
         rewindAudioPositionBasedOnPauseDuration: true,
       );
 
-      notifyListenersSafely();
+      notifyListeners();
     }
   }
 
@@ -923,14 +902,14 @@ class AudioPlayerVM extends ChangeNotifier {
     await _audioPlayerPlugin!.setPlaybackRate(speed);
     updateAndSaveCurrentAudio(forceSave: true);
 
-    notifyListenersSafely();
+    notifyListeners();
   }
 
   // void _executeCommand(Command command) {
   //   command.execute();
   //   _undoList.add(command);
   //   // redoList.clear();
-  //   notifyListenersSafely();
+  //   notifyListeners();
   // }
 
   void undo() {
@@ -938,7 +917,7 @@ class AudioPlayerVM extends ChangeNotifier {
       Command command = _undoList.removeLast();
       command.undo();
       _redoList.add(command);
-      notifyListenersSafely();
+      notifyListeners();
     }
   }
 
@@ -947,7 +926,7 @@ class AudioPlayerVM extends ChangeNotifier {
       Command command = _redoList.removeLast();
       command.redo();
       _undoList.add(command);
-      notifyListenersSafely();
+      notifyListeners();
     }
   }
 

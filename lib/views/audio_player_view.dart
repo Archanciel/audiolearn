@@ -56,6 +56,21 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
 
   /// WidgetsBindingObserver method called when the app's lifecycle
   /// state changes.
+  /// 
+  /// ChatGPT info: when to Save State ?
+  /// 
+  /// inactive: This state occurs when the app is transitioning, such as
+  /// when the user receives a call or an alert dialog is shown. It is
+  /// typically brief and not an ideal place for saving persistent state
+  /// as the app might return to the resumed state quickly.
+  /// 
+  /// paused: This state is more stable than inactive for saving state
+  /// because it indicates the app is no longer in the foreground but
+  /// still running. It is a suitable place to save the current state as
+  /// the app might stay in this state for an extended period.
+  /// 
+  /// detached: This state indicates the app is being removed from memory,
+  /// making it an appropriate place to save the state before termination.
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     switch (state) {
@@ -66,36 +81,30 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
         break;
       // App paused and sent to background
       case AppLifecycleState.paused:
-      case AppLifecycleState.inactive:
-        // writeToLogFile(
-        //     message:
-        //         'WidgetsBinding didChangeAppLifecycleState(): app inactive, paused or closed');
+        // The app is not visible to the user but still running in the
+        // background. This is the state when the audio is playing and
+        // the screen is turned off.
 
+        // Good for regular state-saving when the app goes to the
+        // background.
         Provider.of<AudioPlayerVM>(
           context,
           listen: false,
         ).updateAndSaveCurrentAudio(forceSave: true);
+      case AppLifecycleState.inactive:
+        // writeToLogFile(
+        //     message:
+        //         'WidgetsBinding didChangeAppLifecycleState(): app inactive, paused or closed');
         break;
       case AppLifecycleState.detached:
-        // If the app is closed while an audio is playing, ensures
-        // that the audio player is disposed. Otherwise, the audio
-        // will continue playing. If we close the emulator, when
-        // restarting it, the audio will be playing again, and the
-        // only way to stop the audio play is to restart cold
-        // version of the emulator !
-        //
-        // WARNING: must be positioned after calling
-        // updateAndSaveCurrentAudio() method, otherwise the audio
-        // player remains playing !
+        // This state usually occurs just before the app is terminated.
+
+        // Ensures the state is saved before the app is completely
+        // terminated.
         Provider.of<AudioPlayerVM>(
           context,
           listen: false,
-        ).disposeAudioPlayer(); // Calling this method instead of
-        //                         the AudioPlayerVM dispose()
-        //                         method enables audio player view
-        //                         integr test to be ok even if the
-        //                         test app is not the active Windows
-        //                         app.
+        ).updateAndSaveCurrentAudio(forceSave: true);
         break;
       default:
         break;
