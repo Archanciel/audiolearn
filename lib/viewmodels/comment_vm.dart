@@ -37,19 +37,11 @@ class CommentVM extends ChangeNotifier {
   }) {
     String commentFilePathName =
         _buildCommentFilePathAndFilePathName(audioToComment: audio)[1];
-    File commentFile = File(commentFilePathName);
 
-    List<Comment> commentLst = [];
-
-    if (commentFile.existsSync()) {
-      // Load the comment list from the json comment file
-      commentLst = JsonDataService.loadListFromFile(
-        jsonPathFileName: commentFilePathName,
-        type: Comment,
-      );
-    }
-
-    return commentLst;
+    return JsonDataService.loadListFromFile(
+      jsonPathFileName: commentFilePathName,
+      type: Comment,
+    );
   }
 
   void addComment({
