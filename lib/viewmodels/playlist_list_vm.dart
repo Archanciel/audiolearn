@@ -990,10 +990,16 @@ class PlaylistListVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Returns the audio contained in the playableAudioLst which
-  /// has been downloaded after the current audio and is not fully
-  /// played.
-  Audio? getSubsequentlyDownloadedNotFullyPlayedAudio({
+  /// If no sort/filter parameter is applyed to the playlist
+  /// containing the audios, returns the audio contained in the
+  /// playlist playableAudioLst which has been downloaded after the
+  /// current audio and is not fully played.
+  /// 
+  /// Otherwise, if sort and filter parameters were saved in the
+  /// playlist json file with automatic options application set to
+  /// true, then the returned next not fully played audio is obtained
+  /// from the sorted and filtered playlist playableAudioLst.
+  Audio? getNextSubsequentlyDownloadedOrSortFilteredNotFullyPlayedAudio({
     required Audio currentAudio,
   }) {
     // this test is required, otherwise the method will be

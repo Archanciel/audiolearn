@@ -299,8 +299,8 @@ void main() {
       Audio currentAudio = sourcePlaylist.playableAudioLst[7];
 
       // Obtaining the next playable audio
-      Audio? nextAudio =
-          playlistListVM.getSubsequentlyDownloadedNotFullyPlayedAudio(
+      Audio? nextAudio = playlistListVM
+          .getNextSubsequentlyDownloadedOrSortFilteredNotFullyPlayedAudio(
         currentAudio: currentAudio,
       );
 
@@ -383,8 +383,8 @@ void main() {
       Audio lastDownloadedAudio = sourcePlaylist.playableAudioLst[0];
 
       // Obtaining the next playable audio
-      Audio? nextAudio =
-          playlistListVM.getSubsequentlyDownloadedNotFullyPlayedAudio(
+      Audio? nextAudio = playlistListVM
+          .getNextSubsequentlyDownloadedOrSortFilteredNotFullyPlayedAudio(
         currentAudio: lastDownloadedAudio,
       );
 
@@ -469,8 +469,8 @@ void main() {
       Audio lastDownloadedAudio = sourcePlaylist.playableAudioLst[0];
 
       // Obtaining the next playable audio
-      Audio? nextAudio =
-          playlistListVM.getSubsequentlyDownloadedNotFullyPlayedAudio(
+      Audio? nextAudio = playlistListVM
+          .getNextSubsequentlyDownloadedOrSortFilteredNotFullyPlayedAudio(
         currentAudio: lastDownloadedAudio,
       );
 
@@ -550,8 +550,8 @@ void main() {
       Audio firstDownloadedAudio = sourcePlaylist.playableAudioLst[3];
 
       // Obtaining the next playable audio
-      Audio? nextaudioIslastdownloaded =
-          playlistListVM.getSubsequentlyDownloadedNotFullyPlayedAudio(
+      Audio? nextaudioIslastdownloaded = playlistListVM
+          .getNextSubsequentlyDownloadedOrSortFilteredNotFullyPlayedAudio(
         currentAudio: firstDownloadedAudio,
       );
 
