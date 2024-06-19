@@ -38,7 +38,7 @@ class Comment {
       title: json['title'],
       content: json['content'],
       commentStartPositionInTenthOfSeconds:
-          json['commentStartPositionInTenthOfSeconds'] ?? json['audioPositionInTenthOfSeconds'],
+          json['commentStartPositionInTenthOfSeconds'] ?? 0,
       commentEndPositionInTenthOfSeconds:
           json['commentEndPositionInTenthOfSeconds'] ?? 0,
       creationDateTime: DateTime.parse(json['creationDateTime']),
