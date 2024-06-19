@@ -169,6 +169,8 @@ class JsonDataService {
     File(jsonPathFileName).writeAsStringSync(jsonStr);
   }
 
+  /// If the json file exists, the list of typed objects it contains is
+  /// returned, else, an empty list is returned.
   static List<T> loadListFromFile<T>({
     required String jsonPathFileName,
     required Type type,
