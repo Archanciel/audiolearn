@@ -216,9 +216,8 @@ class PlaylistListVM extends ChangeNotifier {
     if (selectedPlaylistIndex != -1) {
       _isOnePlaylistSelected = true;
 
-      // required so that the TextField keyed by
-      // 'selectedPlaylistTextField' below the playlist URL TextField
-      // is initialized at app startup
+      // required so that the Text keyed by 'selectedPlaylistTitleText'
+      // below the playlist URL TextField is initialized at app startup
       _uniqueSelectedPlaylist =
           _listOfSelectablePlaylists[selectedPlaylistIndex];
 
@@ -421,18 +420,16 @@ class PlaylistListVM extends ChangeNotifier {
         isPlaylistSelected: false,
       );
 
-      // required so that the TextField keyed by
-      // 'selectedPlaylistTextField' below
-      // the playlist URL TextField is updated (emptied)
+      // required so that the Text keyed by 'selectedPlaylistTitleText'
+      // below the playlist URL TextField is updated (emptied)
       _uniqueSelectedPlaylist = null;
     } else {
       _setPlaylistButtonsStateIfOnePlaylistIsSelected(
         selectedPlaylist: playlistSelectedOrUnselected,
       );
 
-      // required so that the TextField keyed by
-      // 'selectedPlaylistTextField' below
-      // the playlist URL TextField is updated
+      // required so that the Text keyed by 'selectedPlaylistTitleText'
+      // below the playlist URL TextField is updated
       _uniqueSelectedPlaylist = playlistSelectedOrUnselected;
 
       // TODO fix handling the right app view !!!
@@ -475,9 +472,8 @@ class PlaylistListVM extends ChangeNotifier {
   void _setUniqueSelectedPlaylistToFalse() {
     _isOnePlaylistSelected = false;
 
-    // required so that the TextField keyed by
-    // 'selectedPlaylistTextField' below
-    // the playlist URL TextField is updated (emptied)
+    // required so that the Text keyed by 'selectedPlaylistTitleText'
+    // below the playlist URL TextField is updated (emptied)
     _uniqueSelectedPlaylist = null;
   }
 
@@ -994,7 +990,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// containing the audios, returns the audio contained in the
   /// playlist playableAudioLst which has been downloaded after the
   /// current audio and is not fully played.
-  /// 
+  ///
   /// Otherwise, if sort and filter parameters were saved in the
   /// playlist json file with automatic options application set to
   /// true, then the returned next not fully played audio is obtained
