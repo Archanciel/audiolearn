@@ -141,10 +141,10 @@ class AudioPlayerVM extends ChangeNotifier {
   }
 
   /// Method called when the user clicks on the audio title or sub
-  /// title or when he clicks on a play icon or when he selects an
-  /// audio in the AudioPlayableListDialogWidget displayed by
-  /// clicking on the audio title on the AudioPlayerView or by
-  /// long pressing on the >| button.
+  /// title or play icon displayed in the playlist download view or
+  /// when he selects an audio in the AudioPlayableListDialogWidget
+  /// displayed by clicking on the audio title on the audio player
+  /// view or by long pressing on the >| button.
   ///
   /// Method called also by setNextAudio() or setPreviousAudio().
   Future<void> setCurrentAudio(Audio audio) async {
@@ -328,6 +328,8 @@ class AudioPlayerVM extends ChangeNotifier {
 
   /// Method to be redefined in AudioPlayerVMTestVersion in order
   /// to avoid the use of the audio player plugin in unit tests.
+  ///
+  /// For this reason, the method is not private !
   void initializeAudioPlayerPlugin() {
     if (_audioPlayerPlugin != null) {
       _audioPlayerPlugin!.dispose();
@@ -602,6 +604,8 @@ class AudioPlayerVM extends ChangeNotifier {
 
   /// Method to be redefined in AudioPlayerVMTestVersion in order
   /// to avoid the use of the audio player plugin in unit tests.
+  ///
+  /// For this reason, the method is not private !
   Future<void> modifyAudioPlayerPluginPosition(
       Duration durationPosition) async {
     await _audioPlayerPlugin!.seek(durationPosition);
@@ -791,12 +795,14 @@ class AudioPlayerVM extends ChangeNotifier {
       //         and the app becomes inactive
     }
 
-    // necessary so that the audio position is stored on the
-    // audio saved in the playlist json file. Must not be located
-    // after the if which sava the audio every 30 seconds and so
-    // can cause the method to return without saving the audio
-    // position. This would cause the play icon's appearance to
-    // be wrong.
+    // This instruction must be executed before the next if block, otherwise,
+    // the audio info dialog widget opened on the current audio which does
+    // display the audio position obtained from the audio player view model
+    // will display the correct audio position only every 30 seconds. This
+    // is demonstrated by the audio indo audio state integration tests.
+    //
+    // The audioPositionSeconds of the current audio will be saved in its
+    // enclosing playlist json file ...
     _currentAudio!.audioPositionSeconds = _currentAudioPosition.inSeconds;
 
     DateTime now = DateTime.now();
