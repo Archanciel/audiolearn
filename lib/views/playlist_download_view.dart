@@ -732,6 +732,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     );
   }
 
+  /// Builds the first line of the playlist download view. This line
+  /// contains the playlist URL text field, the add playlist button,
+  /// the download single video button and the stop download button.
   SizedBox _buildFirstLine({
     required BuildContext context,
     required AudioDownloadVM audioDownloadViewModel,
@@ -1181,6 +1184,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     return Expanded(
       // necessary to avoid Exception
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
             flex: 6, // controls the height ratio
@@ -1200,21 +1204,13 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           ),
           Expanded(
             flex: 4, // controls the height ratio
-            child: TextField(
+            child: Text(
               key: const Key('selectedPlaylistTextField'),
-              readOnly: true,
-              controller: TextEditingController(
                 // using playlistListVM with listen:True guaranties
                 // that the selected playlist title is updated when
                 // the selected playlist changes
-                text: playlistListVMlistenTrue.uniqueSelectedPlaylist?.title ??
+                playlistListVMlistenTrue.uniqueSelectedPlaylist?.title ??
                     '',
-              ),
-              decoration: const InputDecoration(
-                border: InputBorder.none,
-                isDense: true,
-                contentPadding: EdgeInsets.all(2),
-              ),
               style: const TextStyle(
                 fontSize: 12,
               ),
