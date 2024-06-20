@@ -395,7 +395,11 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
         return Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _buildPlayOrPauseIcon(context, audioGlobalPlayerVM, audio)
+            _buildPlayOrPauseIcon(
+              context: context,
+              audioGlobalPlayerVM: audioGlobalPlayerVM,
+              audio: audio,
+            )
           ],
         );
       },
@@ -409,19 +413,14 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
   /// if not playing, is it paused at a certain position or is
   /// its position zero, the icon type and icon color are different.
   /// The current application theme is also integrated.
-  InkWell _buildPlayOrPauseIcon(
-    BuildContext context,
-    AudioPlayerVM audioGlobalPlayerVM,
-    Audio audio,
-  ) {
+  InkWell _buildPlayOrPauseIcon({
+    required BuildContext context,
+    required AudioPlayerVM audioGlobalPlayerVM,
+    required Audio audio,
+  }) {
     CircleAvatar circleAvatar;
 
     if (audio.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd) {
-      // if (audio.audioPositionSeconds > 0 &&
-      //     audio.audioPositionSeconds < audio.audioDuration!.inSeconds) {
-      // the audio is paused on a non-zero position and non end
-      // position, i.e. if it was played and paused ...
-
       Icon playOrPauseIcon;
 
       if (audio.isPaused) {
