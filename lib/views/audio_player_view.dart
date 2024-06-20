@@ -137,7 +137,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
         Row(
           children: [
             Text(
-              key: const Key('selectedPlaylistTextField'),
+              key: const Key('selectedPlaylistTitleText'),
               // using playlistListVM with listen:True guaranties
               // that the selected playlist title is updated when
               // the selected playlist changes

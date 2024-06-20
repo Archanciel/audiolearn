@@ -1565,10 +1565,10 @@ void main() {
       ));
       expect(firstListItemCheckbox.value, isFalse);
 
-      // Verify that the selected playlist TextField is empty
-      TextField selectedPlaylistTextField =
-          tester.widget(find.byKey(const Key('selectedPlaylistTextField')));
-      expect(selectedPlaylistTextField.controller!.text, '');
+      // Verify that the selected playlist Text is empty
+      Text selectedPlaylistTitleText =
+          tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
+      expect(selectedPlaylistTitleText.data, '');
 
       // Check the saved local playlist values in the json file,
       // before the playlist will be selected
@@ -1608,9 +1608,12 @@ void main() {
 
       // Verify that the selected playlist TextField contains the
       // title of the selected playlist
-      selectedPlaylistTextField =
-          tester.widget(find.byKey(const Key('selectedPlaylistTextField')));
-      expect(selectedPlaylistTextField.controller!.text, localPlaylistTitle);
+      selectedPlaylistTitleText =
+          tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
+      expect(
+        selectedPlaylistTitleText.data,
+        localPlaylistTitle,
+      );
 
       // Check the saved local playlist values in the json file
 
@@ -1638,9 +1641,9 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify that the selected playlist TextField is empty
-      selectedPlaylistTextField =
-          tester.widget(find.byKey(const Key('selectedPlaylistTextField')));
-      expect(selectedPlaylistTextField.controller!.text, '');
+      selectedPlaylistTitleText =
+          tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
+      expect(selectedPlaylistTitleText.data, '');
 
       // Check the saved local playlist values in the json file
 
@@ -2898,11 +2901,10 @@ void main() {
       // Now verifying the selected playlist TextField still
       // contains the title of the source playlist
 
-      TextField selectedPlaylistTextField = tester.widget<TextField>(
-          find.byKey(const Key('selectedPlaylistTextField')));
+      Text selectedPlaylistTitleText = tester
+          .widget<Text>(find.byKey(const Key('selectedPlaylistTitleText')));
 
-      expect(selectedPlaylistTextField.controller!.text,
-          youtubeAudioSourcePlaylistTitle);
+      expect(selectedPlaylistTitleText.data, youtubeAudioSourcePlaylistTitle);
 
       // Now verifying that the source audio still access to its
       // comments
@@ -3226,11 +3228,10 @@ void main() {
       // Now verifying the selected playlist TextField still
       // contains the title of the source playlist
 
-      selectedPlaylistTextField = tester.widget<TextField>(
-          find.byKey(const Key('selectedPlaylistTextField')));
+      selectedPlaylistTitleText = tester
+          .widget<Text>(find.byKey(const Key('selectedPlaylistTitleText')));
 
-      expect(selectedPlaylistTextField.controller!.text,
-          youtubeAudioSourcePlaylistTitle);
+      expect(selectedPlaylistTitleText.data, youtubeAudioSourcePlaylistTitle);
 
       // Now verifying that the source playlist directory still
       // contains the audio file copied to the target playlist
@@ -3406,11 +3407,10 @@ void main() {
       // Now verifying the selected playlist TextField still
       // contains the title of the source playlist
 
-      TextField selectedPlaylistTextField = tester.widget<TextField>(
-          find.byKey(const Key('selectedPlaylistTextField')));
+      Text selectedPlaylistTitleText = tester
+          .widget<Text>(find.byKey(const Key('selectedPlaylistTitleText')));
 
-      expect(selectedPlaylistTextField.controller!.text,
-          youtubeAudioSourcePlaylistTitle);
+      expect(selectedPlaylistTitleText.data, youtubeAudioSourcePlaylistTitle);
 
       // Now verifying that the source playlist directory still
       // contains the audio file copied to the target playlist
@@ -3688,11 +3688,10 @@ void main() {
       // Now verifying the selected playlist TextField still
       // contains the title of the source playlist
 
-      selectedPlaylistTextField = tester.widget<TextField>(
-          find.byKey(const Key('selectedPlaylistTextField')));
+      selectedPlaylistTitleText = tester
+          .widget<Text>(find.byKey(const Key('selectedPlaylistTitleText')));
 
-      expect(selectedPlaylistTextField.controller!.text,
-          youtubeAudioSourcePlaylistTitle);
+      expect(selectedPlaylistTitleText.data, youtubeAudioSourcePlaylistTitle);
 
       // Now verifying that the source playlist directory still
       // contains the audio file moved but canceled to the target
@@ -3868,11 +3867,10 @@ void main() {
       // Now verifying the selected playlist TextField still
       // contains the title of the source playlist
 
-      TextField selectedPlaylistTextField = tester.widget<TextField>(
-          find.byKey(const Key('selectedPlaylistTextField')));
+      Text selectedPlaylistTitleText = tester
+          .widget<Text>(find.byKey(const Key('selectedPlaylistTitleText')));
 
-      expect(selectedPlaylistTextField.controller!.text,
-          youtubeAudioSourcePlaylistTitle);
+      expect(selectedPlaylistTitleText.data, youtubeAudioSourcePlaylistTitle);
 
       // Now verifying that the source playlist directory still
       // contains the audio file copied to the target playlist
@@ -4069,11 +4067,10 @@ void main() {
       // Now verifying the selected playlist TextField still
       // contains the title of the source playlist
 
-      selectedPlaylistTextField = tester.widget<TextField>(
-          find.byKey(const Key('selectedPlaylistTextField')));
+      selectedPlaylistTitleText = tester
+          .widget<Text>(find.byKey(const Key('selectedPlaylistTitleText')));
 
-      expect(selectedPlaylistTextField.controller!.text,
-          youtubeAudioSourcePlaylistTitle);
+      expect(selectedPlaylistTitleText.data, youtubeAudioSourcePlaylistTitle);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -4225,11 +4222,10 @@ void main() {
       // Now verifying the selected playlist TextField still
       // contains the title of the source playlist
 
-      TextField selectedPlaylistTextField = tester.widget<TextField>(
-          find.byKey(const Key('selectedPlaylistTextField')));
+      Text selectedPlaylistTitleText = tester
+          .widget<Text>(find.byKey(const Key('selectedPlaylistTitleText')));
 
-      expect(selectedPlaylistTextField.controller!.text,
-          youtubeAudioSourcePlaylistTitle);
+      expect(selectedPlaylistTitleText.data, youtubeAudioSourcePlaylistTitle);
 
       // Now verifying that the source playlist directory still
       // contains the audio file copied to the target playlist
@@ -4426,11 +4422,10 @@ void main() {
       // Now verifying the selected playlist TextField still
       // contains the title of the source playlist
 
-      selectedPlaylistTextField = tester.widget<TextField>(
-          find.byKey(const Key('selectedPlaylistTextField')));
+      selectedPlaylistTitleText = tester
+          .widget<Text>(find.byKey(const Key('selectedPlaylistTitleText')));
 
-      expect(selectedPlaylistTextField.controller!.text,
-          youtubeAudioSourcePlaylistTitle);
+      expect(selectedPlaylistTitleText.data, youtubeAudioSourcePlaylistTitle);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -4576,11 +4571,10 @@ void main() {
       // Now verifying the selected playlist TextField still
       // contains the title of the source playlist
 
-      final TextField selectedPlaylistTextField = tester.widget<TextField>(
-          find.byKey(const Key('selectedPlaylistTextField')));
+      Text selectedPlaylistTitleText = tester
+          .widget<Text>(find.byKey(const Key('selectedPlaylistTitleText')));
 
-      expect(selectedPlaylistTextField.controller!.text,
-          youtubeAudioSourcePlaylistTitle);
+      expect(selectedPlaylistTitleText.data, youtubeAudioSourcePlaylistTitle);
 
       // TODO: Verify that the audio was moved to the target playlist
       // and verify the source and target playlist json file content.
@@ -5027,11 +5021,13 @@ void main() {
       // Now verifying the selected playlist TextField still
       // contains the title of the source playlist
 
-      TextField selectedPlaylistTextField = tester.widget<TextField>(
-          find.byKey(const Key('selectedPlaylistTextField')));
+      Text selectedPlaylistTitleText = tester
+          .widget<Text>(find.byKey(const Key('selectedPlaylistTitleText')));
 
-      expect(selectedPlaylistTextField.controller!.text,
-          youtubeAudioSourcePlaylistTitle);
+      expect(
+        selectedPlaylistTitleText.data,
+        youtubeAudioSourcePlaylistTitle,
+      );
 
       // Now verifying the audio was physically copied to the target
       // playlist directory.
@@ -5156,11 +5152,13 @@ void main() {
       // Now verifying the selected playlist TextField still
       // contains the title of the source playlist
 
-      selectedPlaylistTextField = tester.widget<TextField>(
-          find.byKey(const Key('selectedPlaylistTextField')));
+      selectedPlaylistTitleText = tester
+          .widget<Text>(find.byKey(const Key('selectedPlaylistTitleText')));
 
-      expect(selectedPlaylistTextField.controller!.text,
-          localAudioTargetSourcePlaylistTitle);
+      expect(
+        selectedPlaylistTitleText.data,
+        localAudioTargetSourcePlaylistTitle,
+      );
 
       // Now verifying the audio was physically copied to the target
       // playlist directory.
@@ -5431,11 +5429,13 @@ void main() {
       // Now verifying the selected playlist TextField still
       // contains the title of the source playlist
 
-      TextField selectedPlaylistTextField = tester.widget<TextField>(
-          find.byKey(const Key('selectedPlaylistTextField')));
+      Text selectedPlaylistTitleText = tester
+          .widget<Text>(find.byKey(const Key('selectedPlaylistTitleText')));
 
-      expect(selectedPlaylistTextField.controller!.text,
-          youtubeAudioSourcePlaylistTitle);
+      expect(
+        selectedPlaylistTitleText.data,
+        youtubeAudioSourcePlaylistTitle,
+      );
 
       // Now verifying the audio was physically moved to the target
       // playlist directory.
@@ -5547,11 +5547,11 @@ void main() {
       // Now verifying the selected playlist TextField still
       // contains the title of the source playlist
 
-      selectedPlaylistTextField = tester.widget<TextField>(
-          find.byKey(const Key('selectedPlaylistTextField')));
+      selectedPlaylistTitleText = tester
+          .widget<Text>(find.byKey(const Key('selectedPlaylistTitleText')));
 
-      expect(selectedPlaylistTextField.controller!.text,
-          localAudioTargetSourcePlaylistTitle);
+      expect(
+          selectedPlaylistTitleText.data, localAudioTargetSourcePlaylistTitle);
 
       // Now verifying the audio was physically moved to the target
       // playlist directory.
@@ -7043,11 +7043,13 @@ void main() {
       // Now verifying the selected playlist TextField still
       // contains the title of the source playlist
 
-      TextField selectedPlaylistTextField = tester.widget<TextField>(
-          find.byKey(const Key('selectedPlaylistTextField')));
+      Text selectedPlaylistTitleText = tester
+          .widget<Text>(find.byKey(const Key('selectedPlaylistTitleText')));
 
       expect(
-          selectedPlaylistTextField.controller!.text, localAudioPlaylistTitle);
+        selectedPlaylistTitleText.data,
+        localAudioPlaylistTitle,
+      );
 
       // Now verifying that the audio was physically deleted from the
       // local playlist directory.
@@ -7204,11 +7206,13 @@ void main() {
       // Now verifying the selected playlist TextField still
       // contains the title of the source playlist
 
-      TextField selectedPlaylistTextField = tester.widget<TextField>(
-          find.byKey(const Key('selectedPlaylistTextField')));
+      Text selectedPlaylistTitleText = tester
+          .widget<Text>(find.byKey(const Key('selectedPlaylistTitleText')));
 
       expect(
-          selectedPlaylistTextField.controller!.text, localAudioPlaylistTitle);
+        selectedPlaylistTitleText.data,
+        localAudioPlaylistTitle,
+      );
 
       // Now verifying that the audio was physically deleted from the
       // local playlist directory.
@@ -7753,13 +7757,12 @@ void main() {
 
       // Verifying that the selected playlist text field is empty
       expect(
-          reason: 'Selected playlist text field is not empty',
-          tester
-              .widget<TextField>(
-                  find.byKey(const Key('selectedPlaylistTextField')))
-              .controller!
-              .text,
-          '');
+        tester
+            .widget<Text>(find.byKey(const Key('selectedPlaylistTitleText')))
+            .data,
+        '',
+        reason: 'Selected playlist text field is not empty',
+      );
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -7919,13 +7922,12 @@ void main() {
 
       // Verifying that the selected playlist text field is empty
       expect(
-          reason: 'Selected playlist text field is empty',
-          tester
-              .widget<TextField>(
-                  find.byKey(const Key('selectedPlaylistTextField')))
-              .controller!
-              .text,
-          youtubePlaylistToDeleteTitle);
+        tester
+            .widget<Text>(find.byKey(const Key('selectedPlaylistTitleText')))
+            .data,
+        youtubePlaylistToDeleteTitle,
+        reason: 'Selected playlist text field is empty',
+      );
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -8091,13 +8093,12 @@ void main() {
 
       // Verifying that the selected playlist text field is empty
       expect(
-          reason: 'Selected playlist text field is not empty',
-          tester
-              .widget<TextField>(
-                  find.byKey(const Key('selectedPlaylistTextField')))
-              .controller!
-              .text,
-          '');
+        tester
+            .widget<Text>(find.byKey(const Key('selectedPlaylistTitleText')))
+            .data,
+        '',
+        reason: 'Selected playlist text field is not empty',
+      );
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -8256,13 +8257,12 @@ void main() {
 
       // Verifying that the selected playlist text field is not empty
       expect(
-          reason: 'Selected playlist text field is not empty',
-          tester
-              .widget<TextField>(
-                  find.byKey(const Key('selectedPlaylistTextField')))
-              .controller!
-              .text,
-          localPlaylistToDeleteTitle);
+        tester
+            .widget<Text>(find.byKey(const Key('selectedPlaylistTitleText')))
+            .data,
+        localPlaylistToDeleteTitle,
+        reason: 'Selected playlist text field is not empty',
+      );
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub

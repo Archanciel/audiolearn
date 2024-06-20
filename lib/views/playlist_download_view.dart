@@ -1205,12 +1205,11 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           Expanded(
             flex: 4, // controls the height ratio
             child: Text(
-              key: const Key('selectedPlaylistTextField'),
-                // using playlistListVM with listen:True guaranties
-                // that the selected playlist title is updated when
-                // the selected playlist changes
-                playlistListVMlistenTrue.uniqueSelectedPlaylist?.title ??
-                    '',
+              key: const Key('selectedPlaylistTitleText'),
+              // using playlistListVM with listen:True guaranties
+              // that the selected playlist title is updated when
+              // the selected playlist changes
+              playlistListVMlistenTrue.uniqueSelectedPlaylist?.title ?? '',
               style: const TextStyle(
                 fontSize: 12,
               ),
