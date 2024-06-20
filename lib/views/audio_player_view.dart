@@ -56,19 +56,19 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
 
   /// WidgetsBindingObserver method called when the app's lifecycle
   /// state changes.
-  /// 
+  ///
   /// ChatGPT info: when to Save State ?
-  /// 
+  ///
   /// inactive: This state occurs when the app is transitioning, such as
   /// when the user receives a call or an alert dialog is shown. It is
   /// typically brief and not an ideal place for saving persistent state
   /// as the app might return to the resumed state quickly.
-  /// 
+  ///
   /// paused: This state is more stable than inactive for saving state
   /// because it indicates the app is no longer in the foreground but
   /// still running. It is a suitable place to save the current state as
   /// the app might stay in this state for an extended period.
-  /// 
+  ///
   /// detached: This state indicates the app is being removed from memory,
   /// making it an appropriate place to save the state before termination.
   @override
@@ -134,7 +134,21 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
         buildWarningMessageVMConsumer(
           context: context,
         ),
-
+        Row(
+          children: [
+            Text(
+              key: const Key('selectedPlaylistTextField'),
+              // using playlistListVM with listen:True guaranties
+              // that the selected playlist title is updated when
+              // the selected playlist changes
+              globalAudioPlayerVM.currentAudio?.enclosingPlaylist?.title ?? '',
+              style: const TextStyle(
+                fontSize: 12,
+              ),
+              maxLines: 1,
+            ),
+          ],
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
