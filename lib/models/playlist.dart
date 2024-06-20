@@ -37,10 +37,10 @@ class Playlist {
 
   // This variable contains the index of the audio in the
   // playableAudioLst which is currently playing. The effect is that
-  // this value is the index of the audio that was the last played
+  // this value indicates the index of the audio that was the last played
   // audio from the playlist. This means that if the AudioPlayerView
   // is opened without having clicked on a playlist audio item, then
-  // this audio will be playing. This happens only if the audio
+  // this audio will be playable. This happens only if the audio
   // playlist is selected in the PlaylistDownloadView, i.e. referenced
   // in the app settings.json file. The value -1 means that no
   // playlist audio has been played.
@@ -488,6 +488,14 @@ class Playlist {
     }
   }
 
+  // The currentOrPastPlayableAudioIndex contains the index of the audio
+  // in this playlist playableAudioList which is currently playing was the
+  // last playlist played audio. The utility is that if the AudioPlayerView
+  // is opened without having clicked on a playlist audio item, then
+  // this audio will be playable. This happens only if the audio playlist
+  // is selected in the PlaylistDownloadView, i.e. referenced in the app
+  // settings.json file. The value -1 means that up to now, no playlist audio
+  // has been played.
   void setCurrentOrPastPlayableAudio(Audio audio) {
     currentOrPastPlayableAudioIndex = playableAudioLst
         .indexWhere((item) => item == audio); // using Audio == operator
