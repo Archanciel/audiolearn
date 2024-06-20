@@ -68,6 +68,14 @@ void main() {
       // Verify if the play button changes to pause button
       expect(find.byIcon(Icons.pause), findsOneWidget);
 
+      // Verify that the audio enclosing playlist title Text is correct
+      Text selectedPlaylistTitleText =
+          tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
+      expect(
+        selectedPlaylistTitleText.data,
+        audioPlayerSelectedPlaylistTitle,
+      );
+
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -111,6 +119,14 @@ void main() {
       Text audioRemainingDurationText = tester.widget<Text>(
           find.byKey(const Key('audioPlayerViewAudioRemainingDuration')));
       expect(audioRemainingDurationText.data, '0:59');
+
+      // Verify that the audio enclosing playlist title Text is correct
+      Text selectedPlaylistTitleText =
+          tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
+      expect(
+        selectedPlaylistTitleText.data,
+        audioPlayerSelectedPlaylistTitle,
+      );
 
       verifyAudioDataElementsUpdatedInJsonFile(
         audioPlayerSelectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -255,6 +271,14 @@ void main() {
       // audio and start playing the last downloaded audio of the
       // playlist.
 
+      // Verify that the audio enclosing playlist title Text is correct
+      Text selectedPlaylistTitleText =
+          tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
+      expect(
+        selectedPlaylistTitleText.data,
+        audioPlayerSelectedPlaylistTitle,
+      );
+
       await tester.tap(find.byIcon(Icons.play_arrow));
       await tester.pumpAndSettle();
 
@@ -267,6 +291,14 @@ void main() {
 
       // Verify the last downloaded played audio title
       expect(find.text(lastDownloadedAudioTitle), findsOneWidget);
+
+      // Verify that the audio enclosing playlist title Text is correct
+      selectedPlaylistTitleText =
+          tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
+      expect(
+        selectedPlaylistTitleText.data,
+        audioPlayerSelectedPlaylistTitle,
+      );
 
       // Ensure that the bug corrected on AudioPlayerVM on 06-06-2024
       // no longer happens. This bug impacted the application during
@@ -535,6 +567,14 @@ void main() {
       await tester.tap(firstDownloadedAudioListTileTextWidgetFinder);
       await tester.pumpAndSettle();
 
+      // Verify that the audio enclosing playlist title Text is correct
+      Text selectedPlaylistTitleText =
+          tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
+      expect(
+        selectedPlaylistTitleText.data,
+        audioPlayerSelectedPlaylistTitle,
+      );
+
       // Now we tap on the play button in order to finish
       // playing the first downloaded audio and start playing
       // the last downloaded audio of the playlist. The 2
@@ -553,6 +593,14 @@ void main() {
 
       // Verify the last downloaded played audio title
       expect(find.text(lastDownloadedAudioTitle), findsOneWidget);
+
+      // Verify that the audio enclosing playlist title Text is correct
+      selectedPlaylistTitleText =
+          tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
+      expect(
+        selectedPlaylistTitleText.data,
+        audioPlayerSelectedPlaylistTitle,
+      );
 
       // Ensure that the bug corrected on AudioPlayerVM on 06-06-2024
       // no longer happens. This bug impacted the application during
@@ -1263,6 +1311,11 @@ void main() {
       // there is no audio to play
       expect(find.byIcon(Icons.play_arrow), findsOneWidget);
 
+      // Verify that the audio enclosing playlist title Text is empty
+      Text selectedPlaylistTitleText =
+          tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
+      expect(selectedPlaylistTitleText.data, '');
+
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -1291,6 +1344,11 @@ void main() {
       // Verify the no selected audio title is displayed
       final Finder noAudioTitleFinder = find.text("No audio selected");
       expect(noAudioTitleFinder, findsOneWidget);
+
+      // Verify that the audio enclosing playlist title Text is empty
+      Text selectedPlaylistTitleText =
+          tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
+      expect(selectedPlaylistTitleText.data, '');
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
