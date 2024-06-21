@@ -68,7 +68,7 @@ void main() {
       // Verify if the play button changes to pause button
       expect(find.byIcon(Icons.pause), findsOneWidget);
 
-      // Verify that the audio enclosing playlist title Text is correct
+      // Verify that the selected playlist title is displayed
       Text selectedPlaylistTitleText =
           tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
       expect(
@@ -120,7 +120,7 @@ void main() {
           find.byKey(const Key('audioPlayerViewAudioRemainingDuration')));
       expect(audioRemainingDurationText.data, '0:59');
 
-      // Verify that the audio enclosing playlist title Text is correct
+      // Verify that the selected playlist title is displayed
       Text selectedPlaylistTitleText =
           tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
       expect(
@@ -271,7 +271,7 @@ void main() {
       // audio and start playing the last downloaded audio of the
       // playlist.
 
-      // Verify that the audio enclosing playlist title Text is correct
+      // Verify that the selected playlist title is displayed
       Text selectedPlaylistTitleText =
           tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
       expect(
@@ -292,7 +292,7 @@ void main() {
       // Verify the last downloaded played audio title
       expect(find.text(lastDownloadedAudioTitle), findsOneWidget);
 
-      // Verify that the audio enclosing playlist title Text is correct
+      // Verify that the selected playlist title is displayed
       selectedPlaylistTitleText =
           tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
       expect(
@@ -567,7 +567,7 @@ void main() {
       await tester.tap(firstDownloadedAudioListTileTextWidgetFinder);
       await tester.pumpAndSettle();
 
-      // Verify that the audio enclosing playlist title Text is correct
+      // Verify that the selected playlist title is displayed
       Text selectedPlaylistTitleText =
           tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
       expect(
@@ -594,7 +594,7 @@ void main() {
       // Verify the last downloaded played audio title
       expect(find.text(lastDownloadedAudioTitle), findsOneWidget);
 
-      // Verify that the audio enclosing playlist title Text is correct
+      // Verify that the selected playlist title is displayed
       selectedPlaylistTitleText =
           tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
       expect(
@@ -1311,10 +1311,11 @@ void main() {
       // there is no audio to play
       expect(find.byIcon(Icons.play_arrow), findsOneWidget);
 
-      // Verify that the audio enclosing playlist title Text is empty
+      // Verify that the selected playlist title is displayed, even if
+      // no audio is selected
       Text selectedPlaylistTitleText =
           tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
-      expect(selectedPlaylistTitleText.data, '');
+      expect(selectedPlaylistTitleText.data, audioPlayerSelectedPlaylistTitle);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -1345,7 +1346,8 @@ void main() {
       final Finder noAudioTitleFinder = find.text("No audio selected");
       expect(noAudioTitleFinder, findsOneWidget);
 
-      // Verify that the audio enclosing playlist title Text is empty
+      // Verify that the playlist title Text is empty since no playlist
+      // is selected
       Text selectedPlaylistTitleText =
           tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
       expect(selectedPlaylistTitleText.data, '');

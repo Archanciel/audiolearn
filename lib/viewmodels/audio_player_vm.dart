@@ -335,8 +335,13 @@ class AudioPlayerVM extends ChangeNotifier {
       _audioPlayerPlugin!.dispose();
     }
 
-    // this is not related to the previous dispose instruction
     _audioPlayerPlugin = AudioPlayer();
+
+    // Available only on version 6 !
+    // _audioPlayerPlugin!.positionUpdater = TimerPositionUpdater(
+    //   interval: const Duration(milliseconds: 100),
+    //   getPosition: _audioPlayerPlugin!.getCurrentPosition,
+    // );
 
     // Assuming filePath is the full path to your audio file
     String audioFilePathName = _currentAudio?.filePathName ?? '';
