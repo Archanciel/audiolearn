@@ -179,7 +179,9 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
         Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            _buildStartEndButtonsWithTitle(),
+            _buildStartEndButtonsWithTitle(
+              context: context,
+            ),
             _buildAudioSliderWithPositionTexts(),
             _buildPositionButtons(),
           ],
@@ -396,35 +398,31 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
       );
     }
 
-    return Consumer<ThemeProviderVM>(
-      builder: (context, themeProviderVM, child) {
-        return Tooltip(
-          message: AppLocalizations.of(context)!.commentsIconButtonTooltip,
-          child: SizedBox(
-            width: kSmallButtonWidth,
-            child: InkWell(
-              key: const Key('commentsInkWellButton'),
-              onTap: (!areAudioButtonsEnabled)
-                  ? null // Disable the button if no audio selected
-                  : () {
-                      showDialog<void>(
-                        barrierDismissible:
-                            false, // This line prevents the dialog from closing when
-                        //            tapping outside the dialog
-                        context: context,
-                        // passing the current audio to the dialog instead
-                        // of initializing a private _currentAudio variable
-                        // in the dialog avoid integr test problems
-                        builder: (context) => CommentListAddDialogWidget(
-                          currentAudio: currentAudio!,
-                        ),
-                      );
-                    },
-              child: circleAvatar,
-            ),
-          ),
-        );
-      },
+    return Tooltip(
+      message: AppLocalizations.of(context)!.commentsIconButtonTooltip,
+      child: SizedBox(
+        width: kSmallButtonWidth,
+        child: InkWell(
+          key: const Key('commentsInkWellButton'),
+          onTap: (!areAudioButtonsEnabled)
+              ? null // Disable the button if no audio selected
+              : () {
+                  showDialog<void>(
+                    barrierDismissible:
+                        false, // This line prevents the dialog from closing when
+                    //            tapping outside the dialog
+                    context: context,
+                    // passing the current audio to the dialog instead
+                    // of initializing a private _currentAudio variable
+                    // in the dialog avoid integr test problems
+                    builder: (context) => CommentListAddDialogWidget(
+                      currentAudio: currentAudio!,
+                    ),
+                  );
+                },
+          child: circleAvatar,
+        ),
+      ),
     );
   }
 
@@ -599,7 +597,9 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     );
   }
 
-  Widget _buildStartEndButtonsWithTitle() {
+  Widget _buildStartEndButtonsWithTitle({
+    required BuildContext context,
+  }) {
     return Consumer<AudioPlayerVM>(
       builder: (context, globalAudioPlayerVM, child) {
         String? currentAudioTitleWithDuration =
@@ -633,13 +633,20 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
 
                   _displayOtherAudiosDialog();
                 },
-                child: Text(
-                  currentAudioTitleWithDuration,
-                  style: const TextStyle(
-                    fontSize: kAudioTitleFontSize,
-                  ),
-                  maxLines: 5,
-                  textAlign: TextAlign.center,
+                child: Consumer<ThemeProviderVM>(
+                  builder: (context, themeProviderVM, child) {
+                    return Text(
+                      currentAudioTitleWithDuration ?? '',
+                      style: TextStyle(
+                        fontSize: kAudioTitleFontSize,
+                        color: (themeProviderVM.currentTheme == AppTheme.dark)
+                            ? Colors.white
+                            : Colors.black,
+                      ),
+                      maxLines: 5,
+                      textAlign: TextAlign.center,
+                    );
+                  },
                 ),
               ),
             ),

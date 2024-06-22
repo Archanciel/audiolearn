@@ -420,8 +420,8 @@ mixin ScreenMixin {
     );
   }
 
-/// Create a row with a Text label and an editabe TextField. The width
-/// proportion of the label and the TextField is identical.
+  /// Create a row with a Text label and an editabe TextField. The width
+  /// proportion of the label and the TextField is identical.
   Widget createEditableRowFunction({
     Key? valueTextFieldWidgetKey, // key set to the TextField widget
     // containing the value
@@ -463,54 +463,54 @@ mixin ScreenMixin {
     );
   }
 
-/// Create a row with a Text label and an editabe TextField. The width
-/// proportion of the label and the TextField can be adjusted by setting
-/// the flexValue parameter. The flexValue parameter is set to 6 for the
-/// modify title dialog and to 4 for the rename file dialog.
-Widget createFlexibleEditableRowFunction({
-  Key? valueTextFieldWidgetKey, // key set to the TextField widget
-  //                               containing the value
-  required BuildContext context,
-  required String label,
-  required TextEditingController controller,
-  FocusNode? textFieldFocusNode,
-  bool isCursorAtStart = true,
-  required int flexValue,
-}) {
-  if (isCursorAtStart) {
-    // Set the cursor position at the start of the TextField,
-    // otherwise the cursor is at the end of the TextField.
-    controller.value = controller.value.copyWith(
-      selection: const TextSelection.collapsed(offset: 0),
+  /// Create a row with a Text label and an editabe TextField. The width
+  /// proportion of the label and the TextField can be adjusted by setting
+  /// the flexValue parameter. The flexValue parameter is set to 6 for the
+  /// modify title dialog and to 4 for the rename file dialog.
+  Widget createFlexibleEditableRowFunction({
+    Key? valueTextFieldWidgetKey, // key set to the TextField widget
+    //                               containing the value
+    required BuildContext context,
+    required String label,
+    required TextEditingController controller,
+    FocusNode? textFieldFocusNode,
+    bool isCursorAtStart = true,
+    required int flexValue,
+  }) {
+    if (isCursorAtStart) {
+      // Set the cursor position at the start of the TextField,
+      // otherwise the cursor is at the end of the TextField.
+      controller.value = controller.value.copyWith(
+        selection: const TextSelection.collapsed(offset: 0),
+      );
+    }
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Flexible(
+            flex: 1,
+            child: Text(
+              label,
+              style: kDialogLabelStyle,
+            ),
+          ),
+          const SizedBox(width: 5.0),
+          Flexible(
+            flex: flexValue,
+            child: TextField(
+              key: valueTextFieldWidgetKey,
+              style: kDialogTextFieldStyle,
+              controller: controller,
+              decoration: getDialogTextFieldInputDecoration(),
+              focusNode: textFieldFocusNode,
+            ),
+          ),
+        ],
+      ),
     );
   }
-  return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 5.0),
-    child: Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Flexible(
-          flex: 1,
-          child: Text(
-            label,
-            style: kDialogLabelStyle,
-          ),
-        ),
-        const SizedBox(width: 5.0),
-        Flexible(
-          flex: flexValue,
-          child: TextField(
-            key: valueTextFieldWidgetKey,
-            style: kDialogTextFieldStyle,
-            controller: controller,
-            decoration: getDialogTextFieldInputDecoration(),
-            focusNode: textFieldFocusNode,
-          ),
-        ),
-      ],
-    ),
-  );
-}
 
   Widget createCheckboxRowFunction({
     Key? checkBoxWidgetKey, // key set to the CheckBox widget
@@ -578,13 +578,19 @@ Widget createFlexibleEditableRowFunction({
     required Icon iconToFormat,
     required bool isIconHighlighted,
     bool isIconDisabled = false,
+    bool isAudioAtEndPosition = false,
     double iconSize = 18.0,
     double radius = 10.0,
   }) {
+    Brightness appBrightness = Theme.of(context).brightness;
     CircleAvatar circleAvatar; // This will hold the content of the play button
     Color iconNotHighlightedColor = isIconDisabled
         ? kDarkAndLightDisabledIconColor
-        : kDarkAndLightEnabledIconColor;
+        : isAudioAtEndPosition
+            ? appBrightness == Brightness.dark
+                ? kSliderThumbColorInDarkMode
+                : kSliderThumbColorInLightMode
+            : kDarkAndLightEnabledIconColor;
 
     if (isIconHighlighted) {
       circleAvatar = CircleAvatar(
@@ -603,7 +609,7 @@ Widget createFlexibleEditableRowFunction({
       // i.e. if it was played until the end and stopped.
       Color backgroundColor;
 
-      if (Theme.of(context).brightness == Brightness.dark) {
+      if (appBrightness == Brightness.dark) {
         backgroundColor = Colors.black;
       } else {
         backgroundColor = Colors.white;

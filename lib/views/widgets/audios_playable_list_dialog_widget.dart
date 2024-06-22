@@ -62,8 +62,7 @@ class _AudioPlayableListDialogWidgetState
     Audio? currentAudio = audioGlobalPlayerVM.currentAudio;
 
     // Retrieves the screen width using MediaQuery
-    double maxListItemWidth =
-        computeMaxDialogListItemWidth(context);
+    double maxListItemWidth = computeMaxDialogListItemWidth(context);
 
     List<Audio> playableAudioLst;
 
@@ -330,7 +329,10 @@ class _AudioPlayableListDialogWidgetState
       audioTitleTextColor = Colors.blue;
       audioTitleBackgroundColor = null;
     } else {
-      audioTitleTextColor = null;
+      // is not listened
+      audioTitleTextColor = (isDarkTheme)
+          ? Colors.white
+          : Colors.black;
       audioTitleBackgroundColor = null;
     }
 

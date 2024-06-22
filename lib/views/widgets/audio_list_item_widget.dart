@@ -454,6 +454,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
         isIconHighlighted: false, // since audio at position zero
         //                           or end, the icon is not
         //                           highlighted
+        isAudioAtEndPosition: audio.audioPositionSeconds != 0
       );
     }
 
