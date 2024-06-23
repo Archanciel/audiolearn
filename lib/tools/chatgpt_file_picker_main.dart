@@ -4,6 +4,10 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:path/path.dart' as path;
 
+import '../constants.dart';
+
+
+
 void main() {
   runApp(MyApp());
 }
@@ -30,8 +34,10 @@ class _FilePickerScreenState extends State<FilePickerScreen> {
   List<PlatformFile>? _filePickerSelectedFiles;
   String? _targetDirectory;
 
-  Future<void> _pickDirectory() async {
-    String? directoryPath = await FilePicker.platform.getDirectoryPath();
+  Future<void> _filePickerPickDirectory() async {
+    String? directoryPath = await FilePicker.platform.getDirectoryPath(
+      initialDirectory: '$kApplicationPathWindows',
+    );
 
     if (directoryPath != null) {
       setState(() {
@@ -45,6 +51,7 @@ class _FilePickerScreenState extends State<FilePickerScreen> {
       type: FileType.custom,
       allowedExtensions: ['mp3'],
       allowMultiple: true,
+      initialDirectory: '$kApplicationPathWindows${path.separator}S8 audio',
     );
 
     if (result != null) {
@@ -54,13 +61,14 @@ class _FilePickerScreenState extends State<FilePickerScreen> {
     }
   }
 
-  void _copyFiles() async {
+  Future<void> _copyFiles() async {
     if (_filePickerSelectedFiles != null && _targetDirectory != null) {
       for (PlatformFile file in _filePickerSelectedFiles!) {
         String fileName = file.path!.split(path.separator).last;
         File sourceFile = File(file.path!);
-        File targetFile = File('${_targetDirectory!}${path.separator}$fileName');
-        sourceFile.copySync (targetFile.path);
+        File targetFile =
+            File('${_targetDirectory!}${path.separator}$fileName');
+        await sourceFile.copy(targetFile.path);
       }
     }
   }
@@ -76,15 +84,21 @@ class _FilePickerScreenState extends State<FilePickerScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
-              onPressed: _filePickerPickFiles,
+              onPressed: () async {
+                await _filePickerPickFiles();
+              },
               child: const Text('File Picker Select MP3 Files'),
             ),
             ElevatedButton(
-              onPressed: _pickDirectory,
+              onPressed: () async {
+                await _filePickerPickDirectory();
+              },
               child: const Text('Select Target Directory'),
             ),
             ElevatedButton(
-              onPressed: _copyFiles,
+              onPressed: () async {
+                await _copyFiles();
+              },
               child: const Text('Copy Files'),
             ),
             _filePickerSelectedFiles != null
