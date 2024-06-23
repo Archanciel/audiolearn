@@ -628,7 +628,7 @@ void main() {
     ) async {
       const String audioPlayerSelectedPlaylistTitle =
           'audio_player_view_2_shorts_test';
-      const String lastDownloadedAudioTitle = 'Really short video';
+      const String previouslyDownloadedAudioTitle = 'Really short video';
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
@@ -640,22 +640,24 @@ void main() {
       // playlist in order to open the AudioPlayerView displaying
       // the not yet played audio.
 
-      // First, validate the play/pause button of the previously
-      // downloaded Audio item InkWell widget and obtain again the
-      // previously downloaded Audio item InkWell widget finder
+      // First, validate the play/pause button of the fully played
+      // previously downloaded Audio item InkWell widget and obtain
+      // again the previously downloaded Audio item InkWell widget
+      // finder
 
-      Finder lastDownloadedAudioListTileInkWellFinder =
+      Finder previouslyDownloadedAudioListTileInkWellFinder =
           IntegrationTestUtil.validateInkWellButton(
         tester: tester,
-        audioTitle: lastDownloadedAudioTitle,
+        audioTitle: previouslyDownloadedAudioTitle,
         expectedIcon: Icons.play_arrow,
-        expectedIconColor: kDarkAndLightEnabledIconColor,
+        expectedIconColor:
+            kSliderThumbColorInDarkMode, // Fully played audio item play icon color
         expectedIconBackgroundColor: Colors.black,
       );
 
       // Now tap on the InkWell to play the audio and draw to the audio
       // player screen
-      await tester.tap(lastDownloadedAudioListTileInkWellFinder);
+      await tester.tap(previouslyDownloadedAudioListTileInkWellFinder);
       await tester.pumpAndSettle();
 
       // Without delaying, the playing audio and dragging to the
@@ -675,29 +677,28 @@ void main() {
       await tester.pumpAndSettle();
 
       // Again, validate the play/pause button of the previously
-      // downloaded Audio item InkWell widget and obtain again the
-      // previously downloaded Audio item InkWell widget finder
-      lastDownloadedAudioListTileInkWellFinder =
-          lastDownloadedAudioListTileInkWellFinder =
+      // downloaded Audio item InkWell widget
+      previouslyDownloadedAudioListTileInkWellFinder =
+          previouslyDownloadedAudioListTileInkWellFinder =
               IntegrationTestUtil.validateInkWellButton(
         tester: tester,
-        audioTitle: lastDownloadedAudioTitle,
+        audioTitle: previouslyDownloadedAudioTitle,
         expectedIcon: Icons.pause,
         expectedIconColor: Colors.white,
         expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
       );
 
       // Now tap on the InkWell to pause the audio
-      await tester.tap(lastDownloadedAudioListTileInkWellFinder);
+      await tester.tap(previouslyDownloadedAudioListTileInkWellFinder);
       await tester.pumpAndSettle();
 
       // Verify if the play icon is present as well as its color and
       // its enclosing CircleAvatar background color
 
-      lastDownloadedAudioListTileInkWellFinder =
+      previouslyDownloadedAudioListTileInkWellFinder =
           IntegrationTestUtil.validateInkWellButton(
         tester: tester,
-        audioTitle: lastDownloadedAudioTitle,
+        audioTitle: previouslyDownloadedAudioTitle,
         expectedIcon: Icons.play_arrow,
         expectedIconColor: Colors.white,
         expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
@@ -705,7 +706,7 @@ void main() {
 
       // Now tap on the InkWell to play the previously paused audio
       // and draw to the audio player screen
-      await tester.tap(lastDownloadedAudioListTileInkWellFinder);
+      await tester.tap(previouslyDownloadedAudioListTileInkWellFinder);
       await tester.pumpAndSettle();
 
       // Without delaying, the playing audio and dragging to the
@@ -1265,7 +1266,7 @@ void main() {
         audioTitle: lastDownloadedAudioTitle,
         audioStateExpectedValue: "Terminé",
         expectedAudioRightIcon: Icons.play_arrow,
-        expectedAudioRightIconColor: kDarkAndLightEnabledIconColor,
+        expectedAudioRightIconColor: kSliderThumbColorInDarkMode,
         expectedAudioRightIconSurroundedColor: Colors.black,
       );
 
@@ -1882,6 +1883,18 @@ void main() {
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
+      // First, validate the play/pause button of the almost fully
+      // played first downloaded Audio item InkWell widget
+
+      IntegrationTestUtil.validateInkWellButton(
+        tester: tester,
+        audioTitle: firstDownloadedAudioTitle,
+        expectedIcon: Icons.play_arrow,
+        expectedIconColor:
+            kSliderThumbColorInDarkMode, // 2 seconds before end (=> fully played) audio item play icon color
+        expectedIconBackgroundColor: Colors.black,
+      );
+
       // First, get the first downloaded Audio ListTile Text
       // widget finder and tap on it
       final Finder firstDownloadedAudioListTileTextWidgetFinder =
@@ -1919,6 +1932,24 @@ void main() {
       // Verify if the last downloaded audio title is displayed
       expect(
           find.text(lastDownloadedAudioTitleOnAudioPlayerView), findsOneWidget);
+
+      // go back to the playlist download view
+      await tester.tap(find.byKey(const Key('playlistDownloadViewIconButton')));
+      await tester.pumpAndSettle();
+
+      // Now, validate the play/pause button of the now fully played
+      // first downloaded Audio item InkWell widget and obtain
+      // again the previously downloaded Audio item InkWell widget
+      // finder
+
+      IntegrationTestUtil.validateInkWellButton(
+        tester: tester,
+        audioTitle: firstDownloadedAudioTitle,
+        expectedIcon: Icons.play_arrow,
+        expectedIconColor:
+            kSliderThumbColorInDarkMode, // Fully played audio item play icon color
+        expectedIconBackgroundColor: Colors.black,
+      );
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -2132,6 +2163,16 @@ void main() {
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
+      // verify the fully played third downloaded audio item play icon
+      // layout
+      IntegrationTestUtil.validateInkWellButton(
+        tester: tester,
+        audioTitle: thirdDownloadedAudioTitle,
+        expectedIcon: Icons.play_arrow,
+        expectedIconColor: kSliderThumbColorInDarkMode, // Fully played audio item play icon color
+        expectedIconBackgroundColor: Colors.black,
+      );
+
       // First, get the ListTile Text widget finder of the
       // third downloaded audio and tap on it to open the audio
       // player view.
@@ -2155,6 +2196,17 @@ void main() {
           find.byKey(const ValueKey('playlistDownloadViewIconButton'));
       await tester.tap(audioPlayerNavButton);
       await tester.pumpAndSettle();
+
+      // verify the now unplayed third downloaded audio item play icon
+      // layout
+      IntegrationTestUtil.validateInkWellButton(
+        tester: tester,
+        audioTitle: thirdDownloadedAudioTitle,
+        expectedIcon: Icons.play_arrow,
+        expectedIconColor: kDarkAndLightEnabledIconColor, // Unplayed audio item play icon color
+        expectedIconBackgroundColor: Colors.black,
+      );
+
 
       // Then, get the first downloaded Audio ListTile Text
       // widget finder and tap on it
@@ -2191,9 +2243,30 @@ void main() {
         maxPositionTimeStr: '0:03',
       );
 
-      // Verify if the last downloaded audio title is displayed
+      // Verify if the third downloaded audio title is displayed
       expect(find.text(thirdDownloadedAudioTitleOnAudioPlayerView),
           findsOneWidget);
+
+      // Now tap to the go to end button to reset the third downloaded
+      // audio to fully played state
+
+      await tester
+          .tap(find.byKey(const Key('audioPlayerViewSkipToEndButton')));
+      await tester.pumpAndSettle();
+
+      // Go back to the playlist download view
+      await tester.tap(audioPlayerNavButton);
+      await tester.pumpAndSettle();
+
+      // verify the now fully played third downloaded audio item play icon
+      // layout
+      IntegrationTestUtil.validateInkWellButton(
+        tester: tester,
+        audioTitle: thirdDownloadedAudioTitle,
+        expectedIcon: Icons.play_arrow,
+        expectedIconColor: kSliderThumbColorInDarkMode, // Unplayed audio item play icon color
+        expectedIconBackgroundColor: Colors.black,
+      );
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -2315,7 +2388,7 @@ void main() {
     const Color fullyPlayedAudioTitleColor = kSliderThumbColorInDarkMode;
     const Color currentlyPlayingAudioTitleTextColor = Colors.white;
     const Color currentlyPlayingAudioTitleTextBackgroundColor = Colors.blue;
-    const Color? unplayedAudioTitleTextColor = null;
+    const Color unplayedAudioTitleTextColor = Colors.white;
     const Color partiallyPlayedAudioTitleTextdColor = Colors.blue;
 
     testWidgets('All, then only no played or partially played, audio displayed',
@@ -6421,7 +6494,7 @@ Finder findIconButtonWithIcon(IconData iconData) {
 Future<void> checkAudioTextColor({
   required WidgetTester tester,
   required String audioTitle,
-  required Color? expectedTitleTextColor,
+  required Color expectedTitleTextColor,
   required Color? expectedTitleTextBackgroundColor,
 }) async {
   // Find the Text widget by its text content
