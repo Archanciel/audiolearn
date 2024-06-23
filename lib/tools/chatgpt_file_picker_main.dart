@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:path/path.dart' as path;
+import 'package:file_picker/file_picker.dart';
 
 import '../constants.dart';
 
@@ -73,6 +72,18 @@ class _FilePickerScreenState extends State<FilePickerScreen> {
     }
   }
 
+  Future<void> _moveFiles() async {
+    if (_filePickerSelectedFiles != null && _targetDirectory != null) {
+      for (PlatformFile file in _filePickerSelectedFiles!) {
+        String fileName = file.path!.split(path.separator).last;
+        File sourceFile = File(file.path!);
+        File targetFile =
+            File('${_targetDirectory!}${path.separator}$fileName');
+        await sourceFile.rename(targetFile.path);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,6 +111,12 @@ class _FilePickerScreenState extends State<FilePickerScreen> {
                 await _copyFiles();
               },
               child: const Text('Copy Files'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                await _moveFiles();
+              },
+              child: const Text('Move Files'),
             ),
             _filePickerSelectedFiles != null
                 ? Text('Selected files: ${_filePickerSelectedFiles!.length}')
