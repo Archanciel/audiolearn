@@ -15,6 +15,11 @@ class Audio {
   static DateFormat downloadDateTimePrefixFormatter =
       DateFormat('yyMMdd-HHmmss');
   static DateFormat uploadDateSuffixFormatter = DateFormat('yy-MM-dd');
+
+  // Number of seconds to consider that the audio was fully listened:
+  // If its current position is greater or equal to its total duration
+  // minus fullyListenedBufferSeconds seconds, then the audio is considered
+  // as being fully listened.
   static int fullyListenedBufferSeconds = 15;
 
   // Playlist in which the video is referenced
