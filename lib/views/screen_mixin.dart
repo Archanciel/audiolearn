@@ -573,12 +573,18 @@ mixin ScreenMixin {
     return maxDropdownMenuItemWidth;
   }
 
+  /// {isIconColorStronger} is set to true if the icon color is
+  /// stronger than the default icon color. This is the case
+  /// when the icon formatted is the play icon of an audio item
+  /// widget located in the playlist view. The icon color is stronger
+  /// if the audio is fully played. In this case, the icon color
+  /// is the same as the slider thumb color.
   CircleAvatar formatIconBackAndForGroundColor({
     required BuildContext context,
     required Icon iconToFormat,
     required bool isIconHighlighted,
     bool isIconDisabled = false,
-    bool isAudioAtStartPosition = false,
+    bool isIconColorStronger = false,
     double iconSize = 18.0,
     double radius = 10.0,
   }) {
@@ -586,12 +592,11 @@ mixin ScreenMixin {
     CircleAvatar circleAvatar; // This will hold the content of the play button
     Color iconNotHighlightedColor = isIconDisabled
         ? kDarkAndLightDisabledIconColor
-        : isAudioAtStartPosition
-            ? kDarkAndLightEnabledIconColor
-            : appBrightness == Brightness.dark
+        : isIconColorStronger
+            ? appBrightness == Brightness.dark
                 ? kSliderThumbColorInDarkMode
                 : kSliderThumbColorInLightMode
-            ;
+            : kDarkAndLightEnabledIconColor;
 
     if (isIconHighlighted) {
       circleAvatar = CircleAvatar(

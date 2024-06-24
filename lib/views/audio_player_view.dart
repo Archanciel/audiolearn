@@ -377,7 +377,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
           isIconHighlighted: false, // since no comments are defined
           //                           for the current audio the icon
           //                           isn,t highlighted
-          isAudioAtStartPosition: true, // sets the icon color to normal enabled
+          isIconColorStronger: false, // sets the icon color to normal
         );
       } else {
         circleAvatar = formatIconBackAndForGroundColor(
