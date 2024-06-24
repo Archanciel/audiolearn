@@ -1854,7 +1854,7 @@ void main() {
     });
   });
   group(
-      'From first downloaded audio, skip to next not fully played audio ignoring 5 already fully listened audios tests.',
+      'From first downloaded audio, skip to next not fully played audio ignoring 5 already fully listened audios tests. Verify also the audio item play icon color in playlist download view.',
       () {
     testWidgets(
         'Next fully unread audio also the last downloaded audio of the playlist.',
@@ -2134,7 +2134,7 @@ void main() {
       );
     });
     testWidgets(
-        'User sets to 0 the position of third downloaded audio of the playlist.',
+        'User sets to 0 the position of third downloaded audio of the playlist. Verify also the audio item play icon color in playlist download view.',
         (WidgetTester tester) async {
       const String audioPlayerSelectedPlaylistTitle =
           'S8 audio'; // Youtube playlist
