@@ -504,10 +504,6 @@ class AudioPlayerVM extends ChangeNotifier {
     required Duration posNegPositionDurationChange,
     bool isUndoRedo = false,
   }) async {
-    // Total duration of audio
-    Duration currentAudioDuration =
-        _currentAudio!.audioDuration ?? Duration.zero;
-
     Duration newAudioPosition =
         _currentAudioPosition + posNegPositionDurationChange;
 
@@ -518,11 +514,18 @@ class AudioPlayerVM extends ChangeNotifier {
     // This fixes the bug when clicking on >> after having clicked
     // on >| or clicking on << after having clicked on |<.
 
+    // Total duration of audio
+    Duration currentAudioDuration =
+        _currentAudio!.audioDuration ?? Duration.zero;
+
     if (newAudioPosition < Duration.zero) {
       newAudioPosition = Duration.zero;
     } else if (newAudioPosition > currentAudioDuration) {
       newAudioPosition = currentAudioDuration;
     }
+
+    modifyCurrentAudioPlayingOrPausedWithPositionBetweenAudioStartAndEnd(
+        newAudioPosition: newAudioPosition,);
 
     if (!isUndoRedo) {
       Command command = SetAudioPositionCommand(
@@ -552,6 +555,26 @@ class AudioPlayerVM extends ChangeNotifier {
     updateAndSaveCurrentAudio(forceSave: true);
 
     notifyListeners();
+  }
+
+  /// Method called when the user clicks on the audio slider or on the
+  /// audio position buttons (<<, >>, |<, >|). The utility of this method
+  /// is to enable to modify the audio play icon color in the
+  /// AudioListItemWidget used in the PlaylistDownloadView.
+  void
+      modifyCurrentAudioPlayingOrPausedWithPositionBetweenAudioStartAndEnd({
+    required Duration newAudioPosition,
+  }) {
+    if (newAudioPosition > Duration.zero &&
+        newAudioPosition <
+            (_currentAudio!.audioDuration! -
+                Duration(seconds: Audio.fullyListenedBufferSeconds))) {
+      _currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd =
+          true;
+    } else {
+      _currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd =
+          false;
+    }
   }
 
   /// Method called when the user clicks on the audio slider.
@@ -586,6 +609,10 @@ class AudioPlayerVM extends ChangeNotifier {
     required Duration durationPosition,
     bool isUndoRedo = false,
   }) async {
+    
+    modifyCurrentAudioPlayingOrPausedWithPositionBetweenAudioStartAndEnd(
+        newAudioPosition: durationPosition,);
+
     if (!isUndoRedo) {
       Command command = SetAudioPositionCommand(
         audioPlayerVM: this,
@@ -601,7 +628,7 @@ class AudioPlayerVM extends ChangeNotifier {
     // necessary so that the audio position is stored on the
     // audio
     _currentAudio!.audioPositionSeconds = _currentAudioPosition.inSeconds;
-
+        
     await modifyAudioPlayerPluginPosition(durationPosition);
 
     notifyListeners();

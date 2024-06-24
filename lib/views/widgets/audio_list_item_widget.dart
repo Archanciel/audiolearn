@@ -449,13 +449,12 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
       // (i.e. its position is zero or its position is at the end
       // of the audio file)
       circleAvatar = formatIconBackAndForGroundColor(
-        context: context,
-        iconToFormat: const Icon(Icons.play_arrow),
-        isIconHighlighted: false, // since audio at position zero
-        //                           or end, the icon is not
-        //                           highlighted
-        isAudioAtEndPosition: audio.audioPositionSeconds != 0
-      );
+          context: context,
+          iconToFormat: const Icon(Icons.play_arrow),
+          isIconHighlighted: false, // since audio is at start or end
+          //                           position, the icon is not
+          //                           highlighted
+          isAudioAtStartPosition: audio.audioPositionSeconds == 0);
     }
 
     // Return the icon wrapped inside a SizedBox to ensure

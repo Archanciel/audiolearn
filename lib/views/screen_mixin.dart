@@ -578,7 +578,7 @@ mixin ScreenMixin {
     required Icon iconToFormat,
     required bool isIconHighlighted,
     bool isIconDisabled = false,
-    bool isAudioAtEndPosition = false,
+    bool isAudioAtStartPosition = false,
     double iconSize = 18.0,
     double radius = 10.0,
   }) {
@@ -586,11 +586,12 @@ mixin ScreenMixin {
     CircleAvatar circleAvatar; // This will hold the content of the play button
     Color iconNotHighlightedColor = isIconDisabled
         ? kDarkAndLightDisabledIconColor
-        : isAudioAtEndPosition
-            ? appBrightness == Brightness.dark
+        : isAudioAtStartPosition
+            ? kDarkAndLightEnabledIconColor
+            : appBrightness == Brightness.dark
                 ? kSliderThumbColorInDarkMode
                 : kSliderThumbColorInLightMode
-            : kDarkAndLightEnabledIconColor;
+            ;
 
     if (isIconHighlighted) {
       circleAvatar = CircleAvatar(
