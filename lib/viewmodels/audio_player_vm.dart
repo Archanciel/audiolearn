@@ -277,10 +277,10 @@ class AudioPlayerVM extends ChangeNotifier {
 
     /// Must be called even if rewiding was not necessary. For example,
     /// if the user change the position of a not yet played audio and then
-    /// plays an audio previously downloaded, once this audio ends, the
+    /// plays an audio previously downloaded, once this audio ends, if
+    /// this instruction was located inside the previous if block, the
     /// not yet played audio starts playing not at the changed position,
-    /// but at the start position if this instruction was located inside
-    /// the previous if block.
+    /// but at the start position !
     ///
     /// This test checks this bug fix:
     ///
@@ -359,6 +359,10 @@ class AudioPlayerVM extends ChangeNotifier {
       });
 
       _audioPlayerPlugin!.onPositionChanged.listen((position) {
+        // This method is not called when the audio position is
+        // changed by the user clicking on the audio slider or
+        // on the audio position buttons (<<, >>, |<, >|).
+
         if (_audioPlayerPlugin!.state == PlayerState.playing) {
           // this test avoids that when selecting another audio
           // the selected audio position is set to 0 since the
@@ -559,8 +563,10 @@ class AudioPlayerVM extends ChangeNotifier {
 
   /// Method called when the user clicks on the audio slider or on the
   /// audio position buttons (<<, >>, |<, >|). The utility of this method
-  /// is to enable to modify the audio play icon color in the
-  /// AudioListItemWidget used in the PlaylistDownloadView.
+  /// is to set the current audio
+  /// isPlayingOrPausedWithPositionBetweenAudioStartAndEnd value. This
+  /// instance variable is used to modify the inkwell audio play icon color
+  /// in the AudioListItemWidget used in the PlaylistDownloadView.
   void
       modifyCurrentAudioPlayingOrPausedWithPositionBetweenAudioStartAndEnd({
     required Duration newAudioPosition,
@@ -629,6 +635,11 @@ class AudioPlayerVM extends ChangeNotifier {
     // audio
     _currentAudio!.audioPositionSeconds = _currentAudioPosition.inSeconds;
         
+    // This method must be executed even if the audio player plugin
+    // position is set in the _rewindAudioPositionBasedOnPauseDuration()
+    // method called by the playCurrentAudio() method. This is necessary
+    // so that if we click on the slider or on an audio position button
+    // while the audio is playing, the audio play position is changed.
     await modifyAudioPlayerPluginPosition(durationPosition);
 
     notifyListeners();
