@@ -395,7 +395,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
         return Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _buildPlayOrPauseIcon(
+            _buildPlayOrPauseInkwellButton(
               context: context,
               audioGlobalPlayerVM: audioGlobalPlayerVM,
               audio: audio,
@@ -413,7 +413,13 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
   /// if not playing, is it paused at a certain position or is
   /// its position zero, the icon type and icon color are different.
   /// The current application theme is also integrated.
-  InkWell _buildPlayOrPauseIcon({
+  ///
+  /// Using InkWell instead of IconButton enables to use CircleAvatar
+  /// as a button. IconButton doesn't allow to use CircleAvatar as a
+  /// button. CircleAvatar is used to display the bookmark icon which
+  /// can be highlighted or not and disabled or not and be enclosed in
+  /// a colored circle.
+  InkWell _buildPlayOrPauseInkwellButton({
     required BuildContext context,
     required AudioPlayerVM audioGlobalPlayerVM,
     required Audio audio,
