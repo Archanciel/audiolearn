@@ -1,4 +1,7 @@
 import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:integration_test/integration_test.dart';
 
 import 'package:audiolearn/models/comment.dart';
 import 'package:audiolearn/models/playlist.dart';
@@ -11,9 +14,6 @@ import 'package:audiolearn/views/widgets/comment_list_add_dialog_widget.dart';
 import 'package:audiolearn/views/widgets/playlist_comment_dialog_widget.dart';
 import 'package:audiolearn/views/widgets/set_value_to_target_dialog_widget.dart';
 import 'package:audiolearn/views/widgets/warning_message_display_widget.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:integration_test/integration_test.dart';
 import 'package:path/path.dart' as path;
 import 'package:audiolearn/constants.dart';
 import 'package:audiolearn/utils/dir_util.dart';
@@ -2169,7 +2169,8 @@ void main() {
         tester: tester,
         audioTitle: thirdDownloadedAudioTitle,
         expectedIcon: Icons.play_arrow,
-        expectedIconColor: kSliderThumbColorInDarkMode, // Fully played audio item play icon color
+        expectedIconColor:
+            kSliderThumbColorInDarkMode, // Fully played audio item play icon color
         expectedIconBackgroundColor: Colors.black,
       );
 
@@ -2203,10 +2204,10 @@ void main() {
         tester: tester,
         audioTitle: thirdDownloadedAudioTitle,
         expectedIcon: Icons.play_arrow,
-        expectedIconColor: kDarkAndLightEnabledIconColor, // Unplayed audio item play icon color
+        expectedIconColor:
+            kDarkAndLightEnabledIconColor, // Unplayed audio item play icon color
         expectedIconBackgroundColor: Colors.black,
       );
-
 
       // Then, get the first downloaded Audio ListTile Text
       // widget finder and tap on it
@@ -2250,8 +2251,7 @@ void main() {
       // Now tap to the go to end button to reset the third downloaded
       // audio to fully played state
 
-      await tester
-          .tap(find.byKey(const Key('audioPlayerViewSkipToEndButton')));
+      await tester.tap(find.byKey(const Key('audioPlayerViewSkipToEndButton')));
       await tester.pumpAndSettle();
 
       // Go back to the playlist download view
@@ -2264,7 +2264,8 @@ void main() {
         tester: tester,
         audioTitle: thirdDownloadedAudioTitle,
         expectedIcon: Icons.play_arrow,
-        expectedIconColor: kSliderThumbColorInDarkMode, // Unplayed audio item play icon color
+        expectedIconColor:
+            kSliderThumbColorInDarkMode, // Unplayed audio item play icon color
         expectedIconBackgroundColor: Colors.black,
       );
 

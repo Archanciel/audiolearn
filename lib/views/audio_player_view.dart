@@ -712,6 +712,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                             6.0), // Adjust the radius as you need
                   ),
                   child: Slider(
+                    key: const Key('audioPlayerViewAudioSlider'),
                     min: 0.0,
                     max: maxDuration,
                     value: sliderValue,
