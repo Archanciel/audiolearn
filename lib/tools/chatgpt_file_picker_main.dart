@@ -6,10 +6,12 @@ import 'package:file_picker/file_picker.dart';
 import '../constants.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -17,12 +19,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: FilePickerScreen(),
+      home: const FilePickerScreen(),
     );
   }
 }
 
 class FilePickerScreen extends StatefulWidget {
+  const FilePickerScreen({super.key});
+
   @override
   _FilePickerScreenState createState() => _FilePickerScreenState();
 }
@@ -33,7 +37,7 @@ class _FilePickerScreenState extends State<FilePickerScreen> {
 
   Future<void> _filePickerPickDirectory() async {
     String? directoryPath = await FilePicker.platform.getDirectoryPath(
-      initialDirectory: '$kApplicationPathWindows',
+      initialDirectory: kApplicationPathWindows,
     );
 
     if (directoryPath != null) {

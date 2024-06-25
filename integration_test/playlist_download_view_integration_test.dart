@@ -435,7 +435,7 @@ void main() {
       // Ensure the URL TextField was not emptied
       urlTextField =
           tester.widget(find.byKey(const Key('playlistUrlTextField')));
-      expect(urlTextField.controller!.text, '$youtubePlaylistUrl');
+      expect(urlTextField.controller!.text, youtubePlaylistUrl);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
