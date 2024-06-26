@@ -602,6 +602,10 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     required BuildContext context,
   }) {
     return Consumer<AudioPlayerVM>(
+      // The reason why this widget is consumer of the AudioPlayerVM
+      // that by clicking on the current audio title, the user can
+      // select another audio to play. This action will require to
+      // update the current audio title displayed in the audio player.
       builder: (context, globalAudioPlayerVM, child) {
         String? currentAudioTitleWithDuration =
             globalAudioPlayerVM.getCurrentAudioTitleWithDuration();
