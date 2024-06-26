@@ -52,8 +52,6 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
       listen: false,
     );
 
-    Audio audio;
-
     if (audioGlobalPlayerVM.currentAudio == null) {
       // In this case, the appbar leading popup menu has no menu items
       return PopupMenuButton<AudioPopupMenuAction>(
@@ -63,8 +61,6 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
         icon: const Icon(Icons.menu),
         onSelected: (AudioPopupMenuAction value) {},
       );
-    } else {
-      audio = audioGlobalPlayerVM.currentAudio!;
     }
 
     return PopupMenuButton<AudioPopupMenuAction>(
@@ -107,7 +103,7 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
         switch (value) {
           case AudioPopupMenuAction.openYoutubeVideo:
             openUrlInExternalApp(
-              url: audio.videoUrl,
+              url: audioGlobalPlayerVM.currentAudio!.videoUrl,
               warningMessageVM: Provider.of<WarningMessageVM>(
                 context,
                 listen: false,
@@ -115,17 +111,19 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
             );
             break;
           case AudioPopupMenuAction.copyYoutubeVideoUrl:
-            Clipboard.setData(ClipboardData(text: audio.videoUrl));
+            Clipboard.setData(ClipboardData(
+                text: audioGlobalPlayerVM.currentAudio!.videoUrl));
             break;
           case AudioPopupMenuAction.displayAudioInfo:
             showDialog<void>(
               context: context,
               builder: (BuildContext context) => AudioInfoDialogWidget(
-                audio: audio,
+                audio: audioGlobalPlayerVM.currentAudio!,
               ),
             );
             break;
           case AudioPopupMenuAction.audioComment:
+            Audio audio = audioGlobalPlayerVM.currentAudio!;
             audioGlobalPlayerVM.setCurrentAudio(audio).then((value) {
               showDialog<void>(
                 context: context,
@@ -146,21 +144,24 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
                 //            tapping outside the dialog
                 builder: (BuildContext context) =>
                     AudioModificationDialogWidget(
-                      audio: audio,
+                      audio: audioGlobalPlayerVM.currentAudio!,
                       audioModificationType:
                           AudioModificationType.renameAudioFile,
                     ));
             break;
           case AudioPopupMenuAction.modifyAudioTitle:
+            Audio audio = audioGlobalPlayerVM.currentAudio!;
             showDialog<void>(
               context: context,
               barrierDismissible:
                   false, // This line prevents the dialog from closing when
               //            tapping outside the dialog
-              builder: (BuildContext context) => AudioModificationDialogWidget(
-                audio: audio,
-                audioModificationType: AudioModificationType.modifyAudioTitle,
-              ),
+              builder: (BuildContext context) {
+                return AudioModificationDialogWidget(
+                  audio: audio,
+                  audioModificationType: AudioModificationType.modifyAudioTitle,
+                );
+              },
             ).then((resultMap) async {
               AudioPlayerVM audioGlobalPlayerVM = Provider.of<AudioPlayerVM>(
                 context,
