@@ -19,19 +19,6 @@ import 'comment_list_add_dialog_widget.dart';
 import 'playlist_one_selectable_dialog_widget.dart';
 import 'audio_modification_dialog_widget.dart';
 
-enum AudioPopupMenuAction {
-  openYoutubeVideo,
-  copyYoutubeVideoUrl,
-  displayAudioInfo,
-  renameAudioFile,
-  moveAudioToPlaylist,
-  copyAudioToPlaylist,
-  deleteAudio,
-  deleteAudioFromPlaylistAswell,
-  audioComment,
-  modifyAudioTitle,
-}
-
 /// This widget is used in the PlaylistDownloadView ListView which
 /// display the playable audios of the selected playlist.
 /// AudioListItemWidget displays the audio item content as well
@@ -56,10 +43,10 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
 
   @override
   Widget build(BuildContext context) {
-    final AudioPlayerVM audioGlobalPlayerVM =
-        Provider.of<AudioPlayerVM>(context, listen: false);
-    final WarningMessageVM warningMessageVM =
-        Provider.of<WarningMessageVM>(context, listen: false);
+    final AudioPlayerVM audioGlobalPlayerVM = Provider.of<AudioPlayerVM>(
+      context,
+      listen: false,
+    );
 
     return ListTile(
       // generating the audio item left (leading) menu ...
@@ -138,7 +125,10 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
                 case AudioPopupMenuAction.openYoutubeVideo:
                   openUrlInExternalApp(
                     url: audio.videoUrl,
-                    warningMessageVM: warningMessageVM,
+                    warningMessageVM: Provider.of<WarningMessageVM>(
+                      context,
+                      listen: false,
+                    ),
                   );
                   break;
                 case AudioPopupMenuAction.copyYoutubeVideoUrl:
@@ -147,11 +137,9 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
                 case AudioPopupMenuAction.displayAudioInfo:
                   showDialog<void>(
                     context: context,
-                    builder: (BuildContext context) {
-                      return AudioInfoDialogWidget(
+                    builder: (BuildContext context) => AudioInfoDialogWidget(
                         audio: audio,
-                      );
-                    },
+                      ),
                   );
                   break;
                 case AudioPopupMenuAction.audioComment:
@@ -173,13 +161,11 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
                     barrierDismissible:
                         false, // This line prevents the dialog from closing when
                     //            tapping outside the dialog
-                    builder: (BuildContext context) {
-                      return AudioModificationDialogWidget(
+                    builder: (BuildContext context) => AudioModificationDialogWidget(
                         audio: audio,
                         audioModificationType:
                             AudioModificationType.renameAudioFile,
-                      );
-                    },
+                      ),
                   );
                   break;
                 case AudioPopupMenuAction.modifyAudioTitle:
@@ -188,13 +174,11 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
                     barrierDismissible:
                         false, // This line prevents the dialog from closing when
                     //            tapping outside the dialog
-                    builder: (BuildContext context) {
-                      return AudioModificationDialogWidget(
+                    builder: (BuildContext context) => AudioModificationDialogWidget(
                         audio: audio,
                         audioModificationType:
                             AudioModificationType.modifyAudioTitle,
-                      );
-                    },
+                      ),
                   );
                   break;
                 case AudioPopupMenuAction.moveAudioToPlaylist:
@@ -206,7 +190,10 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
                     builder: (context) => PlaylistOneSelectableDialogWidget(
                       usedFor: PlaylistOneSelectableDialogUsedFor
                           .moveAudioToPlaylist,
-                      warningMessageVM: warningMessageVM,
+                      warningMessageVM: Provider.of<WarningMessageVM>(
+                        context,
+                        listen: false,
+                      ),
                       excludedPlaylist: audio.enclosingPlaylist!,
                     ),
                   ).then((resultMap) {
@@ -243,7 +230,10 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
                     builder: (context) => PlaylistOneSelectableDialogWidget(
                       usedFor: PlaylistOneSelectableDialogUsedFor
                           .copyAudioToPlaylist,
-                      warningMessageVM: warningMessageVM,
+                      warningMessageVM: Provider.of<WarningMessageVM>(
+                        context,
+                        listen: false,
+                      ),
                       excludedPlaylist: audio.enclosingPlaylist!,
                     ),
                   ).then((resultMap) {
@@ -345,8 +335,10 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
 
   PlaylistListVM _getAndInitializeExpandablePlaylistListVM(
       BuildContext context) {
-    PlaylistListVM expandablePlaylistVM =
-        Provider.of<PlaylistListVM>(context, listen: false);
+    PlaylistListVM expandablePlaylistVM = Provider.of<PlaylistListVM>(
+      context,
+      listen: false,
+    );
 
     // Resetting the selected playlist to null,
     // otherwise, if the user selects a playlist, click

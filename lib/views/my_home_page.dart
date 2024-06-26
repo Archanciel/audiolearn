@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../constants.dart';
 import '../services/sort_filter_parameters.dart';
 import '../viewmodels/audio_player_vm.dart';
 import '../viewmodels/theme_provider_vm.dart';
@@ -64,6 +65,12 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
     Icons.edit,
   ];
 
+  final List<AudioLearnAppViewType> _audioLearnAppViewTypeLst = [
+    AudioLearnAppViewType.playlistDownloadView,
+    AudioLearnAppViewType.audioPlayerView,
+    AudioLearnAppViewType.audioExtractorView,
+  ];
+  
   final List<Key> _screenNavigationIconButtonKeyLst = [
     const Key('playlistDownloadViewIconButton'),
     const Key('audioPlayerViewIconButton'),
@@ -145,6 +152,7 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
         title: _appBarTitleWidgetLst[_currentIndex],
         leading: AppBarLeadingPopupMenuWidget(
             key: const Key('appBarLeadingPopupMenuWidget'),
+            audioLearnAppViewType: _audioLearnAppViewTypeLst[_currentIndex],
             themeProvider: themeProviderVM,
             settingsDataService: widget.settingsDataService),
         actions: appBarApplicationActionLst,

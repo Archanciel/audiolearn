@@ -14,6 +14,19 @@ enum AudioLearnAppViewType {
   audioExtractorView,
 }
 
+enum AudioPopupMenuAction {
+  openYoutubeVideo,
+  copyYoutubeVideoUrl,
+  displayAudioInfo,
+  renameAudioFile,
+  moveAudioToPlaylist,
+  copyAudioToPlaylist,
+  deleteAudio,
+  deleteAudioFromPlaylistAswell,
+  audioComment,
+  modifyAudioTitle,
+}
+
 const String kApplicationName = "Audio Learn";
 const String kApplicationVersion = '1.1.58';
 const String kApplicationPath = "/storage/emulated/0/Download/audiolearn";
