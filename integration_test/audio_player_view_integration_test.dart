@@ -3659,7 +3659,8 @@ void main() {
       // Tap on the InkWell to play the audio. Since the audio is fully
       // played, the audio remains at end.
       await tester.tap(secondDownloadedAudioListTileInkWellFinder);
-      await tester.pumpAndSettle(const Duration(milliseconds: 1500));
+      await Future.delayed(const Duration(milliseconds:2000 ));
+      await tester.pumpAndSettle();
 
       // Find the slider using its key
       final sliderFinder = find.byKey(const Key('audioPlayerViewAudioSlider'));
@@ -3684,7 +3685,7 @@ void main() {
               IntegrationTestUtil.validateInkWellButton(
         tester: tester,
         audioTitle: secondDownloadedAudioTitle,
-        expectedIcon: Icons.pause,
+        expectedIcon: Icons.play_arrow,
         expectedIconColor: Colors.white,
         expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
       );
