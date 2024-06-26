@@ -3623,6 +3623,79 @@ void main() {
       );
     });
   });
+  group('Inkwell button building tests', () {
+    testWidgets('To describe', (
+      WidgetTester tester,
+    ) async {
+      const String audioPlayerSelectedPlaylistTitle = 'S8 audio';
+      const String secondDownloadedAudioTitle =
+          "L'argument anti-nuke qui m'inquiète le plus par Y.Rousselet";
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'inkwell_button_test',
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+      );
+
+      // First, validate the play/pause button of the fully played
+      // second downloaded Audio item InkWell widget and obtain
+      // again the previously downloaded Audio item InkWell widget
+      // finder
+
+      Finder secondDownloadedAudioListTileInkWellFinder =
+          IntegrationTestUtil.validateInkWellButton(
+        tester: tester,
+        audioTitle: secondDownloadedAudioTitle,
+        expectedIcon: Icons.play_arrow,
+        expectedIconColor:
+            kSliderThumbColorInDarkMode, // Fully played audio item play icon color
+        expectedIconBackgroundColor: Colors.black,
+      );
+
+      // Now we want to tap on the second downloaded audio of the
+      // playlist in order to open the AudioPlayerView displaying
+      // this fully played audio.
+
+      // Tap on the InkWell to play the audio. Since the audio is fully
+      // played, the audio remains at end.
+      await tester.tap(secondDownloadedAudioListTileInkWellFinder);
+      await tester.pumpAndSettle(const Duration(milliseconds: 1500));
+
+      // Find the slider using its key
+      final sliderFinder = find.byKey(const Key('audioPlayerViewAudioSlider'));
+
+      await tester.drag(
+        sliderFinder,
+        const Offset(-100, 0),
+      ); // Drag horizontally left
+      await tester.pumpAndSettle();
+
+      // Now we go back to the PlayListDownloadView in order to
+      // verify the play/pause audio item InkWell button
+      final audioPlayerNavButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(audioPlayerNavButton);
+      await tester.pumpAndSettle();
+
+      // Again, validate the play/pause button of the previously
+      // downloaded Audio item InkWell widget
+      secondDownloadedAudioListTileInkWellFinder =
+          secondDownloadedAudioListTileInkWellFinder =
+              IntegrationTestUtil.validateInkWellButton(
+        tester: tester,
+        audioTitle: secondDownloadedAudioTitle,
+        expectedIcon: Icons.pause,
+        expectedIconColor: Colors.white,
+        expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+  });
   group('Audio comment tests', () {
     group('Playing audio comment to verify that no rewind is performed', () {
       testWidgets(
