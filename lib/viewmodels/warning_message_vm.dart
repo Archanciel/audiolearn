@@ -310,6 +310,7 @@ class WarningMessageVM extends ChangeNotifier {
       _warningMessageType =
           WarningMessageType.youtubePlaylistWithTitleAlreadyInListOfPlaylists;
     }
+    
     // Causes the display warning message widget to be displayed.
     notifyListeners();
   }
