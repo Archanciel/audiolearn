@@ -22,15 +22,22 @@ class SetValueToTargetDialogWidget extends StatefulWidget {
 
   final bool isPassedValueEditable;
 
+  final Function
+      validationFunction; // The action to execute to validate the entered value
+  final List<dynamic>
+      validationFunctionArgs; // Arguments for the validation function
+
   const SetValueToTargetDialogWidget({
+    super.key,
     required this.dialogTitle,
     required this.dialogCommentStr,
     required this.passedValueFieldLabel,
     required this.passedValueStr,
     required this.targetNamesLst,
+    required this.validationFunction,
+    required this.validationFunctionArgs,
     this.isTargetExclusive = true,
     this.isPassedValueEditable = true,
-    super.key,
   });
 
   @override
@@ -164,8 +171,29 @@ class _SetValueToTargetDialogWidgetState
   }
 
   List<String> _createResultList() {
+    String enteredStr = _passedValueTextEditingController.text;
+
+    widget.validationFunctionArgs.add(enteredStr);
+
+    bool isValid = Function.apply(
+      widget.validationFunction,
+      widget.validationFunctionArgs,
+    );
+
+    if (!isValid) {
+      widget.validationFunctionArgs.removeLast();
+      WarningMessageVM warningMessageVM = Provider.of<WarningMessageVM>(
+        context,
+        listen: false,
+      );
+
+      // warningMessageVM.invalidValueEntered();
+
+      return [];
+    }
+
     List<String> resultLst = [
-      _passedValueTextEditingController.text,
+      enteredStr,
     ];
 
     bool isAnyCheckboxChecked = false;

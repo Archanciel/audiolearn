@@ -361,7 +361,7 @@ class _PlaylistCommentDialogWidgetState
       context: context,
       builder: (BuildContext context) {
         return ActionConfirmDialogWidget(
-          actionFunction: commentVM.deleteCommentParmsNotNamed,
+          actionFunction: commentVM.deleteCommentFunction,
           actionFunctionArgs: [
             comment.id,
             widget.currentPlaylist,

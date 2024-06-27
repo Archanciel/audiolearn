@@ -106,7 +106,7 @@ class CommentVM extends ChangeNotifier {
 
   /// this method is uniquely used as a parameter for the application confirm
   /// dialog.
-  void deleteCommentParmsNotNamed(
+  void deleteCommentFunction(
     String commentId,
     Audio commentedAudio,
   ) {

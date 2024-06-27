@@ -254,7 +254,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                     ),
                   ],
                 ),
-                _buildAudioPlayerViewAudioPositionRow(
+                _buildSetAudioPositionTextButton(
                   context: context,
                   commentVMlistenFalse: commentVMlistenFalse,
                 ),
@@ -485,9 +485,10 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
     );
   }
 
-  /// The row contains the text button which opens a dialog to set the
-  /// current audio position as the comment start or end position.
-  Row _buildAudioPlayerViewAudioPositionRow({
+  /// The returned row contains the text button which opens a dialog
+  /// to set the current audio position as the comment start or end
+  /// position.
+  Row _buildSetAudioPositionTextButton({
     required BuildContext context,
     required CommentVM commentVMlistenFalse,
   }) {
@@ -539,6 +540,8 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                           AppLocalizations.of(context)!.commentStartPosition,
                           AppLocalizations.of(context)!.commentEndPosition,
                         ],
+                        validationFunction: validateEnteredValueFunction,
+                        validationFunctionArgs: [audioPlayerVM.currentAudioTotalDuration],
                       );
                     },
                   ).then((resultStringLst) {
@@ -600,6 +603,22 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
         ),
       ],
     );
+  }
+
+  bool validateEnteredValueFunction(
+    Duration maxDuration,
+    String enteredTimeStr,
+  ) {
+    int enteredTimeInTenthsOfSeconds =
+        DateTimeUtil.convertToTenthsOfSeconds(timeString: enteredTimeStr);
+
+    if (Duration(milliseconds: enteredTimeInTenthsOfSeconds * 100) >
+            maxDuration ||
+        enteredTimeInTenthsOfSeconds < 0) {
+      return false;
+    }
+
+    return true;
   }
 
   /// Since before opening the CommentAddEditDialogWidget its caller, the

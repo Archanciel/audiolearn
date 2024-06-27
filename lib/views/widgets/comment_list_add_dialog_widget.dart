@@ -363,7 +363,7 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
       context: context,
       builder: (BuildContext context) {
         return ActionConfirmDialogWidget(
-          actionFunction: commentVM.deleteCommentParmsNotNamed,
+          actionFunction: commentVM.deleteCommentFunction,
           actionFunctionArgs: [
             comment.id,
             widget.currentAudio,
