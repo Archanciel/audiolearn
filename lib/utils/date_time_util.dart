@@ -21,6 +21,11 @@ class DateTimeUtil {
     return difference.abs() <= toleranceInSeconds;
   }
 
+  /// Converts a time string to tenths of a second. Passed time string
+  /// can be in the format of hh:mm:ss or hh:mm:ss.t or mm:ss or mm:ss.t
+  /// 
+  /// Example: 1:45:24.4 -> 6324, 0:52.4 -> 524 
+  ///          10:00 -> 600, 10:00.1 -> 601  
   static int convertToTenthsOfSeconds({
     required String timeString,
   }) {
