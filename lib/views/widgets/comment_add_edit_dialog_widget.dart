@@ -174,6 +174,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                                     globalAudioPlayerVM.currentAudioPosition;
                               }
                             } else {
+                              // comment is not playing
                               _playButtonWasClicked = true;
                               _commentEndPositionIsModified = false;
 
@@ -541,7 +542,11 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                           AppLocalizations.of(context)!.commentEndPosition,
                         ],
                         validationFunction: validateEnteredValueFunction,
-                        validationFunctionArgs: [audioPlayerVM.currentAudioTotalDuration],
+                        validationFunctionArgs: [
+                          '0:00.0',
+                          audioPlayerVM.currentAudioTotalDuration.HHmmssZeroHH(
+                              addRemainingOneDigitTenthOfSecond: true),
+                        ],
                       );
                     },
                   ).then((resultStringLst) {
@@ -605,20 +610,36 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
     );
   }
 
-  bool validateEnteredValueFunction(
-    Duration maxDuration,
+  /// This function validates the entered time value in the
+  /// SetValuesToTargetDialogWidget. In order to do this, it is passed
+  /// as parameter to the dialog constructor.
+  ///
+  /// In SetValuesToTargetDialogWidget._createResultList(), the entered
+  /// time value is validated by calling this function this way:
+  ///    bool isValid = Function.apply(
+  ///                       widget.validationFunction,
+  ///                       widget.validationFunctionArgs,
+  ///                   );
+  InvalidValueState validateEnteredValueFunction(
+    String minDurationStr,
+    String maxDurationStr,
     String enteredTimeStr,
   ) {
+    int minDurationInTenthsOfSeconds =
+        DateTimeUtil.convertToTenthsOfSeconds(timeString: minDurationStr);
+    int maxDurationInTenthsOfSeconds =
+        DateTimeUtil.convertToTenthsOfSeconds(timeString: maxDurationStr);
     int enteredTimeInTenthsOfSeconds =
         DateTimeUtil.convertToTenthsOfSeconds(timeString: enteredTimeStr);
 
-    if (Duration(milliseconds: enteredTimeInTenthsOfSeconds * 100) >
-            maxDuration ||
-        enteredTimeInTenthsOfSeconds < 0) {
-      return false;
+    if (enteredTimeInTenthsOfSeconds > maxDurationInTenthsOfSeconds) {
+      return InvalidValueState.tooBig;
+    } else if (enteredTimeInTenthsOfSeconds < minDurationInTenthsOfSeconds) {
+      return InvalidValueState.tooSmall;
+    } else {
+      // the case if the entered value is valid
+      return InvalidValueState.none;
     }
-
-    return true;
   }
 
   /// Since before opening the CommentAddEditDialogWidget its caller, the
@@ -661,6 +682,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
 
     await globalAudioPlayerVM.playCurrentAudio(
       rewindAudioPositionBasedOnPauseDuration: false,
+      isCommentPlaying: true,
     );
   }
 
@@ -678,6 +700,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
 
     await globalAudioPlayerVM.playCurrentAudio(
       rewindAudioPositionBasedOnPauseDuration: false,
+      isCommentPlaying: true,
     );
   }
 
@@ -695,6 +718,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
 
     await globalAudioPlayerVM.playCurrentAudio(
       rewindAudioPositionBasedOnPauseDuration: false,
+      isCommentPlaying: true,
     );
   }
 }

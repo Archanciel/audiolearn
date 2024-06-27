@@ -371,5 +371,8 @@
     "placeholders": {
       "playlistTitle": {}
     }
-  }
+  },
+  "setValueToTargetWarning": "La valeur entrée {invalidValueWarningParam} ({maxMinPossibleValue}). Corrigez la valeur et rééssayez ...",
+  "invalidValueTooBig": "excède la valeur maximale",
+  "invalidValueTooSmall": "est inférieure à la valeur minimale"
 }

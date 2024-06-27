@@ -394,6 +394,7 @@ class _PlaylistCommentDialogWidgetState
       // of the other comment to play it.
       await globalAudioPlayerVM.playCurrentAudio(
         rewindAudioPositionBasedOnPauseDuration: false,
+        isCommentPlaying: true,
       );
     }
 
@@ -404,6 +405,7 @@ class _PlaylistCommentDialogWidgetState
 
     await globalAudioPlayerVM.playCurrentAudio(
       rewindAudioPositionBasedOnPauseDuration: false,
+      isCommentPlaying: true,
     );
   }
 }

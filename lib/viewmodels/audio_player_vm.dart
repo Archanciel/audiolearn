@@ -92,6 +92,8 @@ class AudioPlayerVM extends ChangeNotifier {
   final List<Command> _undoList = [];
   final List<Command> _redoList = [];
 
+  bool _isCommentPlaying = false;
+
   AudioPlayerVM({
     required PlaylistListVM playlistListVM,
   }) : _playlistListVM = playlistListVM {
@@ -375,6 +377,12 @@ class AudioPlayerVM extends ChangeNotifier {
       });
 
       _audioPlayerPlugin!.onPlayerComplete.listen((event) async {
+        if (_isCommentPlaying) {
+          // In this situation, if a comment is playing and arrives to the
+          // audio end, the next audio is not played.
+          return;
+        }
+
         // Play next audio when current audio is finished. If a next
         // audio is played, notifyListeners() is called in
         // playNextAudio().
@@ -438,9 +446,17 @@ class AudioPlayerVM extends ChangeNotifier {
   }
 
   /// Method called when the user clicks on the audio play icon
+  /// in the AudioListItemWidget displayed in the PlaylistDownloadView
+  /// or on the audio title or sub title in the AudioPlayerView or
+  /// on the audio play icon in the AudioPlayerView or in the play
+  /// icon in the CommentListAddDialogWidget or PlaylistCommentDialogWidget
+  /// or in the play icon in the CommentAddEditDialogWidget.
   Future<void> playCurrentAudio({
     bool rewindAudioPositionBasedOnPauseDuration = true,
+    bool isCommentPlaying = false,
   }) async {
+    _isCommentPlaying = isCommentPlaying;
+
     if (_currentAudio == null) {
       // the case if the AudioPlayerView is opened directly by
       // dragging to it or clicking on the title or sub title

@@ -1091,4 +1091,17 @@ class MockAppLocalizations extends AppLocalizations {
     Object playlistTitle,
   ) =>
       "This Youtube playlist title \"$playlistTitle\" can not contain commas. Commas are replaced by colons.";
+
+  @override
+  String setValueToTargetWarning(
+    Object invalidValueWarningParam,
+    Object maxMinPossibleValue,
+  ) =>
+      "The entered value $invalidValueWarningParam ($maxMinPossibleValue). Please correct it and retry ...";
+
+  @override
+  String get invalidValueTooBig => "exceeds the maximal value";
+
+  @override
+  String get invalidValueTooSmall => "is below the minimal value";
 }

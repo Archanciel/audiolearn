@@ -1,3 +1,4 @@
+import 'package:audiolearn/views/widgets/set_value_to_target_dialog_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -162,6 +163,27 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
                 themeProviderVM: themeProviderVM);
           });
         }
+
+        return const SizedBox.shrink();
+      case WarningMessageType.invalidValueWarning:
+        String invalidValueWarningParmOne;
+
+        if (_warningMessageVM.invalidValueState == InvalidValueState.tooBig) {
+          invalidValueWarningParmOne =
+              AppLocalizations.of(context)!.invalidValueTooBig;
+        } else {
+          invalidValueWarningParmOne =
+              AppLocalizations.of(context)!.invalidValueTooSmall;
+        }
+
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _displayWarningDialog(
+              context: _context,
+              message: AppLocalizations.of(context)!.setValueToTargetWarning(
+                  invalidValueWarningParmOne, _warningMessageVM.valueLimitStr),
+              warningMessageVM: _warningMessageVM,
+              themeProviderVM: themeProviderVM);
+        });
 
         return const SizedBox.shrink();
       case WarningMessageType.invalidPlaylistUrl:

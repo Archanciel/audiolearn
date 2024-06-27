@@ -9,6 +9,12 @@ import '../../constants.dart';
 import '../../services/settings_data_service.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 
+enum InvalidValueState {
+  none,
+  tooBig,
+  tooSmall,
+}
+
 class SetValueToTargetDialogWidget extends StatefulWidget {
   final String dialogTitle;
   final String dialogCommentStr;
@@ -170,24 +176,67 @@ class _SetValueToTargetDialogWidgetState
     );
   }
 
+  /// Validates the entered value and the selected checkboxes and creates
+  /// the list of the entered value and the selected checkbox(es).
   List<String> _createResultList() {
     String enteredStr = _passedValueTextEditingController.text;
 
     widget.validationFunctionArgs.add(enteredStr);
 
-    bool isValid = Function.apply(
+    // Example of applied validation function:
+    // InvalidValueState validateEnteredValueFunction(
+    //                      String minDurationStr,
+    //                      String maxDurationStr,
+    //                      String enteredTimeStr,
+    //                   )
+    //
+    // Initially, the List<dynamic> widget.validationFunctionArgs contains
+    // two element, the minimal an maximal acceptable duration. The third
+    // element, the entered value, is added in the line above.
+    InvalidValueState invalidValueState = Function.apply(
       widget.validationFunction,
       widget.validationFunctionArgs,
     );
 
-    if (!isValid) {
-      widget.validationFunctionArgs.removeLast();
+    // Once the validation function has been applied, the entered value
+    // must be removed from the list of arguments, otherwise, the next
+    // time the validation function will be applied, it will fail.
+    widget.validationFunctionArgs.removeLast();
+
+    if (invalidValueState != InvalidValueState.none) {
       WarningMessageVM warningMessageVM = Provider.of<WarningMessageVM>(
         context,
         listen: false,
       );
 
-      // warningMessageVM.invalidValueEntered();
+      String minValueLimitStr =
+          widget.validationFunctionArgs[0].toString();
+
+      String maxValueLimitStr =
+          widget.validationFunctionArgs[1].toString();
+
+      switch(invalidValueState) {
+        case InvalidValueState.tooBig:
+          warningMessageVM.setInvalidValueWarning(
+            invalidValueState: invalidValueState,
+            maxOrMinValueLimitStr: maxValueLimitStr,
+          );
+
+          _passedValueTextEditingController.text = maxValueLimitStr;
+
+          return [];
+        case InvalidValueState.tooSmall:
+          warningMessageVM.setInvalidValueWarning(
+            invalidValueState: invalidValueState,
+            maxOrMinValueLimitStr: minValueLimitStr,
+          );
+
+          _passedValueTextEditingController.text = minValueLimitStr;
+
+          return [];
+        default:
+          break;
+      }
 
       return [];
     }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/playlist.dart';
+import '../views/widgets/set_value_to_target_dialog_widget.dart';
 
 enum WarningMessageType {
   none,
@@ -15,6 +16,9 @@ enum WarningMessageType {
 
   addPlaylistTitle, // The playlist with this title is added
   // to the application.
+
+  invalidValueWarning, // The value entered in the SetValueToTargetDialogWidget
+  // text field is invalid.
 
   invalidPlaylistUrl, // The case if the url is a video url and the
   // user clicked on the Add button instead of the Download
@@ -227,6 +231,27 @@ class WarningMessageVM extends ChangeNotifier {
     }
   }
 
+  InvalidValueState _invalidValueState = InvalidValueState.tooBig;
+  InvalidValueState get invalidValueState => _invalidValueState;
+
+  String _valueLimitStr = '';
+  String get valueLimitStr => _valueLimitStr;
+
+  void setInvalidValueWarning({
+    required InvalidValueState invalidValueState,
+    required String maxOrMinValueLimitStr,
+  }) {
+    _invalidValueState = invalidValueState;
+    _valueLimitStr = maxOrMinValueLimitStr;
+
+    if (invalidValueState != InvalidValueState.none) {
+      _warningMessageType = WarningMessageType.invalidValueWarning;
+
+      // Causes the display warning message widget to be displayed.
+      notifyListeners();
+    }
+  }
+
   String _invalidPlaylistUrl = '';
   String get invalidPlaylistUrl => _invalidPlaylistUrl;
   set invalidPlaylistUrl(String invalidPlaylistUrl) {
@@ -310,7 +335,7 @@ class WarningMessageVM extends ChangeNotifier {
       _warningMessageType =
           WarningMessageType.youtubePlaylistWithTitleAlreadyInListOfPlaylists;
     }
-    
+
     // Causes the display warning message widget to be displayed.
     notifyListeners();
   }
@@ -352,16 +377,14 @@ class WarningMessageVM extends ChangeNotifier {
   }
 
   void noCheckboxSelected() {
-    _warningMessageType =
-        WarningMessageType.noCheckboxSelected;
+    _warningMessageType = WarningMessageType.noCheckboxSelected;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();
   }
 
   void noUniqueCheckboxSelected() {
-    _warningMessageType =
-        WarningMessageType.noUniqueCheckboxSelected;
+    _warningMessageType = WarningMessageType.noUniqueCheckboxSelected;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();

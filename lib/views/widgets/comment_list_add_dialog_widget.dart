@@ -396,6 +396,7 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
       // of the other comment to play it.
       await globalAudioPlayerVM.playCurrentAudio(
         rewindAudioPositionBasedOnPauseDuration: false,
+        isCommentPlaying: true,
       );
     }
 
@@ -406,6 +407,7 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
 
     await globalAudioPlayerVM.playCurrentAudio(
       rewindAudioPositionBasedOnPauseDuration: false,
+      isCommentPlaying: true,
     );
   }
 }

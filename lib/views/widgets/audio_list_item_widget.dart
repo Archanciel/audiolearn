@@ -298,8 +298,8 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
   }
 
   /// Method called when the user clicks on the audio list item
-  /// play icon button. This switches to the AudioPlayerView screen
-  /// and plays the clicked audio.
+  /// audio title or subtitle or the play icon button. This switches
+  /// to the AudioPlayerView screen and plays the clicked audio.
   Future<void> _dragToAudioPlayerViewAndPlayAudio(
       AudioPlayerVM audioGlobalPlayerVM) async {
     await audioGlobalPlayerVM.setCurrentAudio(audio);

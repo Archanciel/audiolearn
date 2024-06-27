@@ -59,7 +59,7 @@
   "endUploadDate": "End upl date",
   "fileSizeRange": "File size range (MB)",
   "start": "Start",
-  "end": "End",
+  "end": "End", 
   "audioDurationRange": "Audio duration range (hh:mm)",
   "openYoutubeVideo": "Open Youtube video",
   "openYoutubePlaylist": "Open Youtube playlist",
@@ -369,5 +369,8 @@
     "placeholders": {
       "playlistTitle": {}
     }
-  }
+  },
+  "setValueToTargetWarning": "The entered value {invalidValueWarningParam} ({maxMinPossibleValue}). Please correct it and retry ...",
+  "invalidValueTooBig": "exceeds the maximal value",
+  "invalidValueTooSmall": "is below the minimal value"
 }
