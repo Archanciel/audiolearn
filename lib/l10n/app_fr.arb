@@ -4,9 +4,6 @@
   "downloadAudioScreen": "Écran Télécharger Audio",
   "appBarTitleAudioPlayer": "Lire Audio",
   "audioPlayerScreen": "Écran Lire Audio",
-  "@appBarTitleDownloadAudio": {
-    "description": "Le titre de la page affiché dans l'appbar."
-  },
   "toggleList": "Basculer la liste",
   "delete": "Supprimer",
   "moveItemUp": "Déplacer l'élément vers le haut",
@@ -16,12 +13,6 @@
   "french": "Français",
   "downloadAudio": "Télécharger Audio Youtube",
   "translate": "{language}",
-  "@translate": {
-    "description": "Menu AppBar de sélection de la langue.",
-    "placeholders": {
-      "language": {}
-    }
-  },
   "musicalQualityTooltip": "Si activé, télécharge en qualité musicale.",
   "ofPreposition": "de",
   "atPreposition": "à",
@@ -70,74 +61,17 @@
   "deleteAudioFromPlaylistAswellWarning": "Supprimer l'audio \"{audioTitle}\" de la playlist Youtube \"{playlistTitle}\", sinon l'audio sera téléchargé à nouveau lors du prochain téléchargement de la playlist.",
   "warningDialogTitle": "AVERTISSEMENT",
   "updatedPlaylistUrlTitle": "L'URL de la playlist \"{title}\" a été mise à jour. La playlist peut être téléchargée avec sa nouvelle URL.",
-  "@updatedPlaylistUrlTitle": {
-    "description": "Message d'information affiché lorsqu'une URL de playlist existante a été mise à jour.",
-    "placeholders": {
-      "title": {}
-    }
-  },
   "addPlaylistTitle": "Nouvelle playlist \"{title}\" de qualité {quality} ajoutée à la fin de la liste des playlists.",
-  "@addPlaylistTitle": {
-    "description": "Message informant qu'une nouvelle playlist a été ajoutée à la liste des playlists.",
-    "placeholders": {
-      "title": {},
-      "quality": {}
-    }
-  },
   "invalidPlaylistUrl": "L'URL \"{url}\" ne pointe pas sur une playlist. Aucune playlist n'a donc été ajoutée ou modifiée.",
-  "@invalidPlaylistUrl": {
-    "description": "Message d'erreur affiché lorsqu'une URL de playlist est invalide.",
-    "placeholders": {
-      "url": {}
-    }
-  },
-"renameFileNameAlreadyUsed": "Le nom de fichier \"{fileName}\" est déjà utilisé par un autre fichier dans le même répertoire et ne peut donc pas être réutilisé.",
-  "@renameFileNameAlreadyUsed": {
-    "description": "Warning announcing that the playlist with invalid URL was not added.",
-    "placeholders": {
-      "fileName": {}
-    }
-  },
+  "renameFileNameAlreadyUsed": "Le nom de fichier \"{fileName}\" est déjà utilisé par un autre fichier dans le même répertoire et ne peut donc pas être réutilisé.",
   "playlistWithUrlAlreadyInListOfPlaylists": "La playlist \"{title}\" avec l'URL \"{url}\" est déjà dans la liste des playlists et ne sera donc pas recrée.",
-  "@playlistWithUrlAlreadyInListOfPlaylists": {
-    "description": "Avertissement annonçant que la playlist avec l'URL {url} est déjà dans la liste des playlists.",
-    "placeholders": {
-      "url": {},
-      "title": {}
-    }
-  },
   "localPlaylistWithTitleAlreadyInListOfPlaylists": "La playlist locale \"{title}\" est déjà dans la liste des playlists. Par conséquent, la playlist locale avec ce titre ne sera pas créée.",
-  "@localPlaylistWithTitleAlreadyInListOfPlaylists": {
-    "description": "Avertissement annonçant que la playlist locale avec le titre {title} est déjà dans la liste des playlists.",
-    "placeholders": {
-      "title": {}
-    }
-  },
   "youtubePlaylistWithTitleAlreadyInListOfPlaylists": "La playlist Youtube \"{title}\" est déjà dans la liste des playlists. Par conséquent, la playlist locale avec ce titre ne sera pas créée.",
   "downloadAudioYoutubeError": "Erreur de téléchargement audio Youtube: \"{exceptionMessage}\"",
-  "@downloadAudioYoutubeError": {
-    "description": "Message d'erreur affiché lorsqu'une erreur se produit lors du téléchargement audio Youtube",
-    "placeholders": {
-      "exceptionMessage": {}
-    }
-  },
   "downloadAudioYoutubeErrorDueToLiveVideoInPlaylist": "Erreur de téléchargement audio Youtube. La playlist \"{playlistTitle}\" contient une video live qui provoque l'échec du téléchargement des audios de la playlist. Pour résoudre le problème, après avoir téléchargé l'audio de la vidéo live comme expliqué ci-dessous, supprimez la vidéo live de la playlist puis redémarrez l'application et rééssayez.\n\nL'URL de la vidéo live contient cet élément: \"{liveVideoString}\". Afin d'ajouter l'audio de cette vidéo live à la playlist \"{playlistTitle}\", téléchargez-la séparément en tant que vidéo unique en l'ajoutant à playlist \"{playlistTitle}\".",
-  "@downloadAudioYoutubeErrorDueToLiveVideoInPlaylist": {
-    "description": "Message d'erreur affiché lorsqu'une erreur se produit lors du téléchargement audio Youtube à cause d'une vidéo live dans la playlist.",
-    "placeholders": {
-      "playlistTitle": {},
-      "liveVideoString": {}
-    }
-  },
   "downloadAudioFileAlreadyOnAudioDirectory": "L'audio \"{audioValidVideoTitle}\" est contenu dans le fichier \"{fileName}\" se trouvant dans le répertoire de la playlist cible \"{playlistTitle}\" et ne sera donc pas retéléchargé.",
   "noInternet": "Pas d'Internet. Connectez votre appareil et rééssayez.",
   "invalidSingleVideoUUrl": "L'URL \"{url}\" censée pointer sur une vidéo unique est invalide. Aucune vidéo n'a donc été téléchargée.",
-  "@invalidSingleVideoUUrl": {
-    "description": "Message d'erreur affiché lorsqu'une URL de vidéo unique est invalide.",
-    "placeholders": {
-      "url": {}
-    }
-  },
   "copyYoutubeVideoUrl": "Copier l'URL de la vidéo Youtube",
   "displayAudioInfo": "Afficher les données audio",
   "renameAudioFile": "Renommer le fichier audio ...",
@@ -361,17 +295,7 @@
   "playlistCommentMenu": "Commentaires des audios de la playlist ...",
   "modifyAudioTitle": "Modifier le titre de l'audio ...",
   "invalidLocalPlaylistTitle": "Le titre de la playlist locale \"{playlistTitle}\" ne peut contenir aucune virgule. Corrigez le titre et rééssayez ...",
-  "@invalidLocalPlaylistTitle": {
-    "placeholders": {
-      "playlistTitle": {}
-    }
-  },
   "invalidYoutubePlaylistTitle": "Le titre de la playlist Youtube \"{playlistTitle}\" ne peut contenir aucune virgule. Corrigez le titre et rééssayez ...",
-  "@invalidYoutubePlaylistTitle": {
-    "placeholders": {
-      "playlistTitle": {}
-    }
-  },
   "setValueToTargetWarning": "La valeur entrée {invalidValueWarningParam} ({maxMinPossibleValue}). Corrigez la valeur et rééssayez ...",
   "invalidValueTooBig": "excède la valeur maximale",
   "invalidValueTooSmall": "est inférieure à la valeur minimale"

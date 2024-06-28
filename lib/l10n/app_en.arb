@@ -4,9 +4,6 @@
   "downloadAudioScreen": "Download Audio screen",
   "appBarTitleAudioPlayer": "Play Audio",
   "audioPlayerScreen": "Play Audio screen",
-  "@appBarTitleDownloadAudio": {
-    "description": "The page title displayed in the appbar."
-  },
   "toggleList": "Toggle List",
   "delete": "Delete",
   "moveItemUp": "Move item up",
@@ -16,12 +13,6 @@
   "french": "French",
   "downloadAudio": "Download Audio Youtube",
   "translate": "Select {language}",
-  "@translate": {
-    "description": "Appbar language selection menu item.",
-    "placeholders": {
-      "language": {}
-    }
-  },
   "musicalQualityTooltip": "If set, downloads at musical quality.",
   "ofPreposition": "of",
   "atPreposition": "at",
@@ -70,74 +61,17 @@
   "deleteAudioFromPlaylistAswellWarning": "If the deleted audio video \"{audioTitle}\" remains in the \"{playlistTitle}\" Youtube playlist, it will be downloaded again the next time you download the playlist !",
   "warningDialogTitle": "WARNING",
   "updatedPlaylistUrlTitle": "Playlist \"{title}\" URL was updated. The playlist can be downloaded with its new URL.",
-  "@updatedPlaylistUrlTitle": {
-    "description": "Warning announcing that the playlist url was updated.",
-    "placeholders": {
-      "title": {}
-    }
-  },
   "addPlaylistTitle": "Playlist \"{title}\" of {quality} quality added at end of list of playlists.",
-  "@addPlaylistTitle": {
-    "description": "Warning announcing that the playlist was added at end of list of playlists.",
-    "placeholders": {
-      "title": {},
-      "quality": {}
-    }
-  },
   "invalidPlaylistUrl": "Playlist with invalid URL \"{url}\" neither added nor modified.",
-  "@invalidPlaylistUrl": {
-    "description": "Warning announcing that the playlist with invalid URL was not added.",
-    "placeholders": {
-      "url": {}
-    }
-  },
   "renameFileNameAlreadyUsed": "The file name \"{fileName}\" already exists in the same directory and cannot be used.",
-  "@renameFileNameAlreadyUsed": {
-    "description": "Warning announcing that the playlist with invalid URL was not added.",
-    "placeholders": {
-      "fileName": {}
-    }
-  },
   "playlistWithUrlAlreadyInListOfPlaylists": "Playlist \"{title}\" with this URL \"{url}\" is already in the list of playlists and so won't be recreated.",
-  "@playlistWithUrlAlreadyInListOfPlaylists": {
-    "description": "Warning announcing that the playlist with the URL is already in the list of playlists.",
-    "placeholders": {
-      "url": {},
-      "title": {}
-    }
-  },
   "localPlaylistWithTitleAlreadyInListOfPlaylists": "Local playlist \"{title}\" already exists in the list of playlists. Therefore, the local playlist with this title won't be created.",
-  "@localPlaylistWithTitleAlreadyInListOfPlaylists": {
-    "description": "Warning announcing that the local playlist with the title is already in the list of playlists and so will not be created.",
-    "placeholders": {
-      "title": {}
-    }
-  },
   "youtubePlaylistWithTitleAlreadyInListOfPlaylists": "Youtube playlist \"{title}\" already exists in the list of playlists. Therefore, the local playlist with this title won't be created.",
   "downloadAudioYoutubeError": "Error downloading audio from Youtube: \"{exceptionMessage}\"",
-  "@downloadAudioYoutubeError": {
-    "description": "Warning announcing that downloading the audio from Youtube failed.",
-    "placeholders": {
-      "exceptionMessage": {}
-    }
-  },
   "downloadAudioYoutubeErrorDueToLiveVideoInPlaylist": "Error downloading audio from Youtube. The playlist \"{playlistTitle}\" contains a live video which causes the playlist audio downloading failure. To solve the problem, after having downloaded the audio of the live video as explained below, remove the live video from the playlist, then restart the application and retry.\n\nThe live video URL contains the following string: \"{liveVideoString}\". In order to add the live video audio to the playlist \"{playlistTitle}\", download it separately as single video download adding it to the playlist \"{playlistTitle}\".",
-  "@downloadAudioYoutubeErrorDueToLiveVideoInPlaylist": {
-    "description": "Warning announcing that downloading the audio from Youtube failed due to presence of live video in the playlist.",
-    "placeholders": {
-      "playlistTitle": {},
-      "liveVideoString": {}
-    }
-  },
   "downloadAudioFileAlreadyOnAudioDirectory": "Audio \"{audioValidVideoTitle}\" is contained in file \"{fileName}\" present in the target playlist \"{playlistTitle}\" directory and so won't be redownloaded.",
   "noInternet": "No Internet. Please connect your device and retry.",
   "invalidSingleVideoUUrl": "The URL \"{url}\" supposed to point to a unique video is invalid. Therefore, no video has been downloaded.",
-  "@invalidSingleVideoUUrl": {
-    "description": "Warning announcing that the single video with invalid URL was not downloaded.",
-    "placeholders": {
-      "url": {}
-    }
-  },
   "copyYoutubeVideoUrl": "Copy Youtube video URL",
   "displayAudioInfo": "Display audio data",
   "renameAudioFile": "Rename audio file ...",
@@ -359,17 +293,7 @@
   "playlistCommentMenu": "Comments of playlist audios ...",
   "modifyAudioTitle": "Modify audio title ...",
   "invalidLocalPlaylistTitle": "The local playlist title \"{playlistTitle}\" can not contain any comma. Please correct the title and retry ...",
-  "@invalidLocalPlaylistTitle": {
-    "placeholders": {
-      "playlistTitle": {}
-    }
-  },
   "invalidYoutubePlaylistTitle": "The Youtube playlist title \"{playlistTitle}\" can not contain any comma. Please correct the title and retry ...",
-  "@invalidYoutubePlaylistTitle": {
-    "placeholders": {
-      "playlistTitle": {}
-    }
-  },
   "setValueToTargetWarning": "The entered value {invalidValueWarningParam} ({maxMinPossibleValue}). Please correct it and retry ...",
   "invalidValueTooBig": "exceeds the maximal value",
   "invalidValueTooSmall": "is below the minimal value"
