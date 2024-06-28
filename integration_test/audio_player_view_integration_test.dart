@@ -5576,7 +5576,7 @@ void main() {
       );
     });
     testWidgets(
-        'MUST BE LAST TEST ! Using current audio position dialog to set comment positions',
+        'MUST BE LAST TEST ! Using set value to target dialog to set comment positions',
         (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
       const String alreadyCommentedAudioTitle =
