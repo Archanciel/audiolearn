@@ -374,22 +374,17 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
 
         return const SizedBox.shrink();
       case WarningMessageType.noCheckboxSelected:
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          _displayWarningDialog(
-            context: _context,
-            message: AppLocalizations.of(context)!.noCheckboxSelectedWarning,
-            warningMessageVM: _warningMessageVM,
-            themeProviderVM: themeProviderVM,
-          );
-        });
+        String translatedAtLeastStr = '';
 
-        return const SizedBox.shrink();
-      case WarningMessageType.noUniqueCheckboxSelected:
+        if (_warningMessageVM.addAtListToWarningMessage) {
+          translatedAtLeastStr = AppLocalizations.of(context)!.atLeast;
+        }
+
         WidgetsBinding.instance.addPostFrameCallback((_) {
           _displayWarningDialog(
             context: _context,
-            message:
-                AppLocalizations.of(context)!.noUniqueCheckboxSelectedWarning,
+            message: AppLocalizations.of(context)!
+                .noCheckboxSelectedWarning(translatedAtLeastStr),
             warningMessageVM: _warningMessageVM,
             themeProviderVM: themeProviderVM,
           );

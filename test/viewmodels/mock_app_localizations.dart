@@ -1042,14 +1042,6 @@ class MockAppLocalizations extends AppLocalizations {
       "Update comment start or end position";
 
   @override
-  String get noCheckboxSelectedWarning =>
-      "No checkbox selected. Please select at least one checkbox before clicking 'Ok', or click 'Cancel' to exit.";
-
-  @override
-  String get noUniqueCheckboxSelectedWarning =>
-      "No checkbox selected. Please select one checkbox before clicking 'Ok', or click 'Cancel' to exit.";
-
-  @override
   String get commentCreationDateTooltip => "Comment creation date";
 
   @override
@@ -1104,4 +1096,13 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get invalidValueTooSmall => "is below the minimal value";
+
+  @override
+  String noCheckboxSelectedWarning(
+    Object atLeast,
+  ) =>
+      "No checkbox selected. Please select $atLeast checkbox before clicking 'Ok', or click 'Cancel' to exit.";
+
+  @override
+  String get atLeast => "at least one";
 }

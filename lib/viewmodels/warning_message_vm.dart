@@ -78,10 +78,6 @@ enum WarningMessageType {
   // on the ok button of the SetValueToTargetDialogWidget without
   // having selected at least one checkbox.
 
-  noUniqueCheckboxSelected, // The case if the user clicks
-  // on the ok button of the SetValueToTargetDialogWidget without
-  // having selected a checkbox.
-
   playlistRootPathNotExist, // The case if the user enters a playlist
   // root path which does not exist in the application settings dialog
 
@@ -252,6 +248,19 @@ class WarningMessageVM extends ChangeNotifier {
     }
   }
 
+  bool _addAtListToWarningMessage = false;
+  bool get addAtListToWarningMessage => _addAtListToWarningMessage;
+
+  void setNoCheckboxSelected({
+    required bool addAtListToWarningMessage,
+  }) {
+    _addAtListToWarningMessage = addAtListToWarningMessage;
+    _warningMessageType = WarningMessageType.noCheckboxSelected;
+
+    // Causes the display warning message widget to be displayed.
+    notifyListeners();
+  }
+
   String _invalidPlaylistUrl = '';
   String get invalidPlaylistUrl => _invalidPlaylistUrl;
   set invalidPlaylistUrl(String invalidPlaylistUrl) {
@@ -371,20 +380,6 @@ class WarningMessageVM extends ChangeNotifier {
   void historicalSortFilterParameterWasDeleted() {
     _warningMessageType =
         WarningMessageType.historicalSortFilterParameterWasDeleted;
-
-    // Causes the display warning message widget to be displayed.
-    notifyListeners();
-  }
-
-  void noCheckboxSelected() {
-    _warningMessageType = WarningMessageType.noCheckboxSelected;
-
-    // Causes the display warning message widget to be displayed.
-    notifyListeners();
-  }
-
-  void noUniqueCheckboxSelected() {
-    _warningMessageType = WarningMessageType.noUniqueCheckboxSelected;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();

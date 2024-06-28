@@ -209,13 +209,11 @@ class _SetValueToTargetDialogWidgetState
         listen: false,
       );
 
-      String minValueLimitStr =
-          widget.validationFunctionArgs[0].toString();
+      String minValueLimitStr = widget.validationFunctionArgs[0].toString();
 
-      String maxValueLimitStr =
-          widget.validationFunctionArgs[1].toString();
+      String maxValueLimitStr = widget.validationFunctionArgs[1].toString();
 
-      switch(invalidValueState) {
+      switch (invalidValueState) {
         case InvalidValueState.tooBig:
           warningMessageVM.setInvalidValueWarning(
             invalidValueState: invalidValueState,
@@ -260,11 +258,9 @@ class _SetValueToTargetDialogWidgetState
         listen: false,
       );
 
-      if (widget.isTargetExclusive) {
-        warningMessageVM.noUniqueCheckboxSelected();
-      } else {
-        warningMessageVM.noCheckboxSelected();
-      }
+      warningMessageVM.setNoCheckboxSelected(
+        addAtListToWarningMessage: !widget.isTargetExclusive,
+      );
 
       // the dialog is not closed
       return [];
