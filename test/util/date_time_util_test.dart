@@ -16,6 +16,69 @@ void main() {
         },
       );
       test(
+        '0 mm, 0 ss no tenth of second',
+        () {
+          const String timeStr = '0:0';
+          final int totalTenthsOfSeconds =
+              DateTimeUtil.convertToTenthsOfSeconds(timeString: timeStr);
+          expect(totalTenthsOfSeconds, 0);
+        },
+      );
+      test(
+        '0 hh, 0 mm, 0 ss 0 tenth of second',
+        () {
+          const String timeStr = '0:0:0.0';
+          final int totalTenthsOfSeconds =
+              DateTimeUtil.convertToTenthsOfSeconds(timeString: timeStr);
+          expect(totalTenthsOfSeconds, 0);
+        },
+      );
+      test(
+        '0 mm, 0 ss 0 tenth of second',
+        () {
+          const String timeStr = '0:0.0';
+          final int totalTenthsOfSeconds =
+              DateTimeUtil.convertToTenthsOfSeconds(timeString: timeStr);
+          expect(totalTenthsOfSeconds, 0);
+        },
+      );
+      test(
+        'negative 0 hh, 0 mm, 0 ss no tenth of second',
+        () {
+          const String timeStr = '-0:0:0';
+          final int totalTenthsOfSeconds =
+              DateTimeUtil.convertToTenthsOfSeconds(timeString: timeStr);
+          expect(totalTenthsOfSeconds, 0);
+        },
+      );
+      test(
+        'negative 0 mm, 0 ss no tenth of second',
+        () {
+          const String timeStr = '-0:0';
+          final int totalTenthsOfSeconds =
+              DateTimeUtil.convertToTenthsOfSeconds(timeString: timeStr);
+          expect(totalTenthsOfSeconds, 0);
+        },
+      );
+      test(
+        'negative 0 hh, 0 mm, 0 ss 0 tenth of second',
+        () {
+          const String timeStr = '-0:0:0.0';
+          final int totalTenthsOfSeconds =
+              DateTimeUtil.convertToTenthsOfSeconds(timeString: timeStr);
+          expect(totalTenthsOfSeconds, 0);
+        },
+      );
+      test(
+        'negative 0 mm, 0 ss 0 tenth of second',
+        () {
+          const String timeStr = '-0:0.0';
+          final int totalTenthsOfSeconds =
+              DateTimeUtil.convertToTenthsOfSeconds(timeString: timeStr);
+          expect(totalTenthsOfSeconds, 0);
+        },
+      );
+      test(
         '0 hh, 0 mm, 0 ss 1 tenth of second',
         () {
           const String timeStr = '0:0:0.1';
@@ -31,11 +94,6 @@ void main() {
           int totalTenthsOfSeconds =
               DateTimeUtil.convertToTenthsOfSeconds(timeString: timeStr);
           expect(totalTenthsOfSeconds, 400);
-
-          timeStr = '0:40';
-          totalTenthsOfSeconds =
-              DateTimeUtil.convertToTenthsOfSeconds(timeString: timeStr);
-          expect(totalTenthsOfSeconds, 400);
         },
       );
       test(
@@ -43,11 +101,6 @@ void main() {
         () {
           String timeStr = '0:0:40.3';
           int totalTenthsOfSeconds =
-              DateTimeUtil.convertToTenthsOfSeconds(timeString: timeStr);
-          expect(totalTenthsOfSeconds, 403);
-
-          timeStr = '0:40.3';
-          totalTenthsOfSeconds =
               DateTimeUtil.convertToTenthsOfSeconds(timeString: timeStr);
           expect(totalTenthsOfSeconds, 403);
         },
@@ -60,11 +113,6 @@ void main() {
               DateTimeUtil.convertToTenthsOfSeconds(timeString: timeStr);
           int expectedTenthOfSeconds = 3400;
           expect(totalTenthsOfSeconds, expectedTenthOfSeconds);
-
-          timeStr = '5:40';
-          totalTenthsOfSeconds =
-              DateTimeUtil.convertToTenthsOfSeconds(timeString: timeStr);
-          expect(totalTenthsOfSeconds, expectedTenthOfSeconds);
         },
       );
       test(
@@ -75,10 +123,146 @@ void main() {
               DateTimeUtil.convertToTenthsOfSeconds(timeString: timeStr);
           int expectedTenthOfSeconds = 3409;
           expect(totalTenthsOfSeconds, expectedTenthOfSeconds);
-
-          timeStr = '5:40.9';
-          totalTenthsOfSeconds =
+        },
+      );
+      test(
+        '0 mm, 0 ss 1 tenth of second',
+        () {
+          const String timeStr = '0:0.1';
+          final int totalTenthsOfSeconds =
               DateTimeUtil.convertToTenthsOfSeconds(timeString: timeStr);
+          expect(totalTenthsOfSeconds, 1);
+        },
+      );
+      test(
+        '0 mm, 40 ss no tenth of second',
+        () {
+          String timeStr = '0:40';
+          int totalTenthsOfSeconds =
+              DateTimeUtil.convertToTenthsOfSeconds(timeString: timeStr);
+          expect(totalTenthsOfSeconds, 400);
+        },
+      );
+      test(
+        '0 mm, 40 ss 3 tenth of second',
+        () {
+          String timeStr = '0:40.3';
+          int totalTenthsOfSeconds =
+              DateTimeUtil.convertToTenthsOfSeconds(timeString: timeStr);
+          expect(totalTenthsOfSeconds, 403);
+        },
+      );
+      test(
+        '5 mm, 40 ss 0 tenth of second',
+        () {
+          String timeStr = '5:40';
+          int totalTenthsOfSeconds =
+              DateTimeUtil.convertToTenthsOfSeconds(timeString: timeStr);
+          int expectedTenthOfSeconds = 3400;
+          expect(totalTenthsOfSeconds, expectedTenthOfSeconds);
+        },
+      );
+      test(
+        '5 mm, 40 ss 9 tenth of second',
+        () {
+          String timeStr = '5:40.9';
+          int totalTenthsOfSeconds =
+              DateTimeUtil.convertToTenthsOfSeconds(timeString: timeStr);
+          int expectedTenthOfSeconds = 3409;
+          expect(totalTenthsOfSeconds, expectedTenthOfSeconds);
+        },
+      );
+      test(
+        'negative 0 hh, 0 mm, 0 ss 1 tenth of second',
+        () {
+          const String timeStr = '-0:0:0.1';
+          final int totalTenthsOfSeconds =
+              DateTimeUtil.convertToTenthsOfSeconds(timeString: timeStr);
+          expect(totalTenthsOfSeconds, -1);
+        },
+      );
+      test(
+        'negative 0 hh, 0 mm, 40 ss no tenth of second',
+        () {
+          String timeStr = '-0:0:40';
+          int totalTenthsOfSeconds =
+              DateTimeUtil.convertToTenthsOfSeconds(timeString: timeStr);
+          expect(totalTenthsOfSeconds, -400);
+        },
+      );
+      test(
+        'negative 0 hh, 0 mm, 40 ss 3 tenth of second',
+        () {
+          String timeStr = '-0:0:40.3';
+          int totalTenthsOfSeconds =
+              DateTimeUtil.convertToTenthsOfSeconds(timeString: timeStr);
+          expect(totalTenthsOfSeconds, -403);
+        },
+      );
+      test(
+        'negative 0 hh, 5 mm, 40 ss 0 tenth of second',
+        () {
+          String timeStr = '-0:5:40';
+          int totalTenthsOfSeconds =
+              DateTimeUtil.convertToTenthsOfSeconds(timeString: timeStr);
+          int expectedTenthOfSeconds = -3400;
+          expect(totalTenthsOfSeconds, expectedTenthOfSeconds);
+        },
+      );
+      test(
+        'negative 0 hh, 5 mm, 40 ss 9 tenth of second',
+        () {
+          String timeStr = '-0:5:40.9';
+          int totalTenthsOfSeconds =
+              DateTimeUtil.convertToTenthsOfSeconds(timeString: timeStr);
+          int expectedTenthOfSeconds = -3409;
+          expect(totalTenthsOfSeconds, expectedTenthOfSeconds);
+        },
+      );
+      test(
+        'negative 0 mm, 0 ss 1 tenth of second',
+        () {
+          const String timeStr = '-0:0.1';
+          final int totalTenthsOfSeconds =
+              DateTimeUtil.convertToTenthsOfSeconds(timeString: timeStr);
+          expect(totalTenthsOfSeconds, -1);
+        },
+      );
+      test(
+        'negative 0 mm, 40 ss no tenth of second',
+        () {
+          String timeStr = '-0:40';
+          int totalTenthsOfSeconds =
+              DateTimeUtil.convertToTenthsOfSeconds(timeString: timeStr);
+          expect(totalTenthsOfSeconds, -400);
+        },
+      );
+      test(
+        'negative 0 mm, 40 ss 3 tenth of second',
+        () {
+          String timeStr = '-0:40.3';
+          int totalTenthsOfSeconds =
+              DateTimeUtil.convertToTenthsOfSeconds(timeString: timeStr);
+          expect(totalTenthsOfSeconds, -403);
+        },
+      );
+      test(
+        'negative 5 mm, 40 ss 0 tenth of second',
+        () {
+          String timeStr = '-5:40';
+          int totalTenthsOfSeconds =
+              DateTimeUtil.convertToTenthsOfSeconds(timeString: timeStr);
+          int expectedTenthOfSeconds = -3400;
+          expect(totalTenthsOfSeconds, expectedTenthOfSeconds);
+        },
+      );
+      test(
+        'negative 5 mm, 40 ss 9 tenth of second',
+        () {
+          String timeStr = '-5:40.9';
+          int totalTenthsOfSeconds =
+              DateTimeUtil.convertToTenthsOfSeconds(timeString: timeStr);
+          int expectedTenthOfSeconds = -3409;
           expect(totalTenthsOfSeconds, expectedTenthOfSeconds);
         },
       );
@@ -98,6 +282,24 @@ void main() {
           int totalTenthsOfSeconds =
               DateTimeUtil.convertToTenthsOfSeconds(timeString: timeStr);
           expect(totalTenthsOfSeconds, 75403);
+        },
+      );
+      test(
+        'negative 2 hh, 5 mm, 40 ss 0 tenth of second',
+        () {
+          String timeStr = '-2:5:40';
+          int totalTenthsOfSeconds =
+              DateTimeUtil.convertToTenthsOfSeconds(timeString: timeStr);
+          expect(totalTenthsOfSeconds, -75400);
+        },
+      );
+      test(
+        'negative 2 hh, 5 mm, 40 ss 3 tenth of second',
+        () {
+          String timeStr = '-2:5:40.3';
+          int totalTenthsOfSeconds =
+              DateTimeUtil.convertToTenthsOfSeconds(timeString: timeStr);
+          expect(totalTenthsOfSeconds, -75403);
         },
       );
     },

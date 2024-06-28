@@ -22,14 +22,29 @@ class DateTimeUtil {
   }
 
   /// Converts a time string to tenths of a second. Passed time string
-  /// can be in the format of hh:mm:ss or hh:mm:ss.t or mm:ss or mm:ss.t
+  /// can be in the format of hh:mm:ss or hh:mm:ss.t or mm:ss or mm:ss.t.
+  /// It can be negative as well: -hh:mm:ss or -hh:mm:ss.t or -mm:ss or
+  /// -mm:ss.t.
   /// 
-  /// Example: 1:45:24.4 -> 6324, 0:52.4 -> 524 
+  /// Example: 1:45:24.4 -> 6324, 0:52.4 -> 524
+  ///         -1:45:24.4 -> -6324, -0:52.4 -> -524 
   ///          10:00 -> 600, 10:00.1 -> 601  
+  ///         -10:00 -> -600, -10:00.1 -> -601
   static int convertToTenthsOfSeconds({
     required String timeString,
   }) {
-    // Split the time string into hours, minutes, seconds, and tenths of a second
+    // Remove leading and trailing whitespaces
+    timeString = timeString.trim();
+
+    // Check if the time string is negative
+    bool isNegative = timeString.startsWith('-');
+
+    // Remove the negative sign if the time string is negative
+    if (isNegative) {
+      timeString = timeString.substring(1);
+    }
+
+    // Split the time string into hours, minutes, seconds, and tenths of second
     List<String> parts = timeString.split(':');
     int hours = 0;
     int minutes = 0;
@@ -57,6 +72,10 @@ class DateTimeUtil {
           secondsStr: parts[0], hours: hours, minutes: minutes);
     }
 
+    if (isNegative) {
+      totalTenthsOfSeconds = -totalTenthsOfSeconds;
+    }
+    
     return totalTenthsOfSeconds;
   }
 
