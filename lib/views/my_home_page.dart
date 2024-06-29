@@ -209,7 +209,7 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
             child: Icon(entry.value),
           ),
           onPressed: () async {
-            changePage(entry.key);
+            await changePage(entry.key);
           },
           padding: EdgeInsets
               .zero, // This is crucial to avoid default IconButton padding
@@ -220,11 +220,11 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
 
   /// This function causes PageView to drag to the screen
   /// associated to the passed index.
-  void changePage(int index) {
+  Future<void> changePage(int index) async {
     onPageChangedFunction(index);
 
     // _pageController is the PageView controller
-    _pageController.animateToPage(
+    await _pageController.animateToPage(
       index,
       duration: pageTransitionDuration, // Use constant
       curve: pageTransitionCurve, // Use constant
