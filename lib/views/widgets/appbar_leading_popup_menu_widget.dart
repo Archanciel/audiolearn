@@ -4,6 +4,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/audio.dart';
+import '../../models/playlist.dart';
+import '../../viewmodels/playlist_list_vm.dart';
 import '../../viewmodels/warning_message_vm.dart';
 import '../../constants.dart';
 import '../../services/settings_data_service.dart';
@@ -14,6 +16,7 @@ import 'application_settings_dialog_widget.dart';
 import 'audio_info_dialog_widget.dart';
 import 'audio_modification_dialog_widget.dart';
 import 'comment_list_add_dialog_widget.dart';
+import 'playlist_one_selectable_dialog_widget.dart';
 
 enum AppBarPopupMenu {
   openSettingsDialog,
@@ -96,6 +99,27 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
             value: AudioPopupMenuAction.modifyAudioTitle,
             child: Text(AppLocalizations.of(context)!.modifyAudioTitle),
           ),
+          PopupMenuItem<AudioPopupMenuAction>(
+            key: const Key('popup_menu_move_audio_to_playlist'),
+            value: AudioPopupMenuAction.moveAudioToPlaylist,
+            child: Text(AppLocalizations.of(context)!.moveAudioToPlaylist),
+          ),
+          PopupMenuItem<AudioPopupMenuAction>(
+            key: const Key('popup_menu_copy_audio_to_playlist'),
+            value: AudioPopupMenuAction.copyAudioToPlaylist,
+            child: Text(AppLocalizations.of(context)!.copyAudioToPlaylist),
+          ),
+          PopupMenuItem<AudioPopupMenuAction>(
+            key: const Key('popup_menu_delete_audio'),
+            value: AudioPopupMenuAction.deleteAudio,
+            child: Text(AppLocalizations.of(context)!.deleteAudio),
+          ),
+          PopupMenuItem<AudioPopupMenuAction>(
+            key: const Key('popup_menu_delete_audio_from_playlist_aswell'),
+            value: AudioPopupMenuAction.deleteAudioFromPlaylistAswell,
+            child: Text(
+                AppLocalizations.of(context)!.deleteAudioFromPlaylistAswell),
+          ),
         ];
       },
       icon: const Icon(Icons.menu),
@@ -172,6 +196,99 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
               // audio player view is updated with the modified title
               await audioGlobalPlayerVM.setCurrentAudio(audio);
             });
+            break;
+          case AudioPopupMenuAction.moveAudioToPlaylist:
+            PlaylistListVM expandablePlaylistVM = Provider.of<PlaylistListVM>(
+              context,
+              listen: false,
+            );
+            Audio audio = audioGlobalPlayerVM.currentAudio!;
+
+            showDialog<dynamic>(
+              context: context,
+              builder: (context) => PlaylistOneSelectableDialogWidget(
+                usedFor: PlaylistOneSelectableDialogUsedFor.moveAudioToPlaylist,
+                warningMessageVM: Provider.of<WarningMessageVM>(
+                  context,
+                  listen: false,
+                ),
+                excludedPlaylist: audio.enclosingPlaylist!,
+              ),
+            ).then((resultMap) {
+              if (resultMap is String && resultMap == 'cancel') {
+                // the case if the Cancel button was pressed
+                return;
+              }
+
+              Playlist? targetPlaylist = resultMap['selectedPlaylist'];
+
+              if (targetPlaylist == null) {
+                // the case if no playlist was selected and
+                // Confirm button was pressed
+                return;
+              }
+
+              bool keepAudioDataInSourcePlaylist =
+                  resultMap['keepAudioDataInSourcePlaylist'];
+
+              expandablePlaylistVM.moveAudioAndCommentToPlaylist(
+                audio: audio,
+                targetPlaylist: targetPlaylist,
+                keepAudioInSourcePlaylistDownloadedAudioLst:
+                    keepAudioDataInSourcePlaylist,
+              );
+            });
+            break;
+          case AudioPopupMenuAction.copyAudioToPlaylist:
+            PlaylistListVM expandablePlaylistVM = Provider.of<PlaylistListVM>(
+              context,
+              listen: false,
+            );
+            Audio audio = audioGlobalPlayerVM.currentAudio!;
+
+            showDialog<dynamic>(
+              context: context,
+              builder: (context) => PlaylistOneSelectableDialogWidget(
+                usedFor: PlaylistOneSelectableDialogUsedFor.copyAudioToPlaylist,
+                warningMessageVM: Provider.of<WarningMessageVM>(
+                  context,
+                  listen: false,
+                ),
+                excludedPlaylist: audio.enclosingPlaylist!,
+              ),
+            ).then((resultMap) {
+              if (resultMap is String && resultMap == 'cancel') {
+                // the case if the Cancel button was pressed
+                return;
+              }
+
+              Playlist? targetPlaylist = resultMap['selectedPlaylist'];
+
+              if (targetPlaylist == null) {
+                // the case if no playlist was selected and
+                // Confirm button was pressed
+                return;
+              }
+
+              expandablePlaylistVM.copyAudioToPlaylist(
+                audio: audio,
+                targetPlaylist: targetPlaylist,
+              );
+            });
+            break;
+          case AudioPopupMenuAction.deleteAudio:
+            Audio audio = audioGlobalPlayerVM.currentAudio!;
+            Provider.of<PlaylistListVM>(
+              context,
+              listen: false,
+            ).deleteAudioMp3(audio: audio);
+            break;
+          case AudioPopupMenuAction.deleteAudioFromPlaylistAswell:
+            Audio audio = audioGlobalPlayerVM.currentAudio!;
+            Provider.of<PlaylistListVM>(
+              context,
+              listen: false,
+            ).deleteAudioFromPlaylistAswell(audio: audio);
             break;
           default:
             break;

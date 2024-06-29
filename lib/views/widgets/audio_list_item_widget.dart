@@ -138,8 +138,8 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
                   showDialog<void>(
                     context: context,
                     builder: (BuildContext context) => AudioInfoDialogWidget(
-                        audio: audio,
-                      ),
+                      audio: audio,
+                    ),
                   );
                   break;
                 case AudioPopupMenuAction.audioComment:
@@ -161,11 +161,12 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
                     barrierDismissible:
                         false, // This line prevents the dialog from closing when
                     //            tapping outside the dialog
-                    builder: (BuildContext context) => AudioModificationDialogWidget(
-                        audio: audio,
-                        audioModificationType:
-                            AudioModificationType.renameAudioFile,
-                      ),
+                    builder: (BuildContext context) =>
+                        AudioModificationDialogWidget(
+                      audio: audio,
+                      audioModificationType:
+                          AudioModificationType.renameAudioFile,
+                    ),
                   );
                   break;
                 case AudioPopupMenuAction.modifyAudioTitle:
@@ -174,16 +175,20 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
                     barrierDismissible:
                         false, // This line prevents the dialog from closing when
                     //            tapping outside the dialog
-                    builder: (BuildContext context) => AudioModificationDialogWidget(
-                        audio: audio,
-                        audioModificationType:
-                            AudioModificationType.modifyAudioTitle,
-                      ),
+                    builder: (BuildContext context) =>
+                        AudioModificationDialogWidget(
+                      audio: audio,
+                      audioModificationType:
+                          AudioModificationType.modifyAudioTitle,
+                    ),
                   );
                   break;
                 case AudioPopupMenuAction.moveAudioToPlaylist:
                   PlaylistListVM expandablePlaylistVM =
-                      _getAndInitializeExpandablePlaylistListVM(context);
+                      Provider.of<PlaylistListVM>(
+                    context,
+                    listen: false,
+                  );
 
                   showDialog<dynamic>(
                     context: context,
@@ -223,7 +228,10 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
                   break;
                 case AudioPopupMenuAction.copyAudioToPlaylist:
                   PlaylistListVM expandablePlaylistVM =
-                      _getAndInitializeExpandablePlaylistListVM(context);
+                      Provider.of<PlaylistListVM>(
+                    context,
+                    listen: false,
+                  );
 
                   showDialog<dynamic>(
                     context: context,
@@ -331,25 +339,6 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
 
     // dragging to the AudioPlayerView screen
     onPageChangedFunction(ScreenMixin.AUDIO_PLAYER_VIEW_DRAGGABLE_INDEX);
-  }
-
-  PlaylistListVM _getAndInitializeExpandablePlaylistListVM(
-      BuildContext context) {
-    PlaylistListVM expandablePlaylistVM = Provider.of<PlaylistListVM>(
-      context,
-      listen: false,
-    );
-
-    // Resetting the selected playlist to null,
-    // otherwise, if the user selects a playlist, click
-    // on Confirm button and then opens the dialog again and
-    // clicks on the Cancel button, the previously selected
-    // playlist used as target playlist is still selected
-    // expandablePlaylistVM.setUniqueSelectedPlaylist(
-    //   selectedPlaylist: null,
-    // );
-
-    return expandablePlaylistVM;
   }
 
   String _buildSubTitle(BuildContext context) {
