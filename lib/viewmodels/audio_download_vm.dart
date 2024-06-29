@@ -878,6 +878,8 @@ class AudioDownloadVM extends ChangeNotifier {
       fromPlaylist.removeDownloadedAudioFromPlayableAudioLstOnly(
         downloadedAudio: audio,
       );
+      // The moved to playlist title information is set in the
+      // the audio in the source playlist downloadedAudioLst.
       fromPlaylist.setMovedAudioToPlaylistTitle(
         movedAudio: audio,
         movedToPlaylistTitle: targetPlaylist.title,

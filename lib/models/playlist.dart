@@ -489,7 +489,7 @@ class Playlist {
   }
 
   // The currentOrPastPlayableAudioIndex contains the index of the audio
-  // in this playlist playableAudioList which is currently playing was the
+  // in this playlist playableAudioList which is currently playing or was the
   // last playlist played audio. The utility is that if the AudioPlayerView
   // is opened without having clicked on a playlist audio item, then
   // this audio will be playable. This happens only if the audio playlist
