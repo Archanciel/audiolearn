@@ -808,7 +808,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             ),
             PopupMenuItem<PopupMenuButtonType>(
               key: const Key(
-                  'clear_sort_and_filter_audio_options_history_menu_item'),
+                  'clear_sort_and_filter_audio_parms_history_menu_item'),
               enabled: (playlistListVMlistenFalse
                   .getSearchHistoryAudioSortFilterParametersLst()
                   .isNotEmpty),
@@ -818,7 +818,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             ),
             PopupMenuItem<PopupMenuButtonType>(
               key: const Key(
-                  'save_sort_and_filter_audio_options_in_playlist_menu_item'),
+                  'save_sort_and_filter_audio_parms_in_playlist_item'),
               enabled: (playlistListVMlistenFalse
                   .areButtonsApplicableToAudioEnabled),
               value: PopupMenuButtonType.saveSortFilterAudioParmsToPlaylist,

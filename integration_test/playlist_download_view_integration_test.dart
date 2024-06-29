@@ -9669,7 +9669,7 @@ void main() {
 
       // find the clear sort/filter audio history menu item and tap on it
       await tester.tap(find.byKey(
-          const Key('clear_sort_and_filter_audio_options_history_menu_item')));
+          const Key('clear_sort_and_filter_audio_parms_history_menu_item')));
       await tester.pumpAndSettle();
 
       // Verify that the confirm action dialog is displayed
@@ -9688,7 +9688,7 @@ void main() {
 
       // find the clear sort/filter audio history menu item and tap on it
       await tester.tap(find.byKey(
-          const Key('clear_sort_and_filter_audio_options_history_menu_item')));
+          const Key('clear_sort_and_filter_audio_parms_history_menu_item')));
       await tester.pumpAndSettle();
 
       // Click on the confirm button to cancel deletion
@@ -9699,7 +9699,7 @@ void main() {
       // now disabled
       TestUtility.verifyWidgetIsDisabled(
         tester: tester,
-        widgetKeyStr: "clear_sort_and_filter_audio_options_history_menu_item",
+        widgetKeyStr: "clear_sort_and_filter_audio_parms_history_menu_item",
       );
 
       // Purge the test playlist directory so that the created test
@@ -10558,36 +10558,36 @@ void verifyAudioMenuItemsState({
   required bool areAudioMenuItemsDisabled,
 }) {
   if (areAudioMenuItemsDisabled) {
-    TestUtility.verifyWidgetIsEnabled(
+    TestUtility.verifyWidgetIsDisabled(
       tester: tester,
-      widgetKeyStr: 'define_sort_and_filter_audio_settings_dialog_item',
+      widgetKeyStr: 'define_sort_and_filter_audio_menu_item',
     );
 
     TestUtility.verifyWidgetIsDisabled(
       // no Sort/filter parameters history are available in test data
       tester: tester,
-      widgetKeyStr: 'clear_sort_and_filter_audio_options_history_menu_item',
+      widgetKeyStr: 'clear_sort_and_filter_audio_parms_history_menu_item',
     );
 
-    TestUtility.verifyWidgetIsEnabled(
+    TestUtility.verifyWidgetIsDisabled(
       tester: tester,
-      widgetKeyStr: 'save_sort_and_filter_audio_settings_in_playlist_item',
+      widgetKeyStr: 'save_sort_and_filter_audio_parms_in_playlist_item',
     );
   } else {
     TestUtility.verifyWidgetIsEnabled(
       tester: tester,
-      widgetKeyStr: 'define_sort_and_filter_audio_settings_dialog_item',
+      widgetKeyStr: 'define_sort_and_filter_audio_menu_item',
     );
 
     TestUtility.verifyWidgetIsDisabled(
       // no Sort/filter parameters history are available in test data
       tester: tester,
-      widgetKeyStr: 'clear_sort_and_filter_audio_options_history_menu_item',
+      widgetKeyStr: 'clear_sort_and_filter_audio_parms_history_menu_item',
     );
 
     TestUtility.verifyWidgetIsEnabled(
       tester: tester,
-      widgetKeyStr: 'save_sort_and_filter_audio_settings_in_playlist_item',
+      widgetKeyStr: 'save_sort_and_filter_audio_parms_in_playlist_item',
     );
   }
 

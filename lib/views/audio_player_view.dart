@@ -445,15 +445,14 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
         itemBuilder: (BuildContext context) {
           return [
             PopupMenuItem<PopupMenuButtonType>(
-              key: const Key(
-                  'define_sort_and_filter_audio_settings_dialog_item'),
+              key: const Key('define_sort_and_filter_audio_menu_item'),
               value: PopupMenuButtonType.openSortFilterAudioDialog,
               child: Text(
                   AppLocalizations.of(context)!.defineSortFilterAudiosMenu),
             ),
             PopupMenuItem<PopupMenuButtonType>(
               key: const Key(
-                  'clear_sort_and_filter_audio_options_history_menu_item'),
+                  'clear_sort_and_filter_audio_parms_history_menu_item'),
               enabled: (playlistListVMlistenFalse
                   .getSearchHistoryAudioSortFilterParametersLst()
                   .isNotEmpty),
@@ -463,7 +462,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
             ),
             PopupMenuItem<PopupMenuButtonType>(
               key: const Key(
-                  'save_sort_and_filter_audio_settings_in_playlist_item'),
+                  'save_sort_and_filter_audio_parms_in_playlist_item'),
               value: PopupMenuButtonType.saveSortFilterAudioParmsToPlaylist,
               child: Text(AppLocalizations.of(context)!
                   .saveSortFilterAudiosOptionsToPlaylistMenu),
