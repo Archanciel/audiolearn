@@ -5891,7 +5891,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Tap on the Ok button to set the new position in the comment
-      // previous dialog
+      // previous dialog without checking any checkbox 
 
       await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
       await tester.pumpAndSettle();
@@ -5915,9 +5915,8 @@ void main() {
               .data,
           "No checkbox selected. Please select one checkbox before clicking 'Ok', or click 'Cancel' to exit.");
 
-      // Close the warning dialog by tapping on the Ok button
-      // Fucking shit: does not work. I lost so many hours trying to fix
-      // this problem ...
+      // Close the warning dialog by tapping on the Ok button. Does not
+      // work. I lost so many hours trying to fix this problem ...
       await tester.tap(find.byKey(const Key('warningDialogOkButton')));
       await tester.pumpAndSettle();
 
