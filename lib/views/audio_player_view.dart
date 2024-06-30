@@ -118,11 +118,11 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
       listen: false,
     );
 
-    bool areAudioButtonsEnabled =
-        playlistListVMlistenFalse.areButtonsApplicableToAudioEnabled;
+    bool areAudioButtonsEnabled = true;
 
     if (globalAudioPlayerVM.currentAudio == null) {
       _audioPlaySpeed = 1.0;
+      areAudioButtonsEnabled = false;
     } else {
       _audioPlaySpeed = globalAudioPlayerVM.currentAudio!.audioPlaySpeed;
     }
@@ -171,6 +171,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                 context,
                 listen: false,
               ),
+              isAudioPopumMenuEnabled: areAudioButtonsEnabled,
             ),
           ],
         ),
@@ -224,6 +225,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
               child: SizedBox(
                 width: kSmallButtonWidth,
                 child: IconButton(
+                  key: const Key('decreaseAudioVolumeIconButton'),
                   icon: const Icon(Icons.arrow_drop_down),
                   iconSize: kUpDownButtonSize,
                   onPressed: (!areAudioButtonsEnabled ||
@@ -244,6 +246,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
               child: SizedBox(
                 width: kSmallButtonWidth,
                 child: IconButton(
+                    key: const Key('increaseAudioVolumeIconButton'),
                     icon: const Icon(Icons.arrow_drop_up),
                     iconSize: kUpDownButtonSize,
                     onPressed: (!areAudioButtonsEnabled ||
@@ -435,12 +438,13 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     required BuildContext context,
     required PlaylistListVM playlistListVMlistenFalse,
     required WarningMessageVM warningMessageVMlistenFalse,
+    required bool isAudioPopumMenuEnabled,
   }) {
     return SizedBox(
       width: kRowButtonGroupWidthSeparator,
       child: PopupMenuButton<PopupMenuButtonType>(
         key: const Key('audio_popup_menu_button'),
-        enabled: (playlistListVMlistenFalse.areButtonsApplicableToAudioEnabled),
+        enabled: isAudioPopumMenuEnabled,
         icon: const Icon(Icons.filter_list),
         itemBuilder: (BuildContext context) {
           return [

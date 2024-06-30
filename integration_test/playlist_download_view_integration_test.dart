@@ -30,7 +30,6 @@ import 'package:audiolearn/utils/dir_util.dart';
 import 'package:audiolearn/main.dart' as app;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../test/util/test_utility.dart';
 import '../test/viewmodels/custom_mock_youtube_explode.dart';
 import '../test/viewmodels/mock_audio_download_vm.dart';
 import 'integration_test_util.dart';
@@ -6466,9 +6465,10 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure that the audio menu items are enabled
-      verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyAudioMenuItemsState(
         tester: tester,
         areAudioMenuItemsDisabled: false,
+        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
       // Now delete all the files in the app audio directory
@@ -6493,9 +6493,10 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure that the audio menu items are now disabled
-      verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyAudioMenuItemsState(
         tester: tester,
         areAudioMenuItemsDisabled: true,
+        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
       // Now restore the app data in the app dir
@@ -6522,9 +6523,10 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure that the audio menu items are now enabled
-      verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyAudioMenuItemsState(
         tester: tester,
         areAudioMenuItemsDisabled: false,
+        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
       // Purge the test playlist directory so that the created test
@@ -6603,9 +6605,10 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure that the audio menu items are enabled
-      verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyAudioMenuItemsState(
         tester: tester,
         areAudioMenuItemsDisabled: false,
+        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
       // Now delete all the files in the app audio directory
@@ -6630,9 +6633,10 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure that the audio menu items are now disabled
-      verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyAudioMenuItemsState(
         tester: tester,
         areAudioMenuItemsDisabled: true,
+        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
       // Now restore the app data in the app dir
@@ -6659,9 +6663,10 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure that the audio menu items are now enabled
-      verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyAudioMenuItemsState(
         tester: tester,
         areAudioMenuItemsDisabled: false,
+        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
       // Purge the test playlist directory so that the created test
@@ -6734,9 +6739,10 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure that the audio menu items are disabled
-      verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyAudioMenuItemsState(
         tester: tester,
         areAudioMenuItemsDisabled: true,
+        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
       // Now delete all the files in the app audio directory
@@ -6761,9 +6767,10 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure that the audio menu items are now disabled
-      verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyAudioMenuItemsState(
         tester: tester,
         areAudioMenuItemsDisabled: true,
+        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
       // Now restore the app data in the app dir
@@ -6790,9 +6797,10 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure that the audio menu items are now enabled
-      verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyAudioMenuItemsState(
         tester: tester,
         areAudioMenuItemsDisabled: true,
+        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
       // Purge the test playlist directory so that the created test
@@ -6871,9 +6879,10 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure that the audio menu items are disabled
-      verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyAudioMenuItemsState(
         tester: tester,
         areAudioMenuItemsDisabled: true,
+        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
       // Now delete all the files in the app audio directory
@@ -6898,9 +6907,10 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure that the audio menu items are now disabled
-      verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyAudioMenuItemsState(
         tester: tester,
         areAudioMenuItemsDisabled: true,
+        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
       // Now restore the app data in the app dir
@@ -6927,9 +6937,10 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure that the audio menu items are disabled
-      verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyAudioMenuItemsState(
         tester: tester,
         areAudioMenuItemsDisabled: true,
+        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
       // Purge the test playlist directory so that the created test
@@ -7726,22 +7737,22 @@ void main() {
       // a selected playlist. So, the selected playlist widgets
       // are disabled. Checking this now:
 
-      TestUtility.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'move_up_playlist_button',
       );
 
-      TestUtility.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'move_down_playlist_button',
       );
 
-      TestUtility.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'download_sel_playlists_button',
       );
 
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'audio_popup_menu_button',
       );
@@ -7750,9 +7761,10 @@ void main() {
       await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
       await tester.pumpAndSettle();
 
-      verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyAudioMenuItemsState(
         tester: tester,
         areAudioMenuItemsDisabled: true,
+        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
       // Verifying that the selected playlist text field is empty
@@ -7891,22 +7903,22 @@ void main() {
       // selected, the selected playlist widgets are enabled. Checking
       // this now:
 
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'move_up_playlist_button',
       );
 
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'move_down_playlist_button',
       );
 
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'download_sel_playlists_button',
       );
 
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'audio_popup_menu_button',
       );
@@ -7915,9 +7927,10 @@ void main() {
       await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
       await tester.pumpAndSettle();
 
-      verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyAudioMenuItemsState(
         tester: tester,
         areAudioMenuItemsDisabled: false,
+        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
       // Verifying that the selected playlist text field is empty
@@ -8062,22 +8075,22 @@ void main() {
       // a selected playlist. So, the selected playlist widgets
       // are disabled. Checking this now:
 
-      TestUtility.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'move_up_playlist_button',
       );
 
-      TestUtility.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'move_down_playlist_button',
       );
 
-      TestUtility.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'download_sel_playlists_button',
       );
 
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'audio_popup_menu_button',
       );
@@ -8086,9 +8099,10 @@ void main() {
       await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
       await tester.pumpAndSettle();
 
-      verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyAudioMenuItemsState(
         tester: tester,
         areAudioMenuItemsDisabled: true,
+        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
       // Verifying that the selected playlist text field is empty
@@ -8219,29 +8233,29 @@ void main() {
         localPlaylistToDeleteTitle,
       );
 
-      // Check that the deleted playlist directory still exist
+      // Check that the deletion cancelled playlist directory still exist
       expect(Directory(localPlaylistToDeletePath).existsSync(), true);
 
       // Since the deletion of the selected playlist was cancelled,
       // there is still a selected playlist. So, the selected playlist
       // widgets are enabled. Checking this now:
 
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'move_up_playlist_button',
       );
 
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'move_down_playlist_button',
       );
 
-      TestUtility.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'download_sel_playlists_button',
       );
 
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'audio_popup_menu_button',
       );
@@ -8250,9 +8264,12 @@ void main() {
       await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
       await tester.pumpAndSettle();
 
-      verifyAudioMenuItemsState(
+      // since the playlist whose deletion was cancelled has no audio,
+      // the audui menu items are disabled
+      await IntegrationTestUtil.verifyAudioMenuItemsState(
         tester: tester,
-        areAudioMenuItemsDisabled: false,
+        areAudioMenuItemsDisabled: true,
+        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
       // Verifying that the selected playlist text field is not empty
@@ -8416,22 +8433,22 @@ void main() {
       // Youtube playlist was selected, the selected playlist widgets
       // remain enabled. Checking this now:
 
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'move_up_playlist_button',
       );
 
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'move_down_playlist_button',
       );
 
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'download_sel_playlists_button',
       );
 
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'audio_popup_menu_button',
       );
@@ -8588,24 +8605,24 @@ void main() {
       // enabled, except the download selected playlist button.
       // Checking this now:
 
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'move_up_playlist_button',
       );
 
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'move_down_playlist_button',
       );
 
       // since a local playlist is selected, the download
       // audios of selected playlist button is disabled
-      TestUtility.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'download_sel_playlists_button',
       );
 
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'audio_popup_menu_button',
       );
@@ -8616,9 +8633,10 @@ void main() {
 
       // since the selected local playlist has no audios, the
       // audio menu item is disabled
-      verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyAudioMenuItemsState(
         tester: tester,
         areAudioMenuItemsDisabled: true,
+        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
       // Purge the test playlist directory so that the created test
@@ -8739,27 +8757,27 @@ void main() {
 
       // since a local playlist is selected, verify that
       // some buttons are enabled and some are disabled
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'move_up_playlist_button',
       );
 
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'move_down_playlist_button',
       );
 
-      TestUtility.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'download_sel_playlists_button',
       );
 
-      TestUtility.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'audio_quality_checkbox',
       );
 
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'audio_popup_menu_button',
       );
@@ -8770,9 +8788,10 @@ void main() {
 
       // since the selected local playlist has no audios, the
       // audio menu item is disabled
-      verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyAudioMenuItemsState(
         tester: tester,
         areAudioMenuItemsDisabled: true,
+        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
       // Purge the test playlist directory so that the created test
@@ -8842,27 +8861,27 @@ void main() {
 
       // since a Youtube playlist is selected, verify that all
       // buttons are enabled
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'move_up_playlist_button',
       );
 
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'move_down_playlist_button',
       );
 
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'download_sel_playlists_button',
       );
 
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'audio_quality_checkbox',
       );
 
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'audio_popup_menu_button',
       );
@@ -8873,9 +8892,10 @@ void main() {
 
       // since the selected local playlist has no audios, the
       // audio menu item is disabled
-      verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyAudioMenuItemsState(
         tester: tester,
         areAudioMenuItemsDisabled: true,
+        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
       // Purge the test playlist directory so that the created test
@@ -8945,29 +8965,29 @@ void main() {
 
       // since a local playlist is selected, verify that
       // some buttons are enabled and some are disabled
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'move_up_playlist_button',
       );
 
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'move_down_playlist_button',
       );
 
-      TestUtility.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'download_sel_playlists_button',
       );
 
-      TestUtility.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'audio_quality_checkbox',
       );
 
       // since the playlist has audios, the audio popup menu
       // button is enabled
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'audio_popup_menu_button',
       );
@@ -9039,29 +9059,29 @@ void main() {
 
       // since a Youtube playlist is selected, verify that all
       // buttons are enabled
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'move_up_playlist_button',
       );
 
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'move_down_playlist_button',
       );
 
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'download_sel_playlists_button',
       );
 
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'audio_quality_checkbox',
       );
 
       // since the playlist has audios, the audio popup menu
       // button is enabled
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'audio_popup_menu_button',
       );
@@ -9170,27 +9190,27 @@ void main() {
 
       // since the Youtube playlist was deleted, verify that all
       // buttons are disabled
-      TestUtility.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'move_up_playlist_button',
       );
 
-      TestUtility.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'move_down_playlist_button',
       );
 
-      TestUtility.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'download_sel_playlists_button',
       );
 
-      TestUtility.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'audio_quality_checkbox',
       );
 
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'audio_popup_menu_button',
       );
@@ -9201,9 +9221,10 @@ void main() {
 
       // since the selected local playlist has no audios, the
       // audio menu item is disabled
-      verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyAudioMenuItemsState(
         tester: tester,
         areAudioMenuItemsDisabled: true,
+        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
       // Purge the test playlist directory so that the created test
@@ -9308,27 +9329,27 @@ void main() {
 
       // since the local playlist was deleted, verify that all
       // buttons are disabled
-      TestUtility.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'move_up_playlist_button',
       );
 
-      TestUtility.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'move_down_playlist_button',
       );
 
-      TestUtility.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'download_sel_playlists_button',
       );
 
-      TestUtility.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'audio_quality_checkbox',
       );
 
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'audio_popup_menu_button',
       );
@@ -9339,9 +9360,10 @@ void main() {
 
       // since the selected local playlist has no audios, the
       // audio menu item is disabled
-      verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyAudioMenuItemsState(
         tester: tester,
         areAudioMenuItemsDisabled: true,
+        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
       // Purge the test playlist directory so that the created test
@@ -9444,27 +9466,27 @@ void main() {
       await tester.tap(popupCopyMenuItem);
       await tester.pumpAndSettle();
 
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'move_up_playlist_button',
       );
 
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'move_down_playlist_button',
       );
 
-      TestUtility.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'download_sel_playlists_button',
       );
 
-      TestUtility.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'audio_quality_checkbox',
       );
 
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'audio_popup_menu_button',
       );
@@ -9475,9 +9497,10 @@ void main() {
 
       // since the selected local playlist has no audios, the
       // audio menu item is disabled
-      verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyAudioMenuItemsState(
         tester: tester,
         areAudioMenuItemsDisabled: true,
+        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
       // Purge the test playlist directory so that the created test
@@ -9582,27 +9605,27 @@ void main() {
       await tester.tap(popupCopyMenuItem);
       await tester.pumpAndSettle();
 
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'move_up_playlist_button',
       );
 
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'move_down_playlist_button',
       );
 
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'download_sel_playlists_button',
       );
 
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'audio_quality_checkbox',
       );
 
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'audio_popup_menu_button',
       );
@@ -9613,9 +9636,10 @@ void main() {
 
       // since the selected local playlist has no audios, the
       // audio menu item is disabled
-      verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyAudioMenuItemsState(
         tester: tester,
         areAudioMenuItemsDisabled: true,
+        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
       // Purge the test playlist directory so that the created test
@@ -9691,13 +9715,17 @@ void main() {
           const Key('clear_sort_and_filter_audio_parms_history_menu_item')));
       await tester.pumpAndSettle();
 
-      // Click on the confirm button to cancel deletion
+      // Click on the confirm button to apply deletion
       await tester.tap(find.byKey(const Key('confirmButtonKey')));
+      await tester.pumpAndSettle();
+
+      // Open again the popup menu
+      await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
       await tester.pumpAndSettle();
 
       // Verify that the clear sort/filter audio history menu item is
       // now disabled
-      TestUtility.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: "clear_sort_and_filter_audio_parms_history_menu_item",
       );
@@ -9755,19 +9783,19 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify that the left sort history icon button is disabled
-      TestUtility.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: "search_history_arrow_left_button",
       );
 
       // Verify that the right sort history icon button is disabled
-      TestUtility.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: "search_history_arrow_right_button",
       );
 
       // Verify that the clear sort history icon button is disabled
-      TestUtility.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: "search_history_delete_all_button",
       );
@@ -9782,19 +9810,19 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify that the left sort history icon button is still disabled
-      TestUtility.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: "search_history_arrow_left_button",
       );
 
       // Verify that the right sort history icon button is still disabled
-      TestUtility.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: "search_history_arrow_right_button",
       );
 
       // Verify that the clear sort history icon button is still disabled
-      TestUtility.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: "search_history_delete_all_button",
       );
@@ -9814,19 +9842,19 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify that the left sort history icon button is now enabled
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: "search_history_arrow_left_button",
       );
 
       // Verify that the right sort history icon button is still disabled
-      TestUtility.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: "search_history_arrow_right_button",
       );
 
       // Verify that the clear sort history icon button is now enabled
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: "search_history_delete_all_button",
       );
@@ -9847,19 +9875,19 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify that the left sort history icon button is still enabled
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: "search_history_arrow_left_button",
       );
 
       // Verify that the right sort history icon button is still disabled
-      TestUtility.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: "search_history_arrow_right_button",
       );
 
       // Verify that the clear sort history icon button is still enabled
-      TestUtility.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: "search_history_delete_all_button",
       );
@@ -9880,19 +9908,19 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify that the left sort history icon button is now disabled
-      TestUtility.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: "search_history_arrow_left_button",
       );
 
       // Verify that the right sort history icon button is still disabled
-      TestUtility.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: "search_history_arrow_right_button",
       );
 
       // Verify that the clear sort history icon button is now disabled
-      TestUtility.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: "search_history_delete_all_button",
       );
@@ -10553,75 +10581,31 @@ Future<void> checkAudioCommentUsingAudioItemMenu({
   await tester.pumpAndSettle();
 }
 
-void verifyAudioMenuItemsState({
-  required WidgetTester tester,
-  required bool areAudioMenuItemsDisabled,
-}) {
-  if (areAudioMenuItemsDisabled) {
-    TestUtility.verifyWidgetIsDisabled(
-      tester: tester,
-      widgetKeyStr: 'define_sort_and_filter_audio_menu_item',
-    );
-
-    TestUtility.verifyWidgetIsDisabled(
-      // no Sort/filter parameters history are available in test data
-      tester: tester,
-      widgetKeyStr: 'clear_sort_and_filter_audio_parms_history_menu_item',
-    );
-
-    TestUtility.verifyWidgetIsDisabled(
-      tester: tester,
-      widgetKeyStr: 'save_sort_and_filter_audio_parms_in_playlist_item',
-    );
-  } else {
-    TestUtility.verifyWidgetIsEnabled(
-      tester: tester,
-      widgetKeyStr: 'define_sort_and_filter_audio_menu_item',
-    );
-
-    TestUtility.verifyWidgetIsDisabled(
-      // no Sort/filter parameters history are available in test data
-      tester: tester,
-      widgetKeyStr: 'clear_sort_and_filter_audio_parms_history_menu_item',
-    );
-
-    TestUtility.verifyWidgetIsEnabled(
-      tester: tester,
-      widgetKeyStr: 'save_sort_and_filter_audio_parms_in_playlist_item',
-    );
-  }
-
-  TestUtility.verifyWidgetIsEnabled(
-    tester: tester,
-    widgetKeyStr: 'update_playlist_json_dialog_item',
-  );
-}
-
 Future<void> ensureNoButtonIsEnabledSinceNoPlaylistIsSelected(
     WidgetTester tester) async {
-  TestUtility.verifyWidgetIsDisabled(
+  IntegrationTestUtil.verifyWidgetIsDisabled(
     tester: tester,
     widgetKeyStr: 'move_up_playlist_button',
   );
 
-  TestUtility.verifyWidgetIsDisabled(
+  IntegrationTestUtil.verifyWidgetIsDisabled(
     tester: tester,
     widgetKeyStr: 'move_down_playlist_button',
   );
 
-  TestUtility.verifyWidgetIsDisabled(
+  IntegrationTestUtil.verifyWidgetIsDisabled(
     tester: tester,
     widgetKeyStr: 'download_sel_playlists_button',
   );
 
-  TestUtility.verifyWidgetIsDisabled(
+  IntegrationTestUtil.verifyWidgetIsDisabled(
     tester: tester,
     widgetKeyStr: 'audio_quality_checkbox',
   );
 
   // This menu button is always enabled since the Update playlist json file
   // menu item must be always accessible
-  TestUtility.verifyWidgetIsEnabled(
+  IntegrationTestUtil.verifyWidgetIsEnabled(
     tester: tester,
     widgetKeyStr: 'audio_popup_menu_button',
   );
@@ -10632,9 +10616,10 @@ Future<void> ensureNoButtonIsEnabledSinceNoPlaylistIsSelected(
 
   // since the selected local playlist has no audios, the
   // audio menu items are disabled
-  verifyAudioMenuItemsState(
+  await IntegrationTestUtil.verifyAudioMenuItemsState(
     tester: tester,
     areAudioMenuItemsDisabled: true,
+    audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
   );
 }
 

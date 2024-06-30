@@ -18,7 +18,6 @@ import 'package:path/path.dart' as path;
 import 'package:audiolearn/constants.dart';
 import 'package:audiolearn/utils/dir_util.dart';
 
-import '../test/util/test_utility.dart';
 import 'integration_test_util.dart';
 
 enum AudioPositionModification {
@@ -1294,19 +1293,35 @@ void main() {
       // AudioPlayerView screen which displays the current
       // playable audio which is paused
 
-      // Assuming you have a button to navigate to the AudioPlayerView
-      final audioPlayerNavButton =
+      Finder audioPlayerNavButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(audioPlayerNavButton);
       await tester.pumpAndSettle();
 
       // Test play button
-      final playButton = find.byIcon(Icons.play_arrow);
+      Finder playButton = find.byIcon(Icons.play_arrow);
       await tester.tap(playButton);
       await tester.pumpAndSettle();
 
       // Verify the no selected audio title is displayed
       expect(find.text("Aucun audio sélectionné"), findsOneWidget);
+
+      await verifyTopButtonsState(
+        tester: tester,
+        isEnabled: false,
+        audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
+        setAudioSpeedTextButtonValue: '1.00x',
+      );
+
+      // Select a playlist audio
+
+      // Now we open the AudioPlayableListDialogWidget by tapping on the
+      // audio title
+      await tester.tap(find.text("Aucun audio sélectionné"));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text("Really short video"));
+      await tester.pumpAndSettle();
 
       // Verify if the play button remained the same since
       // there is no audio to play
@@ -1315,6 +1330,70 @@ void main() {
       // Verify that the selected playlist title is displayed, even if
       // no audio is selected
       Text selectedPlaylistTitleText =
+          tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
+      expect(selectedPlaylistTitleText.data, audioPlayerSelectedPlaylistTitle);
+
+      await verifyTopButtonsState(
+        tester: tester,
+        isEnabled: true,
+        audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
+        setAudioSpeedTextButtonValue: '1.25x',
+      );
+
+      // Now, we delete all the audio of the playlist in order to test
+      // the audio player view in the case where no audio exist in the
+      // playlist
+
+      // Go back to playlist download view
+
+      final Finder audioPlayerNavButtonFinder =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(audioPlayerNavButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Now delete all the audio of the playlist
+
+      await deleteAudio(
+        tester: tester,
+        audioToDeleteTitle: "Really short video",
+      );
+
+      await deleteAudio(
+        tester: tester,
+        audioToDeleteTitle: "morning _ cinematic video",
+      );
+
+      // Now we tap on the AudioPlayerView icon button to open
+      // AudioPlayerView screen which displays the current
+      // playable audio which is paused
+
+      audioPlayerNavButton =
+          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+      await tester.tap(audioPlayerNavButton);
+      await tester.pumpAndSettle();
+
+      // Test play button
+      playButton = find.byIcon(Icons.play_arrow);
+      await tester.tap(playButton);
+      await tester.pumpAndSettle();
+
+      // Verify the no selected audio title is displayed
+      expect(find.text("Aucun audio sélectionné"), findsOneWidget);
+
+      await verifyTopButtonsState(
+        tester: tester,
+        isEnabled: false,
+        audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
+        setAudioSpeedTextButtonValue: '1.00x',
+      );
+
+      // Verify if the play button remained the same since
+      // there is no audio to play
+      expect(find.byIcon(Icons.play_arrow), findsOneWidget);
+
+      // Verify that the selected playlist title is displayed, even if
+      // no audio is selected
+      selectedPlaylistTitleText =
           tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
       expect(selectedPlaylistTitleText.data, audioPlayerSelectedPlaylistTitle);
 
@@ -1338,7 +1417,7 @@ void main() {
       // playable audio which is paused
 
       // Assuming you have a button to navigate to the AudioPlayerView
-      final audioPlayerNavButton =
+      final Finder audioPlayerNavButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(audioPlayerNavButton);
       await tester.pumpAndSettle();
@@ -1347,9 +1426,16 @@ void main() {
       final Finder noAudioTitleFinder = find.text("No audio selected");
       expect(noAudioTitleFinder, findsOneWidget);
 
+      await verifyTopButtonsState(
+        tester: tester,
+        isEnabled: false,
+        audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
+        setAudioSpeedTextButtonValue: '1.00x',
+      );
+
       // Verify that the playlist title Text is empty since no playlist
       // is selected
-      Text selectedPlaylistTitleText =
+      final Text selectedPlaylistTitleText =
           tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
       expect(selectedPlaylistTitleText.data, '');
 
@@ -3548,7 +3634,7 @@ void main() {
     });
 
     testWidgets(
-        'Menu Clear sort/filter parameters history execution verifying that the confirm dialog is displayed in the play audio view.',
+        'Menu Clear sort/filter parameters history execution verifying that the confirm dialog is displayed in the audio player view.',
         (WidgetTester tester) async {
       const String audioPlayerSelectedPlaylistTitle =
           'S8 audio'; // Youtube playlist
@@ -3605,13 +3691,17 @@ void main() {
           const Key('clear_sort_and_filter_audio_parms_history_menu_item')));
       await tester.pumpAndSettle();
 
-      // Click on the confirm button to cancel deletion
+      // Click on the confirm button to cause deletion
       await tester.tap(find.byKey(const Key('confirmButtonKey')));
+      await tester.pumpAndSettle();
+
+      // Open again the popup menu
+      await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
       await tester.pumpAndSettle();
 
       // Verify that the clear sort/filter audio history menu item is
       // now disabled
-      TestUtility.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: "clear_sort_and_filter_audio_parms_history_menu_item",
       );
@@ -5953,6 +6043,40 @@ void main() {
   });
 }
 
+Future<void> deleteAudio({
+  required WidgetTester tester,
+  required String audioToDeleteTitle,
+}) async {
+  // First, find the Audio sublist ListTile Text widget
+  final Finder uniqueAudioListTileTextWidgetFinder =
+      find.text(audioToDeleteTitle);
+
+  // Then obtain the Audio ListTile widget enclosing the Text widget by
+  // finding its ancestor
+  final Finder uniqueAudioListTileWidgetFinder = find.ancestor(
+    of: uniqueAudioListTileTextWidgetFinder,
+    matching: find.byType(ListTile),
+  );
+
+  // Now find the leading menu icon button of the Audio ListTile
+  // and tap on it
+  final Finder uniqueAudioListTileLeadingMenuIconButton = find.descendant(
+    of: uniqueAudioListTileWidgetFinder,
+    matching: find.byIcon(Icons.menu),
+  );
+
+  // Tap the leading menu icon button to open the popup menu
+  await tester.tap(uniqueAudioListTileLeadingMenuIconButton);
+  await tester.pumpAndSettle(); // Wait for popup menu to appear
+
+  // Now find the delete audio popup menu item and tap on it
+  final Finder popupCopyMenuItem =
+      find.byKey(const Key("popup_menu_delete_audio"));
+
+  await tester.tap(popupCopyMenuItem);
+  await tester.pumpAndSettle();
+}
+
 Future<void> simulateEnteringTooBigAndTooSmallAudioPosition({
   required WidgetTester tester,
   required Finder setValueToTargetDialogEditTextFinder,
@@ -6867,4 +6991,95 @@ Duration parseDuration(String hhmmString) {
   int minutes = int.parse(parts[1]);
 
   return Duration(hours: hours, minutes: minutes);
+}
+
+Future<void> verifyTopButtonsState({
+  required WidgetTester tester,
+  required bool isEnabled,
+  required AudioLearnAppViewType audioLearnAppViewType,
+  required String setAudioSpeedTextButtonValue,
+}) async {
+  if (isEnabled) {
+    IntegrationTestUtil.verifyWidgetIsEnabled(
+      tester: tester,
+      widgetKeyStr: 'decreaseAudioVolumeIconButton',
+    );
+
+    IntegrationTestUtil.verifyWidgetIsEnabled(
+      tester: tester,
+      widgetKeyStr: 'increaseAudioVolumeIconButton',
+    );
+
+    IntegrationTestUtil.verifyWidgetIsEnabled(
+      tester: tester,
+      widgetKeyStr: 'setAudioSpeedTextButton',
+    );
+
+    IntegrationTestUtil.verifyWidgetIsEnabled(
+      tester: tester,
+      widgetKeyStr: 'commentsInkWellButton',
+    );
+
+    IntegrationTestUtil.verifyWidgetIsEnabled(
+      tester: tester,
+      widgetKeyStr: 'audio_popup_menu_button',
+    );
+  } else {
+    IntegrationTestUtil.verifyWidgetIsDisabled(
+      tester: tester,
+      widgetKeyStr: 'decreaseAudioVolumeIconButton',
+    );
+
+    IntegrationTestUtil.verifyWidgetIsDisabled(
+      tester: tester,
+      widgetKeyStr: 'increaseAudioVolumeIconButton',
+    );
+
+    IntegrationTestUtil.verifyWidgetIsDisabled(
+      tester: tester,
+      widgetKeyStr: 'setAudioSpeedTextButton',
+    );
+
+    IntegrationTestUtil.verifyWidgetIsDisabled(
+      tester: tester,
+      widgetKeyStr: 'commentsInkWellButton',
+    );
+
+    IntegrationTestUtil.verifyWidgetIsDisabled(
+      tester: tester,
+      widgetKeyStr: 'audio_popup_menu_button',
+    );
+  }
+
+  final Finder setAudioSpeedTextButtonFinder =
+      find.byKey(const Key('setAudioSpeedTextButton'));
+
+  final Finder setAudioSpeedTextOfButtonFinder = find.descendant(
+    of: setAudioSpeedTextButtonFinder,
+    matching: find.byType(Text),
+  );
+
+  // Verify that the Text widget contains the expected content
+
+  String setAudioSpeedTextOfButton =
+      tester.widget<Text>(setAudioSpeedTextOfButtonFinder).data!;
+
+  expect(
+    setAudioSpeedTextOfButton,
+    setAudioSpeedTextButtonValue,
+  );
+
+  if (isEnabled) {
+    // Open the audio popup menu
+    await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+    await tester.pumpAndSettle();
+
+    // since the selected local playlist has audios, the
+    // audio menu items are enabled
+    await IntegrationTestUtil.verifyAudioMenuItemsState(
+      tester: tester,
+      areAudioMenuItemsDisabled: false,
+      audioLearnAppViewType: audioLearnAppViewType,
+    );
+  }
 }
