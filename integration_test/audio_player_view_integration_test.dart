@@ -1306,7 +1306,7 @@ void main() {
       // Verify the no selected audio title is displayed
       expect(find.text("Aucun audio sélectionné"), findsOneWidget);
 
-      await verifyTopButtonsState(
+      await IntegrationTestUtil.verifyTopButtonsState(
         tester: tester,
         isEnabled: false,
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -1333,7 +1333,7 @@ void main() {
           tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
       expect(selectedPlaylistTitleText.data, audioPlayerSelectedPlaylistTitle);
 
-      await verifyTopButtonsState(
+      await IntegrationTestUtil.verifyTopButtonsState(
         tester: tester,
         isEnabled: true,
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -1380,7 +1380,7 @@ void main() {
       // Verify the no selected audio title is displayed
       expect(find.text("Aucun audio sélectionné"), findsOneWidget);
 
-      await verifyTopButtonsState(
+      await IntegrationTestUtil.verifyTopButtonsState(
         tester: tester,
         isEnabled: false,
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -1426,7 +1426,7 @@ void main() {
       final Finder noAudioTitleFinder = find.text("No audio selected");
       expect(noAudioTitleFinder, findsOneWidget);
 
-      await verifyTopButtonsState(
+      await IntegrationTestUtil.verifyTopButtonsState(
         tester: tester,
         isEnabled: false,
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -6993,93 +6993,3 @@ Duration parseDuration(String hhmmString) {
   return Duration(hours: hours, minutes: minutes);
 }
 
-Future<void> verifyTopButtonsState({
-  required WidgetTester tester,
-  required bool isEnabled,
-  required AudioLearnAppViewType audioLearnAppViewType,
-  required String setAudioSpeedTextButtonValue,
-}) async {
-  if (isEnabled) {
-    IntegrationTestUtil.verifyWidgetIsEnabled(
-      tester: tester,
-      widgetKeyStr: 'decreaseAudioVolumeIconButton',
-    );
-
-    IntegrationTestUtil.verifyWidgetIsEnabled(
-      tester: tester,
-      widgetKeyStr: 'increaseAudioVolumeIconButton',
-    );
-
-    IntegrationTestUtil.verifyWidgetIsEnabled(
-      tester: tester,
-      widgetKeyStr: 'setAudioSpeedTextButton',
-    );
-
-    IntegrationTestUtil.verifyWidgetIsEnabled(
-      tester: tester,
-      widgetKeyStr: 'commentsInkWellButton',
-    );
-
-    IntegrationTestUtil.verifyWidgetIsEnabled(
-      tester: tester,
-      widgetKeyStr: 'audio_popup_menu_button',
-    );
-  } else {
-    IntegrationTestUtil.verifyWidgetIsDisabled(
-      tester: tester,
-      widgetKeyStr: 'decreaseAudioVolumeIconButton',
-    );
-
-    IntegrationTestUtil.verifyWidgetIsDisabled(
-      tester: tester,
-      widgetKeyStr: 'increaseAudioVolumeIconButton',
-    );
-
-    IntegrationTestUtil.verifyWidgetIsDisabled(
-      tester: tester,
-      widgetKeyStr: 'setAudioSpeedTextButton',
-    );
-
-    IntegrationTestUtil.verifyWidgetIsDisabled(
-      tester: tester,
-      widgetKeyStr: 'commentsInkWellButton',
-    );
-
-    IntegrationTestUtil.verifyWidgetIsDisabled(
-      tester: tester,
-      widgetKeyStr: 'audio_popup_menu_button',
-    );
-  }
-
-  final Finder setAudioSpeedTextButtonFinder =
-      find.byKey(const Key('setAudioSpeedTextButton'));
-
-  final Finder setAudioSpeedTextOfButtonFinder = find.descendant(
-    of: setAudioSpeedTextButtonFinder,
-    matching: find.byType(Text),
-  );
-
-  // Verify that the Text widget contains the expected content
-
-  String setAudioSpeedTextOfButton =
-      tester.widget<Text>(setAudioSpeedTextOfButtonFinder).data!;
-
-  expect(
-    setAudioSpeedTextOfButton,
-    setAudioSpeedTextButtonValue,
-  );
-
-  if (isEnabled) {
-    // Open the audio popup menu
-    await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-    await tester.pumpAndSettle();
-
-    // since the selected local playlist has audios, the
-    // audio menu items are enabled
-    await IntegrationTestUtil.verifyAudioMenuItemsState(
-      tester: tester,
-      areAudioMenuItemsDisabled: false,
-      audioLearnAppViewType: audioLearnAppViewType,
-    );
-  }
-}

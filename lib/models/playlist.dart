@@ -452,6 +452,8 @@ class Playlist {
       }
     }
 
+    currentOrPastPlayableAudioIndex = playableAudioLst.length - 1;
+    
     return removedPlayableAudioNumber;
   }
 

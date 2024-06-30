@@ -410,4 +410,95 @@ class IntegrationTestUtil {
           reason: 'IconButton color should be disabled color');
     }
   }
+
+static Future<void> verifyTopButtonsState({
+  required WidgetTester tester,
+  required bool isEnabled,
+  required AudioLearnAppViewType audioLearnAppViewType,
+  required String setAudioSpeedTextButtonValue,
+}) async {
+  if (isEnabled) {
+    verifyWidgetIsEnabled(
+      tester: tester,
+      widgetKeyStr: 'decreaseAudioVolumeIconButton',
+    );
+
+    verifyWidgetIsEnabled(
+      tester: tester,
+      widgetKeyStr: 'increaseAudioVolumeIconButton',
+    );
+
+    verifyWidgetIsEnabled(
+      tester: tester,
+      widgetKeyStr: 'setAudioSpeedTextButton',
+    );
+
+    verifyWidgetIsEnabled(
+      tester: tester,
+      widgetKeyStr: 'commentsInkWellButton',
+    );
+
+    verifyWidgetIsEnabled(
+      tester: tester,
+      widgetKeyStr: 'audio_popup_menu_button',
+    );
+  } else {
+    verifyWidgetIsDisabled(
+      tester: tester,
+      widgetKeyStr: 'decreaseAudioVolumeIconButton',
+    );
+
+    verifyWidgetIsDisabled(
+      tester: tester,
+      widgetKeyStr: 'increaseAudioVolumeIconButton',
+    );
+
+    verifyWidgetIsDisabled(
+      tester: tester,
+      widgetKeyStr: 'setAudioSpeedTextButton',
+    );
+
+    verifyWidgetIsDisabled(
+      tester: tester,
+      widgetKeyStr: 'commentsInkWellButton',
+    );
+
+    verifyWidgetIsDisabled(
+      tester: tester,
+      widgetKeyStr: 'audio_popup_menu_button',
+    );
+  }
+
+  final Finder setAudioSpeedTextButtonFinder =
+      find.byKey(const Key('setAudioSpeedTextButton'));
+
+  final Finder setAudioSpeedTextOfButtonFinder = find.descendant(
+    of: setAudioSpeedTextButtonFinder,
+    matching: find.byType(Text),
+  );
+
+  // Verify that the Text widget contains the expected content
+
+  String setAudioSpeedTextOfButton =
+      tester.widget<Text>(setAudioSpeedTextOfButtonFinder).data!;
+
+  expect(
+    setAudioSpeedTextOfButton,
+    setAudioSpeedTextButtonValue,
+  );
+
+  if (isEnabled) {
+    // Open the audio popup menu
+    await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+    await tester.pumpAndSettle();
+
+    // since the selected local playlist has audios, the
+    // audio menu items are enabled
+    await verifyAudioMenuItemsState(
+      tester: tester,
+      areAudioMenuItemsDisabled: false,
+      audioLearnAppViewType: audioLearnAppViewType,
+    );
+  }
+}
 }
