@@ -214,7 +214,7 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
                 ),
                 excludedPlaylist: audio.enclosingPlaylist!,
               ),
-            ).then((resultMap) {
+            ).then((resultMap) async {
               if (resultMap is String && resultMap == 'cancel') {
                 // the case if the Cancel button was pressed
                 return;
@@ -231,12 +231,26 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
               bool keepAudioDataInSourcePlaylist =
                   resultMap['keepAudioDataInSourcePlaylist'];
 
-              expandablePlaylistVM.moveAudioAndCommentToPlaylist(
+              Audio? nextAudio =
+                  expandablePlaylistVM.moveAudioAndCommentToPlaylist(
                 audio: audio,
                 targetPlaylist: targetPlaylist,
                 keepAudioInSourcePlaylistDownloadedAudioLst:
                     keepAudioDataInSourcePlaylist,
               );
+
+              if (nextAudio != null) {
+                // Required so that the audio title displayed in the
+                // audio player view is updated with the modified title
+
+                AudioPlayerVM audioGlobalPlayerVM = Provider.of<AudioPlayerVM>(
+                  context,
+                  listen: false,
+                );
+                await audioGlobalPlayerVM.setCurrentAudio(nextAudio);
+              } else {
+                // set No audio selected
+              }
             });
             break;
           case AudioPopupMenuAction.copyAudioToPlaylist:

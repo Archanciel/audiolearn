@@ -754,7 +754,7 @@ class PlaylistListVM extends ChangeNotifier {
     return AudioSortFilterParameters.createDefaultAudioSortFilterParameters();
   }
 
-  void moveAudioAndCommentToPlaylist({
+  Audio? moveAudioAndCommentToPlaylist({
     required Audio audio,
     required Playlist targetPlaylist,
     required bool keepAudioInSourcePlaylistDownloadedAudioLst,
@@ -770,9 +770,11 @@ class PlaylistListVM extends ChangeNotifier {
       targetPlaylistPath: targetPlaylist.downloadPath,
     );
 
-    _removeAudioFromSortedFilteredPlayableAudioList(audio);
+    Audio? nextAudio =_removeAudioFromSortedFilteredPlayableAudioList(audio);
 
     notifyListeners();
+
+    return nextAudio;
   }
 
   void copyAudioToPlaylist({
@@ -867,11 +869,18 @@ class PlaylistListVM extends ChangeNotifier {
 
   /// playableAudioLst order: [available audio last downloaded, ...,
   ///                          available audio first downloaded]
-  void _removeAudioFromSortedFilteredPlayableAudioList(Audio audio) {
+  Audio? _removeAudioFromSortedFilteredPlayableAudioList(Audio audio) {
     if (_sortedFilteredSelectedPlaylistsPlayableAudios != null) {
+      Audio? nextAudio =
+          getNextSubsequentlyDownloadedOrSortFilteredNotFullyPlayedAudio(
+        currentAudio: audio,
+      );
       _sortedFilteredSelectedPlaylistsPlayableAudios!
           .removeWhere((audioInList) => audioInList == audio);
+      return nextAudio;
     }
+
+    return null;
   }
 
   /// User selected the audio menu item "Delete audio
