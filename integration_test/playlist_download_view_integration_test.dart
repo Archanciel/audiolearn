@@ -5754,7 +5754,7 @@ void main() {
 
       // Now find the leading menu icon button of the Playlist ListTile
       // and tap on it
-      final Finder youtubePlaylistListTileLeadingMenuIconButton =
+      Finder youtubePlaylistListTileLeadingMenuIconButton =
           find.descendant(
         of: youtubePlaylistListTileWidgetFinder,
         matching: find.byIcon(Icons.menu),
@@ -5765,7 +5765,7 @@ void main() {
       await tester.pumpAndSettle(); // Wait for popup menu to appear
 
       // Now find the update playlist popup menu item and tap on it
-      final Finder popupUpdatePlayableAudioListPlaylistMenuItem =
+      Finder popupUpdatePlayableAudioListPlaylistMenuItem =
           find.byKey(const Key("popup_menu_update_playable_audio_list"));
 
       await tester.tap(popupUpdatePlayableAudioListPlaylistMenuItem);
@@ -5819,6 +5819,40 @@ void main() {
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
         setAudioSpeedTextButtonValue: '1.00x',
       );
+
+      // Now execute again the playlist update of the Youtube playlist.
+      // This update won't change anything in the playlist.
+
+      // Return to playlist download view
+      Finder playlistDownloadViewNavButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(playlistDownloadViewNavButton);
+      await tester.pumpAndSettle();
+
+      // Now find the leading menu icon button of the Playlist ListTile
+      // and tap on it
+      youtubePlaylistListTileLeadingMenuIconButton =
+          find.descendant(
+        of: youtubePlaylistListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(youtubePlaylistListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle(); // Wait for popup menu to appear
+
+      // Now find the update playlist popup menu item and tap on it
+      popupUpdatePlayableAudioListPlaylistMenuItem =
+          find.byKey(const Key("popup_menu_update_playable_audio_list"));
+
+      await tester.tap(popupUpdatePlayableAudioListPlaylistMenuItem);
+      await tester.pumpAndSettle();
+
+      // Now verifying that no warning dialog is displayed since nothing
+      // was updated in the playlist
+
+      // Check the value of the warning dialog title
+      expect(find.byKey(const Key('warningDialogTitle')), findsNothing);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -5924,7 +5958,7 @@ void main() {
 
       // Now find the leading menu icon button of the Playlist ListTile
       // and tap on it
-      final Finder localPlaylistListTileLeadingMenuIconButton = find.descendant(
+      Finder localPlaylistListTileLeadingMenuIconButton = find.descendant(
         of: localPlaylistListTileWidgetFinder,
         matching: find.byIcon(Icons.menu),
       );
@@ -5934,7 +5968,7 @@ void main() {
       await tester.pumpAndSettle(); // Wait for popup menu to appear
 
       // Now find the update playlist popup menu item and tap on it
-      final Finder popupUpdatePlayableAudioListPlaylistMenuItem =
+      Finder popupUpdatePlayableAudioListPlaylistMenuItem =
           find.byKey(const Key("popup_menu_update_playable_audio_list"));
 
       await tester.tap(popupUpdatePlayableAudioListPlaylistMenuItem);
@@ -5988,6 +6022,40 @@ void main() {
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
         setAudioSpeedTextButtonValue: '1.00x',
       );
+
+      // Now execute again the playlist update of the Youtube playlist.
+      // This update won't change anything in the playlist.
+
+      // Return to playlist download view
+      Finder playlistDownloadViewNavButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(playlistDownloadViewNavButton);
+      await tester.pumpAndSettle();
+
+      // Now find the leading menu icon button of the Playlist ListTile
+      // and tap on it
+      localPlaylistListTileLeadingMenuIconButton =
+          find.descendant(
+        of: localPlaylistListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(localPlaylistListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle(); // Wait for popup menu to appear
+
+      // Now find the update playlist popup menu item and tap on it
+      popupUpdatePlayableAudioListPlaylistMenuItem =
+          find.byKey(const Key("popup_menu_update_playable_audio_list"));
+
+      await tester.tap(popupUpdatePlayableAudioListPlaylistMenuItem);
+      await tester.pumpAndSettle();
+
+      // Now verifying that no warning dialog is displayed since nothing
+      // was updated in the playlist
+
+      // Check the value of the warning dialog title
+      expect(find.byKey(const Key('warningDialogTitle')), findsNothing);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
