@@ -405,6 +405,8 @@ class AudioPlayerVM extends ChangeNotifier {
       // to the AudioPlayerView screen causes the "No audio selected"
       // audio title to be displayed in the AudioPlayerView screen.
       _handleNoPlayableAudioAvailable();
+
+      return;
     }
 
     Audio? currentOrPastPlaylistAudio = selectedPlaylistLst.first
