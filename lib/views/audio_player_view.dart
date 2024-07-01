@@ -635,7 +635,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                         AudioLearnAppViewType.audioPlayerView,
                       )
                       .isEmpty) {
-                    // there is no audio to play
+                    // there is no audio to play, so tapping on the
+                    // current audio title does not perform anything
                     return;
                   }
 
