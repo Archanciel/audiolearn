@@ -239,17 +239,21 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
                     keepAudioDataInSourcePlaylist,
               );
 
-              if (nextAudio != null) {
-                // Required so that the audio title displayed in the
-                // audio player view is updated with the modified title
-
                 AudioPlayerVM audioGlobalPlayerVM = Provider.of<AudioPlayerVM>(
                   context,
                   listen: false,
                 );
+
+              if (nextAudio != null) {
+                // Required so that the audio title displayed in the
+                // audio player view is updated with the modified title
+
                 await audioGlobalPlayerVM.setCurrentAudio(nextAudio);
               } else {
-                // set No audio selected
+                // Calling handleNoPlayableAudioAvailable() is necessary
+                // to update the audio title in the audio player view to
+                // "No selected audio"
+                audioGlobalPlayerVM.handleNoPlayableAudioAvailable();
               }
             });
             break;

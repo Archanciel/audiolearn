@@ -404,10 +404,7 @@ class AudioPlayerVM extends ChangeNotifier {
       // ensures that when the user deselect the playlist, switching
       // to the AudioPlayerView screen causes the "No audio selected"
       // audio title to be displayed in the AudioPlayerView screen.
-      _clearCurrentAudio();
-      _clearUndoRedoLists();
-
-      return;
+      _handleNoPlayableAudioAvailable();
     }
 
     Audio? currentOrPastPlaylistAudio = selectedPlaylistLst.first
@@ -435,6 +432,24 @@ class AudioPlayerVM extends ChangeNotifier {
     }
 
     await _setCurrentAudioAndInitializeAudioPlayer(currentOrPastPlaylistAudio);
+  }
+
+  /// Used as well when the user moves or deletes in the audio
+  /// player view the unique audio available in the current playlist.
+  void handleNoPlayableAudioAvailable() {
+    _handleNoPlayableAudioAvailable();
+
+    notifyListeners();
+
+    return;
+  }
+
+  /// Ensures that when the user deselect the playlist, switching
+  /// to the AudioPlayerView screen causes the "No audio selected"
+  /// audio title to be displayed in the AudioPlayerView screen.
+  void _handleNoPlayableAudioAvailable() {
+    _clearCurrentAudio();
+    _clearUndoRedoLists();
   }
 
   void _clearCurrentAudio() {
@@ -545,7 +560,8 @@ class AudioPlayerVM extends ChangeNotifier {
     }
 
     modifyCurrentAudioPlayingOrPausedWithPositionBetweenAudioStartAndEnd(
-        newAudioPosition: newAudioPosition,);
+      newAudioPosition: newAudioPosition,
+    );
 
     if (!isUndoRedo) {
       Command command = SetAudioPositionCommand(
@@ -583,8 +599,7 @@ class AudioPlayerVM extends ChangeNotifier {
   /// isPlayingOrPausedWithPositionBetweenAudioStartAndEnd value. This
   /// instance variable is used to modify the inkwell audio play icon color
   /// in the AudioListItemWidget used in the PlaylistDownloadView.
-  void
-      modifyCurrentAudioPlayingOrPausedWithPositionBetweenAudioStartAndEnd({
+  void modifyCurrentAudioPlayingOrPausedWithPositionBetweenAudioStartAndEnd({
     required Duration newAudioPosition,
   }) {
     if (newAudioPosition > Duration.zero &&
@@ -631,9 +646,9 @@ class AudioPlayerVM extends ChangeNotifier {
     required Duration durationPosition,
     bool isUndoRedo = false,
   }) async {
-    
     modifyCurrentAudioPlayingOrPausedWithPositionBetweenAudioStartAndEnd(
-        newAudioPosition: durationPosition,);
+      newAudioPosition: durationPosition,
+    );
 
     if (!isUndoRedo) {
       Command command = SetAudioPositionCommand(
@@ -650,7 +665,7 @@ class AudioPlayerVM extends ChangeNotifier {
     // necessary so that the audio position is stored on the
     // audio
     _currentAudio!.audioPositionSeconds = _currentAudioPosition.inSeconds;
-        
+
     // This method must be executed even if the audio player plugin
     // position is set in the _rewindAudioPositionBasedOnPauseDuration()
     // method called by the playCurrentAudio() method. This is necessary
