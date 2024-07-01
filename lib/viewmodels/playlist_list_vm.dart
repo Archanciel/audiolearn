@@ -759,6 +759,11 @@ class PlaylistListVM extends ChangeNotifier {
     required Playlist targetPlaylist,
     required bool keepAudioInSourcePlaylistDownloadedAudioLst,
   }) {
+    Audio? nextAudio =
+        _getNextSubsequentlyDownloadedOrSortFilteredNotFullyPlayedAudio(
+      currentAudio: audio,
+    );
+
     _audioDownloadVM.moveAudioToPlaylist(
         audio: audio,
         targetPlaylist: targetPlaylist,
@@ -769,8 +774,6 @@ class PlaylistListVM extends ChangeNotifier {
       audio: audio,
       targetPlaylistPath: targetPlaylist.downloadPath,
     );
-
-    Audio? nextAudio =_removeAudioFromSortedFilteredPlayableAudioList(audio);
 
     notifyListeners();
 
@@ -872,7 +875,7 @@ class PlaylistListVM extends ChangeNotifier {
   Audio? _removeAudioFromSortedFilteredPlayableAudioList(Audio audio) {
     if (_sortedFilteredSelectedPlaylistsPlayableAudios != null) {
       Audio? nextAudio =
-          getNextSubsequentlyDownloadedOrSortFilteredNotFullyPlayedAudio(
+          _getNextSubsequentlyDownloadedOrSortFilteredNotFullyPlayedAudio(
         currentAudio: audio,
       );
       _sortedFilteredSelectedPlaylistsPlayableAudios!
@@ -1007,13 +1010,21 @@ class PlaylistListVM extends ChangeNotifier {
   Audio? getNextSubsequentlyDownloadedOrSortFilteredNotFullyPlayedAudio({
     required Audio currentAudio,
   }) {
-    // this test is required, otherwise the method will be
+    // If the current audio is not fully listened, null is returned.
+    // This test is required, otherwise the method will be
     // executed so much time that the last downloaded audio
     // will be selected
     if (!currentAudio.wasFullyListened()) {
       return null;
     }
 
+    return _getNextSubsequentlyDownloadedOrSortFilteredNotFullyPlayedAudio(
+        currentAudio: currentAudio);
+  }
+
+  Audio? _getNextSubsequentlyDownloadedOrSortFilteredNotFullyPlayedAudio({
+    required Audio currentAudio,
+  }) {
     // If sort and filter parameters were saved in the playlist json
     // file with automatic options application set to true, then the
     // audio list returned by
