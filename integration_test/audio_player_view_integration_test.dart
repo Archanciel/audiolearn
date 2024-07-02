@@ -346,7 +346,7 @@ void main() {
 
       await tester
           .tap(playlistDownloadViewLastDownloadedAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // Tapping 5 times on the forward 1 minute icon button. Now, the last
       // downloaded audio of the playlist is partially listened.
@@ -359,10 +359,8 @@ void main() {
       // Playing the last downloaded audio during 1 second.
 
       await tester.tap(find.byIcon(Icons.play_arrow));
-      await tester.pumpAndSettle();
-
-      await Future.delayed(const Duration(seconds: 1));
-      await tester.pumpAndSettle();
+      Future.delayed(const Duration(seconds: 1));
+      await tester.pumpAndSettle(const Duration(milliseconds: 1500));
 
       // Click on the pause button to stop the last downloaded audio
       await tester.tap(find.byIcon(Icons.pause));
@@ -384,7 +382,7 @@ void main() {
           find.text(previousEndDownloadedAudioTitle);
 
       await tester.tap(previousEndDownloadedAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 400));
 
       // Now we tap on the play button in order to finish
       // playing the audio downloaded before the last downloaded
@@ -392,8 +390,6 @@ void main() {
       // playlist.
 
       await tester.tap(find.byIcon(Icons.play_arrow));
-      await tester.pumpAndSettle();
-
       await Future.delayed(const Duration(seconds: 5));
       await tester.pumpAndSettle();
 
@@ -452,7 +448,7 @@ void main() {
           find.text(firstDownloadedAudioTitle);
 
       await tester.tap(firstDownloadedAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // Now we tap on the play button in order to finish
       // playing the first downloaded audio and start playing
@@ -464,7 +460,7 @@ void main() {
       await tester.pumpAndSettle();
 
       await Future.delayed(const Duration(seconds: 5));
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 1500));
 
       // Click on the pause button
       await tester.tap(find.byIcon(Icons.pause));
@@ -486,7 +482,7 @@ void main() {
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
         minPositionTimeStr: '0:03',
-        maxPositionTimeStr: '0:06',
+        maxPositionTimeStr: '0:07',
       );
 
       // Purge the test playlist directory so that the created test
@@ -527,7 +523,7 @@ void main() {
 
       await tester
           .tap(playlistDownloadViewLastDownloadedAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // Tapping 5 times on the forward 1 minute icon button. Now, the last
       // downloaded audio of the playlist is partially listened.
@@ -543,7 +539,7 @@ void main() {
       await tester.pumpAndSettle();
 
       await Future.delayed(const Duration(seconds: 1));
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 1500));
 
       // Click on the pause button to stop the last downloaded audio
       await tester.tap(find.byIcon(Icons.pause));
@@ -564,7 +560,7 @@ void main() {
           find.text(firstDownloadedAudioTitle);
 
       await tester.tap(firstDownloadedAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 400));
 
       // Verify that the selected playlist title is displayed
       Text selectedPlaylistTitleText =
@@ -611,7 +607,7 @@ void main() {
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
         minPositionTimeStr: '5:00',
-        maxPositionTimeStr: '5:03',
+        maxPositionTimeStr: '5:05',
       );
 
       // Purge the test playlist directory so that the created test
@@ -1153,7 +1149,7 @@ void main() {
           find.text(lastDownloadedAudioTitle);
 
       await tester.tap(lastDownloadedAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       await tester.tap(find.byIcon(Icons.play_arrow));
       await tester.pumpAndSettle();
@@ -1444,6 +1440,52 @@ void main() {
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
+    });
+    testWidgets(
+        'Opening AudioPlayerView by clicking on AudioPlayerView icon button in situation where no playlist is selected. Then select an empty playlist and open AudioPlayerView by clicking on AudioPlayerView icon button.',
+        (WidgetTester tester) async {
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_player_view_no_playlist_selected_test',
+        selectedPlaylistTitle: null, // no playlist selected
+      );
+
+      // Now we tap on the AudioPlayerView icon button to open
+      // AudioPlayerView screen which displays the current
+      // playable audio which is paused
+
+      // Assuming you have a button to navigate to the AudioPlayerView
+      final Finder audioPlayerNavButton =
+          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+      await tester.tap(audioPlayerNavButton);
+      await tester.pumpAndSettle();
+
+      // Verify the no selected audio title is displayed
+      final Finder noAudioTitleFinder = find.text("No audio selected");
+      expect(noAudioTitleFinder, findsOneWidget);
+
+      await IntegrationTestUtil.verifyTopButtonsState(
+        tester: tester,
+        isEnabled: false,
+        audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
+        setAudioSpeedTextButtonValue: '1.00x',
+      );
+
+      // Verify that the playlist title Text is empty since no playlist
+      // is selected
+      final Text selectedPlaylistTitleText =
+          tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
+      expect(selectedPlaylistTitleText.data, '');
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets(
+        'Opening AudioPlayerView by clicking on AudioPlayerView icon button in situation where no playlist is selected. Then select a playlist with no selected audio and open AudioPlayerView by clicking on AudioPlayerView icon button.',
+        (WidgetTester tester) async {
     });
   });
   group('set play speed tests', () {

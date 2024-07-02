@@ -234,7 +234,7 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
   /// This function is passed as the onPageChanged: parameter
   /// of the PageView builder. The function is called each time
   /// the PageView drag to another screen.
-  void onPageChangedFunction(int index) async {
+  Future<void> onPageChangedFunction(int index) async {
     if (index == ScreenMixin.AUDIO_PLAYER_VIEW_DRAGGABLE_INDEX) {
       // dragging to the AudioPlayerView screen requires to set
       // the current audio defined on the currently selected playlist.

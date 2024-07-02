@@ -232,8 +232,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                           globalAudioPlayerVM.isCurrentAudioVolumeMin())
                       ? null // Disable the button if no audio selected or
                       //        if the volume is min
-                      : () {
-                          globalAudioPlayerVM.changeAudioVolume(
+                      : () async {
+                          await globalAudioPlayerVM.changeAudioVolume(
                             volumeChangedValue: -0.1,
                           );
                         },
@@ -253,8 +253,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                             globalAudioPlayerVM.isCurrentAudioVolumeMax())
                         ? null // Disable the button if no audio selected or
                         //        if the volume is max
-                        : () {
-                            globalAudioPlayerVM.changeAudioVolume(
+                        : () async {
+                            await globalAudioPlayerVM.changeAudioVolume(
                               volumeChangedValue: 0.1,
                             );
                           }),
@@ -818,8 +818,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                     children: [
                       Expanded(
                         child: GestureDetector(
-                          onTap: () =>
-                              globalAudioPlayerVM.changeAudioPlayPosition(
+                          onTap: () async =>
+                              await globalAudioPlayerVM.changeAudioPlayPosition(
                             posNegPositionDurationChange:
                                 const Duration(minutes: -1),
                           ),
@@ -832,8 +832,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                       ),
                       Expanded(
                         child: GestureDetector(
-                          onTap: () =>
-                              globalAudioPlayerVM.changeAudioPlayPosition(
+                          onTap: () async =>
+                              await globalAudioPlayerVM.changeAudioPlayPosition(
                             posNegPositionDurationChange:
                                 const Duration(seconds: -10),
                           ),
@@ -846,8 +846,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                       ),
                       Expanded(
                         child: GestureDetector(
-                          onTap: () =>
-                              globalAudioPlayerVM.changeAudioPlayPosition(
+                          onTap: () async =>
+                              await globalAudioPlayerVM.changeAudioPlayPosition(
                             posNegPositionDurationChange:
                                 const Duration(seconds: 10),
                           ),
@@ -860,8 +860,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                       ),
                       Expanded(
                         child: GestureDetector(
-                          onTap: () =>
-                              globalAudioPlayerVM.changeAudioPlayPosition(
+                          onTap: () async =>
+                              await globalAudioPlayerVM.changeAudioPlayPosition(
                             posNegPositionDurationChange:
                                 const Duration(minutes: 1),
                           ),

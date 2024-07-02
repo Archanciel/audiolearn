@@ -318,7 +318,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
           key: const Key('cancelTextButton'),
           child: Text(AppLocalizations.of(context)!.cancelButton),
           onPressed: () async =>
-              _closeDialogAndReOpenCommentListAddDialog(context),
+              await _closeDialogAndReOpenCommentListAddDialog(context),
         ),
       ],
     );

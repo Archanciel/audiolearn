@@ -61,9 +61,9 @@ class _AudioSetSpeedDialogWidgetState extends State<AudioSetSpeedDialogWidget>
 
   @override
   void initState() {
-    _audioPlaySpeed = widget.audioPlaySpeed;
-
     super.initState();
+
+    _audioPlaySpeed = widget.audioPlaySpeed;
   }
 
   @override
@@ -199,12 +199,12 @@ class _AudioSetSpeedDialogWidgetState extends State<AudioSetSpeedDialogWidget>
                   ? kTextButtonStyleDarkMode
                   : kTextButtonStyleLightMode,
             ),
-            onPressed: () {
+            onPressed: () async {
               // restoring the previous audio play speed when
               // cancel button is pressed. Otherwise, the audio
               // play speed is changed even if the user presses
               // the cancel button.
-              _setPlaybackSpeed(
+              await _setPlaybackSpeed(
                 audioGlobalPlayerVM,
                 widget.audioPlaySpeed,
               );
@@ -289,10 +289,10 @@ class _AudioSetSpeedDialogWidgetState extends State<AudioSetSpeedDialogWidget>
       children: [
         IconButton(
           icon: const Icon(Icons.remove),
-          onPressed: () {
+          onPressed: () async {
             double newSpeed = _audioPlaySpeed - 0.1;
             if (newSpeed >= 0.5) {
-              _setPlaybackSpeed(
+              await _setPlaybackSpeed(
                 audioGlobalPlayerVM,
                 newSpeed,
               );
@@ -306,8 +306,8 @@ class _AudioSetSpeedDialogWidgetState extends State<AudioSetSpeedDialogWidget>
             divisions: 6,
             label: "${_audioPlaySpeed.toStringAsFixed(1)}x",
             value: _audioPlaySpeed,
-            onChanged: (value) {
-              _setPlaybackSpeed(
+            onChanged: (value) async {
+              await _setPlaybackSpeed(
                 audioGlobalPlayerVM,
                 value,
               );
@@ -316,10 +316,10 @@ class _AudioSetSpeedDialogWidgetState extends State<AudioSetSpeedDialogWidget>
         ),
         IconButton(
           icon: const Icon(Icons.add),
-          onPressed: () {
+          onPressed: () async {
             double newSpeed = _audioPlaySpeed + 0.1;
             if (newSpeed <= 2.0) {
-              _setPlaybackSpeed(
+              await _setPlaybackSpeed(
                 audioGlobalPlayerVM,
                 newSpeed,
               );
@@ -330,7 +330,7 @@ class _AudioSetSpeedDialogWidgetState extends State<AudioSetSpeedDialogWidget>
                 // and clicking on '+' button could not
                 // change the speed to 2.0 !
                 newSpeed = 2.0;
-                _setPlaybackSpeed(
+                await _setPlaybackSpeed(
                   audioGlobalPlayerVM,
                   newSpeed,
                 );
@@ -362,8 +362,8 @@ class _AudioSetSpeedDialogWidgetState extends State<AudioSetSpeedDialogWidget>
                 ? kTextButtonSmallStyleDarkMode
                 : kTextButtonSmallStyleLightMode,
           ),
-          onPressed: () {
-            _setPlaybackSpeed(
+          onPressed: () async {
+            await _setPlaybackSpeed(
               audioGlobalPlayerVM,
               speed,
             );
@@ -373,10 +373,10 @@ class _AudioSetSpeedDialogWidgetState extends State<AudioSetSpeedDialogWidget>
     );
   }
 
-  void _setPlaybackSpeed(
+  Future<void> _setPlaybackSpeed(
     AudioPlayerVM audioGlobalPlayerVM,
     double newValue,
-  ) {
+  ) async {
     setState(() {
       _audioPlaySpeed = newValue;
     });
@@ -387,7 +387,7 @@ class _AudioSetSpeedDialogWidgetState extends State<AudioSetSpeedDialogWidget>
       // changed in the dialog, the audio play speed value
       // of the audio play speed button at top of the audio
       // player view is also updated.
-      audioGlobalPlayerVM.changeAudioPlaySpeed(_audioPlaySpeed);
+      await audioGlobalPlayerVM.changeAudioPlaySpeed(_audioPlaySpeed);
     }
   }
 }
