@@ -1105,4 +1105,16 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get atLeast => "at least one";
+
+  @override
+  String confirmCommentedAudioDeletionTitle(
+    Object audioTitle,
+  ) =>
+      "Confirm deletion of the commented audio \"$audioTitle\"";
+
+  @override
+  String confirmCommentedAudioDeletionComment(
+    Object commentNumber,
+  ) =>
+      "The audio contains \"$commentNumber\" comments which will be deleted as well. Confirm deletion ?";
 }
