@@ -289,7 +289,7 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
             Audio? nextAudio = Provider.of<PlaylistListVM>(
               context,
               listen: false,
-            ).deleteAudioMp3File(audio: audio);
+            ).deleteAudioFile(audio: audio);
 
             // if the passed nextAudio is null, the displayed audio
             // title will be "No selected audio"
@@ -300,10 +300,17 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
             break;
           case AudioPopupMenuAction.deleteAudioFromPlaylistAswell:
             Audio audio = audioGlobalPlayerVM.currentAudio!;
-            Provider.of<PlaylistListVM>(
+            Audio? nextAudio = Provider.of<PlaylistListVM>(
               context,
               listen: false,
             ).deleteAudioFromPlaylistAswell(audio: audio);
+
+            // if the passed nextAudio is null, the displayed audio
+            // title will be "No selected audio"
+            await _replaceCurrentAudioByNextAudio(
+              context: context,
+              nextAudio: nextAudio,
+            );
             break;
           default:
             break;

@@ -809,8 +809,8 @@ class PlaylistListVM extends ChangeNotifier {
   /// menu item in the audio item menu button or in
   /// the audio player screen leading popup menu.
   ///
-  /// Physically deletes the audio file from the audio playlist
-  /// directory.
+  /// Physically deletes the audio mp3 file from the audio
+  /// playlist directory.
   ///
   /// The method returns the next playable audio. The returned
   /// value is only useful when the user is in the audio player
@@ -819,7 +819,7 @@ class PlaylistListVM extends ChangeNotifier {
   ///
   /// playableAudioLst order: [available audio last downloaded, ...,
   ///                          available audio first downloaded]
-  Audio? deleteAudioMp3File({
+  Audio? deleteAudioFile({
     required Audio audio,
   }) {
     Audio? nextAudio =
@@ -910,21 +910,35 @@ class PlaylistListVM extends ChangeNotifier {
     return null;
   }
 
-  /// User selected the audio menu item "Delete audio
-  /// from playlist aswell". This method deletes the audio
-  /// from the playlist json file and from the audio playlist
-  /// directory.
+  /// Method called when the user clicks on the 'delete audio
+  /// from playlist aswell' menu item in the audio item menu button
+  /// or in the audio player screen leading popup menu.
+  ///
+  /// This method deletes the audio from the playlist json file and
+  /// deletes the audio mp3 file from the audio playlist directory.
+  ///
+  /// The method returns the next playable audio. The returned
+  /// value is only useful when the user is in the audio player
+  /// screen and so that the audio to move is the currently
+  /// playable audio.
   ///
   /// playableAudioLst order: [available audio last downloaded, ...,
   ///                          available audio first downloaded]
-  void deleteAudioFromPlaylistAswell({
+  Audio? deleteAudioFromPlaylistAswell({
     required Audio audio,
   }) {
+    Audio? nextAudio =
+        _getNextSubsequentlyDownloadedOrSortFilteredNotFullyPlayedAudio(
+      currentAudio: audio,
+    );
+
     _audioDownloadVM.deleteAudioFromPlaylistAswell(audio: audio);
 
     _removeAudioFromSortedFilteredPlayableAudioList(audio);
 
     notifyListeners();
+
+    return nextAudio;
   }
 
   int _getSelectedIndex() {
