@@ -295,7 +295,13 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
                 Provider.of<CommentVM>(context, listen: false)
                     .loadAudioComments(audio: audioToDelete);
             if (audioToDeleteCommentLst.isNotEmpty) {
-              showDialog<dynamic>(
+              // await must be applied to showDialog() so that the nextAudio
+              // variable is assigned according to the result returned by the
+              // dialog. Otherwise, _replaceCurrentAudioByNextAudio() will be
+              // called before the dialog is closed and the nextAudio variable
+              // will be null, which will result in the audio title displayed
+              // in the audio player view to be "No selected audio" !
+              await showDialog<dynamic>(
                 context: context,
                 builder: (BuildContext context) {
                   return ConfirmActionDialogWidget(
