@@ -140,6 +140,18 @@ class CommentVM extends ChangeNotifier {
     notifyListeners();
   }
 
+  void deleteAllAudioComments({
+    required Audio commentedAudio,
+  }) {
+    DirUtil.deleteFileIfExist(
+      pathFileName: _buildCommentFilePathAndFilePathName(
+        audioToComment: commentedAudio,
+      )[1],
+    );
+
+    notifyListeners();
+  }
+
   void modifyComment({
     required Comment modifiedComment,
     required Audio commentedAudio,

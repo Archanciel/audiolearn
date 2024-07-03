@@ -374,5 +374,5 @@
   "invalidValueTooBig": "exceeds the maximal value",
   "invalidValueTooSmall": "is below the minimal value",
   "confirmCommentedAudioDeletionTitle": "Confirm deletion of the commented audio \"{audioTitle}\"",
-  "confirmCommentedAudioDeletionComment": "The audio contains {commentNumber} comments which will be deleted as well. Confirm deletion ?"
+  "confirmCommentedAudioDeletionComment": "The audio contains {commentNumber} comment(s) which will be deleted as well. Confirm deletion ?"
 }

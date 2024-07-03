@@ -342,11 +342,51 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
             );
             break;
           case AudioPopupMenuAction.deleteAudioFromPlaylistAswell:
-            Audio audio = audioGlobalPlayerVM.currentAudio!;
-            Audio? nextAudio = Provider.of<PlaylistListVM>(
-              context,
-              listen: false,
-            ).deleteAudioFromPlaylistAswell(audio: audio);
+            Audio audioToDelete = audioGlobalPlayerVM.currentAudio!;
+            Audio? nextAudio;
+
+            List<Comment> audioToDeleteCommentLst =
+                Provider.of<CommentVM>(context, listen: false)
+                    .loadAudioComments(audio: audioToDelete);
+            if (audioToDeleteCommentLst.isNotEmpty) {
+              // await must be applied to showDialog() so that the nextAudio
+              // variable is assigned according to the result returned by the
+              // dialog. Otherwise, _replaceCurrentAudioByNextAudio() will be
+              // called before the dialog is closed and the nextAudio variable
+              // will be null, which will result in the audio title displayed
+              // in the audio player view to be "No selected audio" !
+              await showDialog<dynamic>(
+                context: context,
+                builder: (BuildContext context) {
+                  return ConfirmActionDialogWidget(
+                    actionFunction: deleteAudioFromPlaylistAswell,
+                    actionFunctionArgs: [
+                      context,
+                      audioToDelete,
+                    ],
+                    dialogTitle: _createDeleteAudioDialogTitle(
+                      context,
+                      audioToDelete,
+                    ),
+                    dialogContent: AppLocalizations.of(context)!
+                        .confirmCommentedAudioDeletionComment(
+                      audioToDeleteCommentLst.length,
+                    ),
+                  );
+                },
+              ).then((result) {
+                if (result == ConfirmAction.cancel) {
+                  nextAudio = audioToDelete;
+                } else {
+                  nextAudio = result as Audio?;
+                }
+              });
+            } else {
+              nextAudio = Provider.of<PlaylistListVM>(
+                context,
+                listen: false,
+              ).deleteAudioFromPlaylistAswell(audio: audioToDelete);
+            }
 
             // if the passed nextAudio is null, the displayed audio
             // title will be "No selected audio"

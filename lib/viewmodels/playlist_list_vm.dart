@@ -837,6 +837,10 @@ class PlaylistListVM extends ChangeNotifier {
       selectedPlaylist: audio.enclosingPlaylist!,
     );
 
+    _commentVM.deleteAllAudioComments(
+      commentedAudio: audio,
+    );
+
     notifyListeners();
 
     return nextAudio;
@@ -935,6 +939,10 @@ class PlaylistListVM extends ChangeNotifier {
     _audioDownloadVM.deleteAudioFromPlaylistAswell(audio: audio);
 
     _removeAudioFromSortedFilteredPlayableAudioList(audio);
+
+    _commentVM.deleteAllAudioComments(
+      commentedAudio: audio,
+    );
 
     notifyListeners();
 

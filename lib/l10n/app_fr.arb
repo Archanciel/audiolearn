@@ -345,7 +345,7 @@
   "commentDialogTitle": "Commentaire",
   "update": "Mettre à jour",
   "deleteCommentConfirnTitle": "Suppression de commentaire",
-  "deleteCommentConfirnBody": "Supptimer le commentaire \"{title}\".",
+  "deleteCommentConfirnBody": "Supprimer le commentaire \"{title}\".",
   "commentMenu": "Commentaires de l'audio ...",
   "tenthOfSecondsCheckboxTooltip": "Activer cette case à cocher pour spécifier la position du commentaire avec une précision au dixième de seconde.",
   "setCommentPosition": "Définir la position",
@@ -375,6 +375,6 @@
   "setValueToTargetWarning": "La valeur entrée {invalidValueWarningParam} ({maxMinPossibleValue}). Corrigez la valeur et rééssayez ...",
   "invalidValueTooBig": "excède la valeur maximale",
   "invalidValueTooSmall": "est inférieure à la valeur minimale",
-  "confirmCommentedAudioDeletionTitle": "Confirmer la suppression de l'audio commenté \"{audioTitle}\"",
-  "confirmCommentedAudioDeletionComment": "L'audio contient {commentNumber} commentaires qui seront également supprimés. Confirmer la suppression ?"
+  "confirmCommentedAudioDeletionTitle": "Confirmez la suppression de l'audio commenté \"{audioTitle}\"",
+  "confirmCommentedAudioDeletionComment": "L'audio contient {commentNumber} commentaire(s) qui seront également supprimés. Confirmer la suppression ?"
 }
