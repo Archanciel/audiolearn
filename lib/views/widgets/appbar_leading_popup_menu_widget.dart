@@ -1,3 +1,4 @@
+import 'package:audiolearn/models/comment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -5,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../../models/audio.dart';
 import '../../models/playlist.dart';
+import '../../viewmodels/comment_vm.dart';
 import '../../viewmodels/playlist_list_vm.dart';
 import '../../viewmodels/warning_message_vm.dart';
 import '../../constants.dart';
@@ -12,6 +14,7 @@ import '../../services/settings_data_service.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 import '../../viewmodels/audio_player_vm.dart';
 import '../screen_mixin.dart';
+import 'action_confirm_dialog_widget.dart';
 import 'application_settings_dialog_widget.dart';
 import 'audio_info_dialog_widget.dart';
 import 'audio_modification_dialog_widget.dart';
@@ -285,11 +288,41 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
             });
             break;
           case AudioPopupMenuAction.deleteAudio:
-            Audio audio = audioGlobalPlayerVM.currentAudio!;
-            Audio? nextAudio = Provider.of<PlaylistListVM>(
-              context,
-              listen: false,
-            ).deleteAudioFile(audio: audio);
+            Audio audioToDelete = audioGlobalPlayerVM.currentAudio!;
+            Audio? nextAudio;
+
+            List<Comment> audioToDeleteCommentLst =
+                Provider.of<CommentVM>(context, listen: false)
+                    .loadAudioComments(audio: audioToDelete);
+            if (audioToDeleteCommentLst.isNotEmpty) {
+              showDialog<dynamic>(
+                context: context,
+                builder: (BuildContext context) {
+                  return ConfirmActionDialogWidget(
+                    actionFunction: deleteAudio,
+                    actionFunctionArgs: [
+                      context,
+                      audioToDelete,
+                    ],
+                    dialogTitle: _createDeleteAudioDialogTitle(
+                      context,
+                      audioToDelete,
+                    ),
+                    dialogContent: AppLocalizations.of(context)!
+                        .confirmCommentedAudioDeletionComment(
+                      audioToDeleteCommentLst.length,
+                    ),
+                  );
+                },
+              ).then((result) {
+                nextAudio = result as Audio?;
+              });
+            } else {
+              nextAudio = Provider.of<PlaylistListVM>(
+                context,
+                listen: false,
+              ).deleteAudioFile(audio: audioToDelete);
+            }
 
             // if the passed nextAudio is null, the displayed audio
             // title will be "No selected audio"
@@ -317,6 +350,13 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
         }
       },
     );
+  }
+
+  Audio? deleteAudio(BuildContext context, Audio audio) {
+    return Provider.of<PlaylistListVM>(
+      context,
+      listen: false,
+    ).deleteAudioFile(audio: audio);
   }
 
   /// Replaces the current audio by the next audio in the audio player
@@ -377,5 +417,17 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
         }
       },
     );
+  }
+
+  String _createDeleteAudioDialogTitle(
+    BuildContext context,
+    Audio audioToDelete,
+  ) {
+    String deleteAudioDialogTitle;
+
+    deleteAudioDialogTitle = AppLocalizations.of(context)!
+        .confirmCommentedAudioDeletionTitle(audioToDelete.validVideoTitle);
+
+    return deleteAudioDialogTitle;
   }
 }

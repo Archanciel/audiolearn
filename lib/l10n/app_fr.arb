@@ -374,5 +374,7 @@
   },
   "setValueToTargetWarning": "La valeur entrée {invalidValueWarningParam} ({maxMinPossibleValue}). Corrigez la valeur et rééssayez ...",
   "invalidValueTooBig": "excède la valeur maximale",
-  "invalidValueTooSmall": "est inférieure à la valeur minimale"
+  "invalidValueTooSmall": "est inférieure à la valeur minimale",
+  "confirmCommentedAudioDeletionTitle": "Confirmer la suppression de l'audio commenté \"{audioTitle}\"",
+  "confirmCommentedAudioDeletionComment": "L'audio contient {commentNumber} commentaires qui seront également supprimés. Confirmer la suppression ?"
 }
