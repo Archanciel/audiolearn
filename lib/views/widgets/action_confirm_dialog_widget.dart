@@ -8,6 +8,8 @@ import '../../views/screen_mixin.dart';
 import '../../services/settings_data_service.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 
+enum ConfirmAction { cancel, confirm }
+
 class ConfirmActionDialogWidget extends StatefulWidget {
   final Function actionFunction; // The action to execute on confirmation
   final List<dynamic> actionFunctionArgs; // Arguments for the action function
@@ -89,7 +91,7 @@ class _ConfirmActionDialogWidgetState extends State<ConfirmActionDialogWidget>
           ),
           TextButton(
             key: const Key('cancelButtonKey'),
-            onPressed: () => Navigator.of(context).pop(), // Cancel the action
+            onPressed: () => Navigator.of(context).pop(ConfirmAction.cancel), // Cancel the action
             child: Text(
               AppLocalizations.of(context)!.cancelButton,
               style: (themeProviderVM.currentTheme == AppTheme.dark)

@@ -315,7 +315,11 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
                   );
                 },
               ).then((result) {
-                nextAudio = result as Audio?;
+                if (result == ConfirmAction.cancel) {
+                  nextAudio = audioToDelete;
+                } else {
+                  nextAudio = result as Audio?;
+                }
               });
             } else {
               nextAudio = Provider.of<PlaylistListVM>(

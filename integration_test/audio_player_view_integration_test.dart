@@ -1835,7 +1835,7 @@ void main() {
           find.text(firstDownloadedAudioTitle);
 
       await tester.tap(firstDownloadedAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // Now open the audio play speed dialog
       await tester.tap(find.byKey(const Key('setAudioSpeedTextButton')));
@@ -3849,7 +3849,7 @@ void main() {
         final Finder alreadyCommentedAudioFinder =
             find.text(alreadyCommentedAudioTitle);
         await tester.tap(alreadyCommentedAudioFinder);
-        await tester.pumpAndSettle();
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
         // Tap on the comment icon button to open the comment add list
         // dialog
@@ -5613,7 +5613,7 @@ void main() {
       final Finder alreadyCommentedAudioFinder =
           find.text(alreadyCommentedAudioTitle);
       await tester.tap(alreadyCommentedAudioFinder);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // Tap on the comment icon button to open the comment add list
       // dialog
