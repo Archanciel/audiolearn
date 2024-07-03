@@ -362,11 +362,28 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
     );
   }
 
+  /// Public method passed to the ConfirmActionDialogWidget to be executd
+  /// when the Confirm button is pressed. The method deletes the audio
+  /// file and its comments.
   Audio? deleteAudio(BuildContext context, Audio audio) {
     return Provider.of<PlaylistListVM>(
       context,
       listen: false,
     ).deleteAudioFile(audio: audio);
+  }
+
+  /// Public method passed to the ConfirmActionDialogWidget to be executd
+  /// when the Confirm button is pressed. The method deletes the audio
+  /// file and its comments as well as the audio reference in the playlist
+  /// json file.
+  Audio? deleteAudioFromPlaylistAswell(
+    BuildContext context,
+    Audio audio,
+  ) {
+    return Provider.of<PlaylistListVM>(
+      context,
+      listen: false,
+    ).deleteAudioFromPlaylistAswell(audio: audio);
   }
 
   /// Replaces the current audio by the next audio in the audio player
