@@ -754,6 +754,14 @@ class PlaylistListVM extends ChangeNotifier {
     return AudioSortFilterParameters.createDefaultAudioSortFilterParameters();
   }
 
+  /// Method called when the user clicks on the 'move audio to
+  /// playlist' menu item in the audio item menu button or in
+  /// the audio player screen leading popup menu.
+  ///
+  /// The method returns the next playable audio. The returned
+  /// value is only useful when the user is in the audio player
+  /// screen and so that the audio to move is the currently
+  /// playable audio.
   Audio? moveAudioAndCommentToPlaylist({
     required Audio audio,
     required Playlist targetPlaylist,
@@ -797,14 +805,28 @@ class PlaylistListVM extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Method called when the user clicks on the 'delete audio'
+  /// menu item in the audio item menu button or in
+  /// the audio player screen leading popup menu.
+  ///
   /// Physically deletes the audio file from the audio playlist
   /// directory.
   ///
+  /// The method returns the next playable audio. The returned
+  /// value is only useful when the user is in the audio player
+  /// screen and so that the audio to move is the currently
+  /// playable audio.
+  ///
   /// playableAudioLst order: [available audio last downloaded, ...,
   ///                          available audio first downloaded]
-  void deleteAudioMp3({
+  Audio? deleteAudioMp3File({
     required Audio audio,
   }) {
+    Audio? nextAudio =
+        _getNextSubsequentlyDownloadedOrSortFilteredNotFullyPlayedAudio(
+      currentAudio: audio,
+    );
+
     // delete the audio file from the audio playlist directory
     // and removes the audio from the its playlist playable audio list
     _audioDownloadVM.deleteAudioMp3(audio: audio);
@@ -816,6 +838,8 @@ class PlaylistListVM extends ChangeNotifier {
     );
 
     notifyListeners();
+
+    return nextAudio;
   }
 
   /// Method called when the user selected the Update playable

@@ -239,22 +239,12 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
                     keepAudioDataInSourcePlaylist,
               );
 
-              AudioPlayerVM audioGlobalPlayerVM = Provider.of<AudioPlayerVM>(
-                context,
-                listen: false,
+              // if the passed nextAudio is null, the displayed audio
+              // title will be "No selected audio"
+              await _replaceCurrentAudioByNextAudio(
+                context: context,
+                nextAudio: nextAudio,
               );
-
-              if (nextAudio != null) {
-                // Required so that the audio title displayed in the
-                // audio player view is updated with the modified title
-
-                await audioGlobalPlayerVM.setCurrentAudio(nextAudio);
-              } else {
-                // Calling handleNoPlayableAudioAvailable() is necessary
-                // to update the audio title in the audio player view to
-                // "No selected audio"
-                await audioGlobalPlayerVM.handleNoPlayableAudioAvailable();
-              }
             });
             break;
           case AudioPopupMenuAction.copyAudioToPlaylist:
@@ -296,10 +286,17 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
             break;
           case AudioPopupMenuAction.deleteAudio:
             Audio audio = audioGlobalPlayerVM.currentAudio!;
-            Provider.of<PlaylistListVM>(
+            Audio? nextAudio = Provider.of<PlaylistListVM>(
               context,
               listen: false,
-            ).deleteAudioMp3(audio: audio);
+            ).deleteAudioMp3File(audio: audio);
+
+            // if the passed nextAudio is null, the displayed audio
+            // title will be "No selected audio"
+            await _replaceCurrentAudioByNextAudio(
+              context: context,
+              nextAudio: nextAudio,
+            );
             break;
           case AudioPopupMenuAction.deleteAudioFromPlaylistAswell:
             Audio audio = audioGlobalPlayerVM.currentAudio!;
@@ -313,6 +310,31 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
         }
       },
     );
+  }
+
+  /// Replaces the current audio by the next audio in the audio player
+  /// view. If the next audio is null, the audio title displayed in the
+  /// audio player view will be "No selected audio".
+  Future<void> _replaceCurrentAudioByNextAudio({
+    required BuildContext context,
+    required Audio? nextAudio,
+  }) async {
+    AudioPlayerVM audioGlobalPlayerVM = Provider.of<AudioPlayerVM>(
+      context,
+      listen: false,
+    );
+
+    if (nextAudio != null) {
+      // Required so that the audio title displayed in the
+      // audio player view is updated with the modified title
+
+      await audioGlobalPlayerVM.setCurrentAudio(nextAudio);
+    } else {
+      // Calling handleNoPlayableAudioAvailable() is necessary
+      // to update the audio title in the audio player view to
+      // "No selected audio"
+      await audioGlobalPlayerVM.handleNoPlayableAudioAvailable();
+    }
   }
 
   PopupMenuButton<AppBarPopupMenu> _playListDownloadViewPopupMenuButton(
