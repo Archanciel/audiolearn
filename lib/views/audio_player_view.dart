@@ -526,7 +526,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
               showDialog<void>(
                 context: context,
                 builder: (BuildContext context) {
-                  return ActionConfirmDialogWidget(
+                  return ConfirmActionDialogWidget(
                     actionFunction: playlistListVMlistenFalse
                         .clearAudioSortFilterSettingsSearchHistory,
                     actionFunctionArgs: const [],

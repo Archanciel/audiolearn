@@ -362,7 +362,7 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
     showDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        return ActionConfirmDialogWidget(
+        return ConfirmActionDialogWidget(
           actionFunction: commentVM.deleteCommentFunction,
           actionFunctionArgs: [
             comment.id,

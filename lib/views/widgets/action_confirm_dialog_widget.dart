@@ -8,7 +8,7 @@ import '../../views/screen_mixin.dart';
 import '../../services/settings_data_service.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 
-class ActionConfirmDialogWidget extends StatefulWidget {
+class ConfirmActionDialogWidget extends StatefulWidget {
   final Function actionFunction; // The action to execute on confirmation
   final List<dynamic> actionFunctionArgs; // Arguments for the action function
   final String dialogTitle; // Title of the dialog
@@ -16,7 +16,7 @@ class ActionConfirmDialogWidget extends StatefulWidget {
   final Function? warningFunction; // The action to execute on confirmation
   final List<dynamic> warningFunctionArgs; // Arguments for the action function
 
-  const ActionConfirmDialogWidget({
+  const ConfirmActionDialogWidget({
     required this.actionFunction,
     required this.actionFunctionArgs,
     required this.dialogTitle,
@@ -27,11 +27,11 @@ class ActionConfirmDialogWidget extends StatefulWidget {
   });
 
   @override
-  State<ActionConfirmDialogWidget> createState() =>
-      _ActionConfirmDialogWidgetState();
+  State<ConfirmActionDialogWidget> createState() =>
+      _ConfirmActionDialogWidgetState();
 }
 
-class _ActionConfirmDialogWidgetState extends State<ActionConfirmDialogWidget>
+class _ConfirmActionDialogWidgetState extends State<ConfirmActionDialogWidget>
     with ScreenMixin {
   final FocusNode _focusNodeDialog = FocusNode();
 
@@ -61,9 +61,7 @@ class _ActionConfirmDialogWidgetState extends State<ActionConfirmDialogWidget>
               event.logicalKey == LogicalKeyboardKey.numpadEnter) {
             // executing the same code as in the 'Delete'
             // TextButton onPressed callback
-            Function.apply(widget.actionFunction,
-                widget.actionFunctionArgs); // Execute the action with arguments
-            Navigator.of(context).pop();
+            _applyConfirm(context);
           }
         }
       },
@@ -80,17 +78,7 @@ class _ActionConfirmDialogWidgetState extends State<ActionConfirmDialogWidget>
           TextButton(
             key: const Key('confirmButtonKey'),
             onPressed: () {
-              // Execute the action function with arguments
-              Function.apply(widget.actionFunction, widget.actionFunctionArgs);
-
-              if (widget.warningFunction != null) {
-                // If the warning function was passed, execute it with
-                // arguments
-                Function.apply(
-                    widget.warningFunction!, widget.warningFunctionArgs);
-              }
-
-              Navigator.of(context).pop();
+              _applyConfirm(context);
             },
             child: Text(
               AppLocalizations.of(context)!.confirmButton,
@@ -112,5 +100,22 @@ class _ActionConfirmDialogWidgetState extends State<ActionConfirmDialogWidget>
         ],
       ),
     );
+  }
+
+  void _applyConfirm(BuildContext context) {
+    // Execute the action function with arguments. This execution
+    // returns the value returned by the action function.
+    dynamic returnedResult = Function.apply(
+      widget.actionFunction,
+      widget.actionFunctionArgs,
+    );
+
+    if (widget.warningFunction != null) {
+      // If the warning function was passed, execute it with
+      // arguments
+      Function.apply(widget.warningFunction!, widget.warningFunctionArgs);
+    }
+
+    Navigator.of(context).pop(returnedResult);
   }
 }

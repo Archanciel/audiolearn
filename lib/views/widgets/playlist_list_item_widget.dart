@@ -224,11 +224,11 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                       showDialog<void>(
                         context: context,
                         builder: (BuildContext context) {
-                          return ActionConfirmDialogWidget(
+                          return ConfirmActionDialogWidget(
                             actionFunction: deletePlaylist,
                             actionFunctionArgs: [
                               expandablePlaylistListVM,
-                              playlist
+                              playlist,
                             ],
                             dialogTitle:
                                 _createDeletePlaylistDialogTitle(context),
@@ -260,6 +260,10 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
     );
   }
 
+  /// Public method passed as parameter to the ActionConfirmDialogWidget
+  /// which, in this case, asks the user to confirm the deletion of a
+  /// playlist. This method is called when the user clicks on the
+  /// 'Confirm' button.
   void deletePlaylist(
     PlaylistListVM expandablePlaylistListVM,
     Playlist playlistToDelete,

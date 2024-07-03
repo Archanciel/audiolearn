@@ -874,7 +874,7 @@ class _AudioSortFilterDialogWidgetState
       ),
     );
   }
-  
+
   Column _buildAudioDurationFields(
     BuildContext context,
   ) {
@@ -1333,7 +1333,7 @@ class _AudioSortFilterDialogWidgetState
     showDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        return ActionConfirmDialogWidget(
+        return ConfirmActionDialogWidget(
           actionFunction: _clearAudioSortFilterSettingsSearchHistory,
           actionFunctionArgs: [
             Provider.of<PlaylistListVM>(context, listen: false),
