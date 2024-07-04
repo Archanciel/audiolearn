@@ -6496,8 +6496,8 @@ void main() {
 
       // *** Execute Updating playlist JSON file menu item
 
-      // open the popup menu
-      await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+      // Tap the appbar leading popup menu button
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
       await tester.pumpAndSettle();
 
       // find the update playlist JSON file menu item and tap on it
@@ -6621,8 +6621,8 @@ void main() {
 
       // *** Execute Updating playlist JSON file menu item
 
-      // open the popup menu
-      await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+      // Tap the appbar leading popup menu button
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
       await tester.pumpAndSettle();
 
       // find the update playlist JSON file menu item and tap on it
@@ -6692,8 +6692,8 @@ void main() {
 
       // *** Execute Updating playlist JSON file menu item
 
-      // open the popup menu
-      await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+      // Tap the appbar leading popup menu button
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
       await tester.pumpAndSettle();
 
       // find the update playlist JSON file menu item and tap on it
@@ -6752,8 +6752,8 @@ void main() {
 
       // *** Execute Updating playlist JSON file menu item
 
-      // open the popup menu
-      await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+      // Tap the appbar leading popup menu button
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
       await tester.pumpAndSettle();
 
       // find the update playlist JSON file menu item and tap on it
@@ -6842,8 +6842,8 @@ void main() {
 
       // *** Execute Updating playlist JSON file menu item
 
-      // open the popup menu
-      await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+      // Tap the appbar leading popup menu button
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
       await tester.pumpAndSettle();
 
       // find the update playlist JSON file menu item and tap on it
@@ -6937,9 +6937,16 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      // Here, the audio menu is still displayed ...
-
       // *** Execute Updating playlist JSON file menu item
+
+      // Tap twice on the appbar leading popup menu button. First tap
+      // closes the audio popup menu and the second tap opens the
+      // leading popup menu
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+      await tester.pumpAndSettle();
 
       // find the update playlist JSON file menu item and tap on it
       await tester
@@ -6969,7 +6976,14 @@ void main() {
 
       // *** Execute again Updating playlist JSON file menu item
 
-      // Here, the audio menu is still displayed ...
+      // Tap twice on the appbar leading popup menu button. First tap
+      // closes the audio popup menu and the second tap opens the
+      // leading popup menu
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+      await tester.pumpAndSettle();
 
       // find the update playlist JSON file menu item and tap on it
       await tester
@@ -7061,7 +7075,7 @@ void main() {
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
-      // Now tap on the audio menu button to open the audio menu
+      // Now tap on the audio menu button to re-open the audio menu
       await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
       await tester.pumpAndSettle();
 
@@ -7077,9 +7091,16 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      // Here, the audio menu is still displayed ...
-
       // *** Execute Updating playlist JSON file menu item
+
+      // Tap twice on the appbar leading popup menu button. First tap
+      // closes the audio popup menu and the second tap opens the
+      // leading popup menu
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+      await tester.pumpAndSettle();
 
       // find the update playlist JSON file menu item and tap on it
       await tester
@@ -7109,7 +7130,14 @@ void main() {
 
       // *** Execute again Updating playlist JSON file menu item
 
-      // Here, the audio menu is still displayed ...
+      // Tap twice on the appbar leading popup menu button. First tap
+      // closes the audio popup menu and the second tap opens the
+      // leading popup menu
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+      await tester.pumpAndSettle();
 
       // find the update playlist JSON file menu item and tap on it
       await tester
@@ -7211,9 +7239,16 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      // Here, the audio menu is still displayed ...
-
       // *** Execute Updating playlist JSON file menu item
+
+      // Tap twice on the appbar leading popup menu button. First tap
+      // closes the audio popup menu and the second tap opens the
+      // leading popup menu
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+      await tester.pumpAndSettle();
 
       // find the update playlist JSON file menu item and tap on it
       await tester
@@ -7223,7 +7258,7 @@ void main() {
       // After executing the update playlist json file, the audio popup
       // menu is closed
 
-      // Now tap on the audio menu button to re-open the audio menu
+      // Now tap on the audio menu button to open the audio menu
       await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
       await tester.pumpAndSettle();
 
@@ -7243,7 +7278,14 @@ void main() {
 
       // *** Execute again Updating playlist JSON file menu item
 
-      // Here, the audio menu is still displayed ...
+      // Tap twice on the appbar leading popup menu button. First tap
+      // closes the audio popup menu and the second tap opens the
+      // leading popup menu
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+      await tester.pumpAndSettle();
 
       // find the update playlist JSON file menu item and tap on it
       await tester
@@ -7335,7 +7377,7 @@ void main() {
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
-      // Now tap on the audio menu button to open the audio menu
+      // Now tap on the audio menu button to re-open the audio menu
       await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
       await tester.pumpAndSettle();
 
@@ -7351,9 +7393,16 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      // Here, the audio menu is still displayed ...
-
       // *** Execute Updating playlist JSON file menu item
+
+      // Tap twice on the appbar leading popup menu button. First tap
+      // closes the audio popup menu and the second tap opens the
+      // leading popup menu
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+      await tester.pumpAndSettle();
 
       // find the update playlist JSON file menu item and tap on it
       await tester
@@ -7383,7 +7432,14 @@ void main() {
 
       // *** Execute again Updating playlist JSON file menu item
 
-      // Here, the audio menu is still displayed ...
+      // Tap twice on the appbar leading popup menu button. First tap
+      // closes the audio popup menu and the second tap opens the
+      // leading popup menu
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+      await tester.pumpAndSettle();
 
       // find the update playlist JSON file menu item and tap on it
       await tester

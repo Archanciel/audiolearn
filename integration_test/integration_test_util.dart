@@ -237,7 +237,7 @@ class IntegrationTestUtil {
 
   static void expectWithSuccessMessage({
     required dynamic actual,
-    required dynamic matcher, 
+    required dynamic matcher,
     String? reason,
     String? successMessage,
     dynamic skip,
@@ -251,6 +251,7 @@ class IntegrationTestUtil {
       rethrow; // Rethrow the exception if the expectation fails
     }
   }
+
   static Future<void> verifyAudioMenuItemsState({
     required WidgetTester tester,
     required bool areAudioMenuItemsDisabled,
@@ -290,12 +291,7 @@ class IntegrationTestUtil {
       );
     }
 
-    if (audioLearnAppViewType == AudioLearnAppViewType.playlistDownloadView) {
-      verifyWidgetIsEnabled(
-        tester: tester,
-        widgetKeyStr: 'update_playlist_json_dialog_item',
-      );
-    } else if (audioLearnAppViewType == AudioLearnAppViewType.audioPlayerView) {
+    if (audioLearnAppViewType == AudioLearnAppViewType.audioPlayerView) {
       // Tap on the AudioPlayerView icon button to close the audio menu
       // item
 
@@ -411,94 +407,94 @@ class IntegrationTestUtil {
     }
   }
 
-static Future<void> verifyTopButtonsState({
-  required WidgetTester tester,
-  required bool isEnabled,
-  required AudioLearnAppViewType audioLearnAppViewType,
-  required String setAudioSpeedTextButtonValue,
-}) async {
-  if (isEnabled) {
-    verifyWidgetIsEnabled(
-      tester: tester,
-      widgetKeyStr: 'decreaseAudioVolumeIconButton',
+  static Future<void> verifyTopButtonsState({
+    required WidgetTester tester,
+    required bool isEnabled,
+    required AudioLearnAppViewType audioLearnAppViewType,
+    required String setAudioSpeedTextButtonValue,
+  }) async {
+    if (isEnabled) {
+      verifyWidgetIsEnabled(
+        tester: tester,
+        widgetKeyStr: 'decreaseAudioVolumeIconButton',
+      );
+
+      verifyWidgetIsEnabled(
+        tester: tester,
+        widgetKeyStr: 'increaseAudioVolumeIconButton',
+      );
+
+      verifyWidgetIsEnabled(
+        tester: tester,
+        widgetKeyStr: 'setAudioSpeedTextButton',
+      );
+
+      verifyWidgetIsEnabled(
+        tester: tester,
+        widgetKeyStr: 'commentsInkWellButton',
+      );
+
+      verifyWidgetIsEnabled(
+        tester: tester,
+        widgetKeyStr: 'audio_popup_menu_button',
+      );
+    } else {
+      verifyWidgetIsDisabled(
+        tester: tester,
+        widgetKeyStr: 'decreaseAudioVolumeIconButton',
+      );
+
+      verifyWidgetIsDisabled(
+        tester: tester,
+        widgetKeyStr: 'increaseAudioVolumeIconButton',
+      );
+
+      verifyWidgetIsDisabled(
+        tester: tester,
+        widgetKeyStr: 'setAudioSpeedTextButton',
+      );
+
+      verifyWidgetIsDisabled(
+        tester: tester,
+        widgetKeyStr: 'commentsInkWellButton',
+      );
+
+      verifyWidgetIsDisabled(
+        tester: tester,
+        widgetKeyStr: 'audio_popup_menu_button',
+      );
+    }
+
+    final Finder setAudioSpeedTextButtonFinder =
+        find.byKey(const Key('setAudioSpeedTextButton'));
+
+    final Finder setAudioSpeedTextOfButtonFinder = find.descendant(
+      of: setAudioSpeedTextButtonFinder,
+      matching: find.byType(Text),
     );
 
-    verifyWidgetIsEnabled(
-      tester: tester,
-      widgetKeyStr: 'increaseAudioVolumeIconButton',
+    // Verify that the Text widget contains the expected content
+
+    String setAudioSpeedTextOfButton =
+        tester.widget<Text>(setAudioSpeedTextOfButtonFinder).data!;
+
+    expect(
+      setAudioSpeedTextOfButton,
+      setAudioSpeedTextButtonValue,
     );
 
-    verifyWidgetIsEnabled(
-      tester: tester,
-      widgetKeyStr: 'setAudioSpeedTextButton',
-    );
+    if (isEnabled) {
+      // Open the audio popup menu
+      await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+      await tester.pumpAndSettle();
 
-    verifyWidgetIsEnabled(
-      tester: tester,
-      widgetKeyStr: 'commentsInkWellButton',
-    );
-
-    verifyWidgetIsEnabled(
-      tester: tester,
-      widgetKeyStr: 'audio_popup_menu_button',
-    );
-  } else {
-    verifyWidgetIsDisabled(
-      tester: tester,
-      widgetKeyStr: 'decreaseAudioVolumeIconButton',
-    );
-
-    verifyWidgetIsDisabled(
-      tester: tester,
-      widgetKeyStr: 'increaseAudioVolumeIconButton',
-    );
-
-    verifyWidgetIsDisabled(
-      tester: tester,
-      widgetKeyStr: 'setAudioSpeedTextButton',
-    );
-
-    verifyWidgetIsDisabled(
-      tester: tester,
-      widgetKeyStr: 'commentsInkWellButton',
-    );
-
-    verifyWidgetIsDisabled(
-      tester: tester,
-      widgetKeyStr: 'audio_popup_menu_button',
-    );
+      // since the selected local playlist has audios, the
+      // audio menu items are enabled
+      await verifyAudioMenuItemsState(
+        tester: tester,
+        areAudioMenuItemsDisabled: false,
+        audioLearnAppViewType: audioLearnAppViewType,
+      );
+    }
   }
-
-  final Finder setAudioSpeedTextButtonFinder =
-      find.byKey(const Key('setAudioSpeedTextButton'));
-
-  final Finder setAudioSpeedTextOfButtonFinder = find.descendant(
-    of: setAudioSpeedTextButtonFinder,
-    matching: find.byType(Text),
-  );
-
-  // Verify that the Text widget contains the expected content
-
-  String setAudioSpeedTextOfButton =
-      tester.widget<Text>(setAudioSpeedTextOfButtonFinder).data!;
-
-  expect(
-    setAudioSpeedTextOfButton,
-    setAudioSpeedTextButtonValue,
-  );
-
-  if (isEnabled) {
-    // Open the audio popup menu
-    await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-    await tester.pumpAndSettle();
-
-    // since the selected local playlist has audios, the
-    // audio menu items are enabled
-    await verifyAudioMenuItemsState(
-      tester: tester,
-      areAudioMenuItemsDisabled: false,
-      audioLearnAppViewType: audioLearnAppViewType,
-    );
-  }
-}
 }

@@ -23,7 +23,7 @@ import 'playlist_one_selectable_dialog_widget.dart';
 
 enum AppBarPopupMenu {
   openSettingsDialog,
-  option2,
+  updatePlaylistJson,
 }
 
 /// The AppBarLeadingPopupMenuWidget is used to display the leading
@@ -474,6 +474,16 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
             child: Text(
                 AppLocalizations.of(context)!.appBarMenuOpenSettingsDialog),
           ),
+          PopupMenuItem<AppBarPopupMenu>(
+            key: const Key('update_playlist_json_dialog_item'),
+            value: AppBarPopupMenu.updatePlaylistJson,
+            child: Tooltip(
+              message: AppLocalizations.of(context)!
+                  .updatePlaylistJsonFilesMenuTooltip,
+              child: Text(
+                  AppLocalizations.of(context)!.updatePlaylistJsonFilesMenu),
+            ),
+          ),
         ];
       },
       icon: const Icon(Icons.menu),
@@ -490,6 +500,12 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
                 );
               },
             );
+            break;
+          case AppBarPopupMenu.updatePlaylistJson:
+            Provider.of<PlaylistListVM>(
+              context,
+              listen: false,
+            ).updateSettingsAndPlaylistJsonFiles();
             break;
           default:
             break;

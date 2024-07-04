@@ -825,16 +825,6 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
               child: Text(AppLocalizations.of(context)!
                   .saveSortFilterAudiosOptionsToPlaylistMenu),
             ),
-            PopupMenuItem<PopupMenuButtonType>(
-              key: const Key('update_playlist_json_dialog_item'),
-              value: PopupMenuButtonType.updatePlaylistJson,
-              child: Tooltip(
-                message: AppLocalizations.of(context)!
-                    .updatePlaylistJsonFilesMenuTooltip,
-                child: Text(
-                    AppLocalizations.of(context)!.updatePlaylistJsonFilesMenu),
-              ),
-            ),
           ];
         },
         onSelected: (PopupMenuButtonType value) {
@@ -931,9 +921,6 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                   );
                 }
               });
-              break;
-            case PopupMenuButtonType.updatePlaylistJson:
-              playlistListVMlistenFalse.updateSettingsAndPlaylistJsonFiles();
               break;
             default:
               break;
