@@ -451,6 +451,18 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
     }
   }
 
+  String _createDeleteAudioDialogTitle(
+    BuildContext context,
+    Audio audioToDelete,
+  ) {
+    String deleteAudioDialogTitle;
+
+    deleteAudioDialogTitle = AppLocalizations.of(context)!
+        .confirmCommentedAudioDeletionTitle(audioToDelete.validVideoTitle);
+
+    return deleteAudioDialogTitle;
+  }
+
   PopupMenuButton<AppBarPopupMenu> _playListDownloadViewPopupMenuButton(
       BuildContext context) {
     return PopupMenuButton<AppBarPopupMenu>(
@@ -484,17 +496,5 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
         }
       },
     );
-  }
-
-  String _createDeleteAudioDialogTitle(
-    BuildContext context,
-    Audio audioToDelete,
-  ) {
-    String deleteAudioDialogTitle;
-
-    deleteAudioDialogTitle = AppLocalizations.of(context)!
-        .confirmCommentedAudioDeletionTitle(audioToDelete.validVideoTitle);
-
-    return deleteAudioDialogTitle;
   }
 }

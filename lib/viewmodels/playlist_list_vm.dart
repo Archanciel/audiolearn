@@ -805,47 +805,6 @@ class PlaylistListVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Method called when the user clicks on the 'delete audio'
-  /// menu item in the audio item menu button or in
-  /// the audio player screen leading popup menu.
-  ///
-  /// Physically deletes the audio mp3 file from the audio
-  /// playlist directory.
-  ///
-  /// The method returns the next playable audio. The returned
-  /// value is only useful when the user is in the audio player
-  /// screen and so that the audio to move is the currently
-  /// playable audio.
-  ///
-  /// playableAudioLst order: [available audio last downloaded, ...,
-  ///                          available audio first downloaded]
-  Audio? deleteAudioFile({
-    required Audio audio,
-  }) {
-    Audio? nextAudio =
-        _getNextSubsequentlyDownloadedOrSortFilteredNotFullyPlayedAudio(
-      currentAudio: audio,
-    );
-
-    // delete the audio file from the audio playlist directory
-    // and removes the audio from the its playlist playable audio list
-    _audioDownloadVM.deleteAudioMp3(audio: audio);
-
-    _removeAudioFromSortedFilteredPlayableAudioList(audio);
-
-    _setStateOfButtonsApplicableToAudio(
-      selectedPlaylist: audio.enclosingPlaylist!,
-    );
-
-    _commentVM.deleteAllAudioComments(
-      commentedAudio: audio,
-    );
-
-    notifyListeners();
-
-    return nextAudio;
-  }
-
   /// Method called when the user selected the Update playable
   /// audio list menu displayed by the playlist item menu button.
   /// This method updates the playlist playable audio list
@@ -898,20 +857,45 @@ class PlaylistListVM extends ChangeNotifier {
     );
   }
 
+  /// Method called when the user clicks on the 'delete audio'
+  /// menu item in the audio item menu button or in
+  /// the audio player screen leading popup menu.
+  ///
+  /// Physically deletes the audio mp3 file from the audio
+  /// playlist directory.
+  ///
+  /// The method returns the next playable audio. The returned
+  /// value is only useful when the user is in the audio player
+  /// screen and so that the audio to move is the currently
+  /// playable audio.
+  ///
   /// playableAudioLst order: [available audio last downloaded, ...,
   ///                          available audio first downloaded]
-  Audio? _removeAudioFromSortedFilteredPlayableAudioList(Audio audio) {
-    if (_sortedFilteredSelectedPlaylistsPlayableAudios != null) {
-      Audio? nextAudio =
-          _getNextSubsequentlyDownloadedOrSortFilteredNotFullyPlayedAudio(
-        currentAudio: audio,
-      );
-      _sortedFilteredSelectedPlaylistsPlayableAudios!
-          .removeWhere((audioInList) => audioInList == audio);
-      return nextAudio;
-    }
+  Audio? deleteAudioFile({
+    required Audio audio,
+  }) {
+    Audio? nextAudio =
+        _getNextSubsequentlyDownloadedOrSortFilteredNotFullyPlayedAudio(
+      currentAudio: audio,
+    );
 
-    return null;
+    // delete the audio file from the audio playlist directory
+    // and removes the audio from the its playlist playable audio list
+    _audioDownloadVM.deleteAudioMp3(audio: audio);
+
+    _removeAudioFromSortedFilteredPlayableAudioList(audio);
+
+    _setStateOfButtonsApplicableToAudio(
+      selectedPlaylist: audio.enclosingPlaylist!,
+    );
+
+    _commentVM.deleteAllAudioComments(
+      commentedAudio: audio,
+    );
+
+    notifyListeners();
+
+    return nextAudio;
   }
 
   /// Method called when the user clicks on the 'delete audio
@@ -947,6 +931,22 @@ class PlaylistListVM extends ChangeNotifier {
     notifyListeners();
 
     return nextAudio;
+  }
+
+  /// playableAudioLst order: [available audio last downloaded, ...,
+  ///                          available audio first downloaded]
+  Audio? _removeAudioFromSortedFilteredPlayableAudioList(Audio audio) {
+    if (_sortedFilteredSelectedPlaylistsPlayableAudios != null) {
+      Audio? nextAudio =
+          _getNextSubsequentlyDownloadedOrSortFilteredNotFullyPlayedAudio(
+        currentAudio: audio,
+      );
+      _sortedFilteredSelectedPlaylistsPlayableAudios!
+          .removeWhere((audioInList) => audioInList == audio);
+      return nextAudio;
+    }
+
+    return null;
   }
 
   int _getSelectedIndex() {
