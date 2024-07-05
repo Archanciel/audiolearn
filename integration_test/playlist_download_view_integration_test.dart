@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:audiolearn/viewmodels/comment_vm.dart';
+import 'package:audiolearn/views/widgets/action_confirm_dialog_widget.dart';
 import 'package:audiolearn/views/widgets/audio_modification_dialog_widget.dart';
 import 'package:audiolearn/views/widgets/comment_add_edit_dialog_widget.dart';
 import 'package:audiolearn/views/widgets/comment_list_add_dialog_widget.dart';
@@ -3723,7 +3724,7 @@ void main() {
       );
     });
     testWidgets(
-        'Copy audio to target playlist and then delete it from target playlist. Then move it to same target playlist.',
+        'Copy/delete commented audio to target playlist. Copy commented audio to target playlist and then delete it from target playlist. Then move it to same target playlist.',
         (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -3884,6 +3885,20 @@ void main() {
         "230628-033813-audio learn test short video two 23-06-10.mp3",
       ]);
 
+      // Now verifying that the source playlist directory still
+      // contains the comment data of audio file copied to the target
+      // playlist
+      List<String> sourcePlaylistCommentFileLst = DirUtil.listFileNamesInDir(
+        path:
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$kCommentDirName',
+        extension: 'json',
+      );
+
+      expect(sourcePlaylistCommentFileLst, [
+        "230628-033811-audio learn test short video one 23-06-10.json",
+        "230628-033813-audio learn test short video two 23-06-10.json",
+      ]);
+
       // And verify that the target playlist directory now
       // contains the audio file copied from the source playlist
       List<String> targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
@@ -3894,6 +3909,17 @@ void main() {
 
       expect(targetPlaylistMp3Lst,
           ["230628-033811-audio learn test short video one 23-06-10.mp3"]);
+
+      // Verify as well that the target playlist directory now contains
+      // the comment file of the audio copied from the source playlist
+      List<String> targetPlaylistJsonLst = DirUtil.listFileNamesInDir(
+        path:
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitleTwo${path.separator}$kCommentDirName',
+        extension: 'json',
+      );
+
+      expect(targetPlaylistJsonLst,
+          ["230628-033811-audio learn test short video one 23-06-10.json"]);
 
       // Find the target ListTile Playlist containing the audio copied
       // from the source playlist
@@ -3952,6 +3978,36 @@ void main() {
       await tester.tap(popupDisplayAudioInfoMenuItemFinder);
       await tester.pumpAndSettle();
 
+      // Since the copied audio contains comment(s), an action confirm
+      // dialog is opened. Checking the confirm dialog title ...
+
+      Finder confirmActionDialogWidgetFinder =
+          find.byType(ConfirmActionDialogWidget);
+
+      // Check the value of the confirm dialog title
+      Finder confirmActionDialogTitleText = find.descendant(
+          of: confirmActionDialogWidgetFinder,
+          matching: find.byKey(const Key("confirmDialogTitleKey")));
+
+      expect(
+        tester.widget<Text>(confirmActionDialogTitleText).data!,
+        "Confirmez la suppression de l'audio commenté \"audio learn test short video one\"",
+      );
+
+      // Check the value of the confirm dialog message
+      Finder confirmActionDialogMessageText = find.descendant(
+          of: confirmActionDialogWidgetFinder,
+          matching: find.byKey(const Key("confirmationDialogMessageKey")));
+
+      expect(
+        tester.widget<Text>(confirmActionDialogMessageText).data!,
+        "L'audio contient 1 commentaire(s) qui seront également supprimés. Confirmer la suppression ?",
+      );
+
+      // Close the confirm dialog by tapping on the Confirm button
+      await tester.tap(find.byKey(const Key('confirmButtonKey')));
+      await tester.pumpAndSettle();
+
       // Now verify that the target playlist directory no longer
       // contains the audio file copied from the source playlist
       targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
@@ -3962,8 +4018,19 @@ void main() {
 
       expect(targetPlaylistMp3Lst, []);
 
-      // Then, we move the audio already copied and deletedto to the
-      // same target playlist in ensure it is moved with no warning
+      // And verify that the target playlist comment directory no longer
+      // contains the audio comment file of the audio copied from the
+      // source playlist
+      targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
+        path:
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitleTwo${path.separator}$kCommentDirName',
+        extension: 'json',
+      );
+
+      expect(targetPlaylistMp3Lst, []);
+
+      // Then, we move the audio already copied and deleted to the
+      // same target playlist to ensure it is moved with no warning
 
       // Find the ListTile Playlist containing the audio to move to
       // the target local playlist
@@ -4078,7 +4145,7 @@ void main() {
       );
     });
     testWidgets(
-        'Copy audio to target playlist and then delete it from target playlist. Then copy it again to same target playlist.',
+        'Copy/delete commented audio to target playlist. Copy commented audio to target playlist and then delete it from target playlist. Then copy it again to same target playlist.',
         (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -4305,6 +4372,40 @@ void main() {
           find.byKey(const Key("popup_menu_delete_audio"));
 
       await tester.tap(popupDisplayAudioInfoMenuItemFinder);
+      await tester.pumpAndSettle();
+
+      // Since the copied audio contains comment(s), an action confirm
+      // dialog is opened. Checking the confirm dialog title ...
+
+
+      // Since the copied audio contains comment(s), an action confirm
+      // dialog is opened. Checking the confirm dialog title ...
+
+      Finder confirmActionDialogWidgetFinder =
+          find.byType(ConfirmActionDialogWidget);
+
+      // Check the value of the confirm dialog title
+      Finder confirmActionDialogTitleText = find.descendant(
+          of: confirmActionDialogWidgetFinder,
+          matching: find.byKey(const Key("confirmDialogTitleKey")));
+
+      expect(
+        tester.widget<Text>(confirmActionDialogTitleText).data!,
+        "Confirmez la suppression de l'audio commenté \"audio learn test short video one\"",
+      );
+
+      // Check the value of the confirm dialog message
+      Finder confirmActionDialogMessageText = find.descendant(
+          of: confirmActionDialogWidgetFinder,
+          matching: find.byKey(const Key("confirmationDialogMessageKey")));
+
+      expect(
+        tester.widget<Text>(confirmActionDialogMessageText).data!,
+        "L'audio contient 1 commentaire(s) qui seront également supprimés. Confirmer la suppression ?",
+      );
+
+      // Close the confirm dialog by tapping on the Confirm button
+      await tester.tap(find.byKey(const Key('confirmButtonKey')));
       await tester.pumpAndSettle();
 
       // Now verify that the target playlist directory no longer
@@ -5754,8 +5855,7 @@ void main() {
 
       // Now find the leading menu icon button of the Playlist ListTile
       // and tap on it
-      Finder youtubePlaylistListTileLeadingMenuIconButton =
-          find.descendant(
+      Finder youtubePlaylistListTileLeadingMenuIconButton = find.descendant(
         of: youtubePlaylistListTileWidgetFinder,
         matching: find.byIcon(Icons.menu),
       );
@@ -5831,8 +5931,7 @@ void main() {
 
       // Now find the leading menu icon button of the Playlist ListTile
       // and tap on it
-      youtubePlaylistListTileLeadingMenuIconButton =
-          find.descendant(
+      youtubePlaylistListTileLeadingMenuIconButton = find.descendant(
         of: youtubePlaylistListTileWidgetFinder,
         matching: find.byIcon(Icons.menu),
       );
@@ -6034,8 +6133,7 @@ void main() {
 
       // Now find the leading menu icon button of the Playlist ListTile
       // and tap on it
-      localPlaylistListTileLeadingMenuIconButton =
-          find.descendant(
+      localPlaylistListTileLeadingMenuIconButton = find.descendant(
         of: localPlaylistListTileWidgetFinder,
         matching: find.byIcon(Icons.menu),
       );
@@ -6227,7 +6325,10 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify the displayed selected audio title
-      expect(find.text("3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)\n20:32"), findsOneWidget);
+      expect(
+          find.text(
+              "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)\n20:32"),
+          findsOneWidget);
 
       await IntegrationTestUtil.verifyTopButtonsState(
         tester: tester,
@@ -6405,7 +6506,10 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify the displayed selected audio title
-      expect(find.text("3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)\n20:32"), findsOneWidget);
+      expect(
+          find.text(
+              "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)\n20:32"),
+          findsOneWidget);
 
       await IntegrationTestUtil.verifyTopButtonsState(
         tester: tester,
@@ -6580,8 +6684,7 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets(
-        'Manually add copied smartphone local playlist directory.',
+    testWidgets('Manually add copied smartphone local playlist directory.',
         (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -6670,13 +6773,124 @@ void main() {
       String testLocalPlaylistPath =
           '$kPlaylistDownloadRootPathWindowsTest${path.separator}$testLocalPlaylistTitle';
 
-      List<String> testLocalPlaylistMp3Lst =
-          DirUtil.listFileNamesInDir(
+      List<String> testLocalPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         path: testLocalPlaylistPath,
         extension: 'mp3',
       );
 
       for (String audioTitle in testLocalPlaylistMp3Lst) {
+        audioTitle = audioTitle
+            .replaceAll(RegExp(r'[\d]'), '')
+            .replaceAll(RegExp(r'\-\-'), '')
+            .replaceFirst(' .mp', '')
+            .replaceFirst(' minutes', '5 minutes');
+        final Finder audioListTileTextWidgetFinder = find.text(audioTitle);
+
+        expect(audioListTileTextWidgetFinder, findsOneWidget);
+      }
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets('Manually add copied smartphone Youtube playlist directory.',
+        (tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}manually_deleting_audios_and_updating_playlists",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+      app.main(['test']);
+      await tester.pumpAndSettle();
+
+      // Manually add the Youtube 'Youtube_test' playlist directory which
+      // were copied from a smartphone
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}manually_added_smartphone_Youtube_playlist_dir",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // *** Execute Updating playlist JSON file menu item
+
+      // Tap the appbar leading popup menu button
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+      await tester.pumpAndSettle();
+
+      // find the update playlist JSON file menu item and tap on it
+      await tester
+          .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
+      await tester.pumpAndSettle();
+
+      // Test that the manually added Youtube_test Youtube smartphone
+      // playlist is displayed
+
+      // Tap the 'Toggle List' button to show the list of playlists. If the
+      // list is not opened, checking that a ListTile with the title of
+      // the manually added playlist was added to the ListView will fail
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Find the ListTile Playlist containing the manually added Youtube
+      // playlist
+
+      const String testYoutubePlaylistTitle = 'Youtube_test';
+
+      // First, find the 'Youtube_test' Youtube playlist ListTile Text
+      // widget
+      final Finder testYoutubePlaylistTileTextWidgetFinder =
+          find.text(testYoutubePlaylistTitle);
+
+      // Then obtain the 'Youtube_test' source playlist ListTile widget
+      // enclosing the Text widget by finding its ancestor
+      final Finder testYoutubePlaylistTileWidgetFinder = find.ancestor(
+        of: testYoutubePlaylistTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the Checkbox widget located in the playlist ListTile
+      // and tap on it to select the playlist
+
+      await tapPlaylistCheckboxIfNotAlreadyChecked(
+        playlistListTileWidgetFinder: testYoutubePlaylistTileWidgetFinder,
+        widgetTester: tester,
+      );
+
+      // Test that the audios of the added 'Youtube_test' Youtube playlist
+      // are listed
+
+      String testYoutubePlaylistPath =
+          '$kPlaylistDownloadRootPathWindowsTest${path.separator}$testYoutubePlaylistTitle';
+
+      List<String> testYoutubePlaylistMp3Lst = DirUtil.listFileNamesInDir(
+        path: testYoutubePlaylistPath,
+        extension: 'mp3',
+      );
+
+      for (String audioTitle in testYoutubePlaylistMp3Lst) {
         audioTitle = audioTitle
             .replaceAll(RegExp(r'[\d]'), '')
             .replaceAll(RegExp(r'\-\-'), '')
