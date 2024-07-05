@@ -35,15 +35,16 @@ Future<void> main(List<String> args) async {
   isTest = myArgs.contains("test");
 
   // Handle deletion of application directory if required
-  if (deleteAppDir) {
-    DirUtil.deleteAppDirOnEmulatorIfExist();
-    // ignore: avoid_print
-    print('***** $kPlaylistDownloadRootPath mp3 files deleted *****');
-  }
+  // if (deleteAppDir) {
+  //   DirUtil.deleteAppDirOnEmulatorIfExist();
+  //   // ignore: avoid_print
+  //   print('***** $kPlaylistDownloadRootPath mp3 files deleted *****');
+  // }
 
   String applicationPath = '';
 
   // Request permissions and then create/get the application directory
+
   await PermissionRequesterService.requestMultiplePermissions();
 
   // Obtain or create the application directory

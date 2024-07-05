@@ -1117,4 +1117,7 @@ class MockAppLocalizations extends AppLocalizations {
     Object commentNumber,
   ) =>
       "The audio contains \"$commentNumber\" comments which will be deleted as well. Confirm deletion ?";
+
+  @override
+  String get commentStartPositionTooltip => "Comment start position";
 }

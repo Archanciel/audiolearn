@@ -376,5 +376,6 @@
   "invalidValueTooBig": "excède la valeur maximale",
   "invalidValueTooSmall": "est inférieure à la valeur minimale",
   "confirmCommentedAudioDeletionTitle": "Confirmez la suppression de l'audio commenté \"{audioTitle}\"",
-  "confirmCommentedAudioDeletionComment": "L'audio contient {commentNumber} commentaire(s) qui seront également supprimés. Confirmer la suppression ?"
+  "confirmCommentedAudioDeletionComment": "L'audio contient {commentNumber} commentaire(s) qui seront également supprimés. Confirmer la suppression ?",
+  "commentStartPositionTooltip": "Position du commentaire dans l'audio"
 }

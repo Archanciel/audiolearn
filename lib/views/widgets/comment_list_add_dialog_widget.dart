@@ -315,15 +315,19 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
             ),
             Row(
               children: [
-                Text(
-                  // comment position Text
-                  key: const Key('commentPositionKey'),
-                  style: const TextStyle(fontSize: 13),
-                  Duration(
-                          milliseconds:
-                              comment.commentStartPositionInTenthOfSeconds *
-                                  100)
-                      .HHmmssZeroHH(),
+                Tooltip(
+                        message: AppLocalizations.of(context)!
+                            .commentStartPositionTooltip,
+                  child: Text(
+                    // comment position Text
+                    key: const Key('commentPositionKey'),
+                    style: const TextStyle(fontSize: 13),
+                    Duration(
+                            milliseconds:
+                                comment.commentStartPositionInTenthOfSeconds *
+                                    100)
+                        .HHmmssZeroHH(),
+                  ),
                 ),
                 const SizedBox(width: 11),
               ],

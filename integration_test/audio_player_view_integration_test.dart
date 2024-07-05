@@ -11,7 +11,7 @@ import 'package:audiolearn/utils/date_time_util.dart';
 import 'package:audiolearn/utils/duration_expansion.dart';
 import 'package:audiolearn/views/widgets/comment_add_edit_dialog_widget.dart';
 import 'package:audiolearn/views/widgets/comment_list_add_dialog_widget.dart';
-import 'package:audiolearn/views/widgets/playlist_comment_dialog_widget.dart';
+import 'package:audiolearn/views/widgets/playlist_comment_list_add_dialog_widget.dart';
 import 'package:audiolearn/views/widgets/set_value_to_target_dialog_widget.dart';
 import 'package:audiolearn/views/widgets/warning_message_display_widget.dart';
 import 'package:path/path.dart' as path;
@@ -1485,8 +1485,7 @@ void main() {
     });
     testWidgets(
         'Opening AudioPlayerView by clicking on AudioPlayerView icon button in situation where no playlist is selected. Then select a playlist with no selected audio and open AudioPlayerView by clicking on AudioPlayerView icon button.',
-        (WidgetTester tester) async {
-    });
+        (WidgetTester tester) async {});
   });
   group('set play speed tests', () {
     testWidgets(
@@ -4051,7 +4050,7 @@ void main() {
 
         // Find the comment list add dialog widget
         final Finder commentListDialogFinder =
-            find.byType(PlaylistCommentDialogWidget);
+            find.byType(PlaylistCommentListAddDialogWidget);
 
         // Find the list body containing the comments
         final Finder listFinder = find.descendant(
@@ -7034,4 +7033,3 @@ Duration parseDuration(String hhmmString) {
 
   return Duration(hours: hours, minutes: minutes);
 }
-
