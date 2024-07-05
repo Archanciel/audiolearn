@@ -6581,6 +6581,119 @@ void main() {
       );
     });
     testWidgets(
+        'Manually add copied smartphone local playlist directory.',
+        (tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}manually_deleting_audios_and_updating_playlists",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+      app.main(['test']);
+      await tester.pumpAndSettle();
+
+      // Manually add the local 'test' playlist directory which were copied
+      // from a smartphone
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}manually_added_smartphone_local_playlist_dir",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // *** Execute Updating playlist JSON file menu item
+
+      // Tap the appbar leading popup menu button
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+      await tester.pumpAndSettle();
+
+      // find the update playlist JSON file menu item and tap on it
+      await tester
+          .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
+      await tester.pumpAndSettle();
+
+      // Test that the manually added test local smartphone playlist is
+      // displayed
+
+      // Tap the 'Toggle List' button to show the list of playlists. If the
+      // list is not opened, checking that a ListTile with the title of
+      // the manually added playlist was added to the ListView will fail
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Find the ListTile Playlist containing the manually added Youtube
+      // playlist
+
+      const String testLocalPlaylistTitle = 'test';
+
+      // First, find the 'test' local playlist ListTile Text widget
+      final Finder testLocalPlaylistTileTextWidgetFinder =
+          find.text(testLocalPlaylistTitle);
+
+      // Then obtain the 'test' source playlist ListTile widget
+      // enclosing the Text widget by finding its ancestor
+      final Finder testLocalPlaylistTileWidgetFinder = find.ancestor(
+        of: testLocalPlaylistTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the Checkbox widget located in the playlist ListTile
+      // and tap on it to select the playlist
+
+      await tapPlaylistCheckboxIfNotAlreadyChecked(
+        playlistListTileWidgetFinder: testLocalPlaylistTileWidgetFinder,
+        widgetTester: tester,
+      );
+
+      // Test that the audios of the added 'test' local playlist are
+      // listed
+
+      String testLocalPlaylistPath =
+          '$kPlaylistDownloadRootPathWindowsTest${path.separator}$testLocalPlaylistTitle';
+
+      List<String> testLocalPlaylistMp3Lst =
+          DirUtil.listFileNamesInDir(
+        path: testLocalPlaylistPath,
+        extension: 'mp3',
+      );
+
+      for (String audioTitle in testLocalPlaylistMp3Lst) {
+        audioTitle = audioTitle
+            .replaceAll(RegExp(r'[\d]'), '')
+            .replaceAll(RegExp(r'\-\-'), '')
+            .replaceFirst(' .mp', '')
+            .replaceFirst(' minutes', '5 minutes');
+        final Finder audioListTileTextWidgetFinder = find.text(audioTitle);
+
+        expect(audioListTileTextWidgetFinder, findsOneWidget);
+      }
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets(
         'Manually delete Youtube playlist directory after adding it manually.',
         (tester) async {
       // Purge the test playlist directory if it exists so that the
