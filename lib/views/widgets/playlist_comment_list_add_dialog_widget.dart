@@ -23,21 +23,21 @@ import 'comment_add_edit_dialog_widget.dart';
 ///
 /// Additionally, a button 'plus' is displayed to add a new
 /// positionned comment.
-class PlaylistCommentDialogWidget extends StatefulWidget {
+class PlaylistCommentListAddDialogWidget extends StatefulWidget {
   final Playlist currentPlaylist;
 
-  const PlaylistCommentDialogWidget({
+  const PlaylistCommentListAddDialogWidget({
     super.key,
     required this.currentPlaylist,
   });
 
   @override
-  State<PlaylistCommentDialogWidget> createState() =>
-      _PlaylistCommentDialogWidgetState();
+  State<PlaylistCommentListAddDialogWidget> createState() =>
+      _PlaylistCommentListAddDialogWidgetState();
 }
 
-class _PlaylistCommentDialogWidgetState
-    extends State<PlaylistCommentDialogWidget> with ScreenMixin {
+class _PlaylistCommentListAddDialogWidgetState
+    extends State<PlaylistCommentListAddDialogWidget> with ScreenMixin {
   final FocusNode _focusNodeDialog = FocusNode();
   Comment? _playingComment;
 
@@ -313,15 +313,19 @@ class _PlaylistCommentDialogWidgetState
             ),
             Row(
               children: [
-                Text(
-                  // comment position Text
-                  key: const Key('commentPositionKey'),
-                  style: const TextStyle(fontSize: 13),
-                  Duration(
-                          milliseconds:
-                              comment.commentStartPositionInTenthOfSeconds *
-                                  100)
-                      .HHmmssZeroHH(),
+                Tooltip(
+                  message:
+                      AppLocalizations.of(context)!.commentStartPositionTooltip,
+                  child: Text(
+                    // comment position Text
+                    key: const Key('commentPositionKey'),
+                    style: const TextStyle(fontSize: 13),
+                    Duration(
+                            milliseconds:
+                                comment.commentStartPositionInTenthOfSeconds *
+                                    100)
+                        .HHmmssZeroHH(),
+                  ),
                 ),
                 const SizedBox(width: 11),
               ],
