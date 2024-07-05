@@ -226,8 +226,8 @@ class IntegrationTestUtil {
     // including the playlist containing the modified audio paused date
     // time, are reloaded.
 
-    // open the popup menu
-    await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+    // Tap the appbar leading popup menu button
+    await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
     await tester.pumpAndSettle();
 
     // find the update playlist JSON file menu item and tap on it
