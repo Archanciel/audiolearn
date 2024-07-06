@@ -130,13 +130,20 @@ class CommentVM extends ChangeNotifier {
       ),
     );
 
+    if (commentLst.isEmpty) {
+      deleteAllAudioComments(
+        commentedAudio: commentedAudio,
+      );
+
+      return;
+    }
+
     JsonDataService.saveListToFile(
       data: commentLst,
       jsonPathFileName: _buildCommentFilePathAndFilePathName(
           audioToComment: commentedAudio)[1],
     );
 
-    // Delete comment from the database
     notifyListeners();
   }
 

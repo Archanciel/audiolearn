@@ -144,7 +144,7 @@ void main() {
       Audio audio = createAudio(
         playlistTitle: 'S8 audio',
         audioFileName:
-            "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
+            "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.mp3",
       );
 
       Comment testCommentOne = Comment(
@@ -264,13 +264,26 @@ void main() {
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
+const String localPlaylistTitle = 'local_delete_comment';
+
+      // Verify that the comment file exists
+
+      String playlistCommentFilePathName =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$localPlaylistTitle${path.separator}$kCommentDirName${path.separator}240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json";
+
+      expect(
+        File(playlistCommentFilePathName).existsSync(),
+        true,
+      );
+
       CommentVM commentVM = CommentVM();
 
       Audio audio = createAudio(
-        playlistTitle: 'local_delete_comment',
+        playlistTitle: localPlaylistTitle,
         audioFileName:
             "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
       );
+
       // deleting comment
 
       commentVM.deleteComment(
@@ -285,7 +298,7 @@ void main() {
       // the returned Commentlist should have two elements
       expect(commentLst.length, 2);
 
-      // deleting the remaining comment
+      // deleting the remaining comments
 
       commentVM.deleteComment(
         commentId: "Test Title 2_2",
@@ -301,7 +314,59 @@ void main() {
 
       commentLst = commentVM.loadAudioComments(audio: audio);
 
-      // the returned Commentlist should have one element
+      // the returned Commentlist should have zero element
+      expect(commentLst.length, 0);
+
+      // Verify that the comment file no longer exist
+      expect(
+        File(playlistCommentFilePathName).existsSync(),
+        false,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesAndSubDirsOfDir(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
+    });
+    test('deleteAllAudioComments', () async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesAndSubDirsOfDir(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_test",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      CommentVM commentVM = CommentVM();
+
+      Audio audio = createAudio(
+        playlistTitle: 'local_delete_comment',
+        audioFileName:
+            "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
+      );
+
+      // now loading the comment list from the comment file
+
+      List<Comment> commentLst = commentVM.loadAudioComments(audio: audio);
+
+      // the returned Commentlist should have two elements
+      expect(commentLst.length, 3);
+
+      // deleting all the comments of the audio
+      commentVM.deleteAllAudioComments(
+        commentedAudio: audio,
+      );
+
+      // now loading the comment list from the comment file
+
+      commentLst = commentVM.loadAudioComments(audio: audio);
+
+      // the returned Commentlist should have two elements
       expect(commentLst.length, 0);
 
       // Purge the test playlist directory so that the created test

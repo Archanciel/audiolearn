@@ -5707,6 +5707,122 @@ void main() {
       );
     });
     testWidgets(
+        'Delete all comments and check that the comment icon button is enabled but no longer highlighted',
+        (WidgetTester tester) async {
+      const String localPlaylistTitle =
+          'local_delete_comment'; // Youtube playlist
+      const String alreadyCommentedAudioTitle =
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_comment_test',
+        selectedPlaylistTitle: localPlaylistTitle,
+      );
+
+      // Verify that the comment file exists
+
+      String playlistCommentFilePathName =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$localPlaylistTitle${path.separator}$kCommentDirName${path.separator}240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json";
+
+      expect(
+        File(playlistCommentFilePathName).existsSync(),
+        true,
+      );
+
+      // Then, get the ListTile Text widget finder of the already commented
+      // audio and tap on it to open the AudioPlayerView
+      final Finder alreadyCommentedAudioFinder =
+          find.text(alreadyCommentedAudioTitle);
+      await tester.tap(alreadyCommentedAudioFinder);
+      await tester.pumpAndSettle();
+
+      // Verify that the comment icon button is now highlighted since
+      // several comments exist for the audio
+      IntegrationTestUtil.validateInkWellButton(
+        tester: tester,
+        inkWellButtonKey: 'commentsInkWellButton',
+        expectedIcon: Icons.bookmark_outline_outlined,
+        expectedIconColor: Colors.white,
+        expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
+      );
+
+      // Tap on the comment icon button to open the comment add list
+      // dialog
+      final Finder commentInkWellButtonFinder = find.byKey(
+        const Key('commentsInkWellButton'),
+      );
+
+      await tester.tap(commentInkWellButtonFinder);
+      await tester.pumpAndSettle();
+
+      final Finder commentListDialogFinder =
+          find.byType(CommentListAddDialogWidget);
+
+      // Find the list body containing the comments
+      final Finder listFinder = find.descendant(
+          of: commentListDialogFinder, matching: find.byType(ListBody));
+
+      // Find all the list items
+      final Finder gestureDetectorsFinder = find.descendant(
+          of: listFinder, matching: find.byType(GestureDetector));
+
+      // Check the number of items
+      expect(
+          gestureDetectorsFinder,
+          findsNWidgets(
+              9)); // Assuming there are 3 items * 3 GestureDetector per item
+
+      // Now delete the 3 comments
+
+      await deleteComment(
+        tester: tester,
+        gestureDetectorsFinder: gestureDetectorsFinder,
+        deletedCommentIndex: 0,
+        deletedCommentTitle: 'Test Title 2',
+      );
+
+      await deleteComment(
+        tester: tester,
+        gestureDetectorsFinder: gestureDetectorsFinder,
+        deletedCommentIndex: 0,
+        deletedCommentTitle: 'number 3',
+      );
+
+      await deleteComment(
+        tester: tester,
+        gestureDetectorsFinder: gestureDetectorsFinder,
+        deletedCommentIndex: 0,
+        deletedCommentTitle: 'Test Title 1',
+      );
+
+      // Now close the comment list dialog
+      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+      await tester.pumpAndSettle();
+
+      // Verify that the comment icon button is enabled but not highlighted
+      // since all comments were deleted
+      IntegrationTestUtil.validateInkWellButton(
+        tester: tester,
+        inkWellButtonKey: 'commentsInkWellButton',
+        expectedIcon: Icons.bookmark_outline_outlined,
+        expectedIconColor: kDarkAndLightEnabledIconColor,
+        expectedIconBackgroundColor: Colors.black,
+      );
+
+      // Verify that the comment file no longer exist
+      expect(
+        File(playlistCommentFilePathName).existsSync(),
+        false,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets(
         'MUST BE LAST TEST ! Using set value to target dialog to set comment positions',
         (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
@@ -6082,6 +6198,33 @@ void main() {
       );
     });
   });
+}
+
+Future<void> deleteComment({
+  required WidgetTester tester,
+  required Finder gestureDetectorsFinder,
+  required int deletedCommentIndex,
+  required String deletedCommentTitle,
+}) async {
+  // Now tap on the delete comment icon button to delete the comment
+  final Finder deleteIconButtonFinder = find.descendant(
+    of: gestureDetectorsFinder.at(deletedCommentIndex),
+    matching: find.byKey(const Key('deleteCommentIconButton')),
+  );
+
+  await tester.tap(deleteIconButtonFinder);
+  await tester.pumpAndSettle();
+
+  // Verify the delete comment dialog title
+  expect(find.text('Delete comment'), findsOneWidget);
+
+  // Verify the delete comment dialog message
+  expect(
+      find.text("Deleting comment \"$deletedCommentTitle\"."), findsOneWidget);
+
+  // Confirm the deletion of the comment
+  await tester.tap(find.byKey(const Key('confirmButtonKey')));
+  await tester.pumpAndSettle();
 }
 
 Future<void> deleteAudio({
