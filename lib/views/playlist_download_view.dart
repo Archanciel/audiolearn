@@ -705,7 +705,14 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                     playlistListVMlistenFalse.moveSelectedItemDown();
                   }
                 : null,
-            padding: const EdgeInsets.all(0),
+            style: ButtonStyle(
+              // Highlight button when pressed
+              padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                const EdgeInsets.symmetric(
+                    horizontal: kSmallButtonInsidePadding, vertical: 0),
+              ),
+              overlayColor: iconButtonTapModification, // Tap feedback color
+            ),
             icon: const Icon(
               Icons.arrow_drop_down,
               size: kUpDownButtonSize,
@@ -721,7 +728,14 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                     playlistListVMlistenFalse.moveSelectedItemUp();
                   }
                 : null,
-            padding: const EdgeInsets.all(0),
+            style: ButtonStyle(
+              // Highlight button when pressed
+              padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                const EdgeInsets.symmetric(
+                    horizontal: kSmallButtonInsidePadding, vertical: 0),
+              ),
+              overlayColor: iconButtonTapModification, // Tap feedback color
+            ),
             icon: const Icon(
               Icons.arrow_drop_up,
               size: kUpDownButtonSize,
