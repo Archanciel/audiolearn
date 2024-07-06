@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:audiolearn/views/widgets/comment_list_add_dialog_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -226,6 +228,15 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                 width: kSmallButtonWidth,
                 child: IconButton(
                   key: const Key('decreaseAudioVolumeIconButton'),
+                  style: ButtonStyle(
+                    // Highlight button when pressed
+                    padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                      const EdgeInsets.symmetric(
+                          horizontal: kSmallButtonInsidePadding, vertical: 0),
+                    ),
+                    overlayColor:
+                        iconButtonTapModification, // Tap feedback color
+                  ),
                   icon: const Icon(Icons.arrow_drop_down),
                   iconSize: kUpDownButtonSize,
                   onPressed: (!areAudioButtonsEnabled ||
@@ -247,6 +258,15 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                 width: kSmallButtonWidth,
                 child: IconButton(
                     key: const Key('increaseAudioVolumeIconButton'),
+                    style: ButtonStyle(
+                      // Highlight button when pressed
+                      padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                        const EdgeInsets.symmetric(
+                            horizontal: kSmallButtonInsidePadding, vertical: 0),
+                      ),
+                      overlayColor:
+                          iconButtonTapModification, // Tap feedback color
+                    ),
                     icon: const Icon(Icons.arrow_drop_up),
                     iconSize: kUpDownButtonSize,
                     onPressed: (!areAudioButtonsEnabled ||
@@ -590,6 +610,14 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                       ? await globalAudioPlayerVM.pause()
                       : await globalAudioPlayerVM.playCurrentAudio();
                 }),
+                style: ButtonStyle(
+                  // Highlight button when pressed
+                  padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                    const EdgeInsets.symmetric(
+                        horizontal: kSmallButtonInsidePadding, vertical: 0),
+                  ),
+                  overlayColor: iconButtonTapModification, // Tap feedback color
+                ),
                 icon: Icon(globalAudioPlayerVM.isPlaying
                     ? Icons.pause
                     : Icons.play_arrow),
@@ -625,6 +653,14 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
               key: const Key('audioPlayerViewSkipToStartButton'),
               iconSize: _audioIconSizeMedium,
               onPressed: () async => await globalAudioPlayerVM.skipToStart(),
+              style: ButtonStyle(
+                // Highlight button when pressed
+                padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                  const EdgeInsets.symmetric(
+                      horizontal: kSmallButtonInsidePadding, vertical: 0),
+                ),
+                overlayColor: iconButtonTapModification, // Tap feedback color
+              ),
               icon: const Icon(Icons.skip_previous),
             ),
             Expanded(
@@ -677,6 +713,14 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                 iconSize: _audioIconSizeMedium,
                 onPressed: () async =>
                     await globalAudioPlayerVM.skipToEndAndPlay(),
+                style: ButtonStyle(
+                  // Highlight button when pressed
+                  padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                    const EdgeInsets.symmetric(
+                        horizontal: kSmallButtonInsidePadding, vertical: 0),
+                  ),
+                  overlayColor: iconButtonTapModification, // Tap feedback color
+                ),
                 icon: const Icon(Icons.skip_next),
               ),
             ),
@@ -770,6 +814,17 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                               posNegPositionDurationChange:
                                   const Duration(minutes: -1),
                             ),
+                            style: ButtonStyle(
+                              // Highlight button when pressed
+                              padding:
+                                  WidgetStateProperty.all<EdgeInsetsGeometry>(
+                                const EdgeInsets.symmetric(
+                                    horizontal: kSmallButtonInsidePadding,
+                                    vertical: 0),
+                              ),
+                              overlayColor:
+                                  iconButtonTapModification, // Tap feedback color
+                            ),
                             icon: const Icon(Icons.fast_rewind),
                           ),
                         ),
@@ -781,6 +836,17 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                                 .changeAudioPlayPosition(
                               posNegPositionDurationChange:
                                   const Duration(seconds: -10),
+                            ),
+                            style: ButtonStyle(
+                              // Highlight button when pressed
+                              padding:
+                                  WidgetStateProperty.all<EdgeInsetsGeometry>(
+                                const EdgeInsets.symmetric(
+                                    horizontal: kSmallButtonInsidePadding,
+                                    vertical: 0),
+                              ),
+                              overlayColor:
+                                  iconButtonTapModification, // Tap feedback color
                             ),
                             icon: const Icon(Icons.fast_rewind),
                           ),
@@ -794,6 +860,17 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                               posNegPositionDurationChange:
                                   const Duration(seconds: 10),
                             ),
+                            style: ButtonStyle(
+                              // Highlight button when pressed
+                              padding:
+                                  WidgetStateProperty.all<EdgeInsetsGeometry>(
+                                const EdgeInsets.symmetric(
+                                    horizontal: kSmallButtonInsidePadding,
+                                    vertical: 0),
+                              ),
+                              overlayColor:
+                                  iconButtonTapModification, // Tap feedback color
+                            ),
                             icon: const Icon(Icons.fast_forward),
                           ),
                         ),
@@ -805,6 +882,17 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                                 .changeAudioPlayPosition(
                               posNegPositionDurationChange:
                                   const Duration(minutes: 1),
+                            ),
+                            style: ButtonStyle(
+                              // Highlight button when pressed
+                              padding:
+                                  WidgetStateProperty.all<EdgeInsetsGeometry>(
+                                const EdgeInsets.symmetric(
+                                    horizontal: kSmallButtonInsidePadding,
+                                    vertical: 0),
+                              ),
+                              overlayColor:
+                                  iconButtonTapModification, // Tap feedback color
                             ),
                             icon: const Icon(Icons.fast_forward),
                           ),
@@ -898,6 +986,14 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                   : () {
                       globalAudioPlayerVM.undo();
                     },
+              style: ButtonStyle(
+                // Highlight button when pressed
+                padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                  const EdgeInsets.symmetric(
+                      horizontal: kSmallButtonInsidePadding, vertical: 0),
+                ),
+                overlayColor: iconButtonTapModification, // Tap feedback color
+              ),
               icon: const Icon(Icons.undo),
             ),
             IconButton(
@@ -908,6 +1004,14 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                   : () {
                       globalAudioPlayerVM.redo();
                     },
+              style: ButtonStyle(
+                // Highlight button when pressed
+                padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                  const EdgeInsets.symmetric(
+                      horizontal: kSmallButtonInsidePadding, vertical: 0),
+                ),
+                overlayColor: iconButtonTapModification, // Tap feedback color
+              ),
               icon: const Icon(Icons.redo),
             ),
           ],

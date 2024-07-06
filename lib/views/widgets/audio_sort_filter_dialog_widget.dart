@@ -600,6 +600,15 @@ class _AudioSortFilterDialogWidgetState
                     setState(() {}); // necessary to update Delete button color
                   },
                   padding: const EdgeInsets.all(0),
+                  style: ButtonStyle(
+                    // Highlight button when pressed
+                    padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                      const EdgeInsets.symmetric(
+                          horizontal: kSmallButtonInsidePadding, vertical: 0),
+                    ),
+                    overlayColor:
+                        iconButtonTapModification, // Tap feedback color
+                  ),
                   icon: Icon(
                     Icons.clear,
                     // since in the Dialog the disabled IconButton color
@@ -706,6 +715,14 @@ class _AudioSortFilterDialogWidgetState
           message: AppLocalizations.of(context)!.resetSortFilterOptionsTooltip,
           child: IconButton(
             key: const Key('resetSortFilterOptionsIconButton'),
+            style: ButtonStyle(
+              // Highlight button when pressed
+              padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                const EdgeInsets.symmetric(
+                    horizontal: kSmallButtonInsidePadding, vertical: 0),
+              ),
+              overlayColor: iconButtonTapModification, // Tap feedback color
+            ),
             icon: const Icon(Icons.clear),
             onPressed: () {
               setState(() {
@@ -1042,6 +1059,14 @@ class _AudioSortFilterDialogWidgetState
         ),
         IconButton(
           key: dateIconButtondKey,
+          style: ButtonStyle(
+            // Highlight button when pressed
+            padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+              const EdgeInsets.symmetric(
+                  horizontal: kSmallButtonInsidePadding, vertical: 0),
+            ),
+            overlayColor: iconButtonTapModification, // Tap feedback color
+          ),
           icon: const Icon(Icons.calendar_month_rounded),
           onPressed: () async {
             DateTime? pickedDate = await showDatePicker(
@@ -1197,6 +1222,14 @@ class _AudioSortFilterDialogWidgetState
             title: Text(_audioTitleFilterSentencesLst[index]),
             trailing: IconButton(
               key: const Key('removeSentenceIconButton'),
+              style: ButtonStyle(
+                // Highlight button when pressed
+                padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                  const EdgeInsets.symmetric(
+                      horizontal: kSmallButtonInsidePadding, vertical: 0),
+                ),
+                overlayColor: iconButtonTapModification, // Tap feedback color
+              ),
               icon: const Icon(Icons.clear),
               onPressed: () {
                 _audioTitleFilterSentencesLst[index].isNotEmpty
@@ -1241,6 +1274,14 @@ class _AudioSortFilterDialogWidgetState
                 : null, // required in order to be able to test if the
             //             IconButton is disabled or not
             padding: const EdgeInsets.all(0),
+            style: ButtonStyle(
+              // Highlight button when pressed
+              padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                const EdgeInsets.symmetric(
+                    horizontal: kSmallButtonInsidePadding, vertical: 0),
+              ),
+              overlayColor: iconButtonTapModification, // Tap feedback color
+            ),
             icon: Icon(
               Icons.arrow_left,
               size: kUpDownButtonSize,
@@ -1258,6 +1299,14 @@ class _AudioSortFilterDialogWidgetState
                 : null, // required in order to be able to test if the
             //             IconButton is disabled or not
             padding: const EdgeInsets.all(0),
+            style: ButtonStyle(
+              // Highlight button when pressed
+              padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                const EdgeInsets.symmetric(
+                    horizontal: kSmallButtonInsidePadding, vertical: 0),
+              ),
+              overlayColor: iconButtonTapModification, // Tap feedback color
+            ),
             icon: Icon(
               Icons.arrow_right,
               size: kUpDownButtonSize,
@@ -1278,6 +1327,14 @@ class _AudioSortFilterDialogWidgetState
                   : null, // required in order to be able to test if the
               //             IconButton is disabled or not
               padding: const EdgeInsets.all(0),
+              style: ButtonStyle(
+                // Highlight button when pressed
+                padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                  const EdgeInsets.symmetric(
+                      horizontal: kSmallButtonInsidePadding, vertical: 0),
+                ),
+                overlayColor: iconButtonTapModification, // Tap feedback color
+              ),
               icon: Icon(
                 Icons.delete,
                 size: kUpDownButtonSize / 2,
@@ -1441,6 +1498,15 @@ class _AudioSortFilterDialogWidgetState
                             })
                         : null,
                     padding: const EdgeInsets.all(0),
+                    style: ButtonStyle(
+                      // Highlight button when pressed
+                      padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                        const EdgeInsets.symmetric(
+                            horizontal: kSmallButtonInsidePadding, vertical: 0),
+                      ),
+                      overlayColor:
+                          iconButtonTapModification, // Tap feedback color
+                    ),
                     icon: Icon(
                       Icons.add,
                       // since in the Dialog the disabled IconButton color
@@ -1519,7 +1585,16 @@ class _AudioSortFilterDialogWidgetState
                               !isAscending; // Toggle the sorting state
                         });
                       },
-                      padding: const EdgeInsets.all(0),
+                      style: ButtonStyle(
+                        // Highlight button when pressed
+                        padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                          const EdgeInsets.symmetric(
+                              horizontal: kSmallButtonInsidePadding,
+                              vertical: 0),
+                        ),
+                        overlayColor:
+                            iconButtonTapModification, // Tap feedback color
+                      ),
                       icon: Icon(
                         _selectedSortingItemLst[index].isAscending
                             ? Icons.arrow_drop_up
@@ -1530,6 +1605,7 @@ class _AudioSortFilterDialogWidgetState
                     ),
                   ),
                 ),
+                const SizedBox(width: 5),
                 SizedBox(
                   width: kSmallIconButtonWidth,
                   child: IconButton(
@@ -1549,6 +1625,15 @@ class _AudioSortFilterDialogWidgetState
                               }
                             })
                         : null,
+                    style: ButtonStyle(
+                      // Highlight button when pressed
+                      padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                        const EdgeInsets.symmetric(
+                            horizontal: kSmallButtonInsidePadding, vertical: 0),
+                      ),
+                      overlayColor:
+                          iconButtonTapModification, // Tap feedback color
+                    ),
                     icon: Icon(
                       Icons.clear,
                       // since in the Dialog the disabled IconButton color

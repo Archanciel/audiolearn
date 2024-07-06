@@ -182,6 +182,17 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                                   commentVMlistenFalse: commentVMlistenFalse);
                             }
                           },
+                          style: ButtonStyle(
+                            // Highlight button when pressed
+                            padding:
+                                WidgetStateProperty.all<EdgeInsetsGeometry>(
+                              const EdgeInsets.symmetric(
+                                  horizontal: kSmallButtonInsidePadding,
+                                  vertical: 0),
+                            ),
+                            overlayColor:
+                                iconButtonTapModification, // Tap feedback color
+                          ),
                           icon: Consumer<AudioPlayerVM>(
                             // Setting the icon as Consumer of AudioPlayerVM
                             // enables the icon to change according to the
@@ -354,6 +365,14 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
           child: IconButton(
             key: const Key('backwardCommentStartIconButton'),
             // Rewind 1 second button
+            style: ButtonStyle(
+              // Highlight button when pressed
+              padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                const EdgeInsets.symmetric(
+                    horizontal: kSmallButtonInsidePadding, vertical: 0),
+              ),
+              overlayColor: iconButtonTapModification, // Tap feedback color
+            ),
             icon: const Icon(Icons.fast_rewind),
             onPressed: () async {
               await _modifyCommentStartPosition(
@@ -388,6 +407,14 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
           child: IconButton(
             // Forward 1 second button
             key: const Key('forwardCommentStartIconButton'),
+            style: ButtonStyle(
+              // Highlight button when pressed
+              padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                const EdgeInsets.symmetric(
+                    horizontal: kSmallButtonInsidePadding, vertical: 0),
+              ),
+              overlayColor: iconButtonTapModification, // Tap feedback color
+            ),
             icon: const Icon(Icons.fast_forward),
             onPressed: () async {
               await _modifyCommentStartPosition(
@@ -433,6 +460,14 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
           child: IconButton(
             key: const Key('backwardCommentEndIconButton'),
             // Rewind 1 second button
+            style: ButtonStyle(
+              // Highlight button when pressed
+              padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                const EdgeInsets.symmetric(
+                    horizontal: kSmallButtonInsidePadding, vertical: 0),
+              ),
+              overlayColor: iconButtonTapModification, // Tap feedback color
+            ),
             icon: const Icon(Icons.fast_rewind),
             onPressed: () async {
               _commentEndPositionIsModified = true;
@@ -468,6 +503,14 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
           child: IconButton(
             // Forward 1 second button
             key: const Key('forwardCommentEndIconButton'),
+            style: ButtonStyle(
+              // Highlight button when pressed
+              padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                const EdgeInsets.symmetric(
+                    horizontal: kSmallButtonInsidePadding, vertical: 0),
+              ),
+              overlayColor: iconButtonTapModification, // Tap feedback color
+            ),
             icon: const Icon(Icons.fast_forward),
             onPressed: () async {
               _commentEndPositionIsModified = true;

@@ -88,6 +88,14 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
               child: IconButton(
                 // add comment icon button
                 key: const Key('addPositionedCommentIconButtonKey'),
+                style: ButtonStyle(
+                  // Highlight button when pressed
+                  padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                    const EdgeInsets.symmetric(
+                        horizontal: kSmallButtonInsidePadding, vertical: 0),
+                  ),
+                  overlayColor: iconButtonTapModification, // Tap feedback color
+                ),
                 icon: IconTheme(
                   data: (themeProviderVM.currentTheme == AppTheme.dark
                           ? ScreenMixin.themeDataDark
@@ -227,6 +235,15 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
                               comment: comment,
                             );
                     },
+                    style: ButtonStyle(
+                      // Highlight button when pressed
+                      padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                        const EdgeInsets.symmetric(
+                            horizontal: kSmallButtonInsidePadding, vertical: 0),
+                      ),
+                      overlayColor:
+                          iconButtonTapModification, // Tap feedback color
+                    ),
                     icon: Consumer<AudioPlayerVM>(
                       builder: (context, audioPlayerVMlistenTrue, child) {
                         // The code below ensures that the audio player is
@@ -267,6 +284,15 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
                     onPressed: () async {
                       await _confirmDeleteComment(commentVM, comment);
                     },
+                    style: ButtonStyle(
+                      // Highlight button when pressed
+                      padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                        const EdgeInsets.symmetric(
+                            horizontal: kSmallButtonInsidePadding, vertical: 0),
+                      ),
+                      overlayColor:
+                          iconButtonTapModification, // Tap feedback color
+                    ),
                     icon: const Icon(
                       Icons.clear,
                     ),
@@ -316,8 +342,8 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
             Row(
               children: [
                 Tooltip(
-                        message: AppLocalizations.of(context)!
-                            .commentStartPositionTooltip,
+                  message:
+                      AppLocalizations.of(context)!.commentStartPositionTooltip,
                   child: Text(
                     // comment position Text
                     key: const Key('commentPositionKey'),

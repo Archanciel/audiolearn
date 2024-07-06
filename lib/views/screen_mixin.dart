@@ -77,15 +77,11 @@ mixin ScreenMixin {
   final WidgetStateProperty<Color> textButtonTapModification =
       WidgetStateProperty.all(Colors.grey.withOpacity(0.6));
 
-  // Defining custom icon themes for light theme
-  final IconThemeData activeScreenIconLightTheme = const IconThemeData(
-    color: kSliderThumbColorInLightMode,
-    size: screenIconSizeLightTheme,
-  );
-  final IconThemeData inactiveScreenIconLightTheme = const IconThemeData(
-    color: Colors.grey,
-    size: screenIconSizeLightTheme,
-  );
+  // When clicking on IconButton, the color of the button is
+  // changed shortly to the color defined in the following
+  // property.
+  final WidgetStateProperty<Color> iconButtonTapModification =
+      WidgetStateProperty.all(Colors.blue.withOpacity(0.3));
 
   // Defining custom icon themes for dark theme
   final IconThemeData activeScreenIconDarkTheme = const IconThemeData(
@@ -96,6 +92,17 @@ mixin ScreenMixin {
     color: Colors.grey,
     size: screenIconSizeDarkTheme,
   );
+
+  // Defining custom icon themes for light theme
+  final IconThemeData activeScreenIconLightTheme = const IconThemeData(
+    color: kSliderThumbColorInLightMode,
+    size: screenIconSizeLightTheme,
+  );
+  final IconThemeData inactiveScreenIconLightTheme = const IconThemeData(
+    color: Colors.grey,
+    size: screenIconSizeLightTheme,
+  );
+
   final kDialogActionsPadding = const EdgeInsets.all(0);
 
   static ThemeData themeDataDark = ThemeData.dark().copyWith(

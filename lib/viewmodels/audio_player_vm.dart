@@ -478,9 +478,8 @@ class AudioPlayerVM extends ChangeNotifier {
   }
 
   /// Method called when the user clicks on the audio play icon
-  /// in the AudioListItemWidget displayed in the PlaylistDownloadView
-  /// or on the audio title or sub title in the AudioPlayerView or
-  /// on the audio play icon in the AudioPlayerView or in the play
+  /// of the AudioListItemWidget displayed in the PlaylistDownloadView
+  /// or on the audio play icon in the AudioPlayerView or in the play
   /// icon in the CommentListAddDialogWidget or PlaylistCommentDialogWidget
   /// or in the play icon in the CommentAddEditDialogWidget.
   Future<void> playCurrentAudio({
