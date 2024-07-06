@@ -27,12 +27,16 @@ Future<void> main(List<String> args) async {
 
   List<String> myArgs = args.isNotEmpty ? args : [];
 
-  bool deleteAppDir = kDeleteAppDirOnEmulator;
   bool isTest = false;
 
-  // Parse command line arguments
-  deleteAppDir = myArgs.contains("delAppDir");
   isTest = myArgs.contains("test");
+
+  // bool deleteAppDir = kDeleteAppDirOnEmulator;
+
+  // Parse command line arguments in integration tests
+  // if (!deleteAppDir) {
+  //   deleteAppDir = myArgs.contains("delAppDir");
+  // }
 
   // Handle deletion of application directory if required
   // if (deleteAppDir) {
