@@ -4377,7 +4377,6 @@ void main() {
       // Since the copied audio contains comment(s), an action confirm
       // dialog is opened. Checking the confirm dialog title ...
 
-
       // Since the copied audio contains comment(s), an action confirm
       // dialog is opened. Checking the confirm dialog title ...
 
@@ -10838,8 +10837,105 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
+    testWidgets('Enter a non existing playlist root dir.',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}app_settings_set_play_speed",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      final String initialSettingsJsonStr = File(
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName")
+          .readAsStringSync();
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+      app.main(['test']);
+      await tester.pumpAndSettle();
+
+      // Tap the appbar leading popup menu button
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+      await tester.pumpAndSettle();
+
+      // Now open the app settings dialog
+      await tester.tap(find.byKey(const Key('appBarMenuOpenSettingsDialog')));
+      await tester.pumpAndSettle();
+
+      // Enter non existing dir path
+      // Find the TextField using the Key
+      final Finder textFieldFinder =
+          find.byKey(Key('playlistRootpathTextField'));
+
+      // Retrieve the TextField widget
+      final TextField textField = tester.widget<TextField>(textFieldFinder);
+
+      // Obtain the current text value of the text field
+      String text = textField.controller!.text;
+
+      // Now enter the text in the text field
+      await tester.enterText(
+        textFieldFinder,
+        '$text${path.separator}new',
+      );
+
+      await tester.pumpAndSettle();
+
+      // And tap on save button
+      await tester.tap(find.byKey(const Key('saveButton')));
+      await tester.pumpAndSettle();
+
+      // Ensure the warning dialog is shown
+      expect(find.byType(WarningMessageDisplayWidget), findsOneWidget);
+
+      // Check the value of the warning dialog title
+      Text warningDialogTitle =
+          tester.widget(find.byKey(const Key('warningDialogTitle')));
+      expect(warningDialogTitle.data, 'WARNING');
+
+      // Check the value of the warning dialog message
+      Text warningDialogMessage =
+          tester.widget(find.byKey(const Key('warningDialogMessage')));
+      expect(warningDialogMessage.data,
+          "The defined path \"$kApplicationPathWindowsTest${path.separator}new\" does not exist. Please enter a valid playlist root path and retry ...");
+
+      // Close the warning dialog by tapping on the Ok button
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+      await tester.pumpAndSettle();
+
+      // Ensure settings json file has not been modified
+      expect(
+        initialSettingsJsonStr,
+        File("$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName")
+            .readAsStringSync(),
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    group('App settings set speed test', () {});
   });
-  group('App settings set speed test', () {});
   group('Rename audio file test and verify comment access', () {
     testWidgets('Not existing new name', (WidgetTester tester) async {
       const String youtubePlaylistTitle =
