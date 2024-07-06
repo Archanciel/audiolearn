@@ -298,7 +298,7 @@ class IntegrationTestUtil {
       Finder audioPlayerNavButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(audioPlayerNavButton);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 100));
     }
   }
 
