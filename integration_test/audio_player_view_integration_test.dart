@@ -4774,17 +4774,39 @@ void main() {
       // Verify that the Text widget contains the expected content
       String commentDialogAudioPlayerViewAudioPositionWithTenthSecText =
           tester.widget<Text>(selectCommentPositionTextOfButtonFinder).data!;
-
       String actualAudioPlayerViewAudioPosition =
           tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
 
-      expect(
-        roundUpTenthOfSeconds(
-          audioPositionHHMMSSWithTenthSecText:
-              commentDialogAudioPlayerViewAudioPositionWithTenthSecText,
+      int commentDialogAudioPlayerViewAudioPositionWithTenthSec = roundUpTenthOfSeconds(
+        audioPositionHHMMSSWithTenthSecText:
+            commentDialogAudioPlayerViewAudioPositionWithTenthSecText,
+      );
+      int actualAudioPlayerViewAudioPositionTenthsOfSeconds =
+          DateTimeUtil.convertToTenthsOfSeconds(
+              timeString: actualAudioPlayerViewAudioPosition); // 5:49
+
+      // Adding 10 milliseconds to the actual audio player view audio
+      // position avoids that the test fails sometimes because the
+      // actual audio player view audio position is displayed with seconds
+      // and the comment dialog audio player view audio position is
+      // displayed with tenth of seconds.
+      int actualAudioPlayerViewAudioPositionTenthsOfSecondsMax =
+          actualAudioPlayerViewAudioPositionTenthsOfSeconds + 10;
+
+      IntegrationTestUtil.expectWithSuccessMessage(
+        actual: commentDialogAudioPlayerViewAudioPositionWithTenthSec,
+        matcher: allOf(
+          [
+            greaterThanOrEqualTo(
+                actualAudioPlayerViewAudioPositionTenthsOfSeconds),
+            lessThanOrEqualTo(
+                actualAudioPlayerViewAudioPositionTenthsOfSecondsMax),
+          ],
         ),
-        DateTimeUtil.convertToTenthsOfSeconds(
-            timeString: actualAudioPlayerViewAudioPosition), // 5:49
+        reason:
+            "Expected value between $actualAudioPlayerViewAudioPositionTenthsOfSeconds and $actualAudioPlayerViewAudioPositionTenthsOfSecondsMax but obtained $commentDialogAudioPlayerViewAudioPositionWithTenthSec",
+        successMessage:
+            "Acceptable position between $actualAudioPlayerViewAudioPositionTenthsOfSeconds and $actualAudioPlayerViewAudioPositionTenthsOfSecondsMax is $commentDialogAudioPlayerViewAudioPositionWithTenthSec",
       );
 
       // Tap once on the forward comment end icon button to increase the
