@@ -10987,6 +10987,48 @@ void main() {
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
+      // Obtains all the ListTile widgets present in the playlist
+      // download view
+      final Finder lisTilesFinder = find.byType(ListTile);
+
+      // Verify the playlist and the audio of the selected playlist titles
+
+      // S8 playlist title
+      Finder playlistTitleTextFinder = find.descendant(
+        of: lisTilesFinder.at(0),
+        matching: find.byType(Text),
+      );
+      expect(tester.widget<Text>(playlistTitleTextFinder).data, 'S8 audio');
+
+      // local playlist title
+      playlistTitleTextFinder = find.descendant(
+        of: lisTilesFinder.at(1),
+        matching: find.byType(Text),
+      );
+      expect(tester.widget<Text>(playlistTitleTextFinder).data, 'local');
+
+      // first audio of S8 audio playlist
+      playlistTitleTextFinder = find.descendant(
+        of: lisTilesFinder.at(2),
+        matching: find.byType(Text),
+      );
+      expect(
+        // 2 Text widgets exist in audio ListTile: the title and sub title
+        tester.widget<Text>(playlistTitleTextFinder.at(0)).data,
+        "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+      );
+
+      // second audio of S8 audio playlist
+      playlistTitleTextFinder = find.descendant(
+        of: lisTilesFinder.at(3),
+        matching: find.byType(Text),
+      );
+      expect(
+        // 2 Text widgets exist in audio ListTile: the title and sub title
+        tester.widget<Text>(playlistTitleTextFinder.at(0)).data,
+        "La surpopulation mondiale par Jancovici et Barrau",
+      );
+
       // Tap the appbar leading popup menu button
       await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
       await tester.pumpAndSettle();
@@ -11051,15 +11093,15 @@ void main() {
       await tester.tap(localPlaylistToSelectListTileCheckboxWidgetFinder);
       await tester.pumpAndSettle();
 
-
-      const String alreadyCommentedAudioTitle = "5 minutes d'éco-anxiété pour se motiver à bouger (Ringenbach, Janco, Barrau, Servigne)";
+      const String alreadyCommentedAudioTitle =
+          "5 minutes d'éco-anxiété pour se motiver à bouger (Ringenbach, Janco, Barrau, Servigne)";
 
       // Then, get the ListTile Text widget finder of the already commented
       // audio and tap on it to open the AudioPlayerView
       final Finder alreadyCommentedAudioFinder =
           find.text(alreadyCommentedAudioTitle);
       await tester.tap(alreadyCommentedAudioFinder);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(Duration(milliseconds: 100));
 
       // Tap on the comment icon button to open the comment add list
       // dialog
@@ -11093,11 +11135,11 @@ void main() {
       );
 
       // Tap on the play/pause icon button to play the audio from the
-      // comment
+      // comment start position
       await tester.tap(playIconButtonFinder);
       await tester.pumpAndSettle();
 
-      await Future.delayed(const Duration(milliseconds: 1000));
+      await Future.delayed(const Duration(milliseconds: 2000));
       await tester.pumpAndSettle();
 
       // Tap on the play/pause icon button to pause the audio
