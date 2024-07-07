@@ -11101,7 +11101,7 @@ void main() {
       final Finder alreadyCommentedAudioFinder =
           find.text(alreadyCommentedAudioTitle);
       await tester.tap(alreadyCommentedAudioFinder);
-      await tester.pumpAndSettle(Duration(milliseconds: 100));
+      await tester.pumpAndSettle(Duration(milliseconds: 200));
 
       // Tap on the comment icon button to open the comment add list
       // dialog
