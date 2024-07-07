@@ -221,9 +221,23 @@ class _ApplicationSettingsDialogWidgetState
         value: _audioPlaySpeed);
 
     String playlistRootPath = _playlistRootpathTextEditingController.text;
+
+    if (widget.settingsDataService.get(
+      // if the playlist root path is not changed, do not update the
+      // settings and the playlist json files
+          settingType: SettingType.playlists,
+          settingSubType: Playlists.playSpeed,
+        ) ==
+        playlistRootPath) {
+      return;
+    }
+
     final Directory directory = Directory(playlistRootPath);
 
     if (!directory.existsSync()) {
+      // if playlist root path is not modified, return is performed,
+      // avoiding unusefull call to PlaylistListVM
+      // updateSettingsAndPlaylistJsonFiles()
       Provider.of<WarningMessageVM>(
         context,
         listen: false,
