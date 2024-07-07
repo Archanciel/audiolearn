@@ -567,7 +567,7 @@ void main() {
           tester.widget(find.byKey(const Key('playlistUrlTextField')));
       expect(urlTextField.controller!.text, '');
 
-      // Check the saved local playlist values in the json file
+      // Check the saved Youtube playlist values in the json file
 
       final String newPlaylistPath = path.join(
         kPlaylistDownloadRootPathWindowsTest,
@@ -614,7 +614,7 @@ void main() {
       //   youtubePlaylistUrl,
       // );
 
-      // Solving this putain de problem
+      // Solving this problem
       tester
           .widget<TextField>(find.byKey(const Key('playlistUrlTextField')))
           .controller!
@@ -10936,7 +10936,8 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets('Enter an existing playlist root dir in which a smartphone playlist dir exist and test that those smartphone audios are usable.',
+    testWidgets(
+        'Enter an existing playlist root dir in which a smartphone playlist dir exist and test that those smartphone audios are usable.',
         (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -10968,10 +10969,10 @@ void main() {
       await tester.pumpAndSettle();
 
       // Create the 'new' directory in the app dir
-      String newDirectoryUsedLaterInApplicationSetting = "$kPlaylistDownloadRootPathWindowsTest${path.separator}new";
+      String newDirectoryUsedLaterInApplicationSetting =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}new";
 
-      Directory(newDirectoryUsedLaterInApplicationSetting)
-          .createSync();
+      Directory(newDirectoryUsedLaterInApplicationSetting).createSync();
 
       // Add the Youtube 'Youtube_test' playlist directory which were
       // copied from a smartphone
@@ -10980,6 +10981,11 @@ void main() {
             "$kDownloadAppTestSavedDataDir${path.separator}manually_added_smartphone_Youtube_playlist_dir",
         destinationRootPath: newDirectoryUsedLaterInApplicationSetting,
       );
+
+      // Tap the 'Toggle List' button to show the list of playlists in the
+      // 'new' playlist root directory.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
 
       // Tap the appbar leading popup menu button
       await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
@@ -11013,13 +11019,94 @@ void main() {
       await tester.tap(find.byKey(const Key('saveButton')));
       await tester.pumpAndSettle();
 
-
       // Ensure settings json file has been modified
       expect(
         File("$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName")
             .readAsStringSync(),
         "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.orderedTitleLst\":\"[Youtube_test]\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.playSpeed\":\"1.25\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\Users\\\\Jean-Pierre\\\\Development\\\\Flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\Users\\\\Jean-Pierre\\\\Development\\\\Flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\new\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":false,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}",
       );
+
+      // Find the Youtube playlist to select
+
+      // First, find the Playlist ListTile Text widget
+      final Finder localPlaylistToSelectListTileTextWidgetFinder =
+          find.text('Youtube_test');
+
+      // Then obtain the Playlist ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      final Finder localPlaylistToSelectListTileWidgetFinder = find.ancestor(
+        of: localPlaylistToSelectListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the Checkbox widget located in the Playlist ListTile
+      // and tap on it to select the playlist
+      final Finder localPlaylistToSelectListTileCheckboxWidgetFinder =
+          find.descendant(
+        of: localPlaylistToSelectListTileWidgetFinder,
+        matching: find.byType(Checkbox),
+      );
+
+      // Tap the ListTile Playlist checkbox to select it
+      await tester.tap(localPlaylistToSelectListTileCheckboxWidgetFinder);
+      await tester.pumpAndSettle();
+
+
+      const String alreadyCommentedAudioTitle = "5 minutes d'éco-anxiété pour se motiver à bouger (Ringenbach, Janco, Barrau, Servigne)";
+
+      // Then, get the ListTile Text widget finder of the already commented
+      // audio and tap on it to open the AudioPlayerView
+      final Finder alreadyCommentedAudioFinder =
+          find.text(alreadyCommentedAudioTitle);
+      await tester.tap(alreadyCommentedAudioFinder);
+      await tester.pumpAndSettle();
+
+      // Tap on the comment icon button to open the comment add list
+      // dialog
+      final Finder commentInkWellButtonFinder = find.byKey(
+        const Key('commentsInkWellButton'),
+      );
+
+      await tester.tap(commentInkWellButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Find the comment list add dialog widget
+      final Finder commentListDialogFinder =
+          find.byType(CommentListAddDialogWidget);
+
+      // Find the list body containing the comments
+      final Finder listFinder = find.descendant(
+          of: commentListDialogFinder, matching: find.byType(ListBody));
+
+      // Find all the list items
+      final Finder itemsFinder = find.descendant(
+          // 3 GestureDetector per comment item
+          of: listFinder,
+          matching: find.byType(GestureDetector));
+
+      // Unique comment index
+      int uniqueCommentFinderIndex = 0;
+
+      final Finder playIconButtonFinder = find.descendant(
+        of: itemsFinder.at(uniqueCommentFinderIndex),
+        matching: find.byKey(const Key('playPauseIconButton')),
+      );
+
+      // Tap on the play/pause icon button to play the audio from the
+      // comment
+      await tester.tap(playIconButtonFinder);
+      await tester.pumpAndSettle();
+
+      await Future.delayed(const Duration(milliseconds: 1000));
+      await tester.pumpAndSettle();
+
+      // Tap on the play/pause icon button to pause the audio
+      await tester.tap(playIconButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Tap on the Close button to close the comment list add dialog
+      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+      await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
