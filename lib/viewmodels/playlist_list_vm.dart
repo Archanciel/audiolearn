@@ -92,7 +92,10 @@ class PlaylistListVM extends ChangeNotifier {
   }
 
   /// Method called when the user choose the "Update playlist
-  /// JSON files" menu item.
+  /// JSON files" menu item. The method is also executed when
+  /// the user modifies the application settings through the
+  /// ApplicationSettingsWidget opened by clicking on the
+  /// Application settings menu item.
   void updateSettingsAndPlaylistJsonFiles() {
     _audioDownloadVM.loadExistingPlaylists();
 
