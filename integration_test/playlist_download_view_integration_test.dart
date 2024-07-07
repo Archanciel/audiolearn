@@ -10882,9 +10882,10 @@ void main() {
       await tester.pumpAndSettle();
 
       // Enter non existing dir path
+
       // Find the TextField using the Key
       final Finder textFieldFinder =
-          find.byKey(Key('playlistRootpathTextField'));
+          find.byKey(const Key('playlistRootpathTextField'));
 
       // Retrieve the TextField widget
       final TextField textField = tester.widget<TextField>(textFieldFinder);
@@ -10950,10 +10951,6 @@ void main() {
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      final String initialSettingsJsonStr = File(
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName")
-          .readAsStringSync();
-
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
@@ -10970,6 +10967,20 @@ void main() {
       app.main(['test']);
       await tester.pumpAndSettle();
 
+      // Create the 'new' directory in the app dir
+      String newDirectoryUsedLaterInApplicationSetting = "$kPlaylistDownloadRootPathWindowsTest${path.separator}new";
+
+      Directory(newDirectoryUsedLaterInApplicationSetting)
+          .createSync();
+
+      // Add the Youtube 'Youtube_test' playlist directory which were
+      // copied from a smartphone
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}manually_added_smartphone_Youtube_playlist_dir",
+        destinationRootPath: newDirectoryUsedLaterInApplicationSetting,
+      );
+
       // Tap the appbar leading popup menu button
       await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
       await tester.pumpAndSettle();
@@ -10978,10 +10989,11 @@ void main() {
       await tester.tap(find.byKey(const Key('appBarMenuOpenSettingsDialog')));
       await tester.pumpAndSettle();
 
-      // Enter non existing dir path
+      // Enter existing dir path
+
       // Find the TextField using the Key
       final Finder textFieldFinder =
-          find.byKey(Key('playlistRootpathTextField'));
+          find.byKey(const Key('playlistRootpathTextField'));
 
       // Retrieve the TextField widget
       final TextField textField = tester.widget<TextField>(textFieldFinder);
@@ -11001,29 +11013,12 @@ void main() {
       await tester.tap(find.byKey(const Key('saveButton')));
       await tester.pumpAndSettle();
 
-      // Ensure the warning dialog is shown
-      expect(find.byType(WarningMessageDisplayWidget), findsOneWidget);
 
-      // Check the value of the warning dialog title
-      Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'WARNING');
-
-      // Check the value of the warning dialog message
-      Text warningDialogMessage =
-          tester.widget(find.byKey(const Key('warningDialogMessage')));
-      expect(warningDialogMessage.data,
-          "The defined path \"$kApplicationPathWindowsTest${path.separator}new\" does not exist. Please enter a valid playlist root path and retry ...");
-
-      // Close the warning dialog by tapping on the Ok button
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
-
-      // Ensure settings json file has not been modified
+      // Ensure settings json file has been modified
       expect(
-        initialSettingsJsonStr,
         File("$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName")
             .readAsStringSync(),
+        "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.orderedTitleLst\":\"[Youtube_test]\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.playSpeed\":\"1.25\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\Users\\\\Jean-Pierre\\\\Development\\\\Flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\Users\\\\Jean-Pierre\\\\Development\\\\Flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\new\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":false,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}",
       );
 
       // Purge the test playlist directory so that the created test
