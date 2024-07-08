@@ -92,7 +92,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
         Provider.of<AudioPlayerVM>(
           context,
           listen: false,
-        ).updateAndSaveCurrentAudio(forceSave: true);
+        ).updateAndSaveCurrentAudio();
       case AppLifecycleState.inactive:
         // writeToLogFile(
         //     message:
@@ -106,7 +106,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
         Provider.of<AudioPlayerVM>(
           context,
           listen: false,
-        ).updateAndSaveCurrentAudio(forceSave: true);
+        ).updateAndSaveCurrentAudio();
         break;
       default:
         break;

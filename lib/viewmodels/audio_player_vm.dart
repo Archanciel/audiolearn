@@ -103,7 +103,8 @@ class AudioPlayerVM extends ChangeNotifier {
   @override
   Future<void> dispose() async {
     if (_audioPlayerPlugin != null) {
-      try { // necessary to avoid the error which causes integration test to fail
+      try {
+        // necessary to avoid the error which causes integration test to fail
         await _audioPlayerPlugin!.dispose();
       } catch (e) {
         // ignore: avoid_print
@@ -142,7 +143,7 @@ class AudioPlayerVM extends ChangeNotifier {
         newAudioPlayVolume; // Increase and clamp to max 1.0
     await _audioPlayerPlugin!.setVolume(newAudioPlayVolume);
 
-    updateAndSaveCurrentAudio(forceSave: true);
+    updateAndSaveCurrentAudio();
 
     notifyListeners();
   }
@@ -158,7 +159,7 @@ class AudioPlayerVM extends ChangeNotifier {
     await _setCurrentAudioAndInitializeAudioPlayer(audio);
 
     audio.enclosingPlaylist!.setCurrentOrPastPlayableAudio(audio);
-    updateAndSaveCurrentAudio(forceSave: true);
+    updateAndSaveCurrentAudio();
     _clearUndoRedoLists();
 
     notifyListeners();
@@ -195,7 +196,7 @@ class AudioPlayerVM extends ChangeNotifier {
       _currentAudio!.isPaused = true;
       // saving the previous current audio state before changing
       // the current audio
-      updateAndSaveCurrentAudio(forceSave: true);
+      updateAndSaveCurrentAudio();
     }
 
     _currentAudio = audio;
@@ -339,7 +340,8 @@ class AudioPlayerVM extends ChangeNotifier {
   /// For this reason, the method is not private !
   Future<void> initializeAudioPlayerPlugin() async {
     if (_audioPlayerPlugin != null) {
-      try { // necessary to avoid the error which causes integration test to fail
+      try {
+        // necessary to avoid the error which causes integration test to fail
         await _audioPlayerPlugin!.dispose();
       } catch (e) {
         // ignore: avoid_print
@@ -381,8 +383,31 @@ class AudioPlayerVM extends ChangeNotifier {
           // passed position value of an AudioPlayer not playing
           // is 0 !
           _currentAudioPosition = position;
-          updateAndSaveCurrentAudio();
+
           notifyListeners();
+
+          // This instruction must be executed before the next if block,
+          // otherwise, if the user opens the audio info dialog while the
+          // audio is playing, the audio position displayed in the audio
+          // info dialog opened on the current audio which does display
+          // the audio position obtained from the audio player view model
+          // will display the correct audio position only every 30 seconds.
+          // This is demonstrated by the audio indo audio state integration
+          // tests.
+          //
+          // The audioPositionSeconds of the current audio will be saved
+          // in its enclosing playlist json file every 30 seconds or when
+          // the audio is paused or when the audio is at end.
+          _currentAudio!.audioPositionSeconds = _currentAudioPosition.inSeconds;
+
+          if (_currentAudioLastSaveDateTime
+              .add(const Duration(seconds: 30))
+              .isAfter(DateTime.now())) {
+            return;
+          }
+
+          // saving the current audio position only every 30 seconds
+          updateAndSaveCurrentAudio();
         }
       });
 
@@ -469,7 +494,8 @@ class AudioPlayerVM extends ChangeNotifier {
     _currentAudioTotalDuration = const Duration();
     _currentAudioPosition = const Duration(seconds: 0);
 
-    try { // necessary to avoid the error which causes integration test to fail
+    try {
+      // necessary to avoid the error which causes integration test to fail
       await _audioPlayerPlugin!.dispose();
     } catch (e) {
       // ignore: avoid_print
@@ -524,7 +550,7 @@ class AudioPlayerVM extends ChangeNotifier {
           true;
       _currentAudio!.isPaused = false;
 
-      updateAndSaveCurrentAudio(forceSave: true);
+      updateAndSaveCurrentAudio();
 
       notifyListeners();
     }
@@ -538,7 +564,7 @@ class AudioPlayerVM extends ChangeNotifier {
       _currentAudio!.audioPausedDateTime = DateTime.now();
     }
 
-    updateAndSaveCurrentAudio(forceSave: true);
+    updateAndSaveCurrentAudio();
     notifyListeners();
   }
 
@@ -604,7 +630,7 @@ class AudioPlayerVM extends ChangeNotifier {
 
     // now, when clicking on position buttons, the playlist.json file
     // is updated
-    updateAndSaveCurrentAudio(forceSave: true);
+    updateAndSaveCurrentAudio();
 
     notifyListeners();
   }
@@ -735,11 +761,11 @@ class AudioPlayerVM extends ChangeNotifier {
 
     // necessary so that the audio position is stored on the
     // audio
+    _currentAudio!.audioPositionSeconds = _currentAudioPosition.inSeconds;
 
-    // Next commented code is performed in updateAndSaveCurrentAudio() method
-    // _currentAudio!.audioPositionSeconds = _currentAudioPosition.inSeconds;
     _currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd = false;
-    updateAndSaveCurrentAudio(forceSave: true);
+
+    updateAndSaveCurrentAudio();
 
     await modifyAudioPlayerPluginPosition(_currentAudioPosition);
 
@@ -755,7 +781,7 @@ class AudioPlayerVM extends ChangeNotifier {
     bool isUndoRedo = false,
   }) async {
     if (_currentAudioPosition == _currentAudioTotalDuration) {
-      updateAndSaveCurrentAudio(forceSave: true);
+      updateAndSaveCurrentAudio();
 
       // situation when the user clicks on >| when the audio
       // position is at audio end. This is the case if the user
@@ -792,7 +818,7 @@ class AudioPlayerVM extends ChangeNotifier {
     // audio
     _currentAudio!.audioPositionSeconds = _currentAudioPosition.inSeconds;
     _currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd = false;
-    updateAndSaveCurrentAudio(forceSave: true);
+    updateAndSaveCurrentAudio();
 
     await modifyAudioPlayerPluginPosition(_currentAudioTotalDuration);
 
@@ -809,15 +835,18 @@ class AudioPlayerVM extends ChangeNotifier {
     bool isUndoRedo = false,
   }) async {
     if (_currentAudioPosition == _currentAudioTotalDuration) {
-      // situation when the user clicks on >| when the audio
+      // Situation when the user clicks on >| when the audio
       // position is at audio end. This is also the case when
       // the user clicks twice on the >| icon.
+      //
+      // Before playing the next audio, the current audio is
+      // saved in its enclosed playlist json file ...
       await playNextAudio();
 
       return;
     }
 
-    // part of method executed when the user click the first time
+    // Part of method executed when the user click the first time
     // on the >| icon button
 
     if (!isUndoRedo) {
@@ -831,9 +860,9 @@ class AudioPlayerVM extends ChangeNotifier {
     }
 
     _currentAudioPosition = _currentAudioTotalDuration;
-    _currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd = false;
 
-    updateAndSaveCurrentAudio(forceSave: true);
+    _setCurrentAudioToEndPosition();
+    updateAndSaveCurrentAudio();
 
     await modifyAudioPlayerPluginPosition(_currentAudioTotalDuration);
 
@@ -845,6 +874,22 @@ class AudioPlayerVM extends ChangeNotifier {
   /// skipToEndAndPlay() is executed after the user clicked
   /// the second time on the >| icon button.
   Future<void> playNextAudio() async {
+    _setCurrentAudioToEndPosition();
+    updateAndSaveCurrentAudio();
+
+    if (await _setNextNotPlayedAudio()) {
+      await playCurrentAudio(
+        // it makes sense that if the next played is partially played,
+        // it is rewinded according to the time elapsed since it was
+        // paused.
+        rewindAudioPositionBasedOnPauseDuration: true,
+      );
+
+      notifyListeners();
+    }
+  }
+
+  void _setCurrentAudioToEndPosition() {
     // since the current audio is no longer playing, the isPaused
     // attribute is set to true
     _currentAudio!.isPaused = true;
@@ -859,53 +904,18 @@ class AudioPlayerVM extends ChangeNotifier {
     // set to false since the audio playing position is set to
     // audio end
     _currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd = false;
-
-    updateAndSaveCurrentAudio(forceSave: true);
-
-    if (await _setNextNotPlayedAudio()) {
-      await playCurrentAudio(
-        // it makes sense that if the next played is partially played,
-        // it is rewinded according to the time elapsed since it was
-        // paused.
-        rewindAudioPositionBasedOnPauseDuration: true,
-      );
-
-      notifyListeners();
-    }
   }
 
   /// When the method is called in case of the audio is at end,
   /// the {forceSave} parameter is set to true in order to save
   /// the current audio position to the end of audio position.
-  void updateAndSaveCurrentAudio({
-    bool forceSave = false,
-  }) {
+  void updateAndSaveCurrentAudio() {
     if (_currentAudio == null) {
       return; // the case if "No audio selected" audio title is displayed
       //         and the app becomes inactive
     }
 
-    // This instruction must be executed before the next if block, otherwise,
-    // the audio info dialog widget opened on the current audio which does
-    // display the audio position obtained from the audio player view model
-    // will display the correct audio position only every 30 seconds. This
-    // is demonstrated by the audio indo audio state integration tests.
-    //
-    // The audioPositionSeconds of the current audio will be saved in its
-    // enclosing playlist json file ...
-    _currentAudio!.audioPositionSeconds = _currentAudioPosition.inSeconds;
-
     DateTime now = DateTime.now();
-
-    if (!forceSave) {
-      // saving the current audio position only every 30 seconds
-
-      if (_currentAudioLastSaveDateTime
-          .add(const Duration(seconds: 30))
-          .isAfter(now)) {
-        return;
-      }
-    }
 
     Playlist? currentAudioPlaylist = _currentAudio!.enclosingPlaylist;
     JsonDataService.saveToFile(
@@ -996,7 +1006,7 @@ class AudioPlayerVM extends ChangeNotifier {
 
     _currentAudio!.audioPlaySpeed = speed;
     await _audioPlayerPlugin!.setPlaybackRate(speed);
-    updateAndSaveCurrentAudio(forceSave: true);
+    updateAndSaveCurrentAudio();
 
     notifyListeners();
   }

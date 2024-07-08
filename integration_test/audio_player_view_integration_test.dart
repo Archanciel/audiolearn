@@ -2342,7 +2342,7 @@ void main() {
           find.text(firstDownloadedAudioTitle);
 
       await tester.tap(firstDownloadedAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(Duration(milliseconds: 200));
 
       // The audio position is 2 seconds before end. Now play
       // the audio and wait 5 seconds so that the next audio
@@ -2439,7 +2439,7 @@ void main() {
           find.text(thirdDownloadedAudioTitle);
 
       await tester.tap(toSelectAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(Duration(milliseconds: 200));
 
       // set the current audio's play position to start
 
