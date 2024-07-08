@@ -3264,8 +3264,9 @@ void main() {
       );
     });
     testWidgets(
-        'Copy audio and then move it to same target playlist: the move is refused with warning. Then 3rd time move to another playlist and click on cancel button',
-        (tester) async {
+        '''Copy audio and then move it to same target playlist: the move is
+           refused with warning. Then 3rd time move to another playlist and
+           click on cancel button''', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -3725,8 +3726,9 @@ void main() {
       );
     });
     testWidgets(
-        'Copy/delete commented audio to target playlist. Copy commented audio to target playlist and then delete it from target playlist. Then move it to same target playlist.',
-        (tester) async {
+        '''Copy/delete commented audio to target playlist. Copy commented
+           audio to target playlist and then delete it from target playlist.
+           Then move it to same target playlist.''', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -3979,8 +3981,10 @@ void main() {
       await tester.tap(popupDisplayAudioInfoMenuItemFinder);
       await tester.pumpAndSettle();
 
-      // Since the copied audio contains comment(s), an action confirm
-      // dialog is opened. Checking the confirm dialog title ...
+      // Since the copied audio contains comment(s), deleting it
+      // causes a confirm action dialog to be displayed.
+
+      // Checking the confirm dialog
 
       Finder confirmActionDialogWidgetFinder =
           find.byType(ConfirmActionDialogWidget);
@@ -4375,11 +4379,8 @@ void main() {
       await tester.tap(popupDisplayAudioInfoMenuItemFinder);
       await tester.pumpAndSettle();
 
-      // Since the copied audio contains comment(s), an action confirm
-      // dialog is opened. Checking the confirm dialog title ...
-
-      // Since the copied audio contains comment(s), an action confirm
-      // dialog is opened. Checking the confirm dialog title ...
+      // Since the copied audio contains comment(s), deleting it
+      // causes a confirm action dialog to be displayed.
 
       Finder confirmActionDialogWidgetFinder =
           find.byType(ConfirmActionDialogWidget);
