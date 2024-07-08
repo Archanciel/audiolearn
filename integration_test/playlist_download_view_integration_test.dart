@@ -685,7 +685,8 @@ void main() {
     /// the url text field will not be emptied after clicking on
     /// the Cancel button of the add playlist dialog.
     testWidgets(
-        'Open the add playlist dialog to add a Youtube playlist and then click on Cancel button',
+        '''Open the add playlist dialog to add a Youtube playlist and then
+           click on Cancel button''',
         (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -1037,7 +1038,8 @@ void main() {
       );
     });
     testWidgets(
-        'Add local playlist with title equal to previously created local playlist',
+        '''Add local playlist with title equal to previously created local
+           playlist''',
         (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -1221,7 +1223,8 @@ void main() {
       );
     });
     testWidgets(
-        'Add local playlist with title equal to previously created Youtube playlist',
+        '''Add local playlist with title equal to previously created Youtube
+           playlist''',
         (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -1367,7 +1370,8 @@ void main() {
       );
     });
     testWidgets(
-        'Open the add playlist dialog to add a local playlist and then click on Cancel button',
+        '''Open the add playlist dialog to add a local playlist and then
+           click on Cancel button''',
         (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -1456,7 +1460,8 @@ void main() {
     /// local playlist, in contrary of what happens after adding
     /// a Youtube playlist.
     testWidgets(
-        'Entered a Youtube playlist URL. Then switch to AudioPlayerView and then back to PlaylistView',
+        '''Entered a Youtube playlist URL. Then switch to AudioPlayerView
+           and then back to PlaylistView''',
         (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -1672,7 +1677,8 @@ void main() {
     });
 
     testWidgets(
-        'Add Youtube and local playlist, download the Youtube playlist and restart the app',
+        '''Add Youtube and local playlist, download the Youtube playlist
+           and restart the app''',
         (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -2758,7 +2764,8 @@ void main() {
   });
   group('Copy or move audio test', () {
     testWidgets(
-        'Copy (+ check comment) audio twice. Second copy is refused with warning. Then 3rd time copy and click on cancel button',
+        '''Copy (+ check comment) audio twice. Second copy is refused with
+           warning. Then 3rd time copy and click on cancel button''',
         (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -4150,8 +4157,9 @@ void main() {
       );
     });
     testWidgets(
-        'Copy/delete commented audio to target playlist. Copy commented audio to target playlist and then delete it from target playlist. Then copy it again to same target playlist.',
-        (tester) async {
+        '''Copy/delete commented audio to target playlist. Copy commented
+           audio to target playlist and then delete it from target playlist.
+           Then copy it again to same target playlist.''', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -4534,8 +4542,8 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets(
-        'Move (+ check comment) audio from Youtube to local playlist, then move it back, then remove it, then remove it back',
+    testWidgets('''Move (+ check comment) audio from Youtube to local playlist,
+           then move it back, then remove it, then remove it back''',
         (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -4819,7 +4827,8 @@ void main() {
       );
     });
     testWidgets(
-        'Move audio from Youtube to local playlist unchecking keep audio in source playlist checkbox. This displays a warning',
+        '''Move audio from Youtube to local playlist unchecking keep audio
+           in source playlist checkbox. This displays a warning''',
         (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -4967,8 +4976,10 @@ void main() {
   });
   group('Delete copied or moved audio test', () {
     testWidgets(
-        'Delete audio first copied from Youtube to local playlist, then copied from local to other Youtube playlist. The audio is then deleted from the other Youtube playlist with no warning being displayed.',
-        (tester) async {
+        '''Delete audio first copied from Youtube to local playlist, then
+           copied from local to other Youtube playlist. The audio is then
+           deleted from the other Youtube playlist with no warning being
+           displayed.''', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -5374,9 +5385,10 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets(
-        'Delete audio first moved from Youtube to local playlist, then moved from local to other Youtube playlist. The audio is then deleted from the other Youtube playlist with no warning being displayed.',
-        (tester) async {
+    testWidgets('''Delete audio first moved from Youtube to local playlist, then
+           moved from local to other Youtube playlist. The audio is then
+           deleted from the other Youtube playlist with no warning being
+           displayed.''', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -5756,7 +5768,8 @@ void main() {
     });
   });
   group(
-      'Executing update playable audio list after manually deleting audio files test',
+      '''Executing update playable audio list after manually deleting audio
+         files test''',
       () {
     testWidgets('Manually delete all audios in Youtube playlist directory.',
         (tester) async {
@@ -6527,11 +6540,13 @@ void main() {
     });
   });
   group(
-      'Executing update playlist JSON files after manually adding or deleting playlist directory and deleting audio files in other playlists test',
+      '''Executing update playlist JSON files after manually adding or
+         deleting playlist directory and deleting audio files in other
+         playlists test''',
       () {
     testWidgets(
-        'Manually add Youtube playlist directory and manually delete audio files in other playlist.',
-        (tester) async {
+        '''Manually add Youtube playlist directory and manually delete audio
+           files in other playlist.''', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -6908,9 +6923,8 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets(
-        'Manually delete Youtube playlist directory after adding it manually.',
-        (tester) async {
+    testWidgets('''Manually delete Youtube playlist directory after adding it
+           manually.''', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -7040,8 +7054,8 @@ void main() {
       );
     });
     testWidgets(
-        'Manually delete Youtube playlist directory with playlist expanded list closed after adding it manually.',
-        (tester) async {
+        '''Manually delete Youtube playlist directory with playlist expanded
+           list closed after adding it manually.''', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -7191,7 +7205,9 @@ void main() {
       );
     });
     testWidgets(
-        'With Playlist list displayed, execute update playlist json file after deleting all files in app audio dir and verify audio menu state. Do same after re-adding app audio dir files.',
+        '''With Playlist list displayed, execute update playlist json file
+           after deleting all files in app audio dir and verify audio menu
+           state. Do same after re-adding app audio dir files.''',
         (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -7339,7 +7355,9 @@ void main() {
       );
     });
     testWidgets(
-        'With Playlist list not displayed, execute update playlist json file after deleting all files in app audio dir and verify audio menu state. Do same after re-adding app audio dir files.',
+        '''With Playlist list not displayed, execute update playlist json
+           file after deleting all files in app audio dir and verify audio
+           menu state. Do same after re-adding app audio dir files.''',
         (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -7493,8 +7511,10 @@ void main() {
       );
     });
     testWidgets(
-        'With Playlist list displayed and selected playlist empty, execute update playlist json file after deleting all files in app audio dir and verify audio menu state. Do same after re-adding app audio dir files.',
-        (tester) async {
+        '''With Playlist list displayed and selected playlist empty, execute
+           update playlist json file after deleting all files in app audio
+           dir and verify audio menu state. Do same after re-adding app audio
+           dir files.''', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -7640,9 +7660,10 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets(
-        'With Playlist list not displayed and selected playlist empty, execute update playlist json file after deleting all files in app audio dir and verify audio menu state. Do same after re-adding app audio dir files.',
-        (tester) async {
+    testWidgets('''With Playlist list not displayed and selected playlist empty,
+           execute update playlist json file after deleting all files in
+           app audio dir and verify audio menu state. Do same after re-adding
+           app audio dir files.''', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -7797,8 +7818,8 @@ void main() {
   });
   group('Delete unique audio test', () {
     testWidgets(
-        'Delete unique audio mp3 only and then switch to AudioPlayerView screen.',
-        (tester) async {
+        '''Delete unique audio mp3 only and then switch to AudioPlayerView
+           screen.''', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -7958,9 +7979,8 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets(
-        'Delete unique audio from playlist as well and then switch to AudioPlayerView screen.',
-        (tester) async {
+    testWidgets('''Delete unique audio from playlist as well and then switch to
+           AudioPlayerView screen.''', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -8184,9 +8204,8 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets(
-        'Verifying execution of "Delete audio from playlist as well" playlist menu item',
-        (tester) async {
+    testWidgets('''Verifying execution of "Delete audio from playlist as well"
+           playlist menu item''', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -9132,9 +9151,8 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets(
-        'Delete non selected Youtube playlist while another Youtube playlist is selected',
-        (tester) async {
+    testWidgets('''Delete non selected Youtube playlist while another Youtube
+           playlist is selected''', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -9305,7 +9323,8 @@ void main() {
       );
     });
     testWidgets(
-        'Delete non selected Youtube playlist while a local playlist is selected',
+        '''Delete non selected Youtube playlist while a local playlist is
+           selected''',
         (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -10496,7 +10515,9 @@ void main() {
   });
   group('Sort/filter test', () {
     testWidgets(
-        'Menu Clear sort/filter parameters history execution verifying that the confirm dialog is displayed in the playlist download  view.',
+        '''Menu Clear sort/filter parameters history execution verifying
+           that the confirm dialog is displayed in the playlist download
+           view.''',
         (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -10582,7 +10603,9 @@ void main() {
       );
     });
     testWidgets(
-        'Sort filter audio dialog button clear sort/filter parameters history typing verifying that bthe warning is displayed in the play audio view.',
+        '''Sort filter audio dialog button clear sort/filter parameters
+           history typing verifying that bthe warning is displayed in the
+           play audio view.''',
         (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -10938,7 +10961,8 @@ void main() {
       );
     });
     testWidgets(
-        'Enter an existing playlist root dir in which a smartphone playlist dir exist and test that those smartphone audios are usable.',
+        '''Enter an existing playlist root dir in which a smartphone playlist
+           dir exist and test that those smartphone audios are usable.''',
         (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -11308,7 +11332,8 @@ void main() {
       );
     });
     testWidgets(
-        'Existing new name. The new file name is the name of an existing file in the same directory',
+        '''Existing new name. The new file name is the name of an existing
+           file in the same directory''',
         (WidgetTester tester) async {
       const String youtubePlaylistTitle =
           'audio_player_view_2_shorts_test'; // Youtube playlist

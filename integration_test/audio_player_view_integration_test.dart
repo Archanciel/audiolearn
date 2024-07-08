@@ -31,7 +31,8 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group(
-      'Play/pause/start/end tests, clicking on audio title to open AudioPlayerView.',
+      '''Play/pause/start/end tests, clicking on audio title to open
+         AudioPlayerView.''',
       () {
     testWidgets('Check play/pause button conversion only.', (
       WidgetTester tester,
@@ -82,7 +83,8 @@ void main() {
       );
     });
     testWidgets(
-        'Play audio during 5 seconds and then pause it. Then click on |<, and then on |> button',
+        '''Play audio during 5 seconds and then pause it. Then click on |<,
+           and then on |> button''',
         (
       WidgetTester tester,
     ) async {
@@ -237,7 +239,9 @@ void main() {
       );
     });
     testWidgets(
-        'Click on play button to finish playing the audio downloaded before the last downloaded audio and start playing the not listened last downloaded audio.',
+        '''Click on play button to finish playing the audio downloaded before
+           the last downloaded audio and start playing the not listened last
+           downloaded audio.''',
         (
       WidgetTester tester,
     ) async {
@@ -319,7 +323,9 @@ void main() {
       );
     });
     testWidgets(
-        'Click on play button to finish playing the audio downloaded before the last downloaded audio and start playing the partially listened last downloaded audio.',
+        '''Click on play button to finish playing the audio downloaded before
+           the last downloaded audio and start playing the partially listened
+           last downloaded audio.''',
         (
       WidgetTester tester,
     ) async {
@@ -420,7 +426,9 @@ void main() {
       );
     });
     testWidgets(
-        'Click on play button to finish playing the first downloaded audio and start playing the not listened last downloaded audio, ignoring the 2 precendent audios already fully played.',
+        '''Click on play button to finish playing the first downloaded audio
+           and start playing the not listened last downloaded audio, ignoring
+           the 2 precendent audios already fully played.''',
         (
       WidgetTester tester,
     ) async {
@@ -492,7 +500,9 @@ void main() {
       );
     });
     testWidgets(
-        'Click on play button to finish playing the first downloaded audio and start playing the partially listened last downloaded audio, ignoring the 2 precendent audios already fully played.',
+        '''Click on play button to finish playing the first downloaded audio
+           and start playing the partially listened last downloaded audio,
+           ignoring the 2 precendent audios already fully played.''',
         (
       WidgetTester tester,
     ) async {
@@ -617,7 +627,8 @@ void main() {
       );
     });
     testWidgets(
-        'Back to playlist download view and click on pause, then on play again. Check the audio item play/pause icon as well as their color',
+        '''Back to playlist download view and click on pause, then on play
+           again. Check the audio item play/pause icon as well as their color''',
         (
       WidgetTester tester,
     ) async {
@@ -718,7 +729,8 @@ void main() {
   });
   group('Test play with or without rewind audio position', () {
     testWidgets(
-        'Partially listened audio > 1 h ago, rewind position after clicking on play button.',
+        '''Partially listened audio > 1 h ago, rewind position after clicking
+           on play button.''',
         (
       WidgetTester tester,
     ) async {
@@ -750,7 +762,9 @@ void main() {
       );
     });
     testWidgets(
-        'Partially listened audio > 1 h ago, click on << 10 sec and test that rewinding position after clicking on play button does not happen.',
+        '''Partially listened audio > 1 h ago, click on << 10 sec and test
+           that rewinding position after clicking on play button does not
+           happen.''',
         (
       WidgetTester tester,
     ) async {
@@ -783,7 +797,8 @@ void main() {
       );
     });
     testWidgets(
-        'Partially listened audio > 1 h ago, click on << 1 min and test that rewinding position after clicking on play button does not happen.',
+        '''Partially listened audio > 1 h ago, click on << 1 min and test that
+           rewinding position after clicking on play button does not happen.''',
         (
       WidgetTester tester,
     ) async {
@@ -816,7 +831,9 @@ void main() {
       );
     });
     testWidgets(
-        'Partially listened audio > 1 h ago, click on >> 10 sec and test that rewinding position after clicking on play button does not happen.',
+        '''Partially listened audio > 1 h ago, click on >> 10 sec and test
+           that rewinding position after clicking on play button does not
+           happen.''',
         (
       WidgetTester tester,
     ) async {
@@ -849,7 +866,8 @@ void main() {
       );
     });
     testWidgets(
-        'Partially listened audio > 1 h ago, click on >> 1 min and test that rewinding position after clicking on play button does not happen.',
+        '''Partially listened audio > 1 h ago, click on >> 1 min and test that 
+           rewinding position after clicking on play button does not happen.''',
         (
       WidgetTester tester,
     ) async {
@@ -882,7 +900,8 @@ void main() {
       );
     });
     testWidgets(
-        'Partially listened audio < 1 h && > 2 sec ago, rewind position after clicking on play button.',
+        '''Partially listened audio < 1 h && > 2 sec ago, rewind position
+           after clicking on play button.''',
         (
       WidgetTester tester,
     ) async {
@@ -915,7 +934,8 @@ void main() {
       );
     });
     testWidgets(
-        'Partially listened audio < 2 sec ago, rewind position after clicking on play button.',
+        '''Partially listened audio < 2 sec ago, rewind position after
+           clicking on play button.''',
         (
       WidgetTester tester,
     ) async {
@@ -948,7 +968,8 @@ void main() {
       );
     });
     testWidgets(
-        'Fully listened audio > 1 h ago, rewind position after clicking on play button.',
+        '''Fully listened audio > 1 h ago, rewind position after clicking on
+           play button.''',
         (
       WidgetTester tester,
     ) async {
@@ -980,7 +1001,8 @@ void main() {
       );
     });
     testWidgets(
-        'Fully listened audio < 1 h && > 2 sec ago, rewind position after clicking on play button.',
+        '''Fully listened audio < 1 h && > 2 sec ago, rewind position after
+           clicking on play button.''',
         (
       WidgetTester tester,
     ) async {
@@ -1013,7 +1035,8 @@ void main() {
       );
     });
     testWidgets(
-        'Fully listened audio < 2 sec ago, rewind position after clicking on play button.',
+        '''Fully listened audio < 2 sec ago, rewind position after clicking
+           on play button.''',
         (
       WidgetTester tester,
     ) async {
@@ -1046,7 +1069,8 @@ void main() {
       );
     });
     testWidgets(
-        'Fully listened audio with audioPausedDateTime == null, rewind position after clicking on play button.',
+        '''Fully listened audio with audioPausedDateTime == null, rewind
+           position after clicking on play button.''',
         (
       WidgetTester tester,
     ) async {
@@ -1078,7 +1102,8 @@ void main() {
       );
     });
     testWidgets(
-        'Not listened audio with audioPausedDateTime == null, rewind position after clicking on play button.',
+        '''Not listened audio with audioPausedDateTime == null, rewind
+           position after clicking on play button.''',
         (
       WidgetTester tester,
     ) async {
@@ -1113,7 +1138,9 @@ void main() {
 
   group('audio info audio state verification', () {
     testWidgets(
-        'After starting to play the audio, go back to playlist download view in order to verify audio info and audio play/pause icon type and state.',
+        '''After starting to play the audio, go back to playlist download
+           view in order to verify audio info and audio play/pause icon type
+           and state.''',
         (
       WidgetTester tester,
     ) async {
@@ -1196,7 +1223,9 @@ void main() {
       );
     });
     testWidgets(
-        'After starting to play the audio, click to end icon and go back to playlist download view in order to verify audio info and audio play/pause icon type and state.',
+        '''After starting to play the audio, click to end icon and go back
+           to playlist download view in order to verify audio info and audio
+           play/pause icon type and state.''',
         (
       WidgetTester tester,
     ) async {
@@ -1274,7 +1303,9 @@ void main() {
   });
   group('no audio selected tests', () {
     testWidgets(
-        'Opening AudioPlayerView by clicking on AudioPlayerView icon button with a playlist recently downloaded with no previously selected audio.',
+        '''Opening AudioPlayerView by clicking on AudioPlayerView icon button
+           with a playlist recently downloaded with no previously selected
+           audio.''',
         (WidgetTester tester) async {
       const String audioPlayerSelectedPlaylistTitle =
           'audio_player_view_no_sel_audio_test';
@@ -1400,7 +1431,8 @@ void main() {
       );
     });
     testWidgets(
-        'Opening AudioPlayerView by clicking on AudioPlayerView icon button in situation where no playlist is selected.',
+        '''Opening AudioPlayerView by clicking on AudioPlayerView icon button
+           in situation where no playlist is selected.''',
         (WidgetTester tester) async {
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
@@ -1442,7 +1474,10 @@ void main() {
       );
     });
     testWidgets(
-        'Opening AudioPlayerView by clicking on AudioPlayerView icon button in situation where no playlist is selected. Then select an empty playlist and open AudioPlayerView by clicking on AudioPlayerView icon button.',
+        '''Opening AudioPlayerView by clicking on AudioPlayerView icon button
+           in situation where no playlist is selected. Then select an empty
+           playlist and open AudioPlayerView by clicking on AudioPlayerView
+           icon button.''',
         (WidgetTester tester) async {
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
@@ -1484,12 +1519,16 @@ void main() {
       );
     });
     testWidgets(
-        'Opening AudioPlayerView by clicking on AudioPlayerView icon button in situation where no playlist is selected. Then select a playlist with no selected audio and open AudioPlayerView by clicking on AudioPlayerView icon button.',
+        '''Opening AudioPlayerView by clicking on AudioPlayerView icon button
+           in situation where no playlist is selected. Then select a playlist
+           with no selected audio and open AudioPlayerView by clicking on
+           AudioPlayerView icon button.''',
         (WidgetTester tester) async {});
   });
   group('set play speed tests', () {
     testWidgets(
-        'Reduce play speed. Then go back to PlaylistDownloadView and click on another audio title.',
+        '''Reduce play speed. Then go back to PlaylistDownloadView and click
+           on another audio title.''',
         (
       WidgetTester tester,
     ) async {
@@ -1587,7 +1626,8 @@ void main() {
       );
     });
     testWidgets(
-        'Reduce play speed. Then click twice on >| button to start playing the most recently downloaded audio.',
+        '''Reduce play speed. Then click twice on >| button to start playing
+           the most recently downloaded audio.''',
         (
       WidgetTester tester,
     ) async {
@@ -1669,7 +1709,8 @@ void main() {
       );
     });
     testWidgets(
-        'Reduce play speed. Then click on play button to finish playing the first downloaded audio and start playing the next downloaded audio.',
+        '''Reduce play speed. Then click on play button to finish playing the
+           first downloaded audio and start playing the next downloaded audio.''',
         (
       WidgetTester tester,
     ) async {
@@ -1810,7 +1851,9 @@ void main() {
       );
     });
     testWidgets(
-        'Reduce play speed. Then click on play button to finish playing the first downloaded audio and start playing the last downloaded audio, ignoring the 2 precendent audios already fully played.',
+        '''Reduce play speed. Then click on play button to finish playing the
+           first downloaded audio and start playing the last downloaded audio,
+           ignoring the 2 precendent audios already fully played.''',
         (
       WidgetTester tester,
     ) async {
@@ -1895,7 +1938,8 @@ void main() {
       );
     });
     testWidgets(
-        'Reduce play speed. Then open the DisplaySelectableAudioListDialogWidget and select the most recently downloaded audio.',
+        '''Reduce play speed. Then open the DisplaySelectableAudioListDialogWidget
+           and select the most recently downloaded audio.''',
         (
       WidgetTester tester,
     ) async {
@@ -1981,10 +2025,13 @@ void main() {
     });
   });
   group(
-      'From first downloaded audio, skip to next not fully played audio ignoring 5 already fully listened audios tests. Verify also the audio item play icon color in playlist download view.',
+      '''From first downloaded audio, skip to next not fully played audio
+         ignoring 5 already fully listened audios tests. Verify also the audio
+         item play icon color in playlist download view.''',
       () {
     testWidgets(
-        'Next fully unread audio also the last downloaded audio of the playlist.',
+        '''Next fully unread audio also the last downloaded audio of the
+           playlist.''',
         (WidgetTester tester) async {
       const String audioPlayerSelectedPlaylistTitle =
           'S8 audio'; // Youtube playlist
@@ -2085,7 +2132,8 @@ void main() {
       );
     });
     testWidgets(
-        'Next partially played audio also the last downloaded audio of the playlist.',
+        '''Next partially played audio also the last downloaded audio of the
+           playlist.''',
         (WidgetTester tester) async {
       const String audioPlayerSelectedPlaylistTitle =
           'S8 audio'; // Youtube playlist
@@ -2160,7 +2208,8 @@ void main() {
       );
     });
     testWidgets(
-        'User modifies the position of next fully unread audio which is also the last downloaded audio of the playlist.',
+        '''User modifies the position of next fully unread audio which is
+           also the last downloaded audio of the playlist.''',
         (WidgetTester tester) async {
       const String audioPlayerSelectedPlaylistTitle =
           'S8 audio'; // Youtube playlist
@@ -2261,7 +2310,9 @@ void main() {
       );
     });
     testWidgets(
-        'User sets to 0 the position of third downloaded audio of the playlist. Verify also the audio item play icon color in playlist download view.',
+        '''User sets to 0 the position of third downloaded audio of the
+           playlist. Verify also the audio item play icon color in playlist
+           download view.''',
         (WidgetTester tester) async {
       const String audioPlayerSelectedPlaylistTitle =
           'S8 audio'; // Youtube playlist
@@ -2403,7 +2454,8 @@ void main() {
       );
     });
     testWidgets(
-        'User sets to 2 minutes the position of third downloaded audio of the playlist.',
+        '''User sets to 2 minutes the position of third downloaded audio of
+           the playlist.''',
         (WidgetTester tester) async {
       const String audioPlayerSelectedPlaylistTitle =
           'S8 audio'; // Youtube playlist
@@ -2696,7 +2748,8 @@ void main() {
       );
     });
     testWidgets(
-        'Select first downloaded audio, then verify that displayed audio list is moved down in order to display this audio title',
+        '''Select first downloaded audio, then verify that displayed audio
+           list is moved down in order to display this audio title''',
         (WidgetTester tester) async {
       const String audioPlayerSelectedPlaylistTitle =
           'S8 audio'; // Youtube playlist
@@ -3605,7 +3658,8 @@ void main() {
   });
   group('Sort/filter audios tests', () {
     testWidgets(
-        'Playing last sorted audio with filter: "Fully listened" unchecked and "Partially listened" checked.',
+        '''Playing last sorted audio with filter: "Fully listened" unchecked
+           and "Partially listened" checked.''',
         (WidgetTester tester) async {
       const String audioPlayerSelectedPlaylistTitle =
           'S8 audio'; // Youtube playlist
@@ -3675,7 +3729,8 @@ void main() {
     });
 
     testWidgets(
-        'Menu Clear sort/filter parameters history execution verifying that the confirm dialog is displayed in the audio player view.',
+        '''Menu Clear sort/filter parameters history execution verifying that
+           the confirm dialog is displayed in the audio player view.''',
         (WidgetTester tester) async {
       const String audioPlayerSelectedPlaylistTitle =
           'S8 audio'; // Youtube playlist
@@ -3831,7 +3886,8 @@ void main() {
   group('Audio comment tests', () {
     group('Playing audio comment to verify that no rewind is performed', () {
       testWidgets(
-          'Playing from CommentAddEditDialogWidget a comment on audio paused more than 1 hour ago.',
+          '''Playing from CommentAddEditDialogWidget a comment on audio paused
+             more than 1 hour ago.''',
           (WidgetTester tester) async {
         const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
         const String alreadyCommentedAudioTitle =
@@ -3915,7 +3971,8 @@ void main() {
         );
       });
       testWidgets(
-          'Playing from CommentListAddDialogWidget a comment on audio paused more than 1 hour ago.',
+          '''Playing from CommentListAddDialogWidget a comment on audio
+             paused more than 1 hour ago.''',
           (WidgetTester tester) async {
         const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
         const String alreadyCommentedAudioTitle =
@@ -4006,7 +4063,8 @@ void main() {
         );
       });
       testWidgets(
-          'Playing from PlaylistCommentDialogWidget a comment on audio paused more than 1 hour ago.',
+          '''Playing from PlaylistCommentDialogWidget a comment on audio
+             paused more than 1 hour ago.''',
           (WidgetTester tester) async {
         const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
 
@@ -4114,7 +4172,9 @@ void main() {
       });
     });
     testWidgets(
-        'Manage comments in initially empty playlist. Copy audio to the empty playlist, add a comment, then edit it, define start, then end, comment position and finally delete it.',
+        '''Manage comments in initially empty playlist. Copy audio to the
+           empty playlist, add a comment, then edit it, define start, then
+           end, comment position and finally delete it.''',
         (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
       const String emptyPlaylistTitle = 'Empty'; // Local empty playlist
@@ -5664,7 +5724,8 @@ void main() {
       );
     });
     testWidgets(
-        'After comment add/edit dialog is opened, tapping outside the comment related dialogs',
+        '''After comment add/edit dialog is opened, tapping outside the comment
+           related dialogs''',
         (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
       const String alreadyCommentedAudioTitle =
@@ -5729,7 +5790,8 @@ void main() {
       );
     });
     testWidgets(
-        'Delete all comments and check that the comment icon button is enabled but no longer highlighted',
+        '''Delete all comments and check that the comment icon button is
+           enabled but no longer highlighted''',
         (WidgetTester tester) async {
       const String localPlaylistTitle =
           'local_delete_comment'; // Youtube playlist
@@ -5845,7 +5907,8 @@ void main() {
       );
     });
     testWidgets(
-        'MUST BE LAST TEST ! Using set value to target dialog to set comment positions',
+        '''MUST BE LAST TEST ! Using set value to target dialog to set comment
+           positions''',
         (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
       const String alreadyCommentedAudioTitle =
