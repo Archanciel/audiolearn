@@ -57,7 +57,7 @@ void main() {
           find.text(lastDownloadedAudioTitle);
 
       await tester.tap(lastDownloadedAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(Duration(milliseconds: 200));
 
       await tester.tap(find.byIcon(Icons.play_arrow));
       await tester.pumpAndSettle();
