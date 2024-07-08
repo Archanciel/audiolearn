@@ -16,7 +16,7 @@ import '../viewmodels/playlist_list_vm.dart';
 import '../viewmodels/warning_message_vm.dart';
 import '../viewmodels/theme_provider_vm.dart';
 import 'screen_mixin.dart';
-import 'widgets/action_confirm_dialog_widget.dart';
+import 'widgets/confirm_action_dialog_widget.dart';
 import 'widgets/audios_playable_list_dialog_widget.dart';
 import 'widgets/playlist_sort_filter_options_save_to_dialog_widget.dart';
 import 'widgets/audio_set_speed_dialog_widget.dart';

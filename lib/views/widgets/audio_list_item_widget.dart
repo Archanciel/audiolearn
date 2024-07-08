@@ -16,7 +16,7 @@ import '../../constants.dart';
 import '../../viewmodels/comment_vm.dart';
 import '../../viewmodels/warning_message_vm.dart';
 import '../screen_mixin.dart';
-import 'action_confirm_dialog_widget.dart';
+import 'confirm_action_dialog_widget.dart';
 import 'audio_info_dialog_widget.dart';
 import 'comment_list_add_dialog_widget.dart';
 import 'playlist_one_selectable_dialog_widget.dart';

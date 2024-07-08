@@ -18,7 +18,7 @@ import 'screen_mixin.dart';
 import 'widgets/playlist_add_dialog_widget.dart';
 import 'widgets/application_snackbar.dart';
 import 'widgets/audio_list_item_widget.dart';
-import 'widgets/action_confirm_dialog_widget.dart';
+import 'widgets/confirm_action_dialog_widget.dart';
 import 'widgets/playlist_list_item_widget.dart';
 import 'widgets/playlist_one_selectable_dialog_widget.dart';
 import 'widgets/audio_sort_filter_dialog_widget.dart';

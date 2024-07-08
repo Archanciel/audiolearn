@@ -12,7 +12,7 @@ import '../../viewmodels/audio_player_vm.dart';
 import '../../viewmodels/comment_vm.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 import '../screen_mixin.dart';
-import 'action_confirm_dialog_widget.dart';
+import 'confirm_action_dialog_widget.dart';
 import 'comment_add_edit_dialog_widget.dart';
 
 /// This widget displays a dialog with the list of positionned

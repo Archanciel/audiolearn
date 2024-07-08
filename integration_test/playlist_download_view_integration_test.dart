@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:audiolearn/viewmodels/comment_vm.dart';
-import 'package:audiolearn/views/widgets/action_confirm_dialog_widget.dart';
+import 'package:audiolearn/views/widgets/confirm_action_dialog_widget.dart';
 import 'package:audiolearn/views/widgets/audio_modification_dialog_widget.dart';
 import 'package:audiolearn/views/widgets/comment_add_edit_dialog_widget.dart';
 import 'package:audiolearn/views/widgets/comment_list_add_dialog_widget.dart';
@@ -10991,7 +10991,8 @@ void main() {
       // download view
       final Finder lisTilesFinder = find.byType(ListTile);
 
-      // Verify the playlist and the audio of the selected playlist titles
+      // Verify the playlist titles and the audio titles of the selected
+      // playlist
 
       // S8 playlist title
       Finder playlistTitleTextFinder = find.descendant(

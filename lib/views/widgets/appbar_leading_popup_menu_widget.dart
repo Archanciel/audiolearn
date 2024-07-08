@@ -14,7 +14,7 @@ import '../../services/settings_data_service.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 import '../../viewmodels/audio_player_vm.dart';
 import '../screen_mixin.dart';
-import 'action_confirm_dialog_widget.dart';
+import 'confirm_action_dialog_widget.dart';
 import 'application_settings_dialog_widget.dart';
 import 'audio_info_dialog_widget.dart';
 import 'audio_modification_dialog_widget.dart';
