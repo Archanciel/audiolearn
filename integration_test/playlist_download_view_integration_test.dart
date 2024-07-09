@@ -4746,7 +4746,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Now verifying the moved audio info dialog related content
-      // in the target playlist
+      // in the target local playlist
 
       Finder targetAudioListTileWidgetFinder = await verifyAudioInfoDialog(
         tester: tester,
@@ -4776,12 +4776,6 @@ void main() {
         expectedIconColor: Colors.white,
         expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
       );
-
-
-
-
-
-
 
       // *** Then move back the moved audio from the target local playlist
       // to the Youtube source playlist.
@@ -4870,7 +4864,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Now verifying the moved audio info dialog related content
-      // in the source playlist
+      // in the target youtube playlist
 
       targetAudioListTileWidgetFinder = await verifyAudioInfoDialog(
         tester: tester,
@@ -4885,6 +4879,109 @@ void main() {
 
 
 
+
+
+
+      // *** Then move again the moved audio from the Youtube playlist
+      // to the target local playlist.
+
+      // Return to playlist download view
+      await tester.tap(playlistDownloadViewNavButton);
+      await tester.pumpAndSettle();
+
+      // Now we want to tap the popup menu of the Audio ListTile
+      // "audio learn test short video one"
+
+      // First, find the Audio sublist ListTile Text widget
+      sourceAudioListTileTextWidgetFinder =
+          find.text(movedAudioTitle);
+
+      // Then obtain the Audio ListTile widget enclosing the Text widget by
+      // finding its ancestor
+      sourceAudioListTileWidgetFinder = find.ancestor(
+        of: sourceAudioListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the leading menu icon button of the Audio ListTile and tap
+      // on it
+      sourceAudioListTileLeadingMenuIconButton = find.descendant(
+        of: sourceAudioListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(sourceAudioListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the move audio popup menu item and tap on it
+      popupMoveMenuItem =
+          find.byKey(const Key("popup_menu_move_audio_to_playlist"));
+
+      await tester.tap(popupMoveMenuItem);
+      await tester.pumpAndSettle();
+
+      // Find the RadioListTile target playlist to which the audio
+      // will be moved
+
+      radioListTile = find.byWidgetPredicate(
+        (Widget widget) =>
+            widget is RadioListTile &&
+            widget.title is Text &&
+            (widget.title as Text).data == localAudioTargetPlaylistTitle
+      );
+
+      // Tap the target playlist RadioListTile to select it
+      await tester.tap(radioListTile);
+      await tester.pumpAndSettle();
+
+      // Now find the confirm button and tap on it
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pumpAndSettle();
+
+      // Now find the ok button of the displayed confirm warning
+      // dialog and tap on it
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+      await tester.pumpAndSettle();
+
+      // Find the target ListTile Playlist containing the audio moved
+      // from the source playlist
+
+      // First, find the Playlist ListTile Text widget
+       targetPlaylistListTileTextWidgetFinder =
+          find.text(localAudioTargetPlaylistTitle);
+
+      // Then obtain the Playlist ListTile widget enclosing the Text widget
+      // by finding its ancestor
+       targetPlaylistListTileWidgetFinder = find.ancestor(
+        of: targetPlaylistListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the Checkbox widget located in the Playlist ListTile
+      // and tap on it to select the playlist
+        targetPlaylistListTileCheckboxWidgetFinder = find.descendant(
+        of: targetPlaylistListTileWidgetFinder,
+        matching: find.byType(Checkbox),
+      );
+
+      // Tap the ListTile Playlist checkbox to select it
+      await tester.tap(targetPlaylistListTileCheckboxWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // Now verifying the moved audio info dialog related content
+      // in the target youtube playlist
+
+      targetAudioListTileWidgetFinder = await verifyAudioInfoDialog(
+        tester: tester,
+        sourcePlaylistTitle: youtubeAudioSourcePlaylistTitle,
+        targetPlaylistTitle: localAudioTargetPlaylistTitle,
+        movedAudioTitle: movedAudioTitle,
+        movedFromPlaylistTitle: youtubeAudioSourcePlaylistTitle,
+        movedToPlaylistTitle: localAudioTargetPlaylistTitle,
+        copiedFromPlaylistTitle: '',
+        copiedToPlaylistTitle: '',
+      );
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
