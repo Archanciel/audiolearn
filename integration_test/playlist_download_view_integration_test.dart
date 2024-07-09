@@ -261,7 +261,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(firstPlaylistListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the delete playlist popup menu item and tap on it
       final Finder popupDeletePlaylistMenuItem =
@@ -686,8 +686,7 @@ void main() {
     /// the Cancel button of the add playlist dialog.
     testWidgets(
         '''Open the add playlist dialog to add a Youtube playlist and then
-           click on Cancel button''',
-        (tester) async {
+           click on Cancel button''', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -987,7 +986,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(firstPlaylistListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the delete playlist popup menu item and tap on it
       final Finder popupDeletePlaylistMenuItem =
@@ -1039,8 +1038,7 @@ void main() {
     });
     testWidgets(
         '''Add local playlist with title equal to previously created local
-           playlist''',
-        (tester) async {
+           playlist''', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -1224,8 +1222,7 @@ void main() {
     });
     testWidgets(
         '''Add local playlist with title equal to previously created Youtube
-           playlist''',
-        (tester) async {
+           playlist''', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -1369,10 +1366,8 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets(
-        '''Open the add playlist dialog to add a local playlist and then
-           click on Cancel button''',
-        (tester) async {
+    testWidgets('''Open the add playlist dialog to add a local playlist and then
+           click on Cancel button''', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -1461,8 +1456,7 @@ void main() {
     /// a Youtube playlist.
     testWidgets(
         '''Entered a Youtube playlist URL. Then switch to AudioPlayerView
-           and then back to PlaylistView''',
-        (tester) async {
+           and then back to PlaylistView''', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -1676,10 +1670,8 @@ void main() {
       );
     });
 
-    testWidgets(
-        '''Add Youtube and local playlist, download the Youtube playlist
-           and restart the app''',
-        (tester) async {
+    testWidgets('''Add Youtube and local playlist, download the Youtube playlist
+           and restart the app''', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -2410,7 +2402,7 @@ void main() {
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
-      // Find the ListTile Playlist containing the audio to move to
+      // Find the ListTile Playlist containing the audio to move from
       // the source Youtube playlist
 
       // First, find the Playlist ListTile Text widget
@@ -2458,7 +2450,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(sourceAudioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the copy video URL popup menu item and tap on it
       final Finder popupCopyVideoUrlMenuItem =
@@ -2765,8 +2757,9 @@ void main() {
   group('Copy or move audio test', () {
     testWidgets(
         '''Copy (+ check comment) audio twice. Second copy is refused with
-           warning. Then 3rd time copy and click on cancel button''',
-        (tester) async {
+           warning since the audio exist now in the target playlist. Then
+           3rd time copy to another target playlist and click on cancel
+           button''', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -2855,7 +2848,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(sourceAudioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the copy audio popup menu item and tap on it
       Finder popupCopyMenuItem =
@@ -3010,7 +3003,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(targetAudioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the popup menu item and tap on it
       final Finder popupDisplayAudioInfoMenuItemFinder =
@@ -3124,7 +3117,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(sourceAudioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the copy audio popup menu item and tap on it
       popupCopyMenuItem =
@@ -3200,7 +3193,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(sourceAudioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the copy audio popup menu item and tap on it
       popupCopyMenuItem =
@@ -3272,8 +3265,9 @@ void main() {
     });
     testWidgets(
         '''Copy audio and then move it to same target playlist: the move is
-           refused with warning. Then 3rd time move to another playlist and
-           click on cancel button''', (tester) async {
+           refused with warning since the copied audio now exists in the
+           target playlist. Then 3rd time move to another playlist and click
+           on cancel button''', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -3362,7 +3356,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(sourceAudioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the copy audio popup menu item and tap on it
       Finder popupCopyMenuItem =
@@ -3493,7 +3487,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(targetAudioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the popup menu item and tap on it
       final Finder popupDisplayAudioInfoMenuItemFinder =
@@ -3585,7 +3579,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(sourceAudioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the copy audio popup menu item and tap on it
       popupCopyMenuItem =
@@ -3661,7 +3655,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(sourceAudioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the copy audio popup menu item and tap on it
       popupCopyMenuItem =
@@ -3735,7 +3729,9 @@ void main() {
     testWidgets(
         '''Copy/delete commented audio to target playlist. Copy commented
            audio to target playlist and then delete it from target playlist.
-           Then move it to same target playlist.''', (tester) async {
+           A warning is displayed informing that the audio has comment(s)
+           and that those comments will be deleted. Confirm deletion and
+           then move the audio to the same target playlist.''', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -3751,7 +3747,7 @@ void main() {
 
       const String youtubeAudioSourcePlaylistTitle =
           'audio_learn_test_download_2_small_videos';
-      const String localAudioTargetPlaylistTitleTwo = 'local_audio_playlist_2';
+      const String localAudioTargetPlaylistTitle = 'local_audio_playlist_2';
       const String copiedAudioTitle = 'audio learn test short video one';
 
       final SettingsDataService settingsDataService = SettingsDataService(
@@ -3823,7 +3819,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(sourceAudioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the copy audio popup menu item and tap on it
       Finder popupCopyMenuItem =
@@ -3845,7 +3841,7 @@ void main() {
         (Widget widget) =>
             widget is RadioListTile &&
             widget.title is Text &&
-            (widget.title as Text).data == localAudioTargetPlaylistTitleTwo,
+            (widget.title as Text).data == localAudioTargetPlaylistTitle,
       );
 
       // Tap the target playlist RadioListTile to select it
@@ -3913,7 +3909,7 @@ void main() {
       // contains the audio file copied from the source playlist
       List<String> targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         path:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitleTwo',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitle',
         extension: 'mp3',
       );
 
@@ -3924,19 +3920,23 @@ void main() {
       // the comment file of the audio copied from the source playlist
       List<String> targetPlaylistJsonLst = DirUtil.listFileNamesInDir(
         path:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitleTwo${path.separator}$kCommentDirName',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitle${path.separator}$kCommentDirName',
         extension: 'json',
       );
 
       expect(targetPlaylistJsonLst,
           ["230628-033811-audio learn test short video one 23-06-10.json"]);
 
+      // Now, we want to delete the audio copied to the target playlist.
+      // Since this audio has comments, its deletion will cause a confirm
+      // action dialog to be displayed.
+
       // Find the target ListTile Playlist containing the audio copied
       // from the source playlist
 
       // First, find the Playlist ListTile Text widget
       final Finder targetPlaylistListTileTextWidgetFinder =
-          find.text(localAudioTargetPlaylistTitleTwo);
+          find.text(localAudioTargetPlaylistTitle);
 
       // Then obtain the Playlist ListTile widget enclosing the Text widget
       // by finding its ancestor
@@ -3979,7 +3979,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(targetAudioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the popup menu delete audio item and tap on it
       final Finder popupDisplayAudioInfoMenuItemFinder =
@@ -4016,7 +4016,8 @@ void main() {
         "L'audio contient 1 commentaire(s) qui seront également supprimés. Confirmer la suppression ?",
       );
 
-      // Close the confirm dialog by tapping on the Confirm button
+      // Confirm the deletion of the audio and close the confirm
+      // dialog by tapping on the Confirm button
       await tester.tap(find.byKey(const Key('confirmButtonKey')));
       await tester.pumpAndSettle();
 
@@ -4024,7 +4025,7 @@ void main() {
       // contains the audio file copied from the source playlist
       targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         path:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitleTwo',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitle',
         extension: 'mp3',
       );
 
@@ -4035,14 +4036,16 @@ void main() {
       // source playlist
       targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         path:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitleTwo${path.separator}$kCommentDirName',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitle${path.separator}$kCommentDirName',
         extension: 'json',
       );
 
       expect(targetPlaylistMp3Lst, []);
 
       // Then, we move the audio already copied and deleted to the
-      // same target playlist to ensure it is moved with no warning
+      // same target playlist to ensure that even it has comment(s),
+      // it is moved with no warning since the comments won't be
+      // distroyd.
 
       // Find the ListTile Playlist containing the audio to move to
       // the target local playlist
@@ -4091,9 +4094,9 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(sourceAudioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
-      // Now find the copy audio popup menu item and tap on it
+      // Now find the move audio popup menu item and tap on it
       popupCopyMenuItem =
           find.byKey(const Key("popup_menu_move_audio_to_playlist"));
 
@@ -4113,7 +4116,7 @@ void main() {
         (Widget widget) =>
             widget is RadioListTile &&
             widget.title is Text &&
-            (widget.title as Text).data == localAudioTargetPlaylistTitleTwo,
+            (widget.title as Text).data == localAudioTargetPlaylistTitle,
       );
 
       // Tap the target playlist RadioListTile to select it
@@ -4142,8 +4145,8 @@ void main() {
       await tester.tap(find.byKey(const Key('warningDialogOkButton')));
       await tester.pumpAndSettle();
 
-      // Now verifying the selected playlist TextField still
-      // contains the title of the source playlist
+      // Now verifying the selected playlist TextField still contains
+      // the title of the source playlist
 
       selectedPlaylistTitleText = tester
           .widget<Text>(find.byKey(const Key('selectedPlaylistTitleText')));
@@ -4159,7 +4162,10 @@ void main() {
     testWidgets(
         '''Copy/delete commented audio to target playlist. Copy commented
            audio to target playlist and then delete it from target playlist.
-           Then copy it again to same target playlist.''', (tester) async {
+           A warning is displayed informing that the audio has comment(s)
+           and that those comments will be deleted. Confirm deletion and
+           then copy again the audio to the same target playlist.''',
+        (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -4175,7 +4181,7 @@ void main() {
 
       const String youtubeAudioSourcePlaylistTitle =
           'audio_learn_test_download_2_small_videos';
-      const String localAudioTargetPlaylistTitleTwo = 'local_audio_playlist_2';
+      const String localAudioTargetPlaylistTitle = 'local_audio_playlist_2';
       const String copiedAudioTitle = 'audio learn test short video one';
 
       final SettingsDataService settingsDataService = SettingsDataService(
@@ -4247,7 +4253,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(sourceAudioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the copy audio popup menu item and tap on it
       Finder popupCopyMenuItem =
@@ -4269,7 +4275,7 @@ void main() {
         (Widget widget) =>
             widget is RadioListTile &&
             widget.title is Text &&
-            (widget.title as Text).data == localAudioTargetPlaylistTitleTwo,
+            (widget.title as Text).data == localAudioTargetPlaylistTitle,
       );
 
       // Tap the target playlist RadioListTile to select it
@@ -4323,7 +4329,7 @@ void main() {
       // contains the audio file copied from the source playlist
       List<String> targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         path:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitleTwo',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitle',
         extension: 'mp3',
       );
 
@@ -4335,7 +4341,7 @@ void main() {
 
       // First, find the Playlist ListTile Text widget
       final Finder targetPlaylistListTileTextWidgetFinder =
-          find.text(localAudioTargetPlaylistTitleTwo);
+          find.text(localAudioTargetPlaylistTitle);
 
       // Then obtain the Playlist ListTile widget enclosing the Text widget
       // by finding its ancestor
@@ -4378,7 +4384,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(targetAudioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the popup menu delete audio item and tap on it
       final Finder popupDisplayAudioInfoMenuItemFinder =
@@ -4413,7 +4419,8 @@ void main() {
         "L'audio contient 1 commentaire(s) qui seront également supprimés. Confirmer la suppression ?",
       );
 
-      // Close the confirm dialog by tapping on the Confirm button
+      // Confirm the deletion of the audio and close the confirm
+      // dialog by tapping on the Confirm button
       await tester.tap(find.byKey(const Key('confirmButtonKey')));
       await tester.pumpAndSettle();
 
@@ -4421,7 +4428,7 @@ void main() {
       // contains the audio file copied from the source playlist
       targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         path:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitleTwo',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitle',
         extension: 'mp3',
       );
 
@@ -4477,7 +4484,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(sourceAudioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the copy audio popup menu item and tap on it
       popupCopyMenuItem =
@@ -4499,7 +4506,7 @@ void main() {
         (Widget widget) =>
             widget is RadioListTile &&
             widget.title is Text &&
-            (widget.title as Text).data == localAudioTargetPlaylistTitleTwo,
+            (widget.title as Text).data == localAudioTargetPlaylistTitle,
       );
 
       // Tap the target playlist RadioListTile to select it
@@ -4542,8 +4549,13 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets('''Move (+ check comment) audio from Youtube to local playlist,
-           then move it back, then remove it, then remove it back''',
+    testWidgets(
+        '''Move (+ check comment) audio from the Youtube source playlist to
+           the local target playlist, then move it back from the target to the
+           source playlist, then move it again from source to target, then move
+           it again back from the target to the source playlist. The purpose
+           of this test is to check that the 'Moved from playlist' and 'Moved
+           to playlist' audio info fields are correctly updated.''',
         (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -4560,7 +4572,7 @@ void main() {
 
       const String youtubeAudioSourcePlaylistTitle =
           'audio_learn_test_download_2_small_videos';
-      const String localAudioPlaylistTitle = 'local_audio_playlist_2';
+      const String localAudioTargetPlaylistTitle = 'local_audio_playlist_2';
       const String movedAudioTitle = 'audio learn test short video one';
 
       final SettingsDataService settingsDataService = SettingsDataService(
@@ -4583,7 +4595,10 @@ void main() {
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
-      // Find the ListTile Playlist containing the audio to move to
+      // *** First move audio from Youtube source playlist to local
+      // target playlist.
+
+      // Find the ListTile Playlist containing the audio to move from
       // the source Youtube playlist
 
       // First, find the Playlist ListTile Text widget
@@ -4612,29 +4627,29 @@ void main() {
       // "audio learn test short video one"
 
       // First, find the Audio sublist ListTile Text widget
-      final Finder sourceAudioListTileTextWidgetFinder =
+       Finder sourceAudioListTileTextWidgetFinder =
           find.text(movedAudioTitle);
 
       // Then obtain the Audio ListTile widget enclosing the Text widget by
       // finding its ancestor
-      final Finder sourceAudioListTileWidgetFinder = find.ancestor(
+       Finder sourceAudioListTileWidgetFinder = find.ancestor(
         of: sourceAudioListTileTextWidgetFinder,
         matching: find.byType(ListTile),
       );
 
       // Now find the leading menu icon button of the Audio ListTile and tap
       // on it
-      final Finder sourceAudioListTileLeadingMenuIconButton = find.descendant(
+       Finder sourceAudioListTileLeadingMenuIconButton = find.descendant(
         of: sourceAudioListTileWidgetFinder,
         matching: find.byIcon(Icons.menu),
       );
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(sourceAudioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the move audio popup menu item and tap on it
-      final Finder popupMoveMenuItem =
+       Finder popupMoveMenuItem =
           find.byKey(const Key("popup_menu_move_audio_to_playlist"));
 
       await tester.tap(popupMoveMenuItem);
@@ -4649,11 +4664,11 @@ void main() {
       // Find the RadioListTile target playlist to which the audio
       // will be moved
 
-      final Finder radioListTile = find.byWidgetPredicate(
+       Finder radioListTile = find.byWidgetPredicate(
         (Widget widget) =>
             widget is RadioListTile &&
             widget.title is Text &&
-            (widget.title as Text).data == localAudioPlaylistTitle,
+            (widget.title as Text).data == localAudioTargetPlaylistTitle,
       );
 
       // Tap the target playlist RadioListTile to select it
@@ -4685,16 +4700,6 @@ void main() {
 
       expect(selectedPlaylistTitleText.data, youtubeAudioSourcePlaylistTitle);
 
-      // TODO: Verify that the audio was moved to the target playlist
-      // and verify the source and target playlist json file content.
-      //
-      // Then move back and remove and remove back ...
-      //
-      // Then test moving moved audio to a different playlist
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-
       // Testing that the audio was moved from the source to the target
       // playlist directory
 
@@ -4706,7 +4711,7 @@ void main() {
 
       List<String> targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         path:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioPlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitle',
         extension: 'mp3',
       );
 
@@ -4719,19 +4724,19 @@ void main() {
       // from the source playlist
 
       // First, find the Playlist ListTile Text widget
-      final Finder targetPlaylistListTileTextWidgetFinder =
-          find.text(localAudioPlaylistTitle);
+       Finder targetPlaylistListTileTextWidgetFinder =
+          find.text(localAudioTargetPlaylistTitle);
 
       // Then obtain the Playlist ListTile widget enclosing the Text widget
       // by finding its ancestor
-      final Finder targetPlaylistListTileWidgetFinder = find.ancestor(
+       Finder targetPlaylistListTileWidgetFinder = find.ancestor(
         of: targetPlaylistListTileTextWidgetFinder,
         matching: find.byType(ListTile),
       );
 
       // Now find the Checkbox widget located in the Playlist ListTile
       // and tap on it to select the playlist
-      final Finder targetPlaylistListTileCheckboxWidgetFinder = find.descendant(
+       Finder targetPlaylistListTileCheckboxWidgetFinder = find.descendant(
         of: targetPlaylistListTileWidgetFinder,
         matching: find.byType(Checkbox),
       );
@@ -4740,67 +4745,19 @@ void main() {
       await tester.tap(targetPlaylistListTileCheckboxWidgetFinder);
       await tester.pumpAndSettle();
 
-      // Now we want to tap the popup menu of the Audio ListTile
-      // "audio learn test short video one"
+      // Now verifying the moved audio info dialog related content
+      // in the target playlist
 
-      // First, find the Audio sublist ListTile Text widget
-      final Finder targetAudioListTileTextWidgetFinder =
-          find.text(movedAudioTitle);
-
-      // Then obtain the Audio ListTile widget enclosing the Text widget by
-      // finding its ancestor
-      final Finder targetAudioListTileWidgetFinder = find.ancestor(
-        of: targetAudioListTileTextWidgetFinder,
-        matching: find.byType(ListTile),
+      Finder targetAudioListTileWidgetFinder = await verifyAudioInfoDialog(
+        tester: tester,
+        sourcePlaylistTitle: youtubeAudioSourcePlaylistTitle,
+        targetPlaylistTitle: localAudioTargetPlaylistTitle,
+        movedAudioTitle: movedAudioTitle,
+        movedFromPlaylistTitle: youtubeAudioSourcePlaylistTitle,
+        movedToPlaylistTitle: '',
+        copiedFromPlaylistTitle: '',
+        copiedToPlaylistTitle: '',
       );
-
-      // Now find the leading menu icon button of the Audio ListTile and tap
-      // on it
-      final Finder targetAudioListTileLeadingMenuIconButton = find.descendant(
-        of: targetAudioListTileWidgetFinder,
-        matching: find.byIcon(Icons.menu),
-      );
-
-      // Tap the leading menu icon button to open the popup menu
-      await tester.tap(targetAudioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
-
-      // Now find the popup menu item and tap on it
-      final Finder popupDisplayAudioInfoMenuItemFinder =
-          find.byKey(const Key("popup_menu_display_audio_info"));
-
-      await tester.tap(popupDisplayAudioInfoMenuItemFinder);
-      await tester.pumpAndSettle();
-
-      // Now verifying the display audio info audio moved dialog
-      // elements
-
-      // Verify the enclosing playlist title of the moved audio
-
-      final Text enclosingPlaylistTitleTextWidget = tester
-          .widget<Text>(find.byKey(const Key('enclosingPlaylistTitleKey')));
-
-      expect(enclosingPlaylistTitleTextWidget.data, localAudioPlaylistTitle);
-
-      // Verify the moved from playlist title of the moved audio
-
-      final Text movedFromPlaylistTitleTextWidget = tester
-          .widget<Text>(find.byKey(const Key('movedFromPlaylistTitleKey')));
-
-      expect(movedFromPlaylistTitleTextWidget.data,
-          youtubeAudioSourcePlaylistTitle);
-
-      // Verify the moved to playlist title of the moved audio
-
-      final Text movedToPlaylistTitleTextWidget =
-          tester.widget<Text>(find.byKey(const Key('movedToPlaylistTitleKey')));
-
-      expect(movedToPlaylistTitleTextWidget.data, '');
-
-      // Now find the ok button of the audio info dialog
-      // and tap on it
-      await tester.tap(find.byKey(const Key('audioInfoOkButtonKey')));
-      await tester.pumpAndSettle();
 
       // Now verifying that the target audio can access to its copied
       // comments
@@ -4808,7 +4765,7 @@ void main() {
       // First, tap on the source audio ListTile to open the
       // audio player view
       await tester.tap(targetAudioListTileWidgetFinder);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // Verify that the comment icon button is highlighted. This indiquates
       // that a comment exist for the audio
@@ -4819,6 +4776,115 @@ void main() {
         expectedIconColor: Colors.white,
         expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
       );
+
+
+
+
+
+
+
+      // *** Then move back the moved audio from the target local playlist
+      // to the Youtube source playlist.
+
+      // Return to playlist download view
+      Finder playlistDownloadViewNavButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(playlistDownloadViewNavButton);
+      await tester.pumpAndSettle();
+
+      // First, find the Playlist ListTile Text widget
+      targetPlaylistListTileTextWidgetFinder =
+          find.text(localAudioTargetPlaylistTitle);
+
+      // Then obtain the Playlist ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      targetPlaylistListTileWidgetFinder = find.ancestor(
+        of: targetPlaylistListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the Checkbox widget located in the Playlist ListTile
+      // and tap on it to select the playlist
+      targetPlaylistListTileCheckboxWidgetFinder = find.descendant(
+        of: targetPlaylistListTileWidgetFinder,
+        matching: find.byType(Checkbox),
+      );
+
+      // Now we want to tap the popup menu of the Audio ListTile
+      // "audio learn test short video one"
+
+      // First, find the Audio sublist ListTile Text widget
+      sourceAudioListTileTextWidgetFinder =
+          find.text(movedAudioTitle);
+
+      // Then obtain the Audio ListTile widget enclosing the Text widget by
+      // finding its ancestor
+      sourceAudioListTileWidgetFinder = find.ancestor(
+        of: sourceAudioListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the leading menu icon button of the Audio ListTile and tap
+      // on it
+      sourceAudioListTileLeadingMenuIconButton = find.descendant(
+        of: sourceAudioListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(sourceAudioListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the move audio popup menu item and tap on it
+      popupMoveMenuItem =
+          find.byKey(const Key("popup_menu_move_audio_to_playlist"));
+
+      await tester.tap(popupMoveMenuItem);
+      await tester.pumpAndSettle();
+
+      // Find the RadioListTile target playlist to which the audio
+      // will be moved
+
+      radioListTile = find.byWidgetPredicate(
+        (Widget widget) =>
+            widget is RadioListTile &&
+            widget.title is Text &&
+            (widget.title as Text).data == youtubeAudioSourcePlaylistTitle,
+      );
+
+      // Tap the target playlist RadioListTile to select it
+      await tester.tap(radioListTile);
+      await tester.pumpAndSettle();
+
+      // Now find the confirm button and tap on it
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pumpAndSettle();
+
+      // Now find the ok button of the displayed confirm warning
+      // dialog and tap on it
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+      await tester.pumpAndSettle();
+
+      // Tap the ListTile Playlist checkbox to select it
+      await tester.tap(sourcePlaylistListTileCheckboxWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // Now verifying the moved audio info dialog related content
+      // in the source playlist
+
+      targetAudioListTileWidgetFinder = await verifyAudioInfoDialog(
+        tester: tester,
+        sourcePlaylistTitle: localAudioTargetPlaylistTitle,
+        targetPlaylistTitle: youtubeAudioSourcePlaylistTitle,
+        movedAudioTitle: movedAudioTitle,
+        movedFromPlaylistTitle: localAudioTargetPlaylistTitle,
+        movedToPlaylistTitle: youtubeAudioSourcePlaylistTitle,
+        copiedFromPlaylistTitle: '',
+        copiedToPlaylistTitle: '',
+      );
+
+
+
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -4868,7 +4934,7 @@ void main() {
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
-      // Find the ListTile Playlist containing the audio to move to
+      // Find the ListTile Playlist containing the audio to move from
       // the source Youtube playlist
 
       // First, find the Playlist ListTile Text widget
@@ -4916,7 +4982,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(sourceAudioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the move audio popup menu item and tap on it
       final Finder popupMoveMenuItem =
@@ -4975,11 +5041,12 @@ void main() {
     });
   });
   group('Delete copied or moved audio test', () {
-    testWidgets(
-        '''Delete audio first copied from Youtube to local playlist, then
-           copied from local to other Youtube playlist. The audio is then
-           deleted from the other Youtube playlist with no warning being
-           displayed.''', (tester) async {
+    testWidgets('''Delete an audio which was first copied from Youtube to local
+           playlist and then was copied from the local playlist to an other
+           Youtube playlist. This audio is then 'deleted from playlist as well'
+           from the other Youtube playlist with no warning being displayed
+           since, as a copied audio, it is not referenced in the Youtube
+           playlist.''', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -5084,7 +5151,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(sourceAudioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the copy audio popup menu item and tap on it
       final Finder popupCopyMenuItem =
@@ -5221,7 +5288,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(localSourceAudioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the copy audio popup menu item and tap on it
       final Finder localSourceAudioPopupCopyMenuItem =
@@ -5355,7 +5422,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(youtubeTargetAudioListTileLeadingMenuIconButtonFinder);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the popup menu item and tap on it
       final Finder popupDisplayAudioInfoMenuItemFinder =
@@ -5385,10 +5452,12 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets('''Delete audio first moved from Youtube to local playlist, then
-           moved from local to other Youtube playlist. The audio is then
-           deleted from the other Youtube playlist with no warning being
-           displayed.''', (tester) async {
+    testWidgets('''Delete an audio which was first moved from Youtube to local
+           playlist and then was moved from the local playlist to an other
+           Youtube playlist. This audio is then 'deleted from playlist as well'
+           from the other Youtube playlist with no warning being displayed
+           since, as a copied audio, it is not referenced in the Youtube
+           playlist.''', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -5493,7 +5562,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(sourceAudioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the move audio popup menu item and tap on it
       final Finder popupMoveMenuItem =
@@ -5617,7 +5686,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(localSourceAudioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the move audio popup menu item and tap on it
       final Finder localSourceAudioPopupMoveMenuItem =
@@ -5736,9 +5805,10 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(youtubeTargetAudioListTileLeadingMenuIconButtonFinder);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
-      // Now find the popup menu item and tap on it
+      // Now find the 'Delete audio from playlist as well' popup menu item
+      // and tap on it
       final Finder popupDisplayAudioInfoMenuItemFinder =
           find.byKey(const Key("popup_menu_delete_audio_from_playlist_aswell"));
 
@@ -5767,10 +5837,8 @@ void main() {
       );
     });
   });
-  group(
-      '''Executing update playable audio list after manually deleting audio
-         files test''',
-      () {
+  group('''Executing update playable audio list after manually deleting audio
+         files test''', () {
     testWidgets('Manually delete all audios in Youtube playlist directory.',
         (tester) async {
       // Purge the test playlist directory if it exists so that the
@@ -5876,7 +5944,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(youtubePlaylistListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the update playlist popup menu item and tap on it
       Finder popupUpdatePlayableAudioListPlaylistMenuItem =
@@ -5952,7 +6020,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(youtubePlaylistListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the update playlist popup menu item and tap on it
       popupUpdatePlayableAudioListPlaylistMenuItem =
@@ -6078,7 +6146,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(localPlaylistListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the update playlist popup menu item and tap on it
       Finder popupUpdatePlayableAudioListPlaylistMenuItem =
@@ -6154,7 +6222,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(localPlaylistListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the update playlist popup menu item and tap on it
       popupUpdatePlayableAudioListPlaylistMenuItem =
@@ -6282,7 +6350,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(youtubePlaylistListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the update playlist popup menu item and tap on it
       final Finder popupUpdatePlayableAudioListPlaylistMenuItem =
@@ -6463,7 +6531,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(localPlaylistListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the update playlist popup menu item and tap on it
       final Finder popupUpdatePlayableAudioListPlaylistMenuItem =
@@ -6539,11 +6607,9 @@ void main() {
       );
     });
   });
-  group(
-      '''Executing update playlist JSON files after manually adding or
+  group('''Executing update playlist JSON files after manually adding or
          deleting playlist directory and deleting audio files in other
-         playlists test''',
-      () {
+         playlists test''', () {
     testWidgets(
         '''Manually add Youtube playlist directory and manually delete audio
            files in other playlist.''', (tester) async {
@@ -7908,7 +7974,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(uniqueAudioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the delete audio popup menu item and tap on it
       final Finder popupCopyMenuItem =
@@ -8069,7 +8135,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(uniqueAudioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the delete audio from playlist as well popup menu
       // item and tap on it
@@ -8291,7 +8357,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(sourceAudioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the popup menu item and tap on it
       final Finder popupDeleteAudioFromPlaylistAsWellMenuItem =
@@ -8549,7 +8615,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(firstPlaylistListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the delete playlist popup menu item and tap on it
       final Finder popupDeletePlaylistMenuItem =
@@ -8722,7 +8788,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(firstPlaylistListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the delete playlist popup menu item and tap on it
       final Finder popupDeletePlaylistMenuItem =
@@ -8887,7 +8953,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(firstPlaylistListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the delete playlist popup menu item and tap on it
       final Finder popupDeletePlaylistMenuItem =
@@ -9059,7 +9125,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(firstPlaylistListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the delete playlist popup menu item and tap on it
       final Finder popupDeletePlaylistMenuItem =
@@ -9244,7 +9310,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(firstPlaylistListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the delete playlist popup menu item and tap on it
       final Finder popupDeletePlaylistMenuItem =
@@ -9324,8 +9390,7 @@ void main() {
     });
     testWidgets(
         '''Delete non selected Youtube playlist while a local playlist is
-           selected''',
-        (tester) async {
+           selected''', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -9416,7 +9481,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(firstPlaylistListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the delete playlist popup menu item and tap on it
       final Finder popupDeletePlaylistMenuItem =
@@ -10030,7 +10095,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(youtubePlaylistToDeleteListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the delete playlist popup menu item and tap on it
       final Finder popupDeletePlaylistMenuItem =
@@ -10169,7 +10234,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(localPlaylistToDeleteListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the delete playlist popup menu item and tap on it
       final Finder popupDeletePlaylistMenuItem =
@@ -10321,7 +10386,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(uniqueAudioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the delete audio popup menu item and tap on it
       final Finder popupCopyMenuItem =
@@ -10460,7 +10525,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(uniqueAudioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the delete audio popup menu item and tap on it
       final Finder popupCopyMenuItem =
@@ -10514,11 +10579,9 @@ void main() {
     });
   });
   group('Sort/filter test', () {
-    testWidgets(
-        '''Menu Clear sort/filter parameters history execution verifying
+    testWidgets('''Menu Clear sort/filter parameters history execution verifying
            that the confirm dialog is displayed in the playlist download
-           view.''',
-        (WidgetTester tester) async {
+           view.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -10602,11 +10665,9 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets(
-        '''Sort filter audio dialog button clear sort/filter parameters
+    testWidgets('''Sort filter audio dialog button clear sort/filter parameters
            history typing verifying that bthe warning is displayed in the
-           play audio view.''',
-        (WidgetTester tester) async {
+           play audio view.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -11232,7 +11293,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(audioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the rename audio file popup menu item and tap on it
       final Finder popupCopyMenuItem =
@@ -11294,7 +11355,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(audioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the popup menu item and tap on it
       final Finder popupDisplayAudioInfoMenuItemFinder =
@@ -11333,8 +11394,7 @@ void main() {
     });
     testWidgets(
         '''Existing new name. The new file name is the name of an existing
-           file in the same directory''',
-        (WidgetTester tester) async {
+           file in the same directory''', (WidgetTester tester) async {
       const String youtubePlaylistTitle =
           'audio_player_view_2_shorts_test'; // Youtube playlist
       const String audioTitle = "morning _ cinematic video";
@@ -11371,7 +11431,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(audioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the rename audio file popup menu item and tap on it
       final Finder popupCopyMenuItem =
@@ -11446,7 +11506,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(audioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the popup menu item and tap on it
       final Finder popupDisplayAudioInfoMenuItemFinder =
@@ -11507,7 +11567,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(audioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the modify audio title popup menu item and tap on
       // it
@@ -11582,7 +11642,7 @@ void main() {
         matching: find.byIcon(Icons.menu),
       );
       await tester.tap(audioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(); // Wait for popup menu to appear
+      await tester.pumpAndSettle();
 
       // Now find the popup menu item and tap on it
       final Finder popupDisplayAudioInfoMenuItemFinder =
@@ -11617,6 +11677,96 @@ void main() {
       );
     });
   });
+}
+
+Future<Finder> verifyAudioInfoDialog({
+  required WidgetTester tester,
+  required String sourcePlaylistTitle,
+  required String targetPlaylistTitle,
+  required String movedAudioTitle,
+  required String movedFromPlaylistTitle,
+  required String movedToPlaylistTitle,
+  required String copiedFromPlaylistTitle,
+  required String copiedToPlaylistTitle,
+}) async {
+  // Now we want to tap the popup menu of the Audio ListTile
+  // "audio learn test short video one" in order to display
+  // the audio info dialog
+
+  // First, find the Audio sublist ListTile Text widget
+  final Finder targetAudioListTileTextWidgetFinder = find.text(movedAudioTitle);
+
+  // Then obtain the Audio ListTile widget enclosing the Text widget by
+  // finding its ancestor
+  final Finder targetAudioListTileWidgetFinder = find.ancestor(
+    of: targetAudioListTileTextWidgetFinder,
+    matching: find.byType(ListTile),
+  );
+
+  // Now find the leading menu icon button of the Audio ListTile and tap
+  // on it
+  final Finder targetAudioListTileLeadingMenuIconButton = find.descendant(
+    of: targetAudioListTileWidgetFinder,
+    matching: find.byIcon(Icons.menu),
+  );
+
+  // Tap the leading menu icon button to open the popup menu
+  await tester.tap(targetAudioListTileLeadingMenuIconButton);
+  await tester.pumpAndSettle();
+
+  // Now find the audio info popup menu item and tap on it
+  final Finder popupDisplayAudioInfoMenuItemFinder =
+      find.byKey(const Key("popup_menu_display_audio_info"));
+
+  await tester.tap(popupDisplayAudioInfoMenuItemFinder);
+  await tester.pumpAndSettle();
+
+  // Now verifying the display audio info audio moved dialog
+  // elements
+
+  // Verify the enclosing playlist title of the moved audio
+
+  final Text enclosingPlaylistTitleTextWidget =
+      tester.widget<Text>(find.byKey(const Key('enclosingPlaylistTitleKey')));
+
+  expect(
+    enclosingPlaylistTitleTextWidget.data,
+    targetPlaylistTitle,
+  );
+
+  // Verify the 'Moved from playlist' title of the moved audio
+
+  final Text movedFromPlaylistTitleTextWidget =
+      tester.widget<Text>(find.byKey(const Key('movedFromPlaylistTitleKey')));
+
+  expect(movedFromPlaylistTitleTextWidget.data, movedFromPlaylistTitle);
+
+  // Verify the 'Moved to playlist title' of the moved audio
+
+  final Text movedToPlaylistTitleTextWidget =
+      tester.widget<Text>(find.byKey(const Key('movedToPlaylistTitleKey')));
+
+  expect(movedToPlaylistTitleTextWidget.data, movedToPlaylistTitle);
+
+  // Verify the 'Copied from playlist' title of the moved audio
+
+  final Text copiedFromPlaylistTitleTextWidget =
+      tester.widget<Text>(find.byKey(const Key('copiedFromPlaylistTitleKey')));
+
+  expect(copiedFromPlaylistTitleTextWidget.data, copiedFromPlaylistTitle);
+
+  // Verify the 'Copied to playlist title' of the moved audio
+
+  final Text copiedToPlaylistTitleTextWidget =
+      tester.widget<Text>(find.byKey(const Key('copiedToPlaylistTitleKey')));
+
+  expect(copiedToPlaylistTitleTextWidget.data, copiedToPlaylistTitle);
+
+  // Now find the ok button of the audio info dialog
+  // and tap on it to close the dialog
+  await tester.tap(find.byKey(const Key('audioInfoOkButtonKey')));
+  await tester.pumpAndSettle();
+  return targetAudioListTileWidgetFinder;
 }
 
 Future<void> checkWarningDialog({
@@ -11712,7 +11862,7 @@ Future<void> checkAudioCommentUsingAudioItemMenu({
 
   // Tap the leading menu icon button to open the popup menu
   await tester.tap(audioListTileLeadingMenuIconButton);
-  await tester.pumpAndSettle(); // Wait for popup menu to appear
+  await tester.pumpAndSettle();
 
   // Now find the audio comments popup menu item and tap on it
   final Finder popupCopyMenuItem =
@@ -12004,7 +12154,7 @@ Future<void> verifyAudioInfoDialogElements({
 
   // Tap the leading menu icon button to open the popup menu
   await tester.tap(targetAudioListTileLeadingMenuIconButton);
-  await tester.pumpAndSettle(); // Wait for popup menu to appear
+  await tester.pumpAndSettle();
 
   // Now find the popup menu item and tap on it
   Finder popupDisplayAudioInfoMenuItemFinder =
