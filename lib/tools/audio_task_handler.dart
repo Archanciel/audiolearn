@@ -1,7 +1,9 @@
 import 'dart:isolate';
+import 'package:path/path.dart' as path;
+import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 
 import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter_foreground_task/flutter_foreground_task.dart';
+import '../constants.dart';
 
 class AudioTaskHandler extends TaskHandler {
   final AudioPlayer _audioPlayer = AudioPlayer();
@@ -24,12 +26,17 @@ class AudioTaskHandler extends TaskHandler {
       // Handle position change
     });
 
-    _audioPlayer.onPlayerComplete.listen((event) {
-      _handleAudioCompletion();
+    _audioPlayer.onPlayerComplete.listen((event) async {
+      await _handleAudioCompletion();
     });
   }
 
-  void _handleAudioCompletion() {
+  Future<void> _handleAudioCompletion() async {
+    String nextAudioPath =
+        '$kApplicationPathWindows${path.separator}S8 audio${path.separator}240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.mp3'; // Replace with your audio file path
+
+    await _audioPlayer.play(DeviceFileSource(nextAudioPath));
+
     // Define completion handling logic
   }
 
