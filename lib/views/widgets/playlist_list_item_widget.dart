@@ -1,4 +1,6 @@
 import 'package:audiolearn/constants.dart';
+import 'package:audiolearn/viewmodels/audio_player_vm.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -56,8 +58,8 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
     final WarningMessageVM warningMessageVM =
         Provider.of<WarningMessageVM>(context, listen: false);
 
-    return Consumer<PlaylistListVM>(
-      builder: (context, expandablePlaylistListVM, child) {
+    return Consumer2<PlaylistListVM, AudioPlayerVM>(
+      builder: (context, expandablePlaylistListVM, audioPlayerVM, child) {
         return ListTile(
           leading: IconButton(
             icon: const Icon(Icons.menu),
@@ -249,11 +251,12 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
           title: Text(playlist.title),
           trailing: Checkbox(
             value: playlist.isSelected,
-            onChanged: (value) {
+            onChanged: (value) async {
               expandablePlaylistListVM.setPlaylistSelection(
                 playlistIndex: index,
                 isPlaylistSelected: value!,
               );
+              await audioPlayerVM.setCurrentAudioFromSelectedPlaylist();
             },
           ),
         );

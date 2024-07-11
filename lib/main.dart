@@ -159,6 +159,8 @@ class MainApp extends StatelessWidget with ScreenMixin {
       playlistListVM: expandablePlaylistListVM,
     );
 
+    globalAudioPlayerVM = audioPlayerVM;
+
     // calling getUpToDateSelectablePlaylists() loads all the
     // playlist json files from the app dir and so enables
     // expandablePlaylistListVM to know which playlists are
