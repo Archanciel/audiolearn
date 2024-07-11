@@ -50,6 +50,17 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
   initState() {
     super.initState();
 
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      PlaylistListVM playlistListVM = Provider.of<PlaylistListVM>(
+        context,
+        listen: false,
+      );
+
+      // When the audio player view is displayed, playlist list is
+      // collapsed
+      playlistListVM.isListExpanded = false;
+    });
+
     // Used in relation of audioplayers
     WidgetsBinding.instance.addObserver(this);
   }
@@ -165,7 +176,9 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
           audioPlayerVM: audioPlayerVMlistenTrue,
           areAudioButtonsEnabled: areAudioButtonsEnabled,
         ),
-        _buildExpandedPlaylistList(),
+        _buildExpandedPlaylistList(
+          playlistListVMListenTrue: playlistListVMlistenTrue,
+        ),
         _buildPlayButton(),
         Column(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -285,7 +298,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
 
   /// Builds the first line of the audio player view. This line contains
   /// only the selected playlist title
-  /// 
+  ///
   /// {playlistListVMlistenTrue} is the PlaylistListVM with listen set to
   /// true. This is necessary to update the selected playlist title when
   /// the user selects another playlist.
@@ -752,7 +765,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
             IconButton(
               key: const Key('audioPlayerViewSkipToStartButton'),
               iconSize: _audioIconSizeMedium,
-              onPressed: () async => await audioPlayerVMlistenTrue.skipToStart(),
+              onPressed: () async =>
+                  await audioPlayerVMlistenTrue.skipToStart(),
               style: ButtonStyle(
                 // Highlight button when pressed
                 padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -1072,35 +1086,34 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     );
   }
 
-  Consumer<PlaylistListVM> _buildExpandedPlaylistList() {
-    return Consumer<PlaylistListVM>(
-      builder: (context, expandablePlaylistListVM, child) {
-        if (expandablePlaylistListVM.isListExpanded) {
-          List<Playlist> upToDateSelectablePlaylists =
-              expandablePlaylistListVM.getUpToDateSelectablePlaylists();
-          return Expanded(
-            child: ListView.builder(
-              key: const Key('expandable_playlist_list'),
-              itemCount: upToDateSelectablePlaylists.length,
-              itemBuilder: (context, index) {
-                Playlist playlist = upToDateSelectablePlaylists[index];
-                return Builder(
-                  builder: (listTileContext) {
-                    return PlaylistListItemWidget(
-                      settingsDataService: widget.settingsDataService,
-                      playlist: playlist,
-                      index: index,
-                    );
-                  },
+  Widget _buildExpandedPlaylistList({
+    required PlaylistListVM playlistListVMListenTrue,
+  }) {
+    if (playlistListVMListenTrue.isListExpanded) {
+      List<Playlist> upToDateSelectablePlaylists =
+          playlistListVMListenTrue.getUpToDateSelectablePlaylists();
+      return Expanded(
+        child: ListView.builder(
+          key: const Key('expandable_playlist_list'),
+          itemCount: upToDateSelectablePlaylists.length,
+          itemBuilder: (context, index) {
+            Playlist playlist = upToDateSelectablePlaylists[index];
+            return Builder(
+              builder: (listTileContext) {
+                return PlaylistListItemWidget(
+                  settingsDataService: widget.settingsDataService,
+                  playlist: playlist,
+                  index: index,
+                  toggleListIfSelected: true,
                 );
               },
-            ),
-          );
-        } else {
-          return const SizedBox.shrink();
-        }
-      },
-    );
+            );
+          },
+        ),
+      );
+    } else {
+      return const SizedBox.shrink();
+    }
   }
 
   Widget _buildUndoRedoButtons() {

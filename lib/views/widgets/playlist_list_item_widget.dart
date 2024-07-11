@@ -37,11 +37,13 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
   final SettingsDataService settingsDataService;
   final Playlist playlist;
   final int index;
+  final bool toggleListIfSelected;
 
   PlaylistListItemWidget({
     required this.settingsDataService,
     required this.playlist,
     required this.index,
+    this.toggleListIfSelected = false,
     super.key,
   });
 
@@ -252,6 +254,9 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
           trailing: Checkbox(
             value: playlist.isSelected,
             onChanged: (value) async {
+              if (toggleListIfSelected) {
+                expandablePlaylistListVM.toggleList();
+              }
               expandablePlaylistListVM.setPlaylistSelection(
                 playlistIndex: index,
                 isPlaylistSelected: value!,

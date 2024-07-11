@@ -36,6 +36,10 @@ import 'warning_message_vm.dart';
 /// manage the playlists.
 class PlaylistListVM extends ChangeNotifier {
   bool _isListExpanded = false;
+  set isListExpanded(bool isListExpanded) {
+    _isListExpanded = isListExpanded;
+    notifyListeners();
+  }
   bool _isButtonDownloadSelPlaylistsEnabled = false;
   bool _isButtonMovePlaylistEnabled = false;
   bool _areButtonsApplicableToAudioEnabled = false;

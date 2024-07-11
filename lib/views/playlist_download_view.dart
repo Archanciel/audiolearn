@@ -66,6 +66,23 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   // }
 
   @override
+  initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      PlaylistListVM playlistListVM = Provider.of<PlaylistListVM>(
+        context,
+        listen: false,
+      );
+
+      // When the download playlist view is displayed, the playlist list
+      // is collapsed or expanded according to the state stored in the
+      // settings file.
+      playlistListVM.isListExpanded = true;
+    });
+  }
+
+  @override
   void dispose() {
     _playlistUrlController.dispose();
     _scrollController.dispose();
@@ -295,6 +312,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 overlayColor: textButtonTapModification, // Tap feedback color
               ),
               onPressed: () {
+                // change in settings file the state of the playlist list
                 playlistListVMlistenFalse.toggleList();
               },
               child: Text(
