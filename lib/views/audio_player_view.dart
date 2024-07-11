@@ -5,6 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../constants.dart';
 import '../models/audio.dart';
+import '../models/playlist.dart';
 import '../services/sort_filter_parameters.dart';
 import '../services/settings_data_service.dart';
 import '../utils/duration_expansion.dart';
@@ -16,6 +17,7 @@ import '../viewmodels/theme_provider_vm.dart';
 import 'screen_mixin.dart';
 import 'widgets/confirm_action_dialog_widget.dart';
 import 'widgets/audios_playable_list_dialog_widget.dart';
+import 'widgets/playlist_list_item_widget.dart';
 import 'widgets/playlist_sort_filter_options_save_to_dialog_widget.dart';
 import 'widgets/audio_set_speed_dialog_widget.dart';
 import 'widgets/audio_sort_filter_dialog_widget.dart';
@@ -23,7 +25,12 @@ import 'widgets/audio_sort_filter_dialog_widget.dart';
 /// Screen enabling the user to play an audio, change the playing
 /// position or go to a previous, next or selected audio.
 class AudioPlayerView extends StatefulWidget {
-  const AudioPlayerView({super.key});
+  final SettingsDataService settingsDataService;
+
+  const AudioPlayerView({
+    super.key,
+    required this.settingsDataService,
+  });
 
   @override
   // ignore: library_private_types_in_public_api
@@ -117,6 +124,11 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
       context,
       listen: false,
     );
+    final ThemeProviderVM themeProviderVMlistenFalse =
+        Provider.of<ThemeProviderVM>(
+      context,
+      listen: false,
+    );
 
     bool areAudioButtonsEnabled = true;
 
@@ -134,48 +146,16 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
         buildWarningMessageVMConsumer(
           context: context,
         ),
-        Row(
-          children: [
-            Text(
-              key: const Key('selectedPlaylistTitleText'),
-              playlistListVMlistenFalse.uniqueSelectedPlaylist?.title ?? '',
-              style: const TextStyle(
-                fontSize: 12,
-              ),
-              maxLines: 1,
-            ),
-          ],
+        _buildFirstLine(
+          playlistListVM: playlistListVMlistenFalse,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            _buildSetAudioVolumeIconButton(
-              context: context,
-              areAudioButtonsEnabled: areAudioButtonsEnabled,
-            ),
-            const SizedBox(
-              width: kRowButtonGroupWidthSeparator,
-            ),
-            _buildSetAudioSpeedTextButton(
-              context: context,
-              areAudioButtonsEnabled: areAudioButtonsEnabled,
-            ),
-            _buildCommentsInkWellButton(
-              context: context,
-              areAudioButtonsEnabled: areAudioButtonsEnabled,
-            ),
-            _buildAudioPopupMenuButton(
-              context: context,
-              playlistListVMlistenFalse: playlistListVMlistenFalse,
-              warningMessageVMlistenFalse: Provider.of<WarningMessageVM>(
-                context,
-                listen: false,
-              ),
-              isAudioPopumMenuEnabled: areAudioButtonsEnabled,
-            ),
-          ],
+        _buildSecondLine(
+          context: context,
+          themeProviderVM: themeProviderVMlistenFalse,
+          playlistListVM: playlistListVMlistenFalse,
+          areAudioButtonsEnabled: areAudioButtonsEnabled,
         ),
-        // const SizedBox(height: 10.0),
+        _buildExpandedPlaylistList(),
         _buildPlayButton(),
         Column(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -202,6 +182,109 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
             : Expanded(
                 child: viewContent,
               )
+      ],
+    );
+  }
+
+  /// Builds the second line of the audio player view. This line contains
+  /// the playlist toggle button, the audio volume buttons, the audio
+  /// speed button, the comments button and the audio popup menu button.
+  Row _buildSecondLine({
+    required BuildContext context,
+    required ThemeProviderVM themeProviderVM,
+    required PlaylistListVM playlistListVM,
+    required bool areAudioButtonsEnabled,
+  }) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            SizedBox(
+              // sets the rounded TextButton size improving the distance
+              // between the button text and its boarder
+              width: kGreaterButtonWidth,
+              height: kNormalButtonHeight,
+              child: Tooltip(
+                message:
+                    AppLocalizations.of(context)!.playlistToggleButtonTooltip,
+                child: TextButton(
+                  key: const Key('playlist_toggle_button'),
+                  style: ButtonStyle(
+                    shape: getButtonRoundedShape(
+                      currentTheme: themeProviderVM.currentTheme,
+                    ),
+                    padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                      const EdgeInsets.symmetric(
+                        horizontal: kSmallButtonInsidePadding,
+                        vertical: 0,
+                      ),
+                    ),
+                    overlayColor:
+                        textButtonTapModification, // Tap feedback color
+                  ),
+                  onPressed: () {
+                    playlistListVM.toggleList();
+                  },
+                  child: Text(
+                    'Playlists',
+                    style: (themeProviderVM.currentTheme == AppTheme.dark)
+                        ? kTextButtonStyleDarkMode
+                        : kTextButtonStyleLightMode,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            _buildSetAudioVolumeIconButton(
+              context: context,
+              areAudioButtonsEnabled: areAudioButtonsEnabled,
+            ),
+            const SizedBox(
+              width: kRowButtonGroupWidthSeparator,
+            ),
+            _buildSetAudioSpeedTextButton(
+              context: context,
+              areAudioButtonsEnabled: areAudioButtonsEnabled,
+            ),
+            _buildCommentsInkWellButton(
+              context: context,
+              areAudioButtonsEnabled: areAudioButtonsEnabled,
+            ),
+            _buildAudioPopupMenuButton(
+              context: context,
+              playlistListVMlistenFalse: playlistListVM,
+              warningMessageVMlistenFalse: Provider.of<WarningMessageVM>(
+                context,
+                listen: false,
+              ),
+              isAudioPopumMenuEnabled: areAudioButtonsEnabled,
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  /// Builds the first line of the audio player view. This line contains
+  /// only the selected playlist title
+  Row _buildFirstLine({
+    required PlaylistListVM playlistListVM,
+  }) {
+    return Row(
+      children: [
+        Text(
+          key: const Key('selectedPlaylistTitleText'),
+          playlistListVM.uniqueSelectedPlaylist?.title ?? '',
+          style: const TextStyle(
+            fontSize: 12,
+          ),
+          maxLines: 1,
+        ),
       ],
     );
   }
@@ -966,6 +1049,37 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
             ),
           ],
         );
+      },
+    );
+  }
+
+  Consumer<PlaylistListVM> _buildExpandedPlaylistList() {
+    return Consumer<PlaylistListVM>(
+      builder: (context, expandablePlaylistListVM, child) {
+        if (expandablePlaylistListVM.isListExpanded) {
+          List<Playlist> upToDateSelectablePlaylists =
+              expandablePlaylistListVM.getUpToDateSelectablePlaylists();
+          return Expanded(
+            child: ListView.builder(
+              key: const Key('expandable_playlist_list'),
+              itemCount: upToDateSelectablePlaylists.length,
+              itemBuilder: (context, index) {
+                Playlist playlist = upToDateSelectablePlaylists[index];
+                return Builder(
+                  builder: (listTileContext) {
+                    return PlaylistListItemWidget(
+                      settingsDataService: widget.settingsDataService,
+                      playlist: playlist,
+                      index: index,
+                    );
+                  },
+                );
+              },
+            ),
+          );
+        } else {
+          return const SizedBox.shrink();
+        }
       },
     );
   }

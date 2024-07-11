@@ -70,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
     AudioLearnAppViewType.audioPlayerView,
     AudioLearnAppViewType.audioExtractorView,
   ];
-  
+
   final List<Key> _screenNavigationIconButtonKeyLst = [
     const Key('playlistDownloadViewIconButton'),
     const Key('audioPlayerViewIconButton'),
@@ -106,7 +106,9 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
         settingsDataService: widget.settingsDataService,
         onPageChangedFunction: changePage,
       ))
-      ..add(const AudioPlayerView())
+      ..add(AudioPlayerView(
+        settingsDataService: widget.settingsDataService,
+      ))
       ..add(const AudioExtractorView());
   }
 
@@ -159,12 +161,11 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
       ),
       resizeToAvoidBottomInset: true,
       body: Column(
-              children: [
-                _buildPageView(_screenWidgetLst[_currentIndex]),
-                _buildBottomScreenIconButtonRow(
-                    audioGlobalPlayerVM, themeProviderVM),
-              ],
-            ),
+        children: [
+          _buildPageView(_screenWidgetLst[_currentIndex]),
+          _buildBottomScreenIconButtonRow(audioGlobalPlayerVM, themeProviderVM),
+        ],
+      ),
     );
   }
 
