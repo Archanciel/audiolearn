@@ -677,35 +677,40 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
   }
 
   Widget _buildPlayButton() {
-    return Consumer<AudioPlayerVM>(
-      builder: (context, globalAudioPlayerVM, child) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(90.0),
-              child: IconButton(
-                iconSize: _audioIconSizeLarge,
-                onPressed: (() async {
-                  globalAudioPlayerVM.isPlaying
-                      ? await globalAudioPlayerVM.pause()
-                      : await globalAudioPlayerVM.playCurrentAudio();
-                }),
-                style: ButtonStyle(
-                  // Highlight button when pressed
-                  padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-                    const EdgeInsets.symmetric(
-                        horizontal: kSmallButtonInsidePadding, vertical: 0),
+    return Consumer2<AudioPlayerVM, PlaylistListVM>(
+      builder: (context, globalAudioPlayerVM, expandablePlaylistListVM, child) {
+        if (!expandablePlaylistListVM.isListExpanded) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(90.0),
+                child: IconButton(
+                  iconSize: _audioIconSizeLarge,
+                  onPressed: (() async {
+                    globalAudioPlayerVM.isPlaying
+                        ? await globalAudioPlayerVM.pause()
+                        : await globalAudioPlayerVM.playCurrentAudio();
+                  }),
+                  style: ButtonStyle(
+                    // Highlight button when pressed
+                    padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                      const EdgeInsets.symmetric(
+                          horizontal: kSmallButtonInsidePadding, vertical: 0),
+                    ),
+                    overlayColor:
+                        iconButtonTapModification, // Tap feedback color
                   ),
-                  overlayColor: iconButtonTapModification, // Tap feedback color
+                  icon: Icon(globalAudioPlayerVM.isPlaying
+                      ? Icons.pause
+                      : Icons.play_arrow),
                 ),
-                icon: Icon(globalAudioPlayerVM.isPlaying
-                    ? Icons.pause
-                    : Icons.play_arrow),
               ),
-            ),
-          ],
-        );
+            ],
+          );
+        } else {
+          return const SizedBox.shrink();
+        }
       },
     );
   }
