@@ -132,7 +132,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
       context,
       listen: true,
     );
-    
+
     final ThemeProviderVM themeProviderVMlistenFalse =
         Provider.of<ThemeProviderVM>(
       context,
@@ -162,6 +162,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
           context: context,
           themeProviderVM: themeProviderVMlistenFalse,
           playlistListVM: playlistListVMlistenFalse,
+          audioPlayerVM: audioPlayerVMlistenTrue,
           areAudioButtonsEnabled: areAudioButtonsEnabled,
         ),
         _buildExpandedPlaylistList(),
@@ -171,6 +172,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
           children: [
             _buildStartEndButtonsWithTitle(
               context: context,
+              audioPlayerVMlistenTrue: audioPlayerVMlistenTrue,
             ),
             _buildAudioSliderWithPositionTexts(),
             _buildPositionButtons(),
@@ -202,6 +204,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     required BuildContext context,
     required ThemeProviderVM themeProviderVM,
     required PlaylistListVM playlistListVM,
+    required AudioPlayerVM audioPlayerVM,
     required bool areAudioButtonsEnabled,
   }) {
     return Row(
@@ -262,6 +265,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
             ),
             _buildCommentsInkWellButton(
               context: context,
+              audioPlayerVMlistenTrue: audioPlayerVM,
               areAudioButtonsEnabled: areAudioButtonsEnabled,
             ),
             _buildAudioPopupMenuButton(
@@ -464,6 +468,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
   /// a colored circle.
   Widget _buildCommentsInkWellButton({
     required BuildContext context,
+    required AudioPlayerVM audioPlayerVMlistenTrue,
     required bool areAudioButtonsEnabled,
   }) {
     CircleAvatar circleAvatar;
@@ -473,20 +478,15 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
       listen: true,
     );
 
-    AudioPlayerVM audioPlayerVM = Provider.of<AudioPlayerVM>(
-      context,
-      listen: true,
-    );
-
     Audio? currentAudio;
 
     if (areAudioButtonsEnabled) {
-      currentAudio = audioPlayerVM.currentAudio;
+      currentAudio = audioPlayerVMlistenTrue.currentAudio;
     }
 
     if (currentAudio != null) {
       if (commentVM
-          .loadAudioComments(audio: audioPlayerVM.currentAudio!)
+          .loadAudioComments(audio: audioPlayerVMlistenTrue.currentAudio!)
           .isEmpty) {
         circleAvatar = formatIconBackAndForGroundColor(
           context: context,
@@ -730,6 +730,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
 
   Widget _buildStartEndButtonsWithTitle({
     required BuildContext context,
+    required AudioPlayerVM audioPlayerVMlistenTrue,
   }) {
     return Consumer<AudioPlayerVM>(
       // The reason why this widget is consumer of the AudioPlayerVM
@@ -738,7 +739,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
       // update the current audio title displayed in the audio player.
       builder: (context, globalAudioPlayerVM, child) {
         String? currentAudioTitleWithDuration =
-            globalAudioPlayerVM.getCurrentAudioTitleWithDuration();
+            audioPlayerVMlistenTrue.getCurrentAudioTitleWithDuration();
 
         // If the current audio title is null, set it to the
         // 'no current audio' translated title
@@ -751,7 +752,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
             IconButton(
               key: const Key('audioPlayerViewSkipToStartButton'),
               iconSize: _audioIconSizeMedium,
-              onPressed: () async => await globalAudioPlayerVM.skipToStart(),
+              onPressed: () async => await audioPlayerVMlistenTrue.skipToStart(),
               style: ButtonStyle(
                 // Highlight button when pressed
                 padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -765,7 +766,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
             Expanded(
               child: GestureDetector(
                 onTap: () {
-                  if (globalAudioPlayerVM
+                  if (audioPlayerVMlistenTrue
                       .getPlayableAudiosApplyingSortFilterParameters(
                         AudioLearnAppViewType.audioPlayerView,
                       )
@@ -796,7 +797,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
             ),
             GestureDetector(
               onLongPress: () {
-                if (globalAudioPlayerVM
+                if (audioPlayerVMlistenTrue
                     .getPlayableAudiosApplyingSortFilterParameters(
                       AudioLearnAppViewType.audioPlayerView,
                     )
@@ -811,7 +812,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                 key: const Key('audioPlayerViewSkipToEndButton'),
                 iconSize: _audioIconSizeMedium,
                 onPressed: () async =>
-                    await globalAudioPlayerVM.skipToEndAndPlay(),
+                    await audioPlayerVMlistenTrue.skipToEndAndPlay(),
                 style: ButtonStyle(
                   // Highlight button when pressed
                   padding: WidgetStateProperty.all<EdgeInsetsGeometry>(

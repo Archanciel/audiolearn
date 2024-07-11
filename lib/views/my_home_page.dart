@@ -239,7 +239,7 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
     if (index == ScreenMixin.AUDIO_PLAYER_VIEW_DRAGGABLE_INDEX) {
       // dragging to the AudioPlayerView screen requires to set
       // the current audio defined on the currently selected playlist.
-      await globalAudioPlayerVM.setCurrentAudioFromSelectedPlaylist();
+      //await globalAudioPlayerVM.setCurrentAudioFromSelectedPlaylist();
     }
 
     setState(() {

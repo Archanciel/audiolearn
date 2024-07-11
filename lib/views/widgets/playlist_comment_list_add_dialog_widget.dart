@@ -51,6 +51,8 @@ class _PlaylistCommentListAddDialogWidgetState
   @override
   Widget build(BuildContext context) {
     ThemeProviderVM themeProviderVM = Provider.of<ThemeProviderVM>(context);
+    AudioPlayerVM audioPlayerVM =
+        Provider.of<AudioPlayerVM>(context, listen: false);
 
     // Retrieve the screen width using MediaQuery
     double maxDropdownWidth =
@@ -124,7 +126,11 @@ class _PlaylistCommentListAddDialogWidgetState
                             padding: const EdgeInsets.only(bottom: 2),
                             child:
                                 _buildCommentTitlePlusIconsAndCommentDatesAndPosition(
-                                    maxDropdownWidth, comment, commentVM),
+                              audioPlayerVM: audioPlayerVM,
+                              commentVM: commentVM,
+                              maxDropdownWidth: maxDropdownWidth,
+                              comment: comment,
+                            ),
                           ),
                           (comment.content.isNotEmpty)
                               ? Padding(
@@ -139,12 +145,12 @@ class _PlaylistCommentListAddDialogWidgetState
                         ],
                       ),
                       onTap: () async {
-                        if (globalAudioPlayerVM.isPlaying &&
+                        if (audioPlayerVM.isPlaying &&
                             _playingComment != comment) {
                           // if the user clicks on a comment while another
                           // comment is playing, the playing comment is paused.
                           // Otherwise, the edited comment keeps playing.
-                          await globalAudioPlayerVM.pause();
+                          await audioPlayerVM.pause();
                         }
 
                         _closeDialogAndOpenCommentAddEditDialog(
@@ -177,11 +183,12 @@ class _PlaylistCommentListAddDialogWidgetState
     );
   }
 
-  Widget _buildCommentTitlePlusIconsAndCommentDatesAndPosition(
-    double maxDropdownWidth,
-    Comment comment,
-    CommentVM commentVM,
-  ) {
+  Widget _buildCommentTitlePlusIconsAndCommentDatesAndPosition({
+    required AudioPlayerVM audioPlayerVM,
+    required CommentVM commentVM,
+    required double maxDropdownWidth,
+    required Comment comment,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
@@ -217,11 +224,12 @@ class _PlaylistCommentListAddDialogWidgetState
                       // paused
                       (_playingComment != null &&
                               _playingComment == comment &&
-                              globalAudioPlayerVM.isPlaying)
-                          ? await globalAudioPlayerVM
+                              audioPlayerVM.isPlaying)
+                          ? await audioPlayerVM
                               .pause() // clicked on currently playing comment pause button
                           : await _playFromCommentPosition(
                               // clicked on other comment play button
+                              audioPlayerVM: audioPlayerVM,
                               comment: comment,
                             );
                     },
@@ -263,7 +271,11 @@ class _PlaylistCommentListAddDialogWidgetState
                     // delete comment icon button
                     key: const Key('deleteCommentIconButton'),
                     onPressed: () async {
-                      await _confirmDeleteComment(commentVM, comment);
+                      await _confirmDeleteComment(
+                        audioPlayerVM: audioPlayerVM,
+                        commentVM: commentVM,
+                        comment: comment,
+                      );
                     },
                     icon: const Icon(
                       Icons.clear,
@@ -357,10 +369,11 @@ class _PlaylistCommentListAddDialogWidgetState
     );
   }
 
-  Future<void> _confirmDeleteComment(
-    CommentVM commentVM,
-    Comment comment,
-  ) async {
+  Future<void> _confirmDeleteComment({
+    required AudioPlayerVM audioPlayerVM,
+    required CommentVM commentVM,
+    required Comment comment,
+  }) async {
     showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -377,17 +390,18 @@ class _PlaylistCommentListAddDialogWidgetState
       },
     );
 
-    if (globalAudioPlayerVM.isPlaying) {
-      await globalAudioPlayerVM.pause();
+    if (audioPlayerVM.isPlaying) {
+      await audioPlayerVM.pause();
     }
   }
 
   Future<void> _playFromCommentPosition({
+    required AudioPlayerVM audioPlayerVM,
     required Comment comment,
   }) async {
     _playingComment = comment;
 
-    if (!globalAudioPlayerVM.isPlaying) {
+    if (!audioPlayerVM.isPlaying) {
       // This fixes a problem when a playing comment was paused and
       // then the user clicked on the play button of an other comment.
       // In such a situation, the user had to click twice or three
@@ -396,18 +410,18 @@ class _PlaylistCommentListAddDialogWidgetState
       // If the other comment was positioned after the previously played
       // comment, then the user had to click only once on the play button
       // of the other comment to play it.
-      await globalAudioPlayerVM.playCurrentAudio(
+      await audioPlayerVM.playCurrentAudio(
         rewindAudioPositionBasedOnPauseDuration: false,
         isCommentPlaying: true,
       );
     }
 
-    await globalAudioPlayerVM.modifyAudioPlayerPluginPosition(
+    await audioPlayerVM.modifyAudioPlayerPluginPosition(
       Duration(
           milliseconds: comment.commentStartPositionInTenthOfSeconds * 100),
     );
 
-    await globalAudioPlayerVM.playCurrentAudio(
+    await audioPlayerVM.playCurrentAudio(
       rewindAudioPositionBasedOnPauseDuration: false,
       isCommentPlaying: true,
     );

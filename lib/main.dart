@@ -155,10 +155,7 @@ class MainApp extends StatelessWidget with ScreenMixin {
       settingsDataService: _settingsDataService,
     );
 
-    // the globalAudioPlayerVM ScreenMixin variable is created
-    // here since it needs expandablePlaylistListVM which is
-    // created above
-    globalAudioPlayerVM = AudioPlayerVM(
+    AudioPlayerVM audioPlayerVM = AudioPlayerVM(
       playlistListVM: expandablePlaylistListVM,
     );
 
@@ -180,9 +177,7 @@ class MainApp extends StatelessWidget with ScreenMixin {
       providers: [
         ChangeNotifierProvider(create: (_) => audioDownloadVM),
         ChangeNotifierProvider(
-          create: (_) {
-            return globalAudioPlayerVM;
-          },
+          create: (_) => audioPlayerVM,
         ),
         ChangeNotifierProvider(
           create: (_) => ThemeProviderVM(
