@@ -250,6 +250,10 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     );
   }
 
+  /// Builds the second line of the playlist download view. This line
+  /// contains the playlists toggle button, the sort filter dropdown
+  /// button, the download selected playlists button, the audio quality
+  /// checkbox and the audio popup menu button.
   Row _buildSecondLine({
     required BuildContext context,
     required ThemeProviderVM themeProviderVM,
@@ -747,8 +751,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   }
 
   /// Builds the first line of the playlist download view. This line
-  /// contains the playlist URL text field, the add playlist button,
-  /// the download single video button and the stop download button.
+  /// contains the playlist URL text field under which is added the
+  /// selected playlist title, the add playlist button, the download
+  /// single video button and the stop download button.
   SizedBox _buildFirstLine({
     required BuildContext context,
     required AudioDownloadVM audioDownloadViewModel,
@@ -1178,6 +1183,10 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     );
   }
 
+  /// Builds the playlist URL text field and the selected playlist
+  /// title text. The playlist URL text field allows the user to
+  /// enter the URL of a Youtube playlist. The selected playlist
+  /// title text displays the title of the selected playlist.
   Expanded _buildPlaylistUrlAndTitle({
     required BuildContext context,
     required PlaylistListVM playlistListVMlistenTrue,
