@@ -124,6 +124,15 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
       context,
       listen: false,
     );
+    PlaylistListVM playlistListVMlistenTrue = Provider.of<PlaylistListVM>(
+      context,
+      listen: true,
+    );
+    AudioPlayerVM audioPlayerVMlistenTrue = Provider.of<AudioPlayerVM>(
+      context,
+      listen: true,
+    );
+    
     final ThemeProviderVM themeProviderVMlistenFalse =
         Provider.of<ThemeProviderVM>(
       context,
@@ -132,11 +141,11 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
 
     bool areAudioButtonsEnabled = true;
 
-    if (globalAudioPlayerVM.currentAudio == null) {
+    if (audioPlayerVMlistenTrue.currentAudio == null) {
       _audioPlaySpeed = 1.0;
       areAudioButtonsEnabled = false;
     } else {
-      _audioPlaySpeed = globalAudioPlayerVM.currentAudio!.audioPlaySpeed;
+      _audioPlaySpeed = audioPlayerVMlistenTrue.currentAudio!.audioPlaySpeed;
     }
 
     Widget viewContent = Column(
@@ -147,7 +156,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
           context: context,
         ),
         _buildFirstLine(
-          playlistListVM: playlistListVMlistenFalse,
+          playlistListVMlistenTrue: playlistListVMlistenTrue,
         ),
         _buildSecondLine(
           context: context,
@@ -272,14 +281,18 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
 
   /// Builds the first line of the audio player view. This line contains
   /// only the selected playlist title
+  /// 
+  /// {playlistListVMlistenTrue} is the PlaylistListVM with listen set to
+  /// true. This is necessary to update the selected playlist title when
+  /// the user selects another playlist.
   Row _buildFirstLine({
-    required PlaylistListVM playlistListVM,
+    required PlaylistListVM playlistListVMlistenTrue,
   }) {
     return Row(
       children: [
         Text(
           key: const Key('selectedPlaylistTitleText'),
-          playlistListVM.uniqueSelectedPlaylist?.title ?? '',
+          playlistListVMlistenTrue.uniqueSelectedPlaylist?.title ?? '',
           style: const TextStyle(
             fontSize: 12,
           ),
