@@ -1187,6 +1187,10 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   /// title text. The playlist URL text field allows the user to
   /// enter the URL of a Youtube playlist. The selected playlist
   /// title text displays the title of the selected playlist.
+  ///
+  /// {playlistListVMlistenTrue} is the PlaylistListVM with listen set to
+  /// true. This is necessary to update the selected playlist title when
+  /// the user selects another playlist.
   Expanded _buildPlaylistUrlAndTitle({
     required BuildContext context,
     required PlaylistListVM playlistListVMlistenTrue,
