@@ -1,3 +1,4 @@
+import 'package:audiolearn/viewmodels/audio_player_vm.dart';
 import 'package:audiolearn/viewmodels/comment_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -1229,28 +1230,29 @@ Future<void> _createPlaylistDownloadView({
   // otherwise the test will fail because the width of
   // the dropdown button is set to 140 in constants.dart
   kDropdownButtonMaxWidth = 315;
+  PlaylistListVM playlistListVM = PlaylistListVM(
+    warningMessageVM: warningMessageVM,
+    audioDownloadVM: audioDownloadVM,
+    commentVM: CommentVM(),
+    settingsDataService: settingsDataService,
+  );
+
+  // necessary so that the playlist list of the
+  // PlaylistListVM is filled. Otherwise, the
+  // playlist list is empty and the
+  // ExpandablePlaylistListView is not displayed,
+  // which causes the tests to fail
+  playlistListVM.getUpToDateSelectablePlaylists();
+
+  AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+    playlistListVM: playlistListVM,
+  );
 
   await tester.pumpWidget(
     MultiProvider(
       providers: [
         ChangeNotifierProvider<PlaylistListVM>(
-          create: (_) {
-            PlaylistListVM playlistListVM = PlaylistListVM(
-              warningMessageVM: warningMessageVM,
-              audioDownloadVM: audioDownloadVM,
-              commentVM: CommentVM(),
-              settingsDataService: settingsDataService,
-            );
-
-            // necessary so that the playlist list of the
-            // PlaylistListVM is filled. Otherwise, the
-            // playlist list is empty and the
-            // ExpandablePlaylistListView is not displayed,
-            // which causes the tests to fail
-            playlistListVM.getUpToDateSelectablePlaylists();
-
-            return playlistListVM;
-          },
+          create: (_) => playlistListVM,
         ),
         ChangeNotifierProvider(create: (_) => audioDownloadVM),
         ChangeNotifierProvider(
@@ -1264,6 +1266,7 @@ Future<void> _createPlaylistDownloadView({
           ),
         ),
         ChangeNotifierProvider(create: (_) => warningMessageVM),
+        ChangeNotifierProvider(create: (_) => audioPlayerVM),
       ],
       child: MaterialApp(
         localizationsDelegates: [
