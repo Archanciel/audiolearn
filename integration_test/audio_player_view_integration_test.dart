@@ -1554,7 +1554,7 @@ void main() {
           find.text(firstDownloadedAudioTitle);
 
       await tester.tap(firstDownloadedAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(Duration(milliseconds: 200));
 
       // Now open the audio play speed dialog
       await tester.tap(find.byKey(const Key('setAudioSpeedTextButton')));
