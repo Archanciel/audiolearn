@@ -302,7 +302,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
   /// {playlistListVMlistenTrue} is the PlaylistListVM with listen set to
   /// true. This is necessary to update the selected playlist title when
   /// the user selects another playlist.
-  Row _buildFirstLine({
+  Widget _buildFirstLine({
     required PlaylistListVM playlistListVMlistenTrue,
   }) {
     return Row(

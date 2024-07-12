@@ -120,6 +120,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     );
 
     return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         buildWarningMessageVMConsumer(
           context: context,
@@ -785,7 +787,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   /// contains the playlist URL text field under which is added the
   /// selected playlist title, the add playlist button, the download
   /// single video button and the stop download button.
-  SizedBox _buildFirstLine({
+  Widget _buildFirstLine({
     required BuildContext context,
     required AudioDownloadVM audioDownloadViewModel,
     required ThemeProviderVM themeProviderVM,
