@@ -76,6 +76,11 @@ void main() {
               settingType: SettingType.playlists,
               settingSubType: Playlists.playSpeed),
           kAudioDefaultPlaySpeed);
+      expect(
+          settings.get(
+              settingType: SettingType.playlists,
+              settingSubType: Playlists.arePlaylistsDisplayedInPlaylistDownloadView),
+          false);
 
       AudioSortFilterParameters defaultAudioSortFilterParameters =
           settings.namedAudioSortFilterParametersMap['Default']!;
@@ -116,6 +121,10 @@ void main() {
           settingType: SettingType.playlists,
           settingSubType: Playlists.playSpeed,
           value: 1.1);
+      settings.set(
+          settingType: SettingType.playlists,
+          settingSubType: Playlists.arePlaylistsDisplayedInPlaylistDownloadView,
+          value: true);
 
       // Save to file
       await DirUtil.createDirIfNotExist(pathStr: testSettingsDir);
@@ -155,6 +164,11 @@ void main() {
               settingType: SettingType.playlists,
               settingSubType: Playlists.playSpeed),
           1.1);
+      expect(
+          loadedSettings.get(
+              settingType: SettingType.playlists,
+              settingSubType: Playlists.arePlaylistsDisplayedInPlaylistDownloadView),
+          true);
 
       AudioSortFilterParameters loadedDefaultAudioSortFilterParameters =
           loadedSettings.namedAudioSortFilterParametersMap['Default']!;

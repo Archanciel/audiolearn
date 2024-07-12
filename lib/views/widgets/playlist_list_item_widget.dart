@@ -199,6 +199,7 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                               ? playlist
                                   .audioPlaySpeed // audio play speed is defined for the playlist
                               : settingsDataService.get(
+                                      // get default audio play speed
                                       settingType: SettingType.playlists,
                                       settingSubType: Playlists.playSpeed) ??
                                   kAudioDefaultPlaySpeed;

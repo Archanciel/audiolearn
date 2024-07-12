@@ -11305,7 +11305,7 @@ void main() {
       );
     });
   });
-  group('App settings test', () {
+  group('App settings dialog test', () {
     testWidgets(
         'Bug fix: open app settings dialog and save it without modification.',
         (WidgetTester tester) async {

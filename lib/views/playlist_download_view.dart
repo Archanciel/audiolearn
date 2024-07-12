@@ -76,9 +76,14 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       );
 
       // When the download playlist view is displayed, the playlist list
-      // is collapsed or expanded according to the state stored in the
-      // settings file.
-      playlistListVM.isListExpanded = true;
+      // is collapsed or expanded corresponds to its state stored in the
+      // settings file. This state is modified by the user when he clicks
+      // on the playlist toggle button.
+      playlistListVM.isListExpanded = widget.settingsDataService.get(
+              settingType: SettingType.playlists,
+              settingSubType:
+                  Playlists.arePlaylistsDisplayedInPlaylistDownloadView) ??
+          false;
     });
   }
 
@@ -312,8 +317,16 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 overlayColor: textButtonTapModification, // Tap feedback color
               ),
               onPressed: () {
-                // change in settings file the state of the playlist list
                 playlistListVMlistenFalse.toggleList();
+
+                // Storing in the settings file the state of the playlist list
+                widget.settingsDataService.set(
+                  settingType: SettingType.playlists,
+                  settingSubType:
+                      Playlists.arePlaylistsDisplayedInPlaylistDownloadView,
+                  value: playlistListVMlistenFalse.isListExpanded,
+                );
+                widget.settingsDataService.saveSettings();
               },
               child: Text(
                 'Playlists',

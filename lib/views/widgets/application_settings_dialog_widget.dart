@@ -43,6 +43,7 @@ class _ApplicationSettingsDialogWidgetState
   void initState() {
     super.initState();
 
+    // Obtaining the default audio play speed from the settings data service
     _audioPlaySpeed = widget.settingsDataService.get(
             settingType: SettingType.playlists,
             settingSubType: Playlists.playSpeed) ??

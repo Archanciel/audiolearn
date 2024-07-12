@@ -14,6 +14,7 @@ enum SettingType {
   language,
   playlists,
   dataLocation,
+  application,
 }
 
 enum AppTheme {
@@ -30,6 +31,7 @@ enum Playlists {
   orderedTitleLst,
   isMusicQualityByDefault,
   playSpeed,
+  arePlaylistsDisplayedInPlaylistDownloadView,
 }
 
 enum DataLocation {
@@ -53,6 +55,7 @@ class SettingsDataService {
       Playlists.orderedTitleLst: [],
       Playlists.isMusicQualityByDefault: false,
       Playlists.playSpeed: kAudioDefaultPlaySpeed,
+      Playlists.arePlaylistsDisplayedInPlaylistDownloadView: false,
     },
     SettingType.dataLocation: {
       DataLocation.appSettingsPath: '',
@@ -134,6 +137,11 @@ class SettingsDataService {
   ///     settingType: SettingType.playlists,
   ///     settingSubType: Playlists.defaultAudioSort,
   ///     value: AudioSortCriterion.validVideoTitle);
+  /// 
+  /// initialSettings.set(
+  ///     settingType: SettingType.playlists,
+  ///     settingSubType: Playlists.arePlaylistsDisplayedInPlaylistDownloadView,
+  ///     value: true);
   void set({
     required SettingType settingType,
     required dynamic settingSubType,
@@ -155,7 +163,8 @@ class SettingsDataService {
     _saveSettings();
   }
 
-  // Save settings to a JSON file
+  // Save settings to a JSON file. This method is not private because
+  // it is used in unit tests.
   void saveSettingsToFile({
     required String jsonPathFileName,
   }) {
@@ -570,6 +579,8 @@ Future<void> usageExample() async {
       '${initialSettings.get(settingType: SettingType.playlists, settingSubType: Playlists.isMusicQualityByDefault)}');
   print(
       '${initialSettings.get(settingType: SettingType.playlists, settingSubType: Playlists.playSpeed)}');
+  print(
+      '${initialSettings.get(settingType: SettingType.playlists, settingSubType: Playlists.arePlaylistsDisplayedInPlaylistDownloadView)}');
 
   // modify initialSettings values
 
@@ -598,6 +609,11 @@ Future<void> usageExample() async {
       settingSubType: Playlists.playSpeed,
       value: 1.35);
 
+  initialSettings.set(
+      settingType: SettingType.playlists,
+      settingSubType: Playlists.arePlaylistsDisplayedInPlaylistDownloadView,
+      value: true);
+
   // print initialSettings after modifying its values
 
   print('\n**** Modified initialSettings\n');
@@ -614,6 +630,8 @@ Future<void> usageExample() async {
       '${initialSettings.get(settingType: SettingType.playlists, settingSubType: Playlists.isMusicQualityByDefault)}');
   print(
       '${initialSettings.get(settingType: SettingType.playlists, settingSubType: Playlists.playSpeed)}');
+  print(
+      '${initialSettings.get(settingType: SettingType.playlists, settingSubType: Playlists.arePlaylistsDisplayedInPlaylistDownloadView)}');
 
   initialSettings.saveSettingsToFile(jsonPathFileName: 'settings.json');
 
@@ -636,4 +654,6 @@ Future<void> usageExample() async {
       '${loadedSettings.get(settingType: SettingType.playlists, settingSubType: Playlists.isMusicQualityByDefault)}');
   print(
       '${loadedSettings.get(settingType: SettingType.playlists, settingSubType: Playlists.playSpeed)}');
+  print(
+      '${loadedSettings.get(settingType: SettingType.playlists, settingSubType: Playlists.arePlaylistsDisplayedInPlaylistDownloadView)}');
 }
