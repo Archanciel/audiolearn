@@ -114,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
 
   @override
   Widget build(BuildContext context) {
-    // creating a default sort filter parameters which will be
+    // Creating a default sort filter parameters which will be
     // applied for sorting the playlists audios if no other
     // sort filter parameters are defined and applied.
     widget.settingsDataService.addOrReplaceNamedAudioSortFilterParameters(
@@ -123,11 +123,11 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
       audioSortFilterParameters:
           AudioSortFilterParameters.createDefaultAudioSortFilterParameters(),
     );
-    ThemeProviderVM themeProviderVM = Provider.of<ThemeProviderVM>(
+    ThemeProviderVM themeProviderVMlistenTrue = Provider.of<ThemeProviderVM>(
       context,
       listen: true,
     );
-    AudioPlayerVM audioGlobalPlayerVM = Provider.of<AudioPlayerVM>(
+    AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
       context,
       listen: false,
     );
@@ -140,13 +140,13 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
     List<Widget> appBarApplicationActionLst = [
       IconButton(
         onPressed: () {
-          themeProviderVM.toggleTheme();
+          themeProviderVMlistenTrue.toggleTheme();
         },
-        icon: Icon(themeProviderVM.currentTheme == AppTheme.dark
+        icon: Icon(themeProviderVMlistenTrue.currentTheme == AppTheme.dark
             ? Icons.light_mode
             : Icons.dark_mode),
       ),
-      AppBarApplicationRightPopupMenuWidget(themeProvider: themeProviderVM),
+      AppBarApplicationRightPopupMenuWidget(themeProvider: themeProviderVMlistenTrue),
     ];
 
     return Scaffold(
@@ -155,7 +155,7 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
         leading: AppBarLeadingPopupMenuWidget(
             key: const Key('appBarLeadingPopupMenuWidget'),
             audioLearnAppViewType: _audioLearnAppViewTypeLst[_currentIndex],
-            themeProvider: themeProviderVM,
+            themeProvider: themeProviderVMlistenTrue,
             settingsDataService: widget.settingsDataService),
         actions: appBarApplicationActionLst,
       ),
@@ -163,12 +163,15 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
       body: Column(
         children: [
           _buildPageView(_screenWidgetLst[_currentIndex]),
-          _buildBottomScreenIconButtonRow(audioGlobalPlayerVM, themeProviderVM),
+          _buildBottomScreenIconButtonRow(audioPlayerVMlistenFalse, themeProviderVMlistenTrue),
         ],
       ),
     );
   }
 
+  /// This method builds the PageView widget which enables to drag
+  /// to the PlaylistDownloadView, AudioPlayerView and AudioExtractorView
+  /// screens.
   Expanded _buildPageView(StatefulWidget screenWidget) {
     return Expanded(
       // PageView enables changing screen by dragging
