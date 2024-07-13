@@ -37,8 +37,15 @@ class AudioPlayerView extends StatefulWidget {
   _AudioPlayerViewState createState() => _AudioPlayerViewState();
 }
 
+/// Adding WidgetsBindingObserver enables to listen to the app's
+/// lifecycle state changes. This is necessary to save the current
+/// audio when the app is paused (smartphone screen turns off or
+/// the user switches to another app) or detached (AudioPLearn app
+/// is closed). Currently, this only works for Android and iOS, not
+/// on Windows.
 class _AudioPlayerViewState extends State<AudioPlayerView>
     with WidgetsBindingObserver, ScreenMixin {
+      
   final double _audioIconSizeSmall = 35;
   final double _audioIconSizeMedium = 40;
   final double _audioIconSizeLarge = 80;
@@ -86,16 +93,21 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
   /// because it indicates the app is no longer in the foreground but
   /// still running. It is a suitable place to save the current state as
   /// the app might stay in this state for an extended period.
+  /// 
+  /// This state is reached when the smartphone screen turns off or when
+  /// the user switches to another app.
   ///
   /// detached: This state indicates the app is being removed from memory,
   /// making it an appropriate place to save the state before termination.
+  /// 
+  /// This state is reached when the app is closed.
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     switch (state) {
       case AppLifecycleState.resumed:
         // writeToLogFile(
         //     message:
-        //         'WidgetsBinding didChangeAppLifecycleState(): app resumed'); // Provider.of<AudioGlobalPlayerVM>(context, listen: false).resume();
+        //         'WidgetsBinding didChangeAppLifecycleState(): app resumed');
         break;
       // App paused and sent to background
       case AppLifecycleState.paused:
