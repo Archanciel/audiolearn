@@ -421,7 +421,7 @@ class AudioPlayerVM extends ChangeNotifier {
         // Play next audio when current audio is finished. If a next
         // audio is played, notifyListeners() is called in
         // playNextAudio().
-        await playNextAudio();
+        await _playNextAudio();
       });
     }
   }
@@ -841,7 +841,7 @@ class AudioPlayerVM extends ChangeNotifier {
       //
       // Before playing the next audio, the current audio is
       // saved in its enclosed playlist json file ...
-      await playNextAudio();
+      await _playNextAudio();
 
       return;
     }
@@ -873,7 +873,7 @@ class AudioPlayerVM extends ChangeNotifier {
   /// i.e. when the current audio is terminated or when
   /// skipToEndAndPlay() is executed after the user clicked
   /// the second time on the >| icon button.
-  Future<void> playNextAudio() async {
+  Future<void> _playNextAudio() async {
     _setCurrentAudioToEndPosition();
     updateAndSaveCurrentAudio();
 
@@ -906,24 +906,25 @@ class AudioPlayerVM extends ChangeNotifier {
     _currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd = false;
   }
 
-  /// When the method is called in case of the audio is at end,
-  /// the {forceSave} parameter is set to true in order to save
-  /// the current audio position to the end of audio position.
+  /// Method called in AudioPlayerView.didChangeAppLifecycleState(
+  /// AppLifecycleState state) method when the app is paused (screen turns off
+  /// oe user select another app) or becomes inactive (is closed).
+  /// 
+  /// Method called as well in several AudioPlayerVM methods.
   void updateAndSaveCurrentAudio() {
     if (_currentAudio == null) {
       return; // the case if "No audio selected" audio title is displayed
       //         and the app becomes inactive
     }
 
-    DateTime now = DateTime.now();
+    _currentAudioLastSaveDateTime = DateTime.now();
 
     Playlist? currentAudioPlaylist = _currentAudio!.enclosingPlaylist;
+
     JsonDataService.saveToFile(
       model: currentAudioPlaylist,
       path: currentAudioPlaylist!.getPlaylistDownloadFilePathName(),
     );
-
-    _currentAudioLastSaveDateTime = now;
   }
 
   /// The returned list is ordered by download date, placing
