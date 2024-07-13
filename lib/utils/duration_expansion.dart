@@ -89,7 +89,7 @@ extension DurationExpansion on Duration {
   /// Here's an example of how to use this method:
   ///
   /// Text(
-  ///   globalAudioPlayerVM.currentAudioPosition.HHmmssZeroHH(),
+  ///   audioPlayerVM.currentAudioPosition.HHmmssZeroHH(),
   /// )
   ///
   /// If addRemainingOneDigitTenthOfSecond is true, the Duration
