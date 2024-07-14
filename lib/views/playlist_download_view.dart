@@ -287,7 +287,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     required PlaylistListVM playlistListVMlistenTrue,
     required WarningMessageVM warningMessageVMlistenFalse,
   }) {
-    final AudioDownloadVM audioDownloadViewModel = Provider.of<AudioDownloadVM>(
+    final AudioDownloadVM audioDownloadVMlistenTrue =
+        Provider.of<AudioDownloadVM>(
       context,
       listen: true,
     );
@@ -436,12 +437,12 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                   return kDarkAndLightEnabledIconColor;
                 },
               ),
-              value: audioDownloadViewModel.isHighQuality,
+              value: audioDownloadVMlistenTrue.isHighQuality,
               onChanged: (arePlaylistDownloadWidgetsEnabled)
                   ? (bool? value) {
                       bool isHighQuality = value ?? false;
-                      audioDownloadViewModel.setAudioQuality(
-                          isHighQuality: isHighQuality);
+                      audioDownloadVMlistenTrue.setAudioQuality(
+                          isAudioDownloadHighQuality: isHighQuality);
                       String snackBarMessage = isHighQuality
                           ? AppLocalizations.of(context)!
                               .audioQualityHighSnackBarMessage

@@ -670,9 +670,9 @@ class AudioDownloadVM extends ChangeNotifier {
   }
 
   void setAudioQuality({
-    required bool isHighQuality,
+    required bool isAudioDownloadHighQuality,
   }) {
-    isHighQuality = isHighQuality;
+    isHighQuality = isAudioDownloadHighQuality;
 
     notifyListeners();
   }
