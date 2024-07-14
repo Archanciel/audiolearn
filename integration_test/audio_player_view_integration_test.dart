@@ -1564,7 +1564,7 @@ void main() {
       final playlistDownloadViewNavButton =
           find.byKey(const ValueKey('playlistDownloadViewIconButton'));
       await tester.tap(playlistDownloadViewNavButton);
-      await tester.pumpAndSettle(const Duration(milliseconds: 2000));
+      await tester.pumpAndSettle();
 
       // Now we want to tap on the last downloaded audio of the
       // playlist in order to open the AudioPlayerView displaying
