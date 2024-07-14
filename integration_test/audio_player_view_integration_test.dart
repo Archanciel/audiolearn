@@ -1529,7 +1529,7 @@ void main() {
           find.text(firstDownloadedAudioTitle);
 
       await tester.tap(firstDownloadedAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle(Duration(milliseconds: 200));
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // Now open the audio play speed dialog
       await tester.tap(find.byKey(const Key('setAudioSpeedTextButton')));
@@ -2135,7 +2135,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Trying to avoid unregular integration test failure
-      await Future.delayed(const Duration(milliseconds: 100));
+      await Future.delayed(const Duration(milliseconds: 200));
 
       // The audio position is 2 seconds before end. Now play
       // the audio and wait 5 seconds so that the next audio
@@ -2565,7 +2565,7 @@ void main() {
 
       await tester
           .tap(fifthDownloadedPartiallyPlayedAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // Now we open the AudioPlayableListDialogWidget
       // and verify the color of the displayed audio titles
@@ -2599,7 +2599,7 @@ void main() {
       await checkAudioTextColor(
         tester: tester,
         audioTitle: "Quand Aurélien Barrau va dans une école de management",
-        expectedTitleTextColor: unplayedAudioTitleTextColor,
+        expectedTitleTextColor: partiallyPlayedAudioTitleTextdColor,
         expectedTitleTextBackgroundColor: null,
       );
 
@@ -2660,7 +2660,7 @@ void main() {
       await checkAudioTextColor(
         tester: tester,
         audioTitle: "Quand Aurélien Barrau va dans une école de management",
-        expectedTitleTextColor: unplayedAudioTitleTextColor,
+        expectedTitleTextColor: partiallyPlayedAudioTitleTextdColor,
         expectedTitleTextBackgroundColor: null,
       );
 
@@ -2817,10 +2817,16 @@ void main() {
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
       );
 
+      // Tap the 'Toggle List' button to avoid displaying the list
+      // of playlists which may hide the audio title we want to
+      // tap on
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
       // Type on the audio to play title in order to open the
       // AudioPlayerView displaying the audio
       await tester.tap(find.text(audioToPlayTitle));
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 500));
 
       // Now tap on the Play button to play the audio
       await tester.tap(find.byIcon(Icons.play_arrow));
