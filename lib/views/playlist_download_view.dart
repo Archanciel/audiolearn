@@ -178,11 +178,13 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             // Scroll the sublist to the top when the audio
             // list is filtered and/or sorted
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              _scrollController.animateTo(
-                0,
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeOut,
-              );
+              if (_scrollController.hasClients) {
+                _scrollController.animateTo(
+                  0,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeOut,
+                );
+              }
             });
           }
 
