@@ -38,6 +38,7 @@ class PlaylistListVM extends ChangeNotifier {
   bool _isListExpanded = false;
   set isListExpanded(bool isListExpanded) {
     _isListExpanded = isListExpanded;
+    
     notifyListeners();
   }
   bool _isButtonDownloadSelPlaylistsEnabled = false;
