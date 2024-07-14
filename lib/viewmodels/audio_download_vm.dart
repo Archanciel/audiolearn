@@ -61,9 +61,7 @@ class AudioDownloadVM extends ChangeNotifier {
   late Audio _currentDownloadingAudio;
   Audio get currentDownloadingAudio => _currentDownloadingAudio;
 
-  bool _isHighQuality = false;
-  bool get isHighQuality => _isHighQuality;
-  set isHighQuality(bool isHighQuality) => _isHighQuality = isHighQuality;
+  bool isHighQuality = false;
 
   bool _stopDownloadPressed = false;
   bool get isDownloadStopping => _stopDownloadPressed;
@@ -117,7 +115,7 @@ class AudioDownloadVM extends ChangeNotifier {
         // if the playlist is selected, the audio quality checkbox will be
         // checked or not according to the selected playlist quality
         if (currentPlaylist.isSelected) {
-          _isHighQuality =
+          isHighQuality =
               currentPlaylist.playlistQuality == PlaylistQuality.music;
         }
       }
@@ -588,7 +586,7 @@ class AudioDownloadVM extends ChangeNotifier {
       // if the playlist is selected, the audio quality checkbox will be
       // checked or not according to the selected playlist quality
       if (isPlaylistSelected) {
-        _isHighQuality = playlist.playlistQuality == PlaylistQuality.music;
+        isHighQuality = playlist.playlistQuality == PlaylistQuality.music;
       }
 
       // saving the playlist since its isSelected property has been updated
@@ -674,7 +672,7 @@ class AudioDownloadVM extends ChangeNotifier {
   void setAudioQuality({
     required bool isHighQuality,
   }) {
-    _isHighQuality = isHighQuality;
+    isHighQuality = isHighQuality;
 
     notifyListeners();
   }
@@ -1201,13 +1199,13 @@ class AudioDownloadVM extends ChangeNotifier {
 
     final yt.AudioOnlyStreamInfo audioStreamInfo;
 
-    if (_isHighQuality) {
+    if (isHighQuality) {
       audioStreamInfo = streamManifest.audioOnly.withHighestBitrate();
     } else {
       audioStreamInfo = streamManifest.audioOnly.first;
     }
 
-    if (_isHighQuality) {
+    if (isHighQuality) {
       audio.setAudioToMusicQuality;
     }
 

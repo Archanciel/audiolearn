@@ -145,14 +145,7 @@ enum ErrorType {
 /// This VM (View Model) class is part of the MVVM architecture.
 ///
 class WarningMessageVM extends ChangeNotifier {
-  WarningMessageType _warningMessageType = WarningMessageType.none;
-  WarningMessageType get warningMessageType => _warningMessageType;
-
-  /// Called after a warning message is displayed when the user
-  /// clicks on the Ok button.
-  set warningMessageType(WarningMessageType warningMessageType) {
-    _warningMessageType = warningMessageType;
-  }
+  WarningMessageType warningMessageType = WarningMessageType.none;
 
   String _errorArgOne = '';
   String get errorArgOne => _errorArgOne;
@@ -172,7 +165,7 @@ class WarningMessageVM extends ChangeNotifier {
     _errorType = errorType;
 
     if (errorType != ErrorType.none) {
-      _warningMessageType = WarningMessageType.errorMessage;
+      warningMessageType = WarningMessageType.errorMessage;
 
       if (errorArgOne != null) {
         _errorArgOne = errorArgOne;
@@ -199,7 +192,7 @@ class WarningMessageVM extends ChangeNotifier {
     _updatedPlaylistTitle = updatedPlaylistTitle;
 
     if (updatedPlaylistTitle.isNotEmpty) {
-      _warningMessageType = WarningMessageType.updatedPlaylistUrlTitle;
+      warningMessageType = WarningMessageType.updatedPlaylistUrlTitle;
 
       // Causes the display warning message widget to be displayed.
       notifyListeners();
@@ -220,7 +213,7 @@ class WarningMessageVM extends ChangeNotifier {
     _addedPlaylistQuality = playlistQuality;
 
     if (playlistTitle.isNotEmpty) {
-      _warningMessageType = WarningMessageType.addPlaylistTitle;
+      warningMessageType = WarningMessageType.addPlaylistTitle;
 
       // Causes the display warning message widget to be displayed.
       notifyListeners();
@@ -241,7 +234,7 @@ class WarningMessageVM extends ChangeNotifier {
     _valueLimitStr = maxOrMinValueLimitStr;
 
     if (invalidValueState != InvalidValueState.none) {
-      _warningMessageType = WarningMessageType.invalidValueWarning;
+      warningMessageType = WarningMessageType.invalidValueWarning;
 
       // Causes the display warning message widget to be displayed.
       notifyListeners();
@@ -255,7 +248,7 @@ class WarningMessageVM extends ChangeNotifier {
     required bool addAtListToWarningMessage,
   }) {
     _addAtListToWarningMessage = addAtListToWarningMessage;
-    _warningMessageType = WarningMessageType.noCheckboxSelected;
+    warningMessageType = WarningMessageType.noCheckboxSelected;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();
@@ -265,7 +258,7 @@ class WarningMessageVM extends ChangeNotifier {
   String get invalidPlaylistUrl => _invalidPlaylistUrl;
   set invalidPlaylistUrl(String invalidPlaylistUrl) {
     _invalidPlaylistUrl = invalidPlaylistUrl;
-    _warningMessageType = WarningMessageType.invalidPlaylistUrl;
+    warningMessageType = WarningMessageType.invalidPlaylistUrl;
 
     // Causes the display warning message widget to be displayed.      // Causes the display warning message widget to be displayed.
     notifyListeners();
@@ -275,7 +268,7 @@ class WarningMessageVM extends ChangeNotifier {
   String get invalidLocalPlaylistTitle => _invalidLocalPlaylistTitle;
   set invalidLocalPlaylistTitle(String invalidLocalPlaylistTitle) {
     _invalidLocalPlaylistTitle = invalidLocalPlaylistTitle;
-    _warningMessageType = WarningMessageType.invalidLocalPlaylistTitle;
+    warningMessageType = WarningMessageType.invalidLocalPlaylistTitle;
 
     // Causes the display warning message widget to be displayed.      // Causes the display warning message widget to be displayed.
     notifyListeners();
@@ -285,7 +278,7 @@ class WarningMessageVM extends ChangeNotifier {
   String get invalidYoutubePlaylistTitle => _invalidYoutubePlaylistTitle;
   set invalidYoutubePlaylistTitle(String invalidYoutubePlaylistTitle) {
     _invalidYoutubePlaylistTitle = invalidYoutubePlaylistTitle;
-    _warningMessageType = WarningMessageType.invalidYoutubePlaylistTitle;
+    warningMessageType = WarningMessageType.invalidYoutubePlaylistTitle;
 
     // Causes the display warning message widget to be displayed.      // Causes the display warning message widget to be displayed.
     notifyListeners();
@@ -295,7 +288,7 @@ class WarningMessageVM extends ChangeNotifier {
   String get renameFileNameAlreadyUsed => _renameFileNameAlreadyUsed;
   set renameFileNameAlreadyUsed(String invalidRenameFileName) {
     _renameFileNameAlreadyUsed = invalidRenameFileName;
-    _warningMessageType = WarningMessageType.renameFileNameAlreadyUsed;
+    warningMessageType = WarningMessageType.renameFileNameAlreadyUsed;
 
     // Causes the display warning message widget to be displayed.      // Causes the display warning message widget to be displayed.
     notifyListeners();
@@ -307,7 +300,7 @@ class WarningMessageVM extends ChangeNotifier {
     _isSingleVideoUrlInvalid = isSingleVideoUrlInvalid;
 
     if (isSingleVideoUrlInvalid) {
-      _warningMessageType = WarningMessageType.invalidSingleVideoUrl;
+      warningMessageType = WarningMessageType.invalidSingleVideoUrl;
 
       // Causes the display warning message widget to be displayed.
       notifyListeners();
@@ -321,7 +314,7 @@ class WarningMessageVM extends ChangeNotifier {
   }) {
     _playlistAlreadyDownloadedTitle = playlistTitle;
 
-    _warningMessageType =
+    warningMessageType =
         WarningMessageType.playlistWithUrlAlreadyInListOfPlaylists;
 
     // Causes the display warning message widget to be displayed.
@@ -338,10 +331,10 @@ class WarningMessageVM extends ChangeNotifier {
     _localPlaylistAlreadyCreatedTitle = playlistTitle;
 
     if (playlistType == PlaylistType.local) {
-      _warningMessageType =
+      warningMessageType =
           WarningMessageType.localPlaylistWithTitleAlreadyInListOfPlaylists;
     } else {
-      _warningMessageType =
+      warningMessageType =
           WarningMessageType.youtubePlaylistWithTitleAlreadyInListOfPlaylists;
     }
 
@@ -355,7 +348,7 @@ class WarningMessageVM extends ChangeNotifier {
     _sortFilterSaveAsName = sortFilterSaveAsName;
 
     if (sortFilterSaveAsName.isEmpty) {
-      _warningMessageType = WarningMessageType.noSortFilterSaveAsName;
+      warningMessageType = WarningMessageType.noSortFilterSaveAsName;
 
       // Causes the display warning message widget to be displayed.
       notifyListeners();
@@ -363,14 +356,14 @@ class WarningMessageVM extends ChangeNotifier {
   }
 
   void noSortFilterParameterWasModified() {
-    _warningMessageType = WarningMessageType.noSortFilterParameterWasModified;
+    warningMessageType = WarningMessageType.noSortFilterParameterWasModified;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();
   }
 
   void deletedHistoricalSortFilterParameterNotExist() {
-    _warningMessageType =
+    warningMessageType =
         WarningMessageType.deletedHistoricalSortFilterParameterNotExist;
 
     // Causes the display warning message widget to be displayed.
@@ -378,7 +371,7 @@ class WarningMessageVM extends ChangeNotifier {
   }
 
   void historicalSortFilterParameterWasDeleted() {
-    _warningMessageType =
+    warningMessageType =
         WarningMessageType.historicalSortFilterParameterWasDeleted;
 
     // Causes the display warning message widget to be displayed.
@@ -386,7 +379,7 @@ class WarningMessageVM extends ChangeNotifier {
   }
 
   void playlistRootPathNotExist() {
-    _warningMessageType = WarningMessageType.playlistRootPathNotExist;
+    warningMessageType = WarningMessageType.playlistRootPathNotExist;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();
@@ -401,7 +394,7 @@ class WarningMessageVM extends ChangeNotifier {
         isNoPlaylistSelectedForSingleVideoDownload;
 
     if (isNoPlaylistSelectedForSingleVideoDownload) {
-      _warningMessageType =
+      warningMessageType =
           WarningMessageType.noPlaylistSelectedForSingleVideoDownload;
 
       // Causes the display warning message widget to be displayed.
@@ -416,7 +409,7 @@ class WarningMessageVM extends ChangeNotifier {
     _isNoPlaylistSelectedForAudioCopy = isNoPlaylistSelectedForAudioCopy;
 
     if (isNoPlaylistSelectedForAudioCopy) {
-      _warningMessageType = WarningMessageType.isNoPlaylistSelectedForAudioCopy;
+      warningMessageType = WarningMessageType.isNoPlaylistSelectedForAudioCopy;
 
       // Causes the display warning message widget to be displayed.
       notifyListeners();
@@ -430,7 +423,7 @@ class WarningMessageVM extends ChangeNotifier {
     _isNoPlaylistSelectedForAudioMove = isNoPlaylistSelectedForAudioMove;
 
     if (isNoPlaylistSelectedForAudioMove) {
-      _warningMessageType = WarningMessageType.isNoPlaylistSelectedForAudioMove;
+      warningMessageType = WarningMessageType.isNoPlaylistSelectedForAudioMove;
 
       // Causes the display warning message widget to be displayed.
       notifyListeners();
@@ -446,7 +439,7 @@ class WarningMessageVM extends ChangeNotifier {
         isTooManyPlaylistSelectedForSingleVideoDownload;
 
     if (isTooManyPlaylistSelectedForSingleVideoDownload) {
-      _warningMessageType =
+      warningMessageType =
           WarningMessageType.tooManyPlaylistSelectedForSingleVideoDownload;
 
       // Causes the display warning message widget to be displayed.
@@ -469,7 +462,7 @@ class WarningMessageVM extends ChangeNotifier {
         deleteAudioFromPlaylistAswellAudioVideoTitle;
 
     if (deleteAudioFromPlaylistAswellTitle.isNotEmpty) {
-      _warningMessageType =
+      warningMessageType =
           WarningMessageType.deleteAudioFromPlaylistAswellWarning;
 
       // Causes the display warning message widget to be displayed.
@@ -498,7 +491,7 @@ class WarningMessageVM extends ChangeNotifier {
     _movedToPlaylistType = movedToPlaylistType;
     _movedToPlaylistTitle = movedToPlaylistTitle;
 
-    _warningMessageType = WarningMessageType.audioNotMovedFromToPlaylist;
+    warningMessageType = WarningMessageType.audioNotMovedFromToPlaylist;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();
@@ -523,7 +516,7 @@ class WarningMessageVM extends ChangeNotifier {
     _movedToPlaylistType = movedToPlaylistType;
     _movedToPlaylistTitle = movedToPlaylistTitle;
 
-    _warningMessageType = WarningMessageType.audioMovedFromToPlaylist;
+    warningMessageType = WarningMessageType.audioMovedFromToPlaylist;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();
@@ -552,7 +545,7 @@ class WarningMessageVM extends ChangeNotifier {
     _copiedToPlaylistTitle = copiedToPlaylistTitle;
     _copiedToPlaylistType = copiedToPlaylistType;
 
-    _warningMessageType = WarningMessageType.audioNotCopiedFromToPlaylist;
+    warningMessageType = WarningMessageType.audioNotCopiedFromToPlaylist;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();
@@ -571,7 +564,7 @@ class WarningMessageVM extends ChangeNotifier {
     _copiedFromPlaylistType = copiedFromPlaylistType;
     _copiedToPlaylistType = copiedToPlaylistType;
 
-    _warningMessageType = WarningMessageType.audioCopiedFromToPlaylist;
+    warningMessageType = WarningMessageType.audioCopiedFromToPlaylist;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();
@@ -591,7 +584,7 @@ class WarningMessageVM extends ChangeNotifier {
     _removedPlayableAudioNumber = removedPlayableAudioNumber;
 
     if (removedPlayableAudioNumber > 0) {
-      _warningMessageType = WarningMessageType.updatedPlayableAudioLst;
+      warningMessageType = WarningMessageType.updatedPlayableAudioLst;
 
       // Causes the display warning message widget to be displayed.
       notifyListeners();
@@ -605,7 +598,7 @@ class WarningMessageVM extends ChangeNotifier {
   }) {
     _playlistInexistingRootPath = playlistInexistingRootPath;
 
-    _warningMessageType = WarningMessageType.playlistRootPathNotExist;
+    warningMessageType = WarningMessageType.playlistRootPathNotExist;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();

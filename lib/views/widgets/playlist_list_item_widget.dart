@@ -1,6 +1,5 @@
 import 'package:audiolearn/constants.dart';
 import 'package:audiolearn/viewmodels/audio_player_vm.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

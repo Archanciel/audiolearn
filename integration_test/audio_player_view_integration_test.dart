@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:audiolearn/views/widgets/audios_playable_list_dialog_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -30,10 +31,8 @@ enum AudioPositionModification {
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group(
-      '''Play/pause/start/end tests, clicking on audio title to open
-         AudioPlayerView.''',
-      () {
+  group('''Play/pause/start/end tests, clicking on audio title to open
+         AudioPlayerView.''', () {
     testWidgets('Check play/pause button conversion only.', (
       WidgetTester tester,
     ) async {
@@ -84,8 +83,7 @@ void main() {
     });
     testWidgets(
         '''Play audio during 5 seconds and then pause it. Then click on |<,
-           and then on |> button''',
-        (
+           and then on |> button''', (
       WidgetTester tester,
     ) async {
       const String audioPlayerSelectedPlaylistTitle =
@@ -241,8 +239,7 @@ void main() {
     testWidgets(
         '''Click on play button to finish playing the audio downloaded before
            the last downloaded audio and start playing the not listened last
-           downloaded audio.''',
-        (
+           downloaded audio.''', (
       WidgetTester tester,
     ) async {
       const String audioPlayerSelectedPlaylistTitle = 'S8 audio';
@@ -325,8 +322,7 @@ void main() {
     testWidgets(
         '''Click on play button to finish playing the audio downloaded before
            the last downloaded audio and start playing the partially listened
-           last downloaded audio.''',
-        (
+           last downloaded audio.''', (
       WidgetTester tester,
     ) async {
       const String audioPlayerSelectedPlaylistTitle = 'S8 audio';
@@ -428,8 +424,7 @@ void main() {
     testWidgets(
         '''Click on play button to finish playing the first downloaded audio
            and start playing the not listened last downloaded audio, ignoring
-           the 2 precendent audios already fully played.''',
-        (
+           the 2 precendent audios already fully played.''', (
       WidgetTester tester,
     ) async {
       const String audioPlayerSelectedPlaylistTitle = 'S8 audio';
@@ -502,8 +497,7 @@ void main() {
     testWidgets(
         '''Click on play button to finish playing the first downloaded audio
            and start playing the partially listened last downloaded audio,
-           ignoring the 2 precendent audios already fully played.''',
-        (
+           ignoring the 2 precendent audios already fully played.''', (
       WidgetTester tester,
     ) async {
       const String audioPlayerSelectedPlaylistTitle = 'S8 audio';
@@ -730,8 +724,7 @@ void main() {
   group('Test play with or without rewind audio position', () {
     testWidgets(
         '''Partially listened audio > 1 h ago, rewind position after clicking
-           on play button.''',
-        (
+           on play button.''', (
       WidgetTester tester,
     ) async {
       const String audioPlayerSelectedPlaylistTitle = 'local';
@@ -764,8 +757,7 @@ void main() {
     testWidgets(
         '''Partially listened audio > 1 h ago, click on << 10 sec and test
            that rewinding position after clicking on play button does not
-           happen.''',
-        (
+           happen.''', (
       WidgetTester tester,
     ) async {
       const String audioPlayerSelectedPlaylistTitle = 'local';
@@ -833,8 +825,7 @@ void main() {
     testWidgets(
         '''Partially listened audio > 1 h ago, click on >> 10 sec and test
            that rewinding position after clicking on play button does not
-           happen.''',
-        (
+           happen.''', (
       WidgetTester tester,
     ) async {
       const String audioPlayerSelectedPlaylistTitle = 'local';
@@ -901,8 +892,7 @@ void main() {
     });
     testWidgets(
         '''Partially listened audio < 1 h && > 2 sec ago, rewind position
-           after clicking on play button.''',
-        (
+           after clicking on play button.''', (
       WidgetTester tester,
     ) async {
       const String audioPlayerSelectedPlaylistTitle = 'local';
@@ -933,10 +923,8 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets(
-        '''Partially listened audio < 2 sec ago, rewind position after
-           clicking on play button.''',
-        (
+    testWidgets('''Partially listened audio < 2 sec ago, rewind position after
+           clicking on play button.''', (
       WidgetTester tester,
     ) async {
       const String audioPlayerSelectedPlaylistTitle = 'local';
@@ -969,8 +957,7 @@ void main() {
     });
     testWidgets(
         '''Fully listened audio > 1 h ago, rewind position after clicking on
-           play button.''',
-        (
+           play button.''', (
       WidgetTester tester,
     ) async {
       const String audioPlayerSelectedPlaylistTitle = 'local';
@@ -1002,8 +989,7 @@ void main() {
     });
     testWidgets(
         '''Fully listened audio < 1 h && > 2 sec ago, rewind position after
-           clicking on play button.''',
-        (
+           clicking on play button.''', (
       WidgetTester tester,
     ) async {
       const String audioPlayerSelectedPlaylistTitle = 'local';
@@ -1036,8 +1022,7 @@ void main() {
     });
     testWidgets(
         '''Fully listened audio < 2 sec ago, rewind position after clicking
-           on play button.''',
-        (
+           on play button.''', (
       WidgetTester tester,
     ) async {
       const String audioPlayerSelectedPlaylistTitle = 'local';
@@ -1068,10 +1053,8 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets(
-        '''Fully listened audio with audioPausedDateTime == null, rewind
-           position after clicking on play button.''',
-        (
+    testWidgets('''Fully listened audio with audioPausedDateTime == null, rewind
+           position after clicking on play button.''', (
       WidgetTester tester,
     ) async {
       const String audioPlayerSelectedPlaylistTitle = 'local_2';
@@ -1101,10 +1084,8 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets(
-        '''Not listened audio with audioPausedDateTime == null, rewind
-           position after clicking on play button.''',
-        (
+    testWidgets('''Not listened audio with audioPausedDateTime == null, rewind
+           position after clicking on play button.''', (
       WidgetTester tester,
     ) async {
       const String audioPlayerSelectedPlaylistTitle = 'local_3';
@@ -1140,8 +1121,7 @@ void main() {
     testWidgets(
         '''After starting to play the audio, go back to playlist download
            view in order to verify audio info and audio play/pause icon type
-           and state.''',
-        (
+           and state.''', (
       WidgetTester tester,
     ) async {
       const String audioPlayerSelectedPlaylistTitle =
@@ -1225,8 +1205,7 @@ void main() {
     testWidgets(
         '''After starting to play the audio, click to end icon and go back
            to playlist download view in order to verify audio info and audio
-           play/pause icon type and state.''',
-        (
+           play/pause icon type and state.''', (
       WidgetTester tester,
     ) async {
       // PLACING THIS TEST IN THE PREVIOUS testWidgets FUNCTION
@@ -1305,8 +1284,7 @@ void main() {
     testWidgets(
         '''Opening AudioPlayerView by clicking on AudioPlayerView icon button
            with a playlist recently downloaded with no previously selected
-           audio.''',
-        (WidgetTester tester) async {
+           audio.''', (WidgetTester tester) async {
       const String audioPlayerSelectedPlaylistTitle =
           'audio_player_view_no_sel_audio_test';
 
@@ -1477,8 +1455,7 @@ void main() {
         '''Opening AudioPlayerView by clicking on AudioPlayerView icon button
            in situation where no playlist is selected. Then select an empty
            playlist and open AudioPlayerView by clicking on AudioPlayerView
-           icon button.''',
-        (WidgetTester tester) async {
+           icon button.''', (WidgetTester tester) async {
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_player_view_no_playlist_selected_test',
@@ -1522,14 +1499,12 @@ void main() {
         '''Opening AudioPlayerView by clicking on AudioPlayerView icon button
            in situation where no playlist is selected. Then select a playlist
            with no selected audio and open AudioPlayerView by clicking on
-           AudioPlayerView icon button.''',
-        (WidgetTester tester) async {});
+           AudioPlayerView icon button.''', (WidgetTester tester) async {});
   });
   group('set play speed tests', () {
     testWidgets(
         '''Reduce play speed. Then go back to PlaylistDownloadView and click
-           on another audio title.''',
-        (
+           on another audio title.''', (
       WidgetTester tester,
     ) async {
       const String audioPlayerSelectedPlaylistTitle = 'S8 audio';
@@ -1589,7 +1564,7 @@ void main() {
       final playlistDownloadViewNavButton =
           find.byKey(const ValueKey('playlistDownloadViewIconButton'));
       await tester.tap(playlistDownloadViewNavButton);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 2000));
 
       // Now we want to tap on the last downloaded audio of the
       // playlist in order to open the AudioPlayerView displaying
@@ -1627,8 +1602,7 @@ void main() {
     });
     testWidgets(
         '''Reduce play speed. Then click twice on >| button to start playing
-           the most recently downloaded audio.''',
-        (
+           the most recently downloaded audio.''', (
       WidgetTester tester,
     ) async {
       const String audioPlayerSelectedPlaylistTitle = 'S8 audio';
@@ -1853,8 +1827,7 @@ void main() {
     testWidgets(
         '''Reduce play speed. Then click on play button to finish playing the
            first downloaded audio and start playing the last downloaded audio,
-           ignoring the 2 precendent audios already fully played.''',
-        (
+           ignoring the 2 precendent audios already fully played.''', (
       WidgetTester tester,
     ) async {
       const String audioPlayerSelectedPlaylistTitle = 'S8 audio';
@@ -1939,8 +1912,7 @@ void main() {
     });
     testWidgets(
         '''Reduce play speed. Then open the DisplaySelectableAudioListDialogWidget
-           and select the most recently downloaded audio.''',
-        (
+           and select the most recently downloaded audio.''', (
       WidgetTester tester,
     ) async {
       const String audioPlayerSelectedPlaylistTitle = 'S8 audio';
@@ -2024,15 +1996,11 @@ void main() {
       );
     });
   });
-  group(
-      '''From first downloaded audio, skip to next not fully played audio
+  group('''From first downloaded audio, skip to next not fully played audio
          ignoring 5 already fully listened audios tests. Verify also the audio
-         item play icon color in playlist download view.''',
-      () {
-    testWidgets(
-        '''Next fully unread audio also the last downloaded audio of the
-           playlist.''',
-        (WidgetTester tester) async {
+         item play icon color in playlist download view.''', () {
+    testWidgets('''Next fully unread audio also the last downloaded audio of the
+           playlist.''', (WidgetTester tester) async {
       const String audioPlayerSelectedPlaylistTitle =
           'S8 audio'; // Youtube playlist
       const String firstDownloadedAudioTitle =
@@ -2133,8 +2101,7 @@ void main() {
     });
     testWidgets(
         '''Next partially played audio also the last downloaded audio of the
-           playlist.''',
-        (WidgetTester tester) async {
+           playlist.''', (WidgetTester tester) async {
       const String audioPlayerSelectedPlaylistTitle =
           'S8 audio'; // Youtube playlist
       const String firstDownloadedAudioTitle =
@@ -2309,11 +2276,9 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets(
-        '''User sets to 0 the position of third downloaded audio of the
+    testWidgets('''User sets to 0 the position of third downloaded audio of the
            playlist. Verify also the audio item play icon color in playlist
-           download view.''',
-        (WidgetTester tester) async {
+           download view.''', (WidgetTester tester) async {
       const String audioPlayerSelectedPlaylistTitle =
           'S8 audio'; // Youtube playlist
       const String firstDownloadedAudioTitle =
@@ -2455,8 +2420,7 @@ void main() {
     });
     testWidgets(
         '''User sets to 2 minutes the position of third downloaded audio of
-           the playlist.''',
-        (WidgetTester tester) async {
+           the playlist.''', (WidgetTester tester) async {
       const String audioPlayerSelectedPlaylistTitle =
           'S8 audio'; // Youtube playlist
       const String firstDownloadedAudioTitle =
@@ -2765,11 +2729,8 @@ void main() {
       // Scrolling down the audios list in order to display the first
       // downloaded audio title
 
-      // Find the list view using the key
+      // Find the audio list widget using its key
       final listFinder = find.byKey(const Key('audio_list'));
-
-      // Ensure the list view is present in the widget tree
-      expect(listFinder, findsOneWidget);
 
       // Perform the scroll action
       await tester.drag(listFinder, const Offset(0, -1000));
@@ -2830,6 +2791,85 @@ void main() {
         expectedTitleTextColor: fullyPlayedAudioTitleColor,
         expectedTitleTextBackgroundColor: null,
       );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Select an audio in the displayed audio list while current audio is
+           playing and then select the previous audio and check that the audio
+           position correspond to its position when the other audio was
+           selected in the displayed audio list''',
+        (WidgetTester tester) async {
+      const String audioPlayerSelectedPlaylistTitle =
+          'S8 audio'; // Youtube playlist
+      const String audioToPlayTitle =
+          "Quand Aurélien Barrau va dans une école de management";
+      const String audioToSelectInAudioListTitle =
+          'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau';
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_player_view_display_audio_list_test',
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+      );
+
+      // Type on the audio to play title in order to open the
+      // AudioPlayerView displaying the audio
+      await tester.tap(find.text(audioToPlayTitle));
+      await tester.pumpAndSettle();
+
+      // Now tap on the Play button to play the audio
+      await tester.tap(find.byIcon(Icons.play_arrow));
+      await tester.pumpAndSettle();
+
+      await Future.delayed(const Duration(seconds: 5));
+      await tester.pumpAndSettle();
+
+      // Memorizing the current audio position
+      Finder audioPlayerViewAudioPositionFinder =
+          find.byKey(const Key('audioPlayerViewAudioPosition'));
+      final String actualPositionTimeString =
+          tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
+
+      // Now we open the AudioPlayableListDialogWidget by tapping on the
+      // audio title
+      await tester.tap(find.text("$audioToPlayTitle\n17:59"));
+      await tester.pumpAndSettle();
+
+      // Find the AudioPlayableListDialogWidget
+      await selectAudioInAudioPlayableDialogWidget(
+        tester: tester,
+        audioToSelectTitle: audioToSelectInAudioListTitle,
+      );
+
+      // Now we are back on the AudioPlayerView displaying the selected
+      // audio to play. We reopen the AudioPlayableListDialogWidget
+      // by tapping on the audio title.
+      await tester.tap(find.text("$audioToSelectInAudioListTitle\n6:29"));
+      await tester.pumpAndSettle();
+
+      // Then select the previously playing audio in order to open it in
+      // the AudioPlayerView
+      await selectAudioInAudioPlayableDialogWidget(
+        tester: tester,
+        audioToSelectTitle: audioToPlayTitle,
+      );
+
+      // Now we are back on the AudioPlayerView displaying the previously
+      // playing audio. We verify that the audio position is the same as
+      // when the other audio was selected in the displayed audio list
+
+      // Retrieving the current audio position
+      audioPlayerViewAudioPositionFinder =
+          find.byKey(const Key('audioPlayerViewAudioPosition'));
+      final String retrievedPositionTimeString =
+          tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
+
+      expect(retrievedPositionTimeString, actualPositionTimeString);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -3659,8 +3699,7 @@ void main() {
   group('Sort/filter audios tests', () {
     testWidgets(
         '''Playing last sorted audio with filter: "Fully listened" unchecked
-           and "Partially listened" checked.''',
-        (WidgetTester tester) async {
+           and "Partially listened" checked.''', (WidgetTester tester) async {
       const String audioPlayerSelectedPlaylistTitle =
           'S8 audio'; // Youtube playlist
       const String toSelectAudioTitle =
@@ -3887,8 +3926,7 @@ void main() {
     group('Playing audio comment to verify that no rewind is performed', () {
       testWidgets(
           '''Playing from CommentAddEditDialogWidget a comment on audio paused
-             more than 1 hour ago.''',
-          (WidgetTester tester) async {
+             more than 1 hour ago.''', (WidgetTester tester) async {
         const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
         const String alreadyCommentedAudioTitle =
             "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
@@ -3970,10 +4008,8 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
-      testWidgets(
-          '''Playing from CommentListAddDialogWidget a comment on audio
-             paused more than 1 hour ago.''',
-          (WidgetTester tester) async {
+      testWidgets('''Playing from CommentListAddDialogWidget a comment on audio
+             paused more than 1 hour ago.''', (WidgetTester tester) async {
         const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
         const String alreadyCommentedAudioTitle =
             "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
@@ -4062,10 +4098,8 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
-      testWidgets(
-          '''Playing from PlaylistCommentDialogWidget a comment on audio
-             paused more than 1 hour ago.''',
-          (WidgetTester tester) async {
+      testWidgets('''Playing from PlaylistCommentDialogWidget a comment on audio
+             paused more than 1 hour ago.''', (WidgetTester tester) async {
         const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
 
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
@@ -4837,7 +4871,8 @@ void main() {
       String actualAudioPlayerViewAudioPosition =
           tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
 
-      int commentDialogAudioPlayerViewAudioPositionWithTenthSec = roundUpTenthOfSeconds(
+      int commentDialogAudioPlayerViewAudioPositionWithTenthSec =
+          roundUpTenthOfSeconds(
         audioPositionHHMMSSWithTenthSecText:
             commentDialogAudioPlayerViewAudioPositionWithTenthSecText,
       );
@@ -5725,8 +5760,7 @@ void main() {
     });
     testWidgets(
         '''After comment add/edit dialog is opened, tapping outside the comment
-           related dialogs''',
-        (WidgetTester tester) async {
+           related dialogs''', (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
       const String alreadyCommentedAudioTitle =
           "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
@@ -5789,10 +5823,8 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets(
-        '''Delete all comments and check that the comment icon button is
-           enabled but no longer highlighted''',
-        (WidgetTester tester) async {
+    testWidgets('''Delete all comments and check that the comment icon button is
+           enabled but no longer highlighted''', (WidgetTester tester) async {
       const String localPlaylistTitle =
           'local_delete_comment'; // Youtube playlist
       const String alreadyCommentedAudioTitle =
@@ -5908,8 +5940,7 @@ void main() {
     });
     testWidgets(
         '''MUST BE LAST TEST ! Using set value to target dialog to set comment
-           positions''',
-        (WidgetTester tester) async {
+           positions''', (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
       const String alreadyCommentedAudioTitle =
           "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
@@ -6283,6 +6314,30 @@ void main() {
       );
     });
   });
+}
+
+Future<void> selectAudioInAudioPlayableDialogWidget({
+  required WidgetTester tester,
+  required String audioToSelectTitle,
+}) async {
+  // Find the AudioPlayableListDialogWidget
+  Finder audioPlayableListDialogFinder =
+      find.byType(AudioPlayableListDialogWidget);
+
+  // Then get the audio to select ListTile Text widget finder
+  // and tap on it
+
+  // Find the list body containing the audio titles
+  final Finder audioPlayableListBodyFinder = find.descendant(
+      of: audioPlayableListDialogFinder, matching: find.byType(ListBody));
+
+  // Find the ListTile containing the specific audio title
+  final Finder audioTitleFinder = find.descendant(
+      of: audioPlayableListBodyFinder, matching: find.text(audioToSelectTitle));
+
+  // Tap on the ListTile containing the specific audio title
+  await tester.tap(audioTitleFinder);
+  await tester.pumpAndSettle(const Duration(milliseconds: 500));
 }
 
 Future<void> deleteComment({
