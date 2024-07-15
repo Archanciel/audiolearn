@@ -3928,6 +3928,77 @@ void main() {
       );
     });
   });
+  group('Selecting playlist in AudioPlayerView', () {
+    testWidgets('''Selecting different playlists in order to change the playable
+           audio contained in the audio player to the selected playlist
+           current or past playable audio.''', (WidgetTester tester) async {
+      const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+      const String emptyPlaylistTitle = 'Empty'; // Youtube playlist
+      const String alreadyCommentedAudioTitle =
+          "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
+      const String youtubePlaylistCurrentPlayableAudioTitle =
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_comment_test',
+        selectedPlaylistTitle: emptyPlaylistTitle,
+      );
+
+      // Go to the audio player view
+      Finder audioPlayerNavButton =
+          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+      await tester.tap(audioPlayerNavButton);
+      await tester.pumpAndSettle();
+
+      // Verify the no selected audio title is displayed
+      expect(find.text("No audio selected"), findsOneWidget);
+
+      // Now tap on playlist button to display the playlists
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Select the S8 audio playlist
+
+      // await tester.tap(find.text(youtubePlaylistTitle));
+      // await tester.pumpAndSettle();
+
+      // Find the S8 audio playlist ListTile Text widget
+      final Finder youtubePlaylistListTileTextWidgetFinder =
+          find.text(youtubePlaylistTitle);
+
+      // Then obtain the playlist ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      final Finder youtubePlaylistListTileWidgetFinder = find.ancestor(
+        of: youtubePlaylistListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the Checkbox widget located in the playlist ListTile
+      // and tap on it to select the playlist
+      final Finder youtubePlaylistListTileCheckboxWidgetFinder =
+          find.descendant(
+        of: youtubePlaylistListTileWidgetFinder,
+        matching: find.byType(Checkbox),
+      );
+
+      // Tap the ListTile Playlist checkbox to select it
+      await tester.tap(youtubePlaylistListTileCheckboxWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the displayed selected playlist current playable audio title
+
+      Finder audioPlayerViewAudioTitleFinder =
+          find.byKey(const Key('audioPlayerViewCurrentAudioTitle'));
+      String audioTitleWithDurationString =
+          tester.widget<Text>(audioPlayerViewAudioTitleFinder).data!;
+          
+      expect(
+        audioTitleWithDurationString,
+        "$alreadyCommentedAudioTitle\n1:17:54",
+      );
+    });
+  });
   group('Audio comment tests', () {
     group('Playing audio comment to verify that no rewind is performed', () {
       testWidgets(
@@ -4978,7 +5049,8 @@ void main() {
                 actualAudioPlayerViewAudioPositionInTenthsOfSeconds + 10),
           ],
         ),
-        reason: "Expected value between $actualAudioPlayerViewAudioPositionInTenthsOfSeconds and ${actualAudioPlayerViewAudioPositionInTenthsOfSeconds + 10} but obtained $commentDialogAudioPlayerViewAudioPositionWithTenthSecText",
+        reason:
+            "Expected value between $actualAudioPlayerViewAudioPositionInTenthsOfSeconds and ${actualAudioPlayerViewAudioPositionInTenthsOfSeconds + 10} but obtained $commentDialogAudioPlayerViewAudioPositionWithTenthSecText",
       );
 
       // Now, tap on the add/update comment button to save the updated
