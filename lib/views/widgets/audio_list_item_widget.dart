@@ -27,6 +27,10 @@ import 'audio_modification_dialog_widget.dart';
 /// AudioListItemWidget displays the audio item content as well
 /// as the audio item left menu and the audio item right play or
 /// pause button.
+///
+/// When the user clicks on the audio item title or subtitle or
+/// the play icon button, the screen switches to the AudioPlayerView
+/// screen and the passed {onPageChangedFunction} is executed.
 class AudioListItemWidget extends StatelessWidget with ScreenMixin {
   final Audio audio;
 
