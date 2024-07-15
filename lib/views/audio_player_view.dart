@@ -807,6 +807,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                 child: Consumer<ThemeProviderVM>(
                   builder: (context, themeProviderVM, child) {
                     return Text(
+                      key: const Key('audioPlayerViewCurrentAudioTitle'),
                       currentAudioTitleWithDuration ?? '',
                       style: TextStyle(
                         fontSize: kAudioTitleFontSize,
