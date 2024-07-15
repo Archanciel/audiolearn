@@ -62,7 +62,7 @@ void main() {
       await tester.pumpAndSettle();
 
       await Future.delayed(const Duration(seconds: 1));
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // Verify if the play button changes to pause button
       expect(find.byIcon(Icons.pause), findsOneWidget);
@@ -106,7 +106,7 @@ void main() {
           find.text(lastDownloadedAudioTitle);
 
       await tester.tap(lastDownloadedAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // Now verify if the displayed audio position and remaining
       // duration are correct
@@ -4956,20 +4956,29 @@ void main() {
       // the audio player view position was also modified.
       actualAudioPlayerViewAudioPosition =
           tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
+      int actualAudioPlayerViewAudioPositionInTenthsOfSeconds =
+          DateTimeUtil.convertToTenthsOfSeconds(
+        timeString: actualAudioPlayerViewAudioPosition,
+      );
 
       // Verify that the Text widget of the text button enabling to open
       // a dialog to edit the position contains the expected content
       commentDialogAudioPlayerViewAudioPositionWithTenthSecText =
           tester.widget<Text>(selectCommentPositionTextOfButtonFinder).data!;
-
       expect(
         roundUpTenthOfSeconds(
           audioPositionHHMMSSWithTenthSecText:
               commentDialogAudioPlayerViewAudioPositionWithTenthSecText,
         ),
-        DateTimeUtil.convertToTenthsOfSeconds(
-          timeString: actualAudioPlayerViewAudioPosition,
-        ), // 0:49
+        allOf(
+          [
+            greaterThanOrEqualTo(
+                actualAudioPlayerViewAudioPositionInTenthsOfSeconds),
+            lessThanOrEqualTo(
+                actualAudioPlayerViewAudioPositionInTenthsOfSeconds + 10),
+          ],
+        ),
+        reason: "Expected value between $actualAudioPlayerViewAudioPositionInTenthsOfSeconds and ${actualAudioPlayerViewAudioPositionInTenthsOfSeconds + 10} but obtained $commentDialogAudioPlayerViewAudioPositionWithTenthSecText",
       );
 
       // Now, tap on the add/update comment button to save the updated

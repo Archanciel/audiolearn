@@ -387,7 +387,7 @@ void main() {
         find.byKey(const Key('playlistUrlTextField')),
         youtubePlaylistUrl,
       );
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // Ensure the url text field contains the entered url
       TextField urlTextField =
