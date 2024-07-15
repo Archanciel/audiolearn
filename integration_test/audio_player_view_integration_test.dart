@@ -3954,7 +3954,7 @@ void main() {
       // Verify the no selected audio title is displayed
       expect(find.text("No audio selected"), findsOneWidget);
 
-      // Now tap on playlist button to display the playlists
+      // Now tap on audio player view playlist button to display the playlists
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
@@ -3964,20 +3964,19 @@ void main() {
       // await tester.pumpAndSettle();
 
       // Find the S8 audio playlist ListTile Text widget
-      final Finder youtubePlaylistListTileTextWidgetFinder =
+      Finder youtubePlaylistListTileTextWidgetFinder =
           find.text(youtubePlaylistTitle);
 
       // Then obtain the playlist ListTile widget enclosing the Text widget
       // by finding its ancestor
-      final Finder youtubePlaylistListTileWidgetFinder = find.ancestor(
+      Finder youtubePlaylistListTileWidgetFinder = find.ancestor(
         of: youtubePlaylistListTileTextWidgetFinder,
         matching: find.byType(ListTile),
       );
 
       // Now find the Checkbox widget located in the playlist ListTile
       // and tap on it to select the playlist
-      final Finder youtubePlaylistListTileCheckboxWidgetFinder =
-          find.descendant(
+      Finder youtubePlaylistListTileCheckboxWidgetFinder = find.descendant(
         of: youtubePlaylistListTileWidgetFinder,
         matching: find.byType(Checkbox),
       );
@@ -3992,10 +3991,47 @@ void main() {
           find.byKey(const Key('audioPlayerViewCurrentAudioTitle'));
       String audioTitleWithDurationString =
           tester.widget<Text>(audioPlayerViewAudioTitleFinder).data!;
-          
+
       expect(
         audioTitleWithDurationString,
         "$alreadyCommentedAudioTitle\n1:17:54",
+      );
+
+      // Now return to the playlist download view
+      audioPlayerNavButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(audioPlayerNavButton);
+      await tester.pumpAndSettle();
+
+      // Verify that the S8 audio playlist is now selected in the playlist
+      // download view since it was selected in the audio player view.
+
+      // Find the S8 audio playlist ListTile Text widget
+      youtubePlaylistListTileTextWidgetFinder = find.text(youtubePlaylistTitle);
+
+      // Then obtain the playlist ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      youtubePlaylistListTileWidgetFinder = find.ancestor(
+        of: youtubePlaylistListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the Checkbox widget located in the playlist ListTile
+      // and tap on it to select the playlist
+      youtubePlaylistListTileCheckboxWidgetFinder = find.descendant(
+        of: youtubePlaylistListTileWidgetFinder,
+        matching: find.byType(Checkbox),
+      );
+
+      final Checkbox checkboxWidget =
+          tester.widget<Checkbox>(youtubePlaylistListTileCheckboxWidgetFinder);
+
+      expect(checkboxWidget.value!, true);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
   });
