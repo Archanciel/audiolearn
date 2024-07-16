@@ -3954,6 +3954,14 @@ void main() {
       // Verify the no selected audio title is displayed
       expect(find.text("No audio selected"), findsOneWidget);
 
+      // Verify the displayed playlist title
+      Text selectedPlaylistTitleText =
+          tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
+      expect(
+        selectedPlaylistTitleText.data,
+        emptyPlaylistTitle,
+      );
+
       // Now tap on audio player view playlist button to display the playlists
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
@@ -3997,6 +4005,14 @@ void main() {
         "$alreadyCommentedAudioTitle\n1:17:54",
       );
 
+      // Verify the displayed playlist title
+      selectedPlaylistTitleText =
+          tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
+      expect(
+        selectedPlaylistTitleText.data,
+        youtubePlaylistTitle,
+      );
+
       // Now return to the playlist download view
       audioPlayerNavButton =
           find.byKey(const ValueKey('playlistDownloadViewIconButton'));
@@ -4017,7 +4033,8 @@ void main() {
       );
 
       // Now find the Checkbox widget located in the playlist ListTile
-      // and tap on it to select the playlist
+      // and verify that it is checked
+
       youtubePlaylistListTileCheckboxWidgetFinder = find.descendant(
         of: youtubePlaylistListTileWidgetFinder,
         matching: find.byType(Checkbox),
@@ -4027,6 +4044,32 @@ void main() {
           tester.widget<Checkbox>(youtubePlaylistListTileCheckboxWidgetFinder);
 
       expect(checkboxWidget.value!, true);
+
+      // Verify the displayed playlist title
+      selectedPlaylistTitleText =
+          tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
+      expect(
+        selectedPlaylistTitleText.data,
+        youtubePlaylistTitle,
+      );
+
+      // Go again to the audio player view
+      audioPlayerNavButton =
+          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+      await tester.tap(audioPlayerNavButton);
+      await tester.pumpAndSettle();
+
+      // Verify the displayed audio title
+
+      audioPlayerViewAudioTitleFinder =
+          find.byKey(const Key('audioPlayerViewCurrentAudioTitle'));
+      audioTitleWithDurationString =
+          tester.widget<Text>(audioPlayerViewAudioTitleFinder).data!;
+
+      expect(
+        audioTitleWithDurationString,
+        "$alreadyCommentedAudioTitle\n1:17:54",
+      );
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
