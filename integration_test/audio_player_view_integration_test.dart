@@ -2885,8 +2885,7 @@ void main() {
 
       expect(
         roundUpTenthOfSeconds(
-          audioPositionHHMMSSWithTenthSecText:
-              retrievedPositionTimeString,
+          audioPositionHHMMSSWithTenthSecText: retrievedPositionTimeString,
         ),
         allOf(
           [
@@ -2896,7 +2895,8 @@ void main() {
                 actualAudioPlayerViewAudioPositionInTenthsOfSeconds),
           ],
         ),
-        reason: "Expected value between $actualAudioPlayerViewAudioPositionInTenthsOfSeconds and ${actualAudioPlayerViewAudioPositionInTenthsOfSeconds + 10} but obtained $retrievedPositionTimeString",
+        reason:
+            "Expected value between $actualAudioPlayerViewAudioPositionInTenthsOfSeconds and ${actualAudioPlayerViewAudioPositionInTenthsOfSeconds + 10} but obtained $retrievedPositionTimeString",
       );
 
       // Purge the test playlist directory so that the created test
@@ -3968,6 +3968,12 @@ void main() {
         selectedPlaylistTitle: emptyPlaylistTitle,
       );
 
+      // Verify that the playlist list is displayed
+      expect(
+        find.byKey(const Key('expandable_playlist_list')),
+        findsOneWidget,
+      );
+
       // Go to the audio player view
       Finder audioPlayerNavButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
@@ -3990,8 +3996,9 @@ void main() {
       // the displayed audio title is the current playable audio title of
       // the S8 audio playlist, i.e. "Interview de Chat GPT  - IA,
       // intelligence, philosophie, géopolitique, post-vérité...".
-      await verifyAudioPlayerViewPlaylistSelection(
+      await verifyAudioPlayerViewPlaylistSelectionImpact(
         tester: tester,
+        playlistDownloadViewCurrentlySelectedPlaylistTitle: emptyPlaylistTitle,
         playlistToSelectTitle: youtubePlaylistTitle,
         playlistCurrentlyPlayableAudioTitleWithDuration:
             "$alreadyCommentedAudioTitle\n1:17:54",
@@ -4005,40 +4012,17 @@ void main() {
 
       // Verify that the S8 audio playlist is now selected in the playlist
       // download view since it was selected in the audio player view.
-
-      // Find the S8 audio playlist ListTile Text widget
-      Finder youtubePlaylistListTileTextWidgetFinder =
-          find.text(youtubePlaylistTitle);
-
-      // Then obtain the playlist ListTile widget enclosing the Text widget
-      // by finding its ancestor
-      Finder youtubePlaylistListTileWidgetFinder = find.ancestor(
-        of: youtubePlaylistListTileTextWidgetFinder,
-        matching: find.byType(ListTile),
+      verifyPlaylistIsSelectedInPlaylistDownloadView(
+        tester: tester,
+        selectedPlaylistTitle: youtubePlaylistTitle,
       );
 
-      // Now find the Checkbox widget located in the playlist ListTile
-      // and verify that it is checked
+      // Now close the playlist download view playlists list. The selected
+      // playlist remains S8 audio
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
 
-      Finder youtubePlaylistListTileCheckboxWidgetFinder = find.descendant(
-        of: youtubePlaylistListTileWidgetFinder,
-        matching: find.byType(Checkbox),
-      );
-
-      final Checkbox checkboxWidget =
-          tester.widget<Checkbox>(youtubePlaylistListTileCheckboxWidgetFinder);
-
-      expect(checkboxWidget.value!, true);
-
-      // Verify the displayed playlist title
-      selectedPlaylistTitleText =
-          tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
-      expect(
-        selectedPlaylistTitleText.data,
-        youtubePlaylistTitle,
-      );
-
-      // Go again to the audio player view
+      // And go again to the audio player view
       audioPlayerNavButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(audioPlayerNavButton);
@@ -4060,11 +4044,36 @@ void main() {
       // the audio player view playlist selection button. Then verify that
       // the displayed audio title is the current playable audio title of
       // the local audio playlist, i.e. "morning _ cinematic video".
-      await verifyAudioPlayerViewPlaylistSelection(
+      await verifyAudioPlayerViewPlaylistSelectionImpact(
         tester: tester,
+        playlistDownloadViewCurrentlySelectedPlaylistTitle:
+            youtubePlaylistTitle,
         playlistToSelectTitle: localPlaylistTitle,
         playlistCurrentlyPlayableAudioTitleWithDuration:
             "$localPlaylistCurrentPlayableAudioTitle\n0:59",
+      );
+
+      // Now return to the playlist download view
+      audioPlayerNavButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(audioPlayerNavButton);
+      await tester.pumpAndSettle();
+
+      // Verify that the playlist download view list of playlists which
+      // was closed before going to the audio player view is still closed
+      expect(find.byKey(const Key('expandable_playlist_list')), findsNothing);
+
+      // Now open the playlist download view playlists list to verify that
+      // the selected playlist is now the 'local' playlist selected in
+      // the audio player view
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Verify that the 'local' playlist is now selected in the playlist
+      // download view since it was selected in the audio player view.
+      verifyPlaylistIsSelectedInPlaylistDownloadView(
+        tester: tester,
+        selectedPlaylistTitle: localPlaylistTitle,
       );
 
       // Purge the test playlist directory so that the created test
@@ -6479,6 +6488,46 @@ void main() {
   });
 }
 
+void verifyPlaylistIsSelectedInPlaylistDownloadView({
+  required WidgetTester tester,
+  required String selectedPlaylistTitle,
+}) {
+  // Verify that the selectedPlaylistTitle playlist is now selected in the
+  // playlist download view since it was selected in the audio player view.
+
+  // Find the S8 audio playlist ListTile Text widget
+  Finder selectedPlaylistListTileTextWidgetFinder =
+      find.text(selectedPlaylistTitle);
+
+  // Then obtain the playlist ListTile widget enclosing the Text widget
+  // by finding its ancestor
+  Finder selectedPlaylistListTileWidgetFinder = find.ancestor(
+    of: selectedPlaylistListTileTextWidgetFinder,
+    matching: find.byType(ListTile),
+  );
+
+  // Now find the Checkbox widget located in the playlist ListTile
+  // and verify that it is checked
+
+  Finder selectedPlaylistListTileCheckboxWidgetFinder = find.descendant(
+    of: selectedPlaylistListTileWidgetFinder,
+    matching: find.byType(Checkbox),
+  );
+
+  final Checkbox checkboxWidget =
+      tester.widget<Checkbox>(selectedPlaylistListTileCheckboxWidgetFinder);
+
+  expect(checkboxWidget.value!, true);
+
+  // Verify the displayed playlist title
+  Text selectedPlaylistTitleText =
+      tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
+  expect(
+    selectedPlaylistTitleText.data,
+    selectedPlaylistTitle,
+  );
+}
+
 Future<void> selectAudioInAudioPlayableDialogWidget({
   required WidgetTester tester,
   required String audioToSelectTitle,
@@ -7480,13 +7529,50 @@ Duration parseDuration(String hhmmString) {
   return Duration(hours: hours, minutes: minutes);
 }
 
-Future<void> verifyAudioPlayerViewPlaylistSelection(
+Future<void> verifyAudioPlayerViewPlaylistSelectionImpact(
     {required WidgetTester tester,
+    required String playlistDownloadViewCurrentlySelectedPlaylistTitle,
     required String playlistToSelectTitle,
     required String playlistCurrentlyPlayableAudioTitleWithDuration}) async {
   // Now tap on audio player view playlist button to display the playlists
   await tester.tap(find.byKey(const Key('playlist_toggle_button')));
   await tester.pumpAndSettle();
+
+  // Verify that the playlist list is displayed
+  expect(
+    find.byKey(const Key('expandable_playlist_list')),
+    findsOneWidget,
+  );
+
+  // Verify that the playlist download view currently selected playlist is
+  // also selected in the playlist download view.
+
+  // Find the currently selected playlist ListTile Text widget
+  Finder playlistDownloadViewCurrentlySelectedPlaylistListTileTextWidgetFinder =
+      find.text(playlistDownloadViewCurrentlySelectedPlaylistTitle);
+
+  // Then obtain the playlist ListTile widget enclosing the Text widget
+  // by finding its ancestor
+  Finder playlistDownloadViewCurrentlySelectedPlaylistListTileWidgetFinder =
+      find.ancestor(
+    of: playlistDownloadViewCurrentlySelectedPlaylistListTileTextWidgetFinder,
+    matching: find.byType(ListTile),
+  );
+
+  // Now find the Checkbox widget located in the playlist ListTile
+  // and verify that it is checked
+
+  Finder
+      playlistDownloadViewCurrentlySelectedPlaylistListTileCheckboxWidgetFinder =
+      find.descendant(
+    of: playlistDownloadViewCurrentlySelectedPlaylistListTileWidgetFinder,
+    matching: find.byType(Checkbox),
+  );
+
+  final Checkbox checkboxWidget = tester.widget<Checkbox>(
+      playlistDownloadViewCurrentlySelectedPlaylistListTileCheckboxWidgetFinder);
+
+  expect(checkboxWidget.value!, true);
 
   // Select the passed playlistToSelectTitle playlist
 
@@ -7511,6 +7597,13 @@ Future<void> verifyAudioPlayerViewPlaylistSelection(
   // Tap the ListTile Playlist checkbox to select it
   await tester.tap(playlistToSelectListTileCheckboxWidgetFinder);
   await tester.pumpAndSettle();
+
+  // Verify that the audio player view list of playlists was closed
+  // after selecting the playlist
+  expect(
+    find.byKey(const Key('expandable_playlist_list')),
+    findsNothing,
+  );
 
   // Verify the displayed selected playlist current playable audio title
 
