@@ -5204,7 +5204,7 @@ void main() {
       // First, tap on the copied audio ListTile to open the
       // audio player view
       await tester.tap(targetAudioListTileWidgetFinder);
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      await tester.pumpAndSettle(const Duration(milliseconds: 300));
 
       // Verify that the comment icon button is highlighted. This indiquates
       // that a comment exist for the audio
