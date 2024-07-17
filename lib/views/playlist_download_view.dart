@@ -144,97 +144,95 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             playlistListVMlistenFalse: playlistListVMlistenFalse,
             playlistListVMlistenTrue: playlistListVMlistenTrue,
             warningMessageVMlistenFalse: warningMessageVMlistenFalse),
-        _buildExpandedPlaylistList(),
+        _buildExpandedPlaylistList(
+          playlistListVMlistenFalse: playlistListVMlistenFalse,
+        ),
         _buildExpandedAudioList(
+          playlistListVMlistenFalse: playlistListVMlistenFalse,
           warningMessageVMlistenFalse: warningMessageVMlistenFalse,
         ),
       ],
     );
   }
 
-  Expanded _buildExpandedAudioList({
+  Widget _buildExpandedAudioList({
+    required PlaylistListVM playlistListVMlistenFalse,
     required WarningMessageVM warningMessageVMlistenFalse,
   }) {
-    return Expanded(
-      child: Consumer<PlaylistListVM>(
-        builder: (context, expandablePlaylistListVM, child) {
-          if (_wasSortFilterAudioSettingsApplied) {
-            // if the sort and filter audio settings have been applied
-            // then the sortedFilteredSelectedPlaylistsPlayableAudios
-            // list is used to display the audio list. Otherwise, even
-            // if the sort and filter audio settings have been applied,
-            // the possibly saved sorted and filtered options of the
-            // selected playlist are used to display the audio list !
-            _selectedPlaylistsPlayableAudios = expandablePlaylistListVM
-                .sortedFilteredSelectedPlaylistsPlayableAudios!;
-            _wasSortFilterAudioSettingsApplied = false;
-          } else {
-            _selectedPlaylistsPlayableAudios = expandablePlaylistListVM
-                .getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters(
-              audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
-            );
-          }
-          if (expandablePlaylistListVM.isAudioListFilteredAndSorted()) {
-            // Scroll the sublist to the top when the audio
-            // list is filtered and/or sorted
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              if (_scrollController.hasClients) {
-                _scrollController.animateTo(
-                  0,
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeOut,
-                );
-              }
-            });
-          }
+    if (_wasSortFilterAudioSettingsApplied) {
+      // if the sort and filter audio settings have been applied
+      // then the sortedFilteredSelectedPlaylistsPlayableAudios
+      // list is used to display the audio list. Otherwise, even
+      // if the sort and filter audio settings have been applied,
+      // the possibly saved sorted and filtered options of the
+      // selected playlist are used to display the audio list !
+      _selectedPlaylistsPlayableAudios = playlistListVMlistenFalse
+          .sortedFilteredSelectedPlaylistsPlayableAudios!;
+      _wasSortFilterAudioSettingsApplied = false;
+    } else {
+      _selectedPlaylistsPlayableAudios = playlistListVMlistenFalse
+          .getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters(
+        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+      );
+    }
+    if (playlistListVMlistenFalse.isAudioListFilteredAndSorted()) {
+      // Scroll the sublist to the top when the audio
+      // list is filtered and/or sorted
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (_scrollController.hasClients) {
+          _scrollController.animateTo(
+            0,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeOut,
+          );
+        }
+      });
+    }
 
-          return ListView.builder(
-            key: const Key('audio_list'),
-            controller: _scrollController,
-            itemCount: _selectedPlaylistsPlayableAudios.length,
-            itemBuilder: (BuildContext context, int index) {
-              final audio = _selectedPlaylistsPlayableAudios[index];
-              return AudioListItemWidget(
-                audio: audio,
-                warningMessageVM: warningMessageVMlistenFalse,
-                onPageChangedFunction: widget.onPageChangedFunction,
-              );
-            },
+    return Expanded(
+      child: ListView.builder(
+        key: const Key('audio_list'),
+        controller: _scrollController,
+        itemCount: _selectedPlaylistsPlayableAudios.length,
+        itemBuilder: (BuildContext context, int index) {
+          final audio = _selectedPlaylistsPlayableAudios[index];
+          return AudioListItemWidget(
+            audio: audio,
+            warningMessageVM: warningMessageVMlistenFalse,
+            onPageChangedFunction: widget.onPageChangedFunction,
           );
         },
       ),
     );
   }
 
-  Consumer<PlaylistListVM> _buildExpandedPlaylistList() {
-    return Consumer<PlaylistListVM>(
-      builder: (context, expandablePlaylistListVM, child) {
-        if (expandablePlaylistListVM.isListExpanded) {
-          List<Playlist> upToDateSelectablePlaylists =
-              expandablePlaylistListVM.getUpToDateSelectablePlaylists();
-          return Expanded(
-            child: ListView.builder(
-              key: const Key('expandable_playlist_list'),
-              itemCount: upToDateSelectablePlaylists.length,
-              itemBuilder: (context, index) {
-                Playlist playlist = upToDateSelectablePlaylists[index];
-                return Builder(
-                  builder: (listTileContext) {
-                    return PlaylistListItemWidget(
-                      settingsDataService: widget.settingsDataService,
-                      playlist: playlist,
-                      index: index,
-                    );
-                  },
+  Widget _buildExpandedPlaylistList({
+    required PlaylistListVM playlistListVMlistenFalse,
+  }) {
+    if (playlistListVMlistenFalse.isListExpanded) {
+      List<Playlist> upToDateSelectablePlaylists =
+          playlistListVMlistenFalse.getUpToDateSelectablePlaylists();
+      return Expanded(
+        child: ListView.builder(
+          key: const Key('expandable_playlist_list'),
+          itemCount: upToDateSelectablePlaylists.length,
+          itemBuilder: (context, index) {
+            Playlist playlist = upToDateSelectablePlaylists[index];
+            return Builder(
+              builder: (listTileContext) {
+                return PlaylistListItemWidget(
+                  settingsDataService: widget.settingsDataService,
+                  playlist: playlist,
+                  index: index,
                 );
               },
-            ),
-          );
-        } else {
-          return const SizedBox.shrink();
-        }
-      },
-    );
+            );
+          },
+        ),
+      );
+    } else {
+      return const SizedBox.shrink();
+    }
   }
 
   Consumer<AudioDownloadVM> _buildDisplayDownloadProgressionInfo() {
