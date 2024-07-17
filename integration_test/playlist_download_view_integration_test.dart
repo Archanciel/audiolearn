@@ -280,7 +280,7 @@ void main() {
 
       // Now find the delete button of the delete playlist confirm
       // dialog and tap on it
-      await tester.tap(find.byKey(const Key('confirmButtonKey')));
+      await tester.tap(find.byKey(const Key('confirmButton')));
       await tester.pumpAndSettle();
 
       // Check that the ordered playlist titles list in the settings
@@ -1005,7 +1005,7 @@ void main() {
 
       // Now find the delete button of the delete playlist confirm
       // dialog and tap on it
-      await tester.tap(find.byKey(const Key('confirmButtonKey')));
+      await tester.tap(find.byKey(const Key('confirmButton')));
       await tester.pumpAndSettle();
 
       // Check that the ordered playlist titles list in the settings
@@ -3359,10 +3359,10 @@ void main() {
       await tester.pumpAndSettle();
 
       // Now find the copy audio popup menu item and tap on it
-      Finder popupCopyMenuItem =
+      Finder popupMoveMenuItem =
           find.byKey(const Key("popup_menu_copy_audio_to_playlist"));
 
-      await tester.tap(popupCopyMenuItem);
+      await tester.tap(popupMoveMenuItem);
       await tester.pumpAndSettle();
 
       // Check the value of the select one playlist AlertDialog
@@ -3581,11 +3581,11 @@ void main() {
       await tester.tap(sourceAudioListTileLeadingMenuIconButton);
       await tester.pumpAndSettle();
 
-      // Now find the copy audio popup menu item and tap on it
-      popupCopyMenuItem =
+      // Now find the move audio popup menu item and tap on it
+      popupMoveMenuItem =
           find.byKey(const Key("popup_menu_move_audio_to_playlist"));
 
-      await tester.tap(popupCopyMenuItem);
+      await tester.tap(popupMoveMenuItem);
       await tester.pumpAndSettle();
 
       // Check the value of the select one playlist AlertDialog
@@ -3657,11 +3657,11 @@ void main() {
       await tester.tap(sourceAudioListTileLeadingMenuIconButton);
       await tester.pumpAndSettle();
 
-      // Now find the copy audio popup menu item and tap on it
-      popupCopyMenuItem =
+      // Now find the move audio popup menu item and tap on it
+      popupMoveMenuItem =
           find.byKey(const Key("popup_menu_move_audio_to_playlist"));
 
-      await tester.tap(popupCopyMenuItem);
+      await tester.tap(popupMoveMenuItem);
       await tester.pumpAndSettle();
 
       // Check the value of the select one playlist AlertDialog
@@ -3822,10 +3822,10 @@ void main() {
       await tester.pumpAndSettle();
 
       // Now find the copy audio popup menu item and tap on it
-      Finder popupCopyMenuItem =
+      Finder popupMoveMenuItem =
           find.byKey(const Key("popup_menu_copy_audio_to_playlist"));
 
-      await tester.tap(popupCopyMenuItem);
+      await tester.tap(popupMoveMenuItem);
       await tester.pumpAndSettle();
 
       // Check the value of the select one playlist AlertDialog
@@ -4018,7 +4018,7 @@ void main() {
 
       // Confirm the deletion of the audio and close the confirm
       // dialog by tapping on the Confirm button
-      await tester.tap(find.byKey(const Key('confirmButtonKey')));
+      await tester.tap(find.byKey(const Key('confirmButton')));
       await tester.pumpAndSettle();
 
       // Now verify that the target playlist directory no longer
@@ -4097,10 +4097,10 @@ void main() {
       await tester.pumpAndSettle();
 
       // Now find the move audio popup menu item and tap on it
-      popupCopyMenuItem =
+      popupMoveMenuItem =
           find.byKey(const Key("popup_menu_move_audio_to_playlist"));
 
-      await tester.tap(popupCopyMenuItem);
+      await tester.tap(popupMoveMenuItem);
       await tester.pumpAndSettle();
 
       // Check the value of the select one playlist AlertDialog
@@ -4421,7 +4421,7 @@ void main() {
 
       // Confirm the deletion of the audio and close the confirm
       // dialog by tapping on the Confirm button
-      await tester.tap(find.byKey(const Key('confirmButtonKey')));
+      await tester.tap(find.byKey(const Key('confirmButton')));
       await tester.pumpAndSettle();
 
       // Now verify that the target playlist directory no longer
@@ -9150,7 +9150,7 @@ void main() {
 
       // Now find the delete button of the delete playlist confirm
       // dialog and tap on it
-      await tester.tap(find.byKey(const Key('confirmButtonKey')));
+      await tester.tap(find.byKey(const Key('confirmButton')));
       await tester.pumpAndSettle();
 
       // Reload the settings from the json file.
@@ -9488,7 +9488,7 @@ void main() {
 
       // Now find the delete button of the delete playlist confirm
       // dialog and tap on it
-      await tester.tap(find.byKey(const Key('confirmButtonKey')));
+      await tester.tap(find.byKey(const Key('confirmButton')));
       await tester.pumpAndSettle();
 
       // Reload the settings from the json file.
@@ -9845,7 +9845,7 @@ void main() {
 
       // Now find the delete button of the delete playlist confirm
       // dialog and tap on it
-      await tester.tap(find.byKey(const Key('confirmButtonKey')));
+      await tester.tap(find.byKey(const Key('confirmButton')));
       await tester.pumpAndSettle();
 
       // Reload the settings from the json file.
@@ -10016,7 +10016,7 @@ void main() {
 
       // Now find the delete button of the delete playlist confirm
       // dialog and tap on it
-      await tester.tap(find.byKey(const Key('confirmButtonKey')));
+      await tester.tap(find.byKey(const Key('confirmButton')));
       await tester.pumpAndSettle();
 
       // Reload the settings from the json file.
@@ -10630,7 +10630,7 @@ void main() {
 
       // Now find the delete button of the delete playlist confirm
       // dialog and tap on it
-      await tester.tap(find.byKey(const Key('confirmButtonKey')));
+      await tester.tap(find.byKey(const Key('confirmButton')));
       await tester.pumpAndSettle();
 
       // since the Youtube playlist was deleted, verify that all
@@ -10769,7 +10769,7 @@ void main() {
 
       // Now find the delete button of the delete playlist confirm
       // dialog and tap on it
-      await tester.tap(find.byKey(const Key('confirmButtonKey')));
+      await tester.tap(find.byKey(const Key('confirmButton')));
       await tester.pumpAndSettle();
 
       // since the local playlist was deleted, verify that all
@@ -11161,7 +11161,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Click on the confirm button to apply deletion
-      await tester.tap(find.byKey(const Key('confirmButtonKey')));
+      await tester.tap(find.byKey(const Key('confirmButton')));
       await tester.pumpAndSettle();
 
       // Open again the popup menu
@@ -11349,7 +11349,7 @@ void main() {
           findsOneWidget);
 
       // Click on the confirm button to execute deletion
-      await tester.tap(find.byKey(const Key('confirmButtonKey')));
+      await tester.tap(find.byKey(const Key('confirmButton')));
       await tester.pumpAndSettle();
 
       // Verify that the left sort history icon button is now disabled
