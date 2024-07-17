@@ -1451,55 +1451,6 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets(
-        '''Opening AudioPlayerView by clicking on AudioPlayerView icon button
-           in situation where no playlist is selected. Then select an empty
-           playlist and open AudioPlayerView by clicking on AudioPlayerView
-           icon button.''', (WidgetTester tester) async {
-      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-        tester: tester,
-        savedTestDataDirName: 'audio_player_view_no_playlist_selected_test',
-        selectedPlaylistTitle: null, // no playlist selected
-      );
-
-      // Now we tap on the AudioPlayerView icon button to open
-      // AudioPlayerView screen which displays the current
-      // playable audio which is paused
-
-      // Assuming you have a button to navigate to the AudioPlayerView
-      final Finder audioPlayerNavButton =
-          find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
-      await tester.pumpAndSettle();
-
-      // Verify the no selected audio title is displayed
-      final Finder noAudioTitleFinder = find.text("No audio selected");
-      expect(noAudioTitleFinder, findsOneWidget);
-
-      await IntegrationTestUtil.verifyTopButtonsState(
-        tester: tester,
-        isEnabled: false,
-        audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
-        setAudioSpeedTextButtonValue: '1.00x',
-      );
-
-      // Verify that the playlist title Text is empty since no playlist
-      // is selected
-      final Text selectedPlaylistTitleText =
-          tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
-      expect(selectedPlaylistTitleText.data, '');
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
-      );
-    });
-    testWidgets(
-        '''Opening AudioPlayerView by clicking on AudioPlayerView icon button
-           in situation where no playlist is selected. Then select a playlist
-           with no selected audio and open AudioPlayerView by clicking on
-           AudioPlayerView icon button.''', (WidgetTester tester) async {});
   });
   group('set play speed tests', () {
     testWidgets(
@@ -4252,6 +4203,111 @@ void main() {
         ),
         reason:
             "Expected value between $actualAudioPlayerViewAudioPositionInTenthsOfSeconds and ${actualAudioPlayerViewAudioPositionInTenthsOfSeconds + 10} but obtained $retrievedPositionTimeString",
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets('''Go to audioplayer view while no playlist is selected and
+                   check a playlist in order to select its currently playable
+                   audio. Then, go back to download playlist view and verify
+                   the selected playlist.''', (WidgetTester tester) async {
+      const String emptyPlaylistTitle = 'Empty'; // Youtube playlist
+      const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+      const String alreadyCommentedAudioTitle =
+          "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_comment_test',
+        selectedPlaylistTitle: emptyPlaylistTitle,
+      );
+
+      // Unselect the 'Empty' playlist
+
+      // Find the playlist to select ListTile Text widget
+      Finder playlistToSelectListTileTextWidgetFinder = find.text(emptyPlaylistTitle);
+
+      // Then obtain the playlist ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      Finder playlistToSelectListTileWidgetFinder = find.ancestor(
+        of: playlistToSelectListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the Checkbox widget located in the playlist ListTile
+      // and tap on it to select the playlist
+      Finder playlistToSelectListTileCheckboxWidgetFinder = find.descendant(
+        of: playlistToSelectListTileWidgetFinder,
+        matching: find.byType(Checkbox),
+      );
+
+      // Tap the ListTile Playlist checkbox to unselect it.
+      await tester.tap(playlistToSelectListTileCheckboxWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // Then go to the audio player view
+      Finder audioPlayerNavButton =
+          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+      await tester.tap(audioPlayerNavButton);
+      await tester.pumpAndSettle();
+
+      // Verify the no selected audio title is displayed
+      expect(find.text("No audio selected"), findsOneWidget);
+
+      // Verify that the displayed playlist title is empty
+      Text selectedPlaylistTitleText =
+          tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
+      expect(
+        selectedPlaylistTitleText.data,
+        '',
+      );
+
+      // Now, in the audio player view, select the 'Empty' audio playlist using
+      // the audio player view playlist selection button.
+
+      // Select the 'Empty' playlist
+
+      // Now tap on audio player view playlist button to display the playlists
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Find the playlist to select ListTile Text widget
+      playlistToSelectListTileTextWidgetFinder =
+          find.text(emptyPlaylistTitle);
+
+      // Then obtain the playlist ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      playlistToSelectListTileWidgetFinder = find.ancestor(
+        of: playlistToSelectListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the Checkbox widget located in the playlist ListTile
+      // and tap on it to select the playlist
+      playlistToSelectListTileCheckboxWidgetFinder = find.descendant(
+        of: playlistToSelectListTileWidgetFinder,
+        matching: find.byType(Checkbox),
+      );
+
+      // Tap the ListTile Playlist checkbox to select it
+      await tester.tap(playlistToSelectListTileCheckboxWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // Now return to the playlist download view
+      audioPlayerNavButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(audioPlayerNavButton);
+      await tester.pumpAndSettle();
+
+      // Verify that the 'Empty playlist is now selected in the playlist
+      // download view since it was selected in the audio player view.
+      verifyPlaylistIsSelectedInPlaylistDownloadView(
+        tester: tester,
+        selectedPlaylistTitle: emptyPlaylistTitle,
       );
 
       // Purge the test playlist directory so that the created test
