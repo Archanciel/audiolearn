@@ -241,7 +241,7 @@
   "downloadSingleVideoButtonTooltip": "Download single video audio.",
   "addPlaylistButtonTooltip": "Add a YouTube or local playlist.",
   "stopDownloadingButtonTooltip": "Stop downloading ...",
-  "playlistToggleButtonTooltip": "Show/hide playlists.",
+  "playlistToggleButtonInPlaylistDownloadViewTooltip": "Show/hide playlists.",
   "downloadSelPlaylistsButtonTooltip": "Download audios of the selected playlist.",
   "audioOneSelectedDialogTitle": "Select an audio",
   "audioPositionLabel": "Audio position",
@@ -375,5 +375,6 @@
   "invalidValueTooSmall": "is below the minimal value",
   "confirmCommentedAudioDeletionTitle": "Confirm deletion of the commented audio \"{audioTitle}\"",
   "confirmCommentedAudioDeletionComment": "The audio contains {commentNumber} comment(s) which will be deleted as well. Confirm deletion ?",
-  "commentStartPositionTooltip": "Comment position in audio"
+  "commentStartPositionTooltip": "Comment position in audio",
+  "playlistToggleButtonInAudioPlayerViewTooltip": "Show/hide playlists. Then check a playlist to select its current listened audio."
 }

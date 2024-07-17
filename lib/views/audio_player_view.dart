@@ -45,7 +45,6 @@ class AudioPlayerView extends StatefulWidget {
 /// on Windows.
 class _AudioPlayerViewState extends State<AudioPlayerView>
     with WidgetsBindingObserver, ScreenMixin {
-      
   final double _audioIconSizeSmall = 35;
   final double _audioIconSizeMedium = 40;
   final double _audioIconSizeLarge = 80;
@@ -93,13 +92,13 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
   /// because it indicates the app is no longer in the foreground but
   /// still running. It is a suitable place to save the current state as
   /// the app might stay in this state for an extended period.
-  /// 
+  ///
   /// This state is reached when the smartphone screen turns off or when
   /// the user switches to another app.
   ///
   /// detached: This state indicates the app is being removed from memory,
   /// making it an appropriate place to save the state before termination.
-  /// 
+  ///
   /// This state is reached when the app is closed.
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -243,8 +242,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
               width: kGreaterButtonWidth,
               height: kNormalButtonHeight,
               child: Tooltip(
-                message:
-                    AppLocalizations.of(context)!.playlistToggleButtonTooltip,
+                message: AppLocalizations.of(context)!
+                    .playlistToggleButtonInAudioPlayerViewTooltip,
                 child: TextButton(
                   key: const Key('playlist_toggle_button'),
                   style: ButtonStyle(
@@ -739,9 +738,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                     overlayColor:
                         iconButtonTapModification, // Tap feedback color
                   ),
-                  icon: Icon(audioPlayerVM.isPlaying
-                      ? Icons.pause
-                      : Icons.play_arrow),
+                  icon: Icon(
+                      audioPlayerVM.isPlaying ? Icons.pause : Icons.play_arrow),
                 ),
               ),
             ],
@@ -905,8 +903,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
               ),
               Text(
                 key: const Key('audioPlayerViewAudioRemainingDuration'),
-                audioPlayerVM.currentAudioRemainingDuration
-                    .HHmmssZeroHH(),
+                audioPlayerVM.currentAudioRemainingDuration.HHmmssZeroHH(),
                 style: kSliderValueTextStyle,
               ),
             ],
@@ -936,8 +933,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                           child: IconButton(
                             key: const Key('audioPlayerViewRewind1mButton'),
                             iconSize: _audioIconSizeMedium,
-                            onPressed: () async => await audioPlayerVM
-                                .changeAudioPlayPosition(
+                            onPressed: () async =>
+                                await audioPlayerVM.changeAudioPlayPosition(
                               posNegPositionDurationChange:
                                   const Duration(minutes: -1),
                             ),
@@ -959,8 +956,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                           child: IconButton(
                             key: const Key('audioPlayerViewRewind10sButton'),
                             iconSize: _audioIconSizeMedium,
-                            onPressed: () async => await audioPlayerVM
-                                .changeAudioPlayPosition(
+                            onPressed: () async =>
+                                await audioPlayerVM.changeAudioPlayPosition(
                               posNegPositionDurationChange:
                                   const Duration(seconds: -10),
                             ),
@@ -982,8 +979,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                           child: IconButton(
                             key: const Key('audioPlayerViewForward10sButton'),
                             iconSize: _audioIconSizeMedium,
-                            onPressed: () async => await audioPlayerVM
-                                .changeAudioPlayPosition(
+                            onPressed: () async =>
+                                await audioPlayerVM.changeAudioPlayPosition(
                               posNegPositionDurationChange:
                                   const Duration(seconds: 10),
                             ),
@@ -1005,8 +1002,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                           child: IconButton(
                             key: const Key('audioPlayerViewForward1mButton'),
                             iconSize: _audioIconSizeMedium,
-                            onPressed: () async => await audioPlayerVM
-                                .changeAudioPlayPosition(
+                            onPressed: () async =>
+                                await audioPlayerVM.changeAudioPlayPosition(
                               posNegPositionDurationChange:
                                   const Duration(minutes: 1),
                             ),

@@ -306,7 +306,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           width: kGreaterButtonWidth,
           height: kNormalButtonHeight,
           child: Tooltip(
-            message: AppLocalizations.of(context)!.playlistToggleButtonTooltip,
+            message: AppLocalizations.of(context)!
+                .playlistToggleButtonInPlaylistDownloadViewTooltip,
             child: TextButton(
               key: const Key('playlist_toggle_button'),
               style: ButtonStyle(
