@@ -2528,7 +2528,7 @@ void main() {
       );
     });
   });
-  group('display audio list.', () {
+  group('Display of playlist audio list.', () {
     const Color fullyPlayedAudioTitleColor = kSliderThumbColorInDarkMode;
     const Color currentlyPlayingAudioTitleTextColor = Colors.white;
     const Color currentlyPlayingAudioTitleTextBackgroundColor = Colors.blue;
@@ -2800,10 +2800,10 @@ void main() {
     });
     testWidgets(
         '''Select an audio in the displayed audio list while current audio is
-           playing and then select the previous audio and check that the audio
-           position correspond to its position when the other audio was
-           selected in the displayed audio list''',
-        (WidgetTester tester) async {
+           playing and then select the previous audio. Then select again the
+           previously selected audio and verify that its position corresponds
+           to its position when the other audio was selected in the displayed
+           audio list''', (WidgetTester tester) async {
       const String audioPlayerSelectedPlaylistTitle =
           'S8 audio'; // Youtube playlist
       const String audioToPlayTitle =
@@ -2870,7 +2870,7 @@ void main() {
       // when the other audio was selected in the displayed audio list.
       //
       // Sometime, the audio position may be different by a 1 second due
-      // to thw way integration tests work !
+      // to the way integration tests work !
 
       // Retrieving the current audio position
       audioPlayerViewAudioPositionFinder =
@@ -4074,6 +4074,184 @@ void main() {
       verifyPlaylistIsSelectedInPlaylistDownloadView(
         tester: tester,
         selectedPlaylistTitle: localPlaylistTitle,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''While current audio is playing, select another playlist so that
+           the current audio is changed. Then select again the previously
+           selected playlist and verify that its current audio position
+           corresponds to its position when the other playlist was selected.''',
+        (WidgetTester tester) async {
+      const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+      const String localPlaylistTitle = 'local'; // Youtube playlist
+      const String localPlaylistCurrentPlayableAudioTitle =
+          "morning _ cinematic video";
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_comment_test',
+        selectedPlaylistTitle: 'Empty',
+      );
+
+      // Go to the audio player view
+      Finder audioPlayerNavButton =
+          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+      await tester.tap(audioPlayerNavButton);
+      await tester.pumpAndSettle();
+
+      // Now, in the audio player view, select the S8 audio playlist using
+      // the audio player view playlist selection button. Then start playing
+      // the current playable audio "Interview de Chat GPT  - IA, intelligence,
+      // philosophie, géopolitique, post-vérité...".
+
+      // Select the 'S8 audio' playlist
+
+      // Now tap on audio player view playlist button to display the playlists
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Find the playlist to select ListTile Text widget
+      Finder playlistToSelectListTileTextWidgetFinder =
+          find.text(youtubePlaylistTitle);
+
+      // Then obtain the playlist ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      Finder playlistToSelectListTileWidgetFinder = find.ancestor(
+        of: playlistToSelectListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the Checkbox widget located in the playlist ListTile
+      // and tap on it to select the playlist
+      Finder playlistToSelectListTileCheckboxWidgetFinder = find.descendant(
+        of: playlistToSelectListTileWidgetFinder,
+        matching: find.byType(Checkbox),
+      );
+
+      // Tap the ListTile Playlist checkbox to select it
+      await tester.tap(playlistToSelectListTileCheckboxWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // Now tap on the Play button to play the playlist current audio
+      await tester.tap(find.byIcon(Icons.play_arrow));
+      await tester.pumpAndSettle();
+
+      await Future.delayed(const Duration(seconds: 5));
+      await tester.pumpAndSettle();
+
+      // Memorizing the current audio position before selecting the 'local'
+      // playlist
+      Finder audioPlayerViewAudioPositionFinder =
+          find.byKey(const Key('audioPlayerViewAudioPosition'));
+      final String actualPositionTimeString =
+          tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
+
+      // Now select the 'local' playlist
+
+      // Now tap on audio player view playlist button to display the playlists
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Find the playlist to select ListTile Text widget
+      playlistToSelectListTileTextWidgetFinder = find.text(localPlaylistTitle);
+
+      // Then obtain the playlist ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      playlistToSelectListTileWidgetFinder = find.ancestor(
+        of: playlistToSelectListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the Checkbox widget located in the playlist ListTile
+      // and tap on it to select the playlist
+      playlistToSelectListTileCheckboxWidgetFinder = find.descendant(
+        of: playlistToSelectListTileWidgetFinder,
+        matching: find.byType(Checkbox),
+      );
+
+      // Tap the ListTile Playlist checkbox to select it. This causes
+      // stopping playing the current audio and displaying the 'local'
+      // playlist current audio
+      await tester.tap(playlistToSelectListTileCheckboxWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the displayed 'local' playlist current playable audio title
+
+      Finder audioPlayerViewAudioTitleFinder =
+          find.byKey(const Key('audioPlayerViewCurrentAudioTitle'));
+      String audioTitleWithDurationString =
+          tester.widget<Text>(audioPlayerViewAudioTitleFinder).data!;
+
+      expect(
+        audioTitleWithDurationString,
+        "$localPlaylistCurrentPlayableAudioTitle\n0:59",
+      );
+
+      // Then select again the 'S8 audio' playlist
+
+      // Now tap on audio player view playlist button to display the playlists
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Find the playlist to select ListTile Text widget
+      playlistToSelectListTileTextWidgetFinder =
+          find.text(youtubePlaylistTitle);
+
+      // Then obtain the playlist ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      playlistToSelectListTileWidgetFinder = find.ancestor(
+        of: playlistToSelectListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the Checkbox widget located in the playlist ListTile
+      // and tap on it to select the playlist
+      playlistToSelectListTileCheckboxWidgetFinder = find.descendant(
+        of: playlistToSelectListTileWidgetFinder,
+        matching: find.byType(Checkbox),
+      );
+
+      // Tap the ListTile Playlist checkbox to select it
+      await tester.tap(playlistToSelectListTileCheckboxWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // Now the previously playing audio is displayed. We verify that its
+      // audio position is the same as when the 'local'' playlist was selected.
+      //
+      // Sometime, the audio position may be different by a 1 second due to
+      // the way integration tests work !
+
+      // Retrieving the current audio position
+      audioPlayerViewAudioPositionFinder =
+          find.byKey(const Key('audioPlayerViewAudioPosition'));
+      final String retrievedPositionTimeString =
+          tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
+
+      int actualAudioPlayerViewAudioPositionInTenthsOfSeconds =
+          DateTimeUtil.convertToTenthsOfSeconds(
+        timeString: actualPositionTimeString,
+      );
+
+      expect(
+        roundUpTenthOfSeconds(
+          audioPositionHHMMSSWithTenthSecText: retrievedPositionTimeString,
+        ),
+        allOf(
+          [
+            greaterThanOrEqualTo(
+                actualAudioPlayerViewAudioPositionInTenthsOfSeconds - 10),
+            lessThanOrEqualTo(
+                actualAudioPlayerViewAudioPositionInTenthsOfSeconds),
+          ],
+        ),
+        reason:
+            "Expected value between $actualAudioPlayerViewAudioPositionInTenthsOfSeconds and ${actualAudioPlayerViewAudioPositionInTenthsOfSeconds + 10} but obtained $retrievedPositionTimeString",
       );
 
       // Purge the test playlist directory so that the created test
