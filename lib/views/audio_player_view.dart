@@ -188,7 +188,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
           areAudioButtonsEnabled: areAudioButtonsEnabled,
         ),
         _buildExpandedPlaylistList(
-          playlistListVMListenTrue: playlistListVMlistenTrue,
+          playlistListVMListenFalse: playlistListVMlistenFalse,
         ),
         _buildPlayButton(),
         Column(
@@ -1097,11 +1097,11 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
   }
 
   Widget _buildExpandedPlaylistList({
-    required PlaylistListVM playlistListVMListenTrue,
+    required PlaylistListVM playlistListVMListenFalse,
   }) {
-    if (playlistListVMListenTrue.isListExpanded) {
+    if (playlistListVMListenFalse.isListExpanded) {
       List<Playlist> upToDateSelectablePlaylists =
-          playlistListVMListenTrue.getUpToDateSelectablePlaylists();
+          playlistListVMListenFalse.getUpToDateSelectablePlaylists();
       return Expanded(
         child: ListView.builder(
           key: const Key('expandable_playlist_list'),
