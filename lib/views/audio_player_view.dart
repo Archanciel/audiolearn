@@ -185,7 +185,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
           context: context,
           themeProviderVM: themeProviderVMlistenFalse,
           playlistListVM: playlistListVMlistenFalse,
-          audioPlayerVM: audioPlayerVMlistenTrue,
+          audioPlayerVMlistenTrue: audioPlayerVMlistenTrue,
           areAudioButtonsEnabled: areAudioButtonsEnabled,
         ),
         _buildExpandedPlaylistList(
@@ -229,7 +229,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     required BuildContext context,
     required ThemeProviderVM themeProviderVM,
     required PlaylistListVM playlistListVM,
-    required AudioPlayerVM audioPlayerVM,
+    required AudioPlayerVM audioPlayerVMlistenTrue,
     required bool areAudioButtonsEnabled,
   }) {
     return Row(
@@ -290,7 +290,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
             ),
             _buildCommentsInkWellButton(
               context: context,
-              audioPlayerVMlistenTrue: audioPlayerVM,
+              audioPlayerVMlistenTrue: audioPlayerVMlistenTrue,
               areAudioButtonsEnabled: areAudioButtonsEnabled,
             ),
             _buildAudioPopupMenuButton(
