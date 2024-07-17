@@ -535,7 +535,8 @@ class MockAppLocalizations extends AppLocalizations {
   String get stopDownloadingButtonTooltip => 'Stop downloading';
 
   @override
-  String get playlistToggleButtonTooltip => 'Show/hide playlists';
+  String get playlistToggleButtonInPlaylistDownloadViewTooltip =>
+      'Show/hide playlists';
 
   @override
   String get downloadSelPlaylistsButtonTooltip =>
@@ -1120,4 +1121,8 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get commentStartPositionTooltip => "Comment start position";
+
+  @override
+  String get playlistToggleButtonInAudioPlayerViewTooltip =>
+      "Show/hide playlists. Then select a playlist to display its current listened audio.";
 }
