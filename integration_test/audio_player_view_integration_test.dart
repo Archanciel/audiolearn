@@ -3807,7 +3807,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Click on the confirm button to cause deletion
-      await tester.tap(find.byKey(const Key('confirmButtonKey')));
+      await tester.tap(find.byKey(const Key('confirmButton')));
       await tester.pumpAndSettle();
 
       // Open again the popup menu
@@ -4217,7 +4217,7 @@ void main() {
                    audio. Then, go back to download playlist view and verify
                    the selected playlist.''', (WidgetTester tester) async {
       const String emptyPlaylistTitle = 'Empty'; // Youtube playlist
-          "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
+      "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
@@ -4228,7 +4228,8 @@ void main() {
       // Unselect the 'Empty' playlist
 
       // Find the playlist to select ListTile Text widget
-      Finder playlistToSelectListTileTextWidgetFinder = find.text(emptyPlaylistTitle);
+      Finder playlistToSelectListTileTextWidgetFinder =
+          find.text(emptyPlaylistTitle);
 
       // Then obtain the playlist ListTile widget enclosing the Text widget
       // by finding its ancestor
@@ -4275,8 +4276,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Find the playlist to select ListTile Text widget
-      playlistToSelectListTileTextWidgetFinder =
-          find.text(emptyPlaylistTitle);
+      playlistToSelectListTileTextWidgetFinder = find.text(emptyPlaylistTitle);
 
       // Then obtain the playlist ListTile widget enclosing the Text widget
       // by finding its ancestor
@@ -4308,6 +4308,130 @@ void main() {
         tester: tester,
         selectedPlaylistTitle: emptyPlaylistTitle,
       );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+  });
+  group('Move audios in AudioPlayerView', () {
+    testWidgets('''Selecting different playlists in order to change the playable
+           audio contained in the audio player to the selected playlist
+           current or past playable audio.''', (WidgetTester tester) async {
+      const String emptyPlaylistTitle = 'Empty'; // Youtube playlist
+      const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+      const String localPlaylistTitle = 'local'; // Youtube playlist
+      const String alreadyCommentedAudioTitle =
+          "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
+      const String localPlaylistCurrentPlayableAudioTitle =
+          "morning _ cinematic video";
+      const String firstDownloadedAudioTitle =
+          "La surpopulation mondiale par Jancovici et Barrau";
+      const String secondDownloadedAudioTitle =
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_comment_test',
+        selectedPlaylistTitle: emptyPlaylistTitle,
+      );
+
+      // Select the 'S8 audio' playlist
+
+      // Find the playlist to select ListTile Text widget
+      Finder playlistToSelectListTileTextWidgetFinder =
+          find.text(youtubePlaylistTitle);
+
+      // Then obtain the playlist ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      Finder playlistToSelectListTileWidgetFinder = find.ancestor(
+        of: playlistToSelectListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the Checkbox widget located in the playlist ListTile
+      // and tap on it to select the playlist
+      Finder playlistToSelectListTileCheckboxWidgetFinder = find.descendant(
+        of: playlistToSelectListTileWidgetFinder,
+        matching: find.byType(Checkbox),
+      );
+
+      // Tap the ListTile Playlist checkbox to select it
+      await tester.tap(playlistToSelectListTileCheckboxWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // Now tap on audio player view playlist button to hide the
+      // so that all the 'S8 audio' audios are displayed
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // First, get the ListTile Text widget finder of the audio to be
+      // selected and tap on it. This switches to the AudioPlayerView
+      await tester.tap(find.text(firstDownloadedAudioTitle));
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+      // Now move this audio to the 'Empty' playlist
+
+      // Tap the appbar leading popup menu button
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+      // Now find the move audio popup menu item and tap on it
+      Finder popupMoveMenuItem =
+          find.byKey(const Key("popup_menu_move_audio_to_playlist"));
+
+      await tester.tap(popupMoveMenuItem);
+      await tester.pumpAndSettle();
+
+      // Check the value of the select one playlist AlertDialog
+      // dialog title
+      Text alertDialogTitle = tester
+          .widget(find.byKey(const Key('playlistOneSelectableDialogTitleKey')));
+      expect(alertDialogTitle.data, 'Select a playlist');
+
+      // Find the RadioListTile target playlist to which the audio
+      // will be copied
+
+      Finder targetPlaylistRadioListTile = find.byWidgetPredicate(
+        (Widget widget) =>
+            widget is RadioListTile &&
+            widget.title is Text &&
+            (widget.title as Text).data == emptyPlaylistTitle,
+      );
+
+      // Tap the target playlist RadioListTile to select it
+      await tester.tap(targetPlaylistRadioListTile);
+      await tester.pumpAndSettle();
+
+      // Now find the Confirm button and tap on it
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pumpAndSettle();
+
+      // Ensure the warning dialog is shown
+      expect(find.byType(WarningMessageDisplayWidget), findsOneWidget);
+
+      // Check the value of the Confirm dialog title
+      Text warningDialogTitle =
+          tester.widget(find.byKey(const Key('warningDialogTitle')));
+      expect(warningDialogTitle.data, 'CONFIRMATION');
+
+      // Now verifying the confirm dialog message
+
+      Text warningDialogMessageTextWidget =
+          tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
+
+      expect(warningDialogMessageTextWidget.data,
+          'Audio "La surpopulation mondiale par Jancovici et Barrau" moved from Youtube playlist "S8 audio" to local playlist "Empty".');
+
+      // Now find the ok button of the confirm dialog
+      // and tap on it
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+      await tester.pumpAndSettle();
+
+
+
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -5387,7 +5511,7 @@ void main() {
       expect(find.text("Deleting comment \"$commentTitle\"."), findsOneWidget);
 
       // Confirm the deletion of the comment
-      await tester.tap(find.byKey(const Key('confirmButtonKey')));
+      await tester.tap(find.byKey(const Key('confirmButton')));
       await tester.pumpAndSettle();
 
       // Verify that the comment list dialog now displays no comment
@@ -6808,7 +6932,7 @@ Future<void> deleteComment({
       find.text("Deleting comment \"$deletedCommentTitle\"."), findsOneWidget);
 
   // Confirm the deletion of the comment
-  await tester.tap(find.byKey(const Key('confirmButtonKey')));
+  await tester.tap(find.byKey(const Key('confirmButton')));
   await tester.pumpAndSettle();
 }
 
