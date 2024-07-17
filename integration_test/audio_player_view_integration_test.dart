@@ -1475,7 +1475,8 @@ void main() {
       // the audio
 
       // First, get the first downloaded Audio ListTile Text
-      // widget finder and tap on it
+      // widget finder and tap on it to open the audio player
+      // view
       final Finder firstDownloadedAudioListTileTextWidgetFinder =
           find.text(firstDownloadedAudioTitle);
 
@@ -4216,8 +4217,6 @@ void main() {
                    audio. Then, go back to download playlist view and verify
                    the selected playlist.''', (WidgetTester tester) async {
       const String emptyPlaylistTitle = 'Empty'; // Youtube playlist
-      const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
-      const String alreadyCommentedAudioTitle =
           "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
