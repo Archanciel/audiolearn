@@ -68,7 +68,7 @@ class _PlaylistOneSelectableDialogWidgetState
   Widget build(BuildContext context) {
     ThemeProviderVM themeProvider = Provider.of<ThemeProviderVM>(context);
     bool isDarkTheme = themeProvider.currentTheme == AppTheme.dark;
-    PlaylistListVM expandablePlaylistVM = Provider.of<PlaylistListVM>(
+    PlaylistListVM playlistVMlistnedFalse = Provider.of<PlaylistListVM>(
       context,
       listen: false,
     );
@@ -76,9 +76,9 @@ class _PlaylistOneSelectableDialogWidgetState
 
     if (widget.excludedPlaylist == null) {
       upToDateSelectablePlaylists =
-          expandablePlaylistVM.getUpToDateSelectablePlaylists();
+          playlistVMlistnedFalse.getUpToDateSelectablePlaylists();
     } else {
-      upToDateSelectablePlaylists = expandablePlaylistVM
+      upToDateSelectablePlaylists = playlistVMlistnedFalse
           .getUpToDateSelectablePlaylistsExceptExcludedPlaylist(
               excludedPlaylist: widget.excludedPlaylist!);
     }
@@ -98,7 +98,10 @@ class _PlaylistOneSelectableDialogWidgetState
               event.logicalKey == LogicalKeyboardKey.numpadEnter) {
             // executing the same code as in the 'Confirm' ElevatedButton
             // onPressed callback
-            _handleConfirmPressed(expandablePlaylistVM, context);
+            _handleConfirmPressed(
+              context: context,
+              playlistVMlistnedFalse: playlistVMlistnedFalse,
+            );
           }
         }
       },
@@ -161,7 +164,10 @@ class _PlaylistOneSelectableDialogWidgetState
           TextButton(
             key: const Key('confirmButton'),
             onPressed: () {
-              _handleConfirmPressed(expandablePlaylistVM, context);
+              _handleConfirmPressed(
+                context: context,
+                playlistVMlistnedFalse: playlistVMlistnedFalse,
+              );
             },
             child: Text(AppLocalizations.of(context)!.confirmButton,
                 style: (themeProvider.currentTheme == AppTheme.dark)
@@ -188,8 +194,10 @@ class _PlaylistOneSelectableDialogWidgetState
     );
   }
 
-  void _handleConfirmPressed(
-      PlaylistListVM expandablePlaylistVM, BuildContext context) {
+  void _handleConfirmPressed({
+    required BuildContext context,
+    required PlaylistListVM playlistVMlistnedFalse,
+  }) {
     switch (widget.usedFor) {
       case PlaylistOneSelectableDialogUsedFor.downloadSingleVideoAudio:
         if (_selectedPlaylist == null) {

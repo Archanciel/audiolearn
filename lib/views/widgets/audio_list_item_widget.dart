@@ -7,6 +7,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../models/audio.dart';
 import '../../../utils/ui_util.dart';
+import '../../models/playlist.dart';
 import '../../viewmodels/audio_player_vm.dart';
 import '../../../viewmodels/playlist_list_vm.dart';
 import '../../utils/duration_expansion.dart';
@@ -212,7 +213,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
             );
             break;
           case AudioPopupMenuAction.moveAudioToPlaylist:
-            final expandablePlaylistVM = Provider.of<PlaylistListVM>(
+            final playlistVMlistnedFalse = Provider.of<PlaylistListVM>(
               context,
               listen: false,
             );
@@ -228,15 +229,20 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
               ),
             ).then((resultMap) {
               if (resultMap is String && resultMap == 'cancel') {
+                // the case if the Cancel button was pressed
                 return;
               }
-              final targetPlaylist = resultMap['selectedPlaylist'];
+              Playlist? targetPlaylist = resultMap['selectedPlaylist'];
+
               if (targetPlaylist == null) {
+                // the case if no playlist was selected and Confirm button was
+                // pressed. In this case, the PlaylistOneSelectableDialogWidget
+                // uses the WarningMessageVM to display the right warning
                 return;
               }
-              final keepAudioDataInSourcePlaylist =
+              bool keepAudioDataInSourcePlaylist =
                   resultMap['keepAudioDataInSourcePlaylist'];
-              expandablePlaylistVM.moveAudioAndCommentToPlaylist(
+              playlistVMlistnedFalse.moveAudioAndCommentToPlaylist(
                 audio: audio,
                 targetPlaylist: targetPlaylist,
                 keepAudioInSourcePlaylistDownloadedAudioLst:

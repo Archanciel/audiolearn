@@ -4412,10 +4412,18 @@ void main() {
       // Ensure the warning dialog is shown
       expect(find.byType(WarningMessageDisplayWidget), findsOneWidget);
 
+
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+      await tester.pumpAndSettle();
+
+
       // Check the value of the Confirm dialog title
       Text warningDialogTitle =
           tester.widget(find.byKey(const Key('warningDialogTitle')));
       expect(warningDialogTitle.data, 'CONFIRMATION');
+
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+      await tester.pumpAndSettle();
 
       // Now verifying the confirm dialog message
 
@@ -6468,8 +6476,14 @@ void main() {
       );
     });
     testWidgets(
-        '''MUST BE LAST TEST ! Using set value to target dialog to set comment
-           positions''', (WidgetTester tester) async {
+        '''Clicking on position button. MUST BE LAST TEST since clicking on
+           "No checkbox selected ..." warning dialog ok button does not close
+           the warning dialog !
+           
+           Clicking on comment position button uses SetValueToTargetDialogWidget
+           to set comment positions. At the end of this test, defining a
+           negative comment position as well as a comment position greater than
+           the audio duration is tested.''', (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
       const String alreadyCommentedAudioTitle =
           "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";

@@ -204,7 +204,7 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
             });
             break;
           case AudioPopupMenuAction.moveAudioToPlaylist:
-            PlaylistListVM expandablePlaylistVM = Provider.of<PlaylistListVM>(
+            PlaylistListVM playlistVMlistnedFalse = Provider.of<PlaylistListVM>(
               context,
               listen: false,
             );
@@ -229,16 +229,16 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
               Playlist? targetPlaylist = resultMap['selectedPlaylist'];
 
               if (targetPlaylist == null) {
-                // the case if no playlist was selected and
-                // Confirm button was pressed
+                // the case if no playlist was selected and Confirm button was
+                // pressed. In this case, the PlaylistOneSelectableDialogWidget
+                // uses the WarningMessageVM to display the right warning
                 return;
               }
 
               bool keepAudioDataInSourcePlaylist =
                   resultMap['keepAudioDataInSourcePlaylist'];
-
               Audio? nextAudio =
-                  expandablePlaylistVM.moveAudioAndCommentToPlaylist(
+                  playlistVMlistnedFalse.moveAudioAndCommentToPlaylist(
                 audio: audio,
                 targetPlaylist: targetPlaylist,
                 keepAudioInSourcePlaylistDownloadedAudioLst:
