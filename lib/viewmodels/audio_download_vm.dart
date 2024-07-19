@@ -94,7 +94,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
   void loadExistingPlaylists() {
     // reinitializing the list of playlist is necessary since
-    // loadExistingPlaylists() is also called by ExpandablePlaylistVM.
+    // loadExistingPlaylists() is also called by PlaylistListVM.
     // updateSettingsAndPlaylistJsonFiles() method.
     _listOfPlaylist = [];
 
@@ -1026,9 +1026,9 @@ class AudioDownloadVM extends ChangeNotifier {
   /// Method called by PlaylistListVM when the user selects the update
   /// playlist JSON files menu item.
   void updatePlaylistJsonFiles() {
-    List<Playlist> copyOfList = List<Playlist>.from(_listOfPlaylist);
+    List<Playlist> listOfPlaylistCopy = List<Playlist>.from(_listOfPlaylist);
 
-    for (Playlist playlist in copyOfList) {
+    for (Playlist playlist in listOfPlaylistCopy) {
       bool isPlaylistDownloadPathUpdated = false;
       Playlist correspondingOriginalPlaylist =
           _listOfPlaylist.firstWhere((element) => element == playlist);
@@ -1037,9 +1037,19 @@ class AudioDownloadVM extends ChangeNotifier {
           path.dirname(playlist.downloadPath);
 
       if (currentPlaylistDownloadHomePath != _playlistsRootPath) {
-        // the case if the playlist dir obtained from another audio
-        // dir was copied on the app audio dir. Then, it must be
-        // updated to the app audio dir
+        // the case if the playlist dir obtained from another AudioLearn
+        // app playlist root dir was copied on the app playlist root dir.
+        // Then, the playlist download path in the json file must be updated
+        // to correspond to the app playlist root dir.
+        //
+        // Example:
+        //
+        // Copying /storage/emulated/0/Download/audiolearn/playlists/math
+        // directory containing the math playlist json file as well as its
+        // audio files to C:\Users\Jean-Pierre\Documents\audio dir will
+        // replace /storage/emulated/0/Download/audiolearn/playlists/math
+        // playlist download path by C:\Users\Jean-Pierre\Documents\audio\math
+        // playlist download path in the playlist json file.
         correspondingOriginalPlaylist.downloadPath =
             _playlistsRootPath + path.separator + playlist.title;
         isPlaylistDownloadPathUpdated = true;

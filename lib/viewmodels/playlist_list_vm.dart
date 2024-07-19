@@ -145,9 +145,6 @@ class PlaylistListVM extends ChangeNotifier {
       // of the playlist download view is updated
       _uniqueSelectedPlaylist = playlistListVMselectedPlaylist;
 
-      // playlistListVMselectedPlaylist is null if the selected
-      // playlist was manually deleted from the audio app root dir or
-      // if no playlist is selected.
       Playlist audioDownloadVMcorrespondingPlaylist =
           _audioDownloadVM.listOfPlaylist.firstWhere(
         (element) => element == playlistListVMselectedPlaylist,
@@ -162,6 +159,10 @@ class PlaylistListVM extends ChangeNotifier {
         selectedPlaylist: playlistListVMselectedPlaylist,
       );
     } else {
+      // playlistListVMselectedPlaylist is null if the selected
+      // playlist was manually deleted from the audio app root dir or
+      // if no playlist is selected.
+      //
       // if no playlist is selected, the playable audio list of the
       // selected playlist is emptied
 
