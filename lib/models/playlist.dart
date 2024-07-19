@@ -439,21 +439,42 @@ class Playlist {
   ///                          available audio first downloaded]
   int updatePlayableAudioLst() {
     int removedPlayableAudioNumber = 0;
+    int currentOrPastPlayableAudioIndexReduction = 0;
 
-    // since we are removing items from the list, we need to make a
+    // Since we are removing items from the list, we need to make a
     // copy of the list because we cannot iterate over a list that
     // is being modified.
-    List<Audio> copyAudioLst = List<Audio>.from(playableAudioLst);
+    List<Audio> playableAudioLstCopy = List<Audio>.from(playableAudioLst);
+    int playableAudioIndex = 0;
 
-    for (Audio audio in copyAudioLst) {
+    for (Audio audio in playableAudioLstCopy) {
       if (!File(audio.filePathName).existsSync()) {
         playableAudioLst.remove(audio);
         removedPlayableAudioNumber++;
+        if (playableAudioIndex <= currentOrPastPlayableAudioIndex) {
+          // If the removed audio is before the current or past
+          // playable audio, then the current or past playable
+          // audio index reduction is improved by 1.
+          currentOrPastPlayableAudioIndexReduction++;
+        }
       }
+
+      playableAudioIndex++;
     }
 
-    currentOrPastPlayableAudioIndex = playableAudioLst.length - 1;
-    
+    // If no audio were removed from the playable audio list, then
+    // the current or past playable audio index is not modified.
+    //
+    // If n audios located before the current or past playable audio
+    // index were removed from the playable audio list, then the
+    // current or past playable audio index is reduced by n.
+    //
+    // If audios located after the current or past playable audio
+    // index were removed from the playable audio list, then the
+    // current or past playable audio index is not impacted.
+    currentOrPastPlayableAudioIndex = currentOrPastPlayableAudioIndex -
+        currentOrPastPlayableAudioIndexReduction;
+
     return removedPlayableAudioNumber;
   }
 
@@ -527,7 +548,7 @@ class Playlist {
   int get hashCode {
     return id.hashCode;
   }
-  
+
   void setAudioPlaySpeedToAllPlayableAudios({
     required double audioPlaySpeed,
   }) {
