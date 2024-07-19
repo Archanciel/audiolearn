@@ -4362,8 +4362,8 @@ void main() {
       await tester.tap(playlistToSelectListTileCheckboxWidgetFinder);
       await tester.pumpAndSettle();
 
-      // Now tap on audio player view playlist button to hide the
-      // so that all the 'S8 audio' audios are displayed
+      // Now tap on playlist download view playlist button to close the
+      // playlist list so that all the 'S8 audio' audios are displayed
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 

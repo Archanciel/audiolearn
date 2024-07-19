@@ -7879,9 +7879,6 @@ void main() {
           .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
       await tester.pumpAndSettle();
 
-      // After executing the update playlist json file, the audio popup
-      // menu is closed
-
       // Now tap on the audio menu button to re-open the audio menu
       await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
       await tester.pumpAndSettle();
@@ -7915,9 +7912,6 @@ void main() {
       await tester
           .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
       await tester.pumpAndSettle();
-
-      // After executing the update playlist json file, the audio popup
-      // menu is closed
 
       // open the popup menu again
       await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
@@ -8035,9 +8029,6 @@ void main() {
           .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
       await tester.pumpAndSettle();
 
-      // After executing the update playlist json file, the audio popup
-      // menu is closed
-
       // Now tap on the audio menu button to re-open the audio menu
       await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
       await tester.pumpAndSettle();
@@ -8071,9 +8062,6 @@ void main() {
       await tester
           .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
       await tester.pumpAndSettle();
-
-      // After executing the update playlist json file, the audio popup
-      // menu is closed
 
       // open the popup menu again
       await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
@@ -8185,9 +8173,6 @@ void main() {
           .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
       await tester.pumpAndSettle();
 
-      // After executing the update playlist json file, the audio popup
-      // menu is closed
-
       // Now tap on the audio menu button to open the audio menu
       await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
       await tester.pumpAndSettle();
@@ -8221,9 +8206,6 @@ void main() {
       await tester
           .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
       await tester.pumpAndSettle();
-
-      // After executing the update playlist json file, the audio popup
-      // menu is closed
 
       // open the popup menu again
       await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
@@ -8340,9 +8322,6 @@ void main() {
           .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
       await tester.pumpAndSettle();
 
-      // After executing the update playlist json file, the audio popup
-      // menu is closed
-
       // Now tap on the audio menu button to re-open the audio menu
       await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
       await tester.pumpAndSettle();
@@ -8377,9 +8356,6 @@ void main() {
           .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
       await tester.pumpAndSettle();
 
-      // After executing the update playlist json file, the audio popup
-      // menu is closed
-
       // open the popup menu again
       await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
       await tester.pumpAndSettle();
@@ -8389,6 +8365,102 @@ void main() {
         tester: tester,
         areAudioMenuItemsDisabled: true,
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets('''After copying playlist json file of existing playlist.''', (WidgetTester tester) async {
+      const String emptyPlaylistTitle = 'Empty'; // Youtube playlist
+      const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+      const String firstDownloadedAudioTitle =
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
+      const String secondDownloadedAudioTitle =
+          "La surpopulation mondiale par Jancovici et Barrau";
+      const String thirdDownloadedAndCommentedAudioTitle =
+          "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'update_playlist_json_file',
+        selectedPlaylistTitle: emptyPlaylistTitle,
+      );
+
+      // Select the 'S8 audio' playlist
+
+      // Find the playlist to select ListTile Text widget
+      Finder playlistToSelectListTileTextWidgetFinder =
+          find.text(youtubePlaylistTitle);
+
+      // Then obtain the playlist ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      Finder playlistToSelectListTileWidgetFinder = find.ancestor(
+        of: playlistToSelectListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the Checkbox widget located in the playlist ListTile
+      // and tap on it to select the playlist
+      Finder playlistToSelectListTileCheckboxWidgetFinder = find.descendant(
+        of: playlistToSelectListTileWidgetFinder,
+        matching: find.byType(Checkbox),
+      );
+
+      // Tap the ListTile Playlist checkbox to select it
+      await tester.tap(playlistToSelectListTileCheckboxWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // Now tap on playlist download view playlist button to close the
+      // playlist list so that all the 'S8 audio' audios are displayed
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // First, get the ListTile Text widget finder of the audio to be
+      // selected and tap on it. This switches to the AudioPlayerView
+      // and sets the playlist current or past playable audio index to 1
+      await tester.tap(find.text(secondDownloadedAudioTitle));
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+      // Then return to playlist download view in order to execute 
+      // the playlist JSON files update
+      Finder audioPlayerNavButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(audioPlayerNavButton);
+      await tester.pumpAndSettle();
+
+      // Tap on the appbar leading popup menu button to open the leading
+      // popup menu
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+      await tester.pumpAndSettle();
+
+      // find the update playlist JSON file menu item and tap on it
+      await tester
+          .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
+      await tester.pumpAndSettle();
+
+      // Go to audio player view in order to verify the current playble
+      // audio of the selected Youtube playlist
+      audioPlayerNavButton =
+          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+      await tester.tap(audioPlayerNavButton);
+      await tester.pumpAndSettle();
+
+      // Verify the displayed audio title
+
+      Finder audioPlayerViewAudioTitleFinder =
+          find.byKey(const Key('audioPlayerViewCurrentAudioTitle'));
+      String audioTitleWithDurationString =
+          tester.widget<Text>(audioPlayerViewAudioTitleFinder).data!;
+
+      const String expectedAudioAndDurationTitle = "$thirdDownloadedAndCommentedAudioTitle\n1:17:54";
+
+      expect(
+        audioTitleWithDurationString,
+        expectedAudioAndDurationTitle,
+        reason: "The audio title and duration $audioTitleWithDurationString displayed in the AudioPlayerView screen isn't $expectedAudioAndDurationTitle.",
       );
 
       // Purge the test playlist directory so that the created test
