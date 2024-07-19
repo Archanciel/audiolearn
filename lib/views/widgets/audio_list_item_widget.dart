@@ -273,7 +273,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
               if (targetPlaylist == null) {
                 return;
               }
-              expandablePlaylistVM.copyAudioToPlaylist(
+              expandablePlaylistVM.copyAudioAndCommentToPlaylist(
                 audio: audio,
                 targetPlaylist: targetPlaylist,
               );

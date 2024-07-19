@@ -38,9 +38,10 @@ class PlaylistListVM extends ChangeNotifier {
   bool _isListExpanded = false;
   set isListExpanded(bool isListExpanded) {
     _isListExpanded = isListExpanded;
-    
+
     notifyListeners();
   }
+
   bool _isButtonDownloadSelPlaylistsEnabled = false;
   bool _isButtonMovePlaylistEnabled = false;
   bool _areButtonsApplicableToAudioEnabled = false;
@@ -762,7 +763,7 @@ class PlaylistListVM extends ChangeNotifier {
     return AudioSortFilterParameters.createDefaultAudioSortFilterParameters();
   }
 
-  /// Method called when the user clicks on the 'move audio to
+  /// Method called when the user clicks on the 'Move audio to
   /// playlist' menu item in the audio item menu button or in
   /// the audio player screen leading popup menu.
   ///
@@ -796,7 +797,10 @@ class PlaylistListVM extends ChangeNotifier {
     return nextAudio;
   }
 
-  void copyAudioToPlaylist({
+  /// Method called when the user clicks on the 'Copy audio to
+  /// playlist' menu item in the audio item menu button or in
+  /// the audio player screen leading popup menu.
+  void copyAudioAndCommentToPlaylist({
     required Audio audio,
     required Playlist targetPlaylist,
   }) {

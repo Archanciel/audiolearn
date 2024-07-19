@@ -915,7 +915,7 @@ void testCopyAudioToPlaylist({
 }) {
   Audio sourceAudio = sourcePlaylist.playableAudioLst[sourceAudioIndex];
 
-  playlistListVM.copyAudioToPlaylist(
+  playlistListVM.copyAudioAndCommentToPlaylist(
     audio: sourceAudio,
     targetPlaylist: targetPlaylist,
   );

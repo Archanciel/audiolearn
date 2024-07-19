@@ -856,6 +856,8 @@ class AudioDownloadVM extends ChangeNotifier {
     );
 
     if (!wasFileMoved) {
+      // the case if the moved audio file already exist in the target
+      // playlist directory
       warningMessageVM.setAudioNotMovedFromToPlaylistTitles(
         movedAudioValidVideoTitle: audio.validVideoTitle,
         movedFromPlaylistTitle: fromPlaylist.title,
@@ -893,11 +895,13 @@ class AudioDownloadVM extends ChangeNotifier {
       movedFromPlaylistTitle: fromPlaylist.title,
     );
 
+    // saving source playlist
     JsonDataService.saveToFile(
       model: fromPlaylist,
       path: fromPlaylist.getPlaylistDownloadFilePathName(),
     );
 
+    // saving target playlist
     JsonDataService.saveToFile(
       model: targetPlaylist,
       path: targetPlaylist.getPlaylistDownloadFilePathName(),
@@ -926,6 +930,8 @@ class AudioDownloadVM extends ChangeNotifier {
     String fromPlaylistTitle = fromPlaylist.title;
 
     if (!wasFileCopied) {
+      // the case if the moved audio file already exist in the target
+      // playlist directory
       warningMessageVM.setAudioNotCopiedFromToPlaylistTitles(
           copiedAudioValidVideoTitle: audio.validVideoTitle,
           copiedFromPlaylistTitle: fromPlaylistTitle,
@@ -946,11 +952,13 @@ class AudioDownloadVM extends ChangeNotifier {
       copiedToPlaylistTitle: targetPlaylist.title,
     );
 
+    // saving source playlist
     JsonDataService.saveToFile(
       model: fromPlaylist,
       path: fromPlaylist.getPlaylistDownloadFilePathName(),
     );
 
+    // saving target playlist
     JsonDataService.saveToFile(
       model: targetPlaylist,
       path: targetPlaylist.getPlaylistDownloadFilePathName(),

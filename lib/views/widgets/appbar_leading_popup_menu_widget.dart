@@ -284,7 +284,7 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
                 return;
               }
 
-              expandablePlaylistVM.copyAudioToPlaylist(
+              expandablePlaylistVM.copyAudioAndCommentToPlaylist(
                 audio: audio,
                 targetPlaylist: targetPlaylist,
               );
