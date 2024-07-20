@@ -28,7 +28,9 @@ void main() {
       );
 
       // set the current audio to the first audio in the list
-      await audioPlayerVM.setCurrentAudio(selectedPlaylistAudioList[0]);
+      await audioPlayerVM.setCurrentAudio(
+        audio: selectedPlaylistAudioList[0],
+      );
 
       // obtain the current audio's initial position
       Duration currentAudioInitialPosition = audioPlayerVM.currentAudioPosition;
@@ -87,7 +89,9 @@ void main() {
       );
 
       // set the current audio to the first audio in the list
-      await audioPlayerVM.setCurrentAudio(selectedPlaylistAudioList[0]);
+      await audioPlayerVM.setCurrentAudio(
+        audio: selectedPlaylistAudioList[0],
+      );
 
       // obtain the current audio's initial position
       Duration currentAudioInitialPosition = audioPlayerVM.currentAudioPosition;
@@ -148,7 +152,9 @@ void main() {
       );
 
       // set the current audio to the first audio in the list
-      await audioPlayerVM.setCurrentAudio(selectedPlaylistAudioList[0]);
+      await audioPlayerVM.setCurrentAudio(
+        audio: selectedPlaylistAudioList[0],
+      );
 
       // obtain the current audio's initial position
       Duration currentAudioInitialPosition = audioPlayerVM.currentAudioPosition;
@@ -226,7 +232,9 @@ void main() {
       );
 
       // set the current audio to the first audio in the list
-      await audioPlayerVM.setCurrentAudio(selectedPlaylistAudioList[0]);
+      await audioPlayerVM.setCurrentAudio(
+        audio: selectedPlaylistAudioList[0],
+      );
 
       // obtain the current audio's initial position
       Duration currentAudioInitialPosition = audioPlayerVM.currentAudioPosition;
@@ -314,7 +322,9 @@ void main() {
       );
 
       // set the current audio to the first audio in the list
-      await audioPlayerVM.setCurrentAudio(selectedPlaylistAudioList[0]);
+      await audioPlayerVM.setCurrentAudio(
+        audio: selectedPlaylistAudioList[0],
+      );
 
       // obtain the current audio's initial position
       Duration currentAudioInitialPosition =
@@ -412,7 +422,9 @@ void main() {
       );
 
       // set the current audio to the first audio in the list
-      await audioPlayerVM.setCurrentAudio(selectedPlaylistAudioList[0]);
+      await audioPlayerVM.setCurrentAudio(
+        audio: selectedPlaylistAudioList[0],
+      );
 
       // obtain the current audio's initial position
       Duration currentAudioInitialPosition =
@@ -468,7 +480,9 @@ void main() {
       );
 
       // set the current audio to the first audio in the list
-      await audioPlayerVM.setCurrentAudio(selectedPlaylistAudioList[0]);
+      await audioPlayerVM.setCurrentAudio(
+        audio: selectedPlaylistAudioList[0],
+      );
 
       // obtain the current audio's initial position
       Duration currentAudioInitialPosition =
@@ -529,7 +543,9 @@ void main() {
       );
 
       // set the current audio to the first audio in the list
-      await audioPlayerVM.setCurrentAudio(selectedPlaylistAudioList[0]);
+      await audioPlayerVM.setCurrentAudio(
+        audio: selectedPlaylistAudioList[0],
+      );
 
       // obtain the current audio's initial position
       Duration currentAudioInitialPosition =
@@ -598,7 +614,9 @@ void main() {
       );
 
       // set the current audio to the first audio in the list
-      await audioPlayerVM.setCurrentAudio(selectedPlaylistAudioList[0]);
+      await audioPlayerVM.setCurrentAudio(
+        audio: selectedPlaylistAudioList[0],
+      );
 
       // obtain the current audio's initial position
       Duration currentAudioInitialPosition =
@@ -680,7 +698,9 @@ void main() {
       );
 
       // set the current audio to the first audio in the list
-      await audioPlayerVM.setCurrentAudio(selectedPlaylistAudioList[0]);
+      await audioPlayerVM.setCurrentAudio(
+        audio: selectedPlaylistAudioList[0],
+      );
 
       // obtain the current audio's initial position
       Duration currentAudioInitialPosition =
@@ -772,7 +792,9 @@ void main() {
       );
 
       // set the current audio to the first audio in the list
-      await audioPlayerVM.setCurrentAudio(selectedPlaylistAudioList[0]);
+      await audioPlayerVM.setCurrentAudio(
+        audio: selectedPlaylistAudioList[0],
+      );
 
       // change one time the current audio's play position
 
@@ -835,7 +857,9 @@ void main() {
       );
 
       // set the current audio to the first audio in the list
-      await audioPlayerVM.setCurrentAudio(selectedPlaylistAudioList[0]);
+      await audioPlayerVM.setCurrentAudio(
+        audio: selectedPlaylistAudioList[0],
+      );
 
       // change one time the current audio's play position
 
@@ -904,7 +928,9 @@ void main() {
       );
 
       // set the current audio to the first audio in the list
-      await audioPlayerVM.setCurrentAudio(selectedPlaylistAudioList[0]);
+      await audioPlayerVM.setCurrentAudio(
+        audio: selectedPlaylistAudioList[0],
+      );
 
       // obtain the current audio's initial position
       Duration currentAudioInitialPosition =
@@ -967,7 +993,9 @@ void main() {
       );
 
       // set the current audio to the first audio in the list
-      await audioPlayerVM.setCurrentAudio(selectedPlaylistAudioList[0]);
+      await audioPlayerVM.setCurrentAudio(
+        audio: selectedPlaylistAudioList[0],
+      );
 
       // obtain the current audio's initial position
       Duration currentAudioInitialPosition =
@@ -1030,7 +1058,9 @@ void main() {
       );
 
       // set the current audio to the first audio in the list
-      await audioPlayerVM.setCurrentAudio(selectedPlaylistAudioList[0]);
+      await audioPlayerVM.setCurrentAudio(
+        audio: selectedPlaylistAudioList[0],
+      );
 
       // change the current audio's play slider position to 3
       // seconds
@@ -1087,7 +1117,9 @@ void main() {
       );
 
       // set the current audio to the first audio in the list
-      await audioPlayerVM.setCurrentAudio(selectedPlaylistAudioList[0]);
+      await audioPlayerVM.setCurrentAudio(
+        audio: selectedPlaylistAudioList[0],
+      );
 
       // change the current audio's play slider position to 3
       // seconds
@@ -1144,7 +1176,9 @@ void main() {
       );
 
       // set the current audio to the first audio in the list
-      await audioPlayerVM.setCurrentAudio(selectedPlaylistAudioList[0]);
+      await audioPlayerVM.setCurrentAudio(
+        audio: selectedPlaylistAudioList[0],
+      );
 
       // obtain the current audio's initial position
       Duration currentAudioInitialPosition =
@@ -1197,7 +1231,9 @@ void main() {
       );
 
       // set the current audio to the first audio in the list
-      await audioPlayerVM.setCurrentAudio(selectedPlaylistAudioList[0]);
+      await audioPlayerVM.setCurrentAudio(
+        audio: selectedPlaylistAudioList[0],
+      );
 
       // skip to the end of the current audio
 
@@ -1290,7 +1326,9 @@ void main() {
       );
 
       // set the current audio to the first audio in the list
-      await audioPlayerVM.setCurrentAudio(selectedPlaylistAudioList[0]);
+      await audioPlayerVM.setCurrentAudio(
+        audio: selectedPlaylistAudioList[0],
+      );
 
       // obtain the current audio's initial position
       Duration currentAudioInitialPosition =
@@ -1345,7 +1383,9 @@ void main() {
       );
 
       // set the current audio to the first audio in the list
-      await audioPlayerVM.setCurrentAudio(selectedPlaylistAudioList[0]);
+      await audioPlayerVM.setCurrentAudio(
+        audio: selectedPlaylistAudioList[0],
+      );
 
       // skip to the start of the current audio
 
@@ -1448,7 +1488,9 @@ void main() {
       );
 
       // set the current audio to the first audio in the list
-      await audioPlayerVM.setCurrentAudio(selectedPlaylistAudioList[0]);
+      await audioPlayerVM.setCurrentAudio(
+        audio: selectedPlaylistAudioList[0],
+      );
 
       // obtain the current audio's initial position
       Duration currentAudioInitialPosition =
@@ -1503,7 +1545,9 @@ void main() {
       );
 
       // set the current audio to the first audio in the list
-      await audioPlayerVM.setCurrentAudio(selectedPlaylistAudioList[0]);
+      await audioPlayerVM.setCurrentAudio(
+        audio: selectedPlaylistAudioList[0],
+      );
 
       // skip to the end of the current audio
 

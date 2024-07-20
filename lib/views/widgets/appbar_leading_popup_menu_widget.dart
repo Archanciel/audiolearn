@@ -154,7 +154,11 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
             break;
           case AudioPopupMenuAction.audioComment:
             Audio audio = audioPlayerVMlistenFalse.currentAudio!;
-            audioPlayerVMlistenFalse.setCurrentAudio(audio).then((value) {
+            audioPlayerVMlistenFalse
+                .setCurrentAudio(
+              audio: audio,
+            )
+                .then((value) {
               showDialog<void>(
                 context: context,
                 // passing the current audio to the dialog instead
@@ -200,7 +204,9 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
 
               // Required so that the audio title displayed in the
               // audio player view is updated with the modified title
-              await audioGlobalPlayerVM.setCurrentAudio(audio);
+              await audioGlobalPlayerVM.setCurrentAudio(
+                audio: audio,
+              );
             });
             break;
           case AudioPopupMenuAction.moveAudioToPlaylist:
@@ -445,7 +451,10 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
       // Required so that the audio title displayed in the
       // audio player view is updated with the modified title
 
-      await audioGlobalPlayerVM.setCurrentAudio(nextAudio);
+      await audioGlobalPlayerVM.setCurrentAudio(
+        audio: nextAudio,
+        doNotifyListeners: false,
+      );
     } else {
       // Calling handleNoPlayableAudioAvailable() is necessary
       // to update the audio title in the audio player view to

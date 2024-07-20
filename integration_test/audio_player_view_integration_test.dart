@@ -4412,18 +4412,10 @@ void main() {
       // Ensure the warning dialog is shown
       expect(find.byType(WarningMessageDisplayWidget), findsOneWidget);
 
-
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
-
-
       // Check the value of the Confirm dialog title
       Text warningDialogTitle =
           tester.widget(find.byKey(const Key('warningDialogTitle')));
       expect(warningDialogTitle.data, 'CONFIRMATION');
-
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
 
       // Now verifying the confirm dialog message
 
@@ -4437,9 +4429,6 @@ void main() {
       // and tap on it
       await tester.tap(find.byKey(const Key('warningDialogOkButton')));
       await tester.pumpAndSettle();
-
-
-
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub

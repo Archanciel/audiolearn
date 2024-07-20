@@ -155,14 +155,19 @@ class AudioPlayerVM extends ChangeNotifier {
   /// view or by long pressing on the >| button.
   ///
   /// Method called also by setNextAudio() or setPreviousAudio().
-  Future<void> setCurrentAudio(Audio audio) async {
+  Future<void> setCurrentAudio({
+    required Audio audio,
+    bool doNotifyListeners = true,
+  }) async {
     await _setCurrentAudioAndInitializeAudioPlayer(audio);
 
     audio.enclosingPlaylist!.setCurrentOrPastPlayableAudio(audio);
     updateAndSaveCurrentAudio();
     _clearUndoRedoLists();
 
-    notifyListeners();
+    if (doNotifyListeners) {
+      notifyListeners();
+    }
   }
 
   /// Method called when the user clicks on the audio title or sub
@@ -315,7 +320,9 @@ class AudioPlayerVM extends ChangeNotifier {
       return false;
     }
 
-    await setCurrentAudio(nextAudio);
+    await setCurrentAudio(
+      audio: nextAudio,
+    );
 
     return true;
   }
@@ -331,7 +338,9 @@ class AudioPlayerVM extends ChangeNotifier {
       return;
     }
 
-    await setCurrentAudio(previousAudio);
+    await setCurrentAudio(
+      audio: previousAudio,
+    );
   }
 
   /// Method to be redefined in AudioPlayerVMTestVersion in order
@@ -909,7 +918,7 @@ class AudioPlayerVM extends ChangeNotifier {
   /// Method called in AudioPlayerView.didChangeAppLifecycleState(
   /// AppLifecycleState state) method when the app is paused (screen turns off
   /// oe user select another app) or becomes inactive (is closed).
-  /// 
+  ///
   /// Method called as well in several AudioPlayerVM methods.
   void updateAndSaveCurrentAudio() {
     if (_currentAudio == null) {

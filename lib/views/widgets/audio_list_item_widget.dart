@@ -184,7 +184,9 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
               context,
               listen: false,
             );
-            await audioGlobalPlayerVM.setCurrentAudio(audio);
+            await audioGlobalPlayerVM.setCurrentAudio(
+              audio: audio,
+            );
             showDialog<void>(
               context: context,
               builder: (context) => CommentListAddDialogWidget(
@@ -383,7 +385,9 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
   /// to the AudioPlayerView screen and plays the clicked audio.
   Future<void> _dragToAudioPlayerViewAndPlayAudio(
       AudioPlayerVM audioGlobalPlayerVM) async {
-    await audioGlobalPlayerVM.setCurrentAudio(audio);
+    await audioGlobalPlayerVM.setCurrentAudio(
+      audio: audio,
+    );
     await audioGlobalPlayerVM.goToAudioPlayPosition(
       durationPosition: Duration(seconds: audio.audioPositionSeconds),
       isUndoRedo: true, // necessary to avoid creating an undo
@@ -400,7 +404,9 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
   /// This switches to the AudioPlayerView screen without playing
   /// the clicked audio.
   Future<void> _dragToAudioPlayerView(AudioPlayerVM audioGlobalPlayerVM) async {
-    await audioGlobalPlayerVM.setCurrentAudio(audio);
+    await audioGlobalPlayerVM.setCurrentAudio(
+      audio: audio,
+    );
     await audioGlobalPlayerVM.goToAudioPlayPosition(
       durationPosition: Duration(
         seconds: audio.audioPositionSeconds,

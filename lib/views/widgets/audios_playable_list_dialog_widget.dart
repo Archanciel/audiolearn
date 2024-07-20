@@ -143,7 +143,7 @@ class _AudioPlayableListDialogWidgetState
                       int index = playableAudioLst.indexOf(audio);
                       return GestureDetector(
                         onTap: () async {
-                          await audioGlobalPlayerVM.setCurrentAudio(audio);
+                          await audioGlobalPlayerVM.setCurrentAudio(audio: audio,);
                           Navigator.of(context).pop();
                         },
                         child: _buildAudioTitleTextWidget(
