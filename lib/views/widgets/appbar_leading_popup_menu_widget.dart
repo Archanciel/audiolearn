@@ -449,8 +449,11 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
 
     if (nextAudio != null) {
       // Required so that the audio title displayed in the
-      // audio player view is updated with the modified title
-
+      // audio player view is updated with the modified title.
+      //
+      // doNotifyListeners is set to false to avoid that the
+      // Confirm warning is displayed twice when the audio
+      // moved to another playlist.      
       await audioGlobalPlayerVM.setCurrentAudio(
         audio: nextAudio,
         doNotifyListeners: false,

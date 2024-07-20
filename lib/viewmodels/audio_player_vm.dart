@@ -155,6 +155,12 @@ class AudioPlayerVM extends ChangeNotifier {
   /// view or by long pressing on the >| button.
   ///
   /// Method called also by setNextAudio() or setPreviousAudio().
+  ///
+  /// {doNotifyListeners} is set to false to avoid that the Confirm
+  /// warning is displayed twice. This happens an audio moved to another
+  /// playlist or deleted and the AppBarLeadingPopupMenuWidget
+  /// _replaceCurrentAudioByNextAudio() method is called to update
+  /// the Audio Player View screen.
   Future<void> setCurrentAudio({
     required Audio audio,
     bool doNotifyListeners = true,
