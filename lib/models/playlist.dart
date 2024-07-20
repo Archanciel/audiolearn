@@ -453,7 +453,8 @@ class Playlist {
         removedPlayableAudioNumber++;
         if (playableAudioIndex <= currentOrPastPlayableAudioIndex) {
           // If the removed audio is before the current or past
-          // playable audio, then the current or past playable
+          // playable audio or if the removed audio IS the current
+          // or past playable audio, then the current or past playable
           // audio index reduction is improved by 1.
           currentOrPastPlayableAudioIndexReduction++;
         }
@@ -465,15 +466,14 @@ class Playlist {
     // If no audio were removed from the playable audio list, then
     // the current or past playable audio index is not modified.
     //
-    // If n audios located before the current or past playable audio
-    // index were removed from the playable audio list, then the
+    // If n audios located before ot at the current or past playable
+    // audio index were removed from the playable audio list, then the
     // current or past playable audio index is reduced by n.
     //
-    // If audios located after the current or past playable audio
-    // index were removed from the playable audio list, then the
-    // current or past playable audio index is not impacted.
-    currentOrPastPlayableAudioIndex = currentOrPastPlayableAudioIndex -
-        currentOrPastPlayableAudioIndexReduction;
+    // If the removed audios were located after the current or past
+    // playable audio index, then the current or past playable audio
+    // index is not impacted.
+    currentOrPastPlayableAudioIndex -= currentOrPastPlayableAudioIndexReduction;
 
     return removedPlayableAudioNumber;
   }
