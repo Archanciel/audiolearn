@@ -110,10 +110,16 @@ class PlaylistListVM extends ChangeNotifier {
     List<Playlist> updatedListOfPlaylist = _audioDownloadVM.listOfPlaylist;
 
     for (Playlist playlist in updatedListOfPlaylist) {
-      if (!_listOfSelectablePlaylists.any((element) => element == playlist)) {
-        // the case if the playlist dir was added to the app
-        // audio dir
+      int index = _listOfSelectablePlaylists
+          .indexWhere((element) => element == playlist);
+      if (index == -1) {
+        // If the playlist does not exist in the list, add it. This is
+        // the case when the playlist dir was added manually to the app
+        // playlist dir.
         _listOfSelectablePlaylists.add(playlist);
+      } else {
+        // If the playlist exists, replace it
+        _listOfSelectablePlaylists[index] = playlist;
       }
     }
 

@@ -825,7 +825,7 @@ void main() {
 
       const String localPlaylistTitle = 'audio_learn_local_playlist_test';
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list. If the list
@@ -1047,7 +1047,7 @@ void main() {
 
       const String localPlaylistTitle = 'audio_learn_local_playlist_test';
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list. If the list
@@ -1144,7 +1144,7 @@ void main() {
 
       const String invalidLocalPlaylistTitle = 'local, with comma';
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list. If the list
@@ -1376,7 +1376,7 @@ void main() {
 
       const String localPlaylistTitle = 'audio_learn_local_playlist_test';
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list. If the list
@@ -1463,7 +1463,7 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list of playlist's.
@@ -1526,7 +1526,7 @@ void main() {
 
       const String localPlaylistTitle = 'audio_learn_local_playlist_test';
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list of playlist's.
@@ -2600,7 +2600,7 @@ void main() {
       const String localMusicPlaylistTitle = 'local_music';
       const String localAudioPlaylistTitle = 'local_audio';
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list. If the list
@@ -2792,7 +2792,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list. If the list
@@ -3300,7 +3300,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list. If the list
@@ -3763,7 +3763,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list. If the list
@@ -4197,7 +4197,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list. If the list
@@ -4588,7 +4588,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list of playlist's.
@@ -5014,7 +5014,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list of playlist's.
@@ -5372,7 +5372,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list of playlist's.
@@ -5526,7 +5526,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // First, set the application language to French
@@ -5937,7 +5937,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // First, set the application language to French
@@ -6314,7 +6314,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       String youtubePlaylistPath =
@@ -6516,7 +6516,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       String localPlaylistPath =
@@ -6718,7 +6718,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       String youtubePlaylistPath =
@@ -6900,7 +6900,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       String localPlaylistPath =
@@ -7086,7 +7086,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       String s8AudioYoutubePlaylistPath =
@@ -7239,7 +7239,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Manually add the local 'test' playlist directory which were copied
@@ -7350,7 +7350,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Manually add the Youtube 'Youtube_test' playlist directory which
@@ -7463,7 +7463,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list of playlists. If the
@@ -7533,7 +7533,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // *** Manually add the urgent_actus Youtube playlist directory
@@ -7664,7 +7664,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // *** Manually add the urgent_actus Youtube playlist directory
@@ -7819,7 +7819,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list of playlists.
@@ -7963,7 +7963,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list of playlists.
@@ -8113,7 +8113,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list of playlists.
@@ -8256,7 +8256,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list of playlists.
@@ -8373,15 +8373,14 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets('''After copying playlist json file of existing playlist.''', (WidgetTester tester) async {
+    testWidgets('''After copying playlist json file of existing playlist.''',
+        (WidgetTester tester) async {
       const String emptyPlaylistTitle = 'Empty'; // Youtube playlist
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
       const String firstDownloadedAudioTitle =
-          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
-      const String secondDownloadedAudioTitle =
           "La surpopulation mondiale par Jancovici et Barrau";
-      const String thirdDownloadedAndCommentedAudioTitle =
-          "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
+      const String secondDownloadedAudioTitle =
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
@@ -8391,7 +8390,7 @@ void main() {
 
       // Select the 'S8 audio' playlist
 
-      // Find the playlist to select ListTile Text widget
+      // First, find the playlist to select ListTile Text widget
       Finder playlistToSelectListTileTextWidgetFinder =
           find.text(youtubePlaylistTitle);
 
@@ -8420,11 +8419,37 @@ void main() {
 
       // First, get the ListTile Text widget finder of the audio to be
       // selected and tap on it. This switches to the AudioPlayerView
-      // and sets the playlist current or past playable audio index to 1
-      await tester.tap(find.text(secondDownloadedAudioTitle));
+      // and sets the playlist current or past playable audio index to 0
+      await tester.tap(find.text(firstDownloadedAudioTitle));
       await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-      // Then return to playlist download view in order to execute 
+      // Verify the displayed audio title
+
+      Finder audioPlayerViewAudioTitleFinder =
+          find.byKey(const Key('audioPlayerViewCurrentAudioTitle'));
+      String audioTitleWithDurationString =
+          tester.widget<Text>(audioPlayerViewAudioTitleFinder).data!;
+
+      String expectedAudioAndDurationTitle = "$firstDownloadedAudioTitle\n7:38";
+
+      // Now, manually copy the 'S8 audio' Youtube playlist directory,
+      // but first delete the dir, otherwise the playlist JSON file
+      // will not be updated.
+
+      String playlistS8audioDir = "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio";
+
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath:
+            playlistS8audioDir,
+      );
+
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}update_playlist_json_file${path.separator}S8 audio",
+        destinationRootPath: playlistS8audioDir,
+      );
+
+      // Then return to playlist download view in order to execute
       // the playlist JSON files update
       Finder audioPlayerNavButton =
           find.byKey(const ValueKey('playlistDownloadViewIconButton'));
@@ -8439,9 +8464,9 @@ void main() {
       // find the update playlist JSON file menu item and tap on it
       await tester
           .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-      // Go to audio player view in order to verify the current playble
+      // Go to audio player view in order to verify the current playable
       // audio of the selected Youtube playlist
       audioPlayerNavButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
@@ -8450,17 +8475,18 @@ void main() {
 
       // Verify the displayed audio title
 
-      Finder audioPlayerViewAudioTitleFinder =
+      audioPlayerViewAudioTitleFinder =
           find.byKey(const Key('audioPlayerViewCurrentAudioTitle'));
-      String audioTitleWithDurationString =
+      audioTitleWithDurationString =
           tester.widget<Text>(audioPlayerViewAudioTitleFinder).data!;
 
-      const String expectedAudioAndDurationTitle = "$thirdDownloadedAndCommentedAudioTitle\n1:17:54";
+      expectedAudioAndDurationTitle = "$secondDownloadedAudioTitle\n6:29";
 
       expect(
         audioTitleWithDurationString,
         expectedAudioAndDurationTitle,
-        reason: "The audio title and duration $audioTitleWithDurationString displayed in the AudioPlayerView screen isn't $expectedAudioAndDurationTitle.",
+        reason:
+            "The actual audio title and duration $audioTitleWithDurationString displayed in the AudioPlayerView screen isn't the expected value $expectedAudioAndDurationTitle.",
       );
 
       // Purge the test playlist directory so that the created test
@@ -8503,7 +8529,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list. If the list
@@ -8664,7 +8690,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list. If the list
@@ -8827,7 +8853,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Enter the single video URL into the url text field
@@ -8890,7 +8916,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list of playlist's.
@@ -9054,7 +9080,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list of no selected playlist's.
@@ -9157,7 +9183,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list of playlist's.
@@ -9330,7 +9356,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list of playlist's.
@@ -9495,7 +9521,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list of playlist's.
@@ -9667,7 +9693,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list of playlist's.
@@ -9839,7 +9865,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list of playlist's.
@@ -10010,7 +10036,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list of playlist's.
@@ -10192,7 +10218,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // since no playlist is selected, verify that no button is
@@ -10240,7 +10266,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list of no selected playlist's.
@@ -10344,7 +10370,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list of no selected playlist's.
@@ -10448,7 +10474,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list of no selected playlist's.
@@ -10542,7 +10568,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list of no selected playlist's.
@@ -10636,7 +10662,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list of no selected playlist's.
@@ -10777,7 +10803,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list of no selected playlist's.
@@ -10916,7 +10942,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list of no selected playlist's.
@@ -11053,7 +11079,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to show the list of no selected playlist's.
@@ -11196,7 +11222,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to avoid displaying the list
@@ -11282,7 +11308,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to avoid displaying the list
@@ -11483,7 +11509,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the appbar leading popup menu button
@@ -11543,7 +11569,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Tap the appbar leading popup menu button
@@ -11639,7 +11665,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      app.main(['test']);
+      await app.main(['test']);
       await tester.pumpAndSettle();
 
       // Create the 'new' directory in the app dir
