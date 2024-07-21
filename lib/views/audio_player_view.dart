@@ -57,14 +57,22 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      PlaylistListVM playlistListVM = Provider.of<PlaylistListVM>(
-        context,
-        listen: false,
-      );
+      if (mounted) {
+        // This if test is necessary to avoid the following integration
+        // test error:
+        //
+        // "The following assertion was thrown during a scheduler callback:
+        // This widget has been unmounted, so the State no longer has a
+        // context (and should be considered defunct)."
+        PlaylistListVM playlistListVM = Provider.of<PlaylistListVM>(
+          context,
+          listen: false,
+        );
 
-      // When the audio player view is displayed, playlist list is
-      // collapsed
-      playlistListVM.isListExpanded = false;
+        // When the audio player view is displayed, playlist list is
+        // collapsed
+        playlistListVM.isListExpanded = false;
+      }
     });
 
     // Used in relation of audioplayers

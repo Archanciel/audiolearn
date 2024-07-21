@@ -7089,6 +7089,27 @@ void main() {
       await app.main(['test']);
       await tester.pumpAndSettle();
 
+      // Now we tap on the AudioPlayerView icon button to open
+      // AudioPlayerView screen in order to verify the current playable
+      // audio
+
+      Finder audioPlayerNavButton =
+          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+      await tester.tap(audioPlayerNavButton);
+      await tester.pumpAndSettle();
+
+      // Verify the displayed current audio title
+      expect(
+          find.text(
+              "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)\n20:32"),
+          findsOneWidget);
+
+      // And return to the playlist download view
+      Finder playlistDownloadViewNavButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(playlistDownloadViewNavButton);
+      await tester.pumpAndSettle();
+
       String s8AudioYoutubePlaylistPath =
           '$kPlaylistDownloadRootPathWindowsTest${path.separator}$s8AudioYoutubePlaylistTitle';
 
@@ -7122,7 +7143,7 @@ void main() {
       // AudioPlayerView screen in order to verify the current playable
       // audio
 
-      Finder audioPlayerNavButton =
+      audioPlayerNavButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(audioPlayerNavButton);
       await tester.pumpAndSettle();
@@ -7134,7 +7155,7 @@ void main() {
           findsOneWidget);
 
       // And return to the playlist download view
-      Finder playlistDownloadViewNavButton =
+      playlistDownloadViewNavButton =
           find.byKey(const ValueKey('playlistDownloadViewIconButton'));
       await tester.tap(playlistDownloadViewNavButton);
       await tester.pumpAndSettle();

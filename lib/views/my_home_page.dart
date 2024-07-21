@@ -146,7 +146,8 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
             ? Icons.light_mode
             : Icons.dark_mode),
       ),
-      AppBarApplicationRightPopupMenuWidget(themeProvider: themeProviderVMlistenTrue),
+      AppBarApplicationRightPopupMenuWidget(
+          themeProvider: themeProviderVMlistenTrue),
     ];
 
     return Scaffold(
@@ -163,7 +164,8 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
       body: Column(
         children: [
           _buildPageView(_screenWidgetLst[_currentIndex]),
-          _buildBottomScreenIconButtonRow(audioPlayerVMlistenFalse, themeProviderVMlistenTrue),
+          _buildBottomScreenIconButtonRow(
+              audioPlayerVMlistenFalse, themeProviderVMlistenTrue),
         ],
       ),
     );
@@ -228,11 +230,16 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
     onPageChangedFunction(index);
 
     // _pageController is the PageView controller
-    await _pageController.animateToPage(
-      index,
-      duration: pageTransitionDuration, // Use constant
-      curve: pageTransitionCurve, // Use constant
-    );
+    if (_pageController.hasClients) {
+      // Using if (_pageController.hasClients) ensures that the PageController
+      // is in a valid state before attempting to perform operations on it,
+      // which can help to avoid errors and makes the code more robust.
+      await _pageController.animateToPage(
+        index,
+        duration: pageTransitionDuration, // Use constant
+        curve: pageTransitionCurve, // Use constant
+      );
+    }
   }
 
   /// This function is passed as the onPageChanged: parameter
