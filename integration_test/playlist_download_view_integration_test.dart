@@ -7118,6 +7118,27 @@ void main() {
         expect(audioListTileTextWidgetFinder, findsOneWidget);
       }
 
+      // Now we tap on the AudioPlayerView icon button to open
+      // AudioPlayerView screen in order to verify the current playable
+      // audio
+
+      Finder audioPlayerNavButton =
+          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+      await tester.tap(audioPlayerNavButton);
+      await tester.pumpAndSettle();
+
+      // Verify the displayed current audio title
+      expect(
+          find.text(
+              "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)\n20:32"),
+          findsOneWidget);
+
+      // And return to the playlist download view
+      Finder playlistDownloadViewNavButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(playlistDownloadViewNavButton);
+      await tester.pumpAndSettle();
+
       // *** Now, manually add the urgent_actus Youtube playlist directory
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
@@ -7125,7 +7146,7 @@ void main() {
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      // *** Execute Updating playlist JSON file menu item
+      // *** Now execute Updating playlist JSON file menu item
 
       // Tap the appbar leading popup menu button
       await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
@@ -7149,6 +7170,24 @@ void main() {
 
         expect(audioListTileTextWidgetFinder, findsNothing);
       }
+
+      // Now we tap on the AudioPlayerView icon button to open
+      // AudioPlayerView screen in order to verify that no current
+      // playable audio is displayed
+
+      audioPlayerNavButton =
+          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+      await tester.tap(audioPlayerNavButton);
+      await tester.pumpAndSettle();
+
+      // Verify the no selected audio title is displayed
+      expect(find.text("No audio selected"), findsOneWidget);
+
+      // And return to the playlist download view
+      playlistDownloadViewNavButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(playlistDownloadViewNavButton);
+      await tester.pumpAndSettle();
 
       // Now test that the manually added urgent_actus Youtube playlist is
       // displayed
@@ -7204,6 +7243,27 @@ void main() {
 
         expect(audioListTileTextWidgetFinder, findsOneWidget);
       }
+
+      // Now we tap on the AudioPlayerView icon button to open
+      // AudioPlayerView screen in order to verify the current playable
+      // audio
+
+      audioPlayerNavButton =
+          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+      await tester.tap(audioPlayerNavButton);
+      await tester.pumpAndSettle();
+
+      // Verify the displayed current audio title
+      expect(
+          find.text(
+              'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n6:29'),
+          findsOneWidget);
+
+      // And return to the playlist download view
+      playlistDownloadViewNavButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(playlistDownloadViewNavButton);
+      await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -8436,11 +8496,11 @@ void main() {
       // but first delete the dir, otherwise the playlist JSON file
       // will not be updated.
 
-      String playlistS8audioDir = "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio";
+      String playlistS8audioDir =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio";
 
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath:
-            playlistS8audioDir,
+        rootPath: playlistS8audioDir,
       );
 
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
