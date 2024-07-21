@@ -110,9 +110,8 @@ class _PlaylistCommentListAddDialogWidgetState
         actionsPadding: kDialogActionsPadding,
         content: Consumer<CommentVM>(
           builder: (context, commentVM, child) {
-            List<Comment> commentsLst = commentVM.loadAudioComments(
-              audio: widget.currentPlaylist.playableAudioLst[
-                  widget.currentPlaylist.currentOrPastPlayableAudioIndex],
+            List<Comment> commentsLst = commentVM.getAllPlaylistComments(
+              playlist: widget.currentPlaylist,
             );
             return SingleChildScrollView(
               child: ListBody(

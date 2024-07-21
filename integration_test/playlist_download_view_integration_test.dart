@@ -2934,9 +2934,9 @@ void main() {
       // Now verifying that the source playlist directory still
       // contains the audio file copied to the target playlist
       List<String> sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path:
+        directoryPath:
             '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle',
-        extension: 'mp3',
+        fileExtension: 'mp3',
       );
 
       expect(sourcePlaylistMp3Lst, [
@@ -2947,9 +2947,9 @@ void main() {
       // And verify that the target playlist directory now
       // contains the audio file copied from the source playlist
       List<String> targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path:
+        directoryPath:
             '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitleTwo',
-        extension: 'mp3',
+        fileExtension: 'mp3',
       );
 
       expect(targetPlaylistMp3Lst,
@@ -3237,9 +3237,9 @@ void main() {
       // Now verifying that the source playlist directory still
       // contains the audio file copied to the target playlist
       sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path:
+        directoryPath:
             '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle',
-        extension: 'mp3',
+        fileExtension: 'mp3',
       );
 
       expect(sourcePlaylistMp3Lst, [
@@ -3250,9 +3250,9 @@ void main() {
       // And verify that the target playlist directory does not
       // contains the audio file copied from the source playlist
       targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path:
+        directoryPath:
             '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitleThree',
-        extension: 'mp3',
+        fileExtension: 'mp3',
       );
 
       expect(targetPlaylistMp3Lst, []);
@@ -3418,9 +3418,9 @@ void main() {
       // Now verifying that the source playlist directory still
       // contains the audio file copied to the target playlist
       List<String> sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path:
+        directoryPath:
             '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle',
-        extension: 'mp3',
+        fileExtension: 'mp3',
       );
 
       expect(sourcePlaylistMp3Lst, [
@@ -3431,9 +3431,9 @@ void main() {
       // And verify that the target playlist directory now
       // contains the audio file copied from the source playlist
       List<String> targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path:
+        directoryPath:
             '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitleTwo',
-        extension: 'mp3',
+        fileExtension: 'mp3',
       );
 
       expect(targetPlaylistMp3Lst,
@@ -3700,9 +3700,9 @@ void main() {
       // contains the audio file moved but canceled to the target
       // playlist
       sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path:
+        directoryPath:
             '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle',
-        extension: 'mp3',
+        fileExtension: 'mp3',
       );
 
       expect(sourcePlaylistMp3Lst, [
@@ -3713,9 +3713,9 @@ void main() {
       // And verify that the target playlist directory does not
       // contains the audio file copied from the source playlist
       targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path:
+        directoryPath:
             '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitleThree',
-        extension: 'mp3',
+        fileExtension: 'mp3',
       );
 
       expect(targetPlaylistMp3Lst, []);
@@ -3881,9 +3881,9 @@ void main() {
       // Now verifying that the source playlist directory still
       // contains the audio file copied to the target playlist
       List<String> sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path:
+        directoryPath:
             '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle',
-        extension: 'mp3',
+        fileExtension: 'mp3',
       );
 
       expect(sourcePlaylistMp3Lst, [
@@ -3895,9 +3895,9 @@ void main() {
       // contains the comment data of audio file copied to the target
       // playlist
       List<String> sourcePlaylistCommentFileLst = DirUtil.listFileNamesInDir(
-        path:
+        directoryPath:
             '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$kCommentDirName',
-        extension: 'json',
+        fileExtension: 'json',
       );
 
       expect(sourcePlaylistCommentFileLst, [
@@ -3908,9 +3908,9 @@ void main() {
       // And verify that the target playlist directory now
       // contains the audio file copied from the source playlist
       List<String> targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path:
+        directoryPath:
             '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitle',
-        extension: 'mp3',
+        fileExtension: 'mp3',
       );
 
       expect(targetPlaylistMp3Lst,
@@ -3919,9 +3919,9 @@ void main() {
       // Verify as well that the target playlist directory now contains
       // the comment file of the audio copied from the source playlist
       List<String> targetPlaylistJsonLst = DirUtil.listFileNamesInDir(
-        path:
+        directoryPath:
             '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitle${path.separator}$kCommentDirName',
-        extension: 'json',
+        fileExtension: 'json',
       );
 
       expect(targetPlaylistJsonLst,
@@ -4024,9 +4024,9 @@ void main() {
       // Now verify that the target playlist directory no longer
       // contains the audio file copied from the source playlist
       targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path:
+        directoryPath:
             '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitle',
-        extension: 'mp3',
+        fileExtension: 'mp3',
       );
 
       expect(targetPlaylistMp3Lst, []);
@@ -4035,9 +4035,9 @@ void main() {
       // contains the audio comment file of the audio copied from the
       // source playlist
       targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path:
+        directoryPath:
             '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitle${path.separator}$kCommentDirName',
-        extension: 'json',
+        fileExtension: 'json',
       );
 
       expect(targetPlaylistMp3Lst, []);
@@ -4315,9 +4315,9 @@ void main() {
       // Now verifying that the source playlist directory still
       // contains the audio file copied to the target playlist
       List<String> sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path:
+        directoryPath:
             '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle',
-        extension: 'mp3',
+        fileExtension: 'mp3',
       );
 
       expect(sourcePlaylistMp3Lst, [
@@ -4328,9 +4328,9 @@ void main() {
       // And verify that the target playlist directory now
       // contains the audio file copied from the source playlist
       List<String> targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path:
+        directoryPath:
             '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitle',
-        extension: 'mp3',
+        fileExtension: 'mp3',
       );
 
       expect(targetPlaylistMp3Lst,
@@ -4427,9 +4427,9 @@ void main() {
       // Now verify that the target playlist directory no longer
       // contains the audio file copied from the source playlist
       targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path:
+        directoryPath:
             '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitle',
-        extension: 'mp3',
+        fileExtension: 'mp3',
       );
 
       expect(targetPlaylistMp3Lst, []);
@@ -4703,15 +4703,15 @@ void main() {
       // playlist directory
 
       List<String> sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path:
+        directoryPath:
             '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle',
-        extension: 'mp3',
+        fileExtension: 'mp3',
       );
 
       List<String> targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path:
+        directoryPath:
             '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitle',
-        extension: 'mp3',
+        fileExtension: 'mp3',
       );
 
       expect(sourcePlaylistMp3Lst,
@@ -5129,15 +5129,15 @@ void main() {
       // playlist directory
 
       List<String> sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path:
+        directoryPath:
             '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle',
-        extension: 'mp3',
+        fileExtension: 'mp3',
       );
 
       List<String> targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path:
+        directoryPath:
             '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetOnePlaylistTitle',
-        extension: 'mp3',
+        fileExtension: 'mp3',
       );
 
       expect(sourcePlaylistMp3Lst, [
@@ -5657,15 +5657,15 @@ void main() {
       // playlist directory.
 
       List<String> sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path:
+        directoryPath:
             '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle',
-        extension: 'mp3',
+        fileExtension: 'mp3',
       );
 
       List<String> targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path:
+        directoryPath:
             '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetSourcePlaylistTitle',
-        extension: 'mp3',
+        fileExtension: 'mp3',
       );
 
       // Verify the Youtube source playlist directory content
@@ -5788,15 +5788,15 @@ void main() {
       // playlist directory.
 
       sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path:
+        directoryPath:
             '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetSourcePlaylistTitle',
-        extension: 'mp3',
+        fileExtension: 'mp3',
       );
 
       targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path:
+        directoryPath:
             '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioTargetPlaylistTitle',
-        extension: 'mp3',
+        fileExtension: 'mp3',
       );
 
       // Verify the local source playlist directory content
@@ -5880,9 +5880,9 @@ void main() {
       // the playlist directory. No warning was displayed.
 
       targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path:
+        directoryPath:
             '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioTargetPlaylistTitle',
-        extension: 'mp3',
+        fileExtension: 'mp3',
       );
 
       // Verify the Youtube target playlist directory content
@@ -6068,15 +6068,15 @@ void main() {
       // playlist directory.
 
       List<String> sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path:
+        directoryPath:
             '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle',
-        extension: 'mp3',
+        fileExtension: 'mp3',
       );
 
       List<String> targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path:
+        directoryPath:
             '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetSourcePlaylistTitle',
-        extension: 'mp3',
+        fileExtension: 'mp3',
       );
 
       // Verify the Youtube source playlist directory content
@@ -6184,15 +6184,15 @@ void main() {
       // playlist directory.
 
       sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path:
+        directoryPath:
             '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetSourcePlaylistTitle',
-        extension: 'mp3',
+        fileExtension: 'mp3',
       );
 
       targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path:
+        directoryPath:
             '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioTargetPlaylistTitle',
-        extension: 'mp3',
+        fileExtension: 'mp3',
       );
 
       // Verify the local source playlist directory content
@@ -6264,9 +6264,9 @@ void main() {
       // the playlist directory. No warning was displayed.
 
       targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path:
+        directoryPath:
             '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioTargetPlaylistTitle',
-        extension: 'mp3',
+        fileExtension: 'mp3',
       );
 
       // Verify the Youtube target playlist directory content
@@ -6321,8 +6321,8 @@ void main() {
           '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubePlaylistTitle';
 
       List<String> youtubePlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path: youtubePlaylistPath,
-        extension: 'mp3',
+        directoryPath: youtubePlaylistPath,
+        fileExtension: 'mp3',
       );
 
       // *** Manually deleting audio files from Youtube
@@ -6523,8 +6523,8 @@ void main() {
           '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localPlaylistTitle';
 
       List<String> localPlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path: localPlaylistPath,
-        extension: 'mp3',
+        directoryPath: localPlaylistPath,
+        fileExtension: 'mp3',
       );
 
       // *** Manually deleting audio files from local
@@ -6725,8 +6725,8 @@ void main() {
           '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubePlaylistTitle';
 
       List<String> youtubePlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path: youtubePlaylistPath,
-        extension: 'mp3',
+        directoryPath: youtubePlaylistPath,
+        fileExtension: 'mp3',
       );
 
       // *** Manually deleting audio files from Youtube
@@ -6907,8 +6907,8 @@ void main() {
           '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localPlaylistTitle';
 
       List<String> localPlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path: localPlaylistPath,
-        extension: 'mp3',
+        directoryPath: localPlaylistPath,
+        fileExtension: 'mp3',
       );
 
       // *** Manually deleting audio files from local
@@ -7056,8 +7056,8 @@ void main() {
          deleting playlist directory and deleting audio files in other
          playlists test''', () {
     testWidgets(
-        '''Manually add Youtube playlist directory and manually delete audio
-           files in other playlist.''', (tester) async {
+        '''Manually delete all audio files in existing playlist and manually
+           add a Youtube playlist directory.''', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -7114,8 +7114,8 @@ void main() {
           '$kPlaylistDownloadRootPathWindowsTest${path.separator}$s8AudioYoutubePlaylistTitle';
 
       List<String> s8AudioYoutubePlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path: s8AudioYoutubePlaylistPath,
-        extension: 'mp3',
+        directoryPath: s8AudioYoutubePlaylistPath,
+        fileExtension: 'mp3',
       );
 
       // *** Manually deleting audio files from S8 Audio Youtube
@@ -7140,8 +7140,8 @@ void main() {
       }
 
       // Now we tap on the AudioPlayerView icon button to open
-      // AudioPlayerView screen in order to verify the current playable
-      // audio
+      // AudioPlayerView screen in order to verify that current playable
+      // audio is still displayed, even if the audio was manually deleted
 
       audioPlayerNavButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
@@ -7193,8 +7193,8 @@ void main() {
       }
 
       // Now we tap on the AudioPlayerView icon button to open
-      // AudioPlayerView screen in order to verify that no current
-      // playable audio is displayed
+      // AudioPlayerView screen in order to verify that "No audio
+      // selected" is displayed
 
       audioPlayerNavButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
@@ -7251,8 +7251,8 @@ void main() {
 
       List<String> urgentActusyoutubeplaylistmp3lst =
           DirUtil.listFileNamesInDir(
-        path: urgentActusyoutubeplaylistpath,
-        extension: 'mp3',
+        directoryPath: urgentActusyoutubeplaylistpath,
+        fileExtension: 'mp3',
       );
 
       for (String audioTitle in urgentActusyoutubeplaylistmp3lst) {
@@ -7267,7 +7267,7 @@ void main() {
 
       // Now we tap on the AudioPlayerView icon button to open
       // AudioPlayerView screen in order to verify the current playable
-      // audio
+      // audio of the manually added playlist
 
       audioPlayerNavButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
@@ -7279,12 +7279,6 @@ void main() {
           find.text(
               'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n6:29'),
           findsOneWidget);
-
-      // And return to the playlist download view
-      playlistDownloadViewNavButton =
-          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-      await tester.tap(playlistDownloadViewNavButton);
-      await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -7382,8 +7376,8 @@ void main() {
           '$kPlaylistDownloadRootPathWindowsTest${path.separator}$testLocalPlaylistTitle';
 
       List<String> testLocalPlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path: testLocalPlaylistPath,
-        extension: 'mp3',
+        directoryPath: testLocalPlaylistPath,
+        fileExtension: 'mp3',
       );
 
       for (String audioTitle in testLocalPlaylistMp3Lst) {
@@ -7396,6 +7390,21 @@ void main() {
 
         expect(audioListTileTextWidgetFinder, findsOneWidget);
       }
+
+      // Now we tap on the AudioPlayerView icon button to open
+      // AudioPlayerView screen in order to verify the current playable
+      // audio of the added playlist
+
+      Finder audioPlayerNavButton =
+          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+      await tester.tap(audioPlayerNavButton);
+      await tester.pumpAndSettle();
+
+      // Verify the displayed current audio title
+      expect(
+          find.text(
+              "Quand les humoristes parlent d'écologie - Thomas VDB, Félix Djhan, Pierre Thévenoux\n5:39"),
+          findsOneWidget);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -7494,8 +7503,8 @@ void main() {
           '$kPlaylistDownloadRootPathWindowsTest${path.separator}$testYoutubePlaylistTitle';
 
       List<String> testYoutubePlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path: testYoutubePlaylistPath,
-        extension: 'mp3',
+        directoryPath: testYoutubePlaylistPath,
+        fileExtension: 'mp3',
       );
 
       for (String audioTitle in testYoutubePlaylistMp3Lst) {
@@ -7508,6 +7517,21 @@ void main() {
 
         expect(audioListTileTextWidgetFinder, findsOneWidget);
       }
+
+      // Now we tap on the AudioPlayerView icon button to open
+      // AudioPlayerView screen in order to verify the current playable
+      // audio of the added playlist
+
+      Finder audioPlayerNavButton =
+          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+      await tester.tap(audioPlayerNavButton);
+      await tester.pumpAndSettle();
+
+      // Verify the displayed current audio title
+      expect(
+          find.text(
+              "5 minutes d'éco-anxiété pour se motiver à bouger (Ringenbach, Janco, Barrau, Servigne)\n7:21"),
+          findsOneWidget);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -7579,6 +7603,18 @@ void main() {
       // playlist view
       listTilesFinder = find.byType(ListTile);
       expect(listTilesFinder, findsNWidgets(0));
+
+      // Now we tap on the AudioPlayerView icon button to open
+      // AudioPlayerView screen in order to verify that "No audio
+      // selected" is displayed
+
+      Finder audioPlayerNavButton =
+          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+      await tester.tap(audioPlayerNavButton);
+      await tester.pumpAndSettle();
+
+      // Verify the no selected audio title is displayed
+      expect(find.text("No audio selected"), findsOneWidget);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -7676,8 +7712,8 @@ void main() {
 
       List<String> urgentActusyoutubeplaylistmp3lst =
           DirUtil.listFileNamesInDir(
-        path: urgentActusyoutubeplaylistpath,
-        extension: 'mp3',
+        directoryPath: urgentActusyoutubeplaylistpath,
+        fileExtension: 'mp3',
       );
 
       for (String audioTitle in urgentActusyoutubeplaylistmp3lst) {
@@ -7807,8 +7843,8 @@ void main() {
 
       List<String> urgentActusyoutubeplaylistmp3lst =
           DirUtil.listFileNamesInDir(
-        path: urgentActusyoutubeplaylistpath,
-        extension: 'mp3',
+        directoryPath: urgentActusyoutubeplaylistpath,
+        fileExtension: 'mp3',
       );
 
       for (String audioTitle in urgentActusyoutubeplaylistmp3lst) {
@@ -8454,7 +8490,13 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets('''After copying playlist json file of existing playlist.''',
+    testWidgets('''After copying playlist json file over the playlist json
+                   file of an existing playlist. In the copied playlist json
+                   file, the current or past playable audio is different. This
+                   test demonstrates that after executing the update playlist
+                   JSON file menu item, the current playlist audio displayed
+                   in the audio player screen corresponds to the current audio
+                   defined in the copied playlist JSON file.''',
         (WidgetTester tester) async {
       const String emptyPlaylistTitle = 'Empty'; // Youtube playlist
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
@@ -8504,7 +8546,8 @@ void main() {
       await tester.tap(find.text(firstDownloadedAudioTitle));
       await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-      // Verify the displayed audio title
+      // Verify the displayed audio title (La surpopulation mondiale par
+      // Jancovici et Barrau)
 
       Finder audioPlayerViewAudioTitleFinder =
           find.byKey(const Key('audioPlayerViewCurrentAudioTitle'));
@@ -8554,7 +8597,8 @@ void main() {
       await tester.tap(audioPlayerNavButton);
       await tester.pumpAndSettle();
 
-      // Verify the displayed audio title
+      // Verify the displayed audio title (Jancovici m'explique l’importance
+      // des ordres de grandeur face au changement climatique)
 
       audioPlayerViewAudioTitleFinder =
           find.byKey(const Key('audioPlayerViewCurrentAudioTitle'));
@@ -8693,9 +8737,9 @@ void main() {
       // local playlist directory.
 
       List<String> localPlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path:
+        directoryPath:
             '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioPlaylistTitle',
-        extension: 'mp3',
+        fileExtension: 'mp3',
       );
 
       // Verify the local target playlist directory content
@@ -8855,9 +8899,9 @@ void main() {
       // local playlist directory.
 
       List<String> localPlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        path:
+        directoryPath:
             '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioPlaylistTitle',
-        extension: 'mp3',
+        fileExtension: 'mp3',
       );
 
       // Verify the local target playlist directory content

@@ -137,7 +137,7 @@ class SettingsDataService {
   ///     settingType: SettingType.playlists,
   ///     settingSubType: Playlists.defaultAudioSort,
   ///     value: AudioSortCriterion.validVideoTitle);
-  /// 
+  ///
   /// initialSettings.set(
   ///     settingType: SettingType.playlists,
   ///     settingSubType: Playlists.arePlaylistsDisplayedInPlaylistDownloadView,
@@ -476,7 +476,7 @@ Future<void> main() async {
   //     "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\temp";
   List<String> oldFilePathLst = DirUtil.listPathFileNamesInSubDirs(
     rootPath: rootPath,
-    extension: 'json',
+    fileExtension: 'json',
     excludeDirName: kCommentDirName,
   );
 

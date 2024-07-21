@@ -314,13 +314,13 @@ class DirUtil {
 
   static List<String> listPathFileNamesInSubDirs({
     required String rootPath,
-    required String extension,
+    required String fileExtension,
     String? excludeDirName, // Default directory name to exclude
   }) {
     List<String> pathFileNameList = [];
 
     final Directory dir = Directory(rootPath);
-    final RegExp pattern = RegExp(r'\.' + RegExp.escape(extension) + r'$');
+    final RegExp pattern = RegExp(r'\.' + RegExp.escape(fileExtension) + r'$');
     RegExp? excludePattern;
 
     if (excludeDirName != null) {
@@ -349,23 +349,54 @@ class DirUtil {
   ///
   /// If the directory does not exist, an empty list is returned.
   static List<String> listFileNamesInDir({
-    required String path,
-    required String extension,
+    required String directoryPath,
+    required String fileExtension,
   }) {
     List<String> fileNameList = [];
 
-    final dir = Directory(path);
+    final dir = Directory(directoryPath);
 
     if (!dir.existsSync()) {
       return fileNameList;
     }
 
-    final pattern = RegExp(r'\.' + RegExp.escape(extension) + r'$');
+    final pattern = RegExp(r'\.' + RegExp.escape(fileExtension) + r'$');
 
     for (FileSystemEntity entity
         in dir.listSync(recursive: false, followLinks: false)) {
       if (entity is File && pattern.hasMatch(entity.path)) {
         fileNameList.add(entity.path.split(Platform.pathSeparator).last);
+      }
+    }
+
+    return fileNameList;
+  }
+
+  /// Lists all the file path names in a directory with a given extension.
+  ///
+  /// If the directory does not exist, an empty list is returned.
+  static List<String> listPathFileNamesInDir({
+    required String directoryPath,
+    required String fileExtension,
+  }) {
+    List<String> fileNameList = [];
+
+    final dir = Directory(directoryPath);
+
+    // Check if the directory exists
+    if (!dir.existsSync()) {
+      return fileNameList;
+    }
+
+    // Create a pattern to match files with the given extension
+    final pattern = RegExp(r'\.' + RegExp.escape(fileExtension) + r'$');
+
+    // Iterate through the directory's contents
+    for (FileSystemEntity entity
+        in dir.listSync(recursive: false, followLinks: false)) {
+      // Check if the entity is a file and matches the pattern
+      if (entity is File && pattern.hasMatch(entity.path)) {
+        fileNameList.add(entity.path);
       }
     }
 
@@ -490,14 +521,14 @@ class DirUtil {
 Future<void> main() async {
   List<String> fileNames = DirUtil.listPathFileNamesInSubDirs(
     rootPath: 'C:\\Users\\Jean-Pierre\\Downloads\\Audio\\',
-    extension: 'json',
+    fileExtension: 'json',
   );
 
   print(fileNames);
 
   List<String> fileNames2 = DirUtil.listFileNamesInDir(
-    path: 'C:\\Users\\Jean-Pierre\\Downloads\\Audio\\new\\',
-    extension: 'mp3',
+    directoryPath: 'C:\\Users\\Jean-Pierre\\Downloads\\Audio\\new\\',
+    fileExtension: 'mp3',
   );
 
   print(fileNames2);

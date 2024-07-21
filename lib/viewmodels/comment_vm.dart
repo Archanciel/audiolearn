@@ -6,6 +6,7 @@ import 'package:path/path.dart' as path;
 
 import '../models/audio.dart';
 import '../models/comment.dart';
+import '../models/playlist.dart';
 import '../services/json_data_service.dart';
 import '../utils/date_time_util.dart';
 import '../utils/dir_util.dart';
@@ -147,6 +148,7 @@ class CommentVM extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Deletes all comments of the passed audio.
   void deleteAllAudioComments({
     required Audio commentedAudio,
   }) {
@@ -243,6 +245,31 @@ class CommentVM extends ChangeNotifier {
         overwriteFileIfExist: false,
       );
     }
+  }
+
+  List<Comment> getAllPlaylistComments({
+    required Playlist playlist,
+  }) {
+    String playlistPath = playlist.downloadPath;
+    List<Comment> allPlaylistComments = [];
+
+    String commentPath = "$playlistPath${path.separator}$kCommentDirName";
+
+    List<String> commentFilePathNames = DirUtil.listPathFileNamesInDir(
+      directoryPath: commentPath,
+      fileExtension: 'json',
+    );
+
+    for (String commentFilePathName in commentFilePathNames) {
+      allPlaylistComments.addAll(
+        JsonDataService.loadListFromFile(
+          jsonPathFileName: commentFilePathName,
+          type: Comment,
+        ),
+      );
+    }
+
+    return allPlaylistComments;
   }
 
   String _createCommentFileName(String audioFileName) =>

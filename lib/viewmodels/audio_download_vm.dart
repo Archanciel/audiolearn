@@ -100,7 +100,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
     List<String> playlistPathFileNameLst = DirUtil.listPathFileNamesInSubDirs(
       rootPath: _playlistsRootPath,
-      extension: 'json',
+      fileExtension: 'json',
       excludeDirName: kCommentDirName,
     );
 
@@ -752,8 +752,8 @@ class AudioDownloadVM extends ChangeNotifier {
     );
 
     final List<String> downloadedAudioFileNameLst = DirUtil.listFileNamesInDir(
-      path: singleVideoTargetPlaylist.downloadPath,
-      extension: 'mp3',
+      directoryPath: singleVideoTargetPlaylist.downloadPath,
+      fileExtension: 'mp3',
     );
 
     try {

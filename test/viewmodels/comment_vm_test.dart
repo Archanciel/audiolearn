@@ -123,6 +123,71 @@ void main() {
       DirUtil.deleteFilesAndSubDirsOfDir(
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
+    test('get playlist comments, 2 comment files for 2 audios exist', () async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesAndSubDirsOfDir(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_test",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      CommentVM commentVM = CommentVM();
+
+      // calling loadAudioComments in situation where comment file
+      // exists and has 3 comments
+
+      Playlist playlistS8 = Playlist(
+        id: "PLzwWSJNcZTMSVHGopMEjlfR7i5qtqbW99",
+        url:
+            "https://youtube.com/playlist?list=PLzwWSJNcZTMSVHGopMEjlfR7i5qtqbW99&si=9KC7VsVt5JIUvNYN",
+        title: 'S8 audio',
+        playlistType: PlaylistType.youtube,
+        playlistQuality: PlaylistQuality.voice,
+      );
+
+      playlistS8.downloadPath =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio";
+
+      List<Comment> commentLst = commentVM.getAllPlaylistComments(playlist: playlistS8,);
+
+      // the returned Commentlist has 3 comments
+      expect(commentLst.length, 5);
+
+      Comment expectedCommentOne = 
+        Comment.fullConstructor(
+          id: 'One_6473',
+          title: 'One',
+          content: 'First comment',
+          commentStartPositionInTenthOfSeconds: 6473,
+          commentEndPositionInTenthOfSeconds: 6553,
+          creationDateTime: DateTime.parse('2024-05-27T13:14:32.000'),
+          lastUpdateDateTime: DateTime.parse('2024-05-29T13:30:03.000'),
+        );
+        Comment expectedCommentFive = Comment.fullConstructor(
+          id: 'Comment Jancovici_430',
+          title: 'Comment Jancovici',
+          content:
+              '',
+          commentStartPositionInTenthOfSeconds: 430,
+          commentEndPositionInTenthOfSeconds: 1030,
+          creationDateTime: DateTime.parse('2024-07-21T16:32:42.000'),
+          lastUpdateDateTime: DateTime.parse('2024-07-21T16:32:42.000'),
+        );
+
+        validateComment(commentLst[0], expectedCommentOne);
+        validateComment(commentLst[4], expectedCommentFive);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesAndSubDirsOfDir(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
+    });
     test(
         'addComment on not exist comment file, then add new comment on same file',
         () async {
@@ -264,7 +329,7 @@ void main() {
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-const String localPlaylistTitle = 'local_delete_comment';
+      const String localPlaylistTitle = 'local_delete_comment';
 
       // Verify that the comment file exists
 
@@ -457,12 +522,12 @@ const String localPlaylistTitle = 'local_delete_comment';
           "$kPlaylistDownloadRootPathWindowsTest${path.separator}$targetPlaylistTitle";
 
       List<String> sourceCommentFileNameLst = DirUtil.listFileNamesInDir(
-          path:
+          directoryPath:
               "${audio.enclosingPlaylist!.downloadPath}${path.separator}$kCommentDirName",
-          extension: 'json');
+          fileExtension: 'json');
       List<String> targetCommentFileNameLst = DirUtil.listFileNamesInDir(
-          path: "$targetPlaylistPath${path.separator}$kCommentDirName",
-          extension: 'json');
+          directoryPath: "$targetPlaylistPath${path.separator}$kCommentDirName",
+          fileExtension: 'json');
 
       expect(sourceCommentFileNameLst.length, 1);
       expect(targetCommentFileNameLst.length, 0);
@@ -473,12 +538,12 @@ const String localPlaylistTitle = 'local_delete_comment';
       );
 
       sourceCommentFileNameLst = DirUtil.listFileNamesInDir(
-          path:
+          directoryPath:
               "${audio.enclosingPlaylist!.downloadPath}${path.separator}$kCommentDirName",
-          extension: 'json');
+          fileExtension: 'json');
       targetCommentFileNameLst = DirUtil.listFileNamesInDir(
-          path: "$targetPlaylistPath${path.separator}$kCommentDirName",
-          extension: 'json');
+          directoryPath: "$targetPlaylistPath${path.separator}$kCommentDirName",
+          fileExtension: 'json');
 
       expect(sourceCommentFileNameLst.length, 0);
       expect(targetCommentFileNameLst.length, 1);
@@ -515,12 +580,12 @@ const String localPlaylistTitle = 'local_delete_comment';
           "$kPlaylistDownloadRootPathWindowsTest${path.separator}$targetPlaylistTitle";
 
       List<String> sourceCommentFileNameLst = DirUtil.listFileNamesInDir(
-          path:
+          directoryPath:
               "${audio.enclosingPlaylist!.downloadPath}${path.separator}$kCommentDirName",
-          extension: 'json');
+          fileExtension: 'json');
       List<String> targetCommentFileNameLst = DirUtil.listFileNamesInDir(
-          path: "$targetPlaylistPath${path.separator}$kCommentDirName",
-          extension: 'json');
+          directoryPath: "$targetPlaylistPath${path.separator}$kCommentDirName",
+          fileExtension: 'json');
 
       expect(sourceCommentFileNameLst.length, 0);
       expect(targetCommentFileNameLst.length, 0);
@@ -531,12 +596,12 @@ const String localPlaylistTitle = 'local_delete_comment';
       );
 
       sourceCommentFileNameLst = DirUtil.listFileNamesInDir(
-          path:
+          directoryPath:
               "${audio.enclosingPlaylist!.downloadPath}${path.separator}$kCommentDirName",
-          extension: 'json');
+          fileExtension: 'json');
       targetCommentFileNameLst = DirUtil.listFileNamesInDir(
-          path: "$targetPlaylistPath${path.separator}$kCommentDirName",
-          extension: 'json');
+          directoryPath: "$targetPlaylistPath${path.separator}$kCommentDirName",
+          fileExtension: 'json');
 
       expect(sourceCommentFileNameLst.length, 0);
       expect(targetCommentFileNameLst.length, 0);
@@ -573,12 +638,12 @@ const String localPlaylistTitle = 'local_delete_comment';
           "$kPlaylistDownloadRootPathWindowsTest${path.separator}$targetPlaylistTitle";
 
       List<String> sourceCommentFileNameLst = DirUtil.listFileNamesInDir(
-          path:
+          directoryPath:
               "${audio.enclosingPlaylist!.downloadPath}${path.separator}$kCommentDirName",
-          extension: 'json');
+          fileExtension: 'json');
       List<String> targetCommentFileNameLst = DirUtil.listFileNamesInDir(
-          path: "$targetPlaylistPath${path.separator}$kCommentDirName",
-          extension: 'json');
+          directoryPath: "$targetPlaylistPath${path.separator}$kCommentDirName",
+          fileExtension: 'json');
 
       expect(sourceCommentFileNameLst.length, 1);
       expect(targetCommentFileNameLst.length, 0);
@@ -589,12 +654,12 @@ const String localPlaylistTitle = 'local_delete_comment';
       );
 
       sourceCommentFileNameLst = DirUtil.listFileNamesInDir(
-          path:
+          directoryPath:
               "${audio.enclosingPlaylist!.downloadPath}${path.separator}$kCommentDirName",
-          extension: 'json');
+          fileExtension: 'json');
       targetCommentFileNameLst = DirUtil.listFileNamesInDir(
-          path: "$targetPlaylistPath${path.separator}$kCommentDirName",
-          extension: 'json');
+          directoryPath: "$targetPlaylistPath${path.separator}$kCommentDirName",
+          fileExtension: 'json');
 
       expect(sourceCommentFileNameLst.length, 1);
       expect(targetCommentFileNameLst.length, 1);
@@ -631,12 +696,12 @@ const String localPlaylistTitle = 'local_delete_comment';
           "$kPlaylistDownloadRootPathWindowsTest${path.separator}$targetPlaylistTitle";
 
       List<String> sourceCommentFileNameLst = DirUtil.listFileNamesInDir(
-          path:
+          directoryPath:
               "${audio.enclosingPlaylist!.downloadPath}${path.separator}$kCommentDirName",
-          extension: 'json');
+          fileExtension: 'json');
       List<String> targetCommentFileNameLst = DirUtil.listFileNamesInDir(
-          path: "$targetPlaylistPath${path.separator}$kCommentDirName",
-          extension: 'json');
+          directoryPath: "$targetPlaylistPath${path.separator}$kCommentDirName",
+          fileExtension: 'json');
 
       expect(sourceCommentFileNameLst.length, 0);
       expect(targetCommentFileNameLst.length, 0);
@@ -647,12 +712,12 @@ const String localPlaylistTitle = 'local_delete_comment';
       );
 
       sourceCommentFileNameLst = DirUtil.listFileNamesInDir(
-          path:
+          directoryPath:
               "${audio.enclosingPlaylist!.downloadPath}${path.separator}$kCommentDirName",
-          extension: 'json');
+          fileExtension: 'json');
       targetCommentFileNameLst = DirUtil.listFileNamesInDir(
-          path: "$targetPlaylistPath${path.separator}$kCommentDirName",
-          extension: 'json');
+          directoryPath: "$targetPlaylistPath${path.separator}$kCommentDirName",
+          fileExtension: 'json');
 
       expect(sourceCommentFileNameLst.length, 0);
       expect(targetCommentFileNameLst.length, 0);
