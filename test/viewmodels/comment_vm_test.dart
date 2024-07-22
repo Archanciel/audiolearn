@@ -154,34 +154,40 @@ void main() {
       playlistS8.downloadPath =
           "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio";
 
-      List<Comment> commentLst = commentVM.getAllPlaylistComments(playlist: playlistS8,);
+      Map<String, List<Comment>> playlistAudiosCommentsMap =
+          commentVM.getAllPlaylistComments(
+        playlist: playlistS8,
+      );
+
+      // List<String> audioFileNamesLst = playlistAudiosCommentsMap.keys.toList();
+      List<Comment> commentsLst = playlistAudiosCommentsMap.values
+          .expand((element) => element)
+          .toList();
 
       // the returned Commentlist has 3 comments
-      expect(commentLst.length, 8);
+      expect(commentsLst.length, 8);
 
-      Comment expectedCommentOne = 
-        Comment.fullConstructor(
-          id: 'One_6473',
-          title: 'One',
-          content: 'First comment',
-          commentStartPositionInTenthOfSeconds: 6473,
-          commentEndPositionInTenthOfSeconds: 6553,
-          creationDateTime: DateTime.parse('2024-05-27T13:14:32.000'),
-          lastUpdateDateTime: DateTime.parse('2024-05-29T13:30:03.000'),
-        );
-        Comment expectedCommentFive = Comment.fullConstructor(
-          id: 'Comment Jancovici_430',
-          title: 'Comment Jancovici',
-          content:
-              '',
-          commentStartPositionInTenthOfSeconds: 430,
-          commentEndPositionInTenthOfSeconds: 1030,
-          creationDateTime: DateTime.parse('2024-07-21T16:32:42.000'),
-          lastUpdateDateTime: DateTime.parse('2024-07-21T16:32:42.000'),
-        );
+      Comment expectedCommentOne = Comment.fullConstructor(
+        id: 'One_6473',
+        title: 'One',
+        content: 'First comment',
+        commentStartPositionInTenthOfSeconds: 6473,
+        commentEndPositionInTenthOfSeconds: 6553,
+        creationDateTime: DateTime.parse('2024-05-27T13:14:32.000'),
+        lastUpdateDateTime: DateTime.parse('2024-05-29T13:30:03.000'),
+      );
+      Comment expectedCommentFive = Comment.fullConstructor(
+        id: 'Comment Jancovici_430',
+        title: 'Comment Jancovici',
+        content: '',
+        commentStartPositionInTenthOfSeconds: 430,
+        commentEndPositionInTenthOfSeconds: 1030,
+        creationDateTime: DateTime.parse('2024-07-21T16:32:42.000'),
+        lastUpdateDateTime: DateTime.parse('2024-07-21T16:32:42.000'),
+      );
 
-        validateComment(commentLst[0], expectedCommentOne);
-        validateComment(commentLst[4], expectedCommentFive);
+      validateComment(commentsLst[0], expectedCommentOne);
+      validateComment(commentsLst[4], expectedCommentFive);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub

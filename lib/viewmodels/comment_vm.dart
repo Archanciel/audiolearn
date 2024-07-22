@@ -247,29 +247,32 @@ class CommentVM extends ChangeNotifier {
     }
   }
 
-  List<Comment> getAllPlaylistComments({
+  /// Returns all comments of all audios in the passed playlist. The
+  /// comments are returned as a map with the audio file name without
+  /// extension as the key.
+  Map<String, List<Comment>> getAllPlaylistComments({
     required Playlist playlist,
   }) {
     String playlistPath = playlist.downloadPath;
-    List<Comment> allPlaylistComments = [];
+    Map<String, List<Comment>> playlistAudiosCommentsMap = {};
 
     String commentPath = "$playlistPath${path.separator}$kCommentDirName";
 
-    List<String> commentFilePathNames = DirUtil.listPathFileNamesInDir(
+    List<String> commentFileNamesLst = DirUtil.listFileNamesInDir(
       directoryPath: commentPath,
       fileExtension: 'json',
     );
 
-    for (String commentFilePathName in commentFilePathNames) {
-      allPlaylistComments.addAll(
-        JsonDataService.loadListFromFile(
-          jsonPathFileName: commentFilePathName,
-          type: Comment,
-        ),
+    for (String commentFileName in commentFileNamesLst) {
+      List<Comment> audioCommentsLst = JsonDataService.loadListFromFile(
+        jsonPathFileName: "$commentPath${path.separator}$commentFileName",
+        type: Comment,
       );
+      playlistAudiosCommentsMap[commentFileName.split('.')[0]] =
+          audioCommentsLst;
     }
 
-    return allPlaylistComments;
+    return playlistAudiosCommentsMap;
   }
 
   String _createCommentFileName(String audioFileName) =>

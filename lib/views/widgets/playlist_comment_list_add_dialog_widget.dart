@@ -110,9 +110,11 @@ class _PlaylistCommentListAddDialogWidgetState
         actionsPadding: kDialogActionsPadding,
         content: Consumer<CommentVM>(
           builder: (context, commentVM, child) {
-            List<Comment> commentsLst = commentVM.getAllPlaylistComments(
+            Map<String, List<Comment>> playlistAudiosCommentsMap = commentVM.getAllPlaylistComments(
               playlist: widget.currentPlaylist,
             );
+            // List<String> audioFileNamesLst = playlistAudiosCommentsMap.keys.toList();
+            List<Comment> commentsLst = playlistAudiosCommentsMap.values.expand((element) => element).toList();
             return SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
