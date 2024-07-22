@@ -339,6 +339,7 @@
   "alreadyDownloadedAudiosPlaylistHelpContent": "La sélection de cette case à cocher permet de modifier la vitesse de lecture pour les fichiers audio de la playlist déjà présents sur l'appareil.",
   "commentsIconButtonTooltip": "Afficher ou insérer des commentaires à des points spécifiques de l'audio.",
   "commentsDialogTitle": "Commentaires",
+  "playlistCommentsDialogTitle": "Commentaires des audios de la playlist",
   "addPositionedCommentTooltip": "Ajouter un commentaire à la position actuelle de l'audio.",
   "commentTitle": "Titre",
   "commentText": "Commentaire",

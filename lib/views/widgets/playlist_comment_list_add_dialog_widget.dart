@@ -80,29 +80,11 @@ class _PlaylistCommentListAddDialogWidgetState
       child: AlertDialog(
         title: Row(
           children: [
-            Text(
-              AppLocalizations.of(context)!.commentsDialogTitle,
-            ),
-            const SizedBox(width: 15),
-            Tooltip(
-              message:
-                  AppLocalizations.of(context)!.addPositionedCommentTooltip,
-              child: IconButton(
-                // add comment icon button
-                key: const Key('addPositionedCommentIconButtonKey'),
-                icon: IconTheme(
-                  data: (themeProviderVM.currentTheme == AppTheme.dark
-                          ? ScreenMixin.themeDataDark
-                          : ScreenMixin.themeDataLight)
-                      .iconTheme,
-                  child: const Icon(
-                    Icons.add_circle_outline,
-                    size: 40.0,
-                  ),
-                ),
-                onPressed: () {
-                  _closeDialogAndOpenCommentAddEditDialog(context: context);
-                },
+            Flexible(
+              child: Text(
+                AppLocalizations.of(context)!.playlistCommentsDialogTitle,
+                maxLines: 2,
+                softWrap: true,
               ),
             ),
           ],
@@ -113,7 +95,16 @@ class _PlaylistCommentListAddDialogWidgetState
             Map<String, List<Comment>> playlistAudiosCommentsMap = commentVM.getAllPlaylistComments(
               playlist: widget.currentPlaylist,
             );
-            // List<String> audioFileNamesLst = playlistAudiosCommentsMap.keys.toList();
+
+            // Obtaining the list of audio file name playlistAudiosCommentsMap
+            // keys and sorting them. Since the audio file names are formatted
+            // as YYMMDD-HHMMSS-audio name YYMMDD, YYMMDD-HHMMSS being the
+            // audio download date time and YYMMDD being the video upload date,
+            // sorting the audio file names sorts them by the audio download
+            // date time.
+            List<String> audioFileNamesLst = playlistAudiosCommentsMap.keys.toList();
+            audioFileNamesLst.sort((a, b) => a.compareTo(b));
+
             List<Comment> commentsLst = playlistAudiosCommentsMap.values.expand((element) => element).toList();
             return SingleChildScrollView(
               child: ListBody(

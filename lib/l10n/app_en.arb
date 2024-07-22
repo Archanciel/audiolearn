@@ -337,6 +337,7 @@
   "alreadyDownloadedAudiosPlaylistHelpContent": "Selecting this checkbox allows you to change the playback speed for the playlist audio files already present on the device.",
   "commentsIconButtonTooltip": "Show or insert comments at specific points in the audio.",
   "commentsDialogTitle": "Comments",
+  "playlistCommentsDialogTitle": "Playlist audios comments",
   "addPositionedCommentTooltip": "Add a comment at the current audio position.",
   "commentTitle": "Title",
   "commentText": "Comment",
