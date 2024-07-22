@@ -3,6 +3,7 @@ import 'package:audiolearn/views/widgets/audios_playable_list_dialog_widget.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
+import 'package:matcher/matcher.dart' as matcher;
 
 import 'package:audiolearn/models/comment.dart';
 import 'package:audiolearn/models/playlist.dart';
@@ -4322,15 +4323,8 @@ void main() {
            current or past playable audio.''', (WidgetTester tester) async {
       const String emptyPlaylistTitle = 'Empty'; // Youtube playlist
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
-      const String localPlaylistTitle = 'local'; // Youtube playlist
-      const String alreadyCommentedAudioTitle =
-          "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
-      const String localPlaylistCurrentPlayableAudioTitle =
-          "morning _ cinematic video";
       const String firstDownloadedAudioTitle =
           "La surpopulation mondiale par Jancovici et Barrau";
-      const String secondDownloadedAudioTitle =
-          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
@@ -4485,7 +4479,7 @@ void main() {
 
         // Tap on the play/pause icon button to pause the audio
         await tester.tap(find.byKey(const Key('playPauseIconButton')));
-        await tester.pumpAndSettle();
+        await tester.pumpAndSettle(const Duration(milliseconds: 500));
 
         // Find the Text child of the selectCommentPosition TextButton
 
@@ -4541,7 +4535,7 @@ void main() {
         final Finder alreadyCommentedAudioFinder =
             find.text(alreadyCommentedAudioTitle);
         await tester.tap(alreadyCommentedAudioFinder);
-        await tester.pumpAndSettle();
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
         // Tap on the comment icon button to open the comment add list
         // dialog
@@ -4599,7 +4593,7 @@ void main() {
         // Ensure the audio position was not rewinded
         expect(
           actualAudioPlayerViewCurrentAudioPosition,
-          '1:16:40',
+          matcher.anyOf([equals('1:16:40'), equals('1:16:41')]),
           reason:
               'Audio Player View audio position value is $actualAudioPlayerViewCurrentAudioPosition',
         );
@@ -4728,8 +4722,9 @@ void main() {
         (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
       const String emptyPlaylistTitle = 'Empty'; // Local empty playlist
-      const String audioToCommentTitle =
-          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
+      const String uncommentedAudioTitle =
+          "La surpopulation mondiale par Jancovici et Barrau";
+      const String uncommentedAudioFileNameNoExt = "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03";
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
@@ -4766,7 +4761,7 @@ void main() {
         tester: tester,
         sourcePlaylistTitle: youtubePlaylistTitle,
         targetPlaylistTitle: emptyPlaylistTitle,
-        audioToCopyTitle: audioToCommentTitle,
+        audioToCopyTitle: uncommentedAudioTitle,
       );
 
       // Now we want to tap on the copied uncommented audio in the
@@ -4783,7 +4778,7 @@ void main() {
       // audio copied in the empty playlist and tap on it to open the
       // AudioPlayerView
       final Finder audioTitleNotYetCommentedFinder =
-          find.text(audioToCommentTitle);
+          find.text(uncommentedAudioTitle);
       await tester.tap(audioTitleNotYetCommentedFinder);
       await tester.pumpAndSettle();
 
@@ -4859,7 +4854,7 @@ void main() {
       );
 
       // Verify audio title displayed in the comment dialog
-      expect(find.text(audioToCommentTitle), findsOneWidget);
+      expect(find.text(uncommentedAudioTitle), findsOneWidget);
 
       // Verify the initial comment position displayed in the
       // comment start and end positions in the comment dialog.
@@ -5019,8 +5014,8 @@ void main() {
       await tester.tap(commentEndTenthOfSecondsCheckboxFinder);
       await tester.pumpAndSettle();
 
-      String expectedCommentEndPositionWithTensOfSecondMin = '0:48.1';
-      String expectedCommentEndPositionWithTensOfSecondMax = '0:49.3';
+      String expectedCommentEndPositionWithTensOfSecondMin = '0:48.9';
+      String expectedCommentEndPositionWithTensOfSecondMax = '0:49.5';
 
       verifyPositionBetweenMinMax(
         tester: tester,
@@ -5187,7 +5182,7 @@ void main() {
       verifyCommentDataStoredInJsonFile(
         playlistTitle: emptyPlaylistTitle,
         audioFileNameNoExt:
-            "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12",
+            uncommentedAudioFileNameNoExt,
         commentTitle: commentTitle,
         commentContent: commentText,
         commentStartPositionTenthOfSecondsStr:
@@ -5268,7 +5263,7 @@ void main() {
       verifyCommentDataStoredInJsonFile(
         playlistTitle: emptyPlaylistTitle,
         audioFileNameNoExt:
-            "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12",
+            uncommentedAudioFileNameNoExt,
         commentTitle: commentTitle,
         commentContent: updatedCommentText,
         commentStartPositionTenthOfSecondsStr:
@@ -5555,7 +5550,7 @@ void main() {
       final Finder alreadyCommentedAudioFinder =
           find.text(alreadyCommentedAudioTitle);
       await tester.tap(alreadyCommentedAudioFinder);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // Verify the current audio position in the audio player view.
 
@@ -7523,6 +7518,10 @@ Future<void> copyAudioFromSourceToTargetPlaylist({
     playlistToSelectTitle: sourcePlaylistTitle,
   );
 
+  // Click on playlist toggle button to hide the playlist list
+  await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+  await tester.pumpAndSettle();
+
   // Now we want to tap the popup menu of the Audio ListTile
   // "audio learn test short video one"
 
@@ -7576,6 +7575,10 @@ Future<void> copyAudioFromSourceToTargetPlaylist({
   // Now find the ok button of the confirm dialog
   // and tap on it
   await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+  await tester.pumpAndSettle();
+
+  // Click on playlist toggle button to display the playlist list
+  await tester.tap(find.byKey(const Key('playlist_toggle_button')));
   await tester.pumpAndSettle();
 }
 

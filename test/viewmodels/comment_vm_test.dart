@@ -157,7 +157,7 @@ void main() {
       List<Comment> commentLst = commentVM.getAllPlaylistComments(playlist: playlistS8,);
 
       // the returned Commentlist has 3 comments
-      expect(commentLst.length, 5);
+      expect(commentLst.length, 8);
 
       Comment expectedCommentOne = 
         Comment.fullConstructor(

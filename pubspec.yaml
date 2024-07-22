@@ -60,6 +60,8 @@ dependencies:
   cupertino_icons: ^1.0.6
   connectivity_plus: ^6.0.3
   file_picker: ^8.0.5
+  f: ^0.1.7
+  matcher: ^0.12.16+1
 
 dev_dependencies:
   flutter_test:
