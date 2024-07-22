@@ -49,7 +49,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
 
   @override
   Widget build(BuildContext context) {
-    final AudioPlayerVM audioGlobalPlayerVM = Provider.of<AudioPlayerVM>(
+    final AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
       context,
       listen: false,
     );
@@ -68,7 +68,8 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
       title: GestureDetector(
         onTap: () async {
           await _dragToAudioPlayerView(
-              audioGlobalPlayerVM); // dragging to the AudioPlayerView screen
+              audioPlayerVMlistenFalse:
+                  audioPlayerVMlistenFalse); // dragging to the AudioPlayerView screen
         },
         child: Text(audio.validVideoTitle,
             style: const TextStyle(fontSize: kAudioTitleFontSize)),
@@ -76,7 +77,8 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
       subtitle: GestureDetector(
         onTap: () async {
           await _dragToAudioPlayerView(
-              audioGlobalPlayerVM); // dragging to the AudioPlayerView screen
+              audioPlayerVMlistenFalse:
+                  audioPlayerVMlistenFalse); // dragging to the AudioPlayerView screen
         },
         child: Text(
           _buildSubTitle(context),
@@ -403,11 +405,13 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
   /// Method called when the user clicks on the audio list item.
   /// This switches to the AudioPlayerView screen without playing
   /// the clicked audio.
-  Future<void> _dragToAudioPlayerView(AudioPlayerVM audioGlobalPlayerVM) async {
-    await audioGlobalPlayerVM.setCurrentAudio(
+  Future<void> _dragToAudioPlayerView({
+    required AudioPlayerVM audioPlayerVMlistenFalse,
+  }) async {
+    await audioPlayerVMlistenFalse.setCurrentAudio(
       audio: audio,
     );
-    await audioGlobalPlayerVM.goToAudioPlayPosition(
+    await audioPlayerVMlistenFalse.goToAudioPlayPosition(
       durationPosition: Duration(
         seconds: audio.audioPositionSeconds,
       ),
@@ -451,13 +455,13 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
 
   Widget _buildPlayButton() {
     return Consumer<AudioPlayerVM>(
-      builder: (context, audioGlobalPlayerVM, child) {
+      builder: (context, audioPlayerVM, child) {
         return Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             _buildPlayOrPauseInkwellButton(
               context: context,
-              audioGlobalPlayerVM: audioGlobalPlayerVM,
+              audioPlayerVMlistenTrue: audioPlayerVM,
               audio: audio,
             )
           ],
@@ -481,7 +485,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
   /// a colored circle.
   InkWell _buildPlayOrPauseInkwellButton({
     required BuildContext context,
-    required AudioPlayerVM audioGlobalPlayerVM,
+    required AudioPlayerVM audioPlayerVMlistenTrue,
     required Audio audio,
   }) {
     CircleAvatar circleAvatar;
@@ -533,13 +537,13 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
           // the play icon. Clicking on it will play the audio
           // from the current position and will switch to the
           // AudioPlayerView screen.
-          await _dragToAudioPlayerViewAndPlayAudio(audioGlobalPlayerVM);
+          await _dragToAudioPlayerViewAndPlayAudio(audioPlayerVMlistenTrue);
         } else {
           // if the audio is playing, the displayed icon is
           // the pause icon. Clicking on it will pause the
           // audio without switching to the AudioPlayerView
           // screen.
-          await audioGlobalPlayerVM.pause();
+          await audioPlayerVMlistenTrue.pause();
         }
       },
       child: SizedBox(
