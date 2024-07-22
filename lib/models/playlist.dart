@@ -535,6 +535,26 @@ class Playlist {
     return playableAudioLst[currentOrPastPlayableAudioIndex];
   }
 
+  /// Returns the audio contained in the playableAudioLst which
+  /// has the same audioFileName as the passed audioFileName.
+  /// 
+  /// File name example: "240528-130636-Interview de Chat GPT  - 
+  /// IA, intelligence, philosophie, géopolitique, post-vérité... 
+  /// 24-01-12"
+  Audio? getAudioByFileName(String audioFileName) {
+    Audio? audio;
+
+    try {
+      audio = playableAudioLst.firstWhere(
+        (audio) => audio.audioFileName == audioFileName,
+      );
+    } catch (e) {
+      audio = null;
+    }
+
+    return audio;
+  }
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) {
