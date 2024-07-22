@@ -25,10 +25,10 @@ class DateTimeUtil {
   /// can be in the format of hh:mm:ss or hh:mm:ss.t or mm:ss or mm:ss.t.
   /// It can be negative as well: -hh:mm:ss or -hh:mm:ss.t or -mm:ss or
   /// -mm:ss.t.
-  /// 
+  ///
   /// Example: 1:45:24.4 -> 6324, 0:52.4 -> 524
-  ///         -1:45:24.4 -> -6324, -0:52.4 -> -524 
-  ///          10:00 -> 600, 10:00.1 -> 601  
+  ///         -1:45:24.4 -> -6324, -0:52.4 -> -524
+  ///          10:00 -> 600, 10:00.1 -> 601
   ///         -10:00 -> -600, -10:00.1 -> -601
   static int convertToTenthsOfSeconds({
     required String timeString,
@@ -75,7 +75,7 @@ class DateTimeUtil {
     if (isNegative) {
       totalTenthsOfSeconds = -totalTenthsOfSeconds;
     }
-    
+
     return totalTenthsOfSeconds;
   }
 
@@ -124,5 +124,20 @@ class DateTimeUtil {
         duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: false);
 
     return timeWithSecondsOnlyStr;
+  }
+
+  /// Removes the date and time elements from the passed file name.
+  /// The date and time elements are expected to be in the format
+  /// of "YYMMDD-HHMMSS-" at the beginning of the file name and
+  /// " HH-MM-SS" at the end of the file name.
+  /// 
+  /// Example: "240528-130636-Interview de Chat GPT  - IA, intelligence,
+  /// philosophie, géopolitique, post-vérité... 24-01-12" is returned
+  /// as "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique,
+  /// post-vérité..."
+  static String removeDateTimeElementsFromFileName(String fileName) {
+    // Regular expression to match the prefix and suffix
+    final regex = RegExp(r'^\d{6}-\d{6}-| \d{2}-\d{2}-\d{2}$');
+    return fileName.replaceAll(regex, '');
   }
 }
