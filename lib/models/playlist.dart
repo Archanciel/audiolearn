@@ -537,16 +537,16 @@ class Playlist {
 
   /// Returns the audio contained in the playableAudioLst which
   /// has the same audioFileName as the passed audioFileName.
-  /// 
-  /// File name example: "240528-130636-Interview de Chat GPT  - 
-  /// IA, intelligence, philosophie, géopolitique, post-vérité... 
+  ///
+  /// File name example: "240528-130636-Interview de Chat GPT  -
+  /// IA, intelligence, philosophie, géopolitique, post-vérité...
   /// 24-01-12"
-  Audio? getAudioByFileName(String audioFileName) {
+  Audio? getAudioByFileNameNoExt({required String audioFileNameNoExt,}) {
     Audio? audio;
 
     try {
       audio = playableAudioLst.firstWhere(
-        (audio) => audio.audioFileName == audioFileName,
+        (audio) => audio.audioFileName == "$audioFileNameNoExt.mp3",
       );
     } catch (e) {
       audio = null;

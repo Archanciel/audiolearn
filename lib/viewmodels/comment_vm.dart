@@ -268,8 +268,10 @@ class CommentVM extends ChangeNotifier {
         jsonPathFileName: "$commentPath${path.separator}$commentFileName",
         type: Comment,
       );
-      playlistAudiosCommentsMap[commentFileName.split('.')[0]] =
-          audioCommentsLst;
+
+      // Remove the file extension from the comment file name. Since the 
+      // extension is ".json", the length of the file name is reduced by 5.
+      playlistAudiosCommentsMap[commentFileName.substring(0, commentFileName.length - 5)] = audioCommentsLst;
     }
 
     return playlistAudiosCommentsMap;
