@@ -24,7 +24,7 @@ enum PlaylistPopupMenuAction {
   //                               deleted from the app dir
   setPlaylistAudioPlaySpeed,
   deletePlaylist,
-  playlistComment,
+  displayPlaylistAudioComments,
 }
 
 /// This widget is used to display a playlist in the
@@ -102,7 +102,7 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                   ),
                   PopupMenuItem<PlaylistPopupMenuAction>(
                     key: const Key('popup_menu_playlist_audio_comments'),
-                    value: PlaylistPopupMenuAction.playlistComment,
+                    value: PlaylistPopupMenuAction.displayPlaylistAudioComments,
                     child:
                         Text(AppLocalizations.of(context)!.playlistCommentMenu),
                   ),
@@ -158,7 +158,14 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                         },
                       );
                       break;
-                    case PlaylistPopupMenuAction.playlistComment:
+                    case PlaylistPopupMenuAction.displayPlaylistAudioComments:
+                      if (playlistListVM.getSelectedPlaylists()[0] !=
+                          playlist) {
+                        playlistListVM.setPlaylistSelection(
+                          playlistIndex: index,
+                          isPlaylistSelected: true,
+                        );
+                      }
                       showDialog<void>(
                         context: context,
                         // passing the current audio to the dialog instead
@@ -177,7 +184,7 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                       );
 
                       if (removedPlayableAudioNumber > 0) {
-                        Provider.of<WarningMessageVM>(context, listen: false)
+                        warningMessageVM
                             .setUpdatedPlayableAudioLstPlaylistTitle(
                                 updatedPlayableAudioLstPlaylistTitle:
                                     playlist.title,
