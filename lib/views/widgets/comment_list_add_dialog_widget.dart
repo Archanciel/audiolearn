@@ -51,7 +51,10 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
   @override
   Widget build(BuildContext context) {
     ThemeProviderVM themeProviderVM = Provider.of<ThemeProviderVM>(context);
-    AudioPlayerVM audioPlayerVM = Provider.of<AudioPlayerVM>(context);
+    AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
+      context,
+      listen: false,
+    );
 
     // Retrieves the screen width using MediaQuery
     double maxCommentTitleWidth =
@@ -132,7 +135,7 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
                             padding: const EdgeInsets.only(bottom: 2),
                             child:
                                 _buildCommentTitlePlusIconsAndCommentDatesAndPosition(
-                              audioPlayerVM: audioPlayerVM,
+                              audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                               commentVM: commentVM,
                               maxCommentTitleWidth: maxCommentTitleWidth,
                               comment: comment,
@@ -151,12 +154,12 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
                         ],
                       ),
                       onTap: () async {
-                        if (audioPlayerVM.isPlaying &&
+                        if (audioPlayerVMlistenFalse.isPlaying &&
                             _playingComment != comment) {
                           // if the user clicks on a comment while another
                           // comment is playing, the playing comment is paused.
                           // Otherwise, the edited comment keeps playing.
-                          await audioPlayerVM.pause();
+                          await audioPlayerVMlistenFalse.pause();
                         }
 
                         _closeDialogAndOpenCommentAddEditDialog(
@@ -190,7 +193,7 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
   }
 
   Widget _buildCommentTitlePlusIconsAndCommentDatesAndPosition({
-    required AudioPlayerVM audioPlayerVM,
+    required AudioPlayerVM audioPlayerVMlistenFalse,
     required CommentVM commentVM,
     required double maxCommentTitleWidth,
     required Comment comment,
@@ -230,12 +233,12 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
                       // paused
                       (_playingComment != null &&
                               _playingComment == comment &&
-                              audioPlayerVM.isPlaying)
-                          ? await audioPlayerVM
+                              audioPlayerVMlistenFalse.isPlaying)
+                          ? await audioPlayerVMlistenFalse
                               .pause() // clicked on currently playing comment pause button
                           : await _playFromCommentPosition(
                               // clicked on other comment play button
-                              audioPlayerVM: audioPlayerVM,
+                              audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                               comment: comment,
                             );
                     },
@@ -287,7 +290,7 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
                     key: const Key('deleteCommentIconButton'),
                     onPressed: () async {
                       await _confirmDeleteComment(
-                        audioPlayerVM: audioPlayerVM,
+                        audioPlayerVM: audioPlayerVMlistenFalse,
                         commentVM: commentVM,
                         comment: comment,
                       );
@@ -420,12 +423,12 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
   }
 
   Future<void> _playFromCommentPosition({
-    required AudioPlayerVM audioPlayerVM,
+    required AudioPlayerVM audioPlayerVMlistenFalse,
     required Comment comment,
   }) async {
     _playingComment = comment;
 
-    if (!audioPlayerVM.isPlaying) {
+    if (!audioPlayerVMlistenFalse.isPlaying) {
       // This fixes a problem when a playing comment was paused and
       // then the user clicked on the play button of an other comment.
       // In such a situation, the user had to click twice or three
@@ -434,18 +437,18 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
       // If the other comment was positioned after the previously played
       // comment, then the user had to click only once on the play button
       // of the other comment to play it.
-      await audioPlayerVM.playCurrentAudio(
+      await audioPlayerVMlistenFalse.playCurrentAudio(
         rewindAudioPositionBasedOnPauseDuration: false,
         isCommentPlaying: true,
       );
     }
 
-    await audioPlayerVM.modifyAudioPlayerPluginPosition(
+    await audioPlayerVMlistenFalse.modifyAudioPlayerPluginPosition(
       Duration(
           milliseconds: comment.commentStartPositionInTenthOfSeconds * 100),
     );
 
-    await audioPlayerVM.playCurrentAudio(
+    await audioPlayerVMlistenFalse.playCurrentAudio(
       rewindAudioPositionBasedOnPauseDuration: false,
       isCommentPlaying: true,
     );
