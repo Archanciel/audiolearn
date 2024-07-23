@@ -541,7 +541,9 @@ class Playlist {
   /// File name example: "240528-130636-Interview de Chat GPT  -
   /// IA, intelligence, philosophie, géopolitique, post-vérité...
   /// 24-01-12"
-  Audio? getAudioByFileNameNoExt({required String audioFileNameNoExt,}) {
+  Audio? getAudioByFileNameNoExt({
+    required String audioFileNameNoExt,
+  }) {
     Audio? audio;
 
     try {
