@@ -97,7 +97,7 @@ void main() {
       // because YoutubeExplode can not access to internet
       // in integration tests in order to download the playlist
       // and so obtain the playlist title
-      PlaylistListVM expandablePlaylistListVM = PlaylistListVM(
+      PlaylistListVM playlistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
         commentVM: CommentVM(),
@@ -106,19 +106,19 @@ void main() {
 
       // calling getUpToDateSelectablePlaylists() loads all the
       // playlist json files from the app dir and so enables
-      // expandablePlaylistListVM to know which playlists are
+      // playlistListVM to know which playlists are
       // selected and which are not
-      expandablePlaylistListVM.getUpToDateSelectablePlaylists();
+      playlistListVM.getUpToDateSelectablePlaylists();
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
-        playlistListVM: expandablePlaylistListVM,
+        playlistListVM: playlistListVM,
       );
 
       await _launchExpandablePlaylistListView(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
-        expandablePlaylistListVM: expandablePlaylistListVM,
+        playlistListVM: playlistListVM,
         warningMessageVM: warningMessageVM,
         audioPlayerVM: audioPlayerVM,
       );
@@ -345,7 +345,7 @@ void main() {
       // because YoutubeExplode can not access to internet
       // in integration tests in order to download the playlist
       // and so obtain the playlist title
-      PlaylistListVM expandablePlaylistListVM = PlaylistListVM(
+      PlaylistListVM playlistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
         commentVM: CommentVM(),
@@ -354,19 +354,19 @@ void main() {
 
       // calling getUpToDateSelectablePlaylists() loads all the
       // playlist json files from the app dir and so enables
-      // expandablePlaylistListVM to know which playlists are
+      // playlistListVM to know which playlists are
       // selected and which are not
-      expandablePlaylistListVM.getUpToDateSelectablePlaylists();
+      playlistListVM.getUpToDateSelectablePlaylists();
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
-        playlistListVM: expandablePlaylistListVM,
+        playlistListVM: playlistListVM,
       );
 
       await _launchExpandablePlaylistListView(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
-        expandablePlaylistListVM: expandablePlaylistListVM,
+        playlistListVM: playlistListVM,
         warningMessageVM: warningMessageVM,
         audioPlayerVM: audioPlayerVM,
       );
@@ -485,7 +485,7 @@ void main() {
       // because YoutubeExplode can not access to internet
       // in integration tests in order to download the playlist
       // and so obtain the playlist title
-      PlaylistListVM expandablePlaylistListVM = PlaylistListVM(
+      PlaylistListVM playlistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
         commentVM: CommentVM(),
@@ -494,19 +494,19 @@ void main() {
 
       // calling getUpToDateSelectablePlaylists() loads all the
       // playlist json files from the app dir and so enables
-      // expandablePlaylistListVM to know which playlists are
+      // playlistListVM to know which playlists are
       // selected and which are not
-      expandablePlaylistListVM.getUpToDateSelectablePlaylists();
+      playlistListVM.getUpToDateSelectablePlaylists();
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
-        playlistListVM: expandablePlaylistListVM,
+        playlistListVM: playlistListVM,
       );
 
       await _launchExpandablePlaylistListView(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
-        expandablePlaylistListVM: expandablePlaylistListVM,
+        playlistListVM: playlistListVM,
         warningMessageVM: warningMessageVM,
         audioPlayerVM: audioPlayerVM,
       );
@@ -726,7 +726,7 @@ void main() {
       // because YoutubeExplode can not access to internet
       // in integration tests in order to download the playlist
       // and so obtain the playlist title
-      PlaylistListVM expandablePlaylistListVM = PlaylistListVM(
+      PlaylistListVM playlistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
         commentVM: CommentVM(),
@@ -735,19 +735,19 @@ void main() {
 
       // calling getUpToDateSelectablePlaylists() loads all the
       // playlist json files from the app dir and so enables
-      // expandablePlaylistListVM to know which playlists are
+      // playlistListVM to know which playlists are
       // selected and which are not
-      expandablePlaylistListVM.getUpToDateSelectablePlaylists();
+      playlistListVM.getUpToDateSelectablePlaylists();
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
-        playlistListVM: expandablePlaylistListVM,
+        playlistListVM: playlistListVM,
       );
 
       await _launchExpandablePlaylistListView(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
-        expandablePlaylistListVM: expandablePlaylistListVM,
+        playlistListVM: playlistListVM,
         warningMessageVM: warningMessageVM,
         audioPlayerVM: audioPlayerVM,
       );
@@ -1262,7 +1262,7 @@ void main() {
       // because YoutubeExplode can not access to internet
       // in integration tests in order to download the playlist
       // and so obtain the playlist title
-      PlaylistListVM expandablePlaylistListVM = PlaylistListVM(
+      PlaylistListVM playlistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
         commentVM: CommentVM(),
@@ -1271,19 +1271,19 @@ void main() {
 
       // calling getUpToDateSelectablePlaylists() loads all the
       // playlist json files from the app dir and so enables
-      // expandablePlaylistListVM to know which playlists are
+      // playlistListVM to know which playlists are
       // selected and which are not
-      expandablePlaylistListVM.getUpToDateSelectablePlaylists();
+      playlistListVM.getUpToDateSelectablePlaylists();
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
-        playlistListVM: expandablePlaylistListVM,
+        playlistListVM: playlistListVM,
       );
 
       await _launchExpandablePlaylistListView(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
-        expandablePlaylistListVM: expandablePlaylistListVM,
+        playlistListVM: playlistListVM,
         warningMessageVM: warningMessageVM,
         audioPlayerVM: audioPlayerVM,
       );
@@ -1713,7 +1713,7 @@ void main() {
       // because YoutubeExplode can not access to internet
       // in integration tests in order to download the playlist
       // and so obtain the playlist title
-      PlaylistListVM expandablePlaylistListVM = PlaylistListVM(
+      PlaylistListVM playlistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
         commentVM: CommentVM(),
@@ -1722,19 +1722,19 @@ void main() {
 
       // calling getUpToDateSelectablePlaylists() loads all the
       // playlist json files from the app dir and so enables
-      // expandablePlaylistListVM to know which playlists are
+      // playlistListVM to know which playlists are
       // selected and which are not
-      expandablePlaylistListVM.getUpToDateSelectablePlaylists();
+      playlistListVM.getUpToDateSelectablePlaylists();
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
-        playlistListVM: expandablePlaylistListVM,
+        playlistListVM: playlistListVM,
       );
 
       await _launchExpandablePlaylistListView(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
-        expandablePlaylistListVM: expandablePlaylistListVM,
+        playlistListVM: playlistListVM,
         warningMessageVM: warningMessageVM,
         audioPlayerVM: audioPlayerVM,
       );
@@ -1837,7 +1837,7 @@ void main() {
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
-        expandablePlaylistListVM: expandablePlaylistListVM,
+        playlistListVM: playlistListVM,
         warningMessageVM: warningMessageVM,
         audioPlayerVM: audioPlayerVM,
       );
@@ -1889,7 +1889,7 @@ void main() {
       // because YoutubeExplode can not access to internet
       // in integration tests in order to download the playlist
       // and so obtain the playlist title
-      PlaylistListVM expandablePlaylistListVM = PlaylistListVM(
+      PlaylistListVM playlistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
         commentVM: CommentVM(),
@@ -1898,19 +1898,19 @@ void main() {
 
       // calling getUpToDateSelectablePlaylists() loads all the
       // playlist json files from the app dir and so enables
-      // expandablePlaylistListVM to know which playlists are
+      // playlistListVM to know which playlists are
       // selected and which are not
-      expandablePlaylistListVM.getUpToDateSelectablePlaylists();
+      playlistListVM.getUpToDateSelectablePlaylists();
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
-        playlistListVM: expandablePlaylistListVM,
+        playlistListVM: playlistListVM,
       );
 
       await _launchExpandablePlaylistListView(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
-        expandablePlaylistListVM: expandablePlaylistListVM,
+        playlistListVM: playlistListVM,
         warningMessageVM: warningMessageVM,
         audioPlayerVM: audioPlayerVM,
       );
@@ -2035,7 +2035,7 @@ void main() {
       // because YoutubeExplode can not access to internet
       // in integration tests in order to download the playlist
       // and so obtain the playlist title
-      PlaylistListVM expandablePlaylistListVM = PlaylistListVM(
+      PlaylistListVM playlistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
         commentVM: CommentVM(),
@@ -2044,19 +2044,19 @@ void main() {
 
       // calling getUpToDateSelectablePlaylists() loads all the
       // playlist json files from the app dir and so enables
-      // expandablePlaylistListVM to know which playlists are
+      // playlistListVM to know which playlists are
       // selected and which are not
-      expandablePlaylistListVM.getUpToDateSelectablePlaylists();
+      playlistListVM.getUpToDateSelectablePlaylists();
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
-        playlistListVM: expandablePlaylistListVM,
+        playlistListVM: playlistListVM,
       );
 
       await _launchExpandablePlaylistListView(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
-        expandablePlaylistListVM: expandablePlaylistListVM,
+        playlistListVM: playlistListVM,
         warningMessageVM: warningMessageVM,
         audioPlayerVM: audioPlayerVM,
       );
@@ -2184,7 +2184,7 @@ void main() {
       // because YoutubeExplode can not access to internet
       // in integration tests in order to download the playlist
       // and so obtain the playlist title
-      PlaylistListVM expandablePlaylistListVM = PlaylistListVM(
+      PlaylistListVM playlistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
         commentVM: CommentVM(),
@@ -2193,19 +2193,19 @@ void main() {
 
       // calling getUpToDateSelectablePlaylists() loads all the
       // playlist json files from the app dir and so enables
-      // expandablePlaylistListVM to know which playlists are
+      // playlistListVM to know which playlists are
       // selected and which are not
-      expandablePlaylistListVM.getUpToDateSelectablePlaylists();
+      playlistListVM.getUpToDateSelectablePlaylists();
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
-        playlistListVM: expandablePlaylistListVM,
+        playlistListVM: playlistListVM,
       );
 
       await _launchExpandablePlaylistListView(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
-        expandablePlaylistListVM: expandablePlaylistListVM,
+        playlistListVM: playlistListVM,
         warningMessageVM: warningMessageVM,
         audioPlayerVM: audioPlayerVM,
       );
@@ -2363,7 +2363,7 @@ void main() {
 
       audioDownloadVM.youtubeExplode = mockYoutubeExplode;
 
-      PlaylistListVM expandablePlaylistListVM = PlaylistListVM(
+      PlaylistListVM playlistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
@@ -2372,19 +2372,19 @@ void main() {
 
       // calling getUpToDateSelectablePlaylists() loads all the
       // playlist json files from the app dir and so enables
-      // expandablePlaylistListVM to know which playlists are
+      // playlistListVM to know which playlists are
       // selected and which are not
-      expandablePlaylistListVM.getUpToDateSelectablePlaylists();
+      playlistListVM.getUpToDateSelectablePlaylists();
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
-        playlistListVM: expandablePlaylistListVM,
+        playlistListVM: playlistListVM,
       );
 
       await _launchExpandablePlaylistListView(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
-        expandablePlaylistListVM: expandablePlaylistListVM,
+        playlistListVM: playlistListVM,
         warningMessageVM: warningMessageVM,
         audioPlayerVM: audioPlayerVM,
       );
@@ -12727,7 +12727,7 @@ Future<void> _launchExpandablePlaylistListView({
   required tester,
   required AudioDownloadVM audioDownloadVM,
   required SettingsDataService settingsDataService,
-  required PlaylistListVM expandablePlaylistListVM,
+  required PlaylistListVM playlistListVM,
   required WarningMessageVM warningMessageVM,
   required AudioPlayerVM audioPlayerVM,
 }) async {
@@ -12743,7 +12743,7 @@ Future<void> _launchExpandablePlaylistListView({
             create: (_) => LanguageProviderVM(
                   appSettings: settingsDataService,
                 )),
-        ChangeNotifierProvider(create: (_) => expandablePlaylistListVM),
+        ChangeNotifierProvider(create: (_) => playlistListVM),
         ChangeNotifierProvider(create: (_) => warningMessageVM),
         ChangeNotifierProvider(create: (_) => audioPlayerVM),
       ],

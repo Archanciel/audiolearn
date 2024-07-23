@@ -60,7 +60,7 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
         Provider.of<WarningMessageVM>(context, listen: false);
 
     return Consumer2<PlaylistListVM, AudioPlayerVM>(
-      builder: (context, expandablePlaylistListVM, audioPlayerVM, child) {
+      builder: (context, playlistListVM, audioPlayerVM, child) {
         return ListTile(
           leading: IconButton(
             icon: const Icon(Icons.menu),
@@ -152,7 +152,7 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                           return PlaylistInfoDialogWidget(
                             settingsDataService: settingsDataService,
                             playlist: playlist,
-                            playlistJsonFileSize: expandablePlaylistListVM
+                            playlistJsonFileSize: playlistListVM
                                 .getPlaylistJsonFileSize(playlist: playlist),
                           );
                         },
@@ -175,7 +175,7 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                       break;
                     case PlaylistPopupMenuAction.updatePlaylistPlayableAudios:
                       int removedPlayableAudioNumber =
-                          expandablePlaylistListVM.updatePlayableAudioLst(
+                          playlistListVM.updatePlayableAudioLst(
                         playlist: playlist,
                       );
 
@@ -215,7 +215,7 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                           // value is null if clicking on Cancel or if the dialog
                           // is dismissed by clicking outside the dialog.
 
-                          expandablePlaylistListVM
+                          playlistListVM
                               .updateIndividualPlaylistAndOrPlaylistAudiosPlaySpeed(
                             audioPlaySpeed: value[0] as double,
                             playlistIndex: index,
@@ -232,7 +232,7 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                           return ConfirmActionDialogWidget(
                             actionFunction: deletePlaylist,
                             actionFunctionArgs: [
-                              expandablePlaylistListVM,
+                              playlistListVM,
                               playlist,
                             ],
                             dialogTitle:
@@ -255,9 +255,9 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
             value: playlist.isSelected,
             onChanged: (value) async {
               if (toggleListIfSelected) {
-                expandablePlaylistListVM.toggleList();
+                playlistListVM.toggleList();
               }
-              expandablePlaylistListVM.setPlaylistSelection(
+              playlistListVM.setPlaylistSelection(
                 playlistIndex: index,
                 isPlaylistSelected: value!,
               );
@@ -274,10 +274,10 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
   /// playlist. This method is called when the user clicks on the
   /// 'Confirm' button.
   void deletePlaylist(
-    PlaylistListVM expandablePlaylistListVM,
+    PlaylistListVM playlistListVM,
     Playlist playlistToDelete,
   ) {
-    expandablePlaylistListVM.deletePlaylist(
+    playlistListVM.deletePlaylist(
       playlistToDelete: playlistToDelete,
     );
   }

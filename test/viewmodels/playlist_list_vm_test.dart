@@ -77,7 +77,7 @@ void main() {
 
       // calling getUpToDateSelectablePlaylists() loads all the
       // playlist json files from the app dir and so enables
-      // expandablePlaylistListVM to know which playlists are
+      // playlistListVM to know which playlists are
       // selected and which are not
       playlistListVM.getUpToDateSelectablePlaylists();
     });
@@ -289,7 +289,7 @@ void main() {
 
       // calling getUpToDateSelectablePlaylists() loads all the
       // playlist json files from the app dir and so enables
-      // expandablePlaylistListVM to know which playlists are
+      // playlistListVM to know which playlists are
       // selected and which are not
       playlistListVM.getUpToDateSelectablePlaylists();
 
@@ -372,7 +372,7 @@ void main() {
 
       // calling getUpToDateSelectablePlaylists() loads all the
       // playlist json files from the app dir and so enables
-      // expandablePlaylistListVM to know which playlists are
+      // playlistListVM to know which playlists are
       // selected and which are not
       List<Playlist> selectablePlaylistLst =
           playlistListVM.getUpToDateSelectablePlaylists();
@@ -458,7 +458,7 @@ void main() {
 
       // calling getUpToDateSelectablePlaylists() loads all the
       // playlist json files from the app dir and so enables
-      // expandablePlaylistListVM to know which playlists are
+      // playlistListVM to know which playlists are
       // selected and which are not
       List<Playlist> selectablePlaylistLst =
           playlistListVM.getUpToDateSelectablePlaylists();
@@ -539,7 +539,7 @@ void main() {
 
       // calling getUpToDateSelectablePlaylists() loads all the
       // playlist json files from the app dir and so enables
-      // expandablePlaylistListVM to know which playlists are
+      // playlistListVM to know which playlists are
       // selected and which are not
       List<Playlist> selectablePlaylistLst =
           playlistListVM.getUpToDateSelectablePlaylists();
@@ -629,7 +629,7 @@ void main() {
 
       // calling getUpToDateSelectablePlaylists() loads all the
       // playlist json files from the app dir and so enables
-      // expandablePlaylistListVM to know which playlists are
+      // playlistListVM to know which playlists are
       // selected and which are not
       playlistListVM.getUpToDateSelectablePlaylists();
 
@@ -711,7 +711,7 @@ void main() {
 
       // calling getUpToDateSelectablePlaylists() loads all the
       // playlist json files from the app dir and so enables
-      // expandablePlaylistListVM to know which playlists are
+      // playlistListVM to know which playlists are
       // selected and which are not
 
       // Obtaining the audio from which to obtain the next playable
@@ -796,7 +796,7 @@ void main() {
 
       // calling getUpToDateSelectablePlaylists() loads all the
       // playlist json files from the app dir and so enables
-      // expandablePlaylistListVM to know which playlists are
+      // playlistListVM to know which playlists are
       // selected and which are not
       playlistListVM.getUpToDateSelectablePlaylists();
       playlistListVM.setPlaylistSelection(
@@ -880,7 +880,7 @@ void main() {
 
       // calling getUpToDateSelectablePlaylists() loads all the
       // playlist json files from the app dir and so enables
-      // expandablePlaylistListVM to know which playlists are
+      // playlistListVM to know which playlists are
       // selected and which are not
       playlistListVM.getUpToDateSelectablePlaylists();
     });

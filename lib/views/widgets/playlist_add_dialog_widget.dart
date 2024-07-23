@@ -81,7 +81,7 @@ class _PlaylistAddDialogWidgetState extends State<PlaylistAddDialogWidget>
             if (isYoutubePlaylistAdded == null) {
               return;
             }
-            
+
             Navigator.of(context).pop(isYoutubePlaylistAdded);
           }
         }
@@ -181,13 +181,13 @@ class _PlaylistAddDialogWidgetState extends State<PlaylistAddDialogWidget>
     required BuildContext context,
   }) async {
     String localPlaylistTitle = _localPlaylistTitleTextEditingController.text;
-    PlaylistListVM expandablePlaylistListVM =
+    PlaylistListVM playlistListVM =
         Provider.of<PlaylistListVM>(context, listen: false);
 
     if (localPlaylistTitle.isNotEmpty) {
       // if the local playlist title is not empty, then add the local
       // playlist
-      if (await expandablePlaylistListVM.addPlaylist(
+      if (await playlistListVM.addPlaylist(
             localPlaylistTitle: localPlaylistTitle,
             playlistQuality:
                 _isChecked ? PlaylistQuality.music : PlaylistQuality.voice,
@@ -201,8 +201,7 @@ class _PlaylistAddDialogWidgetState extends State<PlaylistAddDialogWidget>
       // if the local playlist title is empty, then add the Youtube
       // playlist if the Youtube playlist URL is not empty
       if (widget.playlistUrl.isNotEmpty) {
-        dynamic isYoutubePlaylistAdded =
-            await expandablePlaylistListVM.addPlaylist(
+        dynamic isYoutubePlaylistAdded = await playlistListVM.addPlaylist(
           playlistUrl: widget.playlistUrl,
           playlistQuality:
               _isChecked ? PlaylistQuality.music : PlaylistQuality.voice,

@@ -148,7 +148,7 @@ class MainApp extends StatelessWidget with ScreenMixin {
 
     CommentVM commentVM = CommentVM();
 
-    PlaylistListVM expandablePlaylistListVM = PlaylistListVM(
+    PlaylistListVM playlistListVM = PlaylistListVM(
       warningMessageVM: warningMessageVM,
       audioDownloadVM: audioDownloadVM,
       commentVM: commentVM,
@@ -156,19 +156,19 @@ class MainApp extends StatelessWidget with ScreenMixin {
     );
 
     AudioPlayerVM audioPlayerVM = AudioPlayerVM(
-      playlistListVM: expandablePlaylistListVM,
+      playlistListVM: playlistListVM,
     );
 
     globalAudioPlayerVM = audioPlayerVM;
 
     // calling getUpToDateSelectablePlaylists() loads all the
     // playlist json files from the app dir and so enables
-    // expandablePlaylistListVM to know which playlists are
+    // playlistListVM to know which playlists are
     // selected and which are not
-    expandablePlaylistListVM.getUpToDateSelectablePlaylists();
+    playlistListVM.getUpToDateSelectablePlaylists();
 
     // must be called after
-    // expandablePlaylistListVM.getUpToDateSelectablePlaylists()
+    // playlistListVM.getUpToDateSelectablePlaylists()
     // otherwise the list of selected playlists is empty instead
     // of containing one selected playlist (as valid now)
 
@@ -191,7 +191,7 @@ class MainApp extends StatelessWidget with ScreenMixin {
             appSettings: _settingsDataService,
           ),
         ),
-        ChangeNotifierProvider(create: (_) => expandablePlaylistListVM),
+        ChangeNotifierProvider(create: (_) => playlistListVM),
         ChangeNotifierProvider(create: (_) => warningMessageVM),
         ChangeNotifierProvider(create: (_) => commentVM)
       ],
