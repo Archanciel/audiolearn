@@ -159,7 +159,6 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                       );
                       break;
                     case PlaylistPopupMenuAction.playlistComment:
-                      // audioGlobalPlayerVM.setCurrentAudio(audio).then((value) {
                       showDialog<void>(
                         context: context,
                         // passing the current audio to the dialog instead
@@ -170,8 +169,6 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                           currentPlaylist: playlist,
                         ),
                       );
-                      // }
-                      // );
                       break;
                     case PlaylistPopupMenuAction.updatePlaylistPlayableAudios:
                       int removedPlayableAudioNumber =

@@ -53,8 +53,6 @@ class _PlaylistCommentListAddDialogWidgetState
   @override
   Widget build(BuildContext context) {
     ThemeProviderVM themeProviderVM = Provider.of<ThemeProviderVM>(context);
-    AudioPlayerVM audioPlayerVM =
-        Provider.of<AudioPlayerVM>(context, listen: false);
 
     // Retrieve the screen width using MediaQuery
     double maxDropdownWidth =
