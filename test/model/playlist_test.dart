@@ -24,7 +24,7 @@ void main() {
       expect(playlist.playableAudioLst[1].originalVideoTitle, 'A');
       expect(playlist.playableAudioLst[2].originalVideoTitle, 'C');
     });
-    test('test getAudioByFileName()', () {
+    test('getAudioByFileNameNoExt() test', () {
       Playlist playlist = Playlist(
         url: 'https://example.com/playlist2',
         playlistType: PlaylistType.youtube,
@@ -33,9 +33,27 @@ void main() {
 
       addThreeDownloadedAudios(playlist);
 
-      expect(playlist.getAudioByFileName('230320-000000-C 24-07-22.mp3')!.originalVideoTitle, 'C');
-      expect(playlist.getAudioByFileName('230318-000000-B 24-07-22.mp3')!.originalVideoTitle, 'B');
-      expect(playlist.getAudioByFileName('230325-000000-A 24-07-22.mp3')!.originalVideoTitle, 'A');
+      expect(
+          playlist
+              .getAudioByFileNameNoExt(
+                audioFileNameNoExt: '230320-000000-C 24-07-23',
+              )!
+              .originalVideoTitle,
+          'C');
+      expect(
+          playlist
+              .getAudioByFileNameNoExt(
+                audioFileNameNoExt: '230318-000000-B 24-07-23',
+              )!
+              .originalVideoTitle,
+          'B');
+      expect(
+          playlist
+              .getAudioByFileNameNoExt(
+                audioFileNameNoExt: '230325-000000-A 24-07-23',
+              )!
+              .originalVideoTitle,
+          'A');
     });
 
     test('remove 1 audio from downloaded and playable audio list', () {

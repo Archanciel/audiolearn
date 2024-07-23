@@ -123,7 +123,7 @@ void main() {
       DirUtil.deleteFilesAndSubDirsOfDir(
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
-    test('get playlist comments, 2 comment files for 2 audios exist', () async {
+    test('get playlist comments, 3 comment files for 4 audios exist', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesAndSubDirsOfDir(
@@ -158,6 +158,19 @@ void main() {
           commentVM.getAllPlaylistComments(
         playlist: playlistS8,
       );
+
+      List<String> audioFileNamesLst = playlistAudiosCommentsMap.keys.toList();
+
+      expect(audioFileNamesLst.length, 3);
+
+      audioFileNamesLst.sort((a, b) => a.compareTo(b));
+
+      expect(audioFileNamesLst[0],
+          "240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12");
+      expect(audioFileNamesLst[1],
+          "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12");
+      expect(audioFileNamesLst[2],
+          "240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10");
 
       // List<String> audioFileNamesLst = playlistAudiosCommentsMap.keys.toList();
       List<Comment> commentsLst = playlistAudiosCommentsMap.values
