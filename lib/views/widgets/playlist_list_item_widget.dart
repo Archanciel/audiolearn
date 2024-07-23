@@ -11,6 +11,7 @@ import '../../services/settings_data_service.dart';
 import '../../viewmodels/playlist_list_vm.dart';
 import '../../viewmodels/warning_message_vm.dart';
 import '../screen_mixin.dart';
+import 'application_snackbar.dart';
 import 'confirm_action_dialog_widget.dart';
 import 'playlist_comment_list_add_dialog_widget.dart';
 import 'playlist_info_dialog_widget.dart';
@@ -161,9 +162,19 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                     case PlaylistPopupMenuAction.displayPlaylistAudioComments:
                       if (playlistListVM.getSelectedPlaylists()[0] !=
                           playlist) {
+                        // the case if the user opens the playlist audio
+                        // comment dialog on a playlist which is not currently
+                        // selected
                         playlistListVM.setPlaylistSelection(
                           playlistIndex: index,
                           isPlaylistSelected: true,
+                        );
+                        String snackBarMessage = AppLocalizations.of(context)!
+                            .playlistSelectedSnackBarMessage(playlist.title);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          ApplicationSnackBar(
+                            message: snackBarMessage,
+                          ),
                         );
                       }
                       showDialog<void>(

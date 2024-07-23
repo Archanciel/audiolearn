@@ -1128,4 +1128,10 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get playlistCommentsDialogTitle => "Playlist audios comments";
+
+  @override
+  String playlistSelectedSnackBarMessage(
+    Object title,
+  ) =>
+      "Playlist \"$title\" selected";
 }

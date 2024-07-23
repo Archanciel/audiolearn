@@ -379,5 +379,6 @@
   "confirmCommentedAudioDeletionTitle": "Confirmez la suppression de l'audio commenté \"{audioTitle}\"",
   "confirmCommentedAudioDeletionComment": "L'audio contient {commentNumber} commentaire(s) qui seront également supprimés. Confirmer la suppression ?",
   "commentStartPositionTooltip": "Position du commentaire dans l'audio",
-  "playlistToggleButtonInAudioPlayerViewTooltip": "Afficher/masquer les playlists. Ensuite, cochez une playlist pour sélectionner son audio en cours d'écoute."
+  "playlistToggleButtonInAudioPlayerViewTooltip": "Afficher/masquer les playlists. Ensuite, cochez une playlist pour sélectionner son audio en cours d'écoute.",
+  "playlistSelectedSnackBarMessage": "Playlist \"{title}\" sélectionnée"
 }
