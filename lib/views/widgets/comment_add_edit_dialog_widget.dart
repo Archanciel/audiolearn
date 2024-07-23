@@ -713,8 +713,9 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
   }
 
   /// Since before opening the CommentAddEditDialogWidget its caller, the
-  /// CommentListAddDialogWidget, was closed, this caller dialog must be
-  /// re-opened in order to display the updated list of comments.
+  /// CommentListAddDialogWidget or the PlaylistCommentListAddDialogWidget,
+  /// was closed, the caller dialog must be re-opened in order to display
+  /// the updated list of comments.
   Future<void> _closeDialogAndReOpenCommentListAddDialog({
     required BuildContext context,
     required AudioPlayerVM audioPlayerVM,
