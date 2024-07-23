@@ -94,10 +94,9 @@ class _PlaylistCommentListAddDialogWidgetState
         actionsPadding: kDialogActionsPadding,
         content: Consumer<CommentVM>(
           builder: (context, commentVM, child) {
-            Playlist currentPlaylist = widget.currentPlaylist;
             Map<String, List<Comment>> playlistAudiosCommentsMap =
                 commentVM.getAllPlaylistComments(
-              playlist: currentPlaylist,
+              playlist: widget.currentPlaylist,
             );
 
             // Obtaining the list of audio file name playlistAudiosCommentsMap
@@ -112,7 +111,7 @@ class _PlaylistCommentListAddDialogWidgetState
             audioFileNamesLst.sort((a, b) => a.compareTo(b));
 
             List<Widget> generateCommentWidgets() {
-              AudioPlayerVM audioPlayerVM =
+              AudioPlayerVM audioPlayerVMlistenFalse =
                   Provider.of<AudioPlayerVM>(context, listen: false);
               List<Widget> widgets = [];
 
@@ -133,12 +132,6 @@ class _PlaylistCommentListAddDialogWidgetState
                   ),
                 );
 
-                audioPlayerVM.setCurrentAudio(
-                  audio: currentPlaylist.getAudioByFileNameNoExt(
-                    audioFileNameNoExt: audioFileName,
-                  )!,
-                );
-
                 for (Comment comment
                     in playlistAudiosCommentsMap[audioFileName]!) {
                   widgets.add(
@@ -150,10 +143,12 @@ class _PlaylistCommentListAddDialogWidgetState
                             padding: const EdgeInsets.only(bottom: 2),
                             child:
                                 _buildCommentTitlePlusIconsAndCommentDatesAndPosition(
-                              audioPlayerVM: audioPlayerVM,
+                              audioPlayerVMlistenFalse:
+                                  audioPlayerVMlistenFalse,
                               commentVM: commentVM,
                               maxDropdownWidth: maxDropdownWidth,
                               comment: comment,
+                              audioFileNameNoExt: audioFileName,
                             ),
                           ),
                           if (comment.content.isNotEmpty)
@@ -168,12 +163,12 @@ class _PlaylistCommentListAddDialogWidgetState
                         ],
                       ),
                       onTap: () async {
-                        if (audioPlayerVM.isPlaying &&
+                        if (audioPlayerVMlistenFalse.isPlaying &&
                             _playingComment != comment) {
                           // if the user clicks on a comment while another
                           // comment is playing, the playing comment is paused.
                           // Otherwise, the edited comment keeps playing.
-                          await audioPlayerVM.pause();
+                          await audioPlayerVMlistenFalse.pause();
                         }
 
                         _closeDialogAndOpenCommentAddEditDialog(
@@ -214,10 +209,11 @@ class _PlaylistCommentListAddDialogWidgetState
   }
 
   Widget _buildCommentTitlePlusIconsAndCommentDatesAndPosition({
-    required AudioPlayerVM audioPlayerVM,
+    required AudioPlayerVM audioPlayerVMlistenFalse,
     required CommentVM commentVM,
     required double maxDropdownWidth,
     required Comment comment,
+    required String audioFileNameNoExt,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -254,12 +250,13 @@ class _PlaylistCommentListAddDialogWidgetState
                       // paused
                       (_playingComment != null &&
                               _playingComment == comment &&
-                              audioPlayerVM.isPlaying)
-                          ? await audioPlayerVM
+                              audioPlayerVMlistenFalse.isPlaying)
+                          ? await audioPlayerVMlistenFalse
                               .pause() // clicked on currently playing comment pause button
                           : await _playFromCommentPosition(
                               // clicked on other comment play button
-                              audioPlayerVM: audioPlayerVM,
+                              audioPlayerVM: audioPlayerVMlistenFalse,
+                              audioFileNameNoExt: audioFileNameNoExt,
                               comment: comment,
                             );
                     },
@@ -302,7 +299,7 @@ class _PlaylistCommentListAddDialogWidgetState
                     key: const Key('deleteCommentIconButton'),
                     onPressed: () async {
                       await _confirmDeleteComment(
-                        audioPlayerVM: audioPlayerVM,
+                        audioPlayerVM: audioPlayerVMlistenFalse,
                         commentVM: commentVM,
                         comment: comment,
                       );
@@ -428,8 +425,15 @@ class _PlaylistCommentListAddDialogWidgetState
   Future<void> _playFromCommentPosition({
     required AudioPlayerVM audioPlayerVM,
     required Comment comment,
+    required String audioFileNameNoExt,
   }) async {
     _playingComment = comment;
+
+    await audioPlayerVM.setCurrentAudio(
+      audio: widget.currentPlaylist.getAudioByFileNameNoExt(
+        audioFileNameNoExt: audioFileNameNoExt,
+      )!,
+    );
 
     if (!audioPlayerVM.isPlaying) {
       // This fixes a problem when a playing comment was paused and
