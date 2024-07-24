@@ -130,7 +130,7 @@ class Audio {
     required this.audioPlaySpeed,
   })  : validVideoTitle = createValidVideoTitle(originalVideoTitle),
         audioFileName =
-            '${buildDownloadDatePrefix(audioDownloadDateTime)}${createValidVideoTitle(originalVideoTitle)} ${buildUploadDateSuffix(videoUploadDate)}.mp3';
+            "${buildDownloadDatePrefix(audioDownloadDateTime)}${createValidVideoTitle(originalVideoTitle)} ${buildUploadDateSuffix(videoUploadDate)}.mp3";
 
   /// This constructor requires all instance variables. It is used
   /// by the fromJson factory constructor.
