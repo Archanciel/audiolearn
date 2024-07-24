@@ -169,7 +169,7 @@ class _PlaylistCommentListAddDialogWidgetState
                           await audioPlayerVMlistenFalse.pause();
                         }
 
-                        _closeDialogAndOpenCommentAddEditDialog(
+                        _closeDialogAndOpenCommentAddEditCallerDialog(
                           context: context,
                           comment: comment,
                         );
@@ -376,7 +376,7 @@ class _PlaylistCommentListAddDialogWidgetState
   /// In order to avoid keyboard opening and closing continuously after
   /// opening the CommentAddEditDialogWidget, the current dialog must be
   /// closed before opening the CommentAddEditDialogWidget.
-  void _closeDialogAndOpenCommentAddEditDialog({
+  void _closeDialogAndOpenCommentAddEditCallerDialog({
     required BuildContext context,
     Comment? comment,
   }) {

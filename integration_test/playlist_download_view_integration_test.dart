@@ -1493,9 +1493,9 @@ void main() {
       // Now we tap on the AudioPlayerView icon button to open
       // AudioPlayerView screen
 
-      final audioPlayerNavButton =
+      final appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // Now we tap on the PlaylistDownloadView icon button to go
@@ -6432,9 +6432,9 @@ void main() {
       // Now we tap on the AudioPlayerView icon button to open
       // AudioPlayerView screen
 
-      Finder audioPlayerNavButton =
+      Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // Verify the no selected audio title is displayed
@@ -6634,9 +6634,9 @@ void main() {
       // Now we tap on the AudioPlayerView icon button to open
       // AudioPlayerView screen
 
-      Finder audioPlayerNavButton =
+      Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // Verify the no selected audio title is displayed
@@ -6846,9 +6846,9 @@ void main() {
       // Now we tap on the AudioPlayerView icon button to open
       // AudioPlayerView screen
 
-      Finder audioPlayerNavButton =
+      Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // Verify the displayed selected audio title
@@ -7027,9 +7027,9 @@ void main() {
       // Now we tap on the AudioPlayerView icon button to open
       // AudioPlayerView screen
 
-      Finder audioPlayerNavButton =
+      Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // Verify the displayed selected audio title
@@ -7093,9 +7093,9 @@ void main() {
       // AudioPlayerView screen in order to verify the current playable
       // audio
 
-      Finder audioPlayerNavButton =
+      Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // Verify the displayed current audio title
@@ -7143,9 +7143,9 @@ void main() {
       // AudioPlayerView screen in order to verify that current playable
       // audio is still displayed, even if the audio was manually deleted
 
-      audioPlayerNavButton =
+      appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // Verify the displayed current audio title
@@ -7196,9 +7196,9 @@ void main() {
       // AudioPlayerView screen in order to verify that "No audio
       // selected" is displayed
 
-      audioPlayerNavButton =
+      appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // Verify the no selected audio title is displayed
@@ -7269,9 +7269,9 @@ void main() {
       // AudioPlayerView screen in order to verify the current playable
       // audio of the manually added playlist
 
-      audioPlayerNavButton =
+      appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // Verify the displayed current audio title
@@ -7395,9 +7395,9 @@ void main() {
       // AudioPlayerView screen in order to verify the current playable
       // audio of the added playlist
 
-      Finder audioPlayerNavButton =
+      Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // Verify the displayed current audio title
@@ -7522,9 +7522,9 @@ void main() {
       // AudioPlayerView screen in order to verify the current playable
       // audio of the added playlist
 
-      Finder audioPlayerNavButton =
+      Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // Verify the displayed current audio title
@@ -7608,9 +7608,9 @@ void main() {
       // AudioPlayerView screen in order to verify that "No audio
       // selected" is displayed
 
-      Finder audioPlayerNavButton =
+      Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // Verify the no selected audio title is displayed
@@ -8575,9 +8575,9 @@ void main() {
 
       // Then return to playlist download view in order to execute
       // the playlist JSON files update
-      Finder audioPlayerNavButton =
+      Finder appScreenNavigationButton =
           find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // Tap on the appbar leading popup menu button to open the leading
@@ -8592,9 +8592,9 @@ void main() {
 
       // Go to audio player view in order to verify the current playable
       // audio of the selected Youtube playlist
-      audioPlayerNavButton =
+      appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // Verify the displayed audio title (Jancovici m'explique l’importance
@@ -8748,9 +8748,9 @@ void main() {
       // Now we tap on the AudioPlayerView icon button to open
       // AudioPlayerView screen
 
-      final audioPlayerNavButton =
+      final appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // Now verifying that 'No audio selected' is displayed in the
@@ -8910,9 +8910,9 @@ void main() {
       // Now we tap on the AudioPlayerView icon button to open
       // AudioPlayerView screen
 
-      final audioPlayerNavButton =
+      final appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // Now verifying that 'No audio selected' is displayed in the

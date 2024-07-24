@@ -295,9 +295,9 @@ class IntegrationTestUtil {
       // Tap on the AudioPlayerView icon button to close the audio menu
       // item
 
-      Finder audioPlayerNavButton =
+      Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle(const Duration(milliseconds: 100));
     }
   }
