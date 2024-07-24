@@ -2757,8 +2757,10 @@ void main() {
   group('Copy or move audio test', () {
     testWidgets(
         '''Copy (+ check comment) audio twice. Second copy is refused with
-           warning since the audio exist now in the target playlist. Then
-           3rd time copy to another target playlist and click on cancel
+           warning since the audio exist now in the target playlist. The
+           same duplicate copy is then performed again, but this time the
+           user tap on the cancel button instead of the confirm button. Then
+           3rd time copy to another empty target playlist and click on cancel
            button''', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -3168,8 +3170,64 @@ void main() {
       await tester.tap(find.byKey(const Key('warningDialogOkButton')));
       await tester.pumpAndSettle();
 
+      // Now, we retry to copy a second time the audio already copied
+      // to the target playlist, but instead of clicking on the confirm
+      // button, we will click on the cancel button in order to verify
+      // that no warning is displayed. This ensure that a previously
+      // present bug was solved.
+
+      // First, find the Audio sublist ListTile Text widget
+      sourceAudioListTileTextWidgetFinder = find.text(copiedAudioTitle);
+
+      // Then obtain the Audio ListTile widget enclosing the Text widget by
+      // finding its ancestor
+      sourceAudioListTileWidgetFinder = find.ancestor(
+        of: sourceAudioListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the leading menu icon button of the Audio ListTile
+      // and tap on it
+      sourceAudioListTileLeadingMenuIconButton = find.descendant(
+        of: sourceAudioListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(sourceAudioListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the copy audio popup menu item and tap on it
+      popupCopyMenuItem =
+          find.byKey(const Key("popup_menu_copy_audio_to_playlist"));
+
+      await tester.tap(popupCopyMenuItem);
+      await tester.pumpAndSettle();
+
+      // Find the RadioListTile target playlist to which the audio
+      // will be copied
+
+      targetPlaylistRadioListTile = find.byWidgetPredicate(
+        (Widget widget) =>
+            widget is RadioListTile &&
+            widget.title is Text &&
+            (widget.title as Text).data == localAudioTargetPlaylistTitleTwo,
+      );
+
+      // Tap the target playlist RadioListTile to select it
+      await tester.tap(targetPlaylistRadioListTile);
+      await tester.pumpAndSettle();
+
+      // Now find the cancel button and tap on it
+      await tester.tap(find.byKey(const Key('cancelButton')));
+      await tester.pumpAndSettle();
+
+      // Check that no warning is displayed
+      expect(find.text('AVERTISSEMENT'), findsNothing);
+
       // Finally redo copying the audio to the other local (local_3)
-      // playlist, but finally click on Cancel button.
+      // playlist which contains no audio, but finally click on Cancel
+      // button.
 
       // Now we want to tap the popup menu of the Audio ListTile
       // "audio learn test short video one"
