@@ -143,10 +143,10 @@ class _PlaylistCommentListAddDialogWidgetState
                                 _buildCommentTitlePlusIconsAndCommentDatesAndPosition(
                               audioPlayerVMlistenFalse:
                                   audioPlayerVMlistenFalse,
+                              audioFileNameNoExt: audioFileName,
                               commentVM: commentVM,
                               maxDropdownWidth: maxDropdownWidth,
                               comment: comment,
-                              audioFileNameNoExt: audioFileName,
                             ),
                           ),
                           if (comment.content.isNotEmpty)
@@ -169,8 +169,10 @@ class _PlaylistCommentListAddDialogWidgetState
                           await audioPlayerVMlistenFalse.pause();
                         }
 
-                        _closeDialogAndOpenCommentAddEditDialog(
+                        await _closeDialogAndOpenCommentAddEditDialog(
                           context: context,
+                          audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+                          audioFileNameNoExt: audioFileName,
                           comment: comment,
                         );
                       },
@@ -208,10 +210,10 @@ class _PlaylistCommentListAddDialogWidgetState
 
   Widget _buildCommentTitlePlusIconsAndCommentDatesAndPosition({
     required AudioPlayerVM audioPlayerVMlistenFalse,
+    required String audioFileNameNoExt,
     required CommentVM commentVM,
     required double maxDropdownWidth,
     required Comment comment,
-    required String audioFileNameNoExt,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -297,7 +299,8 @@ class _PlaylistCommentListAddDialogWidgetState
                     key: const Key('deleteCommentIconButton'),
                     onPressed: () async {
                       await _confirmDeleteComment(
-                        audioPlayerVM: audioPlayerVMlistenFalse,
+                        audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+                        audioFileNameNoExt: audioFileNameNoExt,
                         commentVM: commentVM,
                         comment: comment,
                       );
@@ -376,11 +379,19 @@ class _PlaylistCommentListAddDialogWidgetState
   /// In order to avoid keyboard opening and closing continuously after
   /// opening the CommentAddEditDialogWidget, the current dialog must be
   /// closed before opening the CommentAddEditDialogWidget.
-  void _closeDialogAndOpenCommentAddEditDialog({
+  Future<void> _closeDialogAndOpenCommentAddEditDialog({
     required BuildContext context,
+    required AudioPlayerVM audioPlayerVMlistenFalse,
+    required String audioFileNameNoExt,
     Comment? comment,
-  }) {
+  }) async {
     Navigator.of(context).pop(); // closes the current dialog
+
+    await audioPlayerVMlistenFalse.setCurrentAudio(
+        audio: widget.currentPlaylist.getAudioByFileNameNoExt(
+      audioFileNameNoExt: audioFileNameNoExt,
+    )!);
+
     showDialog<void>(
       context: context,
       barrierDismissible:
@@ -396,10 +407,19 @@ class _PlaylistCommentListAddDialogWidgetState
   }
 
   Future<void> _confirmDeleteComment({
-    required AudioPlayerVM audioPlayerVM,
+    required AudioPlayerVM audioPlayerVMlistenFalse,
+    required String audioFileNameNoExt,
     required CommentVM commentVM,
     required Comment comment,
   }) async {
+
+    Audio currentAudio = widget.currentPlaylist.getAudioByFileNameNoExt(
+      audioFileNameNoExt: audioFileNameNoExt,
+    )!;
+
+    await audioPlayerVMlistenFalse.setCurrentAudio(
+        audio: currentAudio);
+
     showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -407,7 +427,7 @@ class _PlaylistCommentListAddDialogWidgetState
           actionFunction: commentVM.deleteCommentFunction,
           actionFunctionArgs: [
             comment.id,
-            widget.currentPlaylist,
+            currentAudio,
           ],
           dialogTitle: AppLocalizations.of(context)!.deleteCommentConfirnTitle,
           dialogContent: AppLocalizations.of(context)!
@@ -416,8 +436,8 @@ class _PlaylistCommentListAddDialogWidgetState
       },
     );
 
-    if (audioPlayerVM.isPlaying) {
-      await audioPlayerVM.pause();
+    if (audioPlayerVMlistenFalse.isPlaying) {
+      await audioPlayerVMlistenFalse.pause();
     }
   }
 

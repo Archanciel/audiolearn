@@ -1,4 +1,3 @@
-import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
@@ -752,12 +751,8 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
               currentAudio: audioPlayerVM.currentAudio!,
             );
           case CallerDialog.playlistCommentListAddDialog:
-            PlaylistListVM playlistListVM = Provider.of<PlaylistListVM>(
-              context,
-              listen: false,
-            );
             return PlaylistCommentListAddDialogWidget(
-              currentPlaylist: playlistListVM.getSelectedPlaylists()[0],
+              currentPlaylist: audioPlayerVM.currentAudio!.enclosingPlaylist!,
             );
         }
       },
