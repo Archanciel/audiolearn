@@ -374,9 +374,9 @@ void main() {
       // it.
 
       // First, go back to the playlist download view.
-      final Finder audioPlayerNavButton =
+      final Finder appScreenNavigationButton =
           find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // Then, get the previous end downloaded audio ListTile Text
@@ -554,9 +554,9 @@ void main() {
       // playlist in order to start playing it.
 
       // First, go back to the playlist download view.
-      final Finder audioPlayerNavButton =
+      final Finder appScreenNavigationButton =
           find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // Then, get the first downloaded Audio ListTile Text
@@ -672,9 +672,9 @@ void main() {
       // Now we go back to the PlayListDownloadView in order
       // to tap on play/pause audio item InkWell to pause the
       // audio
-      final audioPlayerNavButton =
+      final appScreenNavigationButton =
           find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // Again, validate the play/pause button of the previously
@@ -1177,9 +1177,9 @@ void main() {
       );
 
       // Go back to audio player view in order to pause the audio
-      final Finder audioPlayerNavButton =
+      final Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // Pause the audio
@@ -1253,9 +1253,9 @@ void main() {
       );
 
       // Go back to audio player view in order to go to end the audio
-      final Finder audioPlayerNavButton =
+      final Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // Tap on the |> button to go to the end of the audio
@@ -1299,9 +1299,9 @@ void main() {
       // AudioPlayerView screen which displays the current
       // playable audio which is paused
 
-      Finder audioPlayerNavButton =
+      Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // Test play button
@@ -1373,9 +1373,9 @@ void main() {
       // AudioPlayerView screen which displays the current
       // playable audio which is paused
 
-      audioPlayerNavButton =
+      appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // Test play button
@@ -1424,9 +1424,9 @@ void main() {
       // playable audio which is paused
 
       // Assuming you have a button to navigate to the AudioPlayerView
-      final Finder audioPlayerNavButton =
+      final Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // Verify the no selected audio title is displayed
@@ -2179,9 +2179,9 @@ void main() {
       expect(find.text('1:00'), findsOneWidget);
 
       // Now, go back to the playlist download view
-      final Finder audioPlayerNavButton =
+      final Finder appScreenNavigationButton =
           find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // Then, get the first downloaded Audio ListTile Text
@@ -2289,9 +2289,9 @@ void main() {
       expect(find.text('0:00'), findsOneWidget);
 
       // Now, go back to the playlist download view
-      final Finder audioPlayerNavButton =
+      final Finder appScreenNavigationButton =
           find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // verify the now unplayed third downloaded audio item play icon
@@ -2351,7 +2351,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Go back to the playlist download view
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // verify the now fully played third downloaded audio item play icon
@@ -2427,9 +2427,9 @@ void main() {
       expect(find.text('2:00'), findsOneWidget);
 
       // Now, go back to the playlist download view
-      final Finder audioPlayerNavButton =
+      final Finder appScreenNavigationButton =
           find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // Then, get the first downloaded Audio ListTile Text
@@ -3830,7 +3830,9 @@ void main() {
     });
   });
   group('Inkwell button building tests', () {
-    testWidgets('To describe', (
+    testWidgets('''Change the audio position in order to modify the audio
+                item play/pause Inkwell button foreground and background
+                color''', (
       WidgetTester tester,
     ) async {
       const String audioPlayerSelectedPlaylistTitle = 'S8 audio';
@@ -3844,17 +3846,14 @@ void main() {
       );
 
       // First, validate the play/pause button of the fully played
-      // second downloaded Audio item InkWell widget and obtain
-      // again the previously downloaded Audio item InkWell widget
-      // finder
-
+      // second downloaded Audio item InkWell widget
       Finder secondDownloadedAudioListTileInkWellFinder =
           IntegrationTestUtil.validateInkWellButton(
         tester: tester,
         audioTitle: secondDownloadedAudioTitle,
         expectedIcon: Icons.play_arrow,
         expectedIconColor:
-            kSliderThumbColorInDarkMode, // Fully played audio item play icon color
+            kSliderThumbColorInDarkMode, // Fully played audio play/pause icon color
         expectedIconBackgroundColor: Colors.black,
       );
 
@@ -3865,8 +3864,7 @@ void main() {
       // Tap on the InkWell to play the audio. Since the audio is fully
       // played, the audio remains at end.
       await tester.tap(secondDownloadedAudioListTileInkWellFinder);
-      await Future.delayed(const Duration(milliseconds: 2000));
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 1500));
 
       // Find the slider using its key
       final sliderFinder = find.byKey(const Key('audioPlayerViewAudioSlider'));
@@ -3878,10 +3876,10 @@ void main() {
       await tester.pumpAndSettle();
 
       // Now we go back to the PlayListDownloadView in order to
-      // verify the play/pause audio item InkWell button
-      final audioPlayerNavButton =
+      // verify the play/pause audio item InkWell button color
+      Finder appScreenNavigationButton =
           find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // Again, validate the play/pause button of the previously
@@ -3892,8 +3890,44 @@ void main() {
         tester: tester,
         audioTitle: secondDownloadedAudioTitle,
         expectedIcon: Icons.play_arrow,
-        expectedIconColor: Colors.white,
+        expectedIconColor:
+            Colors.white, // currently playing or paused icon color
         expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
+      );
+
+      // Tap again on the second downloaded audio of the playlist in
+      // order to open the AudioPlayerView displaying this now
+      // partially played audio.
+
+      // Then go to the audio player view
+      appScreenNavigationButton =
+          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+      await tester.tap(appScreenNavigationButton);
+      await tester.pumpAndSettle();
+
+      // Tap on |< button to go to the beginning of the audio
+      await tester
+          .tap(find.byKey(const Key('audioPlayerViewSkipToStartButton')));
+      await tester.pumpAndSettle();
+
+      // Now we go back to the PlayListDownloadView in order to
+      // verify the play/pause audio item InkWell button color
+      appScreenNavigationButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(appScreenNavigationButton);
+      await tester.pumpAndSettle();
+
+      // Again, validate the play/pause button of the previously
+      // downloaded Audio item InkWell widget
+      secondDownloadedAudioListTileInkWellFinder =
+          secondDownloadedAudioListTileInkWellFinder =
+              IntegrationTestUtil.validateInkWellButton(
+        tester: tester,
+        audioTitle: secondDownloadedAudioTitle,
+        expectedIcon: Icons.play_arrow,
+        expectedIconColor:
+            kDarkAndLightEnabledIconColor, // not played icon color
+        expectedIconBackgroundColor: Colors.black,
       );
 
       // Purge the test playlist directory so that the created test
@@ -3928,9 +3962,9 @@ void main() {
       );
 
       // Go to the audio player view
-      Finder audioPlayerNavButton =
+      Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // Verify the no selected audio title is displayed
@@ -3958,9 +3992,9 @@ void main() {
       );
 
       // Now return to the playlist download view
-      audioPlayerNavButton =
+      appScreenNavigationButton =
           find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // Verify that the S8 audio playlist is now selected in the playlist
@@ -3976,9 +4010,9 @@ void main() {
       await tester.pumpAndSettle();
 
       // And go again to the audio player view
-      audioPlayerNavButton =
+      appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // Verify the displayed audio title
@@ -4007,9 +4041,9 @@ void main() {
       );
 
       // Now return to the playlist download view
-      audioPlayerNavButton =
+      appScreenNavigationButton =
           find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // Verify that the playlist download view list of playlists which
@@ -4053,9 +4087,9 @@ void main() {
       );
 
       // Go to the audio player view
-      Finder audioPlayerNavButton =
+      Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // Now, in the audio player view, select the S8 audio playlist using
@@ -4251,9 +4285,9 @@ void main() {
       await tester.pumpAndSettle();
 
       // Then go to the audio player view
-      Finder audioPlayerNavButton =
+      Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // Verify the no selected audio title is displayed
@@ -4298,9 +4332,9 @@ void main() {
       await tester.pumpAndSettle();
 
       // Now return to the playlist download view
-      audioPlayerNavButton =
+      appScreenNavigationButton =
           find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // Verify that the 'Empty playlist is now selected in the playlist
@@ -4724,7 +4758,8 @@ void main() {
       const String emptyPlaylistTitle = 'Empty'; // Local empty playlist
       const String uncommentedAudioTitle =
           "La surpopulation mondiale par Jancovici et Barrau";
-      const String uncommentedAudioFileNameNoExt = "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03";
+      const String uncommentedAudioFileNameNoExt =
+          "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03";
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
@@ -4733,9 +4768,9 @@ void main() {
       );
 
       // Go to the audio player view
-      Finder audioPlayerNavButton =
+      Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // Verify that the comment icon button is disabled since no
@@ -4750,9 +4785,9 @@ void main() {
 
       // Now we go back to the PlayListDownloadView in order
       // to copy an audio in the empty playlist
-      audioPlayerNavButton =
+      appScreenNavigationButton =
           find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-      await tester.tap(audioPlayerNavButton);
+      await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
       // Copy an uncommented audio from the Youtube playlist to
@@ -5181,8 +5216,7 @@ void main() {
       // Verify that the comment was correctly stored in the json file
       verifyCommentDataStoredInJsonFile(
         playlistTitle: emptyPlaylistTitle,
-        audioFileNameNoExt:
-            uncommentedAudioFileNameNoExt,
+        audioFileNameNoExt: uncommentedAudioFileNameNoExt,
         commentTitle: commentTitle,
         commentContent: commentText,
         commentStartPositionTenthOfSecondsStr:
@@ -5262,8 +5296,7 @@ void main() {
       // Verify that the comment was correctly stored in the json file
       verifyCommentDataStoredInJsonFile(
         playlistTitle: emptyPlaylistTitle,
-        audioFileNameNoExt:
-            uncommentedAudioFileNameNoExt,
+        audioFileNameNoExt: uncommentedAudioFileNameNoExt,
         commentTitle: commentTitle,
         commentContent: updatedCommentText,
         commentStartPositionTenthOfSecondsStr:
