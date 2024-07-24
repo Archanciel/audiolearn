@@ -391,6 +391,7 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
       // instanciating CommentAddEditDialogWidget without
       // passing a comment opens it in 'add' mode
       builder: (context) => CommentAddEditDialogWidget(
+        callerDialog: CallerDialog.commentListAddDialog,
         comment: comment,
       ),
     );

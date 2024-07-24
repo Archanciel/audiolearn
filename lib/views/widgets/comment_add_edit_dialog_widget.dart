@@ -1,3 +1,4 @@
+import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
@@ -12,17 +13,25 @@ import '../../viewmodels/theme_provider_vm.dart';
 import '../../views/screen_mixin.dart';
 import '../../utils/duration_expansion.dart';
 import 'comment_list_add_dialog_widget.dart';
+import 'playlist_comment_list_add_dialog_widget.dart';
 import 'set_value_to_target_dialog_widget.dart';
+
+enum CallerDialog {
+  commentListAddDialog,
+  playlistCommentListAddDialog,
+}
 
 /// This widget displays a dialog to add or edit a comment.
 /// The edit mode is activated when a comment is passed to the
 /// widget constructor. Else, the widget is in add mode.
 class CommentAddEditDialogWidget extends StatefulWidget {
+  final CallerDialog callerDialog;
   final Comment? comment;
   final bool isAddMode;
 
   const CommentAddEditDialogWidget({
     super.key,
+    required this.callerDialog,
     this.comment,
   }) : isAddMode = comment == null;
 
@@ -151,7 +160,8 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                         _buildCommentStartPositionRow(
                           context: context,
                           audioPlayerVM: audioPlayerVM,
-                          commentVMlistenFalse: commentVMlistenFalse,),
+                          commentVMlistenFalse: commentVMlistenFalse,
+                        ),
                         _buildCommentEndPositionRow(
                           context: context,
                           audioPlayerVM: audioPlayerVM,
@@ -735,9 +745,22 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
       // passing the current audio to the dialog instead
       // of initializing a private _currentAudio variable
       // in the dialog avoid integr test problems
-      builder: (context) => CommentListAddDialogWidget(
-        currentAudio: audioPlayerVM.currentAudio!,
-      ),
+      builder: (context) {
+        switch (widget.callerDialog) {
+          case CallerDialog.commentListAddDialog:
+            return CommentListAddDialogWidget(
+              currentAudio: audioPlayerVM.currentAudio!,
+            );
+          case CallerDialog.playlistCommentListAddDialog:
+            PlaylistListVM playlistListVM = Provider.of<PlaylistListVM>(
+              context,
+              listen: false,
+            );
+            return PlaylistCommentListAddDialogWidget(
+              currentPlaylist: playlistListVM.getSelectedPlaylists()[0],
+            );
+        }
+      },
     );
 
     if (audioPlayerVM.isPlaying) {
