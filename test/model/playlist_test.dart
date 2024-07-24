@@ -36,21 +36,21 @@ void main() {
       expect(
           playlist
               .getAudioByFileNameNoExt(
-                audioFileNameNoExt: '230320-000000-C 24-07-23',
+                audioFileNameNoExt: '230320-000000-C 22-03-20',
               )!
               .originalVideoTitle,
           'C');
       expect(
           playlist
               .getAudioByFileNameNoExt(
-                audioFileNameNoExt: '230318-000000-B 24-07-23',
+                audioFileNameNoExt: '230318-000000-B 22-03-18',
               )!
               .originalVideoTitle,
           'B');
       expect(
           playlist
               .getAudioByFileNameNoExt(
-                audioFileNameNoExt: '230325-000000-A 24-07-23',
+                audioFileNameNoExt: '230325-000000-A 22-03-25',
               )!
               .originalVideoTitle,
           'A');
@@ -488,7 +488,7 @@ void addThreeDownloadedAudios(Playlist playlist) {
       compactVideoDescription: '',
       videoUrl: 'https://example.com/video1',
       audioDownloadDateTime: DateTime(2023, 3, 20),
-      videoUploadDate: DateTime.now(),
+      videoUploadDate: DateTime(2022, 3, 20),
       audioPlaySpeed: 1.5));
   playlist.addDownloadedAudio(Audio(
       enclosingPlaylist: playlist,
@@ -496,7 +496,7 @@ void addThreeDownloadedAudios(Playlist playlist) {
       compactVideoDescription: '',
       videoUrl: 'https://example.com/video2',
       audioDownloadDateTime: DateTime(2023, 3, 25),
-      videoUploadDate: DateTime.now(),
+      videoUploadDate: DateTime(2022, 3, 25),
       audioPlaySpeed: 1.5));
   playlist.addDownloadedAudio(Audio(
       enclosingPlaylist: playlist,
@@ -504,7 +504,7 @@ void addThreeDownloadedAudios(Playlist playlist) {
       originalVideoTitle: 'B',
       videoUrl: 'https://example.com/video3',
       audioDownloadDateTime: DateTime(2023, 3, 18),
-      videoUploadDate: DateTime.now(),
+      videoUploadDate: DateTime(2022, 3, 18),
       audioPlaySpeed: 1.5));
 }
 
