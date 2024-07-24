@@ -417,9 +417,6 @@ class _PlaylistCommentListAddDialogWidgetState
       audioFileNameNoExt: audioFileNameNoExt,
     )!;
 
-    await audioPlayerVMlistenFalse.setCurrentAudio(
-        audio: currentAudio);
-
     showDialog<void>(
       context: context,
       builder: (BuildContext context) {
