@@ -25,7 +25,9 @@ class MyApp extends StatelessWidget {
 }
 
 class FilePickerScreen extends StatefulWidget {
-  const FilePickerScreen({super.key});
+  const FilePickerScreen({
+    super.key,
+  });
 
   @override
   _FilePickerScreenState createState() => _FilePickerScreenState();
@@ -35,19 +37,7 @@ class _FilePickerScreenState extends State<FilePickerScreen> {
   List<PlatformFile>? _filePickerSelectedFiles;
   String? _targetDirectory;
 
-  Future<void> _filePickerPickDirectory() async {
-    String? directoryPath = await FilePicker.platform.getDirectoryPath(
-      initialDirectory: kApplicationPathWindows,
-    );
-
-    if (directoryPath != null) {
-      setState(() {
-        _targetDirectory = directoryPath;
-      });
-    }
-  }
-
-  Future<void> _filePickerPickFiles() async {
+  Future<void> _filePickerSelectAudioFiles() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['mp3'],
@@ -62,25 +52,39 @@ class _FilePickerScreenState extends State<FilePickerScreen> {
     }
   }
 
-  Future<void> _copyFiles() async {
+  Future<void> _filePickerSelectTargetDirectory() async {
+    String? directoryPath = await FilePicker.platform.getDirectoryPath(
+      initialDirectory: kApplicationPathWindows,
+    );
+
+    if (directoryPath != null) {
+      setState(() {
+        _targetDirectory = directoryPath;
+      });
+    }
+  }
+
+  Future<void> _copyFilesToTargetDirectory() async {
     if (_filePickerSelectedFiles != null && _targetDirectory != null) {
       for (PlatformFile file in _filePickerSelectedFiles!) {
         String fileName = file.path!.split(path.separator).last;
         File sourceFile = File(file.path!);
         File targetFile =
             File('${_targetDirectory!}${path.separator}$fileName');
+
         await sourceFile.copy(targetFile.path);
       }
     }
   }
 
-  Future<void> _moveFiles() async {
+  Future<void> _moveFilesToTargetDirectory() async {
     if (_filePickerSelectedFiles != null && _targetDirectory != null) {
       for (PlatformFile file in _filePickerSelectedFiles!) {
         String fileName = file.path!.split(path.separator).last;
         File sourceFile = File(file.path!);
         File targetFile =
             File('${_targetDirectory!}${path.separator}$fileName');
+
         await sourceFile.rename(targetFile.path);
       }
     }
@@ -98,25 +102,25 @@ class _FilePickerScreenState extends State<FilePickerScreen> {
           children: [
             ElevatedButton(
               onPressed: () async {
-                await _filePickerPickFiles();
+                await _filePickerSelectAudioFiles();
               },
-              child: const Text('File Picker Select MP3 Files'),
+              child: const Text('Select MP3 Files'),
             ),
             ElevatedButton(
               onPressed: () async {
-                await _filePickerPickDirectory();
+                await _filePickerSelectTargetDirectory();
               },
               child: const Text('Select Target Directory'),
             ),
             ElevatedButton(
               onPressed: () async {
-                await _copyFiles();
+                await _copyFilesToTargetDirectory();
               },
               child: const Text('Copy Files'),
             ),
             ElevatedButton(
               onPressed: () async {
-                await _moveFiles();
+                await _moveFilesToTargetDirectory();
               },
               child: const Text('Move Files'),
             ),
