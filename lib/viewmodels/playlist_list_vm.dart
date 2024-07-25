@@ -777,7 +777,9 @@ class PlaylistListVM extends ChangeNotifier {
   /// The method returns the next playable audio. The returned
   /// value is only useful when the user is in the audio player
   /// screen and so that the audio to move is the currently
-  /// playable audio.
+  /// playable audio. In case the audio was not moved - the
+  /// case if the audio already exist in the target playlist -
+  /// null is returned
   Audio? moveAudioAndCommentToPlaylist({
     required Audio audio,
     required Playlist targetPlaylist,
@@ -788,11 +790,15 @@ class PlaylistListVM extends ChangeNotifier {
       currentAudio: audio,
     );
 
-    _audioDownloadVM.moveAudioToPlaylist(
+    bool wasAudioMoved = _audioDownloadVM.moveAudioToPlaylist(
         audio: audio,
         targetPlaylist: targetPlaylist,
         keepAudioInSourcePlaylistDownloadedAudioLst:
             keepAudioInSourcePlaylistDownloadedAudioLst);
+
+    if (!wasAudioMoved) {
+      return null;
+    }
 
     _commentVM.moveAudioCommentFileToTargetPlaylist(
       audio: audio,
@@ -811,10 +817,14 @@ class PlaylistListVM extends ChangeNotifier {
     required Audio audio,
     required Playlist targetPlaylist,
   }) {
-    _audioDownloadVM.copyAudioToPlaylist(
+    bool wasAudioCopied = _audioDownloadVM.copyAudioToPlaylist(
       audio: audio,
       targetPlaylist: targetPlaylist,
     );
+
+    if (!wasAudioCopied) {
+      return;
+    }
 
     _commentVM.copyAudioCommentFileToTargetPlaylist(
       audio: audio,

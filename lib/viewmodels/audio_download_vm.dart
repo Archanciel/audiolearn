@@ -843,7 +843,21 @@ class AudioDownloadVM extends ChangeNotifier {
     }
   }
 
-  void moveAudioToPlaylist({
+  /// This method is called by the PlaylistListVM when the user
+  /// selects the "Move audio to playlist" menu item.
+  /// 
+  /// The method physicaly moves the audio file to the target
+  /// playlist directory and adds the moved audio data to the target
+  /// playlist playable audio list.
+  /// 
+  /// The source playlist playable audio data is deleted since the
+  /// the audio no longer exist in the playlist dir.
+  /// 
+  /// True is returned if the audio file was moved to the target
+  /// playlist directory, false otherwise. If the audio file already
+  /// exist in the target playlist directory, the move operation does
+  /// not happen and false is returned.
+  bool moveAudioToPlaylist({
     required Audio audio,
     required Playlist targetPlaylist,
     required bool keepAudioInSourcePlaylistDownloadedAudioLst,
@@ -866,7 +880,7 @@ class AudioDownloadVM extends ChangeNotifier {
         movedToPlaylistType: targetPlaylist.playlistType,
       );
 
-      return;
+      return false;
     }
 
     if (keepAudioInSourcePlaylistDownloadedAudioLst) {
@@ -915,9 +929,25 @@ class AudioDownloadVM extends ChangeNotifier {
         movedToPlaylistType: targetPlaylist.playlistType,
         keepAudioDataInSourcePlaylist:
             keepAudioInSourcePlaylistDownloadedAudioLst);
+
+    return true;
   }
 
-  void copyAudioToPlaylist({
+  /// This method is called by the PlaylistListVM when the user
+  /// selects the "Copy audio to playlist" menu item.
+  /// 
+  /// The method physicaly copies the audio file to the target
+  /// playlist directory and adds the copied audio data to the target
+  /// playlist playable audio list.
+  /// 
+  /// The source playlist playable audio data is also updated to
+  /// reflect that the audio has been copied to the target playlist.
+  /// 
+  /// True is returned if the audio file was copied to the target
+  /// playlist directory, false otherwise. If the audio file already
+  /// exist in the target playlist directory, the copy does not happen
+  /// and false is returned.
+  bool copyAudioToPlaylist({
     required Audio audio,
     required Playlist targetPlaylist,
   }) {
@@ -939,7 +969,7 @@ class AudioDownloadVM extends ChangeNotifier {
           copiedToPlaylistTitle: targetPlaylist.title,
           copiedToPlaylistType: targetPlaylist.playlistType);
 
-      return;
+      return false;
     }
 
     targetPlaylist.addCopiedAudio(
@@ -970,6 +1000,8 @@ class AudioDownloadVM extends ChangeNotifier {
         copiedFromPlaylistType: fromPlaylist.playlistType,
         copiedToPlaylistTitle: targetPlaylist.title,
         copiedToPlaylistType: targetPlaylist.playlistType);
+
+    return true;
   }
 
   /// Physically deletes the audio file from the audio playlist
