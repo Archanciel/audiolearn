@@ -576,6 +576,33 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
         });
 
         return const SizedBox.shrink();
+      case WarningMessageType.audioNotImportedToPlaylist:
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          String audioImportedFromToPlaylistMessage;
+
+          if (_warningMessageVM.importedToPlaylistType == PlaylistType.local) {
+            audioImportedFromToPlaylistMessage =
+                AppLocalizations.of(context)!.audioNotImportedToLocalPlaylist(
+              _warningMessageVM.rejectedImportedAudioFileNames,
+              _warningMessageVM.importedToPlaylistTitle,
+            );
+          } else {
+            audioImportedFromToPlaylistMessage =
+                AppLocalizations.of(context)!.audioNotImportedToYoutubePlaylist(
+              _warningMessageVM.rejectedImportedAudioFileNames,
+              _warningMessageVM.importedToPlaylistTitle,
+            );
+          }
+          _displayWarningDialog(
+            context: _context,
+            message: audioImportedFromToPlaylistMessage,
+            warningMessageVM: _warningMessageVM,
+            themeProviderVM: themeProviderVM,
+            warningMode: WarningMode.warning,
+          );
+        });
+
+        return const SizedBox.shrink();
       case WarningMessageType.audioMovedFromToPlaylist:
         WidgetsBinding.instance.addPostFrameCallback((_) {
           String audioMovedFromToPlaylistMessage;

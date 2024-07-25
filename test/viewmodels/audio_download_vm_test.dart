@@ -389,6 +389,92 @@ void main() {
       );
     });
   });
+  group('AudioDownloadVM import audio files in playlist', () {
+    test(
+        '''Import one not existing file and then reimport it so that it will not
+           be imported a second time.''', () async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}import_audio_file_test",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+      WarningMessageVM warningMessageVM = WarningMessageVM();
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+        isTest: true,
+      );
+
+      // necessary, otherwise audioDownloadVM won't be able to load
+      // the existing playlists and the test will fail
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+        isTest: true,
+      );
+
+      audioDownloadVM.loadExistingPlaylists();
+
+      // Load Playlist from the file
+      const String playListName = "Empty";
+      Playlist playlistEmpty = loadPlaylist(playListName);
+
+      String fileToImportDir =
+          '$kPlaylistDownloadRootPathWindowsTest${path.separator}Files to import';
+      const String importedFileNameOne =
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher).mp3";
+      List<String> filePathNameToImportLst = [
+        "$fileToImportDir${path.separator}$importedFileNameOne",
+      ];
+
+      // Import one file in the Empty playlist
+      audioDownloadVM.importFilesInPlaylist(
+        targetPlaylist: playlistEmpty,
+        filePathNameToImportLst: filePathNameToImportLst,
+      );
+
+      // Verify that the imported file physically exists in the target
+      // playlist directory
+      String playListDownloadedDir =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}Empty";
+      final String importedFilePath =
+          "$playListDownloadedDir${path.separator}$importedFileNameOne";
+      expect(File(importedFilePath).existsSync(), true);
+
+      // Load Playlist from the file
+      playlistEmpty = loadPlaylist(playListName);
+
+      // Verify that the imported file exists in target playlist
+      // expect(playlistEmpty.downloadedAudioLst.length, 1);
+      // expect(playlistEmpty.downloadedAudioLst[0].audioFileName,
+      // "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher).mp3");
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+
+      // Now import again the same file which now exists in the Empty
+      // playlist
+      audioDownloadVM.importFilesInPlaylist(
+        targetPlaylist: playlistEmpty,
+        filePathNameToImportLst: filePathNameToImportLst,
+      );
+
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    test('Import one existing file', () async {});
+  });
 }
 
 Playlist loadPlaylist(String playListOneName) {

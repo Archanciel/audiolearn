@@ -381,5 +381,7 @@
   "playlistSelectedSnackBarMessage": "Playlist \"{title}\" selected",
   "playlistImportAudioMenu": "Import audio files ...",
   "playlistImportAudioMenuTooltip": "Import audio files into the playlist in order to be able to listen them and add positionned comments to them.",
-  "setPlaylistAudioPlaySpeedTooltip": "Set audio play speed for the playlist existing and next downloaded audio."
+  "setPlaylistAudioPlaySpeedTooltip": "Set audio play speed for the playlist existing and next downloaded audio.",
+  "audioNotImportedToLocalPlaylist": "Audio(s) \"{rejectedImportedAudioFileNames}\" NOT imported to local playlist \"{toPlaylistTitle}\" since already present in its directory.",
+  "audioNotImportedToYoutubePlaylist": "Audio(s) \"{rejectedImportedAudioFileNames}\" NOT imported to Youtube playlist \"{toPlaylistTitle}\" since already present in its directory."
 }

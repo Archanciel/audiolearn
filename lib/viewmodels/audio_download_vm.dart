@@ -845,14 +845,14 @@ class AudioDownloadVM extends ChangeNotifier {
 
   /// This method is called by the PlaylistListVM when the user
   /// selects the "Move audio to playlist" menu item.
-  /// 
+  ///
   /// The method physicaly moves the audio file to the target
   /// playlist directory and adds the moved audio data to the target
   /// playlist playable audio list.
-  /// 
+  ///
   /// The source playlist playable audio data is deleted since the
   /// the audio no longer exist in the playlist dir.
-  /// 
+  ///
   /// True is returned if the audio file was moved to the target
   /// playlist directory, false otherwise. If the audio file already
   /// exist in the target playlist directory, the move operation does
@@ -935,14 +935,14 @@ class AudioDownloadVM extends ChangeNotifier {
 
   /// This method is called by the PlaylistListVM when the user
   /// selects the "Copy audio to playlist" menu item.
-  /// 
+  ///
   /// The method physicaly copies the audio file to the target
   /// playlist directory and adds the copied audio data to the target
   /// playlist playable audio list.
-  /// 
+  ///
   /// The source playlist playable audio data is also updated to
   /// reflect that the audio has been copied to the target playlist.
-  /// 
+  ///
   /// True is returned if the audio file was copied to the target
   /// playlist directory, false otherwise. If the audio file already
   /// exist in the target playlist directory, the copy does not happen
@@ -1002,6 +1002,37 @@ class AudioDownloadVM extends ChangeNotifier {
         copiedToPlaylistType: targetPlaylist.playlistType);
 
     return true;
+  }
+
+  void importFilesInPlaylist({
+    required Playlist targetPlaylist,
+    required List<String> filePathNameToImportLst,
+  }) {
+    String rejectedImportedFileNames = '';
+
+    for (String filePathName in filePathNameToImportLst) {
+      String fileName = filePathName.split(path.separator).last;
+      File sourceFile = File(filePathName);
+      File targetFile =
+          File('${targetPlaylist.downloadPath}${path.separator}$fileName');
+
+      if (targetFile.existsSync()) {
+        // the case if the imported audio file already exist in the target
+        // playlist directory
+        rejectedImportedFileNames += '$fileName, ';
+
+        continue;
+      }
+
+      sourceFile.copySync(targetFile.path);
+    }
+
+    if (rejectedImportedFileNames.isNotEmpty) {
+      warningMessageVM.setAudioNotImportedToPlaylistTitles(
+          rejectedImportedAudioFileNames: rejectedImportedFileNames.substring(0, rejectedImportedFileNames.length - 2),
+          importedToPlaylistTitle: targetPlaylist.title,
+          importedToPlaylistType: targetPlaylist.playlistType);
+    }
   }
 
   /// Physically deletes the audio file from the audio playlist

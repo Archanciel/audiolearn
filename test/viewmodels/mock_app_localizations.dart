@@ -1145,4 +1145,18 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get setPlaylistAudioPlaySpeedTooltip =>
       "Set audio play speed for the playlist existing and next downloaded audio.";
+
+  @override
+  String audioNotImportedToLocalPlaylist(
+    Object rejectedImportedAudioFileNames,
+    Object toPlaylistTitle,
+  ) =>
+      "Audio \"$rejectedImportedAudioFileNames\" NOT imported to local playlist \"$toPlaylistTitle\" since it is already present in the destination playlist.";
+
+  @override
+  String audioNotImportedToYoutubePlaylist(
+    Object rejectedImportedAudioFileNames,
+    Object toPlaylistTitle,
+  ) =>
+      "Audio \"$rejectedImportedAudioFileNames\" NOT imported to Youtube playlist \"$toPlaylistTitle\" since it is already present in the destination playlist.";
 }

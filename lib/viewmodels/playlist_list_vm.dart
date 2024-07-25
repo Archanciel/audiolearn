@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart' as path;
 
 import '../constants.dart';
 import '../models/audio.dart';
@@ -963,20 +962,6 @@ class PlaylistListVM extends ChangeNotifier {
     notifyListeners();
 
     return nextAudio;
-  }
-
-  Future<void> importFilesInPlaylist({
-    required Playlist targetPlaylist,
-    required List<String> filePathNameToImportLst,
-  }) async {
-    for (String filePathName in filePathNameToImportLst) {
-      String fileName = filePathName.split(path.separator).last;
-      File sourceFile = File(filePathName);
-      File targetFile =
-          File('${targetPlaylist.downloadPath}${path.separator}$fileName');
-
-      await sourceFile.copy(targetFile.path);
-    }
   }
 
   /// playableAudioLst order: [available audio last downloaded, ...,

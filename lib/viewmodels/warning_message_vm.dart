@@ -121,6 +121,11 @@ enum WarningMessageType {
   audioCopiedFromToPlaylist, // The case if the user clicks on
   // the copy audio to playlist menu item and the audio was copied
   // from the source playlist to the target playlist.
+
+  audioNotImportedToPlaylist, // The case if the user clicks on
+  // the import audio to playlist menu item and the audio was not
+  // imported to the target playlist since the target playlist
+  // already contains the audio
 }
 
 enum ErrorType {
@@ -565,6 +570,27 @@ class WarningMessageVM extends ChangeNotifier {
     _copiedToPlaylistType = copiedToPlaylistType;
 
     warningMessageType = WarningMessageType.audioCopiedFromToPlaylist;
+
+    // Causes the display warning message widget to be displayed.
+    notifyListeners();
+  }
+
+  String _rejectedImportedAudioFileNames = '';
+  String get rejectedImportedAudioFileNames => _rejectedImportedAudioFileNames;
+  String _importedToPlaylistTitle = '';
+  String get importedToPlaylistTitle => _importedToPlaylistTitle;
+  late PlaylistType _importedToPlaylistType;
+  PlaylistType get importedToPlaylistType => _importedToPlaylistType;
+  void setAudioNotImportedToPlaylistTitles({
+    required String rejectedImportedAudioFileNames,
+    required String importedToPlaylistTitle,
+    required PlaylistType importedToPlaylistType,
+  }) {
+    _rejectedImportedAudioFileNames = rejectedImportedAudioFileNames;
+    _importedToPlaylistTitle = importedToPlaylistTitle;
+    _importedToPlaylistType = importedToPlaylistType;
+
+    warningMessageType = WarningMessageType.audioNotImportedToPlaylist;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();

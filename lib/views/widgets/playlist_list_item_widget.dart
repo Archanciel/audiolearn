@@ -1,5 +1,6 @@
 import 'package:audiolearn/constants.dart';
 import 'package:audiolearn/utils/dir_util.dart';
+import 'package:audiolearn/viewmodels/audio_download_vm.dart';
 import 'package:audiolearn/viewmodels/audio_player_vm.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -205,7 +206,10 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                       List<String> selectedFilePathNameLst =
                           await _filePickerSelectAudioFiles();
 
-                      await playlistListVM.importFilesInPlaylist(
+                      AudioDownloadVM audioDownloadVM =
+                          Provider.of<AudioDownloadVM>(context, listen: false);
+
+                      audioDownloadVM.importFilesInPlaylist(
                         targetPlaylist: playlist,
                         filePathNameToImportLst: selectedFilePathNameLst,
                       );
