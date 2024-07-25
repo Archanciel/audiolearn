@@ -1,13 +1,11 @@
-import 'dart:io';
-
 import 'package:audiolearn/constants.dart';
+import 'package:audiolearn/utils/dir_util.dart';
 import 'package:audiolearn/viewmodels/audio_player_vm.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:path/path.dart' as path;
 
 import '../../models/help_item.dart';
 import '../../models/playlist.dart';
@@ -207,9 +205,9 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                       List<String> selectedFilePathNameLst =
                           await _filePickerSelectAudioFiles();
 
-                      await _copyFilesToTargetDirectory(
+                      await playlistListVM.importFilesInPlaylist(
+                        targetPlaylist: playlist,
                         filePathNameToImportLst: selectedFilePathNameLst,
-                        targetDirectory: playlist.downloadPath,
                       );
                       break;
                     case PlaylistPopupMenuAction.updatePlaylistPlayableAudios:
@@ -342,7 +340,7 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
       type: FileType.custom,
       allowedExtensions: ['mp3'],
       allowMultiple: true,
-      initialDirectory: kApplicationPathWindows,
+      initialDirectory: await DirUtil.getApplicationPath(),
     );
 
     if (result != null) {
@@ -350,18 +348,5 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
     }
 
     return [];
-  }
-
-  Future<void> _copyFilesToTargetDirectory({
-    required List<String> filePathNameToImportLst,
-    required String targetDirectory,
-  }) async {
-    for (String filePathName in filePathNameToImportLst) {
-      String fileName = filePathName.split(path.separator).last;
-      File sourceFile = File(filePathName);
-      File targetFile = File('${targetDirectory}${path.separator}$fileName');
-
-      await sourceFile.copy(targetFile.path);
-    }
   }
 }
