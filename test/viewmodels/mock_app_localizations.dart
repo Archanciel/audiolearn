@@ -1134,4 +1134,15 @@ class MockAppLocalizations extends AppLocalizations {
     Object title,
   ) =>
       "Playlist \"$title\" selected";
+
+  @override
+  String get playlistImportAudioMenu => "Import audio files ...";
+
+  @override
+  String get playlistImportAudioMenuTooltip =>
+      "Import audio files into the playlist in order to listen an add comments to them.";
+
+  @override
+  String get setPlaylistAudioPlaySpeedTooltip =>
+      "Set audio play speed for the playlist existing and next downloaded audio.";
 }

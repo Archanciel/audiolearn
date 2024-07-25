@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:audiolearn/constants.dart';
 import 'package:audiolearn/viewmodels/audio_player_vm.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:path/path.dart' as path;
 
 import '../../models/help_item.dart';
 import '../../models/playlist.dart';
@@ -21,11 +25,12 @@ enum PlaylistPopupMenuAction {
   openYoutubePlaylist,
   copyYoutubePlaylistUrl,
   displayPlaylistInfo,
+  displayPlaylistAudioComments,
+  importAudioFilesInPlaylist,
   updatePlaylistPlayableAudios, // useful if playlist audio files were
   //                               deleted from the app dir
   setPlaylistAudioPlaySpeed,
   deletePlaylist,
-  displayPlaylistAudioComments,
 }
 
 /// This widget is used to display a playlist in the
@@ -108,6 +113,16 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                         Text(AppLocalizations.of(context)!.playlistCommentMenu),
                   ),
                   PopupMenuItem<PlaylistPopupMenuAction>(
+                    key: const Key('popup_menu_import_audio_in_playlist'),
+                    value: PlaylistPopupMenuAction.importAudioFilesInPlaylist,
+                    child: Tooltip(
+                      message: AppLocalizations.of(context)!
+                          .playlistImportAudioMenuTooltip,
+                      child: Text(AppLocalizations.of(context)!
+                          .playlistImportAudioMenu),
+                    ),
+                  ),
+                  PopupMenuItem<PlaylistPopupMenuAction>(
                     key: const Key('popup_menu_update_playable_audio_list'),
                     value: PlaylistPopupMenuAction.updatePlaylistPlayableAudios,
                     child: Tooltip(
@@ -122,7 +137,7 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                     value: PlaylistPopupMenuAction.setPlaylistAudioPlaySpeed,
                     child: Tooltip(
                       message: AppLocalizations.of(context)!
-                          .updatePlaylistPlayableAudioListTooltip,
+                          .setPlaylistAudioPlaySpeedTooltip,
                       child:
                           Text(AppLocalizations.of(context)!.setAudioPlaySpeed),
                     ),
@@ -134,7 +149,7 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                   ),
                 ],
                 elevation: 8,
-              ).then((value) {
+              ).then((value) async {
                 if (value != null) {
                   switch (value) {
                     case PlaylistPopupMenuAction.openYoutubePlaylist:
@@ -186,6 +201,15 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                             PlaylistCommentListAddDialogWidget(
                           currentPlaylist: playlist,
                         ),
+                      );
+                      break;
+                    case PlaylistPopupMenuAction.importAudioFilesInPlaylist:
+                      List<String> selectedFilePathNameLst =
+                          await _filePickerSelectAudioFiles();
+
+                      await _copyFilesToTargetDirectory(
+                        filePathNameToImportLst: selectedFilePathNameLst,
+                        targetDirectory: playlist.downloadPath,
                       );
                       break;
                     case PlaylistPopupMenuAction.updatePlaylistPlayableAudios:
@@ -311,5 +335,33 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
     }
 
     return deletePlaylistDialogTitle;
+  }
+
+  Future<List<String>> _filePickerSelectAudioFiles() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['mp3'],
+      allowMultiple: true,
+      initialDirectory: kApplicationPathWindows,
+    );
+
+    if (result != null) {
+      return result.files.map((file) => file.path!).toList();
+    }
+
+    return [];
+  }
+
+  Future<void> _copyFilesToTargetDirectory({
+    required List<String> filePathNameToImportLst,
+    required String targetDirectory,
+  }) async {
+    for (String filePathName in filePathNameToImportLst) {
+      String fileName = filePathName.split(path.separator).last;
+      File sourceFile = File(filePathName);
+      File targetFile = File('${targetDirectory}${path.separator}$fileName');
+
+      await sourceFile.copy(targetFile.path);
+    }
   }
 }

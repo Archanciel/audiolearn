@@ -380,5 +380,8 @@
   "confirmCommentedAudioDeletionComment": "L'audio contient {commentNumber} commentaire(s) qui seront également supprimés. Confirmer la suppression ?",
   "commentStartPositionTooltip": "Position du commentaire dans l'audio",
   "playlistToggleButtonInAudioPlayerViewTooltip": "Afficher/masquer les playlists. Ensuite, cochez une playlist pour sélectionner son audio en cours d'écoute.",
-  "playlistSelectedSnackBarMessage": "Playlist \"{title}\" sélectionnée"
+  "playlistSelectedSnackBarMessage": "Playlist \"{title}\" sélectionnée",
+  "playlistImportAudioMenu": "Importer des audios ...",
+  "playlistImportAudioMenuTooltip": "Importer des audios dans la playlist afin de pouvoir les écouter et ainsi qu'y ajouter des commentaires positionnés.",
+  "setPlaylistAudioPlaySpeedTooltip": "Définir la vitesse de lecture audio pour les prochains audios téléchargés dans la playlist ainsi que pour les audios existants."
 }

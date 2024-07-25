@@ -378,5 +378,8 @@
   "confirmCommentedAudioDeletionComment": "The audio contains {commentNumber} comment(s) which will be deleted as well. Confirm deletion ?",
   "commentStartPositionTooltip": "Comment position in audio",
   "playlistToggleButtonInAudioPlayerViewTooltip": "Show/hide playlists. Then check a playlist to select its current listened audio.",
-  "playlistSelectedSnackBarMessage": "Playlist \"{title}\" selected"
+  "playlistSelectedSnackBarMessage": "Playlist \"{title}\" selected",
+  "playlistImportAudioMenu": "Import audio files ...",
+  "playlistImportAudioMenuTooltip": "Import audio files into the playlist in order to be able to listen them and add positionned comments to them.",
+  "setPlaylistAudioPlaySpeedTooltip": "Set audio play speed for the playlist existing and next downloaded audio."
 }
