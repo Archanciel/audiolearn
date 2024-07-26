@@ -1012,9 +1012,13 @@ class AudioDownloadVM extends ChangeNotifier {
     required Playlist targetPlaylist,
     required List<String> filePathNameToImportLst,
   }) {
+    List<String> importedAudioFileNames = [];
+    List<String> filePathNameToImportLstCopy = List<String>.from(
+        filePathNameToImportLst); // necessary since the filePathNameToImportLst
+    //                           may modified
     String rejectedImportedFileNames = '';
 
-    for (String filePathName in filePathNameToImportLst) {
+    for (String filePathName in filePathNameToImportLstCopy) {
       String fileName = filePathName.split(path.separator).last;
       File sourceFile = File(filePathName);
       File targetFile =
@@ -1024,11 +1028,10 @@ class AudioDownloadVM extends ChangeNotifier {
         // the case if the imported audio file already exist in the target
         // playlist directory
         rejectedImportedFileNames += '$fileName, ';
+        filePathNameToImportLst.remove(filePathName);
 
         continue;
       }
-
-      sourceFile.copySync(targetFile.path);
     }
 
     if (rejectedImportedFileNames.isNotEmpty) {
@@ -1037,6 +1040,15 @@ class AudioDownloadVM extends ChangeNotifier {
               0, rejectedImportedFileNames.length - 2),
           importedToPlaylistTitle: targetPlaylist.title,
           importedToPlaylistType: targetPlaylist.playlistType);
+    }
+
+
+    for (String filePathName in filePathNameToImportLst) {
+      String fileName = filePathName.split(path.separator).last;
+      File sourceFile = File(filePathName);
+      File targetFile =
+          File('${targetPlaylist.downloadPath}${path.separator}$fileName');
+      sourceFile.copySync(targetFile.path);
     }
   }
 
