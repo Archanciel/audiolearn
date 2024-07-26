@@ -429,7 +429,7 @@ void main() {
         downloadedAudio: playlist.playableAudioLst[0],
       );
 
-      expect(playlist.downloadedAudioLst.length, 0);
+      expect(playlist.downloadedAudioLst.length, 1);
       expect(playlist.playableAudioLst.length, 1);
       expect(playlist.currentOrPastPlayableAudioIndex, 0);
       expect(
@@ -540,7 +540,7 @@ void copyOneDownloadedAudio(Playlist playlist) {
       videoUploadDate: DateTime.now(),
       audioPlaySpeed: 1.5);
   audio.audioDownloadSpeed = 1000;
-  playlist.addCopiedAudio(
+  playlist.addCopiedAudioToDownloadAndPlayableLst(
       copiedAudio: audio, copiedFromPlaylistTitle: 'source playlist title');
 }
 
@@ -554,7 +554,7 @@ void copyOneOtherDownloadedAudio(Playlist playlist) {
       videoUploadDate: DateTime.now(),
       audioPlaySpeed: 1.5);
   audio.audioDownloadSpeed = 1000;
-  playlist.addCopiedAudio(
+  playlist.addCopiedAudioToDownloadAndPlayableLst(
       copiedAudio: audio, copiedFromPlaylistTitle: 'source playlist title');
 }
 
@@ -568,7 +568,7 @@ void moveOneDownloadedAudio(Playlist playlist) {
       videoUploadDate: DateTime.now(),
       audioPlaySpeed: 1.5);
   audio.audioDownloadSpeed = 1000;
-  playlist.addMovedAudio(
+  playlist.addMovedAudioToDownloadAndPlayableLst(
       movedAudio: audio, movedFromPlaylistTitle: 'source playlist title');
 }
 
@@ -582,6 +582,6 @@ void moveOneOtherDownloadedAudio(Playlist playlist) {
       videoUploadDate: DateTime.now(),
       audioPlaySpeed: 1.5);
   audio.audioDownloadSpeed = 1000;
-  playlist.addMovedAudio(
+  playlist.addMovedAudioToDownloadAndPlayableLst(
       movedAudio: audio, movedFromPlaylistTitle: 'source playlist title');
 }

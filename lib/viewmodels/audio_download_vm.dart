@@ -848,7 +848,10 @@ class AudioDownloadVM extends ChangeNotifier {
   ///
   /// The method physicaly moves the audio file to the target
   /// playlist directory and adds the moved audio data to the target
-  /// playlist playable audio list.
+  /// playlist download audio list and playable audio list.
+  ///
+  /// The source playlist download list audio data is updated to
+  /// reflect that the audio has been moved to the target playlist.
   ///
   /// The source playlist playable audio data is deleted since the
   /// the audio no longer exist in the playlist dir.
@@ -904,7 +907,7 @@ class AudioDownloadVM extends ChangeNotifier {
       );
     }
 
-    targetPlaylist.addMovedAudio(
+    targetPlaylist.addMovedAudioToDownloadAndPlayableLst(
       movedAudio: audio,
       movedFromPlaylistTitle: fromPlaylist.title,
     );
@@ -938,10 +941,11 @@ class AudioDownloadVM extends ChangeNotifier {
   ///
   /// The method physicaly copies the audio file to the target
   /// playlist directory and adds the copied audio data to the target
-  /// playlist playable audio list.
+  /// playlist download audio list and playable audio list.
   ///
-  /// The source playlist playable audio data is also updated to
-  /// reflect that the audio has been copied to the target playlist.
+  /// The source playlist download and playable audio data is also
+  /// updated to reflect that the audio has been copied to the target
+  /// playlist.
   ///
   /// True is returned if the audio file was copied to the target
   /// playlist directory, false otherwise. If the audio file already
@@ -972,7 +976,7 @@ class AudioDownloadVM extends ChangeNotifier {
       return false;
     }
 
-    targetPlaylist.addCopiedAudio(
+    targetPlaylist.addCopiedAudioToDownloadAndPlayableLst(
       copiedAudio: audio,
       copiedFromPlaylistTitle: fromPlaylistTitle,
     );
@@ -1029,7 +1033,8 @@ class AudioDownloadVM extends ChangeNotifier {
 
     if (rejectedImportedFileNames.isNotEmpty) {
       warningMessageVM.setAudioNotImportedToPlaylistTitles(
-          rejectedImportedAudioFileNames: rejectedImportedFileNames.substring(0, rejectedImportedFileNames.length - 2),
+          rejectedImportedAudioFileNames: rejectedImportedFileNames.substring(
+              0, rejectedImportedFileNames.length - 2),
           importedToPlaylistTitle: targetPlaylist.title,
           importedToPlaylistType: targetPlaylist.playlistType);
     }

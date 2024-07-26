@@ -182,7 +182,7 @@ class Playlist {
   ///
   /// playableAudioLst order: [available audio last downloaded, ...,
   ///                          available audio first downloaded]
-  void addCopiedAudio({
+  void addCopiedAudioToDownloadAndPlayableLst({
     required Audio copiedAudio,
     required String copiedFromPlaylistTitle,
   }) {
@@ -209,6 +209,7 @@ class Playlist {
     copiedAudioCopy.enclosingPlaylist = this;
     copiedAudioCopy.copiedFromPlaylistTitle = copiedFromPlaylistTitle;
 
+    downloadedAudioLst.add(copiedAudioCopy);
     _insertAudioInPlayableAudioList(copiedAudioCopy);
   }
 
@@ -236,7 +237,7 @@ class Playlist {
   ///
   /// Before, sets the enclosingPlaylist to this as well as the
   /// movedFromPlaylistTitle.
-  void addMovedAudio({
+  void addMovedAudioToDownloadAndPlayableLst({
     required Audio movedAudio,
     required String movedFromPlaylistTitle,
   }) {
@@ -370,6 +371,15 @@ class Playlist {
     // playableAudioLst with the updated copiedAudioCopy
     if (index != -1) {
       playableAudioLst[index] = copiedAudioCopy;
+    }
+
+    // Step 4: Find the index of the audio in downloadedAudioLst that matches copiedAudio
+    index = downloadedAudioLst.indexWhere((audio) => audio == copiedAudio);
+
+    // Step 5: Replace the audio at the found index in
+    // downloadedAudioLst with the updated copiedAudioCopy
+    if (index != -1) {
+      downloadedAudioLst[index] = copiedAudioCopy;
     }
   }
 
