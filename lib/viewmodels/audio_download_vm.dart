@@ -1015,8 +1015,9 @@ class AudioDownloadVM extends ChangeNotifier {
     List<String> importedAudioFileNames = [];
     List<String> filePathNameToImportLstCopy = List<String>.from(
         filePathNameToImportLst); // necessary since the filePathNameToImportLst
-    //                           may modified
+    //                               may modified
     String rejectedImportedFileNames = '';
+    String acceptableImportedFileNames = '';
 
     for (String filePathName in filePathNameToImportLstCopy) {
       String fileName = filePathName.split(path.separator).last;
@@ -1032,6 +1033,8 @@ class AudioDownloadVM extends ChangeNotifier {
 
         continue;
       }
+
+        acceptableImportedFileNames += '$fileName, ';
     }
 
     if (rejectedImportedFileNames.isNotEmpty) {
@@ -1042,6 +1045,13 @@ class AudioDownloadVM extends ChangeNotifier {
           importedToPlaylistType: targetPlaylist.playlistType);
     }
 
+    if (acceptableImportedFileNames.isNotEmpty) {
+      warningMessageVM.setAudioNotImportedToPlaylistTitles(
+          rejectedImportedAudioFileNames: acceptableImportedFileNames.substring(
+              0, acceptableImportedFileNames.length - 2),
+          importedToPlaylistTitle: targetPlaylist.title,
+          importedToPlaylistType: targetPlaylist.playlistType);
+    }
 
     for (String filePathName in filePathNameToImportLst) {
       String fileName = filePathName.split(path.separator).last;
