@@ -197,7 +197,9 @@ void main() {
       );
     });
   });
-  group('Copy audio to playlist', () {
+  group(
+      '''Copy audio to playlist and then trying to copy it again in the same target
+         playlist not keeping it in the source playlist''', () {
     test('Copy audio to playlist', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -241,50 +243,143 @@ void main() {
       expect(targetPlaylist.playableAudioLst.length, 0);
 
       // Copying the audio to the target playlist
-      audioDownloadVM.copyAudioToPlaylist(
+      bool wasCopied = audioDownloadVM.copyAudioToPlaylist(
         audio: copiedAudio,
         targetPlaylist: targetPlaylist,
       );
+
+      expect(wasCopied, true);
 
       // Now verifying source and target playlists data
 
       // Loading playlists from the json file
       Playlist loadedSourcePlaylist = loadPlaylist(sourcePlaylist.title);
-      List<Audio> loadedSourcePlaylistDownloadedAudioLst = loadedSourcePlaylist.downloadedAudioLst;
-      List<Audio> loadedSourcePlaylistPlayableAudioLst = loadedSourcePlaylist.playableAudioLst;
-      Audio loadedSourcePlaylistCopiedDownloadedAudio = loadedSourcePlaylistDownloadedAudioLst[0];
-      Audio loadedSourcePlaylistCopiedPlayableAudio = loadedSourcePlaylistPlayableAudioLst[1];
+      List<Audio> loadedSourcePlaylistDownloadedAudioLst =
+          loadedSourcePlaylist.downloadedAudioLst;
+      List<Audio> loadedSourcePlaylistPlayableAudioLst =
+          loadedSourcePlaylist.playableAudioLst;
+      Audio loadedSourcePlaylistCopiedDownloadedAudio =
+          loadedSourcePlaylistDownloadedAudioLst[0];
+      Audio loadedSourcePlaylistCopiedPlayableAudio =
+          loadedSourcePlaylistPlayableAudioLst[1];
 
       String targetPlaylistTitle = targetPlaylist.title;
       Playlist loadedTargetPlaylist = loadPlaylist(targetPlaylistTitle);
       List<Audio> downloadedAudioLst = loadedTargetPlaylist.downloadedAudioLst;
       Audio loadedTargetPlaylistCopiedDownloadAudio = downloadedAudioLst[5];
-      List<Audio> loadedTargetPlaylistPlayableAudioLst = loadedTargetPlaylist.playableAudioLst;
-      Audio loadedTargetPlaylistCopiedPlayableAudio = loadedTargetPlaylistPlayableAudioLst[0];
+      List<Audio> loadedTargetPlaylistPlayableAudioLst =
+          loadedTargetPlaylist.playableAudioLst;
+      Audio loadedTargetPlaylistCopiedPlayableAudio =
+          loadedTargetPlaylistPlayableAudioLst[0];
 
       expect(loadedSourcePlaylistDownloadedAudioLst.length, 2);
       expect(loadedSourcePlaylistPlayableAudioLst.length, 2);
-      expect(loadedSourcePlaylistCopiedDownloadedAudio.movedToPlaylistTitle, null);
-      expect(loadedSourcePlaylistCopiedDownloadedAudio.movedFromPlaylistTitle, null);
-      expect(loadedSourcePlaylistCopiedDownloadedAudio.copiedFromPlaylistTitle, null);
-      expect(loadedSourcePlaylistCopiedDownloadedAudio.copiedToPlaylistTitle, targetPlaylistTitle);
+      expect(
+          loadedSourcePlaylistCopiedDownloadedAudio.movedToPlaylistTitle, null);
+      expect(loadedSourcePlaylistCopiedDownloadedAudio.movedFromPlaylistTitle,
+          null);
+      expect(loadedSourcePlaylistCopiedDownloadedAudio.copiedFromPlaylistTitle,
+          null);
+      expect(loadedSourcePlaylistCopiedDownloadedAudio.copiedToPlaylistTitle,
+          targetPlaylistTitle);
 
-      expect(loadedSourcePlaylistCopiedPlayableAudio.movedToPlaylistTitle, null);
-      expect(loadedSourcePlaylistCopiedPlayableAudio.movedFromPlaylistTitle, null);
-      expect(loadedSourcePlaylistCopiedPlayableAudio.copiedFromPlaylistTitle, null);
-      expect(loadedSourcePlaylistCopiedPlayableAudio.copiedToPlaylistTitle, targetPlaylistTitle);
+      expect(
+          loadedSourcePlaylistCopiedPlayableAudio.movedToPlaylistTitle, null);
+      expect(
+          loadedSourcePlaylistCopiedPlayableAudio.movedFromPlaylistTitle, null);
+      expect(loadedSourcePlaylistCopiedPlayableAudio.copiedFromPlaylistTitle,
+          null);
+      expect(loadedSourcePlaylistCopiedPlayableAudio.copiedToPlaylistTitle,
+          targetPlaylistTitle);
 
       expect(downloadedAudioLst.length, 6);
-      expect(loadedTargetPlaylistCopiedDownloadAudio.movedFromPlaylistTitle, null);
-      expect(loadedTargetPlaylistCopiedDownloadAudio.movedToPlaylistTitle, null);
-      expect(loadedTargetPlaylistCopiedDownloadAudio.copiedFromPlaylistTitle, loadedSourcePlaylist.title);
-      expect(loadedTargetPlaylistCopiedDownloadAudio.copiedToPlaylistTitle, null);
+      expect(
+          loadedTargetPlaylistCopiedDownloadAudio.movedFromPlaylistTitle, null);
+      expect(
+          loadedTargetPlaylistCopiedDownloadAudio.movedToPlaylistTitle, null);
+      expect(loadedTargetPlaylistCopiedDownloadAudio.copiedFromPlaylistTitle,
+          loadedSourcePlaylist.title);
+      expect(
+          loadedTargetPlaylistCopiedDownloadAudio.copiedToPlaylistTitle, null);
 
       expect(loadedTargetPlaylistPlayableAudioLst.length, 1);
-      expect(loadedTargetPlaylistCopiedPlayableAudio.movedFromPlaylistTitle, null);
-      expect(loadedTargetPlaylistCopiedPlayableAudio.movedToPlaylistTitle, null);
-      expect(loadedTargetPlaylistCopiedPlayableAudio.copiedFromPlaylistTitle, loadedSourcePlaylist.title);
-      expect(loadedTargetPlaylistCopiedPlayableAudio.copiedToPlaylistTitle, null);
+      expect(
+          loadedTargetPlaylistCopiedPlayableAudio.movedFromPlaylistTitle, null);
+      expect(
+          loadedTargetPlaylistCopiedPlayableAudio.movedToPlaylistTitle, null);
+      expect(loadedTargetPlaylistCopiedPlayableAudio.copiedFromPlaylistTitle,
+          loadedSourcePlaylist.title);
+      expect(
+          loadedTargetPlaylistCopiedPlayableAudio.copiedToPlaylistTitle, null);
+
+      // Copying again the same the audio to the target playlist
+      wasCopied = audioDownloadVM.copyAudioToPlaylist(
+        audio: copiedAudio,
+        targetPlaylist: targetPlaylist,
+      );
+
+      expect(wasCopied, false);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    test(
+        '''Copy an audio file which was manually deleted from the source playlist
+           directory''', () async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}audio_download_vm_copy_move__audio",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+      WarningMessageVM warningMessageVM = WarningMessageVM();
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+        isTest: true,
+      );
+
+      // necessary, otherwise audioDownloadVM won't be able to load
+      // the existing playlists and the test will fail
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+        isTest: true,
+      );
+
+      audioDownloadVM.loadExistingPlaylists();
+
+      Playlist sourcePlaylist = audioDownloadVM.listOfPlaylist[1];
+      Audio copiedAudio = sourcePlaylist.downloadedAudioLst[0];
+      Playlist targetPlaylist = audioDownloadVM.listOfPlaylist[2];
+
+      expect(sourcePlaylist.downloadedAudioLst.length, 2);
+      expect(sourcePlaylist.playableAudioLst.length, 2);
+      expect(targetPlaylist.downloadedAudioLst.length, 5);
+      expect(targetPlaylist.playableAudioLst.length, 0);
+
+      // Manually deleting the audio to be copied from the source playlist
+      DirUtil.deleteFileIfExist(pathFileName: copiedAudio.filePathName);
+
+      // Copying the audio to the target playlist
+      bool wasCopied = audioDownloadVM.copyAudioToPlaylist(
+        audio: copiedAudio,
+        targetPlaylist: targetPlaylist,
+      );
+
+      expect(wasCopied, false);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -294,7 +389,9 @@ void main() {
     });
   });
   group('Move audio to playlist', () {
-    test('Moved audio kept in source playlist', () async {
+    test('''Moved audio kept in source playlist and then trying to move it again
+            in the same target playlist keeping it in the source  playlist''',
+        () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -337,36 +434,58 @@ void main() {
       expect(targetPlaylist.playableAudioLst.length, 0);
 
       // Moving the audio keeping it in source playlist
-      audioDownloadVM.moveAudioToPlaylist(
+      bool wasMoved = audioDownloadVM.moveAudioToPlaylist(
         audio: movedAudio,
         targetPlaylist: targetPlaylist,
         keepAudioInSourcePlaylistDownloadedAudioLst: true,
       );
 
+      expect(wasMoved, true);
+
       // Now verifying source and target playlists data
 
       // Loading playlists from the json file
       Playlist loadedSourcePlaylist = loadPlaylist(sourcePlaylist.title);
-      List<Audio> loadedSourcePlaylistDownloadedAudioLst = loadedSourcePlaylist.downloadedAudioLst;
-      Audio loadedSourcePlaylistMovedDownloadedAudio = loadedSourcePlaylistDownloadedAudioLst[0];
+      List<Audio> loadedSourcePlaylistDownloadedAudioLst =
+          loadedSourcePlaylist.downloadedAudioLst;
+      Audio loadedSourcePlaylistMovedDownloadedAudio =
+          loadedSourcePlaylistDownloadedAudioLst[0];
       String targetPlaylistTitle = targetPlaylist.title;
       Playlist loadedTargetPlaylist = loadPlaylist(targetPlaylistTitle);
-      List<Audio> loadedTargetPlaylistPlayableAudioLst = loadedTargetPlaylist.playableAudioLst;
-      Audio loadedTargetPlaylistMovedPlayableAudio = loadedTargetPlaylistPlayableAudioLst[0];
+      List<Audio> loadedTargetPlaylistPlayableAudioLst =
+          loadedTargetPlaylist.playableAudioLst;
+      Audio loadedTargetPlaylistMovedPlayableAudio =
+          loadedTargetPlaylistPlayableAudioLst[0];
 
       expect(loadedSourcePlaylistDownloadedAudioLst.length, 2);
       expect(loadedSourcePlaylist.playableAudioLst.length, 1);
-      expect(loadedSourcePlaylistMovedDownloadedAudio.movedToPlaylistTitle, targetPlaylistTitle);
-      expect(loadedSourcePlaylistMovedDownloadedAudio.movedFromPlaylistTitle, null);
-      expect(loadedSourcePlaylistMovedDownloadedAudio.copiedFromPlaylistTitle, null);
-      expect(loadedSourcePlaylistMovedDownloadedAudio.copiedToPlaylistTitle, null);
+      expect(loadedSourcePlaylistMovedDownloadedAudio.movedToPlaylistTitle,
+          targetPlaylistTitle);
+      expect(loadedSourcePlaylistMovedDownloadedAudio.movedFromPlaylistTitle,
+          null);
+      expect(loadedSourcePlaylistMovedDownloadedAudio.copiedFromPlaylistTitle,
+          null);
+      expect(
+          loadedSourcePlaylistMovedDownloadedAudio.copiedToPlaylistTitle, null);
 
       expect(loadedTargetPlaylist.downloadedAudioLst.length, 6);
       expect(loadedTargetPlaylistPlayableAudioLst.length, 1);
-      expect(loadedTargetPlaylistMovedPlayableAudio.movedFromPlaylistTitle, loadedSourcePlaylist.title);
+      expect(loadedTargetPlaylistMovedPlayableAudio.movedFromPlaylistTitle,
+          loadedSourcePlaylist.title);
       expect(loadedTargetPlaylistMovedPlayableAudio.movedToPlaylistTitle, null);
-      expect(loadedTargetPlaylistMovedPlayableAudio.copiedFromPlaylistTitle, null);
-      expect(loadedTargetPlaylistMovedPlayableAudio.copiedToPlaylistTitle, null);
+      expect(
+          loadedTargetPlaylistMovedPlayableAudio.copiedFromPlaylistTitle, null);
+      expect(
+          loadedTargetPlaylistMovedPlayableAudio.copiedToPlaylistTitle, null);
+
+      // Moving again the same audio keeping it in source playlist
+      wasMoved = audioDownloadVM.moveAudioToPlaylist(
+        audio: movedAudio,
+        targetPlaylist: targetPlaylist,
+        keepAudioInSourcePlaylistDownloadedAudioLst: true,
+      );
+
+      expect(wasMoved, false);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -374,7 +493,9 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    test('Moved audio not kept in source playlist', () async {
+    test('''Moved audio not kept in source playlist and then trying to move it 
+           again in the same target playlist not keeping it in the source
+           playlist''', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -417,31 +538,257 @@ void main() {
       expect(targetPlaylist.playableAudioLst.length, 0);
 
       // Moving the audio not keeping it in source playlist
-      audioDownloadVM.moveAudioToPlaylist(
+      bool wasMoved = audioDownloadVM.moveAudioToPlaylist(
         audio: movedAudio,
         targetPlaylist: targetPlaylist,
         keepAudioInSourcePlaylistDownloadedAudioLst: false,
       );
 
+      expect(wasMoved, true);
+
       // Now verifying source and target playlists data
 
       // Loading playlists from the json file
       Playlist loadedSourcePlaylist = loadPlaylist(sourcePlaylist.title);
-      List<Audio> loadedSourcePlaylistDownloadedAudioLst = loadedSourcePlaylist.downloadedAudioLst;
+      List<Audio> loadedSourcePlaylistDownloadedAudioLst =
+          loadedSourcePlaylist.downloadedAudioLst;
       String targetPlaylistTitle = targetPlaylist.title;
       Playlist loadedTargetPlaylist = loadPlaylist(targetPlaylistTitle);
-      List<Audio> loadedTargetPlaylistPlayableAudioLst = loadedTargetPlaylist.playableAudioLst;
-      Audio loadedTargetPlaylistMovedPlayableAudio = loadedTargetPlaylistPlayableAudioLst[0];
+      List<Audio> loadedTargetPlaylistPlayableAudioLst =
+          loadedTargetPlaylist.playableAudioLst;
+      Audio loadedTargetPlaylistMovedPlayableAudio =
+          loadedTargetPlaylistPlayableAudioLst[0];
 
       expect(loadedSourcePlaylistDownloadedAudioLst.length, 1);
       expect(loadedSourcePlaylist.playableAudioLst.length, 1);
 
       expect(loadedTargetPlaylist.downloadedAudioLst.length, 6);
       expect(loadedTargetPlaylistPlayableAudioLst.length, 1);
-      expect(loadedTargetPlaylistMovedPlayableAudio.movedFromPlaylistTitle, loadedSourcePlaylist.title);
+      expect(loadedTargetPlaylistMovedPlayableAudio.movedFromPlaylistTitle,
+          loadedSourcePlaylist.title);
       expect(loadedTargetPlaylistMovedPlayableAudio.movedToPlaylistTitle, null);
-      expect(loadedTargetPlaylistMovedPlayableAudio.copiedFromPlaylistTitle, null);
-      expect(loadedTargetPlaylistMovedPlayableAudio.copiedToPlaylistTitle, null);
+      expect(
+          loadedTargetPlaylistMovedPlayableAudio.copiedFromPlaylistTitle, null);
+      expect(
+          loadedTargetPlaylistMovedPlayableAudio.copiedToPlaylistTitle, null);
+
+      // Moving again the audio suppressed by the first move
+      wasMoved = audioDownloadVM.moveAudioToPlaylist(
+        audio: movedAudio,
+        targetPlaylist: targetPlaylist,
+        keepAudioInSourcePlaylistDownloadedAudioLst: false,
+      );
+
+      expect(wasMoved, false);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    test(
+        '''Moved audio kept in source playlist and then trying to move it again in
+           in the same target playlist but this tyme not keeping it in the source
+           playlist''', () async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}audio_download_vm_copy_move__audio",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+      WarningMessageVM warningMessageVM = WarningMessageVM();
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+        isTest: true,
+      );
+
+      // necessary, otherwise audioDownloadVM won't be able to load
+      // the existing playlists and the test will fail
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+        isTest: true,
+      );
+
+      audioDownloadVM.loadExistingPlaylists();
+
+      Playlist sourcePlaylist = audioDownloadVM.listOfPlaylist[1];
+      Audio movedAudio = sourcePlaylist.downloadedAudioLst[0];
+      Playlist targetPlaylist = audioDownloadVM.listOfPlaylist[2];
+
+      expect(sourcePlaylist.downloadedAudioLst.length, 2);
+      expect(sourcePlaylist.playableAudioLst.length, 2);
+      expect(targetPlaylist.downloadedAudioLst.length, 5);
+      expect(targetPlaylist.playableAudioLst.length, 0);
+
+      // Moving the audio keeping it in source playlist
+      bool wasMoved = audioDownloadVM.moveAudioToPlaylist(
+        audio: movedAudio,
+        targetPlaylist: targetPlaylist,
+        keepAudioInSourcePlaylistDownloadedAudioLst: true,
+      );
+
+      expect(wasMoved, true);
+
+      // Now verifying source and target playlists data
+
+      // Loading playlists from the json file
+      Playlist loadedSourcePlaylist = loadPlaylist(sourcePlaylist.title);
+      List<Audio> loadedSourcePlaylistDownloadedAudioLst =
+          loadedSourcePlaylist.downloadedAudioLst;
+      Audio loadedSourcePlaylistMovedDownloadedAudio =
+          loadedSourcePlaylistDownloadedAudioLst[0];
+      String targetPlaylistTitle = targetPlaylist.title;
+      Playlist loadedTargetPlaylist = loadPlaylist(targetPlaylistTitle);
+      List<Audio> loadedTargetPlaylistPlayableAudioLst =
+          loadedTargetPlaylist.playableAudioLst;
+      Audio loadedTargetPlaylistMovedPlayableAudio =
+          loadedTargetPlaylistPlayableAudioLst[0];
+
+      expect(loadedSourcePlaylistDownloadedAudioLst.length, 2);
+      expect(loadedSourcePlaylist.playableAudioLst.length, 1);
+      expect(loadedSourcePlaylistMovedDownloadedAudio.movedToPlaylistTitle,
+          targetPlaylistTitle);
+      expect(loadedSourcePlaylistMovedDownloadedAudio.movedFromPlaylistTitle,
+          null);
+      expect(loadedSourcePlaylistMovedDownloadedAudio.copiedFromPlaylistTitle,
+          null);
+      expect(
+          loadedSourcePlaylistMovedDownloadedAudio.copiedToPlaylistTitle, null);
+
+      expect(loadedTargetPlaylist.downloadedAudioLst.length, 6);
+      expect(loadedTargetPlaylistPlayableAudioLst.length, 1);
+      expect(loadedTargetPlaylistMovedPlayableAudio.movedFromPlaylistTitle,
+          loadedSourcePlaylist.title);
+      expect(loadedTargetPlaylistMovedPlayableAudio.movedToPlaylistTitle, null);
+      expect(
+          loadedTargetPlaylistMovedPlayableAudio.copiedFromPlaylistTitle, null);
+      expect(
+          loadedTargetPlaylistMovedPlayableAudio.copiedToPlaylistTitle, null);
+
+      // Moving again the same audio not keeping it in source playlist
+      wasMoved = audioDownloadVM.moveAudioToPlaylist(
+        audio: movedAudio,
+        targetPlaylist: targetPlaylist,
+        keepAudioInSourcePlaylistDownloadedAudioLst: false,
+      );
+
+      expect(wasMoved, false);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    test(
+        '''Moving an audio which was manually deleted from the in source playlist
+           directoryt''', () async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}audio_download_vm_copy_move__audio",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+      WarningMessageVM warningMessageVM = WarningMessageVM();
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+        isTest: true,
+      );
+
+      // necessary, otherwise audioDownloadVM won't be able to load
+      // the existing playlists and the test will fail
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+        isTest: true,
+      );
+
+      audioDownloadVM.loadExistingPlaylists();
+
+      Playlist sourcePlaylist = audioDownloadVM.listOfPlaylist[1];
+      Audio movedAudio = sourcePlaylist.downloadedAudioLst[0];
+      Playlist targetPlaylist = audioDownloadVM.listOfPlaylist[2];
+
+      expect(sourcePlaylist.downloadedAudioLst.length, 2);
+      expect(sourcePlaylist.playableAudioLst.length, 2);
+      expect(targetPlaylist.downloadedAudioLst.length, 5);
+      expect(targetPlaylist.playableAudioLst.length, 0);
+
+      // Moving the audio keeping it in source playlist
+      bool wasMoved = audioDownloadVM.moveAudioToPlaylist(
+        audio: movedAudio,
+        targetPlaylist: targetPlaylist,
+        keepAudioInSourcePlaylistDownloadedAudioLst: true,
+      );
+
+      expect(wasMoved, true);
+
+      // Now verifying source and target playlists data
+
+      // Loading playlists from the json file
+      Playlist loadedSourcePlaylist = loadPlaylist(sourcePlaylist.title);
+      List<Audio> loadedSourcePlaylistDownloadedAudioLst =
+          loadedSourcePlaylist.downloadedAudioLst;
+      Audio loadedSourcePlaylistMovedDownloadedAudio =
+          loadedSourcePlaylistDownloadedAudioLst[0];
+      String targetPlaylistTitle = targetPlaylist.title;
+      Playlist loadedTargetPlaylist = loadPlaylist(targetPlaylistTitle);
+      List<Audio> loadedTargetPlaylistPlayableAudioLst =
+          loadedTargetPlaylist.playableAudioLst;
+      Audio loadedTargetPlaylistMovedPlayableAudio =
+          loadedTargetPlaylistPlayableAudioLst[0];
+
+      expect(loadedSourcePlaylistDownloadedAudioLst.length, 2);
+      expect(loadedSourcePlaylist.playableAudioLst.length, 1);
+      expect(loadedSourcePlaylistMovedDownloadedAudio.movedToPlaylistTitle,
+          targetPlaylistTitle);
+      expect(loadedSourcePlaylistMovedDownloadedAudio.movedFromPlaylistTitle,
+          null);
+      expect(loadedSourcePlaylistMovedDownloadedAudio.copiedFromPlaylistTitle,
+          null);
+      expect(
+          loadedSourcePlaylistMovedDownloadedAudio.copiedToPlaylistTitle, null);
+
+      expect(loadedTargetPlaylist.downloadedAudioLst.length, 6);
+      expect(loadedTargetPlaylistPlayableAudioLst.length, 1);
+      expect(loadedTargetPlaylistMovedPlayableAudio.movedFromPlaylistTitle,
+          loadedSourcePlaylist.title);
+      expect(loadedTargetPlaylistMovedPlayableAudio.movedToPlaylistTitle, null);
+      expect(
+          loadedTargetPlaylistMovedPlayableAudio.copiedFromPlaylistTitle, null);
+      expect(
+          loadedTargetPlaylistMovedPlayableAudio.copiedToPlaylistTitle, null);
+
+      // Moving again the same audio keeping it in source playlist
+      wasMoved = audioDownloadVM.moveAudioToPlaylist(
+        audio: movedAudio,
+        targetPlaylist: targetPlaylist,
+        keepAudioInSourcePlaylistDownloadedAudioLst: true,
+      );
+
+      expect(wasMoved, false);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub

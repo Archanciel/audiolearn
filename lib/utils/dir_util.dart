@@ -419,7 +419,9 @@ class DirUtil {
     String targetPathFileName =
         '$targetDirectoryPath${path.separator}$copiedFileName';
 
-    if (File(targetPathFileName).existsSync()) {
+    // If the source file does not exist or the target file already exist,
+    // move is not performed and false is returned.
+    if (!sourceFile.existsSync() || File(targetPathFileName).existsSync()) {
       return false;
     }
 
@@ -445,7 +447,11 @@ class DirUtil {
     String targetPathFileName =
         '$targetDirectoryPath${path.separator}$copiedFileName';
 
-    if (!overwriteFileIfExist && File(targetPathFileName).existsSync()) {
+    // If the source file does not exist or the target file already exist and
+    // overwriteFileIfExist is not true, copy is not performed and false is
+    // returned.
+    if (!sourceFile.existsSync() ||
+        (!overwriteFileIfExist && File(targetPathFileName).existsSync())) {
       return false;
     }
 

@@ -874,7 +874,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
     if (!wasFileMoved) {
       // the case if the moved audio file already exist in the target
-      // playlist directory
+      // playlist directory or not exist in the source playlist directory
       warningMessageVM.setAudioNotMovedFromToPlaylistTitles(
         movedAudioValidVideoTitle: audio.validVideoTitle,
         movedFromPlaylistTitle: fromPlaylist.title,
