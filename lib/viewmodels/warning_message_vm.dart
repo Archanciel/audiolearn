@@ -128,6 +128,10 @@ enum WarningMessageType {
   // the import audio to playlist menu item and the audio was not
   // imported to the target playlist since the target playlist
   // already contains the audio
+
+  audioImportedToPlaylist, // The case if the user clicks on
+  // the import audio to playlist menu item and the audio was
+  // imported to the target playlist
 }
 
 enum ErrorType {
@@ -622,6 +626,22 @@ class WarningMessageVM extends ChangeNotifier {
     warningMessageType = WarningMessageType.audioNotImportedToPlaylist;
 
     addMessage(_rejectedImportedAudioFileNames);
+  }
+
+  String _importedAudioFileNames = '';
+  String get importedAudioFileNames => _importedAudioFileNames;
+  void setAudioImportedToPlaylistTitles({
+    required String importedAudioFileNames,
+    required String importedToPlaylistTitle,
+    required PlaylistType importedToPlaylistType,
+  }) {
+    _importedAudioFileNames = importedAudioFileNames;
+    _importedToPlaylistTitle = importedToPlaylistTitle;
+    _importedToPlaylistType = importedToPlaylistType;
+
+    warningMessageType = WarningMessageType.audioImportedToPlaylist;
+
+    addMessage(_importedAudioFileNames);
   }
 
   String _updatedPlayableAudioLstPlaylistTitle = '';

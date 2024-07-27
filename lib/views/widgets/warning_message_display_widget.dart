@@ -576,33 +576,6 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
         });
 
         return const SizedBox.shrink();
-      case WarningMessageType.audioNotImportedToPlaylist:
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          String audioImportedFromToPlaylistMessage;
-
-          if (_warningMessageVM.importedToPlaylistType == PlaylistType.local) {
-            audioImportedFromToPlaylistMessage =
-                AppLocalizations.of(context)!.audioNotImportedToLocalPlaylist(
-              _warningMessageVM.rejectedImportedAudioFileNames,
-              _warningMessageVM.importedToPlaylistTitle,
-            );
-          } else {
-            audioImportedFromToPlaylistMessage =
-                AppLocalizations.of(context)!.audioNotImportedToYoutubePlaylist(
-              _warningMessageVM.rejectedImportedAudioFileNames,
-              _warningMessageVM.importedToPlaylistTitle,
-            );
-          }
-          _displayWarningDialog(
-            context: _context,
-            message: audioImportedFromToPlaylistMessage,
-            warningMessageVM: _warningMessageVM,
-            themeProviderVM: themeProviderVM,
-            warningMode: WarningMode.warning,
-          );
-        });
-
-        return const SizedBox.shrink();
       case WarningMessageType.audioMovedFromToPlaylist:
         WidgetsBinding.instance.addPostFrameCallback((_) {
           String audioMovedFromToPlaylistMessage;
@@ -718,6 +691,10 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
 
         return const SizedBox.shrink();
       default:
+        _warningMessageVM.addListener(() {
+          _showNextDialog(context, _warningMessageVM.warningMessageType);
+        });
+
         return const SizedBox.shrink();
     }
   }
@@ -795,5 +772,80 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
     // To automatically focus on the dialog when it appears. If commented,
     // clicking on Enter will not close the dialog.
     focusNodeDialog.requestFocus();
+  }
+
+  void _showNextDialog(
+    BuildContext context,
+    WarningMessageType warningMessageType,
+  ) {
+    switch (warningMessageType) {
+      case WarningMessageType.audioNotImportedToPlaylist:
+        final String message = _warningMessageVM.getNextMessage();
+
+        if (message.isNotEmpty) {
+          String audioImportedFromToPlaylistMessage;
+
+          if (_warningMessageVM.importedToPlaylistType == PlaylistType.local) {
+            audioImportedFromToPlaylistMessage =
+                AppLocalizations.of(context)!.audioNotImportedToLocalPlaylist(
+              message,
+              _warningMessageVM.importedToPlaylistTitle,
+            );
+          } else {
+            audioImportedFromToPlaylistMessage =
+                AppLocalizations.of(context)!.audioNotImportedToYoutubePlaylist(
+              message,
+              _warningMessageVM.importedToPlaylistTitle,
+            );
+          }
+
+          _displayDialog(context, audioImportedFromToPlaylistMessage);
+        }
+        break;
+      case WarningMessageType.audioImportedToPlaylist:
+        final String message = _warningMessageVM.getNextMessage();
+
+        if (message.isNotEmpty) {
+          String audioImportedFromToPlaylistMessage;
+
+          if (_warningMessageVM.importedToPlaylistType == PlaylistType.local) {
+            audioImportedFromToPlaylistMessage =
+                AppLocalizations.of(context)!.audioImportedToLocalPlaylist(
+              message,
+              _warningMessageVM.importedToPlaylistTitle,
+            );
+          } else {
+            audioImportedFromToPlaylistMessage =
+                AppLocalizations.of(context)!.audioImportedToYoutubePlaylist(
+              message,
+              _warningMessageVM.importedToPlaylistTitle,
+            );
+          }
+
+          _displayDialog(context, audioImportedFromToPlaylistMessage);
+        }
+        break;
+      default:
+        break;
+    }
+  }
+
+  void _displayDialog(BuildContext context, String message) {
+    showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Warning'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            child: const Text('Ok'),
+            onPressed: () {
+              Navigator.of(context).pop();
+              _warningMessageVM.messageDisplayed();
+            },
+          ),
+        ],
+      ),
+    );
   }
 }

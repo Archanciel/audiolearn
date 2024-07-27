@@ -385,5 +385,7 @@
   "playlistImportAudioMenuTooltip": "Importer des audios dans la playlist afin de pouvoir les écouter et ainsi qu'y ajouter des commentaires positionnés.",
   "setPlaylistAudioPlaySpeedTooltip": "Définir la vitesse de lecture audio pour les prochains audios téléchargés dans la playlist ainsi que pour les audios existants.",
   "audioNotImportedToLocalPlaylist": "Le(s) audio(s) \"{rejectedImportedAudioFileNames}\" n'ont pas été importés vers la playlist locale \"{toPlaylistTitle}\" car ils sont déjà présents dans son répertoire.",
-  "audioNotImportedToYoutubePlaylist": "Le(s) audio(s) \"{rejectedImportedAudioFileNames}\" n'ont pas été importés vers la playlist Youtube \"{toPlaylistTitle}\" car ils sont déjà présents dans son répertoire."
+  "audioNotImportedToYoutubePlaylist": "Le(s) audio(s) \"{rejectedImportedAudioFileNames}\" n'ont pas été importés vers la playlist Youtube \"{toPlaylistTitle}\" car ils sont déjà présents dans son répertoire.",
+  "audioImportedToLocalPlaylist": "Le(s) audio(s) \"{importedAudioFileNames}\" ont été importés vers la playlist locale \"{toPlaylistTitle}\".",
+  "audioImportedToYoutubePlaylist": "Le(s) audio(s) \"{importedAudioFileNames}\" ont été importés vers la playlist Youtube \"{toPlaylistTitle}\"."
 }

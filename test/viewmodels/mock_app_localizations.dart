@@ -1159,4 +1159,18 @@ class MockAppLocalizations extends AppLocalizations {
     Object toPlaylistTitle,
   ) =>
       "Audio \"$rejectedImportedAudioFileNames\" NOT imported to Youtube playlist \"$toPlaylistTitle\" since it is already present in the destination playlist.";
+
+  @override
+  String audioImportedToLocalPlaylist(
+    Object importedAudioFileNames,
+    Object toPlaylistTitle,
+  ) =>
+      "Audio(s) \"$importedAudioFileNames\" imported to local playlist \"$toPlaylistTitle\".";
+
+  @override
+  String audioImportedToYoutubePlaylist(
+    Object importedAudioFileNames,
+    Object toPlaylistTitle,
+  ) =>
+      "Audio(s) \"$importedAudioFileNames\" imported to Youtube playlist \"$toPlaylistTitle\".";
 }

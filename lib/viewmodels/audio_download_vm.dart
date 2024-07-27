@@ -1046,8 +1046,8 @@ class AudioDownloadVM extends ChangeNotifier {
     }
 
     if (acceptableImportedFileNames.isNotEmpty) {
-      warningMessageVM.setAudioNotImportedToPlaylistTitles(
-          rejectedImportedAudioFileNames: acceptableImportedFileNames.substring(
+      warningMessageVM.setAudioImportedToPlaylistTitles(
+          importedAudioFileNames: acceptableImportedFileNames.substring(
               0, acceptableImportedFileNames.length - 2),
           importedToPlaylistTitle: targetPlaylist.title,
           importedToPlaylistType: targetPlaylist.playlistType);
