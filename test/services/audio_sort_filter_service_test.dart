@@ -40,6 +40,7 @@ void main() {
     audioPositionSeconds: 0,
     audioFileName: 'Test Video Title.mp3',
     audioFileSize: 330000000,
+    isAudioImported: false,
   );
 
   final Audio audioTwo = Audio.fullConstructor(
@@ -67,6 +68,7 @@ void main() {
     audioPositionSeconds: 0,
     audioFileName: 'Test Video Title.mp3',
     audioFileSize: 330000000,
+    isAudioImported: false,
   );
   final Audio audioThree = Audio.fullConstructor(
     enclosingPlaylist: null,
@@ -94,6 +96,7 @@ void main() {
     audioPositionSeconds: 0,
     audioFileName: 'Test Video Title.mp3',
     audioFileSize: 330000000,
+    isAudioImported: false,
   );
   final Audio audioFour = Audio.fullConstructor(
     enclosingPlaylist: null,
@@ -121,6 +124,7 @@ void main() {
     audioPositionSeconds: 0,
     audioFileName: 'Test Video Title.mp3',
     audioFileSize: 330000000,
+    isAudioImported: false,
   );
 
   List<Audio> audioLst = [
@@ -705,6 +709,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: false,
       );
       final Audio apple = Audio.fullConstructor(
         enclosingPlaylist: null,
@@ -730,6 +735,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: false,
       );
       final Audio bananna = Audio.fullConstructor(
         enclosingPlaylist: null,
@@ -755,6 +761,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: true,
       );
 
       List<Audio> audioList = [
@@ -839,6 +846,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'audioFileName',
         audioFileSize: 1,
+        isAudioImported: false,
       );
 
       Audio avecPercentTitle = Audio.fullConstructor(
@@ -865,6 +873,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'audioFileName',
         audioFileSize: 1,
+        isAudioImported: false,
       );
 
       Audio percentTitle = Audio.fullConstructor(
@@ -891,6 +900,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'audioFileName',
         audioFileSize: 1,
+        isAudioImported: false,
       );
 
       Audio powerTitle = Audio.fullConstructor(
@@ -917,6 +927,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'audioFileName',
         audioFileSize: 1,
+        isAudioImported: false,
       );
 
       Audio amenTitle = Audio.fullConstructor(
@@ -943,6 +954,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'audioFileName',
         audioFileSize: 1,
+        isAudioImported: true,
       );
 
       Audio epicure = Audio.fullConstructor(
@@ -969,6 +981,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'audioFileName',
         audioFileSize: 1,
+        isAudioImported: false,
       );
 
       Audio ninetyFiveTitle = Audio.fullConstructor(
@@ -995,6 +1008,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'audioFileName',
         audioFileSize: 1,
+        isAudioImported: true,
       );
 
       Audio ninetyThreeTitle = Audio.fullConstructor(
@@ -1021,6 +1035,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'audioFileName',
         audioFileSize: 1,
+        isAudioImported: false,
       );
 
       Audio ninetyFourTitle = Audio.fullConstructor(
@@ -1047,6 +1062,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'audioFileName',
         audioFileSize: 1,
+        isAudioImported: true,
       );
 
       Audio echapper = Audio.fullConstructor(
@@ -1073,6 +1089,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'audioFileName',
         audioFileSize: 1,
+        isAudioImported: false,
       );
 
       Audio evidentTitle = Audio.fullConstructor(
@@ -1099,6 +1116,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'audioFileName',
         audioFileSize: 1,
+        isAudioImported: true,
       );
 
       Audio aLireTitle = Audio.fullConstructor(
@@ -1125,6 +1143,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'audioFileName',
         audioFileSize: 1,
+        isAudioImported: false,
       );
 
       Audio nineTitle = Audio.fullConstructor(
@@ -1151,6 +1170,7 @@ void main() {
         audioDuration: const Duration(seconds: 10000),
         audioFileName: 'audioFileName',
         audioFileSize: 1,
+        isAudioImported: false,
       );
 
       Audio eightTitle = Audio.fullConstructor(
@@ -1177,6 +1197,7 @@ void main() {
         audioDuration: const Duration(seconds: 10000),
         audioFileName: 'audioFileName',
         audioFileSize: 1,
+        isAudioImported: false,
       );
 
       Audio eventuelTitle = Audio.fullConstructor(
@@ -1203,6 +1224,7 @@ void main() {
         audioDuration: const Duration(seconds: 1),
         audioFileName: 'audioFileName',
         audioFileSize: 1,
+        isAudioImported: true,
       );
 
       List<Audio?> audioLst = [
@@ -1329,6 +1351,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: false,
       );
       final Audio apple = Audio.fullConstructor(
         enclosingPlaylist: null,
@@ -1354,6 +1377,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: false,
       );
       final Audio bananna = Audio.fullConstructor(
         enclosingPlaylist: null,
@@ -1379,6 +1403,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: false,
       );
       final Audio banannaLonger = Audio.fullConstructor(
         enclosingPlaylist: null,
@@ -1404,6 +1429,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: false,
       );
 
       List<Audio> audioList = [
@@ -1506,6 +1532,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: false,
       );
       final Audio apple = Audio.fullConstructor(
         enclosingPlaylist: null,
@@ -1531,6 +1558,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: false,
       );
       final Audio zebra3 = Audio.fullConstructor(
         enclosingPlaylist: null,
@@ -1556,6 +1584,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: false,
       );
       final Audio bananna = Audio.fullConstructor(
         enclosingPlaylist: null,
@@ -1581,6 +1610,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: false,
       );
       final Audio zebra2 = Audio.fullConstructor(
         enclosingPlaylist: null,
@@ -1606,6 +1636,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: false,
       );
 
       List<Audio> audioList = [
@@ -1752,6 +1783,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: false,
       );
       final Audio apple = Audio.fullConstructor(
         enclosingPlaylist: null,
@@ -1777,6 +1809,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: false,
       );
       final Audio zebra3 = Audio.fullConstructor(
         enclosingPlaylist: null,
@@ -1802,6 +1835,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: false,
       );
       final Audio bananna = Audio.fullConstructor(
         enclosingPlaylist: null,
@@ -1827,6 +1861,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: false,
       );
       final Audio zebra2 = Audio.fullConstructor(
         enclosingPlaylist: null,
@@ -1852,6 +1887,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: false,
       );
 
       List<Audio> audioList = [
@@ -1958,6 +1994,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: false,
       );
       final Audio apple = Audio.fullConstructor(
         enclosingPlaylist: null,
@@ -1983,6 +2020,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: true,
       );
       final Audio zebra3 = Audio.fullConstructor(
         enclosingPlaylist: null,
@@ -2008,6 +2046,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: false,
       );
       final Audio bananna = Audio.fullConstructor(
         enclosingPlaylist: null,
@@ -2033,8 +2072,9 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: false,
       );
-      final Audio zebra2 = Audio.fullConstructor(
+      var audio2 = Audio.fullConstructor(
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -2058,7 +2098,9 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: false,
       );
+      final Audio zebra2 = audio2;
 
       List<Audio> audioList = [
         zebra1,
@@ -2174,6 +2216,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: false,
       );
       final Audio apple = Audio.fullConstructor(
         enclosingPlaylist: null,
@@ -2199,6 +2242,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: false,
       );
       final Audio zebra3 = Audio.fullConstructor(
         enclosingPlaylist: null,
@@ -2224,6 +2268,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: false,
       );
       final Audio bananna = Audio.fullConstructor(
         enclosingPlaylist: null,
@@ -2249,6 +2294,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: false,
       );
       final Audio zebra2 = Audio.fullConstructor(
         enclosingPlaylist: null,
@@ -2274,6 +2320,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: false,
       );
 
       List<Audio> audioList = [

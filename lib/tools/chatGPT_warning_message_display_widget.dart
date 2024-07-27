@@ -3,15 +3,12 @@ import 'package:flutter/material.dart';
 import 'chatGPT_warning_message_vm.dart';
 
 class WarningMessageDisplayWidget extends StatelessWidget {
-  final BuildContext _context;
   final WarningMessageVM _warningMessageVM;
 
   const WarningMessageDisplayWidget({
-    required BuildContext parentContext,
     required WarningMessageVM warningMessageVM,
     super.key,
-  })  : _context = parentContext,
-        _warningMessageVM = warningMessageVM;
+  })  : _warningMessageVM = warningMessageVM;
 
   @override
   Widget build(BuildContext context) {

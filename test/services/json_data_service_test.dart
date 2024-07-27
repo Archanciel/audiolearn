@@ -71,6 +71,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: false,
       );
 
       // Save the Audio instance to a file
@@ -123,6 +124,7 @@ void main() {
         audioPositionSeconds: 1800,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: true,
       );
 
       // Save the Audio instance to a file
@@ -188,6 +190,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: false
       );
 
       // Save the Audio instance to a file
@@ -251,6 +254,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: false
       );
 
       Audio audio2 = Audio.fullConstructor(
@@ -277,6 +281,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: true,
       );
 
       testPlaylist.downloadedAudioLst = [audio1, audio2];
@@ -388,6 +393,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: false,
       );
 
       Audio audio2 = Audio.fullConstructor(
@@ -414,6 +420,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: true,
       );
 
       testPlaylist.downloadedAudioLst = [audio1, audio2];
@@ -671,6 +678,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: false,
       );
 
       // Save the Audio instance to a file
@@ -713,6 +721,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: false,
       );
 
       Audio audioTwo = Audio.fullConstructor(
@@ -739,6 +748,7 @@ void main() {
         audioPositionSeconds: 1800,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: true,
       );
 
       // Prepare test data
@@ -810,6 +820,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: false,
       );
 
       Audio audio2 = Audio.fullConstructor(
@@ -836,6 +847,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: true,
       );
 
       testPlaylistOne.addDownloadedAudio(audio1);
@@ -876,6 +888,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: false,
       );
 
       Audio audio4 = Audio.fullConstructor(
@@ -902,6 +915,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
+        isAudioImported: true,
       );
 
       testPlaylistTwo.addDownloadedAudio(audio3);

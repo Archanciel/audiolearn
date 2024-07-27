@@ -113,10 +113,8 @@ class Audio {
 
   bool isAudioMusicQuality = false;
 
-  void setAudioToMusicQuality() {
-    isAudioMusicQuality = true;
-    audioPlaySpeed = 1.0;
-  }
+  // true if the audio file was imported from another directory
+  bool isAudioImported = false;
 
   Audio({
     required this.enclosingPlaylist,
@@ -158,6 +156,7 @@ class Audio {
     required this.audioPositionSeconds,
     required this.audioFileName,
     required this.audioFileSize,
+    required this.isAudioImported,
   });
 
   /// Returns a copy of the current Audio instance
@@ -187,6 +186,7 @@ class Audio {
       audioPositionSeconds: audioPositionSeconds,
       audioFileName: audioFileName,
       audioFileSize: audioFileSize,
+      isAudioImported: isAudioImported,
     );
   }
 
@@ -228,6 +228,7 @@ class Audio {
       audioPositionSeconds: json['audioPositionSeconds'] ?? 0,
       audioFileName: json['audioFileName'],
       audioFileSize: json['audioFileSize'],
+      isAudioImported: json['isAudioImported'] ?? false,
     );
   }
 
@@ -260,6 +261,7 @@ class Audio {
       'audioPositionSeconds': audioPositionSeconds,
       'audioFileName': audioFileName,
       'audioFileSize': audioFileSize,
+      'isAudioImported': isAudioImported,
     };
   }
 
@@ -357,5 +359,10 @@ class Audio {
   @override
   String toString() {
     return 'Audio: $validVideoTitle';
+  }
+
+  void setAudioToMusicQuality() {
+    isAudioMusicQuality = true;
+    audioPlaySpeed = 1.0;
   }
 }

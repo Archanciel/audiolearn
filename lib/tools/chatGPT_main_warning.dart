@@ -122,7 +122,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
             // Must be instanciated here !!
             WarningMessageDisplayWidget(
-              parentContext: context,
               warningMessageVM: Provider.of<WarningMessageVM>(context),
             ),
           ],
