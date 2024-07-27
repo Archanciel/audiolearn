@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'chatGPT_warning_message_vm.dart';
 
@@ -7,7 +6,7 @@ class WarningMessageDisplayWidget extends StatelessWidget {
   final BuildContext _context;
   final WarningMessageVM _warningMessageVM;
 
-  WarningMessageDisplayWidget({
+  const WarningMessageDisplayWidget({
     required BuildContext parentContext,
     required WarningMessageVM warningMessageVM,
     super.key,
