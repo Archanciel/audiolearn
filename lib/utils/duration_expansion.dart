@@ -3,7 +3,8 @@
 import 'package:intl/intl.dart';
 
 /// WARNING: these methods are callable on a Duration instance only
-/// if utils/duration_expansion.dart is imported.
+/// if utils/duration_expansion.dart is imported
+/// (import '../utils/duration_expansion.dart';)
 ///
 /// Add format methods to the Duration class.
 extension DurationExpansion on Duration {
