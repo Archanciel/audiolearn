@@ -706,6 +706,12 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
     }
   }
 
+  /// This method is used in two situations:
+  ///   1/ displaying a unique warning,
+  ///   2/ displaying possibly multiple warnings.
+  ///
+  /// When called to display multiple warnings, the passed {warningMessageVM}
+  /// is null.
   void _displayWarningDialog({
     required BuildContext context,
     required String message,
@@ -741,10 +747,17 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
                 event.logicalKey == LogicalKeyboardKey.numpadEnter) {
               // executing the same code as in the 'Ok'
               // TextButton onPressed callback
+              //
+              // WARNING: Navigator.of(context).pop(); can not be located
+              // once after the if statement because in this case calling
+              // _displayWarningDialog to display possibly multiple warnings
+              // will not work !
               if (warningMessageVM != null) {
+                // _displayWarningDialog to display unique warning
                 warningMessageVM.warningMessageType = WarningMessageType.none;
                 Navigator.of(context).pop();
               } else {
+                // _displayWarningDialog to display possibly multiple warnings
                 Navigator.of(context).pop();
                 _warningMessageVM.messageDisplayed();
               }
@@ -772,10 +785,16 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
                     : kTextButtonStyleLightMode,
               ),
               onPressed: () {
+                // WARNING: Navigator.of(context).pop(); can not be located
+                // once after the if statement because in this case calling
+                // _displayWarningDialog to display possibly multiple warnings
+                // will not work !
                 if (warningMessageVM != null) {
+                  // _displayWarningDialog to display unique warning
                   warningMessageVM.warningMessageType = WarningMessageType.none;
                   Navigator.of(context).pop();
                 } else {
+                  // _displayWarningDialog to display possibly multiple warnings
                   Navigator.of(context).pop();
                   _warningMessageVM.messageDisplayed();
                 }
@@ -856,29 +875,5 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
       default:
         break;
     }
-  }
-
-  void _displayDialog({
-    required BuildContext context,
-    required String message,
-    required ThemeProviderVM themeProviderVM,
-    WarningMode warningMode = WarningMode.warning,
-  }) {
-    showDialog<void>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Warning'),
-        content: Text(message),
-        actions: [
-          TextButton(
-            child: const Text('Ok'),
-            onPressed: () {
-              Navigator.of(context).pop();
-              _warningMessageVM.messageDisplayed();
-            },
-          ),
-        ],
-      ),
-    );
   }
 }
