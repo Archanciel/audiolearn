@@ -158,7 +158,12 @@ enum ErrorType {
 class WarningMessageVM extends ChangeNotifier {
   WarningMessageType warningMessageType = WarningMessageType.none;
 
-  final Queue<String> _messageQueue = Queue<String>();
+  // The next two variables are used to handle the display of multiple
+  // warnings. The _warningElementsQueue is a queue of warningElements
+  // for a multiple warning to be displayed.
+  // The _isDisplaying variable is used to determine if a message is
+  // currently being displayed.
+  final Queue<String> _warningElementsQueue = Queue<String>();
   bool _isDisplaying = false;
 
   String _errorArgOne = '';
@@ -200,8 +205,8 @@ class WarningMessageVM extends ChangeNotifier {
     }
   }
 
-  void addMessage(String message) {
-    _messageQueue.add(message);
+  void _addWarningElements(String message) {
+    _warningElementsQueue.add(message);
     if (!_isDisplaying) {
       _isDisplaying = true;
       _displayNextMessage();
@@ -213,7 +218,7 @@ class WarningMessageVM extends ChangeNotifier {
   }
 
   void _displayNextMessage() {
-    if (_messageQueue.isNotEmpty) {
+    if (_warningElementsQueue.isNotEmpty) {
       notifyListeners();
     } else {
       _isDisplaying = false;
@@ -221,7 +226,7 @@ class WarningMessageVM extends ChangeNotifier {
   }
 
   String getNextMessage() {
-    return _messageQueue.isNotEmpty ? _messageQueue.removeFirst() : '';
+    return _warningElementsQueue.isNotEmpty ? _warningElementsQueue.removeFirst() : '';
   }
 
   String _updatedPlaylistTitle = '';
@@ -625,7 +630,7 @@ class WarningMessageVM extends ChangeNotifier {
 
     warningMessageType = WarningMessageType.audioNotImportedToPlaylist;
 
-    addMessage(_rejectedImportedAudioFileNames);
+    _addWarningElements(_rejectedImportedAudioFileNames);
   }
 
   String _importedAudioFileNames = '';
@@ -641,7 +646,7 @@ class WarningMessageVM extends ChangeNotifier {
 
     warningMessageType = WarningMessageType.audioImportedToPlaylist;
 
-    addMessage(_importedAudioFileNames);
+    _addWarningElements(_importedAudioFileNames);
   }
 
   String _updatedPlayableAudioLstPlaylistTitle = '';
