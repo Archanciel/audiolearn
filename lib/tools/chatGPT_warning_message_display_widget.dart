@@ -16,8 +16,7 @@ class WarningMessageDisplayWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Ensure this widget is built at least once
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    _warningMessageVM.addListener(() {
       _showNextDialog(context);
     });
 
@@ -25,26 +24,24 @@ class WarningMessageDisplayWidget extends StatelessWidget {
   }
 
   void _showNextDialog(BuildContext context) {
-    _warningMessageVM.addListener(() {
-      final message = _warningMessageVM.getNextMessage();
-      if (message.isNotEmpty) {
-        _displayDialog(context, message);
-      }
-    });
+    final message = _warningMessageVM.getNextMessage();
+    if (message.isNotEmpty) {
+      _displayDialog(context, message);
+    }
   }
 
   void _displayDialog(BuildContext context, String message) {
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Warning'),
+        title: const Text('Warning'),
         content: Text(message),
         actions: [
           TextButton(
-            child: Text('Ok'),
+            child: const Text('Ok'),
             onPressed: () {
               Navigator.of(context).pop();
-              _showNextDialog(context);
+              _warningMessageVM.messageDisplayed();
             },
           ),
         ],

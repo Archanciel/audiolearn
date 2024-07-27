@@ -14,10 +14,22 @@ class WarningMessageVM extends ChangeNotifier {
   WarningMessageType warningMessageType = WarningMessageType.none;
 
   final Queue<String> _messageQueue = Queue<String>();
+  bool _isDisplaying = false;
 
   void addMessage(String message) {
     _messageQueue.add(message);
-    notifyListeners();
+    if (!_isDisplaying) {
+      _isDisplaying = true;
+      _displayNextMessage();
+    }
+  }
+
+  void _displayNextMessage() {
+    if (_messageQueue.isNotEmpty) {
+      notifyListeners();
+    } else {
+      _isDisplaying = false;
+    }
   }
 
   String getNextMessage() {
@@ -30,6 +42,9 @@ class WarningMessageVM extends ChangeNotifier {
     required PlaylistType importedToPlaylistType,
   }) {
     addMessage('Audio not imported: $rejectedImportedAudioFileNames');
-    notifyListeners();
+  }
+
+  void messageDisplayed() {
+    _displayNextMessage();
   }
 }
