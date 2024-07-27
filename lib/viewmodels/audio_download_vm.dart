@@ -1008,11 +1008,10 @@ class AudioDownloadVM extends ChangeNotifier {
     return true;
   }
 
-  void importFilesInPlaylist({
+  void importAudioFilesInPlaylist({
     required Playlist targetPlaylist,
     required List<String> filePathNameToImportLst,
   }) {
-    List<String> importedAudioFileNames = [];
     List<String> filePathNameToImportLstCopy = List<String>.from(
         filePathNameToImportLst); // necessary since the filePathNameToImportLst
     //                               may modified
@@ -1021,7 +1020,6 @@ class AudioDownloadVM extends ChangeNotifier {
 
     for (String filePathName in filePathNameToImportLstCopy) {
       String fileName = filePathName.split(path.separator).last;
-      File sourceFile = File(filePathName);
       File targetFile =
           File('${targetPlaylist.downloadPath}${path.separator}$fileName');
 
@@ -1034,9 +1032,12 @@ class AudioDownloadVM extends ChangeNotifier {
         continue;
       }
 
-        acceptableImportedFileNames += '$fileName, ';
+      acceptableImportedFileNames += '$fileName, ';
     }
 
+    // Displaying a warning which lists the audio files which won't be
+    // imported to the playlist since they already exist in the playlist
+    // directory.
     if (rejectedImportedFileNames.isNotEmpty) {
       warningMessageVM.setAudioNotImportedToPlaylistTitles(
           rejectedImportedAudioFileNames: rejectedImportedFileNames.substring(
@@ -1045,6 +1046,8 @@ class AudioDownloadVM extends ChangeNotifier {
           importedToPlaylistType: targetPlaylist.playlistType);
     }
 
+    // Displaying a warning which lists the audio files which will be
+    // imported to the playlist.
     if (acceptableImportedFileNames.isNotEmpty) {
       warningMessageVM.setAudioImportedToPlaylistTitles(
           importedAudioFileNames: acceptableImportedFileNames.substring(
@@ -1053,13 +1056,46 @@ class AudioDownloadVM extends ChangeNotifier {
           importedToPlaylistType: targetPlaylist.playlistType);
     }
 
+    List<Audio> importedAudioLst = [];
+
     for (String filePathName in filePathNameToImportLst) {
       String fileName = filePathName.split(path.separator).last;
       File sourceFile = File(filePathName);
       File targetFile =
           File('${targetPlaylist.downloadPath}${path.separator}$fileName');
       sourceFile.copySync(targetFile.path);
+      importedAudioLst.add(
+        _createImportedAudio(
+          targetPlaylist: targetPlaylist,
+          targetFilePath: targetFile,
+        ),
+      );
     }
+  }
+
+  Audio _createImportedAudio({
+    required Playlist targetPlaylist,
+    required File targetFilePath,
+  }) {
+    Audio importedAudio = Audio(
+      enclosingPlaylist: targetPlaylist,
+      originalVideoTitle: targetFilePath.path.split(path.separator).last,
+      compactVideoDescription: '',
+      videoUrl: '',
+      audioDownloadDateTime: DateTime.now(),
+      videoUploadDate: DateTime(00, 1, 1),
+      audioDuration: Duration(seconds: 0),
+      audioPlaySpeed: _getAudioPlaySpeed(targetPlaylist),
+    );
+
+    targetPlaylist.addDownloadedAudio(importedAudio);
+
+    JsonDataService.saveToFile(
+      model: targetPlaylist,
+      path: targetPlaylist.getPlaylistDownloadFilePathName(),
+    );
+
+    return importedAudio;
   }
 
   /// Physically deletes the audio file from the audio playlist

@@ -1039,7 +1039,7 @@ void main() {
       ];
 
       // Import one file in the Empty playlist
-      audioDownloadVM.importFilesInPlaylist(
+      audioDownloadVM.importAudioFilesInPlaylist(
         targetPlaylist: playlistEmpty,
         filePathNameToImportLst: filePathNameToImportLst,
       );
@@ -1065,7 +1065,7 @@ void main() {
 
       // Now import again the same file which now exists in the Empty
       // playlist
-      audioDownloadVM.importFilesInPlaylist(
+      audioDownloadVM.importAudioFilesInPlaylist(
         targetPlaylist: playlistEmpty,
         filePathNameToImportLst: filePathNameToImportLst,
       );

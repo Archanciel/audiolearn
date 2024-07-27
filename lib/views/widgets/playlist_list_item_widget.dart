@@ -207,9 +207,12 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                           await _filePickerSelectAudioFiles();
 
                       AudioDownloadVM audioDownloadVM =
-                          Provider.of<AudioDownloadVM>(context, listen: false);
+                          Provider.of<AudioDownloadVM>(
+                        context,
+                        listen: false,
+                      );
 
-                      audioDownloadVM.importFilesInPlaylist(
+                      audioDownloadVM.importAudioFilesInPlaylist(
                         targetPlaylist: playlist,
                         filePathNameToImportLst: selectedFilePathNameLst,
                       );
