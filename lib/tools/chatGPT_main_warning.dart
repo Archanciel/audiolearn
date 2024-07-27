@@ -17,7 +17,7 @@ Future<void> main() async {
     await setWindowsAppSizeAndPosition(isTest: true);
   }
 
-  runApp(MyApp());
+  runApp(const MainApp());
 }
 
 /// If app runs on Windows, Linux or MacOS, set the app size
@@ -49,47 +49,43 @@ Future<void> setWindowsAppSizeAndPosition({
   }
 }
 
-Future<void> setWindowsAppVersionSize() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await windowManager.ensureInitialized();
+class MainApp extends StatelessWidget {
+  const MainApp({super.key});
 
-  WindowOptions windowOptions = const WindowOptions(
-    size: Size(600, 715),
-    center: true,
-    backgroundColor: Colors.transparent,
-    skipTaskbar: false,
-    // keeping Windows title bar enables to move the app window
-    // titleBarStyle: TitleBarStyle.hidden,
-    // windowButtonVisibility: false,
-  );
-  windowManager.waitUntilReadyToShow(windowOptions, () async {
-    await windowManager.show();
-    await windowManager.focus();
-  });
-}
-
-class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => WarningMessageVM(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => WarningMessageVM(),
+        ),
+      ],
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: MyHomePage(),
+        home: const MyHomePage(),
       ),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  String _textValue = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Multiple Warning Display'),
+        title: const Text('Multiple Warning Display'),
       ),
       body: Center(
         child: Column(
@@ -97,10 +93,35 @@ class MyHomePage extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () {
-                _simulateFileImport(context);
+                _displayNoWarning(context);
+                setState(() {
+                  _textValue = 'No warning displayed';
+                });
               },
-              child: Text('Simulate File Import'),
+              child: const Text('Display no warning'),
             ),
+            ElevatedButton(
+              onPressed: () {
+                _displayOneWarnings(context);
+                setState(() {
+                  _textValue = 'One warning displayed';
+                });
+              },
+              child: const Text('Display 1 warning'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                _displayTwoWarnings(context);
+                setState(() {
+                  _textValue = 'Two warnings displayed';
+                });
+              },
+              child: const Text('Display 2 warnings'),
+            ),
+            const SizedBox(height: 200),
+            Text(_textValue),
+
+            // Must be instanciated here !!
             WarningMessageDisplayWidget(
               parentContext: context,
               warningMessageVM: Provider.of<WarningMessageVM>(context),
@@ -111,9 +132,61 @@ class MyHomePage extends StatelessWidget {
     );
   }
 
-  void _simulateFileImport(BuildContext context) {
+  void _displayNoWarning(BuildContext context) {
+    String rejectedImportedFileNames = '';
+    String acceptableImportedFileNames = '';
+
+    WarningMessageVM warningMessageVM =
+        Provider.of<WarningMessageVM>(context, listen: false);
+
+    if (rejectedImportedFileNames.isNotEmpty) {
+      warningMessageVM.setAudioNotImportedToPlaylistTitles(
+        rejectedImportedAudioFileNames: rejectedImportedFileNames.substring(
+            0, rejectedImportedFileNames.length - 2),
+        importedToPlaylistTitle: 'target playlist',
+        importedToPlaylistType: PlaylistType.local,
+      );
+    }
+
+    if (acceptableImportedFileNames.isNotEmpty) {
+      warningMessageVM.setAudioNotImportedToPlaylistTitles(
+        rejectedImportedAudioFileNames: acceptableImportedFileNames.substring(
+            0, acceptableImportedFileNames.length - 2),
+        importedToPlaylistTitle: 'target playlist',
+        importedToPlaylistType: PlaylistType.local,
+      );
+    }
+  }
+
+  void _displayOneWarnings(BuildContext context) {
     String rejectedImportedFileNames = 'audio1.mp3, audio2.mp3, ';
-    String acceptableImportedFileNames = 'audio3.mp3, audio4.mp3, ';
+    String acceptableImportedFileNames = '';
+
+    WarningMessageVM warningMessageVM =
+        Provider.of<WarningMessageVM>(context, listen: false);
+
+    if (rejectedImportedFileNames.isNotEmpty) {
+      warningMessageVM.setAudioNotImportedToPlaylistTitles(
+        rejectedImportedAudioFileNames: rejectedImportedFileNames.substring(
+            0, rejectedImportedFileNames.length - 2),
+        importedToPlaylistTitle: 'target playlist',
+        importedToPlaylistType: PlaylistType.local,
+      );
+    }
+
+    if (acceptableImportedFileNames.isNotEmpty) {
+      warningMessageVM.setAudioNotImportedToPlaylistTitles(
+        rejectedImportedAudioFileNames: acceptableImportedFileNames.substring(
+            0, acceptableImportedFileNames.length - 2),
+        importedToPlaylistTitle: 'target playlist',
+        importedToPlaylistType: PlaylistType.local,
+      );
+    }
+  }
+
+  void _displayTwoWarnings(BuildContext context) {
+    String rejectedImportedFileNames = 'First warning, audio1.mp3, audio2.mp3, ';
+    String acceptableImportedFileNames = 'Second warning, audio3.mp3, audio4.mp3, ';
 
     WarningMessageVM warningMessageVM =
         Provider.of<WarningMessageVM>(context, listen: false);
