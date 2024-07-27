@@ -24,6 +24,10 @@ enum WarningMode {
 /// The warning messages are displayed as a dialog whose content
 /// depends on the type of the warning message set to the
 /// WarningMessageVM.
+///
+/// In case of multiple warnings, the WarningMessageDisplayWidget is
+/// added as listener of [WarningMessageVM] whis this method:
+/// _warningMessageVM.addListener(() {...}.
 class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
   final BuildContext _context;
   final WarningMessageVM _warningMessageVM;
@@ -691,6 +695,9 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
 
         return const SizedBox.shrink();
       default:
+        // Add the WarningMessageDisplayWidget to the listeners of the
+        // WarningMessageVM. When WarningMessageVM executes notifyListeners(),
+        // the passed callback is executed, i.e. _handlePossiblyMultipleWarnings()
         _warningMessageVM.addListener(() {
           // In situations where multiple warnings may have to be displayed
           // the WarningMessageType is not added in the above switch statement
@@ -759,7 +766,7 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
               } else {
                 // _displayWarningDialog to display possibly multiple warnings
                 Navigator.of(context).pop();
-                _warningMessageVM.messageDisplayed();
+                _warningMessageVM.warningFromMultipleWarningsWasDisplayed();
               }
             }
           }
@@ -796,7 +803,7 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
                 } else {
                   // _displayWarningDialog to display possibly multiple warnings
                   Navigator.of(context).pop();
-                  _warningMessageVM.messageDisplayed();
+                  _warningMessageVM.warningFromMultipleWarningsWasDisplayed();
                 }
               },
             ),
@@ -817,21 +824,22 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
   }) {
     switch (warningMessageType) {
       case WarningMessageType.audioNotImportedToPlaylist:
-        final String message = _warningMessageVM.getNextMessage();
+        final String notImportedAudioFileNames =
+            _warningMessageVM.getNextWarningMessageElements();
 
-        if (message.isNotEmpty) {
+        if (notImportedAudioFileNames.isNotEmpty) {
           String audioImportedFromToPlaylistMessage;
 
           if (_warningMessageVM.importedToPlaylistType == PlaylistType.local) {
             audioImportedFromToPlaylistMessage =
                 AppLocalizations.of(context)!.audioNotImportedToLocalPlaylist(
-              message,
+              notImportedAudioFileNames,
               _warningMessageVM.importedToPlaylistTitle,
             );
           } else {
             audioImportedFromToPlaylistMessage =
                 AppLocalizations.of(context)!.audioNotImportedToYoutubePlaylist(
-              message,
+              notImportedAudioFileNames,
               _warningMessageVM.importedToPlaylistTitle,
             );
           }
@@ -845,21 +853,22 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
         }
         break;
       case WarningMessageType.audioImportedToPlaylist:
-        final String message = _warningMessageVM.getNextMessage();
+        final String importedAudioFileNames =
+            _warningMessageVM.getNextWarningMessageElements();
 
-        if (message.isNotEmpty) {
+        if (importedAudioFileNames.isNotEmpty) {
           String audioImportedFromToPlaylistMessage;
 
           if (_warningMessageVM.importedToPlaylistType == PlaylistType.local) {
             audioImportedFromToPlaylistMessage =
                 AppLocalizations.of(context)!.audioImportedToLocalPlaylist(
-              message,
+              importedAudioFileNames,
               _warningMessageVM.importedToPlaylistTitle,
             );
           } else {
             audioImportedFromToPlaylistMessage =
                 AppLocalizations.of(context)!.audioImportedToYoutubePlaylist(
-              message,
+              importedAudioFileNames,
               _warningMessageVM.importedToPlaylistTitle,
             );
           }

@@ -163,7 +163,7 @@ class WarningMessageVM extends ChangeNotifier {
   // for a multiple warning to be displayed.
   // The _isDisplaying variable is used to determine if a message is
   // currently being displayed.
-  final Queue<String> _warningElementsQueue = Queue<String>();
+  final Queue<String> _warningMessageElementsQueue = Queue<String>();
   bool _isDisplaying = false;
 
   String _errorArgOne = '';
@@ -205,28 +205,64 @@ class WarningMessageVM extends ChangeNotifier {
     }
   }
 
-  void _addWarningElements(String message) {
-    _warningElementsQueue.add(message);
+  /// Adds a warning message elements string to the queue of warning message
+  /// elements to be displayed.
+  ///
+  /// Example of {warningMessageElements}:
+  ///
+  /// For a warning message indicating that 2 audio files were not imported
+  /// due to the fact that they already exist in the target playlist,
+  /// this warning is displayed:
+  ///
+  /// Audio(s) "audio1, audio2" not imported to
+  /// Youtube playlist "S8 audio" since the playlist directory already
+  /// contains the audio(s).
+  ///
+  /// In this example, the {warningMessageElements} value is "audio1, audio2".
+  void _addWarningMessageElements({
+    required String warningMessageElements,
+  }) {
+    _warningMessageElementsQueue.add(warningMessageElements);
     if (!_isDisplaying) {
       _isDisplaying = true;
       _displayNextMessage();
     }
   }
 
-  void messageDisplayed() {
+  /// Called when the user clicks on the Ok button of the warning message.
+  /// This method is used to display the next warning message if there are
+  /// multiple warning messages to be displayed.
+  void warningFromMultipleWarningsWasDisplayed() {
     _displayNextMessage();
   }
 
   void _displayNextMessage() {
-    if (_warningElementsQueue.isNotEmpty) {
-      notifyListeners();
+    if (_warningMessageElementsQueue.isNotEmpty) {
+      notifyListeners(); // Causes the display warning message widget to be
+      //                    informed that a next warning is displayable.
     } else {
       _isDisplaying = false;
     }
   }
 
-  String getNextMessage() {
-    return _warningElementsQueue.isNotEmpty ? _warningElementsQueue.removeFirst() : '';
+  /// Return the warning message elements string of the next warning to be
+  /// displayed.
+  ///
+  /// Example of {warningMessageElements}:
+  ///
+  /// For a warning message indicating that 2 audio files were not imported
+  /// due to the fact that they already exist in the target playlist,
+  /// this warning is displayed:
+  ///
+  /// Audio(s) "audio1, audio2" not imported to
+  /// Youtube playlist "S8 audio" since the playlist directory already
+  /// contains the audio(s).
+  ///
+  /// In this example, the {warningMessageElements} value is "audio1, audio2".
+  String getNextWarningMessageElements() {
+    return _warningMessageElementsQueue.isNotEmpty
+        ? _warningMessageElementsQueue.removeFirst()
+        : '';
   }
 
   String _updatedPlaylistTitle = '';
@@ -630,7 +666,9 @@ class WarningMessageVM extends ChangeNotifier {
 
     warningMessageType = WarningMessageType.audioNotImportedToPlaylist;
 
-    _addWarningElements(_rejectedImportedAudioFileNames);
+    _addWarningMessageElements(
+      warningMessageElements: _rejectedImportedAudioFileNames,
+    );
   }
 
   String _importedAudioFileNames = '';
@@ -646,7 +684,9 @@ class WarningMessageVM extends ChangeNotifier {
 
     warningMessageType = WarningMessageType.audioImportedToPlaylist;
 
-    _addWarningElements(_importedAudioFileNames);
+    _addWarningMessageElements(
+      warningMessageElements: _importedAudioFileNames,
+    );
   }
 
   String _updatedPlayableAudioLstPlaylistTitle = '';
