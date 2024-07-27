@@ -106,25 +106,6 @@ Future<void> setWindowsAppSizeAndPosition({
   }
 }
 
-Future<void> setWindowsAppVersionSize() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await windowManager.ensureInitialized();
-
-  WindowOptions windowOptions = const WindowOptions(
-    size: Size(600, 715),
-    center: true,
-    backgroundColor: Colors.transparent,
-    skipTaskbar: false,
-    // keeping Windows title bar enables to move the app window
-    // titleBarStyle: TitleBarStyle.hidden,
-    // windowButtonVisibility: false,
-  );
-  windowManager.waitUntilReadyToShow(windowOptions, () async {
-    await windowManager.show();
-    await windowManager.focus();
-  });
-}
-
 class MainApp extends StatelessWidget with ScreenMixin {
   final SettingsDataService _settingsDataService;
   final bool _isTest;
