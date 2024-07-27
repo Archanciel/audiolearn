@@ -709,7 +709,7 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
   void _displayWarningDialog({
     required BuildContext context,
     required String message,
-    required WarningMessageVM warningMessageVM,
+    WarningMessageVM? warningMessageVM,
     required ThemeProviderVM themeProviderVM,
     WarningMode warningMode = WarningMode.warning,
   }) {
@@ -741,8 +741,13 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
                 event.logicalKey == LogicalKeyboardKey.numpadEnter) {
               // executing the same code as in the 'Ok'
               // TextButton onPressed callback
-              warningMessageVM.warningMessageType = WarningMessageType.none;
-              Navigator.of(context).pop();
+              if (warningMessageVM != null) {
+                warningMessageVM.warningMessageType = WarningMessageType.none;
+                Navigator.of(context).pop();
+              } else {
+                Navigator.of(context).pop();
+                _warningMessageVM.messageDisplayed();
+              }
             }
           }
         },
@@ -767,8 +772,13 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
                     : kTextButtonStyleLightMode,
               ),
               onPressed: () {
-                warningMessageVM.warningMessageType = WarningMessageType.none;
-                Navigator.of(context).pop();
+                if (warningMessageVM != null) {
+                  warningMessageVM.warningMessageType = WarningMessageType.none;
+                  Navigator.of(context).pop();
+                } else {
+                  Navigator.of(context).pop();
+                  _warningMessageVM.messageDisplayed();
+                }
               },
             ),
           ],
@@ -807,7 +817,7 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
             );
           }
 
-          _displayDialog(
+          _displayWarningDialog(
             context: context,
             message: audioImportedFromToPlaylistMessage,
             themeProviderVM: themeProviderVM,
@@ -835,7 +845,7 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
             );
           }
 
-          _displayDialog(
+          _displayWarningDialog(
             context: context,
             message: audioImportedFromToPlaylistMessage,
             themeProviderVM: themeProviderVM,
