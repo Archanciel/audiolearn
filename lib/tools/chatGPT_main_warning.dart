@@ -191,19 +191,19 @@ class _MyHomePageState extends State<MyHomePage> {
     WarningMessageVM warningMessageVM =
         Provider.of<WarningMessageVM>(context, listen: false);
 
-    if (rejectedImportedFileNames.isNotEmpty) {
+    if (acceptableImportedFileNames.isNotEmpty) {
       warningMessageVM.setAudioNotImportedToPlaylistTitles(
-        rejectedImportedAudioFileNames: rejectedImportedFileNames.substring(
-            0, rejectedImportedFileNames.length - 2),
+        rejectedImportedAudioFileNames: acceptableImportedFileNames.substring(
+            0, acceptableImportedFileNames.length - 2),
         importedToPlaylistTitle: 'target playlist',
         importedToPlaylistType: PlaylistType.local,
       );
     }
 
-    if (acceptableImportedFileNames.isNotEmpty) {
+    if (rejectedImportedFileNames.isNotEmpty) {
       warningMessageVM.setAudioNotImportedToPlaylistTitles(
-        rejectedImportedAudioFileNames: acceptableImportedFileNames.substring(
-            0, acceptableImportedFileNames.length - 2),
+        rejectedImportedAudioFileNames: rejectedImportedFileNames.substring(
+            0, rejectedImportedFileNames.length - 2),
         importedToPlaylistTitle: 'target playlist',
         importedToPlaylistType: PlaylistType.local,
       );
