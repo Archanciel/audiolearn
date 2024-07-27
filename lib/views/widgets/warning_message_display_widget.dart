@@ -692,7 +692,14 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
         return const SizedBox.shrink();
       default:
         _warningMessageVM.addListener(() {
-          _showNextDialog(context, _warningMessageVM.warningMessageType);
+          // In situations where multiple warnings may have to be displayed
+          // the WarningMessageType is not added in the above switch statement
+          // but is instead handled by this method.
+          _handlePossiblyMultipleWarnings(
+            context: context,
+            warningMessageType: _warningMessageVM.warningMessageType,
+            themeProviderVM: themeProviderVM,
+          );
         });
 
         return const SizedBox.shrink();
@@ -774,10 +781,11 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
     focusNodeDialog.requestFocus();
   }
 
-  void _showNextDialog(
-    BuildContext context,
-    WarningMessageType warningMessageType,
-  ) {
+  void _handlePossiblyMultipleWarnings({
+    required BuildContext context,
+    required WarningMessageType warningMessageType,
+    required ThemeProviderVM themeProviderVM,
+  }) {
     switch (warningMessageType) {
       case WarningMessageType.audioNotImportedToPlaylist:
         final String message = _warningMessageVM.getNextMessage();
@@ -799,7 +807,12 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
             );
           }
 
-          _displayDialog(context, audioImportedFromToPlaylistMessage);
+          _displayDialog(
+            context: context,
+            message: audioImportedFromToPlaylistMessage,
+            themeProviderVM: themeProviderVM,
+            warningMode: WarningMode.warning,
+          );
         }
         break;
       case WarningMessageType.audioImportedToPlaylist:
@@ -822,7 +835,12 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
             );
           }
 
-          _displayDialog(context, audioImportedFromToPlaylistMessage);
+          _displayDialog(
+            context: context,
+            message: audioImportedFromToPlaylistMessage,
+            themeProviderVM: themeProviderVM,
+            warningMode: WarningMode.confirm,
+          );
         }
         break;
       default:
@@ -830,7 +848,12 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
     }
   }
 
-  void _displayDialog(BuildContext context, String message) {
+  void _displayDialog({
+    required BuildContext context,
+    required String message,
+    required ThemeProviderVM themeProviderVM,
+    WarningMode warningMode = WarningMode.warning,
+  }) {
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
