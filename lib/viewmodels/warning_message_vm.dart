@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 
 import '../models/playlist.dart';
@@ -152,6 +154,9 @@ enum ErrorType {
 class WarningMessageVM extends ChangeNotifier {
   WarningMessageType warningMessageType = WarningMessageType.none;
 
+  final Queue<String> _messageQueue = Queue<String>();
+  bool _isDisplaying = false;
+
   String _errorArgOne = '';
   String get errorArgOne => _errorArgOne;
   String _errorArgTwo = '';
@@ -189,6 +194,30 @@ class WarningMessageVM extends ChangeNotifier {
     } else {
       _errorArgOne = '';
     }
+  }
+
+  void addMessage(String message) {
+    _messageQueue.add(message);
+    if (!_isDisplaying) {
+      _isDisplaying = true;
+      _displayNextMessage();
+    }
+  }
+
+  void messageDisplayed() {
+    _displayNextMessage();
+  }
+
+  void _displayNextMessage() {
+    if (_messageQueue.isNotEmpty) {
+      notifyListeners();
+    } else {
+      _isDisplaying = false;
+    }
+  }
+
+  String getNextMessage() {
+    return _messageQueue.isNotEmpty ? _messageQueue.removeFirst() : '';
   }
 
   String _updatedPlaylistTitle = '';
@@ -592,8 +621,7 @@ class WarningMessageVM extends ChangeNotifier {
 
     warningMessageType = WarningMessageType.audioNotImportedToPlaylist;
 
-    // Causes the display warning message widget to be displayed.
-    notifyListeners();
+    addMessage(_rejectedImportedAudioFileNames);
   }
 
   String _updatedPlayableAudioLstPlaylistTitle = '';
