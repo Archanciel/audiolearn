@@ -871,7 +871,7 @@ void checkPlaylistAudioOne({
       "Jean-Pierre Schnyder\n\nCette vidéo me sert à tester AudioLearn, l'app Android que je développe et dont le code est disponible sur GitHub. ...");
   expect(
       DateTimeParser.truncateDateTimeToDateOnly(
-          downloadedAudioOne.videoUploadDate!),
+          downloadedAudioOne.videoUploadDate),
       DateTime.parse("2023-06-10"));
   expect(downloadedAudioOne.audioDuration, const Duration(milliseconds: 24000));
   expect(downloadedAudioOne.audioPlaySpeed, 1.0);
@@ -901,7 +901,7 @@ void checkPlaylistAudioTwo({
       "https://www.youtube.com/watch?v=uv3VQoWSjBE");
   expect(
       DateTimeParser.truncateDateTimeToDateOnly(
-          downloadedAudioTwo.videoUploadDate!),
+          downloadedAudioTwo.videoUploadDate),
       DateTime.parse("2023-06-10"));
   expect(downloadedAudioTwo.audioDuration, const Duration(milliseconds: 10000));
   expect(downloadedAudioTwo.audioPlaySpeed, 1.0);
@@ -952,7 +952,7 @@ void checkPlaylistNewAudioOne({
   expect(downloadedAudioOne.audioFileSize, 61425);
   expect(
       DateTimeParser.truncateDateTimeToDateOnly(
-          downloadedAudioOne.videoUploadDate!),
+          downloadedAudioOne.videoUploadDate),
       DateTime.parse("2023-07-01"));
 }
 
@@ -979,7 +979,7 @@ void checkPlaylistNewAudioTwo({
   expect(downloadedAudioTwo.audioFileSize, 360849);
   expect(
       DateTimeParser.truncateDateTimeToDateOnly(
-          downloadedAudioTwo.videoUploadDate!),
+          downloadedAudioTwo.videoUploadDate),
       DateTime.parse("2023-07-01"));
   // DateTime.parse("2023-07-01 18:48:13.000Z")); this
   // uncomprehensible error happened several times when
@@ -1106,8 +1106,8 @@ void compareDeserializedWithOriginalAudio({
   expect(deserializedAudio.compactVideoDescription,
       originalAudio.compactVideoDescription);
   expect(deserializedAudio.videoUrl, originalAudio.videoUrl);
-  expect(deserializedAudio.audioDownloadDateTime?.toIso8601String(),
-      originalAudio.audioDownloadDateTime?.toIso8601String());
+  expect(deserializedAudio.audioDownloadDateTime.toIso8601String(),
+      originalAudio.audioDownloadDateTime.toIso8601String());
 
   // inMilliseconds is used because the duration is not exactly the same
   // when it is serialized and deserialized since it is stored in the json
@@ -1117,8 +1117,8 @@ void compareDeserializedWithOriginalAudio({
 
   expect(
       deserializedAudio.audioDownloadSpeed, originalAudio.audioDownloadSpeed);
-  expect(deserializedAudio.videoUploadDate!.toIso8601String(),
-      originalAudio.videoUploadDate!.toIso8601String());
+  expect(deserializedAudio.videoUploadDate.toIso8601String(),
+      originalAudio.videoUploadDate.toIso8601String());
   expect(deserializedAudio.audioDuration,
       originalAudio.audioDuration ?? const Duration(milliseconds: 0));
   expect(

@@ -98,6 +98,8 @@ void main() {
       Directory tempDir = await Directory.systemTemp.createTemp('AudioTest');
       String filePath = path.join(tempDir.path, 'audio.json');
 
+      DateTime now = DateTime.now();
+
       // Create an Audio instance
       Audio originalAudio = Audio.fullConstructor(
         enclosingPlaylist: null,
@@ -109,10 +111,10 @@ void main() {
         compactVideoDescription: '',
         validVideoTitle: '',
         videoUrl: '',
-        audioDownloadDateTime: null,
-        audioDownloadDuration: null,
+        audioDownloadDateTime: now,
+        audioDownloadDuration: const Duration(microseconds: 0),
         audioDownloadSpeed: 0,
-        videoUploadDate: null,
+        videoUploadDate: now,
         audioDuration: const Duration(minutes: 5, seconds: 30),
         isAudioMusicQuality: false,
         audioPlaySpeed: kAudioDefaultPlaySpeed,
@@ -281,6 +283,8 @@ void main() {
 
       testPlaylist.downloadPath = 'path/to/downloads';
 
+      DateTime now = DateTime.now();
+
       Audio audio1 = Audio.fullConstructor(
           enclosingPlaylist: testPlaylist,
           movedFromPlaylistTitle: testFromPlaylistTitle,
@@ -317,10 +321,10 @@ void main() {
         compactVideoDescription: '',
         validVideoTitle: '',
         videoUrl: '',
-        audioDownloadDateTime: null,
-        audioDownloadDuration: null,
+        audioDownloadDateTime: now,
+        audioDownloadDuration: const Duration(microseconds: 0),
         audioDownloadSpeed: 0,
-        videoUploadDate: null,
+        videoUploadDate: now,
         audioDuration: const Duration(minutes: 5, seconds: 30),
         isAudioMusicQuality: false,
         audioPlaySpeed: kAudioDefaultPlaySpeed,
@@ -746,6 +750,8 @@ void main() {
       File(jsonPath).deleteSync();
     });
     test('saveListToFile() and loadListFromFile() for Audio list', () async {
+      DateTime now = DateTime.now();
+
       // Create an Audio instance
       Audio audioOne = Audio.fullConstructor(
         enclosingPlaylist: null,
@@ -784,10 +790,10 @@ void main() {
         compactVideoDescription: '',
         validVideoTitle: '',
         videoUrl: '',
-        audioDownloadDateTime: null,
-        audioDownloadDuration: null,
+        audioDownloadDateTime: now,
+        audioDownloadDuration: const Duration(microseconds: 0),
         audioDownloadSpeed: 0,
-        videoUploadDate: null,
+        videoUploadDate: now,
         audioDuration: const Duration(minutes: 5, seconds: 30),
         isAudioMusicQuality: false,
         audioPlaySpeed: kAudioDefaultPlaySpeed,
@@ -846,6 +852,8 @@ void main() {
 
       testPlaylistOne.downloadPath = 'path/to/downloads';
 
+      DateTime now = DateTime.now();
+
       Audio audio1 = Audio.fullConstructor(
         enclosingPlaylist: testPlaylistOne,
         movedFromPlaylistTitle: null,
@@ -883,10 +891,10 @@ void main() {
         compactVideoDescription: '',
         validVideoTitle: '',
         videoUrl: '',
-        audioDownloadDateTime: null,
-        audioDownloadDuration: null,
+        audioDownloadDateTime: now,
+        audioDownloadDuration: const Duration(microseconds: 0),
         audioDownloadSpeed: 0,
-        videoUploadDate: null,
+        videoUploadDate: now,
         audioDuration: const Duration(minutes: 5, seconds: 30),
         isAudioMusicQuality: false,
         audioPlaySpeed: kAudioDefaultPlaySpeed,
@@ -951,10 +959,10 @@ void main() {
         compactVideoDescription: '',
         validVideoTitle: '',
         videoUrl: '',
-        audioDownloadDateTime: null,
-        audioDownloadDuration: null,
+        audioDownloadDateTime: now,
+        audioDownloadDuration: const Duration(microseconds: 0),
         audioDownloadSpeed: 0,
-        videoUploadDate: null,
+        videoUploadDate: now,
         audioDuration: const Duration(minutes: 5, seconds: 30),
         isAudioMusicQuality: false,
         audioPlaySpeed: kAudioDefaultPlaySpeed,
@@ -1163,14 +1171,14 @@ void compareDeserializedWithOriginalAudio({
   expect(deserializedAudio.compactVideoDescription,
       originalAudio.compactVideoDescription);
   expect(deserializedAudio.videoUrl, originalAudio.videoUrl);
-  expect(deserializedAudio.audioDownloadDateTime?.toIso8601String(),
-      originalAudio.audioDownloadDateTime?.toIso8601String());
+  expect(deserializedAudio.audioDownloadDateTime.toIso8601String(),
+      originalAudio.audioDownloadDateTime.toIso8601String());
   expect(deserializedAudio.audioDownloadDuration,
       originalAudio.audioDownloadDuration);
   expect(
       deserializedAudio.audioDownloadSpeed, originalAudio.audioDownloadSpeed);
-  expect(deserializedAudio.videoUploadDate?.toIso8601String(),
-      originalAudio.videoUploadDate?.toIso8601String());
+  expect(deserializedAudio.videoUploadDate.toIso8601String(),
+      originalAudio.videoUploadDate.toIso8601String());
 
   if (!originalAudio.isAudioImported) {
     // inMilliseconds is used because the duration is not exactly the same

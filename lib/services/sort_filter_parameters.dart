@@ -5,8 +5,8 @@ import 'package:flutter/foundation.dart';
 import '../models/audio.dart';
 import '../utils/date_time_parser.dart';
 
-/// This enum is used to specify how to sort the audio list.
-/// It is used in the sort and filter audio dialog.
+// This enum is used to specify how to sort the audio list.
+// It is used in the AudioSortFilterDialogWidget.
 enum SortingOption {
   audioDownloadDate,
   videoUploadDate,
@@ -21,16 +21,30 @@ enum SortingOption {
   videoUrl, // useful to detect audio duplicates
 }
 
-/// This enum is used to specify how to combine the filter sentences
-/// specified by the user in the sort and filter audio dialog.
+// This enum is used to specify how to combine the filter sentences
+// specified by the user in the AudioSortFilterDialogWidget.
 enum SentencesCombination {
   AND, // all sentences must be found
   OR, // at least one sentence must be found
 }
 
+// Constants used to specify the sort order. The plus or minus constant is
+// used multiply the value returned by compareTo applyed in 
+// AudioSortFilterService.sortAudioLstBySortingOptions() as shown
+// below:
+//
+//      sortCriteria.selectorFunction(a)
+//                .compareTo(sortCriteria.selectorFunction(b)).
+//
+// Since the compareTo value is a positive or negative integer, the
+// multiplication by the sort order constant will sort the list in
+// ascending or descending order.
 const int sortAscending = 1;
 const int sortDescending = -1;
 
+/// The instances of this class contain the sort function and the sort order
+/// for a specific sorting option. The sort function is used to extract the
+/// value to sort on from T instance, currently only Audio instance.
 class SortCriteria<T> {
   final Comparable Function(T) selectorFunction;
   int sortOrder;
@@ -49,7 +63,7 @@ class SortCriteria<T> {
 }
 
 /// This class represent a 'Sort by:' list item added by the user in
-/// the sort and filter audio dialog. It associates a SortingOption
+/// the AudioSortFilterDialogWidget. It associates a SortingOption
 /// with a boolean indicating if the sorting is ascending or descending.
 class SortingItem {
   final SortingOption sortingOption;
@@ -94,19 +108,24 @@ class SortingItem {
   }
 }
 
+/// This class contains a Map of SortCriteria keyed by SortingOption. The
+/// SortCriteria contains the function used to compute the audio sort order
+/// as well as an ascending or descending sort order modification.The class
+/// also contains the default SortingItem definition and a method to create
+/// a default AudioSortFilterParameters instance.
 class AudioSortFilterParameters {
   static Map<SortingOption, SortCriteria<Audio>>
       sortCriteriaForSortingOptionMap = {
     SortingOption.audioDownloadDate: SortCriteria<Audio>(
       selectorFunction: (Audio audio) {
         return DateTimeParser.truncateDateTimeToDateOnly(
-            audio.audioDownloadDateTime!);
+            audio.audioDownloadDateTime);
       },
       sortOrder: sortDescending,
     ),
     SortingOption.videoUploadDate: SortCriteria<Audio>(
       selectorFunction: (Audio audio) {
-        return DateTimeParser.truncateDateTimeToDateOnly(audio.videoUploadDate!);
+        return DateTimeParser.truncateDateTimeToDateOnly(audio.videoUploadDate);
       },
       sortOrder: sortDescending,
     ),
@@ -167,6 +186,8 @@ class AudioSortFilterParameters {
     ),
   };
 
+  /// The default SortingItem is the one that is selected by default in the
+  /// AudioSortFilterDialogWidget
   static SortingItem getDefaultSortingItem() {
     return SortingItem(
       sortingOption: SortingOption.audioDownloadDate,
@@ -177,6 +198,9 @@ class AudioSortFilterParameters {
     );
   }
 
+  /// In the PlaylistDownloadView or in theAudioPlayableListDialogWidget,
+  /// the audios are by default sorted by the audio download date in descending
+  /// order.
   static AudioSortFilterParameters createDefaultAudioSortFilterParameters() {
     return AudioSortFilterParameters(
       selectedSortItemLst: [AudioSortFilterParameters.getDefaultSortingItem()],
@@ -185,22 +209,51 @@ class AudioSortFilterParameters {
     );
   }
 
+  // This list contains the SortingItem's selected by the user in the
+  // AudioSortFilterDialogWidget. A SortingItem associates a SortingOption
+  // with a boolean indicating if the sorting is ascending or descending.
   final List<SortingItem> selectedSortItemLst;
+
+  // This list contains the filter word(s) or sentence(s) specified by the
+  // user in the Video title (and description) filter field of the
+  // AudioSortFilterDialogWidget.
   final List<String> filterSentenceLst;
+
+  // This enum is used to specify how to combine the filter sentences: 'and'
+  // or 'or'.
   final SentencesCombination sentencesCombination;
+
+  // If true, the search is case insensitive.
   final bool ignoreCase;
+
+  // If true, the search is also done in the video compact description.
   final bool searchAsWellInVideoCompactDescription;
+
+  // If true, only audio with music quality are selected.
   final bool filterMusicQuality;
+
+  // If true, fully listened audio are also selected.
   final bool filterFullyListened;
+
+  // If true, partially listened audio are also selected.
   final bool filterPartiallyListened;
+
+  // If true, not listened audio are also selected.
   final bool filterNotListened;
 
+  // The start and end range for the download date filter.
   final DateTime? downloadDateStartRange;
   final DateTime? downloadDateEndRange;
+
+  // The start and end range for the upload date filter.
   final DateTime? uploadDateStartRange;
   final DateTime? uploadDateEndRange;
+
+  // The start and end range for the file size filter.
   final double fileSizeStartRangeMB;
   final double fileSizeEndRangeMB;
+
+  // The start and end range for the duration filter.
   final int durationStartRangeSec;
   final int durationEndRangeSec;
 
@@ -208,9 +261,9 @@ class AudioSortFilterParameters {
     required this.selectedSortItemLst,
     this.filterSentenceLst = const [],
     required this.sentencesCombination,
-    this.ignoreCase = true, //                  when opening the sort and filter
-    this.searchAsWellInVideoCompactDescription = true, // dialog, corresponding
-    this.filterMusicQuality = false, //         checkbox's are not checked
+    this.ignoreCase = true,
+    this.searchAsWellInVideoCompactDescription = true,
+    this.filterMusicQuality = false,
     this.filterFullyListened = true,
     this.filterPartiallyListened = true,
     this.filterNotListened = true,

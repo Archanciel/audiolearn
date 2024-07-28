@@ -73,10 +73,10 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
     if (result != null) {
-      String? filePath = result.files.single.path;
-      if (filePath != null) {
+      String? filePathName = result.files.single.path;
+      if (filePathName != null) {
         //      int? duration = await getMp3Duration(filePath);
-        Duration? duration = await getMp3DurationWithAudioPlayer(filePath);
+        Duration? duration = await getMp3DurationWithAudioPlayer(filePathName);
         setState(() {
           _duration = duration != null
               ? duration.HHmmss()
@@ -113,12 +113,12 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Future<Duration?> getMp3DurationWithAudioPlayer(String filePath) async {
+  Future<Duration?> getMp3DurationWithAudioPlayer(String filePathName) async {
     AudioPlayer audioPlayer = AudioPlayer();
     Duration? duration;
 
-    // Load audio file
-    await audioPlayer.setSource(DeviceFileSource(filePath));
+    // Load audio file into audio player
+    await audioPlayer.setSource(DeviceFileSource(filePathName));
     // Get duration
     await audioPlayer.getDuration().then((value) {
       duration = value;

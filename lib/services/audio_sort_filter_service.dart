@@ -3,21 +3,37 @@ import 'sort_filter_parameters.dart';
 
 class AudioSortFilterService {
   /// Method called by filterAndSortAudioLst(). This method is used
-  /// to sort the audio list by the given sorting option.
+  /// to sort the audio list by the given sorting items contained in
+  /// passed selectedSortItemLst. A SortingItem associates a SortingOption
+  /// with a boolean indicating if the sorting is ascending or descending.
   ///
   /// Not private in order to be tested.
   List<Audio> sortAudioLstBySortingOptions({
     required List<Audio> audioLst,
     required List<SortingItem> selectedSortItemLst,
   }) {
-    // Create a list of SortCriteria corresponding to the list of
-    // selected sorting options coming from the UI.
+    // Create a list of SortCriteria's corresponding to the list of
+    // selected sorting items coming from the AudioSortFilterDialogWidget
+    // or from the PlaylistListVM method which applies sort filter parameters
+    // to return the playable audios of a playlist. This method is
+    // getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters().
+    //
+    // The selectedSortItemLst is a list of SortingItem objects. Each
+    // SortingItem object contains a SortingOption and a boolean indicating
+    // if the sorting is ascending or descending. The SortCriteria object
+    // is a static object that is used to sort the audio list. The SortCriteria
+    // object contains a selector function that selects the field of the audio
+    // object to sort on and a sortOrder parameter that indicates if the sorting
+    // is ascending or descending.
+    //
+    // The SortCriteria in relation to the UI SortingItem is the SortCriteria
+    // corresponding to the SortingItem SortingOption.
     List<SortCriteria<Audio>> copiedSortCriteriaLst =
         selectedSortItemLst.map((sortingItem) {
-      // it is hyper important to copy the SortCriteria because
+      // it is hyper important to copy the SortCriteria's because
       // the sortCriteriaForSortingOptionMap is a static map and
       // we don't want to modify its objects, as it is done in the
-      // next instruction. If we don't copy the SortCriteria, the
+      // next instruction. If we don't copy the SortCriteria's, the
       // next instruction will modify the sortOrder parameter of
       // the objects in the map and the next time we will use the map,
       // those static objects will have been modified.
@@ -34,11 +50,11 @@ class AudioSortFilterService {
     // Sorting the audio list by applying the SortCriteria of the
     // sortCriteriaLst
     audioLst.sort((a, b) {
-      for (SortCriteria<Audio> sortCriteria in copiedSortCriteriaLst) {
-        int comparison = sortCriteria
+      for (SortCriteria<Audio> copiedSortCriteria in copiedSortCriteriaLst) {
+        int comparison = copiedSortCriteria
                 .selectorFunction(a)
-                .compareTo(sortCriteria.selectorFunction(b)) *
-            sortCriteria.sortOrder;
+                .compareTo(copiedSortCriteria.selectorFunction(b)) *
+            copiedSortCriteria.sortOrder;
         if (comparison != 0) return comparison;
       }
       return 0;
@@ -55,6 +71,14 @@ class AudioSortFilterService {
         sortAscending;
   }
 
+  /// Method called by the AudioSortFilterDialogWidget when the user clicks
+  /// on the 'Save' or 'Apply' button. The method is also called by the
+  /// PlaylistVm getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters()
+  /// method.
+  ///
+  /// This method filters and sorts the audio list according to the passed
+  /// AudioSortFilterParameters. It is more efficient to filter the audio
+  /// list first and then sort it than the opposite.
   List<Audio> filterAndSortAudioLst({
     required List<Audio> audioLst,
     required AudioSortFilterParameters audioSortFilterParameters,
@@ -255,12 +279,10 @@ class AudioSortFilterService {
     required DateTime endDateTime,
   }) {
     return audioLst.where((audio) {
-      return audio.audioDownloadDateTime != null &&
-          ((audio.audioDownloadDateTime!.isAfter(startDateTime) ||
-                  audio.audioDownloadDateTime!
-                      .isAtSameMomentAs(startDateTime)) &&
-              (audio.audioDownloadDateTime!.isBefore(endDateTime) ||
-                  audio.audioDownloadDateTime!.isAtSameMomentAs(endDateTime)));
+      return (audio.audioDownloadDateTime.isAfter(startDateTime) ||
+              audio.audioDownloadDateTime.isAtSameMomentAs(startDateTime)) &&
+          (audio.audioDownloadDateTime.isBefore(endDateTime) ||
+              audio.audioDownloadDateTime.isAtSameMomentAs(endDateTime));
     }).toList();
   }
 
@@ -270,11 +292,10 @@ class AudioSortFilterService {
     required DateTime endDateTime,
   }) {
     return audioLst.where((audio) {
-      return (audio.videoUploadDate != null &&
-          (audio.videoUploadDate!.isAfter(startDateTime) ||
-              audio.videoUploadDate!.isAtSameMomentAs(startDateTime)) &&
-          (audio.videoUploadDate!.isBefore(endDateTime) ||
-              audio.videoUploadDate!.isAtSameMomentAs(endDateTime)));
+      return (audio.videoUploadDate.isAfter(startDateTime) ||
+              audio.videoUploadDate.isAtSameMomentAs(startDateTime)) &&
+          (audio.videoUploadDate.isBefore(endDateTime) ||
+              audio.videoUploadDate.isAtSameMomentAs(endDateTime));
     }).toList();
   }
 

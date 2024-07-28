@@ -1,4 +1,5 @@
 import 'package:audiolearn/constants.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:io';
@@ -467,7 +468,7 @@ class AudioDownloadVM extends ChangeNotifier {
         audioDownloadDateTime: DateTime.now(),
         videoUploadDate: videoUploadDate,
         audioDuration: audioDuration!,
-        audioPlaySpeed: _getAudioPlaySpeed(currentPlaylist),
+        audioPlaySpeed: _determineNewAudioPlaySpeed(currentPlaylist),
       );
 
       try {
@@ -748,7 +749,7 @@ class AudioDownloadVM extends ChangeNotifier {
       audioDownloadDateTime: DateTime.now(),
       videoUploadDate: videoUploadDate,
       audioDuration: audioDuration!,
-      audioPlaySpeed: _getAudioPlaySpeed(singleVideoTargetPlaylist),
+      audioPlaySpeed: _determineNewAudioPlaySpeed(singleVideoTargetPlaylist),
     );
 
     final List<String> downloadedAudioFileNameLst = DirUtil.listFileNamesInDir(
@@ -818,7 +819,8 @@ class AudioDownloadVM extends ChangeNotifier {
     return true;
   }
 
-  double _getAudioPlaySpeed(Playlist currentPlaylist) {
+  /// Returns the play speed value to set to the created audi instance.
+  double _determineNewAudioPlaySpeed(Playlist currentPlaylist) {
     return (currentPlaylist.audioPlaySpeed != 0)
         ? currentPlaylist.audioPlaySpeed
         : settingsDataService.get(
@@ -1008,10 +1010,10 @@ class AudioDownloadVM extends ChangeNotifier {
     return true;
   }
 
-  void importAudioFilesInPlaylist({
+  Future<void> importAudioFilesInPlaylist({
     required Playlist targetPlaylist,
     required List<String> filePathNameToImportLst,
-  }) {
+  }) async {
     List<String> filePathNameToImportLstCopy = List<String>.from(
         filePathNameToImportLst); // necessary since the filePathNameToImportLst
     //                               may modified
@@ -1056,48 +1058,90 @@ class AudioDownloadVM extends ChangeNotifier {
           importedToPlaylistType: targetPlaylist.playlistType);
     }
 
-    List<Audio> importedAudioLst = [];
-
     for (String filePathName in filePathNameToImportLst) {
       String fileName = filePathName.split(path.separator).last;
       File sourceFile = File(filePathName);
-      File targetFile =
-          File('${targetPlaylist.downloadPath}${path.separator}$fileName');
-      sourceFile.copySync(targetFile.path);
-      importedAudioLst.add(
-        _createImportedAudio(
-          targetPlaylist: targetPlaylist,
-          targetFilePath: targetFile,
-        ),
+      String targetFilePathName =
+          "${targetPlaylist.downloadPath}${path.separator}$fileName";
+
+      // Physically copying the audio file to the target playlist directory
+      sourceFile.copySync(targetFilePathName);
+
+      // Instantiating the imported audio and adding it to the target
+      // playlist downloaded audio list and playable audio list.
+
+      Audio importedAudio = await _createImportedAudio(
+        targetPlaylist: targetPlaylist,
+        targetFilePathName: targetFilePathName,
+        importedFileName: fileName,
       );
+
+      targetPlaylist.addDownloadedAudio(
+        importedAudio,
+      );
+
+      notifyListeners();
     }
-  }
-
-  Audio _createImportedAudio({
-    required Playlist targetPlaylist,
-    required File targetFilePath,
-  }) {
-    Audio importedAudio = Audio(
-      enclosingPlaylist: targetPlaylist,
-      originalVideoTitle: targetFilePath.path.split(path.separator).last,
-      compactVideoDescription: '',
-      videoUrl: '',
-      audioDownloadDateTime: DateTime.now(),
-      videoUploadDate: DateTime(00, 1, 1),
-      audioDuration: const Duration(seconds: 0),
-      audioPlaySpeed: _getAudioPlaySpeed(targetPlaylist),
-    );
-
-    importedAudio.downloadDuration = null;
-    
-    targetPlaylist.addDownloadedAudio(importedAudio);
 
     JsonDataService.saveToFile(
       model: targetPlaylist,
       path: targetPlaylist.getPlaylistDownloadFilePathName(),
     );
+  }
+
+  Future<Audio> _createImportedAudio({
+    required Playlist targetPlaylist,
+    required String targetFilePathName,
+    required String importedFileName,
+  }) async {
+    Duration? importedAudioDuration = await _getMp3DurationWithAudioPlayer(
+      filePathName: targetFilePathName,
+    );
+
+    DateTime dateTimeNow = DateTime.now();
+
+    Audio importedAudio = Audio(
+      enclosingPlaylist: targetPlaylist,
+      originalVideoTitle: importedFileName,
+      compactVideoDescription: '',
+      videoUrl: '',
+      audioDownloadDateTime: dateTimeNow,
+      audioDownloadDuration: const Duration(microseconds: 0),
+      videoUploadDate: dateTimeNow,
+      audioDuration: importedAudioDuration,
+      audioPlaySpeed: _determineNewAudioPlaySpeed(targetPlaylist),
+    );
+
+    importedAudio.downloadDuration = const Duration(microseconds: 0);
+    importedAudio.fileSize = File(targetFilePathName).lengthSync();
+
+    // Since the Audio file name is set in the Audio constructor with
+    // adding to it the audio download date time and the video upload
+    // date, the constructor audio file name will not correspond to the
+    // physical imported audio file name.
+    importedAudio.audioFileName = importedFileName;
+    importedAudio.isAudioImported = true;
 
     return importedAudio;
+  }
+
+  Future<Duration?> _getMp3DurationWithAudioPlayer({
+    required String filePathName,
+  }) async {
+    AudioPlayer audioPlayer = AudioPlayer();
+    Duration? duration;
+
+    // Load audio file into audio player
+    await audioPlayer.setSource(DeviceFileSource(filePathName));
+    // Get duration
+    await audioPlayer.getDuration().then((value) {
+      duration = value;
+    });
+
+    // Dispose of audio player
+    await audioPlayer.dispose();
+
+    return duration;
   }
 
   /// Physically deletes the audio file from the audio playlist

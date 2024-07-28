@@ -1173,4 +1173,7 @@ class MockAppLocalizations extends AppLocalizations {
     Object toPlaylistTitle,
   ) =>
       "Audio(s) \"$importedAudioFileNames\" imported to Youtube playlist \"$toPlaylistTitle\".";
+
+  @override
+  String get imported => "imported";
 }

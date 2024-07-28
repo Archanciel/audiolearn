@@ -51,14 +51,14 @@ class Audio {
   final String videoUrl;
 
   // Audio download date time
-  final DateTime? audioDownloadDateTime;
+  final DateTime audioDownloadDateTime;
 
   // Duration in which the audio was downloaded
   Duration? audioDownloadDuration;
 
   // Date at which the video containing the audio was added on
   // Youtube
-  final DateTime? videoUploadDate;
+  final DateTime videoUploadDate;
 
   // Stored audio file name
   String audioFileName;
@@ -70,15 +70,17 @@ class Audio {
   int audioFileSize = 0;
   set fileSize(int size) {
     audioFileSize = size;
-    audioDownloadSpeed = (audioFileSize == 0 || audioDownloadDuration == null)
+    audioDownloadSpeed = (audioFileSize == 0 ||
+            audioDownloadDuration == const Duration(microseconds: 0))
         ? 0
         : (audioFileSize / audioDownloadDuration!.inMicroseconds * 1000000)
             .round();
   }
 
-  set downloadDuration(Duration? downloadDuration) {
+  set downloadDuration(Duration downloadDuration) {
     audioDownloadDuration = downloadDuration;
-    audioDownloadSpeed = (audioFileSize == 0 || audioDownloadDuration == null)
+    audioDownloadSpeed = (audioFileSize == 0 ||
+            audioDownloadDuration == const Duration(microseconds: 0))
         ? 0
         : (audioFileSize / audioDownloadDuration!.inMicroseconds * 1000000)
             .round();
@@ -123,7 +125,7 @@ class Audio {
     required this.videoUrl,
     required this.audioDownloadDateTime,
     this.audioDownloadDuration,
-    this.videoUploadDate,
+    required this.videoUploadDate,
     this.audioDuration,
     required this.audioPlaySpeed,
   })  : validVideoTitle = createValidVideoTitle(originalVideoTitle),
@@ -208,18 +210,13 @@ class Audio {
       compactVideoDescription: json['compactVideoDescription'] ?? '',
       validVideoTitle: json['validVideoTitle'],
       videoUrl: json['videoUrl'],
-      audioDownloadDateTime: (json['audioDownloadDateTime'] != null)
-          ? DateTime.parse(json['audioDownloadDateTime'])
-          : null,
-      audioDownloadDuration: (json['audioDownloadDurationMs'] != null)
-          ? Duration(milliseconds: json['audioDownloadDurationMs'])
-          : null,
+      audioDownloadDateTime: DateTime.parse(json['audioDownloadDateTime']),
+      audioDownloadDuration:
+          Duration(milliseconds: json['audioDownloadDurationMs']),
       audioDownloadSpeed: (json['audioDownloadSpeed'] < 0)
           ? double.infinity
           : json['audioDownloadSpeed'],
-      videoUploadDate: (json['videoUploadDate'] != null)
-          ? DateTime.parse(json['videoUploadDate'])
-          : null,
+      videoUploadDate: DateTime.parse(json['videoUploadDate']),
       audioDuration: Duration(milliseconds: json['audioDurationMs'] ?? 0),
       isAudioMusicQuality: json['isAudioMusicQuality'] ?? false,
       audioPlaySpeed: json['audioPlaySpeed'] ?? kAudioDefaultPlaySpeed,
@@ -248,12 +245,12 @@ class Audio {
       'compactVideoDescription': compactVideoDescription,
       'validVideoTitle': validVideoTitle,
       'videoUrl': videoUrl,
-      'audioDownloadDateTime': audioDownloadDateTime?.toIso8601String(),
+      'audioDownloadDateTime': audioDownloadDateTime.toIso8601String(),
       'audioDownloadDurationMs': audioDownloadDuration?.inMilliseconds,
       'audioDownloadSpeed':
           (audioDownloadSpeed.isFinite) ? audioDownloadSpeed : -1.0,
       'videoUploadDate':
-          videoUploadDate?.toIso8601String(), // can be null in json file
+          videoUploadDate.toIso8601String(), // can be null in json file
       'audioDurationMs': audioDuration?.inMilliseconds,
       'isAudioMusicQuality': isAudioMusicQuality,
       'audioPlaySpeed': audioPlaySpeed,

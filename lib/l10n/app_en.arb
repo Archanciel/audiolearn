@@ -379,11 +379,12 @@
   "commentStartPositionTooltip": "Comment position in audio",
   "playlistToggleButtonInAudioPlayerViewTooltip": "Show/hide playlists. Then check a playlist to select its current listened audio.",
   "playlistSelectedSnackBarMessage": "Playlist \"{title}\" selected",
-  "playlistImportAudioMenu": "Import audio files ...",
-  "playlistImportAudioMenuTooltip": "Import audio files into the playlist in order to be able to listen them and add positionned comments to them.",
+  "playlistImportAudioMenu": "Import audio file(s) ...",
+  "playlistImportAudioMenuTooltip": "Import audio file(s) into the playlist in order to be able to listen them and add positionned comments to them.",
   "setPlaylistAudioPlaySpeedTooltip": "Set audio play speed for the playlist existing and next downloaded audio.",
   "audioNotImportedToLocalPlaylist": "Audio(s) \"{rejectedImportedAudioFileNames}\" NOT imported to local playlist \"{toPlaylistTitle}\" since the playlist directory already contains the audio(s).",
   "audioNotImportedToYoutubePlaylist": "Audio(s) \"{rejectedImportedAudioFileNames}\" NOT imported to Youtube playlist \"{toPlaylistTitle}\" the playlist directory already contains the audio(s).",
   "audioImportedToLocalPlaylist": "Audio(s) \"{importedAudioFileNames}\" imported to local playlist \"{toPlaylistTitle}\".",
-  "audioImportedToYoutubePlaylist": "Audio(s) \"{importedAudioFileNames}\" imported to Youtube playlist \"{toPlaylistTitle}\"."
+  "audioImportedToYoutubePlaylist": "Audio(s) \"{importedAudioFileNames}\" imported to Youtube playlist \"{toPlaylistTitle}\".",
+  "imported": "imported"
 }

@@ -1742,7 +1742,8 @@ class _AudioSortFilterDialogWidgetState
     });
   }
 
-  /// Method called when the user clicks on the 'Save' button.
+  /// Method called when the user clicks on the 'Save' or 'Apply'
+  /// button.
   ///
   /// The method filters and sorts the audio list based on the selected
   /// sorting and filtering options. The method returns a list of three
