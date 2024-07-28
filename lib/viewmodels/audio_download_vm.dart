@@ -1084,10 +1084,12 @@ class AudioDownloadVM extends ChangeNotifier {
       videoUrl: '',
       audioDownloadDateTime: DateTime.now(),
       videoUploadDate: DateTime(00, 1, 1),
-      audioDuration: Duration(seconds: 0),
+      audioDuration: const Duration(seconds: 0),
       audioPlaySpeed: _getAudioPlaySpeed(targetPlaylist),
     );
 
+    importedAudio.downloadDuration = null;
+    
     targetPlaylist.addDownloadedAudio(importedAudio);
 
     JsonDataService.saveToFile(

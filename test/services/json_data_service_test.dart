@@ -91,6 +91,58 @@ void main() {
       // Cleanup the temporary directory
       await tempDir.delete(recursive: true);
     });
+    test('saveToFile and loadFromFile for one imported Audio instance',
+        () async {
+      // Create a temporary directory to store the serialized Audio
+      // object
+      Directory tempDir = await Directory.systemTemp.createTemp('AudioTest');
+      String filePath = path.join(tempDir.path, 'audio.json');
+
+      // Create an Audio instance
+      Audio originalAudio = Audio.fullConstructor(
+        enclosingPlaylist: null,
+        movedFromPlaylistTitle: null,
+        movedToPlaylistTitle: null,
+        copiedFromPlaylistTitle: null,
+        copiedToPlaylistTitle: null,
+        originalVideoTitle: '',
+        compactVideoDescription: '',
+        validVideoTitle: '',
+        videoUrl: '',
+        audioDownloadDateTime: null,
+        audioDownloadDuration: null,
+        audioDownloadSpeed: 0,
+        videoUploadDate: null,
+        audioDuration: const Duration(minutes: 5, seconds: 30),
+        isAudioMusicQuality: false,
+        audioPlaySpeed: kAudioDefaultPlaySpeed,
+        audioPlayVolume: kAudioDefaultPlayVolume,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        isPaused: true,
+        audioPausedDateTime: null,
+        audioPositionSeconds: 0,
+        audioFileName: 'Test Video Title.mp3',
+        audioFileSize: 330000000,
+        isAudioImported: true,
+      );
+
+      // Save the Audio instance to a file
+      JsonDataService.saveToFile(model: originalAudio, path: filePath);
+
+      // Load the Audio instance from the file
+      Audio deserializedAudio =
+          JsonDataService.loadFromFile(jsonPathFileName: filePath, type: Audio);
+
+      // Compare the deserialized Audio instance with the original
+      // Audio instance
+      compareDeserializedWithOriginalAudio(
+        deserializedAudio: deserializedAudio,
+        originalAudio: originalAudio,
+      );
+
+      // Cleanup the temporary directory
+      await tempDir.delete(recursive: true);
+    });
     test(
         'saveToFile and loadFromFile for one Audio instance, audioPausedDateTime not null',
         () async {
@@ -167,31 +219,30 @@ void main() {
 
       // Create an Audio instance
       Audio originalAudio = Audio.fullConstructor(
-        enclosingPlaylist: null,
-        movedFromPlaylistTitle: null,
-        movedToPlaylistTitle: null,
-        copiedFromPlaylistTitle: null,
-        copiedToPlaylistTitle: null,
-        originalVideoTitle: 'Test Video Title',
-        compactVideoDescription: '',
-        validVideoTitle: 'Test Video Title',
-        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
-        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
-        audioDownloadDuration: const Duration(minutes: 1, seconds: 30),
-        audioDownloadSpeed: 1000000,
-        videoUploadDate: DateTime(2023, 3, 1),
-        audioDuration: null,
-        isAudioMusicQuality: false,
-        audioPlaySpeed: kAudioDefaultPlaySpeed,
-        audioPlayVolume: kAudioDefaultPlayVolume,
-        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
-        isPaused: true,
-        audioPausedDateTime: null,
-        audioPositionSeconds: 0,
-        audioFileName: 'Test Video Title.mp3',
-        audioFileSize: 330000000,
-        isAudioImported: false
-      );
+          enclosingPlaylist: null,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle: 'Test Video Title',
+          compactVideoDescription: '',
+          validVideoTitle: 'Test Video Title',
+          videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+          audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioDownloadDuration: const Duration(minutes: 1, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime(2023, 3, 1),
+          audioDuration: null,
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName: 'Test Video Title.mp3',
+          audioFileSize: 330000000,
+          isAudioImported: false);
 
       // Save the Audio instance to a file
       JsonDataService.saveToFile(model: originalAudio, path: filePath);
@@ -231,31 +282,30 @@ void main() {
       testPlaylist.downloadPath = 'path/to/downloads';
 
       Audio audio1 = Audio.fullConstructor(
-        enclosingPlaylist: testPlaylist,
-        movedFromPlaylistTitle: testFromPlaylistTitle,
-        movedToPlaylistTitle: null,
-        copiedFromPlaylistTitle: null,
-        copiedToPlaylistTitle: null,
-        originalVideoTitle: 'Test Video 1',
-        compactVideoDescription: 'Test Video 1 Description',
-        validVideoTitle: 'Test Video Title',
-        videoUrl: 'https://www.example.com/video-url-1',
-        audioDownloadDateTime: DateTime.now(),
-        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
-        audioDownloadSpeed: 1000000,
-        videoUploadDate: DateTime.now().subtract(const Duration(days: 10)),
-        audioDuration: const Duration(minutes: 5, seconds: 30),
-        isAudioMusicQuality: false,
-        audioPlaySpeed: kAudioDefaultPlaySpeed,
-        audioPlayVolume: kAudioDefaultPlayVolume,
-        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
-        isPaused: true,
-        audioPausedDateTime: null,
-        audioPositionSeconds: 0,
-        audioFileName: 'Test Video Title.mp3',
-        audioFileSize: 330000000,
-        isAudioImported: false
-      );
+          enclosingPlaylist: testPlaylist,
+          movedFromPlaylistTitle: testFromPlaylistTitle,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle: 'Test Video 1',
+          compactVideoDescription: 'Test Video 1 Description',
+          validVideoTitle: 'Test Video Title',
+          videoUrl: 'https://www.example.com/video-url-1',
+          audioDownloadDateTime: DateTime.now(),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime.now().subtract(const Duration(days: 10)),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName: 'Test Video Title.mp3',
+          audioFileSize: 330000000,
+          isAudioImported: false);
 
       Audio audio2 = Audio.fullConstructor(
         enclosingPlaylist: testPlaylist,
@@ -263,14 +313,14 @@ void main() {
         movedToPlaylistTitle: testToPlaylistTitle,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: testToPlaylistTitle,
-        originalVideoTitle: 'Test Video 2',
-        compactVideoDescription: 'Test Video 2 Description',
-        validVideoTitle: 'Test Video Title',
-        videoUrl: 'https://www.example.com/video-url-2',
-        audioDownloadDateTime: DateTime.now(),
-        audioDownloadDuration: const Duration(minutes: 0, seconds: 38),
-        audioDownloadSpeed: 1000000,
-        videoUploadDate: DateTime.now().subtract(const Duration(days: 5)),
+        originalVideoTitle: '',
+        compactVideoDescription: '',
+        validVideoTitle: '',
+        videoUrl: '',
+        audioDownloadDateTime: null,
+        audioDownloadDuration: null,
+        audioDownloadSpeed: 0,
+        videoUploadDate: null,
         audioDuration: const Duration(minutes: 5, seconds: 30),
         isAudioMusicQuality: false,
         audioPlaySpeed: kAudioDefaultPlaySpeed,
@@ -730,14 +780,14 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
-        originalVideoTitle: 'Test Video Title',
+        originalVideoTitle: '',
         compactVideoDescription: '',
-        validVideoTitle: 'Test Video Title',
-        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
-        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
-        audioDownloadDuration: const Duration(minutes: 50, seconds: 30),
-        audioDownloadSpeed: 1000000,
-        videoUploadDate: DateTime(2023, 3, 1),
+        validVideoTitle: '',
+        videoUrl: '',
+        audioDownloadDateTime: null,
+        audioDownloadDuration: null,
+        audioDownloadSpeed: 0,
+        videoUploadDate: null,
         audioDuration: const Duration(minutes: 5, seconds: 30),
         isAudioMusicQuality: false,
         audioPlaySpeed: kAudioDefaultPlaySpeed,
@@ -829,14 +879,14 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
-        originalVideoTitle: 'Test Video 2',
-        compactVideoDescription: 'Test Video 2 compact description',
-        validVideoTitle: 'Test Video Title',
-        videoUrl: 'https://www.example.com/video-url-2',
-        audioDownloadDateTime: DateTime.now(),
-        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
-        audioDownloadSpeed: 1000000,
-        videoUploadDate: DateTime.now().subtract(const Duration(days: 5)),
+        originalVideoTitle: '',
+        compactVideoDescription: '',
+        validVideoTitle: '',
+        videoUrl: '',
+        audioDownloadDateTime: null,
+        audioDownloadDuration: null,
+        audioDownloadSpeed: 0,
+        videoUploadDate: null,
         audioDuration: const Duration(minutes: 5, seconds: 30),
         isAudioMusicQuality: false,
         audioPlaySpeed: kAudioDefaultPlaySpeed,
@@ -897,14 +947,14 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
-        originalVideoTitle: 'Test Video 2',
-        compactVideoDescription: 'Test Video 2 compact description',
-        validVideoTitle: 'Test Video Title',
-        videoUrl: 'https://www.example.com/video-url-2',
-        audioDownloadDateTime: DateTime.now(),
-        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
-        audioDownloadSpeed: 1000000,
-        videoUploadDate: DateTime.now().subtract(const Duration(days: 5)),
+        originalVideoTitle: '',
+        compactVideoDescription: '',
+        validVideoTitle: '',
+        videoUrl: '',
+        audioDownloadDateTime: null,
+        audioDownloadDuration: null,
+        audioDownloadSpeed: 0,
+        videoUploadDate: null,
         audioDuration: const Duration(minutes: 5, seconds: 30),
         isAudioMusicQuality: false,
         audioPlaySpeed: kAudioDefaultPlaySpeed,
@@ -1113,21 +1163,23 @@ void compareDeserializedWithOriginalAudio({
   expect(deserializedAudio.compactVideoDescription,
       originalAudio.compactVideoDescription);
   expect(deserializedAudio.videoUrl, originalAudio.videoUrl);
-  expect(deserializedAudio.audioDownloadDateTime.toIso8601String(),
-      originalAudio.audioDownloadDateTime.toIso8601String());
+  expect(deserializedAudio.audioDownloadDateTime?.toIso8601String(),
+      originalAudio.audioDownloadDateTime?.toIso8601String());
   expect(deserializedAudio.audioDownloadDuration,
-      originalAudio.audioDownloadDuration ?? const Duration(milliseconds: 0));
+      originalAudio.audioDownloadDuration);
   expect(
       deserializedAudio.audioDownloadSpeed, originalAudio.audioDownloadSpeed);
-  expect(deserializedAudio.videoUploadDate.toIso8601String(),
-      originalAudio.videoUploadDate.toIso8601String());
+  expect(deserializedAudio.videoUploadDate?.toIso8601String(),
+      originalAudio.videoUploadDate?.toIso8601String());
 
-  // inMilliseconds is used because the duration is not exactly the same
-  // when it is serialized and deserialized since it is stored in the json
-  // file as a number of milliseconds
-  expect(deserializedAudio.audioDownloadDuration!.inMilliseconds,
-      originalAudio.audioDownloadDuration!.inMilliseconds);
-
+  if (!originalAudio.isAudioImported) {
+    // inMilliseconds is used because the duration is not exactly the same
+    // when it is serialized and deserialized since it is stored in the json
+    // file as a number of milliseconds
+    expect(deserializedAudio.audioDownloadDuration!.inMilliseconds,
+        originalAudio.audioDownloadDuration!.inMilliseconds);
+  }
+  
   expect(
       deserializedAudio.isAudioMusicQuality, originalAudio.isAudioMusicQuality);
   expect(deserializedAudio.audioPlaySpeed, originalAudio.audioPlaySpeed);

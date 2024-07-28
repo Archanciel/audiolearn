@@ -9,7 +9,7 @@ import 'package:window_size/window_size.dart';
 import '../utils/duration_expansion.dart';
 void main() {
   setWindowsAppSizeAndPosition(isTest: true);
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 /// If app runs on Windows, Linux or MacOS, set the app size
@@ -42,6 +42,8 @@ Future<void> setWindowsAppSizeAndPosition({
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -49,12 +51,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -86,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('MP3 Duration Example'),
+        title: const Text('MP3 Duration Example'),
       ),
       body: Center(
         child: Column(
@@ -96,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () async {
                 await _pickFile();
               },
-              child: Text('Pick MP3 File'),
+              child: const Text('Pick MP3 File'),
             ),
             if (_duration != null)
               Padding(

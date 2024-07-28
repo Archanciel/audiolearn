@@ -255,10 +255,12 @@ class AudioSortFilterService {
     required DateTime endDateTime,
   }) {
     return audioLst.where((audio) {
-      return (audio.audioDownloadDateTime.isAfter(startDateTime) ||
-              audio.audioDownloadDateTime.isAtSameMomentAs(startDateTime)) &&
-          (audio.audioDownloadDateTime.isBefore(endDateTime) ||
-              audio.audioDownloadDateTime.isAtSameMomentAs(endDateTime));
+      return audio.audioDownloadDateTime != null &&
+          ((audio.audioDownloadDateTime!.isAfter(startDateTime) ||
+                  audio.audioDownloadDateTime!
+                      .isAtSameMomentAs(startDateTime)) &&
+              (audio.audioDownloadDateTime!.isBefore(endDateTime) ||
+                  audio.audioDownloadDateTime!.isAtSameMomentAs(endDateTime)));
     }).toList();
   }
 
@@ -268,10 +270,11 @@ class AudioSortFilterService {
     required DateTime endDateTime,
   }) {
     return audioLst.where((audio) {
-      return (audio.videoUploadDate.isAfter(startDateTime) ||
-              audio.videoUploadDate.isAtSameMomentAs(startDateTime)) &&
-          (audio.videoUploadDate.isBefore(endDateTime) ||
-              audio.videoUploadDate.isAtSameMomentAs(endDateTime));
+      return (audio.videoUploadDate != null &&
+          (audio.videoUploadDate!.isAfter(startDateTime) ||
+              audio.videoUploadDate!.isAtSameMomentAs(startDateTime)) &&
+          (audio.videoUploadDate!.isBefore(endDateTime) ||
+              audio.videoUploadDate!.isAtSameMomentAs(endDateTime)));
     }).toList();
   }
 

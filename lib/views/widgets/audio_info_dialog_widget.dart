@@ -58,13 +58,13 @@ class AudioInfoDialogWidget extends StatelessWidget with ScreenMixin {
               createInfoRowFunction(
                   context: context,
                   label: AppLocalizations.of(context)!.videoUploadDateLabel,
-                  value: frenchDateFormat.format(audio.videoUploadDate)),
+                  value: (audio.videoUploadDate != null) ? frenchDateFormat.format(audio.videoUploadDate!) : ''),
               createInfoRowFunction(
                   context: context,
                   label:
                       AppLocalizations.of(context)!.audioDownloadDateTimeLabel,
-                  value:
-                      frenchDateTimeFormat.format(audio.audioDownloadDateTime)),
+                  value: (audio.audioDownloadDateTime != null) ?
+                      frenchDateTimeFormat.format(audio.audioDownloadDateTime!) : ''),
               createInfoRowFunction(
                   context: context,
                   label: AppLocalizations.of(context)!.videoUrlLabel,

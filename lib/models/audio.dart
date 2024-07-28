@@ -51,14 +51,14 @@ class Audio {
   final String videoUrl;
 
   // Audio download date time
-  final DateTime audioDownloadDateTime;
+  final DateTime? audioDownloadDateTime;
 
   // Duration in which the audio was downloaded
   Duration? audioDownloadDuration;
 
   // Date at which the video containing the audio was added on
   // Youtube
-  final DateTime videoUploadDate;
+  final DateTime? videoUploadDate;
 
   // Stored audio file name
   String audioFileName;
@@ -76,7 +76,7 @@ class Audio {
             .round();
   }
 
-  set downloadDuration(Duration downloadDuration) {
+  set downloadDuration(Duration? downloadDuration) {
     audioDownloadDuration = downloadDuration;
     audioDownloadSpeed = (audioFileSize == 0 || audioDownloadDuration == null)
         ? 0
@@ -123,7 +123,7 @@ class Audio {
     required this.videoUrl,
     required this.audioDownloadDateTime,
     this.audioDownloadDuration,
-    required this.videoUploadDate,
+    this.videoUploadDate,
     this.audioDuration,
     required this.audioPlaySpeed,
   })  : validVideoTitle = createValidVideoTitle(originalVideoTitle),
@@ -208,13 +208,18 @@ class Audio {
       compactVideoDescription: json['compactVideoDescription'] ?? '',
       validVideoTitle: json['validVideoTitle'],
       videoUrl: json['videoUrl'],
-      audioDownloadDateTime: DateTime.parse(json['audioDownloadDateTime']),
-      audioDownloadDuration:
-          Duration(milliseconds: json['audioDownloadDurationMs']),
+      audioDownloadDateTime: (json['audioDownloadDateTime'] != null)
+          ? DateTime.parse(json['audioDownloadDateTime'])
+          : null,
+      audioDownloadDuration: (json['audioDownloadDurationMs'] != null)
+          ? Duration(milliseconds: json['audioDownloadDurationMs'])
+          : null,
       audioDownloadSpeed: (json['audioDownloadSpeed'] < 0)
           ? double.infinity
           : json['audioDownloadSpeed'],
-      videoUploadDate: DateTime.parse(json['videoUploadDate']),
+      videoUploadDate: (json['videoUploadDate'] != null)
+          ? DateTime.parse(json['videoUploadDate'])
+          : null,
       audioDuration: Duration(milliseconds: json['audioDurationMs'] ?? 0),
       isAudioMusicQuality: json['isAudioMusicQuality'] ?? false,
       audioPlaySpeed: json['audioPlaySpeed'] ?? kAudioDefaultPlaySpeed,
@@ -243,11 +248,12 @@ class Audio {
       'compactVideoDescription': compactVideoDescription,
       'validVideoTitle': validVideoTitle,
       'videoUrl': videoUrl,
-      'audioDownloadDateTime': audioDownloadDateTime.toIso8601String(),
+      'audioDownloadDateTime': audioDownloadDateTime?.toIso8601String(),
       'audioDownloadDurationMs': audioDownloadDuration?.inMilliseconds,
       'audioDownloadSpeed':
           (audioDownloadSpeed.isFinite) ? audioDownloadSpeed : -1.0,
-      'videoUploadDate': videoUploadDate.toIso8601String(),
+      'videoUploadDate':
+          videoUploadDate?.toIso8601String(), // can be null in json file
       'audioDurationMs': audioDuration?.inMilliseconds,
       'isAudioMusicQuality': isAudioMusicQuality,
       'audioPlaySpeed': audioPlaySpeed,
@@ -286,22 +292,27 @@ class Audio {
   bool wasFullyListened() {
     return (audioDuration == null)
         ? false
-        : (audioPositionSeconds >= audioDuration!.inSeconds - fullyListenedBufferSeconds);
+        : (audioPositionSeconds >=
+            audioDuration!.inSeconds - fullyListenedBufferSeconds);
   }
 
   bool isPartiallyListened() {
     return (audioPositionSeconds > 0) && !wasFullyListened();
   }
 
-  static String buildDownloadDatePrefix(DateTime downloadDate) {
-    String formattedDateStr = (kAudioFileNamePrefixIncludeTime)
-        ? downloadDateTimePrefixFormatter.format(downloadDate)
-        : downloadDatePrefixFormatter.format(downloadDate);
+  static String buildDownloadDatePrefix(DateTime? downloadDate) {
+    String formattedDateStr = (downloadDate != null)
+        ? (kAudioFileNamePrefixIncludeTime)
+            ? downloadDateTimePrefixFormatter.format(downloadDate)
+            : downloadDatePrefixFormatter.format(downloadDate)
+        : '';
 
     return '$formattedDateStr-';
   }
 
-  static String buildUploadDateSuffix(DateTime uploadDate) {
+  static String buildUploadDateSuffix(DateTime? uploadDate) {
+    if (uploadDate == null) return ''; // Handle nullable uploadDate
+
     String formattedDateStr = uploadDateSuffixFormatter.format(uploadDate);
 
     return formattedDateStr;

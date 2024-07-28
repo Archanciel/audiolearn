@@ -100,13 +100,13 @@ class AudioSortFilterParameters {
     SortingOption.audioDownloadDate: SortCriteria<Audio>(
       selectorFunction: (Audio audio) {
         return DateTimeParser.truncateDateTimeToDateOnly(
-            audio.audioDownloadDateTime);
+            audio.audioDownloadDateTime!);
       },
       sortOrder: sortDescending,
     ),
     SortingOption.videoUploadDate: SortCriteria<Audio>(
       selectorFunction: (Audio audio) {
-        return DateTimeParser.truncateDateTimeToDateOnly(audio.videoUploadDate);
+        return DateTimeParser.truncateDateTimeToDateOnly(audio.videoUploadDate!);
       },
       sortOrder: sortDescending,
     ),
