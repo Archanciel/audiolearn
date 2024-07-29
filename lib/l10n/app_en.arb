@@ -382,9 +382,9 @@
   "playlistImportAudioMenu": "Import audio file(s) ...",
   "playlistImportAudioMenuTooltip": "Import audio file(s) into the playlist in order to be able to listen them and add positionned comments to them.",
   "setPlaylistAudioPlaySpeedTooltip": "Set audio play speed for the playlist existing and next downloaded audio.",
-  "audioNotImportedToLocalPlaylist": "Audio(s) \"{rejectedImportedAudioFileNames}\" NOT imported to local playlist \"{toPlaylistTitle}\" since the playlist directory already contains the audio(s).",
-  "audioNotImportedToYoutubePlaylist": "Audio(s) \"{rejectedImportedAudioFileNames}\" NOT imported to Youtube playlist \"{toPlaylistTitle}\" the playlist directory already contains the audio(s).",
-  "audioImportedToLocalPlaylist": "Audio(s) \"{importedAudioFileNames}\" imported to local playlist \"{toPlaylistTitle}\".",
-  "audioImportedToYoutubePlaylist": "Audio(s) \"{importedAudioFileNames}\" imported to Youtube playlist \"{toPlaylistTitle}\".",
+  "audioNotImportedToLocalPlaylist": "Audio(s)\n\n{rejectedImportedAudioFileNames}\n\nNOT imported to local playlist \"{toPlaylistTitle}\" since the playlist directory already contains the audio(s).",
+  "audioNotImportedToYoutubePlaylist": "Audio(s)\n\n{rejectedImportedAudioFileNames}\n\nNOT imported to Youtube playlist \"{toPlaylistTitle}\" the playlist directory already contains the audio(s).",
+  "audioImportedToLocalPlaylist": "Audio(s)\n\n{importedAudioFileNames}\n\nimported to local playlist \"{toPlaylistTitle}\".",
+  "audioImportedToYoutubePlaylist": "Audio(s)\n\n{importedAudioFileNames}\n\nimported to Youtube playlist \"{toPlaylistTitle}\".",
   "imported": "imported"
 }

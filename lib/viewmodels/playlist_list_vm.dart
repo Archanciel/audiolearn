@@ -910,7 +910,8 @@ class PlaylistListVM extends ChangeNotifier {
 
     // delete the audio file from the audio playlist directory
     // and removes the audio from the its playlist playable audio list
-    _audioDownloadVM.deleteAudioMp3(audio: audio);
+    _audioDownloadVM.deleteAudioPhysicallyAndFromPlayableAudioListOnly(
+        audio: audio);
 
     _removeAudioFromSortedFilteredPlayableAudioList(audio);
 
@@ -949,7 +950,7 @@ class PlaylistListVM extends ChangeNotifier {
       currentAudio: audio,
     );
 
-    _audioDownloadVM.deleteAudioFromPlaylistAswell(audio: audio);
+    _audioDownloadVM.deleteAudioPhysicallyAndFromAllAudioLists(audio: audio);
 
     _removeAudioFromSortedFilteredPlayableAudioList(audio);
 

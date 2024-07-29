@@ -1028,13 +1028,13 @@ class AudioDownloadVM extends ChangeNotifier {
       if (targetFile.existsSync()) {
         // the case if the imported audio file already exist in the target
         // playlist directory
-        rejectedImportedFileNames += '$fileName, ';
+        rejectedImportedFileNames += "\"$fileName\",\n";
         filePathNameToImportLst.remove(filePathName);
 
         continue;
       }
 
-      acceptableImportedFileNames += '$fileName, ';
+      acceptableImportedFileNames += "\"$fileName\",\n";
     }
 
     // Displaying a warning which lists the audio files which won't be
@@ -1148,9 +1148,11 @@ class AudioDownloadVM extends ChangeNotifier {
   }
 
   /// Physically deletes the audio file from the audio playlist
-  /// directory and removes the audio reference from the playlist
-  /// playable audio list.
-  void deleteAudioMp3({
+  /// directory and removes the Audio from the playlist playable
+  /// audio list.
+  ///
+  /// The playlist json file is of course updated.
+  void deleteAudioPhysicallyAndFromPlayableAudioListOnly({
     required Audio audio,
   }) {
     DirUtil.deleteFileIfExist(pathFileName: audio.filePathName);
@@ -1165,10 +1167,11 @@ class AudioDownloadVM extends ChangeNotifier {
   /// User selected the audio menu item "Delete audio from
   /// playlist aswell". This method physically deletes the audio
   /// file from the audio playlist directory as well as deleting
-  /// the audio reference from the playlist downloaded audio list
-  /// and from the playlist playable audio list. This means that
-  /// the playlist json file is modified.
-  void deleteAudioFromPlaylistAswell({
+  /// the Audio from the playlist downloaded audio list and from
+  /// the playlist playable audio list.
+  ///
+  /// The playlist json file is of course updated.
+  void deleteAudioPhysicallyAndFromAllAudioLists({
     required Audio audio,
   }) {
     DirUtil.deleteFileIfExist(pathFileName: audio.filePathName);
