@@ -1028,6 +1028,7 @@ void main() {
         isTest: true,
       );
 
+      // Initializing the audioDownloadVM
       audioDownloadVM.loadExistingPlaylists();
 
       // Load Playlist from the json file
@@ -1041,7 +1042,7 @@ void main() {
           '$kPlaylistDownloadRootPathWindowsTest${path.separator}Files to import';
       const String importedFileNameOne =
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher).mp3";
-      List<String> fileNamesToImportLst = [
+      List<String> importedFileNamesLst = [
         importedFileNameOne,
       ];
       List<String> filePathNamesToImportLst = [
@@ -1055,12 +1056,12 @@ void main() {
       );
 
       // Verify that the imported file physically exists in the target
-      // playlist directory
+      // playlist directory and in the downloaded and playable audio lists
       verifyImportedFilesPresence(
         targetPlaylist: targetPlaylistEmpty,
-        importedFileNamesLst: fileNamesToImportLst,
+        importedFileNamesLst: importedFileNamesLst,
         targetPlaylistDownloadedAudioListInitialLengh: 0,
-        targetPlaylistPlayableAudioListInitialLengh: 0,
+        targetPlaylistPlayableAudioListFinalLengh: 1,
       );
 
       // Now import again the same file which now exists in the Empty
@@ -1075,8 +1076,9 @@ void main() {
       verifyImportedFilesPresence(
         targetPlaylist: targetPlaylistEmpty,
         importedFileNamesLst: [],
-        targetPlaylistDownloadedAudioListInitialLengh: 1,
-        targetPlaylistPlayableAudioListInitialLengh: 1,
+        targetPlaylistDownloadedAudioListInitialLengh:
+            1, // final length in fact
+        targetPlaylistPlayableAudioListFinalLengh: 1,
       );
 
       // Purge the test playlist directory so that the created test
@@ -1085,7 +1087,225 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    test('Import one existing file', () async {});
+    test('''Import four not existing files and then reimport them so that they
+           will not be imported a second time.''', () async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}import_audio_file_test",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+      WarningMessageVM warningMessageVM = WarningMessageVM();
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+        isTest: true,
+      );
+
+      // necessary, otherwise audioDownloadVM won't be able to load
+      // the existing playlists and the test will fail
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+      // Using MockAudioDownloadVM which inherits from AudioDownloadVM
+      // and overrides the getMp3DurationWithAudioPlayer() method so that
+      // the AudioPlayer plugin not usable in unit test is not instantiated.
+      AudioDownloadVM audioDownloadVM = MockAudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+        isTest: true,
+      );
+
+      // Initializing the audioDownloadVM
+      audioDownloadVM.loadExistingPlaylists();
+
+      // Load Playlist from the json file
+      const String playListName = "Empty";
+      Playlist targetPlaylistEmpty = loadPlaylist(playListName);
+
+      expect(targetPlaylistEmpty.downloadedAudioLst.length, 0);
+      expect(targetPlaylistEmpty.playableAudioLst.length, 0);
+
+      String fileToImportDir =
+          '$kPlaylistDownloadRootPathWindowsTest${path.separator}Files to import';
+      const String importedFileNameOne =
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher).mp3";
+      const String importedFileNameTwo = "audio learn test short video one.mp3";
+      const String importedFileNameThree =
+          "L'argument anti-nuke qui m'inquiète le plus par Y.Rousselet.mp3";
+      const String importedFileNameFour = "Really short video.mp3";
+      List<String> importedFileNamesLst = [
+        importedFileNameOne,
+        importedFileNameTwo,
+        importedFileNameThree,
+        importedFileNameFour,
+      ];
+      List<String> filePathNamesToImportLst = [
+        "$fileToImportDir${path.separator}$importedFileNameOne",
+        "$fileToImportDir${path.separator}$importedFileNameTwo",
+        "$fileToImportDir${path.separator}$importedFileNameThree",
+        "$fileToImportDir${path.separator}$importedFileNameFour",
+      ];
+
+      // Import four files in the Empty playlist
+      await audioDownloadVM.importAudioFilesInPlaylist(
+        targetPlaylist: targetPlaylistEmpty,
+        filePathNameToImportLst: filePathNamesToImportLst,
+      );
+
+      // Verify that the imported files physically exists in the target
+      // playlist directory and in the downloaded and playable audio lists
+      verifyImportedFilesPresence(
+        targetPlaylist: targetPlaylistEmpty,
+        importedFileNamesLst: importedFileNamesLst,
+        targetPlaylistDownloadedAudioListInitialLengh: 0,
+        targetPlaylistPlayableAudioListFinalLengh: 4,
+      );
+
+      // Now import again the same file which now exists in the Empty
+      // playlist
+      await audioDownloadVM.importAudioFilesInPlaylist(
+        targetPlaylist: targetPlaylistEmpty,
+        filePathNameToImportLst: filePathNamesToImportLst,
+      );
+
+      // Verify that the re-imported file has not been imported a second
+      // time
+      verifyImportedFilesPresence(
+        targetPlaylist: targetPlaylistEmpty,
+        importedFileNamesLst: [],
+        targetPlaylistDownloadedAudioListInitialLengh:
+            4, // final length in fact
+        targetPlaylistPlayableAudioListFinalLengh: 4,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    test(
+        '''Import four files of which two already exist in target playlist dir.''',
+        () async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}import_audio_file_test",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+      WarningMessageVM warningMessageVM = WarningMessageVM();
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+        isTest: true,
+      );
+
+      // necessary, otherwise audioDownloadVM won't be able to load
+      // the existing playlists and the test will fail
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+      // Using MockAudioDownloadVM which inherits from AudioDownloadVM
+      // and overrides the getMp3DurationWithAudioPlayer() method so that
+      // the AudioPlayer plugin not usable in unit test is not instantiated.
+      AudioDownloadVM audioDownloadVM = MockAudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+        isTest: true,
+      );
+
+      // Initializing the audioDownloadVM
+      audioDownloadVM.loadExistingPlaylists();
+
+      // Load Playlist from the json file
+      const String playListName = "Empty";
+      Playlist targetPlaylistEmpty = loadPlaylist(playListName);
+
+      expect(targetPlaylistEmpty.downloadedAudioLst.length, 0);
+      expect(targetPlaylistEmpty.playableAudioLst.length, 0);
+
+      String fileToImportDir =
+          '$kPlaylistDownloadRootPathWindowsTest${path.separator}Files to import';
+      const String importedFileNameOne =
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher).mp3";
+      const String importedFileNameTwo = "audio learn test short video one.mp3";
+      const String importedFileNameThree =
+          "L'argument anti-nuke qui m'inquiète le plus par Y.Rousselet.mp3";
+      const String importedFileNameFour = "Really short video.mp3";
+      List<String> importedFileNamesLst = [
+        importedFileNameThree,
+        importedFileNameFour,
+      ];
+      List<String> filePathNamesToImportLst = [
+        "$fileToImportDir${path.separator}$importedFileNameOne",
+        "$fileToImportDir${path.separator}$importedFileNameTwo",
+        "$fileToImportDir${path.separator}$importedFileNameThree",
+        "$fileToImportDir${path.separator}$importedFileNameFour",
+      ];
+
+      // Physically add two files to the target playlist directory
+      final String targetPlaylistDownloadPath = targetPlaylistEmpty.downloadPath;
+      final String fileOnePathName =
+          "$targetPlaylistDownloadPath${path.separator}$importedFileNameOne";
+      final String fileTwoPathName =
+          "$targetPlaylistDownloadPath${path.separator}$importedFileNameTwo";
+      File("$fileToImportDir${path.separator}$importedFileNameOne").absolute
+          .copySync(fileOnePathName);
+      File("$fileToImportDir${path.separator}$importedFileNameTwo").absolute
+          .copySync(fileTwoPathName);
+
+      // Import four files in the Empty playlist which already contains
+      // two of them
+      await audioDownloadVM.importAudioFilesInPlaylist(
+        targetPlaylist: targetPlaylistEmpty,
+        filePathNameToImportLst: filePathNamesToImportLst,
+      );
+
+      // Verify that the imported files physically exists in the target
+      // playlist directory and in the downloaded and playable audio lists
+      verifyImportedFilesPresence(
+        targetPlaylist: targetPlaylistEmpty,
+        importedFileNamesLst: importedFileNamesLst,
+        targetPlaylistDownloadedAudioListInitialLengh: 0,
+        targetPlaylistPlayableAudioListFinalLengh: 2,
+      );
+
+      // Now import again the same file which now exists in the Empty
+      // playlist
+      await audioDownloadVM.importAudioFilesInPlaylist(
+        targetPlaylist: targetPlaylistEmpty,
+        filePathNameToImportLst: filePathNamesToImportLst,
+      );
+
+      // Verify that the re-imported file has not been imported a second
+      // time
+      verifyImportedFilesPresence(
+        targetPlaylist: targetPlaylistEmpty,
+        importedFileNamesLst: [],
+        targetPlaylistDownloadedAudioListInitialLengh:
+            2, // final length in fact
+        targetPlaylistPlayableAudioListFinalLengh: 2,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
   });
 }
 
@@ -1093,7 +1313,7 @@ void verifyImportedFilesPresence({
   required Playlist targetPlaylist,
   required List<String> importedFileNamesLst,
   required int targetPlaylistDownloadedAudioListInitialLengh,
-  required int targetPlaylistPlayableAudioListInitialLengh,
+  required int targetPlaylistPlayableAudioListFinalLengh,
 }) {
   final String targetPlaylistDownloadPath = targetPlaylist.downloadPath;
 
@@ -1119,11 +1339,11 @@ void verifyImportedFilesPresence({
 
     // Verify that the imported file is in the playable audio list
     expect(
-      targetPlaylist.playableAudioLst[0].audioFileName,
+      targetPlaylist
+          .playableAudioLst[--targetPlaylistPlayableAudioListFinalLengh]
+          .audioFileName,
       importedFileName,
     );
-
-    targetPlaylistPlayableAudioListInitialLengh++;
   }
 
   expect(
@@ -1132,7 +1352,7 @@ void verifyImportedFilesPresence({
   );
   expect(
     targetPlaylist.playableAudioLst.length,
-    targetPlaylistPlayableAudioListInitialLengh,
+    targetPlaylistPlayableAudioListFinalLengh + importedFileNamesLst.length,
   );
 }
 
