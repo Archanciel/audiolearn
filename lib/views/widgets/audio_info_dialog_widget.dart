@@ -46,136 +46,19 @@ class AudioInfoDialogWidget extends StatelessWidget with ScreenMixin {
         }
       },
       child: AlertDialog(
-        title: Text(AppLocalizations.of(context)!.audioInfoDialogTitle),
+        title: (audio.isAudioImported)
+            ? Text(AppLocalizations.of(context)!.audioImportedInfoDialogTitle)
+            : Text(AppLocalizations.of(context)!.audioInfoDialogTitle),
         actionsPadding: kDialogActionsPadding,
         content: SingleChildScrollView(
           child: ListBody(
-            children: <Widget>[
-              createInfoRowFunction(
-                  context: context,
-                  label: AppLocalizations.of(context)!.originalVideoTitleLabel,
-                  value: audio.originalVideoTitle),
-              createInfoRowFunction(
-                  context: context,
-                  label: AppLocalizations.of(context)!.videoUploadDateLabel,
-                  value: frenchDateFormat.format(audio.videoUploadDate)),
-              createInfoRowFunction(
-                  context: context,
-                  label:
-                      AppLocalizations.of(context)!.audioDownloadDateTimeLabel,
-                  value:
-                      frenchDateTimeFormat.format(audio.audioDownloadDateTime)),
-              createInfoRowFunction(
-                  context: context,
-                  label: AppLocalizations.of(context)!.videoUrlLabel,
-                  value: audio.videoUrl),
-              createInfoRowFunction(
-                  context: context,
-                  label: AppLocalizations.of(context)!.compactVideoDescription,
-                  value: audio.compactVideoDescription),
-              createInfoRowFunction(
-                  valueTextWidgetKey: const Key('validVideoTitleKey'),
-                  context: context,
-                  label: AppLocalizations.of(context)!.validVideoTitleLabel,
-                  value: audio.validVideoTitle),
-              createInfoRowFunction(
-                  valueTextWidgetKey: const Key('enclosingPlaylistTitleKey'),
-                  context: context,
-                  label: AppLocalizations.of(context)!.enclosingPlaylistLabel,
-                  value: (audio.enclosingPlaylist == null)
-                      ? ''
-                      : audio.enclosingPlaylist!.title),
-              createInfoRowFunction(
-                  valueTextWidgetKey: const Key('movedFromPlaylistTitleKey'),
-                  context: context,
-                  label: AppLocalizations.of(context)!.movedFromPlaylistLabel,
-                  value: (audio.movedFromPlaylistTitle == null)
-                      ? ''
-                      : audio.movedFromPlaylistTitle!),
-              createInfoRowFunction(
-                  valueTextWidgetKey: const Key('movedToPlaylistTitleKey'),
-                  context: context,
-                  label: AppLocalizations.of(context)!.movedToPlaylistLabel,
-                  value: (audio.movedToPlaylistTitle == null)
-                      ? ''
-                      : audio.movedToPlaylistTitle!),
-              createInfoRowFunction(
-                  valueTextWidgetKey: const Key('copiedFromPlaylistTitleKey'),
-                  context: context,
-                  label: AppLocalizations.of(context)!.copiedFromPlaylistLabel,
-                  value: (audio.copiedFromPlaylistTitle == null)
-                      ? ''
-                      : audio.copiedFromPlaylistTitle!),
-              createInfoRowFunction(
-                  valueTextWidgetKey: const Key('copiedToPlaylistTitleKey'),
-                  context: context,
-                  label: AppLocalizations.of(context)!.copiedToPlaylistLabel,
-                  value: (audio.copiedToPlaylistTitle == null)
-                      ? ''
-                      : audio.copiedToPlaylistTitle!),
-              createInfoRowFunction(
-                  context: context,
-                  label:
-                      AppLocalizations.of(context)!.audioDownloadDurationLabel,
-                  value: audio.audioDownloadDuration!.HHmmss()),
-              createInfoRowFunction(
-                  context: context,
-                  label: AppLocalizations.of(context)!.audioDownloadSpeedLabel,
-                  value: formatDownloadSpeed(
-                    context: context,
-                    audio: audio,
-                  )),
-              createInfoRowFunction(
-                  context: context,
-                  label: AppLocalizations.of(context)!.audioDurationLabel,
-                  value: audio.audioDuration!.HHmmss()),
-              createInfoRowFunction(
-                  context: context,
-                  label: AppLocalizations.of(context)!.audioPositionLabel,
-                  value:
-                      Duration(seconds: audio.audioPositionSeconds).HHmmss()),
-              createInfoRowFunction(
-                  valueTextWidgetKey: const Key('audioStateKey'),
-                  context: context,
-                  label: AppLocalizations.of(context)!.audioStateLabel,
-                  value: defineAudioStateStr(
-                    context: context,
-                    audio: audio,
-                  )),
-              createInfoRowFunction(
-                  context: context,
-                  label: AppLocalizations.of(context)!.audioPausedDateTimeLabel,
-                  value: (audio.audioPausedDateTime != null)
-                      ? frenchDateTimeFormat.format(audio.audioPausedDateTime!)
-                      : ''),
-              createInfoRowFunction(
-                  valueTextWidgetKey: const Key('audioFileNameKey'),
-                  context: context,
-                  label: AppLocalizations.of(context)!.audioFileNameLabel,
-                  value: audio.audioFileName),
-              createInfoRowFunction(
-                  context: context,
-                  label: AppLocalizations.of(context)!.audioFileSizeLabel,
-                  value: UiUtil.formatLargeIntValue(
-                    context: context,
-                    value: audio.audioFileSize,
-                  )),
-              createInfoRowFunction(
-                  context: context,
-                  label: AppLocalizations.of(context)!.isMusicQualityLabel,
-                  value: (audio.isAudioMusicQuality)
-                      ? AppLocalizations.of(context)!.yes
-                      : AppLocalizations.of(context)!.no),
-              createInfoRowFunction(
-                  context: context,
-                  label: AppLocalizations.of(context)!.audioPlaySpeedLabel,
-                  value: audio.audioPlaySpeed.toString()),
-              createInfoRowFunction(
-                  context: context,
-                  label: AppLocalizations.of(context)!.audioPlayVolumeLabel,
-                  value:
-                      '${(audio.audioPlayVolume * 100).toStringAsFixed(1)} %'),
-            ],
+            children: (audio.isAudioImported)
+                ? _createImportedAudioInfoLines(
+                    context,
+                  )
+                : _createNormalAudioInfoLines(
+                    context,
+                  ),
           ),
         ),
         actions: <Widget>[
@@ -194,6 +77,230 @@ class AudioInfoDialogWidget extends StatelessWidget with ScreenMixin {
         ],
       ),
     );
+  }
+
+  /// Creates the list of audio information lines for downloaded audios.
+  List<Widget> _createNormalAudioInfoLines(BuildContext context) {
+    return <Widget>[
+      createInfoRowFunction(
+          context: context,
+          label: AppLocalizations.of(context)!.originalVideoTitleLabel,
+          value: audio.originalVideoTitle),
+      createInfoRowFunction(
+          context: context,
+          label: AppLocalizations.of(context)!.videoUploadDateLabel,
+          value: frenchDateFormat.format(audio.videoUploadDate)),
+      createInfoRowFunction(
+          context: context,
+          label: AppLocalizations.of(context)!.audioDownloadDateTimeLabel,
+          value: frenchDateTimeFormat.format(audio.audioDownloadDateTime)),
+      createInfoRowFunction(
+          context: context,
+          label: AppLocalizations.of(context)!.videoUrlLabel,
+          value: audio.videoUrl),
+      createInfoRowFunction(
+          context: context,
+          label: AppLocalizations.of(context)!.compactVideoDescription,
+          value: audio.compactVideoDescription),
+      createInfoRowFunction(
+          valueTextWidgetKey: const Key('validVideoTitleKey'),
+          context: context,
+          label: AppLocalizations.of(context)!.validVideoTitleLabel,
+          value: audio.validVideoTitle),
+      createInfoRowFunction(
+          valueTextWidgetKey: const Key('enclosingPlaylistTitleKey'),
+          context: context,
+          label: AppLocalizations.of(context)!.enclosingPlaylistLabel,
+          value: (audio.enclosingPlaylist == null)
+              ? ''
+              : audio.enclosingPlaylist!.title),
+      createInfoRowFunction(
+          valueTextWidgetKey: const Key('movedFromPlaylistTitleKey'),
+          context: context,
+          label: AppLocalizations.of(context)!.movedFromPlaylistLabel,
+          value: (audio.movedFromPlaylistTitle == null)
+              ? ''
+              : audio.movedFromPlaylistTitle!),
+      createInfoRowFunction(
+          valueTextWidgetKey: const Key('movedToPlaylistTitleKey'),
+          context: context,
+          label: AppLocalizations.of(context)!.movedToPlaylistLabel,
+          value: (audio.movedToPlaylistTitle == null)
+              ? ''
+              : audio.movedToPlaylistTitle!),
+      createInfoRowFunction(
+          valueTextWidgetKey: const Key('copiedFromPlaylistTitleKey'),
+          context: context,
+          label: AppLocalizations.of(context)!.copiedFromPlaylistLabel,
+          value: (audio.copiedFromPlaylistTitle == null)
+              ? ''
+              : audio.copiedFromPlaylistTitle!),
+      createInfoRowFunction(
+          valueTextWidgetKey: const Key('copiedToPlaylistTitleKey'),
+          context: context,
+          label: AppLocalizations.of(context)!.copiedToPlaylistLabel,
+          value: (audio.copiedToPlaylistTitle == null)
+              ? ''
+              : audio.copiedToPlaylistTitle!),
+      createInfoRowFunction(
+          context: context,
+          label: AppLocalizations.of(context)!.audioDownloadDurationLabel,
+          value: audio.audioDownloadDuration!.HHmmss()),
+      createInfoRowFunction(
+          context: context,
+          label: AppLocalizations.of(context)!.audioDownloadSpeedLabel,
+          value: formatDownloadSpeed(
+            context: context,
+            audio: audio,
+          )),
+      createInfoRowFunction(
+          context: context,
+          label: AppLocalizations.of(context)!.audioDurationLabel,
+          value: audio.audioDuration!.HHmmss()),
+      createInfoRowFunction(
+          context: context,
+          label: AppLocalizations.of(context)!.audioPositionLabel,
+          value: Duration(seconds: audio.audioPositionSeconds).HHmmss()),
+      createInfoRowFunction(
+          valueTextWidgetKey: const Key('audioStateKey'),
+          context: context,
+          label: AppLocalizations.of(context)!.audioStateLabel,
+          value: defineAudioStateStr(
+            context: context,
+            audio: audio,
+          )),
+      createInfoRowFunction(
+          context: context,
+          label: AppLocalizations.of(context)!.audioPausedDateTimeLabel,
+          value: (audio.audioPausedDateTime != null)
+              ? frenchDateTimeFormat.format(audio.audioPausedDateTime!)
+              : ''),
+      createInfoRowFunction(
+          valueTextWidgetKey: const Key('audioFileNameKey'),
+          context: context,
+          label: AppLocalizations.of(context)!.audioFileNameLabel,
+          value: audio.audioFileName),
+      createInfoRowFunction(
+          context: context,
+          label: AppLocalizations.of(context)!.audioFileSizeLabel,
+          value: UiUtil.formatLargeIntValue(
+            context: context,
+            value: audio.audioFileSize,
+          )),
+      createInfoRowFunction(
+          context: context,
+          label: AppLocalizations.of(context)!.isMusicQualityLabel,
+          value: (audio.isAudioMusicQuality)
+              ? AppLocalizations.of(context)!.yes
+              : AppLocalizations.of(context)!.no),
+      createInfoRowFunction(
+          context: context,
+          label: AppLocalizations.of(context)!.audioPlaySpeedLabel,
+          value: audio.audioPlaySpeed.toString()),
+      createInfoRowFunction(
+          context: context,
+          label: AppLocalizations.of(context)!.audioPlayVolumeLabel,
+          value: '${(audio.audioPlayVolume * 100).toStringAsFixed(1)} %'),
+    ];
+  }
+
+  /// Creates the list of audio information lines for imported audios.
+  List<Widget> _createImportedAudioInfoLines(BuildContext context) {
+    return <Widget>[
+      createInfoRowFunction(
+          context: context,
+          label: AppLocalizations.of(context)!.importedAudioTitleLabel,
+          value: audio.originalVideoTitle),
+      createInfoRowFunction(
+          context: context,
+          label: AppLocalizations.of(context)!.importedAudioDateTimeLabel,
+          value: frenchDateTimeFormat.format(audio.audioDownloadDateTime)),
+      createInfoRowFunction(
+          context: context,
+          label: AppLocalizations.of(context)!.importedAudioUrlLabel,
+          value: audio.videoUrl),
+      createInfoRowFunction(
+          context: context,
+          label: AppLocalizations.of(context)!.importedAudioDescription,
+          value: audio.compactVideoDescription),
+      createInfoRowFunction(
+          valueTextWidgetKey: const Key('enclosingPlaylistTitleKey'),
+          context: context,
+          label: AppLocalizations.of(context)!.enclosingPlaylistLabel,
+          value: (audio.enclosingPlaylist == null)
+              ? ''
+              : audio.enclosingPlaylist!.title),
+      createInfoRowFunction(
+          valueTextWidgetKey: const Key('movedFromPlaylistTitleKey'),
+          context: context,
+          label: AppLocalizations.of(context)!.movedFromPlaylistLabel,
+          value: (audio.movedFromPlaylistTitle == null)
+              ? ''
+              : audio.movedFromPlaylistTitle!),
+      createInfoRowFunction(
+          valueTextWidgetKey: const Key('movedToPlaylistTitleKey'),
+          context: context,
+          label: AppLocalizations.of(context)!.movedToPlaylistLabel,
+          value: (audio.movedToPlaylistTitle == null)
+              ? ''
+              : audio.movedToPlaylistTitle!),
+      createInfoRowFunction(
+          valueTextWidgetKey: const Key('copiedFromPlaylistTitleKey'),
+          context: context,
+          label: AppLocalizations.of(context)!.copiedFromPlaylistLabel,
+          value: (audio.copiedFromPlaylistTitle == null)
+              ? ''
+              : audio.copiedFromPlaylistTitle!),
+      createInfoRowFunction(
+          valueTextWidgetKey: const Key('copiedToPlaylistTitleKey'),
+          context: context,
+          label: AppLocalizations.of(context)!.copiedToPlaylistLabel,
+          value: (audio.copiedToPlaylistTitle == null)
+              ? ''
+              : audio.copiedToPlaylistTitle!),
+      createInfoRowFunction(
+          context: context,
+          label: AppLocalizations.of(context)!.audioDurationLabel,
+          value: audio.audioDuration!.HHmmss()),
+      createInfoRowFunction(
+          context: context,
+          label: AppLocalizations.of(context)!.audioPositionLabel,
+          value: Duration(seconds: audio.audioPositionSeconds).HHmmss()),
+      createInfoRowFunction(
+          valueTextWidgetKey: const Key('audioStateKey'),
+          context: context,
+          label: AppLocalizations.of(context)!.audioStateLabel,
+          value: defineAudioStateStr(
+            context: context,
+            audio: audio,
+          )),
+      createInfoRowFunction(
+          context: context,
+          label: AppLocalizations.of(context)!.audioPausedDateTimeLabel,
+          value: (audio.audioPausedDateTime != null)
+              ? frenchDateTimeFormat.format(audio.audioPausedDateTime!)
+              : ''),
+      createInfoRowFunction(
+          valueTextWidgetKey: const Key('audioFileNameKey'),
+          context: context,
+          label: AppLocalizations.of(context)!.audioFileNameLabel,
+          value: audio.audioFileName),
+      createInfoRowFunction(
+          context: context,
+          label: AppLocalizations.of(context)!.audioFileSizeLabel,
+          value: UiUtil.formatLargeIntValue(
+            context: context,
+            value: audio.audioFileSize,
+          )),
+      createInfoRowFunction(
+          context: context,
+          label: AppLocalizations.of(context)!.audioPlaySpeedLabel,
+          value: audio.audioPlaySpeed.toString()),
+      createInfoRowFunction(
+          context: context,
+          label: AppLocalizations.of(context)!.audioPlayVolumeLabel,
+          value: '${(audio.audioPlayVolume * 100).toStringAsFixed(1)} %'),
+    ];
   }
 
   String formatDownloadSpeed({

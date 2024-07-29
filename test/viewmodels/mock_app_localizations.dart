@@ -1176,4 +1176,19 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get imported => "imported";
+
+  @override
+  String get audioImportedInfoDialogTitle => "Imported Audio Info";
+
+  @override
+  String get importedAudioTitleLabel => "Imported audio title";
+
+  @override
+  String get importedAudioDateTimeLabel => "Imported audio date time";
+
+  @override
+  String get importedAudioUrlLabel => "Imported audio URL";
+
+  @override
+  String get importedAudioDescriptionLabel => "Imported audio description";
 }

@@ -1,1 +1,9 @@
-{}
+{
+  "fr": [
+    "audioImportedInfoDialogTitle",
+    "importedAudioTitleLabel",
+    "importedAudioDateTimeLabel",
+    "importedAudioUrlLabel",
+    "importedAudioDescriptionLabel"
+  ]
+}

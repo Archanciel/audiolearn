@@ -383,8 +383,13 @@
   "playlistImportAudioMenuTooltip": "Import audio file(s) into the playlist in order to be able to listen them and add positionned comments to them.",
   "setPlaylistAudioPlaySpeedTooltip": "Set audio play speed for the playlist existing and next downloaded audio.",
   "audioNotImportedToLocalPlaylist": "Audio(s)\n\n{rejectedImportedAudioFileNames}\n\nNOT imported to local playlist \"{toPlaylistTitle}\" since the playlist directory already contains the audio(s).",
-  "audioNotImportedToYoutubePlaylist": "Audio(s)\n\n{rejectedImportedAudioFileNames}\n\nNOT imported to Youtube playlist \"{toPlaylistTitle}\" the playlist directory already contains the audio(s).",
+  "audioNotImportedToYoutubePlaylist": "Audio(s)\n\n{rejectedImportedAudioFileNames}\n\nNOT imported to Youtube playlist \"{toPlaylistTitle}\" since the playlist directory already contains the audio(s).",
   "audioImportedToLocalPlaylist": "Audio(s)\n\n{importedAudioFileNames}\n\nimported to local playlist \"{toPlaylistTitle}\".",
   "audioImportedToYoutubePlaylist": "Audio(s)\n\n{importedAudioFileNames}\n\nimported to Youtube playlist \"{toPlaylistTitle}\".",
-  "imported": "imported"
+  "imported": "imported",
+  "audioImportedInfoDialogTitle": "Imported Audio Info",
+  "importedAudioTitleLabel": "Imported audio title",
+  "importedAudioDateTimeLabel": "Imported audio date time",
+  "importedAudioUrlLabel": "Imported audio URL",
+  "importedAudioDescriptionLabel": "Imported audio description"
 }
