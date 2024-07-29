@@ -5,6 +5,7 @@ import 'package:audiolearn/models/audio.dart';
 import 'package:audiolearn/models/playlist.dart';
 import 'package:audiolearn/services/json_data_service.dart';
 import 'package:audiolearn/services/settings_data_service.dart';
+import 'package:audiolearn/utils/date_time_util.dart';
 import 'package:audiolearn/utils/dir_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -992,9 +993,10 @@ void main() {
     });
   });
   group('Import audio files in playlist', () {
-    test(
-        '''Import one not existing file and then reimport it so that it will not
-           be imported a second time.''', () async {
+    test('''Import one not existing file in playlist whose play speed is set
+           to 1.0 and then re-import it so that it will not be imported a
+           second time. Since the playlist play speed is defined, it will
+           be applied to the imported Audio.''', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -1032,8 +1034,8 @@ void main() {
       audioDownloadVM.loadExistingPlaylists();
 
       // Load Playlist from the json file
-      const String playListName = "Empty";
-      Playlist targetPlaylistEmpty = loadPlaylist(playListName);
+      const String targetPlayListName = "Empty";
+      Playlist targetPlaylistEmpty = loadPlaylist(targetPlayListName);
 
       expect(targetPlaylistEmpty.downloadedAudioLst.length, 0);
       expect(targetPlaylistEmpty.playableAudioLst.length, 0);
@@ -1063,6 +1065,98 @@ void main() {
         targetPlaylistDownloadedAudioListInitialLengh: 0,
         targetPlaylistPlayableAudioListFinalLengh: 1,
       );
+
+      final DateTime dateTimeNow = DateTime.now();
+
+      Audio expectedImportedAudio = Audio.fullConstructor(
+        enclosingPlaylist: targetPlaylistEmpty,
+        movedFromPlaylistTitle: null,
+        movedToPlaylistTitle: null,
+        copiedFromPlaylistTitle: null,
+        copiedToPlaylistTitle: null,
+        originalVideoTitle:
+            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+        compactVideoDescription: '',
+        validVideoTitle:
+            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+        videoUrl: '',
+        audioDownloadDateTime: dateTimeNow,
+        audioDownloadDuration: const Duration(microseconds: 0),
+        audioDownloadSpeed: 0,
+        videoUploadDate: dateTimeNow,
+        audioDuration: const Duration(milliseconds: 469000),
+        isAudioMusicQuality: false,
+        audioPlaySpeed: 1.0,
+        audioPlayVolume: 0.5,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        isPaused: true,
+        audioPausedDateTime: null,
+        audioPositionSeconds: 0,
+        audioFileName:
+            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher).mp3",
+        audioFileSize: 7509275,
+        isAudioImported: true,
+      );
+
+      Audio importedAudio = targetPlaylistEmpty.playableAudioLst[0];
+
+      expect(importedAudio.enclosingPlaylist,
+          expectedImportedAudio.enclosingPlaylist);
+      expect(importedAudio.movedFromPlaylistTitle,
+          expectedImportedAudio.movedFromPlaylistTitle);
+      expect(importedAudio.movedToPlaylistTitle,
+          expectedImportedAudio.movedToPlaylistTitle);
+      expect(importedAudio.copiedFromPlaylistTitle,
+          expectedImportedAudio.copiedFromPlaylistTitle);
+      expect(importedAudio.copiedToPlaylistTitle,
+          expectedImportedAudio.copiedToPlaylistTitle);
+      expect(importedAudio.originalVideoTitle,
+          expectedImportedAudio.originalVideoTitle);
+      expect(importedAudio.compactVideoDescription,
+          expectedImportedAudio.compactVideoDescription);
+      expect(
+          importedAudio.validVideoTitle, expectedImportedAudio.validVideoTitle);
+      expect(importedAudio.videoUrl, expectedImportedAudio.videoUrl);
+      expect(
+        DateTimeUtil.areDateTimesEqualWithinTolerance(
+          dateTimeOne: importedAudio.audioDownloadDateTime,
+          dateTimeTwo: expectedImportedAudio.audioDownloadDateTime,
+          toleranceInSeconds: 1,
+        ),
+        true,
+      );
+      expect(importedAudio.audioDownloadDuration,
+          expectedImportedAudio.audioDownloadDuration);
+      expect(importedAudio.audioDownloadSpeed,
+          expectedImportedAudio.audioDownloadSpeed);
+      expect(
+        DateTimeUtil.areDateTimesEqualWithinTolerance(
+          dateTimeOne: importedAudio.videoUploadDate,
+          dateTimeTwo: expectedImportedAudio.videoUploadDate,
+          toleranceInSeconds: 1,
+        ),
+        true,
+      );
+      expect(importedAudio.audioDuration, expectedImportedAudio.audioDuration);
+      expect(importedAudio.isAudioMusicQuality,
+          expectedImportedAudio.isAudioMusicQuality);
+      expect(
+          importedAudio.audioPlaySpeed, expectedImportedAudio.audioPlaySpeed);
+      expect(
+          importedAudio.audioPlayVolume, expectedImportedAudio.audioPlayVolume);
+      expect(
+          importedAudio.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd,
+          expectedImportedAudio
+              .isPlayingOrPausedWithPositionBetweenAudioStartAndEnd);
+      expect(importedAudio.isPaused, expectedImportedAudio.isPaused);
+      expect(importedAudio.audioPausedDateTime,
+          expectedImportedAudio.audioPausedDateTime);
+      expect(importedAudio.audioPositionSeconds,
+          expectedImportedAudio.audioPositionSeconds);
+      expect(importedAudio.audioFileName, expectedImportedAudio.audioFileName);
+      expect(importedAudio.audioFileSize, expectedImportedAudio.audioFileSize);
+      expect(
+          importedAudio.isAudioImported, expectedImportedAudio.isAudioImported);
 
       // Now import again the same file which now exists in the Empty
       // playlist
@@ -1126,8 +1220,8 @@ void main() {
       audioDownloadVM.loadExistingPlaylists();
 
       // Load Playlist from the json file
-      const String playListName = "Empty";
-      Playlist targetPlaylistEmpty = loadPlaylist(playListName);
+      const String targerPlayListName = "Empty";
+      Playlist targetPlaylistEmpty = loadPlaylist(targerPlayListName);
 
       expect(targetPlaylistEmpty.downloadedAudioLst.length, 0);
       expect(targetPlaylistEmpty.playableAudioLst.length, 0);
@@ -1231,8 +1325,8 @@ void main() {
       audioDownloadVM.loadExistingPlaylists();
 
       // Load Playlist from the json file
-      const String playListName = "Empty";
-      Playlist targetPlaylistEmpty = loadPlaylist(playListName);
+      const String targerPlayListName = "Empty";
+      Playlist targetPlaylistEmpty = loadPlaylist(targerPlayListName);
 
       expect(targetPlaylistEmpty.downloadedAudioLst.length, 0);
       expect(targetPlaylistEmpty.playableAudioLst.length, 0);
@@ -1257,14 +1351,17 @@ void main() {
       ];
 
       // Physically add two files to the target playlist directory
-      final String targetPlaylistDownloadPath = targetPlaylistEmpty.downloadPath;
+      final String targetPlaylistDownloadPath =
+          targetPlaylistEmpty.downloadPath;
       final String fileOnePathName =
           "$targetPlaylistDownloadPath${path.separator}$importedFileNameOne";
       final String fileTwoPathName =
           "$targetPlaylistDownloadPath${path.separator}$importedFileNameTwo";
-      File("$fileToImportDir${path.separator}$importedFileNameOne").absolute
+      File("$fileToImportDir${path.separator}$importedFileNameOne")
+          .absolute
           .copySync(fileOnePathName);
-      File("$fileToImportDir${path.separator}$importedFileNameTwo").absolute
+      File("$fileToImportDir${path.separator}$importedFileNameTwo")
+          .absolute
           .copySync(fileTwoPathName);
 
       // Import four files in the Empty playlist which already contains

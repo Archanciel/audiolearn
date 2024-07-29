@@ -1100,9 +1100,11 @@ class AudioDownloadVM extends ChangeNotifier {
 
     DateTime dateTimeNow = DateTime.now();
 
+    final String audioTitle = importedFileName.replaceFirst('.mp3', '');
+    
     Audio importedAudio = Audio(
       enclosingPlaylist: targetPlaylist,
-      originalVideoTitle: importedFileName,
+      originalVideoTitle: audioTitle,
       compactVideoDescription: '',
       videoUrl: '',
       audioDownloadDateTime: dateTimeNow,
