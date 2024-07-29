@@ -6,6 +6,7 @@ import 'package:audiolearn/models/playlist.dart';
 import 'package:audiolearn/services/json_data_service.dart';
 import 'package:audiolearn/services/settings_data_service.dart';
 import 'package:audiolearn/utils/dir_util.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path/path.dart' as path;
 
@@ -13,6 +14,7 @@ import 'package:audiolearn/viewmodels/audio_download_vm.dart';
 import 'package:audiolearn/viewmodels/warning_message_vm.dart';
 
 import '../services/mock_shared_preferences.dart';
+import 'mock_audio_download_vm.dart';
 
 void main() {
   group('Video description handling', () {
@@ -1017,7 +1019,10 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+      // Using MockAudioDownloadVM which inherits from AudioDownloadVM
+      // and overrides the getMp3DurationWithAudioPlayer() method so that
+      // the AudioPlayer plugin not usable in unit test is not instantiated.
+      AudioDownloadVM audioDownloadVM = MockAudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
         isTest: true,
@@ -1025,56 +1030,110 @@ void main() {
 
       audioDownloadVM.loadExistingPlaylists();
 
-      // Load Playlist from the file
+      // Load Playlist from the json file
       const String playListName = "Empty";
-      Playlist playlistEmpty = loadPlaylist(playListName);
+      Playlist targetPlaylistEmpty = loadPlaylist(playListName);
+
+      expect(targetPlaylistEmpty.downloadedAudioLst.length, 0);
+      expect(targetPlaylistEmpty.playableAudioLst.length, 0);
 
       String fileToImportDir =
           '$kPlaylistDownloadRootPathWindowsTest${path.separator}Files to import';
       const String importedFileNameOne =
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher).mp3";
-      List<String> filePathNameToImportLst = [
+      List<String> fileNamesToImportLst = [
+        importedFileNameOne,
+      ];
+      List<String> filePathNamesToImportLst = [
         "$fileToImportDir${path.separator}$importedFileNameOne",
       ];
 
       // Import one file in the Empty playlist
-      audioDownloadVM.importAudioFilesInPlaylist(
-        targetPlaylist: playlistEmpty,
-        filePathNameToImportLst: filePathNameToImportLst,
+      await audioDownloadVM.importAudioFilesInPlaylist(
+        targetPlaylist: targetPlaylistEmpty,
+        filePathNameToImportLst: filePathNamesToImportLst,
       );
 
       // Verify that the imported file physically exists in the target
       // playlist directory
-      String playListDownloadedDir =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}Empty";
-      final String importedFilePath =
-          "$playListDownloadedDir${path.separator}$importedFileNameOne";
-      expect(File(importedFilePath).existsSync(), true);
-
-      // Load Playlist from the file
-      playlistEmpty = loadPlaylist(playListName);
-
-      // Verify that the imported file exists in target playlist
-      // expect(playlistEmpty.downloadedAudioLst.length, 1);
-      // expect(playlistEmpty.downloadedAudioLst[0].audioFileName,
-      // "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher).mp3");
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
+      verifyImportedFilesPresence(
+        targetPlaylist: targetPlaylistEmpty,
+        importedFileNamesLst: fileNamesToImportLst,
+        targetPlaylistDownloadedAudioListInitialLengh: 0,
+        targetPlaylistPlayableAudioListInitialLengh: 0,
+      );
 
       // Now import again the same file which now exists in the Empty
       // playlist
-      audioDownloadVM.importAudioFilesInPlaylist(
-        targetPlaylist: playlistEmpty,
-        filePathNameToImportLst: filePathNameToImportLst,
+      await audioDownloadVM.importAudioFilesInPlaylist(
+        targetPlaylist: targetPlaylistEmpty,
+        filePathNameToImportLst: filePathNamesToImportLst,
       );
 
+      // Verify that the re-imported file has not been imported a second
+      // time
+      verifyImportedFilesPresence(
+        targetPlaylist: targetPlaylistEmpty,
+        importedFileNamesLst: [],
+        targetPlaylistDownloadedAudioListInitialLengh: 1,
+        targetPlaylistPlayableAudioListInitialLengh: 1,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     test('Import one existing file', () async {});
   });
+}
+
+void verifyImportedFilesPresence({
+  required Playlist targetPlaylist,
+  required List<String> importedFileNamesLst,
+  required int targetPlaylistDownloadedAudioListInitialLengh,
+  required int targetPlaylistPlayableAudioListInitialLengh,
+}) {
+  final String targetPlaylistDownloadPath = targetPlaylist.downloadPath;
+
+  for (String importedFileName in importedFileNamesLst) {
+    final String importedFilePathName =
+        "$targetPlaylistDownloadPath${path.separator}$importedFileName";
+
+    // Reloadoad Playlist from the file
+    targetPlaylist = loadPlaylist(targetPlaylist.title);
+
+    // Verify that the imported file physically exists in the target
+    // playlist directory
+    expect(File(importedFilePathName).existsSync(), true);
+
+    // Verify that the imported file is in the downloaded audio list
+    expect(
+      targetPlaylist
+          .downloadedAudioLst[
+              ++targetPlaylistDownloadedAudioListInitialLengh - 1]
+          .audioFileName,
+      importedFileName,
+    );
+
+    // Verify that the imported file is in the playable audio list
+    expect(
+      targetPlaylist.playableAudioLst[0].audioFileName,
+      importedFileName,
+    );
+
+    targetPlaylistPlayableAudioListInitialLengh++;
+  }
+
+  expect(
+    targetPlaylist.downloadedAudioLst.length,
+    targetPlaylistDownloadedAudioListInitialLengh,
+  );
+  expect(
+    targetPlaylist.playableAudioLst.length,
+    targetPlaylistPlayableAudioListInitialLengh,
+  );
 }
 
 Playlist loadPlaylist(String playListOneName) {

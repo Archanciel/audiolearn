@@ -1094,7 +1094,7 @@ class AudioDownloadVM extends ChangeNotifier {
     required String targetFilePathName,
     required String importedFileName,
   }) async {
-    Duration? importedAudioDuration = await _getMp3DurationWithAudioPlayer(
+    Duration? importedAudioDuration = await getMp3DurationWithAudioPlayer(
       filePathName: targetFilePathName,
     );
 
@@ -1125,7 +1125,10 @@ class AudioDownloadVM extends ChangeNotifier {
     return importedAudio;
   }
 
-  Future<Duration?> _getMp3DurationWithAudioPlayer({
+  /// This method is not private since it is redifined in the
+  /// MockAudioDownloadVM so that the importAudioFilesInPlaylist()
+  /// method can be tested by the unit test.
+  Future<Duration?> getMp3DurationWithAudioPlayer({
     required String filePathName,
   }) async {
     AudioPlayer audioPlayer = AudioPlayer();

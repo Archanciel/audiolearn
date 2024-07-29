@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:audiolearn/models/audio.dart';
 import 'package:audiolearn/models/playlist.dart';
 import 'package:audiolearn/viewmodels/audio_download_vm.dart';
@@ -7,6 +9,13 @@ import 'package:audiolearn/viewmodels/warning_message_vm.dart';
 /// It exists because when executing integration tests, using
 /// YoutubeExplode to get a Youtube playlist in order to obtain
 /// the playlist title is not possible.
+///
+/// It is also useful in unit tests to test the AudioDownloadVM
+/// importAudioFilesInPlaylist() method. Since this method uses
+/// the Flutter AudioPlayer plugin, it is not possible to test
+/// it in a unit test. The MockAudioDownloadVM redifines the
+/// getMp3DurationWithAudioPlayer() method in order to avoid to
+/// instantiate the AudioPlayer plugin.
 class MockAudioDownloadVM extends AudioDownloadVM {
   String _youtubePlaylistTitle = '';
   set youtubePlaylistTitle(String youtubePlaylistTitle) {
@@ -79,5 +88,24 @@ class MockAudioDownloadVM extends AudioDownloadVM {
     notifyListeners();
 
     return true;
+  }
+
+  /// This method is redifined in the MockAudioDownloadVM so that the
+  /// AudioDownloadVM.importAudioFilesInPlaylist() method can be unit
+  /// tested.
+  @override
+  Future<Duration?> getMp3DurationWithAudioPlayer({
+    required String filePathName,
+  }) async {
+    final File file = File(filePathName);
+
+    if (!await file.exists()) {
+      throw FileSystemException("File not found", filePathName);
+    }
+
+    final int fileSizeBytes = await file.length();
+    final int fileDurationSeconds = (fileSizeBytes * 8) ~/ (128 * 1000);
+
+    return Duration(seconds: fileDurationSeconds);
   }
 }
