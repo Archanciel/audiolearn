@@ -994,9 +994,9 @@ void main() {
   });
   group('Import audio files in playlist', () {
     test('''Import one not existing file in playlist whose play speed is set
-           to 1.0 and then re-import it so that it will not be imported a
-           second time. Since the playlist play speed is defined, it will
-           be applied to the imported Audio.''', () async {
+            to 1.0 and then re-import it so that it will not be imported a
+            second time. Since the playlist play speed is defined, it will
+            be applied to the imported Audio.''', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -1033,7 +1033,8 @@ void main() {
       // Initializing the audioDownloadVM
       audioDownloadVM.loadExistingPlaylists();
 
-      // Load Playlist from the json file
+      // Load Playlist from the json file. The play speed of this playlist is
+      // defined. 
       const String targetPlayListName = "Empty";
       Playlist targetPlaylistEmpty = loadPlaylist(targetPlayListName);
 
@@ -1064,6 +1065,7 @@ void main() {
         importedFileNamesLst: importedFileNamesLst,
         targetPlaylistDownloadedAudioListInitialLengh: 0,
         targetPlaylistPlayableAudioListFinalLengh: 1,
+        initialPlayableListLengh: 0,
       );
 
       final DateTime dateTimeNow = DateTime.now();
@@ -1100,63 +1102,8 @@ void main() {
 
       Audio importedAudio = targetPlaylistEmpty.playableAudioLst[0];
 
-      expect(importedAudio.enclosingPlaylist,
-          expectedImportedAudio.enclosingPlaylist);
-      expect(importedAudio.movedFromPlaylistTitle,
-          expectedImportedAudio.movedFromPlaylistTitle);
-      expect(importedAudio.movedToPlaylistTitle,
-          expectedImportedAudio.movedToPlaylistTitle);
-      expect(importedAudio.copiedFromPlaylistTitle,
-          expectedImportedAudio.copiedFromPlaylistTitle);
-      expect(importedAudio.copiedToPlaylistTitle,
-          expectedImportedAudio.copiedToPlaylistTitle);
-      expect(importedAudio.originalVideoTitle,
-          expectedImportedAudio.originalVideoTitle);
-      expect(importedAudio.compactVideoDescription,
-          expectedImportedAudio.compactVideoDescription);
-      expect(
-          importedAudio.validVideoTitle, expectedImportedAudio.validVideoTitle);
-      expect(importedAudio.videoUrl, expectedImportedAudio.videoUrl);
-      expect(
-        DateTimeUtil.areDateTimesEqualWithinTolerance(
-          dateTimeOne: importedAudio.audioDownloadDateTime,
-          dateTimeTwo: expectedImportedAudio.audioDownloadDateTime,
-          toleranceInSeconds: 1,
-        ),
-        true,
-      );
-      expect(importedAudio.audioDownloadDuration,
-          expectedImportedAudio.audioDownloadDuration);
-      expect(importedAudio.audioDownloadSpeed,
-          expectedImportedAudio.audioDownloadSpeed);
-      expect(
-        DateTimeUtil.areDateTimesEqualWithinTolerance(
-          dateTimeOne: importedAudio.videoUploadDate,
-          dateTimeTwo: expectedImportedAudio.videoUploadDate,
-          toleranceInSeconds: 1,
-        ),
-        true,
-      );
-      expect(importedAudio.audioDuration, expectedImportedAudio.audioDuration);
-      expect(importedAudio.isAudioMusicQuality,
-          expectedImportedAudio.isAudioMusicQuality);
-      expect(
-          importedAudio.audioPlaySpeed, expectedImportedAudio.audioPlaySpeed);
-      expect(
-          importedAudio.audioPlayVolume, expectedImportedAudio.audioPlayVolume);
-      expect(
-          importedAudio.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd,
-          expectedImportedAudio
-              .isPlayingOrPausedWithPositionBetweenAudioStartAndEnd);
-      expect(importedAudio.isPaused, expectedImportedAudio.isPaused);
-      expect(importedAudio.audioPausedDateTime,
-          expectedImportedAudio.audioPausedDateTime);
-      expect(importedAudio.audioPositionSeconds,
-          expectedImportedAudio.audioPositionSeconds);
-      expect(importedAudio.audioFileName, expectedImportedAudio.audioFileName);
-      expect(importedAudio.audioFileSize, expectedImportedAudio.audioFileSize);
-      expect(
-          importedAudio.isAudioImported, expectedImportedAudio.isAudioImported);
+      // Verify that the audio fields are correct
+      verifyAudioFields(importedAudio, expectedImportedAudio);
 
       // Now import again the same file which now exists in the Empty
       // playlist
@@ -1173,6 +1120,144 @@ void main() {
         targetPlaylistDownloadedAudioListInitialLengh:
             1, // final length in fact
         targetPlaylistPlayableAudioListFinalLengh: 1,
+        initialPlayableListLengh: 0,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    test('''Import one not existing file in playlist whose play speed is set
+            to 0.0, which means not defined and then re-import it so that it will
+            not be imported a second time. Since the playlist play speed is not
+            defined, the playlist default play speed defined in the settings.json
+            file will be applied to the imported Audio.''', () async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}import_audio_file_test",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+      WarningMessageVM warningMessageVM = WarningMessageVM();
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+        isTest: true,
+      );
+
+      // necessary, otherwise audioDownloadVM won't be able to load
+      // the existing playlists and the test will fail
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+      // Using MockAudioDownloadVM which inherits from AudioDownloadVM
+      // and overrides the getMp3DurationWithAudioPlayer() method so that
+      // the AudioPlayer plugin not usable in unit test is not instantiated.
+      AudioDownloadVM audioDownloadVM = MockAudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+        isTest: true,
+      );
+
+      // Initializing the audioDownloadVM
+      audioDownloadVM.loadExistingPlaylists();
+
+      // Load Playlist from the json file. The play speed of this playlist is
+      // not defined. 
+      const String targetPlayListName = "S8 audio";
+      Playlist targetPlaylistEmpty = loadPlaylist(targetPlayListName);
+
+      expect(targetPlaylistEmpty.downloadedAudioLst.length, 10);
+      expect(targetPlaylistEmpty.playableAudioLst.length, 2);
+
+      String fileToImportDir =
+          '$kPlaylistDownloadRootPathWindowsTest${path.separator}Files to import';
+      const String importedFileNameOne =
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher).mp3";
+      List<String> importedFileNamesLst = [
+        importedFileNameOne,
+      ];
+      List<String> filePathNamesToImportLst = [
+        "$fileToImportDir${path.separator}$importedFileNameOne",
+      ];
+
+      // Import one file in the Empty playlist
+      await audioDownloadVM.importAudioFilesInPlaylist(
+        targetPlaylist: targetPlaylistEmpty,
+        filePathNameToImportLst: filePathNamesToImportLst,
+      );
+
+      // Verify that the imported file physically exists in the target
+      // playlist directory and in the downloaded and playable audio lists
+      verifyImportedFilesPresence(
+        targetPlaylist: targetPlaylistEmpty,
+        importedFileNamesLst: importedFileNamesLst,
+        targetPlaylistDownloadedAudioListInitialLengh: 10,
+        targetPlaylistPlayableAudioListFinalLengh: 3,
+        initialPlayableListLengh: 2,
+      );
+
+      final DateTime dateTimeNow = DateTime.now();
+
+      Audio expectedImportedAudio = Audio.fullConstructor(
+        enclosingPlaylist: targetPlaylistEmpty,
+        movedFromPlaylistTitle: null,
+        movedToPlaylistTitle: null,
+        copiedFromPlaylistTitle: null,
+        copiedToPlaylistTitle: null,
+        originalVideoTitle:
+            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+        compactVideoDescription: '',
+        validVideoTitle:
+            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+        videoUrl: '',
+        audioDownloadDateTime: dateTimeNow,
+        audioDownloadDuration: const Duration(microseconds: 0),
+        audioDownloadSpeed: 0,
+        videoUploadDate: dateTimeNow,
+        audioDuration: const Duration(milliseconds: 469000),
+        isAudioMusicQuality: false,
+        audioPlaySpeed: 1.5,
+        audioPlayVolume: 0.5,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        isPaused: true,
+        audioPausedDateTime: null,
+        audioPositionSeconds: 0,
+        audioFileName:
+            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher).mp3",
+        audioFileSize: 7509275,
+        isAudioImported: true,
+      );
+
+      Audio importedAudio = targetPlaylistEmpty.playableAudioLst[0];
+
+      // Verify that the audio fields are correct
+      verifyAudioFields(importedAudio, expectedImportedAudio);
+
+      // Now import again the same file which now exists in the Empty
+      // playlist
+      await audioDownloadVM.importAudioFilesInPlaylist(
+        targetPlaylist: targetPlaylistEmpty,
+        filePathNameToImportLst: filePathNamesToImportLst,
+      );
+
+      // Verify that the re-imported file has not been imported a second
+      // time
+      verifyImportedFilesPresence(
+        targetPlaylist: targetPlaylistEmpty,
+        importedFileNamesLst: [],
+        targetPlaylistDownloadedAudioListInitialLengh:
+            11, // final length in fact
+        targetPlaylistPlayableAudioListFinalLengh: 3,
+        initialPlayableListLengh: 2,
       );
 
       // Purge the test playlist directory so that the created test
@@ -1182,7 +1267,7 @@ void main() {
       );
     });
     test('''Import four not existing files and then reimport them so that they
-           will not be imported a second time.''', () async {
+            will not be imported a second time.''', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -1260,6 +1345,7 @@ void main() {
         importedFileNamesLst: importedFileNamesLst,
         targetPlaylistDownloadedAudioListInitialLengh: 0,
         targetPlaylistPlayableAudioListFinalLengh: 4,
+        initialPlayableListLengh: 0,
       );
 
       // Now import again the same file which now exists in the Empty
@@ -1277,6 +1363,7 @@ void main() {
         targetPlaylistDownloadedAudioListInitialLengh:
             4, // final length in fact
         targetPlaylistPlayableAudioListFinalLengh: 4,
+        initialPlayableListLengh: 0,
       );
 
       // Purge the test playlist directory so that the created test
@@ -1378,6 +1465,7 @@ void main() {
         importedFileNamesLst: importedFileNamesLst,
         targetPlaylistDownloadedAudioListInitialLengh: 0,
         targetPlaylistPlayableAudioListFinalLengh: 2,
+        initialPlayableListLengh: 0,
       );
 
       // Now import again the same file which now exists in the Empty
@@ -1395,6 +1483,7 @@ void main() {
         targetPlaylistDownloadedAudioListInitialLengh:
             2, // final length in fact
         targetPlaylistPlayableAudioListFinalLengh: 2,
+        initialPlayableListLengh: 0,
       );
 
       // Purge the test playlist directory so that the created test
@@ -1406,11 +1495,68 @@ void main() {
   });
 }
 
+void verifyAudioFields(Audio importedAudio, Audio expectedImportedAudio) {
+  expect(
+      importedAudio.enclosingPlaylist, expectedImportedAudio.enclosingPlaylist);
+  expect(importedAudio.movedFromPlaylistTitle,
+      expectedImportedAudio.movedFromPlaylistTitle);
+  expect(importedAudio.movedToPlaylistTitle,
+      expectedImportedAudio.movedToPlaylistTitle);
+  expect(importedAudio.copiedFromPlaylistTitle,
+      expectedImportedAudio.copiedFromPlaylistTitle);
+  expect(importedAudio.copiedToPlaylistTitle,
+      expectedImportedAudio.copiedToPlaylistTitle);
+  expect(importedAudio.originalVideoTitle,
+      expectedImportedAudio.originalVideoTitle);
+  expect(importedAudio.compactVideoDescription,
+      expectedImportedAudio.compactVideoDescription);
+  expect(importedAudio.validVideoTitle, expectedImportedAudio.validVideoTitle);
+  expect(importedAudio.videoUrl, expectedImportedAudio.videoUrl);
+  expect(
+    DateTimeUtil.areDateTimesEqualWithinTolerance(
+      dateTimeOne: importedAudio.audioDownloadDateTime,
+      dateTimeTwo: expectedImportedAudio.audioDownloadDateTime,
+      toleranceInSeconds: 1,
+    ),
+    true,
+  );
+  expect(importedAudio.audioDownloadDuration,
+      expectedImportedAudio.audioDownloadDuration);
+  expect(importedAudio.audioDownloadSpeed,
+      expectedImportedAudio.audioDownloadSpeed);
+  expect(
+    DateTimeUtil.areDateTimesEqualWithinTolerance(
+      dateTimeOne: importedAudio.videoUploadDate,
+      dateTimeTwo: expectedImportedAudio.videoUploadDate,
+      toleranceInSeconds: 1,
+    ),
+    true,
+  );
+  expect(importedAudio.audioDuration, expectedImportedAudio.audioDuration);
+  expect(importedAudio.isAudioMusicQuality,
+      expectedImportedAudio.isAudioMusicQuality);
+  expect(importedAudio.audioPlaySpeed, expectedImportedAudio.audioPlaySpeed);
+  expect(importedAudio.audioPlayVolume, expectedImportedAudio.audioPlayVolume);
+  expect(
+      importedAudio.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd,
+      expectedImportedAudio
+          .isPlayingOrPausedWithPositionBetweenAudioStartAndEnd);
+  expect(importedAudio.isPaused, expectedImportedAudio.isPaused);
+  expect(importedAudio.audioPausedDateTime,
+      expectedImportedAudio.audioPausedDateTime);
+  expect(importedAudio.audioPositionSeconds,
+      expectedImportedAudio.audioPositionSeconds);
+  expect(importedAudio.audioFileName, expectedImportedAudio.audioFileName);
+  expect(importedAudio.audioFileSize, expectedImportedAudio.audioFileSize);
+  expect(importedAudio.isAudioImported, expectedImportedAudio.isAudioImported);
+}
+
 void verifyImportedFilesPresence({
   required Playlist targetPlaylist,
   required List<String> importedFileNamesLst,
   required int targetPlaylistDownloadedAudioListInitialLengh,
   required int targetPlaylistPlayableAudioListFinalLengh,
+  required int initialPlayableListLengh,
 }) {
   final String targetPlaylistDownloadPath = targetPlaylist.downloadPath;
 
@@ -1437,7 +1583,7 @@ void verifyImportedFilesPresence({
     // Verify that the imported file is in the playable audio list
     expect(
       targetPlaylist
-          .playableAudioLst[--targetPlaylistPlayableAudioListFinalLengh]
+          .playableAudioLst[--targetPlaylistPlayableAudioListFinalLengh - initialPlayableListLengh]
           .audioFileName,
       importedFileName,
     );
