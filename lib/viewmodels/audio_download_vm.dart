@@ -53,9 +53,6 @@ class AudioDownloadVM extends ChangeNotifier {
   bool _isDownloading = false;
   bool get isDownloading => _isDownloading;
 
-  bool _isImporting = false;
-  bool get isImporting => _isImporting;
-
   double _downloadProgress = 0.0;
   double get downloadProgress => _downloadProgress;
 
@@ -132,9 +129,9 @@ class AudioDownloadVM extends ChangeNotifier {
       notifyListeners();
     }
 
-  //  notifyListeners(); not necessary since the unique
-  //                     Consumer<AudioDownloadVM> is not concerned
-  //                     by the _listOfPlaylist changes
+    //  notifyListeners(); not necessary since the unique
+    //                     Consumer<AudioDownloadVM> is not concerned
+    //                     by the _listOfPlaylist changes
   }
 
   Future<Playlist?> addPlaylist({
@@ -297,7 +294,12 @@ class AudioDownloadVM extends ChangeNotifier {
         // playlist with the same title is created in order
         // to replace the old one which contains too many
         // audios.
-        _updateYoutubePlaylisrUrl(playlistIndex, playlistUrl, playlistId, playlistTitle);
+        _updateYoutubePlaylisrUrl(
+          playlistIndex: playlistIndex,
+          playlistId: playlistId,
+          playlistUrl: playlistUrl,
+          playlistTitle: playlistTitle,
+        );
 
         // since the playlist was not added, but updated, null
         // is returned to avoid that the playlist is added to
@@ -332,7 +334,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
   /// This method handles the case where the user wants to update
   /// the url of a Youtube playlist.
-  /// 
+  ///
   /// After having been used a lot by the user, the Youtube playlist
   /// may contain too many videos. Removing manually the already listened
   /// videos from the Youtube playlist takes too much time. Instead, the
@@ -343,12 +345,17 @@ class AudioDownloadVM extends ChangeNotifier {
   /// where the new Youtube playlist has the same title than the deleted
   /// or renamed Youtube playlist. In this case, the existing application
   /// playlist is updated with the new Youtube playlist url and id.
-  void _updateYoutubePlaylisrUrl(int playlistIndex, String playlistUrl, String playlistId, String playlistTitle) {
+  void _updateYoutubePlaylisrUrl({
+    required int playlistIndex,
+    required String playlistId,
+    required String playlistUrl,
+    required String playlistTitle,
+  }) {
     Playlist updatedPlaylist = _listOfPlaylist[playlistIndex];
     updatedPlaylist.url = playlistUrl;
     updatedPlaylist.id = playlistId;
     warningMessageVM.updatedPlaylistTitle = playlistTitle;
-    
+
     JsonDataService.saveToFile(
       model: updatedPlaylist,
       path: updatedPlaylist.getPlaylistDownloadFilePathName(),
@@ -469,6 +476,8 @@ class AudioDownloadVM extends ChangeNotifier {
         break;
       }
 
+      // Download the audio file
+
       Stopwatch stopwatch = Stopwatch()..start();
 
       if (!_isDownloading) {
@@ -476,8 +485,6 @@ class AudioDownloadVM extends ChangeNotifier {
 
         notifyListeners();
       }
-
-      // Download the audio file
 
       final Audio audio = Audio(
         enclosingPlaylist: currentPlaylist,
@@ -1146,6 +1153,10 @@ class AudioDownloadVM extends ChangeNotifier {
     return importedAudio;
   }
 
+  /// This method is called by the PlaylistListVM when the user selects
+  /// the "Import audio files to playlist" playlist menu item.
+  /// This method is called by the PlaylistListVM when the user selects
+  /// the "Import audio files to playlist" playlist menu item.
   /// This method is not private since it is redifined in the
   /// MockAudioDownloadVM so that the importAudioFilesInPlaylist()
   /// method can be tested by the unit test.
@@ -1436,6 +1447,8 @@ class AudioDownloadVM extends ChangeNotifier {
     );
   }
 
+  /// Downloads the audio file from the Youtube video and saves it
+  /// to the enclosing playlist directory.
   Future<void> _youtubeDownloadAudioFile(
     Audio audio,
     yt.AudioOnlyStreamInfo audioStreamInfo,
@@ -1452,8 +1465,11 @@ class AudioDownloadVM extends ChangeNotifier {
     DateTime lastUpdate = DateTime.now();
     Timer timer = Timer.periodic(updateInterval, (timer) {
       if (DateTime.now().difference(lastUpdate) >= updateInterval) {
-        _updateDownloadProgress(totalBytesDownloaded / audioFileSize,
-            totalBytesDownloaded - previousSecondBytesDownloaded);
+        _updateDownloadProgress(
+          progress: totalBytesDownloaded / audioFileSize,
+          lastSecondDownloadSpeed:
+              totalBytesDownloaded - previousSecondBytesDownloaded,
+        );
         previousSecondBytesDownloaded = totalBytesDownloaded;
         lastUpdate = DateTime.now();
       }
@@ -1462,11 +1478,13 @@ class AudioDownloadVM extends ChangeNotifier {
     await for (var byteChunk in audioStream) {
       totalBytesDownloaded += byteChunk.length;
 
-      // Vérifiez si le délai a été dépassé avant de mettre à jour la
-      // progression
+      // Check if the deadline has been exceeded before updating the
+      // progress
       if (DateTime.now().difference(lastUpdate) >= updateInterval) {
-        _updateDownloadProgress(totalBytesDownloaded / audioFileSize,
-            totalBytesDownloaded - previousSecondBytesDownloaded);
+        _updateDownloadProgress(
+            progress: totalBytesDownloaded / audioFileSize,
+            lastSecondDownloadSpeed:
+                totalBytesDownloaded - previousSecondBytesDownloaded);
         previousSecondBytesDownloaded = totalBytesDownloaded;
         lastUpdate = DateTime.now();
       }
@@ -1474,9 +1492,12 @@ class AudioDownloadVM extends ChangeNotifier {
       audioFileSink.add(byteChunk);
     }
 
-    // Assurez-vous de mettre à jour la progression une dernière fois
-    // à 100% avant de terminer
-    _updateDownloadProgress(1.0, 0);
+    // Make sure to update the progress one last time to 100% before
+    // finishing
+    _updateDownloadProgress(
+      progress: 1.0,
+      lastSecondDownloadSpeed: 0,
+    );
 
     // Annulez le Timer pour éviter les appels inutiles
     timer.cancel();
@@ -1485,7 +1506,10 @@ class AudioDownloadVM extends ChangeNotifier {
     await audioFileSink.close();
   }
 
-  void _updateDownloadProgress(double progress, int lastSecondDownloadSpeed) {
+  void _updateDownloadProgress({
+    required double progress,
+    required int lastSecondDownloadSpeed,
+  }) {
     _downloadProgress = progress;
     _lastSecondDownloadSpeed = lastSecondDownloadSpeed;
 
