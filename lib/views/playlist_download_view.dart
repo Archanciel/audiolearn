@@ -237,6 +237,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     }
   }
 
+  /// 
   Consumer<AudioDownloadVM> _buildDisplayDownloadProgressionInfo() {
     return Consumer<AudioDownloadVM>(
       builder: (context, audioDownloadVM, child) {

@@ -53,6 +53,9 @@ class AudioDownloadVM extends ChangeNotifier {
   bool _isDownloading = false;
   bool get isDownloading => _isDownloading;
 
+  bool _isImporting = false;
+  bool get isImporting => _isImporting;
+
   double _downloadProgress = 0.0;
   double get downloadProgress => _downloadProgress;
 
@@ -340,7 +343,8 @@ class AudioDownloadVM extends ChangeNotifier {
   }
 
   /// Downloads the audio of the videos referenced in the passed
-  /// playlist.
+  /// playlist url. If the audio of a video has already been
+  /// downloaded, it will not be downloaded again.
   Future<void> downloadPlaylistAudios({
     required String playlistUrl,
   }) async {
@@ -358,7 +362,7 @@ class AudioDownloadVM extends ChangeNotifier {
     _stopDownloadPressed = false;
     _youtubeExplode ??= yt.YoutubeExplode();
 
-    // get Youtube playlist
+    // get the Youtube playlist
     String? playlistId = yt.PlaylistId.parsePlaylistId(playlistUrl);
     yt.Playlist youtubePlaylist;
 
@@ -390,6 +394,8 @@ class AudioDownloadVM extends ChangeNotifier {
 
     String playlistTitle = youtubePlaylist.title;
 
+    // Handling the case where the Youtube playlist was deleted or
+    // renamed and a new playlist with the same title was created.
     Playlist currentPlaylist = await _addPlaylistIfNotExist(
       playlistUrl: playlistUrl,
       playlistQuality: PlaylistQuality.voice,

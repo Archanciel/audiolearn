@@ -294,7 +294,7 @@ class PlaylistListVM extends ChangeNotifier {
                 .firstWhere((element) => element.title == localPlaylistTitle);
         // User clicked on Add button but the playlist with this title
         // was already defined since it is in the selectable playlist
-        // list. Since orElse is not defined, firstWhere throws an error
+        // list. Since orElse is not defined, firstWhere throws an exception
         // if the playlist with this title is not found.
         _warningMessageVM.setLocalPlaylistAlreadyCreatedTitle(
             playlistTitle: playlistWithThisTitleAlreadyDownloaded.title,
@@ -312,6 +312,9 @@ class PlaylistListVM extends ChangeNotifier {
       return false;
     }
 
+    // This code here is executed if the playlist url was not found
+    // in the _listOfSelectablePlaylists and an exceptipon was thrown
+    // (see above the empty catch block).
     Playlist? addedPlaylist = await _audioDownloadVM.addPlaylist(
       playlistUrl: playlistUrl,
       localPlaylistTitle: localPlaylistTitle,
