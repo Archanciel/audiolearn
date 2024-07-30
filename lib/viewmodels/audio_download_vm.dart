@@ -132,9 +132,9 @@ class AudioDownloadVM extends ChangeNotifier {
       notifyListeners();
     }
 
-//    notifyListeners(); not necessary since the unique
-//                       Consumer<AudioDownloadVM> is not concerned
-//                       by the _listOfPlaylist changes
+  //  notifyListeners(); not necessary since the unique
+  //                     Consumer<AudioDownloadVM> is not concerned
+  //                     by the _listOfPlaylist changes
   }
 
   Future<Playlist?> addPlaylist({
@@ -178,7 +178,7 @@ class AudioDownloadVM extends ChangeNotifier {
   /// playlist and so, if this logic is modified, it
   /// will be modified in only one place and will be
   /// applied to the MockAudioDownloadVM as well and so
-  /// will tested by the integration test.
+  /// will be tested by the integration test.
   Future<Playlist?> addPlaylistCallableAlsoByMock({
     String playlistUrl = '',
     String localPlaylistTitle = '',
@@ -186,10 +186,6 @@ class AudioDownloadVM extends ChangeNotifier {
     String? mockYoutubePlaylistTitle,
   }) async {
     Playlist addedPlaylist;
-
-    // those two variables are used by the
-    // ExpandablePlaylistListView UI to show a message
-    warningMessageVM.updatedPlaylistTitle = '';
 
     if (localPlaylistTitle.isNotEmpty) {
       // handling creation of a local playlist
@@ -301,15 +297,7 @@ class AudioDownloadVM extends ChangeNotifier {
         // playlist with the same title is created in order
         // to replace the old one which contains too many
         // audios.
-        Playlist updatedPlaylist = _listOfPlaylist[playlistIndex];
-        updatedPlaylist.url = playlistUrl;
-        updatedPlaylist.id = playlistId;
-        warningMessageVM.updatedPlaylistTitle = playlistTitle;
-
-        JsonDataService.saveToFile(
-          model: updatedPlaylist,
-          path: updatedPlaylist.getPlaylistDownloadFilePathName(),
-        );
+        _updateYoutubePlaylisrUrl(playlistIndex, playlistUrl, playlistId, playlistTitle);
 
         // since the playlist was not added, but updated, null
         // is returned to avoid that the playlist is added to
@@ -340,6 +328,31 @@ class AudioDownloadVM extends ChangeNotifier {
     );
 
     return addedPlaylist;
+  }
+
+  /// This method handles the case where the user wants to update
+  /// the url of a Youtube playlist.
+  /// 
+  /// After having been used a lot by the user, the Youtube playlist
+  /// may contain too many videos. Removing manually the already listened
+  /// videos from the Youtube playlist takes too much time. Instead, the
+  /// too big Youtube playlist is deleted or is renamed and a new Youtube
+  /// playlist with the same title is created. The new Youtube playlist is
+  /// then added in the application. The method is called by the
+  /// AudioDownloadVM.addPlaylistCallableAlsoByMock() method in the case
+  /// where the new Youtube playlist has the same title than the deleted
+  /// or renamed Youtube playlist. In this case, the existing application
+  /// playlist is updated with the new Youtube playlist url and id.
+  void _updateYoutubePlaylisrUrl(int playlistIndex, String playlistUrl, String playlistId, String playlistTitle) {
+    Playlist updatedPlaylist = _listOfPlaylist[playlistIndex];
+    updatedPlaylist.url = playlistUrl;
+    updatedPlaylist.id = playlistId;
+    warningMessageVM.updatedPlaylistTitle = playlistTitle;
+    
+    JsonDataService.saveToFile(
+      model: updatedPlaylist,
+      path: updatedPlaylist.getPlaylistDownloadFilePathName(),
+    );
   }
 
   /// Downloads the audio of the videos referenced in the passed
@@ -1107,7 +1120,7 @@ class AudioDownloadVM extends ChangeNotifier {
     DateTime dateTimeNow = DateTime.now();
 
     final String audioTitle = importedFileName.replaceFirst('.mp3', '');
-    
+
     Audio importedAudio = Audio(
       enclosingPlaylist: targetPlaylist,
       originalVideoTitle: audioTitle,
