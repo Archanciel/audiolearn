@@ -263,14 +263,18 @@ class PlaylistListVM extends ChangeNotifier {
                 .firstWhere((element) => element.url == playlistUrl);
         // User clicked on Add button but the playlist with this url
         // was already downloaded since it is in the selectable playlist
-        // list. Since orElse is not defined, firstWhere throws an error
+        // list. Since orElse is not defined, firstWhere throws an exception
         // if the playlist with this url is not found.
         _warningMessageVM.setPlaylistAlreadyDownloadedTitle(
             playlistTitle: playlistWithThisUrlAlreadyDownloaded.title);
+
         return false;
       } catch (_) {
-        // If the playlist with this url is not found, it means that
-        // the playlist must be added.
+        // Here, the playlist with this url was not found. This means that
+        // the Youtube playlist must be added. Since the _audioDownloadVM.
+        // addPlaylist() method is asynchronous, the code which uses it can
+        // not be included on the firstWhere.onElse: parameter and instead
+        // is located after this if {...} block.
       }
     } else if (localPlaylistTitle.isNotEmpty) {
       if (localPlaylistTitle.contains(',')) {
@@ -302,7 +306,7 @@ class PlaylistListVM extends ChangeNotifier {
         return false;
       } catch (_) {
         // If the playlist with this title is not found, it means that
-        // the playlist must be added.
+        // the playlist must be added. Since the
       }
     } else {
       // If both playlistUrl and localPlaylistTitle are empty, it means
@@ -312,9 +316,9 @@ class PlaylistListVM extends ChangeNotifier {
       return false;
     }
 
-    // This code here is executed if the playlist url was not found
-    // in the _listOfSelectablePlaylists and an exceptipon was thrown
-    // (see above the empty catch block).
+    // This code here is executed if the Youtube playlist url was not
+    // found in the _listOfSelectablePlaylists and an exceptipon was
+    // thrown (see above the empty firstWhere catch block).
     Playlist? addedPlaylist = await _audioDownloadVM.addPlaylist(
       playlistUrl: playlistUrl,
       localPlaylistTitle: localPlaylistTitle,

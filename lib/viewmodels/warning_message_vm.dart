@@ -10,11 +10,11 @@ enum WarningMessageType {
   errorMessage, // An error message depending on error type is
   // displayed.
 
-  updatedPlaylistUrlTitle, // This means that the playlist was not added, but
-  // that its url was updated. The case when a new
-  // playlist with the same title is created in order
-  // to replace the old one which contains too many
-  // audios.
+  updatedPlaylistUrlTitle, // This means that the playlist
+  // was not added, but that its url was updated. The case
+  // when a new Voutube playlist with the identical title was
+  // created in order to replace the old one which contained
+  // too many videos.
 
   addPlaylistTitle, // The playlist with this title is added
   // to the application.
