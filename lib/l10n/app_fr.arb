@@ -388,5 +388,10 @@
   "audioNotImportedToYoutubePlaylist": "Le(s) audio(s)\n\n{rejectedImportedAudioFileNames}\n\nn'ont pas été importés vers la playlist Youtube \"{toPlaylistTitle}\" car ils sont déjà présents dans son répertoire.",
   "audioImportedToLocalPlaylist": "Le(s) audio(s)\n\n{importedAudioFileNames}\n\nont été importés vers la playlist locale \"{toPlaylistTitle}\".",
   "audioImportedToYoutubePlaylist": "Le(s) audio(s)\n\n{importedAudioFileNames}\n\nont été importés vers la playlist Youtube \"{toPlaylistTitle}\".",
-  "imported": "importé"
+  "imported": "importé",
+  "audioImportedInfoDialogTitle": "Informations sur l'audio importé",
+  "importedAudioTitleLabel": "Titre audio",
+  "importedAudioDateTimeLabel": "Date/heure import",
+  "importedAudioUrlLabel": "URL audio importé",
+  "importedAudioDescriptionLabel": "Description audio importé"
 }
