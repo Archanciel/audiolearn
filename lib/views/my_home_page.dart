@@ -12,9 +12,7 @@ import '../views/widgets/appbar_application_right_popup_menu_widget.dart';
 import '../views/screen_mixin.dart';
 import '../views/playlist_download_view.dart';
 import '../views/audio_player_view.dart';
-import 'audio_extractor_view.dart';
 import '../views/widgets/appbar_title_for_playlist_download_view.dart';
-import 'widgets/appbar_title_for_audio_extractor_view.dart';
 import 'widgets/appbar_title_for_audio_player_view.dart';
 
 /// Before enclosing Scaffold in MyHomePage, this exception was
