@@ -1,6 +1,7 @@
 import 'package:audiolearn/models/audio.dart';
 import 'package:audiolearn/utils/date_time_util.dart';
 import 'package:audiolearn/utils/duration_expansion.dart';
+import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -108,84 +109,15 @@ class _PlaylistCommentListAddDialogWidgetState
                 playlistAudiosCommentsMap.keys.toList();
             audioFileNamesLst.sort((a, b) => a.compareTo(b));
 
-            List<Widget> generateCommentWidgets() {
-              AudioPlayerVM audioPlayerVMlistenFalse =
-                  Provider.of<AudioPlayerVM>(context, listen: false);
-              List<Widget> widgets = [];
-
-              for (String audioFileName in audioFileNamesLst) {
-                // Display the audio file name
-                widgets.add(
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Text(
-                      DateTimeUtil.removeDateTimeElementsFromFileName(
-                        audioFileName,
-                      ),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
-                );
-
-                for (Comment comment
-                    in playlistAudiosCommentsMap[audioFileName]!) {
-                  widgets.add(
-                    GestureDetector(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 2),
-                            child:
-                                _buildCommentTitlePlusIconsAndCommentDatesAndPosition(
-                              audioPlayerVMlistenFalse:
-                                  audioPlayerVMlistenFalse,
-                              audioFileNameNoExt: audioFileName,
-                              commentVM: commentVM,
-                              maxDropdownWidth: maxDropdownWidth,
-                              comment: comment,
-                            ),
-                          ),
-                          if (comment.content.isNotEmpty)
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 12),
-                              // comment content Text
-                              child: Text(
-                                key: const Key('commentTextKey'),
-                                comment.content,
-                              ),
-                            ),
-                        ],
-                      ),
-                      onTap: () async {
-                        if (audioPlayerVMlistenFalse.isPlaying &&
-                            _playingComment != comment) {
-                          // if the user clicks on a comment while another
-                          // comment is playing, the playing comment is paused.
-                          // Otherwise, the edited comment keeps playing.
-                          await audioPlayerVMlistenFalse.pause();
-                        }
-
-                        await _closeDialogAndOpenCommentAddEditDialog(
-                          context: context,
-                          audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
-                          audioFileNameNoExt: audioFileName,
-                          comment: comment,
-                        );
-                      },
-                    ),
-                  );
-                }
-              }
-              return widgets;
-            }
-
             return SingleChildScrollView(
               child: ListBody(
-                children: generateCommentWidgets(),
+                children: _buildPlaylistAudiosCommentsList(
+                  commentVM: commentVM,
+                  playlistAudiosCommentsMap: playlistAudiosCommentsMap,
+                  audioFileNamesLst: audioFileNamesLst,
+                  maxDropdownWidth: maxDropdownWidth,
+                  isDarkTheme: themeProviderVM.currentTheme == AppTheme.dark,
+                ),
               ),
             );
           },
@@ -206,6 +138,104 @@ class _PlaylistCommentListAddDialogWidgetState
         ],
       ),
     );
+  }
+
+  List<Widget> _buildPlaylistAudiosCommentsList({
+    required CommentVM commentVM,
+    required Map<String, List<Comment>> playlistAudiosCommentsMap,
+    required List<String> audioFileNamesLst,
+    required double maxDropdownWidth,
+    required bool isDarkTheme,
+  }) {
+    AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
+      context,
+      listen: false,
+    );
+    String currentAudioFileName = widget.currentPlaylist
+        .getCurrentOrLastlyPlayedAudioContainedInPlayableAudioLst()!
+        .audioFileName;
+    currentAudioFileName = currentAudioFileName.substring(0, currentAudioFileName.length - 4,);
+
+    List<Widget> widgets = [];
+    Color? audioTitleTextColor;
+    Color? audioTitleBackgroundColor;
+
+    for (String audioFileName in audioFileNamesLst) {
+      if (audioFileName == currentAudioFileName) {
+        audioTitleTextColor = Colors.white;
+        audioTitleBackgroundColor = Colors.blue;
+      } else {
+        audioTitleTextColor = (isDarkTheme)
+            ? kSliderThumbColorInDarkMode
+            : kSliderThumbColorInLightMode;
+        audioTitleBackgroundColor = null;
+      }
+      // Display the audio file name
+      widgets.add(
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Text(
+            DateTimeUtil.removeDateTimeElementsFromFileName(
+              audioFileName,
+            ),
+            style: TextStyle(
+              color: audioTitleTextColor,
+              backgroundColor: audioTitleBackgroundColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+        ),
+      );
+
+      for (Comment comment in playlistAudiosCommentsMap[audioFileName]!) {
+        widgets.add(
+          GestureDetector(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 2),
+                  child: _buildCommentTitlePlusIconsAndCommentDatesAndPosition(
+                    audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+                    audioFileNameNoExt: audioFileName,
+                    commentVM: commentVM,
+                    maxDropdownWidth: maxDropdownWidth,
+                    comment: comment,
+                  ),
+                ),
+                if (comment.content.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    // comment content Text
+                    child: Text(
+                      key: const Key('commentTextKey'),
+                      comment.content,
+                    ),
+                  ),
+              ],
+            ),
+            onTap: () async {
+              if (audioPlayerVMlistenFalse.isPlaying &&
+                  _playingComment != comment) {
+                // if the user clicks on a comment while another
+                // comment is playing, the playing comment is paused.
+                // Otherwise, the edited comment keeps playing.
+                await audioPlayerVMlistenFalse.pause();
+              }
+
+              await _closeDialogAndOpenCommentAddEditDialog(
+                context: context,
+                audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+                audioFileNameNoExt: audioFileName,
+                comment: comment,
+              );
+            },
+          ),
+        );
+      }
+    }
+    return widgets;
   }
 
   Widget _buildCommentTitlePlusIconsAndCommentDatesAndPosition({
@@ -412,7 +442,6 @@ class _PlaylistCommentListAddDialogWidgetState
     required CommentVM commentVM,
     required Comment comment,
   }) async {
-
     Audio currentAudio = widget.currentPlaylist.getAudioByFileNameNoExt(
       audioFileNameNoExt: audioFileNameNoExt,
     )!;
