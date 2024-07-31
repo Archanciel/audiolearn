@@ -1700,17 +1700,32 @@ class _AudioSortFilterDialogWidgetState
 
     return SortingOption.values.where((SortingOption value) {
       // Exclude certain options based on the app view type
-      return !(widget.audioLearnAppViewType ==
-              AudioLearnAppViewType.audioPlayerView &&
-          // below, SortingOption's excluded when the sort/filter dialog
+      return (widget.audioLearnAppViewType ==
+              AudioLearnAppViewType.playlistDownloadView)
+          ?
+          // SortingOption excluded when the sort/filter dialog
+          // is opened in the playlist download view.
+          //
+          // Excluding the audio enclosing playlist title option
+          // since currently the audios of only one playlist are
+          // displayed in the playlist download view. So, sorting
+          // by playlist title is not relevant.
+          !(value == SortingOption.audioEnclosingPlaylistTitle)
+          :
+          // SortingOption's excluded when the sort/filter dialog
           // is opened in the audio play view
-          (value == SortingOption.audioDownloadSpeed ||
+          //
+          // Excluding the audio enclosing playlist title option
+          // since currently the audios of only one playlist are
+          // displayed in the playlist download view. So, sorting
+          // by playlist title is not relevant.
+          !(value == SortingOption.audioDownloadSpeed ||
               value == SortingOption.audioDownloadDuration ||
               value == SortingOption.audioEnclosingPlaylistTitle ||
               value == SortingOption.audioFileSize ||
               value == SortingOption.validAudioTitle ||
               value == SortingOption.audioMusicQuality ||
-              value == SortingOption.videoUrl));
+              value == SortingOption.videoUrl);
     }).map<DropdownMenuItem<SortingOption>>((SortingOption value) {
       return DropdownMenuItem<SortingOption>(
         value: value,
