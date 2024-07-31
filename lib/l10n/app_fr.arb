@@ -390,7 +390,7 @@
   "audioImportedToYoutubePlaylist": "Le(s) audio(s)\n\n{importedAudioFileNames}\n\nont été importés vers la playlist Youtube \"{toPlaylistTitle}\".",
   "imported": "importé",
   "audioImportedInfoDialogTitle": "Informations sur l'audio importé",
-  "importedAudioTitleLabel": "Titre audio",
+  "audioTitleLabel": "Titre audio",
   "importedAudioDateTimeLabel": "Date/heure import",
   "importedAudioUrlLabel": "URL audio importé",
   "importedAudioDescriptionLabel": "Description audio importé"

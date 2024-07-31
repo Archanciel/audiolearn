@@ -56,7 +56,7 @@ class AudioInfoDialogWidget extends StatelessWidget with ScreenMixin {
                 ? _createImportedAudioInfoLines(
                     context,
                   )
-                : _createNormalAudioInfoLines(
+                : _createDownloadedAudioInfoLines(
                     context,
                   ),
           ),
@@ -80,7 +80,7 @@ class AudioInfoDialogWidget extends StatelessWidget with ScreenMixin {
   }
 
   /// Creates the list of audio information lines for downloaded audios.
-  List<Widget> _createNormalAudioInfoLines(BuildContext context) {
+  List<Widget> _createDownloadedAudioInfoLines(BuildContext context) {
     return <Widget>[
       createInfoRowFunction(
           context: context,
@@ -209,7 +209,7 @@ class AudioInfoDialogWidget extends StatelessWidget with ScreenMixin {
     return <Widget>[
       createInfoRowFunction(
           context: context,
-          label: AppLocalizations.of(context)!.importedAudioTitleLabel,
+          label: AppLocalizations.of(context)!.audioTitleLabel,
           value: audio.originalVideoTitle),
       createInfoRowFunction(
           context: context,

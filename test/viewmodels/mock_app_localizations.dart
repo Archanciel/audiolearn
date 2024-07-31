@@ -1181,7 +1181,7 @@ class MockAppLocalizations extends AppLocalizations {
   String get audioImportedInfoDialogTitle => "Imported Audio Info";
 
   @override
-  String get importedAudioTitleLabel => "Imported audio title";
+  String get audioTitleLabel => "Imported audio title";
 
   @override
   String get importedAudioDateTimeLabel => "Imported audio date time";

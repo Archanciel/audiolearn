@@ -388,7 +388,7 @@
   "audioImportedToYoutubePlaylist": "Audio(s)\n\n{importedAudioFileNames}\n\nimported to Youtube playlist \"{toPlaylistTitle}\".",
   "imported": "imported",
   "audioImportedInfoDialogTitle": "Imported Audio Info",
-  "importedAudioTitleLabel": "Audio title",
+  "audioTitleLabel": "Audio title",
   "importedAudioDateTimeLabel": "Imported audio date time",
   "importedAudioUrlLabel": "Imported audio URL",
   "importedAudioDescriptionLabel": "Audio description"
