@@ -39,10 +39,14 @@ class _PlaylistCommentListDialogWidgetState
     extends State<PlaylistCommentListDialogWidget> with ScreenMixin {
   final FocusNode _focusNodeDialog = FocusNode();
   Comment? _playingComment;
+  final ScrollController _scrollController = ScrollController();
+  late int _currentCommentIndex;
+  final double _itemHeight = 70.0;
 
   @override
   void dispose() {
     _focusNodeDialog.dispose();
+    _scrollController.dispose();
 
     super.dispose();
   }
@@ -106,6 +110,7 @@ class _PlaylistCommentListDialogWidgetState
             audioFileNamesLst.sort((a, b) => a.compareTo(b));
 
             return SingleChildScrollView(
+              controller: _scrollController,
               child: ListBody(
                 children: _buildPlaylistAudiosCommentsList(
                   commentVM: commentVM,
@@ -136,6 +141,23 @@ class _PlaylistCommentListDialogWidgetState
     );
   }
 
+  void _computeCuttentCommentIndex({
+    required Map<String, List<Comment>> playlistAudiosCommentsMap,
+    required List<String> audioFileNamesLst,
+    required String currentAudioFileName,
+  }) {
+    _currentCommentIndex = 0;
+
+    for (String audioFileName in audioFileNamesLst) {
+      // Adding the comments number correspomding to the audioFileName
+        _currentCommentIndex += playlistAudiosCommentsMap[audioFileName]!.length;
+
+      if (audioFileName == currentAudioFileName) {
+        return;
+      }
+    }
+  }
+
   List<Widget> _buildPlaylistAudiosCommentsList({
     required CommentVM commentVM,
     required Map<String, List<Comment>> playlistAudiosCommentsMap,
@@ -153,6 +175,12 @@ class _PlaylistCommentListDialogWidgetState
     currentAudioFileName = currentAudioFileName.substring(
       0,
       currentAudioFileName.length - 4,
+    );
+
+    _computeCuttentCommentIndex(
+      playlistAudiosCommentsMap: playlistAudiosCommentsMap,
+      audioFileNamesLst: audioFileNamesLst,
+      currentAudioFileName: currentAudioFileName,
     );
 
     List<Widget> widgets = [];
@@ -234,6 +262,9 @@ class _PlaylistCommentListDialogWidgetState
         );
       }
     }
+
+    _scrollToCurrentAudioItem();
+
     return widgets;
   }
 
@@ -503,5 +534,41 @@ class _PlaylistCommentListDialogWidgetState
       rewindAudioPositionBasedOnPauseDuration: false,
       isCommentPlaying: true,
     );
+  }
+
+  void _scrollToCurrentAudioItem() {
+    if (_currentCommentIndex <= 4) {
+      // this avoids scrolling down when the currenz audio is
+      // in the top part of the audio list. Without that, the
+      // list is unusefully scrolled down and the user has to scroll
+      // up to see top audios
+      return;
+    }
+
+    double multiplier = _currentCommentIndex.toDouble();
+
+    if (_currentCommentIndex > 300) {
+      multiplier *= 1.23;
+    } else if (_currentCommentIndex > 200) {
+      multiplier *= 1.21;
+    } else if (_currentCommentIndex > 120) {
+      multiplier *= 1.2;
+    }
+
+    double offset = multiplier * _itemHeight;
+
+    if (_scrollController.hasClients) {
+      _scrollController.jumpTo(0.0);
+      _scrollController.animateTo(
+        offset,
+        duration: const Duration(seconds: 1),
+        curve: Curves.easeInOut,
+      );
+    } else {
+      // The scroll controller isn't attached to any scroll views.
+      // Schedule a callback to try again after the next frame.
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) => _scrollToCurrentAudioItem());
+    }
   }
 }

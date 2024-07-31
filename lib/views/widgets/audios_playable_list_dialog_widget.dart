@@ -35,13 +35,9 @@ class _AudioPlayableListDialogWidgetState
   final FocusNode _focusNodeDialog = FocusNode();
 
   bool _excludeFullyPlayedAudios = false;
-
   final ScrollController _scrollController = ScrollController();
-
   late int _currentAudioIndex;
-
   final double _itemHeight = 70.0;
-
   bool _backToAllAudios = false;
 
   @override
@@ -353,7 +349,7 @@ class _AudioPlayableListDialogWidgetState
 
   void _scrollToCurrentAudioItem() {
     if (_currentAudioIndex <= 4) {
-      // this avoids scrolling down when the currenz audio is
+      // this avoids scrolling down when the current audio is
       // in the top part of the audio list. Without that, the
       // list is unusefully scrolled down and the user has to scroll
       // up to see top audios

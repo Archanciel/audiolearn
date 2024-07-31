@@ -1219,7 +1219,8 @@ class AudioDownloadVM extends ChangeNotifier {
       path: enclosingPlaylist.getPlaylistDownloadFilePathName(),
     );
 
-    if (enclosingPlaylist.playlistType == PlaylistType.youtube) {
+    if (enclosingPlaylist.playlistType == PlaylistType.youtube &&
+        !audio.isAudioImported) {
       if (audio.movedFromPlaylistTitle == null &&
           audio.copiedFromPlaylistTitle == null) {
         // the case if the audio was not moved or copied from
