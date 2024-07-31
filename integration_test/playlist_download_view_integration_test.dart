@@ -2913,7 +2913,7 @@ void main() {
       // First, tap on the source audio ListTile to open the
       // audio player view
       await tester.tap(sourceAudioListTileWidgetFinder);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // Verify that the comment icon button is highlighted. This indiquates
       // that a comment exist for the audio
