@@ -18,28 +18,25 @@ import 'confirm_action_dialog_widget.dart';
 import 'comment_add_edit_dialog_widget.dart';
 
 /// This widget displays a dialog with the list of positionned
-/// comment added to the current audio.
+/// comment of the audio contained in the playlist.
 ///
 /// When a comment is clicked, this opens a dialog to edit the
 /// comment.
-///
-/// Additionally, a button 'plus' is displayed to add a new
-/// positionned comment.
-class PlaylistCommentListAddDialogWidget extends StatefulWidget {
+class PlaylistCommentListDialogWidget extends StatefulWidget {
   final Playlist currentPlaylist;
 
-  const PlaylistCommentListAddDialogWidget({
+  const PlaylistCommentListDialogWidget({
     super.key,
     required this.currentPlaylist,
   });
 
   @override
-  State<PlaylistCommentListAddDialogWidget> createState() =>
-      _PlaylistCommentListAddDialogWidgetState();
+  State<PlaylistCommentListDialogWidget> createState() =>
+      _PlaylistCommentListDialogWidgetState();
 }
 
-class _PlaylistCommentListAddDialogWidgetState
-    extends State<PlaylistCommentListAddDialogWidget> with ScreenMixin {
+class _PlaylistCommentListDialogWidgetState
+    extends State<PlaylistCommentListDialogWidget> with ScreenMixin {
   final FocusNode _focusNodeDialog = FocusNode();
   Comment? _playingComment;
 
@@ -153,7 +150,10 @@ class _PlaylistCommentListAddDialogWidgetState
     String currentAudioFileName = widget.currentPlaylist
         .getCurrentOrLastlyPlayedAudioContainedInPlayableAudioLst()!
         .audioFileName;
-    currentAudioFileName = currentAudioFileName.substring(0, currentAudioFileName.length - 4,);
+    currentAudioFileName = currentAudioFileName.substring(
+      0,
+      currentAudioFileName.length - 4,
+    );
 
     List<Widget> widgets = [];
     Color? audioTitleTextColor;

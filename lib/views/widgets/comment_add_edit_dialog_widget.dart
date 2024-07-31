@@ -12,7 +12,7 @@ import '../../viewmodels/theme_provider_vm.dart';
 import '../../views/screen_mixin.dart';
 import '../../utils/duration_expansion.dart';
 import 'comment_list_add_dialog_widget.dart';
-import 'playlist_comment_list_add_dialog_widget.dart';
+import 'playlist_comment_list_dialog_widget.dart';
 import 'set_value_to_target_dialog_widget.dart';
 
 enum CallerDialog {
@@ -751,7 +751,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
               currentAudio: audioPlayerVM.currentAudio!,
             );
           case CallerDialog.playlistCommentListAddDialog:
-            return PlaylistCommentListAddDialogWidget(
+            return PlaylistCommentListDialogWidget(
               currentPlaylist: audioPlayerVM.currentAudio!.enclosingPlaylist!,
             );
         }

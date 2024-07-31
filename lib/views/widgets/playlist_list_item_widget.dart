@@ -16,7 +16,7 @@ import '../../viewmodels/warning_message_vm.dart';
 import '../screen_mixin.dart';
 import 'application_snackbar.dart';
 import 'confirm_action_dialog_widget.dart';
-import 'playlist_comment_list_add_dialog_widget.dart';
+import 'playlist_comment_list_dialog_widget.dart';
 import 'playlist_info_dialog_widget.dart';
 import 'audio_set_speed_dialog_widget.dart';
 
@@ -196,8 +196,7 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                         // passing the current audio to the dialog instead
                         // of initializing a private _currentAudio variable
                         // in the dialog avoid integr test problems
-                        builder: (context) =>
-                            PlaylistCommentListAddDialogWidget(
+                        builder: (context) => PlaylistCommentListDialogWidget(
                           currentPlaylist: playlist,
                         ),
                       );
