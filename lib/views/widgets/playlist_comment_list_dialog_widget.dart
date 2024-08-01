@@ -141,23 +141,6 @@ class _PlaylistCommentListDialogWidgetState
     );
   }
 
-  void _computeCuttentCommentIndex({
-    required Map<String, List<Comment>> playlistAudiosCommentsMap,
-    required List<String> audioFileNamesLst,
-    required String currentAudioFileName,
-  }) {
-    _currentCommentIndex = 0;
-
-    for (String audioFileName in audioFileNamesLst) {
-      // Adding the comments number correspomding to the audioFileName
-        _currentCommentIndex += playlistAudiosCommentsMap[audioFileName]!.length;
-
-      if (audioFileName == currentAudioFileName) {
-        return;
-      }
-    }
-  }
-
   List<Widget> _buildPlaylistAudiosCommentsList({
     required CommentVM commentVM,
     required Map<String, List<Comment>> playlistAudiosCommentsMap,
@@ -177,15 +160,10 @@ class _PlaylistCommentListDialogWidgetState
       currentAudioFileName.length - 4,
     );
 
-    _computeCuttentCommentIndex(
-      playlistAudiosCommentsMap: playlistAudiosCommentsMap,
-      audioFileNamesLst: audioFileNamesLst,
-      currentAudioFileName: currentAudioFileName,
-    );
-
     List<Widget> widgets = [];
     Color? audioTitleTextColor;
     Color? audioTitleBackgroundColor;
+    int currentCommentIndex = 0;
 
     for (String audioFileName in audioFileNamesLst) {
       if (audioFileName == currentAudioFileName) {
@@ -215,7 +193,16 @@ class _PlaylistCommentListDialogWidgetState
         ),
       );
 
-      for (Comment comment in playlistAudiosCommentsMap[audioFileName]!) {
+      // Adding the comments number correspomding to the audioFileName
+      List<Comment> audioCommentsLst =
+          playlistAudiosCommentsMap[audioFileName]!;
+      currentCommentIndex += audioCommentsLst.length;
+
+      if (audioFileName == currentAudioFileName) {
+        _currentCommentIndex = currentCommentIndex;
+      }
+
+      for (Comment comment in audioCommentsLst) {
         widgets.add(
           GestureDetector(
             child: Column(
