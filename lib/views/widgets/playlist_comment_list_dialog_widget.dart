@@ -236,13 +236,11 @@ class _PlaylistCommentListDialogWidgetState
                     text: comment.title,
                   ));
 
-          previousCurrentCommentLineNumber +=
-              (1 + // 2 dates + position line after the comment title
-                  computeTextLineNumber(
-                    context: context,
-                    textStyle: commentContentTextStyle,
-                    text: comment.content,
-                  ));
+          previousCurrentCommentLineNumber += computeTextLineNumber(
+            context: context,
+            textStyle: commentContentTextStyle,
+            text: comment.content,
+          );
         }
 
         widgets.add(
