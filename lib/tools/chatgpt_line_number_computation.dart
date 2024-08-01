@@ -56,7 +56,10 @@ class HomePage extends StatelessWidget {
     String text =
         "First comment.\n\nChatGPT is a chatbot and virtual assistant developed by OpenAI and launched on November 30, 2022. Based on large language models (LLMs), it enables users to refine and steer a conversation towards a desired length, format, style, level of detail, and language. Successive user prompts and replies are considered at each conversation stage as context.";
 
-    int lineCount = calculateTextLines(context, text);
+    int lineNumber = computeTextLineNumber(
+      context: context,
+      text: text,
+    );
 
     return Scaffold(
       appBar: AppBar(title: const Text('Text Line Calculation')),
@@ -82,15 +85,20 @@ class HomePage extends StatelessWidget {
               },
             );
           },
-          child: Text('Show Dialog ($lineCount lines)'),
+          child: Text('Show Dialog ($lineNumber lines)'),
         ),
       ),
     );
   }
 
-  int calculateTextLines(BuildContext context, String text) {
+  int computeTextLineNumber({
+    required BuildContext context,
+    required String text,
+  }) {
     // Define your TextStyle
-    TextStyle style = TextStyle(fontSize: fontSizeConst,);
+    TextStyle style = TextStyle(
+      fontSize: fontSizeConst,
+    );
 
     // Create TextSpan with your text
     TextSpan textSpan = TextSpan(text: text, style: style);
@@ -109,8 +117,8 @@ class HomePage extends StatelessWidget {
     textPainter.layout(maxWidth: maxWidth);
 
     // Calculate the number of lines required
-    int lineCount = textPainter.computeLineMetrics().length;
+    int lineNumber = textPainter.computeLineMetrics().length;
 
-    return lineCount; // Add 1 for the last line
+    return lineNumber; // Add 1 for the last line
   }
 }

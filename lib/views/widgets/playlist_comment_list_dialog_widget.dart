@@ -41,6 +41,7 @@ class _PlaylistCommentListDialogWidgetState
   Comment? _playingComment;
   final ScrollController _scrollController = ScrollController();
   late int _currentCommentIndex;
+  int _previousCurrentCommentLineNumber = 0;
   final double _itemHeight = 70.0;
 
   @override
@@ -154,6 +155,15 @@ class _PlaylistCommentListDialogWidgetState
       currentAudioFileName.length - 4,
     );
 
+    const TextStyle commentTitleTextStyle = const TextStyle(
+      fontSize: kAudioTitleFontSize,
+      fontWeight: FontWeight.bold,
+    );
+
+    const TextStyle commentContentTextStyle = const TextStyle(
+      fontSize: kAudioTitleFontSize,
+    );
+
     List<Widget> widgets = [];
     Color? audioTitleTextColor;
     Color? audioTitleBackgroundColor;
@@ -170,20 +180,26 @@ class _PlaylistCommentListDialogWidgetState
             : kSliderThumbColorInLightMode;
         audioTitleBackgroundColor = null;
       }
+
       // Display the audio file name
+      final String commentedAudioTitle =
+          DateTimeUtil.removeDateTimeElementsFromFileName(
+        audioFileName,
+      );
+
+      final TextStyle commentedAudioTitleTextStyle = TextStyle(
+        color: audioTitleTextColor,
+        backgroundColor: audioTitleBackgroundColor,
+        fontWeight: FontWeight.bold,
+        fontSize: kCommentedAudioTitleFontSize,
+      );
+
       widgets.add(
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: Text(
-            DateTimeUtil.removeDateTimeElementsFromFileName(
-              audioFileName,
-            ),
-            style: TextStyle(
-              color: audioTitleTextColor,
-              backgroundColor: audioTitleBackgroundColor,
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
+            commentedAudioTitle,
+            style: commentedAudioTitleTextStyle,
           ),
         ),
       );
@@ -191,13 +207,44 @@ class _PlaylistCommentListDialogWidgetState
       // Adding the comments number correspomding to the audioFileName
       List<Comment> audioCommentsLst =
           playlistAudiosCommentsMap[audioFileName]!;
+
       currentCommentIndex += audioCommentsLst.length;
+      previousCurrentCommentLineNumber +=
+          (1 + // empty line after the commented audio title
+              computeTextLineNumber(
+                context: context,
+                textStyle: commentedAudioTitleTextStyle,
+                text: commentedAudioTitle,
+              ));
 
       if (audioFileName == currentAudioFileName) {
         _currentCommentIndex = currentCommentIndex;
+        _previousCurrentCommentLineNumber = previousCurrentCommentLineNumber;
       }
 
       for (Comment comment in audioCommentsLst) {
+        if (_previousCurrentCommentLineNumber == 0) {
+          // This means that the current audio comments have not yet been
+          // reached. In this situation, the comments title and content line
+          // number must be added to the previousCurrentCommentLineNumber.
+
+          previousCurrentCommentLineNumber +=
+              (1 + // 2 dates + position line after the comment title
+                  computeTextLineNumber(
+                    context: context,
+                    textStyle: commentTitleTextStyle,
+                    text: comment.title,
+                  ));
+
+          previousCurrentCommentLineNumber +=
+              (1 + // 2 dates + position line after the comment title
+                  computeTextLineNumber(
+                    context: context,
+                    textStyle: commentContentTextStyle,
+                    text: comment.content,
+                  ));
+        }
+
         widgets.add(
           GestureDetector(
             child: Column(
@@ -207,6 +254,7 @@ class _PlaylistCommentListDialogWidgetState
                   padding: const EdgeInsets.only(bottom: 2),
                   child: _buildCommentTitlePlusIconsAndCommentDatesAndPosition(
                     audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+                    commentTitleTextStyle: commentTitleTextStyle,
                     audioFileNameNoExt: audioFileName,
                     commentVM: commentVM,
                     comment: comment,
@@ -219,6 +267,7 @@ class _PlaylistCommentListDialogWidgetState
                     child: Text(
                       key: const Key('commentTextKey'),
                       comment.content,
+                      style: commentContentTextStyle,
                     ),
                   ),
               ],
@@ -249,8 +298,36 @@ class _PlaylistCommentListDialogWidgetState
     return widgets;
   }
 
+  int computeTextLineNumber({
+    required BuildContext context,
+    required textStyle,
+    required String text,
+  }) {
+    // Create TextSpan with your text
+    TextSpan textSpan = TextSpan(text: text, style: textStyle);
+
+    // Create TextPainter with TextSpan and other text settings
+    TextPainter textPainter = TextPainter(
+      text: textSpan,
+      textDirection: TextDirection.ltr,
+      maxLines: null,
+    );
+
+    // Set max width constraints (e.g., max width of AlertDialog)
+    double maxWidth = MediaQuery.of(context).size.width * 0.67;
+
+    // Layout the text with given constraints
+    textPainter.layout(maxWidth: maxWidth);
+
+    // Calculate the number of lines required
+    int lineNumber = textPainter.computeLineMetrics().length;
+
+    return lineNumber; // Add 1 for the last line
+  }
+
   Widget _buildCommentTitlePlusIconsAndCommentDatesAndPosition({
     required AudioPlayerVM audioPlayerVMlistenFalse,
+    required TextStyle commentTitleTextStyle,
     required String audioFileNameNoExt,
     required CommentVM commentVM,
     required Comment comment,
@@ -268,9 +345,7 @@ class _PlaylistCommentListDialogWidgetState
                 child: Text(
                   key: const Key('commentTitleKey'),
                   comment.title,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: commentTitleTextStyle,
                 ),
               ),
             ),
@@ -517,24 +592,24 @@ class _PlaylistCommentListDialogWidgetState
 
   void _scrollToCurrentAudioItem() {
     if (_currentCommentIndex <= 4) {
-      // this avoids scrolling down when the currenz audio is
+      // this avoids scrolling down when the current audio is
       // in the top part of the audio list. Without that, the
       // list is unusefully scrolled down and the user has to scroll
       // up to see top audios
       return;
     }
 
-    double multiplier = _currentCommentIndex.toDouble();
+    // double multiplier = _currentCommentIndex.toDouble();
 
-    if (_currentCommentIndex > 300) {
-      multiplier *= 1.23;
-    } else if (_currentCommentIndex > 200) {
-      multiplier *= 1.21;
-    } else if (_currentCommentIndex > 120) {
-      multiplier *= 1.2;
-    }
+    // if (_currentCommentIndex > 300) {
+    //   multiplier *= 1.23;
+    // } else if (_currentCommentIndex > 200) {
+    //   multiplier *= 1.21;
+    // } else if (_currentCommentIndex > 120) {
+    //   multiplier *= 1.2;
+    // }
 
-    double offset = multiplier * _itemHeight;
+    double offset = _previousCurrentCommentLineNumber * 135.0;
 
     if (_scrollController.hasClients) {
       _scrollController.jumpTo(0.0);
@@ -550,4 +625,40 @@ class _PlaylistCommentListDialogWidgetState
           .addPostFrameCallback((_) => _scrollToCurrentAudioItem());
     }
   }
+
+  // void _scrollToCurrentAudioItem() {
+  //   if (_currentCommentIndex <= 4) {
+  //     // this avoids scrolling down when the current audio is
+  //     // in the top part of the audio list. Without that, the
+  //     // list is unusefully scrolled down and the user has to scroll
+  //     // up to see top audios
+  //     return;
+  //   }
+
+  //   double multiplier = _currentCommentIndex.toDouble();
+
+  //   if (_currentCommentIndex > 300) {
+  //     multiplier *= 1.23;
+  //   } else if (_currentCommentIndex > 200) {
+  //     multiplier *= 1.21;
+  //   } else if (_currentCommentIndex > 120) {
+  //     multiplier *= 1.2;
+  //   }
+
+  //   double offset = multiplier * _itemHeight;
+
+  //   if (_scrollController.hasClients) {
+  //     _scrollController.jumpTo(0.0);
+  //     _scrollController.animateTo(
+  //       offset,
+  //       duration: const Duration(seconds: 1),
+  //       curve: Curves.easeInOut,
+  //     );
+  //   } else {
+  //     // The scroll controller isn't attached to any scroll views.
+  //     // Schedule a callback to try again after the next frame.
+  //     WidgetsBinding.instance
+  //         .addPostFrameCallback((_) => _scrollToCurrentAudioItem());
+  //   }
+  // }
 }

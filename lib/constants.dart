@@ -167,6 +167,7 @@ const Color kSliderThumbColorInLightMode = Color(0xff6750a4);
 
 const double kTextButtonFontSize = 15.0;
 const double kTextButtonSmallerFontSize = 13.0;
+const double kCommentedAudioTitleFontSize = 16.0;
 
 const kTextButtonStyleDarkMode = TextStyle(
   // the color is the one defined in textTheme bodyMedium
