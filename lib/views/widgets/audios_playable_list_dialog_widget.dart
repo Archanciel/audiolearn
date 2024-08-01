@@ -57,9 +57,6 @@ class _AudioPlayableListDialogWidgetState
         Provider.of<AudioPlayerVM>(context, listen: false);
     Audio? currentAudio = audioGlobalPlayerVM.currentAudio;
 
-    // Retrieves the screen width using MediaQuery
-    double maxListItemWidth = computeMaxDialogListItemWidth(context);
-
     List<Audio> playableAudioLst;
 
     if (_excludeFullyPlayedAudios) {
@@ -143,7 +140,6 @@ class _AudioPlayableListDialogWidgetState
                           Navigator.of(context).pop();
                         },
                         child: _buildAudioTitleTextWidget(
-                          maxAudioTitleWidth: maxListItemWidth,
                           audio: audio,
                           audioIndex: index,
                           isDarkTheme: isDarkTheme,
@@ -305,7 +301,6 @@ class _AudioPlayableListDialogWidgetState
   /// is different according to the audio status (not yet listened,
   /// currently listening, fully or partially listened).
   Widget _buildAudioTitleTextWidget({
-    required double maxAudioTitleWidth,
     required Audio audio,
     required int audioIndex,
     required bool isDarkTheme,
@@ -333,7 +328,6 @@ class _AudioPlayableListDialogWidgetState
     }
 
     return SizedBox(
-      width: maxAudioTitleWidth,
       height: _itemHeight,
       child: Text(
         audio.validVideoTitle,

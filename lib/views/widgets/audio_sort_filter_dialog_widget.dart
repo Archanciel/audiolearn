@@ -1695,9 +1695,6 @@ class _AudioSortFilterDialogWidgetState
       _buildListOfSortingOptionDropdownMenuItems(
     BuildContext context,
   ) {
-    // Retrieve the screen width using MediaQuery
-    double maxDropdownWidth = computeMaxDialogListItemWidth(context);
-
     return SortingOption.values.where((SortingOption value) {
       // Exclude certain options based on the app view type
       return (widget.audioLearnAppViewType ==
@@ -1730,7 +1727,6 @@ class _AudioSortFilterDialogWidgetState
       return DropdownMenuItem<SortingOption>(
         value: value,
         child: SizedBox(
-          width: maxDropdownWidth,
           child: Text(
             _sortingOptionToString(value, context),
             style: const TextStyle(fontSize: kDropdownMenuItemFontSize),

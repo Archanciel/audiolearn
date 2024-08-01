@@ -56,10 +56,6 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
       listen: false,
     );
 
-    // Retrieves the screen width using MediaQuery
-    double maxCommentTitleWidth =
-        computeMaxDialogListItemWidth(context) - kSmallIconButtonWidth;
-
     // Required so that clicking on Enter closes the dialog
     FocusScope.of(context).requestFocus(
       _focusNodeDialog,
@@ -137,7 +133,6 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
                                 _buildCommentTitlePlusIconsAndCommentDatesAndPosition(
                               audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                               commentVM: commentVM,
-                              maxCommentTitleWidth: maxCommentTitleWidth,
                               comment: comment,
                             ),
                           ),
@@ -195,7 +190,6 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
   Widget _buildCommentTitlePlusIconsAndCommentDatesAndPosition({
     required AudioPlayerVM audioPlayerVMlistenFalse,
     required CommentVM commentVM,
-    required double maxCommentTitleWidth,
     required Comment comment,
   }) {
     return Column(
@@ -207,7 +201,6 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
           children: [
             Expanded(
               child: SizedBox(
-                width: maxCommentTitleWidth,
                 // comment title Text
                 child: Text(
                   key: const Key('commentTitleKey'),

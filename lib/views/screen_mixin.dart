@@ -570,16 +570,6 @@ mixin ScreenMixin {
     );
   }
 
-  double computeMaxDialogListItemWidth(BuildContext context) {
-    // Retrieve the screen width using MediaQuery
-    double screenWidth = MediaQuery.of(context).size.width;
-
-    // Set a reasonable proportion of the screen width for the dropdown items
-    double maxDropdownMenuItemWidth = screenWidth * 0.57;
-
-    return maxDropdownMenuItemWidth;
-  }
-
   /// {isIconColorStronger} is set to true if the icon color is
   /// stronger than the default icon color. This is the case
   /// when the icon formatted is the play icon of an audio item

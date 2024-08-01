@@ -55,10 +55,6 @@ class _PlaylistCommentListDialogWidgetState
   Widget build(BuildContext context) {
     ThemeProviderVM themeProviderVM = Provider.of<ThemeProviderVM>(context);
 
-    // Retrieve the screen width using MediaQuery
-    double maxDropdownWidth =
-        computeMaxDialogListItemWidth(context) - kSmallIconButtonWidth;
-
     // Required so that clicking on Enter closes the dialog
     FocusScope.of(context).requestFocus(
       _focusNodeDialog,
@@ -116,7 +112,6 @@ class _PlaylistCommentListDialogWidgetState
                   commentVM: commentVM,
                   playlistAudiosCommentsMap: playlistAudiosCommentsMap,
                   audioFileNamesLst: audioFileNamesLst,
-                  maxDropdownWidth: maxDropdownWidth,
                   isDarkTheme: themeProviderVM.currentTheme == AppTheme.dark,
                 ),
               ),
@@ -145,7 +140,6 @@ class _PlaylistCommentListDialogWidgetState
     required CommentVM commentVM,
     required Map<String, List<Comment>> playlistAudiosCommentsMap,
     required List<String> audioFileNamesLst,
-    required double maxDropdownWidth,
     required bool isDarkTheme,
   }) {
     AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
@@ -164,6 +158,7 @@ class _PlaylistCommentListDialogWidgetState
     Color? audioTitleTextColor;
     Color? audioTitleBackgroundColor;
     int currentCommentIndex = 0;
+    int previousCurrentCommentLineNumber = 0;
 
     for (String audioFileName in audioFileNamesLst) {
       if (audioFileName == currentAudioFileName) {
@@ -214,7 +209,6 @@ class _PlaylistCommentListDialogWidgetState
                     audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                     audioFileNameNoExt: audioFileName,
                     commentVM: commentVM,
-                    maxDropdownWidth: maxDropdownWidth,
                     comment: comment,
                   ),
                 ),
@@ -259,7 +253,6 @@ class _PlaylistCommentListDialogWidgetState
     required AudioPlayerVM audioPlayerVMlistenFalse,
     required String audioFileNameNoExt,
     required CommentVM commentVM,
-    required double maxDropdownWidth,
     required Comment comment,
   }) {
     return Column(
@@ -271,7 +264,6 @@ class _PlaylistCommentListDialogWidgetState
           children: [
             Expanded(
               child: SizedBox(
-                width: maxDropdownWidth,
                 // comment title Text
                 child: Text(
                   key: const Key('commentTitleKey'),
