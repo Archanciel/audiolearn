@@ -155,12 +155,12 @@ class _PlaylistCommentListDialogWidgetState
       currentAudioFileName.length - 4,
     );
 
-    const TextStyle commentTitleTextStyle = const TextStyle(
+    const TextStyle commentTitleTextStyle = TextStyle(
       fontSize: kAudioTitleFontSize,
       fontWeight: FontWeight.bold,
     );
 
-    const TextStyle commentContentTextStyle = const TextStyle(
+    const TextStyle commentContentTextStyle = TextStyle(
       fontSize: kAudioTitleFontSize,
     );
 

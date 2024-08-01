@@ -7,7 +7,7 @@ import '../constants.dart';
 
 void main() {
   setWindowsAppSizeAndPosition(isTest: true);
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 /// If app runs on Windows, Linux or MacOS, set the app size
@@ -40,9 +40,11 @@ Future<void> setWindowsAppSizeAndPosition({
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: HomePage(),
     );
   }
@@ -50,6 +52,8 @@ class MyApp extends StatelessWidget {
 
 class HomePage extends StatelessWidget {
   final double fontSizeConst = 30;
+
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
