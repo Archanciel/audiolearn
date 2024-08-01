@@ -183,7 +183,7 @@ void main() {
       Comment expectedCommentOne = Comment.fullConstructor(
         id: 'One_6473',
         title: 'One',
-        content: 'First comment',
+        content: 'First comment.\n\nChatGPT is a chatbot and virtual assistant developed by OpenAI and launched on November 30, 2022. Based on large language models (LLMs), it enables users to refine and steer a conversation towards a desired length, format, style, level of detail, and language. Successive user prompts and replies are considered at each conversation stage as context.',
         commentStartPositionInTenthOfSeconds: 6473,
         commentEndPositionInTenthOfSeconds: 6553,
         creationDateTime: DateTime.parse('2024-05-27T13:14:32.000'),
@@ -192,7 +192,7 @@ void main() {
       Comment expectedCommentFive = Comment.fullConstructor(
         id: 'Comment Jancovici_430',
         title: 'Comment Jancovici',
-        content: '',
+        content: "Economic growth will become more and more an exception in Europe, starting from now\r\nBefore any attribution of causes, it is possible to note that the growth rate of the GDP per capita (world average) has been slowly – and constantly – decreasing since the 1960’s (I don’t have any data for the years before, that’s why I start in 1960!):",
         commentStartPositionInTenthOfSeconds: 430,
         commentEndPositionInTenthOfSeconds: 1030,
         creationDateTime: DateTime.parse('2024-07-21T16:32:42.000'),
