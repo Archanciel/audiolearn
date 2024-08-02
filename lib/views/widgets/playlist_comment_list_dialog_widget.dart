@@ -40,9 +40,8 @@ class _PlaylistCommentListDialogWidgetState
   final FocusNode _focusNodeDialog = FocusNode();
   Comment? _playingComment;
   final ScrollController _scrollController = ScrollController();
-  late int _currentCommentIndex;
+  late int _currentCommentIndex = 0;
   int _previousCurrentCommentLineNumber = 0;
-  final double _itemHeight = 70.0;
 
   @override
   void dispose() {
@@ -623,40 +622,4 @@ class _PlaylistCommentListDialogWidgetState
           .addPostFrameCallback((_) => _scrollToCurrentAudioItem());
     }
   }
-
-  // void _scrollToCurrentAudioItem() {
-  //   if (_currentCommentIndex <= 4) {
-  //     // this avoids scrolling down when the current audio is
-  //     // in the top part of the audio list. Without that, the
-  //     // list is unusefully scrolled down and the user has to scroll
-  //     // up to see top audios
-  //     return;
-  //   }
-
-  //   double multiplier = _currentCommentIndex.toDouble();
-
-  //   if (_currentCommentIndex > 300) {
-  //     multiplier *= 1.23;
-  //   } else if (_currentCommentIndex > 200) {
-  //     multiplier *= 1.21;
-  //   } else if (_currentCommentIndex > 120) {
-  //     multiplier *= 1.2;
-  //   }
-
-  //   double offset = multiplier * _itemHeight;
-
-  //   if (_scrollController.hasClients) {
-  //     _scrollController.jumpTo(0.0);
-  //     _scrollController.animateTo(
-  //       offset,
-  //       duration: const Duration(seconds: 1),
-  //       curve: Curves.easeInOut,
-  //     );
-  //   } else {
-  //     // The scroll controller isn't attached to any scroll views.
-  //     // Schedule a callback to try again after the next frame.
-  //     WidgetsBinding.instance
-  //         .addPostFrameCallback((_) => _scrollToCurrentAudioItem());
-  //   }
-  // }
 }
