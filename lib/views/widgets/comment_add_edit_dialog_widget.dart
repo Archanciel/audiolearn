@@ -150,6 +150,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                 // Commented audio title
                 Text(
                   audioPlayerVM.currentAudio?.validVideoTitle ?? '',
+                  textAlign: TextAlign.center,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
