@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:audiolearn/constants.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:window_size/window_size.dart';
 
+import 'package:audiolearn/constants.dart';
 import '../utils/duration_expansion.dart';
 void main() {
   setWindowsAppSizeAndPosition(isTest: true);
