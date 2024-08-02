@@ -109,7 +109,7 @@ class _PlaylistCommentListDialogWidgetState
             return SingleChildScrollView(
               controller: _scrollController,
               child: ListBody(
-                children: _buildPlaylistAudiosCommentsList(
+                children: await _buildPlaylistAudiosCommentsList(
                   commentVM: commentVM,
                   playlistAudiosCommentsMap: playlistAudiosCommentsMap,
                   audioFileNamesLst: audioFileNamesLst,
@@ -137,12 +137,12 @@ class _PlaylistCommentListDialogWidgetState
     );
   }
 
-  List<Widget> _buildPlaylistAudiosCommentsList({
+  Future<List<Widget>> _buildPlaylistAudiosCommentsList({
     required CommentVM commentVM,
     required Map<String, List<Comment>> playlistAudiosCommentsMap,
     required List<String> audioFileNamesLst,
     required bool isDarkTheme,
-  }) {
+  }) async {
     AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
       context,
       listen: false,
@@ -291,7 +291,7 @@ class _PlaylistCommentListDialogWidgetState
       }
     }
 
-    _scrollToCurrentAudioItem();
+    await _scrollToCurrentAudioItem();
 
     return widgets;
   }
@@ -588,7 +588,7 @@ class _PlaylistCommentListDialogWidgetState
     );
   }
 
-  void _scrollToCurrentAudioItem() {
+  Future<void> _scrollToCurrentAudioItem() async {
     if (_currentCommentIndex <= 4) {
       // this avoids scrolling down when the current audio is
       // in the top part of the audio list. Without that, the
@@ -611,7 +611,7 @@ class _PlaylistCommentListDialogWidgetState
 
     if (_scrollController.hasClients) {
       _scrollController.jumpTo(0.0);
-      _scrollController.animateTo(
+      await _scrollController.animateTo(
         offset,
         duration: const Duration(seconds: 1),
         curve: Curves.easeInOut,
@@ -623,40 +623,4 @@ class _PlaylistCommentListDialogWidgetState
           .addPostFrameCallback((_) => _scrollToCurrentAudioItem());
     }
   }
-
-  // void _scrollToCurrentAudioItem() {
-  //   if (_currentCommentIndex <= 4) {
-  //     // this avoids scrolling down when the current audio is
-  //     // in the top part of the audio list. Without that, the
-  //     // list is unusefully scrolled down and the user has to scroll
-  //     // up to see top audios
-  //     return;
-  //   }
-
-  //   double multiplier = _currentCommentIndex.toDouble();
-
-  //   if (_currentCommentIndex > 300) {
-  //     multiplier *= 1.23;
-  //   } else if (_currentCommentIndex > 200) {
-  //     multiplier *= 1.21;
-  //   } else if (_currentCommentIndex > 120) {
-  //     multiplier *= 1.2;
-  //   }
-
-  //   double offset = multiplier * _itemHeight;
-
-  //   if (_scrollController.hasClients) {
-  //     _scrollController.jumpTo(0.0);
-  //     _scrollController.animateTo(
-  //       offset,
-  //       duration: const Duration(seconds: 1),
-  //       curve: Curves.easeInOut,
-  //     );
-  //   } else {
-  //     // The scroll controller isn't attached to any scroll views.
-  //     // Schedule a callback to try again after the next frame.
-  //     WidgetsBinding.instance
-  //         .addPostFrameCallback((_) => _scrollToCurrentAudioItem());
-  //   }
-  // }
 }
