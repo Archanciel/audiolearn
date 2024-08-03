@@ -6202,7 +6202,7 @@ void main() {
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
-        savedTestDataDirName: 'audio_comment_test',
+        savedTestDataDirName: 'audio_comment_short_test',
         selectedPlaylistTitle: youtubePlaylistTitle,
       );
 
