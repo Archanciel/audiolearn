@@ -39,8 +39,10 @@ class _PlaylistCommentListDialogWidgetState
     extends State<PlaylistCommentListDialogWidget> with ScreenMixin {
   final FocusNode _focusNodeDialog = FocusNode();
   Comment? _playingComment;
+
+  // Variables to manage the scrolling of the dialog
   final ScrollController _scrollController = ScrollController();
-  late int _currentCommentIndex = 0;
+  int _currentCommentIndex = 0;
   int _previousCurrentCommentLineNumber = 0;
 
   @override
@@ -146,6 +148,10 @@ class _PlaylistCommentListDialogWidgetState
       context,
       listen: false,
     );
+
+    // Obtaining the current audio file name without the extension.
+    // This will be used to drop down the playlist audios comments list
+    // to the current audio comments.
     String currentAudioFileName = widget.currentPlaylist
         .getCurrentOrLastlyPlayedAudioContainedInPlayableAudioLst()!
         .audioFileName;
@@ -163,12 +169,15 @@ class _PlaylistCommentListDialogWidgetState
       fontSize: kAudioTitleFontSize,
     );
 
-    List<Widget> widgets = [];
+    // List of widgets corresponding to the playlist audios comments
+    List<Widget> widgetsLst = [];
+    
     Color? audioTitleTextColor;
     Color? audioTitleBackgroundColor;
     int currentCommentIndex = 0;
     int previousCurrentCommentLineNumber = 0;
 
+    // Defining the text style for the commented audio title
     for (String audioFileName in audioFileNamesLst) {
       if (audioFileName == currentAudioFileName) {
         audioTitleTextColor = Colors.white;
@@ -180,7 +189,8 @@ class _PlaylistCommentListDialogWidgetState
         audioTitleBackgroundColor = null;
       }
 
-      // Display the audio file name
+      // The commented audio title is equivalent to the audio file name
+      // without the extension and without the date time elements.
       final String commentedAudioTitle =
           DateTimeUtil.removeDateTimeElementsFromFileName(
         audioFileName,
@@ -193,7 +203,8 @@ class _PlaylistCommentListDialogWidgetState
         fontSize: kCommentedAudioTitleFontSize,
       );
 
-      widgets.add(
+      // Adding the commented audio title to the widgets list
+      widgetsLst.add(
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: Text(
@@ -203,7 +214,8 @@ class _PlaylistCommentListDialogWidgetState
         ),
       );
 
-      // Adding the comments number correspomding to the audioFileName
+      // Calculating the number of lines related to the comments
+      // contained in the audioFileName
       List<Comment> audioCommentsLst =
           playlistAudiosCommentsMap[audioFileName]!;
 
@@ -242,7 +254,7 @@ class _PlaylistCommentListDialogWidgetState
           );
         }
 
-        widgets.add(
+        widgetsLst.add(
           GestureDetector(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -292,7 +304,7 @@ class _PlaylistCommentListDialogWidgetState
 
     _scrollToCurrentAudioItem();
 
-    return widgets;
+    return widgetsLst;
   }
 
   int computeTextLineNumber({

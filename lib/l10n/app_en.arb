@@ -357,7 +357,7 @@
   "atLeast": "at least ",
   "commentCreationDateTooltip": "Comment creation date",
   "commentUpdateDateTooltip": "Comment last update date",
-  "playlistCommentMenu": "Comments of playlist audios ...",
+  "playlistCommentMenu": "List comments of playlist audios ...",
   "modifyAudioTitle": "Modify audio title ...",
   "invalidLocalPlaylistTitle": "The local playlist title \"{playlistTitle}\" can not contain any comma. Please correct the title and retry ...",
   "@invalidLocalPlaylistTitle": {

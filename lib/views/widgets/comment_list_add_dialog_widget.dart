@@ -41,6 +41,11 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
   final FocusNode _focusNodeDialog = FocusNode();
   Comment? _playingComment;
 
+  // Variables to manage the scrolling of the dialog
+  final ScrollController _scrollController = ScrollController();
+  int _currentCommentIndex = 0;
+  int _previousCurrentCommentLineNumber = 0;
+
   @override
   void dispose() {
     _focusNodeDialog.dispose();
@@ -51,10 +56,6 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
   @override
   Widget build(BuildContext context) {
     ThemeProviderVM themeProviderVM = Provider.of<ThemeProviderVM>(context);
-    AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
-      context,
-      listen: false,
-    );
 
     // Required so that clicking on Enter closes the dialog
     FocusScope.of(context).requestFocus(
@@ -116,55 +117,9 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
         actionsPadding: kDialogActionsPadding,
         content: Consumer<CommentVM>(
           builder: (context, commentVM, child) {
-            List<Comment> commentsLst = commentVM.loadAudioComments(
-              audio: widget.currentAudio,
-            );
             return SingleChildScrollView(
-              child: ListBody(
-                children: <Widget>[
-                  for (Comment comment in commentsLst) ...[
-                    GestureDetector(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 2),
-                            child:
-                                _buildCommentTitlePlusIconsAndCommentDatesAndPosition(
-                              audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
-                              commentVM: commentVM,
-                              comment: comment,
-                            ),
-                          ),
-                          (comment.content.isNotEmpty)
-                              ? Padding(
-                                  padding: const EdgeInsets.only(bottom: 12),
-                                  // comment content Text
-                                  child: Text(
-                                    key: const Key('commentTextKey'),
-                                    comment.content,
-                                  ),
-                                )
-                              : Container(),
-                        ],
-                      ),
-                      onTap: () async {
-                        if (audioPlayerVMlistenFalse.isPlaying &&
-                            _playingComment != comment) {
-                          // if the user clicks on a comment while another
-                          // comment is playing, the playing comment is paused.
-                          // Otherwise, the edited comment keeps playing.
-                          await audioPlayerVMlistenFalse.pause();
-                        }
-
-                        _closeDialogAndOpenCommentAddEditDialog(
-                          context: context,
-                          comment: comment,
-                        );
-                      },
-                    ),
-                  ],
-                ],
+              child: _buildAudioCommentsLst(
+                commentVM: commentVM,
               ),
             );
           },
@@ -184,6 +139,70 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
           ),
         ],
       ),
+    );
+  }
+
+  ListBody _buildAudioCommentsLst({
+    required CommentVM commentVM,
+  }) {
+    AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
+      context,
+      listen: false,
+    );
+
+    List<Comment> commentsLst = commentVM.loadAudioComments(
+      audio: widget.currentAudio,
+    );
+
+    // List of widgets corresponding to the audio comments
+    List<Widget> widgetsLst = [];
+    int currentCommentIndex = 0;
+    int previousCurrentCommentLineNumber = 0;
+
+    return ListBody(
+      children: <Widget>[
+        for (Comment comment in commentsLst) ...[
+          GestureDetector(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 2),
+                  child: _buildCommentTitlePlusIconsAndCommentDatesAndPosition(
+                    audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+                    commentVM: commentVM,
+                    comment: comment,
+                  ),
+                ),
+                (comment.content.isNotEmpty)
+                    ? Padding(
+                        padding: const EdgeInsets.only(bottom: 12),
+                        // comment content Text
+                        child: Text(
+                          key: const Key('commentTextKey'),
+                          comment.content,
+                        ),
+                      )
+                    : Container(),
+              ],
+            ),
+            onTap: () async {
+              if (audioPlayerVMlistenFalse.isPlaying &&
+                  _playingComment != comment) {
+                // if the user clicks on a comment while another
+                // comment is playing, the playing comment is paused.
+                // Otherwise, the edited comment keeps playing.
+                await audioPlayerVMlistenFalse.pause();
+              }
+
+              _closeDialogAndOpenCommentAddEditDialog(
+                context: context,
+                comment: comment,
+              );
+            },
+          ),
+        ],
+      ],
     );
   }
 
@@ -231,7 +250,8 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
                               .pause() // clicked on currently playing comment pause button
                           : await _playFromCommentPosition(
                               // clicked on other comment play button
-                              audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+                              audioPlayerVMlistenFalse:
+                                  audioPlayerVMlistenFalse,
                               comment: comment,
                             );
                     },

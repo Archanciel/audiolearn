@@ -174,7 +174,7 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                       );
                       break;
                     case PlaylistPopupMenuAction.displayPlaylistAudioComments:
-                      if (playlistListVM.getSelectedPlaylists().length == 0 || playlistListVM.getSelectedPlaylists()[0] !=
+                      if (playlistListVM.getSelectedPlaylists().isEmpty || playlistListVM.getSelectedPlaylists()[0] !=
                           playlist) {
                         // the case if the user opens the playlist audio
                         // comment dialog on a playlist which is not currently

@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:googleapis/cloudsearch/v1.dart';
 import 'dart:async';
 import 'package:window_size/window_size.dart';
 
@@ -9,7 +8,7 @@ import 'package:audiolearn/constants.dart';
 
 void main() {
   setWindowsAppSizeAndPosition(isTest: true);
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 /// If app runs on Windows, Linux or MacOS, set the app size
@@ -42,15 +41,19 @@ Future<void> setWindowsAppSizeAndPosition({
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: ProgressIndicatorScreen(),
     );
   }
 }
 
 class ProgressIndicatorScreen extends StatefulWidget {
+  const ProgressIndicatorScreen({super.key});
+
   @override
   _ProgressIndicatorScreenState createState() =>
       _ProgressIndicatorScreenState();
