@@ -632,6 +632,11 @@ mixin ScreenMixin {
     return circleAvatar;
   }
  
+  /// Method used by the PlaylistCommentListDialogWidget and the
+  /// CommentListAddDialogWidget in order to compute the number
+  /// of lines required to display the comment text. This number
+  /// is then used by the ScrollController in order to scroll
+  /// down the comment list to the last comment.
   int computeTextLineNumber({
     required BuildContext context,
     required textStyle,
