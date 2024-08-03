@@ -631,4 +631,31 @@ mixin ScreenMixin {
 
     return circleAvatar;
   }
+ 
+  int computeTextLineNumber({
+    required BuildContext context,
+    required textStyle,
+    required String text,
+  }) {
+    // Create TextSpan with your text
+    TextSpan textSpan = TextSpan(text: text, style: textStyle);
+
+    // Create TextPainter with TextSpan and other text settings
+    TextPainter textPainter = TextPainter(
+      text: textSpan,
+      textDirection: TextDirection.ltr,
+      maxLines: null,
+    );
+
+    // Set max width constraints (e.g., max width of AlertDialog)
+    double maxWidth = MediaQuery.of(context).size.width * 0.67;
+
+    // Layout the text with given constraints
+    textPainter.layout(maxWidth: maxWidth);
+
+    // Calculate the number of lines required
+    int lineNumber = textPainter.computeLineMetrics().length;
+
+    return lineNumber; // Add 1 for the last line
+  } 
 }

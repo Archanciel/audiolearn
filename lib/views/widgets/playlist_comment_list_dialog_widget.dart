@@ -42,8 +42,7 @@ class _PlaylistCommentListDialogWidgetState
 
   // Variables to manage the scrolling of the dialog
   final ScrollController _scrollController = ScrollController();
-  int _currentCommentIndex = 0;
-  int _previousCurrentCommentLineNumber = 0;
+  int _previousCurrentCommentLinesNumber = 0;
 
   @override
   void dispose() {
@@ -171,10 +170,9 @@ class _PlaylistCommentListDialogWidgetState
 
     // List of widgets corresponding to the playlist audios comments
     List<Widget> widgetsLst = [];
-    
+
     Color? audioTitleTextColor;
     Color? audioTitleBackgroundColor;
-    int currentCommentIndex = 0;
     int previousCurrentCommentLineNumber = 0;
 
     // Defining the text style for the commented audio title
@@ -219,7 +217,7 @@ class _PlaylistCommentListDialogWidgetState
       List<Comment> audioCommentsLst =
           playlistAudiosCommentsMap[audioFileName]!;
 
-      currentCommentIndex += audioCommentsLst.length;
+      // Adding the number of lines related to the commented audio title
       previousCurrentCommentLineNumber +=
           (1 + // empty line after the commented audio title
               computeTextLineNumber(
@@ -229,16 +227,17 @@ class _PlaylistCommentListDialogWidgetState
               ));
 
       if (audioFileName == currentAudioFileName) {
-        _currentCommentIndex = currentCommentIndex;
-        _previousCurrentCommentLineNumber = previousCurrentCommentLineNumber;
+        _previousCurrentCommentLinesNumber = previousCurrentCommentLineNumber;
       }
 
       for (Comment comment in audioCommentsLst) {
-        if (_previousCurrentCommentLineNumber == 0) {
-          // This means that the current audio comments have not yet been
-          // reached. In this situation, the comments title and content line
-          // number must be added to the previousCurrentCommentLineNumber.
+        if (_previousCurrentCommentLinesNumber == 0) {
+          // This means that the comments of the current audio have not
+          // yet been reached. In this situation, the comments title and
+          // content lines number must be added to the varisble
+          // previousCurrentCommentLineNumber.
 
+          // Calculating the number of lines occupied by the comment title
           previousCurrentCommentLineNumber +=
               (1 + // 2 dates + position line after the comment title
                   computeTextLineNumber(
@@ -247,6 +246,8 @@ class _PlaylistCommentListDialogWidgetState
                     text: comment.title,
                   ));
 
+          // Calculating the number of lines occupied by the comment
+          // content
           previousCurrentCommentLineNumber += computeTextLineNumber(
             context: context,
             textStyle: commentContentTextStyle,
@@ -305,33 +306,6 @@ class _PlaylistCommentListDialogWidgetState
     _scrollToCurrentAudioItem();
 
     return widgetsLst;
-  }
-
-  int computeTextLineNumber({
-    required BuildContext context,
-    required textStyle,
-    required String text,
-  }) {
-    // Create TextSpan with your text
-    TextSpan textSpan = TextSpan(text: text, style: textStyle);
-
-    // Create TextPainter with TextSpan and other text settings
-    TextPainter textPainter = TextPainter(
-      text: textSpan,
-      textDirection: TextDirection.ltr,
-      maxLines: null,
-    );
-
-    // Set max width constraints (e.g., max width of AlertDialog)
-    double maxWidth = MediaQuery.of(context).size.width * 0.67;
-
-    // Layout the text with given constraints
-    textPainter.layout(maxWidth: maxWidth);
-
-    // Calculate the number of lines required
-    int lineNumber = textPainter.computeLineMetrics().length;
-
-    return lineNumber; // Add 1 for the last line
   }
 
   Widget _buildCommentTitlePlusIconsAndCommentDatesAndPosition({
@@ -600,25 +574,7 @@ class _PlaylistCommentListDialogWidgetState
   }
 
   void _scrollToCurrentAudioItem() {
-    if (_currentCommentIndex <= 4) {
-      // this avoids scrolling down when the current audio is
-      // in the top part of the audio list. Without that, the
-      // list is unusefully scrolled down and the user has to scroll
-      // up to see top audios
-      return;
-    }
-
-    // double multiplier = _currentCommentIndex.toDouble();
-
-    // if (_currentCommentIndex > 300) {
-    //   multiplier *= 1.23;
-    // } else if (_currentCommentIndex > 200) {
-    //   multiplier *= 1.21;
-    // } else if (_currentCommentIndex > 120) {
-    //   multiplier *= 1.2;
-    // }
-
-    double offset = _previousCurrentCommentLineNumber * 135.0;
+    double offset = _previousCurrentCommentLinesNumber * 135.0;
 
     if (_scrollController.hasClients) {
       _scrollController.jumpTo(0.0);

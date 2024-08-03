@@ -43,8 +43,7 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
 
   // Variables to manage the scrolling of the dialog
   final ScrollController _scrollController = ScrollController();
-  int _currentCommentIndex = 0;
-  int _previousCurrentCommentLineNumber = 0;
+  int _audioCommentsLinesNumber = 0;
 
   @override
   void dispose() {
@@ -157,12 +156,36 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
       audio: widget.currentAudio,
     );
 
+    const TextStyle commentTitleTextStyle = TextStyle(
+      fontSize: kAudioTitleFontSize,
+      fontWeight: FontWeight.bold,
+    );
+
+    const TextStyle commentContentTextStyle = TextStyle(
+      fontSize: kAudioTitleFontSize,
+    );
+
     // List of widgets corresponding to the audio comments
     List<Widget> widgetsLst = [];
-    int currentCommentIndex = 0;
-    int previousCurrentCommentLineNumber = 0;
 
     for (Comment comment in commentsLst) {
+      // Calculating the number of lines occupied by the comment title
+      _audioCommentsLinesNumber +=
+          (1 + // 2 dates + position line after the comment title
+              computeTextLineNumber(
+                context: context,
+                textStyle: commentTitleTextStyle,
+                text: comment.title,
+              ));
+
+      // Calculating the number of lines occupied by the comment
+      // content
+      _audioCommentsLinesNumber += computeTextLineNumber(
+        context: context,
+        textStyle: commentContentTextStyle,
+        text: comment.content,
+      );
+
       widgetsLst.add(
         GestureDetector(
           child: Column(
@@ -176,16 +199,15 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
                   comment: comment,
                 ),
               ),
-              (comment.content.isNotEmpty)
-                  ? Padding(
-                      padding: const EdgeInsets.only(bottom: 12),
-                      // comment content Text
-                      child: Text(
-                        key: const Key('commentTextKey'),
-                        comment.content,
-                      ),
-                    )
-                  : Container(),
+              if (comment.content.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  // comment content Text
+                  child: Text(
+                    key: const Key('commentTextKey'),
+                    comment.content,
+                  ),
+                ),
             ],
           ),
           onTap: () async {
@@ -205,6 +227,8 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
         ),
       );
     }
+
+    _scrollToCurrentAudioItem();
 
     return widgetsLst;
   }
@@ -469,5 +493,23 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
       rewindAudioPositionBasedOnPauseDuration: false,
       isCommentPlaying: true,
     );
+  }
+
+  void _scrollToCurrentAudioItem() {
+    double offset = _audioCommentsLinesNumber * 135.0;
+
+    if (_scrollController.hasClients) {
+      _scrollController.jumpTo(0.0);
+      _scrollController.animateTo(
+        offset,
+        duration: const Duration(seconds: 1),
+        curve: Curves.easeInOut,
+      );
+    } else {
+      // The scroll controller isn't attached to any scroll views.
+      // Schedule a callback to try again after the next frame.
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) => _scrollToCurrentAudioItem());
+    }
   }
 }
