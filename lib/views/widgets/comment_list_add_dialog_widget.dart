@@ -118,8 +118,11 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
         content: Consumer<CommentVM>(
           builder: (context, commentVM, child) {
             return SingleChildScrollView(
-              child: _buildAudioCommentsLst(
-                commentVM: commentVM,
+              controller: _scrollController,
+              child: ListBody(
+                children: _buildAudioCommentsLst(
+                  commentVM: commentVM,
+                ),
               ),
             );
           },
@@ -142,7 +145,7 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
     );
   }
 
-  ListBody _buildAudioCommentsLst({
+  List<Widget> _buildAudioCommentsLst({
     required CommentVM commentVM,
   }) {
     AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
@@ -159,51 +162,51 @@ class _CommentListAddDialogWidgetState extends State<CommentListAddDialogWidget>
     int currentCommentIndex = 0;
     int previousCurrentCommentLineNumber = 0;
 
-    return ListBody(
-      children: <Widget>[
-        for (Comment comment in commentsLst) ...[
-          GestureDetector(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 2),
-                  child: _buildCommentTitlePlusIconsAndCommentDatesAndPosition(
-                    audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
-                    commentVM: commentVM,
-                    comment: comment,
-                  ),
+    for (Comment comment in commentsLst) {
+      widgetsLst.add(
+        GestureDetector(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 2),
+                child: _buildCommentTitlePlusIconsAndCommentDatesAndPosition(
+                  audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+                  commentVM: commentVM,
+                  comment: comment,
                 ),
-                (comment.content.isNotEmpty)
-                    ? Padding(
-                        padding: const EdgeInsets.only(bottom: 12),
-                        // comment content Text
-                        child: Text(
-                          key: const Key('commentTextKey'),
-                          comment.content,
-                        ),
-                      )
-                    : Container(),
-              ],
-            ),
-            onTap: () async {
-              if (audioPlayerVMlistenFalse.isPlaying &&
-                  _playingComment != comment) {
-                // if the user clicks on a comment while another
-                // comment is playing, the playing comment is paused.
-                // Otherwise, the edited comment keeps playing.
-                await audioPlayerVMlistenFalse.pause();
-              }
-
-              _closeDialogAndOpenCommentAddEditDialog(
-                context: context,
-                comment: comment,
-              );
-            },
+              ),
+              (comment.content.isNotEmpty)
+                  ? Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
+                      // comment content Text
+                      child: Text(
+                        key: const Key('commentTextKey'),
+                        comment.content,
+                      ),
+                    )
+                  : Container(),
+            ],
           ),
-        ],
-      ],
-    );
+          onTap: () async {
+            if (audioPlayerVMlistenFalse.isPlaying &&
+                _playingComment != comment) {
+              // if the user clicks on a comment while another
+              // comment is playing, the playing comment is paused.
+              // Otherwise, the edited comment keeps playing.
+              await audioPlayerVMlistenFalse.pause();
+            }
+
+            _closeDialogAndOpenCommentAddEditDialog(
+              context: context,
+              comment: comment,
+            );
+          },
+        ),
+      );
+    }
+
+    return widgetsLst;
   }
 
   Widget _buildCommentTitlePlusIconsAndCommentDatesAndPosition({
