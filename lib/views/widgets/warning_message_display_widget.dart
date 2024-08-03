@@ -32,6 +32,7 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
   final BuildContext _context;
   final WarningMessageVM _warningMessageVM;
   final TextEditingController? _playlistUrlController;
+  final ScrollController _scrollController = ScrollController();
 
   WarningMessageDisplayWidget({
     required BuildContext parentContext,
@@ -777,10 +778,13 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
             alertDialogTitle,
           ),
           actionsPadding: kDialogActionsPadding,
-          content: Text(
-            key: const Key('warningDialogMessage'),
-            message,
-            style: kDialogTextFieldStyle,
+          content: SingleChildScrollView(
+            controller: _scrollController,
+            child: Text(
+              key: const Key('warningDialogMessage'),
+              message,
+              style: kDialogTextFieldStyle,
+            ),
           ),
           actions: [
             TextButton(
@@ -815,6 +819,8 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
     // To automatically focus on the dialog when it appears. If commented,
     // clicking on Enter will not close the dialog.
     focusNodeDialog.requestFocus();
+
+    _scrollToCurrentAudioItem();
   }
 
   void _handlePossiblyMultipleWarnings({
@@ -883,6 +889,24 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
         break;
       default:
         break;
+    }
+  }
+
+  void _scrollToCurrentAudioItem() {
+    double offset = 20000; // A large number to scroll to the bottom of the list
+
+    if (_scrollController.hasClients) {
+      _scrollController.jumpTo(0.0);
+      _scrollController.animateTo(
+        offset,
+        duration: const Duration(seconds: 1),
+        curve: Curves.easeInOut,
+      );
+    } else {
+      // The scroll controller isn't attached to any scroll views.
+      // Schedule a callback to try again after the next frame.
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) => _scrollToCurrentAudioItem());
     }
   }
 }
