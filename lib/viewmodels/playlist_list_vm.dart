@@ -66,7 +66,7 @@ class PlaylistListVM extends ChangeNotifier {
   List<Audio>? get sortedFilteredSelectedPlaylistsPlayableAudios =>
       _sortedFilteredSelectedPlaylistsPlayableAudios;
   AudioSortFilterParameters? _audioSortFilterParameters;
-  String? _audioSortFilterParametersName;
+  String _audioSortFilterParametersName = '';
 
   Playlist? _uniqueSelectedPlaylist;
   Playlist? get uniqueSelectedPlaylist => _uniqueSelectedPlaylist;
@@ -638,15 +638,17 @@ class PlaylistListVM extends ChangeNotifier {
       case AudioLearnAppViewType.playlistDownloadView:
         if (selectedPlaylist
             .applyAutomaticallySortFilterParmsForPlaylistDownloadView) {
-          _audioSortFilterParameters =
-              selectedPlaylist.audioSortFilterParmsForPlaylistDownloadView;
+          _audioSortFilterParameters = _settingsDataService
+                  .namedAudioSortFilterParametersMap[
+              selectedPlaylist.audioSortFilterParmsNameForPlaylistDownloadView];
         }
         break;
       case AudioLearnAppViewType.audioPlayerView:
         if (selectedPlaylist
             .applyAutomaticallySortFilterParmsForAudioPlayerView) {
           _audioSortFilterParameters =
-              selectedPlaylist.audioSortFilterParmsForAudioPlayerView;
+              _settingsDataService.namedAudioSortFilterParametersMap[
+                  selectedPlaylist.audioSortFilterParmsNameForAudioPlayerView];
         }
         break;
       default:
@@ -682,8 +684,9 @@ class PlaylistListVM extends ChangeNotifier {
 
     switch (audioLearnAppViewType) {
       case AudioLearnAppViewType.playlistDownloadView:
-        playlistSortingItemLst = selectedPlaylist
-                .audioSortFilterParmsForPlaylistDownloadView
+        playlistSortingItemLst = _settingsDataService
+                .namedAudioSortFilterParametersMap[selectedPlaylist
+                    .audioSortFilterParmsNameForPlaylistDownloadView]
                 ?.selectedSortItemLst ??
             // if the user has not yet set and saved sort and filter
             // parameters for the playlist, then the default sorting
@@ -691,8 +694,10 @@ class PlaylistListVM extends ChangeNotifier {
             [AudioSortFilterParameters.getDefaultSortingItem()];
         break;
       case AudioLearnAppViewType.audioPlayerView:
-        playlistSortingItemLst = selectedPlaylist
-                .audioSortFilterParmsForAudioPlayerView?.selectedSortItemLst ??
+        playlistSortingItemLst = _settingsDataService
+                .namedAudioSortFilterParametersMap[
+                    selectedPlaylist.audioSortFilterParmsNameForAudioPlayerView]
+                ?.selectedSortItemLst ??
             // if the user has not yet set and saved sort and filter
             // parameters for the playlist, then the default sorting
             // item is returned
@@ -744,14 +749,7 @@ class PlaylistListVM extends ChangeNotifier {
     _sortedFilteredSelectedPlaylistsPlayableAudios =
         sortedFilteredSelectedPlaylistsPlayableAudios;
     _audioSortFilterParameters = audioSortFilterParameters;
-
-    if (audioSortFilterParametersName.isNotEmpty) {
-      _audioSortFilterParametersName = audioSortFilterParametersName;
-    } else {
-      // The case if the user taps on the Apply button of the
-      // SortAndFilterAudioDialogWidget.
-      _audioSortFilterParametersName = null;
-    }
+    _audioSortFilterParametersName = audioSortFilterParametersName;
 
     if (doNotifyListeners) {
       notifyListeners();
@@ -770,12 +768,12 @@ class PlaylistListVM extends ChangeNotifier {
 
     switch (audioLearnAppViewType) {
       case AudioLearnAppViewType.playlistDownloadView:
-        playlistAudioSortFilterParameters =
-            selectedPlaylist.audioSortFilterParmsForPlaylistDownloadView;
+        playlistAudioSortFilterParameters = _settingsDataService.namedAudioSortFilterParametersMap[
+            selectedPlaylist.audioSortFilterParmsNameForPlaylistDownloadView];
         break;
       case AudioLearnAppViewType.audioPlayerView:
-        playlistAudioSortFilterParameters =
-            selectedPlaylist.audioSortFilterParmsForAudioPlayerView;
+        playlistAudioSortFilterParameters = _settingsDataService.namedAudioSortFilterParametersMap[
+            selectedPlaylist.audioSortFilterParmsNameForAudioPlayerView];
         break;
       default:
         break;
@@ -891,14 +889,14 @@ class PlaylistListVM extends ChangeNotifier {
     Playlist playlist = getSelectedPlaylists()[0];
 
     if (audioLearnAppView == AudioLearnAppViewType.playlistDownloadView) {
-      playlist.audioSortFilterParmsForPlaylistDownloadView =
-          _audioSortFilterParameters;
+      playlist.audioSortFilterParmsNameForPlaylistDownloadView =
+          _audioSortFilterParametersName;
       playlist.applyAutomaticallySortFilterParmsForPlaylistDownloadView =
           isSortFilterParmsApplicationAutomatic;
     } else {
       // audioLearnAppView == AudioLearnAppViewType.audioPlayerView
-      playlist.audioSortFilterParmsForAudioPlayerView =
-          _audioSortFilterParameters;
+      playlist.audioSortFilterParmsNameForAudioPlayerView =
+          _audioSortFilterParametersName;
       playlist.applyAutomaticallySortFilterParmsForAudioPlayerView =
           isSortFilterParmsApplicationAutomatic;
     }
