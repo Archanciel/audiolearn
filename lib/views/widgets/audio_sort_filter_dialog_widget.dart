@@ -699,7 +699,10 @@ class _AudioSortFilterDialogWidgetState
     );
   }
 
-  /// Create Reset, Save, Delete and Cancel buttons
+  /// Create Reset (X), Save or Apply, Delete and Cancel buttons.
+  ///
+  /// Save button is displayed when the sort filter name is defined.
+  /// If the sort filter name is empty, the Apply button is displayed.
   Row _buildActionButtonsLine(
     BuildContext context,
     ThemeProviderVM themeProviderVM,
@@ -826,15 +829,17 @@ class _AudioSortFilterDialogWidgetState
     );
   }
 
+  /// Save button is displayed when the sort filter name is defined.
+  /// If the sort filter name is empty, the Apply button is displayed.
   Widget _buildSaveOrApplyButton({
     required PlaylistListVM playlistListVM,
     required ThemeProviderVM themeProviderVM,
   }) {
     if (_sortFilterSaveAsUniqueName.isEmpty) {
-      // in this situation, the user applies a sort/filter (mainly
+      // In this situation, the user applies a sort/filter (mainly
       // a filter only) parameters without saving them. In this case,
       // the defined sort/filter parameters are added to the search
-      // history list
+      // history list which is saved in the settings file.
       return Tooltip(
         message: AppLocalizations.of(context)!.applySortFilterOptionsTooltip,
         child: TextButton(
@@ -867,6 +872,9 @@ class _AudioSortFilterDialogWidgetState
         ),
       );
     }
+    // In this situation, the user saves the named sort/filter
+    // parameters. In this case, the named sort/filter parameters are
+    // added to the sort/filter list which is saved in the settings file.
     return Tooltip(
       message: AppLocalizations.of(context)!.saveSortFilterOptionsTooltip,
       child: TextButton(

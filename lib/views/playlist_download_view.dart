@@ -470,7 +470,11 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   }
 
   /// Method called only if the list of playlists is NOT expanded
-  /// AND if a playlist is selected.
+  /// AND if a playlist is selected. If the list of playlists is
+  /// expanded, the user can select a playlist by clicking on it
+  /// and instead of displaying the sort and filter dropdown button,
+  /// Up and Down icon buttons are displayed enabling the user to move
+  /// the selected playlist up or down in the playlist list.
   ///
   /// This method return a row containing the sort filter
   /// dropdown button. This button contains the list of sort
@@ -480,15 +484,24 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     required PlaylistListVM playlistListVMlistenFalse,
     required WarningMessageVM warningMessageVMlistenFalse,
   }) {
-    String hintDefault =
+    String sortFilterDefaultMenuItemNameCorrespondingToLanguage =
         AppLocalizations.of(context)!.sortFilterParametersDefaultName;
 
     bool wasLanguageChanged = false;
 
-    if (hintDefault == "défaut") {
+    // If the user changed the language, the default sort and filter
+    // parameters name is changed to the corresponding language.
+    // The problem is that the default sort and filter parameters named
+    // in the previous language is still in the sort and filter
+    // parameters list. This default sort and filter parameters name
+    // must be deleted from the list since that the named in current
+    // language default sort and filter parameters is in the list.
+    if (sortFilterDefaultMenuItemNameCorrespondingToLanguage == "défaut") {
       if (playlistListVMlistenFalse.deleteAudioSortFilterParameters(
               audioSortFilterParametersName: "default") !=
           null) {
+            // The sort and filter parameters named "default" was
+            // deleted from the sort and filter parameters list.
         wasLanguageChanged = true;
         if (_selectedSortFilterParametersName == "default") {
           // avoids UI problem since the currently selected sort and
@@ -497,7 +510,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           _selectedSortFilterParametersName = "défaut";
         }
       }
-    } else if (hintDefault == "default") {
+    } else if (sortFilterDefaultMenuItemNameCorrespondingToLanguage == "default") {
       if (playlistListVMlistenFalse.deleteAudioSortFilterParameters(
               audioSortFilterParametersName: 'défaut') !=
           null) {
@@ -513,7 +526,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
     if (wasLanguageChanged &&
         _selectedSortFilterParametersName != null &&
-        _selectedSortFilterParametersName != hintDefault) {
+        _selectedSortFilterParametersName != sortFilterDefaultMenuItemNameCorrespondingToLanguage) {
       // if the selected sort and filter parameters name is not the
       // default name, then the sort and filter parameters are applied
       // to the selected playlist playable audios. Otherwise, when the
@@ -554,14 +567,14 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             items: dropdownMenuItems,
             onChanged: (value) {
               // here, the user has selected a sort/filter option;
-              // ontap code was executed before the onChanged code !
+              // onTap code was executed before the onChanged code !
               // The onTap code is now deleted.
               _selectedSortFilterParametersName = value;
               _updatePlaylistSortedFilteredAudioList(
                   playlistListVMlistenFalse: playlistListVMlistenFalse);
             },
             hint: Text(
-              hintDefault,
+              sortFilterDefaultMenuItemNameCorrespondingToLanguage,
             ),
             underline: Container(), // suppresses the underline
           ),
@@ -586,6 +599,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
         audioSortFilterParameters: audioSortFilterParameters,
       ),
       audioSortFilterParameters: audioSortFilterParameters,
+      audioSortFilterParametersName: _selectedSortFilterParametersName!,
       doNotifyListeners: notifyListeners,
     );
     _wasSortFilterAudioSettingsApplied = true;
@@ -640,7 +654,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   /// sort and filter parameters referenced by the dropdown menu
   /// item. Choosing the edit button opens the sort and filter
   /// dialog. The user can then modify the sort and filter parameters
-  /// and then save them to a the existing name or to new name or
+  /// and then save them to the existing name or to new name or
   /// delete them.
   Widget _buildSortFilterParmsDropdownItemEditIconButton(
       PlaylistListVM playlistListVMlistenFalse,
@@ -715,6 +729,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                   sortedFilteredSelectedPlaylistsPlayableAudios:
                       returnedAudioList,
                   audioSortFilterParameters: audioSortFilterParameters,
+                  audioSortFilterParametersName: sortFilterParametersSaveAsName,
                 );
                 _wasSortFilterAudioSettingsApplied = true;
 
@@ -925,11 +940,13 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                   List<Audio> returnedAudioList = filterSortAudioAndParmLst[0];
                   AudioSortFilterParameters audioSortFilterParameters =
                       filterSortAudioAndParmLst[1];
+                  String audioSortFilterParametersName = filterSortAudioAndParmLst[2];
                   playlistListVMlistenFalse
                       .setSortedFilteredSelectedPlaylistPlayableAudiosAndParms(
                     sortedFilteredSelectedPlaylistsPlayableAudios:
                         returnedAudioList,
                     audioSortFilterParameters: audioSortFilterParameters,
+                    audioSortFilterParametersName: audioSortFilterParametersName,
                   );
                   _wasSortFilterAudioSettingsApplied = true;
                 }

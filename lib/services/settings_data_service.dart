@@ -359,6 +359,8 @@ class SettingsDataService {
     return wasElementRemoved;
   }
 
+  /// Return the deleted audio sort/filter parameters if it was found and
+  /// removed, null otherwise.
   AudioSortFilterParameters? deleteNamedAudioSortFilterParameters({
     required String audioSortFilterParametersName,
   }) {

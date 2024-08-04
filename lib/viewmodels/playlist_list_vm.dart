@@ -66,6 +66,7 @@ class PlaylistListVM extends ChangeNotifier {
   List<Audio>? get sortedFilteredSelectedPlaylistsPlayableAudios =>
       _sortedFilteredSelectedPlaylistsPlayableAudios;
   AudioSortFilterParameters? _audioSortFilterParameters;
+  String? _audioSortFilterParametersName;
 
   Playlist? _uniqueSelectedPlaylist;
   Playlist? get uniqueSelectedPlaylist => _uniqueSelectedPlaylist;
@@ -567,6 +568,8 @@ class PlaylistListVM extends ChangeNotifier {
     );
   }
 
+  /// Return the deleted audio sort/filter parameters if it existed,
+  /// null otherwise.
   AudioSortFilterParameters? deleteAudioSortFilterParameters({
     required String audioSortFilterParametersName,
   }) {
@@ -723,20 +726,32 @@ class PlaylistListVM extends ChangeNotifier {
     return _sortedFilteredSelectedPlaylistsPlayableAudios != null;
   }
 
-  /// Called after the user clicked on the Apply button
+  /// Method called when the user selects a Sort and Filter
+  /// item in the download playlist view Sort and Filter dropdown
+  /// menu or after the user clicked on the Save or Apply button
   /// contained in the SortAndFilterAudioDialogWidget.
   ///
-  /// {audioSortFilterParameters} is the sort and filter
-  /// parameters selected by the user in the
-  /// SortAndFilterAudioDialogWidget.
+  /// {audioSortFilterParameters} is the sort and filter parameters
+  /// selected by the user in the download playlist view Sort and
+  /// Filter dropdown menu or is the sort and filter parameters
+  /// the user set in the SortAndFilterAudioDialogWidget.
   void setSortedFilteredSelectedPlaylistPlayableAudiosAndParms({
     required List<Audio> sortedFilteredSelectedPlaylistsPlayableAudios,
     required AudioSortFilterParameters audioSortFilterParameters,
+    required String audioSortFilterParametersName,
     bool doNotifyListeners = true,
   }) {
     _sortedFilteredSelectedPlaylistsPlayableAudios =
         sortedFilteredSelectedPlaylistsPlayableAudios;
     _audioSortFilterParameters = audioSortFilterParameters;
+
+    if (audioSortFilterParametersName.isNotEmpty) {
+      _audioSortFilterParametersName = audioSortFilterParametersName;
+    } else {
+      // The case if the user taps on the Apply button of the
+      // SortAndFilterAudioDialogWidget.
+      _audioSortFilterParametersName = null;
+    }
 
     if (doNotifyListeners) {
       notifyListeners();
@@ -881,6 +896,7 @@ class PlaylistListVM extends ChangeNotifier {
       playlist.applyAutomaticallySortFilterParmsForPlaylistDownloadView =
           isSortFilterParmsApplicationAutomatic;
     } else {
+      // audioLearnAppView == AudioLearnAppViewType.audioPlayerView
       playlist.audioSortFilterParmsForAudioPlayerView =
           _audioSortFilterParameters;
       playlist.applyAutomaticallySortFilterParmsForAudioPlayerView =

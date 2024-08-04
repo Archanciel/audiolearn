@@ -658,11 +658,13 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                   List<Audio> returnedAudioList = filterSortAudioAndParmLst[0];
                   AudioSortFilterParameters audioSortFilterParameters =
                       filterSortAudioAndParmLst[1];
+                  String audioSortFilterParametersName = filterSortAudioAndParmLst[2];
                   playlistListVMlistenFalse
                       .setSortedFilteredSelectedPlaylistPlayableAudiosAndParms(
                     sortedFilteredSelectedPlaylistsPlayableAudios:
                         returnedAudioList,
                     audioSortFilterParameters: audioSortFilterParameters,
+                    audioSortFilterParametersName: audioSortFilterParametersName,
                   );
                 }
               });
