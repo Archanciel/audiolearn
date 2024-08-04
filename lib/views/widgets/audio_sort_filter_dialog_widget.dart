@@ -1652,7 +1652,7 @@ class _AudioSortFilterDialogWidgetState
     );
   }
 
-  DropdownButton<SortingOption> _buildSortingChoiceList(
+  Widget _buildSortingChoiceList(
     BuildContext context,
   ) {
     return DropdownButton<SortingOption>(
@@ -1716,11 +1716,10 @@ class _AudioSortFilterDialogWidgetState
           // since currently the audios of only one playlist are
           // displayed in the playlist download view. So, sorting
           // by playlist title is not relevant.
-          !(value == SortingOption.audioDownloadSpeed ||
+          !(value == SortingOption.audioEnclosingPlaylistTitle ||
+              value == SortingOption.audioDownloadSpeed ||
               value == SortingOption.audioDownloadDuration ||
-              value == SortingOption.audioEnclosingPlaylistTitle ||
               value == SortingOption.audioFileSize ||
-              value == SortingOption.validAudioTitle ||
               value == SortingOption.audioMusicQuality ||
               value == SortingOption.videoUrl);
     }).map<DropdownMenuItem<SortingOption>>((SortingOption value) {
