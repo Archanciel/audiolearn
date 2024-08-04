@@ -1655,29 +1655,31 @@ class _AudioSortFilterDialogWidgetState
   Widget _buildSortingChoiceList(
     BuildContext context,
   ) {
-    return DropdownButton<SortingOption>(
-      key: const Key('sortingOptionDropdownButton'),
-      value: SortingOption.audioDownloadDate,
-      onChanged: (SortingOption? newValue) {
-        // situation when the user selects a sorting option
-        setState(() {
-          if (!_selectedSortingItemLst
-              .any((sortingItem) => sortingItem.sortingOption == newValue)) {
-            _selectedSortingItemLst.add(SortingItem(
-              sortingOption: newValue!,
-              isAscending: AudioSortFilterService.getDefaultSortOptionOrder(
-                sortingOption: newValue,
-              ),
-            ));
-            // since _selectedSortingItemLst must contain at least one
-            // element, now the _selectedSortingItemLst has more than
-            // one element, the delete IconButton color is set to the
-            // enabled color
-            _audioSortOptionButtonIconColor = kDarkAndLightEnabledIconColor;
-          }
-        });
-      },
-      items: _buildListOfSortingOptionDropdownMenuItems(context),
+    return SingleChildScrollView(
+      child: DropdownButton<SortingOption>(
+        key: const Key('sortingOptionDropdownButton'),
+        value: SortingOption.audioDownloadDate,
+        onChanged: (SortingOption? newValue) {
+          // situation when the user selects a sorting option
+          setState(() {
+            if (!_selectedSortingItemLst
+                .any((sortingItem) => sortingItem.sortingOption == newValue)) {
+              _selectedSortingItemLst.add(SortingItem(
+                sortingOption: newValue!,
+                isAscending: AudioSortFilterService.getDefaultSortOptionOrder(
+                  sortingOption: newValue,
+                ),
+              ));
+              // since _selectedSortingItemLst must contain at least one
+              // element, now the _selectedSortingItemLst has more than
+              // one element, the delete IconButton color is set to the
+              // enabled color
+              _audioSortOptionButtonIconColor = kDarkAndLightEnabledIconColor;
+            }
+          });
+        },
+        items: _buildListOfSortingOptionDropdownMenuItems(context),
+      ),
     );
   }
 
