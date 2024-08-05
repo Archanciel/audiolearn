@@ -237,7 +237,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     }
   }
 
-  /// 
+  ///
   Consumer<AudioDownloadVM> _buildDisplayDownloadProgressionInfo() {
     return Consumer<AudioDownloadVM>(
       builder: (context, audioDownloadVM, child) {
@@ -351,6 +351,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             : (playlistListVMlistenTrue.isOnePlaylistSelected)
                 ? _buildSortFilterParmsDropdownButton(
                     playlistListVMlistenFalse: playlistListVMlistenFalse,
+                    playlistListVMlistenTrue: playlistListVMlistenTrue,
                     warningMessageVMlistenFalse: warningMessageVMlistenFalse,
                   )
                 : _buildPlaylistMoveIconButtons(playlistListVMlistenFalse),
@@ -482,6 +483,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   /// user.
   Row _buildSortFilterParmsDropdownButton({
     required PlaylistListVM playlistListVMlistenFalse,
+    required PlaylistListVM playlistListVMlistenTrue,
     required WarningMessageVM warningMessageVMlistenFalse,
   }) {
     String sortFilterDefaultMenuItemNameCorrespondingToLanguage =
@@ -500,8 +502,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       if (playlistListVMlistenFalse.deleteAudioSortFilterParameters(
               audioSortFilterParametersName: "default") !=
           null) {
-            // The sort and filter parameters named "default" was
-            // deleted from the sort and filter parameters list.
+        // The sort and filter parameters named "default" was
+        // deleted from the sort and filter parameters list.
         wasLanguageChanged = true;
         if (_selectedSortFilterParametersName == "default") {
           // avoids UI problem since the currently selected sort and
@@ -510,7 +512,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           _selectedSortFilterParametersName = "défaut";
         }
       }
-    } else if (sortFilterDefaultMenuItemNameCorrespondingToLanguage == "default") {
+    } else if (sortFilterDefaultMenuItemNameCorrespondingToLanguage ==
+        "default") {
       if (playlistListVMlistenFalse.deleteAudioSortFilterParameters(
               audioSortFilterParametersName: 'défaut') !=
           null) {
@@ -526,13 +529,13 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
     if (wasLanguageChanged &&
         _selectedSortFilterParametersName != null &&
-        _selectedSortFilterParametersName != sortFilterDefaultMenuItemNameCorrespondingToLanguage) {
-      // if the selected sort and filter parameters name is not the
-      // default name, then the sort and filter parameters are applied
-      // to the selected playlist playable audios. Otherwise, when the
-      // user change the language, the default sort and filter parameters
-      // are applied to the selected playlist playable audios instead of
-      // the currently selected sort and filter parameters.
+        _selectedSortFilterParametersName !=
+            sortFilterDefaultMenuItemNameCorrespondingToLanguage) {
+      // When the language was changed and the selected sort and filter
+      // parameters name is not the default name, then, the selected
+      // sort and filter parameters are applied again to the selected
+      // playlist. Without that, the default sort and filter parameters
+      // are applied to the selected playlist after the language changed
       _updatePlaylistSortedFilteredAudioList(
         playlistListVMlistenFalse: playlistListVMlistenFalse,
         notifyListeners: false,
@@ -563,12 +566,12 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             maxWidth: kDropdownButtonMaxWidth,
           ),
           child: DropdownButton<String>(
-            value: _selectedSortFilterParametersName,
+            //  value: _selectedSortFilterParametersName,
+            value: (_selectedSortFilterParametersName == null)
+                ? playlistListVMlistenTrue.getSelectedPlaylistAudioSortFilterParmsName()
+                : _selectedSortFilterParametersName,
             items: dropdownMenuItems,
             onChanged: (value) {
-              // here, the user has selected a sort/filter option;
-              // onTap code was executed before the onChanged code !
-              // The onTap code is now deleted.
               _selectedSortFilterParametersName = value;
               _updatePlaylistSortedFilteredAudioList(
                   playlistListVMlistenFalse: playlistListVMlistenFalse);
@@ -583,6 +586,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     );
   }
 
+  /// Updates the sorted and filtered audio list of the selected playlist
+  /// according to the selected sort and filter parameters in the dropdown
+  /// button list.
   void _updatePlaylistSortedFilteredAudioList({
     required PlaylistListVM playlistListVMlistenFalse,
     bool notifyListeners = true,
@@ -596,6 +602,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       sortedFilteredSelectedPlaylistsPlayableAudios: playlistListVMlistenFalse
           .getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+        wasSortFilterParametersChangedByUser: true,
         audioSortFilterParameters: audioSortFilterParameters,
       ),
       audioSortFilterParameters: audioSortFilterParameters,
@@ -674,7 +681,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           showDialog<List<dynamic>>(
             context: context,
             barrierDismissible: false, // This line prevents the dialog from
-            // closing when tapping outside the dialog
+            //                            closing when tapping outside it
             builder: (BuildContext context) {
               return AudioSortFilterDialogWidget(
                 selectedPlaylistAudioLst: playlistListVMlistenFalse
@@ -702,8 +709,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           ).then((filterSortAudioAndParmLst) {
             if (filterSortAudioAndParmLst != null) {
               // user clicked on Save or Apply or on Delete button
-              // on sort and filter dialog opened by editing
-              // a sort and filter dropdown menu item
+              // on sort and filter dialog OPENED BY EDITING A
+              // SORT AND FILTER DROPDOWN MENU ITEM
               if (filterSortAudioAndParmLst[0] == 'delete') {
                 // user clicked on Delete button
 
@@ -940,13 +947,15 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                   List<Audio> returnedAudioList = filterSortAudioAndParmLst[0];
                   AudioSortFilterParameters audioSortFilterParameters =
                       filterSortAudioAndParmLst[1];
-                  String audioSortFilterParametersName = filterSortAudioAndParmLst[2];
+                  String audioSortFilterParametersName =
+                      filterSortAudioAndParmLst[2];
                   playlistListVMlistenFalse
                       .setSortedFilteredSelectedPlaylistPlayableAudiosAndParms(
                     sortedFilteredSelectedPlaylistsPlayableAudios:
                         returnedAudioList,
                     audioSortFilterParameters: audioSortFilterParameters,
-                    audioSortFilterParametersName: audioSortFilterParametersName,
+                    audioSortFilterParametersName:
+                        audioSortFilterParametersName,
                   );
                   _wasSortFilterAudioSettingsApplied = true;
                 }

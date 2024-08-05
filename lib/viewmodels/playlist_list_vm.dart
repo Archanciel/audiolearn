@@ -614,12 +614,20 @@ class PlaylistListVM extends ChangeNotifier {
         .toList();
   }
 
-  /// Returns the selected playlist audio list. If the user
-  /// clicked on the Apply button in the
-  /// SortAndFilterAudioDialogWidget, then the filtered and
-  /// sorted audio list is returned.
+  /// Returns the selected playlist audio list. If the user clicked
+  /// on a sort filter item in the sort filter dropdown button located
+  /// in the playlist download view or if the user taped on the Apply
+  /// button in the SortAndFilterAudioDialogWidget, then the filtered
+  /// and sorted audio list is returned.
+  ///
+  /// As well, if the selected playlist applies sort filter parameters
+  /// automatically, then the sort filter parameters are applied to
+  /// the returned audio list, unless the user has changed the sort
+  /// filter parameters in the SortAndFilterAudioDialogWidget or in
+  /// the playlist download view sort filter dropdown menu.
   List<Audio> getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters({
     required AudioLearnAppViewType audioLearnAppViewType,
+    bool wasSortFilterParametersChangedByUser = false,
     AudioSortFilterParameters? audioSortFilterParameters,
   }) {
     List<Playlist> selectedPlaylists = getSelectedPlaylists();
@@ -634,59 +642,62 @@ class PlaylistListVM extends ChangeNotifier {
 
     _audioSortFilterParameters = null;
 
-    switch (audioLearnAppViewType) {
-      case AudioLearnAppViewType.playlistDownloadView:
-        if (selectedPlaylist
-            .applyAutomaticallySortFilterParmsForPlaylistDownloadView) {
-          String audioSortFilterParmsNameForPlaylistDownloadView =
-              selectedPlaylist.audioSortFilterParmsNameForPlaylistDownloadView;
+    if (!wasSortFilterParametersChangedByUser) {
+      switch (audioLearnAppViewType) {
+        case AudioLearnAppViewType.playlistDownloadView:
+          if (selectedPlaylist
+              .applyAutomaticallySortFilterParmsForPlaylistDownloadView) {
+            String audioSortFilterParmsNameForPlaylistDownloadView =
+                selectedPlaylist
+                    .audioSortFilterParmsNameForPlaylistDownloadView;
 
-          if (audioSortFilterParmsNameForPlaylistDownloadView.isNotEmpty) {
-            // This means that the user has defined a sort filter parameters
-            // instance applicable to any playlist, which is stored the
-            // application settings json file. This named sort filter
-            // parameters instance was selected to be automatically applyed
-            // to the current playlist in the playlist download view.
-            _audioSortFilterParameters =
-                _settingsDataService.namedAudioSortFilterParametersMap[
-                    audioSortFilterParmsNameForPlaylistDownloadView];
-          } else {
-            // If audioSortFilterParmsForPlaylistDownloadView is not null,
-            // this means that the user has defined a playlist download
-            // view sort filter parameters instance applicable automatically
-            // to the individual playlist only.
-            _audioSortFilterParameters =
-                selectedPlaylist.audioSortFilterParmsForPlaylistDownloadView;
+            if (audioSortFilterParmsNameForPlaylistDownloadView.isNotEmpty) {
+              // This means that the user has defined a sort filter parameters
+              // instance applicable to any playlist, which is stored the
+              // application settings json file. This named sort filter
+              // parameters instance was selected to be automatically applyed
+              // to the current playlist in the playlist download view.
+              _audioSortFilterParameters =
+                  _settingsDataService.namedAudioSortFilterParametersMap[
+                      audioSortFilterParmsNameForPlaylistDownloadView];
+            } else {
+              // If audioSortFilterParmsForPlaylistDownloadView is not null,
+              // this means that the user has defined a playlist download
+              // view sort filter parameters instance applicable automatically
+              // to the individual playlist only.
+              _audioSortFilterParameters =
+                  selectedPlaylist.audioSortFilterParmsForPlaylistDownloadView;
+            }
           }
-        }
-        break;
-      case AudioLearnAppViewType.audioPlayerView:
-        if (selectedPlaylist
-            .applyAutomaticallySortFilterParmsForAudioPlayerView) {
-          String audioSortFilterParmsNameForAudioPlayerView =
-              selectedPlaylist.audioSortFilterParmsNameForAudioPlayerView;
+          break;
+        case AudioLearnAppViewType.audioPlayerView:
+          if (selectedPlaylist
+              .applyAutomaticallySortFilterParmsForAudioPlayerView) {
+            String audioSortFilterParmsNameForAudioPlayerView =
+                selectedPlaylist.audioSortFilterParmsNameForAudioPlayerView;
 
-          if (audioSortFilterParmsNameForAudioPlayerView.isNotEmpty) {
-            // This means that the user has defined a sort filter parameters
-            // instance applicable to any playlist, which is stored the
-            // application settings json file. This named sort filter
-            // parameters instance was selected to be automatically applyed
-            // to the current playlist in the audio player view.
-            _audioSortFilterParameters =
-                _settingsDataService.namedAudioSortFilterParametersMap[
-                    audioSortFilterParmsNameForAudioPlayerView];
-          } else {
-            // If audioSortFilterParmsForAudioPlayerView is not null,
-            // this means that the user has defined a playlist download
-            // view sort filter parameters instance applicable automatically
-            // to the individual playlist only.
-            _audioSortFilterParameters =
-                selectedPlaylist.audioSortFilterParmsForAudioPlayerView;
+            if (audioSortFilterParmsNameForAudioPlayerView.isNotEmpty) {
+              // This means that the user has defined a sort filter parameters
+              // instance applicable to any playlist, which is stored the
+              // application settings json file. This named sort filter
+              // parameters instance was selected to be automatically applyed
+              // to the current playlist in the audio player view.
+              _audioSortFilterParameters =
+                  _settingsDataService.namedAudioSortFilterParametersMap[
+                      audioSortFilterParmsNameForAudioPlayerView];
+            } else {
+              // If audioSortFilterParmsForAudioPlayerView is not null,
+              // this means that the user has defined a playlist download
+              // view sort filter parameters instance applicable automatically
+              // to the individual playlist only.
+              _audioSortFilterParameters =
+                  selectedPlaylist.audioSortFilterParmsForAudioPlayerView;
+            }
           }
-        }
-        break;
-      default:
-        break;
+          break;
+        default:
+          break;
+      }
     }
 
     _audioSortFilterParameters ??= audioSortFilterParameters;
@@ -768,7 +779,11 @@ class PlaylistListVM extends ChangeNotifier {
   /// Method called when the user selects a Sort and Filter
   /// item in the download playlist view Sort and Filter dropdown
   /// menu or after the user clicked on the Save or Apply button
-  /// contained in the SortAndFilterAudioDialogWidget.
+  /// contained in the SortAndFilterAudioDialogWidget. The
+  /// SortAndFilterAudioDialogWidget can be opened by clicking
+  /// on a the Sort and Filter dropdown item edit icon button
+  /// or on Sort Filter menu item in the playlist download view or
+  /// in the audio player view.
   ///
   /// {audioSortFilterParameters} is the sort and filter parameters
   /// selected by the user in the download playlist view Sort and
@@ -791,9 +806,8 @@ class PlaylistListVM extends ChangeNotifier {
   }
 
   /// Method called when the user clicks on the playlist menu
-  /// item "Sort and filter playlist audios" in the
-  /// PlaylistDownloadView screen or in the AudioPlayerView
-  /// screen.
+  /// item "Sort filter audios" in the audio popup menu button
+  /// in PlaylistDownloadView or in the AudioPlayerView.
   AudioSortFilterParameters getSelectedPlaylistAudioSortFilterParamForView(
     AudioLearnAppViewType audioLearnAppViewType,
   ) {
@@ -824,6 +838,17 @@ class PlaylistListVM extends ChangeNotifier {
     // filter and only sort by audio download date descending
     // are returned.
     return AudioSortFilterParameters.createDefaultAudioSortFilterParameters();
+  }
+
+  String? getSelectedPlaylistAudioSortFilterParmsName() {
+    String selectedPlaylistAudioSortFilterParmsName = getSelectedPlaylists()[0]
+        .audioSortFilterParmsNameForPlaylistDownloadView;
+
+    if (selectedPlaylistAudioSortFilterParmsName.isEmpty) {
+      return null;
+    } else {
+      return selectedPlaylistAudioSortFilterParmsName;
+    }
   }
 
   /// Method called when the user clicks on the 'Move audio to

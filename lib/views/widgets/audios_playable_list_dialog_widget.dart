@@ -53,20 +53,20 @@ class _AudioPlayableListDialogWidgetState
   Widget build(BuildContext context) {
     ThemeProviderVM themeProviderVM = Provider.of<ThemeProviderVM>(context);
     bool isDarkTheme = themeProviderVM.currentTheme == AppTheme.dark;
-    AudioPlayerVM audioGlobalPlayerVM =
+    AudioPlayerVM audioPlayerVMlistenFalse =
         Provider.of<AudioPlayerVM>(context, listen: false);
-    Audio? currentAudio = audioGlobalPlayerVM.currentAudio;
+    Audio? currentAudio = audioPlayerVMlistenFalse.currentAudio;
 
     List<Audio> playableAudioLst;
 
     if (_excludeFullyPlayedAudios) {
-      playableAudioLst = audioGlobalPlayerVM
+      playableAudioLst = audioPlayerVMlistenFalse
           .getNotFullyPlayedAudiosApplyingSortFilterParameters(
         AudioLearnAppViewType.audioPlayerView,
       );
     } else {
       playableAudioLst =
-          audioGlobalPlayerVM.getPlayableAudiosApplyingSortFilterParameters(
+          audioPlayerVMlistenFalse.getPlayableAudiosApplyingSortFilterParameters(
         AudioLearnAppViewType.audioPlayerView,
       );
     }
@@ -101,7 +101,7 @@ class _AudioPlayableListDialogWidgetState
             Tooltip(
                 message: _determineDialogTitleAudioSortTooltip(
                   context: context,
-                  audioPlayerVM: audioGlobalPlayerVM,
+                  audioPlayerVM: audioPlayerVMlistenFalse,
                 ),
                 child: Text(
                     AppLocalizations.of(context)!.audioOneSelectedDialogTitle)),
@@ -136,7 +136,7 @@ class _AudioPlayableListDialogWidgetState
                       int index = playableAudioLst.indexOf(audio);
                       return GestureDetector(
                         onTap: () async {
-                          await audioGlobalPlayerVM.setCurrentAudio(audio: audio,);
+                          await audioPlayerVMlistenFalse.setCurrentAudio(audio: audio,);
                           Navigator.of(context).pop();
                         },
                         child: _buildAudioTitleTextWidget(
