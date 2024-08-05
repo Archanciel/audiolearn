@@ -28,7 +28,9 @@ enum Language {
 }
 
 enum Playlists {
-  orderedTitleLst,
+  orderedTitleLst, // Associated to this kex is the list of playlist titles
+  //                  ordered by the user in clicking on up/down icon buttons
+  //                  in the playlist download view.
   isMusicQualityByDefault,
   playSpeed,
   arePlaylistsDisplayedInPlaylistDownloadView,
