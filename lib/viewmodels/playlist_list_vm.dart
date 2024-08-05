@@ -638,17 +638,51 @@ class PlaylistListVM extends ChangeNotifier {
       case AudioLearnAppViewType.playlistDownloadView:
         if (selectedPlaylist
             .applyAutomaticallySortFilterParmsForPlaylistDownloadView) {
-          _audioSortFilterParameters = _settingsDataService
-                  .namedAudioSortFilterParametersMap[
-              selectedPlaylist.audioSortFilterParmsNameForPlaylistDownloadView];
+          String audioSortFilterParmsNameForPlaylistDownloadView =
+              selectedPlaylist.audioSortFilterParmsNameForPlaylistDownloadView;
+
+          if (audioSortFilterParmsNameForPlaylistDownloadView.isNotEmpty) {
+            // This means that the user has defined a sort filter parameters
+            // instance applicable to any playlist, which is stored the
+            // application settings json file. This named sort filter
+            // parameters instance was selected to be automatically applyed
+            // to the current playlist in the playlist download view.
+            _audioSortFilterParameters =
+                _settingsDataService.namedAudioSortFilterParametersMap[
+                    audioSortFilterParmsNameForPlaylistDownloadView];
+          } else {
+            // If audioSortFilterParmsForPlaylistDownloadView is not null,
+            // this means that the user has defined a playlist download
+            // view sort filter parameters instance applicable automatically
+            // to the individual playlist only.
+            _audioSortFilterParameters =
+                selectedPlaylist.audioSortFilterParmsForPlaylistDownloadView;
+          }
         }
         break;
       case AudioLearnAppViewType.audioPlayerView:
         if (selectedPlaylist
             .applyAutomaticallySortFilterParmsForAudioPlayerView) {
-          _audioSortFilterParameters =
-              _settingsDataService.namedAudioSortFilterParametersMap[
-                  selectedPlaylist.audioSortFilterParmsNameForAudioPlayerView];
+          String audioSortFilterParmsNameForAudioPlayerView =
+              selectedPlaylist.audioSortFilterParmsNameForAudioPlayerView;
+
+          if (audioSortFilterParmsNameForAudioPlayerView.isNotEmpty) {
+            // This means that the user has defined a sort filter parameters
+            // instance applicable to any playlist, which is stored the
+            // application settings json file. This named sort filter
+            // parameters instance was selected to be automatically applyed
+            // to the current playlist in the audio player view.
+            _audioSortFilterParameters =
+                _settingsDataService.namedAudioSortFilterParametersMap[
+                    audioSortFilterParmsNameForAudioPlayerView];
+          } else {
+            // If audioSortFilterParmsForAudioPlayerView is not null,
+            // this means that the user has defined a playlist download
+            // view sort filter parameters instance applicable automatically
+            // to the individual playlist only.
+            _audioSortFilterParameters =
+                selectedPlaylist.audioSortFilterParmsForAudioPlayerView;
+          }
         }
         break;
       default:
@@ -768,12 +802,14 @@ class PlaylistListVM extends ChangeNotifier {
 
     switch (audioLearnAppViewType) {
       case AudioLearnAppViewType.playlistDownloadView:
-        playlistAudioSortFilterParameters = _settingsDataService.namedAudioSortFilterParametersMap[
+        playlistAudioSortFilterParameters = _settingsDataService
+                .namedAudioSortFilterParametersMap[
             selectedPlaylist.audioSortFilterParmsNameForPlaylistDownloadView];
         break;
       case AudioLearnAppViewType.audioPlayerView:
-        playlistAudioSortFilterParameters = _settingsDataService.namedAudioSortFilterParametersMap[
-            selectedPlaylist.audioSortFilterParmsNameForAudioPlayerView];
+        playlistAudioSortFilterParameters =
+            _settingsDataService.namedAudioSortFilterParametersMap[
+                selectedPlaylist.audioSortFilterParmsNameForAudioPlayerView];
         break;
       default:
         break;

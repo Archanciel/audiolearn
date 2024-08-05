@@ -1,8 +1,10 @@
 import 'dart:io';
 
 import 'audio.dart';
+import '../services/sort_filter_parameters.dart';
 
 enum PlaylistType { youtube, local }
+
 enum PlaylistQuality { music, voice }
 
 /// This class
@@ -44,10 +46,35 @@ class Playlist {
   // playlist audio has been played.
   int currentOrPastPlayableAudioIndex = -1;
 
-  String audioSortFilterParmsNameForPlaylistDownloadView = '';
+  // A sort filter parameters instance can be associated to a playlist
+  // in order to sort and filter its audios. There are too ways to
+  // associate a sort filter parameters instance to a playlist:
+  //
+  // 1. Selecting or defining a named sort filter parameters instance
+  //    in the SortFilterParametersView and then associating this
+  //    named instance to the playlist. In this case, the named
+  //    instance is stored in the app settings.json file, not in the
+  //    playlist json file.
+  //
+  // 2. Defining an unamed sort filter parameters instance  in the
+  //    SortFilterParametersView and setting the 'For selected playlist'
+  //    checkbox. In this case, the unamed instance is stored in the
+  //    playlist json file.
+  //
+  // Additionally, the sort filter parameters instance can be associated
+  // to the playlist download view and/or to the audio player view.
+  //
+  // Finally, the user can choose to apply the sort filter parameters
+  // automatically when the playlist is opened in the PlaylistDownloadView
+  // or in the AudioPlayerView.
+
   bool applyAutomaticallySortFilterParmsForPlaylistDownloadView = false;
-  String audioSortFilterParmsNameForAudioPlayerView = '';
+  String audioSortFilterParmsNameForPlaylistDownloadView = '';
+  AudioSortFilterParameters? audioSortFilterParmsForPlaylistDownloadView;
+
   bool applyAutomaticallySortFilterParmsForAudioPlayerView = false;
+  String audioSortFilterParmsNameForAudioPlayerView = '';
+  AudioSortFilterParameters? audioSortFilterParmsForAudioPlayerView;
 
   Playlist({
     this.url = '',
@@ -69,10 +96,12 @@ class Playlist {
     required this.downloadPath,
     required this.isSelected,
     required this.currentOrPastPlayableAudioIndex,
-    required this.audioSortFilterParmsNameForPlaylistDownloadView,
     required this.applyAutomaticallySortFilterParmsForPlaylistDownloadView,
-    required this.audioSortFilterParmsNameForAudioPlayerView,
+    required this.audioSortFilterParmsNameForPlaylistDownloadView,
+    required this.audioSortFilterParmsForPlaylistDownloadView,
     required this.applyAutomaticallySortFilterParmsForAudioPlayerView,
+    required this.audioSortFilterParmsNameForAudioPlayerView,
+    required this.audioSortFilterParmsForAudioPlayerView,
   });
 
   /// Factory constructor: creates an instance of Playlist from a
@@ -95,14 +124,24 @@ class Playlist {
       isSelected: json['isSelected'],
       currentOrPastPlayableAudioIndex:
           json['currentOrPastPlayableAudioIndex'] ?? -1,
-      audioSortFilterParmsNameForPlaylistDownloadView:
-          json['audioSortFilterParmsNamePlaylistDownloadView'] ?? '',
       applyAutomaticallySortFilterParmsForPlaylistDownloadView:
           json['applySortFilterParmsForPlaylistDownloadView'] ?? false,
-      audioSortFilterParmsNameForAudioPlayerView:
-          json['audioSortFilterParmsNameAudioPlayerView'] ?? '',
+      audioSortFilterParmsNameForPlaylistDownloadView:
+          json['audioSortFilterParmsNamePlaylistDownloadView'] ?? '',
+      audioSortFilterParmsForPlaylistDownloadView:
+          (json['audioSortFilterParmsPlaylistDownloadView'] != null)
+              ? AudioSortFilterParameters.fromJson(
+                  json['audioSortFilterParmsPlaylistDownloadView'])
+              : null,
       applyAutomaticallySortFilterParmsForAudioPlayerView:
           json['applySortFilterParmsForAudioPlayerView'] ?? false,
+      audioSortFilterParmsNameForAudioPlayerView:
+          json['audioSortFilterParmsNameAudioPlayerView'] ?? '',
+      audioSortFilterParmsForAudioPlayerView:
+          (json['audioSortFilterParamAudioPlayerView'] != null)
+              ? AudioSortFilterParameters.fromJson(
+                  json['audioSortFilterParamAudioPlayerView'])
+              : null,
     );
 
     // Deserialize the Audio instances in the
@@ -144,14 +183,18 @@ class Playlist {
           playableAudioLst.map((audio) => audio.toJson()).toList(),
       'isSelected': isSelected,
       'currentOrPastPlayableAudioIndex': currentOrPastPlayableAudioIndex,
-      'audioSortFilterParmsNamePlaylistDownloadView':
-          audioSortFilterParmsNameForPlaylistDownloadView,
       'applySortFilterParmsForPlaylistDownloadView':
           applyAutomaticallySortFilterParmsForPlaylistDownloadView,
-      'audioSortFilterParmsNameAudioPlayerView':
-          audioSortFilterParmsNameForAudioPlayerView,
+      'audioSortFilterParmsNamePlaylistDownloadView':
+          audioSortFilterParmsNameForPlaylistDownloadView,
+      'audioSortFilterParmsPlaylistDownloadView':
+          audioSortFilterParmsForPlaylistDownloadView?.toJson(),
       'applySortFilterParmsForAudioPlayerView':
           applyAutomaticallySortFilterParmsForAudioPlayerView,
+      'audioSortFilterParmsNameAudioPlayerView':
+          audioSortFilterParmsNameForAudioPlayerView,
+      'audioSortFilterParamAudioPlayerView':
+          audioSortFilterParmsForAudioPlayerView?.toJson(),
     };
   }
 

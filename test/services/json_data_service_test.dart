@@ -263,7 +263,110 @@ void main() {
       // Cleanup the temporary directory
       await tempDir.delete(recursive: true);
     });
-    test('saveToFile and loadFromFile for one Playlist instance', () async {
+    test('''saveToFile and loadFromFile for one Playlist instance. The playlist
+            uses a named sort filter parameters instance.''',
+     () async {
+      // Create a temporary directory to store the serialized Audio object
+      Directory tempDir = await Directory.systemTemp.createTemp('AudioTest');
+      String filePath = path.join(tempDir.path, 'playlist.json');
+
+      const String testFromPlaylistTitle = 'testFromPlaylist1ID';
+      const String testToPlaylistTitle = 'testToPlaylist1ID';
+
+      // Create a Playlist with 2 Audio instances
+      Playlist testPlaylist = Playlist(
+        id: 'testPlaylist1ID',
+        title: 'Test Playlist',
+        url: 'https://www.example.com/playlist-url',
+        playlistType: PlaylistType.youtube,
+        playlistQuality: PlaylistQuality.voice,
+        isSelected: true,
+      );
+
+      testPlaylist.downloadPath = 'path/to/downloads';
+
+      DateTime now = DateTime.now();
+
+      Audio audio1 = Audio.fullConstructor(
+          enclosingPlaylist: testPlaylist,
+          movedFromPlaylistTitle: testFromPlaylistTitle,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle: 'Test Video 1',
+          compactVideoDescription: 'Test Video 1 Description',
+          validVideoTitle: 'Test Video Title',
+          videoUrl: 'https://www.example.com/video-url-1',
+          audioDownloadDateTime: DateTime.now(),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime.now().subtract(const Duration(days: 10)),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName: 'Test Video Title.mp3',
+          audioFileSize: 330000000,
+          isAudioImported: false);
+
+      Audio audio2 = Audio.fullConstructor(
+        enclosingPlaylist: testPlaylist,
+        movedFromPlaylistTitle: null,
+        movedToPlaylistTitle: testToPlaylistTitle,
+        copiedFromPlaylistTitle: null,
+        copiedToPlaylistTitle: testToPlaylistTitle,
+        originalVideoTitle: '',
+        compactVideoDescription: '',
+        validVideoTitle: '',
+        videoUrl: '',
+        audioDownloadDateTime: now,
+        audioDownloadDuration: const Duration(microseconds: 0),
+        audioDownloadSpeed: 0,
+        videoUploadDate: now,
+        audioDuration: const Duration(minutes: 5, seconds: 30),
+        isAudioMusicQuality: false,
+        audioPlaySpeed: kAudioDefaultPlaySpeed,
+        audioPlayVolume: kAudioDefaultPlayVolume,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        isPaused: true,
+        audioPausedDateTime: null,
+        audioPositionSeconds: 0,
+        audioFileName: 'Test Video Title.mp3',
+        audioFileSize: 330000000,
+        isAudioImported: true,
+      );
+
+      testPlaylist.downloadedAudioLst = [audio1, audio2];
+      testPlaylist.playableAudioLst = [audio2];
+
+      testPlaylist.audioSortFilterParmsNameForPlaylistDownloadView =
+          'Title asc';
+      testPlaylist.audioSortFilterParmsNameForAudioPlayerView =
+          'Title desc';
+
+      // Save Playlist to a file
+      JsonDataService.saveToFile(model: testPlaylist, path: filePath);
+
+      // Load Playlist from the file
+      Playlist loadedPlaylist = JsonDataService.loadFromFile(
+          jsonPathFileName: filePath, type: Playlist);
+
+      // Compare original and loaded Playlist
+      compareDeserializedWithOriginalPlaylist(
+        deserializedPlaylist: loadedPlaylist,
+        originalPlaylist: testPlaylist,
+      );
+
+      // Cleanup the temporary directory
+      await tempDir.delete(recursive: true);
+    });
+    test('''saveToFile and loadFromFile for one Playlist instance. The playlist
+            has an own sort filter parameters instance.''',
+    () async {
       // Create a temporary directory to store the serialized Audio object
       Directory tempDir = await Directory.systemTemp.createTemp('AudioTest');
       String filePath = path.join(tempDir.path, 'playlist.json');
@@ -345,6 +448,46 @@ void main() {
           createAudioSortFilterParameters();
       testPlaylist.audioSortFilterParmsForAudioPlayerView =
           createAudioSortFilterParameters();
+          
+      // Save Playlist to a file
+      JsonDataService.saveToFile(model: testPlaylist, path: filePath);
+
+      // Load Playlist from the file
+      Playlist loadedPlaylist = JsonDataService.loadFromFile(
+          jsonPathFileName: filePath, type: Playlist);
+
+      // Compare original and loaded Playlist
+      compareDeserializedWithOriginalPlaylist(
+        deserializedPlaylist: loadedPlaylist,
+        originalPlaylist: testPlaylist,
+      );
+
+      // Cleanup the temporary directory
+      await tempDir.delete(recursive: true);
+    });
+    test('''saveToFile and loadFromFile for one Playlist instance without Audio.
+            The playlist has named sort filter parameters instance.''',
+        () async {
+      // Create a temporary directory to store the serialized Audio object
+      Directory tempDir = await Directory.systemTemp.createTemp('AudioTest');
+      String filePath = path.join(tempDir.path, 'playlist.json');
+
+      // Create a Playlist with 2 Audio instances
+      Playlist testPlaylist = Playlist(
+        id: 'testPlaylist1ID',
+        title: 'Test Playlist',
+        url: 'https://www.example.com/playlist-url',
+        playlistType: PlaylistType.youtube,
+        playlistQuality: PlaylistQuality.voice,
+        isSelected: true,
+      );
+
+      testPlaylist.downloadPath = 'path/to/downloads';
+
+      testPlaylist.audioSortFilterParmsNameForPlaylistDownloadView =
+          'Title asc';
+      testPlaylist.audioSortFilterParmsNameForAudioPlayerView =
+          'Title desc';
 
       // Save Playlist to a file
       JsonDataService.saveToFile(model: testPlaylist, path: filePath);
@@ -362,7 +505,8 @@ void main() {
       // Cleanup the temporary directory
       await tempDir.delete(recursive: true);
     });
-    test('saveToFile and loadFromFile for one Playlist instance without Audio',
+    test('''saveToFile and loadFromFile for one Playlist instance without Audio.
+            The playlist has an own sort filter parameters instance.''',
         () async {
       // Create a temporary directory to store the serialized Audio object
       Directory tempDir = await Directory.systemTemp.createTemp('AudioTest');
@@ -1187,7 +1331,7 @@ void compareDeserializedWithOriginalAudio({
     expect(deserializedAudio.audioDownloadDuration!.inMilliseconds,
         originalAudio.audioDownloadDuration!.inMilliseconds);
   }
-  
+
   expect(
       deserializedAudio.isAudioMusicQuality, originalAudio.isAudioMusicQuality);
   expect(deserializedAudio.audioPlaySpeed, originalAudio.audioPlaySpeed);
