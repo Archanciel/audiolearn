@@ -2,7 +2,7 @@
     "applySortFilterParmsForAudioPlayerView": false,
     "applySortFilterParmsForPlaylistDownloadView": false,
     "audioPlaySpeed": 0.0,
-    "audioSortFilterParamAudioPlayerView": null,
+    "audioSortFilterParmsAudioPlayerView": null,
     "audioSortFilterParmsPlaylistDownloadView": null,
     "currentOrPastPlayableAudioIndex": 6,
     "downloadedAudioLst": [

@@ -138,9 +138,9 @@ class Playlist {
       audioSortFilterParmsNameForAudioPlayerView:
           json['audioSortFilterParmsNameAudioPlayerView'] ?? '',
       audioSortFilterParmsForAudioPlayerView:
-          (json['audioSortFilterParamAudioPlayerView'] != null)
+          (json['audioSortFilterParmsAudioPlayerView'] != null)
               ? AudioSortFilterParameters.fromJson(
-                  json['audioSortFilterParamAudioPlayerView'])
+                  json['audioSortFilterParmsAudioPlayerView'])
               : null,
     );
 
@@ -193,7 +193,7 @@ class Playlist {
           applyAutomaticallySortFilterParmsForAudioPlayerView,
       'audioSortFilterParmsNameAudioPlayerView':
           audioSortFilterParmsNameForAudioPlayerView,
-      'audioSortFilterParamAudioPlayerView':
+      'audioSortFilterParmsAudioPlayerView':
           audioSortFilterParmsForAudioPlayerView?.toJson(),
     };
   }
