@@ -566,10 +566,12 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             maxWidth: kDropdownButtonMaxWidth,
           ),
           child: DropdownButton<String>(
-            //  value: _selectedSortFilterParametersName,
-            value: (_selectedSortFilterParametersName == null)
-                ? playlistListVMlistenTrue.getSelectedPlaylistAudioSortFilterParmsName()
-                : _selectedSortFilterParametersName,
+            value: (playlistListVMlistenTrue
+                        .getSelectedPlaylistAudioSortFilterParmsName() ==
+                    null)
+                ? _selectedSortFilterParametersName
+                : playlistListVMlistenTrue
+                    .getSelectedPlaylistAudioSortFilterParmsName(),
             items: dropdownMenuItems,
             onChanged: (value) {
               _selectedSortFilterParametersName = value;
@@ -602,7 +604,6 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       sortedFilteredSelectedPlaylistsPlayableAudios: playlistListVMlistenFalse
           .getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
-        wasSortFilterParametersChangedByUser: true,
         audioSortFilterParameters: audioSortFilterParameters,
       ),
       audioSortFilterParameters: audioSortFilterParameters,

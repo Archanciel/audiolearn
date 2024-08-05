@@ -66,7 +66,7 @@ class PlaylistListVM extends ChangeNotifier {
   List<Audio>? get sortedFilteredSelectedPlaylistsPlayableAudios =>
       _sortedFilteredSelectedPlaylistsPlayableAudios;
   AudioSortFilterParameters? _audioSortFilterParameters;
-  String _audioSortFilterParametersName = '';
+  Map<String, String> _playlistAudioSortFilterParmsNamesMap = {};
 
   Playlist? _uniqueSelectedPlaylist;
   Playlist? get uniqueSelectedPlaylist => _uniqueSelectedPlaylist;
@@ -627,7 +627,6 @@ class PlaylistListVM extends ChangeNotifier {
   /// the playlist download view sort filter dropdown menu.
   List<Audio> getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters({
     required AudioLearnAppViewType audioLearnAppViewType,
-    bool wasSortFilterParametersChangedByUser = false,
     AudioSortFilterParameters? audioSortFilterParameters,
   }) {
     List<Playlist> selectedPlaylists = getSelectedPlaylists();
@@ -642,7 +641,10 @@ class PlaylistListVM extends ChangeNotifier {
 
     _audioSortFilterParameters = null;
 
-    if (!wasSortFilterParametersChangedByUser) {
+    String selectedPlaylistTitle = selectedPlaylist.title;
+
+    if (!_playlistAudioSortFilterParmsNamesMap
+        .containsKey(selectedPlaylistTitle)) {
       switch (audioLearnAppViewType) {
         case AudioLearnAppViewType.playlistDownloadView:
           if (selectedPlaylist
@@ -698,6 +700,13 @@ class PlaylistListVM extends ChangeNotifier {
         default:
           break;
       }
+    } else {
+      // If the playlist has been selected and the user has not yet
+      // defined sort and filter parameters for the playlist, then
+      // the default sort and filter parameters are applied to the
+      // playlist audio list.
+      _audioSortFilterParameters = _settingsDataService
+          .namedAudioSortFilterParametersMap[selectedPlaylistTitle];
     }
 
     _audioSortFilterParameters ??= audioSortFilterParameters;
@@ -798,7 +807,8 @@ class PlaylistListVM extends ChangeNotifier {
     _sortedFilteredSelectedPlaylistsPlayableAudios =
         sortedFilteredSelectedPlaylistsPlayableAudios;
     _audioSortFilterParameters = audioSortFilterParameters;
-    _audioSortFilterParametersName = audioSortFilterParametersName;
+    _playlistAudioSortFilterParmsNamesMap[getSelectedPlaylists()[0].title] =
+        audioSortFilterParametersName;
 
     if (doNotifyListeners) {
       notifyListeners();
@@ -841,13 +851,21 @@ class PlaylistListVM extends ChangeNotifier {
   }
 
   String? getSelectedPlaylistAudioSortFilterParmsName() {
-    String selectedPlaylistAudioSortFilterParmsName = getSelectedPlaylists()[0]
-        .audioSortFilterParmsNameForPlaylistDownloadView;
+    Playlist selectedPlaylist = getSelectedPlaylists()[0];
+    String? selectedPlaylistUserSetAudioSortFilterParmsName =
+        _playlistAudioSortFilterParmsNamesMap[selectedPlaylist.title];
 
-    if (selectedPlaylistAudioSortFilterParmsName.isEmpty) {
-      return null;
-    } else {
+    if (selectedPlaylistUserSetAudioSortFilterParmsName != null) {
+      return selectedPlaylistUserSetAudioSortFilterParmsName;
+    }
+
+    String selectedPlaylistAudioSortFilterParmsName =
+        selectedPlaylist.audioSortFilterParmsNameForPlaylistDownloadView;
+
+    if (selectedPlaylistAudioSortFilterParmsName.isNotEmpty) {
       return selectedPlaylistAudioSortFilterParmsName;
+    } else {
+      return null;
     }
   }
 
@@ -951,13 +969,13 @@ class PlaylistListVM extends ChangeNotifier {
 
     if (audioLearnAppView == AudioLearnAppViewType.playlistDownloadView) {
       playlist.audioSortFilterParmsNameForPlaylistDownloadView =
-          _audioSortFilterParametersName;
+          _playlistAudioSortFilterParmsNamesMap[playlist.title]!;
       playlist.applyAutomaticallySortFilterParmsForPlaylistDownloadView =
           isSortFilterParmsApplicationAutomatic;
     } else {
       // audioLearnAppView == AudioLearnAppViewType.audioPlayerView
       playlist.audioSortFilterParmsNameForAudioPlayerView =
-          _audioSortFilterParametersName;
+          _playlistAudioSortFilterParmsNamesMap[playlist.title]!;
       playlist.applyAutomaticallySortFilterParmsForAudioPlayerView =
           isSortFilterParmsApplicationAutomatic;
     }
