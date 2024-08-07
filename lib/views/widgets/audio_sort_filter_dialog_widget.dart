@@ -749,7 +749,7 @@ class _AudioSortFilterDialogWidgetState
           child: TextButton(
             key: const Key('deleteSortFilterTextButton'),
             onPressed: () {
-              _updateWidgetAudioSortFilterParameters();
+              _audioSortFilterParameters = _generateAudioSortFilterParametersFromDialogFields();
 
               if (_audioSortFilterParameters ==
                   AudioSortFilterParameters
@@ -761,7 +761,10 @@ class _AudioSortFilterDialogWidgetState
 
                 // does not close the sort and filter dialog
                 return;
-              } else if (_sortFilterSaveAsUniqueName.isEmpty) {
+              } else if (_sortFilterSaveAsUniqueName.isEmpty ||
+                  _sortFilterSaveAsUniqueName ==
+                      AppLocalizations.of(context)!
+                          .sortFilterParametersAppliedName) {
                 // here, the user deletes an historical sort/filter parameter
                 if (!playlistListVM
                     .clearAudioSortFilterSettingsSearchHistoryElement(
@@ -845,7 +848,9 @@ class _AudioSortFilterDialogWidgetState
         child: TextButton(
           key: const Key('applySortFilterOptionsTextButton'),
           onPressed: () {
-            List<dynamic> filterSortAudioAndParmLst = _filterAndSortAudioLst();
+            List<dynamic> filterSortAudioAndParmLst = _filterAndSortAudioLst(
+              sortFilterParametersSaveAsUniqueName: AppLocalizations.of(context)!.sortFilterParametersAppliedName
+            );
 
             if (filterSortAudioAndParmLst[1] ==
                 AudioSortFilterParameters
@@ -1772,9 +1777,9 @@ class _AudioSortFilterDialogWidgetState
   /// 2/ the audio sort filter parameters (AudioSortFilterParameters)
   /// 3/ the sort filter parameters save as unique name
   List<dynamic> _filterAndSortAudioLst({
-    String sortFilterParametersSaveAsUniqueName = '',
+    required String sortFilterParametersSaveAsUniqueName,
   }) {
-    _updateWidgetAudioSortFilterParameters();
+    _audioSortFilterParameters = _generateAudioSortFilterParametersFromDialogFields();
 
     List<Audio> filteredAndSortedAudioLst =
         _audioSortFilterService.filterAndSortAudioLst(
@@ -1789,8 +1794,8 @@ class _AudioSortFilterDialogWidgetState
     ];
   }
 
-  void _updateWidgetAudioSortFilterParameters() {
-    _audioSortFilterParameters = AudioSortFilterParameters(
+  AudioSortFilterParameters _generateAudioSortFilterParametersFromDialogFields() {
+    return AudioSortFilterParameters(
       selectedSortItemLst: _selectedSortingItemLst,
       filterSentenceLst: _audioTitleFilterSentencesLst,
       sentencesCombination:

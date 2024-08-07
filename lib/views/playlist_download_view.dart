@@ -545,6 +545,23 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     Map<String, AudioSortFilterParameters> audioSortFilterParametersMap =
         playlistListVMlistenFalse.getAudioSortFilterParametersMap();
 
+    String selectedPlaylistAudioSortFilterParmsName =
+        playlistListVMlistenTrue.getSelectedPlaylistAudioSortFilterParmsName();
+
+    // If the selected playlist sort and filter parameters name is
+    // is the translated sortFilterParametersAppliedName, which is
+    // the case if the user clicked on the Apply button of the
+    // sort and filter dialog, then the sort and filter parameters
+    // must be added to the sort and filter parameters map, otherwise
+    // building the dropdown menu items list will fail.
+    if (selectedPlaylistAudioSortFilterParmsName ==
+        AppLocalizations.of(context)!.sortFilterParametersAppliedName) {
+      audioSortFilterParametersMap[selectedPlaylistAudioSortFilterParmsName] =
+          playlistListVMlistenTrue.audioSortFilterParameters ??
+              AudioSortFilterParameters
+                  .createDefaultAudioSortFilterParameters();
+    }
+
     List<String> audioSortFilterParametersNamesLst =
         audioSortFilterParametersMap.keys.toList();
     audioSortFilterParametersNamesLst
@@ -558,6 +575,11 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       warningMessageVMlistenFalse: warningMessageVMlistenFalse,
     );
 
+    if (selectedPlaylistAudioSortFilterParmsName.isEmpty) {
+      selectedPlaylistAudioSortFilterParmsName =
+          AppLocalizations.of(context)!.sortFilterParametersDefaultName;
+    }
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -566,12 +588,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             maxWidth: kDropdownButtonMaxWidth,
           ),
           child: DropdownButton<String>(
-            value: (playlistListVMlistenTrue
-                        .getSelectedPlaylistAudioSortFilterParmsName() ==
-                    null)
+            value: (selectedPlaylistAudioSortFilterParmsName.isEmpty)
                 ? _selectedSortFilterParametersName
-                : playlistListVMlistenTrue
-                    .getSelectedPlaylistAudioSortFilterParmsName(),
+                : selectedPlaylistAudioSortFilterParmsName,
             items: dropdownMenuItems,
             onChanged: (value) {
               _selectedSortFilterParametersName = value;
@@ -673,6 +692,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     return SizedBox(
       width: kDropdownItemEditIconButtonWidth,
       child: IconButton(
+        key: const Key('sort_filter_parms_dropdown_item_edit_icon_button'),
         icon: const Icon(Icons.edit),
         onPressed: () {
           // Using FocusNode to enable clicking on Enter to close
@@ -725,7 +745,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                       (element) => element == audioSortFilterParametersName);
                 });
               } else {
-                // user clicked on Save button
+                // user clicked on Save or Apply button (the Apply button
+                // was displayed after the user deleted the sort and filter
+                // parameters 'Save as' name)
                 List<Audio> returnedAudioList = filterSortAudioAndParmLst[0];
                 AudioSortFilterParameters audioSortFilterParameters =
                     filterSortAudioAndParmLst[1];
@@ -747,7 +769,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 _selectedSortFilterParametersName =
                     sortFilterParametersSaveAsName;
               }
-            }
+            } // else filterSortAudioAndParmLst == null if user clicked on
+            //   Cancel button
           });
           focusNode.requestFocus();
         },

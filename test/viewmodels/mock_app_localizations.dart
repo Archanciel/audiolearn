@@ -1191,4 +1191,7 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get importedAudioDescriptionLabel => "Imported audio description";
+
+  @override
+  String get sortFilterParametersAppliedName => "applied";
 }

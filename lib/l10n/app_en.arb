@@ -391,5 +391,6 @@
   "audioTitleLabel": "Audio title",
   "importedAudioDateTimeLabel": "Imported audio date time",
   "importedAudioUrlLabel": "Imported audio URL",
-  "importedAudioDescriptionLabel": "Audio description"
+  "importedAudioDescriptionLabel": "Audio description",
+  "sortFilterParametersAppliedName": "applied"
 }

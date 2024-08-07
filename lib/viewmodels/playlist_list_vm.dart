@@ -66,6 +66,8 @@ class PlaylistListVM extends ChangeNotifier {
   List<Audio>? get sortedFilteredSelectedPlaylistsPlayableAudios =>
       _sortedFilteredSelectedPlaylistsPlayableAudios;
   AudioSortFilterParameters? _audioSortFilterParameters;
+  AudioSortFilterParameters? get audioSortFilterParameters =>
+      _audioSortFilterParameters;
   Map<String, String> _playlistAudioSortFilterParmsNamesMap = {};
 
   Playlist? _uniqueSelectedPlaylist;
@@ -791,8 +793,8 @@ class PlaylistListVM extends ChangeNotifier {
   /// contained in the SortAndFilterAudioDialogWidget. The
   /// SortAndFilterAudioDialogWidget can be opened by clicking
   /// on a the Sort and Filter dropdown item edit icon button
-  /// or on Sort Filter menu item in the playlist download view or
-  /// in the audio player view.
+  /// or on Sort Filter menu item in the audio menu located in the
+  /// playlist download view or in the audio player view.
   ///
   /// {audioSortFilterParameters} is the sort and filter parameters
   /// selected by the user in the download playlist view Sort and
@@ -850,22 +852,28 @@ class PlaylistListVM extends ChangeNotifier {
     return AudioSortFilterParameters.createDefaultAudioSortFilterParameters();
   }
 
-  String? getSelectedPlaylistAudioSortFilterParmsName() {
+  /// If the user has not set sort and filter parameters for
+  /// the selected playlist, then the automatically applicable
+  /// sort and filter parameters for the selected playlist is
+  /// returned if it exists, otherwise the default sort and filter
+  /// parameters are returned.
+  String getSelectedPlaylistAudioSortFilterParmsName() {
     Playlist selectedPlaylist = getSelectedPlaylists()[0];
-    String? selectedPlaylistUserSetAudioSortFilterParmsName =
-        _playlistAudioSortFilterParmsNamesMap[selectedPlaylist.title];
+    String selectedPlaylistAudioSortFilterParmsNameSetByUser =
+        _playlistAudioSortFilterParmsNamesMap[selectedPlaylist.title] ?? '';
 
-    if (selectedPlaylistUserSetAudioSortFilterParmsName != null) {
-      return selectedPlaylistUserSetAudioSortFilterParmsName;
+    if (selectedPlaylistAudioSortFilterParmsNameSetByUser.isNotEmpty) {
+      return selectedPlaylistAudioSortFilterParmsNameSetByUser;
     }
 
+    // TODO Why is applySortFilterParmsForPlaylistDownloadView used ?
     String selectedPlaylistAudioSortFilterParmsName =
         selectedPlaylist.audioSortFilterParmsNameForPlaylistDownloadView;
 
     if (selectedPlaylistAudioSortFilterParmsName.isNotEmpty) {
       return selectedPlaylistAudioSortFilterParmsName;
     } else {
-      return null;
+      return '';
     }
   }
 
