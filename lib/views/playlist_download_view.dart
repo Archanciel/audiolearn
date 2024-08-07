@@ -562,6 +562,20 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                   .createDefaultAudioSortFilterParameters();
     }
 
+    // When going to audio player view, then back to  playlisz download view,
+    // the applied sf parm is not retrieved. Idea: get the last historical
+    // sf parm since applied parn is added to history ! NOT WORKING !
+    // if (selectedPlaylistAudioSortFilterParmsName ==
+    //     AppLocalizations.of(context)!.sortFilterParametersAppliedName) {
+    //   List<AudioSortFilterParameters>
+    //       searchHistoryAudioSortFilterParametersLst = playlistListVMlistenTrue
+    //           .getSearchHistoryAudioSortFilterParametersLst();
+    //   audioSortFilterParametersMap[selectedPlaylistAudioSortFilterParmsName] =
+    //       playlistListVMlistenTrue.audioSortFilterParameters ??
+    //           searchHistoryAudioSortFilterParametersLst[
+    //               searchHistoryAudioSortFilterParametersLst.length - 1];
+    // }
+
     List<String> audioSortFilterParametersNamesLst =
         audioSortFilterParametersMap.keys.toList();
     audioSortFilterParametersNamesLst
