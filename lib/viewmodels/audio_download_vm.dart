@@ -1237,18 +1237,44 @@ class AudioDownloadVM extends ChangeNotifier {
   /// Method called by PlaylistListVM when the user selects the update
   /// playlist JSON files menu item.
   void updatePlaylistJsonFiles() {
+    // Loading again the list of playlists since the list of playlists
+    // existing in the application playlist directory may have been
+    // manually modified: playlist(s) suppression or playlist(s) addition.
+    loadExistingPlaylists();
+
+    // Obtaining the ordered list of playlist titles from the application
+    // settings. The ordered list of playlist titles contains the playlists
+    // title of the playlists existing before the update.
+    List<dynamic> orderedPlaylistTitleLst = settingsDataService.get(
+          settingType: SettingType.playlists,
+          settingSubType: Playlists.orderedTitleLst,
+        ) ??
+        [];
+
+    // Ensure that the playlist(s) added to the application directory are
+    // not selected. Otherwise, more than one playlist may be selected
+    // after updating the available list of playlists.
+    for (Playlist playlist in _listOfPlaylist) {
+      if (!orderedPlaylistTitleLst.contains(playlist.title)) {
+        playlist.isSelected = false;
+      }
+    }
+
+    // Creating a copy of the private list of playlists is necessary since
+    // the private list of playlists may be modified - playlist suppression -
+    // during the iteration over the private list of playlists.
     List<Playlist> listOfPlaylistCopy = List<Playlist>.from(_listOfPlaylist);
 
-    for (Playlist playlist in listOfPlaylistCopy) {
+    for (Playlist playlistCopy in listOfPlaylistCopy) {
       bool isPlaylistDownloadPathUpdated = false;
       Playlist correspondingOriginalPlaylist =
-          _listOfPlaylist.firstWhere((element) => element == playlist);
+          _listOfPlaylist.firstWhere((element) => element == playlistCopy);
 
-      String currentPlaylistDownloadHomePath =
-          path.dirname(playlist.downloadPath);
+      String playlistCopyDownloadHomePath =
+          path.dirname(playlistCopy.downloadPath);
 
-      if (currentPlaylistDownloadHomePath != _playlistsRootPath) {
-        // the case if the playlist dir obtained from another AudioLearn
+      if (playlistCopyDownloadHomePath != _playlistsRootPath) {
+        // The case if the playlist dir obtained from another AudioLearn
         // app playlist root dir was copied on the app playlist root dir.
         // Then, the playlist download path in the json file must be updated
         // to correspond to the app playlist root dir.
@@ -1262,26 +1288,27 @@ class AudioDownloadVM extends ChangeNotifier {
         // playlist download path by C:\Users\Jean-Pierre\Documents\audio\math
         // playlist download path in the playlist json file.
         correspondingOriginalPlaylist.downloadPath =
-            _playlistsRootPath + path.separator + playlist.title;
+            _playlistsRootPath + path.separator + playlistCopy.title;
         isPlaylistDownloadPathUpdated = true;
       }
 
-      if (!Directory(playlist.downloadPath).existsSync()) {
-        // the case if the playlist dir has been deleted by the user
-        // or by another app
-        _listOfPlaylist.remove(playlist);
+      if (!Directory(playlistCopy.downloadPath).existsSync()) {
+        // The case if the playlist dir has been deleted by the user
+        // or by another app. In this case, the playlist is removed
+        // from the list of playlists.
+        _listOfPlaylist.remove(playlistCopy);
         continue;
       }
 
-      // remove the audios from the playlable audio list which are no
+      // Remove the audios from the playable audio list which are no
       // longer in the playlist directory
       int removedPlayableAudioNumber =
           correspondingOriginalPlaylist.updatePlayableAudioLst();
 
       if (isPlaylistDownloadPathUpdated || removedPlayableAudioNumber > 0) {
         JsonDataService.saveToFile(
-          model: playlist,
-          path: playlist.getPlaylistDownloadFilePathName(),
+          model: playlistCopy,
+          path: playlistCopy.getPlaylistDownloadFilePathName(),
         );
       }
     }

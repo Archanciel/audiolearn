@@ -7759,13 +7759,15 @@ void main() {
         matching: find.byType(ListTile),
       );
 
-      // Now find the Checkbox widget located in the playlist ListTile
-      // and tap on it to select the playlist
-
-      await tapPlaylistCheckboxIfNotAlreadyChecked(
+      // Ensure the new playlist has been unselected
+      Finder localPlaylistListTileCheckboxWidgetFinder =
+          await ensurePlaylistCheckboxIsNotChecked(
         playlistListTileWidgetFinder: testLocalPlaylistTileWidgetFinder,
         widgetTester: tester,
       );
+
+      await tester.tap(localPlaylistListTileCheckboxWidgetFinder);
+      await tester.pumpAndSettle();
 
       // Test that the audios of the added 'test' local playlist are
       // listed
@@ -7886,13 +7888,15 @@ void main() {
         matching: find.byType(ListTile),
       );
 
-      // Now find the Checkbox widget located in the playlist ListTile
-      // and tap on it to select the playlist
-
-      await tapPlaylistCheckboxIfNotAlreadyChecked(
+      // Ensure the new playlist has been unselected
+      Finder youtubePlaylistListTileCheckboxWidgetFinder =
+          await ensurePlaylistCheckboxIsNotChecked(
         playlistListTileWidgetFinder: testYoutubePlaylistTileWidgetFinder,
         widgetTester: tester,
       );
+
+      await tester.tap(youtubePlaylistListTileCheckboxWidgetFinder);
+      await tester.pumpAndSettle();
 
       // Test that the audios of the added 'Youtube_test' Youtube playlist
       // are listed
@@ -8432,10 +8436,15 @@ void main() {
       await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
       await tester.pumpAndSettle();
 
-      // Ensure that the audio menu items are now enabled
+      // Ensure that the audio menu items are still disabled since the
+      // re-added playlist were no longer in the app settings sorted
+      // playlist titles and so were added to the application being
+      // deselected. This is due to the fact that any playlist added
+      // by the update playlist JSON file fumctionality is deselected
+      // in order that only one playlist is selected after the update.
       await IntegrationTestUtil.verifyAudioMenuItemsState(
         tester: tester,
-        areAudioMenuItemsDisabled: false,
+        areAudioMenuItemsDisabled: true,
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
@@ -8582,10 +8591,15 @@ void main() {
       await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
       await tester.pumpAndSettle();
 
-      // Ensure that the audio menu items are now enabled
+      // Ensure that the audio menu items are still disabled since the
+      // re-added playlist were no longer in the app settings sorted
+      // playlist titles and so were added to the application being
+      // deselected. This is due to the fact that any playlist added
+      // by the update playlist JSON file fumctionality is deselected
+      // in order that only one playlist is selected after the update.
       await IntegrationTestUtil.verifyAudioMenuItemsState(
         tester: tester,
-        areAudioMenuItemsDisabled: false,
+        areAudioMenuItemsDisabled: true,
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
@@ -13115,6 +13129,25 @@ Future<void> tapPlaylistCheckboxIfNotAlreadyChecked({
     await widgetTester.tap(youtubePlaylistListTileCheckboxWidgetFinder);
     await widgetTester.pumpAndSettle();
   }
+}
+
+Future<Finder> ensurePlaylistCheckboxIsNotChecked({
+  required Finder playlistListTileWidgetFinder,
+  required WidgetTester widgetTester,
+}) async {
+  final Finder youtubePlaylistListTileCheckboxWidgetFinder = find.descendant(
+    of: playlistListTileWidgetFinder,
+    matching: find.byType(Checkbox),
+  );
+
+  // Retrieve the Checkbox widget
+  final Checkbox checkbox = widgetTester
+      .widget<Checkbox>(youtubePlaylistListTileCheckboxWidgetFinder);
+
+  // Check that the checkbox is not checked
+  expect((checkbox.value == null || !checkbox.value!), true);
+
+  return youtubePlaylistListTileCheckboxWidgetFinder;
 }
 
 Future<void> _launchExpandablePlaylistListView({

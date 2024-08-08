@@ -57,7 +57,7 @@
     ],
     "downloadPath": "/storage/emulated/0/Download/audiolearn/playlists/test",
     "id": "test",
-    "isSelected": false,
+    "isSelected": true,
     "playableAudioLst": [
         {
             "audioDownloadDateTime": "2024-07-04T18:06:49.233267",

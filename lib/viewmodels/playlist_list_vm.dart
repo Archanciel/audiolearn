@@ -106,8 +106,6 @@ class PlaylistListVM extends ChangeNotifier {
   /// ApplicationSettingsWidget opened by clicking on the
   /// Application settings menu item.
   void updateSettingsAndPlaylistJsonFiles() {
-    _audioDownloadVM.loadExistingPlaylists();
-
     _audioDownloadVM.updatePlaylistJsonFiles();
 
     List<Playlist> updatedListOfPlaylist = _audioDownloadVM.listOfPlaylist;
