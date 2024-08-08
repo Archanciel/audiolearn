@@ -109,12 +109,13 @@ class _PlaylistCommentListDialogWidgetState
             return SingleChildScrollView(
               controller: _scrollController,
               child: ListBody(
-                children: _buildPlaylistAudiosCommentsList(
+                key: const Key('playlistCommentsListKey'),
+                children: (audioFileNamesLst.isNotEmpty) ? _buildPlaylistAudiosCommentsList(
                   commentVM: commentVM,
                   playlistAudiosCommentsMap: playlistAudiosCommentsMap,
                   audioFileNamesLst: audioFileNamesLst,
                   isDarkTheme: themeProviderVM.currentTheme == AppTheme.dark,
-                ),
+                ) : [],
               ),
             );
           },
@@ -152,8 +153,10 @@ class _PlaylistCommentListDialogWidgetState
     // This will be used to drop down the playlist audios comments list
     // to the current audio comments.
     String currentAudioFileName = widget.currentPlaylist
-        .getCurrentOrLastlyPlayedAudioContainedInPlayableAudioLst()!
-        .audioFileName;
+            .getCurrentOrLastlyPlayedAudioContainedInPlayableAudioLst()
+            ?.audioFileName ??
+        '';
+
     currentAudioFileName = currentAudioFileName.substring(
       0,
       currentAudioFileName.length - 4,

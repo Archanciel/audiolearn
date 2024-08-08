@@ -359,7 +359,7 @@
   "atLeast": "au moins ",
   "commentCreationDateTooltip": "Date de création du commentaire",
   "commentUpdateDateTooltip": "Date de mise à jour du commentaire",
-  "playlistCommentMenu": "Lister les ommentaires des audios de la playlist ...",
+  "playlistCommentMenu": "Lister les commentaires des audios de la playlist ...",
   "modifyAudioTitle": "Modifier le titre de l'audio ...",
   "invalidLocalPlaylistTitle": "Le titre de la playlist locale \"{playlistTitle}\" ne peut contenir aucune virgule. Corrigez le titre et rééssayez ...",
   "@invalidLocalPlaylistTitle": {

@@ -57,6 +57,9 @@ class SettingsDataService {
       Playlists.orderedTitleLst: [],
       Playlists.isMusicQualityByDefault: false,
       Playlists.playSpeed: kAudioDefaultPlaySpeed,
+
+      // true -> the playlists are displayed in the playlist download
+      // view
       Playlists.arePlaylistsDisplayedInPlaylistDownloadView: false,
     },
     SettingType.dataLocation: {

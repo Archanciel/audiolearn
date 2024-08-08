@@ -5,6 +5,7 @@ import 'package:audiolearn/views/widgets/confirm_action_dialog_widget.dart';
 import 'package:audiolearn/views/widgets/audio_modification_dialog_widget.dart';
 import 'package:audiolearn/views/widgets/comment_add_edit_dialog_widget.dart';
 import 'package:audiolearn/views/widgets/comment_list_add_dialog_widget.dart';
+import 'package:audiolearn/views/widgets/playlist_comment_list_dialog_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -6681,7 +6682,7 @@ void main() {
     });
   });
   group('''Executing update playable audio list after manually deleting audio
-         files test''', () {
+           files test''', () {
     testWidgets('Manually delete all audios in Youtube playlist directory.',
         (tester) async {
       // Purge the test playlist directory if it exists so that the
@@ -12815,6 +12816,75 @@ void main() {
         audioListTileWidgetFinder: audioListTileWidgetFinder,
         expectedCommentTitle: 'Not accessible later',
         audioTitleToVerifyInCommentAddEditDialog: newTitle,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+  });
+  group('Playlist audios comments test', () {
+    testWidgets('''
+                   On empty playlist, opening the playlist audios comments dialog.''',
+        (WidgetTester tester) async {
+      const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+      const String emptyPlaylistTitle = 'Empty'; // Youtube playlist
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'import_audio_file_test',
+        selectedPlaylistTitle: youtubePlaylistTitle,
+      );
+
+      // First, find the Empty playlist sublist ListTile Text widget
+      Finder emptyPlaylistListTileTextWidgetFinder =
+          find.text(emptyPlaylistTitle);
+
+      // Then obtain the playlist ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      Finder emptyPlaylistListTileWidgetFinder = find.ancestor(
+        of: emptyPlaylistListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now we want to tap the popup menu of the Empty  playlist ListTile
+
+      // Find the leading menu icon button of the playlist ListTile
+      // and tap on it
+      Finder emptyPlaylistListTileLeadingMenuIconButton = find.descendant(
+        of: emptyPlaylistListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(emptyPlaylistListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the List comments of playlist audio popup menu
+      // item and tap on it
+      final Finder popupCopyMenuItem =
+          find.byKey(const Key("popup_menu_display_playlist_audio_comments"));
+
+      await tester.tap(popupCopyMenuItem);
+      await tester.pumpAndSettle();
+
+      // Verify that the playlist audio comment dialog is displayed
+      expect(find.byType(PlaylistCommentListDialogWidget), findsOneWidget);
+
+      // Verify the dialog title
+      expect(find.text('Playlist audios comments'), findsOneWidget);
+
+      // Verify the audios comments list of the dialog is empty
+
+      final listFinder = find.byKey(const Key('playlistCommentsListKey'));
+      expect(listFinder, findsOneWidget);
+
+      // Ensure the list has no child widgets
+      expect(
+        tester.widget<ListBody>(listFinder).children.length,
+        0,
       );
 
       // Purge the test playlist directory so that the created test
