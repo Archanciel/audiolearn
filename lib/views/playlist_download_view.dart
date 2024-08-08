@@ -346,7 +346,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
         ),
         (playlistListVMlistenTrue.isListExpanded)
             ? _buildPlaylistMoveIconButtons(
-                playlistListVMlistenFalse,
+                playlistListVMlistenFalse: playlistListVMlistenFalse,
               )
             : (playlistListVMlistenTrue.isOnePlaylistSelected)
                 ? _buildSortFilterParmsDropdownButton(
@@ -354,7 +354,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                     playlistListVMlistenTrue: playlistListVMlistenTrue,
                     warningMessageVMlistenFalse: warningMessageVMlistenFalse,
                   )
-                : _buildPlaylistMoveIconButtons(playlistListVMlistenFalse),
+                : _buildPlaylistMoveIconButtons(
+                    playlistListVMlistenFalse: playlistListVMlistenFalse,
+                  ),
         SizedBox(
           // sets the rounded TextButton size improving the distance
           // between the button text and its boarder
@@ -546,7 +548,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
         playlistListVMlistenFalse.getAudioSortFilterParametersMap();
 
     String selectedPlaylistAudioSortFilterParmsName =
-        playlistListVMlistenTrue.getSelectedPlaylistAudioSortFilterParmsName();
+        playlistListVMlistenFalse.getSelectedPlaylistAudioSortFilterParmsName();
 
     // If the selected playlist sort and filter parameters name is
     // is the translated sortFilterParametersAppliedName, which is
@@ -557,7 +559,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     if (selectedPlaylistAudioSortFilterParmsName ==
         AppLocalizations.of(context)!.sortFilterParametersAppliedName) {
       audioSortFilterParametersMap[selectedPlaylistAudioSortFilterParmsName] =
-          playlistListVMlistenTrue.audioSortFilterParameters ??
+          playlistListVMlistenFalse.audioSortFilterParameters ??
               AudioSortFilterParameters
                   .createDefaultAudioSortFilterParameters();
     }
@@ -568,10 +570,10 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     // if (selectedPlaylistAudioSortFilterParmsName ==
     //     AppLocalizations.of(context)!.sortFilterParametersAppliedName) {
     //   List<AudioSortFilterParameters>
-    //       searchHistoryAudioSortFilterParametersLst = playlistListVMlistenTrue
+    //       searchHistoryAudioSortFilterParametersLst = playlistListVMlistenFalse
     //           .getSearchHistoryAudioSortFilterParametersLst();
     //   audioSortFilterParametersMap[selectedPlaylistAudioSortFilterParmsName] =
-    //       playlistListVMlistenTrue.audioSortFilterParameters ??
+    //       playlistListVMlistenFalse.audioSortFilterParameters ??
     //           searchHistoryAudioSortFilterParametersLst[
     //               searchHistoryAudioSortFilterParametersLst.length - 1];
     // }
@@ -673,11 +675,16 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                         (audioSortFilterParametersName ==
                                 _selectedSortFilterParametersName)
                             ? _buildSortFilterParmsDropdownItemEditIconButton(
-                                playlistListVMlistenFalse,
-                                audioSortFilterParametersName,
-                                audioSortFilterParametersMap,
-                                audioSortFilterParametersNamesLst,
-                                warningMessageVMlistenFalse,
+                                playlistListVMlistenFalse:
+                                    playlistListVMlistenFalse,
+                                audioSortFilterParametersName:
+                                    audioSortFilterParametersName,
+                                audioSortFilterParametersMap:
+                                    audioSortFilterParametersMap,
+                                audioSortFilterParametersNamesLst:
+                                    audioSortFilterParametersNamesLst,
+                                warningMessageVMlistenFalse:
+                                    warningMessageVMlistenFalse,
                               )
                             : const SizedBox.shrink(),
                       ],
@@ -697,12 +704,14 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   /// dialog. The user can then modify the sort and filter parameters
   /// and then save them to the existing name or to new name or
   /// delete them.
-  Widget _buildSortFilterParmsDropdownItemEditIconButton(
-      PlaylistListVM playlistListVMlistenFalse,
-      String audioSortFilterParametersName,
-      Map<String, AudioSortFilterParameters> audioSortFilterParametersMap,
-      List<String> audioSortFilterParametersNamesLst,
-      WarningMessageVM warningMessageVMlistenFalse) {
+  Widget _buildSortFilterParmsDropdownItemEditIconButton({
+    required PlaylistListVM playlistListVMlistenFalse,
+    required String audioSortFilterParametersName,
+    required Map<String, AudioSortFilterParameters>
+        audioSortFilterParametersMap,
+    required List<String> audioSortFilterParametersNamesLst,
+    required WarningMessageVM warningMessageVMlistenFalse,
+  }) {
     return SizedBox(
       width: kDropdownItemEditIconButtonWidth,
       child: IconButton(
@@ -792,9 +801,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     );
   }
 
-  Row _buildPlaylistMoveIconButtons(
-    PlaylistListVM playlistListVMlistenFalse,
-  ) {
+  Row _buildPlaylistMoveIconButtons({
+    required PlaylistListVM playlistListVMlistenFalse,
+  }) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [

@@ -864,15 +864,10 @@ class PlaylistListVM extends ChangeNotifier {
       return selectedPlaylistAudioSortFilterParmsNameSetByUser;
     }
 
-    // TODO Why is applySortFilterParmsForPlaylistDownloadView used ?
-    String selectedPlaylistAudioSortFilterParmsName =
-        selectedPlaylist.audioSortFilterParmsNameForPlaylistDownloadView;
-
-    if (selectedPlaylistAudioSortFilterParmsName.isNotEmpty) {
-      return selectedPlaylistAudioSortFilterParmsName;
-    } else {
-      return '';
-    }
+    // The returned sort and filter parameters name is was saved in the
+    // playlist json file using the 'Save sort/filter options to playlist'
+    // audio menu item.
+    return selectedPlaylist.audioSortFilterParmsNameForPlaylistDownloadView;
   }
 
   /// Method called when the user clicks on the 'Move audio to
