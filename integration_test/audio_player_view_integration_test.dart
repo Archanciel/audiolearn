@@ -4822,7 +4822,7 @@ void main() {
         // Now find the playlist comment popup menu item and tap on it
         // to open the PlaylistCommentDialogWidget
         final Finder popupDeletePlaylistMenuItem =
-            find.byKey(const Key("popup_menu_playlist_audio_comments"));
+            find.byKey(const Key("popup_menu_display_playlist_audio_comments"));
 
         await tester.tap(popupDeletePlaylistMenuItem);
         await tester.pumpAndSettle();
