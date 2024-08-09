@@ -815,6 +815,10 @@ class PlaylistListVM extends ChangeNotifier {
     }
   }
 
+  void backToPlaylistDownloadView() {
+    notifyListeners();
+  }
+
   /// Method called when the user clicks on the playlist menu
   /// item "Sort filter audios" in the audio popup menu button
   /// in PlaylistDownloadView or in the AudioPlayerView.

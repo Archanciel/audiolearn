@@ -1,3 +1,4 @@
+import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -223,7 +224,7 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
   /// This function causes PageView to drag to the screen
   /// associated to the passed index.
   Future<void> changePage(int index) async {
-    onPageChangedFunction(index);
+    await onPageChangedFunction(index);
 
     // _pageController is the PageView controller
     if (_pageController.hasClients) {
@@ -242,10 +243,21 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
   /// of the PageView builder. The function is called each time
   /// the PageView drag to another screen.
   Future<void> onPageChangedFunction(int index) async {
-    if (index == ScreenMixin.AUDIO_PLAYER_VIEW_DRAGGABLE_INDEX) {
-      // dragging to the AudioPlayerView screen requires to set
-      // the current audio defined on the currently selected playlist.
-      await globalAudioPlayerVM.setCurrentAudioFromSelectedPlaylist();
+    switch (index) {
+      case ScreenMixin.PLAYLIST_DOWNLOAD_VIEW_DRAGGABLE_INDEX:
+        PlaylistListVM playlistListVM = Provider.of<PlaylistListVM>(
+          context,
+          listen: false,
+        );
+        playlistListVM.backToPlaylistDownloadView();
+        break;
+      case ScreenMixin.AUDIO_PLAYER_VIEW_DRAGGABLE_INDEX:
+        // dragging to the AudioPlayerView screen requires to set
+        // the current audio defined on the currently selected playlist.
+        await globalAudioPlayerVM.setCurrentAudioFromSelectedPlaylist();
+        break;
+      default:
+        break;
     }
 
     setState(() {

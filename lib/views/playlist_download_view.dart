@@ -604,9 +604,12 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             maxWidth: kDropdownButtonMaxWidth,
           ),
           child: DropdownButton<String>(
-            value: (selectedPlaylistAudioSortFilterParmsName.isEmpty)
-                ? _selectedSortFilterParametersName
-                : selectedPlaylistAudioSortFilterParmsName,
+            value: (playlistListVMlistenTrue
+                    .getSelectedPlaylistAudioSortFilterParmsName()
+                    .isEmpty)
+                ? null // causes the default sort filter parms to be applied
+                //        and its name to be displayed
+                : applySortFilterParmsNameChange(playlistListVMlistenTrue),
             items: dropdownMenuItems,
             onChanged: (value) {
               _selectedSortFilterParametersName = value;
@@ -621,6 +624,16 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
         ),
       ],
     );
+  }
+
+  String applySortFilterParmsNameChange(
+      PlaylistListVM playlistListVMlistenTrue) {
+    _selectedSortFilterParametersName =
+        playlistListVMlistenTrue.getSelectedPlaylistAudioSortFilterParmsName();
+    _updatePlaylistSortedFilteredAudioList(
+        playlistListVMlistenFalse: playlistListVMlistenTrue);
+
+    return _selectedSortFilterParametersName!; // is not null
   }
 
   /// Updates the sorted and filtered audio list of the selected playlist
