@@ -631,7 +631,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     _selectedSortFilterParametersName =
         playlistListVMlistenTrue.getSelectedPlaylistAudioSortFilterParmsName();
     _updatePlaylistSortedFilteredAudioList(
-        playlistListVMlistenFalse: playlistListVMlistenTrue);
+        playlistListVMlistenFalse: playlistListVMlistenTrue,
+        notifyListeners: false);  // avoid rebuilding the widget and avoid
+        //                           integration test failure
 
     return _selectedSortFilterParametersName!; // is not null
   }

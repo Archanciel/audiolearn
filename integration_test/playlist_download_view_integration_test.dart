@@ -12109,7 +12109,46 @@ void main() {
 
         // Now verify the playlist download view state with the 'Title asc'
         // sort/filter parms applied
+        final Finder dropDownButtonFinder =
+            find.byKey(const Key('sort_filter_parms_dropdown_button'));
 
+        final Finder dropDownButtonTextFinder = find.descendant(
+          of: dropDownButtonFinder,
+          matching: find.byType(Text),
+        );
+
+        // expect(
+        //   tester.widget<Text>(dropDownButtonTextFinder).data,
+        //   saveAsTitle,
+        // );
+
+        // Obtains all the ListTile widgets present in the playlist
+        // download view
+        final Finder listTilesFinder = find.byType(ListTile);
+
+        List<String> audioTitlesSortedByTitleAscending = [
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          "La résilience insulaire par Fiona Roche",
+          "La surpopulation mondiale par Jancovici et Barrau",
+          "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+          "Les besoins artificiels par R.Keucheyan"
+        ];
+
+        int i = 0;
+        for (String title in audioTitlesSortedByTitleAscending) {
+          Finder playlistTitleTextFinder = find.descendant(
+            of: listTilesFinder.at(i++),
+            matching: find.byType(Text),
+          );
+
+          expect(
+            // 2 Text widgets exist in audio ListTile: the title and sub title
+            tester.widget<Text>(playlistTitleTextFinder.at(0)).data,
+            title,
+          );
+        }
 
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
