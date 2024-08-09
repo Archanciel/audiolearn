@@ -11813,9 +11813,10 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets('''Sort filter audio dialog button clear sort/filter parameters
-           history typing verifying that the warning is displayed in the
-           audio player view.''', (WidgetTester tester) async {
+    testWidgets('''Sort filter audio dialog, tapping on clear sort/filter
+           parameters history icon button and verifying that the confirm
+           warning is displayed in the audio player view.''',
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(

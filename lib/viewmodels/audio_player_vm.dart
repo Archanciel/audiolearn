@@ -176,11 +176,11 @@ class AudioPlayerVM extends ChangeNotifier {
     }
   }
 
-  /// Method called when the user clicks on the audio title or sub
-  /// title or when he clicks on a play icon or when he selects an
-  /// audio in the AudioOneSelectableDialogWidget displayed by
-  /// clicking on the audio title on the AudioPlayerView or by
-  /// long pressing on the >| button.
+  /// Method called when the user in the PlaylistDownloadView clicks
+  /// on the audio title or sub title or when he clicks on a play icon
+  /// or, in the AudioPlayerView, when he selects an audio in the
+  /// AudioOneSelectableDialogWidget displayed by clicking on the audio
+  /// title on the AudioPlayerView or by long pressing on the >| button.
   void _clearUndoRedoLists() {
     _undoList.clear();
     _redoList.clear();
@@ -498,9 +498,11 @@ class AudioPlayerVM extends ChangeNotifier {
 
   /// Ensures that when the user deselect the playlist, switching
   /// to the AudioPlayerView screen causes the "No audio selected"
-  /// audio title to be displayed in the AudioPlayerView screen.
+  /// audio title to be displayed in the AudioPlayerView screen since
+  /// _currentAudio == null.
   Future<void> _handleNoPlayableAudioAvailable() async {
     await _clearCurrentAudio();
+
     _clearUndoRedoLists();
   }
 
