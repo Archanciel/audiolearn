@@ -658,13 +658,15 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                   List<Audio> returnedAudioList = filterSortAudioAndParmLst[0];
                   AudioSortFilterParameters audioSortFilterParameters =
                       filterSortAudioAndParmLst[1];
-                  String audioSortFilterParametersName = filterSortAudioAndParmLst[2];
+                  String audioSortFilterParametersName =
+                      filterSortAudioAndParmLst[2];
                   playlistListVMlistenFalse
                       .setSortedFilteredSelectedPlaylistPlayableAudiosAndParms(
                     sortedFilteredSelectedPlaylistsPlayableAudios:
                         returnedAudioList,
                     audioSortFilterParameters: audioSortFilterParameters,
-                    audioSortFilterParametersName: audioSortFilterParametersName,
+                    audioSortFilterParametersName:
+                        audioSortFilterParametersName,
                   );
                 }
               });
@@ -765,103 +767,101 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     required BuildContext context,
     required AudioPlayerVM audioPlayerVMlistenTrue,
   }) {
-    return Consumer<AudioPlayerVM>(
-      // The reason why this widget is consumer of the AudioPlayerVM
-      // that by clicking on the current audio title, the user can
-      // select another audio to play. This action will require to
-      // update the current audio title displayed in the audio player.
-      builder: (context, audioPlayerVM, child) {
-        String? currentAudioTitleWithDuration =
-            audioPlayerVMlistenTrue.getCurrentAudioTitleWithDuration();
+    // The reason why this widget is consumer of the AudioPlayerVM
+    // that by clicking on the current audio title, the user can
+    // select another audio to play. This action will require to
+    // update the current audio title displayed in the audio player.
+    String? currentAudioTitleWithDuration =
+        audioPlayerVMlistenTrue.getCurrentAudioTitleWithDuration();
 
-        // If the current audio title is null, set it to the
-        // 'no current audio' translated title
-        currentAudioTitleWithDuration ??=
-            AppLocalizations.of(context)!.audioPlayerViewNoCurrentAudio;
+    // If the current audio title is null, set it to the
+    // 'no current audio' translated title
+    currentAudioTitleWithDuration ??=
+        AppLocalizations.of(context)!.audioPlayerViewNoCurrentAudio;
 
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton(
-              key: const Key('audioPlayerViewSkipToStartButton'),
-              iconSize: _audioIconSizeMedium,
-              onPressed: () async =>
-                  await audioPlayerVMlistenTrue.skipToStart(),
-              style: ButtonStyle(
-                // Highlight button when pressed
-                padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-                  const EdgeInsets.symmetric(
-                      horizontal: kSmallButtonInsidePadding, vertical: 0),
-                ),
-                overlayColor: iconButtonTapModification, // Tap feedback color
-              ),
-              icon: const Icon(Icons.skip_previous),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        IconButton(
+          key: const Key('audioPlayerViewSkipToStartButton'),
+          iconSize: _audioIconSizeMedium,
+          onPressed: () async => await audioPlayerVMlistenTrue.skipToStart(),
+          style: ButtonStyle(
+            // Highlight button when pressed
+            padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+              const EdgeInsets.symmetric(
+                  horizontal: kSmallButtonInsidePadding, vertical: 0),
             ),
-            Expanded(
-              child: GestureDetector(
-                onTap: () {
-                  if (audioPlayerVMlistenTrue
-                      .getPlayableAudiosApplyingSortFilterParameters(
-                        AudioLearnAppViewType.audioPlayerView,
-                      )
-                      .isEmpty) {
-                    // there is no audio to play, so tapping on the
-                    // current audio title does not perform anything
-                    return;
-                  }
+            overlayColor: iconButtonTapModification, // Tap feedback color
+          ),
+          icon: const Icon(Icons.skip_previous),
+        ),
+        Expanded(
+          child: GestureDetector(
+            onTap: () {
+              if (audioPlayerVMlistenTrue
+                  .getPlayableAudiosApplyingSortFilterParameters(
+                    AudioLearnAppViewType.audioPlayerView,
+                  )
+                  .isEmpty) {
+                // there is no audio to play, so tapping on the
+                // current audio title does not perform anything
+                return;
+              }
 
-                  _displayOtherAudiosDialog();
-                },
-                child: Consumer<ThemeProviderVM>(
-                  builder: (context, themeProviderVM, child) {
-                    return Text(
-                      key: const Key('audioPlayerViewCurrentAudioTitle'),
-                      currentAudioTitleWithDuration ?? '',
-                      style: TextStyle(
-                        fontSize: kAudioTitleFontSize,
-                        color: (themeProviderVM.currentTheme == AppTheme.dark)
-                            ? Colors.white
-                            : Colors.black,
-                      ),
-                      maxLines: 5,
-                      textAlign: TextAlign.center,
-                    );
-                  },
-                ),
-              ),
-            ),
-            GestureDetector(
-              onLongPress: () {
-                if (audioPlayerVMlistenTrue
-                    .getPlayableAudiosApplyingSortFilterParameters(
-                      AudioLearnAppViewType.audioPlayerView,
-                    )
-                    .isEmpty) {
-                  // there is no audio to play
-                  return;
-                }
-
-                _displayOtherAudiosDialog();
-              },
-              child: IconButton(
-                key: const Key('audioPlayerViewSkipToEndButton'),
-                iconSize: _audioIconSizeMedium,
-                onPressed: () async =>
-                    await audioPlayerVMlistenTrue.skipToEndAndPlay(),
-                style: ButtonStyle(
-                  // Highlight button when pressed
-                  padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-                    const EdgeInsets.symmetric(
-                        horizontal: kSmallButtonInsidePadding, vertical: 0),
+              _displayOtherAudiosDialog();
+            },
+            child: Consumer<ThemeProviderVM>(
+              builder: (context, themeProviderVM, child) {
+                return Text(
+                  key: const Key('audioPlayerViewCurrentAudioTitle'),
+                  currentAudioTitleWithDuration ?? '', // Current audio title
+                  // obtained from the audioPlayerVMlistenTrue. Since it is
+                  // listen == true, the current audio title is updated when
+                  // the user selects another audio to play.
+                  style: TextStyle(
+                    fontSize: kAudioTitleFontSize,
+                    color: (themeProviderVM.currentTheme == AppTheme.dark)
+                        ? Colors.white
+                        : Colors.black,
                   ),
-                  overlayColor: iconButtonTapModification, // Tap feedback color
-                ),
-                icon: const Icon(Icons.skip_next),
-              ),
+                  maxLines: 5,
+                  textAlign: TextAlign.center,
+                );
+              },
             ),
-          ],
-        );
-      },
+          ),
+        ),
+        GestureDetector(
+          onLongPress: () {
+            if (audioPlayerVMlistenTrue
+                .getPlayableAudiosApplyingSortFilterParameters(
+                  AudioLearnAppViewType.audioPlayerView,
+                )
+                .isEmpty) {
+              // there is no audio to play
+              return;
+            }
+
+            _displayOtherAudiosDialog();
+          },
+          child: IconButton(
+            key: const Key('audioPlayerViewSkipToEndButton'),
+            iconSize: _audioIconSizeMedium,
+            onPressed: () async =>
+                await audioPlayerVMlistenTrue.skipToEndAndPlay(),
+            style: ButtonStyle(
+              // Highlight button when pressed
+              padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                const EdgeInsets.symmetric(
+                    horizontal: kSmallButtonInsidePadding, vertical: 0),
+              ),
+              overlayColor: iconButtonTapModification, // Tap feedback color
+            ),
+            icon: const Icon(Icons.skip_next),
+          ),
+        ),
+      ],
     );
   }
 
