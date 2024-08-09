@@ -72,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
   final List<Key> _screenNavigationIconButtonKeyLst = [
     const Key('playlistDownloadViewIconButton'),
     const Key('audioPlayerViewIconButton'),
-    const Key('audioExtractorIconButton'),
+    // const Key('audioExtractorIconButton'),
   ];
 
   // contains a list of widgets which build the AppBar title. Each
