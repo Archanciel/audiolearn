@@ -794,7 +794,8 @@ class _AudioSortFilterDialogWidgetState
                   return;
                 }
               } else {
-                // here, the user deletes a saved sort/filter parameter
+                // here, the user deletes a saved with name sort/filter
+                // parameter
                 playlistListVM.deleteAudioSortFilterParameters(
                   audioSortFilterParametersName: _sortFilterSaveAsUniqueName,
                 );
