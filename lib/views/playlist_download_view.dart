@@ -551,7 +551,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
         playlistListVMlistenFalse.getSelectedPlaylistAudioSortFilterParmsName();
 
     // If the selected playlist sort and filter parameters name is
-    // is the translated sortFilterParametersAppliedName, which is
+    // the translated sortFilterParametersAppliedName, which is
     // the case if the user clicked on the Apply button of the
     // sort and filter dialog, then the sort and filter parameters
     // must be added to the sort and filter parameters map, otherwise
