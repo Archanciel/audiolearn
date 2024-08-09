@@ -749,7 +749,8 @@ class _AudioSortFilterDialogWidgetState
           child: TextButton(
             key: const Key('deleteSortFilterTextButton'),
             onPressed: () {
-              _audioSortFilterParameters = _generateAudioSortFilterParametersFromDialogFields();
+              _audioSortFilterParameters =
+                  _generateAudioSortFilterParametersFromDialogFields();
 
               if (_audioSortFilterParameters ==
                   AudioSortFilterParameters
@@ -850,8 +851,9 @@ class _AudioSortFilterDialogWidgetState
           key: const Key('applySortFilterOptionsTextButton'),
           onPressed: () {
             List<dynamic> filterSortAudioAndParmLst = _filterAndSortAudioLst(
-              sortFilterParametersSaveAsUniqueName: AppLocalizations.of(context)!.sortFilterParametersAppliedName
-            );
+                sortFilterParametersSaveAsUniqueName:
+                    AppLocalizations.of(context)!
+                        .sortFilterParametersAppliedName);
 
             if (filterSortAudioAndParmLst[1] ==
                 AudioSortFilterParameters
@@ -877,33 +879,34 @@ class _AudioSortFilterDialogWidgetState
           ),
         ),
       );
-    }
-    // In this situation, the user saves the named sort/filter
-    // parameters. In this case, the named sort/filter parameters are
-    // added to the sort/filter list which is saved in the settings file.
-    return Tooltip(
-      message: AppLocalizations.of(context)!.saveSortFilterOptionsTooltip,
-      child: TextButton(
-        key: const Key('saveSortFilterOptionsTextButton'),
-        onPressed: () {
-          List<dynamic> filterSortAudioAndParmLst = _filterAndSortAudioLst(
-            sortFilterParametersSaveAsUniqueName: _sortFilterSaveAsUniqueName,
-          );
-          playlistListVM.saveAudioSortFilterParameters(
-            audioSortFilterParametersName: _sortFilterSaveAsUniqueName,
-            audioSortFilterParameters: filterSortAudioAndParmLst[1],
-          );
+    } else {
+      // In this situation, the user saves the named sort/filter
+      // parameters. In this case, the named sort/filter parameters are
+      // added to the sort/filter list which is saved in the settings file.
+      return Tooltip(
+        message: AppLocalizations.of(context)!.saveSortFilterOptionsTooltip,
+        child: TextButton(
+          key: const Key('saveSortFilterOptionsTextButton'),
+          onPressed: () {
+            List<dynamic> filterSortAudioAndParmLst = _filterAndSortAudioLst(
+              sortFilterParametersSaveAsUniqueName: _sortFilterSaveAsUniqueName,
+            );
+            playlistListVM.saveAudioSortFilterParameters(
+              audioSortFilterParametersName: _sortFilterSaveAsUniqueName,
+              audioSortFilterParameters: filterSortAudioAndParmLst[1],
+            );
 
-          Navigator.of(context).pop(filterSortAudioAndParmLst);
-        },
-        child: Text(
-          AppLocalizations.of(context)!.saveButton,
-          style: (themeProviderVM.currentTheme == AppTheme.dark)
-              ? kTextButtonStyleDarkMode
-              : kTextButtonStyleLightMode,
+            Navigator.of(context).pop(filterSortAudioAndParmLst);
+          },
+          child: Text(
+            AppLocalizations.of(context)!.saveButton,
+            style: (themeProviderVM.currentTheme == AppTheme.dark)
+                ? kTextButtonStyleDarkMode
+                : kTextButtonStyleLightMode,
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 
   Column _buildAudioDurationFields(
@@ -1566,6 +1569,7 @@ class _AudioSortFilterDialogWidgetState
       // rendering/box.dart':
       width: double.maxFinite,
       child: ListView.builder(
+        key: const Key('selectedSortingOptionsListView'),
         // controller: _scrollController,
         itemCount: _selectedSortingItemLst.length,
         shrinkWrap: true,
@@ -1780,7 +1784,8 @@ class _AudioSortFilterDialogWidgetState
   List<dynamic> _filterAndSortAudioLst({
     required String sortFilterParametersSaveAsUniqueName,
   }) {
-    _audioSortFilterParameters = _generateAudioSortFilterParametersFromDialogFields();
+    _audioSortFilterParameters =
+        _generateAudioSortFilterParametersFromDialogFields();
 
     List<Audio> filteredAndSortedAudioLst =
         _audioSortFilterService.filterAndSortAudioLst(
@@ -1795,7 +1800,8 @@ class _AudioSortFilterDialogWidgetState
     ];
   }
 
-  AudioSortFilterParameters _generateAudioSortFilterParametersFromDialogFields() {
+  AudioSortFilterParameters
+      _generateAudioSortFilterParametersFromDialogFields() {
     return AudioSortFilterParameters(
       selectedSortItemLst: _selectedSortingItemLst,
       filterSentenceLst: _audioTitleFilterSentencesLst,
