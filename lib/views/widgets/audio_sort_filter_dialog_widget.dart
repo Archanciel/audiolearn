@@ -1466,6 +1466,8 @@ class _AudioSortFilterDialogWidgetState
     }
   }
 
+  // This method defines the TextField used to add a word or sentence
+  // applied to filter the audios based on their title or description.
   Widget _buildAudioFilterSentence() {
     return Tooltip(
       message: AppLocalizations.of(context)!
