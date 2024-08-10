@@ -12179,11 +12179,12 @@ void main() {
           matching: find.byType(Text),
         );
 
-        // Tap on the current dropdown button item to  open the dropdown
+        // Tap on the current dropdown button item to open the dropdown
         // button items list
         await tester.tap(dropDownButtonTextFinder);
         await tester.pumpAndSettle();
 
+        // And select the default sort/filter item
         String defaultTitle = 'default';
         final Finder defaultDropDownTextFinder = find.text(defaultTitle);
         await tester.tap(defaultDropDownTextFinder);
@@ -12244,6 +12245,62 @@ void main() {
           tester: tester,
           audioTitlesOrderLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+        );
+
+        // Finally tap on the current dropdown button item to open the dropdown
+        // button items list
+        await tester.tap(dropDownButtonTextFinder);
+        await tester.pumpAndSettle();
+
+        // And select the 'Title asc' sort/filter item
+        final Finder titleAscDropDownTextFinder = find.text(saveAsTitle);
+        await tester.tap(titleAscDropDownTextFinder);
+        await tester.pumpAndSettle();
+
+        // Now verify the playlist download view state with the 'default'
+        // sort/filter parms applied
+
+        // Verify that the dropdown button has been updated with the
+        // 'default' sort/filter parms selected
+        checkDropdopwnButtonSelectedTitle(
+          tester: tester,
+          dropdownButtonSelectedTitle: saveAsTitle,
+        );
+
+        // And verify the order of the playlist audio titles
+
+        checkAudioTitlesOrder(
+          tester: tester,
+          audioTitlesOrderLst:
+              audioTitlesSortedByTitleAscending,
+        );
+
+        // Now go to audio player view
+        appScreenNavigationButton =
+            find.byKey(const ValueKey('audioPlayerViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        // Then return to playlist download view in order to verify that
+        // its state with the 'default' sort/filter parms is still
+        // applied and correctly sorts the current playable audios.
+        appScreenNavigationButton =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        // Verify that the dropdown button has been updated with the
+        // 'default' sort/filter parms selected
+        checkDropdopwnButtonSelectedTitle(
+          tester: tester,
+          dropdownButtonSelectedTitle: saveAsTitle,
+        );
+
+        // And verify the order of the playlist audio titles
+        checkAudioTitlesOrder(
+          tester: tester,
+          audioTitlesOrderLst:
+              audioTitlesSortedByTitleAscending,
         );
 
         // Purge the test playlist directory so that the created test
@@ -12704,11 +12761,12 @@ void main() {
           matching: find.byType(Text),
         );
 
-        // Tap on the current dropdown button item to  open the dropdown
+        // Tap on the current dropdown button item to open the dropdown
         // button items list
         await tester.tap(dropDownButtonTextFinder);
         await tester.pumpAndSettle();
 
+        // And select the default sort/filter item
         String defaultTitle = 'default';
         final Finder defaultDropDownTextFinder = find.text(defaultTitle);
         await tester.tap(defaultDropDownTextFinder);
@@ -12769,6 +12827,63 @@ void main() {
           tester: tester,
           audioTitlesOrderLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+        );
+
+
+        // Finally tap on the current dropdown button item to open the dropdown
+        // button items list
+        await tester.tap(dropDownButtonTextFinder);
+        await tester.pumpAndSettle();
+
+        // And select the 'applied' sort/filter item
+        final Finder titleAscDropDownTextFinder = find.text(appliedEnglishTitle);
+        await tester.tap(titleAscDropDownTextFinder);
+        await tester.pumpAndSettle();
+
+        // Now verify the playlist download view state with the 'default'
+        // sort/filter parms applied
+
+        // Verify that the dropdown button has been updated with the
+        // 'default' sort/filter parms selected
+        checkDropdopwnButtonSelectedTitle(
+          tester: tester,
+          dropdownButtonSelectedTitle: appliedEnglishTitle,
+        );
+
+        // And verify the order of the playlist audio titles
+
+        checkAudioTitlesOrder(
+          tester: tester,
+          audioTitlesOrderLst:
+              audioTitlesSortedByTitleAscending,
+        );
+
+        // Now go to audio player view
+        appScreenNavigationButton =
+            find.byKey(const ValueKey('audioPlayerViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        // Then return to playlist download view in order to verify that
+        // its state with the 'default' sort/filter parms is still
+        // applied and correctly sorts the current playable audios.
+        appScreenNavigationButton =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        // Verify that the dropdown button has been updated with the
+        // 'default' sort/filter parms selected
+        checkDropdopwnButtonSelectedTitle(
+          tester: tester,
+          dropdownButtonSelectedTitle: appliedEnglishTitle,
+        );
+
+        // And verify the order of the playlist audio titles
+        checkAudioTitlesOrder(
+          tester: tester,
+          audioTitlesOrderLst:
+              audioTitlesSortedByTitleAscending,
         );
 
         // Purge the test playlist directory so that the created test
