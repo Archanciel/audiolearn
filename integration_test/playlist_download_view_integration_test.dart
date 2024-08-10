@@ -12109,22 +12109,12 @@ void main() {
 
         // Now verify the playlist download view state with the 'Title asc'
         // sort/filter parms applied
-        final Finder dropDownButtonFinder =
-            find.byKey(const Key('sort_filter_parms_dropdown_button'));
-
-        final Finder dropDownButtonTextFinder = find.descendant(
-          of: dropDownButtonFinder,
-          matching: find.byType(Text),
+        checkDropdopwnButtonSelectedTitle(
+          tester: tester,
+          dropdownButtonSelectedTitle: saveAsTitle,
         );
 
-        // expect(
-        //   tester.widget<Text>(dropDownButtonTextFinder).data,
-        //   saveAsTitle,
-        // );
-
-        // Obtains all the ListTile widgets present in the playlist
-        // download view
-        final Finder listTilesFinder = find.byType(ListTile);
+        // And verify the order of the playlist audio titles
 
         List<String> audioTitlesSortedByTitleAscending = [
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
@@ -12136,19 +12126,37 @@ void main() {
           "Les besoins artificiels par R.Keucheyan"
         ];
 
-        int i = 0;
-        for (String title in audioTitlesSortedByTitleAscending) {
-          Finder playlistTitleTextFinder = find.descendant(
-            of: listTilesFinder.at(i++),
-            matching: find.byType(Text),
-          );
+        checkAudioTitlesOrder(
+          tester: tester,
+          audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
+        );
 
-          expect(
-            // 2 Text widgets exist in audio ListTile: the title and sub title
-            tester.widget<Text>(playlistTitleTextFinder.at(0)).data,
-            title,
-          );
-        }
+        // Go to audio player view
+        Finder appScreenNavigationButton =
+            find.byKey(const ValueKey('audioPlayerViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        // Then return to playlist download view in order to verify that
+        // its state with the 'Title asc' sort/filter parms is still
+        // correctly applied and sorts the current playable audios.
+        appScreenNavigationButton =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        // Now verify the playlist download view state with the 'Title asc'
+        // sort/filter parms applied
+        checkDropdopwnButtonSelectedTitle(
+          tester: tester,
+          dropdownButtonSelectedTitle: saveAsTitle,
+        );
+
+        // And verify the order of the playlist audio titles
+        checkAudioTitlesOrder(
+          tester: tester,
+          audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
+        );
 
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
@@ -13043,6 +13051,47 @@ void main() {
       );
     });
   });
+}
+
+void checkAudioTitlesOrder({
+  required WidgetTester tester,
+  required List<String> audioTitlesOrderLst,
+}) {
+  // Obtains all the ListTile widgets present in the playlist
+  // download view
+  final Finder listTilesFinder = find.byType(ListTile);
+
+  int i = 0;
+  for (String title in audioTitlesOrderLst) {
+    Finder playlistTitleTextFinder = find.descendant(
+      of: listTilesFinder.at(i++),
+      matching: find.byType(Text),
+    );
+
+    expect(
+      // 2 Text widgets exist in audio ListTile: the title and sub title
+      tester.widget<Text>(playlistTitleTextFinder.at(0)).data,
+      title,
+    );
+  }
+}
+
+void checkDropdopwnButtonSelectedTitle({
+  required WidgetTester tester,
+  required String dropdownButtonSelectedTitle,
+}) {
+  final Finder dropDownButtonFinder =
+      find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+  final Finder dropDownButtonTextFinder = find.descendant(
+    of: dropDownButtonFinder,
+    matching: find.byType(Text),
+  );
+
+  expect(
+    tester.widget<Text>(dropDownButtonTextFinder).data,
+    dropdownButtonSelectedTitle,
+  );
 }
 
 Future<Finder> verifyAudioInfoDialog({

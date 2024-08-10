@@ -604,6 +604,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             maxWidth: kDropdownButtonMaxWidth,
           ),
           child: DropdownButton<String>(
+            key: const Key('sort_filter_parms_dropdown_button'),
             value: (playlistListVMlistenTrue
                     .getSelectedPlaylistAudioSortFilterParmsName()
                     .isEmpty)
