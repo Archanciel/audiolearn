@@ -12009,9 +12009,8 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    group(
-        'Sort/filter Dialog in relation with Sort/filter dropdown button test',
-        () {
+    group('''Saving defined sort/filter parms in sort/filter dialog in relation
+             with Sort/filter dropdown button test''', () {
       testWidgets(
           '''Click on 'Sort/filter audios' menu item of Audio popup menu to
              open sort filter audio dialog. Then creating a named title
