@@ -12190,11 +12190,11 @@ void main() {
         await tester.tap(defaultDropDownTextFinder);
         await tester.pumpAndSettle();
 
-        // Now verify the playlist download view state with the 'Title asc'
+        // Now verify the playlist download view state with the 'default'
         // sort/filter parms applied
 
         // Verify that the dropdown button has been updated with the
-        // 'Title asc' sort/filter parms selected
+        // 'default' sort/filter parms selected
         checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: defaultTitle,
@@ -12226,7 +12226,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Then return to playlist download view in order to verify that
-        // its state with the 'Title asc' sort/filter parms is still
+        // its state with the 'default' sort/filter parms is still
         // applied and correctly sorts the current playable audios.
         appScreenNavigationButton =
             find.byKey(const ValueKey('playlistDownloadViewIconButton'));
@@ -12234,7 +12234,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify that the dropdown button has been updated with the
-        // 'Title asc' sort/filter parms selected
+        // 'default' sort/filter parms selected
         checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: defaultTitle,
@@ -12419,6 +12419,120 @@ void main() {
         checkAudioTitlesOrder(
           tester: tester,
           audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+      testWidgets('''Change language and verify impact on sort/filter dropdown
+          button default title.''', (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
+          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+
+        final SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
+        );
+
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the download app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+        await app.main(['test']);
+        await tester.pumpAndSettle();
+
+        String defaultEnglishTitle = 'default';
+
+        // Verify that the dropdown buttondefault title
+        checkDropdopwnButtonSelectedTitle(
+          tester: tester,
+          dropdownButtonSelectedTitle: defaultEnglishTitle,
+        );
+
+        // And verify the order of the playlist audio titles
+
+        List<String>
+            audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          "La surpopulation mondiale par Jancovici et Barrau",
+          "La résilience insulaire par Fiona Roche",
+          "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+          "Les besoins artificiels par R.Keucheyan",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+        ];
+
+        checkAudioTitlesOrder(
+          tester: tester,
+          audioTitlesOrderLst:
+              audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+        );
+
+        // Change the app language to French
+
+        // Open the appbar right menu
+        await tester.tap(find.byKey(const Key('appBarRightPopupMenu')));
+        await tester.pumpAndSettle();
+
+        // And tap on 'Select French' to change he language
+        await tester.tap(find.text('Select French'));
+        await tester.pumpAndSettle();
+
+        String defaultFrenchTitle = 'défaut';
+
+        // Verify that the dropdown buttondefault title
+        checkDropdopwnButtonSelectedTitle(
+          tester: tester,
+          dropdownButtonSelectedTitle: defaultFrenchTitle,
+        );
+
+        // And verify the order of the playlist audio titles
+
+        checkAudioTitlesOrder(
+          tester: tester,
+          audioTitlesOrderLst:
+              audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+        );
+
+        // Now change the app language to English
+
+        // Open the appbar right menu
+        await tester.tap(find.byKey(const Key('appBarRightPopupMenu')));
+        await tester.pumpAndSettle();
+
+        // And tap on 'Select French' to change he language
+        await tester.tap(find.text('Anglais'));
+        await tester.pumpAndSettle();
+
+        // Verify that the dropdown buttondefault title
+        checkDropdopwnButtonSelectedTitle(
+          tester: tester,
+          dropdownButtonSelectedTitle: defaultEnglishTitle,
+        );
+
+        // And verify the order of the playlist audio titles
+
+        checkAudioTitlesOrder(
+          tester: tester,
+          audioTitlesOrderLst:
+              audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
         // Purge the test playlist directory so that the created test
