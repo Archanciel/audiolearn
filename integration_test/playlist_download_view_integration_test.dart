@@ -12021,7 +12021,9 @@ void main() {
              audio player view and then going back to the playlist download view
              and verifying the previously active and newly created sort/filter
              parms is displayed in the dropdown item button and applied to the
-             audios.''', (WidgetTester tester) async {
+             audios. Finally, select 'default' dropdown item and go to audio
+             player view and back to playlist download view''',
+          (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -12168,6 +12170,83 @@ void main() {
           audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
         );
 
+        // Now, selecting 'Default' dropdown button item to apply the
+        // default sort/filter parms
+        final Finder dropDownButtonFinder =
+            find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+        final Finder dropDownButtonTextFinder = find.descendant(
+          of: dropDownButtonFinder,
+          matching: find.byType(Text),
+        );
+
+        // Tap on the current dropdown button item to  open the dropdown
+        // button items list
+        await tester.tap(dropDownButtonTextFinder);
+        await tester.pumpAndSettle();
+
+        String defaultTitle = 'default';
+        final Finder defaultDropDownTextFinder = find.text(defaultTitle);
+        await tester.tap(defaultDropDownTextFinder);
+        await tester.pumpAndSettle();
+
+        // Now verify the playlist download view state with the 'Title asc'
+        // sort/filter parms applied
+
+        // Verify that the dropdown button has been updated with the
+        // 'Title asc' sort/filter parms selected
+        checkDropdopwnButtonSelectedTitle(
+          tester: tester,
+          dropdownButtonSelectedTitle: defaultTitle,
+        );
+
+        // And verify the order of the playlist audio titles
+
+        List<String>
+            audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          "La surpopulation mondiale par Jancovici et Barrau",
+          "La résilience insulaire par Fiona Roche",
+          "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+          "Les besoins artificiels par R.Keucheyan",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+        ];
+
+        checkAudioTitlesOrder(
+          tester: tester,
+          audioTitlesOrderLst:
+              audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+        );
+
+        // Now go to audio player view
+        appScreenNavigationButton =
+            find.byKey(const ValueKey('audioPlayerViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        // Then return to playlist download view in order to verify that
+        // its state with the 'Title asc' sort/filter parms is still
+        // applied and correctly sorts the current playable audios.
+        appScreenNavigationButton =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        // Verify that the dropdown button has been updated with the
+        // 'Title asc' sort/filter parms selected
+        checkDropdopwnButtonSelectedTitle(
+          tester: tester,
+          dropdownButtonSelectedTitle: defaultTitle,
+        );
+
+        // And verify the order of the playlist audio titles
+        checkAudioTitlesOrder(
+          tester: tester,
+          audioTitlesOrderLst:
+              audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+        );
+
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -12226,7 +12305,7 @@ void main() {
         await tester.pumpAndSettle();
         await tester.tap(dropDownButtonTextFinder);
         await tester.pumpAndSettle();
-        
+
         Finder dropdownItemEditIconButtonFinder = find.byKey(
           const Key('sort_filter_parms_dropdown_item_edit_icon_button'),
         );
