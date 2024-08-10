@@ -12051,32 +12051,36 @@ void main() {
         await app.main(['test']);
         await tester.pumpAndSettle();
 
-        // Now open the popup menu
+        // Now open the audio popup menu
         await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
         await tester.pumpAndSettle();
 
-        // find the sort/filter audios menu item and tap on it
+        // Find the sort/filter audios menu item and tap on it to
+        // open the audio sort filter dialog
         await tester.tap(
             find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
         await tester.pumpAndSettle();
 
         // Type "Title asc" in the 'Save as' TextField
+
         String saveAsTitle = 'Title asc';
+
         await tester.enterText(
             find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
             saveAsTitle);
         await tester.pumpAndSettle();
 
         // Now select the 'Audio title'item in the 'Sort by' dropdown button
+
         await tester.tap(find.byKey(const Key('sortingOptionDropdownButton')));
         await tester.pumpAndSettle();
 
         await tester.tap(find.text('Audio title').last);
         await tester.pumpAndSettle();
 
-        // Now delete the "Audio download date" descending sort option
+        // Then delete the "Audio download date" descending sort option
 
-        // Find the Text with "Audio downl date" which is locted in the
+        // Find the Text with "Audio downl date" which is located in the
         // selected sort options ListView
         final Finder texdtFinder = find.descendant(
           of: find.byKey(const Key('selectedSortingOptionsListView')),
@@ -12098,17 +12102,23 @@ void main() {
           matching: find.byKey(const Key('removeSortingOptionIconButton')),
         );
 
-        // Tap on the delete icon button
+        // Tap on the delete icon button to delete the 'Audio downl date'
+        // descending sort option
         await tester.tap(iconButtonFinder);
         await tester.pumpAndSettle();
 
-        // Click on the "Save" button. This closes the sort/filter dialog.
+        // Click on the "Save" button. This closes the sort/filter dialog
+        // and updates the sort/filter playlist download view dropdown
+        // button with the newly created sort/filter parms
         await tester
             .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
         await tester.pumpAndSettle();
 
         // Now verify the playlist download view state with the 'Title asc'
         // sort/filter parms applied
+
+        // Verify that the dropdown button has been updated with the
+        // 'Title asc' sort/filter parms selected
         checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: saveAsTitle,
@@ -12131,7 +12141,7 @@ void main() {
           audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
         );
 
-        // Go to audio player view
+        // Now go to audio player view
         Finder appScreenNavigationButton =
             find.byKey(const ValueKey('audioPlayerViewIconButton'));
         await tester.tap(appScreenNavigationButton);
@@ -12139,14 +12149,14 @@ void main() {
 
         // Then return to playlist download view in order to verify that
         // its state with the 'Title asc' sort/filter parms is still
-        // correctly applied and sorts the current playable audios.
+        // applied and correctly sorts the current playable audios.
         appScreenNavigationButton =
             find.byKey(const ValueKey('playlistDownloadViewIconButton'));
         await tester.tap(appScreenNavigationButton);
         await tester.pumpAndSettle();
 
-        // Now verify the playlist download view state with the 'Title asc'
-        // sort/filter parms applied
+        // Verify that the dropdown button has been updated with the
+        // 'Title asc' sort/filter parms selected
         checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: saveAsTitle,
