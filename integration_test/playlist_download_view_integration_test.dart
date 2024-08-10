@@ -12020,9 +12020,10 @@ void main() {
              audio player view and then going back to the playlist download view
              and verifying that the previously active and newly created sort/filter
              parms is displayed in the dropdown item button and applied to the
-             audios. Finally, select 'default' dropdown item and go to audio
-             player view and back to playlist download view.''',
-          (WidgetTester tester) async {
+             audios. Then, select 'default' dropdown item and go to audio
+             player view and back to playlist download view. Finally, select
+             'Title asc' dropdown item and go to audio player view and back to
+             playlist download view.''', (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -12271,8 +12272,7 @@ void main() {
 
         checkAudioTitlesOrder(
           tester: tester,
-          audioTitlesOrderLst:
-              audioTitlesSortedByTitleAscending,
+          audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
         );
 
         // Now go to audio player view
@@ -12299,8 +12299,7 @@ void main() {
         // And verify the order of the playlist audio titles
         checkAudioTitlesOrder(
           tester: tester,
-          audioTitlesOrderLst:
-              audioTitlesSortedByTitleAscending,
+          audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
         );
 
         // Purge the test playlist directory so that the created test
@@ -12610,8 +12609,10 @@ void main() {
              going to the audio player view and then going back to the playlist
              download view and verifying that the previously active and newly
              created sort/filter parms is displayed in the dropdown item button
-             and applied to the audios.''',
-          (WidgetTester tester) async {
+             and applied to the audios. Then, select 'default' dropdown item and
+             go to audio player view and back to playlist download view. Finally,
+             select 'applied' dropdown item and go to audio player view and back
+             to playlist download view.''', (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -12829,14 +12830,14 @@ void main() {
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
-
         // Finally tap on the current dropdown button item to open the dropdown
         // button items list
         await tester.tap(dropDownButtonTextFinder);
         await tester.pumpAndSettle();
 
         // And select the 'applied' sort/filter item
-        final Finder titleAscDropDownTextFinder = find.text(appliedEnglishTitle);
+        final Finder titleAscDropDownTextFinder =
+            find.text(appliedEnglishTitle);
         await tester.tap(titleAscDropDownTextFinder);
         await tester.pumpAndSettle();
 
@@ -12854,8 +12855,7 @@ void main() {
 
         checkAudioTitlesOrder(
           tester: tester,
-          audioTitlesOrderLst:
-              audioTitlesSortedByTitleAscending,
+          audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
         );
 
         // Now go to audio player view
@@ -12882,8 +12882,7 @@ void main() {
         // And verify the order of the playlist audio titles
         checkAudioTitlesOrder(
           tester: tester,
-          audioTitlesOrderLst:
-              audioTitlesSortedByTitleAscending,
+          audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
         );
 
         // Purge the test playlist directory so that the created test
@@ -12893,14 +12892,14 @@ void main() {
         );
       });
       testWidgets('''Click on 'Default' dropdown button item edit icon button to
-             open sort filter audio dialog. Then creating a named title
-             ascending sort/filter parms and saving it. Then verifying that
-             a Sort/filter dropdown button item has been created and is applied
-             to the playlist download view list of audios. Then going to the
-             audio player view and then going back to the playlist download view
-             and verifying that the previously active and newly created sort/filter
-             parms is displayed in the dropdown item button and applied to the
-             audios.''', (WidgetTester tester) async {
+             open sort filter audio dialog. Then creating a ascending unamed
+             sort/filter parms and applying it. Then verifying that a Sort/filter
+             dropdown button item has been created with the title 'applied' and
+             is applied to the playlist download view list of audios. Then going
+             to the audio player view and then going back to the playlist
+             download view and verifying that the previously active and newly
+             created sort/filter parms is displayed in the dropdown item button
+             and applied to the audios.''', (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -12953,15 +12952,6 @@ void main() {
         await tester.tap(dropdownItemEditIconButtonFinder);
         await tester.pumpAndSettle();
 
-        // Type "Title asc" in the 'Save as' TextField
-
-        String saveAsTitle = 'Title asc';
-
-        await tester.enterText(
-            find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
-            saveAsTitle);
-        await tester.pumpAndSettle();
-
         // Now select the 'Audio title'item in the 'Sort by' dropdown button
 
         await tester.tap(find.byKey(const Key('sortingOptionDropdownButton')));
@@ -13003,17 +12993,19 @@ void main() {
         // and updates the sort/filter playlist download view dropdown
         // button with the newly created sort/filter parms
         await tester
-            .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+            .tap(find.byKey(const Key('applySortFilterOptionsTextButton')));
         await tester.pumpAndSettle();
 
         // Now verify the playlist download view state with the 'Title asc'
         // sort/filter parms applied
 
+        String appliedEnglishTitle = 'applied';
+
         // Verify that the dropdown button has been updated with the
         // 'Title asc' sort/filter parms selected
         checkDropdopwnButtonSelectedTitle(
           tester: tester,
-          dropdownButtonSelectedTitle: saveAsTitle,
+          dropdownButtonSelectedTitle: appliedEnglishTitle,
         );
 
         // And verify the order of the playlist audio titles
@@ -13051,7 +13043,7 @@ void main() {
         // 'Title asc' sort/filter parms selected
         checkDropdopwnButtonSelectedTitle(
           tester: tester,
-          dropdownButtonSelectedTitle: saveAsTitle,
+          dropdownButtonSelectedTitle: appliedEnglishTitle,
         );
 
         // And verify the order of the playlist audio titles
