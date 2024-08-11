@@ -157,6 +157,10 @@ class AudioSortFilterParameters {
     ),
     SortingOption.lastListenedDateTime: SortCriteria<Audio>(
       selectorFunction: (Audio audio) {
+        // Since audio.audioPausedDateTime is nullable, we return a default
+        // date if it is null. This default date is in the past. So, if the
+        // audio.audioPausedDateTime is null, the audio will be positioned at
+        // the end of the descendly sorted list.
         return audio.audioPausedDateTime ?? DateTime(2000);
       },
       sortOrder: sortDescending,
