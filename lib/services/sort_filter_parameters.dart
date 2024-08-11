@@ -14,6 +14,7 @@ enum SortingOption {
   audioEnclosingPlaylistTitle,
   audioDuration,
   audioRemainingDuration,
+  lastListenedDateTime,
   audioFileSize,
   audioMusicQuality,
   audioDownloadSpeed,
@@ -153,6 +154,12 @@ class AudioSortFilterParameters {
             audio.audioPositionSeconds * 1000;
       },
       sortOrder: sortAscending,
+    ),
+    SortingOption.lastListenedDateTime: SortCriteria<Audio>(
+      selectorFunction: (Audio audio) {
+        return audio.audioPausedDateTime ?? DateTime(2000);
+      },
+      sortOrder: sortDescending,
     ),
     SortingOption.audioFileSize: SortCriteria<Audio>(
       selectorFunction: (Audio audio) {

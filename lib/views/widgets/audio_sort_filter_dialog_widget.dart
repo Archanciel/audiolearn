@@ -348,6 +348,8 @@ class _AudioSortFilterDialogWidgetState
         return AppLocalizations.of(context)!.audioDuration;
       case SortingOption.audioRemainingDuration:
         return AppLocalizations.of(context)!.audioRemainingDuration;
+      case SortingOption.lastListenedDateTime:
+        return AppLocalizations.of(context)!.lastListenedDateTime;
       case SortingOption.audioFileSize:
         return AppLocalizations.of(context)!.audioFileSize;
       case SortingOption.audioMusicQuality:

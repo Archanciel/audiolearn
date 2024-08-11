@@ -139,7 +139,7 @@
     }
   },
   "copyYoutubeVideoUrl": "Copy Youtube video URL",
-  "displayAudioInfo": "Display audio data",
+  "displayAudioInfo": "Audio data ...",
   "renameAudioFile": "Rename audio file ...",
   "moveAudioToPlaylist": "Move audio to playlist ...",
   "copyAudioToPlaylist": "Copy audio to playlist ...",
@@ -165,7 +165,7 @@
   "searchInVideoCompactDescription": "Include description",
   "on": "on",
   "copyYoutubePlaylistUrl": "Copy Youtube playlist URL",
-  "displayPlaylistInfo": "Display playlist data",
+  "displayPlaylistInfo": "Playlist data ...",
   "playlistInfoDialogTitle": "Playlist Info",
   "playlistTitleLabel": "Playlist title",
   "playlistIdLabel": "Playlist ID",
@@ -250,7 +250,7 @@
   "audioStatePlaying": "Playing",
   "audioStateTerminated": "Terminated",
   "audioStateNotListened": "Not listened",
-  "audioPausedDateTimeLabel": "Date/time paused",
+  "audioPausedDateTimeLabel": "Last listened date/time",
   "audioPlaySpeedLabel": "Play speed",
   "playlistAudioPlaySpeedLabel": "Audio play speed",
   "audioPlayVolumeLabel": "Sound volume",
@@ -295,7 +295,7 @@
   "updatePlaylistJsonFilesMenuTooltip": "If one or several playlist directories containing or not audios were manually added or deleted in the application data root directory or if audios were manually deleted from one or several playlist directories, this functionality updates the playlist JSON files as well as the application settings JSON file in order to reflect the changes in the application screens. Playlist directories located on PC can be copied in the application data root directory ...",
   "updatePlaylistPlayableAudioListTooltip": "If audios were manually deleted from one or several playlist directories, this functionality updates the playlist JSON files to reflect the changes in the application screens.",
   "audioPlayedInThisOrderTooltip": "Audios are played in this order. By default, the last downloaded audios are at bottom of the list.",
-  "playableAudioDialogSortDescriptionTooltipBottomDownloadBefore": "Audios at the bottom were downloaded before those at the top.",
+  "playableAudioDialogSortDescriptionTooltipBottomDownloadBefore": "Audios at bottom were downloaded before those at top.",
   "playableAudioDialogSortDescriptionTooltipBottomDownloadAfter": "Audios at the bottom were downloaded after those at the top.",
   "playableAudioDialogSortDescriptionTooltipBottomUploadBefore": "Videos at the bottom were uploaded before those at the top.",
   "playableAudioDialogSortDescriptionTooltipBottomUploadAfter": "Videos at the bottom were uploaded after those at the top.",
@@ -303,6 +303,8 @@
   "playableAudioDialogSortDescriptionTooltipTopDurationSmaller": "Audios at the top have a shorter duration than those at the bottom.",
   "playableAudioDialogSortDescriptionTooltipTopRemainingDurationBigger": "Audios at the top have more remaining listenable duration than those at the bottom.",
   "playableAudioDialogSortDescriptionTooltipTopRemainingDurationSmaller": "Audios at the top have less remaining listenable duration than those at the bottom.",
+  "playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeBigger": "Audios at the top were listened more recently than those at the bottom.",
+  "playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeSmaller": "Audios at the top were listened less recently than those at the bottom.", 
   "saveAs": "Save as:",
   "sortFilterSaveAsTextFieldTooltip": "Save the sort/filter settings with the specified name. Existing settings with the same name will be updated.",
   "applySortFilterToView": "Apply sort/filter to views:",
@@ -357,7 +359,7 @@
   "atLeast": "at least ",
   "commentCreationDateTooltip": "Comment creation date",
   "commentUpdateDateTooltip": "Comment last update date",
-  "playlistCommentMenu": "List comments of playlist audios ...",
+  "playlistCommentMenu": "Audios comments ...",
   "modifyAudioTitle": "Modify audio title ...",
   "invalidLocalPlaylistTitle": "The local playlist title \"{playlistTitle}\" can not contain any comma. Please correct the title and retry ...",
   "@invalidLocalPlaylistTitle": {
@@ -392,5 +394,6 @@
   "importedAudioDateTimeLabel": "Imported audio date time",
   "importedAudioUrlLabel": "Imported audio URL",
   "importedAudioDescriptionLabel": "Audio description",
-  "sortFilterParametersAppliedName": "applied"
+  "sortFilterParametersAppliedName": "applied",
+  "lastListenedDateTime": "Last listened date/time"
 }

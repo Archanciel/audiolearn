@@ -1194,4 +1194,15 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get sortFilterParametersAppliedName => "applied";
+
+  @override
+  String get lastListenedDateTime => "Last listened date/time";
+
+  @override
+  String get playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeBigger =>
+      "Audios at the top were listened more recently than those at the bottom.";
+
+  @override
+  String get playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeSmaller =>
+      "Audios at the top were listened less recently than those at the bottom.";
 }

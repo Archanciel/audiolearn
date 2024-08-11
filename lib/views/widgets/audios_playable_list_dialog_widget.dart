@@ -220,6 +220,14 @@ class _AudioPlayableListDialogWidgetState
           return AppLocalizations.of(context)!
               .playableAudioDialogSortDescriptionTooltipTopRemainingDurationBigger;
         }
+      case SortingOption.lastListenedDateTime:
+        if (sortingItem.isAscending) {
+          return AppLocalizations.of(context)!
+              .playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeSmaller;
+        } else {
+          return AppLocalizations.of(context)!
+              .playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeBigger;
+        }
       default:
         break;
     }
