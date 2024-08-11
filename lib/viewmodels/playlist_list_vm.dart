@@ -573,6 +573,13 @@ class PlaylistListVM extends ChangeNotifier {
   AudioSortFilterParameters? deleteAudioSortFilterParameters({
     required String audioSortFilterParametersName,
   }) {
+    // Since the audio sort/filter parameters is deleted from the
+    // settings named audio sort/filter parameters map, it must be
+    // deleted from the playlist audio sort/filter parameters names
+    // map as well.
+    _playlistAudioSortFilterParmsNamesMap.removeWhere(
+        (key, mapValue) => mapValue == audioSortFilterParametersName);
+
     return _settingsDataService.deleteNamedAudioSortFilterParameters(
       audioSortFilterParametersName: audioSortFilterParametersName,
     );
@@ -854,11 +861,6 @@ class PlaylistListVM extends ChangeNotifier {
     return AudioSortFilterParameters.createDefaultAudioSortFilterParameters();
   }
 
-  /// If the user has not set sort and filter parameters for
-  /// the selected playlist, then the automatically applicable
-  /// sort and filter parameters for the selected playlist is
-  /// returned if it exists, otherwise the default sort and filter
-  /// parameters are returned.
   String getSelectedPlaylistAudioSortFilterParmsName() {
     Playlist selectedPlaylist = getSelectedPlaylists()[0];
     String selectedPlaylistAudioSortFilterParmsNameSetByUser =
@@ -866,12 +868,14 @@ class PlaylistListVM extends ChangeNotifier {
 
     if (selectedPlaylistAudioSortFilterParmsNameSetByUser.isNotEmpty) {
       return selectedPlaylistAudioSortFilterParmsNameSetByUser;
+    } else {
+      // The sort and filter parameters name returned here was saved
+      // in the playlist json file using the 'Save sort/filter options
+      // to playlist' audio menu item. If the user has not saved a
+      // sort and filter parameters name to the playlist json file, then
+      // '' is returned.
+      return selectedPlaylist.audioSortFilterParmsNameForPlaylistDownloadView;
     }
-
-    // The returned sort and filter parameters name is was saved in the
-    // playlist json file using the 'Save sort/filter options to playlist'
-    // audio menu item.
-    return selectedPlaylist.audioSortFilterParmsNameForPlaylistDownloadView;
   }
 
   /// Method called when the user clicks on the 'Move audio to
