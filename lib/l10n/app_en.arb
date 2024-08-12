@@ -397,5 +397,6 @@
   "importedAudioDescriptionLabel": "Audio description",
   "sortFilterParametersAppliedName": "applied",
   "lastListenedDateTime": "Last listened date/time",
-  "downloadSingleVideoAudioAtMusicQuality": "Download single video audio at music quality"
+  "downloadSingleVideoAudioAtMusicQuality": "Download single video audio at music quality",
+  "videoTitleNotWrittenInOccidentalLettersWarning": "Since the original video title is not written in occidental letters, the audio title is empty. You can use the 'Modify audio title ...' audio menu in order to define a valid title. Same remark for improving the audio file name ..."
 }

@@ -132,6 +132,9 @@ enum WarningMessageType {
   audioImportedToPlaylist, // The case if the user clicks on
   // the import audio to playlist menu item and the audio was
   // imported to the target playlist
+
+  videoTitleNotWrittenInOccidentalLetters, // The case if the video
+  // title is not written in occidental letters.
 }
 
 enum ErrorType {
@@ -467,6 +470,14 @@ class WarningMessageVM extends ChangeNotifier {
   void isNoPlaylistSelectedForSingleVideoDownload() {
     warningMessageType =
         WarningMessageType.noPlaylistSelectedForSingleVideoDownload;
+
+    // Causes the display warning message widget to be displayed.
+    notifyListeners();
+  }
+
+  void videoTitleNotWrittenInOccidentalLetters() {
+    warningMessageType =
+        WarningMessageType.videoTitleNotWrittenInOccidentalLetters;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();

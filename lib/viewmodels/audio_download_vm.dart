@@ -785,10 +785,12 @@ class AudioDownloadVM extends ChangeNotifier {
       fileExtension: 'mp3',
     );
 
-    if (audio.validVideoTitle.isNotEmpty) {
+    String validVideoTitle = audio.validVideoTitle;
+
+    if (validVideoTitle.isNotEmpty) {
       try {
         String existingAudioFileName = downloadedAudioFileNameLst
-            .firstWhere((fileName) => fileName.contains(audio.validVideoTitle));
+            .firstWhere((fileName) => fileName.contains(validVideoTitle));
         notifyDownloadError(
           errorType: ErrorType.downloadAudioFileAlreadyOnAudioDirectory,
           errorArgOne: audio.validVideoTitle,
@@ -800,8 +802,10 @@ class AudioDownloadVM extends ChangeNotifier {
       } catch (_) {
         // file was not found in the downloaded audio directory
       }
+    } else {
+      warningMessageVM.videoTitleNotWrittenInOccidentalLetters();
     }
-    
+
     Stopwatch stopwatch = Stopwatch()..start();
 
     if (!_isDownloading) {

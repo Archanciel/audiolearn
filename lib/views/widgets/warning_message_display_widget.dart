@@ -433,6 +433,18 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
         });
 
         return const SizedBox.shrink();
+      case WarningMessageType.videoTitleNotWrittenInOccidentalLetters:
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _displayWarningDialog(
+            context: _context,
+            message: AppLocalizations.of(context)!
+                .videoTitleNotWrittenInOccidentalLettersWarning,
+            warningMessageVM: _warningMessageVM,
+            themeProviderVM: themeProviderVM,
+          );
+        });
+
+        return const SizedBox.shrink();
       case WarningMessageType.isNoPlaylistSelectedForAudioCopy:
         WidgetsBinding.instance.addPostFrameCallback((_) {
           _displayWarningDialog(

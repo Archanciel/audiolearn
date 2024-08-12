@@ -1215,4 +1215,8 @@ class MockAppLocalizations extends AppLocalizations {
     Object title,
   ) =>
       "Confirm target playlist \"$title\" for downloading single video audio at music quality.";
+
+  @override
+  String get videoTitleNotWrittenInOccidentalLettersWarning =>
+      "Since the original video title is not written in occidental letters, the audio title is empty. You can use the 'Modify audio title ...' audio menu in order to define a valid title. Same remark for the audio file name ...";
 }

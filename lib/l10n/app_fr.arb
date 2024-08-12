@@ -399,5 +399,6 @@
   "importedAudioDescriptionLabel": "Description audio importé",
   "sortFilterParametersAppliedName": "appliqué",
   "lastListenedDateTime": "Date/heure dernière écoute",
-  "downloadSingleVideoAudioAtMusicQuality": "Télécharger l'audio de la vidéo à qualité musicale"
+  "downloadSingleVideoAudioAtMusicQuality": "Télécharger l'audio de la vidéo à qualité musicale",
+  "videoTitleNotWrittenInOccidentalLettersWarning": "Le titre original de la vidéo n'étant pas écrit en caractères occidentaux, le titre audio est vide. Vous pouvez utiliser le menu audio 'Modifier le titre de l'audio ...' pour définir un titre valide. Même remarque pour améliorer le nom du fichier audio ..."
 }
