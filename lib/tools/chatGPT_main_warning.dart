@@ -6,9 +6,9 @@ import 'package:window_size/window_size.dart';
 
 import '../constants.dart';
 import '../models/playlist.dart';
-import 'chatGPT_warning_message_vm.dart';
+import 'chatgpt_warning_message_vm.dart';
 
-import 'chatGPT_warning_message_display_widget.dart';
+import 'chatgpt_warning_message_display_widget.dart';
 
 Future<void> main() async {
   // Now proceed with setting up the app window size and position if needed
