@@ -464,49 +464,26 @@ class WarningMessageVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool _isNoPlaylistSelectedForSingleVideoDownload = false;
-  bool get isNoPlaylistSelectedForSingleVideoDownload =>
-      _isNoPlaylistSelectedForSingleVideoDownload;
-  set isNoPlaylistSelectedForSingleVideoDownload(
-      bool isNoPlaylistSelectedForSingleVideoDownload) {
-    _isNoPlaylistSelectedForSingleVideoDownload =
-        isNoPlaylistSelectedForSingleVideoDownload;
+  void isNoPlaylistSelectedForSingleVideoDownload() {
+    warningMessageType =
+        WarningMessageType.noPlaylistSelectedForSingleVideoDownload;
 
-    if (isNoPlaylistSelectedForSingleVideoDownload) {
-      warningMessageType =
-          WarningMessageType.noPlaylistSelectedForSingleVideoDownload;
-
-      // Causes the display warning message widget to be displayed.
-      notifyListeners();
-    }
+    // Causes the display warning message widget to be displayed.
+    notifyListeners();
   }
 
-  bool _isNoPlaylistSelectedForAudioCopy = false;
-  bool get isNoPlaylistSelectedForAudioCopy =>
-      _isNoPlaylistSelectedForAudioCopy;
-  set isNoPlaylistSelectedForAudioCopy(bool isNoPlaylistSelectedForAudioCopy) {
-    _isNoPlaylistSelectedForAudioCopy = isNoPlaylistSelectedForAudioCopy;
+  void isNoPlaylistSelectedForAudioCopy() {
+    warningMessageType = WarningMessageType.isNoPlaylistSelectedForAudioCopy;
 
-    if (isNoPlaylistSelectedForAudioCopy) {
-      warningMessageType = WarningMessageType.isNoPlaylistSelectedForAudioCopy;
-
-      // Causes the display warning message widget to be displayed.
-      notifyListeners();
-    }
+    // Causes the display warning message widget to be displayed.
+    notifyListeners();
   }
 
-  bool _isNoPlaylistSelectedForAudioMove = false;
-  bool get isNoPlaylistSelectedForAudioMove =>
-      _isNoPlaylistSelectedForAudioMove;
-  set isNoPlaylistSelectedForAudioMove(bool isNoPlaylistSelectedForAudioMove) {
-    _isNoPlaylistSelectedForAudioMove = isNoPlaylistSelectedForAudioMove;
+  void isNoPlaylistSelectedForAudioMove() {
+    warningMessageType = WarningMessageType.isNoPlaylistSelectedForAudioMove;
 
-    if (isNoPlaylistSelectedForAudioMove) {
-      warningMessageType = WarningMessageType.isNoPlaylistSelectedForAudioMove;
-
-      // Causes the display warning message widget to be displayed.
-      notifyListeners();
-    }
+    // Causes the display warning message widget to be displayed.
+    notifyListeners();
   }
 
   bool _isTooManyPlaylistSelectedForSingleVideoDownload = false;
