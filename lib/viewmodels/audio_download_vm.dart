@@ -785,21 +785,23 @@ class AudioDownloadVM extends ChangeNotifier {
       fileExtension: 'mp3',
     );
 
-    try {
-      String existingAudioFileName = downloadedAudioFileNameLst
-          .firstWhere((fileName) => fileName.contains(audio.validVideoTitle));
-      notifyDownloadError(
-        errorType: ErrorType.downloadAudioFileAlreadyOnAudioDirectory,
-        errorArgOne: audio.validVideoTitle,
-        errorArgTwo: existingAudioFileName,
-        errorArgThree: singleVideoTargetPlaylist.title,
-      );
+    if (audio.validVideoTitle.isNotEmpty) {
+      try {
+        String existingAudioFileName = downloadedAudioFileNameLst
+            .firstWhere((fileName) => fileName.contains(audio.validVideoTitle));
+        notifyDownloadError(
+          errorType: ErrorType.downloadAudioFileAlreadyOnAudioDirectory,
+          errorArgOne: audio.validVideoTitle,
+          errorArgTwo: existingAudioFileName,
+          errorArgThree: singleVideoTargetPlaylist.title,
+        );
 
-      return false;
-    } catch (_) {
-      // file was not found in the downloaded audio directory
+        return false;
+      } catch (_) {
+        // file was not found in the downloaded audio directory
+      }
     }
-
+    
     Stopwatch stopwatch = Stopwatch()..start();
 
     if (!_isDownloading) {
