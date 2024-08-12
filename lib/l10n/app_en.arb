@@ -213,6 +213,7 @@
   "playlistRootPathNotExistWarning": "The defined path \"{playlistRootPath}\" does not exist. Please enter a valid playlist root path and retry ...",
   "confirmDialogTitle": "CONFIRMATION",
   "confirmSingleVideoAudioPlaylistTitle": "Confirm target playlist \"{title}\" for downloading single video audio.",
+  "confirmSingleVideoAudioAtMusicQualityPlaylistTitle": "Confirm target playlist \"{title}\" for downloading single video audio at music quality.",
   "playlistJsonFileSizeLabel": "JSON file size",
   "playlistOneSelectedDialogTitle": "Select a playlist",
   "confirmButton": "Confirm",
@@ -395,5 +396,6 @@
   "importedAudioUrlLabel": "Imported audio URL",
   "importedAudioDescriptionLabel": "Audio description",
   "sortFilterParametersAppliedName": "applied",
-  "lastListenedDateTime": "Last listened date/time"
+  "lastListenedDateTime": "Last listened date/time",
+  "downloadSingleVideoAudioAtMusicQuality": "Download single video audio at music quality"
 }

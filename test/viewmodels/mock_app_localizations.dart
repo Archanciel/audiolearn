@@ -1205,4 +1205,14 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeSmaller =>
       "Audios at the top were listened less recently than those at the bottom.";
+
+  @override
+  String get downloadSingleVideoAudioAtMusicQuality =>
+      "Download single video audio at music quality";
+
+  @override
+  String confirmSingleVideoAudioAtMusicQualityPlaylistTitle(
+    Object title,
+  ) =>
+      "Confirm target playlist \"$title\" for downloading single video audio at music quality.";
 }

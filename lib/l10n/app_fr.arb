@@ -213,6 +213,7 @@
   "noSortFilterParameterWasModifiedWarning": "Aucun paramètre de tri/filtre n'a été modifié. Définissez un paramètre et rééssayez ...",
   "confirmDialogTitle": "CONFIRMATION",
   "confirmSingleVideoAudioPlaylistTitle": "Confirmez la playlist cible \"{title}\" sélectionnée pour le téléchargement de l'audio de la vidéo unique.",
+  "confirmSingleVideoAudioAtMusicQualityPlaylistTitle": "Confirmez la playlist cible \"{title}\" sélectionnée pour le téléchargement en qualité musicale de l'audio de la vidéo unique.",
   "playlistJsonFileSizeLabel": "Taille fichier JSON",
   "playlistOneSelectedDialogTitle": "Sélectionnez une playlist",
   "confirmButton": "Confirmer",
@@ -397,5 +398,6 @@
   "importedAudioUrlLabel": "URL audio importé",
   "importedAudioDescriptionLabel": "Description audio importé",
   "sortFilterParametersAppliedName": "appliqué",
-  "lastListenedDateTime": "Date/heure dernière écoute"
+  "lastListenedDateTime": "Date/heure dernière écoute",
+  "downloadSingleVideoAudioAtMusicQuality": "Télécharger l'audio de la vidéo à qualité musicale"
 }

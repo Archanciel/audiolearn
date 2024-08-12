@@ -59,6 +59,7 @@ class MockAudioDownloadVM extends AudioDownloadVM {
   Future<bool> downloadSingleVideoAudio({
     required String videoUrl,
     required Playlist singleVideoTargetPlaylist,
+    bool downloadAtMusicQuality = false,
   }) async {
     if (videoUrl.contains('invalid')) {
       warningMessageVM.isSingleVideoUrlInvalid = true;

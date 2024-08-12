@@ -442,11 +442,133 @@ void main() {
         audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
       );
 
-      // Checking the data of the audio contained in the playable
+      // Checking if there are 2 files in the directory (1 mp3 and 1 json)
+      final List<FileSystemEntity> files =
+          directory.listSync(recursive: false, followLinks: false);
+
+      expect(files.length, 2);
+
+      // Checking if the playlist json file has been updated with the
+      // downloaded audio data
+
+      String playlistPathFileName =
+          '$localTestPlaylistDir${path.separator}$localTestPlaylistTitle.json';
+
+      Playlist loadedPlaylist = JsonDataService.loadFromFile(
+          jsonPathFileName: playlistPathFileName, type: Playlist);
+
+      compareDeserializedWithOriginalPlaylist(
+        deserializedPlaylist: loadedPlaylist,
+        originalPlaylist: singleVideoDownloadedPlaylist,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets('In music quality. Local playlist containing no audio',
+        (WidgetTester tester) async {
+      late AudioDownloadVM audioDownloadVM;
+      String localTestPlaylistTitle =
+          'audio_learn_download_single_video_to_empty_local_playlist_test';
+      String localTestPlaylistDir =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$localTestPlaylistTitle";
+      String savedTestPlaylistDir =
+          "$kDownloadAppTestSavedDataDir${path.separator}$localTestPlaylistTitle";
+
+      final Directory directory = Directory(localTestPlaylistDir);
+
+      // necessary in case the previous test failed and so did not
+      // delete the its playlist dir
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      await DirUtil.createDirIfNotExist(pathStr: localTestPlaylistDir);
+
+      // Copying the initial local playlist json file with no audio
+      await DirUtil.copyFileToDirectory(
+        sourceFilePathName:
+            "$savedTestPlaylistDir${path.separator}$localTestPlaylistTitle.json",
+        targetDirectoryPath: localTestPlaylistDir,
+      );
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+      );
+
+      // load settings from file which does not exist. This
+      // will ensure that the default playlist root path is set
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName: "temp\\wrong.json");
+
+      // await tester.pumpWidget(MyApp());
+      await tester.pumpWidget(ChangeNotifierProvider(
+        create: (BuildContext context) {
+          final WarningMessageVM warningMessageVM = WarningMessageVM();
+          audioDownloadVM = AudioDownloadVM(
+            warningMessageVM: warningMessageVM,
+            settingsDataService: settingsDataService,
+            isTest: true,
+          );
+          return audioDownloadVM;
+        },
+        child: MaterialApp(
+          // forcing dark theme
+          theme: ScreenMixin.themeDataDark,
+          home: const DownloadPlaylistPage(
+            playlistUrl: globalTestPlaylistUrl,
+          ),
+        ),
+      ));
+
+      String singleVideoUrl = 'https://youtu.be/uv3VQoWSjBE';
+
+      await tester.enterText(
+        find.byKey(const Key('playlistUrlTextField')),
+        singleVideoUrl,
+      );
+
+      // tapping on the downl single video button in the app which
+      // calls the AudioDownloadVM.downloadPlaylistAudios() method
+      await tester.tap(find
+          .byKey(const Key('downloadSingleVideoAudioInMusicQualityButton')));
+      await tester.pump();
+
+      // Add a delay to allow the download to finish. 5 seconds is ok
+      // when running the audio_download_vm_test only.
+      // Waiting 5 seconds only causes MissingPluginException
+      // 'No implementation found for method $method on channel $name'
+      // when all tsts are run. 7 seconds solve the problem.
+      await Future.delayed(const Duration(seconds: secondsDelay));
+      await tester.pump();
+
+      Playlist singleVideoDownloadedPlaylist =
+          audioDownloadVM.listOfPlaylist[0];
+
+      checkDownloadedPlaylist(
+        downloadedPlaylist: singleVideoDownloadedPlaylist,
+        playlistId: localTestPlaylistTitle,
+        playlistTitle: localTestPlaylistTitle,
+        playlistUrl: '',
+        playlistDir: localTestPlaylistDir,
+      );
+
+      // this check fails if the secondsDelay value is too small
+      expect(audioDownloadVM.isDownloading, false);
+
+      expect(audioDownloadVM.downloadProgress, 1.0);
+      expect(audioDownloadVM.lastSecondDownloadSpeed, 0);
+      expect(audioDownloadVM.isHighQuality, true);
+
+      // Checking the data of the audio contained in the downloaded
       // audio list
       checkPlaylistAudioTwo(
-        downloadedAudioTwo: singleVideoDownloadedPlaylist.playableAudioLst[0],
+        downloadedAudioTwo: singleVideoDownloadedPlaylist.downloadedAudioLst[0],
         audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
+        downloadedAtMusicQuality: true,
       );
 
       // Checking if there are 2 files in the directory (1 mp3 and 1 json)
@@ -890,6 +1012,7 @@ void checkPlaylistAudioOne({
 void checkPlaylistAudioTwo({
   required Audio downloadedAudioTwo,
   required String audioTwoFileNamePrefix,
+  bool downloadedAtMusicQuality = false,
 }) {
   expect(downloadedAudioTwo.originalVideoTitle,
       "audio learn test short video two");
@@ -905,6 +1028,7 @@ void checkPlaylistAudioTwo({
       DateTime.parse("2023-06-10"));
   expect(downloadedAudioTwo.audioDuration, const Duration(milliseconds: 10000));
   expect(downloadedAudioTwo.audioPlaySpeed, 1.0);
+  expect(downloadedAudioTwo.isAudioMusicQuality, downloadedAtMusicQuality);
 
   String secondAudioFileName = downloadedAudioTwo.audioFileName;
   expect(
@@ -912,8 +1036,11 @@ void checkPlaylistAudioTwo({
           secondAudioFileName
               .contains('audio learn test short video two 23-06-10.mp3'),
       true);
-
-  expect(downloadedAudioTwo.audioFileSize, 61425);
+  if (downloadedAtMusicQuality) {
+    expect(downloadedAudioTwo.audioFileSize, 160000);
+  } else {
+    expect(downloadedAudioTwo.audioFileSize, 61425);
+  }
 }
 
 // Verify the values of the Audio's extracted from a playlist
@@ -1043,6 +1170,23 @@ class _DownloadPlaylistPageState extends State<DownloadPlaylistPage> {
                 );
               },
               child: const Text('Download Single Video Audio'),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              key: const Key('downloadSingleVideoAudioInMusicQualityButton'),
+              onPressed: () {
+                AudioDownloadVM audioDownloadVM =
+                    Provider.of<AudioDownloadVM>(context, listen: false);
+
+                // the downloaded audio will be added to the unique playlist
+                // located in the test audio directory
+                audioDownloadVM.downloadSingleVideoAudio(
+                  videoUrl: _urlController.text,
+                  singleVideoTargetPlaylist: audioDownloadVM.listOfPlaylist[0],
+                  downloadAtMusicQuality: true,
+                );
+              },
+              child: const Text('Download Single Video Audio In Music Quality'),
             ),
           ],
         ),

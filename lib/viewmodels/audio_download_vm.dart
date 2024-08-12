@@ -715,7 +715,9 @@ class AudioDownloadVM extends ChangeNotifier {
   Future<bool> downloadSingleVideoAudio({
     required String videoUrl,
     required Playlist singleVideoTargetPlaylist,
+    bool downloadAtMusicQuality = false,
   }) async {
+    isHighQuality = downloadAtMusicQuality;
     _audioDownloadError = false;
     _stopDownloadPressed = false;
     _youtubeExplode ??= yt.YoutubeExplode();
@@ -845,7 +847,7 @@ class AudioDownloadVM extends ChangeNotifier {
     return true;
   }
 
-  /// Returns the play speed value to set to the created audi instance.
+  /// Returns the play speed value to set to the created audio instance.
   double _determineNewAudioPlaySpeed(Playlist currentPlaylist) {
     return (currentPlaylist.audioPlaySpeed != 0)
         ? currentPlaylist.audioPlaySpeed
@@ -863,7 +865,7 @@ class AudioDownloadVM extends ChangeNotifier {
     if (selectedPlaylists.length == 1) {
       return selectedPlaylists[0];
     } else if (selectedPlaylists.isEmpty) {
-      warningMessageVM.isNoPlaylistSelectedForSingleVideoDownload = true;
+      warningMessageVM.isNoPlaylistSelectedForSingleVideoDownload();
       return null;
     } else {
       warningMessageVM.isTooManyPlaylistSelectedForSingleVideoDownload = true;
@@ -1462,7 +1464,7 @@ class AudioDownloadVM extends ChangeNotifier {
     }
 
     if (isHighQuality) {
-      audio.setAudioToMusicQuality;
+      audio.setAudioToMusicQuality();
     }
 
     final int audioFileSize = audioStreamInfo.size.totalBytes;

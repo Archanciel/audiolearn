@@ -633,8 +633,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
         playlistListVMlistenTrue.getSelectedPlaylistAudioSortFilterParmsName();
     _updatePlaylistSortedFilteredAudioList(
         playlistListVMlistenFalse: playlistListVMlistenTrue,
-        notifyListeners: false);  // avoid rebuilding the widget and avoid
-        //                           integration test failure
+        notifyListeners: false); // avoid rebuilding the widget and avoid
+    //                           integration test failure
 
     return _selectedSortFilterParametersName!; // is not null
   }
@@ -1177,8 +1177,6 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             // list.
             playlistListVMlistenFalse.disableSortedFilteredPlayableAudioLst();
 
-            Playlist? selectedTargetPlaylist;
-
             showDialog<dynamic>(
               context: context,
               builder: (context) => PlaylistOneSelectableDialogWidget(
@@ -1196,7 +1194,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 return;
               }
 
-              selectedTargetPlaylist = value["selectedPlaylist"];
+              Playlist? selectedTargetPlaylist = value["selectedPlaylist"];
+              bool isMusicQuality =
+                  value["downloadSingleVideoAudioAtMusicQuality"] ?? false;
 
               // Using FocusNode to enable clicking on Enter to close
               // the dialog
@@ -1232,10 +1232,15 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                             10, 0, 10, 10), // Adjust the value as needed
                     content: Text(
                       key: const Key('confirmationDialogMessageKey'),
-                      AppLocalizations.of(context)!
-                          .confirmSingleVideoAudioPlaylistTitle(
-                        selectedTargetPlaylist!.title,
-                      ),
+                      (isMusicQuality)
+                          ? AppLocalizations.of(context)!
+                              .confirmSingleVideoAudioAtMusicQualityPlaylistTitle(
+                              selectedTargetPlaylist!.title,
+                            )
+                          : AppLocalizations.of(context)!
+                              .confirmSingleVideoAudioPlaylistTitle(
+                              selectedTargetPlaylist!.title,
+                            ),
                       style: kDialogTextFieldStyle,
                     ),
                     actions: [
@@ -1272,6 +1277,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                       await audioDownloadViewModel.downloadSingleVideoAudio(
                     videoUrl: _playlistUrlController.text.trim(),
                     singleVideoTargetPlaylist: selectedTargetPlaylist!,
+                    downloadAtMusicQuality: isMusicQuality,
                   );
 
                   if (isSingleVideoAudioCorrectlyDownloaded) {

@@ -55,6 +55,7 @@ class _PlaylistOneSelectableDialogWidgetState
     extends State<PlaylistOneSelectableDialogWidget> with ScreenMixin {
   Playlist? _selectedPlaylist;
   bool _keepAudioDataInSourcePlaylist = true;
+  bool _downloadSingleVideoAudioAtMusicQuality = false;
   final FocusNode _focusNodeDialog = FocusNode();
 
   @override
@@ -68,7 +69,7 @@ class _PlaylistOneSelectableDialogWidgetState
   Widget build(BuildContext context) {
     ThemeProviderVM themeProvider = Provider.of<ThemeProviderVM>(context);
     bool isDarkTheme = themeProvider.currentTheme == AppTheme.dark;
-    PlaylistListVM playlistVMlistnedFalse = Provider.of<PlaylistListVM>(
+    PlaylistListVM playlistVMlistenFalse = Provider.of<PlaylistListVM>(
       context,
       listen: false,
     );
@@ -76,9 +77,9 @@ class _PlaylistOneSelectableDialogWidgetState
 
     if (widget.excludedPlaylist == null) {
       upToDateSelectablePlaylists =
-          playlistVMlistnedFalse.getUpToDateSelectablePlaylists();
+          playlistVMlistenFalse.getUpToDateSelectablePlaylists();
     } else {
-      upToDateSelectablePlaylists = playlistVMlistnedFalse
+      upToDateSelectablePlaylists = playlistVMlistenFalse
           .getUpToDateSelectablePlaylistsExceptExcludedPlaylist(
               excludedPlaylist: widget.excludedPlaylist!);
     }
@@ -98,9 +99,8 @@ class _PlaylistOneSelectableDialogWidgetState
               event.logicalKey == LogicalKeyboardKey.numpadEnter) {
             // executing the same code as in the 'Confirm' ElevatedButton
             // onPressed callback
-            _handleConfirmPressed(
-              context: context,
-              playlistVMlistnedFalse: playlistVMlistnedFalse,
+            _handleConfirmButtonPressed(
+              playlistVMlistnedFalse: playlistVMlistenFalse,
             );
           }
         }
@@ -141,32 +141,40 @@ class _PlaylistOneSelectableDialogWidgetState
                           PlaylistType.youtube) // when moving an audio
                   //                               from a playlist, the
                   //                               excluded playlist is
-                  //                               the source playlist
-                  ? _buildBottomTextAndCheckbox(
-                      context,
-                      isDarkTheme,
+                  //                               the source playlist.
+                  //
+                  //                               Adding the checkbox
+                  //                               'keep audio entry in
+                  //                               source playlist' is
+                  //                               useful only if the
+                  //                               source playlist is a
+                  //                               Youtube playlist.
+                  ? _buildBottomTextAndCheckboxForMoveAudioToPlaylist(
+                      isDarkTheme: isDarkTheme,
                     )
-                  : Container(), // here, we are moving an audio from a
-              //                    local playlist, or we are copying an
-              //                    audio or downloading the audio of a
-              //                    single video. In those situations,
-              //                    displaying the keep audio entry in
-              //                    source playlist checkbox is not
-              //                    useful.
+                  : (widget.usedFor ==
+                          PlaylistOneSelectableDialogUsedFor
+                              .downloadSingleVideoAudio)
+                      ? _buildBottomTextAndCheckboxForDownloadSingleVideoAudio(
+                          isDarkTheme: isDarkTheme,
+                        )
+                      : Container(), // here, we are moving an audio from a
+              //                    local playlist or we are copying an
+              //                    audio. In those situations, displaying
+              //                    the keep audio entry in source playlist
+              //                    or at music quality is inadequate.
             ],
           ),
         ),
         actions: [
-          // situation of downloading a single video
-          // audio. This is tested by 'Bug fix
-          // verification with partial download single
+          // situation of downloading a single video audio. This solves a
+          // bug and is tested by 'Verifying with partial download of single
           // video audio' integration test
           TextButton(
             key: const Key('confirmButton'),
             onPressed: () {
-              _handleConfirmPressed(
-                context: context,
-                playlistVMlistnedFalse: playlistVMlistnedFalse,
+              _handleConfirmButtonPressed(
+                playlistVMlistnedFalse: playlistVMlistenFalse,
               );
             },
             child: Text(AppLocalizations.of(context)!.confirmButton,
@@ -194,27 +202,25 @@ class _PlaylistOneSelectableDialogWidgetState
     );
   }
 
-  void _handleConfirmPressed({
-    required BuildContext context,
+  void _handleConfirmButtonPressed({
     required PlaylistListVM playlistVMlistnedFalse,
   }) {
     switch (widget.usedFor) {
       case PlaylistOneSelectableDialogUsedFor.downloadSingleVideoAudio:
         if (_selectedPlaylist == null) {
-          widget.warningMessageVM.isNoPlaylistSelectedForSingleVideoDownload =
-              true;
+          widget.warningMessageVM.isNoPlaylistSelectedForSingleVideoDownload();
           return;
         }
         break;
       case PlaylistOneSelectableDialogUsedFor.copyAudioToPlaylist:
         if (_selectedPlaylist == null) {
-          widget.warningMessageVM.isNoPlaylistSelectedForAudioCopy = true;
+          widget.warningMessageVM.isNoPlaylistSelectedForAudioCopy();
           return;
         }
         break;
       case PlaylistOneSelectableDialogUsedFor.moveAudioToPlaylist:
         if (_selectedPlaylist == null) {
-          widget.warningMessageVM.isNoPlaylistSelectedForAudioMove = true;
+          widget.warningMessageVM.isNoPlaylistSelectedForAudioMove();
           return;
         }
         break;
@@ -225,16 +231,17 @@ class _PlaylistOneSelectableDialogWidgetState
     Map<String, dynamic> resultMap = {
       'selectedPlaylist': _selectedPlaylist,
       'keepAudioDataInSourcePlaylist': _keepAudioDataInSourcePlaylist,
+      'downloadSingleVideoAudioAtMusicQuality':
+          _downloadSingleVideoAudioAtMusicQuality,
     };
 
     Navigator.of(context).pop(resultMap);
     return;
   }
 
-  Widget _buildBottomTextAndCheckbox(
-    BuildContext context,
-    bool isDarkTheme,
-  ) {
+  Widget _buildBottomTextAndCheckboxForMoveAudioToPlaylist({
+    required bool isDarkTheme,
+  }) {
     return Column(
       children: [
         const SizedBox(
@@ -268,6 +275,55 @@ class _PlaylistOneSelectableDialogWidgetState
                 onChanged: (bool? newValue) {
                   setState(() {
                     _keepAudioDataInSourcePlaylist = newValue!;
+                  });
+                  // now clicking on Enter works since the
+                  // Checkbox is not focused anymore
+                  // _audioTitleSubStringFocusNode.requestFocus();
+                },
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildBottomTextAndCheckboxForDownloadSingleVideoAudio({
+    required bool isDarkTheme,
+  }) {
+    return Column(
+      children: [
+        const SizedBox(
+          height: ScreenMixin.dialogCheckboxSizeBoxHeight,
+        ),
+        Row(
+          // in this case, the audio is moved from a Youtube
+          // playlist and so the keep audio entry in source
+          // playlist checkbox is displayed
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Tooltip(
+                message: AppLocalizations.of(context)!
+                    .keepAudioEntryInSourcePlaylistTooltip,
+                child: Text(
+                  AppLocalizations.of(context)!.downloadSingleVideoAudioAtMusicQuality,
+                  style: TextStyle(
+                    fontSize: kListDialogBottomTextFontSize,
+                    color: isDarkTheme ? Colors.white : Colors.black,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
+              height: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
+              child: Checkbox(
+                key: const Key('downloadSingleVideoAudioAtMusicQualityCheckboxKey'),
+                value: _downloadSingleVideoAudioAtMusicQuality,
+                onChanged: (bool? newValue) {
+                  setState(() {
+                    _downloadSingleVideoAudioAtMusicQuality = newValue!;
                   });
                   // now clicking on Enter works since the
                   // Checkbox is not focused anymore
