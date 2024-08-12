@@ -265,7 +265,7 @@ void main() {
           find.text(previousEndDownloadedAudioTitle);
 
       await tester.tap(previousEndDownloadedAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // Now we tap on the play button in order to finish
       // playing the audio downloaded before the last downloaded
