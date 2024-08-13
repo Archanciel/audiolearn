@@ -156,6 +156,12 @@ class DirUtil {
     }
   }
 
+  static String getPathFromPathFileName({
+    required String pathFileName,
+  }) {
+    return path.dirname(pathFileName);
+  }
+
   static void deleteFilesAndSubDirsOfDir({
     required String rootPath,
   }) {

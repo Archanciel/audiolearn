@@ -574,7 +574,8 @@ class AudioDownloadVM extends ChangeNotifier {
 
     Playlist enclosingPlaylist = audio.enclosingPlaylist!;
     String audioOldFileName = audio.audioFileName;
-    List<String> oldCommentFilePathAndFilePathNameLst = CommentVM.buildCommentFilePathAndFilePathName(
+    String oldCommentFilePathName =
+        CommentVM.buildCommentFilePathName(
       audioToComment: audio,
     );
 
@@ -583,18 +584,19 @@ class AudioDownloadVM extends ChangeNotifier {
       newFileName: modifiedAudioFileName,
     );
 
-    List<String> newCommentFilePathAndFilePathNameLst = CommentVM.buildCommentFilePathAndFilePathName(
+    String newCommentFilePathName =
+        CommentVM.buildCommentFilePathName(
       audioToComment: audio,
     );
 
     // renaming the comment file if it exists
 
-    String oldCommentFileFilePathName = oldCommentFilePathAndFilePathNameLst[1];
-
-    if (File(oldCommentFileFilePathName).existsSync()) {
+    if (File(oldCommentFilePathName).existsSync()) {
       DirUtil.renameFile(
-        fileToRenameFilePathName: oldCommentFileFilePathName,
-        newFileName: newCommentFilePathAndFilePathNameLst[1].split(Platform.pathSeparator).last,
+        fileToRenameFilePathName: oldCommentFilePathName,
+        newFileName: newCommentFilePathName
+            .split(Platform.pathSeparator)
+            .last,
       );
     }
 

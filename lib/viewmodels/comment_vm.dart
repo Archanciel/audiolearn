@@ -36,11 +36,9 @@ class CommentVM extends ChangeNotifier {
   List<Comment> loadAudioComments({
     required Audio audio,
   }) {
-    String commentFilePathName =
-        buildCommentFilePathAndFilePathName(audioToComment: audio)[1];
 
     return JsonDataService.loadListFromFile(
-      jsonPathFileName: commentFilePathName,
+      jsonPathFileName: buildCommentFilePathName(audioToComment: audio,),
       type: Comment,
     );
   }
@@ -53,14 +51,16 @@ class CommentVM extends ChangeNotifier {
       audio: audioToComment,
     );
 
-    List<String> commentDirInfo = buildCommentFilePathAndFilePathName(
+    String commentFilePathName = buildCommentFilePathName(
       audioToComment: audioToComment,
     );
 
     if (commentLst.isEmpty) {
       // Create the comment dir so that the comment file can be created
       DirUtil.createDirIfNotExistSync(
-        pathStr: commentDirInfo[0],
+        pathStr: DirUtil.getPathFromPathFileName(
+          pathFileName: commentFilePathName,
+        ),
       );
     }
 
@@ -68,7 +68,7 @@ class CommentVM extends ChangeNotifier {
 
     _sortAndSaveCommentLst(
       commentLst: commentLst,
-      commentFilePathName: commentDirInfo[1],
+      commentFilePathName: commentFilePathName,
     );
 
     // Add comment to the database
@@ -78,18 +78,16 @@ class CommentVM extends ChangeNotifier {
   /// Returns a list of two strings. The first string is the path to the
   /// comment directory, and the second string is the path file name to the
   /// maybe not yet existing comment file.
-  static List<String> buildCommentFilePathAndFilePathName({
+  static String buildCommentFilePathName({
     required Audio audioToComment,
   }) {
     final String playlistCommentPath =
         "${audioToComment.enclosingPlaylist!.downloadPath}${path.separator}$kCommentDirName";
 
-    final String createdCommentFileName = audioToComment.audioFileName.replaceAll('.mp3', '.json');
+    final String createdCommentFileName =
+        audioToComment.audioFileName.replaceAll('.mp3', '.json');
 
-    return [
-      playlistCommentPath,
-      "$playlistCommentPath${path.separator}${createdCommentFileName}"
-    ];
+    return "$playlistCommentPath${path.separator}$createdCommentFileName";
   }
 
   void _sortAndSaveCommentLst({
@@ -143,8 +141,8 @@ class CommentVM extends ChangeNotifier {
 
     JsonDataService.saveListToFile(
       data: commentLst,
-      jsonPathFileName: buildCommentFilePathAndFilePathName(
-          audioToComment: commentedAudio)[1],
+      jsonPathFileName:
+          buildCommentFilePathName(audioToComment: commentedAudio),
     );
 
     notifyListeners();
@@ -155,9 +153,9 @@ class CommentVM extends ChangeNotifier {
     required Audio commentedAudio,
   }) {
     DirUtil.deleteFileIfExist(
-      pathFileName: buildCommentFilePathAndFilePathName(
+      pathFileName: buildCommentFilePathName(
         audioToComment: commentedAudio,
-      )[1],
+      ),
     );
 
     notifyListeners();
@@ -186,9 +184,9 @@ class CommentVM extends ChangeNotifier {
 
     _sortAndSaveCommentLst(
       commentLst: commentLst,
-      commentFilePathName: buildCommentFilePathAndFilePathName(
+      commentFilePathName: buildCommentFilePathName(
         audioToComment: commentedAudio,
-      )[1],
+      ),
     );
 
     notifyListeners();
@@ -198,7 +196,7 @@ class CommentVM extends ChangeNotifier {
     required Audio audio,
     required String targetPlaylistPath,
   }) {
-    List<String> commentDirInfo = buildCommentFilePathAndFilePathName(
+    String commentFilePathName = buildCommentFilePathName(
       audioToComment: audio,
     );
 
@@ -209,9 +207,6 @@ class CommentVM extends ChangeNotifier {
     DirUtil.createDirIfNotExistSync(
       pathStr: targetCommentDirPath,
     );
-
-    // Move the comment file to the target playlist comment directory
-    String commentFilePathName = commentDirInfo[1];
 
     if (File(commentFilePathName).existsSync()) {
       DirUtil.moveFileToDirectoryIfNotExistSync(
@@ -225,7 +220,7 @@ class CommentVM extends ChangeNotifier {
     required Audio audio,
     required String targetPlaylistPath,
   }) {
-    List<String> commentDirInfo = buildCommentFilePathAndFilePathName(
+    String commentFilePathName = buildCommentFilePathName(
       audioToComment: audio,
     );
 
@@ -238,7 +233,6 @@ class CommentVM extends ChangeNotifier {
     );
 
     // Copy the comment file to the target playlist comment directory
-    String commentFilePathName = commentDirInfo[1];
 
     if (File(commentFilePathName).existsSync()) {
       DirUtil.copyFileToDirectorySync(

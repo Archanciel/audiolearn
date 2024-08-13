@@ -154,6 +154,11 @@ void main() {
       playlistS8.downloadPath =
           "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio";
 
+      // Deleting comment file used in another test
+      DirUtil.deleteFileIfExist(
+          pathFileName:
+              "${playlistS8.downloadPath}${path.separator}$kCommentDirName${path.separator}New file name.json");
+
       Map<String, List<Comment>> playlistAudiosCommentsMap =
           commentVM.getAllPlaylistComments(
         playlist: playlistS8,
