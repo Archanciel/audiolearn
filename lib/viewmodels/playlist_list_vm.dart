@@ -307,7 +307,10 @@ class PlaylistListVM extends ChangeNotifier {
         return false;
       } catch (_) {
         // If the playlist with this title is not found, it means that
-        // the playlist must be added. Since the
+        // the playlist must be added. Since the _audioDownloadVM.
+        // addPlaylist() method is asynchronous, the code which uses it can
+        // not be included on the firstWhere.onElse: parameter and instead
+        // is located after this if {...} block.
       }
     } else {
       // If both playlistUrl and localPlaylistTitle are empty, it means
@@ -317,9 +320,10 @@ class PlaylistListVM extends ChangeNotifier {
       return false;
     }
 
-    // This code here is executed if the Youtube playlist url was not
-    // found in the _listOfSelectablePlaylists and an exceptipon was
-    // thrown (see above the empty firstWhere catch block).
+    // This code here is executed if the Youtube playlist url or the
+    // local playlist title was not found in the _listOfSelectablePlaylists
+    // and an exceptipon was thrown (see above the 2 empty firstWhere catch
+    // blocks).
     Playlist? addedPlaylist = await _audioDownloadVM.addPlaylist(
       playlistUrl: playlistUrl,
       localPlaylistTitle: localPlaylistTitle,

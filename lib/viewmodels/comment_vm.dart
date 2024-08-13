@@ -37,7 +37,7 @@ class CommentVM extends ChangeNotifier {
     required Audio audio,
   }) {
     String commentFilePathName =
-        _buildCommentFilePathAndFilePathName(audioToComment: audio)[1];
+        buildCommentFilePathAndFilePathName(audioToComment: audio)[1];
 
     return JsonDataService.loadListFromFile(
       jsonPathFileName: commentFilePathName,
@@ -53,7 +53,7 @@ class CommentVM extends ChangeNotifier {
       audio: audioToComment,
     );
 
-    List<String> commentDirInfo = _buildCommentFilePathAndFilePathName(
+    List<String> commentDirInfo = buildCommentFilePathAndFilePathName(
       audioToComment: audioToComment,
     );
 
@@ -78,15 +78,17 @@ class CommentVM extends ChangeNotifier {
   /// Returns a list of two strings. The first string is the path to the
   /// comment directory, and the second string is the path file name to the
   /// maybe not yet existing comment file.
-  List<String> _buildCommentFilePathAndFilePathName({
+  static List<String> buildCommentFilePathAndFilePathName({
     required Audio audioToComment,
   }) {
-    String playlistCommentPath =
+    final String playlistCommentPath =
         "${audioToComment.enclosingPlaylist!.downloadPath}${path.separator}$kCommentDirName";
+
+    final String createdCommentFileName = audioToComment.audioFileName.replaceAll('.mp3', '.json');
 
     return [
       playlistCommentPath,
-      "$playlistCommentPath${path.separator}${_createCommentFileName(audioToComment.audioFileName)}"
+      "$playlistCommentPath${path.separator}${createdCommentFileName}"
     ];
   }
 
@@ -141,7 +143,7 @@ class CommentVM extends ChangeNotifier {
 
     JsonDataService.saveListToFile(
       data: commentLst,
-      jsonPathFileName: _buildCommentFilePathAndFilePathName(
+      jsonPathFileName: buildCommentFilePathAndFilePathName(
           audioToComment: commentedAudio)[1],
     );
 
@@ -153,7 +155,7 @@ class CommentVM extends ChangeNotifier {
     required Audio commentedAudio,
   }) {
     DirUtil.deleteFileIfExist(
-      pathFileName: _buildCommentFilePathAndFilePathName(
+      pathFileName: buildCommentFilePathAndFilePathName(
         audioToComment: commentedAudio,
       )[1],
     );
@@ -184,7 +186,7 @@ class CommentVM extends ChangeNotifier {
 
     _sortAndSaveCommentLst(
       commentLst: commentLst,
-      commentFilePathName: _buildCommentFilePathAndFilePathName(
+      commentFilePathName: buildCommentFilePathAndFilePathName(
         audioToComment: commentedAudio,
       )[1],
     );
@@ -196,7 +198,7 @@ class CommentVM extends ChangeNotifier {
     required Audio audio,
     required String targetPlaylistPath,
   }) {
-    List<String> commentDirInfo = _buildCommentFilePathAndFilePathName(
+    List<String> commentDirInfo = buildCommentFilePathAndFilePathName(
       audioToComment: audio,
     );
 
@@ -223,7 +225,7 @@ class CommentVM extends ChangeNotifier {
     required Audio audio,
     required String targetPlaylistPath,
   }) {
-    List<String> commentDirInfo = _buildCommentFilePathAndFilePathName(
+    List<String> commentDirInfo = buildCommentFilePathAndFilePathName(
       audioToComment: audio,
     );
 
@@ -277,7 +279,4 @@ class CommentVM extends ChangeNotifier {
 
     return playlistAudiosCommentsMap;
   }
-
-  String _createCommentFileName(String audioFileName) =>
-      audioFileName.replaceAll('.mp3', '.json');
 }

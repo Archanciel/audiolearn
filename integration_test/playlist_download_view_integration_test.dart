@@ -14238,10 +14238,6 @@ void main() {
             find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
         await tester.pumpAndSettle();
 
-
-
-
-
         // Type "Desc listened" in the 'Save as' TextField
 
         await tester.enterText(
@@ -14836,7 +14832,137 @@ void main() {
     group('App settings set speed test', () {});
   });
   group('Rename audio file test and verify comment access', () {
-    testWidgets('Not existing new name', (WidgetTester tester) async {
+    testWidgets('''Not existing new audio file name (the renamed audio has
+                   no comments).''', (WidgetTester tester) async {
+      const String youtubePlaylistTitle =
+          'audio_player_view_2_shorts_test'; // Youtube playlist
+      const String audioTitle = "Really short video";
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: '2_youtube_2_local_playlists_integr_test_data',
+        selectedPlaylistTitle: youtubePlaylistTitle,
+      );
+
+      // Before renaming the audio file, we verify that the audio has
+      // a comment
+
+      // First, find the audio sublist ListTile Text widget
+
+      Finder audioListTileTextWidgetFinder = find.text(audioTitle);
+
+      // Then obtain the audio ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      Finder audioListTileWidgetFinder = find.ancestor(
+        of: audioListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now we want to tap the popup menu of the audio ListTile
+      // "Really short video"
+
+      // Find the leading menu icon button of the audio ListTile
+      // and tap on it
+      final Finder audioListTileLeadingMenuIconButton = find.descendant(
+        of: audioListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(audioListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the rename audio file popup menu item and tap on it
+      final Finder popupCopyMenuItem =
+          find.byKey(const Key("popup_menu_rename_audio_file"));
+
+      await tester.tap(popupCopyMenuItem);
+      await tester.pumpAndSettle();
+
+      // Verify that the rename audio file dialog is displayed
+      expect(find.byType(AudioModificationDialogWidget), findsOneWidget);
+
+      // Verify the dialog comment
+      expect(
+          find.text(
+              'Renaming audio file in order to improve their playing order.'),
+          findsOneWidget);
+
+      // Verify the button text
+      final Finder audioModificationButtonFinder =
+          find.byKey(const Key('audioModificationButton'));
+      TextButton audioModificationTextButton =
+          tester.widget<TextButton>(audioModificationButtonFinder);
+      expect((audioModificationTextButton.child! as Text).data, 'Rename');
+
+      // Verify the dialog title
+      expect(find.text('Rename Audio File'), findsOneWidget);
+
+      // Now enter the new file name
+
+      // Find the TextField using the Key
+      final Finder textFieldFinder =
+          find.byKey(const Key('audioModificationTextField'));
+
+      // Retrieve the TextField widget
+      final TextField textField = tester.widget<TextField>(textFieldFinder);
+
+      // Verify the initial value of the TextField
+      expect(textField.controller!.text,
+          '231117-002826-Really short video 23-07-01.mp3');
+
+      // Enter new file name
+
+      const String newFileName = '231117-Really short video 23-07-01.mp3';
+
+      await tester.enterText(
+        textFieldFinder,
+        newFileName,
+      );
+      await tester.pumpAndSettle();
+
+      // Now tap the rename button
+      await tester.tap(find.byKey(const Key('audioModificationButton')));
+      await tester.pumpAndSettle();
+
+      // Verify that the renamed file exists
+      final String renamedAudioFilePath =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubePlaylistTitle${path.separator}$newFileName";
+      expect(File(renamedAudioFilePath).existsSync(), true);
+
+      // Check the new file name in the audio info dialog
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(audioListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the popup menu item and tap on it
+      final Finder popupDisplayAudioInfoMenuItemFinder =
+          find.byKey(const Key("popup_menu_display_audio_info"));
+
+      await tester.tap(popupDisplayAudioInfoMenuItemFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the audio new file name
+
+      final Text audioFileNameTitleTextWidget =
+          tester.widget<Text>(find.byKey(const Key('audioFileNameKey')));
+
+      expect(audioFileNameTitleTextWidget.data, newFileName);
+
+      // Tap the Ok button to close the audio info dialog
+      await tester.tap(find.byKey(const Key('audioInfoOkButtonKey')));
+      await tester.pumpAndSettle();
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets('''Not existing new audio file name and not existing new comment
+                   file name (the renamed audio has a comment file which will be
+                   renamed as well).''', (WidgetTester tester) async {
       const String youtubePlaylistTitle =
           'audio_player_view_2_shorts_test'; // Youtube playlist
       const String audioTitle = "morning _ cinematic video";
@@ -14862,13 +14988,13 @@ void main() {
       );
 
       // The audio file we will rename has a comment linked to this
-      // file name. Once this file is renamed, the comment will no
-      // longer be accessible. Before renaming the file, verify
-      // the comment exist ...
+      // file name. Before renaming the file, verify the comment exist ...
+      String expectedCommentTitle = 'Accessible after renaming';
+
       await checkAudioCommentUsingAudioItemMenu(
         tester: tester,
         audioListTileWidgetFinder: audioListTileWidgetFinder,
-        expectedCommentTitle: 'Not accessible later',
+        expectedCommentTitle: expectedCommentTitle,
       );
 
       // Now we want to tap the popup menu of the audio ListTile
@@ -14924,12 +15050,14 @@ void main() {
       expect(textField.controller!.text,
           '231117-002828-morning _ cinematic video 23-07-01.mp3');
 
+      // Enter new file name
+
       const String newFileName = '240610-Renamed video 23-07-01.mp3';
+
       await tester.enterText(
         textFieldFinder,
         newFileName,
       );
-
       await tester.pumpAndSettle();
 
       // Now tap the rename button
@@ -14965,15 +15093,11 @@ void main() {
       await tester.tap(find.byKey(const Key('audioInfoOkButtonKey')));
       await tester.pumpAndSettle();
 
-      // The renamed audio can now access to a comment defined for the
-      // new audio file name (this is a test situation !). Now we verify
-      // that this comment is accessible as well as that the old comment
-      // is no longer accessible
+      // The audio file we could not rename still access to its comment ...
       await checkAudioCommentInAudioPlayerView(
         tester: tester,
         audioListTileWidgetFinder: audioListTileWidgetFinder,
-        expectedCommentTitle: 'Comment for the renamed audio file',
-        notAccessibleCommentTitle: 'Not accessible later',
+        expectedCommentTitle: expectedCommentTitle,
       );
 
       // Purge the test playlist directory so that the created test
@@ -14983,8 +15107,10 @@ void main() {
       );
     });
     testWidgets(
-        '''Existing new name. The new file name is the name of an existing
-           file in the same directory''', (WidgetTester tester) async {
+        '''Existing new audio file name. The new file name is the name of an
+           existing file in the same directory. In this case, a warning is
+           displayed and the file is not renamed.''',
+        (WidgetTester tester) async {
       const String youtubePlaylistTitle =
           'audio_player_view_2_shorts_test'; // Youtube playlist
       const String audioTitle = "morning _ cinematic video";
@@ -15046,17 +15172,21 @@ void main() {
       final TextField textField = tester.widget<TextField>(textFieldFinder);
 
       // Verify the initial value of the TextField
+
       const String initialFileName =
           '231117-002828-morning _ cinematic video 23-07-01.mp3';
+
       expect(textField.controller!.text, initialFileName);
 
+      // Now entering the name of an existing file in the audio directory
+      // in the file name TextField
       const String fileNameOfExistingFile =
           '231117-002826-Really short video 23-07-01.mp3';
+
       await tester.enterText(
         textFieldFinder,
         fileNameOfExistingFile,
       );
-
       await tester.pumpAndSettle();
 
       // Now tap the rename button
@@ -15105,7 +15235,175 @@ void main() {
       await tester.tap(popupDisplayAudioInfoMenuItemFinder);
       await tester.pumpAndSettle();
 
-      // Verify the audio new file name
+      // Verify the audio old file name
+
+      final Text audioFileNameTitleTextWidget =
+          tester.widget<Text>(find.byKey(const Key('audioFileNameKey')));
+
+      expect(audioFileNameTitleTextWidget.data, initialFileName);
+
+      // Tap the Ok button to close the audio info dialog
+      await tester.tap(find.byKey(const Key('audioInfoOkButtonKey')));
+      await tester.pumpAndSettle();
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets('''Not existing new audio file name and existing new comment
+                   file name. The renamed audio has a comment file which will be
+                   renamed as well, but since a comment file exist with
+                   the renamed comment file name, a warning will be displayed
+                   and the file will not be renamed.''',
+        (WidgetTester tester) async {
+      const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+      const String audioToRenameTitle =
+          "Quand Aurélien Barrau va dans une école de management";
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_comment_test',
+        selectedPlaylistTitle: youtubePlaylistTitle,
+      );
+
+      // Before renaming the audio file, we verify that the audio has
+      // a comment
+
+      // First, find the audio sublist ListTile Text widget
+
+      Finder audioListTileTextWidgetFinder = find.text(audioToRenameTitle);
+
+      // Then obtain the audio ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      Finder audioListTileWidgetFinder = find.ancestor(
+        of: audioListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // The audio file we will rename has a comment linked to this
+      // file name. Before renaming the file, verify the comment exist ...
+
+      String anAudioCommentTitle = 'Aurélien three';
+
+      await checkAudioCommentUsingAudioItemMenu(
+        tester: tester,
+        audioListTileWidgetFinder: audioListTileWidgetFinder,
+        expectedCommentTitle: anAudioCommentTitle,
+      );
+
+      // Now we want to tap the popup menu of the audio ListTile
+      // "Quand Aurélien Barrau va dans une école de management"
+
+      // Find the leading menu icon button of the audio ListTile
+      // and tap on it
+      final Finder audioListTileLeadingMenuIconButton = find.descendant(
+        of: audioListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(audioListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the rename audio file popup menu item and tap on it
+      final Finder popupCopyMenuItem =
+          find.byKey(const Key("popup_menu_rename_audio_file"));
+
+      await tester.tap(popupCopyMenuItem);
+      await tester.pumpAndSettle();
+
+      // Verify that the rename audio file dialog is displayed
+      expect(find.byType(AudioModificationDialogWidget), findsOneWidget);
+
+      // Verify the dialog comment
+      expect(
+          find.text(
+              'Renaming audio file in order to improve their playing order.'),
+          findsOneWidget);
+
+      // Verify the button text
+      final Finder audioModificationButtonFinder =
+          find.byKey(const Key('audioModificationButton'));
+      TextButton audioModificationTextButton =
+          tester.widget<TextButton>(audioModificationButtonFinder);
+      expect((audioModificationTextButton.child! as Text).data, 'Rename');
+
+      // Verify the dialog title
+      expect(find.text('Rename Audio File'), findsOneWidget);
+
+      // Now enter the new file name
+
+      // Find the TextField using the Key
+      final Finder textFieldFinder =
+          find.byKey(const Key('audioModificationTextField'));
+
+      // Retrieve the TextField widget
+      final TextField textField = tester.widget<TextField>(textFieldFinder);
+
+      // Verify the initial value of the TextField
+      expect(textField.controller!.text,
+          '240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.mp3');
+
+      const String newFileName = 'New file name.mp3';
+
+      await tester.enterText(
+        textFieldFinder,
+        newFileName,
+      );
+
+      await tester.pumpAndSettle();
+
+      // Now tap the rename button
+      await tester.tap(find.byKey(const Key('audioModificationButton')));
+      await tester.pumpAndSettle();
+
+      // Since file name is the name of an existing file in the audio
+      // directory, a warning will be displayed ...
+
+      // Ensure the warning dialog is shown
+      final Finder warningMessageDisplayDialogFinder =
+          find.byType(WarningMessageDisplayWidget);
+      expect(warningMessageDisplayDialogFinder, findsOneWidget);
+
+      // Check the value of the warning dialog title
+      Text warningDialogTitle =
+          tester.widget(find.byKey(const Key('warningDialogTitle')));
+      expect(warningDialogTitle.data, 'WARNING');
+
+      // Check the value of the warning dialog message
+      expect(
+          tester
+              .widget<Text>(find.byKey(const Key('warningDialogMessage')))
+              .data,
+          "The comment file name \"${newFileName.substring(0, newFileName.length - 4)}.json\" already exists in the comment directory and so renaming the audio file with this name \"$newFileName\" is not possible.");
+
+      // Close the warning dialog by tapping on the Ok button
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+      await tester.pumpAndSettle();
+
+      // Verify that the old name file exists
+      final String initialFileName =
+          "240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.mp3";
+      final String renamedAudioFilePath =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubePlaylistTitle${path.separator}$initialFileName";
+      expect(File(renamedAudioFilePath).existsSync(), true);
+
+      // Check the old file name in the audio info dialog
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(audioListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the popup menu item and tap on it
+      final Finder popupDisplayAudioInfoMenuItemFinder =
+          find.byKey(const Key("popup_menu_display_audio_info"));
+
+      await tester.tap(popupDisplayAudioInfoMenuItemFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the audio old file name
 
       final Text audioFileNameTitleTextWidget =
           tester.widget<Text>(find.byKey(const Key('audioFileNameKey')));
@@ -15498,7 +15796,6 @@ Future<void> checkAudioCommentInAudioPlayerView({
   required WidgetTester tester,
   required Finder audioListTileWidgetFinder,
   required String expectedCommentTitle,
-  String? notAccessibleCommentTitle,
 }) async {
   // Tap on the ListTile to open the audio player view on the
   // passed audio finder
@@ -15523,16 +15820,6 @@ Future<void> checkAudioCommentInAudioPlayerView({
           of: commentListDialogFinder,
           matching: find.text(expectedCommentTitle)),
       findsOneWidget);
-
-  // If the notAccessibleCommentTitle is not null, verify that it is
-  // not listed
-  if (notAccessibleCommentTitle != null) {
-    expect(
-        find.descendant(
-            of: commentListDialogFinder,
-            matching: find.text(notAccessibleCommentTitle)),
-        findsNothing);
-  }
 
   // Close the comment list dialog
   await tester.tap(find.byKey(const Key('closeDialogTextButton')));

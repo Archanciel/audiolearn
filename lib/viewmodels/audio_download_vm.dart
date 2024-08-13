@@ -15,6 +15,7 @@ import '../services/json_data_service.dart';
 import '../models/audio.dart';
 import '../models/playlist.dart';
 import '../utils/dir_util.dart';
+import 'comment_vm.dart';
 import 'warning_message_vm.dart';
 
 // global variables used by the AudioDownloadVM in order
@@ -196,6 +197,10 @@ class AudioDownloadVM extends ChangeNotifier {
         playlistQuality: playlistQuality,
       );
 
+      if (playlistQuality == PlaylistQuality.music) {
+        addedPlaylist.audioPlaySpeed = 1.0;
+      }
+
       await _setPlaylistPath(
         playlistTitle: localPlaylistTitle,
         playlist: addedPlaylist,
@@ -212,7 +217,8 @@ class AudioDownloadVM extends ChangeNotifier {
       // ExpandablePlaylistListVM.getUpToDateSelectablePlaylists()
       // obtains the list of playlist from the AudioDownloadVM.
       _listOfPlaylist.add(addedPlaylist);
-      warningMessageVM.setAddPlaylist(
+
+      warningMessageVM.annoncePlaylistAddition(
         playlistTitle: localPlaylistTitle,
         playlistQuality: playlistQuality,
       );
@@ -309,9 +315,9 @@ class AudioDownloadVM extends ChangeNotifier {
         return null;
       }
 
-      // Adding the playlist to the application
+      // Adding the Youtube playlist to the application
 
-      addedPlaylist = await _addPlaylistIfNotExist(
+      addedPlaylist = await _addYoutubePlaylistIfNotExist(
         playlistUrl: playlistUrl,
         playlistQuality: playlistQuality,
         playlistTitle: playlistTitle,
@@ -324,7 +330,7 @@ class AudioDownloadVM extends ChangeNotifier {
       );
     }
 
-    warningMessageVM.setAddPlaylist(
+    warningMessageVM.annoncePlaylistAddition(
       playlistTitle: addedPlaylist.title,
       playlistQuality: playlistQuality,
     );
@@ -416,7 +422,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
     // Handling the case where the Youtube playlist was deleted or
     // renamed and a new playlist with the same title was created.
-    Playlist currentPlaylist = await _addPlaylistIfNotExist(
+    Playlist currentPlaylist = await _addYoutubePlaylistIfNotExist(
       playlistUrl: playlistUrl,
       playlistQuality: PlaylistQuality.voice,
       playlistTitle: playlistTitle,
@@ -539,6 +545,8 @@ class AudioDownloadVM extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Rename the passed audio file as well as the associated comment file
+  /// if it exists.
   void renameAudioFile({
     required Audio audio,
     required String modifiedAudioFileName,
@@ -565,10 +573,30 @@ class AudioDownloadVM extends ChangeNotifier {
     }
 
     Playlist enclosingPlaylist = audio.enclosingPlaylist!;
+    String audioOldFileName = audio.audioFileName;
+    List<String> oldCommentFilePathAndFilePathNameLst = CommentVM.buildCommentFilePathAndFilePathName(
+      audioToComment: audio,
+    );
+
     enclosingPlaylist.renameDownloadedAndPlayableAudioFile(
-      oldFileName: audio.audioFileName,
+      oldFileName: audioOldFileName,
       newFileName: modifiedAudioFileName,
     );
+
+    List<String> newCommentFilePathAndFilePathNameLst = CommentVM.buildCommentFilePathAndFilePathName(
+      audioToComment: audio,
+    );
+
+    // renaming the comment file if it exists
+
+    String oldCommentFileFilePathName = oldCommentFilePathAndFilePathNameLst[1];
+
+    if (File(oldCommentFileFilePathName).existsSync()) {
+      DirUtil.renameFile(
+        fileToRenameFilePathName: oldCommentFileFilePathName,
+        newFileName: newCommentFilePathAndFilePathNameLst[1].split(Platform.pathSeparator).last,
+      );
+    }
 
     JsonDataService.saveToFile(
       model: enclosingPlaylist,
@@ -650,7 +678,7 @@ class AudioDownloadVM extends ChangeNotifier {
     _stopDownloadPressed = true;
   }
 
-  Future<Playlist> _addPlaylistIfNotExist({
+  Future<Playlist> _addYoutubePlaylistIfNotExist({
     required String playlistUrl,
     required PlaylistQuality playlistQuality,
     required String playlistTitle,
@@ -1405,6 +1433,10 @@ class AudioDownloadVM extends ChangeNotifier {
       playlistType: PlaylistType.youtube,
       playlistQuality: playlistQuality,
     );
+
+    if (playlistQuality == PlaylistQuality.music) {
+      playlist.audioPlaySpeed = 1.0;
+    }
 
     _listOfPlaylist.add(playlist);
 

@@ -1407,10 +1407,10 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             ).then((value) {
               if (value ?? false) {
                 // Value is null if the Youtube playlist title is invalid
-                // (contains comma) or if the user clickied on Cancel.
+                // (contains comma) or if the user clicked on Cancel.
                 //
-                // If a Youtube playlist has been added, then the
-                // playlistUrlController is cleared.
+                // The value is true if a Youtube playlist has been added.
+                // Then, in this case the playlist url TextField is cleared.
                 _playlistUrlController.clear();
               }
             });

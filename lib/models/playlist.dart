@@ -523,6 +523,9 @@ class Playlist {
     return removedPlayableAudioNumber;
   }
 
+  /// Updates the audio file name of the Audio contained in the downloaded
+  /// audio list and updates the audio file name of the Audio contained in
+  /// the playable audio list.
   void renameDownloadedAndPlayableAudioFile({
     required String oldFileName,
     required String newFileName,

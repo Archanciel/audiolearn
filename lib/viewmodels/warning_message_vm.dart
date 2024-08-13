@@ -287,7 +287,7 @@ class WarningMessageVM extends ChangeNotifier {
   PlaylistQuality _addedPlaylistQuality = PlaylistQuality.voice;
   PlaylistQuality get addedPlaylistQuality => _addedPlaylistQuality;
 
-  void setAddPlaylist({
+  void annoncePlaylistAddition({
     required String playlistTitle,
     required PlaylistQuality playlistQuality,
   }) {
