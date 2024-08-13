@@ -22,9 +22,9 @@ import 'warning_message_vm.dart';
 ///
 /// The PlaylistListVM also stores the selected playlist.
 /// It manages as well the filtered and sorted selected
-/// playlist audios. Using the general playlist menu located
+/// playlist audio. Using the general playlist menu located
 /// at right of the PlaylistDownloadView screen, the user can
-/// sort and filter the selected playlist audios. When the
+/// sort and filter the selected playlist audio. When the
 /// selected playlist audio is asked to the PlaylistListVM,
 /// either the full playable audio list of the selected playlist
 /// or the filtered and sorted audio list is returned.
@@ -136,8 +136,8 @@ class PlaylistListVM extends ChangeNotifier {
 
     // Updating the playable audio list of the selected playlist with the
     // audio list of the AudioDownloadVM list of playlists. This causes the
-    // displayed audios of the selected playlist to be updated in case
-    // audios were manually deleted in the directory of the selected
+    // displayed audio of the selected playlist to be updated in case
+    // audio were manually deleted in the directory of the selected
     // playlist. Without this code, the displayed audio list in the playlist
     // download view is updated only after having tapped on the Playlists
     // button !
@@ -160,7 +160,7 @@ class PlaylistListVM extends ChangeNotifier {
       playlistListVMselectedPlaylist.playableAudioLst =
           audioDownloadVMcorrespondingPlaylist.playableAudioLst;
 
-      // buttons applicable to an audio are enabled if audios are
+      // buttons applicable to an audio are enabled if audio are
       // available in the selected playlist
       _setStateOfButtonsApplicableToAudio(
         selectedPlaylist: playlistListVMselectedPlaylist,
@@ -176,7 +176,7 @@ class PlaylistListVM extends ChangeNotifier {
       _setUniqueSelectedPlaylistToFalse();
 
       _setStateOfButtonsApplicableToAudio(
-        // since no playlist is selected, no audios are displayed and
+        // since no playlist is selected, no audio are displayed and
         // the buttons applicable to an audio are disabled
         selectedPlaylist: null,
       );
@@ -361,7 +361,7 @@ class PlaylistListVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// To be called before asking to download audios of selected
+  /// To be called before asking to download audio of selected
   /// playlists so that the currently displayed audio list is not
   /// sorted or/and filtered. This way, the newly downloaded
   /// audio will be added at top of the displayed audio list.
@@ -372,7 +372,7 @@ class PlaylistListVM extends ChangeNotifier {
   }
 
   /// Method used by PlaylistOneSelectedDialogWidget to select
-  /// only one playlist to which the audios will be moved or
+  /// only one playlist to which the audio will be moved or
   /// copied.
   void setUniqueSelectedPlaylist({
     Playlist? selectedPlaylist,
@@ -827,7 +827,7 @@ class PlaylistListVM extends ChangeNotifier {
   }
 
   /// Method called when the user clicks on the playlist menu
-  /// item "Sort filter audios" in the audio popup menu button
+  /// item "Sort filter audio" in the audio popup menu button
   /// in PlaylistDownloadView or in the AudioPlayerView.
   AudioSortFilterParameters getSelectedPlaylistAudioSortFilterParamForView(
     AudioLearnAppViewType audioLearnAppViewType,
@@ -945,7 +945,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// Method called when the user selected the Update playable
   /// audio list menu displayed by the playlist item menu button.
   /// This method updates the playlist playable audio list
-  /// by removing the audios that are no longer present in the
+  /// by removing the audio that are no longer present in the
   /// audio playlist directory. Those audio were manually deleted
   /// from the playlist directory by the user.
   ///
@@ -1137,13 +1137,13 @@ class PlaylistListVM extends ChangeNotifier {
   }
 
   /// If the selected playlist is local, then the download
-  /// playlist audios button is disabled.
+  /// playlist audio button is disabled.
   ///
   /// If the selected playlist is remote, then the download
-  /// playlist audios button is enabled.
+  /// playlist audio button is enabled.
   ///
   /// If no playlist is selected, then the download playlist
-  /// audios button is disabled.
+  /// audio button is disabled.
   ///
   /// Finally, the move up and down buttons are disabled.
   void _disableExpandedListButtons() {
@@ -1152,14 +1152,14 @@ class PlaylistListVM extends ChangeNotifier {
           _listOfSelectablePlaylists[_getSelectedIndex()];
       if (selectedPlaylist.playlistType == PlaylistType.local) {
         // if the selected playlist is local, the download
-        // playlist audios button is disabled
+        // playlist audio button is disabled
         _isButtonDownloadSelPlaylistsEnabled = false;
       } else {
         _isButtonDownloadSelPlaylistsEnabled = true;
       }
     } else {
       // if no playlist is selected, the download playlist
-      // audios button is disabled
+      // audio button is disabled
       _isButtonDownloadSelPlaylistsEnabled = false;
     }
 
@@ -1184,7 +1184,7 @@ class PlaylistListVM extends ChangeNotifier {
   }
 
   /// If no sort/filter parameter is applyed to the playlist
-  /// containing the audios, returns the audio contained in the
+  /// containing the audio, returns the audio contained in the
   /// playlist playableAudioLst which has been downloaded after the
   /// current audio and is not fully played.
   ///
@@ -1265,7 +1265,7 @@ class PlaylistListVM extends ChangeNotifier {
   }) {
     // In order to obtain the current audio index before the audio
     // was fully listened, we decrement the audio position by 10
-    // seconds and we then research the sorted and filtered audios.
+    // seconds and we then research the sorted and filtered audio.
     currentAudio.audioPositionSeconds = currentAudio.audioPositionSeconds - 10;
     List<Audio> sortedAndFilteredPlayableAudioLstWithCurrentAudio =
         getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters(
@@ -1309,11 +1309,11 @@ class PlaylistListVM extends ChangeNotifier {
   }
 
   /// This method updates the playlists audio play speed or/and
-  /// the audio play speed of the playable audios contained in
+  /// the audio play speed of the playable audio contained in
   /// the playlists.
   ///
   /// Updating the playlists audio play speed only implies that
-  /// the next downloaded audios of this playlist will be set
+  /// the next downloaded audio of this playlist will be set
   /// to the audioPlaySpeed value.
   void updateExistingPlaylistsAndOrAudiosPlaySpeed({
     required double audioPlaySpeed,
@@ -1322,13 +1322,13 @@ class PlaylistListVM extends ChangeNotifier {
   }) {
     for (Playlist playlist in _listOfSelectablePlaylists) {
       // updating the playlist audio play speed. This will imply the
-      // next downloaded audios of this playlist.
+      // next downloaded audio of this playlist.
       if (applyAudioPlaySpeedToExistingPlaylists) {
         playlist.audioPlaySpeed = audioPlaySpeed;
       }
 
       if (applyAudioPlaySpeedToAlreadyDownloadedAudios) {
-        // updating the audio play speed of the playable audios
+        // updating the audio play speed of the playable audio
         // contained in the playlist.
         playlist.setAudioPlaySpeedToAllPlayableAudios(
           audioPlaySpeed: audioPlaySpeed,
@@ -1350,11 +1350,11 @@ class PlaylistListVM extends ChangeNotifier {
   }) {
     Playlist playlist = _listOfSelectablePlaylists[playlistIndex];
     // updating the playlist audio play speed. This will imply the
-    // next downloaded audios of this playlist.
+    // next downloaded audio of this playlist.
     playlist.audioPlaySpeed = audioPlaySpeed;
 
     if (applyAudioPlaySpeedToPlayableAudios) {
-      // updating the audio play speed of the playable audios
+      // updating the audio play speed of the playable audio
       // contained in the playlist.
       playlist.setAudioPlaySpeedToAllPlayableAudios(
         audioPlaySpeed: audioPlaySpeed,

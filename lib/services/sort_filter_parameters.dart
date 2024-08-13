@@ -30,7 +30,7 @@ enum SentencesCombination {
 }
 
 // Constants used to specify the sort order. The plus or minus constant is
-// used multiply the value returned by compareTo applyed in 
+// used multiply the value returned by compareTo applyed in
 // AudioSortFilterService.sortAudioLstBySortingOptions() as shown
 // below:
 //
@@ -210,7 +210,7 @@ class AudioSortFilterParameters {
   }
 
   /// In the PlaylistDownloadView or in theAudioPlayableListDialogWidget,
-  /// the audios are by default sorted by the audio download date in descending
+  /// the audio are by default sorted by the audio download date in descending
   /// order.
   static AudioSortFilterParameters createDefaultAudioSortFilterParameters() {
     return AudioSortFilterParameters(

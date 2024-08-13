@@ -22,7 +22,7 @@ import 'playlist_one_selectable_dialog_widget.dart';
 import 'audio_modification_dialog_widget.dart';
 
 /// This widget is used in the PlaylistDownloadView ListView which
-/// display the playable audios of the selected playlist.
+/// display the playable audio of the selected playlist.
 /// AudioListItemWidget displays the audio item content as well
 /// as the audio item left menu and the audio item right play or
 /// pause button.

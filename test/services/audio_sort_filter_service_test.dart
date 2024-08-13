@@ -3192,7 +3192,7 @@ void main() {
 
       audioSortFilterService = AudioSortFilterService();
     });
-    test('filter not listened audios only', () {
+    test('filter not listened audio only', () {
       List<Audio> audioList = playlistListVM
           .getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -3259,7 +3259,7 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    test('filter audios avoiding fully listened audios', () {
+    test('filter audio avoiding fully listened audio', () {
       List<Audio> audioList = playlistListVM
           .getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -3299,7 +3299,7 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    test('filter audios getting only fully listened audios', () {
+    test('filter audio getting only fully listened audio', () {
       List<Audio> audioList = playlistListVM
           .getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,

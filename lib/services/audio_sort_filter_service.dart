@@ -15,7 +15,7 @@ class AudioSortFilterService {
     // Create a list of SortCriteria's corresponding to the list of
     // selected sorting items coming from the AudioSortFilterDialogWidget
     // or from the PlaylistListVM method which applies sort filter parameters
-    // to return the playable audios of a playlist. This method is
+    // to return the playable audio of a playlist. This method is
     // getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters().
     //
     // The selectedSortItemLst is a list of SortingItem objects. Each
@@ -195,9 +195,9 @@ class AudioSortFilterService {
     List<Audio> filteredAudios = audioLst;
 
     // If the 'Audio music quality' checkbox is set to true, the
-    // returned audio list contains only music quality audios.
+    // returned audio list contains only music quality audio.
     // Otherwise, the returned audio list contains both music and
-    // speech quality audios.
+    // speech quality audio.
     if (audioSortFilterParameters.filterMusicQuality) {
       filteredAudios = audioLst.where((audio) {
         return audio.isAudioMusicQuality;
@@ -206,7 +206,7 @@ class AudioSortFilterService {
 
     // If the 'Fully listened' checkbox was set to false (by
     // default it is set to true), the returned audio list
-    // does not contain audios that were fully listened.
+    // does not contain audio that were fully listened.
     if (!audioSortFilterParameters.filterFullyListened) {
       filteredAudios = filteredAudios.where((audio) {
         return !audio.wasFullyListened();
@@ -215,7 +215,7 @@ class AudioSortFilterService {
 
     // If the 'Partially listened' checkbox was set to false (by
     // default it is set to true), the returned audio list
-    // does not contain audios that are partially listened.
+    // does not contain audio that are partially listened.
     if (!audioSortFilterParameters.filterPartiallyListened) {
       filteredAudios = filteredAudios.where((audio) {
         return !audio.isPartiallyListened();
@@ -224,7 +224,7 @@ class AudioSortFilterService {
 
     // If the 'Not listened' checkbox was set to false (by
     // default it is set to true), the returned audio list
-    // does not contain audios that are not fully or partially
+    // does not contain audio that are not fully or partially
     // listened.
     if (!audioSortFilterParameters.filterNotListened) {
       filteredAudios = filteredAudios.where((audio) {

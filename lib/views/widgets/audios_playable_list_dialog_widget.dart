@@ -12,10 +12,10 @@ import '../../viewmodels/audio_player_vm.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 
 /// This dialog is used in the AudioPlayerView to display the list
-/// of playable audios of the selected playlist and to enable the
+/// of playable audio of the selected playlist and to enable the
 /// user to select another audio to listen.
 ///
-/// The listed audios are displayed with different colors according
+/// The listed audio are displayed with different colors according
 /// to their status (not yet listened, currently listened, fully or partially
 /// listened).
 class AudioPlayableListDialogWidget extends StatefulWidget {
@@ -65,8 +65,8 @@ class _AudioPlayableListDialogWidgetState
         AudioLearnAppViewType.audioPlayerView,
       );
     } else {
-      playableAudioLst =
-          audioPlayerVMlistenFalse.getPlayableAudiosApplyingSortFilterParameters(
+      playableAudioLst = audioPlayerVMlistenFalse
+          .getPlayableAudiosApplyingSortFilterParameters(
         AudioLearnAppViewType.audioPlayerView,
       );
     }
@@ -136,7 +136,9 @@ class _AudioPlayableListDialogWidgetState
                       int index = playableAudioLst.indexOf(audio);
                       return GestureDetector(
                         onTap: () async {
-                          await audioPlayerVMlistenFalse.setCurrentAudio(audio: audio,);
+                          await audioPlayerVMlistenFalse.setCurrentAudio(
+                            audio: audio,
+                          );
                           Navigator.of(context).pop();
                         },
                         child: _buildAudioTitleTextWidget(
@@ -270,7 +272,7 @@ class _AudioPlayableListDialogWidgetState
                             : kSliderThumbColorInLightMode,
                       ),
                     ),
-                    TextSpan(text: AppLocalizations.of(context)!.audios),
+                    TextSpan(text: AppLocalizations.of(context)!.audio),
                   ],
                 ),
               ),
@@ -329,9 +331,7 @@ class _AudioPlayableListDialogWidgetState
       audioTitleBackgroundColor = null;
     } else {
       // is not listened
-      audioTitleTextColor = (isDarkTheme)
-          ? Colors.white
-          : Colors.black;
+      audioTitleTextColor = (isDarkTheme) ? Colors.white : Colors.black;
       audioTitleBackgroundColor = null;
     }
 
@@ -354,7 +354,7 @@ class _AudioPlayableListDialogWidgetState
       // this avoids scrolling down when the current audio is
       // in the top part of the audio list. Without that, the
       // list is unusefully scrolled down and the user has to scroll
-      // up to see top audios
+      // up to see top audio
       return;
     }
 
@@ -372,7 +372,7 @@ class _AudioPlayableListDialogWidgetState
 
     if (_backToAllAudios) {
       // improves the scrolling when the user goes back to
-      // the list of all audios
+      // the list of all audio
       offset *= 1.4;
       _backToAllAudios = false;
     }

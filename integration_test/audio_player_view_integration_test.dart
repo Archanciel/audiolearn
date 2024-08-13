@@ -425,7 +425,7 @@ void main() {
     testWidgets(
         '''Click on play button to finish playing the first downloaded audio
            and start playing the not listened last downloaded audio, ignoring
-           the 2 precendent audios already fully played.''', (
+           the 2 precendent audio already fully played.''', (
       WidgetTester tester,
     ) async {
       const String audioPlayerSelectedPlaylistTitle = 'S8 audio';
@@ -457,7 +457,7 @@ void main() {
       // Now we tap on the play button in order to finish
       // playing the first downloaded audio and start playing
       // the last downloaded audio of the playlist. The 2
-      // audios in between are ignored since they are already
+      // audio in between are ignored since they are already
       // fully played.
 
       await tester.tap(find.byIcon(Icons.play_arrow));
@@ -498,7 +498,7 @@ void main() {
     testWidgets(
         '''Click on play button to finish playing the first downloaded audio
            and start playing the partially listened last downloaded audio,
-           ignoring the 2 precendent audios already fully played.''', (
+           ignoring the 2 precendent audio already fully played.''', (
       WidgetTester tester,
     ) async {
       const String audioPlayerSelectedPlaylistTitle = 'S8 audio';
@@ -578,7 +578,7 @@ void main() {
       // Now we tap on the play button in order to finish
       // playing the first downloaded audio and start playing
       // the last downloaded audio of the playlist. The 2
-      // audios in between are ignored since they are already
+      // audio in between are ignored since they are already
       // fully played.
 
       await tester.tap(find.byIcon(Icons.play_arrow));
@@ -1780,7 +1780,7 @@ void main() {
     testWidgets(
         '''Reduce play speed. Then click on play button to finish playing the
            first downloaded audio and start playing the last downloaded audio,
-           ignoring the 2 precendent audios already fully played.''', (
+           ignoring the 2 precendent audio already fully played.''', (
       WidgetTester tester,
     ) async {
       const String audioPlayerSelectedPlaylistTitle = 'S8 audio';
@@ -1835,7 +1835,7 @@ void main() {
       // Now we tap on the play button in order to finish
       // playing the first downloaded audio and start playing
       // the last downloaded audio of the playlist. The 2
-      // audios in between are ignored since they are already
+      // audio in between are ignored since they are already
       // fully played.
 
       await tester.tap(find.byIcon(Icons.play_arrow));
@@ -1950,7 +1950,7 @@ void main() {
     });
   });
   group('''From first downloaded audio, skip to next not fully played audio
-         ignoring 5 already fully listened audios tests. Verify also the audio
+         ignoring 5 already fully listened audio tests. Verify also the audio
          item play icon color in playlist download view.''', () {
     testWidgets('''Next fully unread audio also the last downloaded audio of the
            playlist.''', (WidgetTester tester) async {
@@ -2679,7 +2679,7 @@ void main() {
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
       );
 
-      // Scrolling down the audios list in order to display the first
+      // Scrolling down the audio list in order to display the first
       // downloaded audio title
 
       // Find the audio list widget using its key
@@ -3677,7 +3677,7 @@ void main() {
       );
     });
   });
-  group('Sort/filter audios tests', () {
+  group('Sort/filter audio tests', () {
     testWidgets(
         '''Playing last sorted audio with filter: "Fully listened" unchecked
            and "Partially listened" checked.''', (WidgetTester tester) async {
@@ -3712,7 +3712,7 @@ void main() {
       await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
       await tester.pumpAndSettle();
 
-      // find the sort/filter audios menu item and tap on it
+      // find the sort/filter audio menu item and tap on it
       await tester
           .tap(find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
       await tester.pumpAndSettle();
@@ -3734,12 +3734,12 @@ void main() {
       await tester.pumpAndSettle();
 
       // Now tap the Fully listened checkbox in order to exclude
-      // those audios from the sort/filter list
+      // those audio from the sort/filter list
       await tester.tap(find.byKey(const Key('filterFullyListenedCheckbox')));
       await tester.pumpAndSettle();
 
       // Now tap the Not listened checkbox in order to exclude
-      // those audios from the sort/filter list
+      // those audio from the sort/filter list
       await tester.tap(find.byKey(const Key('filterNotListenedCheckbox')));
       await tester.pumpAndSettle();
 
@@ -4494,7 +4494,7 @@ void main() {
       );
     });
   });
-  group('Move audios in AudioPlayerView', () {
+  group('Move audio in AudioPlayerView', () {
     testWidgets('''Selecting different playlists in order to change the playable
            audio contained in the audio player to the selected playlist
            current or past playable audio.''', (WidgetTester tester) async {
@@ -4534,7 +4534,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Now tap on playlist download view playlist button to close the
-      // playlist list so that all the 'S8 audio' audios are displayed
+      // playlist list so that all the 'S8 audio' audio are displayed
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
@@ -4795,7 +4795,7 @@ void main() {
           selectedPlaylistTitle: youtubePlaylistTitle,
         );
 
-        // Find the playlist whose audios are commented
+        // Find the playlist whose audio are commented
 
         // First, find the Playlist ListTile Text widget
         final Finder playlistWithCommentedAudioListTileTextWidgetFinder =

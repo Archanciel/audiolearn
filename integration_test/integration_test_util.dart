@@ -173,7 +173,7 @@ class IntegrationTestUtil {
       // already selected
       if (checkbox.value == null || !checkbox.value!) {
         // Tap the ListTile Playlist checkbox to select it
-        // so that the playlist audios are listed
+        // so that the playlist audio are listed
         await tester.tap(selectedPlaylistCheckboxWidgetFinder);
         await tester.pumpAndSettle();
       }
@@ -488,7 +488,7 @@ class IntegrationTestUtil {
       await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
       await tester.pumpAndSettle();
 
-      // since the selected local playlist has audios, the
+      // since the selected local playlist has audio, the
       // audio menu items are enabled
       await verifyAudioMenuItemsState(
         tester: tester,

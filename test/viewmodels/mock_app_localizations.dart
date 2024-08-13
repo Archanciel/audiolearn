@@ -111,7 +111,7 @@ class MockAppLocalizations extends AppLocalizations {
   String get about => 'About ...';
 
   @override
-  String get defineSortFilterAudiosMenu => 'Sort/filter audios';
+  String get defineSortFilterAudiosMenu => 'Sort/filter audio';
 
   @override
   String get clearSortFilterAudiosParmsHistoryMenu =>
@@ -119,7 +119,7 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get saveSortFilterAudiosOptionsToPlaylistMenu =>
-      'Sub sort/filter audios';
+      'Sub sort/filter audio';
 
   @override
   String get sortFilterDialogTitle => 'Sort and Filter Options';
@@ -513,7 +513,7 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get aboutAppDescription =>
-      'This application allows you to download audio from Youtube playlists or from single video links.\n\nThe future version will enable you to listen the audios, to add comments to them and to extract significative portions of the audio and share them or combine them in a new summary audio.';
+      'This application allows you to download audio from Youtube playlists or from single video links.\n\nThe future version will enable you to listen the audio, to add comments to them and to extract significative portions of the audio and share them or combine them in a new summary audio.';
 
   @override
   String get keepAudioEntryInSourcePlaylist =>
@@ -540,7 +540,7 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get downloadSelPlaylistsButtonTooltip =>
-      'Download audios of selected playlist';
+      'Download audio of selected playlist';
 
   @override
   String get audioOneSelectedDialogTitle => 'Select an audio';
@@ -623,7 +623,7 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get deletePlaylistDialogComment =>
-      'Deleting the playlist and all its audios as well as its JSON file and its directory.';
+      'Deleting the playlist and all its audio as well as its JSON file and its directory.';
 
   @override
   String get appBarTitleAudioExtractor => 'Audio Extractor';
@@ -676,7 +676,7 @@ class MockAppLocalizations extends AppLocalizations {
   String get fullyPlayed => "fully played ";
 
   @override
-  String get audios => "audios";
+  String get audio => "audio";
 
   @override
   String get fullyListened => "Fully listened";
@@ -722,47 +722,47 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get updatePlaylistJsonFilesMenuTooltip =>
-      "If one or several playlist directories containing or not audios were manually added to the application data root directory or if audios were manually deleted from one or several playlist directories, this functionality updates the playlist JSON files as well as the application settings JSON file in order to reflect the changes in the application screens.";
+      "If one or several playlist directories containing or not audio were manually added to the application data root directory or if audio were manually deleted from one or several playlist directories, this functionality updates the playlist JSON files as well as the application settings JSON file in order to reflect the changes in the application screens.";
 
   @override
   String get updatePlaylistPlayableAudioListTooltip =>
-      "If audios were manually deleted from one or several playlist directories, this functionality updates the playlist JSON files to reflect the changes in the application screens.";
+      "If audio were manually deleted from one or several playlist directories, this functionality updates the playlist JSON files to reflect the changes in the application screens.";
 
   @override
   String get audioPlayedInThisOrderTooltip =>
-      "Les audios sont joués dans cet ordre.";
+      "Les audio sont joués dans cet ordre.";
 
   @override
   String get playableAudioDialogSortDescriptionTooltipBottomDownloadBefore =>
-      "Les audios au bas de l'écran ont été téléchargés avant les audios en haut de l'écran.";
+      "Les audio au bas de l'écran ont été téléchargés avant les audio en haut de l'écran.";
 
   @override
   String get playableAudioDialogSortDescriptionTooltipBottomDownloadAfter =>
-      "Les audios au bas de l'écran ont été téléchargés après les audios en haut de l'écran.";
+      "Les audio au bas de l'écran ont été téléchargés après les audio en haut de l'écran.";
 
   @override
   String get playableAudioDialogSortDescriptionTooltipBottomUploadBefore =>
-      "Les audios au bas de l'écran ont été téléchargés avant les audios en haut de l'écran.";
+      "Les audio au bas de l'écran ont été téléchargés avant les audio en haut de l'écran.";
 
   @override
   String get playableAudioDialogSortDescriptionTooltipBottomUploadAfter =>
-      "Les audios au bas de l'écran ont été téléchargés après les audios en haut de l'écran.";
+      "Les audio au bas de l'écran ont été téléchargés après les audio en haut de l'écran.";
 
   @override
   String get playableAudioDialogSortDescriptionTooltipTopDurationBigger =>
-      "Les audios au bas de l'écran ont été téléchargés avant les audios en haut de l'écran.";
+      "Les audio au bas de l'écran ont été téléchargés avant les audio en haut de l'écran.";
 
   @override
   String get playableAudioDialogSortDescriptionTooltipTopDurationSmaller =>
-      "Les audios au bas de l'écran ont été téléchargés après les audios en haut de l'écran.";
+      "Les audio au bas de l'écran ont été téléchargés après les audio en haut de l'écran.";
 
   @override
   String get playableAudioDialogSortDescriptionTooltipTopRemainingDurationBigger =>
-      "Les audios au bas de l'écran ont été téléchargés avant les audios en haut de l'écran.";
+      "Les audio au bas de l'écran ont été téléchargés avant les audio en haut de l'écran.";
 
   @override
   String get playableAudioDialogSortDescriptionTooltipTopRemainingDurationSmaller =>
-      "Les audios au bas de l'écran ont été téléchargés après les audios en haut de l'écran.";
+      "Les audio au bas de l'écran ont été téléchargés après les audio en haut de l'écran.";
 
   @override
   String get saveAs => "Save as:";
@@ -924,11 +924,11 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get applyToAlreadyDownloadedAudioTooltip =>
-      "If set, the playback speed is applied to the playable audios of all the existing playlists. If not set and if the apply to the existing playlist checkbox is set, then the playback speed will be applied to the next downloaded audios of the existing playlists.";
+      "If set, the playback speed is applied to the playable audio of all the existing playlists. If not set and if the apply to the existing playlist checkbox is set, then the playback speed will be applied to the next downloaded audio of the existing playlists.";
 
   @override
   String get applyToAlreadyDownloadedAudioOfCurrentPlaylistTooltip =>
-      "If set, the playback speed is applied to the playable audios of the playlist. If not set, then the playback speed will be applied to the next downloaded audios of the playlist.";
+      "If set, the playback speed is applied to the playable audio of the playlist. If not set, then the playback speed will be applied to the next downloaded audio of the playlist.";
 
   @override
   String get applyToExistingPlaylist => "apply to existing\nplaylists";
@@ -962,7 +962,7 @@ class MockAppLocalizations extends AppLocalizations {
       "By selecting the first checkbox, all existing playlists will be set to use the new playback speed. However, this change will only affect audio files that are downloaded after this option is enabled.";
 
   @override
-  String get alreadyDownloadedAudiosHelpTitle => "Already Downloaded Audios";
+  String get alreadyDownloadedAudiosHelpTitle => "Already Downloaded Audio";
 
   @override
   String get alreadyDownloadedAudiosHelpContent =>
@@ -973,11 +973,11 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get excludingFutureDownloadsHelpContent =>
-      "If only the second checkbox is checked, the playback speed will not be modified for audios that will be downloaded later in existing playlists. However, as mentioned previously, new playlists will use the newly defined playback speed for all downloaded audios.";
+      "If only the second checkbox is checked, the playback speed will not be modified for audio that will be downloaded later in existing playlists. However, as mentioned previously, new playlists will use the newly defined playback speed for all downloaded audio.";
 
   @override
   String get alreadyDownloadedAudiosPlaylistHelpTitle =>
-      "Already Downloaded Audios";
+      "Already Downloaded Audio";
 
   @override
   String get alreadyDownloadedAudiosPlaylistHelpContent =>
@@ -1049,7 +1049,7 @@ class MockAppLocalizations extends AppLocalizations {
   String get commentUpdateDateTooltip => "Comment last update date";
 
   @override
-  String get playlistCommentMenu => "Comments of playlist audios ...";
+  String get playlistCommentMenu => "Comments of playlist audio ...";
 
   @override
   String get modifyAudioTitleDialogTitle => "Modify Audio Title";
@@ -1127,7 +1127,7 @@ class MockAppLocalizations extends AppLocalizations {
       "Show/hide playlists. Then select a playlist to display its current listened audio.";
 
   @override
-  String get playlistCommentsDialogTitle => "Playlist audios comments";
+  String get playlistCommentsDialogTitle => "Playlist audio comments";
 
   @override
   String playlistSelectedSnackBarMessage(
@@ -1200,11 +1200,11 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeBigger =>
-      "Audios at the top were listened more recently than those at the bottom.";
+      "Audio at the top were listened more recently than those at the bottom.";
 
   @override
   String get playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeSmaller =>
-      "Audios at the top were listened less recently than those at the bottom.";
+      "Audio at the top were listened less recently than those at the bottom.";
 
   @override
   String get downloadSingleVideoAudioAtMusicQuality =>

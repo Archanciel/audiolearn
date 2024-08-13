@@ -852,7 +852,7 @@ void main() {
 
       // Verify that the audio file name was changed
       // (playabeAudioLst and downloadedAudioLst contain the
-      // same audios, but in inverse order)
+      // same audio, but in inverse order)
       expect(loadedPlaylist.playableAudioLst[1].audioFileName, newFileName);
       expect(loadedPlaylist.downloadedAudioLst[0].audioFileName, newFileName);
 
@@ -916,7 +916,7 @@ void main() {
 
       // Verify that the audio file name was not changed
       // (playabeAudioLst and downloadedAudioLst contain the
-      // same audios, but in inverse order)
+      // same audio, but in inverse order)
       expect(loadedPlaylist.playableAudioLst[1].audioFileName,
           '231117-002826-Really short video 23-07-01.mp3');
       expect(loadedPlaylist.downloadedAudioLst[0].audioFileName,
@@ -979,7 +979,7 @@ void main() {
 
       // Verify that the audio title was changed in the playable
       // audio list only (playabeAudioLst and downloadedAudioLst
-      // contain the same audios, but in inverse order)
+      // contain the same audio, but in inverse order)
       expect(loadedPlaylist.playableAudioLst[1].validVideoTitle, newAudioTitle);
       expect(loadedPlaylist.downloadedAudioLst[0].validVideoTitle,
           initialAudioTitle);
@@ -1033,7 +1033,7 @@ void main() {
       audioDownloadVM.loadExistingPlaylists();
 
       // Load Playlist from the json file. The play speed of this playlist is
-      // defined. 
+      // defined.
       const String targetPlayListName = "Empty";
       Playlist targetPlaylistEmpty = loadPlaylist(targetPlayListName);
 
@@ -1170,7 +1170,7 @@ void main() {
       audioDownloadVM.loadExistingPlaylists();
 
       // Load Playlist from the json file. The play speed of this playlist is
-      // not defined. 
+      // not defined.
       const String targetPlayListName = "S8 audio";
       Playlist targetPlaylistEmpty = loadPlaylist(targetPlayListName);
 
@@ -1582,7 +1582,8 @@ void verifyImportedFilesPresence({
     // Verify that the imported file is in the playable audio list
     expect(
       targetPlaylist
-          .playableAudioLst[--targetPlaylistPlayableAudioListFinalLengh - initialPlayableListLengh]
+          .playableAudioLst[--targetPlaylistPlayableAudioListFinalLengh -
+              initialPlayableListLengh]
           .audioFileName,
       importedFileName,
     );

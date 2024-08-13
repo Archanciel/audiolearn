@@ -38,7 +38,7 @@ void main() {
   // If this issue persists, please report it on the project's GitHub page.
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Download 1 playlist with short audios', () {
+  group('Download 1 playlist with short audio', () {
     test('Check initial values', () async {
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
@@ -77,7 +77,7 @@ void main() {
       );
     });
 
-    testWidgets('Playlist 2 short audios: playlist dir not exist',
+    testWidgets('Playlist 2 short audio: playlist dir not exist',
         (WidgetTester tester) async {
       late AudioDownloadVM audioDownloadVM;
       final Directory directory = Directory(globalTestPlaylistDir);
@@ -182,7 +182,7 @@ void main() {
       );
     });
     testWidgets(
-        'Playlist 2 short audios: playlist 1st audio was already downloaded and was deleted',
+        'Playlist 2 short audio: playlist 1st audio was already downloaded and was deleted',
         (WidgetTester tester) async {
       late AudioDownloadVM audioDownloadVM;
       final Directory directory = Directory(globalTestPlaylistDir);
@@ -741,16 +741,16 @@ void main() {
       );
     });
   });
-  group('Download recreated playlist with short audios', () {
+  group('Download recreated playlist with short audio', () {
     /// This test is used to test recreating the playlist with the
     /// same name. Recreating a playlist with an identical name avoids
     /// to loose time removing from the original playlist the referenced
-    /// videos. The recreated playlist audios are downloaded in the same
+    /// videos. The recreated playlist audio are downloaded in the same
     /// dir than the original playlist, The original playlist json file
     /// is updated with the recreated playlist id and url as well as
-    /// with the newly downloaded audios.
+    /// with the newly downloaded audio.
     testWidgets(
-        'Recreated playlist with 2 new short audios: initial playlist 1st and 2nd audio already downloaded and deleted',
+        'Recreated playlist with 2 new short audio: initial playlist 1st and 2nd audio already downloaded and deleted',
         (WidgetTester tester) async {
       late AudioDownloadVM audioDownloadVM;
       final Directory directory = Directory(globalTestPlaylistDir);
@@ -766,7 +766,7 @@ void main() {
       // Copying the initial playlist json file with the 1st and 2nd
       // audio whose mp3 were deleted from the playlist dir. A
       // replacing new Youtube playlist with the same title was created
-      // with 2 new audios referenced in it. The new playlist id and url
+      // with 2 new audio referenced in it. The new playlist id and url
       // are of course different from the initial playlist id and url.
       await DirUtil.copyFileToDirectory(
         sourceFilePathName:
@@ -870,7 +870,7 @@ void main() {
       Playlist downloadedPlaylist = audioDownloadVM.listOfPlaylist[0];
 
       // The initial playlist json file was updated with the recreated
-      // playlist id and url as well as with the newly downloaded audios
+      // playlist id and url as well as with the newly downloaded audio
       checkDownloadedPlaylist(
         downloadedPlaylist: downloadedPlaylist,
         playlistId: recreatedPlaylistId,
@@ -1137,7 +1137,7 @@ class _DownloadPlaylistPageState extends State<DownloadPlaylistPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Download Playlist Audios')),
+      appBar: AppBar(title: const Text('Download Playlist Audio')),
       body: Center(
         child: Column(
           children: [
@@ -1153,7 +1153,7 @@ class _DownloadPlaylistPageState extends State<DownloadPlaylistPage> {
                   playlistUrl: _urlController.text,
                 );
               },
-              child: const Text('Download Playlist Audios'),
+              child: const Text('Download Playlist Audio'),
             ),
             const SizedBox(height: 20),
             ElevatedButton(

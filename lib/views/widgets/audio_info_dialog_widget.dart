@@ -79,7 +79,7 @@ class AudioInfoDialogWidget extends StatelessWidget with ScreenMixin {
     );
   }
 
-  /// Creates the list of audio information lines for downloaded audios.
+  /// Creates the list of audio information lines for downloaded audio.
   List<Widget> _createDownloadedAudioInfoLines(BuildContext context) {
     return <Widget>[
       createInfoRowFunction(
@@ -204,7 +204,7 @@ class AudioInfoDialogWidget extends StatelessWidget with ScreenMixin {
     ];
   }
 
-  /// Creates the list of audio information lines for imported audios.
+  /// Creates the list of audio information lines for imported audio.
   List<Widget> _createImportedAudioInfoLines(BuildContext context) {
     return <Widget>[
       createInfoRowFunction(

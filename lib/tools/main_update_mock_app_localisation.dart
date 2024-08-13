@@ -6,7 +6,7 @@ void main() async {
   // Simulated content of an ARB file as a JSON string, including a parameterized string
   // String arbContent = '''
   // {
-  // "tryAlreadyDownloadedAudiosPlaylistHelpTitle": "Audios déjà téléchargés",
+  // "tryAlreadyDownloadedAudiosPlaylistHelpTitle": "Audio déjà téléchargés",
   // "tryAlreadyDownloadedAudiosPlaylistHelpContent": "La sélection de la case à cocher permet de modifier la vitesse de lecture pour les fichiers audio de la playlist déjà présents sur l'appareil."
   // }
   // ''';
@@ -57,7 +57,8 @@ void main() async {
   // await Process.run('flutter', ['gen-l10n']); not working !
 
   // ignore: avoid_print
-  print('${arbData.length} localization methods have been inserted into $filePath');
+  print(
+      '${arbData.length} localization methods have been inserted into $filePath');
 }
 
 String generateLocalizationClass(Map<String, dynamic> arbData) {

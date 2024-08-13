@@ -6683,7 +6683,7 @@ void main() {
   });
   group('''Executing update playable audio list after manually deleting audio
            files test''', () {
-    testWidgets('Manually delete all audios in Youtube playlist directory.',
+    testWidgets('Manually delete all audio in Youtube playlist directory.',
         (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -6739,7 +6739,7 @@ void main() {
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
-      // Find the ListTile Playlist containing the audios
+      // Find the ListTile Playlist containing the audio
       // which were manually deleted from the Youtube playlist
       // directory
 
@@ -6763,7 +6763,7 @@ void main() {
       );
 
       // Test that the Youtube playlist is still showing the
-      // deleted audios
+      // deleted audio
 
       for (String audioTitle in youtubePlaylistMp3Lst) {
         audioTitle = audioTitle
@@ -6815,7 +6815,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Test that the youtube playlist is no longer showing the
-      // deleted audios
+      // deleted audio
 
       for (String audioTitle in youtubePlaylistMp3Lst) {
         audioTitle = audioTitle
@@ -6885,7 +6885,7 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets('Manually delete all audios in local playlist directory.',
+    testWidgets('Manually delete all audio in local playlist directory.',
         (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -6941,7 +6941,7 @@ void main() {
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
-      // Find the ListTile Playlist containing the audios
+      // Find the ListTile Playlist containing the audio
       // which were manually deleted from the local playlist
       // directory
 
@@ -6965,7 +6965,7 @@ void main() {
       );
 
       // Test that the local playlist is still showing the
-      // deleted audios
+      // deleted audio
 
       for (String audioTitle in localPlaylistMp3Lst) {
         audioTitle = audioTitle
@@ -7017,7 +7017,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Test that the local playlist is no longer showing the
-      // deleted audios
+      // deleted audio
 
       for (String audioTitle in localPlaylistMp3Lst) {
         audioTitle = audioTitle
@@ -7087,7 +7087,7 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets('Manually delete some audios in Youtube playlist directory.',
+    testWidgets('Manually delete some audio in Youtube playlist directory.',
         (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -7144,7 +7144,7 @@ void main() {
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
-      // Find the ListTile Playlist containing the audios
+      // Find the ListTile Playlist containing the audio
       // which were manually deleted from the Youtube playlist
       // directory
 
@@ -7168,7 +7168,7 @@ void main() {
       );
 
       // Test that the Youtube playlist is still showing the
-      // deleted audios
+      // deleted audio
 
       for (String audioTitle in youtubePlaylistMp3Lst) {
         audioTitle = audioTitle
@@ -7221,7 +7221,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Test that the youtube playlist is no longer showing the
-      // deleted audios
+      // deleted audio
 
       int indexOfDeletedAudio = 0;
 
@@ -7269,7 +7269,7 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets('Manually delete some audios in local playlist directory.',
+    testWidgets('Manually delete some audio in local playlist directory.',
         (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -7326,7 +7326,7 @@ void main() {
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
-      // Find the ListTile Playlist containing the audios
+      // Find the ListTile Playlist containing the audio
       // which were manually deleted from the local playlist
       // directory
 
@@ -7350,7 +7350,7 @@ void main() {
       );
 
       // Test that the local playlist is still showing the
-      // deleted audios
+      // deleted audio
 
       for (String audioTitle in localPlaylistMp3Lst) {
         audioTitle = audioTitle
@@ -7402,7 +7402,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Test that the local playlist is no longer showing the
-      // deleted audios
+      // deleted audio
 
       int indexOfDeletedAudio = 0;
 
@@ -7525,7 +7525,7 @@ void main() {
       );
 
       // Test that the S8 Audio Youtube playlist is still showing the
-      // deleted audios
+      // deleted audio
 
       for (String audioTitle in s8AudioYoutubePlaylistMp3Lst) {
         audioTitle = audioTitle
@@ -7578,7 +7578,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Test that the S8 Audio Youtube playlist is no longer showing the
-      // deleted audios
+      // deleted audio
 
       for (String audioTitle in s8AudioYoutubePlaylistMp3Lst) {
         audioTitle = audioTitle
@@ -7642,7 +7642,7 @@ void main() {
         widgetTester: tester,
       );
 
-      // Test that the audios of the added urgent_actus Youtube playlist
+      // Test that the audio of the added urgent_actus Youtube playlist
       // are listed
 
       String urgentActusyoutubeplaylistpath =
@@ -7770,7 +7770,7 @@ void main() {
       await tester.tap(localPlaylistListTileCheckboxWidgetFinder);
       await tester.pumpAndSettle();
 
-      // Test that the audios of the added 'test' local playlist are
+      // Test that the audio of the added 'test' local playlist are
       // listed
 
       String testLocalPlaylistPath =
@@ -7899,7 +7899,7 @@ void main() {
       await tester.tap(youtubePlaylistListTileCheckboxWidgetFinder);
       await tester.pumpAndSettle();
 
-      // Test that the audios of the added 'Youtube_test' Youtube playlist
+      // Test that the audio of the added 'Youtube_test' Youtube playlist
       // are listed
 
       String testYoutubePlaylistPath =
@@ -8107,7 +8107,7 @@ void main() {
         widgetTester: tester,
       );
 
-      // Test that the audios of the added urgent_actus Youtube playlist
+      // Test that the audio of the added urgent_actus Youtube playlist
       // are listed
 
       String urgentActusyoutubeplaylistpath =
@@ -8238,7 +8238,7 @@ void main() {
         widgetTester: tester,
       );
 
-      // Test that the audios of the added urgent_actus Youtube playlist
+      // Test that the audio of the added urgent_actus Youtube playlist
       // are listed
 
       String urgentActusyoutubeplaylistpath =
@@ -8949,7 +8949,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Now tap on playlist download view playlist button to close the
-      // playlist list so that all the 'S8 audio' audios are displayed
+      // playlist list so that all the 'S8 audio' audio are displayed
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
@@ -10693,7 +10693,7 @@ void main() {
       );
 
       // since a local playlist is selected, the download
-      // audios of selected playlist button is disabled
+      // audio of selected playlist button is disabled
       IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'download_sel_playlists_button',
@@ -10708,7 +10708,7 @@ void main() {
       await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
       await tester.pumpAndSettle();
 
-      // since the selected local playlist has no audios, the
+      // since the selected local playlist has no audio, the
       // audio menu item is disabled
       await IntegrationTestUtil.verifyAudioMenuItemsState(
         tester: tester,
@@ -10863,7 +10863,7 @@ void main() {
       await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
       await tester.pumpAndSettle();
 
-      // since the selected local playlist has no audios, the
+      // since the selected local playlist has no audio, the
       // audio menu item is disabled
       await IntegrationTestUtil.verifyAudioMenuItemsState(
         tester: tester,
@@ -10967,7 +10967,7 @@ void main() {
       await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
       await tester.pumpAndSettle();
 
-      // since the selected local playlist has no audios, the
+      // since the selected local playlist has no audio, the
       // audio menu item is disabled
       await IntegrationTestUtil.verifyAudioMenuItemsState(
         tester: tester,
@@ -11062,7 +11062,7 @@ void main() {
         widgetKeyStr: 'audio_quality_checkbox',
       );
 
-      // since the playlist has audios, the audio popup menu
+      // since the playlist has audio, the audio popup menu
       // button is enabled
       IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
@@ -11156,7 +11156,7 @@ void main() {
         widgetKeyStr: 'audio_quality_checkbox',
       );
 
-      // since the playlist has audios, the audio popup menu
+      // since the playlist has audio, the audio popup menu
       // button is enabled
       IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
@@ -11169,7 +11169,7 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets('Delete a Youtube playlist with audios', (tester) async {
+    testWidgets('Delete a Youtube playlist with audio', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -11296,7 +11296,7 @@ void main() {
       await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
       await tester.pumpAndSettle();
 
-      // since the selected local playlist has no audios, the
+      // since the selected local playlist has no audio, the
       // audio menu item is disabled
       await IntegrationTestUtil.verifyAudioMenuItemsState(
         tester: tester,
@@ -11435,7 +11435,7 @@ void main() {
       await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
       await tester.pumpAndSettle();
 
-      // since the selected local playlist has no audios, the
+      // since the selected local playlist has no audio, the
       // audio menu item is disabled
       await IntegrationTestUtil.verifyAudioMenuItemsState(
         tester: tester,
@@ -11572,7 +11572,7 @@ void main() {
       await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
       await tester.pumpAndSettle();
 
-      // since the selected local playlist has no audios, the
+      // since the selected local playlist has no audio, the
       // audio menu item is disabled
       await IntegrationTestUtil.verifyAudioMenuItemsState(
         tester: tester,
@@ -11711,7 +11711,7 @@ void main() {
       await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
       await tester.pumpAndSettle();
 
-      // since the selected local playlist has no audios, the
+      // since the selected local playlist has no audio, the
       // audio menu item is disabled
       await IntegrationTestUtil.verifyAudioMenuItemsState(
         tester: tester,
@@ -11855,7 +11855,7 @@ void main() {
       await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
       await tester.pumpAndSettle();
 
-      // find the sort/filter audios menu item and tap on it
+      // find the sort/filter audio menu item and tap on it
       await tester
           .tap(find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
       await tester.pumpAndSettle();
@@ -11914,7 +11914,7 @@ void main() {
       await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
       await tester.pumpAndSettle();
 
-      // find the sort/filter audios menu item and tap on it
+      // find the sort/filter audio menu item and tap on it
       await tester
           .tap(find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
       await tester.pumpAndSettle();
@@ -12012,15 +12012,15 @@ void main() {
     group('''Saving defined sort/filter parms in sort/filter dialog in relation
              with Sort/filter dropdown button test''', () {
       testWidgets(
-          '''Click on 'Sort/filter audios' menu item of Audio popup menu to
+          '''Click on 'Sort/filter audio' menu item of Audio popup menu to
              open sort filter audio dialog. Then creating a named title
              ascending sort/filter parms and saving it. Then verifying that
              a Sort/filter dropdown button item has been created and is applied
-             to the playlist download view list of audios. Then going to the
+             to the playlist download view list of audio. Then going to the
              audio player view and then going back to the playlist download view
              and verifying that the previously active and newly created sort/filter
              parms is displayed in the dropdown item button and applied to the
-             audios. Then, select 'default' dropdown item and go to audio
+             audio. Then, select 'default' dropdown item and go to audio
              player view and back to playlist download view. Finally, select
              'Title asc' dropdown item and go to audio player view and back to
              playlist download view.''', (WidgetTester tester) async {
@@ -12057,7 +12057,7 @@ void main() {
         await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
         await tester.pumpAndSettle();
 
-        // Find the sort/filter audios menu item and tap on it to
+        // Find the sort/filter audio menu item and tap on it to
         // open the audio sort filter dialog
         await tester.tap(
             find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
@@ -12151,7 +12151,7 @@ void main() {
 
         // Then return to playlist download view in order to verify that
         // its state with the 'Title asc' sort/filter parms is still
-        // applied and correctly sorts the current playable audios.
+        // applied and correctly sorts the current playable audio.
         appScreenNavigationButton =
             find.byKey(const ValueKey('playlistDownloadViewIconButton'));
         await tester.tap(appScreenNavigationButton);
@@ -12228,7 +12228,7 @@ void main() {
 
         // Then return to playlist download view in order to verify that
         // its state with the 'default' sort/filter parms is still
-        // applied and correctly sorts the current playable audios.
+        // applied and correctly sorts the current playable audio.
         appScreenNavigationButton =
             find.byKey(const ValueKey('playlistDownloadViewIconButton'));
         await tester.tap(appScreenNavigationButton);
@@ -12283,7 +12283,7 @@ void main() {
 
         // Then return to playlist download view in order to verify that
         // its state with the 'default' sort/filter parms is still
-        // applied and correctly sorts the current playable audios.
+        // applied and correctly sorts the current playable audio.
         appScreenNavigationButton =
             find.byKey(const ValueKey('playlistDownloadViewIconButton'));
         await tester.tap(appScreenNavigationButton);
@@ -12312,11 +12312,11 @@ void main() {
              open sort filter audio dialog. Then creating a named title
              ascending sort/filter parms and saving it. Then verifying that
              a Sort/filter dropdown button item has been created and is applied
-             to the playlist download view list of audios. Then going to the
+             to the playlist download view list of audio. Then going to the
              audio player view and then going back to the playlist download view
              and verifying that the previously active and newly created sort/filter
              parms is displayed in the dropdown item button and applied to the
-             audios.''', (WidgetTester tester) async {
+             audio.''', (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -12457,7 +12457,7 @@ void main() {
 
         // Then return to playlist download view in order to verify that
         // its state with the 'Title asc' sort/filter parms is still
-        // applied and correctly sorts the current playable audios.
+        // applied and correctly sorts the current playable audio.
         appScreenNavigationButton =
             find.byKey(const ValueKey('playlistDownloadViewIconButton'));
         await tester.tap(appScreenNavigationButton);
@@ -12599,7 +12599,7 @@ void main() {
       testWidgets(
           '''Create and then modify a named and saved title sort/filter parms.
              Then verifying that the corresponding sort/filter dropdown button
-             item is applied to the playlist download view list of audios.''',
+             item is applied to the playlist download view list of audio.''',
           (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
@@ -12634,7 +12634,7 @@ void main() {
         await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
         await tester.pumpAndSettle();
 
-        // Find the sort/filter audios menu item and tap on it to
+        // Find the sort/filter audio menu item and tap on it to
         // open the audio sort filter dialog
         await tester.tap(
             find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
@@ -12778,7 +12778,7 @@ void main() {
         final Finder audioTitleSearchSentenceTextFieldFinder =
             find.byKey(const Key('audioTitleSearchSentenceTextField'));
 
-        // Enter a selection word in the TextField. So, only the audios
+        // Enter a selection word in the TextField. So, only the audio
         // whose title contain Jancovici will be selected.
         await tester.enterText(
           audioTitleSearchSentenceTextFieldFinder,
@@ -12829,7 +12829,7 @@ void main() {
         // Then return to playlist download view in order to verify that
         // its state with the 'Title asc' sort/filter parms is still
         // applied and correctly sorts and filter the current playable
-        // audios.
+        // audio.
         appScreenNavigationButton =
             find.byKey(const ValueKey('playlistDownloadViewIconButton'));
         await tester.tap(appScreenNavigationButton);
@@ -12859,15 +12859,15 @@ void main() {
         '''Applying defined sort/filter parms in sort/filter dialog in relation
              with Sort/filter dropdown button test''', () {
       testWidgets(
-          '''Click on 'Sort/filter audios' menu item of Audio popup menu to
+          '''Click on 'Sort/filter audio' menu item of Audio popup menu to
              open sort filter audio dialog. Then creating an ascending unamed
              sort/filter parms and apply it. Then verifying that a Sort/filter
              dropdown button item has been created with the title 'applied'
-             and is applied to the playlist download view list of audios. Then,
+             and is applied to the playlist download view list of audio. Then,
              going to the audio player view and then going back to the playlist
              download view and verifying that the previously active and newly
              created sort/filter parms is displayed in the dropdown item button
-             and applied to the audios. Then, select 'default' dropdown item and
+             and applied to the audio. Then, select 'default' dropdown item and
              go to audio player view and back to playlist download view. Finally,
              select 'applied' dropdown item and go to audio player view and back
              to playlist download view.''', (WidgetTester tester) async {
@@ -12904,7 +12904,7 @@ void main() {
         await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
         await tester.pumpAndSettle();
 
-        // Find the sort/filter audios menu item and tap on it to
+        // Find the sort/filter audio menu item and tap on it to
         // open the audio sort filter dialog
         await tester.tap(
             find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
@@ -12991,11 +12991,11 @@ void main() {
 
         // Then return to playlist download view in order to verify that
         // its state with the 'applied' sort/filter parms is still
-        // applied and correctly sorts the current playable audios.
+        // applied and correctly sorts the current playable audio.
         appScreenNavigationButton =
             find.byKey(const ValueKey('playlistDownloadViewIconButton'));
         await tester.tap(appScreenNavigationButton);
-        await tester.pumpAndSettle();
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
         // Verify that the dropdown button has been updated with the
         // 'applied' sort/filter parms selected
@@ -13068,7 +13068,7 @@ void main() {
 
         // Then return to playlist download view in order to verify that
         // its state with the 'default' sort/filter parms is still
-        // applied and correctly sorts the current playable audios.
+        // applied and correctly sorts the current playable audio.
         appScreenNavigationButton =
             find.byKey(const ValueKey('playlistDownloadViewIconButton'));
         await tester.tap(appScreenNavigationButton);
@@ -13124,7 +13124,7 @@ void main() {
 
         // Then return to playlist download view in order to verify that
         // its state with the 'default' sort/filter parms is still
-        // applied and correctly sorts the current playable audios.
+        // applied and correctly sorts the current playable audio.
         appScreenNavigationButton =
             find.byKey(const ValueKey('playlistDownloadViewIconButton'));
         await tester.tap(appScreenNavigationButton);
@@ -13150,17 +13150,17 @@ void main() {
         );
       });
       testWidgets(
-          '''Click on 'Sort/filter audios' menu item of Audio popup menu to
+          '''Click on 'Sort/filter audio' menu item of Audio popup menu to
              open sort filter audio dialog. Then creating an ascending unamed
              sort/filter parms and apply it. Then verifying that a Sort/filter
              dropdown button item has been created with the title 'applied'
-             and is applied to the playlist download view list of audios. Then
+             and is applied to the playlist download view list of audio. Then
              recreate an 'applied' sort/filter parms and verify that the new
              applied sort/filter parms is displayed in the dropdown item button
-             and applied to the audios. Then, going to the audio player view and
+             and applied to the audio. Then, going to the audio player view and
              then going back to the playlist download view and verifying that the
              newly created 'applied' sort/filter parms is displayed in the
-             dropdown item button and applied to the audios.''',
+             dropdown item button and applied to the audio.''',
           (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
@@ -13195,7 +13195,7 @@ void main() {
         await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
         await tester.pumpAndSettle();
 
-        // Find the sort/filter audios menu item and tap on it to
+        // Find the sort/filter audio menu item and tap on it to
         // open the audio sort filter dialog
         await tester.tap(
             find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
@@ -13279,7 +13279,7 @@ void main() {
         await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
         await tester.pumpAndSettle();
 
-        // Find the sort/filter audios menu item and tap on it to
+        // Find the sort/filter audio menu item and tap on it to
         // open the audio sort filter dialog
         await tester.tap(
             find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
@@ -13406,7 +13406,7 @@ void main() {
 
         // Then return to playlist download view in order to verify that
         // its state with the 'applied' sort/filter parms is still
-        // applied and correctly sorts the current playable audios.
+        // applied and correctly sorts the current playable audio.
         appScreenNavigationButton =
             find.byKey(const ValueKey('playlistDownloadViewIconButton'));
         await tester.tap(appScreenNavigationButton);
@@ -13483,7 +13483,7 @@ void main() {
 
         // Then return to playlist download view in order to verify that
         // its state with the 'default' sort/filter parms is still
-        // applied and correctly sorts the current playable audios.
+        // applied and correctly sorts the current playable audio.
         appScreenNavigationButton =
             find.byKey(const ValueKey('playlistDownloadViewIconButton'));
         await tester.tap(appScreenNavigationButton);
@@ -13539,7 +13539,7 @@ void main() {
 
         // Then return to playlist download view in order to verify that
         // its state with the 'default' sort/filter parms is still
-        // applied and correctly sorts the current playable audios.
+        // applied and correctly sorts the current playable audio.
         appScreenNavigationButton =
             find.byKey(const ValueKey('playlistDownloadViewIconButton'));
         await tester.tap(appScreenNavigationButton);
@@ -13568,11 +13568,11 @@ void main() {
              open sort filter audio dialog. Then creating a ascending unamed
              sort/filter parms and applying it. Then verifying that a Sort/filter
              dropdown button item has been created with the title 'applied' and
-             is applied to the playlist download view list of audios. Then going
+             is applied to the playlist download view list of audio. Then going
              to the audio player view and then going back to the playlist
              download view and verifying that the previously active and newly
              created sort/filter parms is displayed in the dropdown item button
-             and applied to the audios.''', (WidgetTester tester) async {
+             and applied to the audio.''', (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -13706,7 +13706,7 @@ void main() {
 
         // Then return to playlist download view in order to verify that
         // its state with the 'Title asc' sort/filter parms is still
-        // applied and correctly sorts the current playable audios.
+        // applied and correctly sorts the current playable audio.
         appScreenNavigationButton =
             find.byKey(const ValueKey('playlistDownloadViewIconButton'));
         await tester.tap(appScreenNavigationButton);
@@ -13850,11 +13850,11 @@ void main() {
              in relation with Sort/filter dropdown button test''', () {
       testWidgets(
           '''Verifying delete sort/filter bug was fixed. Click on 'Sort/filter
-             audios' menu item of Audio popup menu to open sort filter audio
+             audio' menu item of Audio popup menu to open sort filter audio
              dialog. Then creating a named last listened date time descending
              sort/filter parms and saving it. Then verifying that a Sort/filter
              dropdown button item has been created and is applied to the
-             playlist download view list of audios. Then creating a named last
+             playlist download view list of audio. Then creating a named last
              listened date time ascending sort/filter parms and saving it. Then
              verifying its application. Finally, deleting the named last
              listened date time ascending sort/filter parms and verify that now
@@ -13893,7 +13893,7 @@ void main() {
         await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
         await tester.pumpAndSettle();
 
-        // Find the sort/filter audios menu item and tap on it to
+        // Find the sort/filter audio menu item and tap on it to
         // open the audio sort filter dialog
         await tester.tap(
             find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
@@ -13986,7 +13986,7 @@ void main() {
         await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
         await tester.pumpAndSettle();
 
-        // Find the sort/filter audios menu item and tap on it to
+        // Find the sort/filter audio menu item and tap on it to
         // open the audio sort filter dialog
         await tester.tap(
             find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
@@ -14232,7 +14232,7 @@ void main() {
         await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
         await tester.pumpAndSettle();
 
-        // Find the sort/filter audios menu item and tap on it to
+        // Find the sort/filter audio menu item and tap on it to
         // open the audio sort filter dialog
         await tester.tap(
             find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
@@ -14327,7 +14327,7 @@ void main() {
         await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
         await tester.pumpAndSettle();
 
-        // Find the sort/filter audios menu item and tap on it to
+        // Find the sort/filter audio menu item and tap on it to
         // open the audio sort filter dialog
         await tester.tap(
             find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
@@ -14613,7 +14613,7 @@ void main() {
     });
     testWidgets(
         '''Enter an existing playlist root dir in which a smartphone playlist
-           dir exist and test that those smartphone audios are usable.''',
+           dir exist and test that those smartphone audio are usable.''',
         (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -15267,9 +15267,9 @@ void main() {
       );
     });
   });
-  group('Playlist audios comments test', () {
+  group('Playlist audio comments test', () {
     testWidgets('''
-                   On empty playlist, opening the playlist audios comments dialog.''',
+                   On empty playlist, opening the playlist audio comments dialog.''',
         (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
       const String emptyPlaylistTitle = 'Empty'; // Youtube playlist
@@ -15316,9 +15316,9 @@ void main() {
       expect(find.byType(PlaylistCommentListDialogWidget), findsOneWidget);
 
       // Verify the dialog title
-      expect(find.text('Playlist audios comments'), findsOneWidget);
+      expect(find.text('Playlist audio comments'), findsOneWidget);
 
-      // Verify the audios comments list of the dialog is empty
+      // Verify the audio comments list of the dialog is empty
 
       final listFinder = find.byKey(const Key('playlistCommentsListKey'));
       expect(listFinder, findsOneWidget);
@@ -15653,7 +15653,7 @@ Future<void> ensureNoButtonIsEnabledSinceNoPlaylistIsSelected(
   await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
   await tester.pumpAndSettle();
 
-  // since the selected local playlist has no audios, the
+  // since the selected local playlist has no audio, the
   // audio menu items are disabled
   await IntegrationTestUtil.verifyAudioMenuItemsState(
     tester: tester,
@@ -15678,7 +15678,7 @@ Future<void> tapPlaylistCheckboxIfNotAlreadyChecked({
   // Check if the checkbox is checked
   if (checkbox.value == null || !checkbox.value!) {
     // Tap the ListTile Playlist checkbox to select it
-    // so that the playlist audios are listed
+    // so that the playlist audio are listed
     await widgetTester.tap(youtubePlaylistListTileCheckboxWidgetFinder);
     await widgetTester.pumpAndSettle();
   }

@@ -70,7 +70,7 @@ class SetAudioPositionCommand implements Command {
 /// current audio playing status.
 ///
 /// It is also used in the AudioOneSelectableDialogWidget to
-/// obtain the list of audios - currently ordered by download
+/// obtain the list of audio - currently ordered by download
 /// date - to be displayed in the dialog.
 class AudioPlayerVM extends ChangeNotifier {
   Audio? _currentAudio;
@@ -946,7 +946,7 @@ class AudioPlayerVM extends ChangeNotifier {
 
   /// The returned list is ordered by download date, placing
   /// the first downloaded audio at the begining of the list and
-  /// the latest downloaded audios at end of list, so reversing
+  /// the latest downloaded audio at end of list, so reversing
   /// the playlist playable audio list.
   ///
   /// playableAudioLst order: [available audio last downloaded, ...,
@@ -960,7 +960,7 @@ class AudioPlayerVM extends ChangeNotifier {
   /// 5 nov
   /// 28 oct
   ///
-  /// playable audios ordered by download date
+  /// playable audio ordered by download date
   /// 28 oct
   /// 5 nov
   /// 21 nov

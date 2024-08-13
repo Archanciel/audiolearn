@@ -567,11 +567,11 @@ void main() {
       );
     });
   });
-  group('Obtain list of playable audios', () {
+  group('Obtain list of playable audio', () {
     late PlaylistListVM playlistListVM;
 
     test(
-        'Playlist has several not fully played audios. Last downloaded audio is not played.',
+        'Playlist has several not fully played audio. Last downloaded audio is not played.',
         () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -653,7 +653,7 @@ void main() {
       );
     });
     test(
-        'Playlist has several not fully played audios. Last downloaded audio is fully played.',
+        'Playlist has several not fully played audio. Last downloaded audio is fully played.',
         () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -741,7 +741,7 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    test('Playlist has no not fully played audios', () async {
+    test('Playlist has no not fully played audio', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(

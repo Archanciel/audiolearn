@@ -383,7 +383,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
               onPressed: (arePlaylistDownloadWidgetsEnabled)
                   ? () async {
                       // disable the sorted filtered playable audio list
-                      // downloading audios of selected playlists so that
+                      // downloading audio of selected playlists so that
                       // the currently displayed audio list is not sorted
                       // or/and filtered. This way, the newly downloaded
                       // audio will be added at top of the displayed audio
@@ -1170,7 +1170,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           ),
           onPressed: () {
             // disabling the sorted filtered playable audio list
-            // downloading audios of selected playlists so that
+            // downloading audio of selected playlists so that
             // the currently displayed audio list is not sorted
             // or/and filtered. This way, the newly downloaded
             // audio will be added at top of the displayed audio

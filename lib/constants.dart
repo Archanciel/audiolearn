@@ -151,7 +151,7 @@ const double kDialogTextFieldVerticalSeparation = 10.0;
 
 const String kYoutubeUrl = 'https://www.youtube.com/';
 
-// true makes sense if audios are played in
+// true makes sense if audio are played in
 // Smart AudioBook app
 const bool kAudioFileNamePrefixIncludeTime = true;
 

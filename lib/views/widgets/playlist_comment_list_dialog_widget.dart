@@ -110,12 +110,15 @@ class _PlaylistCommentListDialogWidgetState
               controller: _scrollController,
               child: ListBody(
                 key: const Key('playlistCommentsListKey'),
-                children: (audioFileNamesLst.isNotEmpty) ? _buildPlaylistAudiosCommentsList(
-                  commentVM: commentVM,
-                  playlistAudiosCommentsMap: playlistAudiosCommentsMap,
-                  audioFileNamesLst: audioFileNamesLst,
-                  isDarkTheme: themeProviderVM.currentTheme == AppTheme.dark,
-                ) : [],
+                children: (audioFileNamesLst.isNotEmpty)
+                    ? _buildPlaylistAudiosCommentsList(
+                        commentVM: commentVM,
+                        playlistAudiosCommentsMap: playlistAudiosCommentsMap,
+                        audioFileNamesLst: audioFileNamesLst,
+                        isDarkTheme:
+                            themeProviderVM.currentTheme == AppTheme.dark,
+                      )
+                    : [],
               ),
             );
           },
@@ -150,7 +153,7 @@ class _PlaylistCommentListDialogWidgetState
     );
 
     // Obtaining the current audio file name without the extension.
-    // This will be used to drop down the playlist audios comments list
+    // This will be used to drop down the playlist audio comments list
     // to the current audio comments.
     String currentAudioFileName = widget.currentPlaylist
             .getCurrentOrLastlyPlayedAudioContainedInPlayableAudioLst()
@@ -171,7 +174,7 @@ class _PlaylistCommentListDialogWidgetState
       fontSize: kAudioTitleFontSize,
     );
 
-    // List of widgets corresponding to the playlist audios comments
+    // List of widgets corresponding to the playlist audio comments
     List<Widget> widgetsLst = [];
 
     Color? audioTitleTextColor;

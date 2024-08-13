@@ -15,7 +15,7 @@ import 'help_dialog_widget.dart';
 /// This widget displays a dialog to set the audio play speed. The dialog
 /// is used in the application settings view, in the audio player view
 /// and in the playlist set speed item menu.
-/// 
+///
 /// The dialog can display a help icon button if it was called from the
 /// application settings view or from the playlist set speed item menu.
 /// If called from the audio player view, the help icon button is not
@@ -31,10 +31,10 @@ class AudioSetSpeedDialogWidget extends StatefulWidget {
   /// The non required parameters are so since the dialog can be used
   /// in different contexts. When the dialog is used in the audio player,
   /// the 3 non required parameters are not used.
-  /// 
+  ///
   /// When the dialog is used in the application settings view, the
   /// 3 non required parameters are not set by the caller.
-  /// 
+  ///
   /// When the dialog is used in the playlist set speed item menu, the
   /// only {displayApplyToExistingPlaylistCheckbox} and {helpItemsLst}
   /// parameter is are set by the caller.
@@ -265,7 +265,7 @@ class _AudioSetSpeedDialogWidgetState extends State<AudioSetSpeedDialogWidget>
                   //
                   // In this situation, if the user chooses to apply the
                   // modified audio play speed to the already dowmnloaded
-                  // audios, then it makes sence that the apply to existing
+                  // audio, then it makes sence that the apply to existing
                   // checkbox is set to true. The user can uncheck the apply
                   // to existing checkbox without the fact that the apply
                   // to already downloaded audio check box is implied.

@@ -22,13 +22,13 @@ class Playlist {
   String downloadPath = '';
   bool isSelected;
 
-  // Contains the audios once referenced in the Youtube playlist
+  // Contains the audio once referenced in the Youtube playlist
   // which were downloaded.
   //
   // List order: [first downloaded audio, ..., last downloaded audio]
   List<Audio> downloadedAudioLst = [];
 
-  // Contains the downloaded audios currently available on the
+  // Contains the downloaded audio currently available on the
   // device.
   //
   // List order: [available audio last downloaded, ..., first
@@ -47,7 +47,7 @@ class Playlist {
   int currentOrPastPlayableAudioIndex = -1;
 
   // A sort filter parameters instance can be associated to a playlist
-  // in order to sort and filter its audios. There are too ways to
+  // in order to sort and filter its audio. There are too ways to
   // associate a sort filter parameters instance to a playlist:
   //
   // 1. Selecting or defining a named sort filter parameters instance
@@ -330,7 +330,7 @@ class Playlist {
   void removeDownloadedAudioFromDownloadAndPlayableAudioLst({
     required Audio downloadedAudio,
   }) {
-    // removes from the list all audios with the same audioFileName
+    // removes from the list all audio with the same audioFileName
     downloadedAudioLst.removeWhere((Audio audio) => audio == downloadedAudio);
 
     _removeAudioFromPlayableAudioList(downloadedAudio);
@@ -474,10 +474,10 @@ class Playlist {
     return totalFileSize;
   }
 
-  /// Removes from the playableAudioLst the audios that are no longer
+  /// Removes from the playableAudioLst the audio that are no longer
   /// in the playlist download path.
   ///
-  /// Returns the number of audios removed from the playable audio
+  /// Returns the number of audio removed from the playable audio
   /// list.
   ///
   /// playableAudioLst order: [available audio last downloaded, ...,
@@ -511,11 +511,11 @@ class Playlist {
     // If no audio were removed from the playable audio list, then
     // the current or past playable audio index is not modified.
     //
-    // If n audios located before ot at the current or past playable
+    // If n audio located before ot at the current or past playable
     // audio index were removed from the playable audio list, then the
     // current or past playable audio index is reduced by n.
     //
-    // If the removed audios were located after the current or past
+    // If the removed audio were located after the current or past
     // playable audio index, then the current or past playable audio
     // index is not impacted.
     currentOrPastPlayableAudioIndex -= currentOrPastPlayableAudioIndexReduction;

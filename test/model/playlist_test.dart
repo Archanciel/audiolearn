@@ -5,7 +5,7 @@ import 'package:audiolearn/models/audio.dart';
 
 void main() {
   group('Testing Playlist add and remove methods', () {
-    test('add 3 audios to playlist', () {
+    test('add 3 audio to playlist', () {
       Playlist playlist = Playlist(
         url: 'https://example.com/playlist2',
         playlistType: PlaylistType.youtube,
@@ -215,7 +215,7 @@ void main() {
       expect(playlist.currentOrPastPlayableAudioIndex, -1);
     });
     test(
-        'add 2 audios to empty playlist and then remove 1 audio from downloaded and playable list',
+        'add 2 audio to empty playlist and then remove 1 audio from downloaded and playable list',
         () {
       Playlist playlist = Playlist(
         url: 'https://example.com/playlist2',
@@ -256,7 +256,7 @@ void main() {
           'A');
     });
     test(
-        'add 3 audios to playlist, set second as current, then delete the first downloaded',
+        'add 3 audio to playlist, set second as current, then delete the first downloaded',
         () {
       Playlist playlist = Playlist(
         url: 'https://example.com/playlist2',
@@ -287,7 +287,7 @@ void main() {
           'A');
     });
     test(
-        'add 3 audios to playlist, set second as current, then delete the audios',
+        'add 3 audio to playlist, set second as current, then delete the audio',
         () {
       Playlist playlist = Playlist(
         url: 'https://example.com/playlist2',
@@ -326,7 +326,7 @@ void main() {
       expect(playlist.currentOrPastPlayableAudioIndex, -1);
     });
     test(
-        'add 3 audios to playlist, set second as current, then remove from playable audio list the first downloaded',
+        'add 3 audio to playlist, set second as current, then remove from playable audio list the first downloaded',
         () {
       Playlist playlist = Playlist(
         url: 'https://example.com/playlist2',
@@ -358,7 +358,7 @@ void main() {
           'A');
     });
     test(
-        'add 3 audios to playlist, set second as current, then remove them from playable audio list',
+        'add 3 audio to playlist, set second as current, then remove them from playable audio list',
         () {
       Playlist playlist = Playlist(
         url: 'https://example.com/playlist2',
@@ -397,7 +397,7 @@ void main() {
       expect(playlist.currentOrPastPlayableAudioIndex, -1);
     });
     test(
-        'copy 2 audios to empty playlist and then remove 1 audio from downloaded and playable list',
+        'copy 2 audio to empty playlist and then remove 1 audio from downloaded and playable list',
         () {
       Playlist playlist = Playlist(
         url: 'https://example.com/playlist2',
@@ -438,7 +438,7 @@ void main() {
           'A');
     });
     test(
-        'move 2 audios to empty playlist and then remove 1 audio from downloaded and playable list',
+        'move 2 audio to empty playlist and then remove 1 audio from downloaded and playable list',
         () {
       Playlist playlist = Playlist(
         url: 'https://example.com/playlist2',

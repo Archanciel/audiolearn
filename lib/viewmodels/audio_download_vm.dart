@@ -293,7 +293,7 @@ class AudioDownloadVM extends ChangeNotifier {
         // that its url was updated. The case when a new
         // playlist with the same title is created in order
         // to replace the old one which contains too many
-        // audios.
+        // audio.
         _updateYoutubePlaylisrUrl(
           playlistIndex: playlistIndex,
           playlistId: playlistId,
@@ -304,7 +304,7 @@ class AudioDownloadVM extends ChangeNotifier {
         // since the playlist was not added, but updated, null
         // is returned to avoid that the playlist is added to
         // the orderedTitleLst in the SettingsDataService json
-        // file, which will cause a bug when filtering audios
+        // file, which will cause a bug when filtering audio
         // of a playlist
         return null;
       }
@@ -370,7 +370,7 @@ class AudioDownloadVM extends ChangeNotifier {
   }) async {
     // if the playlist is already being downloaded, then
     // the method is not executed. This avoids that the
-    // audios of the playlist are downloaded multiple times
+    // audio of the playlist are downloaded multiple times
     // if the user clicks multiple times on the download
     // button.
     if (downloadingPlaylistUrls.contains(playlistUrl)) {
@@ -1308,7 +1308,7 @@ class AudioDownloadVM extends ChangeNotifier {
         continue;
       }
 
-      // Remove the audios from the playable audio list which are no
+      // Remove the audio from the playable audio list which are no
       // longer in the playlist directory
       int removedPlayableAudioNumber =
           correspondingOriginalPlaylist.updatePlayableAudioLst();

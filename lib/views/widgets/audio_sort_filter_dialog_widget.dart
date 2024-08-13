@@ -1469,7 +1469,7 @@ class _AudioSortFilterDialogWidgetState
   }
 
   // This method defines the TextField used to add a word or sentence
-  // applied to filter the audios based on their title or description.
+  // applied to filter the audio based on their title or description.
   Widget _buildAudioFilterSentence() {
     return Tooltip(
       message: AppLocalizations.of(context)!
@@ -1728,7 +1728,7 @@ class _AudioSortFilterDialogWidgetState
           // is opened in the playlist download view.
           //
           // Excluding the audio enclosing playlist title option
-          // since currently the audios of only one playlist are
+          // since currently the audio of only one playlist are
           // displayed in the playlist download view. So, sorting
           // by playlist title is not relevant.
           !(value == SortingOption.audioEnclosingPlaylistTitle)
@@ -1737,7 +1737,7 @@ class _AudioSortFilterDialogWidgetState
           // is opened in the audio play view
           //
           // Excluding the audio enclosing playlist title option
-          // since currently the audios of only one playlist are
+          // since currently the audio of only one playlist are
           // displayed in the playlist download view. So, sorting
           // by playlist title is not relevant.
           !(value == SortingOption.audioEnclosingPlaylistTitle ||
