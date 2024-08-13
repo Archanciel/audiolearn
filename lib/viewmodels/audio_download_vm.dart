@@ -551,16 +551,36 @@ class AudioDownloadVM extends ChangeNotifier {
     required Audio audio,
     required String modifiedAudioFileName,
   }) {
-    // the case if the user clicked on modify button without
-    // having modified the audio file name
-    if (audio.audioFileName == modifiedAudioFileName) {
+    String audioOldFileName = audio.audioFileName;
+    String playlistDownloadPath = audio.enclosingPlaylist!.downloadPath;
+
+    if (audioOldFileName == modifiedAudioFileName) {
+      // the case if the user clicked on modify button without
+      // having modified the audio file name
       return;
     }
 
+    // Verifying if the new audio file name is already used
     if (File(
-            '${audio.enclosingPlaylist!.downloadPath}${Platform.pathSeparator}$modifiedAudioFileName')
+            '$playlistDownloadPath${Platform.pathSeparator}$modifiedAudioFileName')
         .existsSync()) {
       warningMessageVM.renameFileNameAlreadyUsed = modifiedAudioFileName;
+
+      return;
+    }
+
+    String newCommentFilePathName = CommentVM.buildCommentFilePathName(
+      playlistDownloadPath: playlistDownloadPath,
+      audioFileName: modifiedAudioFileName,
+    );
+
+    String commentNewFileName =
+        newCommentFilePathName.split(Platform.pathSeparator).last;
+
+    // Verifying if the new comment file name is already used
+    if (File(newCommentFilePathName).existsSync()) {
+      warningMessageVM.renameCommentFileNameAlreadyUsed =
+          modifiedAudioFileName.substring(0, modifiedAudioFileName.length - 4);
 
       return;
     }
@@ -573,10 +593,9 @@ class AudioDownloadVM extends ChangeNotifier {
     }
 
     Playlist enclosingPlaylist = audio.enclosingPlaylist!;
-    String audioOldFileName = audio.audioFileName;
-    String oldCommentFilePathName =
-        CommentVM.buildCommentFilePathName(
-      audioToComment: audio,
+    String oldCommentFilePathName = CommentVM.buildCommentFilePathName(
+      playlistDownloadPath: playlistDownloadPath,
+      audioFileName: audioOldFileName,
     );
 
     enclosingPlaylist.renameDownloadedAndPlayableAudioFile(
@@ -584,19 +603,12 @@ class AudioDownloadVM extends ChangeNotifier {
       newFileName: modifiedAudioFileName,
     );
 
-    String newCommentFilePathName =
-        CommentVM.buildCommentFilePathName(
-      audioToComment: audio,
-    );
-
     // renaming the comment file if it exists
 
     if (File(oldCommentFilePathName).existsSync()) {
       DirUtil.renameFile(
         fileToRenameFilePathName: oldCommentFilePathName,
-        newFileName: newCommentFilePathName
-            .split(Platform.pathSeparator)
-            .last,
+        newFileName: commentNewFileName,
       );
     }
 

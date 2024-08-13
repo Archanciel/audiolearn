@@ -36,9 +36,11 @@ class CommentVM extends ChangeNotifier {
   List<Comment> loadAudioComments({
     required Audio audio,
   }) {
-
     return JsonDataService.loadListFromFile(
-      jsonPathFileName: buildCommentFilePathName(audioToComment: audio,),
+      jsonPathFileName: buildCommentFilePathName(
+        playlistDownloadPath: audio.enclosingPlaylist!.downloadPath,
+        audioFileName: audio.audioFileName,
+      ),
       type: Comment,
     );
   }
@@ -52,7 +54,8 @@ class CommentVM extends ChangeNotifier {
     );
 
     String commentFilePathName = buildCommentFilePathName(
-      audioToComment: audioToComment,
+      playlistDownloadPath: audioToComment.enclosingPlaylist!.downloadPath,
+      audioFileName: audioToComment.audioFileName,
     );
 
     if (commentLst.isEmpty) {
@@ -79,13 +82,14 @@ class CommentVM extends ChangeNotifier {
   /// comment directory, and the second string is the path file name to the
   /// maybe not yet existing comment file.
   static String buildCommentFilePathName({
-    required Audio audioToComment,
+    required String playlistDownloadPath,
+    required String audioFileName,
   }) {
     final String playlistCommentPath =
-        "${audioToComment.enclosingPlaylist!.downloadPath}${path.separator}$kCommentDirName";
+        "$playlistDownloadPath${path.separator}$kCommentDirName";
 
     final String createdCommentFileName =
-        audioToComment.audioFileName.replaceAll('.mp3', '.json');
+        audioFileName.replaceAll('.mp3', '.json');
 
     return "$playlistCommentPath${path.separator}$createdCommentFileName";
   }
@@ -141,8 +145,10 @@ class CommentVM extends ChangeNotifier {
 
     JsonDataService.saveListToFile(
       data: commentLst,
-      jsonPathFileName:
-          buildCommentFilePathName(audioToComment: commentedAudio),
+      jsonPathFileName: buildCommentFilePathName(
+        playlistDownloadPath: commentedAudio.enclosingPlaylist!.downloadPath,
+        audioFileName: commentedAudio.audioFileName,
+      ),
     );
 
     notifyListeners();
@@ -154,7 +160,8 @@ class CommentVM extends ChangeNotifier {
   }) {
     DirUtil.deleteFileIfExist(
       pathFileName: buildCommentFilePathName(
-        audioToComment: commentedAudio,
+        playlistDownloadPath: commentedAudio.enclosingPlaylist!.downloadPath,
+        audioFileName: commentedAudio.audioFileName,
       ),
     );
 
@@ -185,7 +192,8 @@ class CommentVM extends ChangeNotifier {
     _sortAndSaveCommentLst(
       commentLst: commentLst,
       commentFilePathName: buildCommentFilePathName(
-        audioToComment: commentedAudio,
+        playlistDownloadPath: commentedAudio.enclosingPlaylist!.downloadPath,
+        audioFileName: commentedAudio.audioFileName,
       ),
     );
 
@@ -197,7 +205,8 @@ class CommentVM extends ChangeNotifier {
     required String targetPlaylistPath,
   }) {
     String commentFilePathName = buildCommentFilePathName(
-      audioToComment: audio,
+      playlistDownloadPath: audio.enclosingPlaylist!.downloadPath,
+      audioFileName: audio.audioFileName,
     );
 
     String targetCommentDirPath =
@@ -221,7 +230,8 @@ class CommentVM extends ChangeNotifier {
     required String targetPlaylistPath,
   }) {
     String commentFilePathName = buildCommentFilePathName(
-      audioToComment: audio,
+      playlistDownloadPath: audio.enclosingPlaylist!.downloadPath,
+      audioFileName: audio.audioFileName,
     );
 
     String targetCommentDirPath =

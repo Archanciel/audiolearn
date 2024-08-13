@@ -37,6 +37,10 @@ enum WarningMessageType {
   // for renaming an audio file is the name of an existing
   // file.
 
+  renameCommentFileNameAlreadyUsed, // The case if the comment file
+  // name proposed for renaming a comment file is the name of an existing
+  // file.
+
   playlistWithUrlAlreadyInListOfPlaylists, // User clicked on Add
   // button but the playlist with this url was already downloaded.
 
@@ -371,6 +375,15 @@ class WarningMessageVM extends ChangeNotifier {
   set renameFileNameAlreadyUsed(String invalidRenameFileName) {
     _renameFileNameAlreadyUsed = invalidRenameFileName;
     warningMessageType = WarningMessageType.renameFileNameAlreadyUsed;
+
+    // Causes the display warning message widget to be displayed.      // Causes the display warning message widget to be displayed.
+    notifyListeners();
+  }
+  String _renameCommentFileNameAlreadyUsed = '';
+  String get renameCommentFileNameAlreadyUsed => _renameCommentFileNameAlreadyUsed;
+  set renameCommentFileNameAlreadyUsed(String invalidRenameFileName) {
+    _renameCommentFileNameAlreadyUsed = invalidRenameFileName;
+    warningMessageType = WarningMessageType.renameCommentFileNameAlreadyUsed;
 
     // Causes the display warning message widget to be displayed.      // Causes the display warning message widget to be displayed.
     notifyListeners();
