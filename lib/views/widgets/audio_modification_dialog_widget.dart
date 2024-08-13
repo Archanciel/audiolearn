@@ -195,7 +195,7 @@ class _AudioModificationDialogWidgetState
 
     audioDownloadVM.renameAudioFile(
       audio: widget.audio,
-      modifiedAudioFileName: audioFileName,
+      audioModifiedFileName: audioFileName,
     );
   }
 

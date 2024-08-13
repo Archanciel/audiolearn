@@ -399,5 +399,6 @@
   "lastListenedDateTime": "Last listened date/time",
   "downloadSingleVideoAudioAtMusicQuality": "Download single video audio at music quality",
   "videoTitleNotWrittenInOccidentalLettersWarning": "Since the original video title is not written in occidental letters, the audio title is empty. You can use the 'Modify audio title ...' audio menu in order to define a valid title. Same remark for improving the audio file name ...",
-  "renameCommentFileNameAlreadyUsed": "The comment file name \"{fileName}.json\" already exists in the comment directory and so renaming the audio file with this name \"{fileName}.mp3\" is not possible."
+  "renameCommentFileNameAlreadyUsed": "The comment file name \"{fileName}.json\" already exists in the comment directory and so renaming the audio file with the name \"{fileName}.mp3\" is not possible.",
+  "renameFileNameInvalid": "The audio file name \"{fileName}\" has no mp3 extension and so is invalid."
 }

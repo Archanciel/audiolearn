@@ -1225,4 +1225,10 @@ class MockAppLocalizations extends AppLocalizations {
     Object fileName,
   ) =>
       "The comment file name \"$fileName\".json already exists in the comment directory and so renaming the audio file with this name \"$fileName\".mp3 is not possible.";
+
+  @override
+  String renameFileNameInvalid(
+    Object fileName,
+  ) =>
+      "The audio file name \"$fileName\" has no mp3 extension and so is invalid.";
 }

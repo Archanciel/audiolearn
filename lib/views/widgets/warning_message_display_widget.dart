@@ -247,6 +247,20 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
         });
 
         return const SizedBox.shrink();
+      case WarningMessageType.renameFileNameInvalid:
+        String fileName = _warningMessageVM.renameFileNameInvalid;
+
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _displayWarningDialog(
+            context: _context,
+            message: AppLocalizations.of(context)!
+                .renameFileNameInvalid(fileName),
+            warningMessageVM: _warningMessageVM,
+            themeProviderVM: themeProviderVM,
+          );
+        });
+
+        return const SizedBox.shrink();
       case WarningMessageType.renameCommentFileNameAlreadyUsed:
         String fileName = _warningMessageVM.renameCommentFileNameAlreadyUsed;
 

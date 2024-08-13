@@ -33,6 +33,9 @@ enum WarningMessageType {
   invalidYoutubePlaylistTitle, // The case if Youtube playlist title
   // contains one or more commas.
 
+  renameFileNameInvalid, // The case if the file name proposed
+  // for renaming an audio file has not .mp3 extension.
+
   renameFileNameAlreadyUsed, // The case if the file name proposed
   // for renaming an audio file is the name of an existing
   // file.
@@ -370,6 +373,16 @@ class WarningMessageVM extends ChangeNotifier {
     notifyListeners();
   }
 
+  String _renameFileNameInvalid = '';
+  String get renameFileNameInvalid => _renameFileNameInvalid;
+  set renameFileNameInvalid(String invalidRenameFileName) {
+    _renameFileNameInvalid = invalidRenameFileName;
+    warningMessageType = WarningMessageType.renameFileNameInvalid;
+
+    // Causes the display warning message widget to be displayed.      // Causes the display warning message widget to be displayed.
+    notifyListeners();
+  }
+  
   String _renameFileNameAlreadyUsed = '';
   String get renameFileNameAlreadyUsed => _renameFileNameAlreadyUsed;
   set renameFileNameAlreadyUsed(String invalidRenameFileName) {
@@ -379,6 +392,7 @@ class WarningMessageVM extends ChangeNotifier {
     // Causes the display warning message widget to be displayed.      // Causes the display warning message widget to be displayed.
     notifyListeners();
   }
+
   String _renameCommentFileNameAlreadyUsed = '';
   String get renameCommentFileNameAlreadyUsed => _renameCommentFileNameAlreadyUsed;
   set renameCommentFileNameAlreadyUsed(String invalidRenameFileName) {

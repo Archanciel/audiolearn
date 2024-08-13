@@ -838,7 +838,7 @@ void main() {
       const String newFileName = "new_name.mp3";
       audioDownloadVM.renameAudioFile(
         audio: audioToRename,
-        modifiedAudioFileName: newFileName,
+        audioModifiedFileName: newFileName,
       );
 
       // Verify that the renamed file exists
@@ -902,7 +902,7 @@ void main() {
           "231117-002828-morning _ cinematic video 23-07-01.mp3";
       audioDownloadVM.renameAudioFile(
         audio: audioToRename,
-        modifiedAudioFileName: fileNameOfExistingFile,
+        audioModifiedFileName: fileNameOfExistingFile,
       );
 
       // Verify that the not renamed file exists
