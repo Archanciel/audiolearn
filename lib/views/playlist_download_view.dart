@@ -396,9 +396,11 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
                       // currently only one playlist can be selected and
                       // downloaded at a time.
-                      await Provider.of<AudioDownloadVM>(context, listen: false)
-                          .downloadPlaylistAudios(
-                              playlistUrl: selectedPlaylists[0].url);
+                      await Provider.of<AudioDownloadVM>(
+                        context,
+                        listen: false,
+                      ).downloadPlaylistAudios(
+                          playlistUrl: selectedPlaylists[0].url);
                     }
                   : null,
               child: Row(

@@ -1518,12 +1518,9 @@ class AudioDownloadVM extends ChangeNotifier {
 
     if (isHighQuality) {
       audioStreamInfo = streamManifest.audioOnly.withHighestBitrate();
+      audio.setAudioToMusicQuality();
     } else {
       audioStreamInfo = streamManifest.audioOnly.first;
-    }
-
-    if (isHighQuality) {
-      audio.setAudioToMusicQuality();
     }
 
     final int audioFileSize = audioStreamInfo.size.totalBytes;
