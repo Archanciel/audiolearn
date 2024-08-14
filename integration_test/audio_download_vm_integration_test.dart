@@ -751,7 +751,7 @@ void main() {
   group('Download recreated playlist with short audio', () {
     testWidgets(
         '''Recreated playlist with 2 new short audio: initial playlist 1st and
-           2nd audio already downloaded and deleted.  This test is used to test
+           2nd audio already downloaded and deleted. This test is used to test
            recreating the playlist with the same name. Recreating a playlist
            with an identical name avoids to loose time removing from the original
            playlist the referenced videos. The recreated playlist audio are

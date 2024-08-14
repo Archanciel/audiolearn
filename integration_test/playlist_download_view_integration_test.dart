@@ -15695,7 +15695,7 @@ void main() {
       await checkAudioCommentUsingAudioItemMenu(
         tester: tester,
         audioListTileWidgetFinder: audioListTileWidgetFinder,
-        expectedCommentTitle: 'Not accessible later',
+        expectedCommentTitle: 'Accessible after renaming',
         audioTitleToVerifyInCommentAddEditDialog: newTitle,
       );
 
