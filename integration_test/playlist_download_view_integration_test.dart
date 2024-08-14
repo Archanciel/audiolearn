@@ -15525,7 +15525,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify that the old name file exists
-      final String initialFileName =
+      const String initialFileName =
           "240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.mp3";
       final String renamedAudioFilePath =
           "$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubePlaylistTitle${path.separator}$initialFileName";
