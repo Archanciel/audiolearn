@@ -120,7 +120,7 @@ void main() {
       // tapping on the downl playlist button in the app which calls the
       // AudioDownloadVM.downloadPlaylistAudios(playlistUrl) method
       await tester.tap(find.byKey(const Key('downloadPlaylistAudiosButton')));
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       // Add a delay to allow the download to finish. 5 seconds is ok
       // when running the audio_download_vm_test only.
@@ -128,7 +128,7 @@ void main() {
       // 'No implementation found for method $method on channel $name'
       // when all tsts are run. 7 seconds solve the problem.
       await Future.delayed(const Duration(seconds: secondsDelay));
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       expect(directory.existsSync(), true);
 
@@ -280,7 +280,7 @@ void main() {
       // tapping on the downl playlist button in the app which calls the
       // AudioDownloadVM.downloadPlaylistAudios(playlistUrl) method
       await tester.tap(find.byKey(const Key('downloadPlaylistAudiosButton')));
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       // Add a delay to allow the download to finish. 5 seconds is ok
       // when running the audio_download_vm_test only.
@@ -288,7 +288,7 @@ void main() {
       // 'No implementation found for method $method on channel $name'
       // when all tsts are run. 7 seconds solve the problem.
       await Future.delayed(const Duration(seconds: secondsDelay));
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       expect(directory.existsSync(), true);
 
@@ -403,11 +403,12 @@ void main() {
         find.byKey(const Key('playlistUrlTextField')),
         singleVideoUrl,
       );
+      await tester.pumpAndSettle();
 
       // tapping on the downl single video button in the app which
       // calls the AudioDownloadVM.downloadPlaylistAudios() method
       await tester.tap(find.byKey(const Key('downloadSingleVideoAudioButton')));
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       // Add a delay to allow the download to finish. 5 seconds is ok
       // when running the audio_download_vm_test only.
@@ -415,7 +416,7 @@ void main() {
       // 'No implementation found for method $method on channel $name'
       // when all tsts are run. 7 seconds solve the problem.
       await Future.delayed(const Duration(seconds: secondsDelay));
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       Playlist singleVideoDownloadedPlaylist =
           audioDownloadVM.listOfPlaylist[0];
@@ -531,6 +532,7 @@ void main() {
         find.byKey(const Key('playlistUrlTextField')),
         singleVideoUrl,
       );
+      await tester.pumpAndSettle();
 
       // tapping on the downl single video button in the app which
       // calls the AudioDownloadVM.downloadSingleVideoAudio(videoUrl,
@@ -539,7 +541,7 @@ void main() {
       // In this case, the downloadAtMusicQuality is set to true.
       await tester.tap(find
           .byKey(const Key('downloadSingleVideoAudioInMusicQualityButton')));
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       // Add a delay to allow the download to finish. 5 seconds is ok
       // when running the audio_download_vm_test only.
@@ -547,7 +549,7 @@ void main() {
       // 'No implementation found for method $method on channel $name'
       // when all tsts are run. 7 seconds solve the problem.
       await Future.delayed(const Duration(seconds: secondsDelay));
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       Playlist singleVideoDownloadedPlaylist =
           audioDownloadVM.listOfPlaylist[0];
@@ -662,11 +664,12 @@ void main() {
         find.byKey(const Key('playlistUrlTextField')),
         singleVideoUrl,
       );
+      await tester.pumpAndSettle();
 
       // tapping on the downl single video button in the app which
       // calls the AudioDownloadVM.downloadPlaylistAudios() method
       await tester.tap(find.byKey(const Key('downloadSingleVideoAudioButton')));
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       // Add a delay to allow the download to finish. 5 seconds is ok
       // when running the audio_download_vm_test only.
@@ -674,7 +677,7 @@ void main() {
       // 'No implementation found for method $method on channel $name'
       // when all tsts are run. 7 seconds solve the problem.
       await Future.delayed(const Duration(seconds: secondsDelay));
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       Playlist singleVideoDownloadedPlaylist =
           audioDownloadVM.listOfPlaylist[0];
@@ -746,15 +749,15 @@ void main() {
     });
   });
   group('Download recreated playlist with short audio', () {
-    /// This test is used to test recreating the playlist with the
-    /// same name. Recreating a playlist with an identical name avoids
-    /// to loose time removing from the original playlist the referenced
-    /// videos. The recreated playlist audio are downloaded in the same
-    /// dir than the original playlist, The original playlist json file
-    /// is updated with the recreated playlist id and url as well as
-    /// with the newly downloaded audio.
     testWidgets(
-        'Recreated playlist with 2 new short audio: initial playlist 1st and 2nd audio already downloaded and deleted',
+        '''Recreated playlist with 2 new short audio: initial playlist 1st and
+           2nd audio already downloaded and deleted.  This test is used to test
+           recreating the playlist with the same name. Recreating a playlist
+           with an identical name avoids to loose time removing from the original
+           playlist the referenced videos. The recreated playlist audio are
+           downloaded in the same dir than the original playlist, The original
+           playlist json file is updated with the recreated playlist id and url
+           as well as with the newly downloaded audio.''',
         (WidgetTester tester) async {
       late AudioDownloadVM audioDownloadVM;
       final Directory directory = Directory(globalTestPlaylistDir);
@@ -809,8 +812,10 @@ void main() {
       List<Audio> playableAudioLstBeforeDownload =
           downloadedPlaylistBeforeDownload.playableAudioLst;
 
-      // Checking the data of the audio contained in the downloaded
-      // audio list
+      // Checking the data of the audio contained in the already
+      // downloaded audio list
+      //
+      // downloadedAudioLst contains Audio's added at list end
       checkPlaylistDownloadedAudios(
         downloadedAudioOne: downloadedAudioLstBeforeDownload[0],
         downloadedAudioTwo: downloadedAudioLstBeforeDownload[1],
@@ -818,8 +823,8 @@ void main() {
         audioTwoFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
       );
 
-      // Checking the data of the audio contained in the playable
-      // audio list;
+      // Checking the data of the  already downloaded audio contained
+      // in the playable audio list;
       //
       // playableAudioLst contains Audio's inserted at list start
       checkPlaylistDownloadedAudios(
@@ -857,11 +862,12 @@ void main() {
         find.byKey(const Key('playlistUrlTextField')),
         recreatedPlaylistWithSameTitleUrl,
       );
+      await tester.pumpAndSettle();
 
       // tapping on the downl playlist button in the app which calls the
       // AudioDownloadVM.downloadPlaylistAudios(playlistUrl) method
       await tester.tap(find.byKey(const Key('downloadPlaylistAudiosButton')));
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       // Add a delay to allow the download to finish. 5 seconds is ok
       // when running the audio_download_vm_test only.
@@ -869,7 +875,7 @@ void main() {
       // 'No implementation found for method $method on channel $name'
       // when all tsts are run. 7 seconds solve the problem.
       await Future.delayed(const Duration(seconds: secondsDelay));
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       Playlist downloadedPlaylist = audioDownloadVM.listOfPlaylist[0];
 

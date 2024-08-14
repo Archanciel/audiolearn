@@ -422,12 +422,20 @@ class AudioDownloadVM extends ChangeNotifier {
 
     // Handling the case where the Youtube playlist was deleted or
     // renamed and a new playlist with the same title was created.
-    Playlist currentPlaylist = await _addYoutubePlaylistIfNotExist(
-      playlistUrl: playlistUrl,
-      playlistQuality: PlaylistQuality.voice,
-      playlistTitle: playlistTitle,
-      playlistId: playlistId!,
-    );
+    Playlist currentPlaylist;
+    int existingPlaylistIndex =
+        _listOfPlaylist.indexWhere((element) => element.url == playlistUrl);
+
+    if (existingPlaylistIndex > -1) {
+      currentPlaylist = _listOfPlaylist[existingPlaylistIndex];
+    } else {
+      currentPlaylist = await _addYoutubePlaylistIfNotExist(
+        playlistUrl: playlistUrl,
+        playlistQuality: PlaylistQuality.voice,
+        playlistTitle: playlistTitle,
+        playlistId: playlistId!,
+      );
+    }
 
     // get already downloaded audio file names
     String playlistDownloadFilePathName =
@@ -699,47 +707,51 @@ class AudioDownloadVM extends ChangeNotifier {
     _stopDownloadPressed = true;
   }
 
+  /// This method handles the case where the Youtube playlist was never
+  /// downloaded or the case where the Youtube playlist was deleted or was
+  /// renamed and then recreated with the same name, which associates the
+  /// application existing playlist to a new url.
+  ///
+  /// Why would the user delete or rename a Yoiutube playlist and then recreate
+  /// a Youtiube playlist with the same name ? The reason is that the Youtube
+  /// playlist may contain too many videos. Removing manually the already
+  /// listened videos from the Youtube playlist takes too much time. Instead,
+  /// the too big Youtube playlist is deleted or is renamed and a new Youtube
+  /// playlist with the same title is created. The new Youtube playlist is then
+  /// added to the application, which in this case creates a new playlist and
+  /// then integrates to it the data of the replaced playlist.
   Future<Playlist> _addYoutubePlaylistIfNotExist({
     required String playlistUrl,
     required PlaylistQuality playlistQuality,
     required String playlistTitle,
     required String playlistId,
   }) async {
-    Playlist addedPlaylist;
-    int existingPlaylistIndex =
-        _listOfPlaylist.indexWhere((element) => element.url == playlistUrl);
+    Playlist addedPlaylist = await _createYoutubePlaylist(
+      playlistUrl: playlistUrl,
+      playlistQuality: playlistQuality,
+      playlistTitle: playlistTitle,
+      playlistId: playlistId,
+    );
 
-    if (existingPlaylistIndex == -1) {
-      // playlist was never downloaded or was deleted and recreated, which
-      // associates it to a new url
+    // checking if current Youtube playlist was deleted and recreated.
+    // The checking must compare the title of the added (recreated)
+    // Youtube playlist with the title of the playlist in the
+    // _listOfPlaylist since the added playlist url and id are
+    // different from their value in the existing playlist.
+    int existingPlaylistIndex = _listOfPlaylist
+        .indexWhere((element) => element.title == addedPlaylist.title);
 
-      addedPlaylist = await _createYoutubePlaylist(
-        playlistUrl: playlistUrl,
-        playlistQuality: playlistQuality,
-        playlistTitle: playlistTitle,
-        playlistId: playlistId,
+    if (existingPlaylistIndex != -1) {
+      // current Youtube playlist was deleted and recreated since it
+      // is referenced in the _listOfPlaylist and has the same title
+      // than the recreated playlist
+      Playlist existingPlaylist = _listOfPlaylist[existingPlaylistIndex];
+
+      addedPlaylist.integrateReplacedPlaylistData(
+        replacedPlaylist: existingPlaylist,
       );
 
-      // checking if current playlist was deleted and recreated. The
-      // checking must compare the title of the added (recreated)
-      // playlist with the title of the playlist in the _listOfPlaylist
-      // since the added playlist url or id is different.
-      existingPlaylistIndex = _listOfPlaylist
-          .indexWhere((element) => element.title == addedPlaylist.title);
-
-      if (existingPlaylistIndex != -1) {
-        // current playlist was deleted and recreated since it is referenced
-        // in the _listOfPlaylist and has the same title than the recreated
-        // polaylist
-        Playlist existingPlaylist = _listOfPlaylist[existingPlaylistIndex];
-        addedPlaylist.downloadedAudioLst = existingPlaylist.downloadedAudioLst;
-        addedPlaylist.playableAudioLst = existingPlaylist.playableAudioLst;
-        _listOfPlaylist[existingPlaylistIndex] = addedPlaylist;
-      }
-    } else {
-      // playlist was already downloaded and so is stored in
-      // a playlist json file
-      addedPlaylist = _listOfPlaylist[existingPlaylistIndex];
+      _listOfPlaylist[existingPlaylistIndex] = addedPlaylist;
     }
 
     return addedPlaylist;

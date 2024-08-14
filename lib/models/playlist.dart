@@ -626,4 +626,47 @@ class Playlist {
       audio.audioPlaySpeed = audioPlaySpeed;
     }
   }
+
+  /// This method is used in case where the Youtube playlist was deleted or
+  /// renamed and then recreated with the same name. In this situation, the
+  /// current playlist was created with the same title as the replaced playlist
+  /// and a new url and Youtube playlist id.
+  /// 
+  /// In this method, the data of the replaced playlist is integrated into the
+  /// current playlist, which will then replace the replaced playlist in the
+  /// AudioDownloadVM playlist list.
+  ///
+  /// Why did the user delete or rename a Yoiutube playlist and then recreate
+  /// a Youtiube playlist with the same name ? The reason is that the Youtube
+  /// playlist may contain too many videos. Removing manually the already
+  /// listened videos from the Youtube playlist would take too much time.
+  /// Instead, the too big Youtube playlist is deleted or is renamed and a new
+  /// Youtube playlist with the same title is created. The new Youtube playlist
+  /// is then added to the application, which in this case creates a new
+  /// playlist and then integrates to it the data of the replaced playlist.
+  void integrateReplacedPlaylistData({
+    required Playlist replacedPlaylist,
+  }) {
+    downloadedAudioLst = replacedPlaylist.downloadedAudioLst;
+    playableAudioLst = replacedPlaylist.playableAudioLst;
+    playlistQuality = replacedPlaylist.playlistQuality;
+    audioPlaySpeed = replacedPlaylist.audioPlaySpeed;
+    isSelected = replacedPlaylist.isSelected;
+    currentOrPastPlayableAudioIndex =
+        replacedPlaylist.currentOrPastPlayableAudioIndex;
+
+    applyAutomaticallySortFilterParmsForPlaylistDownloadView = replacedPlaylist
+        .applyAutomaticallySortFilterParmsForPlaylistDownloadView;
+    audioSortFilterParmsNameForPlaylistDownloadView =
+        replacedPlaylist.audioSortFilterParmsNameForPlaylistDownloadView;
+    audioSortFilterParmsForPlaylistDownloadView =
+        replacedPlaylist.audioSortFilterParmsForPlaylistDownloadView;
+
+    applyAutomaticallySortFilterParmsForAudioPlayerView =
+        replacedPlaylist.applyAutomaticallySortFilterParmsForAudioPlayerView;
+    audioSortFilterParmsNameForAudioPlayerView =
+        replacedPlaylist.audioSortFilterParmsNameForAudioPlayerView;
+    audioSortFilterParmsForAudioPlayerView =
+        replacedPlaylist.audioSortFilterParmsForAudioPlayerView;
+  }
 }
