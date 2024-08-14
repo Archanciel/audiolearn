@@ -570,7 +570,9 @@ class AudioDownloadVM extends ChangeNotifier {
 
     // Ensuring the new audio file name has the .mp3 extension
     if (!audioModifiedFileName.endsWith('.mp3')) {
-      warningMessageVM.renameFileNameInvalid = audioModifiedFileName;
+      warningMessageVM.renameFileNameIsInvalid(
+        invalidRenameFileName: audioModifiedFileName,
+      );
 
       return;
     }
@@ -579,7 +581,9 @@ class AudioDownloadVM extends ChangeNotifier {
     if (File(
             '$playlistDownloadPath${Platform.pathSeparator}$audioModifiedFileName')
         .existsSync()) {
-      warningMessageVM.renameFileNameAlreadyUsed = audioModifiedFileName;
+      warningMessageVM.renameFileNameIsAlreadyUsed(
+        invalidRenameFileName: audioModifiedFileName,
+      );
 
       return;
     }
@@ -594,11 +598,16 @@ class AudioDownloadVM extends ChangeNotifier {
 
     // Verifying if the new comment file name is already used
     if (File(newCommentFilePathName).existsSync()) {
-      warningMessageVM.renameCommentFileNameAlreadyUsed =
-          audioModifiedFileName.substring(0, audioModifiedFileName.length - 4);
+      warningMessageVM.renameCommentFileNameIsAlreadyUsed(
+        invalidRenameFileName: DirUtil.getFileNameWithoutMp3Extension(
+          mp3FileName: audioModifiedFileName,
+        ),
+      );
 
       return;
     }
+
+    // renaming the audio file
 
     if (!DirUtil.renameFile(
       fileToRenameFilePathName: audio.filePathName,
@@ -624,6 +633,28 @@ class AudioDownloadVM extends ChangeNotifier {
       DirUtil.renameFile(
         fileToRenameFilePathName: oldCommentFilePathName,
         newFileName: commentNewFileName,
+      );
+
+      // Displaying a warning message to confirm that the audio
+      // file and its associated comments file were renamed
+      warningMessageVM.confirmRenameAudioAndCommentFile(
+        oldFileName: DirUtil.getFileNameWithoutMp3Extension(
+          mp3FileName: audioOldFileName,
+        ),
+        newFileName: DirUtil.getFileNameWithoutMp3Extension(
+          mp3FileName: audioModifiedFileName,
+        ),
+      );
+    } else {
+      // Displaying a warning message to confirm that the
+      // audio file was renamed
+      warningMessageVM.confirmRenameAudioFile(
+        oldFileName: DirUtil.getFileNameWithoutMp3Extension(
+          mp3FileName: audioOldFileName,
+        ),
+        newFileName: DirUtil.getFileNameWithoutMp3Extension(
+          mp3FileName: audioModifiedFileName,
+        ),
       );
     }
 

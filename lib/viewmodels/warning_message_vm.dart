@@ -44,6 +44,11 @@ enum WarningMessageType {
   // name proposed for renaming a comment file is the name of an existing
   // file.
 
+  renameAudioFileConfirm, // The case if the an audio file was renamed.
+
+  renameAudioAndCommentFileConfirm, // The case if the both audio and comment
+  // files were renamed.
+
   playlistWithUrlAlreadyInListOfPlaylists, // User clicked on Add
   // button but the playlist with this url was already downloaded.
 
@@ -375,17 +380,23 @@ class WarningMessageVM extends ChangeNotifier {
 
   String _renameFileNameInvalid = '';
   String get renameFileNameInvalid => _renameFileNameInvalid;
-  set renameFileNameInvalid(String invalidRenameFileName) {
+
+  void renameFileNameIsInvalid({
+    required String invalidRenameFileName,
+  }) {
     _renameFileNameInvalid = invalidRenameFileName;
     warningMessageType = WarningMessageType.renameFileNameInvalid;
 
     // Causes the display warning message widget to be displayed.      // Causes the display warning message widget to be displayed.
     notifyListeners();
   }
-  
+
   String _renameFileNameAlreadyUsed = '';
   String get renameFileNameAlreadyUsed => _renameFileNameAlreadyUsed;
-  set renameFileNameAlreadyUsed(String invalidRenameFileName) {
+
+  void renameFileNameIsAlreadyUsed({
+    required String invalidRenameFileName,
+  }) {
     _renameFileNameAlreadyUsed = invalidRenameFileName;
     warningMessageType = WarningMessageType.renameFileNameAlreadyUsed;
 
@@ -394,10 +405,45 @@ class WarningMessageVM extends ChangeNotifier {
   }
 
   String _renameCommentFileNameAlreadyUsed = '';
-  String get renameCommentFileNameAlreadyUsed => _renameCommentFileNameAlreadyUsed;
-  set renameCommentFileNameAlreadyUsed(String invalidRenameFileName) {
+  String get renameCommentFileNameAlreadyUsed =>
+      _renameCommentFileNameAlreadyUsed;
+
+  void renameCommentFileNameIsAlreadyUsed({
+    required String invalidRenameFileName,
+  }) {
     _renameCommentFileNameAlreadyUsed = invalidRenameFileName;
     warningMessageType = WarningMessageType.renameCommentFileNameAlreadyUsed;
+
+    // Causes the display warning message widget to be displayed.      // Causes the display warning message widget to be displayed.
+    notifyListeners();
+  }
+
+  String _oldFileName = '';
+  String get oldFileName =>
+      _oldFileName;
+  String _newFileName = '';
+  String get newFileName =>
+      _newFileName;
+      
+  void confirmRenameAudioFile({
+    required String oldFileName,
+    required String newFileName,
+  }) {
+    _oldFileName = oldFileName;
+    _newFileName = newFileName;
+    warningMessageType = WarningMessageType.renameAudioFileConfirm;
+
+    // Causes the display warning message widget to be displayed.      // Causes the display warning message widget to be displayed.
+    notifyListeners();
+  }
+      
+  void confirmRenameAudioAndCommentFile({
+    required String oldFileName,
+    required String newFileName,
+  }) {
+    _oldFileName = oldFileName;
+    _newFileName = newFileName;
+    warningMessageType = WarningMessageType.renameAudioAndCommentFileConfirm;
 
     // Causes the display warning message widget to be displayed.      // Causes the display warning message widget to be displayed.
     notifyListeners();

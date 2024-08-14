@@ -162,6 +162,12 @@ class DirUtil {
     return path.dirname(pathFileName);
   }
 
+  static String getFileNameWithoutMp3Extension({
+    required String mp3FileName,
+  }) {
+    return mp3FileName.substring(0, mp3FileName.length - 4);
+  }
+
   static void deleteFilesAndSubDirsOfDir({
     required String rootPath,
   }) {

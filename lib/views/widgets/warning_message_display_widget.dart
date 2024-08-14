@@ -253,10 +253,47 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           _displayWarningDialog(
             context: _context,
-            message: AppLocalizations.of(context)!
-                .renameFileNameInvalid(fileName),
+            message:
+                AppLocalizations.of(context)!.renameFileNameInvalid(fileName),
             warningMessageVM: _warningMessageVM,
             themeProviderVM: themeProviderVM,
+          );
+        });
+
+        return const SizedBox.shrink();
+      case WarningMessageType.renameAudioFileConfirm:
+        String oldFileName = _warningMessageVM.oldFileName;
+        String newFileName = _warningMessageVM.newFileName;
+
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _displayWarningDialog(
+            context: _context,
+            message: AppLocalizations.of(context)!.renameAudioFileConfirmation(
+              newFileName,
+              oldFileName,
+            ),
+            warningMessageVM: _warningMessageVM,
+            themeProviderVM: themeProviderVM,
+            warningMode: WarningMode.confirm,
+          );
+        });
+
+        return const SizedBox.shrink();
+      case WarningMessageType.renameAudioAndCommentFileConfirm:
+        String oldFileName = _warningMessageVM.oldFileName;
+        String newFileName = _warningMessageVM.newFileName;
+
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _displayWarningDialog(
+            context: _context,
+            message: AppLocalizations.of(context)!
+                .renameAudioAndCommentFileConfirmation(
+              newFileName,
+              oldFileName,
+            ),
+            warningMessageVM: _warningMessageVM,
+            themeProviderVM: themeProviderVM,
+            warningMode: WarningMode.confirm,
           );
         });
 

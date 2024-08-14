@@ -91,7 +91,7 @@
       "url": {}
     }
   },
-"renameFileNameAlreadyUsed": "Le nom de fichier \"{fileName}\" est déjà utilisé par un autre fichier dans le même répertoire et ne peut donc pas être réutilisé.",
+  "renameFileNameAlreadyUsed": "Le nom de fichier \"{fileName}\" est déjà utilisé par un autre fichier dans le même répertoire et ne peut donc pas être réutilisé.",
   "@renameFileNameAlreadyUsed": {
     "description": "Warning announcing that the playlist with invalid URL was not added.",
     "placeholders": {
@@ -307,7 +307,7 @@
   "playableAudioDialogSortDescriptionTooltipTopRemainingDurationBigger": "Les audio en haut ont une durée d'écoute restante plus longue que ceux d'en bas.",
   "playableAudioDialogSortDescriptionTooltipTopRemainingDurationSmaller": "Les audio en haut ont une durée d'écoute restante plus courte que ceux d'en bas.",
   "playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeBigger": "Les audio en haut ont été écoutés plus récemment que ceux d'en bas.",
-  "playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeSmaller": "Les audio en haut ont été écoutés moins récemment que ceux d'en bas.", 
+  "playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeSmaller": "Les audio en haut ont été écoutés moins récemment que ceux d'en bas.",
   "saveAs": "Enregistrer sous:",
   "sortFilterSaveAsTextFieldTooltip": "Enregistrer les paramètres de tri/filtrage avec le nom spécifié. Les paramètres existants avec le même nom seront mis à jour.",
   "applySortFilterToView": "Appliquer le tri/filtre aux vues:",
@@ -402,5 +402,7 @@
   "downloadSingleVideoAudioAtMusicQuality": "Télécharger l'audio de la vidéo à qualité musicale",
   "videoTitleNotWrittenInOccidentalLettersWarning": "Le titre original de la vidéo n'étant pas écrit en caractères occidentaux, le titre audio est vide. Vous pouvez utiliser le menu audio 'Modifier le titre de l'audio ...' pour définir un titre valide. Même remarque pour améliorer le nom du fichier audio ...",
   "renameCommentFileNameAlreadyUsed": "Le nom du fichier de commentaires \"{fileName}.json\" est déjà utilisé dans le même répertoire de commentaires. Il est donc impossible de renommer le fichier audio avec le nom \"{fileName}.mp3\".",
-  "renameFileNameInvalid": "Le nom du fichier audio \"{fileName}\" n'a pas d'extension mp3 et n'est donc pas valide."
+  "renameFileNameInvalid": "Le nom du fichier audio \"{fileName}\" n'a pas d'extension mp3 et n'est donc pas valide.",
+  "renameAudioFileConfirmation": "Le fichier audio \"{oldFileIame}.mp3\" a été renommé en \"{newFileName}.mp3\".",
+  "renameAudioAndCommentFileConfirmation": "Le fichier audio \"{oldFileIame}.mp3\" a été renommé \"{newFileName}.mp3\" ainsi que le fichier de commentaires associé \"{oldFileIame}.json\" a été renommé \"{newFileName}.json\"."
 }

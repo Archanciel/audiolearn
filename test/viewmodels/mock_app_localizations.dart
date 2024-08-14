@@ -1231,4 +1231,18 @@ class MockAppLocalizations extends AppLocalizations {
     Object fileName,
   ) =>
       "The audio file name \"$fileName\" has no mp3 extension and so is invalid.";
+
+  @override
+  String renameAudioFileConfirmation(
+    Object oldFileIame,
+    Object newFileName,
+  ) =>
+      "Audio file \"$oldFileIame.mp3\" renamed to \"$newFileName.mp3\".";
+
+  @override
+  String renameAudioAndCommentFileConfirmation(
+    Object oldFileIame,
+    Object newFileName,
+  ) =>
+      "Audio file \"$oldFileIame.mp3\" renamed to \"$newFileName.mp3\" as well as comment file \"$oldFileIame.json\" renamed to \"$newFileName.json\".";
 }
