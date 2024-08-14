@@ -118,7 +118,7 @@ void main() {
       ));
 
       // tapping on the downl playlist button in the app which calls the
-      // AudioDownloadVM.downloadPlaylistAudios() method
+      // AudioDownloadVM.downloadPlaylistAudios(playlistUrl) method
       await tester.tap(find.byKey(const Key('downloadPlaylistAudiosButton')));
       await tester.pump();
 
@@ -245,14 +245,14 @@ void main() {
 
       // Checking the data of the audio contained in the downloaded
       // audio list
-      checkPlaylistAudioTwo(
+      checkDownloadedAudioShortVideoTwo(
         downloadedAudioTwo: downloadedAudioLstBeforeDownload[0],
         audioTwoFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
       );
 
       // Checking the data of the audio contained in the playable
       // audio list
-      checkPlaylistAudioTwo(
+      checkDownloadedAudioShortVideoTwo(
         downloadedAudioTwo: playableAudioLstBeforeDownload[0],
         audioTwoFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
       );
@@ -278,7 +278,7 @@ void main() {
       ));
 
       // tapping on the downl playlist button in the app which calls the
-      // AudioDownloadVM.downloadPlaylistAudios() method
+      // AudioDownloadVM.downloadPlaylistAudios(playlistUrl) method
       await tester.tap(find.byKey(const Key('downloadPlaylistAudiosButton')));
       await tester.pump();
 
@@ -437,7 +437,7 @@ void main() {
 
       // Checking the data of the audio contained in the downloaded
       // audio list
-      checkPlaylistAudioTwo(
+      checkDownloadedAudioShortVideoTwo(
         downloadedAudioTwo: singleVideoDownloadedPlaylist.downloadedAudioLst[0],
         audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
       );
@@ -468,15 +468,16 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets('In music quality. Local playlist containing no audio',
+    testWidgets('''Download single video in musical quality to a target local
+                   playlist containing no audio''',
         (WidgetTester tester) async {
       late AudioDownloadVM audioDownloadVM;
-      String localTestPlaylistTitle =
+      String localTargetPlaylistTitle =
           'audio_learn_download_single_video_to_empty_local_playlist_test';
       String localTestPlaylistDir =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$localTestPlaylistTitle";
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$localTargetPlaylistTitle";
       String savedTestPlaylistDir =
-          "$kDownloadAppTestSavedDataDir${path.separator}$localTestPlaylistTitle";
+          "$kDownloadAppTestSavedDataDir${path.separator}$localTargetPlaylistTitle";
 
       final Directory directory = Directory(localTestPlaylistDir);
 
@@ -491,7 +492,7 @@ void main() {
       // Copying the initial local playlist json file with no audio
       await DirUtil.copyFileToDirectory(
         sourceFilePathName:
-            "$savedTestPlaylistDir${path.separator}$localTestPlaylistTitle.json",
+            "$savedTestPlaylistDir${path.separator}$localTargetPlaylistTitle.json",
         targetDirectoryPath: localTestPlaylistDir,
       );
 
@@ -532,7 +533,10 @@ void main() {
       );
 
       // tapping on the downl single video button in the app which
-      // calls the AudioDownloadVM.downloadPlaylistAudios() method
+      // calls the AudioDownloadVM.downloadSingleVideoAudio(videoUrl,
+      // singleVideoTargetPlaylist, downloadAtMusicQuality) method.
+      //
+      // In this case, the downloadAtMusicQuality is set to true.
       await tester.tap(find
           .byKey(const Key('downloadSingleVideoAudioInMusicQualityButton')));
       await tester.pump();
@@ -550,8 +554,8 @@ void main() {
 
       checkDownloadedPlaylist(
         downloadedPlaylist: singleVideoDownloadedPlaylist,
-        playlistId: localTestPlaylistTitle,
-        playlistTitle: localTestPlaylistTitle,
+        playlistId: localTargetPlaylistTitle,
+        playlistTitle: localTargetPlaylistTitle,
         playlistUrl: '',
         playlistDir: localTestPlaylistDir,
       );
@@ -563,9 +567,9 @@ void main() {
       expect(audioDownloadVM.lastSecondDownloadSpeed, 0);
       expect(audioDownloadVM.isHighQuality, true);
 
-      // Checking the data of the audio contained in the downloaded
-      // audio list
-      checkPlaylistAudioTwo(
+      // Checking the data of the single video audio contained in the
+      // target playlist in which the audio was downloaded
+      checkDownloadedAudioShortVideoTwo(
         downloadedAudioTwo: singleVideoDownloadedPlaylist.downloadedAudioLst[0],
         audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
         downloadedAtMusicQuality: true,
@@ -581,7 +585,7 @@ void main() {
       // downloaded audio data
 
       String playlistPathFileName =
-          '$localTestPlaylistDir${path.separator}$localTestPlaylistTitle.json';
+          '$localTestPlaylistDir${path.separator}$localTargetPlaylistTitle.json';
 
       Playlist loadedPlaylist = JsonDataService.loadFromFile(
           jsonPathFileName: playlistPathFileName, type: Playlist);
@@ -855,7 +859,7 @@ void main() {
       );
 
       // tapping on the downl playlist button in the app which calls the
-      // AudioDownloadVM.downloadPlaylistAudios() method
+      // AudioDownloadVM.downloadPlaylistAudios(playlistUrl) method
       await tester.tap(find.byKey(const Key('downloadPlaylistAudiosButton')));
       await tester.pump();
 
@@ -967,21 +971,23 @@ void checkPlaylistDownloadedAudios({
   required String audioOneFileNamePrefix,
   required String audioTwoFileNamePrefix,
 }) {
-  checkPlaylistAudioOne(
+  checkDownloadedAudioShortVideoOne(
     downloadedAudioOne: downloadedAudioOne,
     audioOneFileNamePrefix: audioOneFileNamePrefix,
   );
 
-  checkPlaylistAudioTwo(
+  checkDownloadedAudioShortVideoTwo(
     downloadedAudioTwo: downloadedAudioTwo,
     audioTwoFileNamePrefix: audioTwoFileNamePrefix,
   );
 }
 
-// Verify the values of the first Audio extracted from a playlist
-void checkPlaylistAudioOne({
+/// Verify the values of the "audio learn test short video one" downloaded
+/// audio.
+void checkDownloadedAudioShortVideoOne({
   required Audio downloadedAudioOne,
   required String audioOneFileNamePrefix,
+  bool downloadedAtMusicQuality = false,
 }) {
   expect(downloadedAudioOne.originalVideoTitle,
       "audio learn test short video one");
@@ -997,6 +1003,7 @@ void checkPlaylistAudioOne({
       DateTime.parse("2023-06-10"));
   expect(downloadedAudioOne.audioDuration, const Duration(milliseconds: 24000));
   expect(downloadedAudioOne.audioPlaySpeed, 1.0);
+  expect(downloadedAudioOne.isAudioMusicQuality, downloadedAtMusicQuality);
 
   String firstAudioFileName = downloadedAudioOne.audioFileName;
   expect(
@@ -1008,8 +1015,9 @@ void checkPlaylistAudioOne({
   expect(downloadedAudioOne.audioFileSize, 143679);
 }
 
-// Verify the values of the second Audio extracted from a playlist
-void checkPlaylistAudioTwo({
+/// Verify the values of the "audio learn test short video two" downloaded
+/// audio.
+void checkDownloadedAudioShortVideoTwo({
   required Audio downloadedAudioTwo,
   required String audioTwoFileNamePrefix,
   bool downloadedAtMusicQuality = false,
