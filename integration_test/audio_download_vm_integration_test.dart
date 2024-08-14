@@ -796,11 +796,12 @@ void main() {
         settingsDataService: settingsDataService,
         isTest: true,
       );
-      Playlist downloadedPlaylistBeforeDownload =
+      Playlist existingPlaylistBeforeDownloadingRecreatedPlaylistWithSameTitle =
           audioDownloadVMbeforeDownload.listOfPlaylist[0];
 
       checkDownloadedPlaylist(
-        downloadedPlaylist: downloadedPlaylistBeforeDownload,
+        downloadedPlaylist:
+            existingPlaylistBeforeDownloadingRecreatedPlaylistWithSameTitle,
         playlistId: globalTestPlaylistId,
         playlistTitle: globalTestPlaylistTitle,
         playlistUrl: globalTestPlaylistUrl,
@@ -808,9 +809,11 @@ void main() {
       );
 
       List<Audio> downloadedAudioLstBeforeDownload =
-          downloadedPlaylistBeforeDownload.downloadedAudioLst;
+          existingPlaylistBeforeDownloadingRecreatedPlaylistWithSameTitle
+              .downloadedAudioLst;
       List<Audio> playableAudioLstBeforeDownload =
-          downloadedPlaylistBeforeDownload.playableAudioLst;
+          existingPlaylistBeforeDownloadingRecreatedPlaylistWithSameTitle
+              .playableAudioLst;
 
       // Checking the data of the audio contained in the already
       // downloaded audio list
@@ -877,16 +880,18 @@ void main() {
       await Future.delayed(const Duration(seconds: secondsDelay));
       await tester.pumpAndSettle();
 
-      Playlist downloadedPlaylist = audioDownloadVM.listOfPlaylist[0];
+      Playlist addedPlaylistAfterDownloadingRecreatedPlaylistWithSameTitle =
+          audioDownloadVM.listOfPlaylist[0];
 
       // The initial playlist json file was updated with the recreated
       // playlist id and url as well as with the newly downloaded audio
-      checkDownloadedPlaylist(
-        downloadedPlaylist: downloadedPlaylist,
-        playlistId: recreatedPlaylistId,
-        playlistTitle: globalTestPlaylistTitle,
-        playlistUrl: recreatedPlaylistWithSameTitleUrl,
-        playlistDir: globalTestPlaylistDir,
+      compareNewRecreatedPlaylistToPreviouslyExistingPlaylist(
+        newRecreatedPlaylistWithSameTitle:
+            addedPlaylistAfterDownloadingRecreatedPlaylistWithSameTitle,
+        previouslyExistingPlaylist:
+            existingPlaylistBeforeDownloadingRecreatedPlaylistWithSameTitle,
+        newRecreatedPlaylistWithSameTitleId: recreatedPlaylistId,
+        newRecreatedPlaylistWithSameTitleUrl: recreatedPlaylistWithSameTitleUrl,
       );
 
       // this check fails if the secondsDelay value is too small
@@ -900,8 +905,12 @@ void main() {
       // values of the 1st and 2nd audio still in the playlist json
       // file and deleted from the playlist dir ...
       checkPlaylistDownloadedAudios(
-        downloadedAudioOne: downloadedPlaylist.downloadedAudioLst[0],
-        downloadedAudioTwo: downloadedPlaylist.downloadedAudioLst[1],
+        downloadedAudioOne:
+            addedPlaylistAfterDownloadingRecreatedPlaylistWithSameTitle
+                .downloadedAudioLst[0],
+        downloadedAudioTwo:
+            addedPlaylistAfterDownloadingRecreatedPlaylistWithSameTitle
+                .downloadedAudioLst[1],
         audioOneFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
         audioTwoFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
       );
@@ -910,8 +919,12 @@ void main() {
       // and added to the playlist downloaded audio lst ...
 
       checkPlaylistNewDownloadedAudios(
-        downloadedAudioOne: downloadedPlaylist.downloadedAudioLst[2],
-        downloadedAudioTwo: downloadedPlaylist.downloadedAudioLst[3],
+        downloadedAudioOne:
+            addedPlaylistAfterDownloadingRecreatedPlaylistWithSameTitle
+                .downloadedAudioLst[2],
+        downloadedAudioTwo:
+            addedPlaylistAfterDownloadingRecreatedPlaylistWithSameTitle
+                .downloadedAudioLst[3],
       );
 
       // playableAudioLst contains Audio's inserted at list start.
@@ -919,8 +932,12 @@ void main() {
       // playlist json file and deleted from the playlist dir ...
 
       checkPlaylistDownloadedAudios(
-        downloadedAudioOne: downloadedPlaylist.playableAudioLst[3],
-        downloadedAudioTwo: downloadedPlaylist.playableAudioLst[2],
+        downloadedAudioOne:
+            addedPlaylistAfterDownloadingRecreatedPlaylistWithSameTitle
+                .playableAudioLst[3],
+        downloadedAudioTwo:
+            addedPlaylistAfterDownloadingRecreatedPlaylistWithSameTitle
+                .playableAudioLst[2],
         audioOneFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
         audioTwoFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
       );
@@ -934,8 +951,12 @@ void main() {
       //
       // playableAudioLst contains Audio's inserted at list start
       checkPlaylistNewDownloadedAudios(
-        downloadedAudioOne: downloadedPlaylist.playableAudioLst[1],
-        downloadedAudioTwo: downloadedPlaylist.playableAudioLst[0],
+        downloadedAudioOne:
+            addedPlaylistAfterDownloadingRecreatedPlaylistWithSameTitle
+                .playableAudioLst[1],
+        downloadedAudioTwo:
+            addedPlaylistAfterDownloadingRecreatedPlaylistWithSameTitle
+                .playableAudioLst[0],
       );
 
       // Checking if there are 3 files in the directory (2 mp3 and 1 json)
@@ -986,6 +1007,50 @@ void checkPlaylistDownloadedAudios({
     downloadedAudioTwo: downloadedAudioTwo,
     audioTwoFileNamePrefix: audioTwoFileNamePrefix,
   );
+}
+
+// Verify the values of the Audio's extracted from a playlist
+void compareNewRecreatedPlaylistToPreviouslyExistingPlaylist({
+  required Playlist newRecreatedPlaylistWithSameTitle,
+  required Playlist previouslyExistingPlaylist,
+  required String newRecreatedPlaylistWithSameTitleId,
+  required String newRecreatedPlaylistWithSameTitleUrl,
+}) {
+  expect(newRecreatedPlaylistWithSameTitle.id,
+      newRecreatedPlaylistWithSameTitleId);
+  expect(newRecreatedPlaylistWithSameTitle.title,
+      previouslyExistingPlaylist.title);
+  expect(newRecreatedPlaylistWithSameTitle.url,
+      newRecreatedPlaylistWithSameTitleUrl);
+  expect(newRecreatedPlaylistWithSameTitle.downloadPath,
+      previouslyExistingPlaylist.downloadPath);
+  expect(newRecreatedPlaylistWithSameTitle.playlistQuality,
+      previouslyExistingPlaylist.playlistQuality);
+  expect(newRecreatedPlaylistWithSameTitle.audioPlaySpeed,
+      previouslyExistingPlaylist.audioPlaySpeed);
+  expect(newRecreatedPlaylistWithSameTitle.playlistType,
+      previouslyExistingPlaylist.playlistType);
+  expect(newRecreatedPlaylistWithSameTitle.isSelected,
+      previouslyExistingPlaylist.isSelected);
+
+  expect(newRecreatedPlaylistWithSameTitle.downloadedAudioLst.length,
+      previouslyExistingPlaylist.downloadedAudioLst.length + 2);
+  expect(newRecreatedPlaylistWithSameTitle.playableAudioLst.length,
+      previouslyExistingPlaylist.playableAudioLst.length + 2);
+
+  expect(newRecreatedPlaylistWithSameTitle.applyAutomaticallySortFilterParmsForPlaylistDownloadView,
+      previouslyExistingPlaylist.applyAutomaticallySortFilterParmsForPlaylistDownloadView);
+  expect(newRecreatedPlaylistWithSameTitle.audioSortFilterParmsNameForPlaylistDownloadView,
+      previouslyExistingPlaylist.audioSortFilterParmsNameForPlaylistDownloadView);
+  expect(newRecreatedPlaylistWithSameTitle.audioSortFilterParmsForPlaylistDownloadView,
+      previouslyExistingPlaylist.audioSortFilterParmsForPlaylistDownloadView);
+
+  expect(newRecreatedPlaylistWithSameTitle.applyAutomaticallySortFilterParmsForAudioPlayerView,
+      previouslyExistingPlaylist.applyAutomaticallySortFilterParmsForAudioPlayerView);
+  expect(newRecreatedPlaylistWithSameTitle.audioSortFilterParmsNameForAudioPlayerView,
+      previouslyExistingPlaylist.audioSortFilterParmsNameForAudioPlayerView);
+  expect(newRecreatedPlaylistWithSameTitle.audioSortFilterParmsForAudioPlayerView,
+      previouslyExistingPlaylist.audioSortFilterParmsForAudioPlayerView);
 }
 
 /// Verify the values of the "audio learn test short video one" downloaded
