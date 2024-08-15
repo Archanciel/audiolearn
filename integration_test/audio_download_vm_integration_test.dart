@@ -1038,15 +1038,11 @@ void compareNewRecreatedPlaylistToPreviouslyExistingPlaylist({
   expect(newRecreatedPlaylistWithSameTitle.playableAudioLst.length,
       previouslyExistingPlaylist.playableAudioLst.length + 2);
 
-  expect(newRecreatedPlaylistWithSameTitle.applyAutomaticallySortFilterParmsForPlaylistDownloadView,
-      previouslyExistingPlaylist.applyAutomaticallySortFilterParmsForPlaylistDownloadView);
   expect(newRecreatedPlaylistWithSameTitle.audioSortFilterParmsNameForPlaylistDownloadView,
       previouslyExistingPlaylist.audioSortFilterParmsNameForPlaylistDownloadView);
   expect(newRecreatedPlaylistWithSameTitle.audioSortFilterParmsForPlaylistDownloadView,
       previouslyExistingPlaylist.audioSortFilterParmsForPlaylistDownloadView);
 
-  expect(newRecreatedPlaylistWithSameTitle.applyAutomaticallySortFilterParmsForAudioPlayerView,
-      previouslyExistingPlaylist.applyAutomaticallySortFilterParmsForAudioPlayerView);
   expect(newRecreatedPlaylistWithSameTitle.audioSortFilterParmsNameForAudioPlayerView,
       previouslyExistingPlaylist.audioSortFilterParmsNameForAudioPlayerView);
   expect(newRecreatedPlaylistWithSameTitle.audioSortFilterParmsForAudioPlayerView,

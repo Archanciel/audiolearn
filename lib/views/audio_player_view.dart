@@ -694,7 +694,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
               );
               break;
             case PopupMenuButtonType.saveSortFilterAudioParmsToPlaylist:
-              showDialog<bool>(
+              showDialog<List<bool>>(
                 context: context,
                 barrierDismissible: false, // This line prevents the dialog from
                 // closing when tapping outside the dialog
@@ -702,19 +702,23 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                   return PlaylistSortFilterOptionsSaveDialogWidget(
                     playlistTitle:
                         playlistListVMlistenFalse.uniqueSelectedPlaylist!.title,
-                    applicationViewType: AudioLearnAppViewType.audioPlayerView,
+                    sortFilterParametersName: '', // TODO once you refactored
+                    //                              playlist download view sort
+                    //                              filter parms code, correct that
                   );
                 },
-              ).then((isSortFilterParmsApplicationAutomatic) {
-                if (isSortFilterParmsApplicationAutomatic != null) {
-                  // if the user clicked on Save, not on Cancel button
-                  playlistListVMlistenFalse
-                      .savePlaylistAudioSortFilterParmsToPlaylist(
-                    audioLearnAppView: AudioLearnAppViewType.audioPlayerView,
-                    isSortFilterParmsApplicationAutomatic:
-                        isSortFilterParmsApplicationAutomatic,
-                  );
+              ).then((forViewLst) {
+                if (forViewLst == null) {
+                  // the user clicked on Cancel button
+                  return;
                 }
+
+                // if the user clicked on Save, not on Cancel button
+                playlistListVMlistenFalse
+                    .savePlaylistAudioSortFilterParmsToPlaylist(
+                  forAudioPlayerView: forViewLst[0],
+                  forPlaylistDownloadView: forViewLst[1],
+                );
               });
               break;
             default:

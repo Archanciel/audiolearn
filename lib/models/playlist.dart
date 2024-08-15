@@ -68,11 +68,9 @@ class Playlist {
   // automatically when the playlist is opened in the PlaylistDownloadView
   // or in the AudioPlayerView.
 
-  bool applyAutomaticallySortFilterParmsForPlaylistDownloadView = false;
   String audioSortFilterParmsNameForPlaylistDownloadView = '';
   AudioSortFilterParameters? audioSortFilterParmsForPlaylistDownloadView;
 
-  bool applyAutomaticallySortFilterParmsForAudioPlayerView = false;
   String audioSortFilterParmsNameForAudioPlayerView = '';
   AudioSortFilterParameters? audioSortFilterParmsForAudioPlayerView;
 
@@ -96,10 +94,8 @@ class Playlist {
     required this.downloadPath,
     required this.isSelected,
     required this.currentOrPastPlayableAudioIndex,
-    required this.applyAutomaticallySortFilterParmsForPlaylistDownloadView,
     required this.audioSortFilterParmsNameForPlaylistDownloadView,
     required this.audioSortFilterParmsForPlaylistDownloadView,
-    required this.applyAutomaticallySortFilterParmsForAudioPlayerView,
     required this.audioSortFilterParmsNameForAudioPlayerView,
     required this.audioSortFilterParmsForAudioPlayerView,
   });
@@ -124,8 +120,6 @@ class Playlist {
       isSelected: json['isSelected'],
       currentOrPastPlayableAudioIndex:
           json['currentOrPastPlayableAudioIndex'] ?? -1,
-      applyAutomaticallySortFilterParmsForPlaylistDownloadView:
-          json['applySortFilterParmsForPlaylistDownloadView'] ?? false,
       audioSortFilterParmsNameForPlaylistDownloadView:
           json['audioSortFilterParmsNamePlaylistDownloadView'] ?? '',
       audioSortFilterParmsForPlaylistDownloadView:
@@ -133,8 +127,6 @@ class Playlist {
               ? AudioSortFilterParameters.fromJson(
                   json['audioSortFilterParmsPlaylistDownloadView'])
               : null,
-      applyAutomaticallySortFilterParmsForAudioPlayerView:
-          json['applySortFilterParmsForAudioPlayerView'] ?? false,
       audioSortFilterParmsNameForAudioPlayerView:
           json['audioSortFilterParmsNameAudioPlayerView'] ?? '',
       audioSortFilterParmsForAudioPlayerView:
@@ -183,14 +175,10 @@ class Playlist {
           playableAudioLst.map((audio) => audio.toJson()).toList(),
       'isSelected': isSelected,
       'currentOrPastPlayableAudioIndex': currentOrPastPlayableAudioIndex,
-      'applySortFilterParmsForPlaylistDownloadView':
-          applyAutomaticallySortFilterParmsForPlaylistDownloadView,
       'audioSortFilterParmsNamePlaylistDownloadView':
           audioSortFilterParmsNameForPlaylistDownloadView,
       'audioSortFilterParmsPlaylistDownloadView':
           audioSortFilterParmsForPlaylistDownloadView?.toJson(),
-      'applySortFilterParmsForAudioPlayerView':
-          applyAutomaticallySortFilterParmsForAudioPlayerView,
       'audioSortFilterParmsNameAudioPlayerView':
           audioSortFilterParmsNameForAudioPlayerView,
       'audioSortFilterParmsAudioPlayerView':
@@ -655,15 +643,11 @@ class Playlist {
     currentOrPastPlayableAudioIndex =
         replacedPlaylist.currentOrPastPlayableAudioIndex;
 
-    applyAutomaticallySortFilterParmsForPlaylistDownloadView = replacedPlaylist
-        .applyAutomaticallySortFilterParmsForPlaylistDownloadView;
     audioSortFilterParmsNameForPlaylistDownloadView =
         replacedPlaylist.audioSortFilterParmsNameForPlaylistDownloadView;
     audioSortFilterParmsForPlaylistDownloadView =
         replacedPlaylist.audioSortFilterParmsForPlaylistDownloadView;
 
-    applyAutomaticallySortFilterParmsForAudioPlayerView =
-        replacedPlaylist.applyAutomaticallySortFilterParmsForAudioPlayerView;
     audioSortFilterParmsNameForAudioPlayerView =
         replacedPlaylist.audioSortFilterParmsNameForAudioPlayerView;
     audioSortFilterParmsForAudioPlayerView =

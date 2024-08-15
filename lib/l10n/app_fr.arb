@@ -287,10 +287,8 @@
   "fullyListened": "Entièrement écouté",
   "partiallyListened": "Partiellement écouté",
   "notListened": "Non écouté",
-  "saveSortFilterOptionsToPlaylistDialogTitle": "Sauvegarder les options de tri et de filtre",
+  "saveSortFilterOptionsToPlaylistDialogTitle": "Sauvegarder les options de tri et de filtre \"{sortFilterParmsName}\"",
   "saveSortFilterOptionsToPlaylist": "Dans la playlist \"{title}\"",
-  "saveSortFilterOptionsForView": "Pour la vue \"{title}\"",
-  "saveSortFilterOptionsAutomaticApplication": "Appl. les options automat.",
   "saveSortFilterOptionsAutomaticApplicationTooltip": "Appliquer automatiquement les options de tri/filtrage enregistrées lorsque la playlist est sélectionnée.",
   "saveSortFilterOptionsAutomaticApplicationAudioPlayerViewTooltip": "Appliquer automatiquement les options de tri/filtrage enregistrées à la vue \"Lire Audio\". Le prochain audio joué sera le premier audio non complètement écouté après l'audio actuel dans la liste triée et filtrée.",
   "saveButton": "Sauver",
@@ -404,5 +402,6 @@
   "renameCommentFileNameAlreadyUsed": "Le nom du fichier de commentaires \"{fileName}.json\" est déjà utilisé dans le même répertoire de commentaires. Il est donc impossible de renommer le fichier audio avec le nom \"{fileName}.mp3\".",
   "renameFileNameInvalid": "Le nom du fichier audio \"{fileName}\" n'a pas d'extension mp3 et n'est donc pas valide.",
   "renameAudioFileConfirmation": "Le fichier audio \"{oldFileIame}.mp3\" a été renommé en \"{newFileName}.mp3\".",
-  "renameAudioAndCommentFileConfirmation": "Le fichier audio \"{oldFileIame}.mp3\" a été renommé \"{newFileName}.mp3\" ainsi que le fichier de commentaires associé \"{oldFileIame}.json\" a été renommé \"{newFileName}.json\"."
+  "renameAudioAndCommentFileConfirmation": "Le fichier audio \"{oldFileIame}.mp3\" a été renommé \"{newFileName}.mp3\" ainsi que le fichier de commentaires associé \"{oldFileIame}.json\" a été renommé \"{newFileName}.json\".",
+  "forScreen": "Pour l'écran \"{screenName}\""
 }

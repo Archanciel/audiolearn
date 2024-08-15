@@ -285,10 +285,8 @@
   "fullyListened": "Fully listened",
   "partiallyListened": "Partially listened",
   "notListened": "Not listened",
-  "saveSortFilterOptionsToPlaylistDialogTitle": "Save Sort/Filter Options",
+  "saveSortFilterOptionsToPlaylistDialogTitle": "Save Sort/Filter \"{sortFilterParmsName}\"",
   "saveSortFilterOptionsToPlaylist": "To playlist \"{title}\"",
-  "saveSortFilterOptionsForView": "For \"{title}\" view",
-  "saveSortFilterOptionsAutomaticApplication": "Apply options automatically",
   "saveSortFilterOptionsAutomaticApplicationTooltip": "If 'Automatic application' is selected, the sort/filter options stored in the playlist are automatically applied when the playlist is selected.",
   "saveSortFilterOptionsAutomaticApplicationAudioPlayerViewTooltip": "If 'Automatic application' is selected, the sort/filter options stored in the playlist are automatically applied to the \"Play Audio\" audio list. This means that the next played audio will be the first not fully played audio located after the current audio in the sorted and filtered audio list.",
   "saveButton": "Save",
@@ -308,7 +306,7 @@
   "playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeSmaller": "Audio at the top were listened less recently than those at the bottom.", 
   "saveAs": "Save as:",
   "sortFilterSaveAsTextFieldTooltip": "Save the sort/filter settings with the specified name. Existing settings with the same name will be updated.",
-  "applySortFilterToView": "Apply sort/filter to views:",
+  "applySortFilterToView": "Apply sort/filter to:",
   "applySortFilterToViewTooltip": "Selecting sort/filter application to one or two audio views. This will be applied to the playlists to which this sort/filter is associated.",
   "saveSortFilterOptionsTooltip": "Update existing sort/filter options with modified parameters if the name already exists.",
   "applyButton": "Apply",
@@ -402,5 +400,6 @@
   "renameCommentFileNameAlreadyUsed": "The comment file name \"{fileName}.json\" already exists in the comment directory and so renaming the audio file with the name \"{fileName}.mp3\" is not possible.",
   "renameFileNameInvalid": "The audio file name \"{fileName}\" has no mp3 extension and so is invalid.",
   "renameAudioFileConfirmation": "Audio file \"{oldFileIame}.mp3\" renamed to \"{newFileName}.mp3\".",
-  "renameAudioAndCommentFileConfirmation": "Audio file \"{oldFileIame}.mp3\" renamed to \"{newFileName}.mp3\" as well as comment file \"{oldFileIame}.json\" renamed to \"{newFileName}.json\"."
+  "renameAudioAndCommentFileConfirmation": "Audio file \"{oldFileIame}.mp3\" renamed to \"{newFileName}.mp3\" as well as comment file \"{oldFileIame}.json\" renamed to \"{newFileName}.json\".",
+  "forScreen": "For \"{screenName}\" screen"
 }

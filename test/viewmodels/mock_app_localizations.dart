@@ -688,18 +688,7 @@ class MockAppLocalizations extends AppLocalizations {
   String get notListened => "Not listened";
 
   @override
-  String get saveSortFilterOptionsToPlaylistDialogTitle =>
-      "Save Sort/Filter Options";
-
-  @override
   String saveSortFilterOptionsToPlaylist(Object title) => "To playlist $title";
-
-  @override
-  String saveSortFilterOptionsForView(Object title) => "For $title view";
-
-  @override
-  String get saveSortFilterOptionsAutomaticApplication =>
-      "Sort/filter options automatic application";
 
   @override
   String get saveSortFilterOptionsAutomaticApplicationTooltip =>
@@ -1245,4 +1234,16 @@ class MockAppLocalizations extends AppLocalizations {
     Object newFileName,
   ) =>
       "Audio file \"$oldFileIame.mp3\" renamed to \"$newFileName.mp3\" as well as comment file \"$oldFileIame.json\" renamed to \"$newFileName.json\".";
+
+  @override
+  String forScreen(
+    Object screenName,
+  ) =>
+      "For \"$screenName\" screen";
+
+  @override
+  String saveSortFilterOptionsToPlaylistDialogTitle(
+    Object sortFilterParmsName,
+  ) =>
+      "Save Sort/Filter \"$sortFilterParmsName\"";
 }

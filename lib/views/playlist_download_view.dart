@@ -1044,7 +1044,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
               );
               break;
             case PopupMenuButtonType.saveSortFilterAudioParmsToPlaylist:
-              showDialog<bool>(
+              showDialog<List<bool>>(
                 context: context,
                 barrierDismissible:
                     false, // This line prevents the dialog from closing
@@ -1053,21 +1053,22 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                   return PlaylistSortFilterOptionsSaveDialogWidget(
                     playlistTitle:
                         playlistListVMlistenFalse.uniqueSelectedPlaylist!.title,
-                    applicationViewType:
-                        AudioLearnAppViewType.playlistDownloadView,
+                    sortFilterParametersName:
+                        _selectedSortFilterParametersName ?? '',
                   );
                 },
-              ).then((isSortFilterParmsApplicationAutomatic) {
-                if (isSortFilterParmsApplicationAutomatic != null) {
-                  // if the user clicked on Save, not on Cancel button
-                  playlistListVMlistenFalse
-                      .savePlaylistAudioSortFilterParmsToPlaylist(
-                    audioLearnAppView:
-                        AudioLearnAppViewType.playlistDownloadView,
-                    isSortFilterParmsApplicationAutomatic:
-                        isSortFilterParmsApplicationAutomatic,
-                  );
+              ).then((forViewLst) {
+                if (forViewLst == null) {
+                  // the user clicked on Cancel button
+                  return;
                 }
+
+                // if the user clicked on Save, not on Cancel button
+                playlistListVMlistenFalse
+                    .savePlaylistAudioSortFilterParmsToPlaylist(
+                  forAudioPlayerView: forViewLst[0],
+                  forPlaylistDownloadView: forViewLst[1],
+                );
               });
               break;
             default:

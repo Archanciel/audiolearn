@@ -632,72 +632,72 @@ class _AudioSortFilterDialogWidgetState
     BuildContext context,
     ThemeProviderVM themeProviderVM,
   ) {
-    return Tooltip(
-      message: AppLocalizations.of(context)!.applySortFilterToViewTooltip,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Tooltip(
+          message: AppLocalizations.of(context)!.applySortFilterToViewTooltip,
+          child: Text(
             AppLocalizations.of(context)!.applySortFilterToView,
             style: kDialogTitlesStyle,
           ),
-          const SizedBox(
-            height: 5,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                AppLocalizations.of(context)!.downloadAudioScreen,
-              ),
-              Checkbox(
-                key: const Key('playlistDownloadViewCheckbox'),
-                fillColor: WidgetStateColor.resolveWith(
-                  (Set<WidgetState> states) {
-                    if (states.contains(WidgetState.disabled)) {
-                      return kDarkAndLightDisabledIconColor;
-                    }
-                    return kDarkAndLightEnabledIconColor;
-                  },
-                ),
-                value: _applySortFilterToPlaylistDownloadView,
-                onChanged: (bool? newValue) {
-                  setState(() {
-                    _applySortFilterToPlaylistDownloadView = newValue!;
-                  });
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              AppLocalizations.of(context)!.downloadAudioScreen,
+            ),
+            Checkbox(
+              key: const Key('playlistDownloadViewCheckbox'),
+              fillColor: WidgetStateColor.resolveWith(
+                (Set<WidgetState> states) {
+                  if (states.contains(WidgetState.disabled)) {
+                    return kDarkAndLightDisabledIconColor;
+                  }
+                  return kDarkAndLightEnabledIconColor;
                 },
               ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                AppLocalizations.of(context)!.audioPlayerScreen,
-              ),
-              Checkbox(
-                key: const Key('audioPlayerViewCheckbox'),
-                fillColor: WidgetStateColor.resolveWith(
-                  (Set<WidgetState> states) {
-                    if (states.contains(WidgetState.disabled)) {
-                      return kDarkAndLightDisabledIconColor;
-                    }
-                    return kDarkAndLightEnabledIconColor;
-                  },
-                ),
-                value: _applySortFilterToAudioPlayerView,
-                onChanged: (bool? newValue) {
-                  setState(() {
-                    _applySortFilterToAudioPlayerView = newValue!;
-                  });
+              value: _applySortFilterToPlaylistDownloadView,
+              onChanged: (bool? newValue) {
+                setState(() {
+                  _applySortFilterToPlaylistDownloadView = newValue!;
+                });
+              },
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              AppLocalizations.of(context)!.audioPlayerScreen,
+            ),
+            Checkbox(
+              key: const Key('audioPlayerViewCheckbox'),
+              fillColor: WidgetStateColor.resolveWith(
+                (Set<WidgetState> states) {
+                  if (states.contains(WidgetState.disabled)) {
+                    return kDarkAndLightDisabledIconColor;
+                  }
+                  return kDarkAndLightEnabledIconColor;
                 },
               ),
-            ],
-          )
-        ],
-      ),
+              value: _applySortFilterToAudioPlayerView,
+              onChanged: (bool? newValue) {
+                setState(() {
+                  _applySortFilterToAudioPlayerView = newValue!;
+                });
+              },
+            ),
+          ],
+        )
+      ],
     );
   }
 
