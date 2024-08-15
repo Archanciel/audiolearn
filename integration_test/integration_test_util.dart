@@ -1,6 +1,7 @@
 import 'package:audiolearn/models/audio.dart';
 import 'package:audiolearn/models/playlist.dart';
 import 'package:audiolearn/services/json_data_service.dart';
+import 'package:audiolearn/views/widgets/warning_message_display_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -496,5 +497,37 @@ class IntegrationTestUtil {
         audioLearnAppViewType: audioLearnAppViewType,
       );
     }
+  }
+
+  static Future<void> verifyDisplayedWarningAndCloseIt({
+    required WidgetTester tester,
+    required String warningDialogMessage,
+    bool isWarningConfirming = false,
+  }) async {
+    // Ensure the warning dialog is shown
+    final Finder warningMessageDisplayDialogFinder =
+        find.byType(WarningMessageDisplayWidget);
+    expect(warningMessageDisplayDialogFinder, findsOneWidget);
+
+    // Check the value of the warning dialog title
+
+    Text warningDialogTitle =
+        tester.widget(find.byKey(const Key('warningDialogTitle')));
+
+    if (isWarningConfirming) {
+      expect(warningDialogTitle.data, 'CONFIRMATION');
+    } else {
+      expect(warningDialogTitle.data, 'WARNING');
+    }
+
+    // Check the value of the warning dialog message
+    expect(
+      tester.widget<Text>(find.byKey(const Key('warningDialogMessage'))).data,
+      warningDialogMessage,
+    );
+
+    // Close the warning dialog by tapping on the Ok button
+    await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+    await tester.pumpAndSettle();
   }
 }

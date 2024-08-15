@@ -14929,7 +14929,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure the warning dialog is displayed
-      await verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
         tester: tester,
         warningDialogMessage:
             "Audio file \"$oldFileName\" renamed to \"$newFileName\".",
@@ -15083,7 +15083,7 @@ void main() {
       final String oldJsonFileName = oldMp3FileName.replaceAll('mp3', 'json');
       final String newJsonFileName = newMp3FileName.replaceAll('mp3', 'json');
 
-      await verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
         tester: tester,
         warningDialogMessage:
             "Audio file \"$oldMp3FileName\" renamed to \"$newMp3FileName\" as well as comment file \"$oldJsonFileName\" renamed to \"$newJsonFileName\".",
@@ -15117,7 +15117,7 @@ void main() {
 
       // Tap the Ok button to close the audio info dialog
       await tester.tap(find.byKey(const Key('audioInfoOkButtonKey')));
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // The audio file we could not rename still access to its comment ...
       await checkAudioCommentInAudioPlayerView(
@@ -15223,25 +15223,11 @@ void main() {
       // directory, a warning will be displayed ...
 
       // Ensure the warning dialog is shown
-      final Finder warningMessageDisplayDialogFinder =
-          find.byType(WarningMessageDisplayWidget);
-      expect(warningMessageDisplayDialogFinder, findsOneWidget);
-
-      // Check the value of the warning dialog title
-      Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'WARNING');
-
-      // Check the value of the warning dialog message
-      expect(
-          tester
-              .widget<Text>(find.byKey(const Key('warningDialogMessage')))
-              .data,
-          "The file name \"$fileNameOfExistingFile\" already exists in the same directory and cannot be used.");
-
-      // Close the warning dialog by tapping on the Ok button
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:    
+          "The file name \"$fileNameOfExistingFile\" already exists in the same directory and cannot be used.",
+      );
 
       // Verify that the old name file exists
       final String renamedAudioFilePath =
@@ -15365,7 +15351,7 @@ void main() {
       // Since file name has no mp3 extension a warning will be displayed ...
 
       // Ensure the warning dialog is displayed
-      await verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
         tester: tester,
         warningDialogMessage:
             "The audio file name \"$fileNameOfExistingFile\" has no mp3 extension and so is invalid.",
@@ -15516,26 +15502,12 @@ void main() {
       // Since file name is the name of an existing file in the audio
       // directory, a warning will be displayed ...
 
-      // Ensure the warning dialog is shown
-      final Finder warningMessageDisplayDialogFinder =
-          find.byType(WarningMessageDisplayWidget);
-      expect(warningMessageDisplayDialogFinder, findsOneWidget);
-
-      // Check the value of the warning dialog title
-      Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'WARNING');
-
-      // Check the value of the warning dialog message
-      expect(
-          tester
-              .widget<Text>(find.byKey(const Key('warningDialogMessage')))
-              .data,
-          "The comment file name \"${newFileName.substring(0, newFileName.length - 4)}.json\" already exists in the comment directory and so renaming the audio file with the name \"$newFileName\" is not possible.");
-
-      // Close the warning dialog by tapping on the Ok button
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
+      // Ensure the warning dialog is displayed
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+          "The comment file name \"${newFileName.substring(0, newFileName.length - 4)}.json\" already exists in the comment directory and so renaming the audio file with the name \"$newFileName\" is not possible.",
+      );
 
       // Verify that the old name file exists
       const String initialFileName =
@@ -15788,38 +15760,6 @@ void main() {
       );
     });
   });
-}
-
-Future<void> verifyDisplayedWarningAndCloseIt({
-  required WidgetTester tester,
-  required String warningDialogMessage,
-  bool isWarningConfirming = false,
-}) async {
-  // Ensure the warning dialog is shown
-  final Finder warningMessageDisplayDialogFinder =
-      find.byType(WarningMessageDisplayWidget);
-  expect(warningMessageDisplayDialogFinder, findsOneWidget);
-
-  // Check the value of the warning dialog title
-
-  Text warningDialogTitle =
-      tester.widget(find.byKey(const Key('warningDialogTitle')));
-
-  if (isWarningConfirming) {
-    expect(warningDialogTitle.data, 'CONFIRMATION');
-  } else {
-    expect(warningDialogTitle.data, 'WARNING');
-  }
-
-  // Check the value of the warning dialog message
-  expect(
-    tester.widget<Text>(find.byKey(const Key('warningDialogMessage'))).data,
-    warningDialogMessage,
-  );
-
-  // Close the warning dialog by tapping on the Ok button
-  await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-  await tester.pumpAndSettle();
 }
 
 void checkAudioTitlesOrder({
