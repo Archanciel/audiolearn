@@ -18,7 +18,7 @@ import 'screen_mixin.dart';
 import 'widgets/confirm_action_dialog_widget.dart';
 import 'widgets/audios_playable_list_dialog_widget.dart';
 import 'widgets/playlist_list_item_widget.dart';
-import 'widgets/playlist_sort_filter_options_save_to_dialog_widget.dart';
+import 'widgets/playlist_sort_filter_options_save_dialog_widget.dart';
 import 'widgets/audio_set_speed_dialog_widget.dart';
 import 'widgets/audio_sort_filter_dialog_widget.dart';
 
@@ -699,7 +699,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                 barrierDismissible: false, // This line prevents the dialog from
                 // closing when tapping outside the dialog
                 builder: (BuildContext context) {
-                  return PlaylistSortFilterOptionsSaveToDialogWidget(
+                  return PlaylistSortFilterOptionsSaveDialogWidget(
                     playlistTitle:
                         playlistListVMlistenFalse.uniqueSelectedPlaylist!.title,
                     applicationViewType: AudioLearnAppViewType.audioPlayerView,
