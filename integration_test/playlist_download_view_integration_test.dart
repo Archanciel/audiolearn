@@ -14832,8 +14832,8 @@ void main() {
     group('App settings set speed test', () {});
   });
   group('Rename audio file test and verify comment access', () {
-    testWidgets('''Not existing new audio file name (the renamed audio has
-                   no comments).''', (WidgetTester tester) async {
+    testWidgets('''Not existing new audio file name and the renamed audio has
+                   no comments.''', (WidgetTester tester) async {
       const String youtubePlaylistTitle =
           'audio_player_view_2_shorts_test'; // Youtube playlist
       const String audioTitle = "Really short video";
@@ -14908,8 +14908,11 @@ void main() {
       final TextField textField = tester.widget<TextField>(textFieldFinder);
 
       // Verify the initial value of the TextField
-      expect(textField.controller!.text,
-          '231117-002826-Really short video 23-07-01.mp3');
+
+      const String oldFileName =
+          '231117-002826-Really short video 23-07-01.mp3';
+
+      expect(textField.controller!.text, oldFileName);
 
       // Enter new file name
 
@@ -14924,6 +14927,14 @@ void main() {
       // Now tap the rename button
       await tester.tap(find.byKey(const Key('audioModificationButton')));
       await tester.pumpAndSettle();
+
+      // Ensure the warning dialog is displayed
+      await verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Audio file \"$oldFileName\" renamed to \"$newFileName\".",
+        isWarningConfirming: true,
+      );
 
       // Verify that the renamed file exists
       final String renamedAudioFilePath =
@@ -15047,16 +15058,19 @@ void main() {
       final TextField textField = tester.widget<TextField>(textFieldFinder);
 
       // Verify the initial value of the TextField
-      expect(textField.controller!.text,
-          '231117-002828-morning _ cinematic video 23-07-01.mp3');
+
+      const String oldMp3FileName =
+          '231117-002828-morning _ cinematic video 23-07-01.mp3';
+
+      expect(textField.controller!.text, oldMp3FileName);
 
       // Enter new file name
 
-      const String newFileName = '240610-Renamed video 23-07-01.mp3';
+      const String newMp3FileName = '240610-Renamed video 23-07-01.mp3';
 
       await tester.enterText(
         textFieldFinder,
-        newFileName,
+        newMp3FileName,
       );
       await tester.pumpAndSettle();
 
@@ -15064,9 +15078,21 @@ void main() {
       await tester.tap(find.byKey(const Key('audioModificationButton')));
       await tester.pumpAndSettle();
 
+      // Ensure the warning dialog is displayed
+
+      final String oldJsonFileName = oldMp3FileName.replaceAll('mp3', 'json');
+      final String newJsonFileName = newMp3FileName.replaceAll('mp3', 'json');
+
+      await verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Audio file \"$oldMp3FileName\" renamed to \"$newMp3FileName\" as well as comment file \"$oldJsonFileName\" renamed to \"$newJsonFileName\".",
+        isWarningConfirming: true,
+      );
+
       // Verify that the renamed file exists
       final String renamedAudioFilePath =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubePlaylistTitle${path.separator}$newFileName";
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubePlaylistTitle${path.separator}$newMp3FileName";
       expect(File(renamedAudioFilePath).existsSync(), true);
 
       // Check the new file name in the audio info dialog
@@ -15087,7 +15113,7 @@ void main() {
       final Text audioFileNameTitleTextWidget =
           tester.widget<Text>(find.byKey(const Key('audioFileNameKey')));
 
-      expect(audioFileNameTitleTextWidget.data, newFileName);
+      expect(audioFileNameTitleTextWidget.data, newMp3FileName);
 
       // Tap the Ok button to close the audio info dialog
       await tester.tap(find.byKey(const Key('audioInfoOkButtonKey')));
@@ -15338,25 +15364,12 @@ void main() {
 
       // Since file name has no mp3 extension a warning will be displayed ...
 
-      // Ensure the warning dialog is shown
-      final Finder warningMessageDisplayDialogFinder =
-          find.byType(WarningMessageDisplayWidget);
-      expect(warningMessageDisplayDialogFinder, findsOneWidget);
-
-      // Check the value of the warning dialog title
-      Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'WARNING');
-
-      // Check the value of the warning dialog message
-      expect(
-        tester.widget<Text>(find.byKey(const Key('warningDialogMessage'))).data,
-        "The audio file name \"$fileNameOfExistingFile\" has no mp3 extension and so is invalid.",
+      // Ensure the warning dialog is displayed
+      await verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "The audio file name \"$fileNameOfExistingFile\" has no mp3 extension and so is invalid.",
       );
-      
-      // Close the warning dialog by tapping on the Ok button
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
 
       // Verify that the old name file exists
       final String renamedAudioFilePath =
@@ -15775,6 +15788,38 @@ void main() {
       );
     });
   });
+}
+
+Future<void> verifyDisplayedWarningAndCloseIt({
+  required WidgetTester tester,
+  required String warningDialogMessage,
+  bool isWarningConfirming = false,
+}) async {
+  // Ensure the warning dialog is shown
+  final Finder warningMessageDisplayDialogFinder =
+      find.byType(WarningMessageDisplayWidget);
+  expect(warningMessageDisplayDialogFinder, findsOneWidget);
+
+  // Check the value of the warning dialog title
+
+  Text warningDialogTitle =
+      tester.widget(find.byKey(const Key('warningDialogTitle')));
+
+  if (isWarningConfirming) {
+    expect(warningDialogTitle.data, 'CONFIRMATION');
+  } else {
+    expect(warningDialogTitle.data, 'WARNING');
+  }
+
+  // Check the value of the warning dialog message
+  expect(
+    tester.widget<Text>(find.byKey(const Key('warningDialogMessage'))).data,
+    warningDialogMessage,
+  );
+
+  // Close the warning dialog by tapping on the Ok button
+  await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+  await tester.pumpAndSettle();
 }
 
 void checkAudioTitlesOrder({
