@@ -657,9 +657,10 @@ class PlaylistListVM extends ChangeNotifier {
     _audioSortFilterParameters = null;
 
     String selectedPlaylistTitle = selectedPlaylist.title;
+    String selectedPlaylistSortFilterParmsName =
+        _playlistAudioSortFilterParmsNamesMap[selectedPlaylistTitle] ?? '';
 
-    if (!_playlistAudioSortFilterParmsNamesMap
-        .containsKey(selectedPlaylistTitle)) {
+    if (selectedPlaylistSortFilterParmsName.isEmpty) {
       switch (audioLearnAppViewType) {
         case AudioLearnAppViewType.playlistDownloadView:
           String audioSortFilterParmsNameForPlaylistDownloadView =
@@ -714,7 +715,7 @@ class PlaylistListVM extends ChangeNotifier {
       // the default sort and filter parameters are applied to the
       // playlist audio list.
       _audioSortFilterParameters = _settingsDataService
-          .namedAudioSortFilterParametersMap[selectedPlaylistTitle];
+          .namedAudioSortFilterParametersMap[selectedPlaylistSortFilterParmsName];
     }
 
     _audioSortFilterParameters ??= audioSortFilterParameters;

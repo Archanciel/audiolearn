@@ -128,6 +128,9 @@ class _PlaylistOneSelectableDialogWidgetState
                       onChanged: (Playlist? value) {
                         setState(() {
                           _selectedPlaylist = value;
+                          _downloadSingleVideoAudioAtMusicQuality =
+                              (_selectedPlaylist!.playlistQuality ==
+                                  PlaylistQuality.music);
                         });
                       },
                     );
@@ -307,7 +310,8 @@ class _PlaylistOneSelectableDialogWidgetState
                 message: AppLocalizations.of(context)!
                     .keepAudioEntryInSourcePlaylistTooltip,
                 child: Text(
-                  AppLocalizations.of(context)!.downloadSingleVideoAudioAtMusicQuality,
+                  AppLocalizations.of(context)!
+                      .downloadSingleVideoAudioAtMusicQuality,
                   style: TextStyle(
                     fontSize: kListDialogBottomTextFontSize,
                     color: isDarkTheme ? Colors.white : Colors.black,
@@ -319,7 +323,8 @@ class _PlaylistOneSelectableDialogWidgetState
               width: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
               height: ScreenMixin.CHECKBOX_WIDTH_HEIGHT,
               child: Checkbox(
-                key: const Key('downloadSingleVideoAudioAtMusicQualityCheckboxKey'),
+                key: const Key(
+                    'downloadSingleVideoAudioAtMusicQualityCheckboxKey'),
                 value: _downloadSingleVideoAudioAtMusicQuality,
                 onChanged: (bool? newValue) {
                   setState(() {
