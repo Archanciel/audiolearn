@@ -246,6 +246,7 @@ class IntegrationTestUtil {
     try {
       expect(actual, matcher, reason: reason, skip: skip);
       if (successMessage != null) {
+        // ignore: avoid_print
         print(successMessage);
       }
     } catch (e) {
