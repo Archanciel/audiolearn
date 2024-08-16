@@ -26,6 +26,7 @@ enum PlaylistPopupMenuAction {
   displayPlaylistInfo,
   displayPlaylistAudioComments,
   importAudioFilesInPlaylist,
+  downloadVideoUrlsFromTextFileInPlaylist,
   updatePlaylistPlayableAudios, // useful if playlist audio files were
   //                               deleted from the app dir
   setPlaylistAudioPlaySpeed,
@@ -122,6 +123,16 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                     ),
                   ),
                   PopupMenuItem<PlaylistPopupMenuAction>(
+                    key: const Key('popup_menu_download_video_urls_in_playlist'),
+                    value: PlaylistPopupMenuAction.downloadVideoUrlsFromTextFileInPlaylist,
+                    child: Tooltip(
+                      message: AppLocalizations.of(context)!
+                          .downloadVideoUrlsFromTextFileInPlaylistTooltip,
+                      child: Text(AppLocalizations.of(context)!
+                          .downloadVideoUrlsFromTextFileInPlaylist),
+                    ),
+                  ),
+                  PopupMenuItem<PlaylistPopupMenuAction>(
                     key: const Key('popup_menu_update_playable_audio_list'),
                     value: PlaylistPopupMenuAction.updatePlaylistPlayableAudios,
                     child: Tooltip(
@@ -214,6 +225,21 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                       audioDownloadVM.importAudioFilesInPlaylist(
                         targetPlaylist: playlist,
                         filePathNameToImportLst: selectedFilePathNameLst,
+                      );
+                      break;
+                    case PlaylistPopupMenuAction.downloadVideoUrlsFromTextFileInPlaylist:
+                      String selectedFilePathName =
+                          await _filePickerSelectVideoUrlsTextFile();
+
+                      AudioDownloadVM audioDownloadVM =
+                          Provider.of<AudioDownloadVM>(
+                        context,
+                        listen: false,
+                      );
+
+                      audioDownloadVM.downloadAudioFromVideoUrlsInPlaylist(
+                        targetPlaylist: playlist,
+                        videoUrlsTextFile: selectedFilePathName,
                       );
                       break;
                     case PlaylistPopupMenuAction.updatePlaylistPlayableAudios:
@@ -339,8 +365,8 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
     }
 
     return deletePlaylistDialogTitle;
-  }
-
+  } 
+  
   Future<List<String>> _filePickerSelectAudioFiles() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
@@ -354,5 +380,20 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
     }
 
     return [];
+  }
+
+  Future<String> _filePickerSelectVideoUrlsTextFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['txt'],
+      allowMultiple: false,
+      initialDirectory: await DirUtil.getApplicationPath(),
+    );
+
+    if (result != null) {
+      return result.files.single.path!;
+    }
+
+    return '';
   }
 }

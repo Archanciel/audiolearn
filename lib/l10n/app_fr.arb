@@ -403,5 +403,7 @@
   "renameFileNameInvalid": "Le nom du fichier audio \"{fileName}\" n'a pas d'extension mp3 et n'est donc pas valide.",
   "renameAudioFileConfirmation": "Le fichier audio \"{oldFileIame}.mp3\" a été renommé en \"{newFileName}.mp3\".",
   "renameAudioAndCommentFileConfirmation": "Le fichier audio \"{oldFileIame}.mp3\" a été renommé \"{newFileName}.mp3\" ainsi que le fichier de commentaires associé \"{oldFileIame}.json\" a été renommé \"{newFileName}.json\".",
-  "forScreen": "Pour l'écran \"{screenName}\""
+  "forScreen": "Pour l'écran \"{screenName}\"",
+  "downloadVideoUrlsFromTextFileInPlaylist": "Télécharger les URL depuis un fichier ...",
+  "downloadVideoUrlsFromTextFileInPlaylistTooltip": "Téléchargez les audio dans la playlist à partir des URL vidéo répertoriées dans un fichier texte à sélectionner. Le fichier texte doit contenir une URL par ligne."
 }

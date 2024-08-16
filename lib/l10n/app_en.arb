@@ -401,5 +401,7 @@
   "renameFileNameInvalid": "The audio file name \"{fileName}\" has no mp3 extension and so is invalid.",
   "renameAudioFileConfirmation": "Audio file \"{oldFileIame}.mp3\" renamed to \"{newFileName}.mp3\".",
   "renameAudioAndCommentFileConfirmation": "Audio file \"{oldFileIame}.mp3\" renamed to \"{newFileName}.mp3\" as well as comment file \"{oldFileIame}.json\" renamed to \"{newFileName}.json\".",
-  "forScreen": "For \"{screenName}\" screen"
-}
+  "forScreen": "For \"{screenName}\" screen",
+  "downloadVideoUrlsFromTextFileInPlaylist": "Download URLs from text file ...",
+  "downloadVideoUrlsFromTextFileInPlaylistTooltip": "Download audio to the playlist from video URLs listed in a text file to select. The text file must contain one video URL per line."
+  }

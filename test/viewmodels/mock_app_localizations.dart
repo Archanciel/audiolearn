@@ -1246,4 +1246,12 @@ class MockAppLocalizations extends AppLocalizations {
     Object sortFilterParmsName,
   ) =>
       "Save Sort/Filter \"$sortFilterParmsName\"";
+
+  @override
+  String get downloadVideoUrlsFromTextFileInPlaylist =>
+      "Download video URLs from text file ...";
+
+  @override
+  String get downloadVideoUrlsFromTextFileInPlaylistTooltip =>
+      "Download audio to the playlist from video URLs listed in a selected text file. The text file must contain one video URL per line.";
 }

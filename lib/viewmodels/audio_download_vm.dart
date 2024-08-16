@@ -1136,6 +1136,37 @@ class AudioDownloadVM extends ChangeNotifier {
     return true;
   }
 
+  Future<void> downloadAudioFromVideoUrlsInPlaylist({
+    required Playlist targetPlaylist,
+    required String videoUrlsTextFile,
+  }) async {
+    List<String> videoUrls = readUrlsFromFile(videoUrlsTextFile);
+
+    for (String videoUrl in videoUrls) {
+      await downloadSingleVideoAudio(
+        videoUrl: videoUrl,
+        singleVideoTargetPlaylist: targetPlaylist,
+      );
+    }
+  }
+
+  List<String> readUrlsFromFile(String filePath) {
+    try {
+      // Read all lines from the file
+      final file = File(filePath);
+      List<String> lines = file.readAsLinesSync();
+
+      // Filter out any empty lines
+      lines = lines.where((line) => line.trim().isNotEmpty).toList();
+
+      return lines;
+    } catch (e) {
+      // ignore: avoid_print
+      print('Error reading file: $e');
+      return [];
+    }
+  }
+
   Future<void> importAudioFilesInPlaylist({
     required Playlist targetPlaylist,
     required List<String> filePathNameToImportLst,
