@@ -107,7 +107,8 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                         Text(AppLocalizations.of(context)!.displayPlaylistInfo),
                   ),
                   PopupMenuItem<PlaylistPopupMenuAction>(
-                    key: const Key('popup_menu_display_playlist_audio_comments'),
+                    key:
+                        const Key('popup_menu_display_playlist_audio_comments'),
                     value: PlaylistPopupMenuAction.displayPlaylistAudioComments,
                     child:
                         Text(AppLocalizations.of(context)!.playlistCommentMenu),
@@ -123,8 +124,10 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                     ),
                   ),
                   PopupMenuItem<PlaylistPopupMenuAction>(
-                    key: const Key('popup_menu_download_video_urls_in_playlist'),
-                    value: PlaylistPopupMenuAction.downloadVideoUrlsFromTextFileInPlaylist,
+                    key:
+                        const Key('popup_menu_download_video_urls_in_playlist'),
+                    value: PlaylistPopupMenuAction
+                        .downloadVideoUrlsFromTextFileInPlaylist,
                     child: Tooltip(
                       message: AppLocalizations.of(context)!
                           .downloadVideoUrlsFromTextFileInPlaylistTooltip,
@@ -185,8 +188,9 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                       );
                       break;
                     case PlaylistPopupMenuAction.displayPlaylistAudioComments:
-                      if (playlistListVM.getSelectedPlaylists().isEmpty || playlistListVM.getSelectedPlaylists()[0] !=
-                          playlist) {
+                      if (playlistListVM.getSelectedPlaylists().isEmpty ||
+                          playlistListVM.getSelectedPlaylists()[0] !=
+                              playlist) {
                         // the case if the user opens the playlist audio
                         // comment dialog on a playlist which is not currently
                         // selected
@@ -227,9 +231,13 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                         filePathNameToImportLst: selectedFilePathNameLst,
                       );
                       break;
-                    case PlaylistPopupMenuAction.downloadVideoUrlsFromTextFileInPlaylist:
+                    case PlaylistPopupMenuAction
+                          .downloadVideoUrlsFromTextFileInPlaylist:
                       String selectedFilePathName =
                           await _filePickerSelectVideoUrlsTextFile();
+
+                      List<String> videoUrls =
+                          DirUtil.readUrlsFromFile(selectedFilePathName);
 
                       AudioDownloadVM audioDownloadVM =
                           Provider.of<AudioDownloadVM>(
@@ -237,9 +245,25 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                         listen: false,
                       );
 
-                      audioDownloadVM.downloadAudioFromVideoUrlsInPlaylist(
-                        targetPlaylist: playlist,
-                        videoUrlsTextFile: selectedFilePathName,
+                      showDialog<void>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return ConfirmActionDialogWidget(
+                            actionFunction:
+                                downloadAudioFromVideoUrlsInPlaylist,
+                            actionFunctionArgs: [
+                              audioDownloadVM,
+                              playlist,
+                              videoUrls,
+                            ],
+                            dialogTitle: AppLocalizations.of(context)!
+                                .downloadAudioFromVideoUrlsInPlaylistTitle(
+                                    playlist.title),
+                            dialogContent: AppLocalizations.of(context)!
+                                .downloadAudioFromVideoUrlsInPlaylist(
+                                    videoUrls.length.toString()),
+                          );
+                        },
                       );
                       break;
                     case PlaylistPopupMenuAction.updatePlaylistPlayableAudios:
@@ -338,6 +362,17 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
     );
   }
 
+  void downloadAudioFromVideoUrlsInPlaylist(
+    AudioDownloadVM audioDownloadVM,
+    Playlist targetPlaylist,
+    List<String> videoUrls,
+  ) {
+    audioDownloadVM.downloadAudioFromVideoUrlsInPlaylist(
+      targetPlaylist: targetPlaylist,
+      videoUrls: videoUrls,
+    );
+  }
+
   /// Public method passed as parameter to the ActionConfirmDialogWidget
   /// which, in this case, asks the user to confirm the deletion of a
   /// playlist. This method is called when the user clicks on the
@@ -365,8 +400,8 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
     }
 
     return deletePlaylistDialogTitle;
-  } 
-  
+  }
+
   Future<List<String>> _filePickerSelectAudioFiles() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,

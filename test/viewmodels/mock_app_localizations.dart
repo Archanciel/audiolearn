@@ -1254,4 +1254,16 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get downloadVideoUrlsFromTextFileInPlaylistTooltip =>
       "Download audio to the playlist from video URLs listed in a selected text file. The text file must contain one video URL per line.";
+
+  @override
+  String downloadAudioFromVideoUrlsInPlaylistTitle(
+    Object title,
+  ) =>
+      "Download video audio to playlist \"$title\"";
+
+  @override
+  String downloadAudioFromVideoUrlsInPlaylist(
+    Object number,
+  ) =>
+      "Downloading $number audio.";
 }

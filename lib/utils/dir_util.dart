@@ -6,6 +6,22 @@ import 'package:path/path.dart' as path;
 import '../constants.dart';
 
 class DirUtil {
+  static List<String> readUrlsFromFile(String filePath) {
+    try {
+      // Read all lines from the file
+      final file = File(filePath);
+      List<String> lines = file.readAsLinesSync();
+
+      // Filter out any empty lines
+      lines = lines.where((line) => line.trim().isNotEmpty).toList();
+
+      return lines;
+    } catch (e) {
+      print('Error reading file: $e');
+      return [];
+    }
+  }
+
   static Future<String> getApplicationPath({
     bool isTest = false,
   }) async {
