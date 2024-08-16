@@ -62,7 +62,7 @@ class VideoListScreen extends StatefulWidget {
 class _VideoListScreenState extends State<VideoListScreen> {
   final String apiKey = 'AIzaSyDhywmh5EKopsNsaszzMkLJ719aQa2NHBw';
   final String channelId = 'UCP4LykxRItz7-jcvICUOvDg';
-  final String channelId_2 = 'UCElH9qAoRv-jCRU9RYMLZEQ';
+  // final String channelId = 'UCElH9qAoRv-jCRU9RYMLZEQ';
   final int maxResults = 200;
   List videos = [];
 
@@ -74,19 +74,27 @@ class _VideoListScreenState extends State<VideoListScreen> {
 
   Future<void> fetchVideos() async {
     final String playlistId = await fetchUploadsPlaylistId();
-    final response = await http.get(
-      Uri.parse(
-          'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=$playlistId&maxResults=$maxResults&key=$apiKey'),
-    );
+    String nextPageToken = '';
+    List fetchedVideos = [];
 
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      setState(() {
-        videos = data['items'];
-      });
-    } else {
-      throw Exception('Failed to load videos');
-    }
+    do {
+      final response = await http.get(
+        Uri.parse(
+            'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=$playlistId&maxResults=50&pageToken=$nextPageToken&key=$apiKey'),
+      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        fetchedVideos.addAll(data['items']);
+        nextPageToken = data['nextPageToken'] ?? '';
+      } else {
+        throw Exception('Failed to load videos');
+      }
+    } while (nextPageToken.isNotEmpty);
+
+    setState(() {
+      videos = fetchedVideos;
+    });
   }
 
   Future<String> fetchUploadsPlaylistId() async {
@@ -115,12 +123,13 @@ class _VideoListScreenState extends State<VideoListScreen> {
               itemCount: videos.length,
               itemBuilder: (context, index) {
                 final video = videos[index]['snippet'];
+                final url =
+                    'https://www.youtube.com/watch?v=${video['resourceId']['videoId']}';
+                print(url);
                 return ListTile(
                   title: Text("${index + 1}: ${video['title']}"),
                   subtitle: Text(video['resourceId']['videoId']),
                   onTap: () {
-                    final url =
-                        'https://www.youtube.com/watch?v=${video['resourceId']['videoId']}';
                     launch(url);
                   },
                 );
