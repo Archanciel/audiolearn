@@ -853,9 +853,7 @@ class _AudioSortFilterDialogWidgetState
           key: const Key('applySortFilterOptionsTextButton'),
           onPressed: () {
             List<dynamic> filterSortAudioAndParmLst = _filterAndSortAudioLst(
-                sortFilterParametersSaveAsUniqueName:
-                    AppLocalizations.of(context)!
-                        .sortFilterParametersAppliedName);
+                sortFilterParametersSaveAsUniqueName: kAudioSortFilterParmsAppliedName);
 
             if (filterSortAudioAndParmLst[1] ==
                 AudioSortFilterParameters

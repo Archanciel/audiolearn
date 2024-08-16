@@ -22,7 +22,7 @@ import 'widgets/confirm_action_dialog_widget.dart';
 import 'widgets/playlist_list_item_widget.dart';
 import 'widgets/playlist_one_selectable_dialog_widget.dart';
 import 'widgets/audio_sort_filter_dialog_widget.dart';
-import 'widgets/playlist_sort_filter_options_save_dialog_widget.dart';
+import 'widgets/playlist_save_sort_filter_options_sdialog_widget.dart';
 
 class PlaylistDownloadView extends StatefulWidget {
   final SettingsDataService settingsDataService;
@@ -1050,7 +1050,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                     false, // This line prevents the dialog from closing
                 // when tapping outside the dialog
                 builder: (BuildContext context) {
-                  return PlaylistSortFilterOptionsSaveDialogWidget(
+                  return PlaylistSaveSortFilterOptionsDialogWidget(
                     playlistTitle:
                         playlistListVMlistenFalse.uniqueSelectedPlaylist!.title,
                     sortFilterParametersName:
@@ -1066,6 +1066,10 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 // if the user clicked on Save, not on Cancel button
                 playlistListVMlistenFalse
                     .savePlaylistAudioSortFilterParmsToPlaylist(
+                  isAppliedSortFilterParmsNameSelected:
+                      _selectedSortFilterParametersName == // sf parms name
+                          AppLocalizations.of(context)!    // selected in the
+                              .sortFilterParametersAppliedName, // dropdown menu
                   forAudioPlayerView: forViewLst[0],
                   forPlaylistDownloadView: forViewLst[1],
                 );

@@ -69,6 +69,8 @@ const String kTranslationFileDirWindows =
 
 const String kCommentDirName = 'comments';
 
+const String kAudioSortFilterParmsAppliedName = 'applied';
+
 // this constant enables to download a playlist in the emulator in which
 // pasting a URL is not possible. The constant is used in
 // _ExpandablePlaylistListViewState.initState().
@@ -79,9 +81,6 @@ const String kCommentDirName = 'comments';
 const bool kDeleteAppDirOnEmulator = false;
 
 const double kAudioDefaultPlaySpeed = 1.0;
-
-const String kSecretClientCodeJsonFileName =
-    'code_secret_client_923487935936-po8d733kjvrnee3l3ik3r5mebe8ebhr7.apps.googleusercontent.com.json';
 
 const String kGoogleApiKey = 'AIzaSyDhywmh5EKopsNsaszzMkLJ719aQa2NHBw';
 
