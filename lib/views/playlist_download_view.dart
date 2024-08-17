@@ -551,7 +551,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
         playlistListVMlistenFalse.getAudioSortFilterParametersMap();
 
     String selectedPlaylistAudioSortFilterParmsName =
-        playlistListVMlistenFalse.getSelectedPlaylistAudioSortFilterParmsName();
+        playlistListVMlistenFalse.getSelectedPlaylistAudioSortFilterParmsName(
+      audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+    );
 
     // If the selected playlist sort and filter parameters name is
     // the translated sortFilterParametersAppliedName, which is
@@ -609,7 +611,10 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           child: DropdownButton<String>(
             key: const Key('sort_filter_parms_dropdown_button'),
             value: (playlistListVMlistenTrue
-                    .getSelectedPlaylistAudioSortFilterParmsName()
+                    .getSelectedPlaylistAudioSortFilterParmsName(
+                      audioLearnAppViewType:
+                          AudioLearnAppViewType.playlistDownloadView,
+                    )
                     .isEmpty)
                 ? null // causes the default sort filter parms to be applied
                 //        and its name to be displayed
@@ -633,7 +638,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   String applySortFilterParmsNameChange(
       PlaylistListVM playlistListVMlistenTrue) {
     _selectedSortFilterParametersName =
-        playlistListVMlistenTrue.getSelectedPlaylistAudioSortFilterParmsName();
+        playlistListVMlistenTrue.getSelectedPlaylistAudioSortFilterParmsName(
+      audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+    );
     _updatePlaylistSortedFilteredAudioList(
         playlistListVMlistenFalse: playlistListVMlistenTrue,
         notifyListeners: false); // avoid rebuilding the widget and avoid
@@ -655,6 +662,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     );
     playlistListVMlistenFalse
         .setSortedFilteredSelectedPlaylistPlayableAudiosAndParms(
+      audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       sortedFilteredSelectedPlaylistsPlayableAudios: playlistListVMlistenFalse
           .getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
@@ -798,6 +806,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
                 playlistListVMlistenFalse
                     .setSortedFilteredSelectedPlaylistPlayableAudiosAndParms(
+                  audioLearnAppViewType:
+                      AudioLearnAppViewType.playlistDownloadView,
                   sortedFilteredSelectedPlaylistsPlayableAudios:
                       returnedAudioList,
                   audioSortFilterParameters: audioSortFilterParameters,
@@ -1017,6 +1027,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                       filterSortAudioAndParmLst[2];
                   playlistListVMlistenFalse
                       .setSortedFilteredSelectedPlaylistPlayableAudiosAndParms(
+                    audioLearnAppViewType:
+                        AudioLearnAppViewType.playlistDownloadView,
                     sortedFilteredSelectedPlaylistsPlayableAudios:
                         returnedAudioList,
                     audioSortFilterParameters: audioSortFilterParameters,

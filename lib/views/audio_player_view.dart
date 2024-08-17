@@ -662,6 +662,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                       filterSortAudioAndParmLst[2];
                   playlistListVMlistenFalse
                       .setSortedFilteredSelectedPlaylistPlayableAudiosAndParms(
+                    audioLearnAppViewType:
+                        AudioLearnAppViewType.audioPlayerView,
                     sortedFilteredSelectedPlaylistsPlayableAudios:
                         returnedAudioList,
                     audioSortFilterParameters: audioSortFilterParameters,
