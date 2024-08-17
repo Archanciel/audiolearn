@@ -56,15 +56,16 @@ class MockAudioDownloadVM extends AudioDownloadVM {
   }
 
   @override
-  Future<bool> downloadSingleVideoAudio({
+  Future<ErrorType> downloadSingleVideoAudio({
     required String videoUrl,
     required Playlist singleVideoTargetPlaylist,
     bool downloadAtMusicQuality = false,
+    bool displayWarningIfAudioAlreadyExists = true,
   }) async {
     if (videoUrl.contains('invalid')) {
       warningMessageVM.isSingleVideoUrlInvalid = true;
 
-      return false;
+      return ErrorType.downloadAudioYoutubeError;
     }
 
     try {
@@ -81,14 +82,14 @@ class MockAudioDownloadVM extends AudioDownloadVM {
         errorArgThree: singleVideoTargetPlaylist.title,
       );
 
-      return false;
+      return ErrorType.downloadAudioFileAlreadyOnAudioDirectory;
     } catch (e) {
       // file was not found in the downloaded audio directory
     }
 
     notifyListeners();
 
-    return true;
+    return ErrorType.noError;
   }
 
   /// This method is redifined in the MockAudioDownloadVM so that the

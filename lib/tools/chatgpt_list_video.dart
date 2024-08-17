@@ -38,7 +38,7 @@ class YoutubeService {
 
 void main() {
   setWindowsAppSizeAndPosition(isTest: true);
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 /// If app runs on Windows, Linux or MacOS, set the app size
@@ -71,6 +71,8 @@ Future<void> setWindowsAppSizeAndPosition({
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -78,12 +80,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: VideoListScreen(),
+      home: const VideoListScreen(),
     );
   }
 }
 
 class VideoListScreen extends StatefulWidget {
+  const VideoListScreen({super.key});
+
   @override
   _VideoListScreenState createState() => _VideoListScreenState();
 }
@@ -101,17 +105,17 @@ class _VideoListScreenState extends State<VideoListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('YouTube Video Links'),
+        title: const Text('YouTube Video Links'),
       ),
       body: FutureBuilder<List<String>>(
         future: futureVideoLinks,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No video links found.'));
+            return const Center(child: Text('No video links found.'));
           } else {
             return ListView.builder(
               itemCount: snapshot.data!.length,

@@ -9,7 +9,7 @@ import '../constants.dart';
 
 void main() {
   setWindowsAppSizeAndPosition(isTest: true);
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 /// If app runs on Windows, Linux or MacOS, set the app size
@@ -42,6 +42,8 @@ Future<void> setWindowsAppSizeAndPosition({
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -49,12 +51,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: VideoListScreen(),
+      home: const VideoListScreen(),
     );
   }
 }
 
 class VideoListScreen extends StatefulWidget {
+  const VideoListScreen({super.key});
+
   @override
   _VideoListScreenState createState() => _VideoListScreenState();
 }
@@ -115,21 +119,23 @@ class _VideoListScreenState extends State<VideoListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('YouTube Videos'),
+        title: const Text('YouTube Videos'),
       ),
       body: videos.isEmpty
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : ListView.builder(
               itemCount: videos.length,
               itemBuilder: (context, index) {
                 final video = videos[index]['snippet'];
                 final url =
                     'https://www.youtube.com/watch?v=${video['resourceId']['videoId']}';
+                // ignore: avoid_print
                 print(url);
                 return ListTile(
                   title: Text("${index + 1}: ${video['title']}"),
                   subtitle: Text(video['resourceId']['videoId']),
                   onTap: () {
+                    // ignore: deprecated_member_use
                     launch(url);
                   },
                 );

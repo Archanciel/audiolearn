@@ -804,10 +804,11 @@ class AudioDownloadVM extends ChangeNotifier {
   ///
   /// Returning true will cause the single video url text field to be
   /// cleared.
-  Future<bool> downloadSingleVideoAudio({
+  Future<ErrorType> downloadSingleVideoAudio({
     required String videoUrl,
     required Playlist singleVideoTargetPlaylist,
     bool downloadAtMusicQuality = false,
+    bool displayWarningIfAudioAlreadyExists = true,
   }) async {
     isHighQuality = downloadAtMusicQuality;
     _audioDownloadError = false;
@@ -824,11 +825,11 @@ class AudioDownloadVM extends ChangeNotifier {
         errorArgOne: e.toString(),
       );
 
-      return false;
+      return ErrorType.noInternet;
     } catch (e) {
       warningMessageVM.isSingleVideoUrlInvalid = true;
 
-      return false;
+      return ErrorType.downloadAudioYoutubeError;
     }
 
     yt.Video youtubeVideo;
@@ -841,14 +842,14 @@ class AudioDownloadVM extends ChangeNotifier {
         errorArgOne: e.toString(),
       );
 
-      return false;
+      return ErrorType.noInternet;
     } catch (e) {
       notifyDownloadError(
         errorType: ErrorType.downloadAudioYoutubeError,
         errorArgOne: e.toString(),
       );
 
-      return false;
+      return ErrorType.downloadAudioYoutubeError;
     }
 
     final Duration? audioDuration = youtubeVideo.duration;
@@ -883,14 +884,16 @@ class AudioDownloadVM extends ChangeNotifier {
       try {
         String existingAudioFileName = downloadedAudioFileNameLst
             .firstWhere((fileName) => fileName.contains(validVideoTitle));
-        notifyDownloadError(
-          errorType: ErrorType.downloadAudioFileAlreadyOnAudioDirectory,
-          errorArgOne: audio.validVideoTitle,
-          errorArgTwo: existingAudioFileName,
-          errorArgThree: singleVideoTargetPlaylist.title,
-        );
+        if (displayWarningIfAudioAlreadyExists) {
+          notifyDownloadError(
+            errorType: ErrorType.downloadAudioFileAlreadyOnAudioDirectory,
+            errorArgOne: audio.validVideoTitle,
+            errorArgTwo: existingAudioFileName,
+            errorArgThree: singleVideoTargetPlaylist.title,
+          );
+        }
 
-        return false;
+        return ErrorType.downloadAudioFileAlreadyOnAudioDirectory;
       } catch (_) {
         // file was not found in the downloaded audio directory
       }
@@ -920,7 +923,7 @@ class AudioDownloadVM extends ChangeNotifier {
         errorArgOne: e.toString(),
       );
 
-      return false;
+      return ErrorType.downloadAudioYoutubeError;
     }
 
     stopwatch.stop();
@@ -942,7 +945,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
     notifyListeners();
 
-    return true;
+    return ErrorType.noError;
   }
 
   /// Returns the play speed value to set to the created audio instance.
@@ -1136,16 +1139,33 @@ class AudioDownloadVM extends ChangeNotifier {
     return true;
   }
 
-  Future<void> downloadAudioFromVideoUrlsInPlaylist({
+  /// This method is called by the PlaylistListVM when the user selects the
+  /// "Download URLs from text file" menu item. False ios returned in case
+  /// a download problen happens or if the file already exists in the target
+  /// playlist directory.
+  /// 
+  /// {existingAudioFilesNotRedownloadedCount} is the number of audio files
+  /// which were not redownloaded since they already exist in the target
+  /// playlist directory.
+  Future<int> downloadAudioFromVideoUrlsInPlaylist({
     required Playlist targetPlaylist,
     required List<String> videoUrls,
   }) async {
+    int existingAudioFilesNotRedownloadedCount = 0;
+
     for (String videoUrl in videoUrls) {
-      await downloadSingleVideoAudio(
+      ErrorType errorType = await downloadSingleVideoAudio(
         videoUrl: videoUrl,
         singleVideoTargetPlaylist: targetPlaylist,
+        displayWarningIfAudioAlreadyExists: false,
       );
+
+      if (errorType == ErrorType.downloadAudioFileAlreadyOnAudioDirectory) {
+        existingAudioFilesNotRedownloadedCount++;
+      }
     }
+
+    return existingAudioFilesNotRedownloadedCount;
   }
 
   Future<void> importAudioFilesInPlaylist({

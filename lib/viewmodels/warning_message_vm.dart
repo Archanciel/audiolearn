@@ -72,6 +72,10 @@ enum WarningMessageType {
   // was updated. This happens when the user clicks on the update
   // playable audio list playlist menu item.
 
+  notRedownloadAudioFilesInPlaylistDirectory, // The case if the
+  // audio files in the playlist directory were not redownloaded
+  // since they are already in the target playlist directory.
+
   noSortFilterSaveAsName, // The case if the user clicks on the
   // save as button after selecting the sort and filter options
   // but the name of the new sort and filter is empty.
@@ -150,7 +154,7 @@ enum WarningMessageType {
 }
 
 enum ErrorType {
-  none,
+  noError,
 
   downloadAudioYoutubeError, // In case of a Youtube error.
 
@@ -188,7 +192,7 @@ class WarningMessageVM extends ChangeNotifier {
   String _errorArgThree = '';
   String get errorArgThree => _errorArgThree;
 
-  ErrorType _errorType = ErrorType.none;
+  ErrorType _errorType = ErrorType.noError;
   ErrorType get errorType => _errorType;
   void setError({
     required ErrorType errorType,
@@ -198,7 +202,7 @@ class WarningMessageVM extends ChangeNotifier {
   }) {
     _errorType = errorType;
 
-    if (errorType != ErrorType.none) {
+    if (errorType != ErrorType.noError) {
       warningMessageType = WarningMessageType.errorMessage;
 
       if (errorArgOne != null) {
@@ -419,12 +423,10 @@ class WarningMessageVM extends ChangeNotifier {
   }
 
   String _oldFileName = '';
-  String get oldFileName =>
-      _oldFileName;
+  String get oldFileName => _oldFileName;
   String _newFileName = '';
-  String get newFileName =>
-      _newFileName;
-      
+  String get newFileName => _newFileName;
+
   void confirmRenameAudioFile({
     required String oldFileName,
     required String newFileName,
@@ -436,7 +438,7 @@ class WarningMessageVM extends ChangeNotifier {
     // Causes the display warning message widget to be displayed.      // Causes the display warning message widget to be displayed.
     notifyListeners();
   }
-      
+
   void confirmRenameAudioAndCommentFile({
     required String oldFileName,
     required String newFileName,
@@ -755,7 +757,7 @@ class WarningMessageVM extends ChangeNotifier {
       _updatedPlayableAudioLstPlaylistTitle;
   int _removedPlayableAudioNumber = 0;
   int get removedPlayableAudioNumber => _removedPlayableAudioNumber;
-  setUpdatedPlayableAudioLstPlaylistTitle({
+  void setUpdatedPlayableAudioLstPlaylistTitle({
     required String updatedPlayableAudioLstPlaylistTitle,
     required int removedPlayableAudioNumber,
   }) {
@@ -765,6 +767,26 @@ class WarningMessageVM extends ChangeNotifier {
 
     if (removedPlayableAudioNumber > 0) {
       warningMessageType = WarningMessageType.updatedPlayableAudioLst;
+
+      // Causes the display warning message widget to be displayed.
+      notifyListeners();
+    }
+  }
+
+  String _targetPlaylistTitle = '';
+  String get targetPlaylistTitle => _targetPlaylistTitle;
+  int _audioNumber = 0;
+  int get audioNumber => _audioNumber;
+  void setNotRedownloadAudioFilesInPlaylistDirectory({
+    required String targetPlaylistTitle,
+    required int existingAudioNumber,
+  }) {
+    _targetPlaylistTitle = targetPlaylistTitle;
+    _audioNumber = existingAudioNumber;
+
+    if (existingAudioNumber > 0) {
+      warningMessageType =
+          WarningMessageType.notRedownloadAudioFilesInPlaylistDirectory;
 
       // Causes the display warning message widget to be displayed.
       notifyListeners();

@@ -407,5 +407,6 @@
   "downloadVideoUrlsFromTextFileInPlaylist": "Télécharger les URL depuis un fichier ...",
   "downloadVideoUrlsFromTextFileInPlaylistTooltip": "Téléchargez les audio dans la playlist à partir des URL vidéo répertoriées dans un fichier texte à sélectionner. Le fichier texte doit contenir une URL par ligne.",
   "downloadAudioFromVideoUrlsInPlaylistTitle": "Télécharger les audio des videos dans la playlist \"{title}\"",
-  "downloadAudioFromVideoUrlsInPlaylist": "Téléchargement de {number} audio."
+  "downloadAudioFromVideoUrlsInPlaylist": "Téléchargement de {number} audio.",
+  "notRedownloadAudioFilesInPlaylistDirectory": "{number} audio sont déjà contenus dans le répertoire de la playlist cible \"{playlistTitle}\" et n'ont donc pas été retéléchargés."
 }

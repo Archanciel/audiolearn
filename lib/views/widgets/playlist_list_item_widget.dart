@@ -253,6 +253,7 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                                 downloadAudioFromVideoUrlsInPlaylist,
                             actionFunctionArgs: [
                               audioDownloadVM,
+                              warningMessageVM,
                               playlist,
                               videoUrls,
                             ],
@@ -362,15 +363,23 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
     );
   }
 
-  void downloadAudioFromVideoUrlsInPlaylist(
+  Future<void> downloadAudioFromVideoUrlsInPlaylist(
     AudioDownloadVM audioDownloadVM,
+    WarningMessageVM warningMessageVM,
     Playlist targetPlaylist,
     List<String> videoUrls,
-  ) {
-    audioDownloadVM.downloadAudioFromVideoUrlsInPlaylist(
+  ) async {
+    int existingAudioFilesNotRedownloadedCount =
+        await audioDownloadVM.downloadAudioFromVideoUrlsInPlaylist(
       targetPlaylist: targetPlaylist,
       videoUrls: videoUrls,
     );
+
+    if (existingAudioFilesNotRedownloadedCount > 0) {
+      warningMessageVM.setNotRedownloadAudioFilesInPlaylistDirectory(
+          targetPlaylistTitle: playlist.title,
+          existingAudioNumber: existingAudioFilesNotRedownloadedCount);
+    }
   }
 
   /// Public method passed as parameter to the ActionConfirmDialogWidget

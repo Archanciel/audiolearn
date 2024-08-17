@@ -1266,4 +1266,11 @@ class MockAppLocalizations extends AppLocalizations {
     Object number,
   ) =>
       "Downloading $number audio.";
+
+  @override
+  String notRedownloadAudioFilesInPlaylistDirectory(
+    Object number,
+    Object playlistTitle,
+  ) =>
+      "$number audio are already contained in the target playlist \"$playlistTitle\" directory and so were not redownloaded.";
 }

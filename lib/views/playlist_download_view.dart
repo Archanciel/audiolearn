@@ -98,7 +98,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
   @override
   Widget build(BuildContext context) {
-    final AudioDownloadVM audioDownloadViewModel = Provider.of<AudioDownloadVM>(
+    final AudioDownloadVM audioDownloadVMlistenfalse =
+        Provider.of<AudioDownloadVM>(
       context,
       listen: false,
     );
@@ -131,7 +132,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
         ),
         _buildFirstLine(
           context: context,
-          audioDownloadViewModel: audioDownloadViewModel,
+          audioDownloadVMlistenFalse: audioDownloadVMlistenfalse,
           themeProviderVM: themeProviderVM,
           playlistListVMlistenFalse: playlistListVMlistenFalse,
           playlistListVMlistenTrue: playlistListVMlistenTrue,
@@ -881,7 +882,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   /// single video button and the stop download button.
   Widget _buildFirstLine({
     required BuildContext context,
-    required AudioDownloadVM audioDownloadViewModel,
+    required AudioDownloadVM audioDownloadVMlistenFalse,
     required ThemeProviderVM themeProviderVM,
     required PlaylistListVM playlistListVMlistenFalse,
     required PlaylistListVM playlistListVMlistenTrue,
@@ -908,7 +909,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           ),
           _buildDownloadSingleVideoButton(
             context: context,
-            audioDownloadViewModel: audioDownloadViewModel,
+            audioDownloadVMlistenFalse: audioDownloadVMlistenFalse,
             themeProviderVM: themeProviderVM,
             playlistListVMlistenFalse: playlistListVMlistenFalse,
             warningMessageVMlistenFalse: warningMessageVMlistenFalse,
@@ -918,7 +919,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           ),
           _buildStopDownloadButton(
             context: context,
-            audioDownloadViewModel: audioDownloadViewModel,
+            audioDownloadViewModel: audioDownloadVMlistenFalse,
             themeProviderVM: themeProviderVM,
           ),
         ],
@@ -1068,7 +1069,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                     .savePlaylistAudioSortFilterParmsToPlaylist(
                   isAppliedSortFilterParmsNameSelected:
                       _selectedSortFilterParametersName == // sf parms name
-                          AppLocalizations.of(context)!    // selected in the
+                          AppLocalizations.of(context)! // selected in the
                               .sortFilterParametersAppliedName, // dropdown menu
                   forAudioPlayerView: forViewLst[0],
                   forPlaylistDownloadView: forViewLst[1],
@@ -1150,7 +1151,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
   SizedBox _buildDownloadSingleVideoButton({
     required BuildContext context,
-    required AudioDownloadVM audioDownloadViewModel,
+    required AudioDownloadVM audioDownloadVMlistenFalse,
     required ThemeProviderVM themeProviderVM,
     required PlaylistListVM playlistListVMlistenFalse,
     required WarningMessageVM warningMessageVMlistenFalse,
@@ -1280,14 +1281,14 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
               ).then((value) async {
                 if (value != null) {
                   // the case if the user clicked on Ok button
-                  bool isSingleVideoAudioCorrectlyDownloaded =
-                      await audioDownloadViewModel.downloadSingleVideoAudio(
+                  ErrorType errorType =
+                      await audioDownloadVMlistenFalse.downloadSingleVideoAudio(
                     videoUrl: _playlistUrlController.text.trim(),
                     singleVideoTargetPlaylist: selectedTargetPlaylist!,
                     downloadAtMusicQuality: isMusicQuality,
                   );
 
-                  if (isSingleVideoAudioCorrectlyDownloaded) {
+                  if (errorType == ErrorType.noError) {
                     // if the single video audio has been
                     // correctly downloaded, then the playlistUrl
                     // field is cleared
