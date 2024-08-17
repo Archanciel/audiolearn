@@ -919,7 +919,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           ),
           _buildStopDownloadButton(
             context: context,
-            audioDownloadViewModel: audioDownloadVMlistenFalse,
+            audioDownloadVMlistenFalse: audioDownloadVMlistenFalse,
             themeProviderVM: themeProviderVM,
           ),
         ],
@@ -1086,11 +1086,11 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
   SizedBox _buildStopDownloadButton({
     required BuildContext context,
-    required AudioDownloadVM audioDownloadViewModel,
+    required AudioDownloadVM audioDownloadVMlistenFalse,
     required ThemeProviderVM themeProviderVM,
   }) {
-    bool isButtonEnabled = audioDownloadViewModel.isDownloading &&
-        !audioDownloadViewModel.isDownloadStopping;
+    bool isButtonEnabled = audioDownloadVMlistenFalse.isDownloading &&
+        !audioDownloadVMlistenFalse.isDownloadStopping;
 
     return SizedBox(
       // sets the rounded TextButton size improving the distance
@@ -1129,7 +1129,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                     messageColor: Colors.white,
                     borderRadius: const BorderRadius.all(Radius.circular(8)),
                   ).show(context);
-                  audioDownloadViewModel.stopDownload();
+                  audioDownloadVMlistenFalse.stopDownload();
                 }
               : null,
           child: Text(
