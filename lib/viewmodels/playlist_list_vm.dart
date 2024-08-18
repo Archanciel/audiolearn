@@ -12,6 +12,11 @@ import 'audio_download_vm.dart';
 import 'comment_vm.dart';
 import 'warning_message_vm.dart';
 
+enum AudioPlayingOrder {
+  ascending,  // in the audio playable list dialog, last to first
+  descending, // in the audio playable list dialog, first to last
+}
+
 /// This VM (View Model) class is part of the MVVM architecture.
 ///
 /// It is used in the PlaylistDownloadView screen in order to
@@ -933,12 +938,13 @@ class PlaylistListVM extends ChangeNotifier {
   /// case if the audio already exist in the target playlist -
   /// null is returned
   Audio? moveAudioAndCommentToPlaylist({
+    required AudioLearnAppViewType audioLearnAppViewType,
     required Audio audio,
     required Playlist targetPlaylist,
     required bool keepAudioInSourcePlaylistDownloadedAudioLst,
   }) {
-    Audio? nextAudio =
-        _getNextSubsequentlyDownloadedOrSortFilteredNotFullyPlayedAudio(
+    Audio? nextAudio = _getNextSortFilteredNotFullyPlayedAudio(
+      audioLearnAppViewType: audioLearnAppViewType,
       currentAudio: audio,
     );
 
@@ -1061,7 +1067,8 @@ class PlaylistListVM extends ChangeNotifier {
 
       if (forPlaylistDownloadView) {
         audioSortFilterParmsName =
-            _playlistAudioSFparmsNamesForPlaylistDownloadViewMap[playlist.title]!;
+            _playlistAudioSFparmsNamesForPlaylistDownloadViewMap[
+                playlist.title]!;
         playlist.audioSortFilterParmsForPlaylistDownloadView = null;
       } else {
         audioSortFilterParmsName =
@@ -1103,10 +1110,11 @@ class PlaylistListVM extends ChangeNotifier {
   /// playableAudioLst order: [available audio last downloaded, ...,
   ///                          available audio first downloaded]
   Audio? deleteAudioFile({
+    required AudioLearnAppViewType audioLearnAppViewType,
     required Audio audio,
   }) {
-    Audio? nextAudio =
-        _getNextSubsequentlyDownloadedOrSortFilteredNotFullyPlayedAudio(
+    Audio? nextAudio = _getNextSortFilteredNotFullyPlayedAudio(
+      audioLearnAppViewType: audioLearnAppViewType,
       currentAudio: audio,
     );
 
@@ -1115,7 +1123,10 @@ class PlaylistListVM extends ChangeNotifier {
     _audioDownloadVM.deleteAudioPhysicallyAndFromPlayableAudioListOnly(
         audio: audio);
 
-    _removeAudioFromSortedFilteredPlayableAudioList(audio);
+    _removeAudioFromSortedFilteredPlayableAudioList(
+      audioLearnAppViewType: audioLearnAppViewType,
+      audio: audio,
+    );
 
     _setStateOfButtonsApplicableToAudio(
       selectedPlaylist: audio.enclosingPlaylist!,
@@ -1145,16 +1156,20 @@ class PlaylistListVM extends ChangeNotifier {
   /// playableAudioLst order: [available audio last downloaded, ...,
   ///                          available audio first downloaded]
   Audio? deleteAudioFromPlaylistAswell({
+    required AudioLearnAppViewType audioLearnAppViewType,
     required Audio audio,
   }) {
-    Audio? nextAudio =
-        _getNextSubsequentlyDownloadedOrSortFilteredNotFullyPlayedAudio(
+    Audio? nextAudio = _getNextSortFilteredNotFullyPlayedAudio(
+      audioLearnAppViewType: audioLearnAppViewType,
       currentAudio: audio,
     );
 
     _audioDownloadVM.deleteAudioPhysicallyAndFromAllAudioLists(audio: audio);
 
-    _removeAudioFromSortedFilteredPlayableAudioList(audio);
+    _removeAudioFromSortedFilteredPlayableAudioList(
+      audioLearnAppViewType: audioLearnAppViewType,
+      audio: audio,
+    );
 
     _commentVM.deleteAllAudioComments(
       commentedAudio: audio,
@@ -1167,10 +1182,13 @@ class PlaylistListVM extends ChangeNotifier {
 
   /// playableAudioLst order: [available audio last downloaded, ...,
   ///                          available audio first downloaded]
-  Audio? _removeAudioFromSortedFilteredPlayableAudioList(Audio audio) {
+  Audio? _removeAudioFromSortedFilteredPlayableAudioList({
+    required AudioLearnAppViewType audioLearnAppViewType,
+    required Audio audio,
+  }) {
     if (_sortedFilteredSelectedPlaylistsPlayableAudios != null) {
-      Audio? nextAudio =
-          _getNextSubsequentlyDownloadedOrSortFilteredNotFullyPlayedAudio(
+      Audio? nextAudio = _getNextSortFilteredNotFullyPlayedAudio(
+        audioLearnAppViewType: audioLearnAppViewType,
         currentAudio: audio,
       );
       _sortedFilteredSelectedPlaylistsPlayableAudios!
@@ -1285,6 +1303,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// json file, then the returned next not fully played audio is obtained
   /// from the sorted and filtered playlist playableAudioLst.
   Audio? getNextSubsequentlyDownloadedOrSortFilteredNotFullyPlayedAudio({
+    required AudioLearnAppViewType audioLearnAppViewType,
     required Audio currentAudio,
   }) {
     // If the current audio is not fully listened, null is returned.
@@ -1295,11 +1314,13 @@ class PlaylistListVM extends ChangeNotifier {
       return null;
     }
 
-    return _getNextSubsequentlyDownloadedOrSortFilteredNotFullyPlayedAudio(
+    return _getNextSortFilteredNotFullyPlayedAudio(
+        audioLearnAppViewType: audioLearnAppViewType,
         currentAudio: currentAudio);
   }
 
-  Audio? _getNextSubsequentlyDownloadedOrSortFilteredNotFullyPlayedAudio({
+  Audio? _getNextSortFilteredNotFullyPlayedAudio({
+    required AudioLearnAppViewType audioLearnAppViewType,
     required Audio currentAudio,
   }) {
     // If sort and filter parameters were saved in the playlist json
@@ -1310,7 +1331,7 @@ class PlaylistListVM extends ChangeNotifier {
     // download date descending (the de3fault sorting).
     List<Audio> sortedAndFilteredPlayableAudioLst =
         getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters(
-      audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
+      audioLearnAppViewType: audioLearnAppViewType,
     );
 
     int currentAudioIndex = sortedAndFilteredPlayableAudioLst.indexWhere(
@@ -1335,6 +1356,59 @@ class PlaylistListVM extends ChangeNotifier {
     }
 
     for (int i = currentAudioIndex - 1; i >= 0; i--) {
+      Audio audio = sortedAndFilteredPlayableAudioLst[i];
+      if (audio.wasFullyListened()) {
+        continue;
+      } else {
+        return audio;
+      }
+    }
+
+    return null;
+  }
+
+  Audio? _getNextFirstToLastSortFilteredNotFullyPlayedAudio({
+    required AudioLearnAppViewType audioLearnAppViewType,
+    required Audio currentAudio,
+  }) {
+    // If sort and filter parameters were saved in the playlist json
+    // file, then the audio list returned by
+    // getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters()
+    // is sorted and filtered. Otherwise, the returned audio list is the
+    // full playable audio list of the selected playlist sorted by audio
+    // download date descending (the de3fault sorting).
+    List<Audio> sortedAndFilteredPlayableAudioLst =
+        getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters(
+      audioLearnAppViewType: audioLearnAppViewType,
+    );
+
+    int currentAudioIndex = sortedAndFilteredPlayableAudioLst.indexWhere(
+        (audio) => audio == currentAudio); // using Audio == operator
+
+    if (currentAudioIndex == -1) {
+      // the case if the sort and filter parameters contained
+      // "Fully listened" unchecked and "Partially listened" checked.
+      // In this case, the current audio is not in the
+      // sortedAndFilteredPlayableAudioLst since it was fully listened.
+
+      currentAudioIndex = _determineCurrentAudioIndexBeforeItWasFullyPlayed(
+        currentAudio: currentAudio,
+      );
+    }
+
+    int sortedAndFilteredPlayableAudioNumber =
+        sortedAndFilteredPlayableAudioLst.length - 1;
+
+    if (currentAudioIndex == sortedAndFilteredPlayableAudioNumber) {
+      // means the current audio is the last listenable audio available
+      // in the sortedAndFilteredPlayableAudioLst and so there is no
+      // subsequently listenable audio !
+      return null;
+    }
+
+    for (int i = currentAudioIndex + 1;
+        i <= sortedAndFilteredPlayableAudioNumber;
+        i++) {
       Audio audio = sortedAndFilteredPlayableAudioLst[i];
       if (audio.wasFullyListened()) {
         continue;

@@ -317,6 +317,7 @@ class AudioPlayerVM extends ChangeNotifier {
 
     nextAudio = _playlistListVM
         .getNextSubsequentlyDownloadedOrSortFilteredNotFullyPlayedAudio(
+      audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
       currentAudio: _currentAudio!,
     );
 

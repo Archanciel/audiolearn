@@ -247,6 +247,8 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
               bool keepAudioDataInSourcePlaylist =
                   resultMap['keepAudioDataInSourcePlaylist'];
               playlistVMlistnedFalse.moveAudioAndCommentToPlaylist(
+                audioLearnAppViewType:
+                    AudioLearnAppViewType.playlistDownloadView,
                 audio: audio,
                 targetPlaylist: targetPlaylist,
                 keepAudioInSourcePlaylistDownloadedAudioLst:
@@ -308,7 +310,11 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
               Provider.of<PlaylistListVM>(
                 context,
                 listen: false,
-              ).deleteAudioFile(audio: audioToDelete);
+              ).deleteAudioFile(
+                audioLearnAppViewType:
+                    AudioLearnAppViewType.playlistDownloadView,
+                audio: audioToDelete,
+              );
             }
             break;
           case AudioPopupMenuAction.deleteAudioFromPlaylistAswell:
@@ -336,7 +342,11 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
               Provider.of<PlaylistListVM>(
                 context,
                 listen: false,
-              ).deleteAudioFromPlaylistAswell(audio: audioToDelete);
+              ).deleteAudioFromPlaylistAswell(
+                audioLearnAppViewType:
+                    AudioLearnAppViewType.playlistDownloadView,
+                audio: audioToDelete,
+              );
             }
             break;
           default:
@@ -353,7 +363,10 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
     return Provider.of<PlaylistListVM>(
       context,
       listen: false,
-    ).deleteAudioFile(audio: audio);
+    ).deleteAudioFile(
+      audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+      audio: audio,
+    );
   }
 
   /// Public method passed to the ConfirmActionDialogWidget to be executd
@@ -367,7 +380,10 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
     return Provider.of<PlaylistListVM>(
       context,
       listen: false,
-    ).deleteAudioFromPlaylistAswell(audio: audio);
+    ).deleteAudioFromPlaylistAswell(
+      audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+      audio: audio,
+    );
   }
 
   String _createDeleteAudioDialogTitle(

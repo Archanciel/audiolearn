@@ -3,9 +3,20 @@ import 'dart:io';
 import 'audio.dart';
 import '../services/sort_filter_parameters.dart';
 
-enum PlaylistType { youtube, local }
+enum PlaylistType {
+  youtube,
+  local,
+}
 
-enum PlaylistQuality { music, voice }
+enum PlaylistQuality {
+  music,
+  voice,
+}
+
+enum AudioPlayingOrder {
+  ascending, // in the audio playable list dialog, last to first
+  descending, // in the audio playable list dialog, first to last
+}
 
 /// This class
 class Playlist {
@@ -70,7 +81,7 @@ class Playlist {
   // and comes back to the current playlist unless he has saved the
   // the sort filter parameters in the current playlist json file using
   // the audio menu item 'Save sort filter parameters'.
-  
+
   String audioSortFilterParmsNameForPlaylistDownloadView = '';
   AudioSortFilterParameters? audioSortFilterParmsForPlaylistDownloadView;
 
@@ -622,7 +633,7 @@ class Playlist {
   /// renamed and then recreated with the same name. In this situation, the
   /// current playlist was created with the same title as the replaced playlist
   /// and a new url and Youtube playlist id.
-  /// 
+  ///
   /// In this method, the data of the replaced playlist is integrated into the
   /// current playlist, which will then replace the replaced playlist in the
   /// AudioDownloadVM playlist list.
