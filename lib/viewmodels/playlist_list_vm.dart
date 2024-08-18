@@ -12,11 +12,6 @@ import 'audio_download_vm.dart';
 import 'comment_vm.dart';
 import 'warning_message_vm.dart';
 
-enum AudioPlayingOrder {
-  ascending,  // in the audio playable list dialog, last to first
-  descending, // in the audio playable list dialog, first to last
-}
-
 /// This VM (View Model) class is part of the MVVM architecture.
 ///
 /// It is used in the PlaylistDownloadView screen in order to

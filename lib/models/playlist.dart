@@ -14,7 +14,7 @@ enum PlaylistQuality {
 }
 
 enum AudioPlayingOrder {
-  ascending, // in the audio playable list dialog, last to first
+  ascending, // in the audio playable list dialog, last to first with ^ button
   descending, // in the audio playable list dialog, first to last
 }
 
@@ -88,6 +88,8 @@ class Playlist {
   String audioSortFilterParmsNameForAudioPlayerView = '';
   AudioSortFilterParameters? audioSortFilterParmsForAudioPlayerView;
 
+  AudioPlayingOrder audioPlayingOrder = AudioPlayingOrder.ascending;
+
   Playlist({
     this.url = '',
     this.id = '',
@@ -112,6 +114,7 @@ class Playlist {
     required this.audioSortFilterParmsForPlaylistDownloadView,
     required this.audioSortFilterParmsNameForAudioPlayerView,
     required this.audioSortFilterParmsForAudioPlayerView,
+    required this.audioPlayingOrder,
   });
 
   /// Factory constructor: creates an instance of Playlist from a
@@ -148,6 +151,10 @@ class Playlist {
               ? AudioSortFilterParameters.fromJson(
                   json['audioSortFilterParmsAudioPlayerView'])
               : null,
+      audioPlayingOrder: AudioPlayingOrder.values.firstWhere(
+        (e) => e.toString().split('.').last == json['audioPlayingOrder'],
+        orElse: () => AudioPlayingOrder.ascending,
+      ),
     );
 
     // Deserialize the Audio instances in the
@@ -197,6 +204,7 @@ class Playlist {
           audioSortFilterParmsNameForAudioPlayerView,
       'audioSortFilterParmsAudioPlayerView':
           audioSortFilterParmsForAudioPlayerView?.toJson(),
+      'audioPlayingOrder': audioPlayingOrder.toString().split('.').last,
     };
   }
 
