@@ -312,7 +312,7 @@ class AudioPlayerVM extends ChangeNotifier {
   ///
   /// Returns true if a next not fully played audio was found, false
   /// otherwise.
-  Future<bool> _setNextNotPlayedAudio() async {
+  Future<bool> _setNextNotFullyPlayedAudioAsCurrentAudio() async {
     Audio? nextAudio;
 
     nextAudio = _playlistListVM
@@ -803,7 +803,7 @@ class AudioPlayerVM extends ChangeNotifier {
       // situation when the user clicks on >| when the audio
       // position is at audio end. This is the case if the user
       // clicks twice on the >| icon.
-      await _setNextNotPlayedAudio();
+      await _setNextNotFullyPlayedAudioAsCurrentAudio();
 
       notifyListeners();
 
@@ -894,7 +894,7 @@ class AudioPlayerVM extends ChangeNotifier {
     _setCurrentAudioToEndPosition();
     updateAndSaveCurrentAudio();
 
-    if (await _setNextNotPlayedAudio()) {
+    if (await _setNextNotFullyPlayedAudioAsCurrentAudio()) {
       await playCurrentAudio(
         // it makes sense that if the next played is partially played,
         // it is rewinded according to the time elapsed since it was
