@@ -64,10 +64,13 @@ class Playlist {
   // Additionally, the sort filter parameters instance can be associated
   // to the playlist download view and/or to the audio player view.
   //
-  // Finally, the user can choose to apply the sort filter parameters
-  // automatically when the playlist is opened in the PlaylistDownloadView
-  // or in the AudioPlayerView.
-
+  // Finally, the user can choose to apply the defined sort filter
+  // parameters to the PlaylistDownloadView or/and the AudioPlayerView.
+  // This will not happen after the user has selected another playlist
+  // and comes back to the current playlist unless he has saved the
+  // the sort filter parameters in the current playlist json file using
+  // the audio menu item 'Save sort filter parameters'.
+  
   String audioSortFilterParmsNameForPlaylistDownloadView = '';
   AudioSortFilterParameters? audioSortFilterParmsForPlaylistDownloadView;
 
