@@ -404,5 +404,6 @@
   "downloadVideoUrlsFromTextFileInPlaylistTooltip": "Download audio to the playlist from video URLs listed in a text file to select. The text file must contain one video URL per line.",
   "downloadAudioFromVideoUrlsInPlaylistTitle": "Download video audio to playlist \"{title}\"",
   "downloadAudioFromVideoUrlsInPlaylist": "Downloading {number} audio.",
-  "notRedownloadAudioFilesInPlaylistDirectory": "{number} audio are already contained in the target playlist \"{playlistTitle}\" directory and so were not redownloaded."
+  "notRedownloadAudioFilesInPlaylistDirectory": "{number} audio are already contained in the target playlist \"{playlistTitle}\" directory and so were not redownloaded.",
+  "clickToSetAscendingOrDescendingPlayingOrderTooltip": "Click to set ascending or descending playing order."
   }

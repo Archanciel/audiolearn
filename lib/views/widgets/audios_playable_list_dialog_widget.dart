@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../models/playlist.dart';
 import '../../services/sort_filter_parameters.dart';
 import '../../views/screen_mixin.dart';
 import '../../constants.dart';
@@ -99,23 +100,45 @@ class _AudioPlayableListDialogWidgetState
         title: Row(
           children: [
             Tooltip(
-                message: _determineDialogTitleAudioSortTooltip(
-                  context: context,
-                  audioPlayerVM: audioPlayerVMlistenFalse,
-                ),
-                child: Text(
-                    AppLocalizations.of(context)!.audioOneSelectedDialogTitle)),
+              message: _determineDialogTitleAudioSortTooltip(
+                context: context,
+                audioPlayerVM: audioPlayerVMlistenFalse,
+              ),
+              child: Text(
+                  AppLocalizations.of(context)!.audioOneSelectedDialogTitle),
+            ),
             Tooltip(
-              message:
-                  AppLocalizations.of(context)!.audioPlayedInThisOrderTooltip,
-              child: IconTheme(
-                data: (themeProviderVM.currentTheme == AppTheme.dark
-                        ? ScreenMixin.themeDataDark
-                        : ScreenMixin.themeDataLight)
-                    .iconTheme,
-                child: const Icon(
-                  Icons.arrow_drop_up,
-                  size: 80.0,
+              message: AppLocalizations.of(context)!
+                  .clickToSetAscendingOrDescendingPlayingOrderTooltip,
+              child: IconButton(
+                key: const Key('sort_ascending_or_descending_button'),
+                onPressed: () {
+                  setState(() {
+                    if (currentAudio.enclosingPlaylist!.audioPlayingOrder ==
+                        AudioPlayingOrder.ascending) {
+                      currentAudio.enclosingPlaylist!.audioPlayingOrder =
+                          AudioPlayingOrder.descending;
+                    } else {
+                      currentAudio.enclosingPlaylist!.audioPlayingOrder =
+                          AudioPlayingOrder.ascending;
+                    }
+                  });
+                },
+                style: ButtonStyle(
+                  // Highlight button when pressed
+                  padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                    const EdgeInsets.symmetric(
+                        horizontal: kSmallButtonInsidePadding, vertical: 0),
+                  ),
+                  overlayColor: iconButtonTapModification, // Tap feedback color
+                ),
+                icon: Icon(
+                  (currentAudio!.enclosingPlaylist!.audioPlayingOrder ==
+                        AudioPlayingOrder.ascending)
+                      ? Icons.arrow_drop_up
+                      : Icons.arrow_drop_down, // Conditional icon
+                  size: 80,
+                  color: kDarkAndLightEnabledIconColor,
                 ),
               ),
             ),

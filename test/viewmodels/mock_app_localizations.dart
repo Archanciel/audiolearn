@@ -1265,4 +1265,8 @@ class MockAppLocalizations extends AppLocalizations {
     Object playlistTitle,
   ) =>
       "$number audio are already contained in the target playlist \"$playlistTitle\" directory and so were not redownloaded.";
+
+  @override
+  String get clickToSetAscendingOrDescendingPlayingOrderTooltip =>
+      "Click to set ascending or descending playing order.";
 }
