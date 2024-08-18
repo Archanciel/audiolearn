@@ -287,8 +287,6 @@
   "notListened": "Not listened",
   "saveSortFilterOptionsToPlaylistDialogTitle": "Save Sort/Filter \"{sortFilterParmsName}\"",
   "saveSortFilterOptionsToPlaylist": "To playlist \"{title}\"",
-  "saveSortFilterOptionsAutomaticApplicationTooltip": "If 'Automatic application' is selected, the sort/filter options stored in the playlist are automatically applied when the playlist is selected.",
-  "saveSortFilterOptionsAutomaticApplicationAudioPlayerViewTooltip": "If 'Automatic application' is selected, the sort/filter options stored in the playlist are automatically applied to the \"Play Audio\" audio list. This means that the next played audio will be the first not fully played audio located after the current audio in the sorted and filtered audio list.",
   "saveButton": "Save",
   "errorInPlaylistJsonFile": "File \"{filePathName}\" contains an invalid data definition. Try finding the problem in order to correct it before executing again the operation.",
   "updatePlaylistJsonFilesMenuTooltip": "If one or several playlist directories containing or not audio were manually added or deleted in the application data root directory or if audio were manually deleted from one or several playlist directories, this functionality updates the playlist JSON files as well as the application settings JSON file in order to reflect the changes in the application screens. Playlist directories located on PC can be copied in the application data root directory ...",

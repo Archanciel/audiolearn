@@ -289,8 +289,6 @@
   "notListened": "Non écouté",
   "saveSortFilterOptionsToPlaylistDialogTitle": "Sauvegarder les options de tri et de filtre \"{sortFilterParmsName}\"",
   "saveSortFilterOptionsToPlaylist": "Dans la playlist \"{title}\"",
-  "saveSortFilterOptionsAutomaticApplicationTooltip": "Appliquer automatiquement les options de tri/filtrage enregistrées lorsque la playlist est sélectionnée.",
-  "saveSortFilterOptionsAutomaticApplicationAudioPlayerViewTooltip": "Appliquer automatiquement les options de tri/filtrage enregistrées à la vue \"Lire Audio\". Le prochain audio joué sera le premier audio non complètement écouté après l'audio actuel dans la liste triée et filtrée.",
   "saveButton": "Sauver",
   "errorInPlaylistJsonFile": "Le fichier \"{filePathName}\" une donnée de définition invalide. Essayez de trouver le probléme afin de le corriger avant de réexéuter l'opération.",
   "updatePlaylistJsonFilesMenuTooltip": "Si un ou plusieurs répertoires de playlists contenant ou non des audio ont été ajoutés ou supprimés manuellement dans le répertoire racine des données de l'application ou si des audio ont été supprimés manuellement d'un ou de plusieurs répertoires de playlist, cette fonctionnalité met à jour les fichiers JSON des playlists ainsi que celui des paramètres de l'application afin de refléter les changements dans les écrans de l'application. Des répertoires de playlist localisés sur un PC peuvent être copiés dans le répertoire racine des données de l'application ...",

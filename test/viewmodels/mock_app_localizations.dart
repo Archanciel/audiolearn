@@ -691,14 +691,6 @@ class MockAppLocalizations extends AppLocalizations {
   String saveSortFilterOptionsToPlaylist(Object title) => "To playlist $title";
 
   @override
-  String get saveSortFilterOptionsAutomaticApplicationTooltip =>
-      "If the automatic application is selected; the sort/filter options stored in the playlist are automatically applied when the playlist is selected.";
-
-  @override
-  String get saveSortFilterOptionsAutomaticApplicationAudioPlayerViewTooltip =>
-      "If the automatic application is selected; the sort/filter options stored in the playlist are automatically applied when the playlist is selected.";
-
-  @override
   String get saveButton => "Save";
 
   @override
