@@ -1343,72 +1343,45 @@ class PlaylistListVM extends ChangeNotifier {
       );
     }
 
-    if (currentAudioIndex == 0) {
-      // means the current audio is the last downloaded audio
-      // available in the playableAudioLst and so there is no
-      // subsequently downloaded audio !
-      return null;
-    }
-
-    for (int i = currentAudioIndex - 1; i >= 0; i--) {
-      Audio audio = sortedAndFilteredPlayableAudioLst[i];
-      if (audio.wasFullyListened()) {
-        continue;
-      } else {
-        return audio;
+    if (currentAudio.enclosingPlaylist!.audioPlayingOrder ==
+        AudioPlayingOrder.ascending) {
+      if (currentAudioIndex == 0) {
+        // means the current audio is the last downloaded audio
+        // available in the playableAudioLst and so there is no
+        // subsequently downloaded audio !
+        return null;
       }
-    }
 
-    return null;
-  }
+      for (int i = currentAudioIndex - 1; i >= 0; i--) {
+        Audio audio = sortedAndFilteredPlayableAudioLst[i];
+        if (audio.wasFullyListened()) {
+          continue;
+        } else {
+          return audio;
+        }
+      }
+    } else {
+      // the audio playing order of the playlist containing the audio
+      // is AudioPlayingOrder.descending
+      int sortedAndFilteredPlayableAudioNumber =
+          sortedAndFilteredPlayableAudioLst.length - 1;
 
-  Audio? _getNextFirstToLastSortFilteredNotFullyPlayedAudio({
-    required AudioLearnAppViewType audioLearnAppViewType,
-    required Audio currentAudio,
-  }) {
-    // If sort and filter parameters were saved in the playlist json
-    // file, then the audio list returned by
-    // getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters()
-    // is sorted and filtered. Otherwise, the returned audio list is the
-    // full playable audio list of the selected playlist sorted by audio
-    // download date descending (the de3fault sorting).
-    List<Audio> sortedAndFilteredPlayableAudioLst =
-        getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters(
-      audioLearnAppViewType: audioLearnAppViewType,
-    );
+      if (currentAudioIndex == sortedAndFilteredPlayableAudioNumber) {
+        // means the current audio is the last listenable audio available
+        // in the sortedAndFilteredPlayableAudioLst and so there is no
+        // subsequently listenable audio !
+        return null;
+      }
 
-    int currentAudioIndex = sortedAndFilteredPlayableAudioLst.indexWhere(
-        (audio) => audio == currentAudio); // using Audio == operator
-
-    if (currentAudioIndex == -1) {
-      // the case if the sort and filter parameters contained
-      // "Fully listened" unchecked and "Partially listened" checked.
-      // In this case, the current audio is not in the
-      // sortedAndFilteredPlayableAudioLst since it was fully listened.
-
-      currentAudioIndex = _determineCurrentAudioIndexBeforeItWasFullyPlayed(
-        currentAudio: currentAudio,
-      );
-    }
-
-    int sortedAndFilteredPlayableAudioNumber =
-        sortedAndFilteredPlayableAudioLst.length - 1;
-
-    if (currentAudioIndex == sortedAndFilteredPlayableAudioNumber) {
-      // means the current audio is the last listenable audio available
-      // in the sortedAndFilteredPlayableAudioLst and so there is no
-      // subsequently listenable audio !
-      return null;
-    }
-
-    for (int i = currentAudioIndex + 1;
-        i <= sortedAndFilteredPlayableAudioNumber;
-        i++) {
-      Audio audio = sortedAndFilteredPlayableAudioLst[i];
-      if (audio.wasFullyListened()) {
-        continue;
-      } else {
-        return audio;
+      for (int i = currentAudioIndex + 1;
+          i <= sortedAndFilteredPlayableAudioNumber;
+          i++) {
+        Audio audio = sortedAndFilteredPlayableAudioLst[i];
+        if (audio.wasFullyListened()) {
+          continue;
+        } else {
+          return audio;
+        }
       }
     }
 
