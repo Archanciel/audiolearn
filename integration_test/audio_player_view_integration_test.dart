@@ -4947,7 +4947,7 @@ void main() {
       // the audio
 
       // First, select the empty playlist
-      await selectPlaylist(
+      await IntegrationTestUtil.selectPlaylist(
         tester: tester,
         playlistToSelectTitle: emptyPlaylistTitle,
       );
@@ -7689,7 +7689,7 @@ Future<void> copyAudioFromSourceToTargetPlaylist({
   required String audioToCopyTitle,
 }) async {
   // First, select the source playlist
-  await selectPlaylist(
+  await IntegrationTestUtil.selectPlaylist(
     tester: tester,
     playlistToSelectTitle: sourcePlaylistTitle,
   );
@@ -7755,33 +7755,6 @@ Future<void> copyAudioFromSourceToTargetPlaylist({
 
   // Click on playlist toggle button to display the playlist list
   await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-  await tester.pumpAndSettle();
-}
-
-Future<void> selectPlaylist({
-  required WidgetTester tester,
-  required String playlistToSelectTitle,
-}) async {
-  // First, find the source Playlist ListTile Text widget
-  final Finder playlistListTileTextWidgetFinder =
-      find.text(playlistToSelectTitle);
-
-  // Then obtain the source Playlist ListTile widget enclosing the Text widget
-  // by finding its ancestor
-  final Finder playlistListTileWidgetFinder = find.ancestor(
-    of: playlistListTileTextWidgetFinder,
-    matching: find.byType(ListTile),
-  );
-
-  // Now find the Checkbox widget located in the Playlist ListTile
-  // and tap on it to select the playlist
-  final Finder playlistListTileCheckboxWidgetFinder = find.descendant(
-    of: playlistListTileWidgetFinder,
-    matching: find.byType(Checkbox),
-  );
-
-  // Tap the ListTile Playlist checkbox to select it
-  await tester.tap(playlistListTileCheckboxWidgetFinder);
   await tester.pumpAndSettle();
 }
 

@@ -531,4 +531,31 @@ class IntegrationTestUtil {
     await tester.tap(find.byKey(const Key('warningDialogOkButton')));
     await tester.pumpAndSettle();
   }
+
+  static Future<void> selectPlaylist({
+    required WidgetTester tester,
+    required String playlistToSelectTitle,
+  }) async {
+    // First, find the source Playlist ListTile Text widget
+    final Finder playlistListTileTextWidgetFinder =
+        find.text(playlistToSelectTitle);
+
+    // Then obtain the source Playlist ListTile widget enclosing the Text widget
+    // by finding its ancestor
+    final Finder playlistListTileWidgetFinder = find.ancestor(
+      of: playlistListTileTextWidgetFinder,
+      matching: find.byType(ListTile),
+    );
+
+    // Now find the Checkbox widget located in the Playlist ListTile
+    // and tap on it to select the playlist
+    final Finder playlistListTileCheckboxWidgetFinder = find.descendant(
+      of: playlistListTileWidgetFinder,
+      matching: find.byType(Checkbox),
+    );
+
+    // Tap the ListTile Playlist checkbox to select it
+    await tester.tap(playlistListTileCheckboxWidgetFinder);
+    await tester.pumpAndSettle();
+  }
 }
