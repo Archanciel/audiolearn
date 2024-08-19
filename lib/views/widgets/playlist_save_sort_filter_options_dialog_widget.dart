@@ -52,10 +52,7 @@ class _PlaylistSaveSortFilterOptionsDialogWidgetState
               event.logicalKey == LogicalKeyboardKey.numpadEnter) {
             // executing the same code as in the 'Save'
             // TextButton onPressed callback
-            Navigator.of(context).pop([
-              _applySortFilterToPlaylistDownloadView,
-              _applySortFilterToAudioPlayerView,
-            ]);
+            Navigator.of(context).pop(_createReturnedLst());
           }
         }
       },
@@ -144,10 +141,7 @@ class _PlaylistSaveSortFilterOptionsDialogWidgetState
           TextButton(
             key: const Key('saveSortFilterOptionsToPlaylistSaveButton'),
             onPressed: () async {
-              Navigator.of(context).pop([
-                _applySortFilterToPlaylistDownloadView,
-                _applySortFilterToAudioPlayerView,
-              ]);
+              Navigator.of(context).pop(_createReturnedLst());
             },
             child: Text(
               AppLocalizations.of(context)!.saveButton,
@@ -171,5 +165,13 @@ class _PlaylistSaveSortFilterOptionsDialogWidgetState
         ],
       ),
     );
+  }
+
+  List<Object> _createReturnedLst() {
+    return [
+      widget.sortFilterParametersName,
+      _applySortFilterToPlaylistDownloadView,
+      _applySortFilterToAudioPlayerView,
+    ];
   }
 }

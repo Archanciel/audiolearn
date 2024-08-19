@@ -718,8 +718,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                 // if the user clicked on Save, not on Cancel button
                 playlistListVMlistenFalse
                     .savePlaylistAudioSortFilterParmsToPlaylist(
-                  forAudioPlayerView: forViewLst[0],
-                  forPlaylistDownloadView: forViewLst[1],
+                  forPlaylistDownloadView: forViewLst[0],
+                  forAudioPlayerView: forViewLst[1],
                 );
               });
               break;

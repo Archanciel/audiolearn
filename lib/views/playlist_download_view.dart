@@ -1057,7 +1057,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
               );
               break;
             case PopupMenuButtonType.saveSortFilterAudioParmsToPlaylist:
-              showDialog<List<bool>>(
+              showDialog<List<dynamic>>(
                 context: context,
                 barrierDismissible:
                     false, // This line prevents the dialog from closing
@@ -1077,14 +1077,17 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 }
 
                 // if the user clicked on Save, not on Cancel button
+                String sortFilterParmsNameToSave = forViewLst[0];
+
                 playlistListVMlistenFalse
                     .savePlaylistAudioSortFilterParmsToPlaylist(
                   isAppliedSortFilterParmsNameSelected:
-                      _selectedSortFilterParametersName == // sf parms name
+                      (sortFilterParmsNameToSave == // sf parms name
                           AppLocalizations.of(context)! // selected in the
-                              .sortFilterParametersAppliedName, // dropdown menu
-                  forAudioPlayerView: forViewLst[0],
+                              .sortFilterParametersAppliedName),
+                  sortFilterParmsNameToSave: sortFilterParmsNameToSave,             // dropdown menu
                   forPlaylistDownloadView: forViewLst[1],
+                  forAudioPlayerView: forViewLst[2],
                 );
               });
               break;

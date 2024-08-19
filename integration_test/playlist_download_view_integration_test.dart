@@ -14208,6 +14208,7 @@ void main() {
 
         await app.main(['test']);
         await tester.pumpAndSettle();
+        
         // Now tap on the current dropdown button item to open the dropdown
         // button items list
 
@@ -14222,7 +14223,7 @@ void main() {
         await tester.tap(dropDownButtonTextFinder);
         await tester.pumpAndSettle();
 
-        // And find the 'Title asc' sort/filter item
+        // And find the 'desc listened' sort/filter item
         String saveAsTitle = 'desc listened';
         final Finder titleAscDropDownTextFinder = find.text(saveAsTitle);
         await tester.tap(titleAscDropDownTextFinder);
@@ -14238,7 +14239,7 @@ void main() {
             find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
         await tester.pumpAndSettle();
 
-        // Type "Desc listened" in the 'Save as' TextField
+        // Type "desc listened" in the 'Save as' TextField
 
         await tester.enterText(
             find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
@@ -14290,7 +14291,7 @@ void main() {
             .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
         await tester.pumpAndSettle();
 
-        // Now verify the playlist download view state with the 'Desc listened'
+        // Now verify the playlist download view state with the 'desc listened'
         // sort/filter parms applied
 
         // Verify that the dropdown button has been updated with the
@@ -14303,11 +14304,11 @@ void main() {
         // And verify the order of the playlist audio titles
 
         List<String> audioTitlesSortedByTitleAscending = [
-          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
           "Les besoins artificiels par R.Keucheyan",
+          "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
           "La résilience insulaire par Fiona Roche",
-          "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
           "La surpopulation mondiale par Jancovici et Barrau",
           "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
         ];
@@ -14427,11 +14428,11 @@ void main() {
         audioTitlesSortedByTitleAscending = [
           "La surpopulation mondiale par Jancovici et Barrau",
           "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-          "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
           "La résilience insulaire par Fiona Roche",
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-          "Les besoins artificiels par R.Keucheyan",
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+          "Les besoins artificiels par R.Keucheyan",
         ];
 
         checkAudioTitlesOrder(

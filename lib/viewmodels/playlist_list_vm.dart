@@ -1037,6 +1037,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// Finally, the playlist json file is saved.
   void savePlaylistAudioSortFilterParmsToPlaylist({
     bool isAppliedSortFilterParmsNameSelected = false,
+    String sortFilterParmsNameToSave = '',
     bool forPlaylistDownloadView = false,
     bool forAudioPlayerView = false,
   }) {
@@ -1058,28 +1059,16 @@ class PlaylistListVM extends ChangeNotifier {
         playlist.audioSortFilterParmsForAudioPlayerView = audioSortFilterParms;
       }
     } else {
-      String audioSortFilterParmsName;
-
-      if (forPlaylistDownloadView) {
-        audioSortFilterParmsName =
-            _playlistAudioSFparmsNamesForPlaylistDownloadViewMap[
-                playlist.title]!;
-        playlist.audioSortFilterParmsForPlaylistDownloadView = null;
-      } else {
-        audioSortFilterParmsName =
-            _playlistAudioSFparmsNamesForAudioPlayerViewMap[playlist.title]!;
-        playlist.audioSortFilterParmsForAudioPlayerView = null;
-      }
-
+      // a named sort/filter parms is saved in the playlist json file ...
       if (forPlaylistDownloadView) {
         playlist.audioSortFilterParmsNameForPlaylistDownloadView =
-            audioSortFilterParmsName;
+            sortFilterParmsNameToSave;
         playlist.audioSortFilterParmsForPlaylistDownloadView = null;
       }
 
       if (forAudioPlayerView) {
         playlist.audioSortFilterParmsNameForAudioPlayerView =
-            audioSortFilterParmsName;
+            sortFilterParmsNameToSave;
         playlist.audioSortFilterParmsForAudioPlayerView = null;
       }
     }
