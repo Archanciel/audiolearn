@@ -1,9 +1,11 @@
 import 'dart:io';
+import 'package:audiolearn/services/settings_data_service.dart';
 import 'package:audiolearn/views/widgets/audio_playable_list_dialog_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:matcher/matcher.dart' as matcher;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:audiolearn/models/comment.dart';
 import 'package:audiolearn/models/playlist.dart';
@@ -19,6 +21,7 @@ import 'package:audiolearn/views/widgets/warning_message_display_widget.dart';
 import 'package:path/path.dart' as path;
 import 'package:audiolearn/constants.dart';
 import 'package:audiolearn/utils/dir_util.dart';
+import 'package:audiolearn/main.dart' as app;
 
 import 'integration_test_util.dart';
 
@@ -3820,6 +3823,187 @@ void main() {
       IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: "clear_sort_and_filter_audio_parms_history_menu_item",
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Change the SF parms in in the dropdown button list to 'Title asc'
+             and then verify its application. Then go to the audio player view
+             and there verify that the order of the audios displayed in the
+             playable audio list dialog is not sorted according to ^Title asc'.
+             Then, go back to the playlist download view and save the 'Title asc'
+             SF parms selecting only audio player view SF parms name of the 'S8
+             audio' playlist json file. Then  go to the audio player view and
+             there verify that the order of the audios displayed in the
+             playable audio list dialog corresponds now to the 'Title asc'.
+
+             Then select another playlist< and verify the order of the audios
+             displayed in the playable audio list dialog. Then reselect the 'S8
+             audio' playlist and verify the order of the audios displayed in the
+             playable audio list dialog ''', (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_three_playlists_test",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+      await app.main(['test']);
+      await tester.pumpAndSettle();
+
+      // Now tap on the current dropdown button item to open the dropdown
+      // button items list
+
+      final Finder dropDownButtonFinder =
+          find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+      final Finder dropDownButtonTextFinder = find.descendant(
+        of: dropDownButtonFinder,
+        matching: find.byType(Text),
+      );
+
+      await tester.tap(dropDownButtonTextFinder);
+      await tester.pumpAndSettle();
+
+      // And find the 'Title asc' sort/filter item
+      String titleAscendingSFparmsName = 'Title asc';
+      Finder titleAscDropDownTextFinder = find.text(titleAscendingSFparmsName);
+      await tester.tap(titleAscDropDownTextFinder);
+      await tester.pumpAndSettle();
+
+      // And verify the order of the playlist audio titles
+
+      List<String> audioTitlesSortedByTitleAscending = [
+        "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+        "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+        "La résilience insulaire par Fiona Roche",
+        "La surpopulation mondiale par Jancovici et Barrau",
+        "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+        "Les besoins artificiels par R.Keucheyan"
+      ];
+
+      IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        tester: tester,
+        audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
+      );
+
+      // Then go to the audio player view
+      Finder appScreenNavigationButton =
+          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+      await tester.tap(appScreenNavigationButton);
+      await tester.pumpAndSettle();
+
+      // Now we open the AudioPlayableListDialogWidget
+      // and verify the the displayed audio titles
+
+      await tester.tap(find
+          .text("Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik\n13:39"));
+      await tester.pumpAndSettle();
+
+      List<String>
+          audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
+        "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+        "La surpopulation mondiale par Jancovici et Barrau",
+        "La résilience insulaire par Fiona Roche",
+        "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+        "Les besoins artificiels par R.Keucheyan",
+        "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+      ];
+
+      IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        tester: tester,
+        audioTitlesOrderLst:
+            audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+      );
+
+      // Now, in the audio player view, select the 'Local' audio playlist using
+      // the audio player view playlist selection button.
+
+      // Tap on audio player view playlist button to display the playlists
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+      // Find the playlist to select ListTile Text widget
+      final Finder playlistToSelectListTileTextWidgetFinder =
+          find.text('local');
+
+      // Then obtain the playlist ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      final Finder playlistToSelectListTileWidgetFinder = find.ancestor(
+        of: playlistToSelectListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the Checkbox widget located in the playlist ListTile
+      // and tap on it to select the playlist
+      final Finder playlistToSelectListTileCheckboxWidgetFinder =
+          find.descendant(
+        of: playlistToSelectListTileWidgetFinder,
+        matching: find.byType(Checkbox),
+      );
+
+      // Tap the ListTile Playlist checkbox to select it
+      await tester.tap(playlistToSelectListTileCheckboxWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // Now return to the playlist download view
+      appScreenNavigationButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(appScreenNavigationButton);
+      await tester.pumpAndSettle();
+
+      // Click on playlist toggle button to display the playlist list
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: 'S8 audio',
+      );
+
+      // Click again on playlist toggle button to hide the playlist list
+      // and display the sort filter dropdown button
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Verify that the dropdown button has been updated with the
+      // 'Title asc' sort/filter parms selected
+      IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+        tester: tester,
+        dropdownButtonSelectedTitle: titleAscendingSFparmsName,
+      );
+
+      // And verify the order of the playlist audio titles
+
+      IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        tester: tester,
+        audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
       );
 
       // Purge the test playlist directory so that the created test

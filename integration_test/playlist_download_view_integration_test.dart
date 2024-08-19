@@ -12121,7 +12121,7 @@ void main() {
 
         // Verify that the dropdown button has been updated with the
         // 'Title asc' sort/filter parms selected
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: saveAsTitle,
         );
@@ -12138,7 +12138,7 @@ void main() {
           "Les besoins artificiels par R.Keucheyan"
         ];
 
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
         );
@@ -12159,13 +12159,13 @@ void main() {
 
         // Verify that the dropdown button has been updated with the
         // 'Title asc' sort/filter parms selected
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: saveAsTitle,
         );
 
         // And verify the order of the playlist audio titles
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
         );
@@ -12196,7 +12196,7 @@ void main() {
 
         // Verify that the dropdown button has been updated with the
         // 'default' sort/filter parms selected
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: defaultTitle,
         );
@@ -12214,7 +12214,7 @@ void main() {
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
         ];
 
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
@@ -12236,13 +12236,13 @@ void main() {
 
         // Verify that the dropdown button has been updated with the
         // 'default' sort/filter parms selected
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: defaultTitle,
         );
 
         // And verify the order of the playlist audio titles
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
@@ -12263,14 +12263,14 @@ void main() {
 
         // Verify that the dropdown button has been updated with the
         // 'default' sort/filter parms selected
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: saveAsTitle,
         );
 
         // And verify the order of the playlist audio titles
 
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
         );
@@ -12291,13 +12291,13 @@ void main() {
 
         // Verify that the dropdown button has been updated with the
         // 'default' sort/filter parms selected
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: saveAsTitle,
         );
 
         // And verify the order of the playlist audio titles
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
         );
@@ -12427,7 +12427,7 @@ void main() {
 
         // Verify that the dropdown button has been updated with the
         // 'Title asc' sort/filter parms selected
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: saveAsTitle,
         );
@@ -12444,7 +12444,7 @@ void main() {
           "Les besoins artificiels par R.Keucheyan"
         ];
 
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
         );
@@ -12465,13 +12465,13 @@ void main() {
 
         // Verify that the dropdown button has been updated with the
         // 'Title asc' sort/filter parms selected
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: saveAsTitle,
         );
 
         // And verify the order of the playlist audio titles
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
         );
@@ -12516,7 +12516,7 @@ void main() {
         String defaultEnglishTitle = 'default';
 
         // Verify that the dropdown buttondefault title
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: defaultEnglishTitle,
         );
@@ -12534,7 +12534,7 @@ void main() {
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
         ];
 
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
@@ -12553,14 +12553,14 @@ void main() {
         String defaultFrenchTitle = 'défaut';
 
         // Verify that the dropdown buttondefault title
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: defaultFrenchTitle,
         );
 
         // And verify the order of the playlist audio titles
 
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
@@ -12577,14 +12577,14 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify that the dropdown buttondefault title
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: defaultEnglishTitle,
         );
 
         // And verify the order of the playlist audio titles
 
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
@@ -12698,7 +12698,7 @@ void main() {
 
         // Verify that the dropdown button has been updated with the
         // 'Title asc' sort/filter parms selected
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: saveAsTitle,
         );
@@ -12715,7 +12715,7 @@ void main() {
           "Les besoins artificiels par R.Keucheyan"
         ];
 
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
         );
@@ -12802,7 +12802,7 @@ void main() {
 
         // Verify that the dropdown button remains with the 'Title asc'
         // sort/filter parms selected
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: saveAsTitle,
         );
@@ -12815,7 +12815,7 @@ void main() {
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
         );
@@ -12837,13 +12837,13 @@ void main() {
 
         // Verify that the dropdown button has been updated with the
         // 'Title asc' sort/filter parms selected
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: saveAsTitle,
         );
 
         // And verify the order of the playlist audio titles
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
         );
@@ -12960,7 +12960,7 @@ void main() {
 
         // Verify that the dropdown button has been updated with the
         // 'applied' sort/filter parms selected
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: appliedEnglishTitle,
         );
@@ -12977,7 +12977,7 @@ void main() {
           "Les besoins artificiels par R.Keucheyan"
         ];
 
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
         );
@@ -12998,13 +12998,13 @@ void main() {
 
         // Verify that the dropdown button has been updated with the
         // 'applied' sort/filter parms selected
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: appliedEnglishTitle,
         );
 
         // And verify the order of the playlist audio titles
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
         );
@@ -13035,7 +13035,7 @@ void main() {
 
         // Verify that the dropdown button has been updated with the
         // 'default' sort/filter parms selected
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: defaultTitle,
         );
@@ -13053,7 +13053,7 @@ void main() {
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
         ];
 
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
@@ -13075,13 +13075,13 @@ void main() {
 
         // Verify that the dropdown button has been updated with the
         // 'default' sort/filter parms selected
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: defaultTitle,
         );
 
         // And verify the order of the playlist audio titles
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
@@ -13103,14 +13103,14 @@ void main() {
 
         // Verify that the dropdown button has been updated with the
         // 'default' sort/filter parms selected
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: appliedEnglishTitle,
         );
 
         // And verify the order of the playlist audio titles
 
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
         );
@@ -13131,13 +13131,13 @@ void main() {
 
         // Verify that the dropdown button has been updated with the
         // 'default' sort/filter parms selected
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: appliedEnglishTitle,
         );
 
         // And verify the order of the playlist audio titles
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
         );
@@ -13251,7 +13251,7 @@ void main() {
 
         // Verify that the dropdown button has been updated with the
         // 'applied' sort/filter parms selected
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: appliedEnglishTitle,
         );
@@ -13268,7 +13268,7 @@ void main() {
           "Les besoins artificiels par R.Keucheyan"
         ];
 
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
         );
@@ -13379,7 +13379,7 @@ void main() {
 
         // Verify that the dropdown button has been updated with the
         // 'applied' sort/filter parms selected
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: appliedEnglishTitle,
         );
@@ -13392,7 +13392,7 @@ void main() {
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
         );
@@ -13413,13 +13413,13 @@ void main() {
 
         // Verify that the dropdown button has been updated with the
         // 'applied' sort/filter parms selected
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: appliedEnglishTitle,
         );
 
         // And verify the order of the playlist audio titles
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
         );
@@ -13450,7 +13450,7 @@ void main() {
 
         // Verify that the dropdown button has been updated with the
         // 'default' sort/filter parms selected
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: defaultTitle,
         );
@@ -13468,7 +13468,7 @@ void main() {
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
         ];
 
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
@@ -13490,13 +13490,13 @@ void main() {
 
         // Verify that the dropdown button has been updated with the
         // 'default' sort/filter parms selected
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: defaultTitle,
         );
 
         // And verify the order of the playlist audio titles
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
@@ -13518,14 +13518,14 @@ void main() {
 
         // Verify that the dropdown button has been updated with the
         // 'default' sort/filter parms selected
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: appliedEnglishTitle,
         );
 
         // And verify the order of the playlist audio titles
 
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
         );
@@ -13546,13 +13546,13 @@ void main() {
 
         // Verify that the dropdown button has been updated with the
         // 'default' sort/filter parms selected
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: appliedEnglishTitle,
         );
 
         // And verify the order of the playlist audio titles
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
         );
@@ -13675,7 +13675,7 @@ void main() {
 
         // Verify that the dropdown button has been updated with the
         // 'Title asc' sort/filter parms selected
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: appliedEnglishTitle,
         );
@@ -13692,7 +13692,7 @@ void main() {
           "Les besoins artificiels par R.Keucheyan"
         ];
 
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
         );
@@ -13713,13 +13713,13 @@ void main() {
 
         // Verify that the dropdown button has been updated with the
         // 'Title asc' sort/filter parms selected
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: appliedEnglishTitle,
         );
 
         // And verify the order of the playlist audio titles
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
         );
@@ -13764,7 +13764,7 @@ void main() {
         String defaultEnglishTitle = 'default';
 
         // Verify that the dropdown buttondefault title
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: defaultEnglishTitle,
         );
@@ -13782,7 +13782,7 @@ void main() {
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
         ];
 
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
@@ -13801,14 +13801,14 @@ void main() {
         String defaultFrenchTitle = 'défaut';
 
         // Verify that the dropdown buttondefault title
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: defaultFrenchTitle,
         );
 
         // And verify the order of the playlist audio titles
 
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
@@ -13825,14 +13825,14 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify that the dropdown buttondefault title
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: defaultEnglishTitle,
         );
 
         // And verify the order of the playlist audio titles
 
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
@@ -13913,7 +13913,7 @@ void main() {
           "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
         ];
 
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst: audioTitlesSortedByDateTimeListenedDescending,
         );
@@ -13987,14 +13987,14 @@ void main() {
 
         // Verify that the dropdown button has been updated with the
         // 'Desc listened' sort/filter parms selected
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: saveAsTitle,
         );
 
         // And verify the order of the playlist audio titles
 
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst: audioTitlesSortedByDateTimeListenedDescending,
         );
@@ -14099,7 +14099,7 @@ void main() {
 
         // Verify that the dropdown button has been updated with the
         // 'Asc listened' sort/filter parms selected
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: saveAsTitle,
         );
@@ -14116,7 +14116,7 @@ void main() {
           "Les besoins artificiels par R.Keucheyan",
         ];
 
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst: audioTitlesSortedByDateTimeListenedAscending,
         );
@@ -14237,7 +14237,7 @@ void main() {
 
         // Verify that the dropdown button has been updated with the
         // 'Desc listened' sort/filter parms selected
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: saveAsTitle,
         );
@@ -14254,7 +14254,7 @@ void main() {
           "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
         ];
 
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
         );
@@ -14359,7 +14359,7 @@ void main() {
 
         // Verify that the dropdown button has been updated with the
         // 'Asc listened' sort/filter parms selected
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: saveAsTitle,
         );
@@ -14376,7 +14376,7 @@ void main() {
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
         ];
 
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
         );
@@ -14421,7 +14421,7 @@ void main() {
         // Verify that the dropdown button has been updated with the
         // 'default' sort/filter parms selected
         const String defaultTitle = 'default';
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: defaultTitle,
         );
@@ -14439,7 +14439,7 @@ void main() {
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
         ];
 
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
@@ -14506,7 +14506,8 @@ void main() {
 
         // And find the 'Title asc' sort/filter item
         String titleAscendingSFparmsName = 'Title asc';
-        Finder titleAscDropDownTextFinder = find.text(titleAscendingSFparmsName);
+        Finder titleAscDropDownTextFinder =
+            find.text(titleAscendingSFparmsName);
         await tester.tap(titleAscDropDownTextFinder);
         await tester.pumpAndSettle();
 
@@ -14522,7 +14523,7 @@ void main() {
           "Les besoins artificiels par R.Keucheyan"
         ];
 
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
         );
@@ -14585,14 +14586,14 @@ void main() {
 
         // Verify that the dropdown button has been updated with the
         // 'Title asc' sort/filter parms selected
-        checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
           tester: tester,
           dropdownButtonSelectedTitle: titleAscendingSFparmsName,
         );
 
         // And verify the order of the playlist audio titles
 
-        checkAudioTitlesOrder(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
         );
@@ -15918,47 +15919,6 @@ void main() {
       );
     });
   });
-}
-
-void checkAudioTitlesOrder({
-  required WidgetTester tester,
-  required List<String> audioTitlesOrderLst,
-}) {
-  // Obtains all the ListTile widgets present in the playlist
-  // download view
-  final Finder listTilesFinder = find.byType(ListTile);
-
-  int i = 0;
-  for (String title in audioTitlesOrderLst) {
-    Finder playlistTitleTextFinder = find.descendant(
-      of: listTilesFinder.at(i++),
-      matching: find.byType(Text),
-    );
-
-    expect(
-      // 2 Text widgets exist in audio ListTile: the title and sub title
-      tester.widget<Text>(playlistTitleTextFinder.at(0)).data,
-      title,
-    );
-  }
-}
-
-void checkDropdopwnButtonSelectedTitle({
-  required WidgetTester tester,
-  required String dropdownButtonSelectedTitle,
-}) {
-  final Finder dropDownButtonFinder =
-      find.byKey(const Key('sort_filter_parms_dropdown_button'));
-
-  final Finder dropDownButtonTextFinder = find.descendant(
-    of: dropDownButtonFinder,
-    matching: find.byType(Text),
-  );
-
-  expect(
-    tester.widget<Text>(dropDownButtonTextFinder).data,
-    dropdownButtonSelectedTitle,
-  );
 }
 
 Future<Finder> verifyAudioInfoDialog({
