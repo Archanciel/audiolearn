@@ -1,3 +1,4 @@
+import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -96,106 +97,115 @@ class _AudioPlayableListDialogWidgetState
           }
         }
       },
-      child: AlertDialog(
-        title: Row(
-          children: [
-            Tooltip(
-              message: _determineDialogTitleAudioSortTooltip(
-                context: context,
-                audioPlayerVM: audioPlayerVMlistenFalse,
+      child:
+          Consumer<PlaylistListVM>(builder: (context, playlistListVM, child) {
+        return AlertDialog(
+          title: Row(
+            children: [
+              Tooltip(
+                message: _determineDialogTitleAudioSortTooltip(
+                  context: context,
+                  audioPlayerVM: audioPlayerVMlistenFalse,
+                ),
+                child: Text(
+                    AppLocalizations.of(context)!.audioOneSelectedDialogTitle),
               ),
-              child: Text(
-                  AppLocalizations.of(context)!.audioOneSelectedDialogTitle),
-            ),
-            Tooltip(
-              message: AppLocalizations.of(context)!
-                  .clickToSetAscendingOrDescendingPlayingOrderTooltip,
-              child: IconButton(
-                key: const Key('sort_ascending_or_descending_button'),
-                onPressed: () {
-                  setState(() {
-                    if (currentAudio.enclosingPlaylist!.audioPlayingOrder ==
-                        AudioPlayingOrder.ascending) {
-                      currentAudio.enclosingPlaylist!.audioPlayingOrder =
-                          AudioPlayingOrder.descending;
-                    } else {
-                      currentAudio.enclosingPlaylist!.audioPlayingOrder =
-                          AudioPlayingOrder.ascending;
-                    }
-                  });
-                },
-                style: ButtonStyle(
-                  // Highlight button when pressed
-                  padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-                    const EdgeInsets.symmetric(
-                        horizontal: kSmallButtonInsidePadding, vertical: 0),
+              Tooltip(
+                message: AppLocalizations.of(context)!
+                    .clickToSetAscendingOrDescendingPlayingOrderTooltip,
+                child: IconButton(
+                  key: const Key('sort_ascending_or_descending_button'),
+                  onPressed: () {
+                    setState(() {
+                      Playlist selectedPlaylist =
+                          playlistListVM.getSelectedPlaylists()[0];
+
+                      if (selectedPlaylist.audioPlayingOrder ==
+                          AudioPlayingOrder.ascending) {
+                        selectedPlaylist.audioPlayingOrder =
+                            AudioPlayingOrder.descending;
+                      } else {
+                        selectedPlaylist.audioPlayingOrder =
+                            AudioPlayingOrder.ascending;
+                      }
+                    });
+                  },
+                  style: ButtonStyle(
+                    // Highlight button when pressed
+                    padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                      const EdgeInsets.symmetric(
+                          horizontal: kSmallButtonInsidePadding, vertical: 0),
+                    ),
+                    overlayColor:
+                        iconButtonTapModification, // Tap feedback color
                   ),
-                  overlayColor: iconButtonTapModification, // Tap feedback color
+                  icon: Icon(
+                    (playlistListVM
+                                .getSelectedPlaylists()[0]
+                                .audioPlayingOrder ==
+                            AudioPlayingOrder.ascending)
+                        ? Icons.arrow_drop_up
+                        : Icons.arrow_drop_down, // Conditional icon
+                    size: 80,
+                    color: kDarkAndLightEnabledIconColor,
+                  ),
                 ),
-                icon: Icon(
-                  (currentAudio!.enclosingPlaylist!.audioPlayingOrder ==
-                        AudioPlayingOrder.ascending)
-                      ? Icons.arrow_drop_up
-                      : Icons.arrow_drop_down, // Conditional icon
-                  size: 80,
-                  color: kDarkAndLightEnabledIconColor,
+              ),
+            ],
+          ),
+          actionsPadding: kDialogActionsPadding,
+          content: SizedBox(
+            width: double.maxFinite,
+            child: Column(
+              mainAxisSize: MainAxisSize.min, // Use minimum space
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    key: const Key('audioPlayableListKey'),
+                    controller: _scrollController,
+                    child: ListBody(
+                      children: playableAudioLst.map((audio) {
+                        int index = playableAudioLst.indexOf(audio);
+                        return GestureDetector(
+                          onTap: () async {
+                            await audioPlayerVMlistenFalse.setCurrentAudio(
+                              audio: audio,
+                            );
+                            Navigator.of(context).pop();
+                          },
+                          child: _buildAudioTitleTextWidget(
+                            audio: audio,
+                            audioIndex: index,
+                            isDarkTheme: isDarkTheme,
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
                 ),
+                _buildBottomTextAndCheckbox(
+                  context,
+                  isDarkTheme,
+                )
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              key: const Key('cancelButton'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                AppLocalizations.of(context)!.cancelButton,
+                style: (themeProviderVM.currentTheme == AppTheme.dark)
+                    ? kTextButtonStyleDarkMode
+                    : kTextButtonStyleLightMode,
               ),
             ),
           ],
-        ),
-        actionsPadding: kDialogActionsPadding,
-        content: SizedBox(
-          width: double.maxFinite,
-          child: Column(
-            mainAxisSize: MainAxisSize.min, // Use minimum space
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: const Key('audioPlayableListKey'),
-                  controller: _scrollController,
-                  child: ListBody(
-                    children: playableAudioLst.map((audio) {
-                      int index = playableAudioLst.indexOf(audio);
-                      return GestureDetector(
-                        onTap: () async {
-                          await audioPlayerVMlistenFalse.setCurrentAudio(
-                            audio: audio,
-                          );
-                          Navigator.of(context).pop();
-                        },
-                        child: _buildAudioTitleTextWidget(
-                          audio: audio,
-                          audioIndex: index,
-                          isDarkTheme: isDarkTheme,
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                ),
-              ),
-              _buildBottomTextAndCheckbox(
-                context,
-                isDarkTheme,
-              )
-            ],
-          ),
-        ),
-        actions: [
-          TextButton(
-            key: const Key('cancelButton'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text(
-              AppLocalizations.of(context)!.cancelButton,
-              style: (themeProviderVM.currentTheme == AppTheme.dark)
-                  ? kTextButtonStyleDarkMode
-                  : kTextButtonStyleLightMode,
-            ),
-          ),
-        ],
-      ),
+        );
+      }),
     );
 
     _scrollToCurrentAudioItem();

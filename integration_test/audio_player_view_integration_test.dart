@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:audiolearn/views/widgets/audios_playable_list_dialog_widget.dart';
+import 'package:audiolearn/views/widgets/audio_playable_list_dialog_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
