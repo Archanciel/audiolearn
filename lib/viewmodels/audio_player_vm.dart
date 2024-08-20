@@ -315,8 +315,8 @@ class AudioPlayerVM extends ChangeNotifier {
   Future<bool> _setNextNotFullyPlayedAudioAsCurrentAudio() async {
     Audio? nextAudio;
 
-    nextAudio = _playlistListVM
-        .getNextSubsequentlyDownloadedOrSortFilteredNotFullyPlayedAudio(
+    nextAudio =
+        _playlistListVM.getNextDownloadedOrSortFilteredNotFullyPlayedAudio(
       audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
       currentAudio: _currentAudio!,
     );
@@ -337,7 +337,9 @@ class AudioPlayerVM extends ChangeNotifier {
   /// Method called by skipToStart() if the audio is positioned at
   /// start.
   Future<void> _setPreviousAudio() async {
-    Audio? previousAudio = _playlistListVM.getPreviouslyDownloadedPlayableAudio(
+    Audio? previousAudio =
+        _playlistListVM.getPreviouslyDownloadedOrSortFilteredAudio(
+      audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
       currentAudio: _currentAudio!,
     );
 
@@ -949,7 +951,7 @@ class AudioPlayerVM extends ChangeNotifier {
   /// is applicable, placing the first downloaded audio at the begining of the
   /// list and the latest downloaded audio at end of list, so reversing
   /// the playlist playable audio list.
-  /// 
+  ///
   /// If sort/filter parms are applicable, the list is ordered by the
   /// sort/filter parms.
   ///

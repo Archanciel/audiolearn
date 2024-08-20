@@ -3849,7 +3849,7 @@ void main() {
            Then, click twice on |> go to end button in order to play the next
            playable audio according to the 'Title asc' order. Then reopen the
            playable audio list dialog and click on the Play order icon to
-           change it from ascending to descending. This means that the dispèlayed
+           change it from ascending to descending. This means that the displayed
            audio list corresponding to 'Title asc' SF parms will be played from
            top to down. Verify that clicking again twice on |> go to end button
            does play the correct audio.''', (WidgetTester tester) async {
@@ -4037,7 +4037,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Now we tap twice on the >| button in order to start playing
-      // the next audio according to the ^Title app' sort/filter parms
+      // the next audio according to the 'Title app' sort/filter parms
 
       await tester.tap(find.byKey(const Key('audioPlayerViewSkipToEndButton')));
       await tester.pumpAndSettle();
@@ -4089,7 +4089,7 @@ void main() {
       );
 
       // Now we tap twice on the >| button in order to start playing
-      // the next audio according to the ^Title app' sort/filter parms
+      // the next audio according to the 'Title app' sort/filter parms
       // now applied descendingly
 
       await tester.tap(find.byKey(const Key('audioPlayerViewSkipToEndButton')));
@@ -4112,6 +4112,162 @@ void main() {
       // 'Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik'
       nextAudioTextFinder = find
           .text("Les besoins artificiels par R.Keucheyan\n19:05");
+
+      expect(
+        nextAudioTextFinder,
+        findsOneWidget,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Save the 'Title asc' SF parms selecting only audio player view
+           SF parms name of the 'S8 audio' playlist json file.
+        
+           Then go to the audio player view and click twice on <| go to start
+           button in order to play the previous playable audio according to the
+           'Title asc' order. Then reopen the playable audio list dialog and
+           click on the Play order icon to change it from ascending to descending.
+           This means that the displayed audio list corresponding to 'Title asc'
+           SF parms will be played from top to down. Verify that clicking again
+           twice on <| go to start button does play the correct audio.''', (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_three_playlists_test",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+      await app.main(['test']);
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+      // Now tap on the current dropdown button item to open the dropdown
+      // button items list
+
+      final Finder dropDownButtonFinder =
+          find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+      final Finder dropDownButtonTextFinder = find.descendant(
+        of: dropDownButtonFinder,
+        matching: find.byType(Text),
+      );
+
+      await tester.tap(dropDownButtonTextFinder);
+      await tester.pumpAndSettle();
+
+      // And find the 'Title asc' sort/filter item
+      String titleAscendingSFparmsName = 'Title asc';
+      Finder titleAscDropDownTextFinder = find.text(titleAscendingSFparmsName);
+      await tester.tap(titleAscDropDownTextFinder);
+      await tester.pumpAndSettle();
+
+      // Now open the audio popup menu
+      await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+      await tester.pumpAndSettle();
+
+      // find the save sort/filter parms menu item and tap on it
+      await tester.tap(find.byKey(
+          const Key('save_sort_and_filter_audio_parms_in_playlist_item')));
+      await tester.pumpAndSettle();
+
+      // Select the 'For "Play Audio" screen' checkbox
+      await tester.tap(find.byKey(const Key('audioPlayerViewCheckbox')));
+      await tester.pumpAndSettle();
+
+      // Finally, click on save button
+      await tester.tap(
+          find.byKey(const Key('saveSortFilterOptionsToPlaylistSaveButton')));
+      await tester.pumpAndSettle();
+
+      // Then go to the audio player view
+      final Finder appScreenNavigationButton =
+          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+      await tester.tap(appScreenNavigationButton);
+      await tester.pumpAndSettle();
+
+      // Now we tap twice on the |< button in order to start playing
+      // the previous audio according to the 'Title app' sort/filter parms
+
+      await tester.tap(find.byKey(const Key('audioPlayerViewSkipToStartButton')));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(const Key('audioPlayerViewSkipToStartButton')));
+      await tester.pumpAndSettle();
+
+      // Verify the next audio title
+      Finder nextAudioTextFinder =
+          find.text("Les besoins artificiels par R.Keucheyan\n19:05");
+
+      expect(
+        nextAudioTextFinder,
+        findsOneWidget,
+      );
+
+      // Re-opening again the AudioPlayableListDialogWidget in order to
+      // change the audio playing order
+
+      await tester.tap(nextAudioTextFinder);
+      await tester.pumpAndSettle();
+
+      // And tap on the play ascending order icon button in order to change
+      // it to play descending order
+      await tester.tap(
+          find.byKey(const Key('play_order_ascending_or_descending_button')));
+      await tester.pumpAndSettle();
+
+      // Tap on the Cancel button to close the AudioPlayableListDialogWidget
+      await tester.tap(find.byKey(const Key('cancelButton')));
+      await tester.pumpAndSettle();
+
+      // Verify that the audioPlayingOrder was modified and saved in the
+      // playlist
+      verifyAudioSortFilterParmsNameStoredInPlaylistJsonFile(
+        selectedPlaylistTitle: 'S8 audio',
+        expectedAudioSortFilterParmsName: 'Title asc',
+        audioLearnAppViewTypeLst: [AudioLearnAppViewType.audioPlayerView],
+        audioPlayingOrder:
+            AudioPlayingOrder.ascending, // TODO: change to descending
+      );
+
+      // Now we tap twice on the |< button in order to start playing
+      // the previous audio according to the 'Title app' sort/filter parms
+      // now applied descendingly
+
+      await tester.tap(find.byKey(const Key('audioPlayerViewSkipToStartButton')));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(const Key('audioPlayerViewSkipToStartButton')));
+      await tester.pumpAndSettle();
+
+      // Since the audio playing order was changed to 'descending', clicking
+      // twice on the |< button in order to start playing the next audio
+      // selects the previous playable audio which is before the now fully played
+      // 'Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik'
+      nextAudioTextFinder = find
+          .text("Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik\n13:39");
 
       expect(
         nextAudioTextFinder,

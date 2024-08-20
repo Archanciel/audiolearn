@@ -1286,7 +1286,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// Otherwise, if sort and filter parameters were saved in the playlist
   /// json file, then the returned next not fully played audio is obtained
   /// from the sorted and filtered playlist playableAudioLst.
-  Audio? getNextSubsequentlyDownloadedOrSortFilteredNotFullyPlayedAudio({
+  Audio? getNextDownloadedOrSortFilteredNotFullyPlayedAudio({
     required AudioLearnAppViewType audioLearnAppViewType,
     required Audio currentAudio,
   }) {
@@ -1407,26 +1407,60 @@ class PlaylistListVM extends ChangeNotifier {
 
   /// Returns the audio contained in the playableAudioLst which
   /// has been downloaded right before the current audio.
-  Audio? getPreviouslyDownloadedPlayableAudio({
+  Audio? getPreviouslyDownloadedOrSortFilteredAudio({
+    required AudioLearnAppViewType audioLearnAppViewType,
     required Audio currentAudio,
   }) {
-    List<Audio> playableAudioLst =
-        currentAudio.enclosingPlaylist!.playableAudioLst;
+    // If sort and filter parameters were saved in the playlist json
+    // file, then the audio list returned by
+    // getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters()
+    // is sorted and filtered. Otherwise, the returned audio list is the
+    // full playable audio list of the selected playlist sorted by audio
+    // download date descending (the de3fault sorting).
+    List<Audio> sortedAndFilteredPlayableAudioLst =
+        getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters(
+      audioLearnAppViewType: audioLearnAppViewType,
+    );
 
-    int currentAudioIndex = playableAudioLst.indexWhere(
+    int currentAudioIndex = sortedAndFilteredPlayableAudioLst.indexWhere(
         (audio) => audio == currentAudio); // using Audio == operator
 
     if (currentAudioIndex == -1) {
-      return null;
+      // the case if the sort and filter parameters contained
+      // "Fully listened" unchecked and "Partially listened" checked.
+      // In this case, the current audio is not in the
+      // sortedAndFilteredPlayableAudioLst since it was fully listened.
+
+      currentAudioIndex = _determineCurrentAudioIndexBeforeItWasFullyPlayed(
+        currentAudio: currentAudio,
+      );
     }
 
-    if (currentAudioIndex == playableAudioLst.length - 1) {
-      // means the current audio is the oldest downloaded audio available
-      // in the playableAudioLst
-      return null;
-    }
+    if (currentAudio.enclosingPlaylist!.audioPlayingOrder ==
+        AudioPlayingOrder.descending) {
+      if (currentAudioIndex == 0) {
+        // means the current audio is the last downloaded audio
+        // available in the playableAudioLst and so there is no
+        // subsequently downloaded audio !
+        return null;
+      }
 
-    return playableAudioLst[currentAudioIndex + 1];
+      return sortedAndFilteredPlayableAudioLst[currentAudioIndex - 1];
+    } else {
+      // the audio playing order of the playlist containing the audio
+      // is AudioPlayingOrder.ascending
+      int sortedAndFilteredPlayableAudioNumber =
+          sortedAndFilteredPlayableAudioLst.length - 1;
+
+      if (currentAudioIndex == sortedAndFilteredPlayableAudioNumber) {
+        // means the current audio is the last listenable audio available
+        // in the sortedAndFilteredPlayableAudioLst and so there is no
+        // subsequently listenable audio !
+        return null;
+      }
+
+      return sortedAndFilteredPlayableAudioLst[currentAudioIndex + 1];
+    }
   }
 
   /// This method updates the playlists audio play speed or/and

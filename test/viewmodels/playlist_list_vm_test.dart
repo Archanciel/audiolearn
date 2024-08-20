@@ -300,7 +300,7 @@ void main() {
 
       // Obtaining the next playable audio
       Audio? nextAudio = playlistListVM
-          .getNextSubsequentlyDownloadedOrSortFilteredNotFullyPlayedAudio(
+          .getNextDownloadedOrSortFilteredNotFullyPlayedAudio(
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
         currentAudio: currentAudio,
       );
@@ -385,7 +385,7 @@ void main() {
 
       // Obtaining the next playable audio
       Audio? nextAudio = playlistListVM
-          .getNextSubsequentlyDownloadedOrSortFilteredNotFullyPlayedAudio(
+          .getNextDownloadedOrSortFilteredNotFullyPlayedAudio(
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
         currentAudio: lastDownloadedAudio,
       );
@@ -472,7 +472,7 @@ void main() {
 
       // Obtaining the next playable audio
       Audio? nextAudio = playlistListVM
-          .getNextSubsequentlyDownloadedOrSortFilteredNotFullyPlayedAudio(
+          .getNextDownloadedOrSortFilteredNotFullyPlayedAudio(
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
         currentAudio: lastDownloadedAudio,
       );
@@ -554,7 +554,7 @@ void main() {
 
       // Obtaining the next playable audio
       Audio? nextaudioIslastdownloaded = playlistListVM
-          .getNextSubsequentlyDownloadedOrSortFilteredNotFullyPlayedAudio(
+          .getNextDownloadedOrSortFilteredNotFullyPlayedAudio(
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
         currentAudio: firstDownloadedAudio,
       );
