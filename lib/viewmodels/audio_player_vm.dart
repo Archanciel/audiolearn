@@ -945,10 +945,13 @@ class AudioPlayerVM extends ChangeNotifier {
     );
   }
 
-  /// The returned list is ordered by download date, placing
-  /// the first downloaded audio at the begining of the list and
-  /// the latest downloaded audio at end of list, so reversing
+  /// The returned list is ordered by download date if no sort/filter parms
+  /// is applicable, placing the first downloaded audio at the begining of the
+  /// list and the latest downloaded audio at end of list, so reversing
   /// the playlist playable audio list.
+  /// 
+  /// If sort/filter parms are applicable, the list is ordered by the
+  /// sort/filter parms.
   ///
   /// playableAudioLst order: [available audio last downloaded, ...,
   ///                          available audio first downloaded]

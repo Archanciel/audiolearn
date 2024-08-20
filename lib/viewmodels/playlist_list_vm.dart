@@ -1386,7 +1386,7 @@ class PlaylistListVM extends ChangeNotifier {
   }) {
     // In order to obtain the current audio index before the audio
     // was fully listened, we decrement the audio position by 10
-    // seconds and we then research the sorted and filtered audio.
+    // seconds and we then search again the sorted and filtered audio.
     currentAudio.audioPositionSeconds = currentAudio.audioPositionSeconds - 10;
     List<Audio> sortedAndFilteredPlayableAudioLstWithCurrentAudio =
         getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters(
