@@ -4125,16 +4125,17 @@ void main() {
       );
     });
     testWidgets(
-        '''Save the 'Title asc' SF parms selecting only audio player view
-           SF parms name of the 'S8 audio' playlist json file.
+        '''Click twice on <| go to start button in order to select the previous
+           playable audio. First the 'Title asc' SF parms selecting only audio
+           player view SF parms name of the 'S8 audio' playlist json file.
         
            Then go to the audio player view and click twice on <| go to start
-           button in order to play the previous playable audio according to the
+           button in order to select the previous playable audio according to the
            'Title asc' order. Then reopen the playable audio list dialog and
            click on the Play order icon to change it from ascending to descending.
            This means that the displayed audio list corresponding to 'Title asc'
            SF parms will be played from top to down. Verify that clicking again
-           twice on <| go to start button does play the correct audio.''', (WidgetTester tester) async {
+           twice on <| go to start button does select the correct audio.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
