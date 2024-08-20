@@ -559,29 +559,6 @@ class IntegrationTestUtil {
     await tester.pumpAndSettle();
   }
 
-  static void checkAudioTitlesOrderInListBody({
-    required WidgetTester tester,
-    required List<String> audioTitlesOrderLst,
-  }) {
-    // Obtains all the ListBody widgets present in the playlist download view
-    final Finder listBodyFinder = find.byType(ListBody);
-
-    int i = 0;
-    for (String title in audioTitlesOrderLst) {
-      // Finds the Text widget inside the ListBody
-      Finder listBodyTextFinder = find.descendant(
-        of: listBodyFinder.at(i++),
-        matching: find.byType(Text),
-      );
-
-      expect(
-        // Assuming each ListBody item has a single Text widget representing the title
-        tester.widget<Text>(listBodyTextFinder).data,
-        title,
-      );
-    }
-  }
-
   static void checkAudioTitlesOrderInListTile({
     required WidgetTester tester,
     required List<String> audioTitlesOrderLst,
@@ -599,7 +576,32 @@ class IntegrationTestUtil {
 
       expect(
         // 2 Text widgets exist in audio ListTile: the title and sub title
-        tester.widget<Text>(playlistTitleTextFinder).data,
+        tester.widget<Text>(playlistTitleTextFinder.at(0)).data,
+        title,
+      );
+    }
+  }
+
+  static void checkAudioTitlesOrderInListBody({
+    required WidgetTester tester,
+    required List<String> audioTitlesOrderLst,
+  }) {
+    // Obtains all the ListBody widgets present in the playlist download view
+    final Finder listBodyFinder = find.byType(ListBody);
+
+    int i = 0;
+    for (String title in audioTitlesOrderLst) {
+      // Finds the Text widget inside the ListBody
+      Finder listBodyTextFinder = find
+          .descendant(
+            of: listBodyFinder,
+            matching: find.byType(Text),
+          )
+          .at(i++);
+
+      expect(
+        // Assuming each ListBody item has a single Text widget representing the title
+        tester.widget<Text>(listBodyTextFinder).data,
         title,
       );
     }

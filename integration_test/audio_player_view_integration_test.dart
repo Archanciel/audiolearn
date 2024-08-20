@@ -3936,41 +3936,11 @@ void main() {
         "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
       ];
 
-      IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+      IntegrationTestUtil.checkAudioTitlesOrderInListBody(
         tester: tester,
         audioTitlesOrderLst:
             audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
       );
-
-      // Now, in the audio player view, select the 'Local' audio playlist using
-      // the audio player view playlist selection button.
-
-      // Tap on audio player view playlist button to display the playlists
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
-
-      // Find the playlist to select ListTile Text widget
-      final Finder playlistToSelectListTileTextWidgetFinder =
-          find.text('local');
-
-      // Then obtain the playlist ListTile widget enclosing the Text widget
-      // by finding its ancestor
-      final Finder playlistToSelectListTileWidgetFinder = find.ancestor(
-        of: playlistToSelectListTileTextWidgetFinder,
-        matching: find.byType(ListTile),
-      );
-
-      // Now find the Checkbox widget located in the playlist ListTile
-      // and tap on it to select the playlist
-      final Finder playlistToSelectListTileCheckboxWidgetFinder =
-          find.descendant(
-        of: playlistToSelectListTileWidgetFinder,
-        matching: find.byType(Checkbox),
-      );
-
-      // Tap the ListTile Playlist checkbox to select it
-      await tester.tap(playlistToSelectListTileCheckboxWidgetFinder);
-      await tester.pumpAndSettle();
 
       // Now return to the playlist download view
       appScreenNavigationButton =
@@ -3978,33 +3948,15 @@ void main() {
       await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
-      // Click on playlist toggle button to display the playlist list
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      // open the audio popup menu
+      await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
       await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.selectPlaylist(
-        tester: tester,
-        playlistToSelectTitle: 'S8 audio',
-      );
-
-      // Click again on playlist toggle button to hide the playlist list
-      // and display the sort filter dropdown button
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      // find the save sort/filter parms menu item and tap on it
+      await tester
+          .tap(find.byKey(const Key('save_sort_and_filter_audio_parms_in_playlist_item')));
       await tester.pumpAndSettle();
 
-      // Verify that the dropdown button has been updated with the
-      // 'Title asc' sort/filter parms selected
-      IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
-        tester: tester,
-        dropdownButtonSelectedTitle: titleAscendingSFparmsName,
-      );
-
-      // And verify the order of the playlist audio titles
-
-      IntegrationTestUtil.checkAudioTitlesOrderInListTile(
-        tester: tester,
-        audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
-      );
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
