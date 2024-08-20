@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:audiolearn/services/settings_data_service.dart';
 import 'package:audiolearn/views/widgets/audio_playable_list_dialog_widget.dart';
+import 'package:audiolearn/views/widgets/playlist_save_sort_filter_options_dialog_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -1509,9 +1510,9 @@ void main() {
       double expectedAudioPlaySpeed = 0.7;
 
       verifyAudioPlaySpeedStoredInPlaylistJsonFile(
-        audioPlayerSelectedPlaylistTitle,
-        playableAudioLstAudioIndex,
-        expectedAudioPlaySpeed,
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        playableAudioLstAudioIndex: playableAudioLstAudioIndex,
+        expectedAudioPlaySpeed: expectedAudioPlaySpeed,
       );
 
       // Now we go back to the PlayListDownloadView in order
@@ -1545,9 +1546,9 @@ void main() {
       expectedAudioPlaySpeed = 1.5;
 
       verifyAudioPlaySpeedStoredInPlaylistJsonFile(
-        audioPlayerSelectedPlaylistTitle,
-        playableAudioLstAudioIndex,
-        expectedAudioPlaySpeed,
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        playableAudioLstAudioIndex: playableAudioLstAudioIndex,
+        expectedAudioPlaySpeed: expectedAudioPlaySpeed,
       );
 
       // Purge the test playlist directory so that the created test
@@ -1605,9 +1606,9 @@ void main() {
       double expectedAudioPlaySpeed = 0.7;
 
       verifyAudioPlaySpeedStoredInPlaylistJsonFile(
-        audioPlayerSelectedPlaylistTitle,
-        playableAudioLstAudioIndex,
-        expectedAudioPlaySpeed,
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        playableAudioLstAudioIndex: playableAudioLstAudioIndex,
+        expectedAudioPlaySpeed: expectedAudioPlaySpeed,
       );
 
       // Now we tap twice on the >| button in order to start
@@ -1627,9 +1628,9 @@ void main() {
       expectedAudioPlaySpeed = 1.5;
 
       verifyAudioPlaySpeedStoredInPlaylistJsonFile(
-        audioPlayerSelectedPlaylistTitle,
-        playableAudioLstAudioIndex,
-        expectedAudioPlaySpeed,
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        playableAudioLstAudioIndex: playableAudioLstAudioIndex,
+        expectedAudioPlaySpeed: expectedAudioPlaySpeed,
       );
 
       // Purge the test playlist directory so that the created test
@@ -1688,9 +1689,9 @@ void main() {
       double expectedAudioPlaySpeed = 0.7;
 
       verifyAudioPlaySpeedStoredInPlaylistJsonFile(
-        audioPlayerSelectedPlaylistTitle,
-        playableAudioLstAudioIndex,
-        expectedAudioPlaySpeed,
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        playableAudioLstAudioIndex: playableAudioLstAudioIndex,
+        expectedAudioPlaySpeed: expectedAudioPlaySpeed,
       );
 
       // Now we tap on the play button in order to finish
@@ -1711,9 +1712,9 @@ void main() {
       expectedAudioPlaySpeed = 1.5;
 
       verifyAudioPlaySpeedStoredInPlaylistJsonFile(
-        audioPlayerSelectedPlaylistTitle,
-        playableAudioLstAudioIndex,
-        expectedAudioPlaySpeed,
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        playableAudioLstAudioIndex: playableAudioLstAudioIndex,
+        expectedAudioPlaySpeed: expectedAudioPlaySpeed,
       );
 
       // Purge the test playlist directory so that the created test
@@ -1769,9 +1770,9 @@ void main() {
       double expectedAudioPlaySpeed = 1.25;
 
       verifyAudioPlaySpeedStoredInPlaylistJsonFile(
-        audioPlayerSelectedPlaylistTitle,
-        playableAudioLstAudioIndex,
-        expectedAudioPlaySpeed,
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        playableAudioLstAudioIndex: playableAudioLstAudioIndex,
+        expectedAudioPlaySpeed: expectedAudioPlaySpeed,
       );
 
       // Purge the test playlist directory so that the created test
@@ -1830,9 +1831,9 @@ void main() {
       double expectedAudioPlaySpeed = 0.7;
 
       verifyAudioPlaySpeedStoredInPlaylistJsonFile(
-        audioPlayerSelectedPlaylistTitle,
-        playableAudioLstAudioIndex,
-        expectedAudioPlaySpeed,
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        playableAudioLstAudioIndex: playableAudioLstAudioIndex,
+        expectedAudioPlaySpeed: expectedAudioPlaySpeed,
       );
 
       // Now we tap on the play button in order to finish
@@ -1855,9 +1856,9 @@ void main() {
       expectedAudioPlaySpeed = 1.5;
 
       verifyAudioPlaySpeedStoredInPlaylistJsonFile(
-        audioPlayerSelectedPlaylistTitle,
-        playableAudioLstAudioIndex,
-        expectedAudioPlaySpeed,
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        playableAudioLstAudioIndex: playableAudioLstAudioIndex,
+        expectedAudioPlaySpeed: expectedAudioPlaySpeed,
       );
 
       // Purge the test playlist directory so that the created test
@@ -1917,9 +1918,9 @@ void main() {
       double expectedAudioPlaySpeed = 0.7;
 
       verifyAudioPlaySpeedStoredInPlaylistJsonFile(
-        audioPlayerSelectedPlaylistTitle,
-        playableAudioLstAudioIndex,
-        expectedAudioPlaySpeed,
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        playableAudioLstAudioIndex: playableAudioLstAudioIndex,
+        expectedAudioPlaySpeed: expectedAudioPlaySpeed,
       );
 
       // Now we open the DisplaySelectableAudioListDialogWidget
@@ -1940,9 +1941,9 @@ void main() {
       expectedAudioPlaySpeed = 1.5;
 
       verifyAudioPlaySpeedStoredInPlaylistJsonFile(
-        audioPlayerSelectedPlaylistTitle,
-        playableAudioLstAudioIndex,
-        expectedAudioPlaySpeed,
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        playableAudioLstAudioIndex: playableAudioLstAudioIndex,
+        expectedAudioPlaySpeed: expectedAudioPlaySpeed,
       );
 
       // Purge the test playlist directory so that the created test
@@ -3942,6 +3943,10 @@ void main() {
             audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
       );
 
+      // Tap on the Cancel button to close the AudioPlayableListDialogWidget
+      await tester.tap(find.byKey(const Key('cancelButton')));
+      await tester.pumpAndSettle();
+
       // Now return to the playlist download view
       appScreenNavigationButton =
           find.byKey(const ValueKey('playlistDownloadViewIconButton'));
@@ -3953,10 +3958,53 @@ void main() {
       await tester.pumpAndSettle();
 
       // find the save sort/filter parms menu item and tap on it
-      await tester
-          .tap(find.byKey(const Key('save_sort_and_filter_audio_parms_in_playlist_item')));
+      await tester.tap(find.byKey(
+          const Key('save_sort_and_filter_audio_parms_in_playlist_item')));
       await tester.pumpAndSettle();
 
+      // Verify that the save SF parms dialog is displayed
+      expect(find.byType(PlaylistSaveSortFilterOptionsDialogWidget),
+          findsOneWidget);
+
+      // Verify the dialog title
+      expect(
+        find.text("Save Sort/Filter \"Title asc\""),
+        findsOneWidget,
+      );
+
+      // Verify the dialog content
+
+      expect(
+        find.text("To playlist \"S8 audio\""),
+        findsOneWidget,
+      );
+
+      expect(
+        find.text("For \"Download Audio\" screen"),
+        findsOneWidget,
+      );
+
+      expect(
+        find.text("For \"Play Audio\" screen"),
+        findsOneWidget,
+      );
+
+      // Select the 'For "Play Audio" screen' checkbox
+      await tester.tap(find.byKey(const Key('audioPlayerViewCheckbox')));
+      await tester.pumpAndSettle();
+
+      // Finally, click on save button
+      await tester.tap(
+          find.byKey(const Key('saveSortFilterOptionsToPlaylistSaveButton')));
+      await tester.pumpAndSettle();
+
+      // Verify that "Title asc" was correctly saved in the playlist
+      // json file
+      verifyAudioSortFilterParmsNameStoredInPlaylistJsonFile(
+        selectedPlaylistTitle: 'S8 audio',
+        expectedAudioSortFilterParmsName: 'Title asc',
+        audioLearnAppViewTypeLst: [AudioLearnAppViewType.audioPlayerView],
+      );
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -8017,18 +8065,19 @@ Future<void> checkAudioTextColor({
       equals(expectedTitleTextBackgroundColor));
 }
 
-void verifyAudioPlaySpeedStoredInPlaylistJsonFile(
-    String audioPlayerSelectedPlaylistTitle,
-    int playableAudioLstAudioIndex,
-    double expectedAudioPlaySpeed) {
+void verifyAudioPlaySpeedStoredInPlaylistJsonFile({
+  required String selectedPlaylistTitle,
+  required int playableAudioLstAudioIndex,
+  required double expectedAudioPlaySpeed,
+}) {
   final String selectedPlaylistPath = path.join(
     kPlaylistDownloadRootPathWindowsTest,
-    audioPlayerSelectedPlaylistTitle,
+    selectedPlaylistTitle,
   );
 
   final selectedPlaylistFilePathName = path.join(
     selectedPlaylistPath,
-    '$audioPlayerSelectedPlaylistTitle.json',
+    '$selectedPlaylistTitle.json',
   );
 
   // Load playlist from the json file
@@ -8041,6 +8090,48 @@ void verifyAudioPlaySpeedStoredInPlaylistJsonFile(
       loadedSelectedPlaylist
           .playableAudioLst[playableAudioLstAudioIndex].audioPlaySpeed,
       expectedAudioPlaySpeed);
+}
+
+void verifyAudioSortFilterParmsNameStoredInPlaylistJsonFile({
+  required String selectedPlaylistTitle,
+  required String expectedAudioSortFilterParmsName,
+  required List<AudioLearnAppViewType> audioLearnAppViewTypeLst,
+}) {
+  final String selectedPlaylistPath = path.join(
+    kPlaylistDownloadRootPathWindowsTest,
+    selectedPlaylistTitle,
+  );
+
+  final selectedPlaylistFilePathName = path.join(
+    selectedPlaylistPath,
+    '$selectedPlaylistTitle.json',
+  );
+
+  // Load playlist from the json file
+  Playlist loadedSelectedPlaylist = JsonDataService.loadFromFile(
+    jsonPathFileName: selectedPlaylistFilePathName,
+    type: Playlist,
+  );
+
+  String expectedValue = '';
+
+  if (audioLearnAppViewTypeLst
+      .contains(AudioLearnAppViewType.playlistDownloadView)) {
+    expectedValue = expectedAudioSortFilterParmsName;
+  }
+
+  expect(loadedSelectedPlaylist.audioSortFilterParmsNameForPlaylistDownloadView,
+      expectedValue);
+
+  if (audioLearnAppViewTypeLst
+      .contains(AudioLearnAppViewType.audioPlayerView)) {
+    expectedValue = expectedAudioSortFilterParmsName;
+  } else {
+    expectedValue = '';
+  }
+
+  expect(loadedSelectedPlaylist.audioSortFilterParmsNameForAudioPlayerView,
+      expectedValue);
 }
 
 void verifyAudioDataElementsUpdatedInJsonFile({
