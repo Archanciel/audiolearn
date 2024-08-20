@@ -114,7 +114,7 @@ class _AudioPlayableListDialogWidgetState
                 message: AppLocalizations.of(context)!
                     .clickToSetAscendingOrDescendingPlayingOrderTooltip,
                 child: IconButton(
-                  key: const Key('sort_ascending_or_descending_button'),
+                  key: const Key('play_order_ascending_or_descending_button'),
                   onPressed: () {
                     setState(() {
                       Playlist selectedPlaylist =

@@ -3834,19 +3834,25 @@ void main() {
     });
     testWidgets(
         '''Change the SF parms in in the dropdown button list to 'Title asc'
-             and then verify its application. Then go to the audio player view
-             and there verify that the order of the audios displayed in the
-             playable audio list dialog is not sorted according to ^Title asc'.
-             Then, go back to the playlist download view and save the 'Title asc'
-             SF parms selecting only audio player view SF parms name of the 'S8
-             audio' playlist json file. Then  go to the audio player view and
-             there verify that the order of the audios displayed in the
-             playable audio list dialog corresponds now to the 'Title asc'.
+           and then verify its application. Then go to the audio player view
+           and there verify that the order of the audios displayed in the
+           playable audio list dialog is not sorted according to ^Title asc'
+           since this SF parms was not saved in the playlist json file.
 
-             Then select another playlist< and verify the order of the audios
-             displayed in the playable audio list dialog. Then reselect the 'S8
-             audio' playlist and verify the order of the audios displayed in the
-             playable audio list dialog ''', (WidgetTester tester) async {
+           Then, go back to the playlist download view and save the 'Title asc'
+           SF parms selecting only audio player view SF parms name of the 'S8
+           audio' playlist json file. Then go to the audio player view and
+           there verify that the order of the audios displayed in the
+           playable audio list dialog now corresponds to 'Title asc'. Since the
+           Play order icon is ascending, the list is played from down to top.
+
+           Then, click twice on |> go to end button in order to play the next
+           playable audio according to the 'Title asc' order. Then reopen the
+           playable audio list dialog and click on the Play order icon to
+           change it from ascending to descending. This means that the dispèlayed
+           audio list corresponding to 'Title asc' SF parms will be played from
+           top to down. Verify that clicking again twice on |> go to end button
+           does play the correct audio.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -3874,7 +3880,7 @@ void main() {
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // Now tap on the current dropdown button item to open the dropdown
       // button items list
@@ -3999,11 +4005,12 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify that "Title asc" was correctly saved in the playlist
-      // json file
+      // json file for the audio player view only.
       verifyAudioSortFilterParmsNameStoredInPlaylistJsonFile(
         selectedPlaylistTitle: 'S8 audio',
         expectedAudioSortFilterParmsName: 'Title asc',
         audioLearnAppViewTypeLst: [AudioLearnAppViewType.audioPlayerView],
+        audioPlayingOrder: AudioPlayingOrder.ascending,
       );
 
       // Then go to the audio player view to verify that now the
@@ -4022,15 +4029,94 @@ void main() {
 
       IntegrationTestUtil.checkAudioTitlesOrderInListBody(
         tester: tester,
-        audioTitlesOrderLst:
-            audioTitlesSortedByTitleAscending,
+        audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
       );
 
       // Tap on the Cancel button to close the AudioPlayableListDialogWidget
       await tester.tap(find.byKey(const Key('cancelButton')));
       await tester.pumpAndSettle();
 
+      // Now we tap twice on the >| button in order to start playing
+      // the next audio according to the ^Title app' sort/filter parms
 
+      await tester.tap(find.byKey(const Key('audioPlayerViewSkipToEndButton')));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(const Key('audioPlayerViewSkipToEndButton')));
+      await tester.pumpAndSettle();
+
+      // Waiting one second so that the next audio starts playing
+      await Future.delayed(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
+
+      // Tap on pause button to pause the audio
+      await tester.tap(find.byIcon(Icons.pause));
+      await tester.pumpAndSettle();
+
+      // Verify the next audio title
+      Finder nextAudioTextFinder =
+          find.text("La surpopulation mondiale par Jancovici et Barrau\n7:38");
+
+      expect(
+        nextAudioTextFinder,
+        findsOneWidget,
+      );
+
+      // Re-opening again the AudioPlayableListDialogWidget in order to
+      // change the audio playing order
+
+      await tester.tap(nextAudioTextFinder);
+      await tester.pumpAndSettle();
+
+      // And tap on the play ascending order icon button in order to change
+      // it to play descending order
+      await tester.tap(
+          find.byKey(const Key('play_order_ascending_or_descending_button')));
+      await tester.pumpAndSettle();
+
+      // Tap on the Cancel button to close the AudioPlayableListDialogWidget
+      await tester.tap(find.byKey(const Key('cancelButton')));
+      await tester.pumpAndSettle();
+
+      // Verify that the audioPlayingOrder was modified and saved in the
+      // playlist
+      verifyAudioSortFilterParmsNameStoredInPlaylistJsonFile(
+        selectedPlaylistTitle: 'S8 audio',
+        expectedAudioSortFilterParmsName: 'Title asc',
+        audioLearnAppViewTypeLst: [AudioLearnAppViewType.audioPlayerView],
+        audioPlayingOrder:
+            AudioPlayingOrder.ascending, // TODO: change to descending
+      );
+
+      // Now we tap twice on the >| button in order to start playing
+      // the next audio according to the ^Title app' sort/filter parms
+      // now applied descendingly
+
+      await tester.tap(find.byKey(const Key('audioPlayerViewSkipToEndButton')));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(const Key('audioPlayerViewSkipToEndButton')));
+      await tester.pumpAndSettle();
+
+      // Waiting one second so that the next audio starts playing
+      await Future.delayed(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
+
+      // Tap on pause button to pause the audio
+      await tester.tap(find.byIcon(Icons.pause));
+      await tester.pumpAndSettle();
+
+      // Since the audio playing order was changed to 'descending', clicking
+      // twice on the >| button in order to start playing the next audio
+      // selects the next playable audio which is before the now fully played
+      // 'Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik'
+      nextAudioTextFinder = find
+          .text("Les besoins artificiels par R.Keucheyan\n19:05");
+
+      expect(
+        nextAudioTextFinder,
+        findsOneWidget,
+      );
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -8122,6 +8208,7 @@ void verifyAudioSortFilterParmsNameStoredInPlaylistJsonFile({
   required String selectedPlaylistTitle,
   required String expectedAudioSortFilterParmsName,
   required List<AudioLearnAppViewType> audioLearnAppViewTypeLst,
+  required AudioPlayingOrder audioPlayingOrder,
 }) {
   final String selectedPlaylistPath = path.join(
     kPlaylistDownloadRootPathWindowsTest,
@@ -8158,6 +8245,11 @@ void verifyAudioSortFilterParmsNameStoredInPlaylistJsonFile({
 
   expect(loadedSelectedPlaylist.audioSortFilterParmsNameForAudioPlayerView,
       expectedValue);
+
+  expect(
+    loadedSelectedPlaylist.audioPlayingOrder,
+    audioPlayingOrder,
+  );
 }
 
 void verifyAudioDataElementsUpdatedInJsonFile({
