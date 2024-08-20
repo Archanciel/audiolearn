@@ -4006,6 +4006,32 @@ void main() {
         audioLearnAppViewTypeLst: [AudioLearnAppViewType.audioPlayerView],
       );
 
+      // Then go to the audio player view to verify that now the
+      // ¨Title asc' sort/filter parms is applyed
+      appScreenNavigationButton =
+          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+      await tester.tap(appScreenNavigationButton);
+      await tester.pumpAndSettle();
+
+      // Now we open the AudioPlayableListDialogWidget
+      // and verify the the displayed audio titles
+
+      await tester.tap(find
+          .text("Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik\n13:39"));
+      await tester.pumpAndSettle();
+
+      IntegrationTestUtil.checkAudioTitlesOrderInListBody(
+        tester: tester,
+        audioTitlesOrderLst:
+            audioTitlesSortedByTitleAscending,
+      );
+
+      // Tap on the Cancel button to close the AudioPlayableListDialogWidget
+      await tester.tap(find.byKey(const Key('cancelButton')));
+      await tester.pumpAndSettle();
+
+
+
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
