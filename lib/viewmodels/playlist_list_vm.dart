@@ -1522,4 +1522,21 @@ class PlaylistListVM extends ChangeNotifier {
       path: playlist.getPlaylistDownloadFilePathName(),
     );
   }
+
+  void invertSelectedPlaylistAudioPlayingOrder() {
+    Playlist selectedPlaylist = getSelectedPlaylists()[0];
+
+    if (selectedPlaylist.audioPlayingOrder == AudioPlayingOrder.ascending) {
+      selectedPlaylist.audioPlayingOrder = AudioPlayingOrder.descending;
+    } else {
+      selectedPlaylist.audioPlayingOrder = AudioPlayingOrder.ascending;
+    }
+
+    JsonDataService.saveToFile(
+      model: selectedPlaylist,
+      path: selectedPlaylist.getPlaylistDownloadFilePathName(),
+    );
+
+    notifyListeners();
+  }
 }

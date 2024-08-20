@@ -4085,7 +4085,7 @@ void main() {
         expectedAudioSortFilterParmsName: 'Title asc',
         audioLearnAppViewTypeLst: [AudioLearnAppViewType.audioPlayerView],
         audioPlayingOrder:
-            AudioPlayingOrder.ascending, // TODO: change to descending
+            AudioPlayingOrder.descending,
       );
 
       // Now we tap twice on the >| button in order to start playing
@@ -4250,7 +4250,7 @@ void main() {
         expectedAudioSortFilterParmsName: 'Title asc',
         audioLearnAppViewTypeLst: [AudioLearnAppViewType.audioPlayerView],
         audioPlayingOrder:
-            AudioPlayingOrder.ascending, // TODO: change to descending
+            AudioPlayingOrder.descending,
       );
 
       // Now we tap twice on the |< button in order to start playing

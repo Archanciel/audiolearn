@@ -815,7 +815,10 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                 return;
               }
 
-              _displayOtherAudiosDialog();
+              showDialog<void>(
+                context: context,
+                builder: (context) => const AudioPlayableListDialogWidget(),
+              );
             },
             child: Consumer<ThemeProviderVM>(
               builder: (context, themeProviderVM, child) {
@@ -838,34 +841,20 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
             ),
           ),
         ),
-        GestureDetector(
-          onLongPress: () {
-            if (audioPlayerVMlistenTrue
-                .getPlayableAudiosApplyingSortFilterParameters(
-                  AudioLearnAppViewType.audioPlayerView,
-                )
-                .isEmpty) {
-              // there is no audio to play
-              return;
-            }
-
-            _displayOtherAudiosDialog();
-          },
-          child: IconButton(
-            key: const Key('audioPlayerViewSkipToEndButton'),
-            iconSize: _audioIconSizeMedium,
-            onPressed: () async =>
-                await audioPlayerVMlistenTrue.skipToEndAndPlay(),
-            style: ButtonStyle(
-              // Highlight button when pressed
-              padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-                const EdgeInsets.symmetric(
-                    horizontal: kSmallButtonInsidePadding, vertical: 0),
-              ),
-              overlayColor: iconButtonTapModification, // Tap feedback color
+        IconButton(
+          key: const Key('audioPlayerViewSkipToEndButton'),
+          iconSize: _audioIconSizeMedium,
+          onPressed: () async =>
+              await audioPlayerVMlistenTrue.skipToEndAndPlay(),
+          style: ButtonStyle(
+            // Highlight button when pressed
+            padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+              const EdgeInsets.symmetric(
+                  horizontal: kSmallButtonInsidePadding, vertical: 0),
             ),
-            icon: const Icon(Icons.skip_next),
+            overlayColor: iconButtonTapModification, // Tap feedback color
           ),
+          icon: const Icon(Icons.skip_next),
         ),
       ],
     );
@@ -1190,7 +1179,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     );
   }
 
-  void _displayOtherAudiosDialog() {
+  void _displayOtherAudioDialog() {
     showDialog<void>(
       context: context,
       builder: (context) => const AudioPlayableListDialogWidget(),

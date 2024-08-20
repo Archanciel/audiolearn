@@ -97,8 +97,8 @@ class _AudioPlayableListDialogWidgetState
           }
         }
       },
-      child:
-          Consumer<PlaylistListVM>(builder: (context, playlistListVM, child) {
+      child: Consumer<PlaylistListVM>(
+          builder: (context, playlistListVMlistenTrue, child) {
         return AlertDialog(
           title: Row(
             children: [
@@ -117,17 +117,8 @@ class _AudioPlayableListDialogWidgetState
                   key: const Key('play_order_ascending_or_descending_button'),
                   onPressed: () {
                     setState(() {
-                      Playlist selectedPlaylist =
-                          playlistListVM.getSelectedPlaylists()[0];
-
-                      if (selectedPlaylist.audioPlayingOrder ==
-                          AudioPlayingOrder.ascending) {
-                        selectedPlaylist.audioPlayingOrder =
-                            AudioPlayingOrder.descending;
-                      } else {
-                        selectedPlaylist.audioPlayingOrder =
-                            AudioPlayingOrder.ascending;
-                      }
+                      playlistListVMlistenTrue
+                          .invertSelectedPlaylistAudioPlayingOrder();
                     });
                   },
                   style: ButtonStyle(
@@ -140,7 +131,7 @@ class _AudioPlayableListDialogWidgetState
                         iconButtonTapModification, // Tap feedback color
                   ),
                   icon: Icon(
-                    (playlistListVM
+                    (playlistListVMlistenTrue
                                 .getSelectedPlaylists()[0]
                                 .audioPlayingOrder ==
                             AudioPlayingOrder.ascending)
