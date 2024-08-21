@@ -4010,7 +4010,7 @@ void main() {
         selectedPlaylistTitle: 'S8 audio',
         expectedAudioSortFilterParmsName: 'Title asc',
         audioLearnAppViewTypeLst: [AudioLearnAppViewType.audioPlayerView],
-        audioPlayingOrder: AudioPlayingOrder.ascending,
+        audioPlayingOrder: AudioPlayingOrder.descending,
       );
 
       // Then go to the audio player view to verify that now the
@@ -4055,7 +4055,7 @@ void main() {
 
       // Verify the next audio title
       Finder nextAudioTextFinder =
-          find.text("La surpopulation mondiale par Jancovici et Barrau\n7:38");
+          find.text("Les besoins artificiels par R.Keucheyan\n19:05");
 
       expect(
         nextAudioTextFinder,
@@ -4068,8 +4068,8 @@ void main() {
       await tester.tap(nextAudioTextFinder);
       await tester.pumpAndSettle();
 
-      // And tap on the play ascending order icon button in order to change
-      // it to play descending order
+      // And tap on the play descending order icon button in order to change
+      // it to play ascending order
       await tester.tap(
           find.byKey(const Key('play_order_ascending_or_descending_button')));
       await tester.pumpAndSettle();
@@ -4085,7 +4085,7 @@ void main() {
         expectedAudioSortFilterParmsName: 'Title asc',
         audioLearnAppViewTypeLst: [AudioLearnAppViewType.audioPlayerView],
         audioPlayingOrder:
-            AudioPlayingOrder.descending,
+            AudioPlayingOrder.ascending,
       );
 
       // Now we tap twice on the >| button in order to start playing
@@ -4106,12 +4106,12 @@ void main() {
       await tester.tap(find.byIcon(Icons.pause));
       await tester.pumpAndSettle();
 
-      // Since the audio playing order was changed to 'descending', clicking
+      // Since the audio playing order was changed to 'ascending', clicking
       // twice on the >| button in order to start playing the next audio
       // selects the next playable audio which is before the now fully played
-      // 'Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik'
+      // 'Les besoins artificiels par R.Keucheyan'
       nextAudioTextFinder = find
-          .text("Les besoins artificiels par R.Keucheyan\n19:05");
+          .text("La surpopulation mondiale par Jancovici et Barrau\n7:38");
 
       expect(
         nextAudioTextFinder,
@@ -4125,17 +4125,17 @@ void main() {
       );
     });
     testWidgets(
-        '''Click twice on <| go to start button in order to select the previous
+        '''Click twice on the <| go to start button in order to select the previous
            playable audio. First the 'Title asc' SF parms selecting only audio
            player view SF parms name of the 'S8 audio' playlist json file.
         
-           Then go to the audio player view and click twice on <| go to start
+           Then go to the audio player view and click twice on the <| go to start
            button in order to select the previous playable audio according to the
            'Title asc' order. Then reopen the playable audio list dialog and
            click on the Play order icon to change it from ascending to descending.
            This means that the displayed audio list corresponding to 'Title asc'
-           SF parms will be played from top to down. Verify that clicking again
-           twice on <| go to start button does select the correct audio.''', (WidgetTester tester) async {
+           SF parms will be played from top to down. Verify that clicking once
+           on <| go to start button does select the correct audio.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -4209,8 +4209,8 @@ void main() {
       await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
-      // Now we tap twice on the |< button in order to start playing
-      // the previous audio according to the 'Title app' sort/filter parms
+      // Now we tap twice on the |< button in order select the previous
+      // audio according to the 'Title app' with descending audio playing order
 
       await tester.tap(find.byKey(const Key('audioPlayerViewSkipToStartButton')));
       await tester.pumpAndSettle();
@@ -4219,22 +4219,22 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify the next audio title
-      Finder nextAudioTextFinder =
-          find.text("Les besoins artificiels par R.Keucheyan\n19:05");
+      Finder nextAudioTextFinder = find
+          .text("La surpopulation mondiale par Jancovici et Barrau\n7:38");
 
       expect(
         nextAudioTextFinder,
         findsOneWidget,
       );
 
-      // Re-opening again the AudioPlayableListDialogWidget in order to
-      // change the audio playing order
+      // Opening the AudioPlayableListDialogWidget in order to change
+      // the descending audio playing order to ascending
 
       await tester.tap(nextAudioTextFinder);
       await tester.pumpAndSettle();
 
-      // And tap on the play ascending order icon button in order to change
-      // it to play descending order
+      // And tap on the play descending order icon button in order to change
+      // it to play ascending order
       await tester.tap(
           find.byKey(const Key('play_order_ascending_or_descending_button')));
       await tester.pumpAndSettle();
@@ -4250,23 +4250,19 @@ void main() {
         expectedAudioSortFilterParmsName: 'Title asc',
         audioLearnAppViewTypeLst: [AudioLearnAppViewType.audioPlayerView],
         audioPlayingOrder:
-            AudioPlayingOrder.descending,
+            AudioPlayingOrder.ascending,
       );
 
-      // Now we tap twice on the |< button in order to start playing
-      // the previous audio according to the 'Title app' sort/filter parms
-      // now applied descendingly
+      // Now we tap twice on the |< button in order select the previous
+      // audio according to the 'Title app' with audio play ascending order
 
       await tester.tap(find.byKey(const Key('audioPlayerViewSkipToStartButton')));
       await tester.pumpAndSettle();
 
-      await tester.tap(find.byKey(const Key('audioPlayerViewSkipToStartButton')));
-      await tester.pumpAndSettle();
-
-      // Since the audio playing order was changed to 'descending', clicking
-      // twice on the |< button in order to start playing the next audio
-      // selects the previous playable audio which is before the now fully played
-      // 'Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik'
+      // Since the audio playing order was changed to 'ascending', clicking
+      // once on the |< button in order to select the previous audio
+      // selects the previous playable audio which is before the current
+      // audio 'La surpopulation mondiale par Jancovici et Barrau'
       nextAudioTextFinder = find
           .text("Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik\n13:39");
 
