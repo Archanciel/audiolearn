@@ -107,8 +107,40 @@ class _AudioPlayableListDialogWidgetState
                   context: context,
                   audioPlayerVM: audioPlayerVMlistenFalse,
                 ),
-                child: Text(
-                    AppLocalizations.of(context)!.audioOneSelectedDialogTitle),
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(
+                    maxWidth:
+                        180, // Set the maximum width for the RichText here
+                  ),
+                  child: RichText(
+                    text: TextSpan(
+                      text: AppLocalizations.of(context)!
+                          .audioOneSelectedDialogTitle,
+                      style: const TextStyle(
+                        fontSize: 24,
+                      ),
+                      children: [
+                        const WidgetSpan(
+                          child: SizedBox(width: 8),
+                        ),
+                        TextSpan(
+                          text:
+                              "(${playlistListVMlistenTrue.getAudioPlayerViewSortFilterName(
+                            translatedAppliedSFparmsName:
+                                AppLocalizations.of(context)!
+                                    .sortFilterParametersAppliedName,
+                            translatedDefaultSFparmsName:
+                                AppLocalizations.of(context)!
+                                    .sortFilterParametersDefaultName,
+                          )})",
+                          style: const TextStyle(
+                            fontSize: 15,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
               Tooltip(
                 message: AppLocalizations.of(context)!
@@ -183,12 +215,12 @@ class _AudioPlayableListDialogWidgetState
           ),
           actions: [
             TextButton(
-              key: const Key('cancelButton'),
+              key: const Key('closeTextButton'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
               child: Text(
-                AppLocalizations.of(context)!.cancelButton,
+                AppLocalizations.of(context)!.closeTextButton,
                 style: (themeProviderVM.currentTheme == AppTheme.dark)
                     ? kTextButtonStyleDarkMode
                     : kTextButtonStyleLightMode,

@@ -1580,4 +1580,34 @@ class PlaylistListVM extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  /// Method called when the user opens the audio playable list dialog.
+  /// This method returns the name of the sort and filter parameters
+  /// which has been saved in the playlist json file.
+  ///
+  /// If an unamed sort filter parameters instance was applied to the
+  /// listenable audio list, then the translated name of the applied sort
+  /// filter parameters is returned.
+  ///
+  /// If no sort filter parameters were saved in the playlist json file,
+  /// then the translated name of the default sort filter parameter
+  /// is returned.
+  String getAudioPlayerViewSortFilterName({
+    required String translatedAppliedSFparmsName,
+    required String translatedDefaultSFparmsName,
+  }) {
+    Playlist selectedPlaylist = getSelectedPlaylists()[0];
+    String audioSortFilterParmsName =
+        selectedPlaylist.audioSortFilterParmsNameForAudioPlayerView;
+
+    if (audioSortFilterParmsName.isEmpty) {
+      if (selectedPlaylist.audioSortFilterParmsForAudioPlayerView != null) {
+        audioSortFilterParmsName = translatedAppliedSFparmsName;
+      } else {
+        audioSortFilterParmsName = translatedDefaultSFparmsName;
+      }
+    }
+
+    return audioSortFilterParmsName;
+  }
 }
