@@ -1044,6 +1044,7 @@ class PlaylistListVM extends ChangeNotifier {
     Playlist playlist = getSelectedPlaylists()[0];
 
     if (isAppliedSortFilterParmsNameSelected) {
+      // Saving the 'applied' sort/filter parameters in the playlist
       AudioSortFilterParameters audioSortFilterParms =
           getAudioSortFilterParameters(
               audioSortFilterParametersName: kAudioSortFilterParmsAppliedName);
@@ -1057,9 +1058,14 @@ class PlaylistListVM extends ChangeNotifier {
       if (forAudioPlayerView) {
         playlist.audioSortFilterParmsNameForAudioPlayerView = '';
         playlist.audioSortFilterParmsForAudioPlayerView = audioSortFilterParms;
+
+        _improveDefaultAudioPlayingOrder(
+          playlist: playlist,
+          audioSortFilterParms: audioSortFilterParms,
+        );
       }
     } else {
-      // a named sort/filter parms is saved in the playlist json file ...
+      // A named sort/filter parms is saved in the playlist json file ...
       if (forPlaylistDownloadView) {
         playlist.audioSortFilterParmsNameForPlaylistDownloadView =
             sortFilterParmsNameToSave;
@@ -1070,6 +1076,15 @@ class PlaylistListVM extends ChangeNotifier {
         playlist.audioSortFilterParmsNameForAudioPlayerView =
             sortFilterParmsNameToSave;
         playlist.audioSortFilterParmsForAudioPlayerView = null;
+
+        AudioSortFilterParameters audioSortFilterParms =
+            getAudioSortFilterParameters(
+                audioSortFilterParametersName: sortFilterParmsNameToSave);
+
+        _improveDefaultAudioPlayingOrder(
+          playlist: playlist,
+          audioSortFilterParms: audioSortFilterParms,
+        );
       }
     }
 
@@ -1077,6 +1092,30 @@ class PlaylistListVM extends ChangeNotifier {
       model: playlist,
       path: playlist.getPlaylistDownloadFilePathName(),
     );
+  }
+
+  /// Method called only if the saved SF parms are applied to the audio
+  /// player view. The method improves the default audio playing order
+  /// if the selected sort item is 'valid audio title' ascending.
+  ///
+  /// This makes sense: if audio title ascecding is selected, then the
+  /// audio list is sorted by audio title ascendingly: chapter 1, chapter 2,
+  /// chapter 3, ... But it is logic that such a list is played in the
+  /// descending order: chapter 1 first, then down the list chapter 2, then
+  /// chapter 3 etc ! So, the audio playing order is set to descending in the
+  /// playlist json file.
+  void _improveDefaultAudioPlayingOrder({
+    required Playlist playlist,
+    required AudioSortFilterParameters audioSortFilterParms,
+  }) {
+    SortingItem selectedSortItem = audioSortFilterParms.selectedSortItemLst[0];
+
+    if (selectedSortItem.sortingOption == SortingOption.validAudioTitle &&
+        selectedSortItem.isAscending) {
+      playlist.audioPlayingOrder = AudioPlayingOrder.descending;
+    } else {
+      playlist.audioPlayingOrder = AudioPlayingOrder.ascending;
+    }
   }
 
   /// Method called when the user clicks on the 'delete audio'
@@ -1523,6 +1562,8 @@ class PlaylistListVM extends ChangeNotifier {
     );
   }
 
+  /// Method called when the user clicks on the Ascending/Descending
+  /// icon button in the audio playable list dialog.
   void invertSelectedPlaylistAudioPlayingOrder() {
     Playlist selectedPlaylist = getSelectedPlaylists()[0];
 
