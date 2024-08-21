@@ -610,13 +610,13 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
               child: Text(AppLocalizations.of(context)!
                   .clearSortFilterAudiosParmsHistoryMenu),
             ),
-            PopupMenuItem<PopupMenuButtonType>(
-              key: const Key(
-                  'save_sort_and_filter_audio_parms_in_playlist_item'),
-              value: PopupMenuButtonType.saveSortFilterAudioParmsToPlaylist,
-              child: Text(AppLocalizations.of(context)!
-                  .saveSortFilterAudiosOptionsToPlaylistMenu),
-            ),
+            // PopupMenuItem<PopupMenuButtonType>(
+            //   key: const Key(
+            //       'save_sort_and_filter_audio_parms_in_playlist_item'),
+            //   value: PopupMenuButtonType.saveSortFilterAudioParmsToPlaylist,
+            //   child: Text(AppLocalizations.of(context)!
+            //       .saveSortFilterAudiosOptionsToPlaylistMenu),
+            // ),
           ];
         },
         onSelected: (PopupMenuButtonType value) {
@@ -695,34 +695,34 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                 },
               );
               break;
-            case PopupMenuButtonType.saveSortFilterAudioParmsToPlaylist:
-              showDialog<List<bool>>(
-                context: context,
-                barrierDismissible: false, // This line prevents the dialog from
-                // closing when tapping outside the dialog
-                builder: (BuildContext context) {
-                  return PlaylistSaveSortFilterOptionsDialogWidget(
-                    playlistTitle:
-                        playlistListVMlistenFalse.uniqueSelectedPlaylist!.title,
-                    sortFilterParametersName: '', // TODO once you refactored
-                    //                              playlist download view sort
-                    //                              filter parms code, correct that
-                  );
-                },
-              ).then((forViewLst) {
-                if (forViewLst == null) {
-                  // the user clicked on Cancel button
-                  return;
-                }
+            // case PopupMenuButtonType.saveSortFilterAudioParmsToPlaylist:
+            //   showDialog<List<bool>>(
+            //     context: context,
+            //     barrierDismissible: false, // This line prevents the dialog from
+            //     // closing when tapping outside the dialog
+            //     builder: (BuildContext context) {
+            //       return PlaylistSaveSortFilterOptionsDialogWidget(
+            //         playlistTitle:
+            //             playlistListVMlistenFalse.uniqueSelectedPlaylist!.title,
+            //         sortFilterParametersName: '', // TODO once you refactored
+            //         //                              playlist download view sort
+            //         //                              filter parms code, correct that
+            //       );
+            //     },
+            //   ).then((forViewLst) {
+            //     if (forViewLst == null) {
+            //       // the user clicked on Cancel button
+            //       return;
+            //     }
 
-                // if the user clicked on Save, not on Cancel button
-                playlistListVMlistenFalse
-                    .savePlaylistAudioSortFilterParmsToPlaylist(
-                  forPlaylistDownloadView: forViewLst[0],
-                  forAudioPlayerView: forViewLst[1],
-                );
-              });
-              break;
+            //     // if the user clicked on Save, not on Cancel button
+            //     playlistListVMlistenFalse
+            //         .savePlaylistAudioSortFilterParmsToPlaylist(
+            //       forPlaylistDownloadView: forViewLst[0],
+            //       forAudioPlayerView: forViewLst[1],
+            //     );
+            //   });
+            //   break;
             default:
               break;
           }
