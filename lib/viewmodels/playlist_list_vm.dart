@@ -525,14 +525,12 @@ class PlaylistListVM extends ChangeNotifier {
     );
   }
 
-  Map<String, AudioSortFilterParameters> getAudioSortFilterParametersMap() {
-    return _settingsDataService.namedAudioSortFilterParametersMap;
-  }
-
   AudioSortFilterParameters getAudioSortFilterParameters({
     required String audioSortFilterParametersName,
   }) {
-    if (audioSortFilterParametersName.isEmpty) {
+    if (audioSortFilterParametersName.isEmpty ||
+        !_settingsDataService.namedAudioSortFilterParametersMap
+            .containsKey(audioSortFilterParametersName)) {
       return AudioSortFilterParameters.createDefaultAudioSortFilterParameters();
     } else {
       return _settingsDataService
@@ -840,6 +838,7 @@ class PlaylistListVM extends ChangeNotifier {
       _playlistAudioSFparmsNamesForPlaylistDownloadViewMap[
           getSelectedPlaylists()[0].title] = audioSortFilterParametersName;
     } else {
+      // for AudioLearnAppViewType.audioPlayerView
       _playlistAudioSFparmsNamesForAudioPlayerViewMap[
           getSelectedPlaylists()[0].title] = audioSortFilterParametersName;
     }
@@ -1047,7 +1046,7 @@ class PlaylistListVM extends ChangeNotifier {
       // Saving the 'applied' sort/filter parameters in the playlist
       AudioSortFilterParameters audioSortFilterParms =
           getAudioSortFilterParameters(
-              audioSortFilterParametersName: kAudioSortFilterParmsAppliedName);
+              audioSortFilterParametersName: sortFilterParmsNameToSave);
 
       if (forPlaylistDownloadView) {
         playlist.audioSortFilterParmsNameForPlaylistDownloadView = '';

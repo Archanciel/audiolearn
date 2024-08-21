@@ -548,7 +548,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     }
 
     Map<String, AudioSortFilterParameters> audioSortFilterParametersMap =
-        playlistListVMlistenFalse.getAudioSortFilterParametersMap();
+        widget.settingsDataService.namedAudioSortFilterParametersMap;
 
     String selectedPlaylistAudioSortFilterParmsName =
         playlistListVMlistenFalse.getSelectedPlaylistAudioSortFilterParmsName(
@@ -563,10 +563,14 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     // building the dropdown menu items list will fail.
     if (selectedPlaylistAudioSortFilterParmsName ==
         AppLocalizations.of(context)!.sortFilterParametersAppliedName) {
-      audioSortFilterParametersMap[selectedPlaylistAudioSortFilterParmsName] =
-          playlistListVMlistenFalse.audioSortFilterParameters ??
-              AudioSortFilterParameters
-                  .createDefaultAudioSortFilterParameters();
+      // Executing the followingensures that the sort and filter parameters
+      // map is saved in the settings file.
+      widget.settingsDataService.addOrReplaceNamedAudioSortFilterParameters(
+        audioSortFilterParametersName: selectedPlaylistAudioSortFilterParmsName,
+        audioSortFilterParameters: playlistListVMlistenFalse
+              .audioSortFilterParameters ??
+          AudioSortFilterParameters.createDefaultAudioSortFilterParameters(),
+      );
     }
 
     // When going to audio player view, then back to  playlisz download view,
@@ -1085,7 +1089,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                       (sortFilterParmsNameToSave == // sf parms name
                           AppLocalizations.of(context)! // selected in the
                               .sortFilterParametersAppliedName),
-                  sortFilterParmsNameToSave: sortFilterParmsNameToSave,             // dropdown menu
+                  sortFilterParmsNameToSave:
+                      sortFilterParmsNameToSave, // dropdown menu
                   forPlaylistDownloadView: forViewLst[1],
                   forAudioPlayerView: forViewLst[2],
                 );

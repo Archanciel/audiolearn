@@ -764,10 +764,7 @@ class _AudioSortFilterDialogWidgetState
 
                 // does not close the sort and filter dialog
                 return;
-              } else if (_sortFilterSaveAsUniqueName.isEmpty ||
-                  _sortFilterSaveAsUniqueName ==
-                      AppLocalizations.of(context)!
-                          .sortFilterParametersAppliedName) {
+              } else if (_sortFilterSaveAsUniqueName.isEmpty) {
                 // here, the user deletes an historical sort/filter parameter
                 if (!playlistListVM
                     .clearAudioSortFilterSettingsSearchHistoryElement(
@@ -853,7 +850,7 @@ class _AudioSortFilterDialogWidgetState
           key: const Key('applySortFilterOptionsTextButton'),
           onPressed: () {
             List<dynamic> filterSortAudioAndParmLst = _filterAndSortAudioLst(
-                sortFilterParametersSaveAsUniqueName: kAudioSortFilterParmsAppliedName);
+                sortFilterParametersSaveAsUniqueName: AppLocalizations.of(context)!.sortFilterParametersAppliedName);
 
             if (filterSortAudioAndParmLst[1] ==
                 AudioSortFilterParameters
