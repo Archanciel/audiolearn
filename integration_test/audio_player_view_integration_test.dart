@@ -3949,8 +3949,8 @@ void main() {
             audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
       );
 
-      // Tap on the Cancel button to close the AudioPlayableListDialogWidget
-      await tester.tap(find.byKey(const Key('cancelButton')));
+      // Tap on the Close button to close the AudioPlayableListDialogWidget
+      await tester.tap(find.byKey(const Key('closeTextButton')));
       await tester.pumpAndSettle();
 
       // Now return to the playlist download view
@@ -4032,8 +4032,8 @@ void main() {
         audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
       );
 
-      // Tap on the Cancel button to close the AudioPlayableListDialogWidget
-      await tester.tap(find.byKey(const Key('cancelButton')));
+      // Tap on the Close button to close the AudioPlayableListDialogWidget
+      await tester.tap(find.byKey(const Key('closeTextButton')));
       await tester.pumpAndSettle();
 
       // Now we tap twice on the >| button in order to start playing
@@ -4074,8 +4074,8 @@ void main() {
           find.byKey(const Key('play_order_ascending_or_descending_button')));
       await tester.pumpAndSettle();
 
-      // Tap on the Cancel button to close the AudioPlayableListDialogWidget
-      await tester.tap(find.byKey(const Key('cancelButton')));
+      // Tap on the Close button to close the AudioPlayableListDialogWidget
+      await tester.tap(find.byKey(const Key('closeTextButton')));
       await tester.pumpAndSettle();
 
       // Verify that the audioPlayingOrder was modified and saved in the
@@ -4239,8 +4239,8 @@ void main() {
           find.byKey(const Key('play_order_ascending_or_descending_button')));
       await tester.pumpAndSettle();
 
-      // Tap on the Cancel button to close the AudioPlayableListDialogWidget
-      await tester.tap(find.byKey(const Key('cancelButton')));
+      // Tap on the Close button to close the AudioPlayableListDialogWidget
+      await tester.tap(find.byKey(const Key('closeTextButton')));
       await tester.pumpAndSettle();
 
       // Verify that the audioPlayingOrder was modified and saved in the
