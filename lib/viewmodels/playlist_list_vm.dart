@@ -889,9 +889,10 @@ class PlaylistListVM extends ChangeNotifier {
 
   String getSelectedPlaylistAudioSortFilterParmsName({
     required AudioLearnAppViewType audioLearnAppViewType,
+    required String translatedAppliedSortFilterParmsName,
   }) {
     Playlist selectedPlaylist = getSelectedPlaylists()[0];
-    String selectedPlaylistAudioSortFilterParmsNameSetByUser;
+    String selectedPlaylistAudioSortFilterParmsNameSetByUser = '';
 
     if (audioLearnAppViewType == AudioLearnAppViewType.playlistDownloadView) {
       selectedPlaylistAudioSortFilterParmsNameSetByUser =
@@ -899,25 +900,38 @@ class PlaylistListVM extends ChangeNotifier {
                   selectedPlaylist.title] ??
               '';
     } else {
+      // for AudioLearnAppViewType.audioPlayerView
       selectedPlaylistAudioSortFilterParmsNameSetByUser =
           _playlistAudioSFparmsNamesForAudioPlayerViewMap[
                   selectedPlaylist.title] ??
               '';
     }
 
-    if (selectedPlaylistAudioSortFilterParmsNameSetByUser.isNotEmpty) {
-      return selectedPlaylistAudioSortFilterParmsNameSetByUser;
-    } else {
+    if (selectedPlaylistAudioSortFilterParmsNameSetByUser.isEmpty) {
       // The sort and filter parameters name returned here was saved
       // in the playlist json file using the 'Save sort/filter options
       // to playlist' audio menu item. If the user has not saved a
       // sort and filter parameters name to the playlist json file, then
       // '' is returned.
       if (audioLearnAppViewType == AudioLearnAppViewType.playlistDownloadView) {
-        return selectedPlaylist.audioSortFilterParmsNameForPlaylistDownloadView;
+        selectedPlaylistAudioSortFilterParmsNameSetByUser =
+            selectedPlaylist.audioSortFilterParmsNameForPlaylistDownloadView;
       } else {
-        return selectedPlaylist.audioSortFilterParmsNameForAudioPlayerView;
+        // for AudioLearnAppViewType.audioPlayerView
+        selectedPlaylistAudioSortFilterParmsNameSetByUser =
+            selectedPlaylist.audioSortFilterParmsNameForAudioPlayerView;
       }
+    }
+
+    if (selectedPlaylistAudioSortFilterParmsNameSetByUser == 'applied') {
+      return 'applied';
+    }
+    
+    if (_settingsDataService.namedAudioSortFilterParametersMap
+        .containsKey(selectedPlaylistAudioSortFilterParmsNameSetByUser)) {
+      return selectedPlaylistAudioSortFilterParmsNameSetByUser;
+    } else {
+      return '';
     }
   }
 

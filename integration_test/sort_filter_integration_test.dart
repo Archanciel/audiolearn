@@ -19,7 +19,7 @@ void main() {
 }
 
 void audioPlayerViewSortFilterIntregrationTest() {
-  group('Sort/filter audio tests', () {
+  group('Sort/filter audio player view tests', () {
     testWidgets(
         '''Playing last sorted audio with filter: "Fully listened" unchecked
            and "Partially listened" checked.''', (WidgetTester tester) async {
@@ -620,7 +620,7 @@ void audioPlayerViewSortFilterIntregrationTest() {
 }
 
 void playlistDownloadViewSortFilterIntregrationTest() {
-  group('Sort/filter tests', () {
+  group('Sort/filter playlist download view tests', () {
     testWidgets('''Menu Clear sort/filter parameters history execution verifying
            that the confirm dialog is displayed in the playlist download
            view.''', (WidgetTester tester) async {

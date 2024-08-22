@@ -553,6 +553,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     String selectedPlaylistAudioSortFilterParmsName =
         playlistListVMlistenFalse.getSelectedPlaylistAudioSortFilterParmsName(
       audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+      translatedAppliedSortFilterParmsName:
+          AppLocalizations.of(context)!.sortFilterParametersAppliedName,
     );
 
     // If the selected playlist sort and filter parameters name is
@@ -568,8 +570,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       widget.settingsDataService.addOrReplaceNamedAudioSortFilterParameters(
         audioSortFilterParametersName: selectedPlaylistAudioSortFilterParmsName,
         audioSortFilterParameters: playlistListVMlistenFalse
-              .audioSortFilterParameters ??
-          AudioSortFilterParameters.createDefaultAudioSortFilterParameters(),
+                .audioSortFilterParameters ??
+            AudioSortFilterParameters.createDefaultAudioSortFilterParameters(),
       );
     }
 
@@ -618,6 +620,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                     .getSelectedPlaylistAudioSortFilterParmsName(
                       audioLearnAppViewType:
                           AudioLearnAppViewType.playlistDownloadView,
+                      translatedAppliedSortFilterParmsName:
+                          AppLocalizations.of(context)!
+                              .sortFilterParametersAppliedName,
                     )
                     .isEmpty)
                 ? null // causes the default sort filter parms to be applied
@@ -644,6 +649,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     _selectedSortFilterParametersName =
         playlistListVMlistenTrue.getSelectedPlaylistAudioSortFilterParmsName(
       audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+      translatedAppliedSortFilterParmsName:
+          AppLocalizations.of(context)!.sortFilterParametersAppliedName,
     );
     _updatePlaylistSortedFilteredAudioList(
         playlistListVMlistenFalse: playlistListVMlistenTrue,
