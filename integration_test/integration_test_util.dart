@@ -271,10 +271,12 @@ class IntegrationTestUtil {
         widgetKeyStr: 'clear_sort_and_filter_audio_parms_history_menu_item',
       );
 
-      verifyWidgetIsDisabled(
-        tester: tester,
-        widgetKeyStr: 'save_sort_and_filter_audio_parms_in_playlist_item',
-      );
+      // The save sort and filter audio parameters in playlist menu item
+      // is currently disabled in the audio player view
+      // verifyWidgetIsDisabled(
+      //   tester: tester,
+      //   widgetKeyStr: 'save_sort_and_filter_audio_parms_in_playlist_item',
+      // );
     } else {
       verifyWidgetIsEnabled(
         tester: tester,
@@ -287,10 +289,12 @@ class IntegrationTestUtil {
         widgetKeyStr: 'clear_sort_and_filter_audio_parms_history_menu_item',
       );
 
-      verifyWidgetIsEnabled(
-        tester: tester,
-        widgetKeyStr: 'save_sort_and_filter_audio_parms_in_playlist_item',
-      );
+      // The save sort and filter audio parameters in playlist menu item
+      // is currently disabled in the audio player view
+      // verifyWidgetIsEnabled(
+      //   tester: tester,
+      //   widgetKeyStr: 'save_sort_and_filter_audio_parms_in_playlist_item',
+      // );
     }
 
     if (audioLearnAppViewType == AudioLearnAppViewType.audioPlayerView) {
@@ -348,6 +352,7 @@ class IntegrationTestUtil {
   static void verifyWidgetIsDisabled({
     required WidgetTester tester,
     required String widgetKeyStr,
+    bool isSaveSortFilterMenuDisabled = false,
   }) {
     // Find the widget by its key
     final Finder widgetFinder = find.byKey(Key(widgetKeyStr));

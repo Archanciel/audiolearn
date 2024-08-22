@@ -28,7 +28,7 @@ enum AudioPopupMenuAction {
 }
 
 const String kApplicationName = "Audio Learn";
-const String kApplicationVersion = '1.1.92';
+const String kApplicationVersion = '1.1.93';
 const String kApplicationPath = "/storage/emulated/0/Download/audiolearn";
 const String kApplicationPathTest = "/storage/emulated/0/Download/audiolearn";
 const String kPlaylistDownloadRootPath =

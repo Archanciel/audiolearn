@@ -2659,7 +2659,7 @@ void main() {
 
       // Tap on Cancel button to close the
       // DisplaySelectableAudioListDialogWidget
-      await tester.tap(find.text('Cancel'));
+      await tester.tap(find.text('Close'));
       await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
@@ -3963,7 +3963,6 @@ void main() {
       await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
       await tester.pumpAndSettle();
 
-      // find the save sort/filter parms menu item and tap on it
       await tester.tap(find.byKey(
           const Key('save_sort_and_filter_audio_parms_in_playlist_item')));
       await tester.pumpAndSettle();
@@ -4189,7 +4188,6 @@ void main() {
       await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
       await tester.pumpAndSettle();
 
-      // find the save sort/filter parms menu item and tap on it
       await tester.tap(find.byKey(
           const Key('save_sort_and_filter_audio_parms_in_playlist_item')));
       await tester.pumpAndSettle();
