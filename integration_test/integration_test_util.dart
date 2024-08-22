@@ -629,4 +629,14 @@ class IntegrationTestUtil {
       dropdownButtonSelectedTitle,
     );
   }
+
+// A custom finder that finds an IconButton with the specified icon data.
+  static Finder findIconButtonWithIcon(IconData iconData) {
+    return find.byWidgetPredicate(
+      (Widget widget) =>
+          widget is IconButton &&
+          widget.icon is Icon &&
+          (widget.icon as Icon).icon == iconData,
+    );
+  }
 }
