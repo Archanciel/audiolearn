@@ -3345,6 +3345,152 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
+      testWidgets(
+          '''Delete saved to playlist named sort/filter bug fix verification:
+
+             Select the 'Title asc' sort/filter parms. Then save it only to
+             playlist download view. Then delete it and verify that the
+             'default' sort/filter parms is applied to the playlist download
+             view.''', (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_three_playlists_test",
+          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+
+        final SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
+        );
+
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the download app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+        await app.main(['test']);
+        await tester.pumpAndSettle();
+
+        // Tap on the current dropdown button item to open the dropdown
+        // button items list
+
+        Finder dropDownButtonFinder =
+            find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+        Finder dropDownButtonTextFinder = find.descendant(
+          of: dropDownButtonFinder,
+          matching: find.byType(Text),
+        );
+
+        await tester.tap(dropDownButtonTextFinder);
+        await tester.pumpAndSettle();
+
+        String titleAscSortFilterName = 'Title asc';
+
+        // Find and select the 'Title asc' sort/filter item
+        Finder titleAscDropDownTextFinder =
+            find.text(titleAscSortFilterName).last;
+        await tester.tap(titleAscDropDownTextFinder);
+        await tester.pumpAndSettle();
+
+        // Now open the audio popup menu
+        await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+        await tester.pumpAndSettle();
+
+        // And open the 'Save sort/filter options to playlist' dialog
+        await tester.tap(find.byKey(
+            const Key('save_sort_and_filter_audio_parms_in_playlist_item')));
+        await tester.pumpAndSettle();
+
+        // Select only the 'For "Download Audio" screen' checkbox
+        await tester.tap(find.byKey(const Key('playlistDownloadViewCheckbox')));
+        await tester.pumpAndSettle();
+
+        // Finally, click on save button
+        await tester.tap(
+            find.byKey(const Key('saveSortFilterOptionsToPlaylistSaveButton')));
+        await tester.pumpAndSettle();
+
+        // Now delete the 'Title asc' sort/filter parms
+
+        // Tap on the current dropdown button item to open the dropdown
+        // button items list
+
+        dropDownButtonFinder =
+            find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+        dropDownButtonTextFinder = find.descendant(
+          of: dropDownButtonFinder,
+          matching: find.byType(Text),
+        );
+
+        await tester.tap(dropDownButtonTextFinder);
+        await tester.pumpAndSettle();
+
+        // And find the 'Asc listened' sort/filter item
+        titleAscDropDownTextFinder = find.text(titleAscSortFilterName).last;
+        await tester.tap(titleAscDropDownTextFinder);
+        await tester.pumpAndSettle();
+
+        // Now open the audio popup menu in order to delete the
+        // 'Title asc' sf parms
+        final Finder dropdownItemEditIconButtonFinder = find.byKey(
+            const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+        await tester.tap(dropdownItemEditIconButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Click on the "Delete" button. This closes the sort/filter dialog
+        // and sets the default sort/filter parms in the playlist download
+        // view dropdown button.
+        await tester.tap(find.byKey(const Key('deleteSortFilterTextButton')));
+        await tester.pumpAndSettle();
+
+        // Now verify the playlist download view state with the 'default'
+        // sort/filter parms applied
+
+        // Verify that the dropdown button has been updated with the
+        // 'default' sort/filter parms selected
+        const String defaultTitle = 'default';
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+          tester: tester,
+          dropdownButtonSelectedTitle: defaultTitle,
+        );
+
+        // And verify the order of the playlist audio titles
+
+        List<String>
+            audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          "La surpopulation mondiale par Jancovici et Barrau",
+          "La résilience insulaire par Fiona Roche",
+          "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+          "Les besoins artificiels par R.Keucheyan",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+        ];
+
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          tester: tester,
+          audioTitlesOrderLst:
+              audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
     });
     group('''Verifying playlist selection change applies correctly their
              named sort/filter parms.''', () {
