@@ -923,10 +923,11 @@ class PlaylistListVM extends ChangeNotifier {
       }
     }
 
-    if (selectedPlaylistAudioSortFilterParmsNameSetByUser == 'applied') {
-      return 'applied';
+    if (selectedPlaylistAudioSortFilterParmsNameSetByUser ==
+        translatedAppliedSortFilterParmsName) {
+      return translatedAppliedSortFilterParmsName;
     }
-    
+
     if (_settingsDataService.namedAudioSortFilterParametersMap
         .containsKey(selectedPlaylistAudioSortFilterParmsNameSetByUser)) {
       return selectedPlaylistAudioSortFilterParmsNameSetByUser;

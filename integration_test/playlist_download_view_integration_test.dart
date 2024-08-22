@@ -5936,13 +5936,10 @@ void main() {
       await tester.pumpAndSettle();
 
       // First, set the application language to French
-      // Tap the appbar leading popup menu button
-      await tester.tap(find.byKey(const Key('appBarRightPopupMenu')));
-      await tester.pumpAndSettle();
-
-      // Select French
-      await tester.tap(find.byKey(const Key('appBarMenuFrench')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.setApplicationLanguage(
+        tester: tester,
+        language: Language.french,
+      );
 
       // *** First test part: Copy audio from Youtube to local
       // playlist
@@ -6345,13 +6342,10 @@ void main() {
       await tester.pumpAndSettle();
 
       // First, set the application language to French
-      // Tap the appbar leading popup menu button
-      await tester.tap(find.byKey(const Key('appBarRightPopupMenu')));
-      await tester.pumpAndSettle();
-
-      // Select French
-      await tester.tap(find.byKey(const Key('appBarMenuFrench')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.setApplicationLanguage(
+        tester: tester,
+        language: Language.french,
+      );
 
       // *** First test part: Copy audio from Youtube to local
       // playlist

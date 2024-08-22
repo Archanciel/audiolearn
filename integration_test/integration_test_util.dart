@@ -639,4 +639,18 @@ class IntegrationTestUtil {
           (widget.icon as Icon).icon == iconData,
     );
   }
+
+  static Future<void> setApplicationLanguage({
+    required WidgetTester tester,
+    required Language language,
+  }) async {
+    // First, set the application language to French
+    // Tap the appbar leading popup menu button
+    await tester.tap(find.byKey(const Key('appBarRightPopupMenu')));
+    await tester.pumpAndSettle();
+
+    // Select French
+    await tester.tap(find.byKey(const Key('appBarMenuFrench')));
+    await tester.pumpAndSettle();
+  }
 }
