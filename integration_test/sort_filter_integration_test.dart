@@ -4686,6 +4686,8 @@ void playlistDownloadViewSortFilterIntregrationTest() {
                 audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
           );
 
+          // TODO VERIFY ALSO IN THE AUDIO PLAYER VIEW !!!
+
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -4893,6 +4895,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
             "Les besoins artificiels par R.Keucheyan"
           ];
 
+          // TODO VERIFY ALSO IN THE AUDIO PLAYER VIEW !!!
           IntegrationTestUtil.checkAudioTitlesOrderInListTile(
             tester: tester,
             audioTitlesOrderLst:

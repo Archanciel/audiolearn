@@ -916,10 +916,29 @@ class PlaylistListVM extends ChangeNotifier {
       if (audioLearnAppViewType == AudioLearnAppViewType.playlistDownloadView) {
         selectedPlaylistAudioSortFilterParmsNameSetByUser =
             selectedPlaylist.audioSortFilterParmsNameForPlaylistDownloadView;
+        if (selectedPlaylistAudioSortFilterParmsNameSetByUser.isEmpty) {
+          if (selectedPlaylist.audioSortFilterParmsForPlaylistDownloadView !=
+              null) {
+            // here, the user did save the applied (not named) sort and filter
+            // parameters to the playlist json file for the playlist download
+            // view.
+            selectedPlaylistAudioSortFilterParmsNameSetByUser =
+                translatedAppliedSortFilterParmsName;
+          }
+        }
       } else {
         // for AudioLearnAppViewType.audioPlayerView
         selectedPlaylistAudioSortFilterParmsNameSetByUser =
             selectedPlaylist.audioSortFilterParmsNameForAudioPlayerView;
+        if (selectedPlaylistAudioSortFilterParmsNameSetByUser.isEmpty) {
+          if (selectedPlaylist.audioSortFilterParmsForAudioPlayerView != null) {
+            // here, the user did save the applied (not named) sort and filter
+            // parameters to the playlist json file for the audio player
+            // view.
+            selectedPlaylistAudioSortFilterParmsNameSetByUser =
+                translatedAppliedSortFilterParmsName;
+          }
+        }
       }
     }
 

@@ -567,7 +567,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
         AppLocalizations.of(context)!.sortFilterParametersAppliedName) {
       // Executing the followingensures that the sort and filter parameters
       // map is saved in the settings file.
-      widget.settingsDataService.addOrReplaceNamedAudioSortFilterParameters(
+      widget.settingsDataService.addNamedAudioSortFilterParametersIfNotPresent(
         audioSortFilterParametersName: selectedPlaylistAudioSortFilterParmsName,
         audioSortFilterParameters: playlistListVMlistenFalse
                 .audioSortFilterParameters ??
@@ -655,7 +655,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     _updatePlaylistSortedFilteredAudioList(
         playlistListVMlistenFalse: playlistListVMlistenTrue,
         notifyListeners: false); // avoid rebuilding the widget and avoid
-    //                           integration test failure
+    //                              integration test failure
 
     return _selectedSortFilterParametersName!; // is not null
   }
