@@ -1,5 +1,6 @@
 import 'package:audiolearn/services/json_data_service.dart';
 import 'package:audiolearn/services/settings_data_service.dart';
+import 'package:audiolearn/services/sort_filter_parameters.dart';
 import 'package:audiolearn/views/widgets/playlist_save_sort_filter_options_dialog_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -1988,8 +1989,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
         await tester.pumpAndSettle();
 
         // And select the 'applied' sort/filter item
-        final Finder titleAscDropDownTextFinder =
-            find.text(appliedFrenchTitle);
+        final Finder titleAscDropDownTextFinder = find.text(appliedFrenchTitle);
         await tester.tap(titleAscDropDownTextFinder);
         await tester.pumpAndSettle();
 
@@ -2403,8 +2403,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
         await tester.pumpAndSettle();
 
         // And select the 'applied' sort/filter item
-        final Finder titleAscDropDownTextFinder =
-            find.text(appliedFrenchTitle);
+        final Finder titleAscDropDownTextFinder = find.text(appliedFrenchTitle);
         await tester.tap(titleAscDropDownTextFinder);
         await tester.pumpAndSettle();
 
@@ -2984,8 +2983,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
         await tester.pumpAndSettle();
 
         // And select the 'appliqué' sort/filter item
-        final Finder titleAscDropDownTextFinder =
-            find.text(appliedFrenchTitle);
+        final Finder titleAscDropDownTextFinder = find.text(appliedFrenchTitle);
         await tester.tap(titleAscDropDownTextFinder);
         await tester.pumpAndSettle();
 
@@ -3405,8 +3403,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
         await tester.pumpAndSettle();
 
         // And select the 'appliqué' sort/filter item
-        final Finder titleAscDropDownTextFinder =
-            find.text(appliedFrenchTitle);
+        final Finder titleAscDropDownTextFinder = find.text(appliedFrenchTitle);
         await tester.tap(titleAscDropDownTextFinder);
         await tester.pumpAndSettle();
 
@@ -4539,6 +4536,169 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
+    });
+    group('Saving to playlist applied or named sort/filter parms', () {
+      group('Saving applied sort/filter parms', () {
+        testWidgets(
+            '''Click on 'Sort/filter audio' menu item of Audio popup menu to
+             open sort filter audio dialog. Then creating a Title ascending
+             unamed sort/filter parms and apply it. Then save this applied SF
+             parms to the 'S8 audio' playlist checking the 'For Download Audio'
+             and 'For Audio Player' checkboxes. Then verify that the 'S8 audio'
+             playlist json file has been updated with applied unamed SF parms
+             saved in audio SF parms for playlist download view and audio player
+             view.
+
+             Then close the application and restart it. Then verify the playlist
+             download and the audio player view audio order.''',
+            (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          // Copy the test initial audio data to the app dir
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath:
+                "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          final SettingsDataService settingsDataService = SettingsDataService(
+            sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
+          );
+
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the download app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+          await app.main(['test']);
+          await tester.pumpAndSettle();
+
+          // Now open the audio popup menu
+          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+          await tester.pumpAndSettle();
+
+          // Find the sort/filter audio menu item and tap on it to
+          // open the audio sort filter dialog
+          await tester.tap(
+              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+          await tester.pumpAndSettle();
+
+          // Now select the 'Audio title'item in the 'Sort by' dropdown button
+
+          await tester
+              .tap(find.byKey(const Key('sortingOptionDropdownButton')));
+          await tester.pumpAndSettle();
+
+          await tester.tap(find.text('Audio title'));
+          await tester.pumpAndSettle();
+
+          // Then delete the "Audio download date" descending sort option
+
+          // Find the Text with "Audio downl date" which is located in the
+          // selected sort options ListView
+          final Finder texdtFinder = find.descendant(
+            of: find.byKey(const Key('selectedSortingOptionsListView')),
+            matching: find.text('Audio downl date'),
+          );
+
+          // Then find the ListTile ancestor of the 'Audio downl date' Text
+          // widget. The ascending/descending and remove icon buttons are
+          // contained in their ListTile ancestor
+          final Finder listTileFinder = find.ancestor(
+            of: texdtFinder,
+            matching: find.byType(ListTile),
+          );
+
+          // Now, within that ListTile, find the sort option delete IconButton
+          // with key 'removeSortingOptionIconButton'
+          final Finder iconButtonFinder = find.descendant(
+            of: listTileFinder,
+            matching: find.byKey(const Key('removeSortingOptionIconButton')),
+          );
+
+          // Tap on the delete icon button to delete the 'Audio downl date'
+          // descending sort option
+          await tester.tap(iconButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Click on the "Apply" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the newly created sort/filter parms
+          await tester
+              .tap(find.byKey(const Key('applySortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
+
+          // Now open the audio popup menu
+          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+          await tester.pumpAndSettle();
+
+          // And open the 'Save sort/filter options to playlist' dialog
+          await tester.tap(find.byKey(
+              const Key('save_sort_and_filter_audio_parms_in_playlist_item')));
+          await tester.pumpAndSettle();
+
+          // Select 'For "Download Audio" and 'For "Play Audio"  screen' checkbox's
+
+          await tester
+              .tap(find.byKey(const Key('playlistDownloadViewCheckbox')));
+          await tester.pumpAndSettle();
+
+          await tester.tap(find.byKey(const Key('audioPlayerViewCheckbox')));
+          await tester.pumpAndSettle();
+
+          // Finally, click on save button
+          await tester.tap(find
+              .byKey(const Key('saveSortFilterOptionsToPlaylistSaveButton')));
+          await tester.pumpAndSettle();
+
+          final List<SortingItem> selectedSortItemLstTitleAscending = [
+            SortingItem(
+              sortingOption: SortingOption.validAudioTitle,
+              isAscending: true,
+            ),
+          ];
+
+          AudioSortFilterParameters audioSortFilterParmsBothViews =
+              AudioSortFilterParameters(
+            selectedSortItemLst: selectedSortItemLstTitleAscending,
+            sentencesCombination: SentencesCombination.AND,
+            filterFullyListened: true,
+            filterPartiallyListened: true,
+            filterNotListened: true,
+          );
+
+          // Now verify the 'S8 audio' playlist json file has been updated
+          // with the unamed SF parms saved as audio SF parms for playlist
+          // download view and audio player view
+          IntegrationTestUtil
+              .verifyPlaylistDataElementsUpdatedInPlaylistJsonFile(
+            selectedPlaylistTitle: 'S8 audio',
+            audioSortFilterParmsPlaylistDownloadView:
+                audioSortFilterParmsBothViews,
+            audioSortFilterParmsAudioPlayerView: audioSortFilterParmsBothViews,
+            audioPlayingOrder: AudioPlayingOrder.descending,
+          );
+
+          // Restarting the app
+          await app.main(['test']);
+          await tester.pumpAndSettle();
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
+      });
+      group('Saving named sort/filter parms', () {});
     });
   });
 }

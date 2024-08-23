@@ -135,7 +135,7 @@ void main() {
         audioPlayerSelectedPlaylistTitle,
       );
 
-      verifyAudioDataElementsUpdatedInJsonFile(
+      IntegrationTestUtil.verifyAudioDataElementsUpdatedInPlaylistJsonFile(
         audioPlayerSelectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         playableAudioLstAudioIndex: 0,
         audioTitle: lastDownloadedAudioTitle,
@@ -152,7 +152,7 @@ void main() {
       await Future.delayed(const Duration(seconds: 5));
       await tester.pumpAndSettle();
 
-      verifyAudioDataElementsUpdatedInJsonFile(
+      IntegrationTestUtil.verifyAudioDataElementsUpdatedInPlaylistJsonFile(
         audioPlayerSelectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         playableAudioLstAudioIndex: 0,
         audioTitle: lastDownloadedAudioTitle,
@@ -172,7 +172,7 @@ void main() {
 
       DateTime pausedAudioAtDateTime = DateTime.now();
 
-      verifyAudioDataElementsUpdatedInJsonFile(
+      IntegrationTestUtil.verifyAudioDataElementsUpdatedInPlaylistJsonFile(
         audioPlayerSelectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         playableAudioLstAudioIndex: 0,
         audioTitle: lastDownloadedAudioTitle,
@@ -213,7 +213,7 @@ void main() {
       await tester.tap(find.byKey(const Key('audioPlayerViewSkipToEndButton')));
       await tester.pumpAndSettle();
 
-      verifyAudioDataElementsUpdatedInJsonFile(
+      IntegrationTestUtil.verifyAudioDataElementsUpdatedInPlaylistJsonFile(
         audioPlayerSelectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         playableAudioLstAudioIndex: 0,
         audioTitle: lastDownloadedAudioTitle,
@@ -228,7 +228,7 @@ void main() {
           .tap(find.byKey(const Key('audioPlayerViewSkipToStartButton')));
       await tester.pumpAndSettle();
 
-      verifyAudioDataElementsUpdatedInJsonFile(
+      IntegrationTestUtil.verifyAudioDataElementsUpdatedInPlaylistJsonFile(
         audioPlayerSelectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         playableAudioLstAudioIndex: 0,
         audioTitle: lastDownloadedAudioTitle,
@@ -5212,7 +5212,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify that the comment was correctly stored in the json file
-      verifyCommentDataStoredInJsonFile(
+      verifyCommentDataStoredInCommentJsonFile(
         playlistTitle: emptyPlaylistTitle,
         audioFileNameNoExt: uncommentedAudioFileNameNoExt,
         commentTitle: commentTitle,
@@ -5292,7 +5292,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify that the comment was correctly stored in the json file
-      verifyCommentDataStoredInJsonFile(
+      verifyCommentDataStoredInCommentJsonFile(
         playlistTitle: emptyPlaylistTitle,
         audioFileNameNoExt: uncommentedAudioFileNameNoExt,
         commentTitle: commentTitle,
@@ -7753,73 +7753,7 @@ void verifyAudioPlaySpeedStoredInPlaylistJsonFile({
       expectedAudioPlaySpeed);
 }
 
-void verifyAudioDataElementsUpdatedInJsonFile({
-  required String audioPlayerSelectedPlaylistTitle,
-  required int playableAudioLstAudioIndex,
-  required String audioTitle,
-  required int audioPositionSeconds,
-  required bool isPaused,
-  required bool isPlayingOrPausedWithPositionBetweenAudioStartAndEnd,
-  required DateTime? audioPausedDateTime,
-}) {
-  final String selectedPlaylistPath = path.join(
-    kPlaylistDownloadRootPathWindowsTest,
-    audioPlayerSelectedPlaylistTitle,
-  );
-
-  final selectedPlaylistFilePathName = path.join(
-    selectedPlaylistPath,
-    '$audioPlayerSelectedPlaylistTitle.json',
-  );
-
-  // Load playlist from the json file
-  Playlist loadedSelectedPlaylist = JsonDataService.loadFromFile(
-    jsonPathFileName: selectedPlaylistFilePathName,
-    type: Playlist,
-  );
-
-  expect(
-      loadedSelectedPlaylist
-          .playableAudioLst[playableAudioLstAudioIndex].validVideoTitle,
-      audioTitle);
-
-  int actualAudioPositionSeconds = loadedSelectedPlaylist
-      .playableAudioLst[playableAudioLstAudioIndex].audioPositionSeconds;
-
-  expect((actualAudioPositionSeconds - audioPositionSeconds).abs() <= 1, isTrue,
-      reason:
-          "Expected audioPositionSeconds: $audioPositionSeconds, actual: $actualAudioPositionSeconds");
-
-  expect(
-      loadedSelectedPlaylist
-          .playableAudioLst[playableAudioLstAudioIndex].isPaused,
-      isPaused);
-
-  expect(
-      loadedSelectedPlaylist.playableAudioLst[playableAudioLstAudioIndex]
-          .isPlayingOrPausedWithPositionBetweenAudioStartAndEnd,
-      isPlayingOrPausedWithPositionBetweenAudioStartAndEnd);
-
-  if (audioPausedDateTime == null) {
-    expect(
-        loadedSelectedPlaylist
-            .playableAudioLst[playableAudioLstAudioIndex].audioPausedDateTime,
-        audioPausedDateTime);
-  } else {
-    expect(
-        DateTimeUtil.areDateTimesEqualWithinTolerance(
-            dateTimeOne: DateTimeUtil.getDateTimeLimitedToSeconds(
-                loadedSelectedPlaylist
-                    .playableAudioLst[playableAudioLstAudioIndex]
-                    .audioPausedDateTime!),
-            dateTimeTwo:
-                DateTimeUtil.getDateTimeLimitedToSeconds(audioPausedDateTime),
-            toleranceInSeconds: 1),
-        isTrue);
-  }
-}
-
-void verifyCommentDataStoredInJsonFile({
+void verifyCommentDataStoredInCommentJsonFile({
   required String playlistTitle,
   required String audioFileNameNoExt,
   required String commentTitle,

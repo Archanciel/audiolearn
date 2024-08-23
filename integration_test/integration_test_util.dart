@@ -1,6 +1,8 @@
 import 'package:audiolearn/models/audio.dart';
 import 'package:audiolearn/models/playlist.dart';
 import 'package:audiolearn/services/json_data_service.dart';
+import 'package:audiolearn/services/sort_filter_parameters.dart';
+import 'package:audiolearn/utils/date_time_util.dart';
 import 'package:audiolearn/views/widgets/warning_message_display_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -652,5 +654,119 @@ class IntegrationTestUtil {
     // Select French
     await tester.tap(find.byKey(const Key('appBarMenuFrench')));
     await tester.pumpAndSettle();
+  }
+
+  static void verifyAudioDataElementsUpdatedInPlaylistJsonFile({
+    required String audioPlayerSelectedPlaylistTitle,
+    required int playableAudioLstAudioIndex,
+    required String audioTitle,
+    required int audioPositionSeconds,
+    required bool isPaused,
+    required bool isPlayingOrPausedWithPositionBetweenAudioStartAndEnd,
+    required DateTime? audioPausedDateTime,
+  }) {
+    final String selectedPlaylistPath = path.join(
+      kPlaylistDownloadRootPathWindowsTest,
+      audioPlayerSelectedPlaylistTitle,
+    );
+
+    final selectedPlaylistFilePathName = path.join(
+      selectedPlaylistPath,
+      '$audioPlayerSelectedPlaylistTitle.json',
+    );
+
+    // Load playlist from the json file
+    Playlist loadedSelectedPlaylist = JsonDataService.loadFromFile(
+      jsonPathFileName: selectedPlaylistFilePathName,
+      type: Playlist,
+    );
+
+    expect(
+        loadedSelectedPlaylist
+            .playableAudioLst[playableAudioLstAudioIndex].validVideoTitle,
+        audioTitle);
+
+    int actualAudioPositionSeconds = loadedSelectedPlaylist
+        .playableAudioLst[playableAudioLstAudioIndex].audioPositionSeconds;
+
+    expect(
+        (actualAudioPositionSeconds - audioPositionSeconds).abs() <= 1, isTrue,
+        reason:
+            "Expected audioPositionSeconds: $audioPositionSeconds, actual: $actualAudioPositionSeconds");
+
+    expect(
+        loadedSelectedPlaylist
+            .playableAudioLst[playableAudioLstAudioIndex].isPaused,
+        isPaused);
+
+    expect(
+        loadedSelectedPlaylist.playableAudioLst[playableAudioLstAudioIndex]
+            .isPlayingOrPausedWithPositionBetweenAudioStartAndEnd,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd);
+
+    if (audioPausedDateTime == null) {
+      expect(
+          loadedSelectedPlaylist
+              .playableAudioLst[playableAudioLstAudioIndex].audioPausedDateTime,
+          audioPausedDateTime);
+    } else {
+      expect(
+          DateTimeUtil.areDateTimesEqualWithinTolerance(
+              dateTimeOne: DateTimeUtil.getDateTimeLimitedToSeconds(
+                  loadedSelectedPlaylist
+                      .playableAudioLst[playableAudioLstAudioIndex]
+                      .audioPausedDateTime!),
+              dateTimeTwo:
+                  DateTimeUtil.getDateTimeLimitedToSeconds(audioPausedDateTime),
+              toleranceInSeconds: 1),
+          isTrue);
+    }
+  }
+
+  static void verifyPlaylistDataElementsUpdatedInPlaylistJsonFile({
+    required String selectedPlaylistTitle,
+    String audioSortFilterParmsNamePlaylistDownloadView = '',
+    String audioSortFilterParmsNameAudioPlayerView = '',
+    AudioSortFilterParameters? audioSortFilterParmsPlaylistDownloadView,
+    AudioSortFilterParameters? audioSortFilterParmsAudioPlayerView,
+    AudioPlayingOrder audioPlayingOrder = AudioPlayingOrder.ascending,
+  }) {
+    final String selectedPlaylistPath = path.join(
+      kPlaylistDownloadRootPathWindowsTest,
+      selectedPlaylistTitle,
+    );
+
+    final selectedPlaylistFilePathName = path.join(
+      selectedPlaylistPath,
+      '$selectedPlaylistTitle.json',
+    );
+
+    // Load playlist from the json file
+    Playlist loadedSelectedPlaylist = JsonDataService.loadFromFile(
+      jsonPathFileName: selectedPlaylistFilePathName,
+      type: Playlist,
+    );
+
+    expect(
+        loadedSelectedPlaylist.audioSortFilterParmsNameForPlaylistDownloadView,
+        audioSortFilterParmsNamePlaylistDownloadView);
+
+    expect(loadedSelectedPlaylist.audioSortFilterParmsNameForAudioPlayerView,
+        audioSortFilterParmsNameAudioPlayerView);
+
+    if (audioSortFilterParmsPlaylistDownloadView != null) {
+      expect(loadedSelectedPlaylist.audioSortFilterParmsForPlaylistDownloadView,
+          audioSortFilterParmsPlaylistDownloadView);
+    }
+
+    if (audioSortFilterParmsAudioPlayerView != null) {
+      expect(loadedSelectedPlaylist.audioSortFilterParmsForAudioPlayerView,
+          audioSortFilterParmsAudioPlayerView);
+    }
+
+    expect(
+      loadedSelectedPlaylist.audioPlayingOrder,
+      audioPlayingOrder,
+    );
   }
 }
