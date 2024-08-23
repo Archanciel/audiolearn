@@ -1,12 +1,9 @@
 import 'dart:io';
-import 'package:audiolearn/services/settings_data_service.dart';
 import 'package:audiolearn/views/widgets/audio_playable_list_dialog_widget.dart';
-import 'package:audiolearn/views/widgets/playlist_save_sort_filter_options_dialog_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:matcher/matcher.dart' as matcher;
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:audiolearn/models/comment.dart';
 import 'package:audiolearn/models/playlist.dart';
@@ -22,7 +19,6 @@ import 'package:audiolearn/views/widgets/warning_message_display_widget.dart';
 import 'package:path/path.dart' as path;
 import 'package:audiolearn/constants.dart';
 import 'package:audiolearn/utils/dir_util.dart';
-import 'package:audiolearn/main.dart' as app;
 
 import 'integration_test_util.dart';
 import 'sort_filter_integration_test.dart';
