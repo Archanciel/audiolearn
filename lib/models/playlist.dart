@@ -253,6 +253,7 @@ class Playlist {
 
     copiedAudioCopy.enclosingPlaylist = this;
     copiedAudioCopy.copiedFromPlaylistTitle = copiedFromPlaylistTitle;
+    copiedAudioCopy.audioPlaySpeed = audioPlaySpeed;
 
     downloadedAudioLst.add(copiedAudioCopy);
     _insertAudioInPlayableAudioList(copiedAudioCopy);
@@ -299,6 +300,7 @@ class Playlist {
 
     movedAudioCopy.enclosingPlaylist = this;
     movedAudioCopy.movedFromPlaylistTitle = movedFromPlaylistTitle;
+    movedAudioCopy.audioPlaySpeed = audioPlaySpeed;
 
     if (existingDownloadedAudio != null) {
       // the case if the audio was moved to this playlist a first
@@ -312,6 +314,7 @@ class Playlist {
           movedFromPlaylistTitle;
       existingDownloadedAudioCopy.movedToPlaylistTitle = title;
       existingDownloadedAudioCopy.enclosingPlaylist = this;
+      existingDownloadedAudioCopy.audioPlaySpeed = audioPlaySpeed;
 
       // Step 2: Find the index of the audio in downloadedAudioLst that
       // matches movedAudio
