@@ -1069,7 +1069,7 @@ class _AudioSortFilterDialogWidgetState
       children: [
         SizedBox(
           width: 104,
-          child: Text(AppLocalizations.of(context)!.startDownloadDate),
+          child: Text(label),
         ),
         IconButton(
           key: dateIconButtondKey,
