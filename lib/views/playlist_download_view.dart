@@ -985,8 +985,13 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             PopupMenuItem<PopupMenuButtonType>(
               key: const Key(
                   'save_sort_and_filter_audio_parms_in_playlist_item'),
-              enabled: (playlistListVMlistenFalse
-                  .areButtonsApplicableToAudioEnabled),
+              enabled: (_selectedSortFilterParametersName != null &&
+                  _selectedSortFilterParametersName !=
+                      AppLocalizations.of(context)!
+                          .sortFilterParametersAppliedName &&
+                  _selectedSortFilterParametersName !=
+                      AppLocalizations.of(context)!
+                          .sortFilterParametersDefaultName),
               value: PopupMenuButtonType.saveSortFilterAudioParmsToPlaylist,
               child: Text(AppLocalizations.of(context)!
                   .saveSortFilterAudiosOptionsToPlaylistMenu),
