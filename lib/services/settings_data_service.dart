@@ -315,21 +315,6 @@ class SettingsDataService {
     _saveSettings();
   }
 
-  void addNamedAudioSortFilterParametersIfNotPresent({
-    required String audioSortFilterParametersName,
-    required AudioSortFilterParameters audioSortFilterParameters,
-  }) {
-    if (_namedAudioSortFilterParametersMap
-        .containsKey(audioSortFilterParametersName)) {
-      return;
-    }
-    
-    _namedAudioSortFilterParametersMap[audioSortFilterParametersName] =
-        audioSortFilterParameters;
-
-    _saveSettings();
-  }
-
   void addAudioSortFilterParametersToSearchHistory({
     required AudioSortFilterParameters audioSortFilterParameters,
   }) {
