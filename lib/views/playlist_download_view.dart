@@ -150,10 +150,13 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
         _buildExpandedPlaylistList(
           playlistListVMlistenFalse: playlistListVMlistenFalse,
         ),
-        const Divider(
-          color: Colors.yellow, // Set the color of the divider
-          thickness: 2.0, // Set the thickness of the divider
-        ),
+        (playlistListVMlistenFalse.isListExpanded)
+            ? const Divider(
+                color:
+                    kDarkAndLightEnabledIconColor, // Set the color of the divider
+                thickness: 1.0, // Set the thickness of the divider
+              )
+            : const SizedBox.shrink(),
         _buildExpandedAudioList(
           playlistListVMlistenFalse: playlistListVMlistenFalse,
           warningMessageVMlistenFalse: warningMessageVMlistenFalse,
