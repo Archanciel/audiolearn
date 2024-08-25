@@ -748,7 +748,7 @@ class AudioDownloadVM extends ChangeNotifier {
   /// renamed and then recreated with the same name, which associates the
   /// application existing playlist to a new url.
   ///
-  /// Why would the user delete or rename a Yoiutube playlist and then recreate
+  /// Why would the user delete or rename a Youtube playlist and then recreate
   /// a Youtiube playlist with the same name ? The reason is that the Youtube
   /// playlist may contain too many videos. Removing manually the already
   /// listened videos from the Youtube playlist takes too much time. Instead,
@@ -769,7 +769,9 @@ class AudioDownloadVM extends ChangeNotifier {
       playlistId: playlistId,
     );
 
-    // checking if current Youtube playlist was deleted and recreated.
+    // checking if current Youtube playlist was deleted and recreated
+    // on Youtube.
+    //
     // The checking must compare the title of the added (recreated)
     // Youtube playlist with the title of the playlist in the
     // _listOfPlaylist since the added playlist url and id are
@@ -778,9 +780,9 @@ class AudioDownloadVM extends ChangeNotifier {
         .indexWhere((element) => element.title == addedPlaylist.title);
 
     if (existingPlaylistIndex != -1) {
-      // current Youtube playlist was deleted and recreated since it
-      // is referenced in the _listOfPlaylist and has the same title
-      // than the recreated playlist
+      // current Youtube playlist was deleted and recreated on Youtube
+      // since it is referenced in the _listOfPlaylist and has the same
+      // title than the recreated playlist
       Playlist existingPlaylist = _listOfPlaylist[existingPlaylistIndex];
 
       addedPlaylist.integrateReplacedPlaylistData(
@@ -1537,6 +1539,11 @@ class AudioDownloadVM extends ChangeNotifier {
 
     if (playlistQuality == PlaylistQuality.music) {
       playlist.audioPlaySpeed = 1.0;
+    } else {
+      playlist.audioPlaySpeed = settingsDataService.get(
+        settingType: SettingType.playlists,
+        settingSubType: Playlists.playSpeed,
+      );
     }
 
     _listOfPlaylist.add(playlist);

@@ -60,7 +60,8 @@ void main() {
   playlistDownloadViewSortFilterIntregrationTest();
 
   group('Playlist Download View test', () {
-    testWidgets('Add and then delete Youtube playlist', (tester) async {
+    testWidgets('Youtube playlist audio quality addition and then delete it ',
+        (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -82,6 +83,12 @@ void main() {
       // will ensure that the default playlist root path is set
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName: "temp\\wrong.json");
+
+      // setting default playlist audio play speed to 1.25
+      settingsDataService.set(
+          settingType: SettingType.playlists,
+          settingSubType: Playlists.playSpeed,
+          value: 1.25);
 
       WarningMessageVM warningMessageVM = WarningMessageVM();
       MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
@@ -237,6 +244,7 @@ void main() {
       expect(loadedNewPlaylist.url, youtubePlaylistUrl);
       expect(loadedNewPlaylist.playlistType, PlaylistType.youtube);
       expect(loadedNewPlaylist.playlistQuality, PlaylistQuality.voice);
+      expect(loadedNewPlaylist.audioPlaySpeed, 1.25);
       expect(loadedNewPlaylist.downloadedAudioLst.length, 0);
       expect(loadedNewPlaylist.playableAudioLst.length, 0);
       expect(loadedNewPlaylist.isSelected, false);
@@ -327,6 +335,12 @@ void main() {
       // will ensure that the default playlist root path is set
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName: "temp\\wrong.json");
+
+      // setting default playlist audio play speed to 1.25
+      settingsDataService.set(
+          settingType: SettingType.playlists,
+          settingSubType: Playlists.playSpeed,
+          value: 1.25);
 
       WarningMessageVM warningMessageVM = WarningMessageVM();
       MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
@@ -448,8 +462,9 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets('Add Youtube playlist and then add it again with same URL',
-        (tester) async {
+    testWidgets(
+        '''Youtube playlist music quality addition and then add it again with same
+           URL''', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -467,10 +482,23 @@ void main() {
         isTest: true,
       );
 
+      // setting default playlist audio play speed to 1.25
+      settingsDataService.set(
+          settingType: SettingType.playlists,
+          settingSubType: Playlists.playSpeed,
+          value: 1.25);
+
       // load settings from file which does not exist. This
       // will ensure that the default playlist root path is set
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName: "temp\\wrong.json");
+
+      // setting default playlist audio play speed to 1.25
+      settingsDataService.set(
+          settingType: SettingType.playlists,
+          settingSubType: Playlists.playSpeed,
+          value: 1.25);
+
       WarningMessageVM warningMessageVM = WarningMessageVM();
       MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
         warningMessageVM: warningMessageVM,
@@ -545,6 +573,11 @@ void main() {
       // Ensure the dialog is shown
       expect(find.byType(AlertDialog), findsOneWidget);
 
+      // Set the quality to music
+      await tester
+          .tap(find.byKey(const Key('playlistQualityConfirmDialogCheckBox')));
+      await tester.pumpAndSettle();
+
       // Check the value of the AlertDialog dialog title
       Text alertDialogTitle =
           tester.widget(find.byKey(const Key('playlistConfirmDialogTitleKey')));
@@ -564,7 +597,7 @@ void main() {
       await checkWarningDialog(
           tester: tester,
           playlistTitle: youtubeNewPlaylistTitle,
-          isMusicQuality: false);
+          isMusicQuality: true);
 
       // Ensure the URL TextField was emptied
       urlTextField =
@@ -593,7 +626,8 @@ void main() {
       expect(loadedNewPlaylist.id, youtubePlaylistId);
       expect(loadedNewPlaylist.url, youtubePlaylistUrl);
       expect(loadedNewPlaylist.playlistType, PlaylistType.youtube);
-      expect(loadedNewPlaylist.playlistQuality, PlaylistQuality.voice);
+      expect(loadedNewPlaylist.playlistQuality, PlaylistQuality.music);
+      expect(loadedNewPlaylist.audioPlaySpeed, 1.0);
       expect(loadedNewPlaylist.downloadedAudioLst.length, 0);
       expect(loadedNewPlaylist.playableAudioLst.length, 0);
       expect(loadedNewPlaylist.isSelected, false);
@@ -712,6 +746,13 @@ void main() {
       // will ensure that the default playlist root path is set
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName: "temp\\wrong.json");
+
+      // setting default playlist audio play speed to 1.25
+      settingsDataService.set(
+          settingType: SettingType.playlists,
+          settingSubType: Playlists.playSpeed,
+          value: 1.25);
+
       WarningMessageVM warningMessageVM = WarningMessageVM();
       MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
         warningMessageVM: warningMessageVM,
@@ -819,7 +860,8 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets('Add and then delete local playlist with empty playlist URL',
+    testWidgets(
+        '''Local playlist music quality addition with empty playlist URL''',
         (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -949,12 +991,252 @@ void main() {
       expect(loadedNewPlaylist.url, '');
       expect(loadedNewPlaylist.playlistType, PlaylistType.local);
       expect(loadedNewPlaylist.playlistQuality, PlaylistQuality.music);
+      expect(loadedNewPlaylist.audioPlaySpeed, 1.0);
       expect(loadedNewPlaylist.downloadedAudioLst.length, 0);
       expect(loadedNewPlaylist.playableAudioLst.length, 0);
       expect(loadedNewPlaylist.isSelected, false);
       expect(loadedNewPlaylist.downloadPath, newPlaylistPath);
 
       final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
+      );
+
+      final settingsPathFileName = path.join(
+        kPlaylistDownloadRootPathWindowsTest,
+        'settings.json',
+      );
+
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName: settingsPathFileName);
+
+      // Check that the ordered playlist titles list in the settings
+      // data service contains the added playlist title
+      expect(
+          settingsDataService.get(
+            settingType: SettingType.playlists,
+            settingSubType: Playlists.orderedTitleLst,
+          ),
+          [localPlaylistTitle]);
+
+      // Now test deleting the playlist
+
+      // Open the delete playlist dialog by clicking on the 'Delete
+      // playlist ...' playlist menu item
+
+      // Now find the leading menu icon button of the Playlist ListTile
+      // and tap on it
+      final Finder firstPlaylistListTileLeadingMenuIconButton = find.descendant(
+        of: firstListTileFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(firstPlaylistListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the delete playlist popup menu item and tap on it
+      final Finder popupDeletePlaylistMenuItem =
+          find.byKey(const Key("popup_menu_delete_playlist"));
+
+      await tester.tap(popupDeletePlaylistMenuItem);
+      await tester.pumpAndSettle();
+
+      // Now verifying the confirm dialog message
+
+      final Text deletePlaylistDialogTitleWidget =
+          tester.widget<Text>(find.byKey(const Key('confirmDialogTitleKey')));
+
+      expect(deletePlaylistDialogTitleWidget.data,
+          'Delete Local Playlist "$localPlaylistTitle"');
+
+      // Now find the delete button of the delete playlist confirm
+      // dialog and tap on it
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pumpAndSettle();
+
+      // Check that the ordered playlist titles list in the settings
+      // data service is now empty
+
+      // Reload the settings data service from the settings json file
+      await settingsDataService.loadSettingsFromFile(
+        settingsJsonPathFileName: settingsPathFileName,
+      );
+
+      expect(
+          settingsDataService.get(
+            settingType: SettingType.playlists,
+            settingSubType: Playlists.orderedTitleLst,
+          ),
+          ['']); // if loading from the settings json file,
+      //            the ordered playlist titles list is never
+      //            empty. I don't know why, but it is the same
+      //            if loading settings from file in add and delete
+      //            Youtube playlist !
+
+      // Check that the deleted playlist directory no longer exist
+      expect(Directory(newPlaylistPath).existsSync(), false);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Local playlist audio quality addition with empty playlist URL and then
+           delete local playlist''', (tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      const String localPlaylistTitle = 'audio_learn_local_playlist_test';
+
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
+      );
+
+      // load settings from file which does not exist. This
+      // will ensure that the default playlist root path is set
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kDownloadAppTestSavedDataDir${path.separator}settings.json");
+
+      // setting default playlist audio play speed to 1.25 instead of 1.0
+      settingsDataService.set(
+          settingType: SettingType.playlists,
+          settingSubType: Playlists.playSpeed,
+          value: 1.25);
+
+      // saving the settings so that the app creation can access to them
+      // as defined above
+      settingsDataService.saveSettings();
+
+      await app.main(['test']);
+      await tester.pumpAndSettle();
+
+      // Tap the 'Toggle List' button to display the playlist list If the list
+      // is not opened, checking that a ListTile with the title of
+      // the playlist was added to the list will fail
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // The playlist list and audio list should exist now but be
+      // empty (no ListTile widgets)
+      expect(find.byType(ListView), findsNWidgets(2));
+      expect(find.byType(ListTile), findsNothing);
+
+      // Open the add playlist dialog by tapping the add playlist
+      // button
+      await tester.tap(find.byKey(const Key('addPlaylistButton')));
+      await tester.pumpAndSettle();
+
+      // Ensure the dialog is shown
+      expect(find.byType(AlertDialog), findsOneWidget);
+
+      // Check the value of the AlertDialog dialog title
+      Text alertDialogTitle =
+          tester.widget(find.byKey(const Key('playlistConfirmDialogTitleKey')));
+      expect(alertDialogTitle.data, 'Add Local Playlist');
+
+      // Check that the AlertDialog url Text is not displayed since
+      // a local playlist is added with the playlist URL text field
+      // empty
+      expect(
+        find.byKey(const Key('playlistUrlConfirmDialogText')),
+        findsNothing,
+      );
+
+      // Enter the title of the local playlist
+      await tester.enterText(
+        find.byKey(const Key('playlistLocalTitleConfirmDialogTextField')),
+        localPlaylistTitle,
+      );
+
+      // Check the value of the AlertDialog local playlist title
+      // TextField
+      TextField localPlaylistTitleTextField = tester.widget(
+          find.byKey(const Key('playlistLocalTitleConfirmDialogTextField')));
+      expect(
+        localPlaylistTitleTextField.controller!.text,
+        localPlaylistTitle,
+      );
+
+      // Confirm the addition by tapping the confirmation button in
+      // the AlertDialog
+      await tester
+          .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
+      await tester.pumpAndSettle();
+
+      // Ensure the warning dialog is shown
+      await checkWarningDialog(
+        tester: tester,
+        playlistTitle: localPlaylistTitle,
+        isMusicQuality: false,
+      );
+
+      // The list of Playlist's should have one item now
+      expect(find.byType(ListTile), findsOneWidget);
+
+      // Check if the added item is displayed correctly
+      final PlaylistListItemWidget playlistListItemWidget =
+          tester.widget(find.byType(PlaylistListItemWidget).first);
+      expect(playlistListItemWidget.playlist.title, localPlaylistTitle);
+
+      // Find the ListTile representing the added playlist
+
+      final Finder firstListTileFinder = find.byType(ListTile).first;
+
+      // Retrieve the ListTile widget
+      final ListTile firstPlaylistListTile =
+          tester.widget<ListTile>(firstListTileFinder);
+
+      // Ensure that the title is a Text widget and check its data
+      expect(firstPlaylistListTile.title, isA<Text>());
+      expect((firstPlaylistListTile.title as Text).data, localPlaylistTitle);
+
+      // Alternatively, find the ListTile by its title
+      expect(
+          find.descendant(
+              of: firstListTileFinder,
+              matching: find.text(
+                localPlaylistTitle,
+              )),
+          findsOneWidget);
+
+      // Check the saved local playlist values in the json file
+
+      final String newPlaylistPath = path.join(
+        kPlaylistDownloadRootPathWindowsTest,
+        localPlaylistTitle,
+      );
+
+      final newPlaylistFilePathName = path.join(
+        newPlaylistPath,
+        '$localPlaylistTitle.json',
+      );
+
+      // Load playlist from the json file
+      Playlist loadedNewPlaylist = JsonDataService.loadFromFile(
+        jsonPathFileName: newPlaylistFilePathName,
+        type: Playlist,
+      );
+
+      expect(loadedNewPlaylist.title, localPlaylistTitle);
+      expect(loadedNewPlaylist.id, localPlaylistTitle);
+      expect(loadedNewPlaylist.url, '');
+      expect(loadedNewPlaylist.playlistType, PlaylistType.local);
+      expect(loadedNewPlaylist.playlistQuality, PlaylistQuality.voice);
+      expect(loadedNewPlaylist.audioPlaySpeed, 1.25);
+      expect(loadedNewPlaylist.downloadedAudioLst.length, 0);
+      expect(loadedNewPlaylist.playableAudioLst.length, 0);
+      expect(loadedNewPlaylist.isSelected, false);
+      expect(loadedNewPlaylist.downloadPath, newPlaylistPath);
+
+      settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
@@ -1248,6 +1530,13 @@ void main() {
       // will ensure that the default playlist root path is set
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName: "temp\\wrong.json");
+
+      // setting default playlist audio play speed to 1.25
+      settingsDataService.set(
+          settingType: SettingType.playlists,
+          settingSubType: Playlists.playSpeed,
+          value: 1.25);
+
       WarningMessageVM warningMessageVM = WarningMessageVM();
       MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
         warningMessageVM: warningMessageVM,
@@ -1699,6 +1988,13 @@ void main() {
       // will ensure that the default playlist root path is set
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName: "temp\\wrong.json");
+
+      // setting default playlist audio play speed to 1.25
+      settingsDataService.set(
+          settingType: SettingType.playlists,
+          settingSubType: Playlists.playSpeed,
+          value: 1.25);
+
       WarningMessageVM warningMessageVM = WarningMessageVM();
       MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
         warningMessageVM: warningMessageVM,
@@ -1875,6 +2171,13 @@ void main() {
       // will ensure that the default playlist root path is set
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName: "temp\\wrong.json");
+
+      // setting default playlist audio play speed to 1.25
+      settingsDataService.set(
+          settingType: SettingType.playlists,
+          settingSubType: Playlists.playSpeed,
+          value: 1.25);
+
       WarningMessageVM warningMessageVM = WarningMessageVM();
       MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
         warningMessageVM: warningMessageVM,
@@ -2021,6 +2324,13 @@ void main() {
       // will ensure that the default playlist root path is set
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName: "temp\\wrong.json");
+
+      // setting default playlist audio play speed to 1.25
+      settingsDataService.set(
+          settingType: SettingType.playlists,
+          settingSubType: Playlists.playSpeed,
+          value: 1.25);
+
       WarningMessageVM warningMessageVM = WarningMessageVM();
       MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
         warningMessageVM: warningMessageVM,
@@ -2163,6 +2473,12 @@ void main() {
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+      // setting default playlist audio play speed to 1.25
+      settingsDataService.set(
+          settingType: SettingType.playlists,
+          settingSubType: Playlists.playSpeed,
+          value: 1.25);
 
       // Since we have to use a mock AudioDownloadVM to add the
       // youtube playlist, we can not use app.main() to start the
@@ -4979,8 +5295,6 @@ void main() {
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      const String youtubeAudioSourcePlaylistTitle =
-          'audio_learn_test_download_2_small_videos';
       const String newLocalAudioTargetPlaylistTitle = 'new_local';
       const String copiedAudioTitle = 'audio learn test short video one';
 
@@ -5150,11 +5464,10 @@ void main() {
       await tester.pumpAndSettle();
 
       // Now verifying the audio play speed in the displayed audio info
-      final Text enclosingPlaylistTitleTextWidget = tester
-          .widget<Text>(find.byKey(const Key('audioPlaySpeedKey')));
+      final Text enclosingPlaylistTitleTextWidget =
+          tester.widget<Text>(find.byKey(const Key('audioPlaySpeedKey')));
 
-      expect(enclosingPlaylistTitleTextWidget.data,
-          '1.25');
+      expect(enclosingPlaylistTitleTextWidget.data, '1.25');
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -5608,8 +5921,6 @@ void main() {
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      const String youtubeAudioSourcePlaylistTitle =
-          'audio_learn_test_download_2_small_videos';
       const String localAudioPlaylistTitle = 'local_audio_playlist_2';
       const String movedAudioTitle = 'audio learn test short video one';
 
@@ -5880,8 +6191,6 @@ void main() {
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      const String youtubeAudioSourcePlaylistTitle =
-          'audio_learn_test_download_2_small_videos';
       const String newLocalAudioTargetPlaylistTitle = 'new_local';
       const String movedAudioTitle = 'audio learn test short video one';
 
@@ -6051,11 +6360,10 @@ void main() {
       await tester.pumpAndSettle();
 
       // Now verifying the audio play speed in the displayed audio info
-      final Text enclosingPlaylistTitleTextWidget = tester
-          .widget<Text>(find.byKey(const Key('audioPlaySpeedKey')));
+      final Text enclosingPlaylistTitleTextWidget =
+          tester.widget<Text>(find.byKey(const Key('audioPlaySpeedKey')));
 
-      expect(enclosingPlaylistTitleTextWidget.data,
-          '1.25');
+      expect(enclosingPlaylistTitleTextWidget.data, '1.25');
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
