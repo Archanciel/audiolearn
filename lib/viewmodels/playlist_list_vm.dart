@@ -325,7 +325,7 @@ class PlaylistListVM extends ChangeNotifier {
 
     // This code here is executed if the Youtube playlist url or the
     // local playlist title was not found in the _listOfSelectablePlaylists
-    // and an exceptipon was thrown (see above the 2 empty firstWhere catch
+    // and an exception was thrown (see above the 2 empty firstWhere catch
     // blocks).
     Playlist? addedPlaylist = await _audioDownloadVM.addPlaylist(
       playlistUrl: playlistUrl,

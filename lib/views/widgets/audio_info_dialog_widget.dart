@@ -194,6 +194,7 @@ class AudioInfoDialogWidget extends StatelessWidget with ScreenMixin {
               ? AppLocalizations.of(context)!.yes
               : AppLocalizations.of(context)!.no),
       createInfoRowFunction(
+          valueTextWidgetKey: const Key('audioPlaySpeedKey'),
           context: context,
           label: AppLocalizations.of(context)!.audioPlaySpeedLabel,
           value: audio.audioPlaySpeed.toString()),

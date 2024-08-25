@@ -95,14 +95,7 @@ class PlaylistInfoDialogWidget extends StatelessWidget with ScreenMixin {
                 context: context,
                 label:
                     AppLocalizations.of(context)!.playlistAudioPlaySpeedLabel,
-                value: (playlist.audioPlaySpeed != 0)
-                    ? playlist.audioPlaySpeed.toString()
-                    : settingsDataService
-                        .get(
-                          settingType: SettingType.playlists,
-                          settingSubType: Playlists.playSpeed,
-                        )
-                        .toString(),
+                value: playlist.audioPlaySpeed.toString(),
               ),
               createInfoRowFunction(
                   context: context,

@@ -199,6 +199,11 @@ class AudioDownloadVM extends ChangeNotifier {
 
       if (playlistQuality == PlaylistQuality.music) {
         addedPlaylist.audioPlaySpeed = 1.0;
+      } else {
+        addedPlaylist.audioPlaySpeed = settingsDataService.get(
+          settingType: SettingType.playlists,
+          settingSubType: Playlists.playSpeed,
+        );
       }
 
       await _setPlaylistPath(
@@ -1143,7 +1148,7 @@ class AudioDownloadVM extends ChangeNotifier {
   /// "Download URLs from text file" menu item. False ios returned in case
   /// a download problen happens or if the file already exists in the target
   /// playlist directory.
-  /// 
+  ///
   /// {existingAudioFilesNotRedownloadedCount} is the number of audio files
   /// which were not redownloaded since they already exist in the target
   /// playlist directory.

@@ -127,7 +127,7 @@ void main() {
         audioPlayerVM: audioPlayerVM,
       );
 
-      // Tap the 'Toggle List' button to show the list. If the list
+      // Tap the 'Toggle List' button to display the playlist list If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -375,7 +375,7 @@ void main() {
         audioPlayerVM: audioPlayerVM,
       );
 
-      // Tap the 'Toggle List' button to show the list. If the list
+      // Tap the 'Toggle List' button to display the playlist list If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -515,7 +515,7 @@ void main() {
         audioPlayerVM: audioPlayerVM,
       );
 
-      // Tap the 'Toggle List' button to show the list. If the list
+      // Tap the 'Toggle List' button to display the playlist list If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -756,7 +756,7 @@ void main() {
         audioPlayerVM: audioPlayerVM,
       );
 
-      // Tap the 'Toggle List' button to show the list. If the list
+      // Tap the 'Toggle List' button to display the playlist list If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -832,7 +832,7 @@ void main() {
       await app.main(['test']);
       await tester.pumpAndSettle();
 
-      // Tap the 'Toggle List' button to show the list. If the list
+      // Tap the 'Toggle List' button to display the playlist list If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -1054,7 +1054,7 @@ void main() {
       await app.main(['test']);
       await tester.pumpAndSettle();
 
-      // Tap the 'Toggle List' button to show the list. If the list
+      // Tap the 'Toggle List' button to display the playlist list If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -1151,7 +1151,7 @@ void main() {
       await app.main(['test']);
       await tester.pumpAndSettle();
 
-      // Tap the 'Toggle List' button to show the list. If the list
+      // Tap the 'Toggle List' button to display the playlist list If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -1292,7 +1292,7 @@ void main() {
         audioPlayerVM: audioPlayerVM,
       );
 
-      // Tap the 'Toggle List' button to show the list. If the list
+      // Tap the 'Toggle List' button to display the playlist list If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -1383,7 +1383,7 @@ void main() {
       await app.main(['test']);
       await tester.pumpAndSettle();
 
-      // Tap the 'Toggle List' button to show the list. If the list
+      // Tap the 'Toggle List' button to display the playlist list If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -1743,7 +1743,7 @@ void main() {
         audioPlayerVM: audioPlayerVM,
       );
 
-      // Tap the 'Toggle List' button to show the list. If the list
+      // Tap the 'Toggle List' button to display the playlist list If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -1919,7 +1919,7 @@ void main() {
         audioPlayerVM: audioPlayerVM,
       );
 
-      // Tap the 'Toggle List' button to show the list. If the list
+      // Tap the 'Toggle List' button to display the playlist list If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -2607,7 +2607,7 @@ void main() {
       await app.main(['test']);
       await tester.pumpAndSettle();
 
-      // Tap the 'Toggle List' button to show the list. If the list
+      // Tap the 'Toggle List' button to display the playlist list If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -2801,7 +2801,7 @@ void main() {
       await app.main(['test']);
       await tester.pumpAndSettle();
 
-      // Tap the 'Toggle List' button to show the list.
+      // Tap the 'Toggle List' button to display the playlist list
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
@@ -3363,7 +3363,7 @@ void main() {
       await app.main(['test']);
       await tester.pumpAndSettle();
 
-      // Tap the 'Toggle List' button to show the list.
+      // Tap the 'Toggle List' button to display the playlist list
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
@@ -3824,7 +3824,7 @@ void main() {
       await app.main(['test']);
       await tester.pumpAndSettle();
 
-      // Tap the 'Toggle List' button to show the list.
+      // Tap the 'Toggle List' button to display the playlist list
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
@@ -4256,7 +4256,7 @@ void main() {
       await app.main(['test']);
       await tester.pumpAndSettle();
 
-      // Tap the 'Toggle List' button to show the list.
+      // Tap the 'Toggle List' button to display the playlist list
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
@@ -5020,7 +5020,7 @@ void main() {
         targetDirectoryPath: targetPlaylistLocalDir,
       );
 
-      // Tap the 'Toggle List' button to show the list.
+      // Tap the 'Toggle List' button to display the playlist list
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
@@ -5130,6 +5130,206 @@ void main() {
             .existsSync(),
         false,
       );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Copy in new created local playlist an audio whose play speed is set to 
+           1.5. Verify that the audio play speed is correctly set in the copied
+           audio file''', (tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}copy_move_audio_integr_test_data",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      const String youtubeAudioSourcePlaylistTitle =
+          'audio_learn_test_download_2_small_videos';
+      const String newLocalAudioTargetPlaylistTitle = 'new_local';
+      const String copiedAudioTitle = 'audio learn test short video one';
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+      await app.main(['test']);
+      await tester.pumpAndSettle();
+
+      // Creating new local playlist
+
+      // Open the add playlist dialog by tapping the add playlist
+      // button
+      await tester.tap(find.byKey(const Key('addPlaylistButton')));
+      await tester.pumpAndSettle();
+
+      // Enter the title of the local playlist
+      await tester.enterText(
+        find.byKey(const Key('playlistLocalTitleConfirmDialogTextField')),
+        newLocalAudioTargetPlaylistTitle,
+      );
+
+      // Confirm the addition by tapping the confirmation button in
+      // the AlertDialog
+      await tester
+          .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
+      await tester.pumpAndSettle();
+
+      // Close the warning dialog by tapping on the Ok button
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+      await tester.pumpAndSettle();
+
+      // Tap the 'Toggle List' button to display the playlist list
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Now we want to tap the popup menu of the Audio ListTile
+      // "audio learn test short video one", the audio to be copied
+
+      // First, find the Audio sublist ListTile Text widget
+      Finder sourceAudioListTileTextWidgetFinder = find.text(copiedAudioTitle);
+
+      // Then obtain the Audio ListTile widget enclosing the Text widget by
+      // finding its ancestor
+      Finder sourceAudioListTileWidgetFinder = find.ancestor(
+        of: sourceAudioListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the leading menu icon button of the Audio ListTile
+      // and tap on it
+      Finder sourceAudioListTileLeadingMenuIconButton = find.descendant(
+        of: sourceAudioListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(sourceAudioListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the copy audio popup menu item and tap on it
+      Finder popupCopyMenuItem =
+          find.byKey(const Key("popup_menu_copy_audio_to_playlist"));
+
+      await tester.tap(popupCopyMenuItem);
+      await tester.pumpAndSettle();
+
+      // Find the RadioListTile target playlist to which the audio
+      // will be copied
+
+      Finder targetPlaylistRadioListTile = find.byWidgetPredicate(
+        (Widget widget) =>
+            widget is RadioListTile &&
+            widget.title is Text &&
+            (widget.title as Text).data == newLocalAudioTargetPlaylistTitle,
+      );
+
+      // Tap the target playlist RadioListTile to select it
+      await tester.tap(targetPlaylistRadioListTile);
+      await tester.pumpAndSettle();
+
+      // Now find the confirm button and tap on it
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pumpAndSettle();
+
+      // Now find the ok button of the confirm dialog
+      // and tap on it
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+      await tester.pumpAndSettle();
+
+      // Verify that the target playlist directory now
+      // contains the audio file copied from the source playlist
+      List<String> targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
+        directoryPath:
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$newLocalAudioTargetPlaylistTitle',
+        fileExtension: 'mp3',
+      );
+
+      expect(targetPlaylistMp3Lst,
+          ["230628-033811-audio learn test short video one 23-06-10.mp3"]);
+
+      // Find the target ListTile Playlist containing the audio copied
+      // from the source playlist
+
+      // First, find the Playlist ListTile Text widget
+      final Finder targetPlaylistListTileTextWidgetFinder =
+          find.text(newLocalAudioTargetPlaylistTitle);
+
+      // Then obtain the Playlist ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      final Finder targetPlaylistListTileWidgetFinder = find.ancestor(
+        of: targetPlaylistListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the Checkbox widget located in the Playlist ListTile
+      // and tap on it to select the playlist
+      final Finder targetPlaylistListTileCheckboxWidgetFinder = find.descendant(
+        of: targetPlaylistListTileWidgetFinder,
+        matching: find.byType(Checkbox),
+      );
+
+      // Tap the ListTile Playlist checkbox to select it
+      await tester.tap(targetPlaylistListTileCheckboxWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // Now we want to tap the popup menu of the Audio ListTile
+      // "audio learn test short video one"
+
+      // First, find the Audio sublist ListTile Text widget
+      final Finder targetAudioListTileTextWidgetFinder =
+          find.text(copiedAudioTitle);
+
+      // Then obtain the Audio ListTile widget enclosing the Text widget by
+      // finding its ancestor
+      final Finder targetAudioListTileWidgetFinder = find.ancestor(
+        of: targetAudioListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the leading menu icon button of the Audio ListTile and tap
+      // on it
+      final Finder targetAudioListTileLeadingMenuIconButton = find.descendant(
+        of: targetAudioListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(targetAudioListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the popup menu item and tap on it
+      final Finder popupDisplayAudioInfoMenuItemFinder =
+          find.byKey(const Key("popup_menu_display_audio_info"));
+
+      await tester.tap(popupDisplayAudioInfoMenuItemFinder);
+      await tester.pumpAndSettle();
+
+      // Now verifying the audio play speed in the displayed audio info
+      final Text enclosingPlaylistTitleTextWidget = tester
+          .widget<Text>(find.byKey(const Key('audioPlaySpeedKey')));
+
+      expect(enclosingPlaylistTitleTextWidget.data,
+          '1.25');
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -5773,7 +5973,7 @@ void main() {
         targetDirectoryPath: targetPlaylistLocalDir,
       );
 
-      // Tap the 'Toggle List' button to show the list.
+      // Tap the 'Toggle List' button to display the playlist list
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
@@ -5890,6 +6090,206 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
+    testWidgets(
+        '''Move in new created local playlist an audio whose play speed is set to 
+           1.5. Verify that the audio play speed is correctly set in the moved
+           audio file''', (tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}copy_move_audio_integr_test_data",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      const String youtubeAudioSourcePlaylistTitle =
+          'audio_learn_test_download_2_small_videos';
+      const String newLocalAudioTargetPlaylistTitle = 'new_local';
+      const String movedAudioTitle = 'audio learn test short video one';
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+      await app.main(['test']);
+      await tester.pumpAndSettle();
+
+      // Creating new local playlist
+
+      // Open the add playlist dialog by tapping the add playlist
+      // button
+      await tester.tap(find.byKey(const Key('addPlaylistButton')));
+      await tester.pumpAndSettle();
+
+      // Enter the title of the local playlist
+      await tester.enterText(
+        find.byKey(const Key('playlistLocalTitleConfirmDialogTextField')),
+        newLocalAudioTargetPlaylistTitle,
+      );
+
+      // Confirm the addition by tapping the confirmation button in
+      // the AlertDialog
+      await tester
+          .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
+      await tester.pumpAndSettle();
+
+      // Close the warning dialog by tapping on the Ok button
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+      await tester.pumpAndSettle();
+
+      // Tap the 'Toggle List' button to display the playlist list
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Now we want to tap the popup menu of the Audio ListTile
+      // "audio learn test short video one", the audio to be moved
+
+      // First, find the Audio sublist ListTile Text widget
+      Finder sourceAudioListTileTextWidgetFinder = find.text(movedAudioTitle);
+
+      // Then obtain the Audio ListTile widget enclosing the Text widget by
+      // finding its ancestor
+      Finder sourceAudioListTileWidgetFinder = find.ancestor(
+        of: sourceAudioListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the leading menu icon button of the Audio ListTile
+      // and tap on it
+      Finder sourceAudioListTileLeadingMenuIconButton = find.descendant(
+        of: sourceAudioListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(sourceAudioListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the move audio popup menu item and tap on it
+      Finder popupCopyMenuItem =
+          find.byKey(const Key("popup_menu_move_audio_to_playlist"));
+
+      await tester.tap(popupCopyMenuItem);
+      await tester.pumpAndSettle();
+
+      // Find the RadioListTile target playlist to which the audio
+      // will be moved
+
+      Finder targetPlaylistRadioListTile = find.byWidgetPredicate(
+        (Widget widget) =>
+            widget is RadioListTile &&
+            widget.title is Text &&
+            (widget.title as Text).data == newLocalAudioTargetPlaylistTitle,
+      );
+
+      // Tap the target playlist RadioListTile to select it
+      await tester.tap(targetPlaylistRadioListTile);
+      await tester.pumpAndSettle();
+
+      // Now find the confirm button and tap on it
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pumpAndSettle();
+
+      // Now find the ok button of the confirm dialog
+      // and tap on it
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+      await tester.pumpAndSettle();
+
+      // Verify that the target playlist directory now
+      // contains the audio file moved from the source playlist
+      List<String> targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
+        directoryPath:
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$newLocalAudioTargetPlaylistTitle',
+        fileExtension: 'mp3',
+      );
+
+      expect(targetPlaylistMp3Lst,
+          ["230628-033811-audio learn test short video one 23-06-10.mp3"]);
+
+      // Find the target ListTile Playlist containing the audio moved
+      // from the source playlist
+
+      // First, find the Playlist ListTile Text widget
+      final Finder targetPlaylistListTileTextWidgetFinder =
+          find.text(newLocalAudioTargetPlaylistTitle);
+
+      // Then obtain the Playlist ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      final Finder targetPlaylistListTileWidgetFinder = find.ancestor(
+        of: targetPlaylistListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the Checkbox widget located in the Playlist ListTile
+      // and tap on it to select the playlist
+      final Finder targetPlaylistListTileCheckboxWidgetFinder = find.descendant(
+        of: targetPlaylistListTileWidgetFinder,
+        matching: find.byType(Checkbox),
+      );
+
+      // Tap the ListTile Playlist checkbox to select it
+      await tester.tap(targetPlaylistListTileCheckboxWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // Now we want to tap the popup menu of the Audio ListTile
+      // "audio learn test short video one"
+
+      // First, find the Audio sublist ListTile Text widget
+      final Finder targetAudioListTileTextWidgetFinder =
+          find.text(movedAudioTitle);
+
+      // Then obtain the Audio ListTile widget enclosing the Text widget by
+      // finding its ancestor
+      final Finder targetAudioListTileWidgetFinder = find.ancestor(
+        of: targetAudioListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the leading menu icon button of the Audio ListTile and tap
+      // on it
+      final Finder targetAudioListTileLeadingMenuIconButton = find.descendant(
+        of: targetAudioListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(targetAudioListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the popup menu item and tap on it
+      final Finder popupDisplayAudioInfoMenuItemFinder =
+          find.byKey(const Key("popup_menu_display_audio_info"));
+
+      await tester.tap(popupDisplayAudioInfoMenuItemFinder);
+      await tester.pumpAndSettle();
+
+      // Now verifying the audio play speed in the displayed audio info
+      final Text enclosingPlaylistTitleTextWidget = tester
+          .widget<Text>(find.byKey(const Key('audioPlaySpeedKey')));
+
+      expect(enclosingPlaylistTitleTextWidget.data,
+          '1.25');
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
   });
   group('Delete copied or moved audio test', () {
     testWidgets('''Delete an audio which was first copied from Youtube to local
@@ -5944,7 +6344,7 @@ void main() {
       // *** First test part: Copy audio from Youtube to local
       // playlist
 
-      // Tap the 'Toggle List' button to show the list.
+      // Tap the 'Toggle List' button to display the playlist list
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
@@ -6350,7 +6750,7 @@ void main() {
       // *** First test part: Copy audio from Youtube to local
       // playlist
 
-      // Tap the 'Toggle List' button to show the list.
+      // Tap the 'Toggle List' button to display the playlist list
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
@@ -6730,7 +7130,7 @@ void main() {
 
       // *** Updating the Youtube playlist
 
-      // Tap the 'Toggle List' button to show the list. If the list
+      // Tap the 'Toggle List' button to display the playlist list If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -6932,7 +7332,7 @@ void main() {
 
       // *** Updating the local playlist
 
-      // Tap the 'Toggle List' button to show the list. If the list
+      // Tap the 'Toggle List' button to display the playlist list If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -7135,7 +7535,7 @@ void main() {
 
       // *** Updating the Youtube playlist
 
-      // Tap the 'Toggle List' button to show the list. If the list
+      // Tap the 'Toggle List' button to display the playlist list If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -7317,7 +7717,7 @@ void main() {
 
       // *** Updating the local playlist
 
-      // Tap the 'Toggle List' button to show the list. If the list
+      // Tap the 'Toggle List' button to display the playlist list If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -9067,7 +9467,7 @@ void main() {
       await app.main(['test']);
       await tester.pumpAndSettle();
 
-      // Tap the 'Toggle List' button to show the list.
+      // Tap the 'Toggle List' button to display the playlist list
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
@@ -9226,7 +9626,7 @@ void main() {
       await app.main(['test']);
       await tester.pumpAndSettle();
 
-      // Tap the 'Toggle List' button to show the list.
+      // Tap the 'Toggle List' button to display the playlist list
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
