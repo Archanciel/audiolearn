@@ -3304,7 +3304,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
         appScreenNavigationButton =
             find.byKey(const ValueKey('playlistDownloadViewIconButton'));
         await tester.tap(appScreenNavigationButton);
-        await tester.pumpAndSettle();
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
         // Verify that the dropdown button has been updated with the
         // 'appliqué' sort/filter parms selected
