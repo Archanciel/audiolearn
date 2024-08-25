@@ -119,6 +119,13 @@ void main() {
         type: Playlist,
       );
 
+      // Needed so that testing equality of source and target audio
+      // returns true. This is due to the fact that when copying or
+      // moving an audio to a target playlist, the copied or moved
+      // audio play speed is set to the target olaylist audio play
+      // speed.
+      targetPlaylist.audioPlaySpeed = 1.25;
+
       // Testing copy La résilience insulaire par Fiona Roche with
       // play position at start of audio and no comment file
       testCopyAudioToPlaylist(
@@ -191,6 +198,13 @@ void main() {
         jsonPathFileName: targetPlaylistFilePathName,
         type: Playlist,
       );
+
+      // Needed so that testing equality of source and target audio
+      // returns true. This is due to the fact that when copying or
+      // moving an audio to a target playlist, the copied or moved
+      // audio play speed is set to the target olaylist audio play
+      // speed.
+      targetPlaylist.audioPlaySpeed = 1.25;
 
       // Testing move La résilience insulaire par Fiona Roche with
       // play position at start of audio, no comments
@@ -299,8 +313,8 @@ void main() {
       Audio currentAudio = sourcePlaylist.playableAudioLst[7];
 
       // Obtaining the next playable audio
-      Audio? nextAudio = playlistListVM
-          .getNextDownloadedOrSortFilteredNotFullyPlayedAudio(
+      Audio? nextAudio =
+          playlistListVM.getNextDownloadedOrSortFilteredNotFullyPlayedAudio(
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
         currentAudio: currentAudio,
       );
@@ -384,8 +398,8 @@ void main() {
       Audio lastDownloadedAudio = sourcePlaylist.playableAudioLst[0];
 
       // Obtaining the next playable audio
-      Audio? nextAudio = playlistListVM
-          .getNextDownloadedOrSortFilteredNotFullyPlayedAudio(
+      Audio? nextAudio =
+          playlistListVM.getNextDownloadedOrSortFilteredNotFullyPlayedAudio(
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
         currentAudio: lastDownloadedAudio,
       );
@@ -471,8 +485,8 @@ void main() {
       Audio lastDownloadedAudio = sourcePlaylist.playableAudioLst[0];
 
       // Obtaining the next playable audio
-      Audio? nextAudio = playlistListVM
-          .getNextDownloadedOrSortFilteredNotFullyPlayedAudio(
+      Audio? nextAudio =
+          playlistListVM.getNextDownloadedOrSortFilteredNotFullyPlayedAudio(
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
         currentAudio: lastDownloadedAudio,
       );
@@ -553,8 +567,8 @@ void main() {
       Audio firstDownloadedAudio = sourcePlaylist.playableAudioLst[3];
 
       // Obtaining the next playable audio
-      Audio? nextaudioIslastdownloaded = playlistListVM
-          .getNextDownloadedOrSortFilteredNotFullyPlayedAudio(
+      Audio? nextaudioIslastdownloaded =
+          playlistListVM.getNextDownloadedOrSortFilteredNotFullyPlayedAudio(
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
         currentAudio: firstDownloadedAudio,
       );

@@ -14,6 +14,12 @@ import 'package:audiolearn/main.dart' as app;
 
 import 'integration_test_util.dart';
 
+/// This integration test contains the integration tests groups for the
+/// sort/filter parms testing. The groups are included in the plalist download
+/// view or in the audio player view integration test.
+/// 
+/// So, if you excute those two integration tests, you do not need to execute
+/// this integration test !
 void main() {
   playlistDownloadViewSortFilterIntregrationTest();
   audioPlayerViewSortFilterIntregrationTest();
