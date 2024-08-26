@@ -571,14 +571,14 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     // must be added to the sort and filter parameters map, otherwise
     // building the dropdown menu items list will fail.
     if (selectedPlaylistAudioSortFilterParmsName ==
-        AppLocalizations.of(context)!.sortFilterParametersAppliedName) {
-      // Executing the followingensures that the sort and filter parameters
-      // map is saved in the settings file.
+            AppLocalizations.of(context)!.sortFilterParametersAppliedName &&
+        playlistListVMlistenFalse.audioSortFilterParameters != null) {
+      // Executing the following instruction ensures that the sort/filter
+      // parameters map is saved in the settings file.
       widget.settingsDataService.addOrReplaceNamedAudioSortFilterParameters(
         audioSortFilterParametersName: selectedPlaylistAudioSortFilterParmsName,
-        audioSortFilterParameters: playlistListVMlistenFalse
-                .audioSortFilterParameters ??
-            AudioSortFilterParameters.createDefaultAudioSortFilterParameters(),
+        audioSortFilterParameters:
+            playlistListVMlistenFalse.audioSortFilterParameters!,
       );
     }
 
