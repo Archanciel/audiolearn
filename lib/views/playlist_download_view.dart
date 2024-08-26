@@ -77,7 +77,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
         );
 
         // When the download playlist view is displayed, the playlist list
-        // is collapsed or expanded corresponds to its state stored in the
+        // is collapsed or expanded corresponding to the state stored in the
         // settings file. This state is modified by the user when he clicks
         // on the playlist toggle button.
         playlistListVM.isListExpanded = widget.settingsDataService.get(

@@ -59,7 +59,11 @@ class SettingsDataService {
       Playlists.playSpeed: kAudioDefaultPlaySpeed,
 
       // true -> the playlists are displayed in the playlist download
-      // view
+      // view.
+      // false -> the playlist list is no longer expanded and so the
+      // playlists are not displayed in the playlist download view.
+      //
+      // This changes when the user clicks on the playlist toggle button.
       Playlists.arePlaylistsDisplayedInPlaylistDownloadView: false,
     },
     SettingType.dataLocation: {
