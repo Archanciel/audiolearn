@@ -1862,7 +1862,8 @@ void playlistDownloadViewSortFilterIntregrationTest() {
 
         // Verify that the dropdown button has been updated with the
         // 'applied' sort/filter parms selected
-        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle( // ERROR
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+          // ERROR
           tester: tester,
           dropdownButtonSelectedTitle: appliedEnglishTitle,
         );
@@ -3004,8 +3005,10 @@ void playlistDownloadViewSortFilterIntregrationTest() {
 
         // Now open the audio popup menu in order to delete the
         // 'applied' sf parms
-        final Finder dropdownItemEditIconButtonFinder = find.byKey(
-            const Key('sort_filter_parms_dropdown_item_edit_icon_button')).at(0);
+        final Finder dropdownItemEditIconButtonFinder = find
+            .byKey(
+                const Key('sort_filter_parms_dropdown_item_edit_icon_button'))
+            .at(0);
         await tester.tap(dropdownItemEditIconButtonFinder);
         await tester.pumpAndSettle();
 
@@ -4704,7 +4707,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
         await tester.tap(dropDownButtonTextFinder);
         await tester.pumpAndSettle();
 
-        // And find the 'Asc listened' sort/filter item
+        // And find the 'Title asc' sort/filter item
         titleAscDropDownTextFinder = find.text(titleAscSortFilterName).last;
         await tester.tap(titleAscDropDownTextFinder);
         await tester.pumpAndSettle();
@@ -4737,6 +4740,171 @@ void playlistDownloadViewSortFilterIntregrationTest() {
 
         List<String>
             audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          "La surpopulation mondiale par Jancovici et Barrau",
+          "La résilience insulaire par Fiona Roche",
+          "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+          "Les besoins artificiels par R.Keucheyan",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+        ];
+
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          tester: tester,
+          audioTitlesOrderLst:
+              audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Delete then recreate saved to 2 playlists named sort/filter params:
+
+             Select the 'Title asc' sort/filter parms. Then, in 'S8 audio' and
+             in 'local' playlist, save it to playlist download view and to audio
+             player view. Then delete it 'Title asc' and verify that the
+             'default' sort/filter parms is applied to the playlist download
+             view as well as the audio player view in both 'S8 audio' and 'local'
+             playlist. Finally, recreate the 'Title asc' sort/filter parms and
+             verify its application in the two playlists.''',
+          (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_three_playlists_test",
+          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+
+        final SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
+        );
+
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the download app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+        await app.main(['test']);
+        await tester.pumpAndSettle();
+
+        const String titleAscSortFilterName = 'Title asc';
+
+        // Save the 'Title asc' sort/filter parms to the 'S8 audio' playlist
+        await selectAndSaveSortFilterParmsToPlaylist(
+          tester: tester,
+          sortFilterParmsNameName: titleAscSortFilterName,
+          saveToPlaylistDownloadView: true,
+          saveToAudioPlayerView: true,
+        );
+
+        // Now switch to 'local' playlist
+        await switchToPlaylist(
+          tester: tester,
+          playlistTitle: 'local',
+        );
+
+        // Save the 'Title asc' sort/filter parms to the 'local' playlist
+        await selectAndSaveSortFilterParmsToPlaylist(
+          tester: tester,
+          sortFilterParmsNameName: titleAscSortFilterName,
+          saveToPlaylistDownloadView: true,
+          saveToAudioPlayerView: true,
+        );
+
+        // Now delete the 'Title asc' sort/filter parms
+
+        // Tap on the current dropdown button item to open the dropdown
+        // button items list
+
+        Finder dropDownButtonFinder =
+            find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+        Finder dropDownButtonTextFinder = find.descendant(
+          of: dropDownButtonFinder,
+          matching: find.byType(Text),
+        );
+
+        await tester.tap(dropDownButtonTextFinder);
+        await tester.pumpAndSettle();
+
+        // And find the 'Title asc' sort/filter item
+        Finder titleAscDropDownTextFinder =
+            find.text(titleAscSortFilterName).last;
+        await tester.tap(titleAscDropDownTextFinder);
+        await tester.pumpAndSettle();
+
+        // Now open the audio popup menu in order to delete the
+        // 'Title asc' sf parms
+        final Finder dropdownItemEditIconButtonFinder = find.byKey(
+            const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+        await tester.tap(dropdownItemEditIconButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Click on the "Delete" button. This closes the sort/filter dialog
+        // and sets the default sort/filter parms in the playlist download
+        // view dropdown button.
+        await tester.tap(find.byKey(const Key('deleteSortFilterTextButton')));
+        await tester.pumpAndSettle();
+
+        // Now verify the playlist download view state with the 'default'
+        // sort/filter parms applied
+
+        // Verify that the dropdown button has been updated with the
+        // 'default' sort/filter parms selected
+        const String defaultTitle = 'default';
+
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+          tester: tester,
+          dropdownButtonSelectedTitle: defaultTitle,
+        );
+
+        // And verify the order of the playlist audio titles
+        List<String>
+            audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
+          "Really short video",
+          "morning _ cinematic video",
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          "Les besoins artificiels par R.Keucheyan",
+          "La résilience insulaire par Fiona Roche",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        ];
+
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          tester: tester,
+          audioTitlesOrderLst:
+              audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+        );
+
+
+        // Now switch back to the 'S8 audio' playlist
+        await switchToPlaylist(
+          tester: tester,
+          playlistTitle: 'S8 audio',
+        );
+
+        // Verify that the 'default' dropdown button sort/filter parms is
+        // selected
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+          tester: tester,
+          dropdownButtonSelectedTitle: defaultTitle,
+        );
+
+        // And verify the order of the playlist audio titles
+        audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
           "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
           "La surpopulation mondiale par Jancovici et Barrau",
           "La résilience insulaire par Fiona Roche",
@@ -5121,4 +5289,95 @@ void verifyAudioSortFilterParmsNameStoredInPlaylistJsonFile({
     loadedSelectedPlaylist.audioPlayingOrder,
     audioPlayingOrder,
   );
+}
+
+Future<void> selectAndSaveSortFilterParmsToPlaylist({
+  required WidgetTester tester,
+  required String sortFilterParmsNameName,
+  required bool saveToPlaylistDownloadView,
+  required bool saveToAudioPlayerView,
+}) async {
+  // Tap on the current dropdown button item to open the dropdown
+  // button items list
+
+  Finder dropDownButtonFinder =
+      find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+  Finder dropDownButtonTextFinder = find.descendant(
+    of: dropDownButtonFinder,
+    matching: find.byType(Text),
+  );
+
+  await tester.tap(dropDownButtonTextFinder);
+  await tester.pumpAndSettle();
+
+  // Find and select the 'Title asc' sort/filter item
+  Finder titleAscDropDownTextFinder = find.text(sortFilterParmsNameName).last;
+  await tester.tap(titleAscDropDownTextFinder);
+  await tester.pumpAndSettle();
+
+  // Now open the audio popup menu
+  await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+  await tester.pumpAndSettle();
+
+  // And open the 'Save sort/filter options to playlist' dialog
+  await tester.tap(find
+      .byKey(const Key('save_sort_and_filter_audio_parms_in_playlist_item')));
+  await tester.pumpAndSettle();
+
+  if (saveToPlaylistDownloadView) {
+    // Select the 'For "Download Audio" screen' checkbox
+    await tester.tap(find.byKey(const Key('playlistDownloadViewCheckbox')));
+    await tester.pumpAndSettle();
+  }
+
+  if (saveToAudioPlayerView) {
+    // Select the 'For "Play Audio" screen' checkbox
+    await tester.tap(find.byKey(const Key('audioPlayerViewCheckbox')));
+    await tester.pumpAndSettle();
+  }
+
+  // Finally, click on save button
+  await tester
+      .tap(find.byKey(const Key('saveSortFilterOptionsToPlaylistSaveButton')));
+  await tester.pumpAndSettle();
+}
+
+Future<void> switchToPlaylist({
+  required WidgetTester tester,
+  required String playlistTitle,
+}) async {
+  // Now select the local playlist in order to apply the created
+  // sort/filter parms to it
+
+  // Tap on audio player view playlist button to expand the
+  // list of playlists
+  await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+  await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+  // Find the playlist to select ListTile Text widget
+  Finder playlistToSelectListTileTextWidgetFinder = find.text(playlistTitle);
+
+  // Then obtain the playlist ListTile widget enclosing the Text widget
+  // by finding its ancestor
+  Finder playlistToSelectListTileWidgetFinder = find.ancestor(
+    of: playlistToSelectListTileTextWidgetFinder,
+    matching: find.byType(ListTile),
+  );
+
+  // Now find the Checkbox widget located in the playlist ListTile
+  // and tap on it to select the playlist
+  Finder playlistToSelectListTileCheckboxWidgetFinder = find.descendant(
+    of: playlistToSelectListTileWidgetFinder,
+    matching: find.byType(Checkbox),
+  );
+
+  // Tap the ListTile Playlist checkbox to select it
+  await tester.tap(playlistToSelectListTileCheckboxWidgetFinder);
+  await tester.pumpAndSettle();
+
+  // Tap on audio player view playlist button to contract the
+  // list of playlists
+  await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+  await tester.pumpAndSettle(const Duration(milliseconds: 200));
 }
