@@ -1177,11 +1177,4 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
       },
     );
   }
-
-  void _displayOtherAudioDialog() {
-    showDialog<void>(
-      context: context,
-      builder: (context) => const AudioPlayableListDialogWidget(),
-    );
-  }
 }

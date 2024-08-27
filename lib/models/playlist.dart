@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'audio.dart';
-import '../services/sort_filter_parameters.dart';
 
 enum PlaylistType {
   youtube,
