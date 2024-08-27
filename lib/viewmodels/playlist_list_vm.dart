@@ -1563,6 +1563,13 @@ class PlaylistListVM extends ChangeNotifier {
 
     if (audioSortFilterParmsName.isEmpty) {
       audioSortFilterParmsName = translatedDefaultSFparmsName;
+    } else {
+      if (_settingsDataService.namedAudioSortFilterParametersMap
+          .containsKey(audioSortFilterParmsName)) {
+        return audioSortFilterParmsName;
+      } else {
+        audioSortFilterParmsName = translatedDefaultSFparmsName;
+      }
     }
 
     return audioSortFilterParmsName;
