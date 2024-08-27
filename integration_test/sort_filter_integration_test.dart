@@ -4889,34 +4889,6 @@ void playlistDownloadViewSortFilterIntregrationTest() {
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
-        // Then go to the audio player view
-        Finder appScreenNavigationButton =
-            find.byKey(const ValueKey('audioPlayerViewIconButton'));
-        await tester.tap(appScreenNavigationButton);
-        await tester.pumpAndSettle();
-
-        // Now we open the AudioPlayableListDialogWidget
-        // and verify the the displayed audio titles
-
-        await tester.tap(find.text(
-            "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique\n6:29"));
-        await tester.pumpAndSettle();
-
-        RichText dialogTitle = tester.widget<RichText>(
-            find.byKey(const ValueKey('audioPlayableListDialogTitle')));
-
-        // Extract the main TextSpan
-        final TextSpan textSpan = dialogTitle.text as TextSpan;
-
-        // Verify the main text content
-        expect(textSpan.text,
-            'Select an audio'); // Replace with actual expected text
-
-        // Verify the nested TextSpan content (children)
-        final TextSpan nestedTextSpan = textSpan.children![1] as TextSpan;
-
-        expect(nestedTextSpan.text, '(default)');
-
         audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
           "Really short video",
           "morning _ cinematic video",
@@ -4926,18 +4898,18 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListBody(
+        // Verify also the audio playable list dialog title and content
+        await verifyAudioPlayableList(
           tester: tester,
-          audioTitlesOrderLst:
+          currentAudioTitle:
+              "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique\n6:29",
+          sortFilterParmsName: 'default',
+          audioTitlesLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
-        // Tap on the Close button to close the AudioPlayableListDialogWidget
-        await tester.tap(find.byKey(const Key('closeTextButton')));
-        await tester.pumpAndSettle();
-
         // Return to the playlist download view
-        appScreenNavigationButton =
+        Finder appScreenNavigationButton =
             find.byKey(const ValueKey('playlistDownloadViewIconButton'));
         await tester.tap(appScreenNavigationButton);
         await tester.pumpAndSettle();
@@ -4971,6 +4943,18 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           audioTitlesOrderLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
+
+        // Verify also the audio playable list dialog title and content
+        await verifyAudioPlayableList(
+          tester: tester,
+          currentAudioTitle:
+              "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik\n13:39",
+          sortFilterParmsName: 'default',
+          audioTitlesLst:
+              audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+        );
+
+        // TODO Now recreate the 'Title asc' sort/filter parms
 
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
@@ -5432,4 +5416,46 @@ Future<void> switchToPlaylist({
   // list of playlists
   await tester.tap(find.byKey(const Key('playlist_toggle_button')));
   await tester.pumpAndSettle(const Duration(milliseconds: 200));
+}
+
+Future<void> verifyAudioPlayableList({
+  required WidgetTester tester,
+  required String currentAudioTitle,
+  required String sortFilterParmsName,
+  required List<String> audioTitlesLst,
+}) async {
+  // Going to the audio player view
+  Finder appScreenNavigationButton =
+      find.byKey(const ValueKey('audioPlayerViewIconButton'));
+  await tester.tap(appScreenNavigationButton);
+  await tester.pumpAndSettle();
+
+  // Now we open the AudioPlayableListDialogWidget
+  // and verify the the displayed audio titles
+
+  await tester.tap(find.text(currentAudioTitle));
+  await tester.pumpAndSettle();
+
+  RichText dialogTitle = tester.widget<RichText>(
+      find.byKey(const ValueKey('audioPlayableListDialogTitle')));
+
+  // Extract the main TextSpan
+  final TextSpan textSpan = dialogTitle.text as TextSpan;
+
+  // Verify the main text content
+  expect(textSpan.text, 'Select an audio'); // Replace with actual expected text
+
+  // Verify the nested TextSpan content (children)
+  final TextSpan nestedTextSpan = textSpan.children![1] as TextSpan;
+
+  expect(nestedTextSpan.text, "($sortFilterParmsName)");
+
+  IntegrationTestUtil.checkAudioTitlesOrderInListBody(
+    tester: tester,
+    audioTitlesOrderLst: audioTitlesLst,
+  );
+
+  // Tap on the Close button to close the AudioPlayableListDialogWidget
+  await tester.tap(find.byKey(const Key('closeTextButton')));
+  await tester.pumpAndSettle();
 }
