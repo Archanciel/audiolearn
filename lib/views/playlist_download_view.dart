@@ -1104,10 +1104,6 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
                 playlistListVMlistenFalse
                     .savePlaylistAudioSortFilterParmsToPlaylist(
-                  isAppliedSortFilterParmsNameSelected:
-                      (sortFilterParmsNameToSave == // sf parms name
-                          AppLocalizations.of(context)! // selected in the
-                              .sortFilterParametersAppliedName),
                   sortFilterParmsNameToSave:
                       sortFilterParmsNameToSave, // dropdown menu
                   forPlaylistDownloadView: forViewLst[1],

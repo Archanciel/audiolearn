@@ -1037,16 +1037,10 @@ void compareNewRecreatedPlaylistToPreviouslyExistingPlaylist({
       previouslyExistingPlaylist.downloadedAudioLst.length + 2);
   expect(newRecreatedPlaylistWithSameTitle.playableAudioLst.length,
       previouslyExistingPlaylist.playableAudioLst.length + 2);
-
   expect(newRecreatedPlaylistWithSameTitle.audioSortFilterParmsNameForPlaylistDownloadView,
       previouslyExistingPlaylist.audioSortFilterParmsNameForPlaylistDownloadView);
-  expect(newRecreatedPlaylistWithSameTitle.audioSortFilterParmsForPlaylistDownloadView,
-      previouslyExistingPlaylist.audioSortFilterParmsForPlaylistDownloadView);
-
   expect(newRecreatedPlaylistWithSameTitle.audioSortFilterParmsNameForAudioPlayerView,
       previouslyExistingPlaylist.audioSortFilterParmsNameForAudioPlayerView);
-  expect(newRecreatedPlaylistWithSameTitle.audioSortFilterParmsForAudioPlayerView,
-      previouslyExistingPlaylist.audioSortFilterParmsForAudioPlayerView);
 }
 
 /// Verify the values of the "audio learn test short video one" downloaded

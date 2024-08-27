@@ -58,35 +58,16 @@ class Playlist {
   int currentOrPastPlayableAudioIndex = -1;
 
   // A sort filter parameters instance can be associated to a playlist
-  // in order to sort and filter its audio. There are too ways to
-  // associate a sort filter parameters instance to a playlist:
+  // in order to sort and filter its audio.
   //
   // 1. Selecting or defining a named sort filter parameters instance
   //    in the SortFilterParametersView and then associating this
   //    named instance to the playlist. In this case, the named
   //    instance is stored in the app settings.json file, not in the
   //    playlist json file.
-  //
-  // 2. Defining an unamed sort filter parameters instance  in the
-  //    SortFilterParametersView and setting the 'For selected playlist'
-  //    checkbox. In this case, the unamed instance is stored in the
-  //    playlist json file.
-  //
-  // Additionally, the sort filter parameters instance can be associated
-  // to the playlist download view and/or to the audio player view.
-  //
-  // Finally, the user can choose to apply the defined sort filter
-  // parameters to the PlaylistDownloadView or/and the AudioPlayerView.
-  // This will not happen after the user has selected another playlist
-  // and comes back to the current playlist unless he has saved the
-  // the sort filter parameters in the current playlist json file using
-  // the audio menu item 'Save sort filter parameters'.
 
   String audioSortFilterParmsNameForPlaylistDownloadView = '';
-  AudioSortFilterParameters? audioSortFilterParmsForPlaylistDownloadView;
-
   String audioSortFilterParmsNameForAudioPlayerView = '';
-  AudioSortFilterParameters? audioSortFilterParmsForAudioPlayerView;
 
   AudioPlayingOrder audioPlayingOrder = AudioPlayingOrder.ascending;
 
@@ -111,9 +92,7 @@ class Playlist {
     required this.isSelected,
     required this.currentOrPastPlayableAudioIndex,
     required this.audioSortFilterParmsNameForPlaylistDownloadView,
-    required this.audioSortFilterParmsForPlaylistDownloadView,
     required this.audioSortFilterParmsNameForAudioPlayerView,
-    required this.audioSortFilterParmsForAudioPlayerView,
     required this.audioPlayingOrder,
   });
 
@@ -139,18 +118,8 @@ class Playlist {
           json['currentOrPastPlayableAudioIndex'] ?? -1,
       audioSortFilterParmsNameForPlaylistDownloadView:
           json['audioSortFilterParmsNamePlaylistDownloadView'] ?? '',
-      audioSortFilterParmsForPlaylistDownloadView:
-          (json['audioSortFilterParmsPlaylistDownloadView'] != null)
-              ? AudioSortFilterParameters.fromJson(
-                  json['audioSortFilterParmsPlaylistDownloadView'])
-              : null,
       audioSortFilterParmsNameForAudioPlayerView:
           json['audioSortFilterParmsNameAudioPlayerView'] ?? '',
-      audioSortFilterParmsForAudioPlayerView:
-          (json['audioSortFilterParmsAudioPlayerView'] != null)
-              ? AudioSortFilterParameters.fromJson(
-                  json['audioSortFilterParmsAudioPlayerView'])
-              : null,
       audioPlayingOrder: AudioPlayingOrder.values.firstWhere(
         (e) => e.toString().split('.').last == json['audioPlayingOrder'],
         orElse: () => AudioPlayingOrder.ascending,
@@ -198,12 +167,8 @@ class Playlist {
       'currentOrPastPlayableAudioIndex': currentOrPastPlayableAudioIndex,
       'audioSortFilterParmsNamePlaylistDownloadView':
           audioSortFilterParmsNameForPlaylistDownloadView,
-      'audioSortFilterParmsPlaylistDownloadView':
-          audioSortFilterParmsForPlaylistDownloadView?.toJson(),
       'audioSortFilterParmsNameAudioPlayerView':
           audioSortFilterParmsNameForAudioPlayerView,
-      'audioSortFilterParmsAudioPlayerView':
-          audioSortFilterParmsForAudioPlayerView?.toJson(),
       'audioPlayingOrder': audioPlayingOrder.toString().split('.').last,
     };
   }
@@ -667,15 +632,9 @@ class Playlist {
     isSelected = replacedPlaylist.isSelected;
     currentOrPastPlayableAudioIndex =
         replacedPlaylist.currentOrPastPlayableAudioIndex;
-
     audioSortFilterParmsNameForPlaylistDownloadView =
         replacedPlaylist.audioSortFilterParmsNameForPlaylistDownloadView;
-    audioSortFilterParmsForPlaylistDownloadView =
-        replacedPlaylist.audioSortFilterParmsForPlaylistDownloadView;
-
     audioSortFilterParmsNameForAudioPlayerView =
         replacedPlaylist.audioSortFilterParmsNameForAudioPlayerView;
-    audioSortFilterParmsForAudioPlayerView =
-        replacedPlaylist.audioSortFilterParmsForAudioPlayerView;
   }
 }

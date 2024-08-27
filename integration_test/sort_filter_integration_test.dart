@@ -1862,7 +1862,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
 
         // Verify that the dropdown button has been updated with the
         // 'applied' sort/filter parms selected
-        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle( // ERROR
           tester: tester,
           dropdownButtonSelectedTitle: appliedEnglishTitle,
         );

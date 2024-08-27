@@ -443,11 +443,6 @@ void main() {
 
       testPlaylist.downloadedAudioLst = [audio1, audio2];
       testPlaylist.playableAudioLst = [audio2];
-
-      testPlaylist.audioSortFilterParmsForPlaylistDownloadView =
-          createAudioSortFilterParameters();
-      testPlaylist.audioSortFilterParmsForAudioPlayerView =
-          createAudioSortFilterParameters();
           
       // Save Playlist to a file
       JsonDataService.saveToFile(model: testPlaylist, path: filePath);
@@ -523,11 +518,6 @@ void main() {
       );
 
       testPlaylist.downloadPath = 'path/to/downloads';
-
-      testPlaylist.audioSortFilterParmsForPlaylistDownloadView =
-          createAudioSortFilterParameters();
-      testPlaylist.audioSortFilterParmsForAudioPlayerView =
-          createAudioSortFilterParameters();
 
       // Save Playlist to a file
       JsonDataService.saveToFile(model: testPlaylist, path: filePath);

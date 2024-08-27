@@ -690,13 +690,6 @@ class PlaylistListVM extends ChangeNotifier {
             _audioSortFilterParameters =
                 _settingsDataService.namedAudioSortFilterParametersMap[
                     audioSortFilterParmsNameForPlaylistDownloadView];
-          } else {
-            // If audioSortFilterParmsForPlaylistDownloadView is not null,
-            // this means that the user has defined a playlist download
-            // view sort filter parameters instance applicable automatically
-            // to the individual playlist only.
-            _audioSortFilterParameters =
-                selectedPlaylist.audioSortFilterParmsForPlaylistDownloadView;
           }
           break;
         case AudioLearnAppViewType.audioPlayerView:
@@ -712,13 +705,6 @@ class PlaylistListVM extends ChangeNotifier {
             _audioSortFilterParameters =
                 _settingsDataService.namedAudioSortFilterParametersMap[
                     audioSortFilterParmsNameForAudioPlayerView];
-          } else {
-            // If audioSortFilterParmsForAudioPlayerView is not null,
-            // this means that the user has defined a playlist download
-            // view sort filter parameters instance applicable automatically
-            // to the individual playlist only.
-            _audioSortFilterParameters =
-                selectedPlaylist.audioSortFilterParmsForAudioPlayerView;
           }
           break;
         default:
@@ -916,29 +902,10 @@ class PlaylistListVM extends ChangeNotifier {
       if (audioLearnAppViewType == AudioLearnAppViewType.playlistDownloadView) {
         selectedPlaylistAudioSortFilterParmsNameSetByUser =
             selectedPlaylist.audioSortFilterParmsNameForPlaylistDownloadView;
-        if (selectedPlaylistAudioSortFilterParmsNameSetByUser.isEmpty) {
-          if (selectedPlaylist.audioSortFilterParmsForPlaylistDownloadView !=
-              null) {
-            // here, the user did save the applied (not named) sort and filter
-            // parameters to the playlist json file for the playlist download
-            // view.
-            selectedPlaylistAudioSortFilterParmsNameSetByUser =
-                translatedAppliedSortFilterParmsName;
-          }
-        }
       } else {
         // for AudioLearnAppViewType.audioPlayerView
         selectedPlaylistAudioSortFilterParmsNameSetByUser =
             selectedPlaylist.audioSortFilterParmsNameForAudioPlayerView;
-        if (selectedPlaylistAudioSortFilterParmsNameSetByUser.isEmpty) {
-          if (selectedPlaylist.audioSortFilterParmsForAudioPlayerView != null) {
-            // here, the user did save the applied (not named) sort and filter
-            // parameters to the playlist json file for the audio player
-            // view.
-            selectedPlaylistAudioSortFilterParmsNameSetByUser =
-                translatedAppliedSortFilterParmsName;
-          }
-        }
       }
     }
 
@@ -1052,73 +1019,39 @@ class PlaylistListVM extends ChangeNotifier {
   /// to playlist' menu item in the audio item menu button present in the
   /// playlist download view and in the audio player view.
   ///
-  /// {isAppliedSortFilterParmsNameSelected} is true if the user selected
-  /// the 'applied' or 'appliqué' sort/filter parameters name in the
-  /// sort/filter dropdown button located in the playlist download view or
-  /// in the audio player view. In this case, the 'applied'' sort/filter
-  /// parameters are set in the playlist and the playlist sort/filter parameters
-  /// name is set to ''.
-  ///
-  /// If {isAppliedSortFilterParmsNameSelected} is false, then the sort/filter
-  /// parameters name selected by the user in the sort/filter dropdown button
-  /// is set in the playlist and the playlist sort/filter parameters are set to
-  /// null.
+  /// The sort/filter parms name was selected by the user in the sort/filter
+  /// dropdown button. The selected sort/filter parms name is saved in the
+  /// playlist json file.
   ///
   /// The actions above are done for the playlist download view and/or for the
   /// audio player view.
   ///
   /// Finally, the playlist json file is saved.
   void savePlaylistAudioSortFilterParmsToPlaylist({
-    bool isAppliedSortFilterParmsNameSelected = false,
     String sortFilterParmsNameToSave = '',
     bool forPlaylistDownloadView = false,
     bool forAudioPlayerView = false,
   }) {
     Playlist playlist = getSelectedPlaylists()[0];
 
-    if (isAppliedSortFilterParmsNameSelected) {
-      // Saving the 'applied' sort/filter parameters in the playlist
+    // A named sort/filter parms is saved in the playlist json file ...
+    if (forPlaylistDownloadView) {
+      playlist.audioSortFilterParmsNameForPlaylistDownloadView =
+          sortFilterParmsNameToSave;
+    }
+
+    if (forAudioPlayerView) {
+      playlist.audioSortFilterParmsNameForAudioPlayerView =
+          sortFilterParmsNameToSave;
+
       AudioSortFilterParameters audioSortFilterParms =
           getAudioSortFilterParameters(
               audioSortFilterParametersName: sortFilterParmsNameToSave);
 
-      if (forPlaylistDownloadView) {
-        playlist.audioSortFilterParmsNameForPlaylistDownloadView = '';
-        playlist.audioSortFilterParmsForPlaylistDownloadView =
-            audioSortFilterParms;
-      }
-
-      if (forAudioPlayerView) {
-        playlist.audioSortFilterParmsNameForAudioPlayerView = '';
-        playlist.audioSortFilterParmsForAudioPlayerView = audioSortFilterParms;
-
-        _improveDefaultAudioPlayingOrder(
-          playlist: playlist,
-          audioSortFilterParms: audioSortFilterParms,
-        );
-      }
-    } else {
-      // A named sort/filter parms is saved in the playlist json file ...
-      if (forPlaylistDownloadView) {
-        playlist.audioSortFilterParmsNameForPlaylistDownloadView =
-            sortFilterParmsNameToSave;
-        playlist.audioSortFilterParmsForPlaylistDownloadView = null;
-      }
-
-      if (forAudioPlayerView) {
-        playlist.audioSortFilterParmsNameForAudioPlayerView =
-            sortFilterParmsNameToSave;
-        playlist.audioSortFilterParmsForAudioPlayerView = null;
-
-        AudioSortFilterParameters audioSortFilterParms =
-            getAudioSortFilterParameters(
-                audioSortFilterParametersName: sortFilterParmsNameToSave);
-
-        _improveDefaultAudioPlayingOrder(
-          playlist: playlist,
-          audioSortFilterParms: audioSortFilterParms,
-        );
-      }
+      _improveDefaultAudioPlayingOrder(
+        playlist: playlist,
+        audioSortFilterParms: audioSortFilterParms,
+      );
     }
 
     JsonDataService.saveToFile(
@@ -1618,15 +1551,10 @@ class PlaylistListVM extends ChangeNotifier {
   /// This method returns the name of the sort and filter parameters
   /// which has been saved in the playlist json file.
   ///
-  /// If an unamed sort filter parameters instance was applied to the
-  /// listenable audio list, then the translated name of the applied sort
-  /// filter parameters is returned.
-  ///
   /// If no sort filter parameters were saved in the playlist json file,
   /// then the translated name of the default sort filter parameter
   /// is returned.
   String getAudioPlayerViewSortFilterName({
-    required String translatedAppliedSFparmsName,
     required String translatedDefaultSFparmsName,
   }) {
     Playlist selectedPlaylist = getSelectedPlaylists()[0];
@@ -1634,11 +1562,7 @@ class PlaylistListVM extends ChangeNotifier {
         selectedPlaylist.audioSortFilterParmsNameForAudioPlayerView;
 
     if (audioSortFilterParmsName.isEmpty) {
-      if (selectedPlaylist.audioSortFilterParmsForAudioPlayerView != null) {
-        audioSortFilterParmsName = translatedAppliedSFparmsName;
-      } else {
-        audioSortFilterParmsName = translatedDefaultSFparmsName;
-      }
+      audioSortFilterParmsName = translatedDefaultSFparmsName;
     }
 
     return audioSortFilterParmsName;

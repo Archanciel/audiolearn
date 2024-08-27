@@ -126,9 +126,6 @@ class _AudioPlayableListDialogWidgetState
                         TextSpan(
                           text:
                               "(${playlistListVMlistenTrue.getAudioPlayerViewSortFilterName(
-                            translatedAppliedSFparmsName:
-                                AppLocalizations.of(context)!
-                                    .sortFilterParametersAppliedName,
                             translatedDefaultSFparmsName:
                                 AppLocalizations.of(context)!
                                     .sortFilterParametersDefaultName,
