@@ -4889,6 +4889,58 @@ void playlistDownloadViewSortFilterIntregrationTest() {
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
+        // Then go to the audio player view
+        Finder appScreenNavigationButton =
+            find.byKey(const ValueKey('audioPlayerViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        // Now we open the AudioPlayableListDialogWidget
+        // and verify the the displayed audio titles
+
+        await tester.tap(find.text(
+            "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique\n6:29"));
+        await tester.pumpAndSettle();
+
+        RichText dialogTitle = tester.widget<RichText>(
+            find.byKey(const ValueKey('audioPlayableListDialogTitle')));
+
+        // Extract the main TextSpan
+        final TextSpan textSpan = dialogTitle.text as TextSpan;
+
+        // Verify the main text content
+        expect(textSpan.text,
+            'Select an audio'); // Replace with actual expected text
+
+        // Verify the nested TextSpan content (children)
+        final TextSpan nestedTextSpan = textSpan.children![1] as TextSpan;
+
+        expect(nestedTextSpan.text, '(default)');
+
+        audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
+          "Really short video",
+          "morning _ cinematic video",
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          "Les besoins artificiels par R.Keucheyan",
+          "La résilience insulaire par Fiona Roche",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        ];
+
+        IntegrationTestUtil.checkAudioTitlesOrderInListBody(
+          tester: tester,
+          audioTitlesOrderLst:
+              audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+        );
+
+        // Tap on the Close button to close the AudioPlayableListDialogWidget
+        await tester.tap(find.byKey(const Key('closeTextButton')));
+        await tester.pumpAndSettle();
+
+        // Return to the playlist download view
+        appScreenNavigationButton =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
 
         // Now switch back to the 'S8 audio' playlist
         await switchToPlaylist(

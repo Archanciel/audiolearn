@@ -113,6 +113,7 @@ class _AudioPlayableListDialogWidgetState
                         180, // Set the maximum width for the RichText here
                   ),
                   child: RichText(
+                    key: const Key('audioPlayableListDialogTitle'),
                     text: TextSpan(
                       text: AppLocalizations.of(context)!
                           .audioOneSelectedDialogTitle,
