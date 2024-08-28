@@ -410,6 +410,6 @@
   "clickToSetAscendingOrDescendingPlayingOrderTooltip": "Cliquez pour définir l'ordre de lecture croissant ou décroissant.",
   "removeSortFilterAudiosOptionsFromPlaylistMenu": "Eliminer les options tri/filtre de la playlist",
   "removeSortFilterOptionsFromPlaylist": "De la playlist \"{title}\"",
-  "removeSortFilterOptionsFromPlaylistDialogTitle": "Eliminer les options de tri et de filtre",
+  "removeSortFilterOptionsFromPlaylistDialogTitle": "Eliminer les options de tri et de filtre \"{sortFilterParmsName}\"",
   "fromScreen": "Sur l'écran \"{screenName}\""
 }

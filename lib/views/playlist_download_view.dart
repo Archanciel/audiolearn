@@ -1009,7 +1009,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
               key: const Key(
                   'remove_sort_and_filter_audio_parms_from_playlist_item'),
               enabled: (playlistListVMlistenFalse
-                  .areButtonsApplicableToAudioEnabled),
+                  .getSortFilterParmsNameApplicationToCurrentPlaylist()[2]
+                  .isNotEmpty),
               value: PopupMenuButtonType.removeSortFilterAudioParmsFromPlaylist,
               child: Text(AppLocalizations.of(context)!
                   .removeSortFilterAudiosOptionsFromPlaylistMenu),
@@ -1129,9 +1130,18 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                     false, // This line prevents the dialog from closing
                 // when tapping outside the dialog
                 builder: (BuildContext context) {
+                  List<dynamic> sortFilterParmsNameAppliedToCurrentPlaylist =
+                      playlistListVMlistenFalse
+                          .getSortFilterParmsNameApplicationToCurrentPlaylist();
                   return PlaylistManageSortFilterOptionsDialogWidget(
                     playlistTitle:
                         playlistListVMlistenFalse.uniqueSelectedPlaylist!.title,
+                    sortFilterParametersName:
+                        sortFilterParmsNameAppliedToCurrentPlaylist[2],
+                    sortFilterAppliedToPlaylistDownloadView:
+                        sortFilterParmsNameAppliedToCurrentPlaylist[0],
+                    sortFilterAppliedToAudioPlayerView:
+                        sortFilterParmsNameAppliedToCurrentPlaylist[1],
                     isSaveApplied: false, // SF options remove is applied ...
                   );
                 },

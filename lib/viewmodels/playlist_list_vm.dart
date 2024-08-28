@@ -1574,4 +1574,23 @@ class PlaylistListVM extends ChangeNotifier {
 
     return audioSortFilterParmsName;
   }
+
+  List<dynamic> getSortFilterParmsNameApplicationToCurrentPlaylist() {
+    final String audioSortFilterParmsNameForPlaylistDownloadView =
+        _uniqueSelectedPlaylist!
+            .audioSortFilterParmsNameForPlaylistDownloadView;
+    final String audioSortFilterParmsNameForAudioPlayerView =
+        _uniqueSelectedPlaylist!.audioSortFilterParmsNameForAudioPlayerView;
+    final bool audioSortFilterParmsNameForPlaylistDownloadViewIsNotEmpty =
+        audioSortFilterParmsNameForPlaylistDownloadView.isNotEmpty;
+    final List<dynamic> returnedResults = [
+      audioSortFilterParmsNameForPlaylistDownloadViewIsNotEmpty,
+      audioSortFilterParmsNameForAudioPlayerView.isNotEmpty,
+      (audioSortFilterParmsNameForPlaylistDownloadViewIsNotEmpty)
+          ? audioSortFilterParmsNameForPlaylistDownloadView
+          : audioSortFilterParmsNameForAudioPlayerView,
+    ];
+
+    return returnedResults;
+  }
 }

@@ -19,12 +19,16 @@ class PlaylistManageSortFilterOptionsDialogWidget extends StatefulWidget {
   final String playlistTitle;
   final String sortFilterParametersName;
   final bool isSaveApplied;
+  final bool sortFilterAppliedToPlaylistDownloadView;
+  final bool sortFilterAppliedToAudioPlayerView;
 
   const PlaylistManageSortFilterOptionsDialogWidget({
     super.key,
     required this.playlistTitle,
-    this.sortFilterParametersName = '',
+    required this.sortFilterParametersName,
     this.isSaveApplied = true,
+    this.sortFilterAppliedToPlaylistDownloadView = false,
+    this.sortFilterAppliedToAudioPlayerView = false,
   });
 
   @override
@@ -37,8 +41,18 @@ class _PlaylistManageSortFilterOptionsDialogWidgetState
     with ScreenMixin {
   final FocusNode _focusNodeDialog = FocusNode();
 
-  bool _applySortFilterToAudioPlayerView = false;
   bool _applySortFilterToPlaylistDownloadView = false;
+  bool _applySortFilterToAudioPlayerView = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _applySortFilterToPlaylistDownloadView =
+        widget.sortFilterAppliedToPlaylistDownloadView;
+    _applySortFilterToAudioPlayerView =
+        widget.sortFilterAppliedToAudioPlayerView;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +85,8 @@ class _PlaylistManageSortFilterOptionsDialogWidgetState
                   .saveSortFilterOptionsToPlaylistDialogTitle(
                       widget.sortFilterParametersName)
               : AppLocalizations.of(context)!
-                  .removeSortFilterOptionsFromPlaylistDialogTitle,
+                  .removeSortFilterOptionsFromPlaylistDialogTitle(
+                      widget.sortFilterParametersName),
         ),
         actionsPadding: kDialogActionsPadding,
         content: SingleChildScrollView(
