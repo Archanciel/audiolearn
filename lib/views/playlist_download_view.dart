@@ -22,7 +22,7 @@ import 'widgets/confirm_action_dialog_widget.dart';
 import 'widgets/playlist_list_item_widget.dart';
 import 'widgets/playlist_one_selectable_dialog_widget.dart';
 import 'widgets/audio_sort_filter_dialog_widget.dart';
-import 'widgets/playlist_save_sort_filter_options_dialog_widget.dart';
+import 'widgets/playlist_manage_sort_filter_options_dialog_widget.dart';
 
 class PlaylistDownloadView extends StatefulWidget {
   final SettingsDataService settingsDataService;
@@ -801,7 +801,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
               // on sort and filter dialog OPENED BY EDITING A
               // SORT AND FILTER DROPDOWN MENU ITEM
               if (filterSortAudioAndParmLst[0] == 'delete') {
-                // user clicked on Delete button
+                // user clicked on Delete button. The deleted sort
+                // filter parameters was removed from the settings
+                // in the audio sort filter dialog.
 
                 // selecting the default sort and filter
                 // parameters drop down button item
@@ -1003,6 +1005,15 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
               child: Text(AppLocalizations.of(context)!
                   .saveSortFilterAudiosOptionsToPlaylistMenu),
             ),
+            PopupMenuItem<PopupMenuButtonType>(
+              key: const Key(
+                  'remove_sort_and_filter_audio_parms_from_playlist_item'),
+              enabled: (playlistListVMlistenFalse
+                  .areButtonsApplicableToAudioEnabled),
+              value: PopupMenuButtonType.removeSortFilterAudioParmsFromPlaylist,
+              child: Text(AppLocalizations.of(context)!
+                  .removeSortFilterAudiosOptionsFromPlaylistMenu),
+            ),
           ];
         },
         onSelected: (PopupMenuButtonType value) {
@@ -1086,11 +1097,42 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                     false, // This line prevents the dialog from closing
                 // when tapping outside the dialog
                 builder: (BuildContext context) {
-                  return PlaylistSaveSortFilterOptionsDialogWidget(
+                  return PlaylistManageSortFilterOptionsDialogWidget(
                     playlistTitle:
                         playlistListVMlistenFalse.uniqueSelectedPlaylist!.title,
                     sortFilterParametersName:
                         _selectedSortFilterParametersName ?? '',
+                  );
+                },
+              ).then((forViewLst) {
+                if (forViewLst == null) {
+                  // the user clicked on Cancel button
+                  return;
+                }
+
+                // if the user clicked on Save, not on Cancel button
+                String sortFilterParmsNameToSave = forViewLst[0];
+
+                playlistListVMlistenFalse
+                    .savePlaylistAudioSortFilterParmsToPlaylist(
+                  sortFilterParmsNameToSave:
+                      sortFilterParmsNameToSave, // dropdown menu
+                  forPlaylistDownloadView: forViewLst[1],
+                  forAudioPlayerView: forViewLst[2],
+                );
+              });
+              break;
+            case PopupMenuButtonType.removeSortFilterAudioParmsFromPlaylist:
+              showDialog<List<dynamic>>(
+                context: context,
+                barrierDismissible:
+                    false, // This line prevents the dialog from closing
+                // when tapping outside the dialog
+                builder: (BuildContext context) {
+                  return PlaylistManageSortFilterOptionsDialogWidget(
+                    playlistTitle:
+                        playlistListVMlistenFalse.uniqueSelectedPlaylist!.title,
+                    isSaveApplied: false, // SF options remove is applied ...
                   );
                 },
               ).then((forViewLst) {

@@ -89,6 +89,8 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
     );
   }
 
+  /// This method builds the audio item left menu which is displayed
+  /// when the user clicks on the audio item left menu icon.
   void _buildAudioListItemMenu({
     required BuildContext context,
     required Audio audio,

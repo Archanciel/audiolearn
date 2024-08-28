@@ -5,7 +5,7 @@ enum PopupMenuButtonType {
   openSortFilterAudioDialog,
   clearSortFilterAudioParmsHistory,
   saveSortFilterAudioParmsToPlaylist,
-  updatePlaylistJson,
+  removeSortFilterAudioParmsFromPlaylist,
 }
 
 enum AudioLearnAppViewType {

@@ -1269,4 +1269,18 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get clickToSetAscendingOrDescendingPlayingOrderTooltip =>
       "Click to set ascending or descending playing order.";
+
+  @override
+  String get removeSortFilterAudiosOptionsFromPlaylistMenu =>
+      "Remove sort/filter options from playlist";
+
+  @override
+  String removeSortFilterOptionsFromPlaylist(
+    Object title,
+  ) =>
+      "From playlist \"$title\"";
+
+  @override
+  String get removeSortFilterOptionsFromPlaylistDialogTitle =>
+      "Remove Sort/Filter";
 }

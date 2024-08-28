@@ -73,8 +73,6 @@ class _AudioSortFilterDialogWidgetState
   late bool _filterFullyListened;
   late bool _filterPartiallyListened;
   late bool _filterNotListened;
-  late bool _applySortFilterToPlaylistDownloadView;
-  late bool _applySortFilterToAudioPlayerView;
 
   final TextEditingController _startFileSizeController =
       TextEditingController();
@@ -214,15 +212,6 @@ class _AudioSortFilterDialogWidgetState
     _filterPartiallyListened =
         audioSortDefaultFilterParameters.filterPartiallyListened;
     _filterNotListened = audioSortDefaultFilterParameters.filterNotListened;
-
-    if (widget.audioLearnAppViewType ==
-        AudioLearnAppViewType.playlistDownloadView) {
-      _applySortFilterToPlaylistDownloadView = true;
-      _applySortFilterToAudioPlayerView = false;
-    } else {
-      _applySortFilterToPlaylistDownloadView = false;
-      _applySortFilterToAudioPlayerView = true;
-    }
   }
 
   @override
@@ -266,8 +255,6 @@ class _AudioSortFilterDialogWidgetState
     _endAudioDurationController.clear();
     _startFileSizeController.clear();
     _endFileSizeController.clear();
-    _applySortFilterToPlaylistDownloadView = false;
-    _applySortFilterToAudioPlayerView = false;
     _audioSortOptionButtonIconColor = kDarkAndLightDisabledIconColor;
 
     _initializeHistoricalAudioSortFilterParamsLeftIconColors();
@@ -305,8 +292,6 @@ class _AudioSortFilterDialogWidgetState
     _endAudioDurationController.clear();
     _startFileSizeController.clear();
     _endFileSizeController.clear();
-    _applySortFilterToPlaylistDownloadView = false;
-    _applySortFilterToAudioPlayerView = false;
 
     if (_selectedSortingItemLst.length > 1) {
       _audioSortOptionButtonIconColor = kDarkAndLightEnabledIconColor;
@@ -531,10 +516,6 @@ class _AudioSortFilterDialogWidgetState
                     const SizedBox(
                       height: kDialogTextFieldVerticalSeparation,
                     ),
-                    _buildApplySortFilterToViewCheckboxes(
-                      context,
-                      themeProviderVM,
-                    ),
                   ],
                 ),
               );
@@ -625,79 +606,6 @@ class _AudioSortFilterDialogWidgetState
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildApplySortFilterToViewCheckboxes(
-    BuildContext context,
-    ThemeProviderVM themeProviderVM,
-  ) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Tooltip(
-          message: AppLocalizations.of(context)!.applySortFilterToViewTooltip,
-          child: Text(
-            AppLocalizations.of(context)!.applySortFilterToView,
-            style: kDialogTitlesStyle,
-          ),
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              AppLocalizations.of(context)!.downloadAudioScreen,
-            ),
-            Checkbox(
-              key: const Key('playlistDownloadViewCheckbox'),
-              fillColor: WidgetStateColor.resolveWith(
-                (Set<WidgetState> states) {
-                  if (states.contains(WidgetState.disabled)) {
-                    return kDarkAndLightDisabledIconColor;
-                  }
-                  return kDarkAndLightEnabledIconColor;
-                },
-              ),
-              value: _applySortFilterToPlaylistDownloadView,
-              onChanged: (bool? newValue) {
-                setState(() {
-                  _applySortFilterToPlaylistDownloadView = newValue!;
-                });
-              },
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text(
-              AppLocalizations.of(context)!.audioPlayerScreen,
-            ),
-            Checkbox(
-              key: const Key('audioPlayerViewCheckbox'),
-              fillColor: WidgetStateColor.resolveWith(
-                (Set<WidgetState> states) {
-                  if (states.contains(WidgetState.disabled)) {
-                    return kDarkAndLightDisabledIconColor;
-                  }
-                  return kDarkAndLightEnabledIconColor;
-                },
-              ),
-              value: _applySortFilterToAudioPlayerView,
-              onChanged: (bool? newValue) {
-                setState(() {
-                  _applySortFilterToAudioPlayerView = newValue!;
-                });
-              },
-            ),
-          ],
-        )
-      ],
     );
   }
 

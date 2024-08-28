@@ -405,5 +405,8 @@
   "downloadAudioFromVideoUrlsInPlaylistTitle": "Download video audio to playlist \"{title}\"",
   "downloadAudioFromVideoUrlsInPlaylist": "Downloading {number} audio.",
   "notRedownloadAudioFilesInPlaylistDirectory": "{number} audio are already contained in the target playlist \"{playlistTitle}\" directory and so were not redownloaded.",
-  "clickToSetAscendingOrDescendingPlayingOrderTooltip": "Click to set ascending or descending playing order."
+  "clickToSetAscendingOrDescendingPlayingOrderTooltip": "Click to set ascending or descending playing order.",
+  "removeSortFilterAudiosOptionsFromPlaylistMenu": "Remove sort/filter options from playlist",
+  "removeSortFilterOptionsFromPlaylist": "From playlist \"{title}\"",
+  "removeSortFilterOptionsFromPlaylistDialogTitle": "Remove Sort/Filter options"
   }

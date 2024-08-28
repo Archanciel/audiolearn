@@ -1,6 +1,6 @@
 import 'package:audiolearn/services/json_data_service.dart';
 import 'package:audiolearn/services/settings_data_service.dart';
-import 'package:audiolearn/views/widgets/playlist_save_sort_filter_options_dialog_widget.dart';
+import 'package:audiolearn/views/widgets/playlist_manage_sort_filter_options_dialog_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -313,7 +313,7 @@ void audioPlayerViewSortFilterIntregrationTest() {
       await tester.pumpAndSettle();
 
       // Verify that the save SF parms dialog is displayed
-      expect(find.byType(PlaylistSaveSortFilterOptionsDialogWidget),
+      expect(find.byType(PlaylistManageSortFilterOptionsDialogWidget),
           findsOneWidget);
 
       // Verify the dialog title
