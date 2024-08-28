@@ -408,5 +408,6 @@
   "clickToSetAscendingOrDescendingPlayingOrderTooltip": "Click to set ascending or descending playing order.",
   "removeSortFilterAudiosOptionsFromPlaylistMenu": "Remove sort/filter options from playlist",
   "removeSortFilterOptionsFromPlaylist": "From playlist \"{title}\"",
-  "removeSortFilterOptionsFromPlaylistDialogTitle": "Remove Sort/Filter options"
+  "removeSortFilterOptionsFromPlaylistDialogTitle": "Remove Sort/Filter options",
+  "fromScreen": "On \"{screenName}\" screen"
   }

@@ -66,12 +66,12 @@ class _PlaylistManageSortFilterOptionsDialogWidgetState
       child: AlertDialog(
         title: Text(
           key: const Key('saveSortFilterOptionsToPlaylistDialogTitleKey'),
-          (widget.isSaveApplied) ?
-          AppLocalizations.of(context)!
-              .saveSortFilterOptionsToPlaylistDialogTitle(
-                  widget.sortFilterParametersName) :
-                  AppLocalizations.of(context)!
-              .removeSortFilterOptionsFromPlaylistDialogTitle,
+          (widget.isSaveApplied)
+              ? AppLocalizations.of(context)!
+                  .saveSortFilterOptionsToPlaylistDialogTitle(
+                      widget.sortFilterParametersName)
+              : AppLocalizations.of(context)!
+                  .removeSortFilterOptionsFromPlaylistDialogTitle,
         ),
         actionsPadding: kDialogActionsPadding,
         content: SingleChildScrollView(
@@ -87,7 +87,8 @@ class _PlaylistManageSortFilterOptionsDialogWidgetState
                     ? AppLocalizations.of(context)!
                         .saveSortFilterOptionsToPlaylist(widget.playlistTitle)
                     : AppLocalizations.of(context)!
-                        .removeSortFilterOptionsFromPlaylist(widget.playlistTitle),
+                        .removeSortFilterOptionsFromPlaylist(
+                            widget.playlistTitle),
               ),
               Column(
                 children: [
@@ -95,9 +96,13 @@ class _PlaylistManageSortFilterOptionsDialogWidgetState
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        AppLocalizations.of(context)!.forScreen(
-                            AppLocalizations.of(context)!
-                                .appBarTitleDownloadAudio),
+                        (widget.isSaveApplied)
+                            ? AppLocalizations.of(context)!.forScreen(
+                                AppLocalizations.of(context)!
+                                    .appBarTitleDownloadAudio)
+                            : AppLocalizations.of(context)!.fromScreen(
+                                AppLocalizations.of(context)!
+                                    .appBarTitleDownloadAudio),
                       ),
                       Checkbox(
                         key: const Key('playlistDownloadViewCheckbox'),
@@ -122,9 +127,13 @@ class _PlaylistManageSortFilterOptionsDialogWidgetState
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        AppLocalizations.of(context)!.forScreen(
-                            AppLocalizations.of(context)!
-                                .appBarTitleAudioPlayer),
+                        (widget.isSaveApplied)
+                            ? AppLocalizations.of(context)!.forScreen(
+                                AppLocalizations.of(context)!
+                                    .appBarTitleAudioPlayer)
+                            : AppLocalizations.of(context)!.fromScreen(
+                                AppLocalizations.of(context)!
+                                    .appBarTitleAudioPlayer),
                       ),
                       Checkbox(
                         key: const Key('audioPlayerViewCheckbox'),
