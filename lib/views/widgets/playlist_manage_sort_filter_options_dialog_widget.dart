@@ -8,26 +8,33 @@ import '../../views/screen_mixin.dart';
 import '../../services/settings_data_service.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 
-/// Dialog widget that allows the user to save the sort and
-/// filter options to a playlist so that they can be applied
-/// when the playlist is opened.
-class PlaylistSaveSortFilterOptionsDialogWidget extends StatefulWidget {
+/// Dialog widget that allows the user to save the sort filter options to
+/// a playlist so that they can be applied when the playlist is selected.
+/// The application can be set to the playlist download view and/or the audio
+/// player view.
+///
+/// The dialog also enables the user to remove the sort filter options from
+/// the playlist download view and/or the audio player view.
+class PlaylistManageSortFilterOptionsDialogWidget extends StatefulWidget {
   final String playlistTitle;
   final String sortFilterParametersName;
+  final bool isSaveApplied;
 
-  const PlaylistSaveSortFilterOptionsDialogWidget({
+  const PlaylistManageSortFilterOptionsDialogWidget({
     super.key,
     required this.playlistTitle,
-    required this.sortFilterParametersName,
+    this.sortFilterParametersName = '',
+    this.isSaveApplied = true,
   });
 
   @override
-  State<PlaylistSaveSortFilterOptionsDialogWidget> createState() =>
-      _PlaylistSaveSortFilterOptionsDialogWidgetState();
+  State<PlaylistManageSortFilterOptionsDialogWidget> createState() =>
+      _PlaylistManageSortFilterOptionsDialogWidgetState();
 }
 
-class _PlaylistSaveSortFilterOptionsDialogWidgetState
-    extends State<PlaylistSaveSortFilterOptionsDialogWidget> with ScreenMixin {
+class _PlaylistManageSortFilterOptionsDialogWidgetState
+    extends State<PlaylistManageSortFilterOptionsDialogWidget>
+    with ScreenMixin {
   final FocusNode _focusNodeDialog = FocusNode();
 
   bool _applySortFilterToAudioPlayerView = false;
@@ -59,9 +66,12 @@ class _PlaylistSaveSortFilterOptionsDialogWidgetState
       child: AlertDialog(
         title: Text(
           key: const Key('saveSortFilterOptionsToPlaylistDialogTitleKey'),
+          (widget.isSaveApplied) ?
           AppLocalizations.of(context)!
               .saveSortFilterOptionsToPlaylistDialogTitle(
-                  widget.sortFilterParametersName),
+                  widget.sortFilterParametersName) :
+                  AppLocalizations.of(context)!
+              .removeSortFilterOptionsFromPlaylistDialogTitle,
         ),
         actionsPadding: kDialogActionsPadding,
         content: SingleChildScrollView(
@@ -73,8 +83,11 @@ class _PlaylistSaveSortFilterOptionsDialogWidgetState
                 valueTextWidgetKey:
                     const Key('saveSortFilterOptionsToPlaylistTitleKey'),
                 context: context,
-                label: AppLocalizations.of(context)!
-                    .saveSortFilterOptionsToPlaylist(widget.playlistTitle),
+                label: (widget.isSaveApplied)
+                    ? AppLocalizations.of(context)!
+                        .saveSortFilterOptionsToPlaylist(widget.playlistTitle)
+                    : AppLocalizations.of(context)!
+                        .removeSortFilterOptionsFromPlaylist(widget.playlistTitle),
               ),
               Column(
                 children: [
