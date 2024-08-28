@@ -411,5 +411,6 @@
   "removeSortFilterAudiosOptionsFromPlaylistMenu": "Eliminer les options tri/filtre de la playlist",
   "removeSortFilterOptionsFromPlaylist": "De la playlist \"{title}\"",
   "removeSortFilterOptionsFromPlaylistDialogTitle": "Eliminer les options de tri et de filtre \"{sortFilterParmsName}\"",
-  "fromScreen": "Sur l'écran \"{screenName}\""
+  "fromScreen": "Sur l'écran \"{screenName}\"",
+  "removeButton": "Eliminer"
 }

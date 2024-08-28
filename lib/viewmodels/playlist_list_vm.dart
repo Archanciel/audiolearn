@@ -1060,6 +1060,44 @@ class PlaylistListVM extends ChangeNotifier {
     );
   }
 
+  void removeAudioSortFilterParmsFromPlaylist({
+    bool fromPlaylistDownloadView = false,
+    bool fromAudioPlayerView = false,
+  }) {
+    Playlist playlist = getSelectedPlaylists()[0];
+    String playlistTitle = playlist.title;
+
+    if (fromPlaylistDownloadView) {
+      _playlistAudioSFparmsNamesForPlaylistDownloadViewMap
+          .remove(playlistTitle);
+      playlist.audioSortFilterParmsNameForPlaylistDownloadView = '';
+
+      // necessary so that the default sort and filter parameters is
+      // applied to the playlist audio list. Causes the displayed playlist
+      // download view audio list to be sorted and filtered by the default
+      // sort and filter parameters. Also necessary so the sort filter
+      // dropdown button selects the default sort filter parameters.
+      _sortedFilteredSelectedPlaylistsPlayableAudios =
+          _audioSortFilterService.filterAndSortAudioLst(
+        audioLst: playlist.playableAudioLst,
+        audioSortFilterParameters:
+            AudioSortFilterParameters.createDefaultAudioSortFilterParameters(),
+      );
+    }
+
+    if (fromAudioPlayerView) {
+      _playlistAudioSFparmsNamesForAudioPlayerViewMap.remove(playlistTitle);
+      playlist.audioSortFilterParmsNameForAudioPlayerView = '';
+    }
+
+    JsonDataService.saveToFile(
+      model: playlist,
+      path: playlist.getPlaylistDownloadFilePathName(),
+    );
+
+    notifyListeners();
+  }
+
   /// Method called only if the saved SF parms are applied to the audio
   /// player view. The method improves the default audio playing order
   /// if the selected sort item is 'valid audio title' ascending.
@@ -1575,6 +1613,16 @@ class PlaylistListVM extends ChangeNotifier {
     return audioSortFilterParmsName;
   }
 
+  /// Method called when the user opens the
+  /// PlaylistManageSortFilterOptionsDialogWidget. The Method returns
+  /// a list of two bool and one String possibly empty.
+  ///
+  /// The returned list content is
+  /// [
+  ///   is audioSortFilterParmsName for playlist download view not empty,
+  ///   is audioSortFilterParmsName for audio player view not empty,
+  ///   the applied sort and filter parameters name
+  /// ]
   List<dynamic> getSortFilterParmsNameApplicationToCurrentPlaylist() {
     final String audioSortFilterParmsNameForPlaylistDownloadView =
         _uniqueSelectedPlaylist!

@@ -181,7 +181,9 @@ class _PlaylistManageSortFilterOptionsDialogWidgetState
               Navigator.of(context).pop(_createReturnedLst());
             },
             child: Text(
-              AppLocalizations.of(context)!.saveButton,
+              (widget.isSaveApplied) ?
+              AppLocalizations.of(context)!.saveButton :
+              AppLocalizations.of(context)!.removeButton,
               style: (themeProviderVM.currentTheme == AppTheme.dark)
                   ? kTextButtonStyleDarkMode
                   : kTextButtonStyleLightMode,

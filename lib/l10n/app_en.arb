@@ -409,5 +409,6 @@
   "removeSortFilterAudiosOptionsFromPlaylistMenu": "Remove sort/filter options from playlist",
   "removeSortFilterOptionsFromPlaylist": "From playlist \"{title}\"",
   "removeSortFilterOptionsFromPlaylistDialogTitle": "Remove Sort/Filter options \"{sortFilterParmsName}\"",
-  "fromScreen": "On \"{screenName}\" screen"
+  "fromScreen": "On \"{screenName}\" screen",
+  "removeButton": "Remove"
   }

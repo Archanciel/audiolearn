@@ -1112,12 +1112,11 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 }
 
                 // if the user clicked on Save, not on Cancel button
-                String sortFilterParmsNameToSave = forViewLst[0];
 
                 playlistListVMlistenFalse
                     .savePlaylistAudioSortFilterParmsToPlaylist(
                   sortFilterParmsNameToSave:
-                      sortFilterParmsNameToSave, // dropdown menu
+                      forViewLst[0], // sort filter parms name
                   forPlaylistDownloadView: forViewLst[1],
                   forAudioPlayerView: forViewLst[2],
                 );
@@ -1151,15 +1150,11 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                   return;
                 }
 
-                // if the user clicked on Save, not on Cancel button
-                String sortFilterParmsNameToSave = forViewLst[0];
-
+                // if the user clicked on Remove, not on Cancel button
                 playlistListVMlistenFalse
-                    .savePlaylistAudioSortFilterParmsToPlaylist(
-                  sortFilterParmsNameToSave:
-                      sortFilterParmsNameToSave, // dropdown menu
-                  forPlaylistDownloadView: forViewLst[1],
-                  forAudioPlayerView: forViewLst[2],
+                    .removeAudioSortFilterParmsFromPlaylist(
+                  fromPlaylistDownloadView: forViewLst[1],
+                  fromAudioPlayerView: forViewLst[2],
                 );
               });
               break;
