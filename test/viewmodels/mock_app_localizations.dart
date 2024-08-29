@@ -1281,6 +1281,17 @@ class MockAppLocalizations extends AppLocalizations {
       "From playlist \"$title\"";
 
   @override
-  String get removeSortFilterOptionsFromPlaylistDialogTitle =>
-      "Remove Sort/Filter";
+  String fromScreen(
+    Object screenName,
+  ) =>
+      "From \"$screenName\" screen";
+
+  @override
+  String removeSortFilterOptionsFromPlaylistDialogTitle(
+    Object sortFilterParmsName,
+  ) =>
+      "Remove Sort/Filter options \"$sortFilterParmsName\"";
+
+  @override
+  String get removeButton => "Remove";
 }
