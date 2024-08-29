@@ -5368,7 +5368,8 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           );
 
           // And verify the order of the playlist audio titles
-          List<String> audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
+          List<String>
+              audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
             "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
             "La surpopulation mondiale par Jancovici et Barrau",
             "La résilience insulaire par Fiona Roche",
@@ -5394,6 +5395,31 @@ void playlistDownloadViewSortFilterIntregrationTest() {
                 audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
           );
 
+          // Return to the playlist download view
+          Finder appScreenNavigationButton =
+              find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+          await tester.tap(appScreenNavigationButton);
+          await tester.pumpAndSettle();
+
+          // Now verify the save ... and remove ... audio popup menu items
+          // state
+
+          await verifyAudioPopupMenuItemState(
+            tester: tester,
+            menuItemKey: 'save_sort_and_filter_audio_parms_in_playlist_item',
+            isEnabled: false,
+          );
+
+          await verifyAudioPopupMenuItemState(
+            tester: tester,
+            doNotTapOnAudioPopupMenuButton: true, // since the audio popup menu
+            //                                       is already open, do not tap
+            //                                       on it again
+            menuItemKey:
+                'remove_sort_and_filter_audio_parms_from_playlist_item',
+            isEnabled: false,
+          );
+
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -5403,6 +5429,31 @@ void playlistDownloadViewSortFilterIntregrationTest() {
       });
     });
   });
+}
+
+Future<void> verifyAudioPopupMenuItemState({
+  required WidgetTester tester,
+  bool doNotTapOnAudioPopupMenuButton = false,
+  required String menuItemKey,
+  required bool isEnabled,
+}) async {
+  if (!doNotTapOnAudioPopupMenuButton) {
+    // Now open the audio popup menu
+    await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+    await tester.pumpAndSettle();
+  }
+
+  // And verify the 'Remove sort/filter options from playlist' menu item
+  // state
+  await tester.tap(find.byKey(Key(menuItemKey)));
+  await tester.pumpAndSettle();
+
+  // Retrieve the PopupMenuItem widget
+  final PopupMenuItem menuItem = tester.widget<PopupMenuItem>(find.byKey(
+      const Key('remove_sort_and_filter_audio_parms_from_playlist_item')));
+
+  // Check if the menu item is disabled
+  expect(menuItem.enabled, isEnabled);
 }
 
 void verifyAudioSortFilterParmsNameStoredInPlaylistJsonFile({
@@ -5509,7 +5560,7 @@ Future<void> selectAndRemoveSortFilterParmsToPlaylist({
   required WidgetTester tester,
   required String sortFilterParmsNameName,
   bool tapOnRemoveFromPlaylistDownloadViewCheckbox = false,
-  bool tapOnRemoveFromAudioPlayerViewCheckbox =false,
+  bool tapOnRemoveFromAudioPlayerViewCheckbox = false,
 }) async {
   // Tap on the current dropdown button item to open the dropdown
   // button items list
@@ -5535,8 +5586,8 @@ Future<void> selectAndRemoveSortFilterParmsToPlaylist({
   await tester.pumpAndSettle();
 
   // And open the 'Remove sort/filter options from playlist' dialog
-  await tester.tap(find
-      .byKey(const Key('remove_sort_and_filter_audio_parms_from_playlist_item')));
+  await tester.tap(find.byKey(
+      const Key('remove_sort_and_filter_audio_parms_from_playlist_item')));
   await tester.pumpAndSettle();
 
   if (tapOnRemoveFromPlaylistDownloadViewCheckbox) {
