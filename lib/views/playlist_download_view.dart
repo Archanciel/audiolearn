@@ -1009,8 +1009,10 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
               key: const Key(
                   'remove_sort_and_filter_audio_parms_from_playlist_item'),
               enabled: (playlistListVMlistenFalse
-                  .getSortFilterParmsNameApplicationToCurrentPlaylist()[2]
-                  .isNotEmpty),
+                  .getSortFilterParmsNameApplicationValuesToCurrentPlaylist()[0]
+                  .isNotEmpty), // this menu item is enabled if a sort filter
+              //                   parms is applied to the one or two views of
+              //                   the selected playlist
               value: PopupMenuButtonType.removeSortFilterAudioParmsFromPlaylist,
               child: Text(AppLocalizations.of(context)!
                   .removeSortFilterAudiosOptionsFromPlaylistMenu),
@@ -1131,16 +1133,16 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 builder: (BuildContext context) {
                   List<dynamic> sortFilterParmsNameAppliedToCurrentPlaylist =
                       playlistListVMlistenFalse
-                          .getSortFilterParmsNameApplicationToCurrentPlaylist();
+                          .getSortFilterParmsNameApplicationValuesToCurrentPlaylist();
                   return PlaylistManageSortFilterOptionsDialogWidget(
                     playlistTitle:
                         playlistListVMlistenFalse.uniqueSelectedPlaylist!.title,
                     sortFilterParametersName:
-                        sortFilterParmsNameAppliedToCurrentPlaylist[2],
-                    sortFilterAppliedToPlaylistDownloadView:
                         sortFilterParmsNameAppliedToCurrentPlaylist[0],
-                    sortFilterAppliedToAudioPlayerView:
+                    sortFilterAppliedToPlaylistDownloadView:
                         sortFilterParmsNameAppliedToCurrentPlaylist[1],
+                    sortFilterAppliedToAudioPlayerView:
+                        sortFilterParmsNameAppliedToCurrentPlaylist[2],
                     isSaveApplied: false, // SF options remove is applied ...
                   );
                 },
@@ -1151,9 +1153,11 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 }
 
                 // if the user clicked on Remove, not on Cancel button
+                bool isPlaylistDownloadViewSFParmsRemoved = forViewLst[1];
+
                 playlistListVMlistenFalse
                     .removeAudioSortFilterParmsFromPlaylist(
-                  fromPlaylistDownloadView: forViewLst[1],
+                  fromPlaylistDownloadView: isPlaylistDownloadViewSFParmsRemoved,
                   fromAudioPlayerView: forViewLst[2],
                 );
               });

@@ -1072,11 +1072,11 @@ class PlaylistListVM extends ChangeNotifier {
           .remove(playlistTitle);
       playlist.audioSortFilterParmsNameForPlaylistDownloadView = '';
 
-      // necessary so that the default sort and filter parameters is
-      // applied to the playlist audio list. Causes the displayed playlist
-      // download view audio list to be sorted and filtered by the default
-      // sort and filter parameters. Also necessary so the sort filter
-      // dropdown button selects the default sort filter parameters.
+      // necessary so that the default sort filter parameters is applied
+      // to the playlist audio list. Causes the displayed playlist download
+      // view audio list to be sorted and filtered by the default sort
+      // filter parameters. Also necessary so the sort filter dropdown
+      // button selects the default sort filter parameters.
       _sortedFilteredSelectedPlaylistsPlayableAudios =
           _audioSortFilterService.filterAndSortAudioLst(
         audioLst: playlist.playableAudioLst,
@@ -1619,24 +1619,36 @@ class PlaylistListVM extends ChangeNotifier {
   ///
   /// The returned list content is
   /// [
+  ///   the sort and filter parameters name applied to the playlist download
+  ///   view or/and to the audio player view or uniqually to the audio player
+  ///   view,
   ///   is audioSortFilterParmsName for playlist download view not empty,
   ///   is audioSortFilterParmsName for audio player view not empty,
-  ///   the applied sort and filter parameters name
   /// ]
-  List<dynamic> getSortFilterParmsNameApplicationToCurrentPlaylist() {
-    final String audioSortFilterParmsNameForPlaylistDownloadView =
-        _uniqueSelectedPlaylist!
-            .audioSortFilterParmsNameForPlaylistDownloadView;
-    final String audioSortFilterParmsNameForAudioPlayerView =
-        _uniqueSelectedPlaylist!.audioSortFilterParmsNameForAudioPlayerView;
-    final bool audioSortFilterParmsNameForPlaylistDownloadViewIsNotEmpty =
-        audioSortFilterParmsNameForPlaylistDownloadView.isNotEmpty;
+  List<dynamic> getSortFilterParmsNameApplicationValuesToCurrentPlaylist() {
+    String appliedAudioSortFilterParmsName = _uniqueSelectedPlaylist!
+        .audioSortFilterParmsNameForPlaylistDownloadView;
+    bool isAudioSortFilterParmsNameAppliedToPlaylistDownloadView = false;
+    bool isAudioSortFilterParmsNameAppliedToAudioPlayerView = false;
+
+    if (appliedAudioSortFilterParmsName.isNotEmpty) {
+      isAudioSortFilterParmsNameAppliedToPlaylistDownloadView = true;
+      if (_uniqueSelectedPlaylist!.audioSortFilterParmsNameForAudioPlayerView ==
+          appliedAudioSortFilterParmsName) {
+        isAudioSortFilterParmsNameAppliedToAudioPlayerView = true;
+      }
+    } else {
+      appliedAudioSortFilterParmsName =
+          _uniqueSelectedPlaylist!.audioSortFilterParmsNameForAudioPlayerView;
+      if (appliedAudioSortFilterParmsName.isNotEmpty) {
+        isAudioSortFilterParmsNameAppliedToAudioPlayerView = true;
+      }
+    }
+
     final List<dynamic> returnedResults = [
-      audioSortFilterParmsNameForPlaylistDownloadViewIsNotEmpty,
-      audioSortFilterParmsNameForAudioPlayerView.isNotEmpty,
-      (audioSortFilterParmsNameForPlaylistDownloadViewIsNotEmpty)
-          ? audioSortFilterParmsNameForPlaylistDownloadView
-          : audioSortFilterParmsNameForAudioPlayerView,
+      appliedAudioSortFilterParmsName,
+      isAudioSortFilterParmsNameAppliedToPlaylistDownloadView,
+      isAudioSortFilterParmsNameAppliedToAudioPlayerView,
     ];
 
     return returnedResults;
