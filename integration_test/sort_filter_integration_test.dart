@@ -5430,9 +5430,8 @@ void playlistDownloadViewSortFilterIntregrationTest() {
             '''Select the 'Title asc' sort/filter parms. Then, in 'S8 audio',
                save it only to playlist download view. Then remove 'Title asc'
                SF parms from playlist download view and verify that the 'default'
-               sort/filter parms is applied to the playlist download viewin the
-               'S8 audio' playlist.''',
-            (WidgetTester tester) async {
+               sort/filter parms is applied to the playlist download view in the
+               'S8 audio' playlist.''', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -5548,6 +5547,95 @@ void playlistDownloadViewSortFilterIntregrationTest() {
             rootPath: kPlaylistDownloadRootPathWindowsTest,
           );
         });
+        testWidgets(
+            '''Select the 'Title asc' sort/filter parms. Then, in 'S8 audio',
+               save it only to playlist download view. Then remove 'Title asc'
+               SF parms from playlist download view and verify that the 'default'
+               sort/filter parms is applied to the playlist download view in the
+               'S8 audio' playlist. Then verify the audio popup menu items state
+               without having gone to the audio player view.''',
+            (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          // Copy the test initial audio data to the app dir
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath:
+                "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_three_playlists_test",
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          final SettingsDataService settingsDataService = SettingsDataService(
+            sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
+          );
+
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the download app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+          await app.main(['test']);
+          await tester.pumpAndSettle();
+
+          const String titleAscSortFilterName = 'Title asc';
+
+          // Save the 'Title asc' sort/filter parms to the 'S8 audio' playlist
+          await selectAndSaveSortFilterParmsToPlaylist(
+            tester: tester,
+            sortFilterParmsNameName: titleAscSortFilterName,
+            saveToPlaylistDownloadView: true,
+            saveToAudioPlayerView: false,
+          );
+
+          // Now remove the 'Title asc' sort/filter parms from the 'S8 audio'
+          // playlist
+          await selectAndRemoveSortFilterParmsToPlaylist(
+            tester: tester,
+            sortFilterParmsNameName: titleAscSortFilterName,
+          );
+
+          // Verify that the 'default' dropdown button sort/filter parms is
+          // selected
+
+          const String defaultTitle = 'default';
+
+          IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+            tester: tester,
+            dropdownButtonSelectedTitle: defaultTitle,
+          );
+
+          // Now verify the save ... and remove ... audio popup menu items
+          // state
+
+          await verifyAudioPopupMenuItemState(
+            tester: tester,
+            menuItemKey: 'save_sort_and_filter_audio_parms_in_playlist_item',
+            isEnabled: false,
+          );
+
+          await verifyAudioPopupMenuItemState(
+            tester: tester,
+            doNotTapOnAudioPopupMenuButton: true, // since the audio popup menu
+            //                                       is already open, do not tap
+            //                                       on it again
+            menuItemKey:
+                'remove_sort_and_filter_audio_parms_from_playlist_item',
+            isEnabled: false,
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
       });
     });
   });
@@ -5565,14 +5653,9 @@ Future<void> verifyAudioPopupMenuItemState({
     await tester.pumpAndSettle();
   }
 
-  // And verify the 'Remove sort/filter options from playlist' menu item
-  // state
-  await tester.tap(find.byKey(Key(menuItemKey)));
-  await tester.pumpAndSettle();
-
   // Retrieve the PopupMenuItem widget
-  final PopupMenuItem menuItem = tester.widget<PopupMenuItem>(find.byKey(
-      const Key('remove_sort_and_filter_audio_parms_from_playlist_item')));
+  final PopupMenuItem menuItem =
+      tester.widget<PopupMenuItem>(find.byKey(Key(menuItemKey)));
 
   // Check if the menu item is disabled
   expect(menuItem.enabled, isEnabled);

@@ -1160,6 +1160,14 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                   fromPlaylistDownloadView: isPlaylistDownloadViewSFParmsRemoved,
                   fromAudioPlayerView: forViewLst[2],
                 );
+
+                if (isPlaylistDownloadViewSFParmsRemoved) {
+                  // selecting the default sort and filter parameters drop
+                  // down button item. Necessary so that the 'Save sort filter
+                  // options to playlist' menu item is now disabled.
+                  _selectedSortFilterParametersName =
+                      AppLocalizations.of(context)!.sortFilterParametersDefaultName;
+                }
               });
               break;
             default:
