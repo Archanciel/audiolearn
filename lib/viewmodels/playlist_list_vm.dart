@@ -1615,15 +1615,15 @@ class PlaylistListVM extends ChangeNotifier {
 
   /// Method called when the user opens the
   /// PlaylistManageSortFilterOptionsDialogWidget. The Method returns
-  /// a list of two bool and one String possibly empty.
+  /// a list of one String possibly empty two bool's.
   ///
   /// The returned list content is
   /// [
   ///   the sort and filter parameters name applied to the playlist download
-  ///   view or/and to the audio player view or uniqually to the audio player
+  ///   view or/and to the audio player view or uniquely to the audio player
   ///   view,
-  ///   is audioSortFilterParmsName for playlist download view not empty,
-  ///   is audioSortFilterParmsName for audio player view not empty,
+  ///   is audioSortFilterParmsName applied to playlist download view,
+  ///   is audioSortFilterParmsName applied to audio player view,
   /// ]
   List<dynamic> getSortFilterParmsNameApplicationValuesToCurrentPlaylist() {
     String appliedAudioSortFilterParmsName = _uniqueSelectedPlaylist!
@@ -1638,6 +1638,7 @@ class PlaylistListVM extends ChangeNotifier {
         isAudioSortFilterParmsNameAppliedToAudioPlayerView = true;
       }
     } else {
+      // isAudioSortFilterParmsNameAppliedToPlaylistDownloadView == false
       appliedAudioSortFilterParmsName =
           _uniqueSelectedPlaylist!.audioSortFilterParmsNameForAudioPlayerView;
       if (appliedAudioSortFilterParmsName.isNotEmpty) {
