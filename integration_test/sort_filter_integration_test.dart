@@ -4956,11 +4956,11 @@ void playlistDownloadViewSortFilterIntregrationTest() {
         testWidgets(
             '''Select the 'desc listened' sort/filter parms. Then, in 'S8 audio',
                save it only to playlist download view. Verify playlist json file
-               as well as the Save and Remove dialogs content. Then reopen the 'Save sort/filter
-               parameters to playlist' dialog and save it after unchecking the
-               'Download Audio' checkbox. Then verifying that the playlist json
-               file was not modified since in order to disable a saved playlist
-               SF parms, the Remove dialog must be used.
+               as well as the Save and Remove dialogs content. Then reopen the
+               'Save sort/filter parameters to playlist' dialog and save it after
+               unchecking the 'Download Audio' checkbox. Then verifying that the
+               playlist json file was not modified since in order to disable a
+               saved playlist SF parms, the Remove dialog must be used.
                
                Then, select 'Title asc' in the sort/filter dropdown button and
                open the Save dialog in order to save this SF parms to the audio
