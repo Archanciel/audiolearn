@@ -4952,6 +4952,132 @@ void playlistDownloadViewSortFilterIntregrationTest() {
       });
     });
     group('Saved to playlist named sort/filter parms', () {
+      group('Saving to playlist named sort/filter parms', () {
+        testWidgets(
+            '''Select the 'Title asc' sort/filter parms. Then, in 'S8 audio',
+               save it only to audio player view. Then reopen the 'Save sort/filter
+               options to playlist' dialog and verify that the 'Title asc' sort/filter
+               remove 'Title asc' SF parms from playlist download view and from
+               audio player view and verify that the 'default' sort/filter parms
+               is applied to the playlist download view as well as to the audio
+               player view in the 'S8 audio' playlist.''',
+            (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          // Copy the test initial audio data to the app dir
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath:
+                "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_three_playlists_test",
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          final SettingsDataService settingsDataService = SettingsDataService(
+            sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
+          );
+
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the download app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+          await app.main(['test']);
+          await tester.pumpAndSettle();
+
+          const String titleAscSortFilterName = 'Title asc';
+
+          // Save the 'Title asc' sort/filter parms to the 'S8 audio' playlist
+          await selectAndSaveSortFilterParmsToPlaylist(
+            tester: tester,
+            sortFilterParmsNameName: titleAscSortFilterName,
+            saveToPlaylistDownloadView: true,
+            saveToAudioPlayerView: true,
+          );
+
+          // Now remove the 'Title asc' sort/filter parms from the 'S8 audio'
+          // playlist
+          await selectAndRemoveSortFilterParmsToPlaylist(
+            tester: tester,
+            sortFilterParmsNameName: titleAscSortFilterName,
+          );
+
+          // Verify that the 'default' dropdown button sort/filter parms is
+          // selected
+
+          const String defaultTitle = 'default';
+
+          IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+            tester: tester,
+            dropdownButtonSelectedTitle: defaultTitle,
+          );
+
+          // And verify the order of the playlist audio titles
+          List<String>
+              audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
+            "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+            "La surpopulation mondiale par Jancovici et Barrau",
+            "La résilience insulaire par Fiona Roche",
+            "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+            "Les besoins artificiels par R.Keucheyan",
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          ];
+
+          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+            tester: tester,
+            audioTitlesOrderLst:
+                audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+          );
+
+          // Verify also the audio playable list dialog title and content
+          await verifyAudioPlayableList(
+            tester: tester,
+            currentAudioTitle:
+                "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik\n13:39",
+            sortFilterParmsName: 'default',
+            audioTitlesLst:
+                audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+          );
+
+          // Return to the playlist download view
+          Finder appScreenNavigationButton =
+              find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+          await tester.tap(appScreenNavigationButton);
+          await tester.pumpAndSettle();
+
+          // Now verify the save ... and remove ... audio popup menu items
+          // state
+
+          await verifyAudioPopupMenuItemState(
+            tester: tester,
+            menuItemKey: 'save_sort_and_filter_audio_parms_in_playlist_item',
+            isEnabled: false,
+          );
+
+          await verifyAudioPopupMenuItemState(
+            tester: tester,
+            doNotTapOnAudioPopupMenuButton: true, // since the audio popup menu
+            //                                       is already open, do not tap
+            //                                       on it again
+            menuItemKey:
+                'remove_sort_and_filter_audio_parms_from_playlist_item',
+            isEnabled: false,
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
+      });
       group('Deleting saved to playlist named sort/filter parms', () {
         testWidgets(
             '''Delete saved to playlist named sort/filter bug fix verification:

@@ -1614,8 +1614,9 @@ class PlaylistListVM extends ChangeNotifier {
   }
 
   /// Method called when the user opens the
-  /// PlaylistManageSortFilterOptionsDialogWidget. The Method returns
-  /// a list of one String possibly empty two bool's.
+  /// PlaylistManageSortFilterOptionsDialogWidget. The passed parameter
+  /// {selectzedSortFilterParmsName} contains the name of the sort filter
+  /// parameters selected by the user in the dropdown button.
   ///
   /// The returned list content is
   /// [
@@ -1625,29 +1626,32 @@ class PlaylistListVM extends ChangeNotifier {
   ///   is audioSortFilterParmsName applied to playlist download view,
   ///   is audioSortFilterParmsName applied to audio player view,
   /// ]
-  List<dynamic> getSortFilterParmsNameApplicationValuesToCurrentPlaylist() {
-    String appliedAudioSortFilterParmsName = _uniqueSelectedPlaylist!
-        .audioSortFilterParmsNameForPlaylistDownloadView;
+  List<dynamic> getSortFilterParmsNameApplicationValuesToCurrentPlaylist({
+    required String selectedSortFilterParmsName,
+  }) {
+    // String selectedSortFilterParmsName = _uniqueSelectedPlaylist!
+    //     .audioSortFilterParmsNameForPlaylistDownloadView;
     bool isAudioSortFilterParmsNameAppliedToPlaylistDownloadView = false;
     bool isAudioSortFilterParmsNameAppliedToAudioPlayerView = false;
 
-    if (appliedAudioSortFilterParmsName.isNotEmpty) {
+    if (_uniqueSelectedPlaylist!
+            .audioSortFilterParmsNameForPlaylistDownloadView ==
+        selectedSortFilterParmsName) {
       isAudioSortFilterParmsNameAppliedToPlaylistDownloadView = true;
-      if (_uniqueSelectedPlaylist!.audioSortFilterParmsNameForAudioPlayerView ==
-          appliedAudioSortFilterParmsName) {
-        isAudioSortFilterParmsNameAppliedToAudioPlayerView = true;
-      }
-    } else {
-      // isAudioSortFilterParmsNameAppliedToPlaylistDownloadView == false
-      appliedAudioSortFilterParmsName =
-          _uniqueSelectedPlaylist!.audioSortFilterParmsNameForAudioPlayerView;
-      if (appliedAudioSortFilterParmsName.isNotEmpty) {
-        isAudioSortFilterParmsNameAppliedToAudioPlayerView = true;
-      }
+    }
+
+    if (_uniqueSelectedPlaylist!.audioSortFilterParmsNameForAudioPlayerView ==
+        selectedSortFilterParmsName) {
+      isAudioSortFilterParmsNameAppliedToAudioPlayerView = true;
+    }
+
+    if (!isAudioSortFilterParmsNameAppliedToAudioPlayerView &&
+        !isAudioSortFilterParmsNameAppliedToPlaylistDownloadView) {
+      selectedSortFilterParmsName = '';
     }
 
     final List<dynamic> returnedResults = [
-      appliedAudioSortFilterParmsName,
+      selectedSortFilterParmsName,
       isAudioSortFilterParmsNameAppliedToPlaylistDownloadView,
       isAudioSortFilterParmsNameAppliedToAudioPlayerView,
     ];

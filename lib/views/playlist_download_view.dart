@@ -1008,9 +1008,13 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             PopupMenuItem<PopupMenuButtonType>(
               key: const Key(
                   'remove_sort_and_filter_audio_parms_from_playlist_item'),
-              enabled: (playlistListVMlistenFalse
-                  .getSortFilterParmsNameApplicationValuesToCurrentPlaylist()[0]
-                  .isNotEmpty), // this menu item is enabled if a sort filter
+              enabled: (_selectedSortFilterParametersName != null &&
+                  playlistListVMlistenFalse
+                      .getSortFilterParmsNameApplicationValuesToCurrentPlaylist(
+                        selectedSortFilterParmsName:
+                            _selectedSortFilterParametersName!,
+                      )[0]
+                      .isNotEmpty), // this menu item is enabled if a sort filter
               //                   parms is applied to the one or two views of
               //                   the selected playlist
               value: PopupMenuButtonType.removeSortFilterAudioParmsFromPlaylist,
@@ -1094,17 +1098,39 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
               );
               break;
             case PopupMenuButtonType.saveSortFilterAudioParmsToPlaylist:
+              List<dynamic> sortFilterParmsNameAppliedToCurrentPlaylist =
+                  playlistListVMlistenFalse
+                      .getSortFilterParmsNameApplicationValuesToCurrentPlaylist(
+                selectedSortFilterParmsName: _selectedSortFilterParametersName!,
+              );
+              bool isAudioSortFilterParmsNameAppliedToPlaylistDownloadView =
+                  false;
+              bool isAudioSortFilterParmsNameAppliedToAudioPlayerView = false;
+
+              if (sortFilterParmsNameAppliedToCurrentPlaylist[0] ==
+                  _selectedSortFilterParametersName) {
+                // The currently selected in the dropdown menu sort and filter
+                // parameters are already applied to the selected playlist.
+                isAudioSortFilterParmsNameAppliedToPlaylistDownloadView =
+                    sortFilterParmsNameAppliedToCurrentPlaylist[1];
+                isAudioSortFilterParmsNameAppliedToAudioPlayerView =
+                    sortFilterParmsNameAppliedToCurrentPlaylist[2];
+              }
               showDialog<List<dynamic>>(
                 context: context,
                 barrierDismissible:
                     false, // This line prevents the dialog from closing
-                // when tapping outside the dialog
+                //            when tapping outside the dialog
                 builder: (BuildContext context) {
                   return PlaylistManageSortFilterOptionsDialogWidget(
                     playlistTitle:
                         playlistListVMlistenFalse.uniqueSelectedPlaylist!.title,
                     sortFilterParametersName:
                         _selectedSortFilterParametersName ?? '',
+                    sortFilterAppliedToPlaylistDownloadView:
+                        isAudioSortFilterParmsNameAppliedToPlaylistDownloadView,
+                    sortFilterAppliedToAudioPlayerView:
+                        isAudioSortFilterParmsNameAppliedToAudioPlayerView,
                   );
                 },
               ).then((forViewLst) {
@@ -1133,7 +1159,10 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 builder: (BuildContext context) {
                   List<dynamic> sortFilterParmsNameAppliedToCurrentPlaylist =
                       playlistListVMlistenFalse
-                          .getSortFilterParmsNameApplicationValuesToCurrentPlaylist();
+                          .getSortFilterParmsNameApplicationValuesToCurrentPlaylist(
+                    selectedSortFilterParmsName:
+                        _selectedSortFilterParametersName!,
+                  );
                   return PlaylistManageSortFilterOptionsDialogWidget(
                     playlistTitle:
                         playlistListVMlistenFalse.uniqueSelectedPlaylist!.title,
@@ -1157,7 +1186,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
                 playlistListVMlistenFalse
                     .removeAudioSortFilterParmsFromPlaylist(
-                  fromPlaylistDownloadView: isPlaylistDownloadViewSFParmsRemoved,
+                  fromPlaylistDownloadView:
+                      isPlaylistDownloadViewSFParmsRemoved,
                   fromAudioPlayerView: forViewLst[2],
                 );
 
@@ -1166,7 +1196,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                   // down button item. Necessary so that the 'Save sort filter
                   // options to playlist' menu item is now disabled.
                   _selectedSortFilterParametersName =
-                      AppLocalizations.of(context)!.sortFilterParametersDefaultName;
+                      AppLocalizations.of(context)!
+                          .sortFilterParametersDefaultName;
                 }
               });
               break;
