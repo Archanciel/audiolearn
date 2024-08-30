@@ -66,7 +66,7 @@ void audioPlayerViewSortFilterIntregrationTest() {
       await tester.pumpAndSettle();
 
       // tap on the sort option dropdown button to display the sort
-      // options
+      // parameters
       await tester.tap(find.byKey(const Key('sortingOptionDropdownButton')));
       await tester.pumpAndSettle();
 
@@ -990,7 +990,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
         // Then delete the "Audio download date" descending sort option
 
         // Find the Text with "Audio downl date" which is located in the
-        // selected sort options ListView
+        // selected sort parameters ListView
         final Finder texdtFinder = find.descendant(
           of: find.byKey(const Key('selectedSortingOptionsListView')),
           matching: find.text('Audio downl date'),
@@ -1296,7 +1296,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
         // Then delete the "Audio download date" descending sort option
 
         // Find the Text with "Audio downl date" which is located in the
-        // selected sort options ListView
+        // selected sort parameters ListView
         final Finder texdtFinder = find.descendant(
           of: find.byKey(const Key('selectedSortingOptionsListView')),
           matching: find.text('Audio downl date'),
@@ -1567,7 +1567,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
         // Then delete the "Audio download date" descending sort option
 
         // Find the Text with "Audio downl date" which is located in the
-        // selected sort options ListView
+        // selected sort parameters ListView
         Finder texdtFinder = find.descendant(
           of: find.byKey(const Key('selectedSortingOptionsListView')),
           matching: find.text('Audio downl date'),
@@ -1653,7 +1653,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
         await tester.pumpAndSettle();
 
         // Find the Text with 'Audio title' which is now located in the
-        // selected sort options ListView
+        // selected sort parameters ListView
         texdtFinder = find.descendant(
           of: find.byKey(const Key('selectedSortingOptionsListView')),
           matching: find.text('Audio title'),
@@ -1866,7 +1866,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
         // Then delete the "Audio download date" descending sort option
 
         // Find the Text with "Audio downl date" which is located in the
-        // selected sort options ListView
+        // selected sort parameters ListView
         Finder texdtFinder = find.descendant(
           of: find.byKey(const Key('selectedSortingOptionsListView')),
           matching: find.text('Audio downl date'),
@@ -1947,7 +1947,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
         await tester.pumpAndSettle();
 
         // Find the Text with 'Last listened date/time' which is located
-        // in the selected sort options ListView
+        // in the selected sort parameters ListView
         texdtFinder = find.descendant(
           of: find.byKey(const Key('selectedSortingOptionsListView')),
           matching: find.text('Last listened date/time'),
@@ -1978,7 +1978,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
         // Then delete the "Audio download date" descending sort option
 
         // Find the Text with "Audio downl date" which is located in the
-        // selected sort options ListView
+        // selected sort parameters ListView
         texdtFinder = find.descendant(
           of: find.byKey(const Key('selectedSortingOptionsListView')),
           matching: find.text('Audio downl date'),
@@ -2116,7 +2116,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
         // Then delete the "Audio download date" descending sort option
 
         // Find the Text with "Audio downl date" which is located in the
-        // selected sort options ListView
+        // selected sort parameters ListView
         Finder texdtFinder = find.descendant(
           of: find.byKey(const Key('selectedSortingOptionsListView')),
           matching: find.text('Audio downl date'),
@@ -2207,7 +2207,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
         await tester.pumpAndSettle();
 
         // Find the Text with 'Last listened date/time' which is located
-        // in the selected sort options ListView
+        // in the selected sort parameters ListView
         texdtFinder = find.descendant(
           of: find.byKey(const Key('selectedSortingOptionsListView')),
           matching: find.text('Last listened date/time'),
@@ -2238,7 +2238,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
         // Then delete the "Audio download date" descending sort option
 
         // Find the Text with "Audio downl date" which is located in the
-        // selected sort options ListView
+        // selected sort parameters ListView
         texdtFinder = find.descendant(
           of: find.byKey(const Key('selectedSortingOptionsListView')),
           matching: find.text('Audio downl date'),
@@ -2438,7 +2438,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           // Then delete the "Audio download date" descending sort option
 
           // Find the Text with "Audio downl date" which is located in the
-          // selected sort options ListView
+          // selected sort parameters ListView
           final Finder texdtFinder = find.descendant(
             of: find.byKey(const Key('selectedSortingOptionsListView')),
             matching: find.text('Audio downl date'),
@@ -2742,7 +2742,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           // Then delete the "Audio download date" descending sort option
 
           // Find the Text with "Audio downl date" which is located in the
-          // selected sort options ListView
+          // selected sort parameters ListView
           Finder texdtFinder = find.descendant(
             of: find.byKey(const Key('selectedSortingOptionsListView')),
             matching: find.text('Audio downl date'),
@@ -2828,7 +2828,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           // sort option
 
           // Find the Text with 'Audio title' which is now located in the
-          // selected sort options ListView
+          // selected sort parameters ListView
           texdtFinder = find.descendant(
             of: find.byKey(const Key('selectedSortingOptionsListView')),
             matching: find.text('Audio title'),
@@ -2858,7 +2858,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           // Then delete the "Audio download date" descending sort option
 
           // Find the Text with "Audio downl date" which is located in the
-          // selected sort options ListView
+          // selected sort parameters ListView
           texdtFinder = find.descendant(
             of: find.byKey(const Key('selectedSortingOptionsListView')),
             matching: find.text('Audio downl date'),
@@ -3169,7 +3169,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           // Then delete the "Audio download date" descending sort option
 
           // Find the Text with "Audio downl date" which is located in the
-          // selected sort options ListView
+          // selected sort parameters ListView
           final Finder texdtFinder = find.descendant(
             of: find.byKey(const Key('selectedSortingOptionsListView')),
             matching: find.text('Audio downl date'),
@@ -3433,7 +3433,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           // Then delete the "Audio download date" descending sort option
 
           // Find the Text with "Audio downl date" which is located in the
-          // selected sort options ListView
+          // selected sort parameters ListView
           final Finder texdtFinder = find.descendant(
             of: find.byKey(const Key('selectedSortingOptionsListView')),
             matching: find.text('Audio downl date'),
@@ -3799,7 +3799,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
             // Then delete the "Audio download date" descending sort option
 
             // Find the Text with "Audio downl date" which is located in the
-            // selected sort options ListView
+            // selected sort parameters ListView
             final Finder texdtFinder = find.descendant(
               of: find.byKey(const Key('selectedSortingOptionsListView')),
               matching: find.text('Audio downl date'),
@@ -3969,7 +3969,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           // Then delete the "Audio download date" descending sort option
 
           // Find the Text with "Audio downl date" which is located in the
-          // selected sort options ListView
+          // selected sort parameters ListView
           final Finder texdtFinder = find.descendant(
             of: find.byKey(const Key('selectedSortingOptionsListView')),
             matching: find.text('Date téléch audio'),
@@ -4268,7 +4268,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           // Then delete the "Date téléch audio" descending sort option
 
           // Find the Text with "Date téléch audio" which is located in the
-          // selected sort options ListView
+          // selected sort parameters ListView
           Finder texdtFinder = find.descendant(
             of: find.byKey(const Key('selectedSortingOptionsListView')),
             matching: find.text('Date téléch audio'),
@@ -4354,7 +4354,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           // sort option
 
           // Find the Text with 'Titre audio' which is now located in the
-          // selected sort options ListView
+          // selected sort parameters ListView
           texdtFinder = find.descendant(
             of: find.byKey(const Key('selectedSortingOptionsListView')),
             matching: find.text('Titre audio'),
@@ -4384,7 +4384,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           // Then delete the "Date téléch audio" descending sort option
 
           // Find the Text with "Date téléch audio" which is located in the
-          // selected sort options ListView
+          // selected sort parameters ListView
           texdtFinder = find.descendant(
             of: find.byKey(const Key('selectedSortingOptionsListView')),
             matching: find.text('Date téléch audio'),
@@ -4701,7 +4701,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           // Then delete the "Date téléch audio" descending sort option
 
           // Find the Text with "Date téléch audio" which is located in the
-          // selected sort options ListView
+          // selected sort parameters ListView
           final Finder texdtFinder = find.descendant(
             of: find.byKey(const Key('selectedSortingOptionsListView')),
             matching: find.text('Date téléch audio'),
@@ -4952,15 +4952,27 @@ void playlistDownloadViewSortFilterIntregrationTest() {
       });
     });
     group('Saved to playlist named sort/filter parms', () {
-      group('Saving to playlist named sort/filter parms', () {
+      group('Saving different named sort/filter parms to playlist views', () {
         testWidgets(
-            '''Select the 'Title asc' sort/filter parms. Then, in 'S8 audio',
-               save it only to audio player view. Then reopen the 'Save sort/filter
-               options to playlist' dialog and verify that the 'Title asc' sort/filter
-               remove 'Title asc' SF parms from playlist download view and from
-               audio player view and verify that the 'default' sort/filter parms
-               is applied to the playlist download view as well as to the audio
-               player view in the 'S8 audio' playlist.''',
+            '''Select the 'desc listened' sort/filter parms. Then, in 'S8 audio',
+               save it only to playlist download view. Verify playlist json file
+               as well as the Save and Remove dialogs content. Then reopen the 'Save sort/filter
+               parameters to playlist' dialog and save it after unchecking the
+               'Download Audio' checkbox. Then verifying that the playlist json
+               file was not modified since in order to disable a saved playlist
+               SF parms, the Remove dialog must be used.
+               
+               Then, select 'Title asc' in the sort/filter dropdown button and
+               open the Save dialog in order to save this SF parms to the audio
+               player view. Now verify the playlist json file as well as the
+               fact that the audio player view playable audio list is correctly
+               sorted.
+
+               Then restart the application. Verify that 'desc listened' is
+               selected. Open the Remove dialog to verify its content and remove
+               the 'desc listened' SF parms. Then verify that the 'default'
+               is applied to the playlist download view and not to the audio
+               player view. Verify also the playlist json file.''',
             (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
@@ -4991,21 +5003,167 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           await app.main(['test']);
           await tester.pumpAndSettle();
 
+          const String descListenedSortFilterName = 'desc listened';
           const String titleAscSortFilterName = 'Title asc';
 
-          // Save the 'Title asc' sort/filter parms to the 'S8 audio' playlist
+          // Save the 'desc listened' sort/filter parms to the 'S8 audio' playlist
           await selectAndSaveSortFilterParmsToPlaylist(
             tester: tester,
-            sortFilterParmsNameName: titleAscSortFilterName,
+            sortFilterParmsName: descListenedSortFilterName,
             saveToPlaylistDownloadView: true,
+            saveToAudioPlayerView: false,
+          );
+
+          // Verifying that the playlist json file only contains a SF name for
+          // the playlist download view and not for the audio player view.
+          IntegrationTestUtil
+              .verifyPlaylistDataElementsUpdatedInPlaylistJsonFile(
+            selectedPlaylistTitle: 'S8 audio',
+            audioSortFilterParmsNamePlaylistDownloadView:
+                descListenedSortFilterName,
+            audioSortFilterParmsNameAudioPlayerView: '',
+          );
+
+          // Now verify the save ... and remove ... audio popup menu items
+          // state
+
+          await verifyAudioPopupMenuItemState(
+            tester: tester,
+            menuItemKey: 'save_sort_and_filter_audio_parms_in_playlist_item',
+            isEnabled: true,
+          );
+
+          await verifyAudioPopupMenuItemState(
+            tester: tester,
+            doNotTapOnAudioPopupMenuButton: true, // since the audio popup menu
+            //                                       is already open, do not tap
+            //                                       on it again
+            menuItemKey:
+                'remove_sort_and_filter_audio_parms_from_playlist_item',
+            isEnabled: true,
+          );
+
+          // Click on playlist toggle button to close the audio menu
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+          // Verify the content of the save sort/filter parms dialog
+          await verifySaveSortFilterParmsToPlaylistDialog(
+            tester: tester,
+            playlistTitle: 'S8 audio',
+            sortFilterParmsName: descListenedSortFilterName,
+            forPlaylistDownloadViewCheckboxValue: true,
+            forAudioPlayerViewCheckboxValue: false,
+          );
+
+          // Now reopen the Save dialog, uncheck the 'Download Audio' screen
+          // checkbox and click on Save button.
+          await selectAndSaveSortFilterParmsToPlaylist(
+            tester: tester,
+            sortFilterParmsName: descListenedSortFilterName,
+            saveToPlaylistDownloadView: false,
+            saveToAudioPlayerView: false,
+          );
+
+          // Verifying that the playlist json file was not modified.
+          IntegrationTestUtil
+              .verifyPlaylistDataElementsUpdatedInPlaylistJsonFile(
+            selectedPlaylistTitle: 'S8 audio',
+            audioSortFilterParmsNamePlaylistDownloadView:
+                descListenedSortFilterName,
+            audioSortFilterParmsNameAudioPlayerView: '',
+          );
+
+          // Select and save the 'Title asc' sort/filter parms to the audio
+          // player view of 'S8 audio' playlist
+          await selectAndSaveSortFilterParmsToPlaylist(
+            tester: tester,
+            sortFilterParmsName: titleAscSortFilterName,
+            saveToPlaylistDownloadView: false,
             saveToAudioPlayerView: true,
           );
 
-          // Now remove the 'Title asc' sort/filter parms from the 'S8 audio'
-          // playlist
+          // Verifying that the playlist json file was correctly modified.
+          IntegrationTestUtil
+              .verifyPlaylistDataElementsUpdatedInPlaylistJsonFile(
+            selectedPlaylistTitle: 'S8 audio',
+            audioSortFilterParmsNamePlaylistDownloadView:
+                descListenedSortFilterName,
+            audioSortFilterParmsNameAudioPlayerView: titleAscSortFilterName,
+            audioPlayingOrder: AudioPlayingOrder.descending,
+          );
+
+          // Now go to the audio player view
+          Finder appScreenNavigationButton =
+              find.byKey(const ValueKey('audioPlayerViewIconButton'));
+          await tester.tap(appScreenNavigationButton);
+
+          List<String> audioTitlesSortedByTitleAscending = [
+            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+            "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+            "La résilience insulaire par Fiona Roche",
+            "La surpopulation mondiale par Jancovici et Barrau",
+            "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+            "Les besoins artificiels par R.Keucheyan"
+          ];
+
+          // Verify also the audio playable list dialog title and content
+          await verifyAudioPlayableList(
+            tester: tester,
+            currentAudioTitle:
+                "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik\n13:39",
+            sortFilterParmsName: titleAscSortFilterName,
+            audioTitlesLst: audioTitlesSortedByTitleAscending,
+          );
+        });
+        testWidgets(
+            '''Then restart the application. Verify that 'desc listened' is
+               selected. Open the Remove dialog to verify its content and remove
+               the 'desc listened' SF parms. Then verify that the 'default'
+               is applied to the playlist download view and not to the audio
+               player view. Verify also the playlist json file.''',
+            (WidgetTester tester) async {
+
+          final SettingsDataService settingsDataService = SettingsDataService(
+            sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
+          );
+
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the download app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+          await app.main(['test']);
+          await tester.pumpAndSettle();
+
+          const String descListenedSortFilterName = 'desc listened';
+          const String titleAscSortFilterName = 'Title asc';
+
+          // Verify that the 'desc listened' sort/filter parms is selected
+          IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+            tester: tester,
+            dropdownButtonSelectedTitle: descListenedSortFilterName,
+          );
+
+          // Now remove the 'desc listened' sort/filter parms from the
+          // 'Download Audio' screen 'S8 audio' playlist
           await selectAndRemoveSortFilterParmsToPlaylist(
             tester: tester,
-            sortFilterParmsNameName: titleAscSortFilterName,
+            sortFilterParmsNameName: descListenedSortFilterName,
+          );
+
+          // Verifying that the playlist json file was correctly modified.
+          IntegrationTestUtil
+              .verifyPlaylistDataElementsUpdatedInPlaylistJsonFile(
+            selectedPlaylistTitle: 'S8 audio',
+            audioSortFilterParmsNamePlaylistDownloadView: '',
+            audioSortFilterParmsNameAudioPlayerView: titleAscSortFilterName,
+            audioPlayingOrder: AudioPlayingOrder.descending,
           );
 
           // Verify that the 'default' dropdown button sort/filter parms is
@@ -5035,22 +5193,6 @@ void playlistDownloadViewSortFilterIntregrationTest() {
             audioTitlesOrderLst:
                 audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
           );
-
-          // Verify also the audio playable list dialog title and content
-          await verifyAudioPlayableList(
-            tester: tester,
-            currentAudioTitle:
-                "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik\n13:39",
-            sortFilterParmsName: 'default',
-            audioTitlesLst:
-                audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
-          );
-
-          // Return to the playlist download view
-          Finder appScreenNavigationButton =
-              find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-          await tester.tap(appScreenNavigationButton);
-          await tester.pumpAndSettle();
 
           // Now verify the save ... and remove ... audio popup menu items
           // state
@@ -5141,7 +5283,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
           await tester.pumpAndSettle();
 
-          // And open the 'Save sort/filter options to playlist' dialog
+          // And open the 'Save sort/filter parameters to playlist' dialog
           await tester.tap(find.byKey(
               const Key('save_sort_and_filter_audio_parms_in_playlist_item')));
           await tester.pumpAndSettle();
@@ -5271,7 +5413,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           // Save the 'Title asc' sort/filter parms to the 'S8 audio' playlist
           await selectAndSaveSortFilterParmsToPlaylist(
             tester: tester,
-            sortFilterParmsNameName: titleAscSortFilterName,
+            sortFilterParmsName: titleAscSortFilterName,
             saveToPlaylistDownloadView: true,
             saveToAudioPlayerView: true,
           );
@@ -5285,7 +5427,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           // Save the 'Title asc' sort/filter parms to the 'local' playlist
           await selectAndSaveSortFilterParmsToPlaylist(
             tester: tester,
-            sortFilterParmsNameName: titleAscSortFilterName,
+            sortFilterParmsName: titleAscSortFilterName,
             saveToPlaylistDownloadView: true,
             saveToAudioPlayerView: true,
           );
@@ -5471,7 +5613,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           // Save the 'Title asc' sort/filter parms to the 'S8 audio' playlist
           await selectAndSaveSortFilterParmsToPlaylist(
             tester: tester,
-            sortFilterParmsNameName: titleAscSortFilterName,
+            sortFilterParmsName: titleAscSortFilterName,
             saveToPlaylistDownloadView: true,
             saveToAudioPlayerView: true,
           );
@@ -5592,7 +5734,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           // Save the 'Title asc' sort/filter parms to the 'S8 audio' playlist
           await selectAndSaveSortFilterParmsToPlaylist(
             tester: tester,
-            sortFilterParmsNameName: titleAscSortFilterName,
+            sortFilterParmsName: titleAscSortFilterName,
             saveToPlaylistDownloadView: true,
             saveToAudioPlayerView: false,
           );
@@ -5715,7 +5857,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           // Save the 'Title asc' sort/filter parms to the 'S8 audio' playlist
           await selectAndSaveSortFilterParmsToPlaylist(
             tester: tester,
-            sortFilterParmsNameName: titleAscSortFilterName,
+            sortFilterParmsName: titleAscSortFilterName,
             saveToPlaylistDownloadView: true,
             saveToAudioPlayerView: false,
           );
@@ -5837,7 +5979,7 @@ void verifyAudioSortFilterParmsNameStoredInPlaylistJsonFile({
 
 Future<void> selectAndSaveSortFilterParmsToPlaylist({
   required WidgetTester tester,
-  required String sortFilterParmsNameName,
+  required String sortFilterParmsName,
   required bool saveToPlaylistDownloadView,
   required bool saveToAudioPlayerView,
 }) async {
@@ -5856,7 +5998,7 @@ Future<void> selectAndSaveSortFilterParmsToPlaylist({
   await tester.pumpAndSettle();
 
   // Find and select the sort filter parms item
-  Finder titleAscDropDownTextFinder = find.text(sortFilterParmsNameName).last;
+  Finder titleAscDropDownTextFinder = find.text(sortFilterParmsName).last;
   await tester.tap(titleAscDropDownTextFinder);
   await tester.pumpAndSettle();
 
@@ -5864,7 +6006,7 @@ Future<void> selectAndSaveSortFilterParmsToPlaylist({
   await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
   await tester.pumpAndSettle();
 
-  // And open the 'Save sort/filter options to playlist' dialog
+  // And open the 'Save sort/filter parameters to playlist' dialog
   await tester.tap(find
       .byKey(const Key('save_sort_and_filter_audio_parms_in_playlist_item')));
   await tester.pumpAndSettle();
@@ -5884,6 +6026,43 @@ Future<void> selectAndSaveSortFilterParmsToPlaylist({
   // Finally, click on save button
   await tester
       .tap(find.byKey(const Key('saveSortFilterOptionsToPlaylistSaveButton')));
+  await tester.pumpAndSettle();
+}
+
+Future<void> verifySaveSortFilterParmsToPlaylistDialog({
+  required WidgetTester tester,
+  required String playlistTitle,
+  required String sortFilterParmsName,
+  required bool forPlaylistDownloadViewCheckboxValue,
+  required bool forAudioPlayerViewCheckboxValue,
+}) async {
+  // Now open the audio popup menu
+  await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+  await tester.pumpAndSettle();
+
+  // And open the 'Save sort/filter parameters to playlist' dialog
+  await tester.tap(find
+      .byKey(const Key('save_sort_and_filter_audio_parms_in_playlist_item')));
+  await tester.pumpAndSettle();
+
+  expect(find.text(playlistTitle), findsOneWidget);
+  expect(find.text(sortFilterParmsName), findsOneWidget);
+  expect(
+    tester
+        .widget<Checkbox>(find.byKey(const Key('playlistDownloadViewCheckbox')))
+        .value,
+    forPlaylistDownloadViewCheckboxValue,
+  );
+  expect(
+    tester
+        .widget<Checkbox>(find.byKey(const Key('audioPlayerViewCheckbox')))
+        .value,
+    forAudioPlayerViewCheckboxValue,
+  );
+
+  // Finally, click on cancel button
+  await tester
+      .tap(find.byKey(const Key('sortFilterOptionsToPlaylistCancelButton')));
   await tester.pumpAndSettle();
 }
 
@@ -5916,7 +6095,7 @@ Future<void> selectAndRemoveSortFilterParmsToPlaylist({
   await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
   await tester.pumpAndSettle();
 
-  // And open the 'Remove sort/filter options from playlist' dialog
+  // And open the 'Remove sort/filter parameters from playlist' dialog
   await tester.tap(find.byKey(
       const Key('remove_sort_and_filter_audio_parms_from_playlist_item')));
   await tester.pumpAndSettle();
