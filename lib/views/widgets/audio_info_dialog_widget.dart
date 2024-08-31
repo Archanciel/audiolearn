@@ -83,6 +83,7 @@ class AudioInfoDialogWidget extends StatelessWidget with ScreenMixin {
   List<Widget> _createDownloadedAudioInfoLines(BuildContext context) {
     return <Widget>[
       createInfoRowFunction(
+          valueTextWidgetKey: const Key('originalVideoTitleKey'),
           context: context,
           label: AppLocalizations.of(context)!.originalVideoTitleLabel,
           value: audio.originalVideoTitle),
@@ -209,9 +210,10 @@ class AudioInfoDialogWidget extends StatelessWidget with ScreenMixin {
   List<Widget> _createImportedAudioInfoLines(BuildContext context) {
     return <Widget>[
       createInfoRowFunction(
+          valueTextWidgetKey: const Key('importedAudioTitleKey'),
           context: context,
           label: AppLocalizations.of(context)!.audioTitleLabel,
-          value: audio.originalVideoTitle),
+          value: audio.validVideoTitle),
       createInfoRowFunction(
           context: context,
           label: AppLocalizations.of(context)!.importedAudioDateTimeLabel,
