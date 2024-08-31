@@ -3265,7 +3265,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           );
         });
         testWidgets('''Change language and verify impact on sort/filter dropdown
-                     button default title.''', (WidgetTester tester) async {
+                       button default title.''', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -3380,7 +3380,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
         });
         testWidgets(
             '''Apply and finally delete an unamed ascending sort/filter parms after
-             having selected it in a second playlist.''',
+               having selected it in a second playlist.''',
             (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
@@ -3833,8 +3833,8 @@ void playlistDownloadViewSortFilterIntregrationTest() {
             await tester.pumpAndSettle();
           });
           testWidgets(
-              '''After restarting the application, verify that the playlist download
-               view and the audio player view audio order is default.''',
+              '''After restarting the application, verify that the playlist
+                 download view and the audio player view audio order is default.''',
               (WidgetTester tester) async {
             final SettingsDataService settingsDataService = SettingsDataService(
               sharedPreferences: await SharedPreferences.getInstance(),
@@ -3886,7 +3886,21 @@ void playlistDownloadViewSortFilterIntregrationTest() {
                   audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
             );
 
-            // TODO VERIFY ALSO IN THE AUDIO PLAYER VIEW !!!
+            // Now go to the audio player view
+            Finder appScreenNavigationButton =
+                find.byKey(const ValueKey('audioPlayerViewIconButton'));
+            await tester.tap(appScreenNavigationButton);
+            await tester.pumpAndSettle();
+
+            // Verify also the audio playable list dialog title and content
+            await verifyAudioPlayableList(
+              tester: tester,
+              currentAudioTitle:
+                  "La résilience insulaire par Fiona Roche\n13:35",
+              sortFilterParmsName: 'default',
+              audioTitlesLst:
+                  audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+            );
 
             // Purge the test playlist directory so that the created test
             // files are not uploaded to GitHub
@@ -5097,6 +5111,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           Finder appScreenNavigationButton =
               find.byKey(const ValueKey('audioPlayerViewIconButton'));
           await tester.tap(appScreenNavigationButton);
+          await tester.pumpAndSettle();
 
           List<String> audioTitlesSortedByTitleAscending = [
             "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
@@ -5124,7 +5139,6 @@ void playlistDownloadViewSortFilterIntregrationTest() {
                is applied to the playlist download view and not to the audio
                player view. Verify also the playlist json file.''',
             (WidgetTester tester) async {
-
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
             isTest: true,
