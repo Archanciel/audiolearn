@@ -12601,8 +12601,11 @@ void main() {
         selectedPlaylistTitle: youtubePlaylistTitle,
       );
 
-      // Before renaming the audio file, we verify that the audio has
-      // a comment
+      // Deletion of comment file used by another test, but not needed
+      // for this test
+      final String commentFilePath =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubePlaylistTitle${path.separator}$kCommentDirName${path.separator}231117-002826-Really short video 23-07-01.json";
+      DirUtil.deleteFileIfExist(pathFileName: commentFilePath);
 
       // First, find the audio sublist ListTile Text widget
 
@@ -13305,7 +13308,7 @@ void main() {
     });
   });
   group('Modify audio title test and verify comment display change', () {
-    testWidgets('Change audio title', (WidgetTester tester) async {
+    testWidgets('Downl audio: change audio title', (WidgetTester tester) async {
       const String youtubePlaylistTitle =
           'audio_player_view_2_shorts_test'; // Youtube playlist
       const String audioTitle = "morning _ cinematic video";
@@ -13426,8 +13429,162 @@ void main() {
 
       final Text audioTitleTextWidget =
           tester.widget<Text>(find.byKey(const Key('validVideoTitleKey')));
-
+      
       expect(audioTitleTextWidget.data, newTitle);
+
+      // Verify the presence of Original video title label
+      expect(find.text('Original video title'), findsOneWidget);
+
+      // Verify the absence of Audio title label
+      expect(find.text('Audio title'), findsNothing);
+
+      // Tap the Ok button to close the audio info dialog
+      await tester.tap(find.byKey(const Key('audioInfoOkButtonKey')));
+      await tester.pumpAndSettle();
+
+      // Verifying that the comment of the audio displays the modified audio title
+      await checkAudioCommentUsingAudioItemMenu(
+        tester: tester,
+        audioListTileWidgetFinder: audioListTileWidgetFinder,
+        expectedCommentTitle: 'Accessible after renaming',
+        audioTitleToVerifyInCommentAddEditDialog: newTitle,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets('Imported audio: change audio title', (WidgetTester tester) async {
+      const String youtubePlaylistTitle =
+          'audio_player_view_2_shorts_test'; // Youtube playlist
+      const String audioTitle = "Really short video";
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: '2_youtube_2_local_playlists_integr_test_data',
+        selectedPlaylistTitle: youtubePlaylistTitle,
+      );
+
+      // First, find the audio sublist ListTile Text widget
+      Finder audioListTileTextWidgetFinder = find.text(audioTitle);
+
+      // Then obtain the audio ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      Finder audioListTileWidgetFinder = find.ancestor(
+        of: audioListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now we want to tap the popup menu of the audio ListTile
+      // "morning _ cinematic video"
+
+      // Find the leading menu icon button of the audio ListTile
+      // and tap on it
+      Finder audioListTileLeadingMenuIconButton = find.descendant(
+        of: audioListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(audioListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the modify audio title popup menu item and tap on
+      // it
+      final Finder popupCopyMenuItem =
+          find.byKey(const Key("popup_menu_modify_audio_title"));
+
+      await tester.tap(popupCopyMenuItem);
+      await tester.pumpAndSettle();
+
+      // Verify that the rename audio file dialog is displayed
+      expect(find.byType(AudioModificationDialogWidget), findsOneWidget);
+
+      // Verify the dialog title
+      expect(find.text('Modify Audio Title'), findsOneWidget);
+
+      // Verify the dialog comment
+      expect(
+          find.text(
+              'Modify the audio title to identify it more easily during listening.'),
+          findsOneWidget);
+
+      // Verify the button text
+
+      final Finder audioModificationButtonFinder =
+          find.byKey(const Key('audioModificationButton'));
+      TextButton audioModificationTextButton =
+          tester.widget<TextButton>(audioModificationButtonFinder);
+      expect((audioModificationTextButton.child! as Text).data, 'Modify');
+
+      // Now enter the new title
+
+      // Find the TextField using the Key
+      final Finder textFieldFinder =
+          find.byKey(const Key('audioModificationTextField'));
+
+      // Retrieve the TextField widget
+      final TextField textField = tester.widget<TextField>(textFieldFinder);
+
+      // Verify the initial value of the TextField
+      expect(textField.controller!.text, 'Really short video');
+
+      const String newTitle = 'Really really short imported audio';
+      await tester.enterText(
+        textFieldFinder,
+        newTitle,
+      );
+
+      await tester.pumpAndSettle();
+
+      // Now tap the Modify button
+      await tester.tap(audioModificationButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Check the modified audio title in the audio info dialog
+
+      // First, find the audio sublist ListTile Text widget
+      // using the new title
+      audioListTileTextWidgetFinder = find.text(newTitle);
+
+      // Then obtain the audio ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      audioListTileWidgetFinder = find.ancestor(
+        of: audioListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Find the leading menu icon button of the audio ListTile
+      // and tap on it
+
+      audioListTileLeadingMenuIconButton = find.descendant(
+        of: audioListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+      await tester.tap(audioListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the popup menu item and tap on it
+      final Finder popupDisplayAudioInfoMenuItemFinder =
+          find.byKey(const Key("popup_menu_display_audio_info"));
+
+      await tester.tap(popupDisplayAudioInfoMenuItemFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the audio new title
+
+      final Text audioTitleTextWidget =
+          tester.widget<Text>(find.byKey(const Key('importedAudioTitleKey')));
+      
+      expect(audioTitleTextWidget.data, newTitle);
+
+      // Verify the presence of Audio title label
+      expect(find.text('Audio title'), findsOneWidget);
+
+      // Verify the absence of Original video title label
+      expect(find.text('Original video title'), findsNothing);
 
       // Tap the Ok button to close the audio info dialog
       await tester.tap(find.byKey(const Key('audioInfoOkButtonKey')));
