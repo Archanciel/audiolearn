@@ -132,7 +132,19 @@ class AudioSortFilterParameters {
     ),
     SortingOption.validAudioTitle: SortCriteria<Audio>(
       selectorFunction: (Audio audio) {
-        return audio.validVideoTitle.toLowerCase();
+        final regex = RegExp(r'(\d+)_\d+');
+
+        String validVideoTitleLow = audio.validVideoTitle.toLowerCase();
+
+        RegExpMatch? firstMatch = regex.firstMatch(validVideoTitleLow);
+
+        if (firstMatch != null) {
+          int firstMatchInt = int.parse(firstMatch.group(1)!);
+
+          return firstMatchInt;
+        }
+
+        return validVideoTitleLow;
       },
       sortOrder: sortAscending,
     ),
