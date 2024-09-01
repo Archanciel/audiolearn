@@ -1,6 +1,7 @@
 import 'package:audiolearn/models/audio.dart';
 import 'package:audiolearn/utils/date_time_util.dart';
 import 'package:audiolearn/utils/duration_expansion.dart';
+import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -104,17 +105,27 @@ class _PlaylistCommentListDialogWidgetState
             // and ends with the last downloaded audio.
             List<String> audioFileNamesLst =
                 playlistAudiosCommentsMap.keys.toList();
-            audioFileNamesLst.sort((a, b) => a.compareTo(b));
+
+            PlaylistListVM playlistListVM = Provider.of<PlaylistListVM>(
+              context,
+              listen: false,
+            );
+            List<String> sortedAudioFileNamesLst = playlistListVM
+                .getPlaylistAudioFileNamesApplyingSortFilterParameters(
+              selectedPlaylist: widget.currentPlaylist,
+              audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
+              audioFileNamesLst: audioFileNamesLst,
+            );
 
             return SingleChildScrollView(
               controller: _scrollController,
               child: ListBody(
                 key: const Key('playlistCommentsListKey'),
-                children: (audioFileNamesLst.isNotEmpty)
+                children: (sortedAudioFileNamesLst.isNotEmpty)
                     ? _buildPlaylistAudiosCommentsList(
                         commentVM: commentVM,
                         playlistAudiosCommentsMap: playlistAudiosCommentsMap,
-                        audioFileNamesLst: audioFileNamesLst,
+                        audioFileNamesLst: sortedAudioFileNamesLst,
                         isDarkTheme:
                             themeProviderVM.currentTheme == AppTheme.dark,
                       )

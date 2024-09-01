@@ -644,7 +644,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// to the returned audio list, unless the user has changed the sort
   /// filter parameters in the SortAndFilterAudioDialogWidget or in
   /// the playlist download view sort filter dropdown menu.
-  List<Audio> getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters({
+  List<Audio> getSelectedPlaylistPlayableAudioApplyingSortFilterParameters({
     required AudioLearnAppViewType audioLearnAppViewType,
     AudioSortFilterParameters? audioSortFilterParameters,
   }) {
@@ -741,6 +741,94 @@ class PlaylistListVM extends ChangeNotifier {
     return _sortedFilteredSelectedPlaylistsPlayableAudios!;
   }
 
+  List<String> getPlaylistAudioFileNamesApplyingSortFilterParameters({
+    required Playlist selectedPlaylist,
+    required AudioLearnAppViewType audioLearnAppViewType,
+    required List<String> audioFileNamesLst,
+    AudioSortFilterParameters? audioSortFilterParameters,
+  }) {
+    String selectedPlaylistTitle = selectedPlaylist.title;
+    String selectedPlaylistSortFilterParmsName;
+    AudioSortFilterParameters? localAudioSortFilterParameters;
+
+    if (audioLearnAppViewType == AudioLearnAppViewType.playlistDownloadView) {
+      selectedPlaylistSortFilterParmsName =
+          _playlistAudioSFparmsNamesForPlaylistDownloadViewMap[
+                  selectedPlaylistTitle] ??
+              '';
+    } else {
+      selectedPlaylistSortFilterParmsName =
+          _playlistAudioSFparmsNamesForAudioPlayerViewMap[
+                  selectedPlaylistTitle] ??
+              '';
+    }
+
+    if (selectedPlaylistSortFilterParmsName.isEmpty) {
+      switch (audioLearnAppViewType) {
+        case AudioLearnAppViewType.playlistDownloadView:
+          String audioSortFilterParmsNameForPlaylistDownloadView =
+              selectedPlaylist.audioSortFilterParmsNameForPlaylistDownloadView;
+
+          if (audioSortFilterParmsNameForPlaylistDownloadView.isNotEmpty) {
+            // This means that the user has defined a sort filter parameters
+            // instance applicable to any playlist, which is stored the
+            // application settings json file. This named sort filter
+            // parameters instance was saved in the current playlist json
+            // file to be automatically applyed in the playlist download view.
+            localAudioSortFilterParameters =
+                _settingsDataService.namedAudioSortFilterParametersMap[
+                    audioSortFilterParmsNameForPlaylistDownloadView];
+          }
+          break;
+        case AudioLearnAppViewType.audioPlayerView:
+          String audioSortFilterParmsNameForAudioPlayerView =
+              selectedPlaylist.audioSortFilterParmsNameForAudioPlayerView;
+
+          if (audioSortFilterParmsNameForAudioPlayerView.isNotEmpty) {
+            // This means that the user has defined a sort filter parameters
+            // instance applicable to any playlist, which is stored the
+            // application settings json file. This named sort filter
+            // parameters instance was saved in the current playlist json
+            // file to be automatically applyed in the audio player view.
+            localAudioSortFilterParameters =
+                _settingsDataService.namedAudioSortFilterParametersMap[
+                    audioSortFilterParmsNameForAudioPlayerView];
+          }
+          break;
+        default:
+          break;
+      }
+    } else {
+      // If the playlist has been selected and the user has not yet
+      // defined sort and filter parameters for the playlist, then
+      // the default sort and filter parameters are applied to the
+      // playlist audio list.
+      localAudioSortFilterParameters =
+          _settingsDataService.namedAudioSortFilterParametersMap[
+              selectedPlaylistSortFilterParmsName];
+    }
+
+    localAudioSortFilterParameters ??= audioSortFilterParameters;
+
+    List<String> sortedAudioFileNamesLst =
+        _audioSortFilterService.sortAudioFileNamesLst(
+      audioFileNamesLst: audioFileNamesLst,
+      audioSortFilterParameters: localAudioSortFilterParameters ??
+          AudioSortFilterParameters.createDefaultAudioSortFilterParameters(),
+    );
+
+    // currently, only one playlist can be selected at a time !
+    // so, the following code is not useful
+    //
+    // for (Playlist playlist in _listOfSelectablePlaylists) {
+    //   if (playlist.isSelected) {
+    //     selectedPlaylistsAudios.addAll(playlist.playableAudioLst);
+    //   }
+    // }
+
+    return sortedAudioFileNamesLst;
+  }
+
   List<SortingItem> getSortingItemLstForViewType(
     AudioLearnAppViewType audioLearnAppViewType,
   ) {
@@ -781,7 +869,7 @@ class PlaylistListVM extends ChangeNotifier {
     AudioLearnAppViewType audioLearnAppViewType,
   ) {
     List<Audio> playlistPlayableAudioLst =
-        getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters(
+        getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
       audioLearnAppViewType: audioLearnAppViewType,
     );
 
@@ -1357,7 +1445,7 @@ class PlaylistListVM extends ChangeNotifier {
     // full playable audio list of the selected playlist sorted by audio
     // download date descending (the de3fault sorting).
     List<Audio> sortedAndFilteredPlayableAudioLst =
-        getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters(
+        getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
       audioLearnAppViewType: audioLearnAppViewType,
     );
 
@@ -1432,7 +1520,7 @@ class PlaylistListVM extends ChangeNotifier {
     // seconds and we then search again the sorted and filtered audio.
     currentAudio.audioPositionSeconds = currentAudio.audioPositionSeconds - 10;
     List<Audio> sortedAndFilteredPlayableAudioLstWithCurrentAudio =
-        getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters(
+        getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
       audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
     );
 
@@ -1461,7 +1549,7 @@ class PlaylistListVM extends ChangeNotifier {
     // full playable audio list of the selected playlist sorted by audio
     // download date descending (the de3fault sorting).
     List<Audio> sortedAndFilteredPlayableAudioLst =
-        getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters(
+        getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
       audioLearnAppViewType: audioLearnAppViewType,
     );
 

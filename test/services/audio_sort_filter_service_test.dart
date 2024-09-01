@@ -2214,7 +2214,8 @@ void main() {
       );
 
       // Load the expected sorted audio list from the file
-      List<Audio> expectedAudioSortedByTitleAscLst = JsonDataService.loadListFromFile(
+      List<Audio> expectedAudioSortedByTitleAscLst =
+          JsonDataService.loadListFromFile(
         jsonPathFileName:
             "$kPlaylistDownloadRootPathWindowsTest${path.separator}expected audio list asc Et l'univers disparaîtra.json",
         type: Audio,
@@ -2246,7 +2247,8 @@ void main() {
       // );
 
       // Load the expected sorted audio list from the file
-      List<Audio> expectedAudioSortedByTitleDescLst = JsonDataService.loadListFromFile(
+      List<Audio> expectedAudioSortedByTitleDescLst =
+          JsonDataService.loadListFromFile(
         jsonPathFileName:
             "$kPlaylistDownloadRootPathWindowsTest${path.separator}expected audio list desc Et l'univers disparaîtra.json",
         type: Audio,
@@ -2263,10 +2265,10 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    test('''sort by title with chapter number. The valid video title of the audio
+    test(
+        '''sort by title with chapter number. The valid video title of the audio
             contained in the 'Gary Renard - Et l'univers disparaîtra imported'
-            json file are original and so not modified.''',
-        () {
+            json file are original and so not modified.''', () {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -2303,7 +2305,8 @@ void main() {
       );
 
       // Load the expected sorted audio list from the file
-      List<Audio> expectedAudioSortedByTitleAscLst = JsonDataService.loadListFromFile(
+      List<Audio> expectedAudioSortedByTitleAscLst =
+          JsonDataService.loadListFromFile(
         jsonPathFileName:
             "$kPlaylistDownloadRootPathWindowsTest${path.separator}expected audio list asc Et l'univers disparaîtra imported.json",
         type: Audio,
@@ -2335,7 +2338,8 @@ void main() {
       // );
 
       // Load the expected sorted audio list from the file
-      List<Audio> expectedAudioSortedByTitleDescLst = JsonDataService.loadListFromFile(
+      List<Audio> expectedAudioSortedByTitleDescLst =
+          JsonDataService.loadListFromFile(
         jsonPathFileName:
             "$kPlaylistDownloadRootPathWindowsTest${path.separator}expected audio list desc Et l'univers disparaîtra imported.json",
         type: Audio,
@@ -4017,7 +4021,7 @@ void main() {
         'filter by one word in audio title and sort by download date descending and duration ascending',
         () {
       List<Audio> audioList = playlistListVM
-          .getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters(
+          .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
       );
 
@@ -4116,7 +4120,7 @@ void main() {
         'filter by multiple words in audio title or in audio compact description and sort by download date descending and duration ascending',
         () {
       List<Audio> audioList = playlistListVM
-          .getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters(
+          .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
       );
 
@@ -4213,7 +4217,7 @@ void main() {
         'filter by one sentence present in audio compact description only with searchInVideoCompactDescription = false and sort by download date descending and duration ascending. Result list will be empty',
         () {
       List<Audio> audioList = playlistListVM
-          .getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters(
+          .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
       );
 
@@ -4291,7 +4295,7 @@ void main() {
         "filter in 'and' mode by multiple sentences present in audio title and compact description only with searchInVideoCompactDescription = false and sort by download date descending and duration ascending",
         () {
       List<Audio> audioList = playlistListVM
-          .getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters(
+          .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
       );
 
@@ -4375,7 +4379,7 @@ void main() {
         "filter in 'and' mode by multiple sentences present in audio title and compact description only with searchInVideoCompactDescription = true and sort by download date descending and duration ascending",
         () {
       List<Audio> audioList = playlistListVM
-          .getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters(
+          .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
       );
 
@@ -4466,7 +4470,7 @@ void main() {
         "filter in 'or' mode by multiple sentences present in audio title and compact description only with searchInVideoCompactDescription = false and sort by download date descending and duration ascending",
         () {
       List<Audio> audioList = playlistListVM
-          .getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters(
+          .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
       );
 
@@ -4561,7 +4565,7 @@ void main() {
         "filter in 'or' mode by multiple sentences present in audio title and compact description only with searchInVideoCompactDescription = true and sort by download date descending and duration ascending",
         () {
       List<Audio> audioList = playlistListVM
-          .getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters(
+          .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
       );
 
@@ -4726,7 +4730,7 @@ void main() {
     });
     test('filter not listened audio only', () {
       List<Audio> audioList = playlistListVM
-          .getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters(
+          .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
       );
 
@@ -4793,7 +4797,7 @@ void main() {
     });
     test('filter audio avoiding fully listened audio', () {
       List<Audio> audioList = playlistListVM
-          .getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters(
+          .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
       );
 
@@ -4833,7 +4837,7 @@ void main() {
     });
     test('filter audio getting only fully listened audio', () {
       List<Audio> audioList = playlistListVM
-          .getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters(
+          .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
       );
 
@@ -4944,7 +4948,7 @@ void main() {
         'filter by no word in audio title or video compact description and sort by download date descending',
         () {
       List<Audio> audioList = playlistListVM
-          .getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters(
+          .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
       );
 

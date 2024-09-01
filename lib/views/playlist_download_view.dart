@@ -181,7 +181,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       _wasSortFilterAudioSettingsApplied = false;
     } else {
       _selectedPlaylistsPlayableAudios = playlistListVMlistenFalse
-          .getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters(
+          .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
     }
@@ -682,7 +682,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
         .setSortedFilteredSelectedPlaylistPlayableAudiosAndParms(
       audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       sortedFilteredSelectedPlaylistsPlayableAudios: playlistListVMlistenFalse
-          .getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters(
+          .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
         audioSortFilterParameters: audioSortFilterParameters,
       ),
@@ -774,7 +774,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             builder: (BuildContext context) {
               return AudioSortFilterDialogWidget(
                 selectedPlaylistAudioLst: playlistListVMlistenFalse
-                    .getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters(
+                    .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
                   audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
                 ),
                 audioSortFilterParametersName: audioSortFilterParametersName,
@@ -1037,7 +1037,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 builder: (BuildContext context) {
                   return AudioSortFilterDialogWidget(
                     selectedPlaylistAudioLst: playlistListVMlistenFalse
-                        .getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters(
+                        .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
                       audioLearnAppViewType:
                           AudioLearnAppViewType.audioPlayerView,
                     ),

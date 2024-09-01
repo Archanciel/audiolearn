@@ -984,7 +984,7 @@ class AudioPlayerVM extends ChangeNotifier {
     }
 
     return _playlistListVM
-        .getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters(
+        .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
       audioLearnAppViewType: audioLearnAppViewType,
     );
   }

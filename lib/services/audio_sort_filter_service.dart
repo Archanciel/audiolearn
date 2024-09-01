@@ -63,6 +63,63 @@ class AudioSortFilterService {
     return audioLst;
   }
 
+  List<String> sortAudioFileNamesLstBySortingOptions({
+    required List<String> audioFileNamesLst,
+    required List<SortingItem> selectedSortItemLst,
+  }) {
+    // Create a list of SortCriteria's corresponding to the list of
+    // selected sorting items coming from the AudioSortFilterDialogWidget
+    // or from the PlaylistListVM method which applies sort filter parameters
+    // to return the playable audio of a playlist. This method is
+    // getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters().
+    //
+    // The selectedSortItemLst is a list of SortingItem objects. Each
+    // SortingItem object contains a SortingOption and a boolean indicating
+    // if the sorting is ascending or descending. The SortCriteria object
+    // is a static object that is used to sort the audio list. The SortCriteria
+    // object contains a selector function that selects the field of the audio
+    // object to sort on and a sortOrder parameter that indicates if the sorting
+    // is ascending or descending.
+    //
+    // The SortCriteria in relation to the UI SortingItem is the SortCriteria
+    // corresponding to the SortingItem SortingOption.
+    List<SortCriteria<String>> sortCriteriaLst = [
+      SortCriteria<String>(
+        selectorFunction: (String audioFileName) {
+          final regex = RegExp(r'(\d+)_\d+');
+
+          String audioFileNameLow = audioFileName.toLowerCase();
+
+          RegExpMatch? firstMatch = regex.firstMatch(audioFileNameLow);
+
+          if (firstMatch != null) {
+            int firstMatchInt = int.parse(firstMatch.group(1)!);
+
+            return firstMatchInt;
+          }
+
+          return audioFileNameLow;
+        },
+        sortOrder: sortAscending,
+      ),
+    ];
+
+    // Sorting the audio list by applying the SortCriteria of the
+    // sortCriteriaLst
+    audioFileNamesLst.sort((a, b) {
+      for (SortCriteria<String> sortCriteria in sortCriteriaLst) {
+        int comparison = sortCriteria
+                .selectorFunction(a)
+                .compareTo(sortCriteria.selectorFunction(b)) *
+            sortCriteria.sortOrder;
+        if (comparison != 0) return comparison;
+      }
+      return 0;
+    });
+
+    return audioFileNamesLst;
+  }
+
   static bool getDefaultSortOptionOrder({
     required SortingOption sortingOption,
   }) {
@@ -105,6 +162,18 @@ class AudioSortFilterService {
 
     return sortAudioLstBySortingOptions(
       audioLst: audioLstCopy,
+      selectedSortItemLst: audioSortFilterParameters.selectedSortItemLst,
+    );
+  }
+
+  List<String> sortAudioFileNamesLst({
+    required List<String> audioFileNamesLst,
+    required AudioSortFilterParameters audioSortFilterParameters,
+  }) {
+    List<String> audioFileNamesLstCopy = List<String>.from(audioFileNamesLst);
+
+    return sortAudioFileNamesLstBySortingOptions(
+      audioFileNamesLst: audioFileNamesLstCopy,
       selectedSortItemLst: audioSortFilterParameters.selectedSortItemLst,
     );
   }
