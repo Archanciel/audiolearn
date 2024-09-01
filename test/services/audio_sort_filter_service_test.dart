@@ -1,3 +1,5 @@
+import 'package:audiolearn/models/playlist.dart';
+import 'package:audiolearn/services/json_data_service.dart';
 import 'package:audiolearn/services/sort_filter_parameters.dart';
 import 'package:audiolearn/viewmodels/comment_vm.dart';
 import 'package:path/path.dart' as path;
@@ -827,9 +829,11 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
-        originalVideoTitle: "Audio Et l'Univers disparaitra 1_37  - Avant - propos de l'éditeur américain",
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra 1_37  - Avant - propos de l'éditeur américain",
         compactVideoDescription: '',
-        validVideoTitle: "Audio Et l'Univers disparaitra 1_37  - Avant - propos de l'éditeur américain",
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra 1_37  - Avant - propos de l'éditeur américain",
         videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
         audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
         audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
@@ -843,7 +847,8 @@ void main() {
         isPaused: true,
         audioPausedDateTime: null,
         audioPositionSeconds: 0,
-        audioFileName: "Audio Et l'Univers disparaitra 1_37  - Avant - propos de l'éditeur américain.mp3",
+        audioFileName:
+            "Audio Et l'Univers disparaitra 1_37  - Avant - propos de l'éditeur américain.mp3",
         audioFileSize: 330000000,
         isAudioImported: false,
       );
@@ -854,9 +859,11 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
-        originalVideoTitle: "Audio Et l'Univers disparaitra 2_37  - Note et remerciements de l'auteur",
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra 2_37  - Note et remerciements de l'auteur",
         compactVideoDescription: '',
-        validVideoTitle: "Audio Et l'Univers disparaitra 2_37  - Note et remerciements de l'auteur",
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra 2_37  - Note et remerciements de l'auteur",
         videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
         audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
         audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
@@ -870,7 +877,8 @@ void main() {
         isPaused: true,
         audioPausedDateTime: null,
         audioPositionSeconds: 0,
-        audioFileName: "Audio Et l'Univers disparaitra 2_37  - Note et remerciements de l'auteur.mp3",
+        audioFileName:
+            "Audio Et l'Univers disparaitra 2_37  - Note et remerciements de l'auteur.mp3",
         audioFileSize: 330000000,
         isAudioImported: false,
       );
@@ -881,9 +889,11 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
-        originalVideoTitle: "Audio Et l'Univers disparaitra de Gary Renard 3_37  - Partie 1 chapitre 1",
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 3_37  - Partie 1 chapitre 1",
         compactVideoDescription: '',
-        validVideoTitle: "Audio Et l'Univers disparaitra de Gary Renard 3_37  - Partie 1 chapitre 1",
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 3_37  - Partie 1 chapitre 1",
         videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
         audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
         audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
@@ -897,7 +907,8 @@ void main() {
         isPaused: true,
         audioPausedDateTime: null,
         audioPositionSeconds: 0,
-        audioFileName: "Audio Et l'Univers disparaitra de Gary Renard 3_37  - Partie 1 chapitre 1.mp3",
+        audioFileName:
+            "Audio Et l'Univers disparaitra de Gary Renard 3_37  - Partie 1 chapitre 1.mp3",
         audioFileSize: 330000000,
         isAudioImported: false,
       );
@@ -908,9 +919,11 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
-        originalVideoTitle: "Audio Et l'Univers disparaitra de Gary Renard 4_37  - chapitre 2-1",
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 4_37  - chapitre 2-1",
         compactVideoDescription: '',
-        validVideoTitle: "Audio Et l'Univers disparaitra de Gary Renard 4_37  - chapitre 2-1",
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 4_37  - chapitre 2-1",
         videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
         audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
         audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
@@ -924,7 +937,8 @@ void main() {
         isPaused: true,
         audioPausedDateTime: null,
         audioPositionSeconds: 0,
-        audioFileName: "Audio Et l'Univers disparaitra de Gary Renard 4_37  - chapitre 2-1.mp3",
+        audioFileName:
+            "Audio Et l'Univers disparaitra de Gary Renard 4_37  - chapitre 2-1.mp3",
         audioFileSize: 330000000,
         isAudioImported: false,
       );
@@ -935,9 +949,11 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
-        originalVideoTitle: "Audio Et l'Univers disparaitra de Gary Renard 5_37  - chapitre 2 - 2",
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 5_37  - chapitre 2 - 2",
         compactVideoDescription: '',
-        validVideoTitle: "Audio Et l'Univers disparaitra de Gary Renard 5_37  - chapitre 2 - 2",
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 5_37  - chapitre 2 - 2",
         videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
         audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
         audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
@@ -951,7 +967,8 @@ void main() {
         isPaused: true,
         audioPausedDateTime: null,
         audioPositionSeconds: 0,
-        audioFileName: "Audio Et l'Univers disparaitra de Gary Renard 5_37  - chapitre 2 - 2.mp3",
+        audioFileName:
+            "Audio Et l'Univers disparaitra de Gary Renard 5_37  - chapitre 2 - 2.mp3",
         audioFileSize: 330000000,
         isAudioImported: false,
       );
@@ -962,9 +979,11 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
-        originalVideoTitle: "Audio Et l'Univers disparaitra de Gary Renard 6_37  - chapitre 2 - 3",
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 6_37  - chapitre 2 - 3",
         compactVideoDescription: '',
-        validVideoTitle: "Audio Et l'Univers disparaitra de Gary Renard 6_37  - chapitre 2 - 3",
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 6_37  - chapitre 2 - 3",
         videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
         audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
         audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
@@ -978,7 +997,8 @@ void main() {
         isPaused: true,
         audioPausedDateTime: null,
         audioPositionSeconds: 0,
-        audioFileName: "Audio Et l'Univers disparaitra de Gary Renard 6_37  - chapitre 2 - 3.mp3",
+        audioFileName:
+            "Audio Et l'Univers disparaitra de Gary Renard 6_37  - chapitre 2 - 3.mp3",
         audioFileSize: 330000000,
         isAudioImported: false,
       );
@@ -989,9 +1009,11 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
-        originalVideoTitle: "Audio Et l'Univers disparaitra de Gary Renard 10_37  - chapitre 3 - 1",
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 10_37  - chapitre 3 - 1",
         compactVideoDescription: '',
-        validVideoTitle: "Audio Et l'Univers disparaitra de Gary Renard 10_37  - chapitre 3 - 1",
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 10_37  - chapitre 3 - 1",
         videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
         audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
         audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
@@ -1005,7 +1027,8 @@ void main() {
         isPaused: true,
         audioPausedDateTime: null,
         audioPositionSeconds: 0,
-        audioFileName: "Audio Et l'Univers disparaitra de Gary Renard 10_37  - chapitre 3 - 1.mp3",
+        audioFileName:
+            "Audio Et l'Univers disparaitra de Gary Renard 10_37  - chapitre 3 - 1.mp3",
         audioFileSize: 330000000,
         isAudioImported: false,
       );
@@ -1016,9 +1039,11 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
-        originalVideoTitle: "Audio Et l'Univers disparaitra de Gary Renard 11_37  - chapitre 3 - 2",
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 11_37  - chapitre 3 - 2",
         compactVideoDescription: '',
-        validVideoTitle: "Audio Et l'Univers disparaitra de Gary Renard 11_37  - chapitre 3 - 2",
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 11_37  - chapitre 3 - 2",
         videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
         audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
         audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
@@ -1032,7 +1057,8 @@ void main() {
         isPaused: true,
         audioPausedDateTime: null,
         audioPositionSeconds: 0,
-        audioFileName: "Audio Et l'Univers disparaitra de Gary Renard 11_37  - chapitre 3 - 2.mp3",
+        audioFileName:
+            "Audio Et l'Univers disparaitra de Gary Renard 11_37  - chapitre 3 - 2.mp3",
         audioFileSize: 330000000,
         isAudioImported: false,
       );
@@ -1043,9 +1069,11 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
-        originalVideoTitle: "Audio Et l'Univers disparaitra de Gary Renard 13_37  - chapitre 4 - 1",
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 13_37  - chapitre 4 - 1",
         compactVideoDescription: '',
-        validVideoTitle: "Audio Et l'Univers disparaitra de Gary Renard 13_37  - chapitre 4 - 1",
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 13_37  - chapitre 4 - 1",
         videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
         audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
         audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
@@ -1059,7 +1087,8 @@ void main() {
         isPaused: true,
         audioPausedDateTime: null,
         audioPositionSeconds: 0,
-        audioFileName: "Audio Et l'Univers disparaitra de Gary Renard 13_37  - chapitre 4 - 1.mp3",
+        audioFileName:
+            "Audio Et l'Univers disparaitra de Gary Renard 13_37  - chapitre 4 - 1.mp3",
         audioFileSize: 330000000,
         isAudioImported: false,
       );
@@ -1070,9 +1099,11 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
-        originalVideoTitle: "Audio Et l'Univers disparaitra de Gary Renard 16_37  - Chapitre 5 - 1",
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 16_37  - Chapitre 5 - 1",
         compactVideoDescription: '',
-        validVideoTitle: "Audio Et l'Univers disparaitra de Gary Renard 16_37  - Chapitre 5 - 1",
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 16_37  - Chapitre 5 - 1",
         videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
         audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
         audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
@@ -1086,7 +1117,8 @@ void main() {
         isPaused: true,
         audioPausedDateTime: null,
         audioPositionSeconds: 0,
-        audioFileName: "Audio Et l'Univers disparaitra de Gary Renard 16_37  - Chapitre 5 - 1.mp3",
+        audioFileName:
+            "Audio Et l'Univers disparaitra de Gary Renard 16_37  - Chapitre 5 - 1.mp3",
         audioFileSize: 330000000,
         isAudioImported: false,
       );
@@ -1097,9 +1129,11 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
-        originalVideoTitle: "Audio Et l'Univers disparaitra de Gary Renard 21_37  - Partie 2 chapitre 6 - 1",
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 21_37  - Partie 2 chapitre 6 - 1",
         compactVideoDescription: '',
-        validVideoTitle: "Audio Et l'Univers disparaitra de Gary Renard 21_37  - Partie 2 chapitre 6 - 1",
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 21_37  - Partie 2 chapitre 6 - 1",
         videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
         audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
         audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
@@ -1113,7 +1147,8 @@ void main() {
         isPaused: true,
         audioPausedDateTime: null,
         audioPositionSeconds: 0,
-        audioFileName: "Audio Et l'Univers disparaitra de Gary Renard 21_37  - Partie 2 chapitre 6 - 1.mp3",
+        audioFileName:
+            "Audio Et l'Univers disparaitra de Gary Renard 21_37  - Partie 2 chapitre 6 - 1.mp3",
         audioFileSize: 330000000,
         isAudioImported: false,
       );
@@ -1124,9 +1159,11 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
-        originalVideoTitle: "Audio Et l'Univers disparaitra de Gary Renard 22_37  - chapitre 6 - 2",
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 22_37  - chapitre 6 - 2",
         compactVideoDescription: '',
-        validVideoTitle: "Audio Et l'Univers disparaitra de Gary Renard 22_37  - chapitre 6 - 2",
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 22_37  - chapitre 6 - 2",
         videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
         audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
         audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
@@ -1140,7 +1177,8 @@ void main() {
         isPaused: true,
         audioPausedDateTime: null,
         audioPositionSeconds: 0,
-        audioFileName: "Audio Et l'Univers disparaitra de Gary Renard 22_37  - chapitre 6 - 2.mp3",
+        audioFileName:
+            "Audio Et l'Univers disparaitra de Gary Renard 22_37  - chapitre 6 - 2.mp3",
         audioFileSize: 330000000,
         isAudioImported: false,
       );
@@ -1151,9 +1189,11 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
-        originalVideoTitle: "Audio Et l'Univers disparaitra de Gary Renard 26_37  - chapitre 8",
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 26_37  - chapitre 8",
         compactVideoDescription: '',
-        validVideoTitle: "Audio Et l'Univers disparaitra de Gary Renard 26_37  - chapitre 8",
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 26_37  - chapitre 8",
         videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
         audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
         audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
@@ -1167,7 +1207,8 @@ void main() {
         isPaused: true,
         audioPausedDateTime: null,
         audioPositionSeconds: 0,
-        audioFileName: "Audio Et l'Univers disparaitra de Gary Renard 26_37  - chapitre 8.mp3",
+        audioFileName:
+            "Audio Et l'Univers disparaitra de Gary Renard 26_37  - chapitre 8.mp3",
         audioFileSize: 330000000,
         isAudioImported: false,
       );
@@ -1178,9 +1219,11 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
-        originalVideoTitle: "Audio Et l'Univers disparaitra de Gary Renard 27_37  - chapitre 9 - 1",
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 27_37  - chapitre 9 - 1",
         compactVideoDescription: '',
-        validVideoTitle: "Audio Et l'Univers disparaitra de Gary Renard 27_37  - chapitre 9 - 1",
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 27_37  - chapitre 9 - 1",
         videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
         audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
         audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
@@ -1194,7 +1237,8 @@ void main() {
         isPaused: true,
         audioPausedDateTime: null,
         audioPositionSeconds: 0,
-        audioFileName: "Audio Et l'Univers disparaitra de Gary Renard 27_37  - chapitre 9 - 1.mp3",
+        audioFileName:
+            "Audio Et l'Univers disparaitra de Gary Renard 27_37  - chapitre 9 - 1.mp3",
         audioFileSize: 330000000,
         isAudioImported: false,
       );
@@ -1205,9 +1249,11 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
-        originalVideoTitle: "Audio Et l'Univers disparaitra de Gary Renard 29_37  - chapitre 10",
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 29_37  - chapitre 10",
         compactVideoDescription: '',
-        validVideoTitle: "Audio Et l'Univers disparaitra de Gary Renard 29_37  - chapitre 10",
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 29_37  - chapitre 10",
         videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
         audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
         audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
@@ -1221,7 +1267,8 @@ void main() {
         isPaused: true,
         audioPausedDateTime: null,
         audioPositionSeconds: 0,
-        audioFileName: "Audio Et l'Univers disparaitra de Gary Renard 29_37  - chapitre 10.mp3",
+        audioFileName:
+            "Audio Et l'Univers disparaitra de Gary Renard 29_37  - chapitre 10.mp3",
         audioFileSize: 330000000,
         isAudioImported: false,
       );
@@ -1232,9 +1279,11 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
-        originalVideoTitle: "Audio Et l'Univers disparaitra de Gary Renard 30_37  - chapitre 11 - 1",
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 30_37  - chapitre 11 - 1",
         compactVideoDescription: '',
-        validVideoTitle: "Audio Et l'Univers disparaitra de Gary Renard 30_37  - chapitre 11 - 1",
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 30_37  - chapitre 11 - 1",
         videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
         audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
         audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
@@ -1248,7 +1297,8 @@ void main() {
         isPaused: true,
         audioPausedDateTime: null,
         audioPositionSeconds: 0,
-        audioFileName: "Audio Et l'Univers disparaitra de Gary Renard 30_37  - chapitre 11 - 1.mp3",
+        audioFileName:
+            "Audio Et l'Univers disparaitra de Gary Renard 30_37  - chapitre 11 - 1.mp3",
         audioFileSize: 330000000,
         isAudioImported: false,
       );
@@ -1259,9 +1309,11 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
-        originalVideoTitle: "Audio Et l'Univers disparaitra de Gary Renard 31_37  - chapitre 11 - 2",
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 31_37  - chapitre 11 - 2",
         compactVideoDescription: '',
-        validVideoTitle: "Audio Et l'Univers disparaitra de Gary Renard 31_37  - chapitre 11 - 2",
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 31_37  - chapitre 11 - 2",
         videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
         audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
         audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
@@ -1275,7 +1327,8 @@ void main() {
         isPaused: true,
         audioPausedDateTime: null,
         audioPositionSeconds: 0,
-        audioFileName: "Audio Et l'Univers disparaitra de Gary Renard 31_37  - chapitre 11 - 2.mp3",
+        audioFileName:
+            "Audio Et l'Univers disparaitra de Gary Renard 31_37  - chapitre 11 - 2.mp3",
         audioFileSize: 330000000,
         isAudioImported: false,
       );
@@ -1286,9 +1339,11 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
-        originalVideoTitle: "Audio Et l'Univers disparaitra de Gary Renard 32_37  - chapitre 12",
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 32_37  - chapitre 12",
         compactVideoDescription: '',
-        validVideoTitle: "Audio Et l'Univers disparaitra de Gary Renard 32_37  - chapitre 12",
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 32_37  - chapitre 12",
         videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
         audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
         audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
@@ -1302,7 +1357,8 @@ void main() {
         isPaused: true,
         audioPausedDateTime: null,
         audioPositionSeconds: 0,
-        audioFileName: "Audio Et l'Univers disparaitra de Gary Renard 32_37  - chapitre 12.mp3",
+        audioFileName:
+            "Audio Et l'Univers disparaitra de Gary Renard 32_37  - chapitre 12.mp3",
         audioFileSize: 330000000,
         isAudioImported: false,
       );
@@ -1313,9 +1369,11 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
-        originalVideoTitle: "Audio Et l'Univers disparaitra de Gary Renard 33_37  - chapitre 13",
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 33_37  - chapitre 13",
         compactVideoDescription: '',
-        validVideoTitle: "Audio Et l'Univers disparaitra de Gary Renard 33_37  - chapitre 13",
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 33_37  - chapitre 13",
         videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
         audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
         audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
@@ -1329,7 +1387,8 @@ void main() {
         isPaused: true,
         audioPausedDateTime: null,
         audioPositionSeconds: 0,
-        audioFileName: "Audio Et l'Univers disparaitra de Gary Renard 33_37  - chapitre 13.mp3",
+        audioFileName:
+            "Audio Et l'Univers disparaitra de Gary Renard 33_37  - chapitre 13.mp3",
         audioFileSize: 330000000,
         isAudioImported: false,
       );
@@ -1437,6 +1496,861 @@ void main() {
           equals(expectedResultForTitleDesc
               .map((audio) => audio.validVideoTitle)
               .toList()));
+    });
+    test('''sort by title with chapter number. The order of the list of audio to
+            sort was modified''', () {
+      final Audio avantPropos = Audio.fullConstructor(
+        enclosingPlaylist: null,
+        movedFromPlaylistTitle: null,
+        movedToPlaylistTitle: null,
+        copiedFromPlaylistTitle: null,
+        copiedToPlaylistTitle: null,
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra 1_37  - Avant - propos de l'éditeur américain",
+        compactVideoDescription: '',
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra 1_37  - Avant - propos de l'éditeur américain",
+        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+        audioDownloadSpeed: 1000000,
+        videoUploadDate: DateTime(2023, 3, 1),
+        audioDuration: const Duration(minutes: 5, seconds: 30),
+        isAudioMusicQuality: false,
+        audioPlaySpeed: kAudioDefaultPlaySpeed,
+        audioPlayVolume: kAudioDefaultPlayVolume,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        isPaused: true,
+        audioPausedDateTime: null,
+        audioPositionSeconds: 0,
+        audioFileName:
+            "Audio Et l'Univers disparaitra 1_37  - Avant - propos de l'éditeur américain.mp3",
+        audioFileSize: 330000000,
+        isAudioImported: false,
+      );
+
+      final Audio note = Audio.fullConstructor(
+        enclosingPlaylist: null,
+        movedFromPlaylistTitle: null,
+        movedToPlaylistTitle: null,
+        copiedFromPlaylistTitle: null,
+        copiedToPlaylistTitle: null,
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra 2_37  - Note et remerciements de l'auteur",
+        compactVideoDescription: '',
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra 2_37  - Note et remerciements de l'auteur",
+        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+        audioDownloadSpeed: 1000000,
+        videoUploadDate: DateTime(2023, 3, 1),
+        audioDuration: const Duration(minutes: 5, seconds: 30),
+        isAudioMusicQuality: false,
+        audioPlaySpeed: kAudioDefaultPlaySpeed,
+        audioPlayVolume: kAudioDefaultPlayVolume,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        isPaused: true,
+        audioPausedDateTime: null,
+        audioPositionSeconds: 0,
+        audioFileName:
+            "Audio Et l'Univers disparaitra 2_37  - Note et remerciements de l'auteur.mp3",
+        audioFileSize: 330000000,
+        isAudioImported: false,
+      );
+
+      final Audio chap_1 = Audio.fullConstructor(
+        enclosingPlaylist: null,
+        movedFromPlaylistTitle: null,
+        movedToPlaylistTitle: null,
+        copiedFromPlaylistTitle: null,
+        copiedToPlaylistTitle: null,
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 3_37  - Partie 1 chapitre 1",
+        compactVideoDescription: '',
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 3_37  - Partie 1 chapitre 1",
+        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+        audioDownloadSpeed: 1000000,
+        videoUploadDate: DateTime(2023, 3, 1),
+        audioDuration: const Duration(minutes: 5, seconds: 30),
+        isAudioMusicQuality: false,
+        audioPlaySpeed: kAudioDefaultPlaySpeed,
+        audioPlayVolume: kAudioDefaultPlayVolume,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        isPaused: true,
+        audioPausedDateTime: null,
+        audioPositionSeconds: 0,
+        audioFileName:
+            "Audio Et l'Univers disparaitra de Gary Renard 3_37  - Partie 1 chapitre 1.mp3",
+        audioFileSize: 330000000,
+        isAudioImported: false,
+      );
+
+      final Audio chap_2_1 = Audio.fullConstructor(
+        enclosingPlaylist: null,
+        movedFromPlaylistTitle: null,
+        movedToPlaylistTitle: null,
+        copiedFromPlaylistTitle: null,
+        copiedToPlaylistTitle: null,
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 4_37  - chapitre 2-1",
+        compactVideoDescription: '',
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 4_37  - chapitre 2-1",
+        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+        audioDownloadSpeed: 1000000,
+        videoUploadDate: DateTime(2023, 3, 1),
+        audioDuration: const Duration(minutes: 5, seconds: 30),
+        isAudioMusicQuality: false,
+        audioPlaySpeed: kAudioDefaultPlaySpeed,
+        audioPlayVolume: kAudioDefaultPlayVolume,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        isPaused: true,
+        audioPausedDateTime: null,
+        audioPositionSeconds: 0,
+        audioFileName:
+            "Audio Et l'Univers disparaitra de Gary Renard 4_37  - chapitre 2-1.mp3",
+        audioFileSize: 330000000,
+        isAudioImported: false,
+      );
+
+      final Audio chap_2_2 = Audio.fullConstructor(
+        enclosingPlaylist: null,
+        movedFromPlaylistTitle: null,
+        movedToPlaylistTitle: null,
+        copiedFromPlaylistTitle: null,
+        copiedToPlaylistTitle: null,
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 5_37  - chapitre 2 - 2",
+        compactVideoDescription: '',
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 5_37  - chapitre 2 - 2",
+        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+        audioDownloadSpeed: 1000000,
+        videoUploadDate: DateTime(2023, 3, 1),
+        audioDuration: const Duration(minutes: 5, seconds: 30),
+        isAudioMusicQuality: false,
+        audioPlaySpeed: kAudioDefaultPlaySpeed,
+        audioPlayVolume: kAudioDefaultPlayVolume,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        isPaused: true,
+        audioPausedDateTime: null,
+        audioPositionSeconds: 0,
+        audioFileName:
+            "Audio Et l'Univers disparaitra de Gary Renard 5_37  - chapitre 2 - 2.mp3",
+        audioFileSize: 330000000,
+        isAudioImported: false,
+      );
+
+      final Audio chap_2_3 = Audio.fullConstructor(
+        enclosingPlaylist: null,
+        movedFromPlaylistTitle: null,
+        movedToPlaylistTitle: null,
+        copiedFromPlaylistTitle: null,
+        copiedToPlaylistTitle: null,
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 6_37  - chapitre 2 - 3",
+        compactVideoDescription: '',
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 6_37  - chapitre 2 - 3",
+        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+        audioDownloadSpeed: 1000000,
+        videoUploadDate: DateTime(2023, 3, 1),
+        audioDuration: const Duration(minutes: 5, seconds: 30),
+        isAudioMusicQuality: false,
+        audioPlaySpeed: kAudioDefaultPlaySpeed,
+        audioPlayVolume: kAudioDefaultPlayVolume,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        isPaused: true,
+        audioPausedDateTime: null,
+        audioPositionSeconds: 0,
+        audioFileName:
+            "Audio Et l'Univers disparaitra de Gary Renard 6_37  - chapitre 2 - 3.mp3",
+        audioFileSize: 330000000,
+        isAudioImported: false,
+      );
+
+      final Audio chap_3_1 = Audio.fullConstructor(
+        enclosingPlaylist: null,
+        movedFromPlaylistTitle: null,
+        movedToPlaylistTitle: null,
+        copiedFromPlaylistTitle: null,
+        copiedToPlaylistTitle: null,
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 10_37  - chapitre 3 - 1",
+        compactVideoDescription: '',
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 10_37  - chapitre 3 - 1",
+        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+        audioDownloadSpeed: 1000000,
+        videoUploadDate: DateTime(2023, 3, 1),
+        audioDuration: const Duration(minutes: 5, seconds: 30),
+        isAudioMusicQuality: false,
+        audioPlaySpeed: kAudioDefaultPlaySpeed,
+        audioPlayVolume: kAudioDefaultPlayVolume,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        isPaused: true,
+        audioPausedDateTime: null,
+        audioPositionSeconds: 0,
+        audioFileName:
+            "Audio Et l'Univers disparaitra de Gary Renard 10_37  - chapitre 3 - 1.mp3",
+        audioFileSize: 330000000,
+        isAudioImported: false,
+      );
+
+      final Audio chap_3_2 = Audio.fullConstructor(
+        enclosingPlaylist: null,
+        movedFromPlaylistTitle: null,
+        movedToPlaylistTitle: null,
+        copiedFromPlaylistTitle: null,
+        copiedToPlaylistTitle: null,
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 11_37  - chapitre 3 - 2",
+        compactVideoDescription: '',
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 11_37  - chapitre 3 - 2",
+        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+        audioDownloadSpeed: 1000000,
+        videoUploadDate: DateTime(2023, 3, 1),
+        audioDuration: const Duration(minutes: 5, seconds: 30),
+        isAudioMusicQuality: false,
+        audioPlaySpeed: kAudioDefaultPlaySpeed,
+        audioPlayVolume: kAudioDefaultPlayVolume,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        isPaused: true,
+        audioPausedDateTime: null,
+        audioPositionSeconds: 0,
+        audioFileName:
+            "Audio Et l'Univers disparaitra de Gary Renard 11_37  - chapitre 3 - 2.mp3",
+        audioFileSize: 330000000,
+        isAudioImported: false,
+      );
+
+      final Audio chap_4_1 = Audio.fullConstructor(
+        enclosingPlaylist: null,
+        movedFromPlaylistTitle: null,
+        movedToPlaylistTitle: null,
+        copiedFromPlaylistTitle: null,
+        copiedToPlaylistTitle: null,
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 13_37  - chapitre 4 - 1",
+        compactVideoDescription: '',
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 13_37  - chapitre 4 - 1",
+        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+        audioDownloadSpeed: 1000000,
+        videoUploadDate: DateTime(2023, 3, 1),
+        audioDuration: const Duration(minutes: 5, seconds: 30),
+        isAudioMusicQuality: false,
+        audioPlaySpeed: kAudioDefaultPlaySpeed,
+        audioPlayVolume: kAudioDefaultPlayVolume,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        isPaused: true,
+        audioPausedDateTime: null,
+        audioPositionSeconds: 0,
+        audioFileName:
+            "Audio Et l'Univers disparaitra de Gary Renard 13_37  - chapitre 4 - 1.mp3",
+        audioFileSize: 330000000,
+        isAudioImported: false,
+      );
+
+      final Audio chap_5_1 = Audio.fullConstructor(
+        enclosingPlaylist: null,
+        movedFromPlaylistTitle: null,
+        movedToPlaylistTitle: null,
+        copiedFromPlaylistTitle: null,
+        copiedToPlaylistTitle: null,
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 16_37  - Chapitre 5 - 1",
+        compactVideoDescription: '',
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 16_37  - Chapitre 5 - 1",
+        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+        audioDownloadSpeed: 1000000,
+        videoUploadDate: DateTime(2023, 3, 1),
+        audioDuration: const Duration(minutes: 5, seconds: 30),
+        isAudioMusicQuality: false,
+        audioPlaySpeed: kAudioDefaultPlaySpeed,
+        audioPlayVolume: kAudioDefaultPlayVolume,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        isPaused: true,
+        audioPausedDateTime: null,
+        audioPositionSeconds: 0,
+        audioFileName:
+            "Audio Et l'Univers disparaitra de Gary Renard 16_37  - Chapitre 5 - 1.mp3",
+        audioFileSize: 330000000,
+        isAudioImported: false,
+      );
+
+      final Audio chap_6_1 = Audio.fullConstructor(
+        enclosingPlaylist: null,
+        movedFromPlaylistTitle: null,
+        movedToPlaylistTitle: null,
+        copiedFromPlaylistTitle: null,
+        copiedToPlaylistTitle: null,
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 21_37  - Partie 2 chapitre 6 - 1",
+        compactVideoDescription: '',
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 21_37  - Partie 2 chapitre 6 - 1",
+        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+        audioDownloadSpeed: 1000000,
+        videoUploadDate: DateTime(2023, 3, 1),
+        audioDuration: const Duration(minutes: 5, seconds: 30),
+        isAudioMusicQuality: false,
+        audioPlaySpeed: kAudioDefaultPlaySpeed,
+        audioPlayVolume: kAudioDefaultPlayVolume,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        isPaused: true,
+        audioPausedDateTime: null,
+        audioPositionSeconds: 0,
+        audioFileName:
+            "Audio Et l'Univers disparaitra de Gary Renard 21_37  - Partie 2 chapitre 6 - 1.mp3",
+        audioFileSize: 330000000,
+        isAudioImported: false,
+      );
+
+      final Audio chap_6_2 = Audio.fullConstructor(
+        enclosingPlaylist: null,
+        movedFromPlaylistTitle: null,
+        movedToPlaylistTitle: null,
+        copiedFromPlaylistTitle: null,
+        copiedToPlaylistTitle: null,
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 22_37  - chapitre 6 - 2",
+        compactVideoDescription: '',
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 22_37  - chapitre 6 - 2",
+        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+        audioDownloadSpeed: 1000000,
+        videoUploadDate: DateTime(2023, 3, 1),
+        audioDuration: const Duration(minutes: 5, seconds: 30),
+        isAudioMusicQuality: false,
+        audioPlaySpeed: kAudioDefaultPlaySpeed,
+        audioPlayVolume: kAudioDefaultPlayVolume,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        isPaused: true,
+        audioPausedDateTime: null,
+        audioPositionSeconds: 0,
+        audioFileName:
+            "Audio Et l'Univers disparaitra de Gary Renard 22_37  - chapitre 6 - 2.mp3",
+        audioFileSize: 330000000,
+        isAudioImported: false,
+      );
+
+      final Audio chap_8 = Audio.fullConstructor(
+        enclosingPlaylist: null,
+        movedFromPlaylistTitle: null,
+        movedToPlaylistTitle: null,
+        copiedFromPlaylistTitle: null,
+        copiedToPlaylistTitle: null,
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 26_37  - chapitre 8",
+        compactVideoDescription: '',
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 26_37  - chapitre 8",
+        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+        audioDownloadSpeed: 1000000,
+        videoUploadDate: DateTime(2023, 3, 1),
+        audioDuration: const Duration(minutes: 5, seconds: 30),
+        isAudioMusicQuality: false,
+        audioPlaySpeed: kAudioDefaultPlaySpeed,
+        audioPlayVolume: kAudioDefaultPlayVolume,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        isPaused: true,
+        audioPausedDateTime: null,
+        audioPositionSeconds: 0,
+        audioFileName:
+            "Audio Et l'Univers disparaitra de Gary Renard 26_37  - chapitre 8.mp3",
+        audioFileSize: 330000000,
+        isAudioImported: false,
+      );
+
+      final Audio chap_9_1 = Audio.fullConstructor(
+        enclosingPlaylist: null,
+        movedFromPlaylistTitle: null,
+        movedToPlaylistTitle: null,
+        copiedFromPlaylistTitle: null,
+        copiedToPlaylistTitle: null,
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 27_37  - chapitre 9 - 1",
+        compactVideoDescription: '',
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 27_37  - chapitre 9 - 1",
+        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+        audioDownloadSpeed: 1000000,
+        videoUploadDate: DateTime(2023, 3, 1),
+        audioDuration: const Duration(minutes: 5, seconds: 30),
+        isAudioMusicQuality: false,
+        audioPlaySpeed: kAudioDefaultPlaySpeed,
+        audioPlayVolume: kAudioDefaultPlayVolume,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        isPaused: true,
+        audioPausedDateTime: null,
+        audioPositionSeconds: 0,
+        audioFileName:
+            "Audio Et l'Univers disparaitra de Gary Renard 27_37  - chapitre 9 - 1.mp3",
+        audioFileSize: 330000000,
+        isAudioImported: false,
+      );
+
+      final Audio chap_10 = Audio.fullConstructor(
+        enclosingPlaylist: null,
+        movedFromPlaylistTitle: null,
+        movedToPlaylistTitle: null,
+        copiedFromPlaylistTitle: null,
+        copiedToPlaylistTitle: null,
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 29_37  - chapitre 10",
+        compactVideoDescription: '',
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 29_37  - chapitre 10",
+        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+        audioDownloadSpeed: 1000000,
+        videoUploadDate: DateTime(2023, 3, 1),
+        audioDuration: const Duration(minutes: 5, seconds: 30),
+        isAudioMusicQuality: false,
+        audioPlaySpeed: kAudioDefaultPlaySpeed,
+        audioPlayVolume: kAudioDefaultPlayVolume,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        isPaused: true,
+        audioPausedDateTime: null,
+        audioPositionSeconds: 0,
+        audioFileName:
+            "Audio Et l'Univers disparaitra de Gary Renard 29_37  - chapitre 10.mp3",
+        audioFileSize: 330000000,
+        isAudioImported: false,
+      );
+
+      final Audio chap_11_1 = Audio.fullConstructor(
+        enclosingPlaylist: null,
+        movedFromPlaylistTitle: null,
+        movedToPlaylistTitle: null,
+        copiedFromPlaylistTitle: null,
+        copiedToPlaylistTitle: null,
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 30_37  - chapitre 11 - 1",
+        compactVideoDescription: '',
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 30_37  - chapitre 11 - 1",
+        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+        audioDownloadSpeed: 1000000,
+        videoUploadDate: DateTime(2023, 3, 1),
+        audioDuration: const Duration(minutes: 5, seconds: 30),
+        isAudioMusicQuality: false,
+        audioPlaySpeed: kAudioDefaultPlaySpeed,
+        audioPlayVolume: kAudioDefaultPlayVolume,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        isPaused: true,
+        audioPausedDateTime: null,
+        audioPositionSeconds: 0,
+        audioFileName:
+            "Audio Et l'Univers disparaitra de Gary Renard 30_37  - chapitre 11 - 1.mp3",
+        audioFileSize: 330000000,
+        isAudioImported: false,
+      );
+
+      final Audio chap_11_2 = Audio.fullConstructor(
+        enclosingPlaylist: null,
+        movedFromPlaylistTitle: null,
+        movedToPlaylistTitle: null,
+        copiedFromPlaylistTitle: null,
+        copiedToPlaylistTitle: null,
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 31_37  - chapitre 11 - 2",
+        compactVideoDescription: '',
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 31_37  - chapitre 11 - 2",
+        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+        audioDownloadSpeed: 1000000,
+        videoUploadDate: DateTime(2023, 3, 1),
+        audioDuration: const Duration(minutes: 5, seconds: 30),
+        isAudioMusicQuality: false,
+        audioPlaySpeed: kAudioDefaultPlaySpeed,
+        audioPlayVolume: kAudioDefaultPlayVolume,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        isPaused: true,
+        audioPausedDateTime: null,
+        audioPositionSeconds: 0,
+        audioFileName:
+            "Audio Et l'Univers disparaitra de Gary Renard 31_37  - chapitre 11 - 2.mp3",
+        audioFileSize: 330000000,
+        isAudioImported: false,
+      );
+
+      final Audio chap_12 = Audio.fullConstructor(
+        enclosingPlaylist: null,
+        movedFromPlaylistTitle: null,
+        movedToPlaylistTitle: null,
+        copiedFromPlaylistTitle: null,
+        copiedToPlaylistTitle: null,
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 32_37  - chapitre 12",
+        compactVideoDescription: '',
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 32_37  - chapitre 12",
+        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+        audioDownloadSpeed: 1000000,
+        videoUploadDate: DateTime(2023, 3, 1),
+        audioDuration: const Duration(minutes: 5, seconds: 30),
+        isAudioMusicQuality: false,
+        audioPlaySpeed: kAudioDefaultPlaySpeed,
+        audioPlayVolume: kAudioDefaultPlayVolume,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        isPaused: true,
+        audioPausedDateTime: null,
+        audioPositionSeconds: 0,
+        audioFileName:
+            "Audio Et l'Univers disparaitra de Gary Renard 32_37  - chapitre 12.mp3",
+        audioFileSize: 330000000,
+        isAudioImported: false,
+      );
+
+      final Audio chap_13 = Audio.fullConstructor(
+        enclosingPlaylist: null,
+        movedFromPlaylistTitle: null,
+        movedToPlaylistTitle: null,
+        copiedFromPlaylistTitle: null,
+        copiedToPlaylistTitle: null,
+        originalVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 33_37  - chapitre 13",
+        compactVideoDescription: '',
+        validVideoTitle:
+            "Audio Et l'Univers disparaitra de Gary Renard 33_37  - chapitre 13",
+        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+        audioDownloadSpeed: 1000000,
+        videoUploadDate: DateTime(2023, 3, 1),
+        audioDuration: const Duration(minutes: 5, seconds: 30),
+        isAudioMusicQuality: false,
+        audioPlaySpeed: kAudioDefaultPlaySpeed,
+        audioPlayVolume: kAudioDefaultPlayVolume,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        isPaused: true,
+        audioPausedDateTime: null,
+        audioPositionSeconds: 0,
+        audioFileName:
+            "Audio Et l'Univers disparaitra de Gary Renard 33_37  - chapitre 13.mp3",
+        audioFileSize: 330000000,
+        isAudioImported: false,
+      );
+
+      List<Audio> audioList = [
+        note,
+        chap_10,
+        chap_1,
+        chap_5_1,
+        chap_2_2,
+        chap_6_1,
+        chap_2_1,
+        chap_2_3,
+        avantPropos,
+        chap_3_1,
+        chap_3_2,
+        chap_11_1,
+        chap_11_2,
+        chap_4_1,
+        chap_6_2,
+        chap_8,
+        chap_9_1,
+        chap_12,
+        chap_13,
+      ];
+
+      List<Audio> expectedResultForTitleAsc = [
+        avantPropos,
+        note,
+        chap_1,
+        chap_2_1,
+        chap_2_2,
+        chap_2_3,
+        chap_3_1,
+        chap_3_2,
+        chap_4_1,
+        chap_5_1,
+        chap_6_1,
+        chap_6_2,
+        chap_8,
+        chap_9_1,
+        chap_10,
+        chap_11_1,
+        chap_11_2,
+        chap_12,
+        chap_13,
+      ];
+
+      List<Audio> expectedResultForTitleDesc = [
+        chap_13,
+        chap_12,
+        chap_11_2,
+        chap_11_1,
+        chap_10,
+        chap_9_1,
+        chap_8,
+        chap_6_2,
+        chap_6_1,
+        chap_5_1,
+        chap_4_1,
+        chap_3_2,
+        chap_3_1,
+        chap_2_3,
+        chap_2_2,
+        chap_2_1,
+        chap_1,
+        note,
+        avantPropos,
+      ];
+
+      final List<SortingItem> selectedSortItemLstAsc = [
+        SortingItem(
+          sortingOption: SortingOption.validAudioTitle,
+          isAscending: true,
+        ),
+      ];
+
+      List<Audio> sortedByTitleAsc =
+          audioSortFilterService.sortAudioLstBySortingOptions(
+        audioLst: List<Audio>.from(audioList), // copy list
+        selectedSortItemLst: selectedSortItemLstAsc,
+      );
+
+      expect(
+          sortedByTitleAsc.map((audio) => audio.validVideoTitle).toList(),
+          equals(expectedResultForTitleAsc
+              .map((audio) => audio.validVideoTitle)
+              .toList()));
+
+      final List<SortingItem> selectedSortItemLstDesc = [
+        SortingItem(
+          sortingOption: SortingOption.validAudioTitle,
+          isAscending: false,
+        ),
+      ];
+
+      List<Audio> sortedByTitleDesc =
+          audioSortFilterService.sortAudioLstBySortingOptions(
+        audioLst: List<Audio>.from(audioList), // copy list
+        selectedSortItemLst: selectedSortItemLstDesc,
+      );
+
+      expect(
+          sortedByTitleDesc.map((audio) => audio.validVideoTitle).toList(),
+          equals(expectedResultForTitleDesc
+              .map((audio) => audio.validVideoTitle)
+              .toList()));
+    });
+    test('''sort by edited title with chapter number. The valid video titles of
+            the audio contained in the 'Gary Renard - Et l'univers disparaîtra'
+            json file were edited in order for their titles to be sorted correctly
+            before the SortingOption.validAudioTitle sort function was improved.''',
+        () {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}sort_filter_unit_test",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Load Playlist from the file
+      Playlist loadedPlaylist = JsonDataService.loadFromFile(
+        jsonPathFileName:
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}Gary Renard - Et l'univers disparaîtra.json",
+        type: Playlist,
+      );
+
+      List<Audio> audioList = loadedPlaylist.playableAudioLst;
+
+      final List<SortingItem> selectedSortItemLstAsc = [
+        SortingItem(
+          sortingOption: SortingOption.validAudioTitle,
+          isAscending: true,
+        ),
+      ];
+
+      List<Audio> actualAudioSortedByTitleAscLst =
+          audioSortFilterService.sortAudioLstBySortingOptions(
+        audioLst: List<Audio>.from(audioList), // copy list
+        selectedSortItemLst: selectedSortItemLstAsc,
+      );
+
+      // Load the expected sorted audio list from the file
+      List<Audio> expectedAudioSortedByTitleAscLst = JsonDataService.loadListFromFile(
+        jsonPathFileName:
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}expected audio list asc Et l'univers disparaîtra.json",
+        type: Audio,
+      );
+
+      expect(
+        actualAudioSortedByTitleAscLst,
+        expectedAudioSortedByTitleAscLst,
+      );
+
+      final List<SortingItem> selectedSortItemLstDesc = [
+        SortingItem(
+          sortingOption: SortingOption.validAudioTitle,
+          isAscending: false,
+        ),
+      ];
+
+      List<Audio> actualAudioSortedByTitleDescLst =
+          audioSortFilterService.sortAudioLstBySortingOptions(
+        audioLst: List<Audio>.from(audioList), // copy list
+        selectedSortItemLst: selectedSortItemLstDesc,
+      );
+
+      // Save the list to a file
+      // JsonDataService.saveListToFile(
+      //   data: actualAudioSortedByTitleDescLst,
+      //   jsonPathFileName:
+      //       "$kPlaylistDownloadRootPathWindowsTest${path.separator}expected audio list desc Et l'univers disparaîtra.json",
+      // );
+
+      // Load the expected sorted audio list from the file
+      List<Audio> expectedAudioSortedByTitleDescLst = JsonDataService.loadListFromFile(
+        jsonPathFileName:
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}expected audio list desc Et l'univers disparaîtra.json",
+        type: Audio,
+      );
+
+      expect(
+        actualAudioSortedByTitleDescLst,
+        expectedAudioSortedByTitleDescLst,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    test('''sort by title with chapter number. The valid video title of the audio
+            contained in the 'Gary Renard - Et l'univers disparaîtra imported'
+            json file are original and so not modified.''',
+        () {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}sort_filter_unit_test",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Load Playlist from the file
+      Playlist loadedPlaylist = JsonDataService.loadFromFile(
+        jsonPathFileName:
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}Et l'univers disparaîtra imported.json",
+        type: Playlist,
+      );
+
+      List<Audio> audioList = loadedPlaylist.playableAudioLst;
+
+      final List<SortingItem> selectedSortItemLstAsc = [
+        SortingItem(
+          sortingOption: SortingOption.validAudioTitle,
+          isAscending: true,
+        ),
+      ];
+
+      List<Audio> actualAudioSortedByTitleAscLst =
+          audioSortFilterService.sortAudioLstBySortingOptions(
+        audioLst: List<Audio>.from(audioList), // copy list
+        selectedSortItemLst: selectedSortItemLstAsc,
+      );
+
+      // Load the expected sorted audio list from the file
+      List<Audio> expectedAudioSortedByTitleAscLst = JsonDataService.loadListFromFile(
+        jsonPathFileName:
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}expected audio list asc Et l'univers disparaîtra imported.json",
+        type: Audio,
+      );
+
+      expect(
+        actualAudioSortedByTitleAscLst,
+        expectedAudioSortedByTitleAscLst,
+      );
+
+      final List<SortingItem> selectedSortItemLstDesc = [
+        SortingItem(
+          sortingOption: SortingOption.validAudioTitle,
+          isAscending: false,
+        ),
+      ];
+
+      List<Audio> actualAudioSortedByTitleDescLst =
+          audioSortFilterService.sortAudioLstBySortingOptions(
+        audioLst: List<Audio>.from(audioList), // copy list
+        selectedSortItemLst: selectedSortItemLstDesc,
+      );
+
+      // Save the list to a file
+      // JsonDataService.saveListToFile(
+      //   data: actualAudioSortedByTitleDescLst,
+      //   jsonPathFileName:
+      //       "$kPlaylistDownloadRootPathWindowsTest${path.separator}expected audio list desc Et l'univers disparaîtra imported.json",
+      // );
+
+      // Load the expected sorted audio list from the file
+      List<Audio> expectedAudioSortedByTitleDescLst = JsonDataService.loadListFromFile(
+        jsonPathFileName:
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}expected audio list desc Et l'univers disparaîtra imported.json",
+        type: Audio,
+      );
+
+      expect(
+        actualAudioSortedByTitleDescLst,
+        expectedAudioSortedByTitleDescLst,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
 
     test('sort by title starting with non language chars', () {
