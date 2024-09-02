@@ -1,3 +1,4 @@
+import 'package:audiolearn/utils/dir_util.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
@@ -747,86 +748,28 @@ class PlaylistListVM extends ChangeNotifier {
     required List<String> audioFileNamesLst,
     AudioSortFilterParameters? audioSortFilterParameters,
   }) {
-    String selectedPlaylistTitle = selectedPlaylist.title;
-    String selectedPlaylistSortFilterParmsName;
-    AudioSortFilterParameters? localAudioSortFilterParameters;
-
-    if (audioLearnAppViewType == AudioLearnAppViewType.playlistDownloadView) {
-      selectedPlaylistSortFilterParmsName =
-          _playlistAudioSFparmsNamesForPlaylistDownloadViewMap[
-                  selectedPlaylistTitle] ??
-              '';
-    } else {
-      selectedPlaylistSortFilterParmsName =
-          _playlistAudioSFparmsNamesForAudioPlayerViewMap[
-                  selectedPlaylistTitle] ??
-              '';
-    }
-
-    if (selectedPlaylistSortFilterParmsName.isEmpty) {
-      switch (audioLearnAppViewType) {
-        case AudioLearnAppViewType.playlistDownloadView:
-          String audioSortFilterParmsNameForPlaylistDownloadView =
-              selectedPlaylist.audioSortFilterParmsNameForPlaylistDownloadView;
-
-          if (audioSortFilterParmsNameForPlaylistDownloadView.isNotEmpty) {
-            // This means that the user has defined a sort filter parameters
-            // instance applicable to any playlist, which is stored the
-            // application settings json file. This named sort filter
-            // parameters instance was saved in the current playlist json
-            // file to be automatically applyed in the playlist download view.
-            localAudioSortFilterParameters =
-                _settingsDataService.namedAudioSortFilterParametersMap[
-                    audioSortFilterParmsNameForPlaylistDownloadView];
-          }
-          break;
-        case AudioLearnAppViewType.audioPlayerView:
-          String audioSortFilterParmsNameForAudioPlayerView =
-              selectedPlaylist.audioSortFilterParmsNameForAudioPlayerView;
-
-          if (audioSortFilterParmsNameForAudioPlayerView.isNotEmpty) {
-            // This means that the user has defined a sort filter parameters
-            // instance applicable to any playlist, which is stored the
-            // application settings json file. This named sort filter
-            // parameters instance was saved in the current playlist json
-            // file to be automatically applyed in the audio player view.
-            localAudioSortFilterParameters =
-                _settingsDataService.namedAudioSortFilterParametersMap[
-                    audioSortFilterParmsNameForAudioPlayerView];
-          }
-          break;
-        default:
-          break;
-      }
-    } else {
-      // If the playlist has been selected and the user has not yet
-      // defined sort and filter parameters for the playlist, then
-      // the default sort and filter parameters are applied to the
-      // playlist audio list.
-      localAudioSortFilterParameters =
-          _settingsDataService.namedAudioSortFilterParametersMap[
-              selectedPlaylistSortFilterParmsName];
-    }
-
-    localAudioSortFilterParameters ??= audioSortFilterParameters;
-
-    List<String> sortedAudioFileNamesLst =
-        _audioSortFilterService.sortAudioFileNamesLst(
-      audioFileNamesLst: audioFileNamesLst,
-      audioSortFilterParameters: localAudioSortFilterParameters ??
-          AudioSortFilterParameters.createDefaultAudioSortFilterParameters(),
+    List<Audio> selectedPlaylistSortedAudioLst =
+        getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
+      audioLearnAppViewType: audioLearnAppViewType,
+      audioSortFilterParameters: audioSortFilterParameters,
     );
 
-    // currently, only one playlist can be selected at a time !
-    // so, the following code is not useful
-    //
-    // for (Playlist playlist in _listOfSelectablePlaylists) {
-    //   if (playlist.isSelected) {
-    //     selectedPlaylistsAudios.addAll(playlist.playableAudioLst);
-    //   }
-    // }
+    Map<String, int> audioFileNameToIndexMap = {};
+    int position = 0;
 
-    return sortedAudioFileNamesLst;
+    for (Audio audio in selectedPlaylistSortedAudioLst) {
+      audioFileNameToIndexMap[DirUtil.getFileNameWithoutMp3Extension(
+        mp3FileName: audio.audioFileName,
+      )] = position++;
+    }
+
+    audioFileNamesLst.sort(
+      (a, b) => audioFileNameToIndexMap[a]!.compareTo(
+        audioFileNameToIndexMap[b]!,
+      ),
+    );
+
+    return audioFileNamesLst;
   }
 
   List<SortingItem> getSortingItemLstForViewType(
