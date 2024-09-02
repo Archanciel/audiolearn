@@ -5107,22 +5107,22 @@ void main() {
       // playlistListVM to know which playlist is selected
       playlistListVM.getUpToDateSelectablePlaylists();
 
-      List<String> sortedAudioFileNamesLst =
+      List<String> sortedCommentFileNamesLst =
           playlistListVM.getPlaylistAudioFileNamesApplyingSortFilterParameters(
         selectedPlaylist: loadedPlaylist,
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
         commentFileNamesLst: commentFileNamesNoExtLst,
       );
 
-      List<String> expectedCommentFileNameLst = [
+      List<String> expectedSortedCommentFileNameLst = [
         "Conversation avec dieu T1 Tome 1 lecture complet entier Neal",
         "Conversation avec Dieu T2 en entier   Neale Donald Walsch   Livre audio",
         "Conversation avec Dieu T3   Neale Donald Walsch   Livre audio",
       ];
 
       expect(
-        sortedAudioFileNamesLst,
-        expectedCommentFileNameLst,
+        sortedCommentFileNamesLst,
+        expectedSortedCommentFileNameLst,
       );
 
       // Purge the test playlist directory so that the created test
@@ -5206,22 +5206,106 @@ void main() {
       // playlistListVM to know which playlist is selected
       playlistListVM.getUpToDateSelectablePlaylists();
 
-      List<String> sortedAudioFileNamesLst =
+      List<String> sortedCommentFileNamesLst =
           playlistListVM.getPlaylistAudioFileNamesApplyingSortFilterParameters(
         selectedPlaylist: loadedPlaylist,
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
         commentFileNamesLst: commentFileNamesNoExtLst,
       );
 
-      List<String> expectedCommentFileNameLst = [
+      List<String> expectedSortedCommentFileNameLst = [
         "Conversation avec dieu T1 Tome 1 lecture complet entier Neal",
         "Conversation avec Dieu T2 en entier   Neale Donald Walsch   Livre audio",
         "Conversation avec Dieu T3   Neale Donald Walsch   Livre audio",
       ];
 
       expect(
-        sortedAudioFileNamesLst,
-        expectedCommentFileNameLst,
+        sortedCommentFileNamesLst,
+        expectedSortedCommentFileNameLst,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    test('''sort playlist zero comments.''', () async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}playlist_audio_comments_sort test",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Load Playlist from the file
+      Playlist loadedPlaylist = JsonDataService.loadFromFile(
+        jsonPathFileName:
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}Conversation avec Dieu${path.separator}Conversation avec Dieu.json",
+        type: Playlist,
+      );
+
+      List<String> commentFileNamesNoExtLst = [];
+
+      // Adding a comment file name which does not correspond to a playable
+      // audio list of the playlist.
+      commentFileNamesNoExtLst.add("Conversation avec Dieu T4");
+
+      // Inserting a comment file name which does not correspond to a playable
+      // audio list of the playlist.
+      commentFileNamesNoExtLst.insert(1, "Conversation avec Dieu T5");
+
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+      WarningMessageVM warningMessageVM = WarningMessageVM();
+
+      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+        isTest: true,
+      );
+
+      PlaylistListVM playlistListVM = PlaylistListVM(
+        warningMessageVM: warningMessageVM,
+        audioDownloadVM: audioDownloadVM,
+        commentVM: CommentVM(),
+        settingsDataService: settingsDataService,
+      );
+
+      // calling getUpToDateSelectablePlaylists() loads all the
+      // playlist json files from the app dir and so enables
+      // playlistListVM to know which playlist is selected
+      playlistListVM.getUpToDateSelectablePlaylists();
+
+      List<String> sortedCommentFileNamesLst =
+          playlistListVM.getPlaylistAudioFileNamesApplyingSortFilterParameters(
+        selectedPlaylist: loadedPlaylist,
+        audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
+        commentFileNamesLst: commentFileNamesNoExtLst,
+      );
+
+      List<String> expectedSortedCommentFileNameLst = [];
+
+      expect(
+        sortedCommentFileNamesLst,
+        expectedSortedCommentFileNameLst,
       );
 
       // Purge the test playlist directory so that the created test
