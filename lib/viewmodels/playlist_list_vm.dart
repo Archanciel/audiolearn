@@ -745,7 +745,7 @@ class PlaylistListVM extends ChangeNotifier {
   List<String> getPlaylistAudioFileNamesApplyingSortFilterParameters({
     required Playlist selectedPlaylist,
     required AudioLearnAppViewType audioLearnAppViewType,
-    required List<String> audioFileNamesLst,
+    required List<String> commentFileNamesLst,
     AudioSortFilterParameters? audioSortFilterParameters,
   }) {
     List<Audio> selectedPlaylistSortedAudioLst =
@@ -753,6 +753,9 @@ class PlaylistListVM extends ChangeNotifier {
       audioLearnAppViewType: audioLearnAppViewType,
       audioSortFilterParameters: audioSortFilterParameters,
     );
+
+    // First step: create a map associating each comment file name to
+    // its position in the audio list of the selected playlist.
 
     Map<String, int> audioFileNameToIndexMap = {};
     int position = 0;
@@ -763,13 +766,26 @@ class PlaylistListVM extends ChangeNotifier {
       )] = position++;
     }
 
-    audioFileNamesLst.sort(
+    // Second step: filter out the comment file names not present in
+    // the audioFileNameToIndexMap
+    List<String> filteredAudioFileNamesLst = commentFileNamesLst
+        .where(
+          (audioFileName) => audioFileNameToIndexMap.containsKey(
+            audioFileName,
+          ),
+        )
+        .toList();
+
+    // Third step: sort the filtered audio file names list according to
+    // the position of the corresponding audio in the audio list of the
+    // selected playlist
+    filteredAudioFileNamesLst.sort(
       (a, b) => audioFileNameToIndexMap[a]!.compareTo(
         audioFileNameToIndexMap[b]!,
       ),
     );
 
-    return audioFileNamesLst;
+    return filteredAudioFileNamesLst;
   }
 
   List<SortingItem> getSortingItemLstForViewType(

@@ -4637,7 +4637,8 @@ void main() {
         );
       });
       testWidgets('''Playing from PlaylistCommentDialogWidget a comment on audio
-             paused more than 1 hour ago.''', (WidgetTester tester) async {
+                     paused more than 1 hour ago.''',
+          (WidgetTester tester) async {
         const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
 
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(

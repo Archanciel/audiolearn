@@ -110,12 +110,12 @@ class _PlaylistCommentListDialogWidgetState
               context,
               listen: false,
             );
-            
+
             List<String> sortedAudioFileNamesLst = playlistListVM
                 .getPlaylistAudioFileNamesApplyingSortFilterParameters(
               selectedPlaylist: widget.currentPlaylist,
               audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
-              audioFileNamesLst: audioFileNamesLst,
+              commentFileNamesLst: audioFileNamesLst,
             );
 
             return SingleChildScrollView(
