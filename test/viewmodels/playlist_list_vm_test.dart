@@ -47,26 +47,13 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      // Since we have to use a mock AudioDownloadVM to add the
-      // youtube playlist, we can not use app.main() to start the
-      // app because app.main() uses the real AudioDownloadVM
-      // and we don't want to make the main.dart file dependent
-      // of a mock class. So we have to start the app by hand.
-
       WarningMessageVM warningMessageVM = WarningMessageVM();
-      // MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
-      //   warningMessageVM: warningMessageVM,
-      //   isTest: true,
-      // );
-      // mockAudioDownloadVM.youtubePlaylistTitle = youtubeNewPlaylistTitle;
 
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
         isTest: true,
       );
-
-      // audioDownloadVM.youtubeExplode = mockYoutubeExplode;
 
       playlistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
@@ -273,26 +260,13 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      // Since we have to use a mock AudioDownloadVM to add the
-      // youtube playlist, we can not use app.main() to start the
-      // app because app.main() uses the real AudioDownloadVM
-      // and we don't want to make the main.dart file dependent
-      // of a mock class. So we have to start the app by hand.
-
       WarningMessageVM warningMessageVM = WarningMessageVM();
-      // MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
-      //   warningMessageVM: warningMessageVM,
-      //   isTest: true,
-      // );
-      // mockAudioDownloadVM.youtubePlaylistTitle = youtubeNewPlaylistTitle;
 
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
         isTest: true,
       );
-
-      // audioDownloadVM.youtubeExplode = mockYoutubeExplode;
 
       playlistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
@@ -357,26 +331,13 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      // Since we have to use a mock AudioDownloadVM to add the
-      // youtube playlist, we can not use app.main() to start the
-      // app because app.main() uses the real AudioDownloadVM
-      // and we don't want to make the main.dart file dependent
-      // of a mock class. So we have to start the app by hand.
-
       WarningMessageVM warningMessageVM = WarningMessageVM();
-      // MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
-      //   warningMessageVM: warningMessageVM,
-      //   isTest: true,
-      // );
-      // mockAudioDownloadVM.youtubePlaylistTitle = youtubeNewPlaylistTitle;
 
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
         isTest: true,
       );
-
-      // audioDownloadVM.youtubeExplode = mockYoutubeExplode;
 
       playlistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
@@ -444,26 +405,13 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      // Since we have to use a mock AudioDownloadVM to add the
-      // youtube playlist, we can not use app.main() to start the
-      // app because app.main() uses the real AudioDownloadVM
-      // and we don't want to make the main.dart file dependent
-      // of a mock class. So we have to start the app by hand.
-
       WarningMessageVM warningMessageVM = WarningMessageVM();
-      // MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
-      //   warningMessageVM: warningMessageVM,
-      //   isTest: true,
-      // );
-      // mockAudioDownloadVM.youtubePlaylistTitle = youtubeNewPlaylistTitle;
 
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
         isTest: true,
       );
-
-      // audioDownloadVM.youtubeExplode = mockYoutubeExplode;
 
       playlistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
@@ -528,18 +476,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      // Since we have to use a mock AudioDownloadVM to add the
-      // youtube playlist, we can not use app.main() to start the
-      // app because app.main() uses the real AudioDownloadVM
-      // and we don't want to make the main.dart file dependent
-      // of a mock class. So we have to start the app by hand.
-
       WarningMessageVM warningMessageVM = WarningMessageVM();
-      // MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
-      //   warningMessageVM: warningMessageVM,
-      //   isTest: true,
-      // );
-      // mockAudioDownloadVM.youtubePlaylistTitle = youtubeNewPlaylistTitle;
 
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
@@ -617,26 +554,13 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      // Since we have to use a mock AudioDownloadVM to add the
-      // youtube playlist, we can not use app.main() to start the
-      // app because app.main() uses the real AudioDownloadVM
-      // and we don't want to make the main.dart file dependent
-      // of a mock class. So we have to start the app by hand.
-
       WarningMessageVM warningMessageVM = WarningMessageVM();
-      // MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
-      //   warningMessageVM: warningMessageVM,
-      //   isTest: true,
-      // );
-      // mockAudioDownloadVM.youtubePlaylistTitle = youtubeNewPlaylistTitle;
 
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
         isTest: true,
       );
-
-      // audioDownloadVM.youtubeExplode = mockYoutubeExplode;
 
       playlistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
@@ -699,26 +623,13 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      // Since we have to use a mock AudioDownloadVM to add the
-      // youtube playlist, we can not use app.main() to start the
-      // app because app.main() uses the real AudioDownloadVM
-      // and we don't want to make the main.dart file dependent
-      // of a mock class. So we have to start the app by hand.
-
       WarningMessageVM warningMessageVM = WarningMessageVM();
-      // MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
-      //   warningMessageVM: warningMessageVM,
-      //   isTest: true,
-      // );
-      // mockAudioDownloadVM.youtubePlaylistTitle = youtubeNewPlaylistTitle;
 
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
         isTest: true,
       );
-
-      // audioDownloadVM.youtubeExplode = mockYoutubeExplode;
 
       playlistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
@@ -786,18 +697,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      // Since we have to use a mock AudioDownloadVM to add the
-      // youtube playlist, we can not use app.main() to start the
-      // app because app.main() uses the real AudioDownloadVM
-      // and we don't want to make the main.dart file dependent
-      // of a mock class. So we have to start the app by hand.
-
       WarningMessageVM warningMessageVM = WarningMessageVM();
-      // MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
-      //   warningMessageVM: warningMessageVM,
-      //   isTest: true,
-      // );
-      // mockAudioDownloadVM.youtubePlaylistTitle = youtubeNewPlaylistTitle;
 
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
@@ -868,26 +768,13 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      // Since we have to use a mock AudioDownloadVM to add the
-      // youtube playlist, we can not use app.main() to start the
-      // app because app.main() uses the real AudioDownloadVM
-      // and we don't want to make the main.dart file dependent
-      // of a mock class. So we have to start the app by hand.
-
       WarningMessageVM warningMessageVM = WarningMessageVM();
-      // MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
-      //   warningMessageVM: warningMessageVM,
-      //   isTest: true,
-      // );
-      // mockAudioDownloadVM.youtubePlaylistTitle = youtubeNewPlaylistTitle;
 
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
         isTest: true,
       );
-
-      // audioDownloadVM.youtubeExplode = mockYoutubeExplode;
 
       playlistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
