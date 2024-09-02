@@ -622,6 +622,7 @@ void audioPlayerViewSortFilterIntregrationTest() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
+    group('Comments order tests', () {});
   });
 }
 

@@ -110,6 +110,7 @@ class _PlaylistCommentListDialogWidgetState
               context,
               listen: false,
             );
+            
             List<String> sortedAudioFileNamesLst = playlistListVM
                 .getPlaylistAudioFileNamesApplyingSortFilterParameters(
               selectedPlaylist: widget.currentPlaylist,
