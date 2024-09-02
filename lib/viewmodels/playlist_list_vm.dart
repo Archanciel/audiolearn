@@ -742,7 +742,8 @@ class PlaylistListVM extends ChangeNotifier {
     return _sortedFilteredSelectedPlaylistsPlayableAudios!;
   }
 
-  List<String> getPlaylistAudioFileNamesApplyingSortFilterParameters({
+  List<String>
+      getSortedPlaylistAudioCommentFileNamesApplyingSortFilterParameters({
     required Playlist selectedPlaylist,
     required AudioLearnAppViewType audioLearnAppViewType,
     required List<String> commentFileNamesLst,

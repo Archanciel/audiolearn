@@ -91,20 +91,17 @@ class _PlaylistCommentListDialogWidgetState
         actionsPadding: kDialogActionsPadding,
         content: Consumer<CommentVM>(
           builder: (context, commentVM, child) {
-            Map<String, List<Comment>> playlistAudiosCommentsMap =
+            Map<String, List<Comment>> playlistAudioCommentsMap =
                 commentVM.getAllPlaylistComments(
               playlist: widget.currentPlaylist,
             );
 
-            // Obtaining the list of audio file name playlistAudiosCommentsMap
-            // keys and sorting them. Since the audio file names are formatted
-            // as YYMMDD-HHMMSS-audio name YYMMDD, YYMMDD-HHMMSS being the
-            // audio download date time and YYMMDD being the video upload date,
-            // sorting the audio file names sorts them by the audio download
-            // date time. So, the list starts with the first downloaded audio
-            // and ends with the last downloaded audio.
+            // Obtaining the list of audio comment file names equal to
+            // playlistAudioCommentsMap keys and sorting them according to the
+            // playble audio order.
+
             List<String> audioFileNamesLst =
-                playlistAudiosCommentsMap.keys.toList();
+                playlistAudioCommentsMap.keys.toList();
 
             PlaylistListVM playlistListVM = Provider.of<PlaylistListVM>(
               context,
@@ -112,7 +109,7 @@ class _PlaylistCommentListDialogWidgetState
             );
 
             List<String> sortedAudioFileNamesLst = playlistListVM
-                .getPlaylistAudioFileNamesApplyingSortFilterParameters(
+                .getSortedPlaylistAudioCommentFileNamesApplyingSortFilterParameters(
               selectedPlaylist: widget.currentPlaylist,
               audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
               commentFileNamesLst: audioFileNamesLst,
@@ -125,7 +122,7 @@ class _PlaylistCommentListDialogWidgetState
                 children: (sortedAudioFileNamesLst.isNotEmpty)
                     ? _buildPlaylistAudiosCommentsList(
                         commentVM: commentVM,
-                        playlistAudiosCommentsMap: playlistAudiosCommentsMap,
+                        playlistAudiosCommentsMap: playlistAudioCommentsMap,
                         audioFileNamesLst: sortedAudioFileNamesLst,
                         isDarkTheme:
                             themeProviderVM.currentTheme == AppTheme.dark,
@@ -172,10 +169,12 @@ class _PlaylistCommentListDialogWidgetState
             ?.audioFileName ??
         '';
 
-    currentAudioFileName = currentAudioFileName.substring(
-      0,
-      currentAudioFileName.length - 4,
-    );
+    if (currentAudioFileName.isNotEmpty) {
+      currentAudioFileName = currentAudioFileName.substring(
+        0,
+        currentAudioFileName.length - 4,
+      );
+    }
 
     const TextStyle commentTitleTextStyle = TextStyle(
       fontSize: kAudioTitleFontSize,
