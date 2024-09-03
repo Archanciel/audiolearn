@@ -5072,7 +5072,8 @@ void main() {
         playlist: loadedPlaylist,
       );
 
-      List<String> commentFileNamesNoExtLst = playlistAudiosCommentsMap.keys.toList();
+      List<String> commentFileNamesNoExtLst =
+          playlistAudiosCommentsMap.keys.toList();
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
@@ -5107,8 +5108,8 @@ void main() {
       // playlistListVM to know which playlist is selected
       playlistListVM.getUpToDateSelectablePlaylists();
 
-      List<String> sortedCommentFileNamesLst =
-          playlistListVM.getPlaylistAudioFileNamesApplyingSortFilterParameters(
+      List<String> sortedCommentFileNamesLst = playlistListVM
+          .getSortedPlaylistAudioCommentFileNamesApplyingSortFilterParameters(
         selectedPlaylist: loadedPlaylist,
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
         commentFileNamesLst: commentFileNamesNoExtLst,
@@ -5131,7 +5132,8 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    test('''sort playlist audio and non audio comments so that they are displayed
+    test(
+        '''sort playlist audio and non audio comments so that they are displayed
             in the same order than the audio in the audio playable list dialog
             available in the audio player view. The audio comment file names
             list contains audio comment file name which do not correspond to
@@ -5163,7 +5165,8 @@ void main() {
         playlist: loadedPlaylist,
       );
 
-      List<String> commentFileNamesNoExtLst = playlistAudiosCommentsMap.keys.toList();
+      List<String> commentFileNamesNoExtLst =
+          playlistAudiosCommentsMap.keys.toList();
 
       // Adding a comment file name which does not correspond to a playable
       // audio list of the playlist.
@@ -5206,8 +5209,8 @@ void main() {
       // playlistListVM to know which playlist is selected
       playlistListVM.getUpToDateSelectablePlaylists();
 
-      List<String> sortedCommentFileNamesLst =
-          playlistListVM.getPlaylistAudioFileNamesApplyingSortFilterParameters(
+      List<String> sortedCommentFileNamesLst = playlistListVM
+          .getSortedPlaylistAudioCommentFileNamesApplyingSortFilterParameters(
         selectedPlaylist: loadedPlaylist,
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
         commentFileNamesLst: commentFileNamesNoExtLst,
@@ -5294,8 +5297,8 @@ void main() {
       // playlistListVM to know which playlist is selected
       playlistListVM.getUpToDateSelectablePlaylists();
 
-      List<String> sortedCommentFileNamesLst =
-          playlistListVM.getPlaylistAudioFileNamesApplyingSortFilterParameters(
+      List<String> sortedCommentFileNamesLst = playlistListVM
+          .getSortedPlaylistAudioCommentFileNamesApplyingSortFilterParameters(
         selectedPlaylist: loadedPlaylist,
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
         commentFileNamesLst: commentFileNamesNoExtLst,
