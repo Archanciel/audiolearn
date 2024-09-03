@@ -51,12 +51,36 @@ class AudioSortFilterService {
     // sortCriteriaLst
     audioLst.sort((a, b) {
       for (SortCriteria<Audio> copiedSortCriteria in copiedSortCriteriaLst) {
-        int comparison = copiedSortCriteria
-                .selectorFunction(a)
-                .compareTo(copiedSortCriteria.selectorFunction(b)) *
-            copiedSortCriteria.sortOrder;
-        if (comparison != 0) return comparison;
+        var comparableA = copiedSortCriteria.selectorFunction(a);
+        var comparableB = copiedSortCriteria.selectorFunction(b);
+        int comparison;
+
+        if (comparableA.runtimeType == comparableB.runtimeType) {
+          comparison =
+              comparableA.compareTo(comparableB) * copiedSortCriteria.sortOrder;
+        } else {
+          // the possibility that the two comparable objects are not of
+          // the same type can happen only when the sorting option is
+          // SortingOption.validVideoTitle. In this case, the selector
+          // function is coded to compare titles containing a chapter
+          // number, the case for audio files representing audio book
+          // chapters which were imported. If the titles of downloaded
+          // audio are compared and two titles are compared, one containing
+          // a number with the other containing no number, in order to
+          // avoid compareZo exception, the title strings are compared.
+          //
+          // Problem example: "EMI  - Un athée voyage au paradis et découvre
+          // la vérité - Expérience de mort imminente" and "Expérience de mort
+          // imminente (EMI)  - je reviens de l'au-delà (1_2 ) _ RTS"
+          comparison = a.validVideoTitle.compareTo(b.validVideoTitle) *
+              copiedSortCriteria.sortOrder;
+        }
+
+      if (comparison != 0) {
+          return comparison;
+        }
       }
+
       return 0;
     });
 
