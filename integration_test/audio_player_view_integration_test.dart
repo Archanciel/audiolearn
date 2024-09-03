@@ -4679,7 +4679,7 @@ void main() {
         await tester.tap(popupDeletePlaylistMenuItem);
         await tester.pumpAndSettle();
 
-        // Find the comment list add dialog widget
+        // Find the playlist comment list dialog widget
         final Finder commentListDialogFinder =
             find.byType(PlaylistCommentListDialogWidget);
 

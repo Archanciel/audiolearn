@@ -5054,7 +5054,7 @@ void main() {
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}playlist_audio_comments_sort test",
+            "$kDownloadAppTestSavedDataDir${path.separator}playlist_audio_comments_sort_unit_test",
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
@@ -5134,10 +5134,10 @@ void main() {
     });
     test(
         '''sort playlist audio and non audio comments so that they are displayed
-            in the same order than the audio in the audio playable list dialog
-            available in the audio player view. The audio comment file names
-            list contains audio comment file name which do not correspond to
-            playable audio list of the playlist.''', () async {
+           in the same order than the audio in the audio playable list dialog
+           available in the audio player view. The audio comment file names
+           list contains audio comment file name which do not correspond to
+           playable audio list of the playlist.''', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -5147,7 +5147,7 @@ void main() {
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}playlist_audio_comments_sort test",
+            "$kDownloadAppTestSavedDataDir${path.separator}playlist_audio_comments_sort_unit_test",
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
@@ -5243,7 +5243,7 @@ void main() {
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}playlist_audio_comments_sort test",
+            "$kDownloadAppTestSavedDataDir${path.separator}playlist_audio_comments_sort_unit_test",
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 

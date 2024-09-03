@@ -1,5 +1,6 @@
 import 'package:audiolearn/services/json_data_service.dart';
 import 'package:audiolearn/services/settings_data_service.dart';
+import 'package:audiolearn/views/widgets/playlist_comment_list_dialog_widget.dart';
 import 'package:audiolearn/views/widgets/playlist_manage_sort_filter_options_dialog_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -622,7 +623,6 @@ void audioPlayerViewSortFilterIntregrationTest() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    group('Comments order tests', () {});
   });
 }
 
@@ -6039,6 +6039,294 @@ void playlistDownloadViewSortFilterIntregrationTest() {
                 'remove_sort_and_filter_audio_parms_from_playlist_item',
             isEnabled: false,
           );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
+      });
+      group('Comments order tests', () {
+        testWidgets(
+            '''Select the 'Title asc' sort/filter parms. Then save it to both
+               playlist download view and audio player view. Then open the
+               playlist comment list.''', (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          // Copy the test initial audio data to the app dir
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath:
+                "$kDownloadAppTestSavedDataDir${path.separator}playlist_audio_comments_sort_integr_test",
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          final SettingsDataService settingsDataService = SettingsDataService(
+            sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
+          );
+
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the download app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+          await app.main(['test']);
+          await tester.pumpAndSettle();
+
+          const String playlistTitle = "Conversation avec Dieu";
+
+          // Display the playlist audio comments
+
+          // First, find the playlist ListTile Text widget
+          Finder playlistListTileTextWidgetFinder =
+              find.text(playlistTitle);
+
+          // Then obtain the playlist ListTile widget enclosing the Text widget by finding its ancestor
+          Finder playlistListTileWidgetFinder = find.ancestor(
+            of: playlistListTileTextWidgetFinder,
+            matching: find.byType(ListTile),
+          );
+
+          // Find the leading menu icon button of the Playlist ListTile
+          // and tap on it
+          Finder playlistListTileLeadingMenuIconButton = find.descendant(
+            of: playlistListTileWidgetFinder,
+            matching: find.byIcon(Icons.menu),
+          );
+
+          // Tap the leading menu icon button to open the popup menu
+          await tester.tap(playlistListTileLeadingMenuIconButton);
+          await tester.pumpAndSettle();
+
+          // Now find the 'Audio comments' popup menu item and tap on it
+          Finder popupUpdatePlayableAudioListPlaylistMenuItem = find
+              .byKey(const Key("popup_menu_display_playlist_audio_comments"));
+
+          await tester.tap(popupUpdatePlayableAudioListPlaylistMenuItem);
+          await tester.pumpAndSettle();
+
+          // Verify the order of the playlist audio comments
+
+          // Find the playlist comment list dialog widget
+          Finder commentListDialogFinder =
+              find.byType(PlaylistCommentListDialogWidget);
+
+          // Find the list body containing the comments
+          Finder listFinder = find.descendant(
+              of: commentListDialogFinder, matching: find.byType(ListBody));
+
+          // Find all the list items
+          Finder itemsFinder = find.descendant(
+              // 3 GestureDetector per comment item
+              of: listFinder,
+              matching: find.byType(GestureDetector));
+
+          int gestureDectectorNumberByCommentLine = 3;
+
+          // Since there are 3 GestureDetector per comment item, we need to
+          // multiply the comment line index by 3 to get the right index
+          // of "Interview de Chat GPT  - IA, intelligence, philosophie,
+          // géopolitique, post-vérité..."
+
+          final List<String> expectedDefaultCommentTitles = [
+            "Mais comment tout cela est-il vrai ?",
+            "L'amérique était un pays qui ne se détournait pas des affamés",
+            "Début de Conversation avec Dieu",
+            "Chapitre 3, les questions",
+          ];
+
+          final List<String> expectedDefaultCommentTimes = [
+            "5:36:36",
+            "2:55:00",
+            "0:00",
+            "2:36:27",
+          ];
+
+          for (int i = 0; i < expectedDefaultCommentTitles.length; i++) {
+            // Since each comment is composed of multiple GestureDetectors,
+            // calculate the index for the specific comment.
+            final Finder commentTitleFinder = find.descendant(
+              of: itemsFinder.at(i * gestureDectectorNumberByCommentLine),
+              matching: find.byKey(const Key('commentTitleKey')),
+            );
+
+            final Finder commentTimeFinder = find.descendant(
+              of: itemsFinder.at(i * gestureDectectorNumberByCommentLine),
+              matching: find.byKey(const Key('commentPositionKey')),
+            );
+
+            // Verify the comment title text
+            expect(commentTitleFinder, findsOneWidget);
+            expect(tester.widget<Text>(commentTitleFinder).data,
+                expectedDefaultCommentTitles[i]);
+
+            // Verify the comment time text
+            expect(commentTimeFinder, findsOneWidget);
+            expect(tester.widget<Text>(commentTimeFinder).data,
+                expectedDefaultCommentTimes[i]);
+          }
+
+          // Tap on the Close button to close the playlist comment dialog
+          await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+          await tester.pumpAndSettle();
+
+          // Tap the 'Toggle List' button to display the playlist list If the list
+          // is not opened, checking that a ListTile with the title of
+          // the playlist was added to the list will fail
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Tap on the current dropdown button item to open the dropdown
+          // button items list
+
+          Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+          Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
+
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
+
+          String titleAscSortFilterName = 'Title asc';
+
+          // Find and select the 'Title asc' sort/filter item
+          Finder titleAscDropDownTextFinder =
+              find.text(titleAscSortFilterName).last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
+
+          // Now open the audio popup menu
+          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+          await tester.pumpAndSettle();
+
+          // And open the 'Save sort/filter parameters to playlist' dialog
+          await tester.tap(find.byKey(
+              const Key('save_sort_and_filter_audio_parms_in_playlist_item')));
+          await tester.pumpAndSettle();
+
+          // Select the 'For "Download Audio" screen' checkbox
+          await tester
+              .tap(find.byKey(const Key('playlistDownloadViewCheckbox')));
+          await tester.pumpAndSettle();
+
+          // Select the 'For "Play Audio" screen' checkbox
+          await tester
+              .tap(find.byKey(const Key('audioPlayerViewCheckbox')));
+          await tester.pumpAndSettle();
+
+          // Finally, click on save button
+          await tester.tap(find
+              .byKey(const Key('saveSortFilterOptionsToPlaylistSaveButton')));
+          await tester.pumpAndSettle();
+
+          // Tap the 'Toggle List' button to display the playlist list.
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Display the playlist audio comments
+
+          // First, find the playlist ListTile Text widget
+          playlistListTileTextWidgetFinder =
+              find.text(playlistTitle);
+
+          // Then obtain the playlist ListTile widget enclosing the Text widget by finding its ancestor
+          playlistListTileWidgetFinder = find.ancestor(
+            of: playlistListTileTextWidgetFinder,
+            matching: find.byType(ListTile),
+          );
+
+          // Find the leading menu icon button of the Playlist ListTile
+          // and tap on it
+          playlistListTileLeadingMenuIconButton = find.descendant(
+            of: playlistListTileWidgetFinder,
+            matching: find.byIcon(Icons.menu),
+          );
+
+          // Tap the leading menu icon button to open the popup menu
+          await tester.tap(playlistListTileLeadingMenuIconButton);
+          await tester.pumpAndSettle();
+
+          // Now find the 'Audio comments' popup menu item and tap on it
+          popupUpdatePlayableAudioListPlaylistMenuItem = find
+              .byKey(const Key("popup_menu_display_playlist_audio_comments"));
+
+          await tester.tap(popupUpdatePlayableAudioListPlaylistMenuItem);
+          await tester.pumpAndSettle();
+
+          // Verify the order of the playlist audio comments
+
+          // Find the playlist comment list dialog widget
+          commentListDialogFinder =
+              find.byType(PlaylistCommentListDialogWidget);
+
+          // Find the list body containing the comments
+          listFinder = find.descendant(
+              of: commentListDialogFinder, matching: find.byType(ListBody));
+
+          // Find all the list items
+          itemsFinder = find.descendant(
+              // 3 GestureDetector per comment item
+              of: listFinder,
+              matching: find.byType(GestureDetector));
+
+          // Since there are 3 GestureDetector per comment item, we need to
+          // multiply the comment line index by 3 to get the right index
+          // of "Interview de Chat GPT  - IA, intelligence, philosophie,
+          // géopolitique, post-vérité..."
+
+          // Expected order and content of comments
+          final List<String> expectedTitleAscCommentTitles = [
+            "Début de Conversation avec Dieu",
+            "Chapitre 3, les questions",
+            "L'amérique était un pays qui ne se détournait pas des affamés",
+            "Mais comment tout cela est-il vrai ?",
+          ];
+
+          final List<String> expectedTitleAscCommentTimes = [
+            "0:00",
+            "2:36:27",
+            "2:55:00",
+            "5:36:36",
+          ];
+
+          for (int i = 0; i < expectedTitleAscCommentTitles.length; i++) {
+            // Since each comment is composed of multiple GestureDetectors,
+            // calculate the index for the specific comment.
+            final Finder commentTitleFinder = find.descendant(
+              of: itemsFinder.at(i * gestureDectectorNumberByCommentLine),
+              matching: find.byKey(const Key('commentTitleKey')),
+            );
+
+            final Finder commentTimeFinder = find.descendant(
+              of: itemsFinder.at(i * gestureDectectorNumberByCommentLine),
+              matching: find.byKey(const Key('commentPositionKey')),
+            );
+
+            // Verify the comment title text
+            expect(commentTitleFinder, findsOneWidget);
+            expect(tester.widget<Text>(commentTitleFinder).data,
+                expectedTitleAscCommentTitles[i]);
+
+            // Verify the comment time text
+            expect(commentTimeFinder, findsOneWidget);
+            expect(tester.widget<Text>(commentTimeFinder).data,
+                expectedTitleAscCommentTimes[i]);
+          }
+
+          // Tap on the Close button to close the playlist comment dialog
+          await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+          await tester.pumpAndSettle();
 
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
