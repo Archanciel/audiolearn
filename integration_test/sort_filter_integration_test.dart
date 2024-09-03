@@ -390,7 +390,7 @@ void audioPlayerViewSortFilterIntregrationTest() {
       await tester.pumpAndSettle();
 
       // Waiting one second so that the next audio starts playing
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 2));
       await tester.pumpAndSettle();
 
       // Tap on pause button to pause the audio
