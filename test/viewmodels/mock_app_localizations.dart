@@ -1294,4 +1294,20 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get removeButton => "Remove";
+
+  @override
+  String saveSortFilterParmsConfirmation(
+    Object sortFilterParmsName,
+    Object playlistTitle,
+    Object forViewMessage,
+  ) =>
+      "Sort/filter parameters \"$sortFilterParmsName\" were saved to playlist \"$playlistTitle\" for screen(s) \"$forViewMessage\".";
+
+  @override
+  String removeSortFilterParmsConfirmation(
+    Object sortFilterParmsName,
+    Object playlistTitle,
+    Object forViewMessage,
+  ) =>
+      "Sort/filter parameters \"$sortFilterParmsName\" were removed from playlist \"$playlistTitle\" on screen(s) \"$forViewMessage\".";
 }
