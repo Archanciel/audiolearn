@@ -1000,7 +1000,13 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                           .sortFilterParametersAppliedName &&
                   _selectedSortFilterParametersName !=
                       AppLocalizations.of(context)!
-                          .sortFilterParametersDefaultName),
+                          .sortFilterParametersDefaultName &&
+                  _isSaveSortFilterAudioParmsToPlaylistDialogUseful(
+                    selectedPlaylist:
+                        playlistListVMlistenFalse.getSelectedPlaylists()[0],
+                    selectedSortFilterParametersName:
+                        _selectedSortFilterParametersName!,
+                  )),
               value: PopupMenuButtonType.saveSortFilterAudioParmsToPlaylist,
               child: Text(AppLocalizations.of(context)!
                   .saveSortFilterAudiosOptionsToPlaylistMenu),
@@ -1210,8 +1216,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
                 playlistListVMlistenFalse
                     .removeAudioSortFilterParmsFromPlaylist(
-                  fromPlaylistDownloadView:
-                      isForPlaylistDownloadView,
+                  fromPlaylistDownloadView: isForPlaylistDownloadView,
                   fromAudioPlayerView: isForAudioPlayerView,
                 );
 
@@ -1231,6 +1236,31 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
         },
       ),
     );
+  }
+
+  /// Returns true if opening the save sort and filter dialog is useful, i.e.
+  /// if the selected sort and filter parameters name is different from the
+  /// sort and filter parameters name saved in the selected playlist json file
+  /// for the playlist download view or for the audio player view.
+  bool _isSaveSortFilterAudioParmsToPlaylistDialogUseful({
+    required Playlist selectedPlaylist,
+    required String selectedSortFilterParametersName,
+  }) {
+    String audioSortFilterParmsNameForPlaylistDownloadView =
+        selectedPlaylist.audioSortFilterParmsNameForPlaylistDownloadView;
+    String audioSortFilterParmsNameForAudioPlayerView =
+        selectedPlaylist.audioSortFilterParmsNameForAudioPlayerView;
+
+    if (audioSortFilterParmsNameForPlaylistDownloadView == '' ||
+        audioSortFilterParmsNameForPlaylistDownloadView !=
+            selectedSortFilterParametersName ||
+        audioSortFilterParmsNameForAudioPlayerView == '' ||
+        audioSortFilterParmsNameForAudioPlayerView !=
+            selectedSortFilterParametersName) {
+      return true;
+    }
+
+    return false;
   }
 
   SizedBox _buildStopDownloadButton({
