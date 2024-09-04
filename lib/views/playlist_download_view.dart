@@ -1125,28 +1125,42 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                   return PlaylistAddRemoveSortFilterOptionsDialog(
                     playlistTitle:
                         playlistListVMlistenFalse.uniqueSelectedPlaylist!.title,
-                    sortFilterParametersName:
+                    sortFilterParmsName:
                         _selectedSortFilterParametersName ?? '',
-                    sortFilterAppliedToPlaylistDownloadView:
+                    isSortFilterParmsNameAlreadyAppliedToPlaylistDownloadView:
                         isAudioSortFilterParmsNameAppliedToPlaylistDownloadView,
-                    sortFilterAppliedToAudioPlayerView:
+                    isSortFilterParmsNameAlreadyAppliedToAudioPlayerView:
                         isAudioSortFilterParmsNameAppliedToAudioPlayerView,
                   );
                 },
               ).then((forViewLst) {
+                bool isForPlaylistDownloadView;
+                bool isForAudioPlayerView;
+
                 if (forViewLst == null) {
                   // the user clicked on Cancel button
                   return;
+                } else {
+                  // the user clicked on Save button
+                  isForPlaylistDownloadView = forViewLst[1];
+                  isForAudioPlayerView = forViewLst[2];
+
+                  if (!isForPlaylistDownloadView && !isForAudioPlayerView) {
+                    // the user did not select any checkbox. In this case,
+                    // the playlist json files are not updated.
+                    return;
+                  }
                 }
 
-                // if the user clicked on Save, not on Cancel button
+                // The user clicked on Save, not on Cancel button and at
+                // least one checkbox was selected ...
 
                 playlistListVMlistenFalse
                     .savePlaylistAudioSortFilterParmsToPlaylist(
                   sortFilterParmsNameToSave:
                       forViewLst[0], // sort filter parms name
-                  forPlaylistDownloadView: forViewLst[1],
-                  forAudioPlayerView: forViewLst[2],
+                  forPlaylistDownloadView: isForPlaylistDownloadView,
+                  forAudioPlayerView: isForAudioPlayerView,
                 );
               });
               break;
@@ -1166,32 +1180,42 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                   return PlaylistAddRemoveSortFilterOptionsDialog(
                     playlistTitle:
                         playlistListVMlistenFalse.uniqueSelectedPlaylist!.title,
-                    sortFilterParametersName:
+                    sortFilterParmsName:
                         sortFilterParmsNameAppliedToCurrentPlaylist[0],
-                    sortFilterAppliedToPlaylistDownloadView:
+                    isSortFilterParmsNameAlreadyAppliedToPlaylistDownloadView:
                         sortFilterParmsNameAppliedToCurrentPlaylist[1],
-                    sortFilterAppliedToAudioPlayerView:
+                    isSortFilterParmsNameAlreadyAppliedToAudioPlayerView:
                         sortFilterParmsNameAppliedToCurrentPlaylist[2],
                     isSaveApplied: false, // SF options remove is applied ...
                   );
                 },
               ).then((forViewLst) {
+                bool isForPlaylistDownloadView;
+                bool isForAudioPlayerView;
+
                 if (forViewLst == null) {
                   // the user clicked on Cancel button
                   return;
+                } else {
+                  isForPlaylistDownloadView = forViewLst[1];
+                  isForAudioPlayerView = forViewLst[2];
+                  if (!isForPlaylistDownloadView && !isForAudioPlayerView) {
+                    // the user did not select any checkbox
+                    return;
+                  }
                 }
 
-                // if the user clicked on Remove, not on Cancel button
-                bool isPlaylistDownloadViewSFParmsRemoved = forViewLst[1];
+                // The user clicked on Remove, not on Cancel button and
+                // at least one checkbox was selected ...
 
                 playlistListVMlistenFalse
                     .removeAudioSortFilterParmsFromPlaylist(
                   fromPlaylistDownloadView:
-                      isPlaylistDownloadViewSFParmsRemoved,
-                  fromAudioPlayerView: forViewLst[2],
+                      isForPlaylistDownloadView,
+                  fromAudioPlayerView: isForAudioPlayerView,
                 );
 
-                if (isPlaylistDownloadViewSFParmsRemoved) {
+                if (isForPlaylistDownloadView) {
                   // selecting the default sort and filter parameters drop
                   // down button item. Necessary so that the 'Save sort filter
                   // options to playlist' menu item is now disabled.

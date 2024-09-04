@@ -18,18 +18,18 @@ import '../../viewmodels/theme_provider_vm.dart';
 /// the playlist download view and/or the audio player view.
 class PlaylistAddRemoveSortFilterOptionsDialog extends StatefulWidget {
   final String playlistTitle;
-  final String sortFilterParametersName;
+  final String sortFilterParmsName;
   final bool isSaveApplied;
-  final bool sortFilterAppliedToPlaylistDownloadView;
-  final bool sortFilterAppliedToAudioPlayerView;
+  final bool isSortFilterParmsNameAlreadyAppliedToPlaylistDownloadView;
+  final bool isSortFilterParmsNameAlreadyAppliedToAudioPlayerView;
 
   const PlaylistAddRemoveSortFilterOptionsDialog({
     super.key,
     required this.playlistTitle,
-    required this.sortFilterParametersName,
+    required this.sortFilterParmsName,
     this.isSaveApplied = true,
-    this.sortFilterAppliedToPlaylistDownloadView = false,
-    this.sortFilterAppliedToAudioPlayerView = false,
+    this.isSortFilterParmsNameAlreadyAppliedToPlaylistDownloadView = false,
+    this.isSortFilterParmsNameAlreadyAppliedToAudioPlayerView = false,
   });
 
   @override
@@ -43,16 +43,6 @@ class _PlaylistAddRemoveSortFilterOptionsDialogState
 
   bool _applySortFilterToPlaylistDownloadView = false;
   bool _applySortFilterToAudioPlayerView = false;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _applySortFilterToPlaylistDownloadView =
-        widget.sortFilterAppliedToPlaylistDownloadView;
-    _applySortFilterToAudioPlayerView =
-        widget.sortFilterAppliedToAudioPlayerView;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,10 +73,10 @@ class _PlaylistAddRemoveSortFilterOptionsDialogState
           (widget.isSaveApplied)
               ? AppLocalizations.of(context)!
                   .saveSortFilterOptionsToPlaylistDialogTitle(
-                      widget.sortFilterParametersName)
+                      widget.sortFilterParmsName)
               : AppLocalizations.of(context)!
                   .removeSortFilterOptionsFromPlaylistDialogTitle(
-                      widget.sortFilterParametersName),
+                      widget.sortFilterParmsName),
         ),
         actionsPadding: kDialogActionsPadding,
         content: SingleChildScrollView(
@@ -105,72 +95,7 @@ class _PlaylistAddRemoveSortFilterOptionsDialogState
                         .removeSortFilterOptionsFromPlaylist(
                             widget.playlistTitle),
               ),
-              Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        (widget.isSaveApplied)
-                            ? AppLocalizations.of(context)!.forScreen(
-                                AppLocalizations.of(context)!
-                                    .appBarTitleDownloadAudio)
-                            : AppLocalizations.of(context)!.fromScreen(
-                                AppLocalizations.of(context)!
-                                    .appBarTitleDownloadAudio),
-                      ),
-                      Checkbox(
-                        key: const Key('playlistDownloadViewCheckbox'),
-                        fillColor: WidgetStateColor.resolveWith(
-                          (Set<WidgetState> states) {
-                            if (states.contains(WidgetState.disabled)) {
-                              return kDarkAndLightDisabledIconColor;
-                            }
-                            return kDarkAndLightEnabledIconColor;
-                          },
-                        ),
-                        value: _applySortFilterToPlaylistDownloadView,
-                        onChanged: (bool? newValue) {
-                          setState(() {
-                            _applySortFilterToPlaylistDownloadView = newValue!;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        (widget.isSaveApplied)
-                            ? AppLocalizations.of(context)!.forScreen(
-                                AppLocalizations.of(context)!
-                                    .appBarTitleAudioPlayer)
-                            : AppLocalizations.of(context)!.fromScreen(
-                                AppLocalizations.of(context)!
-                                    .appBarTitleAudioPlayer),
-                      ),
-                      Checkbox(
-                        key: const Key('audioPlayerViewCheckbox'),
-                        fillColor: WidgetStateColor.resolveWith(
-                          (Set<WidgetState> states) {
-                            if (states.contains(WidgetState.disabled)) {
-                              return kDarkAndLightDisabledIconColor;
-                            }
-                            return kDarkAndLightEnabledIconColor;
-                          },
-                        ),
-                        value: _applySortFilterToAudioPlayerView,
-                        onChanged: (bool? newValue) {
-                          setState(() {
-                            _applySortFilterToAudioPlayerView = newValue!;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+              _buildPlaylistViewCheckboxColumn(),
             ],
           ),
         ),
@@ -206,21 +131,174 @@ class _PlaylistAddRemoveSortFilterOptionsDialogState
     );
   }
 
+  Column _buildPlaylistViewCheckboxColumn() {
+    if (widget.isSaveApplied) {
+      return Column(
+        children: [
+          (widget.isSortFilterParmsNameAlreadyAppliedToPlaylistDownloadView)
+              ? Container()
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      (widget.isSaveApplied)
+                          ? AppLocalizations.of(context)!.forScreen(
+                              AppLocalizations.of(context)!
+                                  .appBarTitleDownloadAudio)
+                          : AppLocalizations.of(context)!.fromScreen(
+                              AppLocalizations.of(context)!
+                                  .appBarTitleDownloadAudio),
+                    ),
+                    Checkbox(
+                      key: const Key('playlistDownloadViewCheckbox'),
+                      fillColor: WidgetStateColor.resolveWith(
+                        (Set<WidgetState> states) {
+                          if (states.contains(WidgetState.disabled)) {
+                            return kDarkAndLightDisabledIconColor;
+                          }
+                          return kDarkAndLightEnabledIconColor;
+                        },
+                      ),
+                      value: _applySortFilterToPlaylistDownloadView,
+                      onChanged: (bool? newValue) {
+                        setState(() {
+                          _applySortFilterToPlaylistDownloadView = newValue!;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+          (widget.isSortFilterParmsNameAlreadyAppliedToAudioPlayerView)
+              ? Container()
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      (widget.isSaveApplied)
+                          ? AppLocalizations.of(context)!.forScreen(
+                              AppLocalizations.of(context)!
+                                  .appBarTitleAudioPlayer)
+                          : AppLocalizations.of(context)!.fromScreen(
+                              AppLocalizations.of(context)!
+                                  .appBarTitleAudioPlayer),
+                    ),
+                    Checkbox(
+                      key: const Key('audioPlayerViewCheckbox'),
+                      fillColor: WidgetStateColor.resolveWith(
+                        (Set<WidgetState> states) {
+                          if (states.contains(WidgetState.disabled)) {
+                            return kDarkAndLightDisabledIconColor;
+                          }
+                          return kDarkAndLightEnabledIconColor;
+                        },
+                      ),
+                      value: _applySortFilterToAudioPlayerView,
+                      onChanged: (bool? newValue) {
+                        setState(() {
+                          _applySortFilterToAudioPlayerView = newValue!;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+        ],
+      );
+    } else {
+      // remove is applied
+      return Column(
+        children: [
+          (!widget.isSortFilterParmsNameAlreadyAppliedToPlaylistDownloadView)
+              ? Container()
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      (widget.isSaveApplied)
+                          ? AppLocalizations.of(context)!.forScreen(
+                              AppLocalizations.of(context)!
+                                  .appBarTitleDownloadAudio)
+                          : AppLocalizations.of(context)!.fromScreen(
+                              AppLocalizations.of(context)!
+                                  .appBarTitleDownloadAudio),
+                    ),
+                    Checkbox(
+                      key: const Key('playlistDownloadViewCheckbox'),
+                      fillColor: WidgetStateColor.resolveWith(
+                        (Set<WidgetState> states) {
+                          if (states.contains(WidgetState.disabled)) {
+                            return kDarkAndLightDisabledIconColor;
+                          }
+                          return kDarkAndLightEnabledIconColor;
+                        },
+                      ),
+                      value: _applySortFilterToPlaylistDownloadView,
+                      onChanged: (bool? newValue) {
+                        setState(() {
+                          _applySortFilterToPlaylistDownloadView = newValue!;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+          (!widget.isSortFilterParmsNameAlreadyAppliedToAudioPlayerView)
+              ? Container()
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      (widget.isSaveApplied)
+                          ? AppLocalizations.of(context)!.forScreen(
+                              AppLocalizations.of(context)!
+                                  .appBarTitleAudioPlayer)
+                          : AppLocalizations.of(context)!.fromScreen(
+                              AppLocalizations.of(context)!
+                                  .appBarTitleAudioPlayer),
+                    ),
+                    Checkbox(
+                      key: const Key('audioPlayerViewCheckbox'),
+                      fillColor: WidgetStateColor.resolveWith(
+                        (Set<WidgetState> states) {
+                          if (states.contains(WidgetState.disabled)) {
+                            return kDarkAndLightDisabledIconColor;
+                          }
+                          return kDarkAndLightEnabledIconColor;
+                        },
+                      ),
+                      value: _applySortFilterToAudioPlayerView,
+                      onChanged: (bool? newValue) {
+                        setState(() {
+                          _applySortFilterToAudioPlayerView = newValue!;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+        ],
+      );
+    }
+  }
+
   List<Object> _displayConfirmAndCreateReturnedLst() {
     WarningMessageVM warningMessageVM = Provider.of<WarningMessageVM>(
       context,
       listen: false,
     );
 
-    warningMessageVM.confirmAddRemoveSortFilterParmsToPlaylist(
-      playlistTitle: widget.playlistTitle,
-      sortFilterParmsName: widget.sortFilterParametersName,
-      isSaveApplied: widget.isSaveApplied,
-      forPlaylistDownloadView: _applySortFilterToPlaylistDownloadView,
-      forAudioPlayerView: _applySortFilterToAudioPlayerView,
-    );
+    if (_applySortFilterToPlaylistDownloadView ||
+        _applySortFilterToAudioPlayerView) {
+      // The confirmation warning message is displayed only if
+      // the user has selected at least one of the checkboxes
+      warningMessageVM.confirmAddRemoveSortFilterParmsToPlaylist(
+        playlistTitle: widget.playlistTitle,
+        sortFilterParmsName: widget.sortFilterParmsName,
+        isSaveApplied: widget.isSaveApplied,
+        forPlaylistDownloadView: _applySortFilterToPlaylistDownloadView,
+        forAudioPlayerView: _applySortFilterToAudioPlayerView,
+      );
+    }
+
     return [
-      widget.sortFilterParametersName,
+      widget.sortFilterParmsName,
       _applySortFilterToPlaylistDownloadView,
       _applySortFilterToAudioPlayerView,
     ];
