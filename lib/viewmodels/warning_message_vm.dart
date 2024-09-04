@@ -3,7 +3,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 
 import '../models/playlist.dart';
-import '../views/widgets/set_value_to_target_dialog_widget.dart';
+import '../views/widgets/set_value_to_target_dialog.dart';
 
 enum WarningMessageType {
   none,

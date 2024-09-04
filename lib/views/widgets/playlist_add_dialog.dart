@@ -12,20 +12,19 @@ import '../../utils/ui_util.dart';
 import '../../viewmodels/playlist_list_vm.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 
-class PlaylistAddDialogWidget extends StatefulWidget {
+class PlaylistAddDialog extends StatefulWidget {
   final String playlistUrl;
 
-  const PlaylistAddDialogWidget({
+  const PlaylistAddDialog({
     required this.playlistUrl,
     super.key,
   });
 
   @override
-  State<PlaylistAddDialogWidget> createState() =>
-      _PlaylistAddDialogWidgetState();
+  State<PlaylistAddDialog> createState() => _PlaylistAddDialogState();
 }
 
-class _PlaylistAddDialogWidgetState extends State<PlaylistAddDialogWidget>
+class _PlaylistAddDialogState extends State<PlaylistAddDialog>
     with ScreenMixin {
   final TextEditingController _localPlaylistTitleTextEditingController =
       TextEditingController();

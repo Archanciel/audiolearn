@@ -20,18 +20,18 @@ import '../../viewmodels/theme_provider_vm.dart';
 /// The listed audio are displayed with different colors according
 /// to their status (not yet listened, currently listened, fully or partially
 /// listened).
-class AudioPlayableListDialogWidget extends StatefulWidget {
-  const AudioPlayableListDialogWidget({
+class AudioPlayableListDialog extends StatefulWidget {
+  const AudioPlayableListDialog({
     super.key,
   });
 
   @override
-  _AudioPlayableListDialogWidgetState createState() =>
-      _AudioPlayableListDialogWidgetState();
+  _AudioPlayableListDialogState createState() =>
+      _AudioPlayableListDialogState();
 }
 
-class _AudioPlayableListDialogWidgetState
-    extends State<AudioPlayableListDialogWidget> with ScreenMixin {
+class _AudioPlayableListDialogState extends State<AudioPlayableListDialog>
+    with ScreenMixin {
   // Using FocusNode to enable clicking on Enter to close
   // the dialog
   final FocusNode _focusNodeDialog = FocusNode();

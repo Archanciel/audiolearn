@@ -15,10 +15,10 @@ import '../../viewmodels/playlist_list_vm.dart';
 import '../../viewmodels/warning_message_vm.dart';
 import '../screen_mixin.dart';
 import 'application_snackbar.dart';
-import 'confirm_action_dialog_widget.dart';
-import 'playlist_comment_list_dialog_widget.dart';
-import 'playlist_info_dialog_widget.dart';
-import 'audio_set_speed_dialog_widget.dart';
+import 'confirm_action_dialog.dart';
+import 'playlist_comment_list_dialog.dart';
+import 'playlist_info_dialog.dart';
+import 'audio_set_speed_dialog.dart';
 
 enum PlaylistPopupMenuAction {
   openYoutubePlaylist,
@@ -38,13 +38,13 @@ enum PlaylistPopupMenuAction {
 /// playlist title, a menu button is displayed with menu items
 /// created by this class. At right of the playlist title, a
 /// checkbox is displayed to select the playlist.
-class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
+class PlaylistListItem extends StatelessWidget with ScreenMixin {
   final SettingsDataService settingsDataService;
   final Playlist playlist;
   final int index;
   final bool toggleListIfSelected;
 
-  PlaylistListItemWidget({
+  PlaylistListItem({
     required this.settingsDataService,
     required this.playlist,
     required this.index,
@@ -178,7 +178,7 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                       showDialog<void>(
                         context: context,
                         builder: (BuildContext context) {
-                          return PlaylistInfoDialogWidget(
+                          return PlaylistInfoDialog(
                             settingsDataService: settingsDataService,
                             playlist: playlist,
                             playlistJsonFileSize: playlistListVM
@@ -211,7 +211,7 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                         // passing the current audio to the dialog instead
                         // of initializing a private _currentAudio variable
                         // in the dialog avoid integr test problems
-                        builder: (context) => PlaylistCommentListDialogWidget(
+                        builder: (context) => PlaylistCommentListDialog(
                           currentPlaylist: playlist,
                         ),
                       );
@@ -248,7 +248,7 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                       showDialog<void>(
                         context: context,
                         builder: (BuildContext context) {
-                          return ConfirmActionDialogWidget(
+                          return ConfirmActionDialog(
                             actionFunction:
                                 downloadAudioFromVideoUrlsInPlaylist,
                             actionFunctionArgs: [
@@ -296,7 +296,7 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                                       settingType: SettingType.playlists,
                                       settingSubType: Playlists.playSpeed) ??
                                   kAudioDefaultPlaySpeed;
-                          return AudioSetSpeedDialogWidget(
+                          return AudioSetSpeedDialog(
                             audioPlaySpeed: playlistAudioPlaySpeed,
                             updateCurrentPlayAudioSpeed: false,
                             displayApplyToAudioAlreadyDownloadedCheckbox: true,
@@ -323,7 +323,7 @@ class PlaylistListItemWidget extends StatelessWidget with ScreenMixin {
                       showDialog<void>(
                         context: context,
                         builder: (BuildContext context) {
-                          return ConfirmActionDialogWidget(
+                          return ConfirmActionDialog(
                             actionFunction: deletePlaylist,
                             actionFunctionArgs: [
                               playlistListVM,

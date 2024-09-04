@@ -13,7 +13,7 @@ import '../../models/audio.dart';
 import '../../services/audio_sort_filter_service.dart';
 import '../../services/settings_data_service.dart';
 import '../../viewmodels/theme_provider_vm.dart';
-import 'confirm_action_dialog_widget.dart';
+import 'confirm_action_dialog.dart';
 
 enum CalledFrom {
   playlistDownloadView,
@@ -29,7 +29,7 @@ enum DateTimeType {
   endUploadDateTime,
 }
 
-class AudioSortFilterDialogWidget extends StatefulWidget {
+class AudioSortFilterDialog extends StatefulWidget {
   final List<Audio> selectedPlaylistAudioLst;
   final String audioSortFilterParametersName;
   final AudioSortFilterParameters audioSortFilterParameters;
@@ -39,7 +39,7 @@ class AudioSortFilterDialogWidget extends StatefulWidget {
   final WarningMessageVM warningMessageVM;
   final CalledFrom calledFrom;
 
-  const AudioSortFilterDialogWidget({
+  const AudioSortFilterDialog({
     super.key,
     required this.selectedPlaylistAudioLst,
     this.audioSortFilterParametersName = '',
@@ -53,12 +53,11 @@ class AudioSortFilterDialogWidget extends StatefulWidget {
 
   @override
   // ignore: library_private_types_in_public_api
-  _AudioSortFilterDialogWidgetState createState() =>
-      _AudioSortFilterDialogWidgetState();
+  _AudioSortFilterDialogState createState() => _AudioSortFilterDialogState();
 }
 
-class _AudioSortFilterDialogWidgetState
-    extends State<AudioSortFilterDialogWidget> with ScreenMixin {
+class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
+    with ScreenMixin {
   late AudioSortFilterParameters _audioSortFilterParameters;
   late InputDecoration _dialogTextFieldDecoration;
 
@@ -758,7 +757,9 @@ class _AudioSortFilterDialogWidgetState
           key: const Key('applySortFilterOptionsTextButton'),
           onPressed: () {
             List<dynamic> filterSortAudioAndParmLst = _filterAndSortAudioLst(
-                sortFilterParametersSaveAsUniqueName: AppLocalizations.of(context)!.sortFilterParametersAppliedName);
+                sortFilterParametersSaveAsUniqueName:
+                    AppLocalizations.of(context)!
+                        .sortFilterParametersAppliedName);
 
             if (filterSortAudioAndParmLst[1] ==
                 AudioSortFilterParameters
@@ -1312,7 +1313,7 @@ class _AudioSortFilterDialogWidgetState
     showDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        return ConfirmActionDialogWidget(
+        return ConfirmActionDialog(
           actionFunction: _clearAudioSortFilterSettingsSearchHistory,
           actionFunctionArgs: [
             Provider.of<PlaylistListVM>(context, listen: false),

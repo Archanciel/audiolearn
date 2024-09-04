@@ -18,23 +18,23 @@ enum AudioModificationType {
 
 /// A dialog widget that allows the user to rename the audio file or
 /// modify the title of the audio.
-class AudioModificationDialogWidget extends StatefulWidget {
+class AudioModificationDialog extends StatefulWidget {
   final Audio audio;
   final AudioModificationType audioModificationType;
 
-  const AudioModificationDialogWidget({
+  const AudioModificationDialog({
     required this.audio,
     required this.audioModificationType,
     super.key,
   });
 
   @override
-  State<AudioModificationDialogWidget> createState() =>
-      _AudioModificationDialogWidgetState();
+  State<AudioModificationDialog> createState() =>
+      _AudioModificationDialogState();
 }
 
-class _AudioModificationDialogWidgetState
-    extends State<AudioModificationDialogWidget> with ScreenMixin {
+class _AudioModificationDialogState extends State<AudioModificationDialog>
+    with ScreenMixin {
   final TextEditingController _audioModificationTextEditingController =
       TextEditingController();
   final FocusNode _focusNodeDialog = FocusNode();

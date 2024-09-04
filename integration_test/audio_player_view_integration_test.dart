@@ -11,11 +11,11 @@ import 'package:audiolearn/services/json_data_service.dart';
 import 'package:audiolearn/utils/date_time_parser.dart';
 import 'package:audiolearn/utils/date_time_util.dart';
 import 'package:audiolearn/utils/duration_expansion.dart';
-import 'package:audiolearn/views/widgets/comment_add_edit_dialog_widget.dart';
-import 'package:audiolearn/views/widgets/comment_list_add_dialog_widget.dart';
-import 'package:audiolearn/views/widgets/playlist_comment_list_dialog_widget.dart';
-import 'package:audiolearn/views/widgets/set_value_to_target_dialog_widget.dart';
-import 'package:audiolearn/views/widgets/warning_message_display_widget.dart';
+import 'package:audiolearn/views/widgets/comment_add_edit_dialog.dart';
+import 'package:audiolearn/views/widgets/comment_list_add_dialog.dart';
+import 'package:audiolearn/views/widgets/playlist_comment_list_dialog.dart';
+import 'package:audiolearn/views/widgets/set_value_to_target_dialog.dart';
+import 'package:audiolearn/views/widgets/warning_message_display.dart';
 import 'package:path/path.dart' as path;
 import 'package:audiolearn/constants.dart';
 import 'package:audiolearn/utils/dir_util.dart';
@@ -4432,7 +4432,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure the warning dialog is shown
-      expect(find.byType(WarningMessageDisplayWidget), findsOneWidget);
+      expect(find.byType(WarningMessageDisplayDialog), findsOneWidget);
 
       // Check the value of the Confirm dialog title
       Text warningDialogTitle =
@@ -4576,7 +4576,7 @@ void main() {
 
         // Find the comment list add dialog widget
         final Finder commentListDialogFinder =
-            find.byType(CommentListAddDialogWidget);
+            find.byType(CommentListAddDialog);
 
         // Find the list body containing the comments
         final Finder listFinder = find.descendant(
@@ -4681,7 +4681,7 @@ void main() {
 
         // Find the playlist comment list dialog widget
         final Finder commentListDialogFinder =
-            find.byType(PlaylistCommentListDialogWidget);
+            find.byType(PlaylistCommentListDialog);
 
         // Find the list body containing the comments
         final Finder listFinder = find.descendant(
@@ -5223,8 +5223,7 @@ void main() {
       // Verify that the comment list dialog now displays the
       // added comment
 
-      final Finder commentListDialogFinder =
-          find.byType(CommentListAddDialogWidget);
+      final Finder commentListDialogFinder = find.byType(CommentListAddDialog);
 
       expect(
           find.descendant(
@@ -5780,8 +5779,7 @@ void main() {
       await tester.tap(addOrUpdateCommentTextButton);
       await tester.pumpAndSettle();
 
-      final Finder commentListDialogFinder =
-          find.byType(CommentListAddDialogWidget);
+      final Finder commentListDialogFinder = find.byType(CommentListAddDialog);
 
       // Verify that the comment list dialog now displays the
       // added comment
@@ -6010,8 +6008,7 @@ void main() {
       await tester.tap(addOrUpdateCommentTextButton);
       await tester.pumpAndSettle();
 
-      final Finder commentListDialogFinder =
-          find.byType(CommentListAddDialogWidget);
+      final Finder commentListDialogFinder = find.byType(CommentListAddDialog);
 
       // Find the list body containing the comments
       final Finder listFinder = find.descendant(
@@ -6113,8 +6110,7 @@ void main() {
       await tester.tap(addOrUpdateCommentTextButton);
       await tester.pumpAndSettle();
 
-      final Finder commentListDialogFinder =
-          find.byType(CommentListAddDialogWidget);
+      final Finder commentListDialogFinder = find.byType(CommentListAddDialog);
 
       // Verify that the comment list dialog now displays the
       // added comment
@@ -6224,7 +6220,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify that the dialog is not closed
-      expect(find.byType(SetValueToTargetDialogWidget), findsOneWidget);
+      expect(find.byType(SetValueToTargetDialog), findsOneWidget);
 
       // Close the define position dialog by tapping on the Cancel button
       await tester.tap(find.byKey(const Key('setValueToTargetCancelButton')));
@@ -6248,7 +6244,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify that the dialog is not closed
-      expect(find.byType(CommentListAddDialogWidget), findsOneWidget);
+      expect(find.byType(CommentListAddDialog), findsOneWidget);
 
       // Now close the comment list dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));
@@ -6295,7 +6291,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify that the dialog is not closed
-      expect(find.byType(CommentListAddDialogWidget), findsOneWidget);
+      expect(find.byType(CommentListAddDialog), findsOneWidget);
 
       // Now close the comment list dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));
@@ -6360,7 +6356,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify that the dialog is not closed
-      expect(find.byType(CommentListAddDialogWidget), findsOneWidget);
+      expect(find.byType(CommentListAddDialog), findsOneWidget);
 
       // Now close the comment list dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));
@@ -6421,8 +6417,7 @@ void main() {
       await tester.tap(commentInkWellButtonFinder);
       await tester.pumpAndSettle();
 
-      final Finder commentListDialogFinder =
-          find.byType(CommentListAddDialogWidget);
+      final Finder commentListDialogFinder = find.byType(CommentListAddDialog);
 
       // Find the list body containing the comments
       final Finder listFinder = find.descendant(
@@ -6558,8 +6553,7 @@ void main() {
         '1:12:48.0',
       );
 
-      Finder setValueToTargetDialogFinder =
-          find.byType(SetValueToTargetDialogWidget);
+      Finder setValueToTargetDialogFinder = find.byType(SetValueToTargetDialog);
 
       // This finder obtained as descendant of its enclosing dialog does
       // able to change the value of the TextField
@@ -6606,7 +6600,7 @@ void main() {
 
       // This finder obtained as descendant of its enclosing dialog does
       // able to change the value of the TextField
-      setValueToTargetDialogFinder = find.byType(SetValueToTargetDialogWidget);
+      setValueToTargetDialogFinder = find.byType(SetValueToTargetDialog);
       setValueToTargetDialogEditTextFinder = find.descendant(
         of: setValueToTargetDialogFinder,
         matching: find.byType(TextField),
@@ -6659,7 +6653,7 @@ void main() {
 
       // This finder obtained as descendant of its enclosing dialog does
       // able to change the value of the TextField
-      setValueToTargetDialogFinder = find.byType(SetValueToTargetDialogWidget);
+      setValueToTargetDialogFinder = find.byType(SetValueToTargetDialog);
       setValueToTargetDialogEditTextFinder = find.descendant(
         of: setValueToTargetDialogFinder,
         matching: find.byType(TextField),
@@ -6707,7 +6701,7 @@ void main() {
 
       // This finder obtained as descendant of its enclosing dialog does
       // able to change the value of the TextField
-      setValueToTargetDialogFinder = find.byType(SetValueToTargetDialogWidget);
+      setValueToTargetDialogFinder = find.byType(SetValueToTargetDialog);
       setValueToTargetDialogEditTextFinder = find.descendant(
         of: setValueToTargetDialogFinder,
         matching: find.byType(TextField),
@@ -6752,7 +6746,7 @@ void main() {
 
       // This finder obtained as descendant of its enclosing dialog does
       // able to change the value of the TextField
-      setValueToTargetDialogFinder = find.byType(SetValueToTargetDialogWidget);
+      setValueToTargetDialogFinder = find.byType(SetValueToTargetDialog);
       setValueToTargetDialogEditTextFinder = find.descendant(
         of: setValueToTargetDialogFinder,
         matching: find.byType(TextField),
@@ -6794,7 +6788,7 @@ void main() {
 
       // This finder obtained as descendant of its enclosing dialog does
       // able to change the value of the TextField
-      setValueToTargetDialogFinder = find.byType(SetValueToTargetDialogWidget);
+      setValueToTargetDialogFinder = find.byType(SetValueToTargetDialog);
       setValueToTargetDialogEditTextFinder = find.descendant(
         of: setValueToTargetDialogFinder,
         matching: find.byType(TextField),
@@ -6818,7 +6812,7 @@ void main() {
 
       // Ensure the warning dialog is shown
       Finder warningMessageDisplayDialogFinder =
-          find.byType(WarningMessageDisplayWidget);
+          find.byType(WarningMessageDisplayDialog);
       expect(warningMessageDisplayDialogFinder, findsOneWidget);
 
       // Check the value of the warning dialog title
@@ -6916,8 +6910,7 @@ Future<void> selectAudioInAudioPlayableDialogWidget({
   required String audioToSelectTitle,
 }) async {
   // Find the AudioPlayableListDialogWidget
-  Finder audioPlayableListDialogFinder =
-      find.byType(AudioPlayableListDialogWidget);
+  Finder audioPlayableListDialogFinder = find.byType(AudioPlayableListDialog);
 
   // Then get the audio to select ListTile Text widget finder
   // and tap on it
@@ -7030,7 +7023,7 @@ Future<void> simulateEnteringTooBigAndTooSmallAudioPosition({
 
   // Ensure the warning dialog is shown
   Finder warningMessageDisplayDialogFinder =
-      find.byType(WarningMessageDisplayWidget);
+      find.byType(WarningMessageDisplayDialog);
   expect(warningMessageDisplayDialogFinder, findsOneWidget);
 
   // Check the value of the warning dialog title
@@ -7086,7 +7079,7 @@ Future<void> simulateEnteringTooBigAndTooSmallAudioPosition({
   // or end checkbox was checked ...
 
   // Ensure the warning dialog is shown
-  warningMessageDisplayDialogFinder = find.byType(WarningMessageDisplayWidget);
+  warningMessageDisplayDialogFinder = find.byType(WarningMessageDisplayDialog);
   expect(warningMessageDisplayDialogFinder, findsOneWidget);
 
   // Check the value of the warning dialog title

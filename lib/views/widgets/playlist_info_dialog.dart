@@ -11,13 +11,13 @@ import '../../utils/ui_util.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 import '../screen_mixin.dart';
 
-class PlaylistInfoDialogWidget extends StatelessWidget with ScreenMixin {
+class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
   final SettingsDataService settingsDataService;
   final Playlist playlist;
   final int playlistJsonFileSize;
   final FocusNode focusNodeDialog = FocusNode();
 
-  PlaylistInfoDialogWidget({
+  PlaylistInfoDialog({
     required this.settingsDataService,
     required this.playlist,
     required this.playlistJsonFileSize,

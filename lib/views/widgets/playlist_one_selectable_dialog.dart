@@ -19,7 +19,7 @@ enum PlaylistOneSelectableDialogUsedFor {
 
 /// This dialog is used to select a single playlist among the
 /// displayed playlists.
-class PlaylistOneSelectableDialogWidget extends StatefulWidget {
+class PlaylistOneSelectableDialog extends StatefulWidget {
   final PlaylistOneSelectableDialogUsedFor usedFor;
   final Playlist? excludedPlaylist;
 
@@ -38,7 +38,7 @@ class PlaylistOneSelectableDialogWidget extends StatefulWidget {
 
   final WarningMessageVM warningMessageVM;
 
-  const PlaylistOneSelectableDialogWidget({
+  const PlaylistOneSelectableDialog({
     super.key,
     required this.usedFor,
     required this.warningMessageVM,
@@ -47,12 +47,12 @@ class PlaylistOneSelectableDialogWidget extends StatefulWidget {
   });
 
   @override
-  _PlaylistOneSelectableDialogWidgetState createState() =>
-      _PlaylistOneSelectableDialogWidgetState();
+  _PlaylistOneSelectableDialogState createState() =>
+      _PlaylistOneSelectableDialogState();
 }
 
-class _PlaylistOneSelectableDialogWidgetState
-    extends State<PlaylistOneSelectableDialogWidget> with ScreenMixin {
+class _PlaylistOneSelectableDialogState
+    extends State<PlaylistOneSelectableDialog> with ScreenMixin {
   Playlist? _selectedPlaylist;
   bool _keepAudioDataInSourcePlaylist = true;
   bool _downloadSingleVideoAudioAtMusicQuality = false;

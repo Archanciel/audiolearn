@@ -9,11 +9,11 @@ import '../../services/settings_data_service.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 import '../screen_mixin.dart';
 
-class HelpDialogWidget extends StatelessWidget with ScreenMixin {
+class HelpDialog extends StatelessWidget with ScreenMixin {
   final List<HelpItem> helpItemsLst;
   final FocusNode focusNodeDialog = FocusNode();
 
-  HelpDialogWidget({
+  HelpDialog({
     super.key,
     required this.helpItemsLst,
   });

@@ -11,9 +11,9 @@ import '../../viewmodels/comment_vm.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 import '../../views/screen_mixin.dart';
 import '../../utils/duration_expansion.dart';
-import 'comment_list_add_dialog_widget.dart';
-import 'playlist_comment_list_dialog_widget.dart';
-import 'set_value_to_target_dialog_widget.dart';
+import 'comment_list_add_dialog.dart';
+import 'playlist_comment_list_dialog.dart';
+import 'set_value_to_target_dialog.dart';
 
 enum CallerDialog {
   commentListAddDialog,
@@ -609,7 +609,7 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
                     //            tapping outside the dialog
                     context: context,
                     builder: (BuildContext context) {
-                      return SetValueToTargetDialogWidget(
+                      return SetValueToTargetDialog(
                         dialogTitle:
                             AppLocalizations.of(context)!.setCommentPosition,
                         dialogCommentStr: AppLocalizations.of(context)!
@@ -748,11 +748,11 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
       builder: (context) {
         switch (widget.callerDialog) {
           case CallerDialog.commentListAddDialog:
-            return CommentListAddDialogWidget(
+            return CommentListAddDialog(
               currentAudio: audioPlayerVM.currentAudio!,
             );
           case CallerDialog.playlistCommentListAddDialog:
-            return PlaylistCommentListDialogWidget(
+            return PlaylistCommentListDialog(
               currentPlaylist: audioPlayerVM.currentAudio!.enclosingPlaylist!,
             );
         }

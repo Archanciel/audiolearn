@@ -15,11 +15,11 @@ import '../../constants.dart';
 import '../../viewmodels/comment_vm.dart';
 import '../../viewmodels/warning_message_vm.dart';
 import '../screen_mixin.dart';
-import 'confirm_action_dialog_widget.dart';
-import 'audio_info_dialog_widget.dart';
-import 'comment_list_add_dialog_widget.dart';
-import 'playlist_one_selectable_dialog_widget.dart';
-import 'audio_modification_dialog_widget.dart';
+import 'confirm_action_dialog.dart';
+import 'audio_info_dialog.dart';
+import 'comment_list_add_dialog.dart';
+import 'playlist_one_selectable_dialog.dart';
+import 'audio_modification_dialog.dart';
 
 /// This widget is used in the PlaylistDownloadView ListView which
 /// display the playable audio of the selected playlist.
@@ -178,7 +178,8 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
           case AudioPopupMenuAction.displayAudioInfo:
             showDialog<void>(
               context: context,
-              builder: (BuildContext context) => AudioInfoDialogWidget(
+              builder: (BuildContext context) =>
+                  AudioInfoDialogWidget.AudioInfoDialog(
                 audio: audio,
               ),
             );
@@ -193,7 +194,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
             );
             showDialog<void>(
               context: context,
-              builder: (context) => CommentListAddDialogWidget(
+              builder: (context) => CommentListAddDialog(
                 currentAudio: audio,
               ),
             );
@@ -202,7 +203,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
             showDialog<void>(
               context: context,
               barrierDismissible: false,
-              builder: (BuildContext context) => AudioModificationDialogWidget(
+              builder: (BuildContext context) => AudioModificationDialog(
                 audio: audio,
                 audioModificationType: AudioModificationType.renameAudioFile,
               ),
@@ -212,7 +213,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
             showDialog<void>(
               context: context,
               barrierDismissible: false,
-              builder: (BuildContext context) => AudioModificationDialogWidget(
+              builder: (BuildContext context) => AudioModificationDialog(
                 audio: audio,
                 audioModificationType: AudioModificationType.modifyAudioTitle,
               ),
@@ -225,7 +226,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
             );
             showDialog<dynamic>(
               context: context,
-              builder: (context) => PlaylistOneSelectableDialogWidget(
+              builder: (context) => PlaylistOneSelectableDialog(
                 usedFor: PlaylistOneSelectableDialogUsedFor.moveAudioToPlaylist,
                 warningMessageVM: Provider.of<WarningMessageVM>(
                   context,
@@ -265,7 +266,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
             );
             showDialog<dynamic>(
               context: context,
-              builder: (context) => PlaylistOneSelectableDialogWidget(
+              builder: (context) => PlaylistOneSelectableDialog(
                 usedFor: PlaylistOneSelectableDialogUsedFor.copyAudioToPlaylist,
                 warningMessageVM: Provider.of<WarningMessageVM>(
                   context,
@@ -297,7 +298,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
               showDialog<dynamic>(
                 context: context,
                 builder: (BuildContext context) {
-                  return ConfirmActionDialogWidget(
+                  return ConfirmActionDialog(
                     actionFunction: deleteAudio,
                     actionFunctionArgs: [context, audioToDelete],
                     dialogTitle:
@@ -329,7 +330,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
               showDialog<dynamic>(
                 context: context,
                 builder: (BuildContext context) {
-                  return ConfirmActionDialogWidget(
+                  return ConfirmActionDialog(
                     actionFunction: deleteAudioFromPlaylistAswell,
                     actionFunctionArgs: [context, audioToDelete],
                     dialogTitle:

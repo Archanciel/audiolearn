@@ -1,7 +1,7 @@
 import 'package:audiolearn/services/json_data_service.dart';
 import 'package:audiolearn/services/settings_data_service.dart';
-import 'package:audiolearn/views/widgets/playlist_comment_list_dialog_widget.dart';
-import 'package:audiolearn/views/widgets/playlist_manage_sort_filter_options_dialog_widget.dart';
+import 'package:audiolearn/views/widgets/playlist_comment_list_dialog.dart';
+import 'package:audiolearn/views/widgets/playlist_add_remove_sort_filter_options_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -314,7 +314,7 @@ void audioPlayerViewSortFilterIntregrationTest() {
       await tester.pumpAndSettle();
 
       // Verify that the save SF parms dialog is displayed
-      expect(find.byType(PlaylistManageSortFilterOptionsDialogWidget),
+      expect(find.byType(PlaylistAddRemoveSortFilterOptionsDialog),
           findsOneWidget);
 
       // Verify the dialog title
@@ -6547,7 +6547,7 @@ Future<void> verifyOrderOfPlaylistAudioComments({
   required List<String> expectedCommentTimes,
 }) async {
   // Find the playlist comment list dialog widget
-  Finder commentListDialogFinder = find.byType(PlaylistCommentListDialogWidget);
+  Finder commentListDialogFinder = find.byType(PlaylistCommentListDialog);
 
   // Find the list body containing the comments
   Finder listFinder = find.descendant(

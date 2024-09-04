@@ -11,7 +11,7 @@ import '../services/settings_data_service.dart';
 import '../viewmodels/audio_player_vm.dart';
 import '../viewmodels/theme_provider_vm.dart';
 import '../viewmodels/warning_message_vm.dart';
-import 'widgets/warning_message_display_widget.dart';
+import 'widgets/warning_message_display.dart';
 
 enum MultipleIconType {
   iconOne,
@@ -561,7 +561,7 @@ mixin ScreenMixin {
         // warningMessageVM calls notifyListners(), which
         // happens when an other view model sets a warning
         // message on the warningMessageVM
-        return WarningMessageDisplayWidget(
+        return WarningMessageDisplayDialog(
           warningMessageVM: warningMessageVM,
           parentContext: context,
           urlController: urlController, // required only for 2 warning types ...
@@ -631,7 +631,7 @@ mixin ScreenMixin {
 
     return circleAvatar;
   }
- 
+
   /// Method used by the PlaylistCommentListDialogWidget and the
   /// CommentListAddDialogWidget in order to compute the number
   /// of lines required to display the comment text. This number
@@ -662,5 +662,5 @@ mixin ScreenMixin {
     int lineNumber = textPainter.computeLineMetrics().length;
 
     return lineNumber; // Add 1 for the last line
-  } 
+  }
 }

@@ -15,7 +15,7 @@ enum InvalidValueState {
   tooSmall,
 }
 
-class SetValueToTargetDialogWidget extends StatefulWidget {
+class SetValueToTargetDialog extends StatefulWidget {
   final String dialogTitle;
   final String dialogCommentStr;
   final String passedValueStr;
@@ -33,7 +33,7 @@ class SetValueToTargetDialogWidget extends StatefulWidget {
   final List<dynamic>
       validationFunctionArgs; // Arguments for the validation function
 
-  const SetValueToTargetDialogWidget({
+  const SetValueToTargetDialog({
     super.key,
     required this.dialogTitle,
     required this.dialogCommentStr,
@@ -47,12 +47,11 @@ class SetValueToTargetDialogWidget extends StatefulWidget {
   });
 
   @override
-  State<SetValueToTargetDialogWidget> createState() =>
-      _SetValueToTargetDialogWidgetState();
+  State<SetValueToTargetDialog> createState() => _SetValueToTargetDialogState();
 }
 
-class _SetValueToTargetDialogWidgetState
-    extends State<SetValueToTargetDialogWidget> with ScreenMixin {
+class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
+    with ScreenMixin {
   final TextEditingController _passedValueTextEditingController =
       TextEditingController();
   final FocusNode _focusNodeDialog = FocusNode();

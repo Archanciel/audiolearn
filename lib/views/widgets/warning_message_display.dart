@@ -1,4 +1,4 @@
-import 'package:audiolearn/views/widgets/set_value_to_target_dialog_widget.dart';
+import 'package:audiolearn/views/widgets/set_value_to_target_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -28,13 +28,13 @@ enum WarningMode {
 /// In case of multiple warnings, the WarningMessageDisplayWidget is
 /// added as listener of [WarningMessageVM] whis this method:
 /// _warningMessageVM.addListener(() {...}.
-class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
+class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
   final BuildContext _context;
   final WarningMessageVM _warningMessageVM;
   final TextEditingController? _playlistUrlController;
   final ScrollController _scrollController = ScrollController();
 
-  WarningMessageDisplayWidget({
+  WarningMessageDisplayDialog({
     required BuildContext parentContext,
     required WarningMessageVM warningMessageVM,
     TextEditingController? urlController,
@@ -411,7 +411,8 @@ class WarningMessageDisplayWidget extends StatelessWidget with ScreenMixin {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           _displayWarningDialog(
             context: _context,
-            message: AppLocalizations.of(context)!.notRedownloadAudioFilesInPlaylistDirectory(
+            message: AppLocalizations.of(context)!
+                .notRedownloadAudioFilesInPlaylistDirectory(
               _warningMessageVM.audioNumber,
               _warningMessageVM.targetPlaylistTitle,
             ),

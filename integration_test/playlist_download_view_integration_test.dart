@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:audiolearn/viewmodels/comment_vm.dart';
-import 'package:audiolearn/views/widgets/confirm_action_dialog_widget.dart';
-import 'package:audiolearn/views/widgets/audio_modification_dialog_widget.dart';
-import 'package:audiolearn/views/widgets/comment_add_edit_dialog_widget.dart';
-import 'package:audiolearn/views/widgets/comment_list_add_dialog_widget.dart';
-import 'package:audiolearn/views/widgets/playlist_comment_list_dialog_widget.dart';
+import 'package:audiolearn/views/widgets/confirm_action_dialog.dart';
+import 'package:audiolearn/views/widgets/audio_modification_dialog.dart';
+import 'package:audiolearn/views/widgets/comment_add_edit_dialog.dart';
+import 'package:audiolearn/views/widgets/comment_list_add_dialog.dart';
+import 'package:audiolearn/views/widgets/playlist_comment_list_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -25,8 +25,8 @@ import 'package:audiolearn/viewmodels/language_provider_vm.dart';
 import 'package:audiolearn/viewmodels/theme_provider_vm.dart';
 import 'package:audiolearn/viewmodels/warning_message_vm.dart';
 import 'package:audiolearn/views/playlist_download_view.dart';
-import 'package:audiolearn/views/widgets/warning_message_display_widget.dart';
-import 'package:audiolearn/views/widgets/playlist_list_item_widget.dart';
+import 'package:audiolearn/views/widgets/warning_message_display.dart';
+import 'package:audiolearn/views/widgets/playlist_list_item.dart';
 import 'package:audiolearn/services/settings_data_service.dart';
 import 'package:audiolearn/utils/dir_util.dart';
 import 'package:audiolearn/main.dart' as app;
@@ -195,8 +195,8 @@ void main() {
       expect(find.byType(ListTile), findsOneWidget);
 
       // Check if the added item is displayed correctly
-      final PlaylistListItemWidget playlistListItemWidget =
-          tester.widget(find.byType(PlaylistListItemWidget).first);
+      final PlaylistListItem playlistListItemWidget =
+          tester.widget(find.byType(PlaylistListItem).first);
       expect(playlistListItemWidget.playlist.title, youtubeNewPlaylistTitle);
 
       // Find the ListTile representing the added playlist
@@ -434,7 +434,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure the warning dialog is shown
-      expect(find.byType(WarningMessageDisplayWidget), findsOneWidget);
+      expect(find.byType(WarningMessageDisplayDialog), findsOneWidget);
 
       // Check the value of the warning dialog title
       Text warningDialogTitle =
@@ -690,7 +690,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure the warning dialog is shown
-      expect(find.byType(WarningMessageDisplayWidget), findsOneWidget);
+      expect(find.byType(WarningMessageDisplayDialog), findsOneWidget);
 
       // Check the value of the warning dialog title
       Text warningDialogTitleText =
@@ -943,8 +943,8 @@ void main() {
       expect(find.byType(ListTile), findsOneWidget);
 
       // Check if the added item is displayed correctly
-      final PlaylistListItemWidget playlistListItemWidget =
-          tester.widget(find.byType(PlaylistListItemWidget).first);
+      final PlaylistListItem playlistListItemWidget =
+          tester.widget(find.byType(PlaylistListItem).first);
       expect(playlistListItemWidget.playlist.title, localPlaylistTitle);
 
       // Find the ListTile representing the added playlist
@@ -1182,8 +1182,8 @@ void main() {
       expect(find.byType(ListTile), findsOneWidget);
 
       // Check if the added item is displayed correctly
-      final PlaylistListItemWidget playlistListItemWidget =
-          tester.widget(find.byType(PlaylistListItemWidget).first);
+      final PlaylistListItem playlistListItemWidget =
+          tester.widget(find.byType(PlaylistListItem).first);
       expect(playlistListItemWidget.playlist.title, localPlaylistTitle);
 
       // Find the ListTile representing the added playlist
@@ -1372,8 +1372,8 @@ void main() {
       expect(find.byType(ListTile), findsOneWidget);
 
       // Check if the added item is displayed correctly
-      final PlaylistListItemWidget playlistListItemWidget =
-          tester.widget(find.byType(PlaylistListItemWidget).first);
+      final PlaylistListItem playlistListItemWidget =
+          tester.widget(find.byType(PlaylistListItem).first);
       expect(playlistListItemWidget.playlist.title, localPlaylistTitle);
 
       // Add a new local playlist with the same title of the first
@@ -1397,7 +1397,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure the warning dialog is shown
-      expect(find.byType(WarningMessageDisplayWidget), findsOneWidget);
+      expect(find.byType(WarningMessageDisplayDialog), findsOneWidget);
 
       // Check the value of the warning dialog title
       Text warningDialogTitle =
@@ -1462,7 +1462,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure the warning dialog is shown
-      expect(find.byType(WarningMessageDisplayWidget), findsOneWidget);
+      expect(find.byType(WarningMessageDisplayDialog), findsOneWidget);
 
       // Check the value of the warning dialog title
       Text warningDialogTitle =
@@ -1636,7 +1636,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure the warning dialog is shown
-      expect(find.byType(WarningMessageDisplayWidget), findsOneWidget);
+      expect(find.byType(WarningMessageDisplayDialog), findsOneWidget);
 
       // Check the value of the warning dialog title
       Text warningDialogTitle =
@@ -2271,7 +2271,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure the warning dialog is shown
-      expect(find.byType(WarningMessageDisplayWidget), findsOneWidget);
+      expect(find.byType(WarningMessageDisplayDialog), findsOneWidget);
 
       // Check the value of the warning dialog title
       Text warningDialogTitle =
@@ -2414,7 +2414,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure the warning dialog is shown
-      expect(find.byType(WarningMessageDisplayWidget), findsOneWidget);
+      expect(find.byType(WarningMessageDisplayDialog), findsOneWidget);
 
       // Check the value of the warning dialog title
       Text warningDialogTitle =
@@ -2596,7 +2596,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure the warning dialog is shown
-      expect(find.byType(WarningMessageDisplayWidget), findsOneWidget);
+      expect(find.byType(WarningMessageDisplayDialog), findsOneWidget);
 
       // Check the value of the warning dialog title
       Text warningDialogTitle =
@@ -2823,7 +2823,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure the warning dialog is shown
-      expect(find.byType(WarningMessageDisplayWidget), findsOneWidget);
+      expect(find.byType(WarningMessageDisplayDialog), findsOneWidget);
 
       // Check the value of the warning dialog title
       Text warningDialogTitle =
@@ -2936,7 +2936,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure the warning dialog is shown
-      expect(find.byType(WarningMessageDisplayWidget), findsOneWidget);
+      expect(find.byType(WarningMessageDisplayDialog), findsOneWidget);
 
       // Check the value of the warning dialog message
       Text warningDialogMessage =
@@ -2952,8 +2952,8 @@ void main() {
       expect(find.byType(ListTile), findsNWidgets(3));
 
       // Check if the added item is displayed correctly
-      final PlaylistListItemWidget playlistListItemWidget =
-          tester.widget(find.byType(PlaylistListItemWidget).first);
+      final PlaylistListItem playlistListItemWidget =
+          tester.widget(find.byType(PlaylistListItem).first);
       expect(playlistListItemWidget.playlist.title, localMusicPlaylistTitle);
 
       // Check the saved local playlist values in the json file
@@ -4265,8 +4265,7 @@ void main() {
 
       // Checking the confirm dialog
 
-      Finder confirmActionDialogWidgetFinder =
-          find.byType(ConfirmActionDialogWidget);
+      Finder confirmActionDialogWidgetFinder = find.byType(ConfirmActionDialog);
 
       // Check the value of the confirm dialog title
       Finder confirmActionDialogTitleText = find.descendant(
@@ -4641,8 +4640,7 @@ void main() {
       // Since the copied audio contains comment(s), deleting it
       // causes a confirm action dialog to be displayed.
 
-      Finder confirmActionDialogWidgetFinder =
-          find.byType(ConfirmActionDialogWidget);
+      Finder confirmActionDialogWidgetFinder = find.byType(ConfirmActionDialog);
 
       // Check the value of the confirm dialog title
       Finder confirmActionDialogTitleText = find.descendant(
@@ -9993,7 +9991,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure the warning dialog is shown
-      expect(find.byType(WarningMessageDisplayWidget), findsOneWidget);
+      expect(find.byType(WarningMessageDisplayDialog), findsOneWidget);
 
       // Check the value of the warning dialog title
       Text warningDialogTitle =
@@ -12334,7 +12332,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure the warning dialog is shown
-      expect(find.byType(WarningMessageDisplayWidget), findsOneWidget);
+      expect(find.byType(WarningMessageDisplayDialog), findsOneWidget);
 
       // Check the value of the warning dialog title
       Text warningDialogTitle =
@@ -12543,8 +12541,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Find the comment list add dialog widget
-      final Finder commentListDialogFinder =
-          find.byType(CommentListAddDialogWidget);
+      final Finder commentListDialogFinder = find.byType(CommentListAddDialog);
 
       // Find the list body containing the comments
       final Finder listFinder = find.descendant(
@@ -12640,7 +12637,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify that the rename audio file dialog is displayed
-      expect(find.byType(AudioModificationDialogWidget), findsOneWidget);
+      expect(find.byType(AudioModificationDialog), findsOneWidget);
 
       // Verify the dialog comment
       expect(
@@ -12790,7 +12787,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify that the rename audio file dialog is displayed
-      expect(find.byType(AudioModificationDialogWidget), findsOneWidget);
+      expect(find.byType(AudioModificationDialog), findsOneWidget);
 
       // Verify the dialog comment
       expect(
@@ -12943,7 +12940,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify that the rename audio file dialog is displayed
-      expect(find.byType(AudioModificationDialogWidget), findsOneWidget);
+      expect(find.byType(AudioModificationDialog), findsOneWidget);
 
       // Verify the dialog title
       expect(find.text('Rename Audio File'), findsOneWidget);
@@ -13074,7 +13071,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify that the rename audio file dialog is displayed
-      expect(find.byType(AudioModificationDialogWidget), findsOneWidget);
+      expect(find.byType(AudioModificationDialog), findsOneWidget);
 
       // Verify the dialog title
       expect(find.text('Rename Audio File'), findsOneWidget);
@@ -13215,7 +13212,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify that the rename audio file dialog is displayed
-      expect(find.byType(AudioModificationDialogWidget), findsOneWidget);
+      expect(find.byType(AudioModificationDialog), findsOneWidget);
 
       // Verify the dialog comment
       expect(
@@ -13352,7 +13349,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify that the rename audio file dialog is displayed
-      expect(find.byType(AudioModificationDialogWidget), findsOneWidget);
+      expect(find.byType(AudioModificationDialog), findsOneWidget);
 
       // Verify the dialog title
       expect(find.text('Modify Audio Title'), findsOneWidget);
@@ -13429,7 +13426,7 @@ void main() {
 
       final Text audioTitleTextWidget =
           tester.widget<Text>(find.byKey(const Key('validVideoTitleKey')));
-      
+
       expect(audioTitleTextWidget.data, newTitle);
 
       // Verify the presence of Original video title label
@@ -13456,7 +13453,8 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets('Imported audio: change audio title', (WidgetTester tester) async {
+    testWidgets('Imported audio: change audio title',
+        (WidgetTester tester) async {
       const String youtubePlaylistTitle =
           'audio_player_view_2_shorts_test'; // Youtube playlist
       const String audioTitle = "Really short video";
@@ -13500,7 +13498,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify that the rename audio file dialog is displayed
-      expect(find.byType(AudioModificationDialogWidget), findsOneWidget);
+      expect(find.byType(AudioModificationDialog), findsOneWidget);
 
       // Verify the dialog title
       expect(find.text('Modify Audio Title'), findsOneWidget);
@@ -13577,7 +13575,7 @@ void main() {
 
       final Text audioTitleTextWidget =
           tester.widget<Text>(find.byKey(const Key('importedAudioTitleKey')));
-      
+
       expect(audioTitleTextWidget.data, newTitle);
 
       // Verify the presence of Audio title label
@@ -13651,7 +13649,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify that the playlist audio comment dialog is displayed
-      expect(find.byType(PlaylistCommentListDialogWidget), findsOneWidget);
+      expect(find.byType(PlaylistCommentListDialog), findsOneWidget);
 
       // Verify the dialog title
       expect(find.text('Playlist audio comments'), findsOneWidget);
@@ -13772,7 +13770,7 @@ Future<void> checkWarningDialog({
   required bool isMusicQuality,
 }) async {
   // Ensure the warning dialog is shown
-  expect(find.byType(WarningMessageDisplayWidget), findsOneWidget);
+  expect(find.byType(WarningMessageDisplayDialog), findsOneWidget);
 
   // Check the value of the warning dialog title
   Text warningDialogTitle =
@@ -13812,7 +13810,7 @@ Future<void> checkAudioCommentInAudioPlayerView({
 
   // Verify that the expectedCommentTitle is listed
 
-  Finder commentListDialogFinder = find.byType(CommentListAddDialogWidget);
+  Finder commentListDialogFinder = find.byType(CommentListAddDialog);
 
   expect(
       find.descendant(
@@ -13858,11 +13856,11 @@ Future<void> checkAudioCommentUsingAudioItemMenu({
   await tester.pumpAndSettle();
 
   // Verify that the comment list is displayed
-  expect(find.byType(CommentListAddDialogWidget), findsOneWidget);
+  expect(find.byType(CommentListAddDialog), findsOneWidget);
 
   // Verify that the expectedCommentTitle is listed
 
-  Finder commentListDialogFinder = find.byType(CommentListAddDialogWidget);
+  Finder commentListDialogFinder = find.byType(CommentListAddDialog);
 
   expect(
       find.descendant(

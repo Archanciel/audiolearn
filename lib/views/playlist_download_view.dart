@@ -15,14 +15,14 @@ import '../viewmodels/playlist_list_vm.dart';
 import '../viewmodels/theme_provider_vm.dart';
 import '../viewmodels/warning_message_vm.dart';
 import 'screen_mixin.dart';
-import 'widgets/playlist_add_dialog_widget.dart';
+import 'widgets/playlist_add_dialog.dart';
 import 'widgets/application_snackbar.dart';
 import 'widgets/audio_list_item_widget.dart';
-import 'widgets/confirm_action_dialog_widget.dart';
-import 'widgets/playlist_list_item_widget.dart';
-import 'widgets/playlist_one_selectable_dialog_widget.dart';
-import 'widgets/audio_sort_filter_dialog_widget.dart';
-import 'widgets/playlist_manage_sort_filter_options_dialog_widget.dart';
+import 'widgets/confirm_action_dialog.dart';
+import 'widgets/playlist_list_item.dart';
+import 'widgets/playlist_one_selectable_dialog.dart';
+import 'widgets/audio_sort_filter_dialog.dart';
+import 'widgets/playlist_add_remove_sort_filter_options_dialog.dart';
 
 class PlaylistDownloadView extends StatefulWidget {
   final SettingsDataService settingsDataService;
@@ -230,7 +230,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             Playlist playlist = upToDateSelectablePlaylists[index];
             return Builder(
               builder: (listTileContext) {
-                return PlaylistListItemWidget(
+                return PlaylistListItem(
                   settingsDataService: widget.settingsDataService,
                   playlist: playlist,
                   index: index,
@@ -772,7 +772,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             barrierDismissible: false, // This line prevents the dialog from
             //                            closing when tapping outside it
             builder: (BuildContext context) {
-              return AudioSortFilterDialogWidget(
+              return AudioSortFilterDialog(
                 selectedPlaylistAudioLst: playlistListVMlistenFalse
                     .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
                   audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -1035,7 +1035,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 barrierDismissible: false, // This line prevents the dialog from
                 // closing when tapping outside the dialog
                 builder: (BuildContext context) {
-                  return AudioSortFilterDialogWidget(
+                  return AudioSortFilterDialog(
                     selectedPlaylistAudioLst: playlistListVMlistenFalse
                         .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
                       audioLearnAppViewType:
@@ -1085,7 +1085,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
               showDialog<void>(
                 context: context,
                 builder: (BuildContext context) {
-                  return ConfirmActionDialogWidget(
+                  return ConfirmActionDialog(
                     actionFunction: playlistListVMlistenFalse
                         .clearAudioSortFilterSettingsSearchHistory,
                     actionFunctionArgs: const [],
@@ -1122,7 +1122,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                     false, // This line prevents the dialog from closing
                 //            when tapping outside the dialog
                 builder: (BuildContext context) {
-                  return PlaylistManageSortFilterOptionsDialogWidget(
+                  return PlaylistAddRemoveSortFilterOptionsDialog(
                     playlistTitle:
                         playlistListVMlistenFalse.uniqueSelectedPlaylist!.title,
                     sortFilterParametersName:
@@ -1163,7 +1163,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                     selectedSortFilterParmsName:
                         _selectedSortFilterParametersName!,
                   );
-                  return PlaylistManageSortFilterOptionsDialogWidget(
+                  return PlaylistAddRemoveSortFilterOptionsDialog(
                     playlistTitle:
                         playlistListVMlistenFalse.uniqueSelectedPlaylist!.title,
                     sortFilterParametersName:
@@ -1312,7 +1312,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
             showDialog<dynamic>(
               context: context,
-              builder: (context) => PlaylistOneSelectableDialogWidget(
+              builder: (context) => PlaylistOneSelectableDialog(
                 usedFor:
                     PlaylistOneSelectableDialogUsedFor.downloadSingleVideoAudio,
                 warningMessageVM: warningMessageVMlistenFalse,
@@ -1533,7 +1533,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                   false, // This line prevents the dialog from closing when
               //            tapping outside the dialog
               builder: (BuildContext context) {
-                return PlaylistAddDialogWidget(
+                return PlaylistAddDialog(
                   playlistUrl: playlistUrl,
                 );
               },

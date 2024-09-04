@@ -10,7 +10,7 @@ import '../../services/settings_data_service.dart';
 import '../../viewmodels/audio_player_vm.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 import '../../views/screen_mixin.dart';
-import 'help_dialog_widget.dart';
+import 'help_dialog.dart';
 
 /// This widget displays a dialog to set the audio play speed. The dialog
 /// is used in the application settings view, in the audio player view
@@ -20,7 +20,7 @@ import 'help_dialog_widget.dart';
 /// application settings view or from the playlist set speed item menu.
 /// If called from the audio player view, the help icon button is not
 /// displayed.
-class AudioSetSpeedDialogWidget extends StatefulWidget {
+class AudioSetSpeedDialog extends StatefulWidget {
   final double audioPlaySpeed;
 
   final bool displayApplyToExistingPlaylistCheckbox;
@@ -38,7 +38,7 @@ class AudioSetSpeedDialogWidget extends StatefulWidget {
   /// When the dialog is used in the playlist set speed item menu, the
   /// only {displayApplyToExistingPlaylistCheckbox} and {helpItemsLst}
   /// parameter is are set by the caller.
-  const AudioSetSpeedDialogWidget({
+  const AudioSetSpeedDialog({
     super.key,
     required this.audioPlaySpeed,
     required this.updateCurrentPlayAudioSpeed,
@@ -48,11 +48,10 @@ class AudioSetSpeedDialogWidget extends StatefulWidget {
   });
 
   @override
-  _AudioSetSpeedDialogWidgetState createState() =>
-      _AudioSetSpeedDialogWidgetState();
+  _AudioSetSpeedDialogState createState() => _AudioSetSpeedDialogState();
 }
 
-class _AudioSetSpeedDialogWidgetState extends State<AudioSetSpeedDialogWidget>
+class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
     with ScreenMixin {
   double _audioPlaySpeed = 1.0;
   bool _applyToAudioAlreadyDownloaded = false;
@@ -146,7 +145,7 @@ class _AudioSetSpeedDialogWidgetState extends State<AudioSetSpeedDialogWidget>
                     onPressed: () {
                       showDialog<void>(
                         context: context,
-                        builder: (context) => HelpDialogWidget(
+                        builder: (context) => HelpDialog(
                           helpItemsLst: widget.helpItemsLst,
                         ),
                       );

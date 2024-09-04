@@ -1,4 +1,4 @@
-import 'package:audiolearn/views/widgets/comment_list_add_dialog_widget.dart';
+import 'package:audiolearn/views/widgets/comment_list_add_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -15,11 +15,11 @@ import '../viewmodels/playlist_list_vm.dart';
 import '../viewmodels/warning_message_vm.dart';
 import '../viewmodels/theme_provider_vm.dart';
 import 'screen_mixin.dart';
-import 'widgets/confirm_action_dialog_widget.dart';
+import 'widgets/confirm_action_dialog.dart';
 import 'widgets/audio_playable_list_dialog_widget.dart';
-import 'widgets/playlist_list_item_widget.dart';
-import 'widgets/audio_set_speed_dialog_widget.dart';
-import 'widgets/audio_sort_filter_dialog_widget.dart';
+import 'widgets/playlist_list_item.dart';
+import 'widgets/audio_set_speed_dialog.dart';
+import 'widgets/audio_sort_filter_dialog.dart';
 
 /// Screen enabling the user to play an audio, change the playing
 /// position or go to a previous, next or selected audio.
@@ -455,7 +455,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                           showDialog<List<dynamic>>(
                             context: context,
                             builder: (BuildContext context) {
-                              return AudioSetSpeedDialogWidget(
+                              return AudioSetSpeedDialog(
                                 audioPlaySpeed: _audioPlaySpeed,
                                 updateCurrentPlayAudioSpeed: true,
                               );
@@ -564,7 +564,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                     // passing the current audio to the dialog instead
                     // of initializing a private _currentAudio variable
                     // in the dialog avoid integr test problems
-                    builder: (context) => CommentListAddDialogWidget(
+                    builder: (context) => CommentListAddDialog(
                       currentAudio: currentAudio!,
                     ),
                   );
@@ -630,7 +630,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                 barrierDismissible:
                     false, // This line prevents the dialog from closing when tapping outside
                 builder: (BuildContext context) {
-                  return AudioSortFilterDialogWidget(
+                  return AudioSortFilterDialog(
                     selectedPlaylistAudioLst: playlistListVMlistenFalse
                         .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
                       audioLearnAppViewType:
@@ -677,7 +677,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
               showDialog<void>(
                 context: context,
                 builder: (BuildContext context) {
-                  return ConfirmActionDialogWidget(
+                  return ConfirmActionDialog(
                     actionFunction: playlistListVMlistenFalse
                         .clearAudioSortFilterSettingsSearchHistory,
                     actionFunctionArgs: const [],
@@ -816,7 +816,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
 
               showDialog<void>(
                 context: context,
-                builder: (context) => const AudioPlayableListDialogWidget(),
+                builder: (context) => const AudioPlayableListDialog(),
               );
             },
             child: Consumer<ThemeProviderVM>(
@@ -1114,7 +1114,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
             Playlist playlist = upToDateSelectablePlaylists[index];
             return Builder(
               builder: (listTileContext) {
-                return PlaylistListItemWidget(
+                return PlaylistListItem(
                   settingsDataService: widget.settingsDataService,
                   playlist: playlist,
                   index: index,

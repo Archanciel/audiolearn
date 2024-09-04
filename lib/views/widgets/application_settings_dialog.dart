@@ -13,23 +13,23 @@ import '../../views/screen_mixin.dart';
 import '../../constants.dart';
 import '../../services/settings_data_service.dart';
 import '../../viewmodels/theme_provider_vm.dart';
-import 'audio_set_speed_dialog_widget.dart';
+import 'audio_set_speed_dialog.dart';
 
-class ApplicationSettingsDialogWidget extends StatefulWidget {
+class ApplicationSettingsDialog extends StatefulWidget {
   final SettingsDataService settingsDataService;
 
-  const ApplicationSettingsDialogWidget({
+  const ApplicationSettingsDialog({
     required this.settingsDataService,
     super.key,
   });
 
   @override
-  State<ApplicationSettingsDialogWidget> createState() =>
-      _ApplicationSettingsDialogWidgetState();
+  State<ApplicationSettingsDialog> createState() =>
+      _ApplicationSettingsDialogState();
 }
 
-class _ApplicationSettingsDialogWidgetState
-    extends State<ApplicationSettingsDialogWidget> with ScreenMixin {
+class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
+    with ScreenMixin {
   final TextEditingController _playlistRootpathTextEditingController =
       TextEditingController();
   late double _audioPlaySpeed;
@@ -224,8 +224,8 @@ class _ApplicationSettingsDialogWidgetState
     String playlistRootPath = _playlistRootpathTextEditingController.text;
 
     if (widget.settingsDataService.get(
-      // if the playlist root path is not changed, do not update the
-      // settings and the playlist json files
+          // if the playlist root path is not changed, do not update the
+          // settings and the playlist json files
           settingType: SettingType.playlists,
           settingSubType: Playlists.playSpeed,
         ) ==
@@ -298,7 +298,7 @@ class _ApplicationSettingsDialogWidgetState
                     showDialog<List<dynamic>>(
                       context: context,
                       builder: (BuildContext context) {
-                        return AudioSetSpeedDialogWidget(
+                        return AudioSetSpeedDialog(
                           audioPlaySpeed: _audioPlaySpeed,
                           updateCurrentPlayAudioSpeed: false,
                           displayApplyToExistingPlaylistCheckbox: true,

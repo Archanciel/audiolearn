@@ -15,14 +15,14 @@ import '../../viewmodels/theme_provider_vm.dart';
 ///
 /// The dialog also enables the user to remove the sort filter options from
 /// the playlist download view and/or the audio player view.
-class PlaylistManageSortFilterOptionsDialogWidget extends StatefulWidget {
+class PlaylistAddRemoveSortFilterOptionsDialog extends StatefulWidget {
   final String playlistTitle;
   final String sortFilterParametersName;
   final bool isSaveApplied;
   final bool sortFilterAppliedToPlaylistDownloadView;
   final bool sortFilterAppliedToAudioPlayerView;
 
-  const PlaylistManageSortFilterOptionsDialogWidget({
+  const PlaylistAddRemoveSortFilterOptionsDialog({
     super.key,
     required this.playlistTitle,
     required this.sortFilterParametersName,
@@ -32,13 +32,12 @@ class PlaylistManageSortFilterOptionsDialogWidget extends StatefulWidget {
   });
 
   @override
-  State<PlaylistManageSortFilterOptionsDialogWidget> createState() =>
-      _PlaylistManageSortFilterOptionsDialogWidgetState();
+  State<PlaylistAddRemoveSortFilterOptionsDialog> createState() =>
+      _PlaylistAddRemoveSortFilterOptionsDialogState();
 }
 
-class _PlaylistManageSortFilterOptionsDialogWidgetState
-    extends State<PlaylistManageSortFilterOptionsDialogWidget>
-    with ScreenMixin {
+class _PlaylistAddRemoveSortFilterOptionsDialogState
+    extends State<PlaylistAddRemoveSortFilterOptionsDialog> with ScreenMixin {
   final FocusNode _focusNodeDialog = FocusNode();
 
   bool _applySortFilterToPlaylistDownloadView = false;
@@ -181,9 +180,9 @@ class _PlaylistManageSortFilterOptionsDialogWidgetState
               Navigator.of(context).pop(_createReturnedLst());
             },
             child: Text(
-              (widget.isSaveApplied) ?
-              AppLocalizations.of(context)!.saveButton :
-              AppLocalizations.of(context)!.removeButton,
+              (widget.isSaveApplied)
+                  ? AppLocalizations.of(context)!.saveButton
+                  : AppLocalizations.of(context)!.removeButton,
               style: (themeProviderVM.currentTheme == AppTheme.dark)
                   ? kTextButtonStyleDarkMode
                   : kTextButtonStyleLightMode,

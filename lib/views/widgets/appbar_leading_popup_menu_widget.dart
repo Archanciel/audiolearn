@@ -14,12 +14,12 @@ import '../../services/settings_data_service.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 import '../../viewmodels/audio_player_vm.dart';
 import '../screen_mixin.dart';
-import 'confirm_action_dialog_widget.dart';
-import 'application_settings_dialog_widget.dart';
-import 'audio_info_dialog_widget.dart';
-import 'audio_modification_dialog_widget.dart';
-import 'comment_list_add_dialog_widget.dart';
-import 'playlist_one_selectable_dialog_widget.dart';
+import 'confirm_action_dialog.dart';
+import 'application_settings_dialog.dart';
+import 'audio_info_dialog.dart';
+import 'audio_modification_dialog.dart';
+import 'comment_list_add_dialog.dart';
+import 'playlist_one_selectable_dialog.dart';
 
 enum AppBarPopupMenu {
   openSettingsDialog,
@@ -147,7 +147,8 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
           case AudioPopupMenuAction.displayAudioInfo:
             showDialog<void>(
               context: context,
-              builder: (BuildContext context) => AudioInfoDialogWidget(
+              builder: (BuildContext context) =>
+                  AudioInfoDialogWidget.AudioInfoDialog(
                 audio: audioPlayerVMlistenFalse.currentAudio!,
               ),
             );
@@ -164,7 +165,7 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
                 // passing the current audio to the dialog instead
                 // of initializing a private _currentAudio variable
                 // in the dialog avoid integr test problems
-                builder: (context) => CommentListAddDialogWidget(
+                builder: (context) => CommentListAddDialog(
                   currentAudio: audio,
                 ),
               );
@@ -176,8 +177,7 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
                 barrierDismissible:
                     false, // This line prevents the dialog from closing when
                 //            tapping outside the dialog
-                builder: (BuildContext context) =>
-                    AudioModificationDialogWidget(
+                builder: (BuildContext context) => AudioModificationDialog(
                       audio: audioPlayerVMlistenFalse.currentAudio!,
                       audioModificationType:
                           AudioModificationType.renameAudioFile,
@@ -191,7 +191,7 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
                   false, // This line prevents the dialog from closing when
               //            tapping outside the dialog
               builder: (BuildContext context) {
-                return AudioModificationDialogWidget(
+                return AudioModificationDialog(
                   audio: audio,
                   audioModificationType: AudioModificationType.modifyAudioTitle,
                 );
@@ -218,7 +218,7 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
 
             showDialog<dynamic>(
               context: context,
-              builder: (context) => PlaylistOneSelectableDialogWidget(
+              builder: (context) => PlaylistOneSelectableDialog(
                 usedFor: PlaylistOneSelectableDialogUsedFor.moveAudioToPlaylist,
                 warningMessageVM: Provider.of<WarningMessageVM>(
                   context,
@@ -269,7 +269,7 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
 
             showDialog<dynamic>(
               context: context,
-              builder: (context) => PlaylistOneSelectableDialogWidget(
+              builder: (context) => PlaylistOneSelectableDialog(
                 usedFor: PlaylistOneSelectableDialogUsedFor.copyAudioToPlaylist,
                 warningMessageVM: Provider.of<WarningMessageVM>(
                   context,
@@ -314,7 +314,7 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
               await showDialog<dynamic>(
                 context: context,
                 builder: (BuildContext context) {
-                  return ConfirmActionDialogWidget(
+                  return ConfirmActionDialog(
                     actionFunction: deleteAudio,
                     actionFunctionArgs: [
                       context,
@@ -371,7 +371,7 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
               await showDialog<dynamic>(
                 context: context,
                 builder: (BuildContext context) {
-                  return ConfirmActionDialogWidget(
+                  return ConfirmActionDialog(
                     actionFunction: deleteAudioFromPlaylistAswell,
                     actionFunctionArgs: [
                       context,
@@ -523,7 +523,7 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
               barrierDismissible: false, // This line prevents the dialog from
               // closing when tapping outside the dialog
               builder: (BuildContext context) {
-                return ApplicationSettingsDialogWidget(
+                return ApplicationSettingsDialog(
                   settingsDataService: settingsDataService,
                 );
               },
