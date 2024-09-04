@@ -6,7 +6,7 @@ import '../models/audio.dart';
 import '../utils/date_time_parser.dart';
 
 // This enum is used to specify how to sort the audio list.
-// It is used in the AudioSortFilterDialogWidget.
+// It is used in the AudioSortFilterDialog.
 enum SortingOption {
   audioDownloadDate,
   videoUploadDate,
@@ -23,7 +23,7 @@ enum SortingOption {
 }
 
 // This enum is used to specify how to combine the filter sentences
-// specified by the user in the AudioSortFilterDialogWidget.
+// specified by the user in the AudioSortFilterDialog.
 enum SentencesCombination {
   AND, // all sentences must be found
   OR, // at least one sentence must be found
@@ -64,7 +64,7 @@ class SortCriteria<T> {
 }
 
 /// This class represent a 'Sort by:' list item added by the user in
-/// the AudioSortFilterDialogWidget. It associates a SortingOption
+/// the AudioSortFilterDialog. It associates a SortingOption
 /// with a boolean indicating if the sorting is ascending or descending.
 class SortingItem {
   final SortingOption sortingOption;
@@ -210,7 +210,7 @@ class AudioSortFilterParameters {
   };
 
   /// The default SortingItem is the one that is selected by default in the
-  /// AudioSortFilterDialogWidget
+  /// AudioSortFilterDialog
   static SortingItem getDefaultSortingItem() {
     return SortingItem(
       sortingOption: SortingOption.audioDownloadDate,
@@ -221,7 +221,7 @@ class AudioSortFilterParameters {
     );
   }
 
-  /// In the PlaylistDownloadView or in theAudioPlayableListDialogWidget,
+  /// In the PlaylistDownloadView or in theAudioPlayableListDialog,
   /// the audio are by default sorted by the audio download date in descending
   /// order.
   static AudioSortFilterParameters createDefaultAudioSortFilterParameters() {
@@ -233,13 +233,13 @@ class AudioSortFilterParameters {
   }
 
   // This list contains the SortingItem's selected by the user in the
-  // AudioSortFilterDialogWidget. A SortingItem associates a SortingOption
+  // AudioSortFilterDialog. A SortingItem associates a SortingOption
   // with a boolean indicating if the sorting is ascending or descending.
   final List<SortingItem> selectedSortItemLst;
 
   // This list contains the filter word(s) or sentence(s) specified by the
   // user in the Video title (and description) filter field of the
-  // AudioSortFilterDialogWidget.
+  // AudioSortFilterDialog.
   final List<String> filterSentenceLst;
 
   // This enum is used to specify how to combine the filter sentences: 'and'

@@ -382,7 +382,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
     }
   }
 
-  /// Public method passed as parameter to the ActionConfirmDialogWidget
+  /// Public method passed as parameter to the ActionConfirmDialog
   /// which, in this case, asks the user to confirm the deletion of a
   /// playlist. This method is called when the user clicks on the
   /// 'Confirm' button.

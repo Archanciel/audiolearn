@@ -415,8 +415,8 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
   }
 
   /// In order to avoid keyboard opening and closing continuously after
-  /// opening the CommentAddEditDialogWidget, the current dialog must be
-  /// closed before opening the CommentAddEditDialogWidget.
+  /// opening the CommentAddEditDialog, the current dialog must be
+  /// closed before opening the CommentAddEditDialog.
   void _closeDialogAndOpenCommentAddEditDialog({
     required BuildContext context,
     Comment? comment,
@@ -427,9 +427,9 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
       barrierDismissible:
           false, // This line prevents the dialog from closing when
       //        tapping outside the dialog
-      // instanciating CommentAddEditDialogWidget without
+      // instanciating CommentAddEditDialog without
       // passing a comment opens it in 'add' mode
-      builder: (context) => CommentAddEditDialogWidget(
+      builder: (context) => CommentAddEditDialog(
         callerDialog: CallerDialog.commentListAddDialog,
         comment: comment,
       ),

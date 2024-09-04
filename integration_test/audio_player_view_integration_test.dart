@@ -1324,7 +1324,7 @@ void main() {
 
       // Select a playlist audio
 
-      // Now we open the AudioPlayableListDialogWidget by tapping on the
+      // Now we open the AudioPlayableListDialog by tapping on the
       // audio title
       await tester.tap(find.text("Aucun audio sélectionné"));
       await tester.pumpAndSettle();
@@ -1867,7 +1867,7 @@ void main() {
       );
     });
     testWidgets(
-        '''Reduce play speed. Then open the DisplaySelectableAudioListDialogWidget
+        '''Reduce play speed. Then open the DisplaySelectableAudioListDialog
            and select the most recently downloaded audio.''', (
       WidgetTester tester,
     ) async {
@@ -1922,7 +1922,7 @@ void main() {
         expectedAudioPlaySpeed: expectedAudioPlaySpeed,
       );
 
-      // Now we open the DisplaySelectableAudioListDialogWidget
+      // Now we open the DisplaySelectableAudioListDialog
       // and select the last downloaded audio of the playlist
 
       await tester.tap(find.text(
@@ -2523,7 +2523,7 @@ void main() {
           .tap(fifthDownloadedPartiallyPlayedAudioListTileTextWidgetFinder);
       await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-      // Now we open the AudioPlayableListDialogWidget
+      // Now we open the AudioPlayableListDialog
       // and verify the color of the displayed audio titles
 
       await tester
@@ -2657,7 +2657,7 @@ void main() {
       );
 
       // Tap on Cancel button to close the
-      // DisplaySelectableAudioListDialogWidget
+      // DisplaySelectableAudioListDialog
       await tester.tap(find.text('Close'));
       await tester.pumpAndSettle();
 
@@ -2697,7 +2697,7 @@ void main() {
       await tester.tap(find.text(thirdDownloadedNotPlayedAudioTitle));
       await tester.pumpAndSettle();
 
-      // Now we open the AudioPlayableListDialogWidget by tapping on the
+      // Now we open the AudioPlayableListDialog by tapping on the
       // audio title
       await tester.tap(find.text("$thirdDownloadedNotPlayedAudioTitle\n19:05"));
       await tester.pumpAndSettle();
@@ -2797,26 +2797,26 @@ void main() {
       final String actualPositionTimeString =
           tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
 
-      // Now we open the AudioPlayableListDialogWidget by tapping on the
+      // Now we open the AudioPlayableListDialog by tapping on the
       // audio title
       await tester.tap(find.text("$audioToPlayTitle\n17:59"));
       await tester.pumpAndSettle();
 
-      // Find the AudioPlayableListDialogWidget
-      await selectAudioInAudioPlayableDialogWidget(
+      // Find the AudioPlayableListDialog
+      await selectAudioInAudioPlayableDialog(
         tester: tester,
         audioToSelectTitle: audioToSelectInAudioListTitle,
       );
 
       // Now we are back on the AudioPlayerView displaying the selected
-      // audio to play. We reopen the AudioPlayableListDialogWidget
+      // audio to play. We reopen the AudioPlayableListDialog
       // by tapping on the audio title.
       await tester.tap(find.text("$audioToSelectInAudioListTitle\n6:29"));
       await tester.pumpAndSettle();
 
       // Then select the previously playing audio in order to open it in
       // the AudioPlayerView
-      await selectAudioInAudioPlayableDialogWidget(
+      await selectAudioInAudioPlayableDialog(
         tester: tester,
         audioToSelectTitle: audioToPlayTitle,
       );
@@ -4462,8 +4462,7 @@ void main() {
 
   group('Audio comment tests', () {
     group('Playing audio comment to verify that no rewind is performed', () {
-      testWidgets(
-          '''Playing from CommentAddEditDialogWidget a comment on audio paused
+      testWidgets('''Playing from CommentAddEditDialog a comment on audio paused
              more than 1 hour ago.''', (WidgetTester tester) async {
         const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
         const String alreadyCommentedAudioTitle =
@@ -4546,7 +4545,7 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
-      testWidgets('''Playing from CommentListAddDialogWidget a comment on audio
+      testWidgets('''Playing from CommentListAddDialog a comment on audio
              paused more than 1 hour ago.''', (WidgetTester tester) async {
         const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
         const String alreadyCommentedAudioTitle =
@@ -4636,7 +4635,7 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
-      testWidgets('''Playing from PlaylistCommentDialogWidget a comment on audio
+      testWidgets('''Playing from PlaylistCommentDialog a comment on audio
                      paused more than 1 hour ago.''',
           (WidgetTester tester) async {
         const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
@@ -4672,7 +4671,7 @@ void main() {
         await tester.pumpAndSettle(); // Wait for popup menu to appear
 
         // Now find the playlist comment popup menu item and tap on it
-        // to open the PlaylistCommentDialogWidget
+        // to open the PlaylistCommentDialog
         final Finder popupDeletePlaylistMenuItem =
             find.byKey(const Key("popup_menu_display_playlist_audio_comments"));
 
@@ -6232,7 +6231,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify that the dialog is not closed
-      expect(find.byType(CommentAddEditDialogWidget), findsOneWidget);
+      expect(find.byType(CommentAddEditDialog), findsOneWidget);
 
       // Tap on the cancel comment button to close the dialog
       await tester.tap(find.byKey(const Key('cancelTextButton')));
@@ -6344,7 +6343,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify that the dialog is not closed
-      expect(find.byType(CommentAddEditDialogWidget), findsOneWidget);
+      expect(find.byType(CommentAddEditDialog), findsOneWidget);
 
       // Tap on the cancel comment button to close the dialog
       await tester.tap(find.byKey(const Key('cancelTextButton')));
@@ -6487,7 +6486,7 @@ void main() {
            "No checkbox selected ..." warning dialog ok button does not close
            the warning dialog !
            
-           Clicking on comment position button uses SetValueToTargetDialogWidget
+           Clicking on comment position button uses SetValueToTargetDialog
            to set comment positions. At the end of this test, defining a
            negative comment position as well as a comment position greater than
            the audio duration is tested.''', (WidgetTester tester) async {
@@ -6905,11 +6904,11 @@ void verifyPlaylistIsSelectedInPlaylistDownloadView({
   );
 }
 
-Future<void> selectAudioInAudioPlayableDialogWidget({
+Future<void> selectAudioInAudioPlayableDialog({
   required WidgetTester tester,
   required String audioToSelectTitle,
 }) async {
-  // Find the AudioPlayableListDialogWidget
+  // Find the AudioPlayableListDialog
   Finder audioPlayableListDialogFinder = find.byType(AudioPlayableListDialog);
 
   // Then get the audio to select ListTile Text widget finder

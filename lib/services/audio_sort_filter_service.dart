@@ -13,7 +13,7 @@ class AudioSortFilterService {
     required List<SortingItem> selectedSortItemLst,
   }) {
     // Create a list of SortCriteria's corresponding to the list of
-    // selected sorting items coming from the AudioSortFilterDialogWidget
+    // selected sorting items coming from the AudioSortFilterDialog
     // or from the PlaylistListVM method which applies sort filter parameters
     // to return the playable audio of a playlist. This method is
     // getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters().
@@ -76,7 +76,7 @@ class AudioSortFilterService {
               copiedSortCriteria.sortOrder;
         }
 
-      if (comparison != 0) {
+        if (comparison != 0) {
           return comparison;
         }
       }
@@ -92,7 +92,7 @@ class AudioSortFilterService {
     required List<SortingItem> selectedSortItemLst,
   }) {
     // Create a list of SortCriteria's corresponding to the list of
-    // selected sorting items coming from the AudioSortFilterDialogWidget
+    // selected sorting items coming from the AudioSortFilterDialog
     // or from the PlaylistListVM method which applies sort filter parameters
     // to return the playable audio of a playlist. This method is
     // getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters().
@@ -152,7 +152,7 @@ class AudioSortFilterService {
         sortAscending;
   }
 
-  /// Method called by the AudioSortFilterDialogWidget when the user clicks
+  /// Method called by the AudioSortFilterDialog when the user clicks
   /// on the 'Save' or 'Apply' button. The method is also called by the
   /// PlaylistVm getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters()
   /// method.

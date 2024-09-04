@@ -69,7 +69,7 @@ class SetAudioPositionCommand implements Command {
 /// It is also used in the AudioListItemWidget to display the
 /// current audio playing status.
 ///
-/// It is also used in the AudioOneSelectableDialogWidget to
+/// It is also used in the AudioOneSelectableDialog to
 /// obtain the list of audio - currently ordered by download
 /// date - to be displayed in the dialog.
 class AudioPlayerVM extends ChangeNotifier {
@@ -150,7 +150,7 @@ class AudioPlayerVM extends ChangeNotifier {
 
   /// Method called when the user clicks on the audio title or sub
   /// title or play icon displayed in the playlist download view or
-  /// when he selects an audio in the AudioPlayableListDialogWidget
+  /// when he selects an audio in the AudioPlayableListDialog
   /// displayed by clicking on the audio title on the audio player
   /// view or by long pressing on the >| button.
   ///
@@ -179,7 +179,7 @@ class AudioPlayerVM extends ChangeNotifier {
   /// Method called when the user in the PlaylistDownloadView clicks
   /// on the audio title or sub title or when he clicks on a play icon
   /// or, in the AudioPlayerView, when he selects an audio in the
-  /// AudioOneSelectableDialogWidget displayed by clicking on the audio
+  /// AudioOneSelectableDialog displayed by clicking on the audio
   /// title on the AudioPlayerView or by long pressing on the >| button.
   void _clearUndoRedoLists() {
     _undoList.clear();
@@ -188,7 +188,7 @@ class AudioPlayerVM extends ChangeNotifier {
 
   /// Method called indirectly when the user clicks on the audio title
   /// or sub title or when he clicks on a play icon or when he selects
-  /// an audio in the AudioOneSelectableDialogWidget displayed by
+  /// an audio in the AudioOneSelectableDialog displayed by
   /// clicking on the audio title on the AudioPlayerView or by
   /// long pressing on the >| button.
   ///
@@ -526,8 +526,8 @@ class AudioPlayerVM extends ChangeNotifier {
   /// Method called when the user clicks on the audio play icon
   /// of the AudioListItemWidget displayed in the PlaylistDownloadView
   /// or on the audio play icon in the AudioPlayerView or in the play
-  /// icon in the CommentListAddDialogWidget or PlaylistCommentDialogWidget
-  /// or in the play icon in the CommentAddEditDialogWidget.
+  /// icon in the CommentListAddDialog or PlaylistCommentDialog
+  /// or in the play icon in the CommentAddEditDialog.
   Future<void> playCurrentAudio({
     bool rewindAudioPositionBasedOnPauseDuration = true,
     bool isCommentPlaying = false,

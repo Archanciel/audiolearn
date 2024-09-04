@@ -2,7 +2,6 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
 import '../models/playlist.dart';
 import '../views/widgets/set_value_to_target_dialog.dart';
 
@@ -20,7 +19,7 @@ enum WarningMessageType {
   addPlaylistTitle, // The playlist with this title is added
   // to the application.
 
-  invalidValueWarning, // The value entered in the SetValueToTargetDialogWidget
+  invalidValueWarning, // The value entered in the SetValueToTargetDialog
   // text field is invalid.
 
   invalidPlaylistUrl, // The case if the url is a video url and the
@@ -97,7 +96,7 @@ enum WarningMessageType {
   // parameter which does  exist in the sort/filter parameter history.
 
   noCheckboxSelected, // The case if the user clicks
-  // on the ok button of the SetValueToTargetDialogWidget without
+  // on the ok button of the SetValueToTargetDialog without
   // having selected at least one checkbox.
 
   playlistRootPathNotExist, // The case if the user enters a playlist
@@ -478,7 +477,8 @@ class WarningMessageVM extends ChangeNotifier {
     _isSaveApplied = isSaveApplied;
     _forPlaylistDownloadView = forPlaylistDownloadView;
     _forAudioPlayerView = forAudioPlayerView;
-    warningMessageType = WarningMessageType.addRemoveSortFilterParmsToPlaylistConfirm;
+    warningMessageType =
+        WarningMessageType.addRemoveSortFilterParmsToPlaylistConfirm;
 
     // Causes the display warning message widget to be displayed.      // Causes the display warning message widget to be displayed.
     notifyListeners();

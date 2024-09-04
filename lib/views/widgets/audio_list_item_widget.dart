@@ -178,8 +178,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
           case AudioPopupMenuAction.displayAudioInfo:
             showDialog<void>(
               context: context,
-              builder: (BuildContext context) =>
-                  AudioInfoDialogWidget.AudioInfoDialog(
+              builder: (BuildContext context) => AudioInfoDialog(
                 audio: audio,
               ),
             );
@@ -243,7 +242,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
 
               if (targetPlaylist == null) {
                 // the case if no playlist was selected and Confirm button was
-                // pressed. In this case, the PlaylistOneSelectableDialogWidget
+                // pressed. In this case, the PlaylistOneSelectableDialog
                 // uses the WarningMessageVM to display the right warning
                 return;
               }
@@ -359,7 +358,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
     });
   }
 
-  /// Public method passed to the ConfirmActionDialogWidget to be executd
+  /// Public method passed to the ConfirmActionDialog to be executd
   /// when the Confirm button is pressed. The method deletes the audio
   /// file and its comments.
   Audio? deleteAudio(BuildContext context, Audio audio) {
@@ -372,7 +371,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
     );
   }
 
-  /// Public method passed to the ConfirmActionDialogWidget to be executd
+  /// Public method passed to the ConfirmActionDialog to be executd
   /// when the Confirm button is pressed. The method deletes the audio
   /// file and its comments as well as the audio reference in the playlist
   /// json file.

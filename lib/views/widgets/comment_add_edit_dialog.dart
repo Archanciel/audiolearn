@@ -23,23 +23,22 @@ enum CallerDialog {
 /// This widget displays a dialog to add or edit a comment.
 /// The edit mode is activated when a comment is passed to the
 /// widget constructor. Else, the widget is in add mode.
-class CommentAddEditDialogWidget extends StatefulWidget {
+class CommentAddEditDialog extends StatefulWidget {
   final CallerDialog callerDialog;
   final Comment? comment;
   final bool isAddMode;
 
-  const CommentAddEditDialogWidget({
+  const CommentAddEditDialog({
     super.key,
     required this.callerDialog,
     this.comment,
   }) : isAddMode = comment == null;
 
   @override
-  State<CommentAddEditDialogWidget> createState() =>
-      _CommentAddEditDialogWidgetState();
+  State<CommentAddEditDialog> createState() => _CommentAddEditDialogState();
 }
 
-class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
+class _CommentAddEditDialogState extends State<CommentAddEditDialog>
     with ScreenMixin {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _commentController = TextEditingController();
@@ -691,10 +690,10 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
   }
 
   /// This function validates the entered time value in the
-  /// SetValuesToTargetDialogWidget. In order to do this, it is passed
+  /// SetValuesToTargetDialog. In order to do this, it is passed
   /// as parameter to the dialog constructor.
   ///
-  /// In SetValuesToTargetDialogWidget._createResultList(), the entered
+  /// In SetValuesToTargetDialog._createResultList(), the entered
   /// time value is validated by calling this function this way:
   ///    bool isValid = Function.apply(
   ///                       widget.validationFunction,
@@ -722,19 +721,19 @@ class _CommentAddEditDialogWidgetState extends State<CommentAddEditDialogWidget>
     }
   }
 
-  /// Since before opening the CommentAddEditDialogWidget its caller, the
-  /// CommentListAddDialogWidget or the PlaylistCommentListAddDialogWidget,
+  /// Since before opening the CommentAddEditDialog its caller, the
+  /// CommentListAddDialog or the PlaylistCommentListAddDialog,
   /// was closed, the caller dialog must be re-opened in order to display
   /// the updated list of comments.
   Future<void> _closeDialogAndReOpenCommentListAddDialog({
     required BuildContext context,
     required AudioPlayerVM audioPlayerVM,
   }) async {
-    // Closing first the current CommentAddEditDialogWidget dialog (... pop())
-    // and then opening the CommentListAddDialogWidget dialog before pausing
+    // Closing first the current CommentAddEditDialog dialog (... pop())
+    // and then opening the CommentListAddDialog dialog before pausing
     // the audio without using await on pause method avoids that if the audio
-    // is playing when we close the CommentAddEditDialogWidget, the
-    // CommentAddEditDialogWidget is re-opened !
+    // is playing when we close the CommentAddEditDialog, the
+    // CommentAddEditDialog is re-opened !
     Navigator.of(context).pop(); // close the current dialog
 
     showDialog<void>(

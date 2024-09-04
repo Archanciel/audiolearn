@@ -271,7 +271,7 @@ void audioPlayerViewSortFilterIntregrationTest() {
       await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
-      // Now we open the AudioPlayableListDialogWidget
+      // Now we open the AudioPlayableListDialog
       // and verify the the displayed audio titles
 
       await tester.tap(find
@@ -295,7 +295,7 @@ void audioPlayerViewSortFilterIntregrationTest() {
             audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
       );
 
-      // Tap on the Close button to close the AudioPlayableListDialogWidget
+      // Tap on the Close button to close the AudioPlayableListDialog
       await tester.tap(find.byKey(const Key('closeTextButton')));
       await tester.pumpAndSettle();
 
@@ -365,7 +365,7 @@ void audioPlayerViewSortFilterIntregrationTest() {
       await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
-      // Now we open the AudioPlayableListDialogWidget
+      // Now we open the AudioPlayableListDialog
       // and verify the the displayed audio titles
 
       await tester.tap(find
@@ -377,7 +377,7 @@ void audioPlayerViewSortFilterIntregrationTest() {
         audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
       );
 
-      // Tap on the Close button to close the AudioPlayableListDialogWidget
+      // Tap on the Close button to close the AudioPlayableListDialog
       await tester.tap(find.byKey(const Key('closeTextButton')));
       await tester.pumpAndSettle();
 
@@ -407,7 +407,7 @@ void audioPlayerViewSortFilterIntregrationTest() {
         findsOneWidget,
       );
 
-      // Re-opening again the AudioPlayableListDialogWidget in order to
+      // Re-opening again the AudioPlayableListDialog in order to
       // change the audio playing order
 
       await tester.tap(nextAudioTextFinder);
@@ -419,7 +419,7 @@ void audioPlayerViewSortFilterIntregrationTest() {
           find.byKey(const Key('play_order_ascending_or_descending_button')));
       await tester.pumpAndSettle();
 
-      // Tap on the Close button to close the AudioPlayableListDialogWidget
+      // Tap on the Close button to close the AudioPlayableListDialog
       await tester.tap(find.byKey(const Key('closeTextButton')));
       await tester.pumpAndSettle();
 
@@ -573,7 +573,7 @@ void audioPlayerViewSortFilterIntregrationTest() {
         findsOneWidget,
       );
 
-      // Opening the AudioPlayableListDialogWidget in order to change
+      // Opening the AudioPlayableListDialog in order to change
       // the descending audio playing order to ascending
 
       await tester.tap(nextAudioTextFinder);
@@ -585,7 +585,7 @@ void audioPlayerViewSortFilterIntregrationTest() {
           find.byKey(const Key('play_order_ascending_or_descending_button')));
       await tester.pumpAndSettle();
 
-      // Tap on the Close button to close the AudioPlayableListDialogWidget
+      // Tap on the Close button to close the AudioPlayableListDialog
       await tester.tap(find.byKey(const Key('closeTextButton')));
       await tester.pumpAndSettle();
 
@@ -2635,14 +2635,14 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           await tester.tap(appScreenNavigationButton);
           await tester.pumpAndSettle();
 
-          // Now we open the AudioPlayableListDialogWidget
+          // Now we open the AudioPlayableListDialog
           // and verify the the displayed audio titles
 
           await tester
               .tap(find.text("La résilience insulaire par Fiona Roche\n13:35"));
           await tester.pumpAndSettle();
 
-          // Tap on the Close button to close the AudioPlayableListDialogWidget
+          // Tap on the Close button to close the AudioPlayableListDialog
           await tester.tap(find.byKey(const Key('closeTextButton')));
           await tester.pumpAndSettle();
 
@@ -6855,7 +6855,7 @@ Future<void> verifyAudioPlayableList({
   await tester.tap(appScreenNavigationButton);
   await tester.pumpAndSettle();
 
-  // Now we open the AudioPlayableListDialogWidget
+  // Now we open the AudioPlayableListDialog
   // and verify the the displayed audio titles
 
   await tester.tap(find.text(currentAudioTitle));
@@ -6880,7 +6880,7 @@ Future<void> verifyAudioPlayableList({
     audioTitlesOrderLst: audioTitlesLst,
   );
 
-  // Tap on the Close button to close the AudioPlayableListDialogWidget
+  // Tap on the Close button to close the AudioPlayableListDialog
   await tester.tap(find.byKey(const Key('closeTextButton')));
   await tester.pumpAndSettle();
 }

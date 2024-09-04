@@ -4265,11 +4265,11 @@ void main() {
 
       // Checking the confirm dialog
 
-      Finder confirmActionDialogWidgetFinder = find.byType(ConfirmActionDialog);
+      Finder confirmActionDialogFinder = find.byType(ConfirmActionDialog);
 
       // Check the value of the confirm dialog title
       Finder confirmActionDialogTitleText = find.descendant(
-          of: confirmActionDialogWidgetFinder,
+          of: confirmActionDialogFinder,
           matching: find.byKey(const Key("confirmDialogTitleKey")));
 
       expect(
@@ -4279,7 +4279,7 @@ void main() {
 
       // Check the value of the confirm dialog message
       Finder confirmActionDialogMessageText = find.descendant(
-          of: confirmActionDialogWidgetFinder,
+          of: confirmActionDialogFinder,
           matching: find.byKey(const Key("confirmationDialogMessageKey")));
 
       expect(
@@ -4640,11 +4640,11 @@ void main() {
       // Since the copied audio contains comment(s), deleting it
       // causes a confirm action dialog to be displayed.
 
-      Finder confirmActionDialogWidgetFinder = find.byType(ConfirmActionDialog);
+      Finder confirmActionDialogFinder = find.byType(ConfirmActionDialog);
 
       // Check the value of the confirm dialog title
       Finder confirmActionDialogTitleText = find.descendant(
-          of: confirmActionDialogWidgetFinder,
+          of: confirmActionDialogFinder,
           matching: find.byKey(const Key("confirmDialogTitleKey")));
 
       expect(
@@ -4654,7 +4654,7 @@ void main() {
 
       // Check the value of the confirm dialog message
       Finder confirmActionDialogMessageText = find.descendant(
-          of: confirmActionDialogWidgetFinder,
+          of: confirmActionDialogFinder,
           matching: find.byKey(const Key("confirmationDialogMessageKey")));
 
       expect(
@@ -13883,8 +13883,7 @@ Future<void> checkAudioCommentUsingAudioItemMenu({
     await tester.tap(find.text(expectedCommentTitle));
     await tester.pumpAndSettle();
 
-    final Finder commentAddEditDialogFinder =
-        find.byType(CommentAddEditDialogWidget);
+    final Finder commentAddEditDialogFinder = find.byType(CommentAddEditDialog);
 
     // Verify audio title displayed in the comment add/edit dialog
     expect(

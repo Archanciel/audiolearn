@@ -379,7 +379,7 @@ class PlaylistListVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Method used by PlaylistOneSelectedDialogWidget to select
+  /// Method used by PlaylistOneSelectedDialog to select
   /// only one playlist to which the audio will be moved or
   /// copied.
   void setUniqueSelectedPlaylist({
@@ -637,13 +637,13 @@ class PlaylistListVM extends ChangeNotifier {
   /// Returns the selected playlist audio list. If the user clicked
   /// on a sort filter item in the sort filter dropdown button located
   /// in the playlist download view or if the user taped on the Apply
-  /// button in the SortAndFilterAudioDialogWidget, then the filtered
+  /// button in the SortAndFilterAudioDialog, then the filtered
   /// and sorted audio list is returned.
   ///
   /// As well, if the selected playlist has a sort filter parameters
   /// saved in its json file, then the sort filter parameters are applied
   /// to the returned audio list, unless the user has changed the sort
-  /// filter parameters in the SortAndFilterAudioDialogWidget or in
+  /// filter parameters in the SortAndFilterAudioDialog or in
   /// the playlist download view sort filter dropdown menu.
   List<Audio> getSelectedPlaylistPlayableAudioApplyingSortFilterParameters({
     required AudioLearnAppViewType audioLearnAppViewType,
@@ -847,8 +847,8 @@ class PlaylistListVM extends ChangeNotifier {
   /// Method called when the user selects a Sort and Filter
   /// item in the download playlist view Sort and Filter dropdown
   /// menu or after the user clicked on the Save or Apply button
-  /// contained in the SortAndFilterAudioDialogWidget. The
-  /// SortAndFilterAudioDialogWidget can be opened by clicking
+  /// contained in the SortAndFilterAudioDialog. The
+  /// SortAndFilterAudioDialog can be opened by clicking
   /// on a the Sort and Filter dropdown item edit icon button
   /// or on Sort Filter menu item in the audio menu located in the
   /// playlist download view or in the audio player view.
@@ -856,7 +856,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// {audioSortFilterParameters} is the sort and filter parameters
   /// selected by the user in the download playlist view Sort and
   /// Filter dropdown menu or is the sort and filter parameters
-  /// the user set in the SortAndFilterAudioDialogWidget.
+  /// the user set in the SortAndFilterAudioDialog.
   void setSortedFilteredSelectedPlaylistPlayableAudiosAndParms({
     required AudioLearnAppViewType audioLearnAppViewType,
     required List<Audio> sortedFilteredSelectedPlaylistsPlayableAudios,
@@ -1661,10 +1661,9 @@ class PlaylistListVM extends ChangeNotifier {
     return audioSortFilterParmsName;
   }
 
-  /// Method called when the user opens the
-  /// PlaylistManageSortFilterOptionsDialogWidget. The passed parameter
-  /// {selectzedSortFilterParmsName} contains the name of the sort filter
-  /// parameters selected by the user in the dropdown button.
+  /// Method called when the user opens PlaylistAddRemoveSortFilterOptionsDialog.
+  /// The passed parameter {selectzedSortFilterParmsName} contains the name of
+  /// the sort filter parameters selected by the user in the dropdown button.
   ///
   /// The returned list content is
   /// [

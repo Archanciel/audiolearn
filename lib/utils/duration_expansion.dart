@@ -46,7 +46,7 @@ extension DurationExpansion on Duration {
     }
 
     if (addRemainingOneDigitTenthOfSecond) {
-      // the case when the method is called in the CommentAddEditDialogWidget
+      // the case when the method is called in the CommentAddEditDialog
       // when the user is defining a comment position in tenth of seconds
       int remainingOneDigitTenthOfSecond =
           inMilliseconds.remainder(1000).abs() ~/
@@ -115,7 +115,7 @@ extension DurationExpansion on Duration {
     if (hoursInt > 0) {
       remainingMinutesStr = twoDigits(remainingMinuteInt);
     } else {
-        remainingMinutesStr = remainingMinuteInt.toString();
+      remainingMinutesStr = remainingMinuteInt.toString();
     }
 
     String minusStr = inMicroseconds < 0 ? '-' : '';
@@ -145,7 +145,7 @@ extension DurationExpansion on Duration {
     if (n >= 10) {
       return "$n";
     }
-    
+
     return "0$n";
   }
 }
