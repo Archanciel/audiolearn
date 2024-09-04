@@ -844,6 +844,25 @@ class PlaylistListVM extends ChangeNotifier {
     return _sortedFilteredSelectedPlaylistsPlayableAudios != null;
   }
 
+  /// Returns false if the passed selected sort and filter parameters name is
+  /// already saved in the selected playlist json file for the playlist download
+  /// view and for the audio player view. In this case, the Save sort/filter to
+  /// playlist menu item is not enabled.
+  bool isSortFilterAudioParmsAlreadySavedInPlaylistForAllViews({
+    required String selectedSortFilterParametersName,
+  }) {
+    Playlist selectedPlaylist = getSelectedPlaylists()[0];
+
+    if (selectedPlaylist.audioSortFilterParmsNameForPlaylistDownloadView ==
+            selectedSortFilterParametersName &&
+        selectedPlaylist.audioSortFilterParmsNameForAudioPlayerView ==
+            selectedSortFilterParametersName) {
+      return false;
+    }
+
+    return true;
+  }
+
   /// Method called when the user selects a Sort and Filter
   /// item in the download playlist view Sort and Filter dropdown
   /// menu or after the user clicked on the Save or Apply button
