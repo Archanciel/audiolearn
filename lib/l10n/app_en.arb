@@ -59,7 +59,7 @@
   "endUploadDate": "End upl date",
   "fileSizeRange": "File size range (MB)",
   "start": "Start",
-  "end": "End", 
+  "end": "End",
   "audioDurationRange": "Audio duration range (hh:mm)",
   "openYoutubeVideo": "Open Youtube video",
   "openYoutubePlaylist": "Open Youtube playlist",
@@ -276,8 +276,8 @@
   "decreaseAudioVolumeIconButtonTooltip": "Decrease the audio volume. Disabled when minimum volume is reached.",
   "resetSortFilterOptionsTooltip": "Reset the sort and filter parameters.",
   "clickToSetAscendingOrDescendingTooltip": "Click to set ascending or descending sort order.",
-  "and": "And",
-  "or": "Or",
+  "and": "and",
+  "or": "or",
   "audioTitleSearchSentenceTextFieldTooltip": "Enter a word or phrase to be selected in the video title and description if 'Include description' is checked.",
   "andSentencesTooltip": "If set, only audio containing all the listed words or sentences are selected.",
   "orSentencesTooltip": "If set, audio containing one of the listed words or sentences are selected.",
@@ -301,7 +301,7 @@
   "playableAudioDialogSortDescriptionTooltipTopRemainingDurationBigger": "Audio at the top have more remaining listenable duration than those at the bottom.",
   "playableAudioDialogSortDescriptionTooltipTopRemainingDurationSmaller": "Audio at the top have less remaining listenable duration than those at the bottom.",
   "playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeBigger": "Audio at the top were listened more recently than those at the bottom.",
-  "playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeSmaller": "Audio at the top were listened less recently than those at the bottom.", 
+  "playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeSmaller": "Audio at the top were listened less recently than those at the bottom.",
   "saveAs": "Save as:",
   "sortFilterSaveAsTextFieldTooltip": "Save the sort/filter settings with the specified name. Existing settings with the same name will be updated.",
   "applySortFilterToView": "Apply sort/filter to:",
@@ -410,5 +410,23 @@
   "removeSortFilterOptionsFromPlaylist": "From playlist \"{title}\"",
   "removeSortFilterOptionsFromPlaylistDialogTitle": "Remove Sort/Filter parameters \"{sortFilterParmsName}\"",
   "fromScreen": "On \"{screenName}\" screen",
-  "removeButton": "Remove"
+  "removeButton": "Remove",
+  "saveSortFilterParmsConfirmation": "Sort/filter parameters \"{sortFilterParmsName}\" were saved to playlist \"{playlistTitle}\" for screen(s) \"{forViewMessage}\".",
+  "@saveSortFilterParmsConfirmation": {
+    "description": "Confirmation message for saving sort/filter parameters",
+    "placeholders": {
+      "sortFilterParmsName": {},
+      "playlistTitle": {},
+      "forViewMessage": {}
+    }
+  },
+  "removeSortFilterParmsConfirmation": "Sort/filter parameters \"{sortFilterParmsName}\" were removed from playlist \"{playlistTitle}\" on screen(s) \"{forViewMessage}\".",
+  "@removeSortFilterParmsConfirmation": {
+    "description": "Confirmation message for removing sort/filter parameters",
+    "placeholders": {
+      "sortFilterParmsName": {},
+      "playlistTitle": {},
+      "forViewMessage": {}
+    }
   }
+}

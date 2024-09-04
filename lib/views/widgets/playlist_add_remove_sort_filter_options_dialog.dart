@@ -1,3 +1,4 @@
+import 'package:audiolearn/viewmodels/warning_message_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -72,7 +73,7 @@ class _PlaylistAddRemoveSortFilterOptionsDialogState
               event.logicalKey == LogicalKeyboardKey.numpadEnter) {
             // executing the same code as in the 'Save'
             // TextButton onPressed callback
-            Navigator.of(context).pop(_createReturnedLst());
+            Navigator.of(context).pop(_displayConfirmAndCreateReturnedLst());
           }
         }
       },
@@ -177,7 +178,7 @@ class _PlaylistAddRemoveSortFilterOptionsDialogState
           TextButton(
             key: const Key('saveSortFilterOptionsToPlaylistSaveButton'),
             onPressed: () async {
-              Navigator.of(context).pop(_createReturnedLst());
+              Navigator.of(context).pop(_displayConfirmAndCreateReturnedLst());
             },
             child: Text(
               (widget.isSaveApplied)
@@ -205,7 +206,19 @@ class _PlaylistAddRemoveSortFilterOptionsDialogState
     );
   }
 
-  List<Object> _createReturnedLst() {
+  List<Object> _displayConfirmAndCreateReturnedLst() {
+    WarningMessageVM warningMessageVM = Provider.of<WarningMessageVM>(
+      context,
+      listen: false,
+    );
+
+    warningMessageVM.confirmAddRemoveSortFilterParmsToPlaylist(
+      playlistTitle: widget.playlistTitle,
+      sortFilterParmsName: widget.sortFilterParametersName,
+      isSaveApplied: widget.isSaveApplied,
+      forPlaylistDownloadView: _applySortFilterToPlaylistDownloadView,
+      forAudioPlayerView: _applySortFilterToAudioPlayerView,
+    );
     return [
       widget.sortFilterParametersName,
       _applySortFilterToPlaylistDownloadView,

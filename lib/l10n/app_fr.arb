@@ -276,8 +276,8 @@
   "decreaseAudioVolumeIconButtonTooltip": "Diminuer le volume audio. Le bouton est désactivé lorsque le volume minimum est atteint.",
   "resetSortFilterOptionsTooltip": "Réinitialiser les paramètres de tri et de filtrage.",
   "clickToSetAscendingOrDescendingTooltip": "Cliquez pour définir l'ordre de tri croissant ou décroissant.",
-  "and": "Et",
-  "or": "Ou",
+  "and": "et",
+  "or": "ou",
   "audioTitleSearchSentenceTextFieldTooltip": "Entrez un mot ou une phrase à rechercher dans le titre et la description de la vidéo si 'Inclure la description' est coché.",
   "andSentencesTooltip": "Sélectionne les audio qui contiennent tous les mots ou phrases listés.",
   "orSentencesTooltip": "Sélectionne les audio qui contienneoptionsnt l'un des mots ou phrases listés.",
@@ -410,5 +410,23 @@
   "removeSortFilterOptionsFromPlaylist": "De la playlist \"{title}\"",
   "removeSortFilterOptionsFromPlaylistDialogTitle": "Eliminer les paramètres de tri et de filtre \"{sortFilterParmsName}\"",
   "fromScreen": "Sur l'écran \"{screenName}\"",
-  "removeButton": "Eliminer"
+  "removeButton": "Eliminer",
+  "saveSortFilterParmsConfirmation": "Les paramètres de tri/filtre \"{sortFilterParmsName}\" ont été enregistrés dans la playlist \"{playlistTitle}\" pour l'écran(s) \"{forViewMessage}\".",
+  "@saveSortFilterParmsConfirmation": {
+    "description": "Confirmation message for saving sort/filter parameters",
+    "placeholders": {
+      "sortFilterParmsName": {},
+      "playlistTitle": {},
+      "forViewMessage": {}
+    }
+  },
+  "removeSortFilterParmsConfirmation": "Les paramètres de tri/filtre \"{sortFilterParmsName}\" ont été supprimés de la playlist \"{playlistTitle}\" sur l'écran(s) \"{forViewMessage}\".",
+  "@removeSortFilterParmsConfirmation": {
+    "description": "Confirmation message for removing sort/filter parameters",
+    "placeholders": {
+      "sortFilterParmsName": {},
+      "playlistTitle": {},
+      "forViewMessage": {}
+    }
+  }
 }

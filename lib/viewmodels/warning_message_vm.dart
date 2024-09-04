@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 
+import '../constants.dart';
 import '../models/playlist.dart';
 import '../views/widgets/set_value_to_target_dialog.dart';
 
@@ -44,10 +45,13 @@ enum WarningMessageType {
   // name proposed for renaming a comment file is the name of an existing
   // file.
 
-  renameAudioFileConfirm, // The case if the an audio file was renamed.
+  renameAudioFileConfirm, // The case if an audio file was renamed.
 
-  renameAudioAndCommentFileConfirm, // The case if the both audio and comment
+  renameAudioAndCommentFileConfirm, // The case if both audio and comment
   // files were renamed.
+
+  addRemoveSortFilterParmsToPlaylistConfirm, // The case if the a sort/filter
+  // parms was added or removed from a playlist.
 
   playlistWithUrlAlreadyInListOfPlaylists, // User clicked on Add
   // button but the playlist with this url was already downloaded.
@@ -446,6 +450,35 @@ class WarningMessageVM extends ChangeNotifier {
     _oldFileName = oldFileName;
     _newFileName = newFileName;
     warningMessageType = WarningMessageType.renameAudioAndCommentFileConfirm;
+
+    // Causes the display warning message widget to be displayed.      // Causes the display warning message widget to be displayed.
+    notifyListeners();
+  }
+
+  String _playlistTitle = '';
+  String get playlistTitle => _playlistTitle;
+  String _sortFilterParmsName = '';
+  String get sortFilterParmsName => _sortFilterParmsName;
+  bool _isSaveApplied = false;
+  bool get isSaveApplied => _isSaveApplied;
+  bool _forPlaylistDownloadView = false;
+  bool get forPlaylistDownloadView => _forPlaylistDownloadView;
+  bool _forAudioPlayerView = false;
+  bool get forAudioPlayerView => _forAudioPlayerView;
+
+  void confirmAddRemoveSortFilterParmsToPlaylist({
+    required String playlistTitle,
+    required String sortFilterParmsName,
+    required bool isSaveApplied,
+    required bool forPlaylistDownloadView,
+    required bool forAudioPlayerView,
+  }) {
+    _playlistTitle = playlistTitle;
+    _sortFilterParmsName = sortFilterParmsName;
+    _isSaveApplied = isSaveApplied;
+    _forPlaylistDownloadView = forPlaylistDownloadView;
+    _forAudioPlayerView = forAudioPlayerView;
+    warningMessageType = WarningMessageType.addRemoveSortFilterParmsToPlaylistConfirm;
 
     // Causes the display warning message widget to be displayed.      // Causes the display warning message widget to be displayed.
     notifyListeners();

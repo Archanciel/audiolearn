@@ -312,6 +312,60 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         });
 
         return const SizedBox.shrink();
+      case WarningMessageType.addRemoveSortFilterParmsToPlaylistConfirm:
+        String playlistTitle = _warningMessageVM.playlistTitle;
+        String sortFilterParmsName = _warningMessageVM.sortFilterParmsName;
+        String forPlaylistDownloadViewMessagePart;
+        String forAudioPlayerViewMessagePart;
+        String forViewMessage = '';
+
+        if ((_warningMessageVM.forPlaylistDownloadView)) {
+          forPlaylistDownloadViewMessagePart =
+              AppLocalizations.of(context)!.appBarTitleDownloadAudio;
+          if ((_warningMessageVM.forAudioPlayerView)) {
+            forAudioPlayerViewMessagePart =
+                "\" ${AppLocalizations.of(context)!.and} \"${AppLocalizations.of(context)!.appBarTitleAudioPlayer}";
+          } else {
+            forAudioPlayerViewMessagePart = '';
+          }
+
+          forViewMessage = forPlaylistDownloadViewMessagePart + forAudioPlayerViewMessagePart;
+        } else {
+          if (_warningMessageVM.forAudioPlayerView) {
+            forViewMessage =
+                AppLocalizations.of(context)!.appBarTitleAudioPlayer;
+          }
+        }
+
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          String confirmationMessage;
+
+          if (_warningMessageVM.isSaveApplied) {
+            confirmationMessage =
+                AppLocalizations.of(context)!.saveSortFilterParmsConfirmation(
+              sortFilterParmsName,
+              playlistTitle,
+              forViewMessage,
+            );
+          } else {
+            confirmationMessage =
+                AppLocalizations.of(context)!.removeSortFilterParmsConfirmation(
+              sortFilterParmsName,
+              playlistTitle,
+              forViewMessage,
+            );
+          }
+
+          _displayWarningDialog(
+            context: _context,
+            message: confirmationMessage,
+            warningMessageVM: _warningMessageVM,
+            themeProviderVM: themeProviderVM,
+            warningMode: WarningMode.confirm,
+          );
+        });
+
+        return const SizedBox.shrink();
       case WarningMessageType.playlistWithUrlAlreadyInListOfPlaylists:
         String playlistUrl = _playlistUrlController?.text ?? '';
         String playlistTitle = _warningMessageVM.playlistAlreadyDownloadedTitle;
