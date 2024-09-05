@@ -349,6 +349,14 @@ void audioPlayerViewSortFilterIntregrationTest() {
           find.byKey(const Key('saveSortFilterOptionsToPlaylistSaveButton')));
       await tester.pumpAndSettle();
 
+      // Verify confirmation dialog
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Sort/filter parameters \"Title asc\" were saved to playlist \"S8 audio\" for screen(s) \"Play Audio\".",
+        isWarningConfirming: true,
+      );
+
       // Verify that "Title asc" was correctly saved in the playlist
       // json file for the audio player view only.
       verifyAudioSortFilterParmsNameStoredInPlaylistJsonFile(
@@ -470,8 +478,8 @@ void audioPlayerViewSortFilterIntregrationTest() {
     });
     testWidgets(
         '''Click twice on the <| go to start button in order to select the previous
-           playable audio. First the 'Title asc' SF parms selecting only audio
-           player view SF parms name of the 'S8 audio' playlist json file.
+           playable audio. First, save the 'Title asc' SF parms selecting only
+           audio player view SF parms name of the 'S8 audio' playlist json file.
         
            Then go to the audio player view and click twice on the <| go to start
            button in order to select the previous playable audio according to the
@@ -546,6 +554,14 @@ void audioPlayerViewSortFilterIntregrationTest() {
       await tester.tap(
           find.byKey(const Key('saveSortFilterOptionsToPlaylistSaveButton')));
       await tester.pumpAndSettle();
+
+      // Verify confirmation dialog
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Sort/filter parameters \"Title asc\" were saved to playlist \"S8 audio\" for screen(s) \"Play Audio\".",
+        isWarningConfirming: true,
+      );
 
       // Then go to the audio player view
       final Finder appScreenNavigationButton =
@@ -5098,11 +5114,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
         testWidgets(
             '''Select the 'desc listened' sort/filter parms. Then, in 'S8 audio',
                save it only to playlist download view. Verify playlist json file
-               as well as the Save and Remove dialogs content. Then reopen the
-               'Save sort/filter parameters to playlist' dialog and save it after
-               unchecking the 'Download Audio' checkbox. Then verifying that the
-               playlist json file was not modified since in order to disable a
-               saved playlist SF parms, the Remove dialog must be used.
+               as well as the Save and Remove dialogs content..
                
                Then, select 'Title asc' in the sort/filter dropdown button and
                open the Save dialog in order to save this SF parms to the audio
@@ -5149,11 +5161,20 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           const String titleAscSortFilterName = 'Title asc';
 
           // Save the 'desc listened' sort/filter parms to the 'S8 audio' playlist
+          // for playlist download view only
           await selectAndSaveSortFilterParmsToPlaylist(
             tester: tester,
             sortFilterParmsName: descListenedSortFilterName,
             saveToPlaylistDownloadView: true,
             saveToAudioPlayerView: false,
+          );
+
+          // Verify confirmation dialog
+          await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+            tester: tester,
+            warningDialogMessage:
+                "Sort/filter parameters \"desc listened\" were saved to playlist \"S8 audio\" for screen(s) \"Download Audio\".",
+            isWarningConfirming: true,
           );
 
           // Verifying that the playlist json file only contains a SF name for
@@ -5194,26 +5215,8 @@ void playlistDownloadViewSortFilterIntregrationTest() {
             tester: tester,
             playlistTitle: 'S8 audio',
             sortFilterParmsName: descListenedSortFilterName,
-            forPlaylistDownloadViewCheckboxValue: true,
-            forAudioPlayerViewCheckboxValue: false,
-          );
-
-          // Now reopen the Save dialog, uncheck the 'Download Audio' screen
-          // checkbox and click on Save button.
-          await selectAndSaveSortFilterParmsToPlaylist(
-            tester: tester,
-            sortFilterParmsName: descListenedSortFilterName,
-            saveToPlaylistDownloadView: false,
-            saveToAudioPlayerView: false,
-          );
-
-          // Verifying that the playlist json file was not modified.
-          IntegrationTestUtil
-              .verifyPlaylistDataElementsUpdatedInPlaylistJsonFile(
-            selectedPlaylistTitle: 'S8 audio',
-            audioSortFilterParmsNamePlaylistDownloadView:
-                descListenedSortFilterName,
-            audioSortFilterParmsNameAudioPlayerView: '',
+            forPlaylistDownloadViewCheckboxNotDisplayed: true,
+            forAudioPlayerViewCheckboxNotDisplayed: false,
           );
 
           // Select and save the 'Title asc' sort/filter parms to the audio
@@ -5223,6 +5226,14 @@ void playlistDownloadViewSortFilterIntregrationTest() {
             sortFilterParmsName: titleAscSortFilterName,
             saveToPlaylistDownloadView: false,
             saveToAudioPlayerView: true,
+          );
+
+          // Verify confirmation dialog
+          await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+            tester: tester,
+            warningDialogMessage:
+                "Sort/filter parameters \"Title asc\" were saved to playlist \"S8 audio\" for screen(s) \"Play Audio\".",
+            isWarningConfirming: true,
           );
 
           // Verifying that the playlist json file was correctly modified.
@@ -5292,11 +5303,25 @@ void playlistDownloadViewSortFilterIntregrationTest() {
             dropdownButtonSelectedTitle: descListenedSortFilterName,
           );
 
-          // Now remove the 'desc listened' sort/filter parms from the
-          // 'Download Audio' screen 'S8 audio' playlist
+          // Now open the Remove dialog, check the 'Download Audio' screen
+          // checkbox and click on Save button in order to remove this
+          // Sort/Filter parms name for the playlist sownload view in the
+          // playlist.
           await selectAndRemoveSortFilterParmsToPlaylist(
             tester: tester,
-            sortFilterParmsNameName: descListenedSortFilterName,
+            sortFilterParmsName: descListenedSortFilterName,
+            onPlaylistDownloadViewCheckboxNotDisplayed: false,
+            tapOnRemoveFromPlaylistDownloadViewCheckbox: true,
+            onAudioPlayerViewCheckboxNotDisplayed: true,
+            tapOnRemoveFromAudioPlayerViewCheckbox: false,
+          );
+
+          // Verify confirmation dialog
+          await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+            tester: tester,
+            warningDialogMessage:
+                "Sort/filter parameters \"desc listened\" were removed from playlist \"S8 audio\" on screen(s) \"Download Audio\".",
+            isWarningConfirming: true,
           );
 
           // Verifying that the playlist json file was correctly modified.
@@ -5764,7 +5789,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           // playlist
           await selectAndRemoveSortFilterParmsToPlaylist(
             tester: tester,
-            sortFilterParmsNameName: titleAscSortFilterName,
+            sortFilterParmsName: titleAscSortFilterName,
           );
 
           // Verify that the 'default' dropdown button sort/filter parms is
@@ -5885,7 +5910,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           // playlist
           await selectAndRemoveSortFilterParmsToPlaylist(
             tester: tester,
-            sortFilterParmsNameName: titleAscSortFilterName,
+            sortFilterParmsName: titleAscSortFilterName,
           );
 
           // Verify that the 'default' dropdown button sort/filter parms is
@@ -6008,7 +6033,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           // playlist
           await selectAndRemoveSortFilterParmsToPlaylist(
             tester: tester,
-            sortFilterParmsNameName: titleAscSortFilterName,
+            sortFilterParmsName: titleAscSortFilterName,
           );
 
           // Verify that the 'default' dropdown button sort/filter parms is
@@ -6715,12 +6740,16 @@ Future<void> selectAndSaveSortFilterParmsToPlaylist({
   await tester.pumpAndSettle();
 }
 
+/// The PlaylistAddRemoveSortFilterOptionsDialog only display the
+/// 'For "Download Audio" screen' and 'For "Play Audio" screen' checkboxes
+/// if the {sortFilterParmsName} is not already saved in the playlist
+/// for the screen.
 Future<void> verifySaveSortFilterParmsToPlaylistDialog({
   required WidgetTester tester,
   required String playlistTitle,
   required String sortFilterParmsName,
-  required bool forPlaylistDownloadViewCheckboxValue,
-  required bool forAudioPlayerViewCheckboxValue,
+  required bool forPlaylistDownloadViewCheckboxNotDisplayed,
+  required bool forAudioPlayerViewCheckboxNotDisplayed,
 }) async {
   // Now open the audio popup menu
   await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
@@ -6733,18 +6762,30 @@ Future<void> verifySaveSortFilterParmsToPlaylistDialog({
 
   expect(find.text(playlistTitle), findsOneWidget);
   expect(find.text(sortFilterParmsName), findsOneWidget);
-  expect(
-    tester
-        .widget<Checkbox>(find.byKey(const Key('playlistDownloadViewCheckbox')))
-        .value,
-    forPlaylistDownloadViewCheckboxValue,
-  );
-  expect(
-    tester
-        .widget<Checkbox>(find.byKey(const Key('audioPlayerViewCheckbox')))
-        .value,
-    forAudioPlayerViewCheckboxValue,
-  );
+
+  if (forPlaylistDownloadViewCheckboxNotDisplayed) {
+    expect(
+      find.byKey(const Key('playlistDownloadViewCheckbox')),
+      findsNothing,
+    );
+  } else {
+    expect(
+      find.byKey(const Key('playlistDownloadViewCheckbox')),
+      findsOneWidget,
+    );
+  }
+
+  if (forAudioPlayerViewCheckboxNotDisplayed) {
+    expect(
+      find.byKey(const Key('audioPlayerViewCheckbox')),
+      findsNothing,
+    );
+  } else {
+    expect(
+      find.byKey(const Key('audioPlayerViewCheckbox')),
+      findsOneWidget,
+    );
+  }
 
   // Finally, click on cancel button
   await tester
@@ -6754,8 +6795,10 @@ Future<void> verifySaveSortFilterParmsToPlaylistDialog({
 
 Future<void> selectAndRemoveSortFilterParmsToPlaylist({
   required WidgetTester tester,
-  required String sortFilterParmsNameName,
+  required String sortFilterParmsName,
+  bool onPlaylistDownloadViewCheckboxNotDisplayed = true,
   bool tapOnRemoveFromPlaylistDownloadViewCheckbox = false,
+  bool onAudioPlayerViewCheckboxNotDisplayed = true,
   bool tapOnRemoveFromAudioPlayerViewCheckbox = false,
 }) async {
   // Tap on the current dropdown button item to open the dropdown
@@ -6773,7 +6816,7 @@ Future<void> selectAndRemoveSortFilterParmsToPlaylist({
   await tester.pumpAndSettle();
 
   // Find and select the sort filter parms item
-  Finder titleAscDropDownTextFinder = find.text(sortFilterParmsNameName).last;
+  Finder titleAscDropDownTextFinder = find.text(sortFilterParmsName).last;
   await tester.tap(titleAscDropDownTextFinder);
   await tester.pumpAndSettle();
 
@@ -6786,16 +6829,38 @@ Future<void> selectAndRemoveSortFilterParmsToPlaylist({
       const Key('remove_sort_and_filter_audio_parms_from_playlist_item')));
   await tester.pumpAndSettle();
 
-  if (tapOnRemoveFromPlaylistDownloadViewCheckbox) {
-    // Select the 'On "Download Audio" screen' checkbox
-    await tester.tap(find.byKey(const Key('playlistDownloadViewCheckbox')));
-    await tester.pumpAndSettle();
+  if (onPlaylistDownloadViewCheckboxNotDisplayed) {
+    expect(
+      find.byKey(const Key('playlistDownloadViewCheckbox')),
+      findsNothing,
+    );
+  } else {
+    expect(
+      find.byKey(const Key('playlistDownloadViewCheckbox')),
+      findsOneWidget,
+    );
+    if (tapOnRemoveFromPlaylistDownloadViewCheckbox) {
+      // Select the 'On "Download Audio" screen' checkbox
+      await tester.tap(find.byKey(const Key('playlistDownloadViewCheckbox')));
+      await tester.pumpAndSettle();
+    }
   }
 
-  if (tapOnRemoveFromAudioPlayerViewCheckbox) {
-    // Select the 'On "Play Audio" screen' checkbox
-    await tester.tap(find.byKey(const Key('audioPlayerViewCheckbox')));
-    await tester.pumpAndSettle();
+  if (onAudioPlayerViewCheckboxNotDisplayed) {
+    expect(
+      find.byKey(const Key('audioPlayerViewCheckbox')),
+      findsNothing,
+    );
+  } else {
+    expect(
+      find.byKey(const Key('audioPlayerViewCheckbox')),
+      findsOneWidget,
+    );
+    if (tapOnRemoveFromAudioPlayerViewCheckbox) {
+      // Select the 'On "Play Audio" screen' checkbox
+      await tester.tap(find.byKey(const Key('audioPlayerViewCheckbox')));
+      await tester.pumpAndSettle();
+    }
   }
 
   // Finally, click on save button
