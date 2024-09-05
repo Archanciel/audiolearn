@@ -1310,4 +1310,10 @@ class MockAppLocalizations extends AppLocalizations {
     Object forViewMessage,
   ) =>
       "Sort/filter parameters \"$sortFilterParmsName\" were removed from playlist \"$playlistTitle\" on screen(s) \"$forViewMessage\".";
+
+  @override
+  String playlistSortFilterLabel(
+    Object screenName,
+  ) =>
+      "\"$screenName\" sort/filter";
 }

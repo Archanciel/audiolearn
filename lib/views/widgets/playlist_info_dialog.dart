@@ -37,6 +37,9 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
       focusNodeDialog,
     );
 
+    String audioSortFilterParmsNameForPlaylistDownloadView = playlist.audioSortFilterParmsNameForPlaylistDownloadView;
+    String audioSortFilterParmsNameForAudioPlayerView = playlist.audioSortFilterParmsNameForAudioPlayerView;
+
     return KeyboardListener(
       // Using FocusNode to enable clicking on Enter to close
       // the dialog
@@ -96,6 +99,24 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
                 label:
                     AppLocalizations.of(context)!.playlistAudioPlaySpeedLabel,
                 value: playlist.audioPlaySpeed.toString(),
+              ),
+              createInfoRowFunction(
+                context: context,
+                label: AppLocalizations.of(context)!.playlistSortFilterLabel(
+                  AppLocalizations.of(context)!.appBarTitleDownloadAudio,
+                ),
+                value: (audioSortFilterParmsNameForPlaylistDownloadView.isEmpty) ?
+                  AppLocalizations.of(context)!.sortFilterParametersDefaultName :
+                  audioSortFilterParmsNameForPlaylistDownloadView,
+              ),
+              createInfoRowFunction(
+                context: context,
+                label: AppLocalizations.of(context)!.playlistSortFilterLabel(
+                  AppLocalizations.of(context)!.appBarTitleAudioPlayer,
+                ),
+                value: (audioSortFilterParmsNameForAudioPlayerView.isEmpty) ?
+                  AppLocalizations.of(context)!.sortFilterParametersDefaultName :
+                  audioSortFilterParmsNameForAudioPlayerView,
               ),
               createInfoRowFunction(
                   context: context,

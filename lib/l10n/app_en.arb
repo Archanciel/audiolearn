@@ -428,5 +428,6 @@
       "playlistTitle": {},
       "forViewMessage": {}
     }
-  }
+  },
+  "playlistSortFilterLabel": "{screenName} sort/filter"
 }
