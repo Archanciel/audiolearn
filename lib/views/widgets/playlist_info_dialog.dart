@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
+import '../../viewmodels/comment_vm.dart';
 import '/../utils/duration_expansion.dart';
 import '../../constants.dart';
 import '../../models/playlist.dart';
@@ -37,8 +38,13 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
       focusNodeDialog,
     );
 
-    String audioSortFilterParmsNameForPlaylistDownloadView = playlist.audioSortFilterParmsNameForPlaylistDownloadView;
-    String audioSortFilterParmsNameForAudioPlayerView = playlist.audioSortFilterParmsNameForAudioPlayerView;
+    String audioSortFilterParmsNameForPlaylistDownloadView =
+        playlist.audioSortFilterParmsNameForPlaylistDownloadView;
+    String audioSortFilterParmsNameForAudioPlayerView =
+        playlist.audioSortFilterParmsNameForAudioPlayerView;
+
+    CommentVM commentVMlistenFalse =
+        Provider.of<CommentVM>(context, listen: false);
 
     return KeyboardListener(
       // Using FocusNode to enable clicking on Enter to close
@@ -105,18 +111,20 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
                 label: AppLocalizations.of(context)!.playlistSortFilterLabel(
                   AppLocalizations.of(context)!.appBarTitleDownloadAudio,
                 ),
-                value: (audioSortFilterParmsNameForPlaylistDownloadView.isEmpty) ?
-                  AppLocalizations.of(context)!.sortFilterParametersDefaultName :
-                  audioSortFilterParmsNameForPlaylistDownloadView,
+                value: (audioSortFilterParmsNameForPlaylistDownloadView.isEmpty)
+                    ? AppLocalizations.of(context)!
+                        .sortFilterParametersDefaultName
+                    : audioSortFilterParmsNameForPlaylistDownloadView,
               ),
               createInfoRowFunction(
                 context: context,
                 label: AppLocalizations.of(context)!.playlistSortFilterLabel(
                   AppLocalizations.of(context)!.appBarTitleAudioPlayer,
                 ),
-                value: (audioSortFilterParmsNameForAudioPlayerView.isEmpty) ?
-                  AppLocalizations.of(context)!.sortFilterParametersDefaultName :
-                  audioSortFilterParmsNameForAudioPlayerView,
+                value: (audioSortFilterParmsNameForAudioPlayerView.isEmpty)
+                    ? AppLocalizations.of(context)!
+                        .sortFilterParametersDefaultName
+                    : audioSortFilterParmsNameForAudioPlayerView,
               ),
               createInfoRowFunction(
                   context: context,
@@ -148,6 +156,12 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
                   value: playlist.getPlayableAudioLstTotalFileSize(),
                 ),
               ),
+              createInfoRowFunction(
+                  context: context,
+                  label: AppLocalizations.of(context)!.playlistAudioCommentsLabel,
+                  value: commentVMlistenFalse
+                      .getPlaylistAudioCommentNumber(playlist: playlist,)
+                      .toString()),
               createInfoRowFunction(
                 context: context,
                 label: AppLocalizations.of(context)!.playlistJsonFileSizeLabel,

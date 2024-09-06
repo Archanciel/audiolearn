@@ -92,7 +92,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
         content: Consumer<CommentVM>(
           builder: (context, commentVM, child) {
             Map<String, List<Comment>> playlistAudioCommentsMap =
-                commentVM.getAllPlaylistComments(
+                commentVM.getPlaylistAudioComments(
               playlist: widget.currentPlaylist,
             );
 

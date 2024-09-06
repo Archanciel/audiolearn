@@ -45,6 +45,14 @@ class CommentVM extends ChangeNotifier {
     );
   }
 
+  int getCommentNumber({
+    required Audio audio,
+  }) {
+    return loadAudioComments(
+      audio: audio,
+    ).length;
+  }
+
   void addComment({
     required Comment comment,
     required Audio audioToComment,
@@ -256,7 +264,7 @@ class CommentVM extends ChangeNotifier {
   /// Returns all comments of all audio in the passed playlist. The
   /// comments are returned as a map with the audio file name without
   /// extension as the key.
-  Map<String, List<Comment>> getAllPlaylistComments({
+  Map<String, List<Comment>> getPlaylistAudioComments({
     required Playlist playlist,
   }) {
     String playlistPath = playlist.downloadPath;
@@ -282,5 +290,22 @@ class CommentVM extends ChangeNotifier {
     }
 
     return playlistAudiosCommentsMap;
+  }
+
+  int getPlaylistAudioCommentNumber({
+    required Playlist playlist,
+  }) {
+    int commentNumber = 0;
+
+    Map<String, List<Comment>> playlistAudiosCommentsMap =
+        getPlaylistAudioComments(
+      playlist: playlist,
+    );
+
+    for (List<Comment> audioComments in playlistAudiosCommentsMap.values) {
+      commentNumber += audioComments.length;
+    }
+
+    return commentNumber;
   }
 }

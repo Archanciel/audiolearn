@@ -1,3 +1,4 @@
+import 'package:audiolearn/viewmodels/comment_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -81,6 +82,8 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
 
   /// Creates the list of audio information lines for downloaded audio.
   List<Widget> _createDownloadedAudioInfoLines(BuildContext context) {
+    CommentVM commentVMlistenFalse = Provider.of<CommentVM>(context, listen: false);
+
     return <Widget>[
       createInfoRowFunction(
           valueTextWidgetKey: const Key('originalVideoTitleKey'),
@@ -203,11 +206,17 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
           context: context,
           label: AppLocalizations.of(context)!.audioPlayVolumeLabel,
           value: '${(audio.audioPlayVolume * 100).toStringAsFixed(1)} %'),
+      createInfoRowFunction(
+          context: context,
+          label: AppLocalizations.of(context)!.commentsDialogTitle,
+          value: commentVMlistenFalse.getCommentNumber(audio: audio).toString()),
     ];
   }
 
   /// Creates the list of audio information lines for imported audio.
   List<Widget> _createImportedAudioInfoLines(BuildContext context) {
+    CommentVM commentVMlistenFalse = Provider.of<CommentVM>(context, listen: false);
+
     return <Widget>[
       createInfoRowFunction(
           valueTextWidgetKey: const Key('importedAudioTitleKey'),
@@ -303,6 +312,10 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
           context: context,
           label: AppLocalizations.of(context)!.audioPlayVolumeLabel,
           value: '${(audio.audioPlayVolume * 100).toStringAsFixed(1)} %'),
+      createInfoRowFunction(
+          context: context,
+          label: AppLocalizations.of(context)!.commentsDialogTitle,
+          value: commentVMlistenFalse.getCommentNumber(audio: audio).toString()),
     ];
   }
 
