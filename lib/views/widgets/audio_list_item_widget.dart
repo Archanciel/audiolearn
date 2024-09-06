@@ -466,12 +466,14 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
       )}/sec';
     }
 
+    DateTime audioDownloadDateTime = audio.audioDownloadDateTime;
+
     if (audio.isAudioImported) {
       subTitle =
-          '${audioDuration!.HHmmss()}. $audioFileSizeStr ${AppLocalizations.of(context)!.imported} ${AppLocalizations.of(context)!.atPreposition} ${frenchDateTimeFormat.format(audio.audioDownloadDateTime)}';
+          '${audioDuration!.HHmmss()}. $audioFileSizeStr ${AppLocalizations.of(context)!.imported} ${AppLocalizations.of(context)!.atPreposition} ${frenchDateFormat.format(audioDownloadDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(audioDownloadDateTime)}';
     } else {
       subTitle =
-          '${audioDuration!.HHmmss()}. $audioFileSizeStr ${AppLocalizations.of(context)!.atPreposition} $audioDownloadSpeedStr ${AppLocalizations.of(context)!.on} ${frenchDateTimeFormat.format(audio.audioDownloadDateTime)}';
+          '${audioDuration!.HHmmss()}. $audioFileSizeStr ${AppLocalizations.of(context)!.atPreposition} $audioDownloadSpeedStr ${AppLocalizations.of(context)!.on} ${frenchDateFormat.format(audioDownloadDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(audioDownloadDateTime)}';
     }
 
     return subTitle;
