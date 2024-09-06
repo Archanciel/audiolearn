@@ -37,10 +37,18 @@ void main() {
       // calling loadAudioComments in situation where comment file
       // does not exist
 
-      List<Comment> commentLst = commentVM.loadAudioComments(audio: audio);
+      List<Comment> commentLst = commentVM.loadAudioComments(
+        audio: audio,
+      );
 
       // the returned Commentlist should be empty
       expect(commentLst.length, 0);
+
+      expect(
+          commentVM.getCommentNumber(
+            audio: audio,
+          ),
+          0);
 
       String createdCommentFilePathName =
           "$kPlaylistDownloadRootPathWindowsTest${path.separator}local${path.separator}$kCommentDirName${path.separator}240110-181805-Really short video 23-07-01.json";
@@ -82,6 +90,12 @@ void main() {
 
       // the returned Commentlist has 3 comments
       expect(commentLst.length, 3);
+
+      expect(
+          commentVM.getCommentNumber(
+            audio: audio,
+          ),
+          3);
 
       List<Comment> expectedCommentsLst = [
         Comment.fullConstructor(
@@ -160,7 +174,7 @@ void main() {
               "${playlistS8.downloadPath}${path.separator}$kCommentDirName${path.separator}New file name.json");
 
       Map<String, List<Comment>> playlistAudiosCommentsMap =
-          commentVM.getAllPlaylistComments(
+          commentVM.getPlaylistAudioComments(
         playlist: playlistS8,
       );
 
@@ -185,6 +199,12 @@ void main() {
       // the returned Commentlist has 3 comments
       expect(commentsLst.length, 8);
 
+      expect(
+          commentVM.getPlaylistAudioCommentNumber(
+            playlist: playlistS8,
+          ),
+          8);
+          
       Comment expectedCommentOne = Comment.fullConstructor(
         id: 'One_6473',
         title: 'One',
@@ -281,6 +301,12 @@ void main() {
       // the returned Commentlist should have two elements
       expect(commentLst.length, 2);
 
+      expect(
+          commentVM.getCommentNumber(
+            audio: audio,
+          ),
+          2);
+
       // checking the content of the comments. Since the comments are
       // sorted by audioPositionSeconds, the first comment should be
       // testCommentTwo and the second testCommentOne
@@ -332,6 +358,12 @@ void main() {
 
       // the returned Commentlist should have one element
       expect(commentLst.length, 1);
+
+      expect(
+          commentVM.getCommentNumber(
+            audio: audio,
+          ),
+          1);
 
       // checking the content of the comment
       validateComment(commentLst[0], testCommentOne);
@@ -388,6 +420,12 @@ void main() {
 
       // the returned Commentlist should have two elements
       expect(commentLst.length, 2);
+
+      expect(
+          commentVM.getCommentNumber(
+            audio: audio,
+          ),
+          2);
 
       // deleting the remaining comments
 
@@ -459,6 +497,12 @@ void main() {
 
       // the returned Commentlist should have two elements
       expect(commentLst.length, 0);
+
+      expect(
+          commentVM.getCommentNumber(
+            audio: audio,
+          ),
+          0);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub

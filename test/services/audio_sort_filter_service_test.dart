@@ -5068,7 +5068,7 @@ void main() {
       CommentVM commentVM = CommentVM();
 
       Map<String, List<Comment>> playlistAudiosCommentsMap =
-          commentVM.getAllPlaylistComments(
+          commentVM.getPlaylistAudioComments(
         playlist: loadedPlaylist,
       );
 
@@ -5161,7 +5161,7 @@ void main() {
       CommentVM commentVM = CommentVM();
 
       Map<String, List<Comment>> playlistAudiosCommentsMap =
-          commentVM.getAllPlaylistComments(
+          commentVM.getPlaylistAudioComments(
         playlist: loadedPlaylist,
       );
 

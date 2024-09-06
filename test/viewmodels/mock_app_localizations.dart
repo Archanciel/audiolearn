@@ -1316,4 +1316,7 @@ class MockAppLocalizations extends AppLocalizations {
     Object screenName,
   ) =>
       "\"$screenName\" sort/filter";
+
+  @override
+  String get playlistAudioCommentsLabel => "Audio comments";
 }
