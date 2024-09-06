@@ -69,7 +69,7 @@ class _AudioModificationDialogState extends State<AudioModificationDialog>
 
   @override
   Widget build(BuildContext context) {
-    ThemeProviderVM themeProviderVM = Provider.of<ThemeProviderVM>(context);
+    final ThemeProviderVM themeProviderVM = Provider.of<ThemeProviderVM>(context);
 
     FocusScope.of(context).requestFocus(
       _focusNodeAudioModificationTextField,

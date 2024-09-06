@@ -572,7 +572,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
     required BuildContext context,
     required CommentVM commentVMlistenFalse,
   }) {
-    ThemeProviderVM themeProviderVM = Provider.of<ThemeProviderVM>(
+    final ThemeProviderVM themeProviderVM = Provider.of<ThemeProviderVM>(
       context,
       listen: false,
     );

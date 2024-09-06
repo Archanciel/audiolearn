@@ -1960,7 +1960,7 @@ void main() {
       const String audioPlayerSelectedPlaylistTitle =
           'S8 audio'; // Youtube playlist
       const String firstDownloadedAudioTitle =
-          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
+          "L'argument anti-nuke qui m'inquiète le plus par Y.Rousselet";
       const String lastDownloadedAudioTitleOnAudioPlayerView =
           "La résilience insulaire par Fiona Roche\n13:35";
 
@@ -1999,7 +1999,7 @@ void main() {
           find.text(firstDownloadedAudioTitle);
 
       await tester.tap(firstDownloadedAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // The audio position is 2 seconds before end. Now play
       // the audio and wait 5 seconds so that the next audio
@@ -2023,8 +2023,8 @@ void main() {
       verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '0:00',
-        maxPositionTimeStr: '0:03',
+        minPositionTimeStr: '0:01',
+        maxPositionTimeStr: '0:04',
       );
 
       // Verify if the last downloaded audio title is displayed
@@ -2061,7 +2061,7 @@ void main() {
       const String audioPlayerSelectedPlaylistTitle =
           'S8 audio'; // Youtube playlist
       const String firstDownloadedAudioTitle =
-          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
+          "L'argument anti-nuke qui m'inquiète le plus par Y.Rousselet";
       const String lastDownloadedAudioTitleOnAudioPlayerView =
           "La résilience insulaire par Fiona Roche\n13:35";
 
@@ -2116,8 +2116,8 @@ void main() {
       verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '3:00',
-        maxPositionTimeStr: '3:03',
+        minPositionTimeStr: '3:02',
+        maxPositionTimeStr: '3:05',
       );
 
       // Verify if the last downloaded audio title is displayed
@@ -2137,7 +2137,7 @@ void main() {
       const String audioPlayerSelectedPlaylistTitle =
           'S8 audio'; // Youtube playlist
       const String firstDownloadedAudioTitle =
-          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
+          "L'argument anti-nuke qui m'inquiète le plus par Y.Rousselet";
       const String lastDownloadedAudioTitle =
           "La résilience insulaire par Fiona Roche";
       const String lastDownloadedAudioTitleOnAudioPlayerView =
@@ -2238,7 +2238,7 @@ void main() {
       const String audioPlayerSelectedPlaylistTitle =
           'S8 audio'; // Youtube playlist
       const String firstDownloadedAudioTitle =
-          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
+          "L'argument anti-nuke qui m'inquiète le plus par Y.Rousselet";
       const String thirdDownloadedAudioTitle =
           "Les besoins artificiels par R.Keucheyan";
       const String thirdDownloadedAudioTitleOnAudioPlayerView =
@@ -2339,8 +2339,8 @@ void main() {
       verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '0:00',
-        maxPositionTimeStr: '0:03',
+        minPositionTimeStr: '0:02',
+        maxPositionTimeStr: '0:05',
       );
 
       // Verify if the third downloaded audio title is displayed
@@ -2380,7 +2380,7 @@ void main() {
       const String audioPlayerSelectedPlaylistTitle =
           'S8 audio'; // Youtube playlist
       const String firstDownloadedAudioTitle =
-          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
+          "L'argument anti-nuke qui m'inquiète le plus par Y.Rousselet";
       const String thirdDownloadedAudioTitle =
           "Les besoins artificiels par R.Keucheyan";
       const String thirdDownloadedAudioTitleOnAudioPlayerView =

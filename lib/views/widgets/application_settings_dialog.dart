@@ -103,7 +103,7 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
 
   @override
   Widget build(BuildContext context) {
-    ThemeProviderVM themeProviderVM = Provider.of<ThemeProviderVM>(context);
+    final ThemeProviderVM themeProviderVM = Provider.of<ThemeProviderVM>(context);
 
     FocusScope.of(context).requestFocus(
       _focusNodePlaylistRootPath,

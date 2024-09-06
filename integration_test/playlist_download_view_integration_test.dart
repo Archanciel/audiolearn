@@ -7238,8 +7238,14 @@ void main() {
         widgetTester: tester,
       );
 
+      // Tap the 'Toggle List' button to hide the list of playlist
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
       // Test that the Youtube playlist is still showing the
       // deleted audio
+
+      Finder audioListTileTextWidgetFinder;
 
       for (String audioTitle in youtubePlaylistMp3Lst) {
         audioTitle = audioTitle
@@ -7247,13 +7253,19 @@ void main() {
             .replaceFirst(' .mp', '')
             .replaceFirst(' fois', '3 fois')
             .replaceFirst('antinuke', 'anti-nuke');
-        final Finder audioListTileTextWidgetFinder = find.text(audioTitle);
+        audioListTileTextWidgetFinder = find.text(audioTitle);
 
         expect(audioListTileTextWidgetFinder, findsOneWidget);
       }
 
       // Now update the playable audio list of the Youtube
       // playlist
+
+      // Tap the 'Toggle List' button to display the playlist list If the list
+      // is not opened, checking that a ListTile with the title of
+      // the playlist was added to the list will fail
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
 
       // Now find the leading menu icon button of the Playlist ListTile
       // and tap on it
@@ -7643,6 +7655,10 @@ void main() {
         widgetTester: tester,
       );
 
+      // Tap the 'Toggle List' button to hide the list of playlist
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
       // Test that the Youtube playlist is still showing the
       // deleted audio
 
@@ -7659,6 +7675,12 @@ void main() {
 
       // Now update the playable audio list of the Youtube
       // playlist
+
+      // Tap the 'Toggle List' button to display the playlist list If the list
+      // is not opened, checking that a ListTile with the title of
+      // the playlist was added to the list will fail
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
 
       // Now find the leading menu icon button of the Playlist ListTile
       // and tap on it
@@ -8459,7 +8481,7 @@ void main() {
       // Obtains all the ListTile widgets present in the playlist
       // download view (2 playlist items + 4 audio items)
       Finder listTilesFinder = find.byType(ListTile);
-      expect(listTilesFinder, findsNWidgets(6));
+      expect(listTilesFinder, findsNWidgets(5));
 
       // Now manually delete all application data including the settings.json
       // file

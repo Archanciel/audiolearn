@@ -25,7 +25,7 @@ class HelpDialog extends StatelessWidget with ScreenMixin {
       focusNodeDialog,
     );
 
-    ThemeProviderVM themeProviderVM = Provider.of<ThemeProviderVM>(context);
+    final ThemeProviderVM themeProviderVM = Provider.of<ThemeProviderVM>(context);
 
     int number = 1;
     int helpItemsLstLength = helpItemsLst.length;

@@ -30,7 +30,8 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
       focusNodeDialog,
     );
 
-    ThemeProviderVM themeProviderVM = Provider.of<ThemeProviderVM>(context);
+    final ThemeProviderVM themeProviderVM =
+        Provider.of<ThemeProviderVM>(context);
 
     return KeyboardListener(
       // Using FocusNode to enable clicking on Enter to close
@@ -82,7 +83,8 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
 
   /// Creates the list of audio information lines for downloaded audio.
   List<Widget> _createDownloadedAudioInfoLines(BuildContext context) {
-    CommentVM commentVMlistenFalse = Provider.of<CommentVM>(context, listen: false);
+    final CommentVM commentVMlistenFalse =
+        Provider.of<CommentVM>(context, listen: false);
 
     return <Widget>[
       createInfoRowFunction(
@@ -209,13 +211,15 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
       createInfoRowFunction(
           context: context,
           label: AppLocalizations.of(context)!.commentsDialogTitle,
-          value: commentVMlistenFalse.getCommentNumber(audio: audio).toString()),
+          value:
+              commentVMlistenFalse.getCommentNumber(audio: audio).toString()),
     ];
   }
 
   /// Creates the list of audio information lines for imported audio.
   List<Widget> _createImportedAudioInfoLines(BuildContext context) {
-    CommentVM commentVMlistenFalse = Provider.of<CommentVM>(context, listen: false);
+    CommentVM commentVMlistenFalse =
+        Provider.of<CommentVM>(context, listen: false);
 
     return <Widget>[
       createInfoRowFunction(
@@ -315,7 +319,8 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
       createInfoRowFunction(
           context: context,
           label: AppLocalizations.of(context)!.commentsDialogTitle,
-          value: commentVMlistenFalse.getCommentNumber(audio: audio).toString()),
+          value:
+              commentVMlistenFalse.getCommentNumber(audio: audio).toString()),
     ];
   }
 

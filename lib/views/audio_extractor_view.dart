@@ -229,7 +229,7 @@ class _AudioExtractorViewState extends State<AudioExtractorView>
   }
 
   Widget _buildPlayStopButtonsRow() {
-    ThemeProviderVM themeProviderVM =
+    final ThemeProviderVM themeProviderVM =
         Provider.of<ThemeProviderVM>(context, listen: false);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,

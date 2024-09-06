@@ -27,9 +27,10 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
 
   @override
   Widget build(BuildContext context) {
-    ThemeProviderVM themeProviderVM = Provider.of<ThemeProviderVM>(context);
-    DateTime? lastDownloadDateTime = playlist.getLastDownloadDateTime();
-    String lastDownloadDateTimeStr = (lastDownloadDateTime != null)
+    final ThemeProviderVM themeProviderVM =
+        Provider.of<ThemeProviderVM>(context);
+    final DateTime? lastDownloadDateTime = playlist.getLastDownloadDateTime();
+    final String lastDownloadDateTimeStr = (lastDownloadDateTime != null)
         ? frenchDateTimeFormat.format(lastDownloadDateTime)
         : '';
 
@@ -38,12 +39,12 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
       focusNodeDialog,
     );
 
-    String audioSortFilterParmsNameForPlaylistDownloadView =
+    final String audioSortFilterParmsNameForPlaylistDownloadView =
         playlist.audioSortFilterParmsNameForPlaylistDownloadView;
-    String audioSortFilterParmsNameForAudioPlayerView =
+    final String audioSortFilterParmsNameForAudioPlayerView =
         playlist.audioSortFilterParmsNameForAudioPlayerView;
 
-    CommentVM commentVMlistenFalse =
+    final CommentVM commentVMlistenFalse =
         Provider.of<CommentVM>(context, listen: false);
 
     return KeyboardListener(
@@ -158,9 +159,12 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
               ),
               createInfoRowFunction(
                   context: context,
-                  label: AppLocalizations.of(context)!.playlistAudioCommentsLabel,
+                  label:
+                      AppLocalizations.of(context)!.playlistAudioCommentsLabel,
                   value: commentVMlistenFalse
-                      .getPlaylistAudioCommentNumber(playlist: playlist,)
+                      .getPlaylistAudioCommentNumber(
+                        playlist: playlist,
+                      )
                       .toString()),
               createInfoRowFunction(
                 context: context,

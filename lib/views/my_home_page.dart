@@ -120,11 +120,11 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
       audioSortFilterParameters:
           AudioSortFilterParameters.createDefaultAudioSortFilterParameters(),
     );
-    ThemeProviderVM themeProviderVMlistenTrue = Provider.of<ThemeProviderVM>(
+    final ThemeProviderVM themeProviderVMlistenTrue = Provider.of<ThemeProviderVM>(
       context,
       listen: true,
     );
-    AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
+    final AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
       context,
       listen: false,
     );

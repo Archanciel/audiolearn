@@ -353,8 +353,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
   Widget build(
     BuildContext context,
   ) {
-    DateTime now = DateTime.now();
-    ThemeProviderVM themeProviderVM = Provider.of<ThemeProviderVM>(
+    final DateTime now = DateTime.now();
+    final ThemeProviderVM themeProviderVM = Provider.of<ThemeProviderVM>(
       context,
       listen: false,
     );

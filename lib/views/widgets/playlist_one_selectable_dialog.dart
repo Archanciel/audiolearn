@@ -67,9 +67,9 @@ class _PlaylistOneSelectableDialogState
 
   @override
   Widget build(BuildContext context) {
-    ThemeProviderVM themeProvider = Provider.of<ThemeProviderVM>(context);
+    final ThemeProviderVM themeProvider = Provider.of<ThemeProviderVM>(context);
     bool isDarkTheme = themeProvider.currentTheme == AppTheme.dark;
-    PlaylistListVM playlistVMlistenFalse = Provider.of<PlaylistListVM>(
+    final PlaylistListVM playlistVMlistenFalse = Provider.of<PlaylistListVM>(
       context,
       listen: false,
     );

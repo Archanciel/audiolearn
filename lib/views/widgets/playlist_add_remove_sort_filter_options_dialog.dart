@@ -51,7 +51,7 @@ class _PlaylistAddRemoveSortFilterOptionsDialogState
       _focusNodeDialog,
     );
 
-    ThemeProviderVM themeProviderVM = Provider.of<ThemeProviderVM>(context);
+    final ThemeProviderVM themeProviderVM = Provider.of<ThemeProviderVM>(context);
 
     return KeyboardListener(
       // Using FocusNode to enable clicking on Enter to close
