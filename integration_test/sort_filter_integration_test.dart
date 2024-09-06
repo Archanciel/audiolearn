@@ -5198,9 +5198,9 @@ void playlistDownloadViewSortFilterIntregrationTest() {
 
           await verifyAudioPopupMenuItemState(
             tester: tester,
-            doNotTapOnAudioPopupMenuButton: true, // since the audio popup menu
-            //                                       is already open, do not tap
-            //                                       on it again
+            tapOnAudioPopupMenuButton: false, // since the audio popup menu
+            //                                   is already open, do not tap
+            //                                   on it again
             menuItemKey:
                 'remove_sort_and_filter_audio_parms_from_playlist_item',
             isEnabled: true,
@@ -5215,8 +5215,8 @@ void playlistDownloadViewSortFilterIntregrationTest() {
             tester: tester,
             playlistTitle: 'S8 audio',
             sortFilterParmsName: descListenedSortFilterName,
-            forPlaylistDownloadViewCheckboxNotDisplayed: true,
-            forAudioPlayerViewCheckboxNotDisplayed: false,
+            isForPlaylistDownloadViewCheckboxDisplayed: false,
+            isForAudioPlayerViewCheckboxDisplayed: true,
           );
 
           // Select and save the 'Title asc' sort/filter parms to the audio
@@ -5310,9 +5310,9 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           await selectAndRemoveSortFilterParmsToPlaylist(
             tester: tester,
             sortFilterParmsName: descListenedSortFilterName,
-            onPlaylistDownloadViewCheckboxNotDisplayed: false,
+            isOnPlaylistDownloadViewCheckboxDisplayed: true,
             tapOnRemoveFromPlaylistDownloadViewCheckbox: true,
-            onAudioPlayerViewCheckboxNotDisplayed: true,
+            isOnAudioPlayerViewCheckboxDisplayed: false,
             tapOnRemoveFromAudioPlayerViewCheckbox: false,
           );
 
@@ -5372,9 +5372,9 @@ void playlistDownloadViewSortFilterIntregrationTest() {
 
           await verifyAudioPopupMenuItemState(
             tester: tester,
-            doNotTapOnAudioPopupMenuButton: true, // since the audio popup menu
-            //                                       is already open, do not tap
-            //                                       on it again
+            tapOnAudioPopupMenuButton: false, // since the audio popup menu
+            //                                   is already open, do not tap
+            //                                   on it again
             menuItemKey:
                 'remove_sort_and_filter_audio_parms_from_playlist_item',
             isEnabled: false,
@@ -5942,9 +5942,9 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           await selectAndRemoveSortFilterParmsToPlaylist(
             tester: tester,
             sortFilterParmsName: titleAscSortFilterName,
-            onPlaylistDownloadViewCheckboxNotDisplayed: false,
+            isOnPlaylistDownloadViewCheckboxDisplayed: true,
             tapOnRemoveFromPlaylistDownloadViewCheckbox: true,
-            onAudioPlayerViewCheckboxNotDisplayed: false,
+            isOnAudioPlayerViewCheckboxDisplayed: true,
             tapOnRemoveFromAudioPlayerViewCheckbox: true,
           );
 
@@ -6004,9 +6004,9 @@ void playlistDownloadViewSortFilterIntregrationTest() {
 
           await verifyAudioPopupMenuItemState(
             tester: tester,
-            doNotTapOnAudioPopupMenuButton: true, // since the audio popup menu
-            //                                       is already open, do not tap
-            //                                       on it again
+            tapOnAudioPopupMenuButton: false, // since the audio popup menu
+            //                                   is already open, do not tap
+            //                                   on it again
             menuItemKey:
                 'remove_sort_and_filter_audio_parms_from_playlist_item',
             isEnabled: false,
@@ -6085,9 +6085,9 @@ void playlistDownloadViewSortFilterIntregrationTest() {
 
           await verifyAudioPopupMenuItemState(
             tester: tester,
-            doNotTapOnAudioPopupMenuButton: true, // since the audio popup menu
-            //                                       is already open, do not tap
-            //                                       on it again
+            tapOnAudioPopupMenuButton: false, // since the audio popup menu
+            //                                   is already open, do not tap
+            //                                   on it again
             menuItemKey:
                 'remove_sort_and_filter_audio_parms_from_playlist_item',
             isEnabled: false,
@@ -6157,9 +6157,9 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           await selectAndRemoveSortFilterParmsToPlaylist(
             tester: tester,
             sortFilterParmsName: titleAscSortFilterName,
-            onPlaylistDownloadViewCheckboxNotDisplayed: false,
+            isOnPlaylistDownloadViewCheckboxDisplayed: true,
             tapOnRemoveFromPlaylistDownloadViewCheckbox: true,
-            onAudioPlayerViewCheckboxNotDisplayed: true,
+            isOnAudioPlayerViewCheckboxDisplayed: false,
             tapOnRemoveFromAudioPlayerViewCheckbox: false,
           );
 
@@ -6235,9 +6235,9 @@ void playlistDownloadViewSortFilterIntregrationTest() {
 
           await verifyAudioPopupMenuItemState(
             tester: tester,
-            doNotTapOnAudioPopupMenuButton: true, // since the audio popup menu
-            //                                       is already open, do not tap
-            //                                       on it again
+            tapOnAudioPopupMenuButton: false, // since the audio popup menu
+            //                                   is already open, do not tap
+            //                                   on it again
             menuItemKey:
                 'remove_sort_and_filter_audio_parms_from_playlist_item',
             isEnabled: false,
@@ -6309,9 +6309,9 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           await selectAndRemoveSortFilterParmsToPlaylist(
             tester: tester,
             sortFilterParmsName: titleAscSortFilterName,
-            onPlaylistDownloadViewCheckboxNotDisplayed: false,
+            isOnPlaylistDownloadViewCheckboxDisplayed: true,
             tapOnRemoveFromPlaylistDownloadViewCheckbox: true,
-            onAudioPlayerViewCheckboxNotDisplayed: true,
+            isOnAudioPlayerViewCheckboxDisplayed: false,
             tapOnRemoveFromAudioPlayerViewCheckbox: false,
           );
 
@@ -6344,9 +6344,9 @@ void playlistDownloadViewSortFilterIntregrationTest() {
 
           await verifyAudioPopupMenuItemState(
             tester: tester,
-            doNotTapOnAudioPopupMenuButton: true, // since the audio popup menu
-            //                                       is already open, do not tap
-            //                                       on it again
+            tapOnAudioPopupMenuButton: false, // since the audio popup menu
+            //                                   is already open, do not tap
+            //                                   on it again
             menuItemKey:
                 'remove_sort_and_filter_audio_parms_from_playlist_item',
             isEnabled: false,
@@ -6895,11 +6895,11 @@ Future<void> verifyOrderOfPlaylistAudioComments({
 
 Future<void> verifyAudioPopupMenuItemState({
   required WidgetTester tester,
-  bool doNotTapOnAudioPopupMenuButton = false,
+  bool tapOnAudioPopupMenuButton = true,
   required String menuItemKey,
   required bool isEnabled,
 }) async {
-  if (!doNotTapOnAudioPopupMenuButton) {
+  if (tapOnAudioPopupMenuButton) {
     // Now open the audio popup menu
     await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
     await tester.pumpAndSettle();
@@ -7021,8 +7021,8 @@ Future<void> verifySaveSortFilterParmsToPlaylistDialog({
   required WidgetTester tester,
   required String playlistTitle,
   required String sortFilterParmsName,
-  required bool forPlaylistDownloadViewCheckboxNotDisplayed,
-  required bool forAudioPlayerViewCheckboxNotDisplayed,
+  required bool isForPlaylistDownloadViewCheckboxDisplayed,
+  required bool isForAudioPlayerViewCheckboxDisplayed,
 }) async {
   // Now open the audio popup menu
   await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
@@ -7036,27 +7036,27 @@ Future<void> verifySaveSortFilterParmsToPlaylistDialog({
   expect(find.text(playlistTitle), findsOneWidget);
   expect(find.text(sortFilterParmsName), findsOneWidget);
 
-  if (forPlaylistDownloadViewCheckboxNotDisplayed) {
+  if (isForPlaylistDownloadViewCheckboxDisplayed) {
     expect(
       find.byKey(const Key('playlistDownloadViewCheckbox')),
-      findsNothing,
+      findsOneWidget,
     );
   } else {
     expect(
       find.byKey(const Key('playlistDownloadViewCheckbox')),
-      findsOneWidget,
+      findsNothing,
     );
   }
 
-  if (forAudioPlayerViewCheckboxNotDisplayed) {
+  if (isForAudioPlayerViewCheckboxDisplayed) {
     expect(
       find.byKey(const Key('audioPlayerViewCheckbox')),
-      findsNothing,
+      findsOneWidget,
     );
   } else {
     expect(
       find.byKey(const Key('audioPlayerViewCheckbox')),
-      findsOneWidget,
+      findsNothing,
     );
   }
 
@@ -7069,9 +7069,9 @@ Future<void> verifySaveSortFilterParmsToPlaylistDialog({
 Future<void> selectAndRemoveSortFilterParmsToPlaylist({
   required WidgetTester tester,
   required String sortFilterParmsName,
-  bool onPlaylistDownloadViewCheckboxNotDisplayed = true,
+  bool isOnPlaylistDownloadViewCheckboxDisplayed = false,
   bool tapOnRemoveFromPlaylistDownloadViewCheckbox = false,
-  bool onAudioPlayerViewCheckboxNotDisplayed = true,
+  bool isOnAudioPlayerViewCheckboxDisplayed = false,
   bool tapOnRemoveFromAudioPlayerViewCheckbox = false,
 }) async {
   // Tap on the current dropdown button item to open the dropdown
@@ -7102,38 +7102,40 @@ Future<void> selectAndRemoveSortFilterParmsToPlaylist({
       const Key('remove_sort_and_filter_audio_parms_from_playlist_item')));
   await tester.pumpAndSettle();
 
-  if (onPlaylistDownloadViewCheckboxNotDisplayed) {
-    expect(
-      find.byKey(const Key('playlistDownloadViewCheckbox')),
-      findsNothing,
-    );
-  } else {
+  if (isOnPlaylistDownloadViewCheckboxDisplayed) {
     expect(
       find.byKey(const Key('playlistDownloadViewCheckbox')),
       findsOneWidget,
     );
+
     if (tapOnRemoveFromPlaylistDownloadViewCheckbox) {
       // Select the 'On "Download Audio" screen' checkbox
       await tester.tap(find.byKey(const Key('playlistDownloadViewCheckbox')));
       await tester.pumpAndSettle();
     }
-  }
-
-  if (onAudioPlayerViewCheckboxNotDisplayed) {
+  } else {
     expect(
-      find.byKey(const Key('audioPlayerViewCheckbox')),
+      find.byKey(const Key('playlistDownloadViewCheckbox')),
       findsNothing,
     );
-  } else {
+  }
+
+  if (isOnAudioPlayerViewCheckboxDisplayed) {
     expect(
       find.byKey(const Key('audioPlayerViewCheckbox')),
       findsOneWidget,
     );
+
     if (tapOnRemoveFromAudioPlayerViewCheckbox) {
       // Select the 'On "Play Audio" screen' checkbox
       await tester.tap(find.byKey(const Key('audioPlayerViewCheckbox')));
       await tester.pumpAndSettle();
     }
+  } else {
+    expect(
+      find.byKey(const Key('audioPlayerViewCheckbox')),
+      findsNothing,
+    );
   }
 
   // Finally, click on save button
