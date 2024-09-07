@@ -679,15 +679,15 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       audioSortFilterParametersName: _selectedSortFilterParametersName!,
     );
     playlistListVMlistenFalse
-        .setSortedFilteredSelectedPlaylistPlayableAudiosAndParms(
+        .setSortFilterForSelectedPlaylistPlayableAudiosAndParms(
       audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
-      sortedFilteredSelectedPlaylistsPlayableAudios: playlistListVMlistenFalse
+      sortFilteredSelectedPlaylistPlayableAudio: playlistListVMlistenFalse
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
         audioSortFilterParameters: audioSortFilterParameters,
       ),
-      audioSortFilterParameters: audioSortFilterParameters,
-      audioSortFilterParametersName: _selectedSortFilterParametersName!,
+      audioSortFilterParms: audioSortFilterParameters,
+      audioSortFilterParmsName: _selectedSortFilterParametersName!,
       doNotifyListeners: notifyListeners,
     );
     _wasSortFilterAudioSettingsApplied = true;
@@ -825,13 +825,12 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                     filterSortAudioAndParmLst[2];
 
                 playlistListVMlistenFalse
-                    .setSortedFilteredSelectedPlaylistPlayableAudiosAndParms(
+                    .setSortFilterForSelectedPlaylistPlayableAudiosAndParms(
                   audioLearnAppViewType:
                       AudioLearnAppViewType.playlistDownloadView,
-                  sortedFilteredSelectedPlaylistsPlayableAudios:
-                      returnedAudioList,
-                  audioSortFilterParameters: audioSortFilterParameters,
-                  audioSortFilterParametersName: sortFilterParametersSaveAsName,
+                  sortFilteredSelectedPlaylistPlayableAudio: returnedAudioList,
+                  audioSortFilterParms: audioSortFilterParameters,
+                  audioSortFilterParmsName: sortFilterParametersSaveAsName,
                 );
                 _wasSortFilterAudioSettingsApplied = true;
 
@@ -1072,14 +1071,13 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                   String audioSortFilterParametersName =
                       filterSortAudioAndParmLst[2];
                   playlistListVMlistenFalse
-                      .setSortedFilteredSelectedPlaylistPlayableAudiosAndParms(
+                      .setSortFilterForSelectedPlaylistPlayableAudiosAndParms(
                     audioLearnAppViewType:
                         AudioLearnAppViewType.playlistDownloadView,
-                    sortedFilteredSelectedPlaylistsPlayableAudios:
+                    sortFilteredSelectedPlaylistPlayableAudio:
                         returnedAudioList,
-                    audioSortFilterParameters: audioSortFilterParameters,
-                    audioSortFilterParametersName:
-                        audioSortFilterParametersName,
+                    audioSortFilterParms: audioSortFilterParameters,
+                    audioSortFilterParmsName: audioSortFilterParametersName,
                   );
                   _wasSortFilterAudioSettingsApplied = true;
                 }

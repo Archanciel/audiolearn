@@ -1,5 +1,6 @@
 // dart file located in lib\views
 
+import 'package:audiolearn/services/sort_filter_parameters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../models/audio.dart';
 import '../../../utils/ui_util.dart';
+import '../../models/comment.dart';
 import '../../models/playlist.dart';
 import '../../viewmodels/audio_player_vm.dart';
 import '../../../viewmodels/playlist_list_vm.dart';
@@ -184,13 +186,16 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
             );
             break;
           case AudioPopupMenuAction.audioComment:
-            final audioGlobalPlayerVM = Provider.of<AudioPlayerVM>(
+            final AudioPlayerVM audioGlobalPlayerVM =
+                Provider.of<AudioPlayerVM>(
               context,
               listen: false,
             );
+
             await audioGlobalPlayerVM.setCurrentAudio(
               audio: audio,
             );
+
             showDialog<void>(
               context: context,
               builder: (context) => CommentListAddDialog(
@@ -219,10 +224,12 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
             );
             break;
           case AudioPopupMenuAction.moveAudioToPlaylist:
-            final playlistVMlistnedFalse = Provider.of<PlaylistListVM>(
+            final PlaylistListVM playlistVMlistnedFalse =
+                Provider.of<PlaylistListVM>(
               context,
               listen: false,
             );
+
             showDialog<dynamic>(
               context: context,
               builder: (context) => PlaylistOneSelectableDialog(
@@ -238,6 +245,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
                 // the case if the Cancel button was pressed
                 return;
               }
+
               Playlist? targetPlaylist = resultMap['selectedPlaylist'];
 
               if (targetPlaylist == null) {
@@ -259,10 +267,12 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
             });
             break;
           case AudioPopupMenuAction.copyAudioToPlaylist:
-            final expandablePlaylistVM = Provider.of<PlaylistListVM>(
+            final PlaylistListVM expandablePlaylistVM =
+                Provider.of<PlaylistListVM>(
               context,
               listen: false,
             );
+
             showDialog<dynamic>(
               context: context,
               builder: (context) => PlaylistOneSelectableDialog(
@@ -277,10 +287,13 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
               if (resultMap is String && resultMap == 'cancel') {
                 return;
               }
-              final targetPlaylist = resultMap['selectedPlaylist'];
+
+              final Playlist? targetPlaylist = resultMap['selectedPlaylist'];
+
               if (targetPlaylist == null) {
                 return;
               }
+
               expandablePlaylistVM.copyAudioAndCommentToPlaylist(
                 audio: audio,
                 targetPlaylist: targetPlaylist,
@@ -288,11 +301,13 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
             });
             break;
           case AudioPopupMenuAction.deleteAudio:
-            final audioToDelete = audio;
-            final audioToDeleteCommentLst = Provider.of<CommentVM>(
+            final Audio audioToDelete = audio;
+            final List<Comment> audioToDeleteCommentLst =
+                Provider.of<CommentVM>(
               context,
               listen: false,
             ).loadAudioComments(audio: audioToDelete);
+
             if (audioToDeleteCommentLst.isNotEmpty) {
               showDialog<dynamic>(
                 context: context,
@@ -320,11 +335,13 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
             }
             break;
           case AudioPopupMenuAction.deleteAudioFromPlaylistAswell:
-            final audioToDelete = audio;
-            final audioToDeleteCommentLst = Provider.of<CommentVM>(
+            final Audio audioToDelete = audio;
+            final List<Comment> audioToDeleteCommentLst =
+                Provider.of<CommentVM>(
               context,
               listen: false,
             ).loadAudioComments(audio: audioToDelete);
+
             if (audioToDeleteCommentLst.isNotEmpty) {
               showDialog<dynamic>(
                 context: context,
@@ -361,7 +378,10 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
   /// Public method passed to the ConfirmActionDialog to be executd
   /// when the Confirm button is pressed. The method deletes the audio
   /// file and its comments.
-  Audio? deleteAudio(BuildContext context, Audio audio) {
+  Audio? deleteAudio(
+    BuildContext context,
+    Audio audio,
+  ) {
     return Provider.of<PlaylistListVM>(
       context,
       listen: false,
@@ -443,40 +463,68 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
   }
 
   String _buildSubTitle(BuildContext context) {
-    String subTitle;
-
-    Duration? audioDuration = audio.audioDuration;
-    int audioFileSize = audio.audioFileSize;
-    String audioFileSizeStr;
-
-    audioFileSizeStr = UiUtil.formatLargeIntValue(
-      context: context,
-      value: audioFileSize,
+    final PlaylistListVM playlistVMlistnedFalse = Provider.of<PlaylistListVM>(
+      context,
+      listen: false,
     );
 
-    int audioDownloadSpeed = audio.audioDownloadSpeed;
-    String audioDownloadSpeedStr;
+    Duration? audioDuration = audio.audioDuration;
 
-    if (audioDownloadSpeed.isInfinite) {
-      audioDownloadSpeedStr = 'infinite o/sec';
-    } else {
-      audioDownloadSpeedStr = '${UiUtil.formatLargeIntValue(
-        context: context,
-        value: audioDownloadSpeed,
-      )}/sec';
+    SortingOption appliedSortingOption =
+        playlistVMlistnedFalse.getAppliedSortingOption();
+
+    switch (appliedSortingOption) {
+      case SortingOption.lastListenedDateTime:
+        DateTime? lastListenedDateTime = audio.audioPausedDateTime;
+
+        if (lastListenedDateTime == null) {
+          final String lastSubtitlePart;
+
+          lastSubtitlePart = '';
+
+          return '${audioDuration!.HHmmss()}. $lastSubtitlePart.';
+        } else {
+          final String lastSubtitlePart;
+
+          lastSubtitlePart =
+              '${AppLocalizations.of(context)!.on} ${frenchDateFormat.format(lastListenedDateTime!)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(lastListenedDateTime)}';
+
+          return '${audioDuration!.HHmmss()}. $lastSubtitlePart.';
+        }
+      default:
+        int audioFileSize = audio.audioFileSize;
+        String audioFileSizeStr;
+
+        audioFileSizeStr = UiUtil.formatLargeIntValue(
+          context: context,
+          value: audioFileSize,
+        );
+
+        int audioDownloadSpeed = audio.audioDownloadSpeed;
+        String audioDownloadSpeedStr;
+
+        if (audioDownloadSpeed.isInfinite) {
+          audioDownloadSpeedStr = 'infinite o/sec';
+        } else {
+          audioDownloadSpeedStr = '${UiUtil.formatLargeIntValue(
+            context: context,
+            value: audioDownloadSpeed,
+          )}/sec';
+        }
+
+        DateTime audioDownloadDateTime = audio.audioDownloadDateTime;
+        final String lastSubtitlePart;
+
+        if (audio.isAudioImported) {
+          lastSubtitlePart =
+              '$audioFileSizeStr ${AppLocalizations.of(context)!.imported} ${AppLocalizations.of(context)!.atPreposition} ${frenchDateFormat.format(audioDownloadDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(audioDownloadDateTime)}';
+        } else {
+          lastSubtitlePart =
+              '$audioFileSizeStr ${AppLocalizations.of(context)!.atPreposition} $audioDownloadSpeedStr ${AppLocalizations.of(context)!.on} ${frenchDateFormat.format(audioDownloadDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(audioDownloadDateTime)}';
+        }
+
+        return '${audioDuration!.HHmmss()}. $lastSubtitlePart.';
     }
-
-    DateTime audioDownloadDateTime = audio.audioDownloadDateTime;
-
-    if (audio.isAudioImported) {
-      subTitle =
-          '${audioDuration!.HHmmss()}. $audioFileSizeStr ${AppLocalizations.of(context)!.imported} ${AppLocalizations.of(context)!.atPreposition} ${frenchDateFormat.format(audioDownloadDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(audioDownloadDateTime)}.';
-    } else {
-      subTitle =
-          '${audioDuration!.HHmmss()}. $audioFileSizeStr ${AppLocalizations.of(context)!.atPreposition} $audioDownloadSpeedStr ${AppLocalizations.of(context)!.on} ${frenchDateFormat.format(audioDownloadDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(audioDownloadDateTime)}.';
-    }
-
-    return subTitle;
   }
 
   Widget _buildPlayButton() {

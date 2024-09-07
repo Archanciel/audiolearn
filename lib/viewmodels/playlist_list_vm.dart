@@ -876,24 +876,24 @@ class PlaylistListVM extends ChangeNotifier {
   /// selected by the user in the download playlist view Sort and
   /// Filter dropdown menu or is the sort and filter parameters
   /// the user set in the SortAndFilterAudioDialog.
-  void setSortedFilteredSelectedPlaylistPlayableAudiosAndParms({
+  void setSortFilterForSelectedPlaylistPlayableAudiosAndParms({
     required AudioLearnAppViewType audioLearnAppViewType,
-    required List<Audio> sortedFilteredSelectedPlaylistsPlayableAudios,
-    required AudioSortFilterParameters audioSortFilterParameters,
-    required String audioSortFilterParametersName,
+    required List<Audio> sortFilteredSelectedPlaylistPlayableAudio,
+    required AudioSortFilterParameters audioSortFilterParms,
+    required String audioSortFilterParmsName,
     bool doNotifyListeners = true,
   }) {
     _sortedFilteredSelectedPlaylistsPlayableAudios =
-        sortedFilteredSelectedPlaylistsPlayableAudios;
-    _audioSortFilterParameters = audioSortFilterParameters;
+        sortFilteredSelectedPlaylistPlayableAudio;
+    _audioSortFilterParameters = audioSortFilterParms;
 
     if (audioLearnAppViewType == AudioLearnAppViewType.playlistDownloadView) {
       _playlistAudioSFparmsNamesForPlaylistDownloadViewMap[
-          getSelectedPlaylists()[0].title] = audioSortFilterParametersName;
+          getSelectedPlaylists()[0].title] = audioSortFilterParmsName;
     } else {
       // for AudioLearnAppViewType.audioPlayerView
       _playlistAudioSFparmsNamesForAudioPlayerViewMap[
-          getSelectedPlaylists()[0].title] = audioSortFilterParametersName;
+          getSelectedPlaylists()[0].title] = audioSortFilterParmsName;
     }
 
     if (doNotifyListeners) {
@@ -1723,5 +1723,13 @@ class PlaylistListVM extends ChangeNotifier {
     ];
 
     return returnedResults;
+  }
+
+  SortingOption getAppliedSortingOption() {
+    if (_audioSortFilterParameters != null) {
+      return _audioSortFilterParameters!.selectedSortItemLst[0].sortingOption;
+    } else {
+      return SortingOption.audioDownloadDate;
+    }
   }
 }
