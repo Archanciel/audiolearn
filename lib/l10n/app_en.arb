@@ -430,5 +430,6 @@
     }
   },
   "playlistSortFilterLabel": "{screenName} sort/filter",
-  "playlistAudioCommentsLabel": "Audio comments"
+  "playlistAudioCommentsLabel": "Audio comments",
+  "listenedOn": "Listened on"
 }

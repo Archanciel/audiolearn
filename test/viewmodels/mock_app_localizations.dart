@@ -1319,4 +1319,7 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get playlistAudioCommentsLabel => "Audio comments";
+
+  @override
+  String get listenedOn => "Listened on";
 }

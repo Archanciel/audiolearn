@@ -475,33 +475,29 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
 
     switch (appliedSortingOption) {
       case SortingOption.lastListenedDateTime:
-        DateTime? lastListenedDateTime = audio.audioPausedDateTime;
+        final DateTime? lastListenedDateTime = audio.audioPausedDateTime;
+        final String lastSubtitlePart;
 
         if (lastListenedDateTime == null) {
-          final String lastSubtitlePart;
-
-          lastSubtitlePart = '';
-
-          return '${audioDuration!.HHmmss()}. $lastSubtitlePart.';
-        } else {
-          final String lastSubtitlePart;
-
           lastSubtitlePart =
-              '${AppLocalizations.of(context)!.on} ${frenchDateFormat.format(lastListenedDateTime!)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(lastListenedDateTime)}';
-
-          return '${audioDuration!.HHmmss()}. $lastSubtitlePart.';
+              AppLocalizations.of(context)!.audioStateNotListened;
+        } else {
+          lastSubtitlePart =
+              '${AppLocalizations.of(context)!.listenedOn} ${frenchDateFormat.format(lastListenedDateTime!)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(lastListenedDateTime)}';
         }
+
+        return '${audioDuration!.HHmmss()}. $lastSubtitlePart.';
       default:
-        int audioFileSize = audio.audioFileSize;
-        String audioFileSizeStr;
+        final int audioFileSize = audio.audioFileSize;
+        final String audioFileSizeStr;
 
         audioFileSizeStr = UiUtil.formatLargeIntValue(
           context: context,
           value: audioFileSize,
         );
 
-        int audioDownloadSpeed = audio.audioDownloadSpeed;
-        String audioDownloadSpeedStr;
+        final int audioDownloadSpeed = audio.audioDownloadSpeed;
+        final String audioDownloadSpeedStr;
 
         if (audioDownloadSpeed.isInfinite) {
           audioDownloadSpeedStr = 'infinite o/sec';
@@ -512,7 +508,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
           )}/sec';
         }
 
-        DateTime audioDownloadDateTime = audio.audioDownloadDateTime;
+        final DateTime audioDownloadDateTime = audio.audioDownloadDateTime;
         final String lastSubtitlePart;
 
         if (audio.isAudioImported) {
