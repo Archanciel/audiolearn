@@ -373,4 +373,8 @@ class Audio {
     isAudioMusicQuality = true;
     audioPlaySpeed = 1.0;
   }
+
+  int getAudioRemainingMilliseconds() {
+    return audioDuration!.inMilliseconds - audioPositionSeconds * 1000;
+  }
 }

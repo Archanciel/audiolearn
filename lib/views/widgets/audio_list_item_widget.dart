@@ -1,6 +1,7 @@
 // dart file located in lib\views
 
 import 'package:audiolearn/services/sort_filter_parameters.dart';
+import 'package:audiolearn/utils/date_time_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -462,6 +463,18 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
     onPageChangedFunction(ScreenMixin.AUDIO_PLAYER_VIEW_DRAGGABLE_INDEX);
   }
 
+  /// The method builds the audio item subtitle displayed in the audio
+  /// list item. The subtitle is built according to the applied sorting option.
+  /// The subtitle displays the audio duration and the last listened date
+  /// and time if the applied sorting option is last listened date time.
+  ///                                                                                                                                                 
+  /// If the applied sorting option is audio remaining duration, the subtitle
+  /// displays the audio duration, the remaining audio duration and the last
+  /// listened date and time if the audio is paused.
+  /// 
+  /// If the applied sorting option is default, the subtitle displays
+  /// the audio duration, the audio file size, the audio download speed and
+  /// the audio download date and time.
   String _buildSubTitle(BuildContext context) {
     final PlaylistListVM playlistVMlistnedFalse = Provider.of<PlaylistListVM>(
       context,
@@ -483,7 +496,24 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
               AppLocalizations.of(context)!.audioStateNotListened;
         } else {
           lastSubtitlePart =
-              '${AppLocalizations.of(context)!.listenedOn} ${frenchDateFormat.format(lastListenedDateTime!)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(lastListenedDateTime)}';
+              '${AppLocalizations.of(context)!.listenedOn} ${frenchDateFormat.format(lastListenedDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(lastListenedDateTime)}';
+        }
+
+        return '${audioDuration!.HHmmss()}. $lastSubtitlePart.';
+      case SortingOption.audioRemainingDuration:
+        final DateTime? lastListenedDateTime = audio.audioPausedDateTime;
+        final String lastSubtitlePart;
+        final String audioRemainingHHMMSSDuration =
+            DateTimeUtil.formatSecondsToHHMMSS(
+          seconds: audio.getAudioRemainingMilliseconds() ~/ 1000,
+        );
+
+        if (lastListenedDateTime == null) {
+          lastSubtitlePart =
+              '${AppLocalizations.of(context)!.remaining} $audioRemainingHHMMSSDuration. ${AppLocalizations.of(context)!.audioStateNotListened}.';
+        } else {
+          lastSubtitlePart =
+              '${AppLocalizations.of(context)!.remaining} $audioRemainingHHMMSSDuration. ${AppLocalizations.of(context)!.listenedOn} ${frenchDateFormat.format(lastListenedDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(lastListenedDateTime)}';
         }
 
         return '${audioDuration!.HHmmss()}. $lastSubtitlePart.';

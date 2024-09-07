@@ -130,7 +130,7 @@ class DateTimeUtil {
   /// The date and time elements are expected to be in the format
   /// of "YYMMDD-HHMMSS-" at the beginning of the file name and
   /// " HH-MM-SS" at the end of the file name.
-  /// 
+  ///
   /// Example: "240528-130636-Interview de Chat GPT  - IA, intelligence,
   /// philosophie, géopolitique, post-vérité... 24-01-12" is returned
   /// as "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique,
@@ -139,5 +139,20 @@ class DateTimeUtil {
     // Regular expression to match the prefix and suffix
     final regex = RegExp(r'^\d{6}-\d{6}-| \d{2}-\d{2}-\d{2}$');
     return fileName.replaceAll(regex, '');
+  }
+
+  static String formatSecondsToHHMMSS({
+    required int seconds,
+  }) {
+    int hours = seconds ~/ 3600;
+    int minutes = (seconds % 3600) ~/ 60;
+    int remainingSeconds = seconds % 60;
+
+    // Format the result with leading zeros for single digits
+    String formattedTime = '${hours.toString().padLeft(2, '0')}:'
+        '${minutes.toString().padLeft(2, '0')}:'
+        '${remainingSeconds.toString().padLeft(2, '0')}';
+
+    return formattedTime;
   }
 }

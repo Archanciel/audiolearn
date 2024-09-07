@@ -162,8 +162,7 @@ class AudioSortFilterParameters {
     ),
     SortingOption.audioRemainingDuration: SortCriteria<Audio>(
       selectorFunction: (Audio audio) {
-        return audio.audioDuration!.inMilliseconds -
-            audio.audioPositionSeconds * 1000;
+        return audio.getAudioRemainingMilliseconds();
       },
       sortOrder: sortAscending,
     ),

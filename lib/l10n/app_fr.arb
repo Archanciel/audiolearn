@@ -431,5 +431,6 @@
   },
   "playlistSortFilterLabel": "{screenName} tri/filtre",
   "playlistAudioCommentsLabel": "Commentaires des audio",
-  "listenedOn": "Écouté le"
+  "listenedOn": "Écouté le",
+  "remaining": "Durée restante"
 }

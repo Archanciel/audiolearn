@@ -1322,4 +1322,7 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get listenedOn => "Listened on";
+
+  @override
+  String get remaining => "Remaining";
 }

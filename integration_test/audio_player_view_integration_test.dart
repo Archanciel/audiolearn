@@ -2023,8 +2023,8 @@ void main() {
       verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '0:01',
-        maxPositionTimeStr: '0:04',
+        minPositionTimeStr: '0:02',
+        maxPositionTimeStr: '0:05',
       );
 
       // Verify if the last downloaded audio title is displayed

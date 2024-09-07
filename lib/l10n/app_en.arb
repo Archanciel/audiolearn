@@ -431,5 +431,6 @@
   },
   "playlistSortFilterLabel": "{screenName} sort/filter",
   "playlistAudioCommentsLabel": "Audio comments",
-  "listenedOn": "Listened on"
+  "listenedOn": "Listened on",
+  "remaining": "Remaining"
 }
