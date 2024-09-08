@@ -167,7 +167,7 @@ class AudioPlayerVM extends ChangeNotifier {
   }) async {
     await _setCurrentAudioAndInitializeAudioPlayer(audio);
 
-    audio.enclosingPlaylist!.setCurrentOrPastPlayableAudio(audio);
+    audio.enclosingPlaylist!.setCurrentOrPastPlayableAudio(audio: audio,);
     updateAndSaveCurrentAudio();
     _clearUndoRedoLists();
 

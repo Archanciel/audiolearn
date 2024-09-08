@@ -46,6 +46,9 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
   final ScrollController _scrollController = ScrollController();
   int _previousCurrentCommentLinesNumber = 0;
 
+  int _currentAudioIndex = -1;
+  Audio? _audioByFileNameNoExtCopy = null;
+
   @override
   void dispose() {
     _focusNodeDialog.dispose();
@@ -63,6 +66,8 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
     FocusScope.of(context).requestFocus(
       _focusNodeDialog,
     );
+
+    _currentAudioIndex = widget.currentPlaylist.currentOrPastPlayableAudioIndex;
 
     return KeyboardListener(
       // Using FocusNode to enable clicking on Enter to close
@@ -145,6 +150,17 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                   : kTextButtonStyleLightMode,
             ),
             onPressed: () {
+              Playlist currentPlaylist = widget.currentPlaylist;
+
+              currentPlaylist.currentOrPastPlayableAudioIndex =
+                  _currentAudioIndex;
+
+              if (_audioByFileNameNoExtCopy != null) {
+                currentPlaylist.updateCurrentOrPastPlayableAudio(
+                  audioCopy: _audioByFileNameNoExtCopy!,
+                );
+              }
+
               Navigator.of(context).pop();
             },
           ),
@@ -562,10 +578,16 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
   }) async {
     _playingComment = comment;
 
+    final Playlist currentPlaylist = widget.currentPlaylist;
+
+    Audio audioByFileNameNoExt = currentPlaylist.getAudioByFileNameNoExt(
+      audioFileNameNoExt: audioFileNameNoExt,
+    )!;
+
+    _audioByFileNameNoExtCopy = audioByFileNameNoExt.copy();
+
     await audioPlayerVM.setCurrentAudio(
-      audio: widget.currentPlaylist.getAudioByFileNameNoExt(
-        audioFileNameNoExt: audioFileNameNoExt,
-      )!,
+      audio: audioByFileNameNoExt,
     );
 
     if (!audioPlayerVM.isPlaying) {

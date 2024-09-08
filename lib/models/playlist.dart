@@ -544,9 +544,23 @@ class Playlist {
   // is selected in the PlaylistDownloadView, i.e. referenced in the app
   // settings.json file. The value -1 means that up to now, no playlist audio
   // has been played.
-  void setCurrentOrPastPlayableAudio(Audio audio) {
+  void setCurrentOrPastPlayableAudio({
+    required Audio audio,
+  }) {
     currentOrPastPlayableAudioIndex = playableAudioLst
         .indexWhere((item) => item == audio); // using Audio == operator
+  }
+
+  /// Method called when te user clicks on play icon of a comment listed in
+  /// the playlist comment list view so that playing a comment from there
+  /// does change the playlist current audio index and does impact the
+  /// commented audio position.
+  void updateCurrentOrPastPlayableAudio({
+    required Audio audioCopy,
+  }) {
+    int audioIndex = playableAudioLst
+        .indexWhere((item) => item == audioCopy); // using Audio == operator
+    playableAudioLst[audioIndex] = audioCopy;
   }
 
   /// Returns the currently playing audio or the playlist audio
