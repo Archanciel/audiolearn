@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../constants.dart';
+import '../models/audio.dart';
+
 class UiUtil {
   static String formatLargeIntValue({
     required BuildContext context,
@@ -16,5 +19,34 @@ class UiUtil {
           '${(value / 1000000).toStringAsFixed(2)} M${AppLocalizations.of(context)!.octetShort}';
     }
     return formattedValueStr;
+  }
+
+  static List<Color?> generateAudioStateColors({
+    required Audio audio,
+    required int audioIndex,
+    required int currentAudioIndex,
+    required bool isDarkTheme,
+  }) {
+    Color? audioTitleTextColor;
+    Color? audioTitleBackgroundColor;
+
+    if (audioIndex == currentAudioIndex) {
+      audioTitleTextColor = Colors.white;
+      audioTitleBackgroundColor = Colors.blue;
+    } else if (audio.wasFullyListened()) {
+      audioTitleTextColor = (isDarkTheme)
+          ? kSliderThumbColorInDarkMode
+          : kSliderThumbColorInLightMode;
+      audioTitleBackgroundColor = null;
+    } else if (audio.isPartiallyListened()) {
+      audioTitleTextColor = Colors.blue;
+      audioTitleBackgroundColor = null;
+    } else {
+      // is not listened
+      audioTitleTextColor = (isDarkTheme) ? Colors.white : Colors.black;
+      audioTitleBackgroundColor = null;
+    }
+
+    return [audioTitleTextColor, audioTitleBackgroundColor];
   }
 }

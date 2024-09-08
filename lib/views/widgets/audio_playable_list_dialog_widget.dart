@@ -1,3 +1,4 @@
+import 'package:audiolearn/utils/ui_util.dart';
 import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -53,7 +54,8 @@ class _AudioPlayableListDialogState extends State<AudioPlayableListDialog>
 
   @override
   Widget build(BuildContext context) {
-    final ThemeProviderVM themeProviderVM = Provider.of<ThemeProviderVM>(context);
+    final ThemeProviderVM themeProviderVM =
+        Provider.of<ThemeProviderVM>(context);
     bool isDarkTheme = themeProviderVM.currentTheme == AppTheme.dark;
     final AudioPlayerVM audioPlayerVMlistenFalse =
         Provider.of<AudioPlayerVM>(context, listen: false);
@@ -369,25 +371,15 @@ class _AudioPlayableListDialogState extends State<AudioPlayableListDialog>
     required int audioIndex,
     required bool isDarkTheme,
   }) {
-    Color? audioTitleTextColor;
-    Color? audioTitleBackgroundColor;
+    List<Color?> audioTitleForeAndBackgroundColors = UiUtil.generateAudioStateColors(
+      audio: audio,
+      audioIndex: audioIndex,
+      currentAudioIndex: _currentAudioIndex,
+      isDarkTheme: isDarkTheme,
+    );
 
-    if (audioIndex == _currentAudioIndex) {
-      audioTitleTextColor = Colors.white;
-      audioTitleBackgroundColor = Colors.blue;
-    } else if (audio.wasFullyListened()) {
-      audioTitleTextColor = (isDarkTheme)
-          ? kSliderThumbColorInDarkMode
-          : kSliderThumbColorInLightMode;
-      audioTitleBackgroundColor = null;
-    } else if (audio.isPartiallyListened()) {
-      audioTitleTextColor = Colors.blue;
-      audioTitleBackgroundColor = null;
-    } else {
-      // is not listened
-      audioTitleTextColor = (isDarkTheme) ? Colors.white : Colors.black;
-      audioTitleBackgroundColor = null;
-    }
+    Color? audioTitleTextColor = audioTitleForeAndBackgroundColors[0];
+    Color? audioTitleBackgroundColor = audioTitleForeAndBackgroundColors[1];
 
     return SizedBox(
       height: _itemHeight,

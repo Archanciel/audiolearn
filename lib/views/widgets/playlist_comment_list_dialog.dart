@@ -11,6 +11,7 @@ import '../../constants.dart';
 import '../../models/comment.dart';
 import '../../models/playlist.dart';
 import '../../services/settings_data_service.dart';
+import '../../utils/ui_util.dart';
 import '../../viewmodels/audio_player_vm.dart';
 import '../../viewmodels/comment_vm.dart';
 import '../../viewmodels/theme_provider_vm.dart';
@@ -55,7 +56,8 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
 
   @override
   Widget build(BuildContext context) {
-    final ThemeProviderVM themeProviderVM = Provider.of<ThemeProviderVM>(context);
+    final ThemeProviderVM themeProviderVM =
+        Provider.of<ThemeProviderVM>(context);
 
     // Required so that clicking on Enter closes the dialog
     FocusScope.of(context).requestFocus(
@@ -91,7 +93,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
         actionsPadding: kDialogActionsPadding,
         content: Consumer<CommentVM>(
           builder: (context, commentVM, child) {
-            Map<String, List<Comment>> playlistAudioCommentsMap =
+            final Map<String, List<Comment>> playlistAudioCommentsMap =
                 commentVM.getPlaylistAudioComments(
               playlist: widget.currentPlaylist,
             );
@@ -100,15 +102,16 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
             // playlistAudioCommentsMap keys and sorting them according to the
             // playble audio order.
 
-            List<String> audioFileNamesLst =
+            final List<String> audioFileNamesLst =
                 playlistAudioCommentsMap.keys.toList();
 
-            PlaylistListVM playlistListVM = Provider.of<PlaylistListVM>(
+            final PlaylistListVM playlistListVMlistenFalse =
+                Provider.of<PlaylistListVM>(
               context,
               listen: false,
             );
 
-            List<String> sortedAudioFileNamesLst = playlistListVM
+            final List<String> sortedAudioFileNamesLst = playlistListVMlistenFalse
                 .getSortedPlaylistAudioCommentFileNamesApplyingSortFilterParameters(
               selectedPlaylist: widget.currentPlaylist,
               audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -164,7 +167,8 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
     // Obtaining the current audio file name without the extension.
     // This will be used to drop down the playlist audio comments list
     // to the current audio comments.
-    String currentAudioFileName = widget.currentPlaylist
+    Playlist currentPlaylist = widget.currentPlaylist;
+    String currentAudioFileName = currentPlaylist
             .getCurrentOrLastlyPlayedAudioContainedInPlayableAudioLst()
             ?.audioFileName ??
         '';
@@ -176,11 +180,6 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
       );
     }
 
-    const TextStyle commentTitleTextStyle = TextStyle(
-      fontSize: kAudioTitleFontSize,
-      fontWeight: FontWeight.bold,
-    );
-
     const TextStyle commentContentTextStyle = TextStyle(
       fontSize: kAudioTitleFontSize,
     );
@@ -188,21 +187,20 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
     // List of widgets corresponding to the playlist audio comments
     List<Widget> widgetsLst = [];
 
-    Color? audioTitleTextColor;
-    Color? audioTitleBackgroundColor;
-    int previousCurrentCommentLineNumber = 0;
-
-    // Defining the text style for the commented audio title
     for (String audioFileName in audioFileNamesLst) {
-      if (audioFileName == currentAudioFileName) {
-        audioTitleTextColor = Colors.white;
-        audioTitleBackgroundColor = Colors.blue;
-      } else {
-        audioTitleTextColor = (isDarkTheme)
-            ? kSliderThumbColorInDarkMode
-            : kSliderThumbColorInLightMode;
-        audioTitleBackgroundColor = null;
-      }
+      Audio audio = currentPlaylist.getAudioByFileNameNoExt(
+        audioFileNameNoExt: audioFileName,
+      )!;
+
+      List<Color?> audioStateColors = UiUtil.generateAudioStateColors(
+        audio: audio,
+        audioIndex: audioFileNamesLst.indexOf(audioFileName),
+        currentAudioIndex: audioFileNamesLst.indexOf(currentAudioFileName),
+        isDarkTheme: isDarkTheme,
+      );
+
+      Color? audioTitleTextColor = audioStateColors[0];
+      Color? audioTitleBackgroundColor = audioStateColors[1];
 
       // The commented audio title is equivalent to the audio file name
       // without the extension and without the date time elements.
@@ -233,6 +231,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
       // contained in the audioFileName
       List<Comment> audioCommentsLst =
           playlistAudiosCommentsMap[audioFileName]!;
+      int previousCurrentCommentLineNumber = 0;
 
       // Adding the number of lines related to the commented audio title
       previousCurrentCommentLineNumber +=
@@ -246,6 +245,11 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
       if (audioFileName == currentAudioFileName) {
         _previousCurrentCommentLinesNumber = previousCurrentCommentLineNumber;
       }
+
+      const TextStyle commentTitleTextStyle = TextStyle(
+        fontSize: kAudioTitleFontSize,
+        fontWeight: FontWeight.bold,
+      );
 
       for (Comment comment in audioCommentsLst) {
         if (_previousCurrentCommentLinesNumber == 0) {
