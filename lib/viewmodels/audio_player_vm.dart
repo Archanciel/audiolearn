@@ -230,7 +230,9 @@ class AudioPlayerVM extends ChangeNotifier {
 
     await initializeAudioPlayerPlugin();
 
-    await modifyAudioPlayerPluginPosition(_currentAudioPosition);
+    await modifyAudioPlayerPluginPosition(
+      durationPosition: _currentAudioPosition,
+    );
   }
 
   /// Adjusts the playback start position of the current audio based on the elapsed
@@ -646,7 +648,9 @@ class AudioPlayerVM extends ChangeNotifier {
     // button, the audio is rewinded maybe half a minute ...
     _currentAudio!.audioPausedDateTime = DateTime.now();
 
-    await modifyAudioPlayerPluginPosition(_currentAudioPosition);
+    await modifyAudioPlayerPluginPosition(
+      durationPosition: _currentAudioPosition,
+    );
 
     // now, when clicking on position buttons, the playlist.json file
     // is updated
@@ -733,7 +737,9 @@ class AudioPlayerVM extends ChangeNotifier {
     // method called by the playCurrentAudio() method. This is necessary
     // so that if we click on the slider or on an audio position button
     // while the audio is playing, the audio play position is changed.
-    await modifyAudioPlayerPluginPosition(durationPosition);
+    await modifyAudioPlayerPluginPosition(
+      durationPosition: durationPosition,
+    );
 
     notifyListeners();
   }
@@ -742,8 +748,20 @@ class AudioPlayerVM extends ChangeNotifier {
   /// to avoid the use of the audio player plugin in unit tests.
   ///
   /// For this reason, the method is not private !
-  Future<void> modifyAudioPlayerPluginPosition(
-      Duration durationPosition) async {
+  Future<void> modifyAudioPlayerPluginPosition({
+    required Duration durationPosition,
+    bool addUndoCommand = false,
+  }) async {
+    if (addUndoCommand) {
+      Command command = SetAudioPositionCommand(
+        audioPlayerVM: this,
+        oldDurationPosition: _currentAudioPosition,
+        newDurationPosition: durationPosition,
+      );
+
+      _undoList.add(command);
+    }
+    
     await _audioPlayerPlugin!.seek(durationPosition);
   }
 
@@ -787,7 +805,9 @@ class AudioPlayerVM extends ChangeNotifier {
 
     updateAndSaveCurrentAudio();
 
-    await modifyAudioPlayerPluginPosition(_currentAudioPosition);
+    await modifyAudioPlayerPluginPosition(
+      durationPosition: _currentAudioPosition,
+    );
 
     notifyListeners();
   }
@@ -840,7 +860,9 @@ class AudioPlayerVM extends ChangeNotifier {
     _currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd = false;
     updateAndSaveCurrentAudio();
 
-    await modifyAudioPlayerPluginPosition(_currentAudioTotalDuration);
+    await modifyAudioPlayerPluginPosition(
+      durationPosition: _currentAudioTotalDuration,
+    );
 
     notifyListeners();
   }
@@ -884,7 +906,9 @@ class AudioPlayerVM extends ChangeNotifier {
     _setCurrentAudioToEndPosition();
     updateAndSaveCurrentAudio();
 
-    await modifyAudioPlayerPluginPosition(_currentAudioTotalDuration);
+    await modifyAudioPlayerPluginPosition(
+      durationPosition: _currentAudioTotalDuration,
+    );
 
     notifyListeners();
   }
@@ -1034,13 +1058,6 @@ class AudioPlayerVM extends ChangeNotifier {
 
     notifyListeners();
   }
-
-  // void _executeCommand(Command command) {
-  //   command.execute();
-  //   _undoList.add(command);
-  //   // redoList.clear();
-  //   notifyListeners();
-  // }
 
   void undo() {
     if (_undoList.isNotEmpty) {
