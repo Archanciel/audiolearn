@@ -784,11 +784,13 @@ class IntegrationTestUtil {
     );
   }
 
+  /// Passing {enclosingWidgetFinder} depends on the context the integration
+  /// test which call this method.
   static Future<void> checkAudioTextColor({
     required WidgetTester tester,
     Finder? enclosingWidgetFinder,
     required String audioTitle,
-    required Color expectedTitleTextColor,
+    required Color? expectedTitleTextColor,
     required Color? expectedTitleTextBackgroundColor,
   }) async {
     // Find the Text widget by its text content

@@ -13706,7 +13706,7 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets('''Playlist audio comments color verification.''',
+    testWidgets('''Playlist comments color verification.''',
         (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
 
@@ -13757,6 +13757,8 @@ void main() {
         8,
       );
 
+      // Verify the color of the audio titles in the playlist comment dialog
+
       await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
         enclosingWidgetFinder: playlistCommentListDialogFinder,
@@ -13787,6 +13789,41 @@ void main() {
         enclosingWidgetFinder: playlistCommentListDialogFinder,
         audioTitle: "La surpopulation mondiale par Jancovici et Barrau",
         expectedTitleTextColor: IntegrationTestUtil.unplayedAudioTitleTextColor,
+        expectedTitleTextBackgroundColor: null,
+      );
+
+      // Verifying the color of the comments titles in the playlist comment
+      // dialog
+
+      await IntegrationTestUtil.checkAudioTextColor(
+        tester: tester,
+        enclosingWidgetFinder: playlistCommentListDialogFinder,
+        audioTitle: "Barrau one",
+        expectedTitleTextColor: null,
+        expectedTitleTextBackgroundColor: null,
+      );
+
+      await IntegrationTestUtil.checkAudioTextColor(
+        tester: tester,
+        enclosingWidgetFinder: playlistCommentListDialogFinder,
+        audioTitle: "One",
+        expectedTitleTextColor: null,
+        expectedTitleTextBackgroundColor: null,
+      );
+
+      await IntegrationTestUtil.checkAudioTextColor(
+        tester: tester,
+        enclosingWidgetFinder: playlistCommentListDialogFinder,
+        audioTitle: "Comment Jancovici",
+        expectedTitleTextColor: null,
+        expectedTitleTextBackgroundColor: null,
+      );
+
+      await IntegrationTestUtil.checkAudioTextColor(
+        tester: tester,
+        enclosingWidgetFinder: playlistCommentListDialogFinder,
+        audioTitle: "Start",
+        expectedTitleTextColor: null,
         expectedTitleTextBackgroundColor: null,
       );
 
