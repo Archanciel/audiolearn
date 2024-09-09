@@ -39,7 +39,7 @@ class CommentVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<CommentPlayCommand> _undoCommentPlayCommandLst = [];
+  final List<CommentPlayCommand> _undoCommentPlayCommandLst = [];
 
   CommentVM();
 

@@ -123,6 +123,7 @@ void main() {
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
         playlistListVM: playlistListVM,
+        commentVM: CommentVM(),
       );
 
       await _launchExpandablePlaylistListView(
@@ -378,6 +379,7 @@ void main() {
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
         playlistListVM: playlistListVM,
+        commentVM: CommentVM(),
       );
 
       await _launchExpandablePlaylistListView(
@@ -532,6 +534,7 @@ void main() {
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
         playlistListVM: playlistListVM,
+        commentVM: CommentVM(),
       );
 
       await _launchExpandablePlaylistListView(
@@ -786,6 +789,7 @@ void main() {
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
         playlistListVM: playlistListVM,
+        commentVM: CommentVM(),
       );
 
       await _launchExpandablePlaylistListView(
@@ -1570,6 +1574,7 @@ void main() {
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
         playlistListVM: playlistListVM,
+        commentVM: CommentVM(),
       );
 
       await _launchExpandablePlaylistListView(
@@ -2028,6 +2033,7 @@ void main() {
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
         playlistListVM: playlistListVM,
+        commentVM: CommentVM(),
       );
 
       await _launchExpandablePlaylistListView(
@@ -2211,6 +2217,7 @@ void main() {
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
         playlistListVM: playlistListVM,
+        commentVM: CommentVM(),
       );
 
       await _launchExpandablePlaylistListView(
@@ -2364,6 +2371,7 @@ void main() {
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
         playlistListVM: playlistListVM,
+        commentVM: CommentVM(),
       );
 
       await _launchExpandablePlaylistListView(
@@ -2519,6 +2527,7 @@ void main() {
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
         playlistListVM: playlistListVM,
+        commentVM: CommentVM(),
       );
 
       await _launchExpandablePlaylistListView(
@@ -2698,6 +2707,7 @@ void main() {
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
         playlistListVM: playlistListVM,
+        commentVM: CommentVM(),
       );
 
       await _launchExpandablePlaylistListView(
