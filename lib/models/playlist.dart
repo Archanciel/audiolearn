@@ -555,13 +555,17 @@ class Playlist {
   /// the playlist comment list view so that playing a comment from there
   /// does change the playlist current audio index and does impact the
   /// commented audio position.
-  void updateCurrentOrPastPlayableAudio({
-    required Audio audioCopy,
-  }) {
-    int audioIndex = playableAudioLst
-        .indexWhere((item) => item == audioCopy); // using Audio == operator
+void updateCurrentOrPastPlayableAudio({
+  required Audio audioCopy,
+}) {
+  int audioIndex = playableAudioLst.indexWhere((item) => item == audioCopy);
+
+  // Only replace if the audio equal to the audioCopy exists in
+  // the list
+  if (audioIndex != -1) {
     playableAudioLst[audioIndex] = audioCopy;
   }
+}
 
   /// Returns the currently playing audio or the playlist audio
   /// which was played the last time. If no valid audio index is
