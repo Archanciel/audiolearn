@@ -13636,8 +13636,8 @@ void main() {
     });
   });
   group('Playlist audio comments test', () {
-    testWidgets('''
-                   On empty playlist, opening the playlist audio comments dialog.''',
+    testWidgets(
+        '''On empty playlist, opening the playlist audio comments dialog.''',
         (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
       const String emptyPlaylistTitle = 'Empty'; // Youtube playlist
@@ -13674,10 +13674,10 @@ void main() {
 
       // Now find the List comments of playlist audio popup menu
       // item and tap on it
-      final Finder popupCopyMenuItem =
+      final Finder popupPlaylistAudioCommentsMenuItem =
           find.byKey(const Key("popup_menu_display_playlist_audio_comments"));
 
-      await tester.tap(popupCopyMenuItem);
+      await tester.tap(popupPlaylistAudioCommentsMenuItem);
       await tester.pumpAndSettle();
 
       // Verify that the playlist audio comment dialog is displayed
@@ -13686,16 +13686,113 @@ void main() {
       // Verify the dialog title
       expect(find.text('Playlist audio comments'), findsOneWidget);
 
-      // Verify the audio comments list of the dialog is empty
+      // Verify that the audio comments list of the dialog is empty
 
-      final listFinder = find.byKey(const Key('playlistCommentsListKey'));
-      expect(listFinder, findsOneWidget);
+      final Finder playlistCommentsLstFinder = find.byKey(const Key('playlistCommentsListKey',));
 
       // Ensure the list has no child widgets
       expect(
-        tester.widget<ListBody>(listFinder).children.length,
+        tester.widget<ListBody>(playlistCommentsLstFinder).children.length,
         0,
       );
+
+      // Tap on Close text button
+      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+      await tester.pumpAndSettle();
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets('''Playlist audio comments color verification.''',
+        (WidgetTester tester) async {
+      const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_comment_color_test',
+        selectedPlaylistTitle: youtubePlaylistTitle,
+      );
+
+      // First, find the 'S8 audio' playlist sublist ListTile Text widget
+      Finder youtubePlaylistListTileTextWidgetFinder =
+          find.text(youtubePlaylistTitle);
+
+      // Then obtain the playlist ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      Finder youtubePlaylistListTileWidgetFinder = find.ancestor(
+        of: youtubePlaylistListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now we want to tap the popup menu of the 'S8 audio'  playlist ListTile
+
+      // Find the leading menu icon button of the playlist ListTile
+      // and tap on it
+      Finder youtubePlaylistListTileLeadingMenuIconButton = find.descendant(
+        of: youtubePlaylistListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(youtubePlaylistListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the List comments of playlist audio popup menu
+      // item and tap on it
+      final Finder popupPlaylistAudioCommentsMenuItem =
+          find.byKey(const Key("popup_menu_display_playlist_audio_comments"));
+
+      await tester.tap(popupPlaylistAudioCommentsMenuItem);
+      await tester.pumpAndSettle();
+
+      final Finder playlistCommentListDialogFinder = find.byType(PlaylistCommentListDialog);
+      final Finder playlistCommentListFinder = find.byKey(const Key('playlistCommentsListKey'));
+
+      // Ensure the list has 8 child widgets
+      expect(
+        tester.widget<ListBody>(playlistCommentListFinder).children.length,
+        8,
+      );
+
+      await IntegrationTestUtil.checkAudioTextColor(
+        tester: tester,
+        enclosingWidgetFinder: playlistCommentListDialogFinder,
+        audioTitle: "Quand Aurélien Barrau va dans une école de management",
+        expectedTitleTextColor: IntegrationTestUtil.currentlyPlayingAudioTitleTextColor,
+        expectedTitleTextBackgroundColor:
+            IntegrationTestUtil.currentlyPlayingAudioTitleTextBackgroundColor,
+      );
+
+      await IntegrationTestUtil.checkAudioTextColor(
+        tester: tester,
+        enclosingWidgetFinder: playlistCommentListDialogFinder,
+        audioTitle: "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...",
+        expectedTitleTextColor: IntegrationTestUtil.partiallyPlayedAudioTitleTextdColor,
+        expectedTitleTextBackgroundColor: null,
+      );
+
+      await IntegrationTestUtil.checkAudioTextColor(
+        tester: tester,
+        enclosingWidgetFinder: playlistCommentListDialogFinder,
+        audioTitle: "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+        expectedTitleTextColor: IntegrationTestUtil.fullyPlayedAudioTitleColor,
+        expectedTitleTextBackgroundColor: null,
+      );
+
+      await IntegrationTestUtil.checkAudioTextColor(
+        tester: tester,
+        enclosingWidgetFinder: playlistCommentListDialogFinder,
+        audioTitle: "La surpopulation mondiale par Jancovici et Barrau",
+        expectedTitleTextColor: IntegrationTestUtil.unplayedAudioTitleTextColor,
+        expectedTitleTextBackgroundColor: null,
+      );
+
+      // Tap on Close text button
+      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+      await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub

@@ -14,6 +14,13 @@ import 'package:audiolearn/utils/dir_util.dart';
 import 'package:audiolearn/main.dart' as app;
 
 class IntegrationTestUtil {
+  static const Color fullyPlayedAudioTitleColor = kSliderThumbColorInDarkMode;
+  static const Color currentlyPlayingAudioTitleTextColor = Colors.white;
+  static const Color currentlyPlayingAudioTitleTextBackgroundColor =
+      Colors.blue;
+  static const Color unplayedAudioTitleTextColor = Colors.white;
+  static const Color partiallyPlayedAudioTitleTextdColor = Colors.blue;
+
   static Finder validateInkWellButton({
     required WidgetTester tester,
     String? audioTitle,
@@ -150,15 +157,35 @@ class IntegrationTestUtil {
       // contains the audio to play
 
       // First, find the Playlist ListTile Text widget
-      final Finder audioPlayerSelectedPlaylistFinder =
+      Finder audioPlayerSelectedPlaylistFinder =
           find.text(selectedPlaylistTitle);
 
       // Then obtain the Playlist ListTile widget enclosing the Text
       // widget by finding its ancestor
-      final Finder selectedPlaylistListTileWidgetFinder = find.ancestor(
+      Finder selectedPlaylistListTileWidgetFinder = find.ancestor(
         of: audioPlayerSelectedPlaylistFinder,
         matching: find.byType(ListTile),
       );
+
+      if (selectedPlaylistListTileWidgetFinder.evaluate().isEmpty) {
+        // In this case, the first tap on the 'Toggle List' button
+        // did close the list of playlists. Tap the 'Toggle List' button
+        // again to show the list. If the list selecting the playlist
+        // won't be possible.
+
+        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+        await tester.pumpAndSettle();
+
+        // First, find the Playlist ListTile Text widget
+        audioPlayerSelectedPlaylistFinder = find.text(selectedPlaylistTitle);
+
+        // Then obtain the Playlist ListTile widget enclosing the Text
+        // widget by finding its ancestor
+        selectedPlaylistListTileWidgetFinder = find.ancestor(
+          of: audioPlayerSelectedPlaylistFinder,
+          matching: find.byType(ListTile),
+        );
+      }
 
       // Now find the Checkbox widget located in the Playlist ListTile
       // and tap on it to select the playlist
@@ -755,5 +782,34 @@ class IntegrationTestUtil {
       loadedSelectedPlaylist.audioPlayingOrder,
       audioPlayingOrder,
     );
+  }
+
+  static Future<void> checkAudioTextColor({
+    required WidgetTester tester,
+    Finder? enclosingWidgetFinder,
+    required String audioTitle,
+    required Color expectedTitleTextColor,
+    required Color? expectedTitleTextBackgroundColor,
+  }) async {
+    // Find the Text widget by its text content
+    final Finder textFinder;
+
+    if (enclosingWidgetFinder != null) {
+      // Find the Text widget within the enclosing widget
+      textFinder = find.descendant(
+        of: enclosingWidgetFinder,
+        matching: find.text(audioTitle),
+      );
+    } else {
+      textFinder = find.text(audioTitle);
+    }
+
+    // Retrieve the Text widget
+    final Text textWidget = tester.widget(textFinder) as Text;
+
+    // Check if the color of the Text widget is as expected
+    expect(textWidget.style?.color, equals(expectedTitleTextColor));
+    expect(textWidget.style?.backgroundColor,
+        equals(expectedTitleTextBackgroundColor));
   }
 }

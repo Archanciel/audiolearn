@@ -2484,13 +2484,7 @@ void main() {
       );
     });
   });
-  group('Display of playlist audio list.', () {
-    const Color fullyPlayedAudioTitleColor = kSliderThumbColorInDarkMode;
-    const Color currentlyPlayingAudioTitleTextColor = Colors.white;
-    const Color currentlyPlayingAudioTitleTextBackgroundColor = Colors.blue;
-    const Color unplayedAudioTitleTextColor = Colors.white;
-    const Color partiallyPlayedAudioTitleTextdColor = Colors.blue;
-
+  group('Display of audio playable list.', () {
     testWidgets('All, then only no played or partially played, audio displayed',
         (WidgetTester tester) async {
       const String audioPlayerSelectedPlaylistTitle =
@@ -2530,55 +2524,55 @@ void main() {
           .tap(find.text('$fifthDownloadedPartiallyPlayedAudioTitle\n6:29'));
       await tester.pumpAndSettle();
 
-      await checkAudioTextColor(
+      await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
         audioTitle:
             "La sagesse ancestrale au service de la transition - Barrau & Bellet",
-        expectedTitleTextColor: fullyPlayedAudioTitleColor,
+        expectedTitleTextColor: IntegrationTestUtil.fullyPlayedAudioTitleColor,
         expectedTitleTextBackgroundColor: null,
       );
 
-      await checkAudioTextColor(
+      await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
         audioTitle: "Manger de la viande à notre époque par Aurélien Barrau",
-        expectedTitleTextColor: partiallyPlayedAudioTitleTextdColor,
+        expectedTitleTextColor: IntegrationTestUtil.partiallyPlayedAudioTitleTextdColor,
         expectedTitleTextBackgroundColor: null,
       );
 
-      await checkAudioTextColor(
+      await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
         audioTitle: "Jancovici démonte les avantages du numérique chez Orange",
-        expectedTitleTextColor: fullyPlayedAudioTitleColor,
+        expectedTitleTextColor: IntegrationTestUtil.fullyPlayedAudioTitleColor,
         expectedTitleTextBackgroundColor: null,
       );
 
-      await checkAudioTextColor(
+      await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
         audioTitle: "Quand Aurélien Barrau va dans une école de management",
-        expectedTitleTextColor: partiallyPlayedAudioTitleTextdColor,
+        expectedTitleTextColor: IntegrationTestUtil.partiallyPlayedAudioTitleTextdColor,
         expectedTitleTextBackgroundColor: null,
       );
 
-      await checkAudioTextColor(
+      await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
         audioTitle: fifthDownloadedPartiallyPlayedAudioTitle,
-        expectedTitleTextColor: currentlyPlayingAudioTitleTextColor,
+        expectedTitleTextColor: IntegrationTestUtil.currentlyPlayingAudioTitleTextColor,
         expectedTitleTextBackgroundColor:
-            currentlyPlayingAudioTitleTextBackgroundColor,
+            IntegrationTestUtil.currentlyPlayingAudioTitleTextBackgroundColor,
       );
 
-      await checkAudioTextColor(
+      await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
         audioTitle:
             "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
-        expectedTitleTextColor: fullyPlayedAudioTitleColor,
+        expectedTitleTextColor: IntegrationTestUtil.fullyPlayedAudioTitleColor,
         expectedTitleTextBackgroundColor: null,
       );
 
-      await checkAudioTextColor(
+      await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
         audioTitle: "morning _ cinematic video",
-        expectedTitleTextColor: unplayedAudioTitleTextColor,
+        expectedTitleTextColor: IntegrationTestUtil.unplayedAudioTitleTextColor,
         expectedTitleTextBackgroundColor: null,
       );
 
@@ -2606,53 +2600,53 @@ void main() {
 
       // Checking the color of the displayed audio titles
 
-      await checkAudioTextColor(
+      await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
         audioTitle: "Manger de la viande à notre époque par Aurélien Barrau",
-        expectedTitleTextColor: partiallyPlayedAudioTitleTextdColor,
+        expectedTitleTextColor: IntegrationTestUtil.partiallyPlayedAudioTitleTextdColor,
         expectedTitleTextBackgroundColor: null,
       );
 
-      await checkAudioTextColor(
+      await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
         audioTitle: "Quand Aurélien Barrau va dans une école de management",
-        expectedTitleTextColor: partiallyPlayedAudioTitleTextdColor,
+        expectedTitleTextColor: IntegrationTestUtil.partiallyPlayedAudioTitleTextdColor,
         expectedTitleTextBackgroundColor: null,
       );
 
-      await checkAudioTextColor(
+      await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
         audioTitle: fifthDownloadedPartiallyPlayedAudioTitle,
-        expectedTitleTextColor: currentlyPlayingAudioTitleTextColor,
+        expectedTitleTextColor: IntegrationTestUtil.currentlyPlayingAudioTitleTextColor,
         expectedTitleTextBackgroundColor:
-            currentlyPlayingAudioTitleTextBackgroundColor,
+            IntegrationTestUtil.currentlyPlayingAudioTitleTextBackgroundColor,
       );
 
-      await checkAudioTextColor(
+      await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
         audioTitle: "morning _ cinematic video",
-        expectedTitleTextColor: unplayedAudioTitleTextColor,
+        expectedTitleTextColor: IntegrationTestUtil.unplayedAudioTitleTextColor,
         expectedTitleTextBackgroundColor: null,
       );
 
-      await checkAudioTextColor(
+      await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
         audioTitle: "La résilience insulaire par Fiona Roche",
-        expectedTitleTextColor: partiallyPlayedAudioTitleTextdColor,
+        expectedTitleTextColor: IntegrationTestUtil.partiallyPlayedAudioTitleTextdColor,
         expectedTitleTextBackgroundColor: null,
       );
 
-      await checkAudioTextColor(
+      await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
         audioTitle: "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
-        expectedTitleTextColor: unplayedAudioTitleTextColor,
+        expectedTitleTextColor: IntegrationTestUtil.unplayedAudioTitleTextColor,
         expectedTitleTextBackgroundColor: null,
       );
 
-      await checkAudioTextColor(
+      await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
         audioTitle: "Les besoins artificiels par R.Keucheyan",
-        expectedTitleTextColor: unplayedAudioTitleTextColor,
+        expectedTitleTextColor: IntegrationTestUtil.unplayedAudioTitleTextColor,
         expectedTitleTextBackgroundColor: null,
       );
 
@@ -2704,47 +2698,47 @@ void main() {
 
       // The list has been moved down so that the current audio is
       // displayed at the botom of the list
-      await checkAudioTextColor(
+      await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
         audioTitle: thirdDownloadedNotPlayedAudioTitle,
-        expectedTitleTextColor: currentlyPlayingAudioTitleTextColor,
+        expectedTitleTextColor: IntegrationTestUtil.currentlyPlayingAudioTitleTextColor,
         expectedTitleTextBackgroundColor:
-            currentlyPlayingAudioTitleTextBackgroundColor,
+            IntegrationTestUtil.currentlyPlayingAudioTitleTextBackgroundColor,
       );
 
-      await checkAudioTextColor(
+      await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
         audioTitle: "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
-        expectedTitleTextColor: unplayedAudioTitleTextColor,
+        expectedTitleTextColor: IntegrationTestUtil.unplayedAudioTitleTextColor,
         expectedTitleTextBackgroundColor: null,
       );
 
-      await checkAudioTextColor(
+      await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
         audioTitle: "La résilience insulaire par Fiona Roche",
-        expectedTitleTextColor: partiallyPlayedAudioTitleTextdColor,
+        expectedTitleTextColor: IntegrationTestUtil.partiallyPlayedAudioTitleTextdColor,
         expectedTitleTextBackgroundColor: null,
       );
 
-      await checkAudioTextColor(
+      await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
         audioTitle: "Really short video",
-        expectedTitleTextColor: fullyPlayedAudioTitleColor,
+        expectedTitleTextColor: IntegrationTestUtil.fullyPlayedAudioTitleColor,
         expectedTitleTextBackgroundColor: null,
       );
 
-      await checkAudioTextColor(
+      await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
         audioTitle: "morning _ cinematic video",
-        expectedTitleTextColor: unplayedAudioTitleTextColor,
+        expectedTitleTextColor: IntegrationTestUtil.unplayedAudioTitleTextColor,
         expectedTitleTextBackgroundColor: null,
       );
 
-      await checkAudioTextColor(
+      await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
         audioTitle:
             "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
-        expectedTitleTextColor: fullyPlayedAudioTitleColor,
+        expectedTitleTextColor: IntegrationTestUtil.fullyPlayedAudioTitleColor,
         expectedTitleTextBackgroundColor: null,
       );
 
@@ -7695,24 +7689,6 @@ Future<void> goBackToPlaylistdownloadViewToCheckAudioStateAndIcon({
   // Assert CircleAvatar background color
   expect(circleAvatarWidget.backgroundColor,
       equals(expectedAudioRightIconSurroundedColor));
-}
-
-Future<void> checkAudioTextColor({
-  required WidgetTester tester,
-  required String audioTitle,
-  required Color expectedTitleTextColor,
-  required Color? expectedTitleTextBackgroundColor,
-}) async {
-  // Find the Text widget by its text content
-  final Finder textFinder = find.text(audioTitle);
-
-  // Retrieve the Text widget
-  final Text textWidget = tester.widget(textFinder) as Text;
-
-  // Check if the color of the Text widget is as expected
-  expect(textWidget.style?.color, equals(expectedTitleTextColor));
-  expect(textWidget.style?.backgroundColor,
-      equals(expectedTitleTextBackgroundColor));
 }
 
 void verifyAudioPlaySpeedStoredInPlaylistJsonFile({
