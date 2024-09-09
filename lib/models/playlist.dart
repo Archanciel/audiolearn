@@ -557,6 +557,7 @@ class Playlist {
   /// commented audio position.
 void updateCurrentOrPastPlayableAudio({
   required Audio audioCopy,
+  required int previousAudioIndex,
 }) {
   int audioIndex = playableAudioLst.indexWhere((item) => item == audioCopy);
 
@@ -565,6 +566,8 @@ void updateCurrentOrPastPlayableAudio({
   if (audioIndex != -1) {
     playableAudioLst[audioIndex] = audioCopy;
   }
+
+  currentOrPastPlayableAudioIndex = previousAudioIndex;
 }
 
   /// Returns the currently playing audio or the playlist audio

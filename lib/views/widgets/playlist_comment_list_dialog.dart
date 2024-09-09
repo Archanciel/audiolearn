@@ -46,9 +46,6 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
   final ScrollController _scrollController = ScrollController();
   int _previousCurrentCommentLinesNumber = 0;
 
-  int _currentAudioIndex = -1;
-  Audio? _audioByFileNameNoExtCopy = null;
-
   @override
   void dispose() {
     _focusNodeDialog.dispose();
@@ -61,13 +58,15 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
   Widget build(BuildContext context) {
     final ThemeProviderVM themeProviderVM =
         Provider.of<ThemeProviderVM>(context);
+    final AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
+      context,
+      listen: false,
+    );
 
     // Required so that clicking on Enter closes the dialog
     FocusScope.of(context).requestFocus(
       _focusNodeDialog,
     );
-
-    _currentAudioIndex = widget.currentPlaylist.currentOrPastPlayableAudioIndex;
 
     return KeyboardListener(
       // Using FocusNode to enable clicking on Enter to close
@@ -129,6 +128,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                 key: const Key('playlistCommentsListKey'),
                 children: (sortedAudioFileNamesLst.isNotEmpty)
                     ? _buildPlaylistAudiosCommentsList(
+                        audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                         commentVM: commentVM,
                         playlistAudiosCommentsMap: playlistAudioCommentsMap,
                         audioFileNamesLst: sortedAudioFileNamesLst,
@@ -149,16 +149,9 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                   ? kTextButtonStyleDarkMode
                   : kTextButtonStyleLightMode,
             ),
-            onPressed: () {
-              Playlist currentPlaylist = widget.currentPlaylist;
-
-              currentPlaylist.currentOrPastPlayableAudioIndex =
-                  _currentAudioIndex;
-
-              if (_audioByFileNameNoExtCopy != null) {
-                currentPlaylist.updateCurrentOrPastPlayableAudio(
-                  audioCopy: _audioByFileNameNoExtCopy!,
-                );
+            onPressed: () async {
+              if (audioPlayerVMlistenFalse.isPlaying) {
+                await audioPlayerVMlistenFalse.pause();
               }
 
               Navigator.of(context).pop();
@@ -170,16 +163,12 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
   }
 
   List<Widget> _buildPlaylistAudiosCommentsList({
+    required AudioPlayerVM audioPlayerVMlistenFalse,
     required CommentVM commentVM,
     required Map<String, List<Comment>> playlistAudiosCommentsMap,
     required List<String> audioFileNamesLst,
     required bool isDarkTheme,
   }) {
-    AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
-      context,
-      listen: false,
-    );
-
     // Obtaining the current audio file name without the extension.
     // This will be used to drop down the playlist audio comments list
     // to the current audio comments.
@@ -389,6 +378,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                               .pause() // clicked on currently playing comment pause button
                           : await _playFromCommentPosition(
                               // clicked on other comment play button
+                              commentVM: commentVM,
                               audioPlayerVM: audioPlayerVMlistenFalse,
                               audioFileNameNoExt: audioFileNameNoExt,
                               comment: comment,
@@ -572,6 +562,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
   }
 
   Future<void> _playFromCommentPosition({
+    required CommentVM commentVM,
     required AudioPlayerVM audioPlayerVM,
     required Comment comment,
     required String audioFileNameNoExt,
@@ -580,14 +571,17 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
 
     final Playlist currentPlaylist = widget.currentPlaylist;
 
-    Audio audioByFileNameNoExt = currentPlaylist.getAudioByFileNameNoExt(
+    Audio fileNameNoExtAudio = currentPlaylist.getAudioByFileNameNoExt(
       audioFileNameNoExt: audioFileNameNoExt,
     )!;
 
-    _audioByFileNameNoExtCopy = audioByFileNameNoExt.copy();
+    commentVM.addUndoableCommentPlayCommand(
+      commentAudioCopy: fileNameNoExtAudio.copy(),
+      previousAudioIndex: currentPlaylist.currentOrPastPlayableAudioIndex,
+    );
 
     await audioPlayerVM.setCurrentAudio(
-      audio: audioByFileNameNoExt,
+      audio: fileNameNoExtAudio,
     );
 
     if (!audioPlayerVM.isPlaying) {

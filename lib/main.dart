@@ -118,25 +118,26 @@ class MainApp extends StatelessWidget with ScreenMixin {
 
   @override
   Widget build(BuildContext context) {
-    WarningMessageVM warningMessageVM = WarningMessageVM();
+    final WarningMessageVM warningMessageVM = WarningMessageVM();
 
-    AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+    final AudioDownloadVM audioDownloadVM = AudioDownloadVM(
       warningMessageVM: warningMessageVM,
       settingsDataService: _settingsDataService,
       isTest: _isTest,
     );
 
-    CommentVM commentVM = CommentVM();
+    final CommentVM commentVM = CommentVM();
 
-    PlaylistListVM playlistListVM = PlaylistListVM(
+    final PlaylistListVM playlistListVM = PlaylistListVM(
       warningMessageVM: warningMessageVM,
       audioDownloadVM: audioDownloadVM,
       commentVM: commentVM,
       settingsDataService: _settingsDataService,
     );
 
-    AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+    final AudioPlayerVM audioPlayerVM = AudioPlayerVM(
       playlistListVM: playlistListVM,
+      commentVM: commentVM,
     );
 
     globalAudioPlayerVM = audioPlayerVM;

@@ -11,6 +11,16 @@ import '../services/json_data_service.dart';
 import '../utils/date_time_util.dart';
 import '../utils/dir_util.dart';
 
+class CommentPlayCommand {
+  Audio commentAudioCopy;
+  int previousAudioIndex;
+
+  CommentPlayCommand({
+    required this.commentAudioCopy,
+    required this.previousAudioIndex,
+  });
+}
+
 /// This VM (View Model) class is part of the MVVM architecture.
 ///
 /// This class manages the audio player obtained from the
@@ -28,6 +38,8 @@ class CommentVM extends ChangeNotifier {
     _currentCommentEndPosition = value;
     notifyListeners();
   }
+
+  List<CommentPlayCommand> _undoCommentPlayCommandLst = [];
 
   CommentVM();
 
@@ -307,5 +319,37 @@ class CommentVM extends ChangeNotifier {
     }
 
     return commentNumber;
+  }
+
+  void addUndoableCommentPlayCommand({
+    required Audio commentAudioCopy,
+    required int previousAudioIndex,
+  }) {
+    CommentPlayCommand commentPlayCommand = CommentPlayCommand(
+      commentAudioCopy: commentAudioCopy,
+      previousAudioIndex: previousAudioIndex,
+    );
+
+    _undoCommentPlayCommandLst.add(commentPlayCommand);
+  }
+
+  void undoAllRecordedCommentPlayCommands() {
+    if (_undoCommentPlayCommandLst.isNotEmpty) {
+      for (int i = _undoCommentPlayCommandLst.length - 1; i >= 0; i--) {
+        CommentPlayCommand commentPlayCommand = _undoCommentPlayCommandLst[i];
+
+        Playlist playlist =
+            commentPlayCommand.commentAudioCopy.enclosingPlaylist!;
+
+        playlist.updateCurrentOrPastPlayableAudio(
+          audioCopy: commentPlayCommand.commentAudioCopy,
+          previousAudioIndex: commentPlayCommand.previousAudioIndex,
+        );
+      }
+
+      _undoCommentPlayCommandLst.clear();
+    }
+
+    notifyListeners();
   }
 }

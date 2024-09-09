@@ -8,6 +8,7 @@ import '../models/playlist.dart';
 import '../services/json_data_service.dart';
 import '../services/sort_filter_parameters.dart';
 import '../utils/duration_expansion.dart';
+import 'comment_vm.dart';
 import 'playlist_list_vm.dart';
 
 /// Abstract class used to implement the Command design pattern
@@ -76,6 +77,7 @@ class AudioPlayerVM extends ChangeNotifier {
   Audio? _currentAudio;
   Audio? get currentAudio => _currentAudio;
   final PlaylistListVM _playlistListVM;
+  final CommentVM _commentVM;
   AudioPlayer? _audioPlayerPlugin;
   Duration _currentAudioTotalDuration = const Duration();
   Duration _currentAudioPosition = const Duration();
@@ -96,7 +98,9 @@ class AudioPlayerVM extends ChangeNotifier {
 
   AudioPlayerVM({
     required PlaylistListVM playlistListVM,
-  }) : _playlistListVM = playlistListVM {
+    required CommentVM commentVM,
+  })  : _playlistListVM = playlistListVM,
+        _commentVM = commentVM {
     initializeAudioPlayerPlugin();
   }
 
@@ -167,7 +171,9 @@ class AudioPlayerVM extends ChangeNotifier {
   }) async {
     await _setCurrentAudioAndInitializeAudioPlayer(audio);
 
-    audio.enclosingPlaylist!.setCurrentOrPastPlayableAudio(audio: audio,);
+    audio.enclosingPlaylist!.setCurrentOrPastPlayableAudio(
+      audio: audio,
+    );
     updateAndSaveCurrentAudio();
     _clearUndoRedoLists();
 
@@ -587,6 +593,8 @@ class AudioPlayerVM extends ChangeNotifier {
     }
 
     updateAndSaveCurrentAudio();
+    _commentVM.undoAllRecordedCommentPlayCommands();
+
     notifyListeners();
   }
 

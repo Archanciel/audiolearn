@@ -1230,12 +1230,13 @@ Future<void> _createPlaylistDownloadView({
   // otherwise the test will fail because the width of
   // the dropdown button is set to 140 in constants.dart
   kDropdownButtonMaxWidth = 315;
-  PlaylistListVM playlistListVM = PlaylistListVM(
+  final PlaylistListVM playlistListVM = PlaylistListVM(
     warningMessageVM: warningMessageVM,
     audioDownloadVM: audioDownloadVM,
     commentVM: CommentVM(),
     settingsDataService: settingsDataService,
   );
+  final CommentVM commentVM = CommentVM();
 
   // necessary so that the playlist list of the
   // PlaylistListVM is filled. Otherwise, the
@@ -1244,8 +1245,9 @@ Future<void> _createPlaylistDownloadView({
   // which causes the tests to fail
   playlistListVM.getUpToDateSelectablePlaylists();
 
-  AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+  final AudioPlayerVM audioPlayerVM = AudioPlayerVM(
     playlistListVM: playlistListVM,
+    commentVM: commentVM,
   );
 
   await tester.pumpWidget(

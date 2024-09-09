@@ -18,11 +18,11 @@ import 'audio_player_vm_test_version.dart';
 void main() {
   group('AudioPlayerVM changeAudioPlayPosition undo/redo', () {
     test('Test single undo/redo of forward position change', () async {
-      AudioPlayerVM audioPlayerVM = await createAudioPlayerVM();
+      final AudioPlayerVM audioPlayerVM = await createAudioPlayerVM();
 
       // obtain the list of playable audio of the selected
       // playlist ordered by download date
-      List<Audio> selectedPlaylistAudioList =
+      final List<Audio> selectedPlaylistAudioList =
           audioPlayerVM.getPlayableAudiosApplyingSortFilterParameters(
         AudioLearnAppViewType.playlistDownloadView,
       );
@@ -1657,6 +1657,7 @@ Future<AudioPlayerVM> createAudioPlayerVM() async {
     commentVM: CommentVM(),
     settingsDataService: settingsDataService,
   );
+  final CommentVM commentVM = CommentVM();
 
   // calling getUpToDateSelectablePlaylists() loads all the
   // playlist json files from the app dir and so enables
@@ -1664,8 +1665,9 @@ Future<AudioPlayerVM> createAudioPlayerVM() async {
   // selected and which are not
   playlistListVM.getUpToDateSelectablePlaylists();
 
-  AudioPlayerVM audioPlayerVM = AudioPlayerVMTestVersion(
+  final AudioPlayerVM audioPlayerVM = AudioPlayerVMTestVersion(
     playlistListVM: playlistListVM,
+    commentVM: commentVM,
   );
 
   return audioPlayerVM;
