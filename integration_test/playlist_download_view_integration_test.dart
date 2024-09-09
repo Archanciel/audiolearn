@@ -13772,7 +13772,7 @@ void main() {
         tester: tester,
         enclosingWidgetFinder: playlistCommentListDialogFinder,
         audioTitle: "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...",
-        expectedTitleTextColor: IntegrationTestUtil.partiallyPlayedAudioTitleTextdColor,
+        expectedTitleTextColor: IntegrationTestUtil.fullyPlayedAudioTitleColor,
         expectedTitleTextBackgroundColor: null,
       );
 
@@ -13780,7 +13780,7 @@ void main() {
         tester: tester,
         enclosingWidgetFinder: playlistCommentListDialogFinder,
         audioTitle: "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-        expectedTitleTextColor: IntegrationTestUtil.fullyPlayedAudioTitleColor,
+        expectedTitleTextColor: IntegrationTestUtil.partiallyPlayedAudioTitleTextdColor,
         expectedTitleTextBackgroundColor: null,
       );
 
