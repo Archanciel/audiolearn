@@ -1732,4 +1732,22 @@ class PlaylistListVM extends ChangeNotifier {
       return SortingOption.audioDownloadDate;
     }
   }
+
+  /// This method is called when the user closes the playlist comment list dialog.
+  /// It is used to undo the changs made to the playlist current audio index
+  /// as well as the position of the listened comments audio.
+  /// 
+  /// Using this method located in the PlaylistListVM is necessary in order to
+  /// notify the listeners of the undone modification of the audio position.
+  void updateCurrentOrPastPlayableAudio({
+    required Audio audioCopy,
+    required int previousAudioIndex,
+  }) {
+    _uniqueSelectedPlaylist!.updateCurrentOrPastPlayableAudio(
+      audioCopy: audioCopy,
+      previousAudioIndex: previousAudioIndex,
+    );
+
+    notifyListeners();
+  }
 }

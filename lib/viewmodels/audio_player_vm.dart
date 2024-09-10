@@ -593,7 +593,9 @@ class AudioPlayerVM extends ChangeNotifier {
     }
 
     updateAndSaveCurrentAudio();
-    _commentVM.undoAllRecordedCommentPlayCommands();
+    _commentVM.undoAllRecordedCommentPlayCommands(
+      playlistListVM: _playlistListVM,
+    );
 
     notifyListeners();
   }

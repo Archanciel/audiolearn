@@ -10,6 +10,7 @@ import '../models/playlist.dart';
 import '../services/json_data_service.dart';
 import '../utils/date_time_util.dart';
 import '../utils/dir_util.dart';
+import 'playlist_list_vm.dart';
 
 class CommentPlayCommand {
   Audio commentAudioCopy;
@@ -321,6 +322,15 @@ class CommentVM extends ChangeNotifier {
     return commentNumber;
   }
 
+  /// Method called when te user clicks on play icon of a comment listed in
+  /// the playlist comment list dialog. In this case, playing a comment from there
+  /// usually changes the playlist current audio index and modifies the commented
+  /// audio position. If the audio was fully played, it will be then partially
+  /// played. Thanks to this method, it is possible to undo the changes made to
+  /// the playlist current audio index as well as the commented audio position.
+  /// This undo action is done by calling the undoAllRecordedCommentPlayCommands
+  /// method coded below. This method is called when the user closes the playlist
+  /// comment list dialog.
   void addUndoableCommentPlayCommand({
     required Audio commentAudioCopy,
     required int previousAudioIndex,
@@ -333,15 +343,18 @@ class CommentVM extends ChangeNotifier {
     _undoCommentPlayCommandLst.add(commentPlayCommand);
   }
 
-  void undoAllRecordedCommentPlayCommands() {
+  /// This method is called when the user closes the playlist comment list dialog.
+  /// It is used to undo all the changes made to the playlist current audio index
+  /// as well as the position of the listened comments audio.
+  void undoAllRecordedCommentPlayCommands({
+    required PlaylistListVM playlistListVM,
+  }) {
     if (_undoCommentPlayCommandLst.isNotEmpty) {
       for (int i = _undoCommentPlayCommandLst.length - 1; i >= 0; i--) {
         CommentPlayCommand commentPlayCommand = _undoCommentPlayCommandLst[i];
 
-        Playlist playlist =
-            commentPlayCommand.commentAudioCopy.enclosingPlaylist!;
-
-        playlist.updateCurrentOrPastPlayableAudio(
+        playlistListVM.updateCurrentOrPastPlayableAudio
+        (
           audioCopy: commentPlayCommand.commentAudioCopy,
           previousAudioIndex: commentPlayCommand.previousAudioIndex,
         );
@@ -349,7 +362,5 @@ class CommentVM extends ChangeNotifier {
 
       _undoCommentPlayCommandLst.clear();
     }
-
-    notifyListeners();
   }
 }
