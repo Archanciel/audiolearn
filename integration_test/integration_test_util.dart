@@ -820,7 +820,7 @@ class IntegrationTestUtil {
     required final Finder gestureDetectorsFinder,
     required int itemIndex,
     required bool typeOnPauseAfterPlay,
-    int maxPlayDurationSeconds = 1,
+    double maxPlayDurationSeconds = 1,
   }) async {
     final Finder playIconButtonFinder = find.descendant(
       of: gestureDetectorsFinder.at(itemIndex),
@@ -831,7 +831,7 @@ class IntegrationTestUtil {
     await tester.pumpAndSettle();
     await Future.delayed(const Duration(milliseconds: 200));
 
-    await Future.delayed(Duration(seconds: maxPlayDurationSeconds));
+    await Future.delayed(Duration(milliseconds: maxPlayDurationSeconds * 1000 ~/ 1));
     await tester.pumpAndSettle();
 
     if (typeOnPauseAfterPlay) {

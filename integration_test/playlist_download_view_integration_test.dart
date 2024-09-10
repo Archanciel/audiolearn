@@ -13864,11 +13864,11 @@ void main() {
       );
     });
     testWidgets('''One comment partial play color verification. Play one comment
-           partially. Then close the playlist comment dialog and reopen it.
-           Verify that the played comment color was not changed, which means
-           that the commented audio position change due to the comment play was
-           undone. Verify as well that the current audio change to the played
-           comment audio was undone as well.''', (WidgetTester tester) async {
+           partially, clicking on pause button after 1.5 seconds. Then close the
+           playlist comment dialog and reopen it. Verify that the played comment
+           color was not changed, which means that the commented audio position
+           change due to the comment play was undone. Verify as well that the
+           current audio change to the played comment audio was undone as well.''', (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
       const String playedCommentAudioTitle =
           "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
@@ -13896,13 +13896,13 @@ void main() {
           matching: find.byType(GestureDetector));
 
       // Now tap on the play icon button of the unique comment of the second
-      // audio in order to play it completely
+      // audio in order to play it partially (during 2 seconds)
       await IntegrationTestUtil.playComment(
         tester: tester,
         gestureDetectorsFinder: gestureDetectorsFinder,
         itemIndex: 3,
         typeOnPauseAfterPlay: true,
-        maxPlayDurationSeconds: 1,
+        maxPlayDurationSeconds: 1.5,
       );
 
       // Tap on Close text button
