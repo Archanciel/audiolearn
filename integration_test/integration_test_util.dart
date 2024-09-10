@@ -814,4 +814,29 @@ class IntegrationTestUtil {
     expect(textWidget.style?.backgroundColor,
         equals(expectedTitleTextBackgroundColor));
   }
+
+  static Future<void> playComment({
+    required WidgetTester tester,
+    required final Finder gestureDetectorsFinder,
+    required int itemIndex,
+    required bool typeOnPauseAfterPlay,
+    int maxPlayDurationSeconds = 1,
+  }) async {
+    final Finder playIconButtonFinder = find.descendant(
+      of: gestureDetectorsFinder.at(itemIndex),
+      matching: find.byKey(const Key('playPauseIconButton')),
+    );
+
+    await tester.tap(playIconButtonFinder);
+    await tester.pumpAndSettle();
+    await Future.delayed(const Duration(milliseconds: 200));
+
+    await Future.delayed(Duration(seconds: maxPlayDurationSeconds));
+    await tester.pumpAndSettle();
+
+    if (typeOnPauseAfterPlay) {
+      await tester.tap(playIconButtonFinder);
+      await tester.pumpAndSettle();
+    }
+  }
 }

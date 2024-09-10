@@ -5832,7 +5832,7 @@ void main() {
 
       // Now tap on first comment play icon button to ensure you can play
       // a comment located before the comment you added
-      await playComment(
+      await IntegrationTestUtil.playComment(
         tester: tester,
         gestureDetectorsFinder: itemsFinder,
         itemIndex: 0,
@@ -5842,7 +5842,7 @@ void main() {
       // Play comments after playing a previous comment
 
       // Now tap on first comment play icon button
-      await playComment(
+      await IntegrationTestUtil.playComment(
         tester: tester,
         gestureDetectorsFinder: itemsFinder,
         itemIndex: 0,
@@ -5850,7 +5850,7 @@ void main() {
       );
 
       // Now tap on fourth comment play icon button
-      await playComment(
+      await IntegrationTestUtil.playComment(
         tester: tester,
         gestureDetectorsFinder: itemsFinder,
         itemIndex: 9,
@@ -5858,7 +5858,7 @@ void main() {
       );
 
       // Now tap on second comment play icon button
-      await playComment(
+      await IntegrationTestUtil.playComment(
         tester: tester,
         gestureDetectorsFinder: itemsFinder,
         itemIndex: 3,
@@ -5868,7 +5868,7 @@ void main() {
       // Play comments after pausing a previous comment
 
       // Now tap on first comment play icon button
-      await playComment(
+      await IntegrationTestUtil.playComment(
         tester: tester,
         gestureDetectorsFinder: itemsFinder,
         itemIndex: 0,
@@ -5876,7 +5876,7 @@ void main() {
       );
 
       // Now tap on fourth comment play icon button
-      await playComment(
+      await IntegrationTestUtil.playComment(
         tester: tester,
         gestureDetectorsFinder: itemsFinder,
         itemIndex: 9,
@@ -5884,7 +5884,7 @@ void main() {
       );
 
       // Now tap on second comment play icon button
-      await playComment(
+      await IntegrationTestUtil.playComment(
         tester: tester,
         gestureDetectorsFinder: itemsFinder,
         itemIndex: 3,
@@ -6019,7 +6019,7 @@ void main() {
 
       // Now tap on first comment play icon button to ensure you can play
       // a comment located before the comment you added
-      await playComment(
+      await IntegrationTestUtil.playComment(
         tester: tester,
         gestureDetectorsFinder: gestureDetectorsFinder,
         itemIndex: 9,
@@ -7399,51 +7399,6 @@ Finder verifyCommentsInCommentListDialog({
   }
 
   return gestureDetectorsFinder;
-}
-
-Future<void> playComment({
-  required WidgetTester tester,
-  required final Finder gestureDetectorsFinder,
-  required int itemIndex,
-  required bool typeOnPauseAfterPlay,
-}) async {
-  final Finder playIconButtonFinder = find.descendant(
-    of: gestureDetectorsFinder.at(itemIndex),
-    matching: find.byKey(const Key('playPauseIconButton')),
-  );
-
-  await tester.tap(playIconButtonFinder);
-  await tester.pumpAndSettle();
-  await Future.delayed(const Duration(milliseconds: 200));
-
-  Finder iconFinder;
-  int gestureDectectorNumberByCommentLine = 3;
-
-  // Loop from 0 to 14, incrementing by 3 in each iteration since
-  // there are 3 GestureDetector per comment item
-  for (int i = 0; i < 15; i += gestureDectectorNumberByCommentLine) {
-    if (i == itemIndex) {
-      iconFinder = find.descendant(
-        of: gestureDetectorsFinder.at(i),
-        matching: find.byIcon(Icons.pause),
-      );
-      expect(iconFinder, findsOneWidget);
-    } else {
-      iconFinder = find.descendant(
-        of: gestureDetectorsFinder.at(i),
-        matching: find.byIcon(Icons.play_arrow),
-      );
-      expect(iconFinder, findsOneWidget);
-    }
-  }
-
-  await Future.delayed(const Duration(seconds: 1));
-  await tester.pumpAndSettle();
-
-  if (typeOnPauseAfterPlay) {
-    await tester.tap(playIconButtonFinder);
-    await tester.pumpAndSettle();
-  }
 }
 
 /// Verify that the position displayed in the {textWidgetFinder} text

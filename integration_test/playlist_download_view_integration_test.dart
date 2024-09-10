@@ -13806,8 +13806,25 @@ void main() {
         playlistTitle: youtubePlaylistTitle,
       );
 
-      final Finder playlistCommentListFinder =
-          find.byKey(const Key('playlistCommentsListKey'));
+      // Find the list of comments in the playlist comment dialog
+      final Finder listFinder = find.descendant(
+          of: playlistCommentListDialogFinder, matching: find.byType(ListBody));
+
+      // Find all the list items GestureDetector's
+      final Finder gestureDetectorsFinder = find.descendant(
+          // 3 GestureDetector per comment item
+          of: listFinder,
+          matching: find.byType(GestureDetector));
+
+      // Now tap on the play icon button of the unique comment of the second
+      // audio in order to play it completely
+      await IntegrationTestUtil.playComment(
+        tester: tester,
+        gestureDetectorsFinder: gestureDetectorsFinder,
+        itemIndex: 3,
+        typeOnPauseAfterPlay: false,
+        maxPlayDurationSeconds: 3,
+      );
 
       // Verify the color of the audio titles in the playlist comment dialog
 
@@ -13834,8 +13851,7 @@ Future<Finder> openPlaylistCommentDialog({
   required String playlistTitle,
 }) async {
   // First, find the 'S8 audio' playlist sublist ListTile Text widget
-  Finder youtubePlaylistListTileTextWidgetFinder =
-      find.text(playlistTitle);
+  Finder youtubePlaylistListTileTextWidgetFinder = find.text(playlistTitle);
 
   // Then obtain the playlist ListTile widget enclosing the Text widget
   // by finding its ancestor
