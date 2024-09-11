@@ -391,6 +391,8 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                         // is reached.
                         if (_playingComment != null &&
                             _playingComment == comment &&
+                            audioPlayerVMlistenTrue.currentAudio!
+                                .isPlayingOrPausedWithPositionBetweenAudioStartAndEnd &&
                             audioPlayerVMlistenTrue.currentAudioPosition >=
                                 Duration(
                                     milliseconds: comment
