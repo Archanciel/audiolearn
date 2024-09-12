@@ -163,7 +163,8 @@ void main() {
               ],
               sentencesCombination: SentencesCombination.AND,
               ignoreCase: true,
-              searchAsWellInVideoCompactDescription: false);
+              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInYoutubeChannelName: false);
 
       expect(filteredAudios, expectedFilteredAudios);
     });
@@ -183,7 +184,8 @@ void main() {
               ],
               sentencesCombination: SentencesCombination.OR,
               ignoreCase: true,
-              searchAsWellInVideoCompactDescription: false);
+              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInYoutubeChannelName: false);
 
       expect(filteredAudios, expectedFilteredAudios);
     });
@@ -202,7 +204,8 @@ void main() {
               ],
               sentencesCombination: SentencesCombination.AND,
               ignoreCase: true,
-              searchAsWellInVideoCompactDescription: false);
+              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInYoutubeChannelName: false);
 
       expect(filteredAudios, expectedFilteredAudios);
     });
@@ -222,7 +225,8 @@ void main() {
               ],
               sentencesCombination: SentencesCombination.OR,
               ignoreCase: true,
-              searchAsWellInVideoCompactDescription: false);
+              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInYoutubeChannelName: false);
 
       expect(filteredAudios, expectedFilteredAudios);
     });
@@ -241,7 +245,8 @@ void main() {
               ],
               sentencesCombination: SentencesCombination.AND,
               ignoreCase: true,
-              searchAsWellInVideoCompactDescription: false);
+              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInYoutubeChannelName: false);
 
       expect(filteredAudios, expectedFilteredAudios);
     });
@@ -262,7 +267,8 @@ void main() {
               ],
               sentencesCombination: SentencesCombination.OR,
               ignoreCase: true,
-              searchAsWellInVideoCompactDescription: false);
+              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInYoutubeChannelName: false);
 
       expect(filteredAudios, expectedFilteredAudios);
     });
@@ -281,7 +287,8 @@ void main() {
               ],
               sentencesCombination: SentencesCombination.AND,
               ignoreCase: true,
-              searchAsWellInVideoCompactDescription: false);
+              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInYoutubeChannelName: false);
 
       expect(filteredAudios, expectedFilteredAudios);
     });
@@ -302,7 +309,8 @@ void main() {
               ],
               sentencesCombination: SentencesCombination.OR,
               ignoreCase: true,
-              searchAsWellInVideoCompactDescription: false);
+              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInYoutubeChannelName: false);
 
       expect(filteredAudios, expectedFilteredAudios);
     });
@@ -321,7 +329,8 @@ void main() {
               ],
               sentencesCombination: SentencesCombination.OR,
               ignoreCase: true,
-              searchAsWellInVideoCompactDescription: false);
+              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInYoutubeChannelName: false);
 
       expect(filteredAudios, expectedFilteredAudios);
     });
@@ -348,7 +357,8 @@ void main() {
               ],
               sentencesCombination: SentencesCombination.AND,
               ignoreCase: false,
-              searchAsWellInVideoCompactDescription: false);
+              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInYoutubeChannelName: false);
 
       expect(filteredAudios, expectedFilteredAudios);
     });
@@ -368,7 +378,8 @@ void main() {
               ],
               sentencesCombination: SentencesCombination.OR,
               ignoreCase: false,
-              searchAsWellInVideoCompactDescription: false);
+              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInYoutubeChannelName: false);
 
       expect(filteredAudios, expectedFilteredAudios);
     });
@@ -386,7 +397,8 @@ void main() {
               ],
               sentencesCombination: SentencesCombination.AND,
               ignoreCase: false,
-              searchAsWellInVideoCompactDescription: false);
+              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInYoutubeChannelName: false);
 
       expect(filteredAudios, expectedFilteredAudios);
     });
@@ -406,7 +418,8 @@ void main() {
               ],
               sentencesCombination: SentencesCombination.OR,
               ignoreCase: false,
-              searchAsWellInVideoCompactDescription: false);
+              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInYoutubeChannelName: false);
 
       expect(filteredAudios, expectedFilteredAudios);
     });
@@ -425,7 +438,8 @@ void main() {
               ],
               sentencesCombination: SentencesCombination.AND,
               ignoreCase: false,
-              searchAsWellInVideoCompactDescription: false);
+              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInYoutubeChannelName: false);
 
       expect(filteredAudios, expectedFilteredAudios);
     });
@@ -446,7 +460,8 @@ void main() {
               ],
               sentencesCombination: SentencesCombination.OR,
               ignoreCase: false,
-              searchAsWellInVideoCompactDescription: false);
+              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInYoutubeChannelName: false);
 
       expect(filteredAudios, expectedFilteredAudios);
     });
@@ -465,7 +480,8 @@ void main() {
               ],
               sentencesCombination: SentencesCombination.AND,
               ignoreCase: false,
-              searchAsWellInVideoCompactDescription: false);
+              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInYoutubeChannelName: false);
 
       expect(filteredAudios, expectedFilteredAudios);
     });
@@ -483,7 +499,8 @@ void main() {
               ],
               sentencesCombination: SentencesCombination.OR,
               ignoreCase: false,
-              searchAsWellInVideoCompactDescription: false);
+              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInYoutubeChannelName: false);
 
       expect(filteredAudios, expectedFilteredAudios);
     });
@@ -504,7 +521,8 @@ void main() {
               ],
               sentencesCombination: SentencesCombination.OR,
               ignoreCase: false,
-              searchAsWellInVideoCompactDescription: false);
+              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInYoutubeChannelName: false);
 
       expect(filteredAudios, expectedFilteredAudios);
     });
@@ -529,7 +547,8 @@ void main() {
               ],
               sentencesCombination: SentencesCombination.AND,
               ignoreCase: true,
-              searchAsWellInVideoCompactDescription: true);
+              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInYoutubeChannelName: false);
 
       expect(filteredAudios, expectedFilteredAudios);
     });
@@ -547,7 +566,8 @@ void main() {
               ],
               sentencesCombination: SentencesCombination.AND,
               ignoreCase: true,
-              searchAsWellInVideoCompactDescription: true);
+              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInYoutubeChannelName: false);
 
       expect(filteredAudios, expectedFilteredAudios);
     });
@@ -566,7 +586,8 @@ void main() {
               ],
               sentencesCombination: SentencesCombination.OR,
               ignoreCase: true,
-              searchAsWellInVideoCompactDescription: true);
+              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInYoutubeChannelName: false);
 
       expect(filteredAudios, expectedFilteredAudios);
     });
@@ -585,7 +606,8 @@ void main() {
               ],
               sentencesCombination: SentencesCombination.OR,
               ignoreCase: true,
-              searchAsWellInVideoCompactDescription: true);
+              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInYoutubeChannelName: false);
 
       expect(filteredAudios, expectedFilteredAudios);
     });
@@ -610,7 +632,8 @@ void main() {
               ],
               sentencesCombination: SentencesCombination.AND,
               ignoreCase: false,
-              searchAsWellInVideoCompactDescription: true);
+              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInYoutubeChannelName: false);
 
       expect(filteredAudios, expectedFilteredAudios);
     });
@@ -628,7 +651,8 @@ void main() {
               ],
               sentencesCombination: SentencesCombination.AND,
               ignoreCase: false,
-              searchAsWellInVideoCompactDescription: true);
+              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInYoutubeChannelName: false);
 
       expect(filteredAudios, expectedFilteredAudios);
     });
@@ -644,7 +668,8 @@ void main() {
               ],
               sentencesCombination: SentencesCombination.OR,
               ignoreCase: false,
-              searchAsWellInVideoCompactDescription: true);
+              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInYoutubeChannelName: false);
 
       expect(filteredAudios, expectedFilteredAudios);
     });
@@ -662,7 +687,8 @@ void main() {
               ],
               sentencesCombination: SentencesCombination.OR,
               ignoreCase: false,
-              searchAsWellInVideoCompactDescription: true);
+              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInYoutubeChannelName: false);
 
       expect(filteredAudios, expectedFilteredAudios);
     });
@@ -680,7 +706,8 @@ void main() {
               ],
               sentencesCombination: SentencesCombination.OR,
               ignoreCase: false,
-              searchAsWellInVideoCompactDescription: true);
+              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInYoutubeChannelName: false);
 
       expect(filteredAudios, expectedFilteredAudios);
     });
@@ -3325,7 +3352,8 @@ void main() {
         filterSentenceLst: ['Zeb'],
         sentencesCombination: SentencesCombination.AND,
         ignoreCase: true,
-        searchAsWellInVideoCompactDescription: true,
+        searchAsWellInVideoCompactDescription: false,
+        searchAsWellInYoutubeChannelName: false,
       );
 
       List<Audio> filteredAndSortedByTitleAsc =
@@ -3347,7 +3375,8 @@ void main() {
         filterSentenceLst: ['Zeb'],
         sentencesCombination: SentencesCombination.AND,
         ignoreCase: true,
-        searchAsWellInVideoCompactDescription: true,
+        searchAsWellInVideoCompactDescription: false,
+        searchAsWellInYoutubeChannelName: false,
       );
 
       List<Audio> filteredAndSortedByTitleDesc =
@@ -3534,7 +3563,8 @@ void main() {
         filterSentenceLst: ['Julien'],
         sentencesCombination: SentencesCombination.AND,
         ignoreCase: true,
-        searchAsWellInVideoCompactDescription: true,
+        searchAsWellInVideoCompactDescription: false,
+        searchAsWellInYoutubeChannelName: false,
       );
 
       List<Audio> filteredAndSortedByTitleAsc =
@@ -3563,7 +3593,8 @@ void main() {
         filterSentenceLst: ['Julien'],
         sentencesCombination: SentencesCombination.AND,
         ignoreCase: true,
-        searchAsWellInVideoCompactDescription: true,
+        searchAsWellInVideoCompactDescription: false,
+        searchAsWellInYoutubeChannelName: false,
       );
 
       List<Audio> filteredAndSortedByTitleDesc =
@@ -3753,7 +3784,8 @@ void main() {
         filterSentenceLst: ['Julien'],
         sentencesCombination: SentencesCombination.AND,
         ignoreCase: true,
-        searchAsWellInVideoCompactDescription: true,
+        searchAsWellInVideoCompactDescription: false,
+        searchAsWellInYoutubeChannelName: false,
       );
 
       List<Audio> filteredAndSortedByTitleAsc =
@@ -3782,7 +3814,8 @@ void main() {
         filterSentenceLst: ['Julien'],
         sentencesCombination: SentencesCombination.AND,
         ignoreCase: true,
-        searchAsWellInVideoCompactDescription: true,
+        searchAsWellInVideoCompactDescription: false,
+        searchAsWellInYoutubeChannelName: false,
       );
 
       List<Audio> filteredAndSortedByTitleDesc =
@@ -3976,6 +4009,7 @@ void main() {
         sentencesCombination: SentencesCombination.AND,
         ignoreCase: true,
         searchAsWellInVideoCompactDescription: false,
+        searchAsWellInYoutubeChannelName: false,
       );
 
       List<Audio> filteredAndSortedByTitleAsc =
@@ -4005,6 +4039,7 @@ void main() {
         sentencesCombination: SentencesCombination.AND,
         ignoreCase: true,
         searchAsWellInVideoCompactDescription: false,
+        searchAsWellInYoutubeChannelName: false,
       );
 
       List<Audio> filteredAndSortedByTitleDesc =
@@ -4138,7 +4173,8 @@ void main() {
         ],
         sentencesCombination: SentencesCombination.AND,
         ignoreCase: true,
-        searchAsWellInVideoCompactDescription: true,
+        searchAsWellInVideoCompactDescription: false,
+        searchAsWellInYoutubeChannelName: false,
       );
 
       List<Audio> filteredByWordAndSortedByDownloadDateDescAndDurationAsc =
@@ -4172,7 +4208,8 @@ void main() {
         ],
         sentencesCombination: SentencesCombination.AND,
         ignoreCase: true,
-        searchAsWellInVideoCompactDescription: true,
+        searchAsWellInVideoCompactDescription: false,
+        searchAsWellInYoutubeChannelName: false,
       );
 
       List<Audio> filteredByWordAndSortedByDownloadDateAscAndDurationDesc =
@@ -4237,7 +4274,8 @@ void main() {
         ],
         sentencesCombination: SentencesCombination.AND,
         ignoreCase: true,
-        searchAsWellInVideoCompactDescription: true,
+        searchAsWellInVideoCompactDescription: false,
+        searchAsWellInYoutubeChannelName: false,
       );
 
       List<Audio> filteredByWordAndSortedByDownloadDateDescAndDurationAsc =
@@ -4271,7 +4309,8 @@ void main() {
         ],
         sentencesCombination: SentencesCombination.AND,
         ignoreCase: true,
-        searchAsWellInVideoCompactDescription: true,
+        searchAsWellInVideoCompactDescription: false,
+        searchAsWellInYoutubeChannelName: false,
       );
 
       List<Audio> filteredByWordAndSortedByDownloadDateAscAndDurationDesc =
@@ -4325,6 +4364,7 @@ void main() {
         sentencesCombination: SentencesCombination.OR,
         ignoreCase: true,
         searchAsWellInVideoCompactDescription: false,
+        searchAsWellInYoutubeChannelName: false,
       );
 
       List<Audio> filteredByWordAndSortedByDownloadDateDescAndDurationAsc =
@@ -4357,6 +4397,7 @@ void main() {
         sentencesCombination: SentencesCombination.OR,
         ignoreCase: true,
         searchAsWellInVideoCompactDescription: false,
+        searchAsWellInYoutubeChannelName: false,
       );
       List<Audio> filteredByWordAndSortedByDownloadDateAscAndDurationDesc =
           audioSortFilterService.filterAndSortAudioLst(
@@ -4406,6 +4447,7 @@ void main() {
         sentencesCombination: SentencesCombination.AND,
         ignoreCase: true,
         searchAsWellInVideoCompactDescription: false,
+        searchAsWellInYoutubeChannelName: false,
       );
 
       List<Audio> filteredByWordAndSortedByDownloadDateDescAndDurationAsc =
@@ -4440,6 +4482,7 @@ void main() {
         sentencesCombination: SentencesCombination.AND,
         ignoreCase: true,
         searchAsWellInVideoCompactDescription: false,
+        searchAsWellInYoutubeChannelName: false,
       );
 
       List<Audio> filteredByWordAndSortedByDownloadDateAscAndDurationDesc =
@@ -4489,7 +4532,8 @@ void main() {
         ],
         sentencesCombination: SentencesCombination.AND,
         ignoreCase: true,
-        searchAsWellInVideoCompactDescription: true,
+        searchAsWellInVideoCompactDescription: false,
+        searchAsWellInYoutubeChannelName: false,
       );
 
       List<Audio> filteredByWordAndSortedByDownloadDateDescAndDurationAsc =
@@ -4527,7 +4571,8 @@ void main() {
         ],
         sentencesCombination: SentencesCombination.AND,
         ignoreCase: true,
-        searchAsWellInVideoCompactDescription: true,
+        searchAsWellInVideoCompactDescription: false,
+        searchAsWellInYoutubeChannelName: false,
       );
 
       List<Audio> filteredByWordAndSortedByDownloadDateAscAndDurationDesc =
@@ -4581,6 +4626,7 @@ void main() {
         sentencesCombination: SentencesCombination.OR,
         ignoreCase: true,
         searchAsWellInVideoCompactDescription: false,
+        searchAsWellInYoutubeChannelName: false,
       );
 
       List<Audio> filteredByWordAndSortedByDownloadDateDescAndDurationAsc =
@@ -4621,6 +4667,7 @@ void main() {
         sentencesCombination: SentencesCombination.OR,
         ignoreCase: true,
         searchAsWellInVideoCompactDescription: false,
+        searchAsWellInYoutubeChannelName: false,
       );
 
       List<Audio> filteredByWordAndSortedByDownloadDateAscAndDurationDesc =
@@ -4675,7 +4722,8 @@ void main() {
         ],
         sentencesCombination: SentencesCombination.OR,
         ignoreCase: true,
-        searchAsWellInVideoCompactDescription: true,
+        searchAsWellInVideoCompactDescription: false,
+        searchAsWellInYoutubeChannelName: false,
       );
 
       List<Audio> filteredByWordAndSortedByDownloadDateDescAndDurationAsc =
@@ -4717,7 +4765,8 @@ void main() {
         ],
         sentencesCombination: SentencesCombination.OR,
         ignoreCase: true,
-        searchAsWellInVideoCompactDescription: true,
+        searchAsWellInVideoCompactDescription: false,
+        searchAsWellInYoutubeChannelName: false,
       );
 
       List<Audio> filteredByWordAndSortedByDownloadDateAscAndDurationDesc =
@@ -5063,7 +5112,8 @@ void main() {
         filterSentenceLst: [],
         sentencesCombination: SentencesCombination.AND,
         ignoreCase: true,
-        searchAsWellInVideoCompactDescription: true,
+        searchAsWellInVideoCompactDescription: false,
+        searchAsWellInYoutubeChannelName: false,
       );
 
       List<Audio> filteredByWordAndSortedByDownloadDateDescAndDurationAsc =
@@ -5095,7 +5145,8 @@ void main() {
         filterSentenceLst: ['Janco'],
         sentencesCombination: SentencesCombination.AND,
         ignoreCase: true,
-        searchAsWellInVideoCompactDescription: true,
+        searchAsWellInVideoCompactDescription: false,
+        searchAsWellInYoutubeChannelName: false,
       );
 
       List<Audio> filteredByWordAndSortedByDownloadDateAscAndDurationDesc =

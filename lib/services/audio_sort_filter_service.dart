@@ -176,7 +176,7 @@ class AudioSortFilterService {
         ignoreCase: audioSortFilterParameters.ignoreCase,
         searchAsWellInVideoCompactDescription:
             audioSortFilterParameters.searchAsWellInVideoCompactDescription,
-        searchAsWellInYoutubeChannelDescription:
+        searchAsWellInYoutubeChannelName:
             audioSortFilterParameters.searchAsWellInYoutubeChannelName,
       );
     }
@@ -217,7 +217,7 @@ class AudioSortFilterService {
     required SentencesCombination sentencesCombination,
     required bool ignoreCase,
     required bool searchAsWellInVideoCompactDescription,
-    required bool searchAsWellInYoutubeChannelDescription,
+    required bool searchAsWellInYoutubeChannelName,
   }) {
     List<Audio> filteredAudios = [];
 
@@ -225,7 +225,7 @@ class AudioSortFilterService {
       bool isAudioFiltered = false;
       for (String filterSentence in filterSentenceLst) {
         if (searchAsWellInVideoCompactDescription ||
-            searchAsWellInYoutubeChannelDescription) {
+            searchAsWellInYoutubeChannelName) {
           // we need to search in the valid video title as well as in the
           // compact video description
           String? filterSentenceInLowerCase;
