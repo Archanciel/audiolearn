@@ -22,6 +22,9 @@ class Audio {
   // as being fully listened.
   static int fullyListenedBufferSeconds = 15;
 
+  // Youtube video author
+  String youtubeVideoChannel;
+
   // Playlist in which the video is referenced
   Playlist? enclosingPlaylist;
 
@@ -45,7 +48,7 @@ class Audio {
   // exception
   String validVideoTitle;
 
-  String compactVideoDescription;
+  final String compactVideoDescription;
 
   // Url referencing the video from which rhe audio was extracted
   final String videoUrl;
@@ -119,6 +122,7 @@ class Audio {
   bool isAudioImported = false;
 
   Audio({
+    this.youtubeVideoChannel = '',
     required this.enclosingPlaylist,
     required this.originalVideoTitle,
     required this.compactVideoDescription,
@@ -135,6 +139,7 @@ class Audio {
   /// This constructor requires all instance variables. It is used
   /// by the fromJson factory constructor.
   Audio.fullConstructor({
+    required this.youtubeVideoChannel,
     required this.enclosingPlaylist,
     required this.movedFromPlaylistTitle,
     required this.movedToPlaylistTitle,
@@ -164,6 +169,7 @@ class Audio {
   /// Returns a copy of the current Audio instance
   Audio copy() {
     return Audio.fullConstructor(
+      youtubeVideoChannel: youtubeVideoChannel,
       enclosingPlaylist: enclosingPlaylist,
       movedFromPlaylistTitle: movedFromPlaylistTitle,
       movedToPlaylistTitle: movedToPlaylistTitle,
@@ -196,6 +202,7 @@ class Audio {
   /// JSON object
   factory Audio.fromJson(Map<String, dynamic> json) {
     return Audio.fullConstructor(
+      youtubeVideoChannel: json['youtubeVideoChannel'] ?? '',
       enclosingPlaylist:
           null, // the enclosing playlist is not stored in the Audio JSON
       // object. It is set when the Playlist is created from
@@ -237,6 +244,7 @@ class Audio {
   // Method: converts an instance of Audio to a JSON object
   Map<String, dynamic> toJson() {
     return {
+      'youtubeVideoChannel': youtubeVideoChannel,
       'movedFromPlaylistTitle': movedFromPlaylistTitle,
       'movedToPlaylistTitle': movedToPlaylistTitle,
       'copiedFromPlaylistTitle': copiedFromPlaylistTitle,

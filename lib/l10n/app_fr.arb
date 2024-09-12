@@ -144,6 +144,7 @@
   "moveAudioToPlaylist": "Déplacer l'audio vers la playlist ...",
   "copyAudioToPlaylist": "Copier l'audio vers la playlist ...",
   "audioInfoDialogTitle": "Audio Informations",
+  "youtubeChannelLabel": "Chaîne Youtube",
   "originalVideoTitleLabel": "Titre vidéo original",
   "validVideoTitleLabel": "Titre vidéo valide",
   "videoUrlLabel": "URL vidéo",

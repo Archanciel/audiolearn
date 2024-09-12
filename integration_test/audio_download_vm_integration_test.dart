@@ -1037,9 +1037,14 @@ void compareNewRecreatedPlaylistToPreviouslyExistingPlaylist({
       previouslyExistingPlaylist.downloadedAudioLst.length + 2);
   expect(newRecreatedPlaylistWithSameTitle.playableAudioLst.length,
       previouslyExistingPlaylist.playableAudioLst.length + 2);
-  expect(newRecreatedPlaylistWithSameTitle.audioSortFilterParmsNameForPlaylistDownloadView,
-      previouslyExistingPlaylist.audioSortFilterParmsNameForPlaylistDownloadView);
-  expect(newRecreatedPlaylistWithSameTitle.audioSortFilterParmsNameForAudioPlayerView,
+  expect(
+      newRecreatedPlaylistWithSameTitle
+          .audioSortFilterParmsNameForPlaylistDownloadView,
+      previouslyExistingPlaylist
+          .audioSortFilterParmsNameForPlaylistDownloadView);
+  expect(
+      newRecreatedPlaylistWithSameTitle
+          .audioSortFilterParmsNameForAudioPlayerView,
       previouslyExistingPlaylist.audioSortFilterParmsNameForAudioPlayerView);
 }
 
@@ -1050,6 +1055,7 @@ void checkDownloadedAudioShortVideoOne({
   required String audioOneFileNamePrefix,
   bool downloadedAtMusicQuality = false,
 }) {
+  expect(downloadedAudioOne.youtubeVideoChannel, "Jean-Pierre Schnyder");
   expect(downloadedAudioOne.originalVideoTitle,
       "audio learn test short video one");
   expect(
@@ -1083,6 +1089,7 @@ void checkDownloadedAudioShortVideoTwo({
   required String audioTwoFileNamePrefix,
   bool downloadedAtMusicQuality = false,
 }) {
+  expect(downloadedAudioTwo.youtubeVideoChannel, "Jean-Pierre Schnyder");
   expect(downloadedAudioTwo.originalVideoTitle,
       "audio learn test short video two");
   expect(
@@ -1130,6 +1137,7 @@ void checkPlaylistNewDownloadedAudios({
 void checkPlaylistNewAudioOne({
   required Audio downloadedAudioOne,
 }) {
+  expect(downloadedAudioOne.youtubeVideoChannel, "Jean-Pierre Schnyder");
   expect(downloadedAudioOne.originalVideoTitle, "Really short video");
   expect(downloadedAudioOne.validVideoTitle, "Really short video");
   expect(downloadedAudioOne.compactVideoDescription,
@@ -1156,6 +1164,7 @@ void checkPlaylistNewAudioOne({
 void checkPlaylistNewAudioTwo({
   required Audio downloadedAudioTwo,
 }) {
+  expect(downloadedAudioTwo.youtubeVideoChannel, "Jean-Pierre Schnyder");
   expect(downloadedAudioTwo.originalVideoTitle, "morning | cinematic video");
   expect(downloadedAudioTwo.validVideoTitle, "morning _ cinematic video");
   expect(downloadedAudioTwo.videoUrl,

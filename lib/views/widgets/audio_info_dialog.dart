@@ -88,6 +88,11 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
 
     return <Widget>[
       createInfoRowFunction(
+          valueTextWidgetKey: const Key('youtubeChannelKey'),
+          context: context,
+          label: AppLocalizations.of(context)!.youtubeChannelLabel,
+          value: audio.youtubeVideoChannel),
+      createInfoRowFunction(
           valueTextWidgetKey: const Key('originalVideoTitleKey'),
           context: context,
           label: AppLocalizations.of(context)!.originalVideoTitleLabel,

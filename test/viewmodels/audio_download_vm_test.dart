@@ -1070,6 +1070,7 @@ void main() {
       final DateTime dateTimeNow = DateTime.now();
 
       Audio expectedImportedAudio = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: targetPlaylistEmpty,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -1207,6 +1208,7 @@ void main() {
       final DateTime dateTimeNow = DateTime.now();
 
       Audio expectedImportedAudio = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: targetPlaylistEmpty,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,

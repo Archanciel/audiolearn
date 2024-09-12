@@ -464,16 +464,17 @@ class AudioDownloadVM extends ChangeNotifier {
 
       // using youtubeVideo.description is not correct since it
       // it is empty !
-      String videoDescription =
+      final String videoDescription =
           (await _youtubeExplode!.videos.get(youtubeVideo.id.value))
               .description;
 
-      String compactVideoDescription = _createCompactVideoDescription(
+      final String compactVideoDescription = _createCompactVideoDescription(
         videoDescription: videoDescription,
         videoAuthor: youtubeVideo.author,
       );
 
-      String youtubeVideoTitle = youtubeVideo.title;
+      final String youtubeVideoChannel = youtubeVideo.author;
+      final String youtubeVideoTitle = youtubeVideo.title;
 
       final bool alreadyDownloaded = downloadedAudioOriginalVideoTitleLst
           .any((originalVideoTitle) => originalVideoTitle == youtubeVideoTitle);
@@ -506,6 +507,7 @@ class AudioDownloadVM extends ChangeNotifier {
       }
 
       final Audio audio = Audio(
+        youtubeVideoChannel: youtubeVideoChannel,
         enclosingPlaylist: currentPlaylist,
         originalVideoTitle: youtubeVideoTitle,
         compactVideoDescription: compactVideoDescription,
@@ -864,12 +866,13 @@ class AudioDownloadVM extends ChangeNotifier {
 
     videoUploadDate ??= DateTime(00, 1, 1);
 
-    String compactVideoDescription = _createCompactVideoDescription(
+    final String compactVideoDescription = _createCompactVideoDescription(
       videoDescription: youtubeVideo.description,
       videoAuthor: youtubeVideo.author,
     );
 
     final Audio audio = Audio(
+      youtubeVideoChannel: youtubeVideo.author,
       enclosingPlaylist: singleVideoTargetPlaylist,
       originalVideoTitle: youtubeVideo.title,
       compactVideoDescription: compactVideoDescription,
@@ -1147,7 +1150,7 @@ class AudioDownloadVM extends ChangeNotifier {
   }
 
   /// This method is called by the PlaylistListVM when the user selects the
-  /// "Download URLs from text file" menu item. False ios returned in case
+  /// "Download URLs from text file" menu item. False is returned in case
   /// a download problen happens or if the file already exists in the target
   /// playlist directory.
   ///

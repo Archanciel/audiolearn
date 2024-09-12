@@ -14942,6 +14942,13 @@ Future<Finder> verifyAudioInfoDialog({
   // Now verifying the display audio info audio moved dialog
   // elements
 
+  // Verify the audio channel name
+  
+  Text youtubeChannelTextWidget =
+      tester.widget<Text>(find.byKey(const Key('youtubeChannelKey')));
+
+  expect(youtubeChannelTextWidget.data, "Jean-Pierre Schnyder");
+
   // Verify the enclosing playlist title of the moved audio
 
   final Text enclosingPlaylistTitleTextWidget =
@@ -15390,6 +15397,13 @@ Future<void> verifyAudioInfoDialogElements({
 
   // Now verifying the display audio info audio copied dialog
   // elements
+
+  // Verify the audio channel name
+
+  Text youtubeChannelTextWidget =
+      tester.widget<Text>(find.byKey(const Key('youtubeChannelKey')));
+
+  expect(youtubeChannelTextWidget.data, "Jean-Pierre Schnyder");
 
   // Verify the enclosing playlist title of the copied audio
 

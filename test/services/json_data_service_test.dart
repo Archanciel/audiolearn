@@ -48,6 +48,7 @@ void main() {
 
       // Create an Audio instance
       Audio originalAudio = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -102,6 +103,7 @@ void main() {
 
       // Create an Audio instance
       Audio originalAudio = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -155,6 +157,7 @@ void main() {
 
       // Create an Audio instance
       Audio originalAudio = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -221,6 +224,7 @@ void main() {
 
       // Create an Audio instance
       Audio originalAudio = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
           enclosingPlaylist: null,
           movedFromPlaylistTitle: null,
           movedToPlaylistTitle: null,
@@ -264,8 +268,7 @@ void main() {
       await tempDir.delete(recursive: true);
     });
     test('''saveToFile and loadFromFile for one Playlist instance. The playlist
-            uses a named sort filter parameters instance.''',
-     () async {
+            uses a named sort filter parameters instance.''', () async {
       // Create a temporary directory to store the serialized Audio object
       Directory tempDir = await Directory.systemTemp.createTemp('AudioTest');
       String filePath = path.join(tempDir.path, 'playlist.json');
@@ -288,6 +291,7 @@ void main() {
       DateTime now = DateTime.now();
 
       Audio audio1 = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
           enclosingPlaylist: testPlaylist,
           movedFromPlaylistTitle: testFromPlaylistTitle,
           movedToPlaylistTitle: null,
@@ -314,6 +318,7 @@ void main() {
           isAudioImported: false);
 
       Audio audio2 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: testPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: testToPlaylistTitle,
@@ -345,8 +350,7 @@ void main() {
 
       testPlaylist.audioSortFilterParmsNameForPlaylistDownloadView =
           'Title asc';
-      testPlaylist.audioSortFilterParmsNameForAudioPlayerView =
-          'Title desc';
+      testPlaylist.audioSortFilterParmsNameForAudioPlayerView = 'Title desc';
 
       // Save Playlist to a file
       JsonDataService.saveToFile(model: testPlaylist, path: filePath);
@@ -365,8 +369,7 @@ void main() {
       await tempDir.delete(recursive: true);
     });
     test('''saveToFile and loadFromFile for one Playlist instance. The playlist
-            has an own sort filter parameters instance.''',
-    () async {
+            has an own sort filter parameters instance.''', () async {
       // Create a temporary directory to store the serialized Audio object
       Directory tempDir = await Directory.systemTemp.createTemp('AudioTest');
       String filePath = path.join(tempDir.path, 'playlist.json');
@@ -389,6 +392,7 @@ void main() {
       DateTime now = DateTime.now();
 
       Audio audio1 = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
           enclosingPlaylist: testPlaylist,
           movedFromPlaylistTitle: testFromPlaylistTitle,
           movedToPlaylistTitle: null,
@@ -415,6 +419,7 @@ void main() {
           isAudioImported: false);
 
       Audio audio2 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: testPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: testToPlaylistTitle,
@@ -443,7 +448,7 @@ void main() {
 
       testPlaylist.downloadedAudioLst = [audio1, audio2];
       testPlaylist.playableAudioLst = [audio2];
-          
+
       // Save Playlist to a file
       JsonDataService.saveToFile(model: testPlaylist, path: filePath);
 
@@ -481,8 +486,7 @@ void main() {
 
       testPlaylist.audioSortFilterParmsNameForPlaylistDownloadView =
           'Title asc';
-      testPlaylist.audioSortFilterParmsNameForAudioPlayerView =
-          'Title desc';
+      testPlaylist.audioSortFilterParmsNameForAudioPlayerView = 'Title desc';
 
       // Save Playlist to a file
       JsonDataService.saveToFile(model: testPlaylist, path: filePath);
@@ -558,6 +562,7 @@ void main() {
       testPlaylist.downloadPath = 'path/to/downloads';
 
       Audio audio1 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: testPlaylist,
         movedFromPlaylistTitle: testFromPlaylistTitle,
         movedToPlaylistTitle: null,
@@ -585,6 +590,7 @@ void main() {
       );
 
       Audio audio2 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: testPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: testToPlaylistTitle,
@@ -843,6 +849,7 @@ void main() {
         () {
       // Create an Audio instance
       Audio originalAudio = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -888,6 +895,7 @@ void main() {
 
       // Create an Audio instance
       Audio audioOne = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -915,6 +923,7 @@ void main() {
       );
 
       Audio audioTwo = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -989,6 +998,7 @@ void main() {
       DateTime now = DateTime.now();
 
       Audio audio1 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: testPlaylistOne,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -1016,6 +1026,7 @@ void main() {
       );
 
       Audio audio2 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: testPlaylistOne,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -1057,6 +1068,7 @@ void main() {
       testPlaylistTwo.downloadPath = 'path/to/downloads';
 
       Audio audio3 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: testPlaylistTwo,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -1084,6 +1096,7 @@ void main() {
       );
 
       Audio audio4 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: testPlaylistTwo,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,

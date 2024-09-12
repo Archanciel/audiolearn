@@ -1325,4 +1325,7 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get remaining => "Remaining";
+
+  @override
+  String get youtubeChannelLabel => "Youtube channel";
 }

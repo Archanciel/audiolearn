@@ -19,6 +19,7 @@ import 'mock_shared_preferences.dart';
 
 void main() {
   final Audio audioOne = Audio.fullConstructor(
+    youtubeVideoChannel: 'one',
     enclosingPlaylist: null,
     movedFromPlaylistTitle: null,
     movedToPlaylistTitle: null,
@@ -47,6 +48,7 @@ void main() {
   );
 
   final Audio audioTwo = Audio.fullConstructor(
+    youtubeVideoChannel: 'two',
     enclosingPlaylist: null,
     movedFromPlaylistTitle: null,
     movedToPlaylistTitle: null,
@@ -74,6 +76,7 @@ void main() {
     isAudioImported: false,
   );
   final Audio audioThree = Audio.fullConstructor(
+    youtubeVideoChannel: 'one',
     enclosingPlaylist: null,
     movedFromPlaylistTitle: null,
     movedToPlaylistTitle: null,
@@ -102,6 +105,7 @@ void main() {
     isAudioImported: false,
   );
   final Audio audioFour = Audio.fullConstructor(
+    youtubeVideoChannel: 'one',
     enclosingPlaylist: null,
     movedFromPlaylistTitle: null,
     movedToPlaylistTitle: null,
@@ -689,6 +693,7 @@ void main() {
     });
     test('sort by title', () {
       final Audio zebra = Audio.fullConstructor(
+        youtubeVideoChannel: 'three',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -715,6 +720,7 @@ void main() {
         isAudioImported: false,
       );
       final Audio apple = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -741,6 +747,7 @@ void main() {
         isAudioImported: false,
       );
       final Audio bananna = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -825,6 +832,7 @@ void main() {
     });
     test('sort by title with chapter number', () {
       final Audio avantPropos = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -855,6 +863,7 @@ void main() {
       );
 
       final Audio note = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -885,6 +894,7 @@ void main() {
       );
 
       final Audio chap_1 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -915,6 +925,7 @@ void main() {
       );
 
       final Audio chap_2_1 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -945,6 +956,7 @@ void main() {
       );
 
       final Audio chap_2_2 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -975,6 +987,7 @@ void main() {
       );
 
       final Audio chap_2_3 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -1005,6 +1018,7 @@ void main() {
       );
 
       final Audio chap_3_1 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -1035,6 +1049,7 @@ void main() {
       );
 
       final Audio chap_3_2 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -1065,6 +1080,7 @@ void main() {
       );
 
       final Audio chap_4_1 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -1095,6 +1111,7 @@ void main() {
       );
 
       final Audio chap_5_1 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -1125,6 +1142,7 @@ void main() {
       );
 
       final Audio chap_6_1 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -1155,6 +1173,7 @@ void main() {
       );
 
       final Audio chap_6_2 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -1185,6 +1204,7 @@ void main() {
       );
 
       final Audio chap_8 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -1215,6 +1235,7 @@ void main() {
       );
 
       final Audio chap_9_1 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -1245,6 +1266,7 @@ void main() {
       );
 
       final Audio chap_10 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -1275,6 +1297,7 @@ void main() {
       );
 
       final Audio chap_11_1 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -1305,6 +1328,7 @@ void main() {
       );
 
       final Audio chap_11_2 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -1335,6 +1359,7 @@ void main() {
       );
 
       final Audio chap_12 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -1365,6 +1390,7 @@ void main() {
       );
 
       final Audio chap_13 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -1501,6 +1527,7 @@ void main() {
     test('''sort by title with chapter number. The order of the list of audio to
             sort was modified''', () {
       final Audio avantPropos = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -1531,6 +1558,7 @@ void main() {
       );
 
       final Audio note = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -1561,6 +1589,7 @@ void main() {
       );
 
       final Audio chap_1 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -1591,6 +1620,7 @@ void main() {
       );
 
       final Audio chap_2_1 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -1621,6 +1651,7 @@ void main() {
       );
 
       final Audio chap_2_2 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -1651,6 +1682,7 @@ void main() {
       );
 
       final Audio chap_2_3 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -1681,6 +1713,7 @@ void main() {
       );
 
       final Audio chap_3_1 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -1711,6 +1744,7 @@ void main() {
       );
 
       final Audio chap_3_2 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -1741,6 +1775,7 @@ void main() {
       );
 
       final Audio chap_4_1 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -1771,6 +1806,7 @@ void main() {
       );
 
       final Audio chap_5_1 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -1801,6 +1837,7 @@ void main() {
       );
 
       final Audio chap_6_1 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -1831,6 +1868,7 @@ void main() {
       );
 
       final Audio chap_6_2 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -1861,6 +1899,7 @@ void main() {
       );
 
       final Audio chap_8 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -1891,6 +1930,7 @@ void main() {
       );
 
       final Audio chap_9_1 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -1921,6 +1961,7 @@ void main() {
       );
 
       final Audio chap_10 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -1951,6 +1992,7 @@ void main() {
       );
 
       final Audio chap_11_1 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -1981,6 +2023,7 @@ void main() {
       );
 
       final Audio chap_11_2 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -2011,6 +2054,7 @@ void main() {
       );
 
       final Audio chap_12 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -2041,6 +2085,7 @@ void main() {
       );
 
       final Audio chap_13 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -2360,6 +2405,7 @@ void main() {
 
     test('sort by title starting with non language chars', () {
       Audio title = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -2387,6 +2433,7 @@ void main() {
       );
 
       Audio avecPercentTitle = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -2414,6 +2461,7 @@ void main() {
       );
 
       Audio percentTitle = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -2441,6 +2489,7 @@ void main() {
       );
 
       Audio powerTitle = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -2468,6 +2517,7 @@ void main() {
       );
 
       Audio amenTitle = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -2495,6 +2545,7 @@ void main() {
       );
 
       Audio epicure = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -2522,6 +2573,7 @@ void main() {
       );
 
       Audio ninetyFiveTitle = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -2549,6 +2601,7 @@ void main() {
       );
 
       Audio ninetyThreeTitle = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -2576,6 +2629,7 @@ void main() {
       );
 
       Audio ninetyFourTitle = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -2603,6 +2657,7 @@ void main() {
       );
 
       Audio echapper = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -2630,6 +2685,7 @@ void main() {
       );
 
       Audio evidentTitle = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -2657,6 +2713,7 @@ void main() {
       );
 
       Audio aLireTitle = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -2684,6 +2741,7 @@ void main() {
       );
 
       Audio nineTitle = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -2711,6 +2769,7 @@ void main() {
       );
 
       Audio eightTitle = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -2738,6 +2797,7 @@ void main() {
       );
 
       Audio eventuelTitle = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -2865,6 +2925,7 @@ void main() {
     });
     test('sort by duration and title', () {
       final Audio zebra = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -2891,6 +2952,7 @@ void main() {
         isAudioImported: false,
       );
       final Audio apple = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -2917,6 +2979,7 @@ void main() {
         isAudioImported: false,
       );
       final Audio bananna = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -2943,6 +3006,7 @@ void main() {
         isAudioImported: false,
       );
       final Audio banannaLonger = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -3046,6 +3110,7 @@ void main() {
 
     test('with search word present in in title only', () {
       final Audio zebra1 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -3072,6 +3137,7 @@ void main() {
         isAudioImported: false,
       );
       final Audio apple = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -3098,6 +3164,7 @@ void main() {
         isAudioImported: false,
       );
       final Audio zebra3 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -3124,6 +3191,7 @@ void main() {
         isAudioImported: false,
       );
       final Audio bananna = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -3150,6 +3218,7 @@ void main() {
         isAudioImported: false,
       );
       final Audio zebra2 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -3297,6 +3366,7 @@ void main() {
     });
     test('with search word present in compact description only', () {
       final Audio zebra1 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -3323,6 +3393,7 @@ void main() {
         isAudioImported: false,
       );
       final Audio apple = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -3349,6 +3420,7 @@ void main() {
         isAudioImported: false,
       );
       final Audio zebra3 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -3375,6 +3447,7 @@ void main() {
         isAudioImported: false,
       );
       final Audio bananna = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -3401,6 +3474,7 @@ void main() {
         isAudioImported: false,
       );
       final Audio zebra2 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -3508,6 +3582,7 @@ void main() {
     });
     test('with search word in title and in compact description', () {
       final Audio zebra1 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -3534,6 +3609,7 @@ void main() {
         isAudioImported: false,
       );
       final Audio apple = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -3560,6 +3636,7 @@ void main() {
         isAudioImported: true,
       );
       final Audio zebra3 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -3586,6 +3663,7 @@ void main() {
         isAudioImported: false,
       );
       final Audio bananna = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -3612,6 +3690,7 @@ void main() {
         isAudioImported: false,
       );
       var audio2 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -3730,6 +3809,7 @@ void main() {
 
     test('with search word in title and in compact description', () {
       final Audio zebra1 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -3756,6 +3836,7 @@ void main() {
         isAudioImported: false,
       );
       final Audio apple = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -3782,6 +3863,7 @@ void main() {
         isAudioImported: false,
       );
       final Audio zebra3 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -3808,6 +3890,7 @@ void main() {
         isAudioImported: false,
       );
       final Audio bananna = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
@@ -3834,6 +3917,7 @@ void main() {
         isAudioImported: false,
       );
       final Audio zebra2 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
         enclosingPlaylist: null,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
