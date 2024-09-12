@@ -312,7 +312,8 @@ class AudioSortFilterParameters {
       sentencesCombination:
           SentencesCombination.values[json['sentencesCombination']],
       ignoreCase: json['ignoreCase'],
-      searchAsWellInYoutubeChannelName: json['searchAsWellInYoutubeChannelName'],
+      searchAsWellInYoutubeChannelName: json['searchAsWellInYoutubeChannelName'] ??
+          true,
       searchAsWellInVideoCompactDescription:
           json['searchAsWellInVideoCompactDescription'],
       filterMusicQuality: json['filterMusicQuality'],
