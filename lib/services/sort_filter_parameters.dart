@@ -248,6 +248,9 @@ class AudioSortFilterParameters {
   // If true, the search is case insensitive.
   final bool ignoreCase;
 
+  // If true, the search is also done in the Youtube channel name.
+  final bool searchAsWellInYoutubeChannelName;
+
   // If true, the search is also done in the video compact description.
   final bool searchAsWellInVideoCompactDescription;
 
@@ -284,6 +287,7 @@ class AudioSortFilterParameters {
     this.filterSentenceLst = const [],
     required this.sentencesCombination,
     this.ignoreCase = true,
+    this.searchAsWellInYoutubeChannelName = true,
     this.searchAsWellInVideoCompactDescription = true,
     this.filterMusicQuality = false,
     this.filterFullyListened = true,
@@ -308,6 +312,7 @@ class AudioSortFilterParameters {
       sentencesCombination:
           SentencesCombination.values[json['sentencesCombination']],
       ignoreCase: json['ignoreCase'],
+      searchAsWellInYoutubeChannelName: json['searchAsWellInYoutubeChannelName'],
       searchAsWellInVideoCompactDescription:
           json['searchAsWellInVideoCompactDescription'],
       filterMusicQuality: json['filterMusicQuality'],
@@ -339,6 +344,7 @@ class AudioSortFilterParameters {
       'filterSentenceLst': filterSentenceLst,
       'sentencesCombination': sentencesCombination.index,
       'ignoreCase': ignoreCase,
+      'searchAsWellInYoutubeChannelName': searchAsWellInYoutubeChannelName,
       'searchAsWellInVideoCompactDescription':
           searchAsWellInVideoCompactDescription,
       'filterMusicQuality': filterMusicQuality,
@@ -365,6 +371,8 @@ class AudioSortFilterParameters {
         listEquals(other.filterSentenceLst, filterSentenceLst) &&
         other.sentencesCombination == sentencesCombination &&
         other.ignoreCase == ignoreCase &&
+        other.searchAsWellInYoutubeChannelName ==
+            searchAsWellInYoutubeChannelName &&
         other.searchAsWellInVideoCompactDescription ==
             searchAsWellInVideoCompactDescription &&
         other.filterMusicQuality == filterMusicQuality &&
@@ -388,6 +396,7 @@ class AudioSortFilterParameters {
       filterSentenceLst,
       sentencesCombination,
       ignoreCase,
+      searchAsWellInYoutubeChannelName,
       searchAsWellInVideoCompactDescription,
       filterMusicQuality,
       filterFullyListened,
@@ -411,6 +420,7 @@ class AudioSortFilterParameters {
       filterSentenceLst: List<String>.from(filterSentenceLst),
       sentencesCombination: sentencesCombination,
       ignoreCase: ignoreCase,
+      searchAsWellInYoutubeChannelName: searchAsWellInYoutubeChannelName,
       searchAsWellInVideoCompactDescription:
           searchAsWellInVideoCompactDescription,
       filterMusicQuality: filterMusicQuality,

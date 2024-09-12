@@ -68,6 +68,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
   late bool _isOr;
   late bool _ignoreCase;
   late bool _searchInVideoCompactDescription;
+  late bool _searchInYoutubeChannelName;
   late bool _filterMusicQuality;
   late bool _filterFullyListened;
   late bool _filterPartiallyListened;
@@ -201,6 +202,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     _audioTitleFilterSentencesLst
         .addAll(audioSortDefaultFilterParameters.filterSentenceLst);
     _ignoreCase = audioSortDefaultFilterParameters.ignoreCase;
+    _searchInYoutubeChannelName =
+        audioSortDefaultFilterParameters.searchAsWellInYoutubeChannelName;
     _searchInVideoCompactDescription =
         _audioSortFilterParameters.searchAsWellInVideoCompactDescription;
     _isAnd = (audioSortDefaultFilterParameters.sentencesCombination ==
@@ -239,6 +242,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     _audioTitleSearchSentenceController.clear();
     _audioTitleFilterSentencesLst.clear();
     _ignoreCase = true;
+    _searchInYoutubeChannelName = true;
     _searchInVideoCompactDescription = true;
     _isAnd = true;
     _isOr = false;
@@ -273,6 +277,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     _audioTitleFilterSentencesLst
         .addAll(audioSortFilterParameters.filterSentenceLst);
     _ignoreCase = audioSortFilterParameters.ignoreCase;
+    _searchInYoutubeChannelName =
+        audioSortFilterParameters.searchAsWellInYoutubeChannelName;
     _searchInVideoCompactDescription =
         audioSortFilterParameters.searchAsWellInVideoCompactDescription;
     _isAnd = (audioSortFilterParameters.sentencesCombination ==
@@ -469,6 +475,38 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                               : null,
                         ),
                       ],
+                    ),
+                    Tooltip(
+                      message: AppLocalizations.of(context)!
+                          .searchInYoutubeChannelNameTooltip,
+                      child: Row(
+                        children: [
+                          Text(AppLocalizations.of(context)!
+                              .searchInYoutubeChannelName),
+                          Checkbox(
+                            key: const Key('searchInYoutubeChannelName'),
+                            fillColor: WidgetStateColor.resolveWith(
+                              (Set<WidgetState> states) {
+                                if (states.contains(WidgetState.disabled)) {
+                                  return kDarkAndLightDisabledIconColor;
+                                }
+                                return kDarkAndLightEnabledIconColor;
+                              },
+                            ),
+                            value: _searchInYoutubeChannelName,
+                            onChanged:
+                                (_audioTitleFilterSentencesLst.isNotEmpty)
+                                    ? (bool? newValue) {
+                                        setState(() {
+                                          _modifySearchInYoutubeChannelNameCheckbox(
+                                            newValue,
+                                          );
+                                        });
+                                      }
+                                    : null,
+                          ),
+                        ],
+                      ),
                     ),
                     Tooltip(
                       message: AppLocalizations.of(context)!
@@ -1116,6 +1154,14 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     );
   }
 
+  void _modifySearchInYoutubeChannelNameCheckbox(bool? newValue) {
+    _searchInYoutubeChannelName = newValue!;
+
+    // now clicking on Enter works since the
+    // Checkbox is not focused anymore
+    _audioTitleSearchSentenceFocusNode.requestFocus();
+  }
+
   void _modifySearchInVideoCompactDescriptionCheckbox(bool? newValue) {
     _searchInVideoCompactDescription = newValue!;
 
@@ -1716,6 +1762,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       sentencesCombination:
           (_isAnd) ? SentencesCombination.AND : SentencesCombination.OR,
       ignoreCase: _ignoreCase,
+      searchAsWellInYoutubeChannelName: _searchInYoutubeChannelName,
       searchAsWellInVideoCompactDescription: _searchInVideoCompactDescription,
       filterMusicQuality: _filterMusicQuality,
       filterFullyListened: _filterFullyListened,

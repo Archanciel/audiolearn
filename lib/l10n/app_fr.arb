@@ -433,5 +433,7 @@
   "playlistSortFilterLabel": "{screenName} tri/filtre",
   "playlistAudioCommentsLabel": "Commentaires des audio",
   "listenedOn": "Écouté le",
-  "remaining": "Durée restante"
+  "remaining": "Durée restante",
+  "searchInYoutubeChannelName": "Inclure la chaîne Youtube",
+  "searchInYoutubeChannelNameTooltip": "Inclure le nom de la chaîne Youtube dans la recherche."
 }

@@ -169,13 +169,15 @@ class AudioSortFilterService {
         audioSortFilterParameters.filterSentenceLst;
 
     if (filterSentenceLst.isNotEmpty) {
-      audioLstCopy = filterOnVideoTitleAndDescriptionOptions(
+      audioLstCopy = filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
         audioLst: audioLstCopy,
         filterSentenceLst: filterSentenceLst,
         sentencesCombination: audioSortFilterParameters.sentencesCombination,
         ignoreCase: audioSortFilterParameters.ignoreCase,
         searchAsWellInVideoCompactDescription:
             audioSortFilterParameters.searchAsWellInVideoCompactDescription,
+        searchAsWellInYoutubeChannelDescription:
+            audioSortFilterParameters.searchAsWellInYoutubeChannelName,
       );
     }
 
@@ -209,19 +211,21 @@ class AudioSortFilterService {
   /// description if required.
   ///
   /// Not private in order to be tested
-  List<Audio> filterOnVideoTitleAndDescriptionOptions({
+  List<Audio> filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions({
     required List<Audio> audioLst,
     required List<String> filterSentenceLst,
     required SentencesCombination sentencesCombination,
     required bool ignoreCase,
     required bool searchAsWellInVideoCompactDescription,
+    required bool searchAsWellInYoutubeChannelDescription,
   }) {
     List<Audio> filteredAudios = [];
 
     for (Audio audio in audioLst) {
       bool isAudioFiltered = false;
       for (String filterSentence in filterSentenceLst) {
-        if (searchAsWellInVideoCompactDescription) {
+        if (searchAsWellInVideoCompactDescription ||
+            searchAsWellInYoutubeChannelDescription) {
           // we need to search in the valid video title as well as in the
           // compact video description
           String? filterSentenceInLowerCase;
@@ -237,9 +241,13 @@ class AudioSortFilterService {
                       .contains(filterSentenceInLowerCase!) ||
                   audio.compactVideoDescription
                       .toLowerCase()
+                      .contains(filterSentenceInLowerCase) ||
+                  audio.youtubeVideoChannel
+                      .toLowerCase()
                       .contains(filterSentenceInLowerCase)
               : audio.validVideoTitle.contains(filterSentence) ||
-                  audio.compactVideoDescription.contains(filterSentence)) {
+                  audio.compactVideoDescription.contains(filterSentence) ||
+                  audio.youtubeVideoChannel.contains(filterSentence)) {
             isAudioFiltered = true;
             if (sentencesCombination == SentencesCombination.OR) {
               break;

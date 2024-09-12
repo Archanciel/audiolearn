@@ -433,5 +433,7 @@
   "playlistSortFilterLabel": "{screenName} sort/filter",
   "playlistAudioCommentsLabel": "Audio comments",
   "listenedOn": "Listened on",
-  "remaining": "Remaining"
+  "remaining": "Remaining",
+  "searchInYoutubeChannelName": "Include Youtube channel",
+  "searchInYoutubeChannelNameTooltip": "If set, search words or sentences are searched on Youtube channel name as well."
 }

@@ -1328,4 +1328,11 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get youtubeChannelLabel => "Youtube channel";
+
+  @override
+  String get searchInYoutubeChannelName => "Include Youtube channel";
+
+  @override
+  String get searchInYoutubeChannelNameTooltip =>
+      "If set, search words or sentences are searched on Youtube channel name as well.";
 }

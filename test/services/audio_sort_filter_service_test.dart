@@ -154,8 +154,8 @@ void main() {
         audioTwo,
       ];
 
-      List<Audio> filteredAudios =
-          audioSortFilterService.filterOnVideoTitleAndDescriptionOptions(
+      List<Audio> filteredAudios = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
                 'tendance crypto',
@@ -174,8 +174,8 @@ void main() {
         audioThree,
       ];
 
-      List<Audio> filteredAudios =
-          audioSortFilterService.filterOnVideoTitleAndDescriptionOptions(
+      List<Audio> filteredAudios = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
                 'tendance crypto',
@@ -193,8 +193,8 @@ void main() {
         audioTwo,
       ];
 
-      List<Audio> filteredAudios =
-          audioSortFilterService.filterOnVideoTitleAndDescriptionOptions(
+      List<Audio> filteredAudios = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
                 'en 2024',
@@ -213,8 +213,8 @@ void main() {
         audioThree,
       ];
 
-      List<Audio> filteredAudios =
-          audioSortFilterService.filterOnVideoTitleAndDescriptionOptions(
+      List<Audio> filteredAudios = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
                 'en 2024',
@@ -232,8 +232,8 @@ void main() {
         audioThree,
       ];
 
-      List<Audio> filteredAudios =
-          audioSortFilterService.filterOnVideoTitleAndDescriptionOptions(
+      List<Audio> filteredAudios = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
                 'quelle',
@@ -253,8 +253,8 @@ void main() {
         audioFour,
       ];
 
-      List<Audio> filteredAudios =
-          audioSortFilterService.filterOnVideoTitleAndDescriptionOptions(
+      List<Audio> filteredAudios = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
                 'quelle',
@@ -272,8 +272,8 @@ void main() {
         audioThree,
       ];
 
-      List<Audio> filteredAudios =
-          audioSortFilterService.filterOnVideoTitleAndDescriptionOptions(
+      List<Audio> filteredAudios = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
                 '2024',
@@ -293,8 +293,8 @@ void main() {
         audioFour,
       ];
 
-      List<Audio> filteredAudios =
-          audioSortFilterService.filterOnVideoTitleAndDescriptionOptions(
+      List<Audio> filteredAudios = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
                 '2024',
@@ -312,8 +312,8 @@ void main() {
         audioFour,
       ];
 
-      List<Audio> filteredAudios =
-          audioSortFilterService.filterOnVideoTitleAndDescriptionOptions(
+      List<Audio> filteredAudios = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
                 'intelligence',
@@ -339,8 +339,8 @@ void main() {
         audioOne,
       ];
 
-      List<Audio> filteredAudios =
-          audioSortFilterService.filterOnVideoTitleAndDescriptionOptions(
+      List<Audio> filteredAudios = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
                 'tendance crypto',
@@ -359,8 +359,8 @@ void main() {
         audioThree,
       ];
 
-      List<Audio> filteredAudios =
-          audioSortFilterService.filterOnVideoTitleAndDescriptionOptions(
+      List<Audio> filteredAudios = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
                 'tendance crypto',
@@ -377,8 +377,8 @@ void main() {
         audioOne,
       ];
 
-      List<Audio> filteredAudios =
-          audioSortFilterService.filterOnVideoTitleAndDescriptionOptions(
+      List<Audio> filteredAudios = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
                 'en 2024',
@@ -397,8 +397,8 @@ void main() {
         audioThree,
       ];
 
-      List<Audio> filteredAudios =
-          audioSortFilterService.filterOnVideoTitleAndDescriptionOptions(
+      List<Audio> filteredAudios = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
                 'en 2024',
@@ -416,8 +416,8 @@ void main() {
         audioThree,
       ];
 
-      List<Audio> filteredAudios =
-          audioSortFilterService.filterOnVideoTitleAndDescriptionOptions(
+      List<Audio> filteredAudios = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
                 'quelle',
@@ -437,8 +437,8 @@ void main() {
         audioFour,
       ];
 
-      List<Audio> filteredAudios =
-          audioSortFilterService.filterOnVideoTitleAndDescriptionOptions(
+      List<Audio> filteredAudios = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
                 'quelle',
@@ -456,8 +456,8 @@ void main() {
         audioThree,
       ];
 
-      List<Audio> filteredAudios =
-          audioSortFilterService.filterOnVideoTitleAndDescriptionOptions(
+      List<Audio> filteredAudios = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
                 '2024',
@@ -474,8 +474,8 @@ void main() {
         audioFour,
       ];
 
-      List<Audio> filteredAudios =
-          audioSortFilterService.filterOnVideoTitleAndDescriptionOptions(
+      List<Audio> filteredAudios = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
                 'intelligence',
@@ -495,8 +495,8 @@ void main() {
         audioFour,
       ];
 
-      List<Audio> filteredAudios =
-          audioSortFilterService.filterOnVideoTitleAndDescriptionOptions(
+      List<Audio> filteredAudios = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
                 '2024',
@@ -520,8 +520,8 @@ void main() {
     test('filter by <investir en 2024> AND <éthique et tac>', () {
       List<Audio> expectedFilteredAudios = [];
 
-      List<Audio> filteredAudios =
-          audioSortFilterService.filterOnVideoTitleAndDescriptionOptions(
+      List<Audio> filteredAudios = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
                 'investir en 2024',
@@ -538,8 +538,8 @@ void main() {
         audioTwo,
       ];
 
-      List<Audio> filteredAudios =
-          audioSortFilterService.filterOnVideoTitleAndDescriptionOptions(
+      List<Audio> filteredAudios = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
                 'accélération',
@@ -557,8 +557,8 @@ void main() {
         audioTwo,
       ];
 
-      List<Audio> filteredAudios =
-          audioSortFilterService.filterOnVideoTitleAndDescriptionOptions(
+      List<Audio> filteredAudios = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
                 'investir en 2024',
@@ -576,8 +576,8 @@ void main() {
         audioTwo,
       ];
 
-      List<Audio> filteredAudios =
-          audioSortFilterService.filterOnVideoTitleAndDescriptionOptions(
+      List<Audio> filteredAudios = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
                 'on vous propose',
@@ -601,8 +601,8 @@ void main() {
     test('filter by <investir en 2024> AND <éthique et tac>', () {
       List<Audio> expectedFilteredAudios = [];
 
-      List<Audio> filteredAudios =
-          audioSortFilterService.filterOnVideoTitleAndDescriptionOptions(
+      List<Audio> filteredAudios = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
                 'investir en 2024',
@@ -619,8 +619,8 @@ void main() {
         audioTwo,
       ];
 
-      List<Audio> filteredAudios =
-          audioSortFilterService.filterOnVideoTitleAndDescriptionOptions(
+      List<Audio> filteredAudios = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
                 'accélération',
@@ -635,8 +635,8 @@ void main() {
     test('filter by <investir en 2024> OR <Éthique et tac>', () {
       List<Audio> expectedFilteredAudios = [audioOne, audioTwo];
 
-      List<Audio> filteredAudios =
-          audioSortFilterService.filterOnVideoTitleAndDescriptionOptions(
+      List<Audio> filteredAudios = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
                 'investir en 2024',
@@ -653,8 +653,8 @@ void main() {
         audioOne,
       ];
 
-      List<Audio> filteredAudios =
-          audioSortFilterService.filterOnVideoTitleAndDescriptionOptions(
+      List<Audio> filteredAudios = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
                 'investir en 2024',
@@ -671,8 +671,8 @@ void main() {
         audioTwo,
       ];
 
-      List<Audio> filteredAudios =
-          audioSortFilterService.filterOnVideoTitleAndDescriptionOptions(
+      List<Audio> filteredAudios = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
                 'on vous propose',
