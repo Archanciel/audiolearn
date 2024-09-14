@@ -386,9 +386,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                     },
                     icon: Consumer<AudioPlayerVM>(
                       builder: (context, audioPlayerVMlistenTrue, child) {
-                        // The code below ensures that the audio player is
-                        // paused when the current comment end audio position
-                        // is reached.
+                        // Check if the comment is playing and the position has been reached
                         if (_playingComment != null &&
                             _playingComment == comment &&
                             audioPlayerVMlistenTrue.currentAudio!
@@ -398,13 +396,16 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                                     milliseconds: comment
                                             .commentEndPositionInTenthOfSeconds *
                                         100)) {
-                          audioPlayerVMlistenTrue.pause().then((_) {});
+                          // You cannot await here, but you can trigger an action like so
+                          // (this will not block the widget tree rendering)
+                          WidgetsBinding.instance
+                              .addPostFrameCallback((_) async {
+                            await audioPlayerVMlistenTrue.pause();
+                          });
                         }
 
-                        // this logic avoids that when the
-                        // user clicks on the play button of a
-                        // comment, the play button of the
-                        // other comment are updated to 'pause'
+                        // This logic avoids that when the user clicks on the play button of a
+                        // comment, the play button of the other comment is updated to 'pause'
                         return Icon((_playingComment != null &&
                                 _playingComment == comment &&
                                 audioPlayerVMlistenTrue.isPlaying)
