@@ -12525,7 +12525,7 @@ void main() {
       expect(
         File("$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName")
             .readAsStringSync(),
-        "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.orderedTitleLst\":\"[Youtube_test]\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.playSpeed\":\"1.25\",\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\Users\\\\Jean-Pierre\\\\Development\\\\Flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\Users\\\\Jean-Pierre\\\\Development\\\\Flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\new\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":false,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}",
+        "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.orderedTitleLst\":\"[Youtube_test]\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.playSpeed\":\"1.25\",\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\Users\\\\Jean-Pierre\\\\Development\\\\Flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\Users\\\\Jean-Pierre\\\\Development\\\\Flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\new\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInYoutubeChannelName\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":false,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}",
       );
 
       // Find the Youtube playlist to select
@@ -14604,15 +14604,15 @@ void main() {
       });
     });
     group('Playing several comments', () {
-      testWidgets('''Three comments partially played color verification. Play second
+      testWidgets(
+          '''Three comments partially played color verification. Play second
            comment partially, then play third comment partially, then play fourth
            comment partially until you close the playlist comment dialog. Then
            reopen the playlist comment dialog and verify that the played comments
            color was not changed, which means that the commented audio position
            changes related to the comment play of the three comments were undone.
            Verify as well that the played audio changes caused by the comments
-           playing was undone as well.''',
-          (WidgetTester tester) async {
+           playing was undone as well.''', (WidgetTester tester) async {
         const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
         const String secondPlayedCommentAudioTitle =
             "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
@@ -14943,7 +14943,7 @@ Future<Finder> verifyAudioInfoDialog({
   // elements
 
   // Verify the audio channel name
-  
+
   Text youtubeChannelTextWidget =
       tester.widget<Text>(find.byKey(const Key('youtubeChannelKey')));
 

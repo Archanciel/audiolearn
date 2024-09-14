@@ -71,7 +71,7 @@ void audioPlayerViewSortFilterIntregrationTest() {
       await tester.tap(find.byKey(const Key('sortingOptionDropdownButton')));
       await tester.pumpAndSettle();
 
-      // select the Audio duration sort option and tapp on it to add
+      // select the Audio duration sort option and tap on it to add
       // it to the sort option list
       await tester.tap(find.text('Audio duration'));
       await tester.pumpAndSettle();
@@ -80,7 +80,7 @@ void audioPlayerViewSortFilterIntregrationTest() {
       // Then tap on it in order to suppress the Audio download
       // date sort option
       await tester
-          .tap(IntegrationTestUtil.findIconButtonWithIcon(Icons.clear).first);
+          .tap(IntegrationTestUtil.findIconButtonWithIcon(Icons.clear).at(1));
       await tester.pumpAndSettle();
 
       // Now tap the Fully listened checkbox in order to exclude
@@ -182,7 +182,7 @@ void audioPlayerViewSortFilterIntregrationTest() {
         '''Change the SF parms in in the dropdown button list to 'Title asc'
            and then verify its application. Then go to the audio player view
            and there verify that the order of the audios displayed in the
-           playable audio list dialog is not sorted according to ^Title asc'
+           playable audio list dialog is not sorted according to 'Title asc'
            since this SF parms was not saved in the playlist json file.
 
            Then, go back to the playlist download view and save the 'Title asc'

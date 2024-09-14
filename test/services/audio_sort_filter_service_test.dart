@@ -547,7 +547,7 @@ void main() {
               ],
               sentencesCombination: SentencesCombination.AND,
               ignoreCase: true,
-              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInVideoCompactDescription: true,
               searchAsWellInYoutubeChannelName: false);
 
       expect(filteredAudios, expectedFilteredAudios);
@@ -566,7 +566,7 @@ void main() {
               ],
               sentencesCombination: SentencesCombination.AND,
               ignoreCase: true,
-              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInVideoCompactDescription: true,
               searchAsWellInYoutubeChannelName: false);
 
       expect(filteredAudios, expectedFilteredAudios);
@@ -586,7 +586,7 @@ void main() {
               ],
               sentencesCombination: SentencesCombination.OR,
               ignoreCase: true,
-              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInVideoCompactDescription: true,
               searchAsWellInYoutubeChannelName: false);
 
       expect(filteredAudios, expectedFilteredAudios);
@@ -606,7 +606,7 @@ void main() {
               ],
               sentencesCombination: SentencesCombination.OR,
               ignoreCase: true,
-              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInVideoCompactDescription: true,
               searchAsWellInYoutubeChannelName: false);
 
       expect(filteredAudios, expectedFilteredAudios);
@@ -632,7 +632,7 @@ void main() {
               ],
               sentencesCombination: SentencesCombination.AND,
               ignoreCase: false,
-              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInVideoCompactDescription: true,
               searchAsWellInYoutubeChannelName: false);
 
       expect(filteredAudios, expectedFilteredAudios);
@@ -651,7 +651,7 @@ void main() {
               ],
               sentencesCombination: SentencesCombination.AND,
               ignoreCase: false,
-              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInVideoCompactDescription: true,
               searchAsWellInYoutubeChannelName: false);
 
       expect(filteredAudios, expectedFilteredAudios);
@@ -668,7 +668,7 @@ void main() {
               ],
               sentencesCombination: SentencesCombination.OR,
               ignoreCase: false,
-              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInVideoCompactDescription: true,
               searchAsWellInYoutubeChannelName: false);
 
       expect(filteredAudios, expectedFilteredAudios);
@@ -687,7 +687,7 @@ void main() {
               ],
               sentencesCombination: SentencesCombination.OR,
               ignoreCase: false,
-              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInVideoCompactDescription: true,
               searchAsWellInYoutubeChannelName: false);
 
       expect(filteredAudios, expectedFilteredAudios);
@@ -706,7 +706,7 @@ void main() {
               ],
               sentencesCombination: SentencesCombination.OR,
               ignoreCase: false,
-              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInVideoCompactDescription: true,
               searchAsWellInYoutubeChannelName: false);
 
       expect(filteredAudios, expectedFilteredAudios);
@@ -3352,7 +3352,7 @@ void main() {
         filterSentenceLst: ['Zeb'],
         sentencesCombination: SentencesCombination.AND,
         ignoreCase: true,
-        searchAsWellInVideoCompactDescription: false,
+        searchAsWellInVideoCompactDescription: true,
         searchAsWellInYoutubeChannelName: false,
       );
 
@@ -3375,7 +3375,7 @@ void main() {
         filterSentenceLst: ['Zeb'],
         sentencesCombination: SentencesCombination.AND,
         ignoreCase: true,
-        searchAsWellInVideoCompactDescription: false,
+        searchAsWellInVideoCompactDescription: true,
         searchAsWellInYoutubeChannelName: false,
       );
 
@@ -3563,7 +3563,7 @@ void main() {
         filterSentenceLst: ['Julien'],
         sentencesCombination: SentencesCombination.AND,
         ignoreCase: true,
-        searchAsWellInVideoCompactDescription: false,
+        searchAsWellInVideoCompactDescription: true,
         searchAsWellInYoutubeChannelName: false,
       );
 
@@ -3593,7 +3593,7 @@ void main() {
         filterSentenceLst: ['Julien'],
         sentencesCombination: SentencesCombination.AND,
         ignoreCase: true,
-        searchAsWellInVideoCompactDescription: false,
+        searchAsWellInVideoCompactDescription: true,
         searchAsWellInYoutubeChannelName: false,
       );
 
@@ -3784,7 +3784,7 @@ void main() {
         filterSentenceLst: ['Julien'],
         sentencesCombination: SentencesCombination.AND,
         ignoreCase: true,
-        searchAsWellInVideoCompactDescription: false,
+        searchAsWellInVideoCompactDescription: true,
         searchAsWellInYoutubeChannelName: false,
       );
 
@@ -3814,7 +3814,7 @@ void main() {
         filterSentenceLst: ['Julien'],
         sentencesCombination: SentencesCombination.AND,
         ignoreCase: true,
-        searchAsWellInVideoCompactDescription: false,
+        searchAsWellInVideoCompactDescription: true,
         searchAsWellInYoutubeChannelName: false,
       );
 
@@ -4173,7 +4173,7 @@ void main() {
         ],
         sentencesCombination: SentencesCombination.AND,
         ignoreCase: true,
-        searchAsWellInVideoCompactDescription: false,
+        searchAsWellInVideoCompactDescription: true,
         searchAsWellInYoutubeChannelName: false,
       );
 
@@ -4208,7 +4208,7 @@ void main() {
         ],
         sentencesCombination: SentencesCombination.AND,
         ignoreCase: true,
-        searchAsWellInVideoCompactDescription: false,
+        searchAsWellInVideoCompactDescription: true,
         searchAsWellInYoutubeChannelName: false,
       );
 
@@ -4274,7 +4274,7 @@ void main() {
         ],
         sentencesCombination: SentencesCombination.AND,
         ignoreCase: true,
-        searchAsWellInVideoCompactDescription: false,
+        searchAsWellInVideoCompactDescription: true,
         searchAsWellInYoutubeChannelName: false,
       );
 
@@ -4309,7 +4309,7 @@ void main() {
         ],
         sentencesCombination: SentencesCombination.AND,
         ignoreCase: true,
-        searchAsWellInVideoCompactDescription: false,
+        searchAsWellInVideoCompactDescription: true,
         searchAsWellInYoutubeChannelName: false,
       );
 
@@ -4532,7 +4532,7 @@ void main() {
         ],
         sentencesCombination: SentencesCombination.AND,
         ignoreCase: true,
-        searchAsWellInVideoCompactDescription: false,
+        searchAsWellInVideoCompactDescription: true,
         searchAsWellInYoutubeChannelName: false,
       );
 
@@ -4571,7 +4571,7 @@ void main() {
         ],
         sentencesCombination: SentencesCombination.AND,
         ignoreCase: true,
-        searchAsWellInVideoCompactDescription: false,
+        searchAsWellInVideoCompactDescription: true,
         searchAsWellInYoutubeChannelName: false,
       );
 
@@ -4722,7 +4722,7 @@ void main() {
         ],
         sentencesCombination: SentencesCombination.OR,
         ignoreCase: true,
-        searchAsWellInVideoCompactDescription: false,
+        searchAsWellInVideoCompactDescription: true,
         searchAsWellInYoutubeChannelName: false,
       );
 
@@ -4765,7 +4765,7 @@ void main() {
         ],
         sentencesCombination: SentencesCombination.OR,
         ignoreCase: true,
-        searchAsWellInVideoCompactDescription: false,
+        searchAsWellInVideoCompactDescription: true,
         searchAsWellInYoutubeChannelName: false,
       );
 
@@ -5112,7 +5112,7 @@ void main() {
         filterSentenceLst: [],
         sentencesCombination: SentencesCombination.AND,
         ignoreCase: true,
-        searchAsWellInVideoCompactDescription: false,
+        searchAsWellInVideoCompactDescription: true,
         searchAsWellInYoutubeChannelName: false,
       );
 
@@ -5145,7 +5145,7 @@ void main() {
         filterSentenceLst: ['Janco'],
         sentencesCombination: SentencesCombination.AND,
         ignoreCase: true,
-        searchAsWellInVideoCompactDescription: false,
+        searchAsWellInVideoCompactDescription: true,
         searchAsWellInYoutubeChannelName: false,
       );
 

@@ -668,7 +668,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   }
 
   /// Updates the sorted and filtered audio list of the selected playlist
-  /// according to the selected sort and filter parameters in the dropdown
+  /// according to the sort and filter parameters selected in the dropdown
   /// button list.
   void _updatePlaylistSortedFilteredAudioList({
     required PlaylistListVM playlistListVMlistenFalse,

@@ -664,6 +664,8 @@ class PlaylistListVM extends ChangeNotifier {
     String selectedPlaylistTitle = selectedPlaylist.title;
     String selectedPlaylistSortFilterParmsName;
 
+    // trying to obtain the sort and filter parameters name saved in the
+    // view type PlaylistListVM map for the selected playlist
     if (audioLearnAppViewType == AudioLearnAppViewType.playlistDownloadView) {
       selectedPlaylistSortFilterParmsName =
           _playlistAudioSFparmsNamesForPlaylistDownloadViewMap[
@@ -676,6 +678,9 @@ class PlaylistListVM extends ChangeNotifier {
               '';
     }
 
+    // if the user has not yet defined sort and filter parameters for the
+    // selected playlist, then the sort and filter parameters name stored
+    // in the selected playlist json file is obtained.
     if (selectedPlaylistSortFilterParmsName.isEmpty) {
       switch (audioLearnAppViewType) {
         case AudioLearnAppViewType.playlistDownloadView:
@@ -866,11 +871,10 @@ class PlaylistListVM extends ChangeNotifier {
   /// Method called when the user selects a Sort and Filter
   /// item in the download playlist view Sort and Filter dropdown
   /// menu or after the user clicked on the Save or Apply button
-  /// contained in the SortAndFilterAudioDialog. The
-  /// SortAndFilterAudioDialog can be opened by clicking
-  /// on a the Sort and Filter dropdown item edit icon button
-  /// or on Sort Filter menu item in the audio menu located in the
-  /// playlist download view or in the audio player view.
+  /// contained in the AudioSortFilterDialog. The AudioSortFilterDialog
+  /// can be opened by clicking on a the Sort and Filter dropdown item
+  /// edit icon button or on Sort Filter menu item in the audio menu
+  /// located in the playlist download view or in the audio player view.
   ///
   /// {audioSortFilterParameters} is the sort and filter parameters
   /// selected by the user in the download playlist view Sort and
@@ -1736,7 +1740,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// This method is called when the user closes the playlist comment list dialog.
   /// It is used to undo the changs made to the playlist current audio index
   /// as well as the position of the listened comments audio.
-  /// 
+  ///
   /// Using this method located in the PlaylistListVM is necessary in order to
   /// notify the listeners of the undone modification of the audio position.
   void updateCurrentOrPastPlayableAudio({
