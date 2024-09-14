@@ -14603,7 +14603,7 @@ void main() {
         );
       });
     });
-    group('Playing several comments', () {
+    // group('Playing several comments', () {
       // testWidgets(
       //     '''Three comments partially played color verification. Play second
       //      comment partially, then play third comment partially, then play fourth
@@ -14766,7 +14766,7 @@ void main() {
       //     rootPath: kPlaylistDownloadRootPathWindowsTest,
       //   );
       // });
-    });
+    // });
   });
 }
 
