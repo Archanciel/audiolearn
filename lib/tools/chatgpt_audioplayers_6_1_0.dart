@@ -1,10 +1,9 @@
-// https://pub.dev/packages/audioplayers/example
-
 import 'dart:async';
 import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:file_picker/file_picker.dart';  // Import the file_picker package
 import 'package:path/path.dart' as path;
 import 'package:window_size/window_size.dart';
 
@@ -53,6 +52,7 @@ class SimpleExampleApp extends StatefulWidget {
 
 class _SimpleExampleAppState extends State<SimpleExampleApp> {
   late AudioPlayer player = AudioPlayer();
+  String? selectedFile;
 
   @override
   void initState() {
@@ -63,25 +63,27 @@ class _SimpleExampleAppState extends State<SimpleExampleApp> {
 
     // Set the release mode to keep the source after playback has completed.
     player.setReleaseMode(ReleaseMode.stop);
+  }
 
-    // Start the player as soon as the app is displayed.
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await player.setSource(DeviceFileSource("C:${path.separator}Users${path.separator}Jean-Pierre${path.separator}Development${path.separator}Flutter${path.separator}audiolearn${path.separator}test${path.separator}data${path.separator}audio${path.separator}S8 audio${path.separator}240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.mp3"));
-      await player.resume();
+  Future<void> _selectFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['mp3'],
+    );
 
-      // The mp3 file must be in the assets\audio folder. Useful only for
-      // running the app on Android emulator.
-      // await player.setSource(AssetSource(
-      //     'audio/240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.mp3'));
-      // await player.resume();
-    });
+    if (result != null) {
+      String filePath = result.files.single.path!;
+      setState(() {
+        selectedFile = filePath;
+      });
+      await player.setSource(DeviceFileSource(filePath));
+    }
   }
 
   @override
   void dispose() {
     // Release all sources and dispose the player.
     player.dispose();
-
     super.dispose();
   }
 
@@ -91,12 +93,27 @@ class _SimpleExampleAppState extends State<SimpleExampleApp> {
       appBar: AppBar(
         title: const Text('Simple Player'),
       ),
-      body: PlayerWidget(player: player),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            selectedFile != null
+                ? 'Selected File: ${path.basename(selectedFile!)}'
+                : 'No file selected',
+            style: const TextStyle(fontSize: 16),
+          ),
+          const SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: _selectFile,
+            child: const Text('Select MP3'),
+          ),
+          PlayerWidget(player: player),
+        ],
+      ),
     );
   }
 }
 
-// The PlayerWidget is a copy of "/lib/components/player_widget.dart".
 //#region PlayerWidget
 
 class PlayerWidget extends StatefulWidget {
@@ -153,8 +170,6 @@ class _PlayerWidgetState extends State<PlayerWidget> {
 
   @override
   void setState(VoidCallback fn) {
-    // Subscriptions only can be closed asynchronously,
-    // therefore events can occur after widget has been disposed.
     if (mounted) {
       super.setState(fn);
     }
