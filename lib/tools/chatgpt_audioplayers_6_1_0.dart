@@ -1,21 +1,57 @@
+// https://pub.dev/packages/audioplayers/example
+
 import 'dart:async';
+import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
+import 'package:window_size/window_size.dart';
+
+import '../constants.dart';
 
 void main() {
-  runApp(const MaterialApp(home: _SimpleExampleApp()));
+  setWindowsAppSizeAndPosition(isTest: true);
+  runApp(const MaterialApp(home: SimpleExampleApp()));
 }
 
-class _SimpleExampleApp extends StatefulWidget {
-  const _SimpleExampleApp();
+/// If app runs on Windows, Linux or MacOS, set the app size
+/// and position.
+Future<void> setWindowsAppSizeAndPosition({
+  required bool isTest,
+}) async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  if (!kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
+    await getScreenList().then((List<Screen> screens) {
+      // Assumez que vous voulez utiliser le premier écran (principal)
+      final Screen screen = screens.first;
+      final Rect screenRect = screen.visibleFrame;
+
+      // Définissez la largeur et la hauteur de votre fenêtre
+      double windowWidth = (isTest) ? 900 : 730;
+      const double windowHeight = 1300;
+
+      // Calculez la position X pour placer la fenêtre sur le côté droit de l'écran
+      final double posX = screenRect.right - windowWidth + 10;
+      // Optionnellement, ajustez la position Y selon vos préférences
+      final double posY = (screenRect.height - windowHeight) / 2;
+
+      final Rect windowRect =
+          Rect.fromLTWH(posX, posY, windowWidth, windowHeight);
+      setWindowFrame(windowRect);
+    });
+  }
+}
+
+class SimpleExampleApp extends StatefulWidget {
+  const SimpleExampleApp({super.key});
 
   @override
   _SimpleExampleAppState createState() => _SimpleExampleAppState();
 }
 
-class _SimpleExampleAppState extends State<_SimpleExampleApp> {
+class _SimpleExampleAppState extends State<SimpleExampleApp> {
   late AudioPlayer player = AudioPlayer();
 
   @override
@@ -81,13 +117,13 @@ class _PlayerWidgetState extends State<PlayerWidget> {
   StreamSubscription? _playerCompleteSubscription;
   StreamSubscription? _playerStateChangeSubscription;
 
-  bool get _isPlaying => _playerState == PlayerState.playing;
+  bool get isPlaying => _playerState == PlayerState.playing;
 
-  bool get _isPaused => _playerState == PlayerState.paused;
+  bool get isPaused => _playerState == PlayerState.paused;
 
-  String get _durationText => _duration?.toString().split('.').first ?? '';
+  String get durationText => _duration?.toString().split('.').first ?? '';
 
-  String get _positionText => _position?.toString().split('.').first ?? '';
+  String get positionText => _position?.toString().split('.').first ?? '';
 
   AudioPlayer get player => widget.player;
 
@@ -138,21 +174,21 @@ class _PlayerWidgetState extends State<PlayerWidget> {
           children: [
             IconButton(
               key: const Key('play_button'),
-              onPressed: _isPlaying ? null : _play,
+              onPressed: isPlaying ? null : _play,
               iconSize: 48.0,
               icon: const Icon(Icons.play_arrow),
               color: color,
             ),
             IconButton(
               key: const Key('pause_button'),
-              onPressed: _isPlaying ? _pause : null,
+              onPressed: isPlaying ? _pause : null,
               iconSize: 48.0,
               icon: const Icon(Icons.pause),
               color: color,
             ),
             IconButton(
               key: const Key('stop_button'),
-              onPressed: _isPlaying || _isPaused ? _stop : null,
+              onPressed: isPlaying || isPaused ? _stop : null,
               iconSize: 48.0,
               icon: const Icon(Icons.stop),
               color: color,
@@ -177,9 +213,9 @@ class _PlayerWidgetState extends State<PlayerWidget> {
         ),
         Text(
           _position != null
-              ? '$_positionText / $_durationText'
+              ? '$positionText / $durationText'
               : _duration != null
-                  ? _durationText
+                  ? durationText
                   : '',
           style: const TextStyle(fontSize: 16.0),
         ),
