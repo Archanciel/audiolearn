@@ -51,7 +51,7 @@ dependencies:
   url_launcher: ^6.3.0
   path: ^1.8.3
   permission_handler: ^11.3.1
-  window_manager: ^0.3.7
+  window_manager: ^0.4.2
   collection: ^1.18.0
   shared_preferences: ^2.2.3
 
@@ -80,3 +80,4 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/audio/

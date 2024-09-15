@@ -68,6 +68,12 @@ class _SimpleExampleAppState extends State<SimpleExampleApp> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await player.setSource(DeviceFileSource("C:${path.separator}Users${path.separator}Jean-Pierre${path.separator}Development${path.separator}Flutter${path.separator}audiolearn${path.separator}test${path.separator}data${path.separator}audio${path.separator}S8 audio${path.separator}240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.mp3"));
       await player.resume();
+
+      // The mp3 file must be in the assets\audio folder. Useful only for
+      // running the app on Android emulator.
+      // await player.setSource(AssetSource(
+      //     'audio/240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.mp3'));
+      // await player.resume();
     });
   }
 
