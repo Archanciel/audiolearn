@@ -19,7 +19,8 @@ class AudioPlayerViewModel extends ChangeNotifier {
   AudioPlayerViewModel() {
     _player = AudioPlayer();
     _player.setReleaseMode(ReleaseMode.stop);
-    _initStreams();
+
+    _initPlayer();
   }
 
   // Getters
@@ -76,7 +77,8 @@ class AudioPlayerViewModel extends ChangeNotifier {
   }
 
   // Initialize streams to listen to audio events
-  void _initStreams() {
+  void _initPlayer() {
+    _player.setVolume(1.0);
     _durationSubscription = _player.onDurationChanged.listen((duration) {
       _duration = duration;
       notifyListeners();

@@ -62,40 +62,54 @@ class PlayerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = context.watch<AudioPlayerViewModel>();
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
-          viewModel.selectedFile != null
-              ? 'Selected File: ${viewModel.selectedFile!.split('/').last}'
-              : 'No file selected',
-          style: const TextStyle(fontSize: 16),
+        Consumer<AudioPlayerViewModel>(
+          builder: (context, viewModel, child) {
+            return Text(
+              viewModel.selectedFile != null
+                  ? 'Selected File: ${viewModel.selectedFile!.split('/').last}'
+                  : 'No file selected',
+              style: const TextStyle(fontSize: 16),
+            );
+          },
         ),
         const SizedBox(height: 20),
-        ElevatedButton(
-          onPressed: viewModel.selectFile,
-          child: const Text('Select MP3'),
+        Consumer<AudioPlayerViewModel>(
+          builder: (context, viewModel, child) {
+            return ElevatedButton(
+              onPressed: viewModel.selectFile,
+              child: const Text('Select MP3'),
+            );
+          },
         ),
         const SizedBox(height: 20),
-        PlayerControls(viewModel: viewModel),
-        Slider(
-          onChanged: (value) => viewModel.seek(value),
-          value: (viewModel.position != null &&
-                  viewModel.duration != null &&
-                  viewModel.position!.inMilliseconds > 0 &&
-                  viewModel.position!.inMilliseconds < viewModel.duration!.inMilliseconds)
-              ? viewModel.position!.inMilliseconds / viewModel.duration!.inMilliseconds
-              : 0.0,
+        const PlayerControls(),
+        Consumer<AudioPlayerViewModel>(
+          builder: (context, viewModel, child) {
+            return Slider(
+              onChanged: (value) => viewModel.seek(value),
+              value: (viewModel.position != null &&
+                      viewModel.duration != null &&
+                      viewModel.position!.inMilliseconds > 0 &&
+                      viewModel.position!.inMilliseconds < viewModel.duration!.inMilliseconds)
+                  ? viewModel.position!.inMilliseconds / viewModel.duration!.inMilliseconds
+                  : 0.0,
+            );
+          },
         ),
-        Text(
-          viewModel.position != null
-              ? '${viewModel.positionText} / ${viewModel.durationText}'
-              : viewModel.duration != null
-                  ? viewModel.durationText
-                  : '',
-          style: const TextStyle(fontSize: 16.0),
+        Consumer<AudioPlayerViewModel>(
+          builder: (context, viewModel, child) {
+            return Text(
+              viewModel.position != null
+                  ? '${viewModel.positionText} / ${viewModel.durationText}'
+                  : viewModel.duration != null
+                      ? viewModel.durationText
+                      : '',
+              style: const TextStyle(fontSize: 16.0),
+            );
+          },
         ),
       ],
     );
@@ -103,36 +117,38 @@ class PlayerView extends StatelessWidget {
 }
 
 class PlayerControls extends StatelessWidget {
-  final AudioPlayerViewModel viewModel;
-
-  const PlayerControls({required this.viewModel, super.key});
+  const PlayerControls({super.key});
 
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).primaryColor;
 
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        IconButton(
-          onPressed: viewModel.isPlaying ? null : viewModel.play,
-          iconSize: 48.0,
-          icon: const Icon(Icons.play_arrow),
-          color: color,
-        ),
-        IconButton(
-          onPressed: viewModel.isPlaying ? viewModel.pause : null,
-          iconSize: 48.0,
-          icon: const Icon(Icons.pause),
-          color: color,
-        ),
-        IconButton(
-          onPressed: viewModel.isPlaying || viewModel.isPaused ? viewModel.stop : null,
-          iconSize: 48.0,
-          icon: const Icon(Icons.stop),
-          color: color,
-        ),
-      ],
+    return Consumer<AudioPlayerViewModel>(
+      builder: (context, viewModel, child) {
+        return Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconButton(
+              onPressed: viewModel.isPlaying ? null : viewModel.play,
+              iconSize: 48.0,
+              icon: const Icon(Icons.play_arrow),
+              color: color,
+            ),
+            IconButton(
+              onPressed: viewModel.isPlaying ? viewModel.pause : null,
+              iconSize: 48.0,
+              icon: const Icon(Icons.pause),
+              color: color,
+            ),
+            IconButton(
+              onPressed: viewModel.isPlaying || viewModel.isPaused ? viewModel.stop : null,
+              iconSize: 48.0,
+              icon: const Icon(Icons.stop),
+              color: color,
+            ),
+          ],
+        );
+      },
     );
   }
 }
