@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
@@ -78,7 +80,8 @@ class AudioPlayerVM extends ChangeNotifier {
   Audio? get currentAudio => _currentAudio;
   final PlaylistListVM _playlistListVM;
   final CommentVM _commentVM;
-  AudioPlayer? _audioPlayerPlugin;
+  late AudioPlayer _player;
+
   Duration _currentAudioTotalDuration = const Duration();
   Duration _currentAudioPosition = const Duration();
 
@@ -87,7 +90,7 @@ class AudioPlayerVM extends ChangeNotifier {
   Duration get currentAudioRemainingDuration =>
       _currentAudioTotalDuration - _currentAudioPosition;
 
-  bool get isPlaying => _audioPlayerPlugin!.state == PlayerState.playing;
+  bool get isPlaying => _player.state == PlayerState.playing;
 
   DateTime _currentAudioLastSaveDateTime = DateTime.now();
 
@@ -95,6 +98,12 @@ class AudioPlayerVM extends ChangeNotifier {
   final List<Command> _redoList = [];
 
   bool _isCommentPlaying = false;
+
+  // Stream subscriptions
+  StreamSubscription? _durationSubscription;
+  StreamSubscription? _positionSubscription;
+  StreamSubscription? _playerCompleteSubscription;
+  StreamSubscription? _playerStateChangeSubscription;
 
   AudioPlayerVM({
     required PlaylistListVM playlistListVM,
@@ -106,15 +115,11 @@ class AudioPlayerVM extends ChangeNotifier {
 
   @override
   Future<void> dispose() async {
-    if (_audioPlayerPlugin != null) {
-      try {
-        // necessary to avoid the error which causes integration test to fail
-        await _audioPlayerPlugin!.dispose();
-      } catch (e) {
-        // ignore: avoid_print
-        print('***** AudioPlayerVM.dispose() error: $e');
-      }
-    }
+    _durationSubscription?.cancel();
+    _positionSubscription?.cancel();
+    _playerCompleteSubscription?.cancel();
+    _playerStateChangeSubscription?.cancel();
+    _player.dispose();
 
     super.dispose();
   }
@@ -145,7 +150,7 @@ class AudioPlayerVM extends ChangeNotifier {
         (_currentAudio!.audioPlayVolume + volumeChangedValue).clamp(0.0, 1.0);
     _currentAudio!.audioPlayVolume =
         newAudioPlayVolume; // Increase and clamp to max 1.0
-    await _audioPlayerPlugin!.setVolume(newAudioPlayVolume);
+    await _player.setVolume(newAudioPlayVolume);
 
     updateAndSaveCurrentAudio();
 
@@ -169,7 +174,7 @@ class AudioPlayerVM extends ChangeNotifier {
     required Audio audio,
     bool doNotifyListeners = true,
   }) async {
-    await _setCurrentAudioAndInitializeAudioPlayer(audio);
+    await _setCurrentAudio(audio);
 
     audio.enclosingPlaylist!.setCurrentOrPastPlayableAudio(
       audio: audio,
@@ -206,7 +211,11 @@ class AudioPlayerVM extends ChangeNotifier {
   /// the AudioPlayerView screen without playing the selected playlist
   /// current or last played audio which is displayed correctly in the
   /// AudioPlayerView screen.
-  Future<void> _setCurrentAudioAndInitializeAudioPlayer(
+  /// 
+  /// Since with audioplayers 6.1.0 the audioplayers is initialized
+  /// only once, it is not reinitialized here as it was with audioplayers
+  /// 5.2.1.
+  Future<void> _setCurrentAudio(
     Audio audio,
   ) async {
     if (_currentAudio != null && !_currentAudio!.isPaused) {
@@ -234,7 +243,11 @@ class AudioPlayerVM extends ChangeNotifier {
     _currentAudioPosition = Duration(seconds: audio.audioPositionSeconds);
     _clearUndoRedoLists();
 
-    await initializeAudioPlayerPlugin();
+    final String audioFilePathName = _currentAudio?.filePathName ?? '';
+
+    if (audioFilePathName.isNotEmpty && File(audioFilePathName).existsSync()) {
+      await _player.setSource(DeviceFileSource(audioFilePathName));
+    }
 
     await modifyAudioPlayerPluginPosition(
       durationPosition: _currentAudioPosition,
@@ -312,7 +325,9 @@ class AudioPlayerVM extends ChangeNotifier {
     /// This test checks this bug fix:
     ///
     /// testWidgets('User modifies the position of next fully unread audio which is also the last downloaded audio of the playlist.').
-    await _audioPlayerPlugin!.seek(_currentAudioPosition);
+    if (_player.state == PlayerState.playing) {
+      await _player.seek(_currentAudioPosition);
+    }
   }
 
   /// Method called by skipToEndNoPlay() if the audio is positioned
@@ -364,92 +379,85 @@ class AudioPlayerVM extends ChangeNotifier {
   /// to avoid the use of the audio player plugin in unit tests.
   ///
   /// For this reason, the method is not private !
-  Future<void> initializeAudioPlayerPlugin() async {
-    if (_audioPlayerPlugin != null) {
-      try {
-        // necessary to avoid the error which causes integration test to fail
-        await _audioPlayerPlugin!.dispose();
-      } catch (e) {
-        // ignore: avoid_print
-        print('***** AudioPlayerVM.initializeAudioPlayerPlugin() error: $e');
-      }
-    }
-
-    _audioPlayerPlugin = AudioPlayer();
+  void initializeAudioPlayerPlugin() {
+    _player = AudioPlayer();
+    _player.setReleaseMode(ReleaseMode.stop);
 
     // Available only on version 6 !
-    // _audioPlayerPlugin!.positionUpdater = TimerPositionUpdater(
+    // _audioPlayerPlugin.positionUpdater = TimerPositionUpdater(
     //   interval: const Duration(milliseconds: 100),
-    //   getPosition: _audioPlayerPlugin!.getCurrentPosition,
+    //   getPosition: _audioPlayerPlugin.getCurrentPosition,
     // );
 
-    // Assuming filePath is the full path to your audio file
-    String audioFilePathName = _currentAudio?.filePathName ?? '';
+    _player.setVolume(
+      _currentAudio?.audioPlayVolume ?? kAudioDefaultPlayVolume,
+    );
 
-    // Check if the file exists before attempting to play it
-    if (audioFilePathName.isNotEmpty && File(audioFilePathName).existsSync()) {
-      await _audioPlayerPlugin!
-          .setVolume(_currentAudio?.audioPlayVolume ?? kAudioDefaultPlayVolume);
+    // setting audio player plugin listeners
 
-      // setting audio player plugin listeners
+    _durationSubscription = _player.onDurationChanged.listen((duration) {
+      _currentAudioTotalDuration = duration;
+      notifyListeners();
+    });
 
-      _audioPlayerPlugin!.onDurationChanged.listen((duration) {
-        _currentAudioTotalDuration = duration;
+    _positionSubscription = _player.onPositionChanged.listen((position) {
+      // This method is not called when the audio position is
+      // changed by the user clicking on the audio slider or
+      // on the audio position buttons (<<, >>, |<, >|).
+
+      if (_player.state == PlayerState.playing) {
+        // this test avoids that when selecting another audio
+        // the selected audio position is set to 0 since the
+        // passed position value of an AudioPlayer not playing
+        // is 0 !
+        _currentAudioPosition = position;
+
         notifyListeners();
-      });
 
-      _audioPlayerPlugin!.onPositionChanged.listen((position) {
-        // This method is not called when the audio position is
-        // changed by the user clicking on the audio slider or
-        // on the audio position buttons (<<, >>, |<, >|).
+        // This instruction must be executed before the next if block,
+        // otherwise, if the user opens the audio info dialog while the
+        // audio is playing, the audio position displayed in the audio
+        // info dialog opened on the current audio which does display
+        // the audio position obtained from the audio player view model
+        // will display the correct audio position only every 30 seconds.
+        // This is demonstrated by the audio indo audio state integration
+        // tests.
+        //
+        // The audioPositionSeconds of the current audio will be saved
+        // in its enclosing playlist json file every 30 seconds or when
+        // the audio is paused or when the audio is at end.
+        _currentAudio!.audioPositionSeconds = _currentAudioPosition.inSeconds;
 
-        if (_audioPlayerPlugin!.state == PlayerState.playing) {
-          // this test avoids that when selecting another audio
-          // the selected audio position is set to 0 since the
-          // passed position value of an AudioPlayer not playing
-          // is 0 !
-          _currentAudioPosition = position;
-
-          notifyListeners();
-
-          // This instruction must be executed before the next if block,
-          // otherwise, if the user opens the audio info dialog while the
-          // audio is playing, the audio position displayed in the audio
-          // info dialog opened on the current audio which does display
-          // the audio position obtained from the audio player view model
-          // will display the correct audio position only every 30 seconds.
-          // This is demonstrated by the audio indo audio state integration
-          // tests.
-          //
-          // The audioPositionSeconds of the current audio will be saved
-          // in its enclosing playlist json file every 30 seconds or when
-          // the audio is paused or when the audio is at end.
-          _currentAudio!.audioPositionSeconds = _currentAudioPosition.inSeconds;
-
-          if (_currentAudioLastSaveDateTime
-              .add(const Duration(seconds: 30))
-              .isAfter(DateTime.now())) {
-            return;
-          }
-
-          // saving the current audio position only every 30 seconds
-          updateAndSaveCurrentAudio();
-        }
-      });
-
-      _audioPlayerPlugin!.onPlayerComplete.listen((event) async {
-        if (_isCommentPlaying) {
-          // In this situation, if a comment is playing and arrives to the
-          // audio end, the next audio is not played.
+        if (_currentAudioLastSaveDateTime
+            .add(const Duration(seconds: 30))
+            .isAfter(DateTime.now())) {
           return;
         }
 
-        // Play next audio when current audio is finished. If a next
-        // audio is played, notifyListeners() is called in
-        // playNextAudio().
-        await _playNextAudio();
-      });
-    }
+        // saving the current audio position only every 30 seconds
+        updateAndSaveCurrentAudio();
+      }
+    });
+
+    _playerCompleteSubscription =
+        _player.onPlayerComplete.listen((event) async {
+      if (_isCommentPlaying) {
+        // In this situation, if a comment is playing and arrives to the
+        // audio end, the next audio is not played.
+        return;
+      }
+
+      // Play next audio when current audio is finished. If a next
+      // audio is played, notifyListeners() is called in
+      // playNextAudio().
+      await _playNextAudio();
+    });
+
+    // _playerStateChangeSubscription =
+    //     _player.onPlayerStateChanged.listen((state) {
+    //   _playerState = state;
+    //   notifyListeners();
+    // });
   }
 
   /// Method called when the user clicks on the AudioPlayerView
@@ -494,7 +502,7 @@ class AudioPlayerVM extends ChangeNotifier {
       return;
     }
 
-    await _setCurrentAudioAndInitializeAudioPlayer(currentOrPastPlaylistAudio);
+    await _setCurrentAudio(currentOrPastPlaylistAudio);
   }
 
   /// Used as well when the user moves or deletes in the audio
@@ -524,7 +532,7 @@ class AudioPlayerVM extends ChangeNotifier {
 
     try {
       // necessary to avoid the error which causes integration test to fail
-      await _audioPlayerPlugin!.dispose();
+      await _player.dispose();
     } catch (e) {
       // ignore: avoid_print
       print('***** AudioPlayerVM._clearCurrentAudio() error: $e');
@@ -570,9 +578,9 @@ class AudioPlayerVM extends ChangeNotifier {
         await _rewindAudioPositionBasedOnPauseDuration();
       }
 
-      await _audioPlayerPlugin!.play(DeviceFileSource(
+      await _player.play(DeviceFileSource(
           audioFilePathName)); // <-- Directly using play method
-      await _audioPlayerPlugin!.setPlaybackRate(_currentAudio!.audioPlaySpeed);
+      await _player.setPlaybackRate(_currentAudio!.audioPlaySpeed);
 
       _currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd =
           true;
@@ -585,7 +593,7 @@ class AudioPlayerVM extends ChangeNotifier {
   }
 
   Future<void> pause() async {
-    await _audioPlayerPlugin!.pause();
+    await _player.pause();
 
     if (_currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd) {
       _currentAudio!.isPaused = true;
@@ -760,7 +768,9 @@ class AudioPlayerVM extends ChangeNotifier {
       );
     }
 
-    await _audioPlayerPlugin!.seek(durationPosition);
+    if (_player.state == PlayerState.playing) {
+      await _player.seek(durationPosition);
+    }
   }
 
   void _addUndoCommand({
@@ -1051,7 +1061,7 @@ class AudioPlayerVM extends ChangeNotifier {
     }
 
     _currentAudio!.audioPlaySpeed = speed;
-    await _audioPlayerPlugin!.setPlaybackRate(speed);
+    await _player.setPlaybackRate(speed);
     updateAndSaveCurrentAudio();
 
     notifyListeners();
