@@ -484,7 +484,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
       );
     }
 
-    await audioPlayerVMlistenFalse.modifyAudioPlayerPluginPosition(
+    await audioPlayerVMlistenFalse.modifyPlayerPosition(
       durationPosition: Duration(
           milliseconds: comment.commentStartPositionInTenthOfSeconds * 100),
       addUndoCommand: true,

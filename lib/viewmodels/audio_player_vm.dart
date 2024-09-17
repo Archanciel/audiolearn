@@ -211,7 +211,7 @@ class AudioPlayerVM extends ChangeNotifier {
   /// the AudioPlayerView screen without playing the selected playlist
   /// current or last played audio which is displayed correctly in the
   /// AudioPlayerView screen.
-  /// 
+  ///
   /// Since with audioplayers 6.1.0 the audioplayers is initialized
   /// only once, it is not reinitialized here as it was with audioplayers
   /// 5.2.1.
@@ -249,7 +249,7 @@ class AudioPlayerVM extends ChangeNotifier {
       await _player.setSource(DeviceFileSource(audioFilePathName));
     }
 
-    await modifyAudioPlayerPluginPosition(
+    await modifyPlayerPosition(
       durationPosition: _currentAudioPosition,
     );
   }
@@ -662,7 +662,7 @@ class AudioPlayerVM extends ChangeNotifier {
     // button, the audio is rewinded maybe half a minute ...
     _currentAudio!.audioPausedDateTime = DateTime.now();
 
-    await modifyAudioPlayerPluginPosition(
+    await modifyPlayerPosition(
       durationPosition: _currentAudioPosition,
     );
 
@@ -747,7 +747,7 @@ class AudioPlayerVM extends ChangeNotifier {
     // method called by the playCurrentAudio() method. This is necessary
     // so that if we click on the slider or on an audio position button
     // while the audio is playing, the audio play position is changed.
-    await modifyAudioPlayerPluginPosition(
+    await modifyPlayerPosition(
       durationPosition: durationPosition,
     );
 
@@ -758,7 +758,7 @@ class AudioPlayerVM extends ChangeNotifier {
   /// to avoid the use of the audio player plugin in unit tests.
   ///
   /// For this reason, the method is not private !
-  Future<void> modifyAudioPlayerPluginPosition({
+  Future<void> modifyPlayerPosition({
     required Duration durationPosition,
     bool addUndoCommand = false,
   }) async {
@@ -821,7 +821,7 @@ class AudioPlayerVM extends ChangeNotifier {
 
     updateAndSaveCurrentAudio();
 
-    await modifyAudioPlayerPluginPosition(
+    await modifyPlayerPosition(
       durationPosition: _currentAudioPosition,
     );
 
@@ -872,7 +872,7 @@ class AudioPlayerVM extends ChangeNotifier {
     _currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd = false;
     updateAndSaveCurrentAudio();
 
-    await modifyAudioPlayerPluginPosition(
+    await modifyPlayerPosition(
       durationPosition: _currentAudioTotalDuration,
     );
 
@@ -914,7 +914,7 @@ class AudioPlayerVM extends ChangeNotifier {
     _setCurrentAudioToEndPosition();
     updateAndSaveCurrentAudio();
 
-    await modifyAudioPlayerPluginPosition(
+    await modifyPlayerPosition(
       durationPosition: _currentAudioTotalDuration,
     );
 
