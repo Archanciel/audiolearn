@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:file_picker/file_picker.dart';
 
 class AudioPlayerViewModel extends ChangeNotifier {
-  late AudioPlayer _player;
+  AudioPlayer _player;
   PlayerState? _playerState;
   Duration? _duration;
   Duration? _position;
@@ -26,7 +26,9 @@ class AudioPlayerViewModel extends ChangeNotifier {
   final Duration initialSeekPosition =
       const Duration(seconds: 30); // Set your desired position
 
-  AudioPlayerViewModel() {
+  AudioPlayerViewModel() : _player = AudioPlayer() {
+    _player.setReleaseMode(ReleaseMode.stop);
+
     _initPlayer();
     _loadInitialFileAndSeek();
   }
