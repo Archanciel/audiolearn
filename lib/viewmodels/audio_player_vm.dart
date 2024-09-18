@@ -80,7 +80,7 @@ class AudioPlayerVM extends ChangeNotifier {
   Audio? get currentAudio => _currentAudio;
   final PlaylistListVM _playlistListVM;
   final CommentVM _commentVM;
-  late AudioPlayer _player;
+  AudioPlayer _player;
 
   Duration _currentAudioTotalDuration = const Duration();
   Duration _currentAudioPosition = const Duration();
@@ -109,7 +109,13 @@ class AudioPlayerVM extends ChangeNotifier {
     required PlaylistListVM playlistListVM,
     required CommentVM commentVM,
   })  : _playlistListVM = playlistListVM,
-        _commentVM = commentVM {
+        _commentVM = commentVM,
+        _player = AudioPlayer() {
+    _player.setReleaseMode(ReleaseMode.stop);
+
+    // setting audio player plugin listeners
+    _initPlayer();
+
     initializeAudioPlayerPlugin();
   }
 
@@ -380,9 +386,6 @@ class AudioPlayerVM extends ChangeNotifier {
   ///
   /// For this reason, the method is not private !
   void initializeAudioPlayerPlugin() {
-    _player = AudioPlayer();
-    _player.setReleaseMode(ReleaseMode.stop);
-
     // Available only on version 6 !
     // _audioPlayerPlugin.positionUpdater = TimerPositionUpdater(
     //   interval: const Duration(milliseconds: 100),
@@ -392,7 +395,9 @@ class AudioPlayerVM extends ChangeNotifier {
     _player.setVolume(
       _currentAudio?.audioPlayVolume ?? kAudioDefaultPlayVolume,
     );
+  }
 
+  void _initPlayer() {
     // setting audio player plugin listeners
 
     _durationSubscription = _player.onDurationChanged.listen((duration) {
