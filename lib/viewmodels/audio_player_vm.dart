@@ -328,12 +328,48 @@ class AudioPlayerVM extends ChangeNotifier {
     /// not yet played audio starts playing not at the changed position,
     /// but at the start position !
     ///
-    /// This test checks this bug fix:
+    /// This integration test checks this bug fix:
     ///
     /// testWidgets('User modifies the position of next fully unread audio which is also the last downloaded audio of the playlist.').
+
+    await _audioPlayerSeekToPosition(
+      position: _currentAudioPosition,
+    );
+  }
+
+  /// This method applies an important bug fix. When audioPlayer.resume()
+  /// _audioPlayer.pause() were executed initially, the audioplayer onPositionChanged
+  /// listener was called with a position equal to 0 seconds.This causes the
+  /// audio position to be updated incorrectly in its enclosing playlist json file.
+  /// 
+  /// Cancelling the onPositionChanged existing listener and before the acceptable
+  /// audioplayer seek() and then setting a new onPositionChanged listener fixes
+  /// this bug.
+  Future<void> _audioPlayerSeekToPosition({
+    required Duration position,
+  }) async {
     if (_audioPlayer.state == PlayerState.playing) {
-      await _audioPlayer.seek(_currentAudioPosition);
+      await _audioPlayer.seek(position);
+    } else {
+      // Play briefly to enable seeking, then pause and seek to the desired
+      // position
+
+      await _positionSubscription?.cancel(); // Cancel the existing listener
+      await _audioPlayer.resume(); // Start playback briefly to enable seek
+      await _audioPlayer.pause(); // Pause immediately
+
+      // Now seek to the desired current audio position
+      await _audioPlayer.seek(position);
+
+      _positionSubscription = _audioPlayer.onPositionChanged.listen((position) {
+        // This method is not called when the audio position is
+        // changed by the user clicking on the audio slider or
+        // on the audio position buttons (<<, >>, |<, >|).
+        handlePositionChanged(position);
+      });
     }
+
+    _currentAudioPosition = position;
   }
 
   /// Method called by skipToEndNoPlay() if the audio is positioned
@@ -401,12 +437,17 @@ class AudioPlayerVM extends ChangeNotifier {
       await _audioPlayer.setSource(DeviceFileSource(audioFilePathName));
       await _audioPlayer
           .setVolume(_currentAudio?.audioPlayVolume ?? kAudioDefaultPlayVolume);
+      // await _audioPlayerSeekToPosition(
+      //   position: Duration(
+      //     seconds: _currentAudio!.audioPositionSeconds,
+      //   ),
+      // );
     }
   }
 
+  /// This method sets the audio player listeners. Those listeners will be
+  /// cancelled in the AudioPlayerVM dispose() method.
   void _initPlayer() {
-    // setting audio player plugin listeners
-
     _durationSubscription = _audioPlayer.onDurationChanged.listen((duration) {
       _currentAudioTotalDuration = duration;
       notifyListeners();
@@ -416,39 +457,7 @@ class AudioPlayerVM extends ChangeNotifier {
       // This method is not called when the audio position is
       // changed by the user clicking on the audio slider or
       // on the audio position buttons (<<, >>, |<, >|).
-
-      if (_audioPlayer.state == PlayerState.playing) {
-        // this test avoids that when selecting another audio
-        // the selected audio position is set to 0 since the
-        // passed position value of an AudioPlayer not playing
-        // is 0 !
-        _currentAudioPosition = position;
-
-        notifyListeners();
-
-        // This instruction must be executed before the next if block,
-        // otherwise, if the user opens the audio info dialog while the
-        // audio is playing, the audio position displayed in the audio
-        // info dialog opened on the current audio which does display
-        // the audio position obtained from the audio player view model
-        // will display the correct audio position only every 30 seconds.
-        // This is demonstrated by the audio indo audio state integration
-        // tests.
-        //
-        // The audioPositionSeconds of the current audio will be saved
-        // in its enclosing playlist json file every 30 seconds or when
-        // the audio is paused or when the audio is at end.
-        _currentAudio!.audioPositionSeconds = _currentAudioPosition.inSeconds;
-
-        if (_currentAudioLastSaveDateTime
-            .add(const Duration(seconds: 30))
-            .isAfter(DateTime.now())) {
-          return;
-        }
-
-        // saving the current audio position only every 30 seconds
-        updateAndSaveCurrentAudio();
-      }
+      handlePositionChanged(position);
     });
 
     _playerCompleteSubscription =
@@ -470,6 +479,38 @@ class AudioPlayerVM extends ChangeNotifier {
     //   _playerState = state;
     //   notifyListeners();
     // });
+  }
+
+  void handlePositionChanged(Duration position) {
+    if (_audioPlayer.state == PlayerState.playing) {
+      // this test avoids that when selecting another audio
+      // the selected audio position is set to 0 since the
+      // passed position value of an AudioPlayer not playing
+      // is 0 !
+      _currentAudioPosition = position;
+      notifyListeners();
+
+      // This instruction must be executed before the next if block,
+      // otherwise, if the user opens the audio info dialog while the
+      // audio is playing, the audio position displayed in the audio
+      // info dialog opened on the current audio which does display
+      // the audio position obtained from the audio player view model
+      // will display the correct audio position only every 30 seconds.
+      // This is demonstrated by the audio indo audio state integration
+      // tests.
+      //
+      // The audioPositionSeconds of the current audio will be saved
+      // in its enclosing playlist json file every 30 seconds or when
+      // the audio is paused or when the audio is at end.
+      _currentAudio!.audioPositionSeconds = _currentAudioPosition.inSeconds;
+      if (_currentAudioLastSaveDateTime
+          .add(const Duration(seconds: 30))
+          .isAfter(DateTime.now())) {
+        return;
+      }
+
+      updateAndSaveCurrentAudio();
+    }
   }
 
   /// Method called when the user clicks on the AudioPlayerView
@@ -586,12 +627,12 @@ class AudioPlayerVM extends ChangeNotifier {
 
     // Check if the file exists before attempting to play it
     if (File(audioFilePathName).existsSync()) {
-      if (rewindAudioPositionBasedOnPauseDuration) {
-        await _rewindAudioPositionBasedOnPauseDuration();
-      }
+      // if (rewindAudioPositionBasedOnPauseDuration) {
+      //   await _rewindAudioPositionBasedOnPauseDuration();
+      // }
 
-      await _audioPlayer.play(DeviceFileSource(
-          audioFilePathName)); // <-- Directly using play method
+      // await _audioPlayer.setSource(DeviceFileSource(audioFilePathName));
+      await _audioPlayer.resume();
       await _audioPlayer.setPlaybackRate(_currentAudio!.audioPlaySpeed);
 
       _currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd =
@@ -780,9 +821,9 @@ class AudioPlayerVM extends ChangeNotifier {
       );
     }
 
-    if (_audioPlayer.state == PlayerState.playing) {
-      await _audioPlayer.seek(durationPosition);
-    }
+    await _audioPlayerSeekToPosition(
+      position: durationPosition,
+    );
   }
 
   void _addUndoCommand({
