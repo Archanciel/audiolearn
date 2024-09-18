@@ -627,6 +627,8 @@ class AudioPlayerVM extends ChangeNotifier {
 
     // Check if the file exists before attempting to play it
     if (File(audioFilePathName).existsSync()) {
+      // TODO: Uncomment this code and determine if and why it causes
+      // a bug (modification of position of an audio)
       // if (rewindAudioPositionBasedOnPauseDuration) {
       //   await _rewindAudioPositionBasedOnPauseDuration();
       // }
