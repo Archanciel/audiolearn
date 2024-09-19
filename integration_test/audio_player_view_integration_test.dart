@@ -352,7 +352,7 @@ void main() {
 
       await tester
           .tap(playlistDownloadViewLastDownloadedAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      await tester.pumpAndSettle(const Duration(milliseconds: 400));
 
       // Tapping 5 times on the forward 1 minute icon button. Now, the last
       // downloaded audio of the playlist is partially listened.
