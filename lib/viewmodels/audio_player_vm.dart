@@ -111,8 +111,6 @@ class AudioPlayerVM extends ChangeNotifier {
   })  : _playlistListVM = playlistListVM,
         _commentVM = commentVM,
         _audioPlayer = AudioPlayer() {
-    _audioPlayer.setReleaseMode(ReleaseMode.stop);
-
     // setting audio player plugin listeners
     _initAudioPlayer();
 
