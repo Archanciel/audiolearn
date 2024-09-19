@@ -602,7 +602,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
       );
     }
 
-    await audioPlayerVM.modifyPlayerPosition(
+    await audioPlayerVM.modifyAudioPlayerPosition(
       durationPosition: Duration(
           milliseconds: comment.commentStartPositionInTenthOfSeconds * 100),
       addUndoCommand: true,

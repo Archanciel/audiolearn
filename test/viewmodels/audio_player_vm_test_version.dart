@@ -23,7 +23,7 @@ class AudioPlayerVMTestVersion extends AudioPlayerVM {
   }
 
   @override
-  Future<void> modifyPlayerPosition({
+  Future<void> modifyAudioPlayerPosition({
     required Duration durationPosition,
     bool addUndoCommand = false,
   }) async {
