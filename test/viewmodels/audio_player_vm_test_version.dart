@@ -16,6 +16,12 @@ class AudioPlayerVMTestVersion extends AudioPlayerVM {
   });
 
   @override
+  Future<void> audioPlayerSetSource(String audioFilePathName) async {
+    // does not access to the audio player plugin so that unit
+    // tests can be run without throwing an exception
+  }
+
+  @override
   Future<void> initializeAudioPlayer() {
     // does not access to the audio player plugin so that unit
     // tests can be run without throwing an exception
