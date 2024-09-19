@@ -3015,7 +3015,7 @@ void main() {
           find.text(toSelectAudioTitle);
 
       await tester.tap(toSelectAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // check the current audio's position
       expect(find.text('10:00'), findsOneWidget);
