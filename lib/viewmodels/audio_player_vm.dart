@@ -80,7 +80,7 @@ class AudioPlayerVM extends ChangeNotifier {
   Audio? get currentAudio => _currentAudio;
   final PlaylistListVM _playlistListVM;
   final CommentVM _commentVM;
-  AudioPlayer _audioPlayer;
+  AudioPlayer? _audioPlayer;
 
   Duration _currentAudioTotalDuration = const Duration();
   Duration _currentAudioPosition = const Duration();
@@ -90,7 +90,7 @@ class AudioPlayerVM extends ChangeNotifier {
   Duration get currentAudioRemainingDuration =>
       _currentAudioTotalDuration - _currentAudioPosition;
 
-  bool get isPlaying => _audioPlayer.state == PlayerState.playing;
+  bool get isPlaying => _audioPlayer!.state == PlayerState.playing;
 
   DateTime _currentAudioLastSaveDateTime = DateTime.now();
 
@@ -109,21 +109,26 @@ class AudioPlayerVM extends ChangeNotifier {
     required PlaylistListVM playlistListVM,
     required CommentVM commentVM,
   })  : _playlistListVM = playlistListVM,
-        _commentVM = commentVM,
-        _audioPlayer = AudioPlayer() {
-    // setting audio player plugin listeners
-    _initAudioPlayer();
-
+        _commentVM = commentVM {
     initializeAudioPlayer();
   }
 
   @override
   Future<void> dispose() async {
+    if (_audioPlayer != null) {
+      try {
+        // necessary to avoid the error which causes integration test to fail
+        await _audioPlayer!.dispose();
+      } catch (e) {
+        // ignore: avoid_print
+        print('***** AudioPlayerVM.dispose() error: $e');
+      }
+    }
+
     _durationSubscription?.cancel();
     _positionSubscription?.cancel();
     _playerCompleteSubscription?.cancel();
     _playerStateChangeSubscription?.cancel();
-    _audioPlayer.dispose();
 
     super.dispose();
   }
@@ -154,7 +159,7 @@ class AudioPlayerVM extends ChangeNotifier {
         (_currentAudio!.audioPlayVolume + volumeChangedValue).clamp(0.0, 1.0);
     _currentAudio!.audioPlayVolume =
         newAudioPlayVolume; // Increase and clamp to max 1.0
-    await _audioPlayer.setVolume(newAudioPlayVolume);
+    await _audioPlayer!.setVolume(newAudioPlayVolume);
 
     updateAndSaveCurrentAudio();
 
@@ -250,12 +255,18 @@ class AudioPlayerVM extends ChangeNotifier {
     final String audioFilePathName = _currentAudio?.filePathName ?? '';
 
     if (audioFilePathName.isNotEmpty && File(audioFilePathName).existsSync()) {
-      await _audioPlayer.setSource(DeviceFileSource(audioFilePathName));
+      await audioPlayerSetSource(audioFilePathName);
     }
 
     await modifyAudioPlayerPosition(
       durationPosition: _currentAudioPosition,
     );
+  }
+
+  /// Method defined as public since it is redefined in the mock subclass
+  /// AudioPlayerVMTestVersion which does not access to audioplayers plugin.
+  Future<void> audioPlayerSetSource(String audioFilePathName) async {
+      await _audioPlayer!.setSource(DeviceFileSource(audioFilePathName));
   }
 
   /// Adjusts the playback start position of the current audio based on the elapsed
@@ -336,7 +347,7 @@ class AudioPlayerVM extends ChangeNotifier {
   }
 
   /// This method applies an important bug fix. When audioPlayer.resume()
-  /// _audioPlayer.pause() were executed initially, the audioplayer onPositionChanged
+  /// _audioPlayer!.pause() were executed initially, the audioplayer onPositionChanged
   /// listener was called with a position equal to 0 seconds.This causes the
   /// audio position to be updated incorrectly in its enclosing playlist json file.
   ///
@@ -346,20 +357,21 @@ class AudioPlayerVM extends ChangeNotifier {
   Future<void> _audioPlayerSeekToPosition({
     required Duration position,
   }) async {
-    if (_audioPlayer.state == PlayerState.playing) {
-      await _audioPlayer.seek(position);
+    if (_audioPlayer!.state == PlayerState.playing) {
+      await _audioPlayer!.seek(position);
     } else {
       // Play briefly to enable seeking, then pause and seek to the desired
       // position
 
       await _positionSubscription?.cancel(); // Cancel the existing listener
-      await _audioPlayer.resume(); // Start playback briefly to enable seek
-      await _audioPlayer.pause(); // Pause immediately
+      await _audioPlayer!.resume(); // Start playback briefly to enable seek
+      await _audioPlayer!.pause(); // Pause immediately
 
       // Now seek to the desired current audio position
-      await _audioPlayer.seek(position);
+      await _audioPlayer!.seek(position);
 
-      _positionSubscription = _audioPlayer.onPositionChanged.listen((position) {
+      _positionSubscription =
+          _audioPlayer!.onPositionChanged.listen((position) {
         // This method is not called when the audio position is
         // changed by the user clicking on the audio slider or
         // on the audio position buttons (<<, >>, |<, >|).
@@ -420,6 +432,20 @@ class AudioPlayerVM extends ChangeNotifier {
   ///
   /// For this reason, the method is not private !
   Future<void> initializeAudioPlayer() async {
+    if (_audioPlayer != null) {
+      try {
+        // necessary to avoid the error which causes integration test to fail
+        await _audioPlayer!.dispose();
+      } catch (e) {
+        // ignore: avoid_print
+        print('***** AudioPlayerVM.initializeAudioPlayerPlugin() error: $e');
+      }
+    }
+
+    _audioPlayer = AudioPlayer();
+
+    _initAudioPlayer();
+
     // Available only on version 6 !
     // _audioPlayerPlugin.positionUpdater = TimerPositionUpdater(
     //   interval: const Duration(milliseconds: 100),
@@ -432,8 +458,8 @@ class AudioPlayerVM extends ChangeNotifier {
     // Check if the file exists before attempting to play it
     if (audioFilePathName.isNotEmpty && File(audioFilePathName).existsSync()) {
       // Load the file but don't play yet
-      await _audioPlayer.setSource(DeviceFileSource(audioFilePathName));
-      await _audioPlayer
+      await _audioPlayer!.setSource(DeviceFileSource(audioFilePathName));
+      await _audioPlayer!
           .setVolume(_currentAudio?.audioPlayVolume ?? kAudioDefaultPlayVolume);
       // await _audioPlayerSeekToPosition(
       //   position: Duration(
@@ -446,12 +472,12 @@ class AudioPlayerVM extends ChangeNotifier {
   /// This method sets the audio player listeners. Those listeners will be
   /// cancelled in the AudioPlayerVM dispose() method.
   void _initAudioPlayer() {
-    _durationSubscription = _audioPlayer.onDurationChanged.listen((duration) {
+    _durationSubscription = _audioPlayer!.onDurationChanged.listen((duration) {
       _currentAudioTotalDuration = duration;
       notifyListeners();
     });
 
-    _positionSubscription = _audioPlayer.onPositionChanged.listen((position) {
+    _positionSubscription = _audioPlayer!.onPositionChanged.listen((position) {
       // This method is not called when the audio position is
       // changed by the user clicking on the audio slider or
       // on the audio position buttons (<<, >>, |<, >|).
@@ -459,7 +485,7 @@ class AudioPlayerVM extends ChangeNotifier {
     });
 
     _playerCompleteSubscription =
-        _audioPlayer.onPlayerComplete.listen((event) async {
+        _audioPlayer!.onPlayerComplete.listen((event) async {
       if (_isCommentPlaying) {
         // In this situation, if a comment is playing and arrives to the
         // audio end, the next audio is not played.
@@ -480,7 +506,7 @@ class AudioPlayerVM extends ChangeNotifier {
   }
 
   void handlePositionChanged(Duration position) {
-    if (_audioPlayer.state == PlayerState.playing) {
+    if (_audioPlayer!.state == PlayerState.playing) {
       // this test avoids that when selecting another audio
       // the selected audio position is set to 0 since the
       // passed position value of an AudioPlayer not playing
@@ -583,7 +609,7 @@ class AudioPlayerVM extends ChangeNotifier {
 
     try {
       // necessary to avoid the error which causes integration test to fail
-      await _audioPlayer.dispose();
+      await _audioPlayer!.dispose();
     } catch (e) {
       // ignore: avoid_print
       print('***** AudioPlayerVM._clearCurrentAudio() error: $e');
@@ -631,9 +657,9 @@ class AudioPlayerVM extends ChangeNotifier {
       //   await _rewindAudioPositionBasedOnPauseDuration();
       // }
 
-      // await _audioPlayer.setSource(DeviceFileSource(audioFilePathName));
-      await _audioPlayer.resume();
-      await _audioPlayer.setPlaybackRate(_currentAudio!.audioPlaySpeed);
+      // await _audioPlayer!.setSource(DeviceFileSource(audioFilePathName));
+      await _audioPlayer!.resume();
+      await _audioPlayer!.setPlaybackRate(_currentAudio!.audioPlaySpeed);
 
       _currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd =
           true;
@@ -646,7 +672,7 @@ class AudioPlayerVM extends ChangeNotifier {
   }
 
   Future<void> pause() async {
-    await _audioPlayer.pause();
+    await _audioPlayer!.pause();
 
     if (_currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd) {
       _currentAudio!.isPaused = true;
@@ -974,7 +1000,7 @@ class AudioPlayerVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Method called when _audioPlayer.onPlayerComplete happens,
+  /// Method called when _audioPlayer!.onPlayerComplete happens,
   /// i.e. when the current audio is terminated or when
   /// skipToEndAndPlay() is executed after the user clicked
   /// the second time on the >| icon button.
@@ -1114,7 +1140,7 @@ class AudioPlayerVM extends ChangeNotifier {
     }
 
     _currentAudio!.audioPlaySpeed = speed;
-    await _audioPlayer.setPlaybackRate(speed);
+    await _audioPlayer!.setPlaybackRate(speed);
     updateAndSaveCurrentAudio();
 
     notifyListeners();
