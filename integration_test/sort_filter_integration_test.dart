@@ -6208,7 +6208,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
                 audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
           );
 
-          // Return to the playlist download view
+          // Return to the plg6050aylist download view
           Finder appScreenNavigationButton =
               find.byKey(const ValueKey('playlistDownloadViewIconButton'));
           await tester.tap(appScreenNavigationButton);
@@ -7183,7 +7183,8 @@ Future<void> verifyAudioPlayableList({
   Finder appScreenNavigationButton =
       find.byKey(const ValueKey('audioPlayerViewIconButton'));
   await tester.tap(appScreenNavigationButton);
-  await tester.pumpAndSettle();
+  await tester.pumpAndSettle(
+      IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers_6_1_0);
 
   // Now we open the AudioPlayableListDialog
   // and verify the the displayed audio titles
