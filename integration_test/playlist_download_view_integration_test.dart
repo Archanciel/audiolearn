@@ -9681,7 +9681,8 @@ void main() {
       final appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(
+          IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers_6_1_0);
 
       // Now verifying that 'No audio selected' is displayed in the
       // AudioPlayerView screen
@@ -9841,7 +9842,8 @@ void main() {
       final appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(
+          IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers_6_1_0);
 
       // Now verifying that 'No audio selected' is displayed in the
       // AudioPlayerView screen
