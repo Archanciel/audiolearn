@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:file_picker/file_picker.dart';
 
 class AudioPlayerViewModel extends ChangeNotifier {
-  AudioPlayer _audioPlayer;
+  final AudioPlayer _audioPlayer;
   PlayerState? _playerState;
   Duration? _duration;
   Duration? _position;
