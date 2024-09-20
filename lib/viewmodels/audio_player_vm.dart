@@ -266,7 +266,7 @@ class AudioPlayerVM extends ChangeNotifier {
   /// Method defined as public since it is redefined in the mock subclass
   /// AudioPlayerVMTestVersion which does not access to audioplayers plugin.
   Future<void> audioPlayerSetSource(String audioFilePathName) async {
-      await _audioPlayer!.setSource(DeviceFileSource(audioFilePathName));
+    await _audioPlayer!.setSource(DeviceFileSource(audioFilePathName));
   }
 
   /// Adjusts the playback start position of the current audio based on the elapsed
@@ -375,7 +375,7 @@ class AudioPlayerVM extends ChangeNotifier {
         // This method is not called when the audio position is
         // changed by the user clicking on the audio slider or
         // on the audio position buttons (<<, >>, |<, >|).
-        handlePositionChanged(position);
+        handlePositionChanged(position: position);
       });
     }
 
@@ -481,7 +481,7 @@ class AudioPlayerVM extends ChangeNotifier {
       // This method is not called when the audio position is
       // changed by the user clicking on the audio slider or
       // on the audio position buttons (<<, >>, |<, >|).
-      handlePositionChanged(position);
+      handlePositionChanged(position: position);
     });
 
     _playerCompleteSubscription =
@@ -505,7 +505,11 @@ class AudioPlayerVM extends ChangeNotifier {
     // });
   }
 
-  void handlePositionChanged(Duration position) {
+
+  /// Method passed to the audio player onPositionChanged listener.
+  void handlePositionChanged({
+    required Duration position,
+  }) {
     if (_audioPlayer!.state == PlayerState.playing) {
       // this test avoids that when selecting another audio
       // the selected audio position is set to 0 since the
@@ -533,6 +537,7 @@ class AudioPlayerVM extends ChangeNotifier {
         return;
       }
 
+      // saving the current audio position only every 30 seconds
       updateAndSaveCurrentAudio();
     }
   }
