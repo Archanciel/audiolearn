@@ -220,10 +220,6 @@ class AudioPlayerVM extends ChangeNotifier {
   /// the AudioPlayerView screen without playing the selected playlist
   /// current or last played audio which is displayed correctly in the
   /// AudioPlayerView screen.
-  ///
-  /// Since with audioplayers 6.1.0 the audioplayers is initialized
-  /// only once, it is not reinitialized here as it was with audioplayers
-  /// 5.2.1.
   Future<void> _setCurrentAudio(
     Audio audio,
   ) async {
@@ -428,11 +424,6 @@ class AudioPlayerVM extends ChangeNotifier {
       await _audioPlayer!.setSource(DeviceFileSource(audioFilePathName));
       await _audioPlayer!
           .setVolume(_currentAudio?.audioPlayVolume ?? kAudioDefaultPlayVolume);
-      // await _audioPlayerSeekToPosition(
-      //   position: Duration(
-      //     seconds: _currentAudio!.audioPositionSeconds,
-      //   ),
-      // );
     }
   }
 
@@ -445,10 +436,36 @@ class AudioPlayerVM extends ChangeNotifier {
     });
 
     _positionSubscription = _audioPlayer!.onPositionChanged.listen((position) {
-      // This method is not called when the audio position is
-      // changed by the user clicking on the audio slider or
-      // on the audio position buttons (<<, >>, |<, >|).
-      handlePositionChanged(position: position);
+      if (_audioPlayer!.state == PlayerState.playing) {
+        // this test avoids that when selecting another audio
+        // the selected audio position is set to 0 since the
+        // passed position value of an AudioPlayer not playing
+        // is 0 !
+        _currentAudioPosition = position;
+        notifyListeners();
+      
+        // This instruction must be executed before the next if block,
+        // otherwise, if the user opens the audio info dialog while the
+        // audio is playing, the audio position displayed in the audio
+        // info dialog opened on the current audio which does display
+        // the audio position obtained from the audio player view model
+        // will display the correct audio position only every 30 seconds.
+        // This is demonstrated by the audio indo audio state integration
+        // tests.
+        //
+        // The audioPositionSeconds of the current audio will be saved
+        // in its enclosing playlist json file every 30 seconds or when
+        // the audio is paused or when the audio is at end.
+        _currentAudio!.audioPositionSeconds = _currentAudioPosition.inSeconds;
+        if (_currentAudioLastSaveDateTime
+            .add(const Duration(seconds: 30))
+            .isAfter(DateTime.now())) {
+          return;
+        }
+      
+        // saving the current audio position only every 30 seconds
+        updateAndSaveCurrentAudio();
+      }
     });
 
     _playerCompleteSubscription =
@@ -470,42 +487,6 @@ class AudioPlayerVM extends ChangeNotifier {
     //   _playerState = state;
     //   notifyListeners();
     // });
-  }
-
-  /// Method passed to the audio player onPositionChanged listener.
-  void handlePositionChanged({
-    required Duration position,
-  }) {
-    if (_audioPlayer!.state == PlayerState.playing) {
-      // this test avoids that when selecting another audio
-      // the selected audio position is set to 0 since the
-      // passed position value of an AudioPlayer not playing
-      // is 0 !
-      _currentAudioPosition = position;
-      notifyListeners();
-
-      // This instruction must be executed before the next if block,
-      // otherwise, if the user opens the audio info dialog while the
-      // audio is playing, the audio position displayed in the audio
-      // info dialog opened on the current audio which does display
-      // the audio position obtained from the audio player view model
-      // will display the correct audio position only every 30 seconds.
-      // This is demonstrated by the audio indo audio state integration
-      // tests.
-      //
-      // The audioPositionSeconds of the current audio will be saved
-      // in its enclosing playlist json file every 30 seconds or when
-      // the audio is paused or when the audio is at end.
-      _currentAudio!.audioPositionSeconds = _currentAudioPosition.inSeconds;
-      if (_currentAudioLastSaveDateTime
-          .add(const Duration(seconds: 30))
-          .isAfter(DateTime.now())) {
-        return;
-      }
-
-      // saving the current audio position only every 30 seconds
-      updateAndSaveCurrentAudio();
-    }
   }
 
   /// Method called when the user clicks on the AudioPlayerView
