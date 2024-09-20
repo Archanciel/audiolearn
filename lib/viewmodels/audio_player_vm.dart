@@ -227,6 +227,11 @@ class AudioPlayerVM extends ChangeNotifier {
   Future<void> _setCurrentAudio(
     Audio audio,
   ) async {
+
+    // necessary to avoid position error when the chosen audio is displayed
+    // in the AudioPlayerView screen.
+    await _audioPlayer!.pause();
+    
     if (_currentAudio != null && !_currentAudio!.isPaused) {
       _currentAudio!.isPaused = true;
       // saving the previous current audio state before changing
@@ -341,45 +346,7 @@ class AudioPlayerVM extends ChangeNotifier {
     ///
     /// testWidgets('User modifies the position of next fully unread audio which is also the last downloaded audio of the playlist.').
 
-    await _audioPlayerSeekToPosition(
-      position: _currentAudioPosition,
-    );
-  }
-
-  /// This method applies an important bug fix. When audioPlayer.resume()
-  /// _audioPlayer!.pause() were executed initially, the audioplayer onPositionChanged
-  /// listener was called with a position equal to 0 seconds.This causes the
-  /// audio position to be updated incorrectly in its enclosing playlist json file.
-  ///
-  /// Cancelling the onPositionChanged existing listener and before the acceptable
-  /// audioplayer seek() and then setting a new onPositionChanged listener fixes
-  /// this bug.
-  Future<void> _audioPlayerSeekToPosition({
-    required Duration position,
-  }) async {
-    if (_audioPlayer!.state == PlayerState.playing) {
-      await _audioPlayer!.seek(position);
-    } else {
-      // Play briefly to enable seeking, then pause and seek to the desired
-      // position
-
-      await _positionSubscription?.cancel(); // Cancel the existing listener
-      await _audioPlayer!.resume(); // Start playback briefly to enable seek
-      await _audioPlayer!.pause(); // Pause immediately
-
-      // Now seek to the desired current audio position
-      await _audioPlayer!.seek(position);
-
-      _positionSubscription =
-          _audioPlayer!.onPositionChanged.listen((position) {
-        // This method is not called when the audio position is
-        // changed by the user clicking on the audio slider or
-        // on the audio position buttons (<<, >>, |<, >|).
-        handlePositionChanged(position: position);
-      });
-    }
-
-    _currentAudioPosition = position;
+    await _audioPlayer!.seek(_currentAudioPosition);
   }
 
   /// Method called by skipToEndNoPlay() if the audio is positioned
@@ -504,7 +471,6 @@ class AudioPlayerVM extends ChangeNotifier {
     //   notifyListeners();
     // });
   }
-
 
   /// Method passed to the audio player onPositionChanged listener.
   void handlePositionChanged({
@@ -852,9 +818,7 @@ class AudioPlayerVM extends ChangeNotifier {
       );
     }
 
-    await _audioPlayerSeekToPosition(
-      position: durationPosition,
-    );
+    await _audioPlayer!.seek(durationPosition);
   }
 
   void _addUndoCommand({
