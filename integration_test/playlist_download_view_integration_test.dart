@@ -1794,7 +1794,8 @@ void main() {
       final appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(
+          IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers_6_1_0);
 
       // Now we tap on the PlaylistDownloadView icon button to go
       // back to the PlaylistDownloadView screen
@@ -7334,7 +7335,8 @@ void main() {
       Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(
+          IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers_6_1_0);
 
       // Verify the no selected audio title is displayed
       expect(find.text("No audio selected"), findsOneWidget);
@@ -8059,7 +8061,8 @@ void main() {
       appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(
+          IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers_6_1_0);
 
       // Verify the displayed current audio title
       expect(
@@ -8112,7 +8115,8 @@ void main() {
       appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(
+          IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers_6_1_0);
 
       // Verify the no selected audio title is displayed
       expect(find.text("No audio selected"), findsOneWidget);
@@ -8185,7 +8189,8 @@ void main() {
       appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(
+          IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers_6_1_0);
 
       // Verify the displayed current audio title
       expect(
