@@ -223,11 +223,14 @@ class AudioPlayerVM extends ChangeNotifier {
   Future<void> _setCurrentAudio(
     Audio audio,
   ) async {
-
     // necessary to avoid position error when the chosen audio is displayed
     // in the AudioPlayerView screen.
-    await _audioPlayer!.pause();
-    
+    if (_audioPlayer != null) {
+      // this test is nrcessary in order to avoid unit test failure since
+      // the AudioPlayerVMTestVersion does not instanciate audioplayers 
+      await _audioPlayer!.pause();
+    }
+
     if (_currentAudio != null && !_currentAudio!.isPaused) {
       _currentAudio!.isPaused = true;
       // saving the previous current audio state before changing
@@ -443,7 +446,7 @@ class AudioPlayerVM extends ChangeNotifier {
         // is 0 !
         _currentAudioPosition = position;
         notifyListeners();
-      
+
         // This instruction must be executed before the next if block,
         // otherwise, if the user opens the audio info dialog while the
         // audio is playing, the audio position displayed in the audio
@@ -462,7 +465,7 @@ class AudioPlayerVM extends ChangeNotifier {
             .isAfter(DateTime.now())) {
           return;
         }
-      
+
         // saving the current audio position only every 30 seconds
         updateAndSaveCurrentAudio();
       }
