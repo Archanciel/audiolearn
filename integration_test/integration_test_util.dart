@@ -20,6 +20,8 @@ class IntegrationTestUtil {
       Colors.blue;
   static const Color unplayedAudioTitleTextColor = Colors.white;
   static const Color partiallyPlayedAudioTitleTextdColor = Colors.blue;
+  static const Duration dueToSlownessOmWindowsOfAudioplayers_6_1_0 =
+      Duration(milliseconds: 2000);
 
   static Finder validateInkWellButton({
     required WidgetTester tester,
@@ -831,7 +833,8 @@ class IntegrationTestUtil {
     await tester.pumpAndSettle();
     await Future.delayed(const Duration(milliseconds: 200));
 
-    await Future.delayed(Duration(milliseconds: maxPlayDurationSeconds * 1000 ~/ 1));
+    await Future.delayed(
+        Duration(milliseconds: maxPlayDurationSeconds * 1000 ~/ 1));
     await tester.pumpAndSettle();
 
     if (typeOnPauseAfterPlay) {
