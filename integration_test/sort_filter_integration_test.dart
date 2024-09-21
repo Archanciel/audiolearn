@@ -1378,7 +1378,8 @@ void playlistDownloadViewSortFilterIntregrationTest() {
         Finder appScreenNavigationButton =
             find.byKey(const ValueKey('audioPlayerViewIconButton'));
         await tester.tap(appScreenNavigationButton);
-        await tester.pumpAndSettle();
+        await tester.pumpAndSettle(IntegrationTestUtil
+            .dueToSlownessOmWindowsOfAudioplayers_6_1_0);
 
         // Then return to playlist download view in order to verify that
         // its state with the 'Title asc' sort/filter parms is still
@@ -1749,7 +1750,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
         Finder appScreenNavigationButton =
             find.byKey(const ValueKey('audioPlayerViewIconButton'));
         await tester.tap(appScreenNavigationButton);
-        await tester.pumpAndSettle();
+        await tester.pumpAndSettle(IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers_6_1_0);
 
         // Then return to playlist download view in order to verify that
         // its state with the 'Title asc' sort/filter parms is still
