@@ -15049,7 +15049,7 @@ Future<void> checkAudioCommentInAudioPlayerView({
   // Tap on the ListTile to open the audio player view on the
   // passed audio finder
   await tester.tap(audioListTileWidgetFinder);
-  await tester.pumpAndSettle();
+  await tester.pumpAndSettle(IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers610);
 
   // Tap on the comment icon button to open the comment add list
   // dialog
@@ -15105,7 +15105,7 @@ Future<void> checkAudioCommentUsingAudioItemMenu({
       find.byKey(const Key("popup_menu_audio_comment"));
 
   await tester.tap(popupCopyMenuItem);
-  await tester.pumpAndSettle();
+  await tester.pumpAndSettle(const Duration(milliseconds: 1000));
 
   // Verify that the comment list is displayed
   expect(find.byType(CommentListAddDialog), findsOneWidget);
