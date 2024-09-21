@@ -20,8 +20,10 @@ class IntegrationTestUtil {
       Colors.blue;
   static const Color unplayedAudioTitleTextColor = Colors.white;
   static const Color partiallyPlayedAudioTitleTextdColor = Colors.blue;
-  static const Duration dueToSlownessOmWindowsOfAudioplayers_6_1_0 =
+  static const Duration dueToSlownessOmWindowsOfAudioplayers610 =
       Duration(milliseconds: 2000);
+  static const Duration dueToSlownessOmWindowsOfAudioplayers610Longer =
+      Duration(milliseconds: 2400);
 
   static Finder validateInkWellButton({
     required WidgetTester tester,
