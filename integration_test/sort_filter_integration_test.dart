@@ -4624,7 +4624,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           Finder appScreenNavigationButton =
               find.byKey(const ValueKey('audioPlayerViewIconButton'));
           await tester.tap(appScreenNavigationButton);
-          await tester.pumpAndSettle();
+          await tester.pumpAndSettle(IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers610);
 
           // Then return to playlist download view in order to verify that
           // its state with the 'applied' sort/filter parms is still
@@ -4760,7 +4760,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           await tester.pumpAndSettle();
 
           // Then return to playlist download view in order to verify that
-          // its state with the 'défaut' sort/filter parms is still
+          // its state with the 'appliqué' sort/filter parms is still
           // applied and correctly sorts the current playable audio.
           appScreenNavigationButton =
               find.byKey(const ValueKey('playlistDownloadViewIconButton'));
@@ -5044,7 +5044,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
         Finder appScreenNavigationButton =
             find.byKey(const ValueKey('audioPlayerViewIconButton'));
         await tester.tap(appScreenNavigationButton);
-        await tester.pumpAndSettle();
+        await tester.pumpAndSettle(IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers610Max);
 
         // Now, in the audio player view, select the 'Local' audio playlist using
         // the audio player view playlist selection button.
@@ -5080,11 +5080,11 @@ void playlistDownloadViewSortFilterIntregrationTest() {
         appScreenNavigationButton =
             find.byKey(const ValueKey('playlistDownloadViewIconButton'));
         await tester.tap(appScreenNavigationButton);
-        await tester.pumpAndSettle();
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
         // Click on playlist toggle button to display the playlist list
         await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester.pumpAndSettle();
+        await tester.pumpAndSettle(const Duration(milliseconds: 400));
 
         await IntegrationTestUtil.selectPlaylist(
           tester: tester,
@@ -5094,7 +5094,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
         // Click again on playlist toggle button to hide the playlist list
         // and display the sort filter dropdown button
         await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester.pumpAndSettle();
+        await tester.pumpAndSettle(const Duration(milliseconds: 400));
 
         // Verify that the dropdown button has been updated with the
         // 'Title asc' sort/filter parms selected

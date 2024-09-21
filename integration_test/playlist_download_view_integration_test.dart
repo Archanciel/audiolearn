@@ -9513,7 +9513,7 @@ void main() {
         destinationRootPath: playlistS8audioDir,
       );
 
-      // Then return to playlist download view in order to execute
+      // Then  execute
       // the playlist JSON files update
       Finder appScreenNavigationButton =
           find.byKey(const ValueKey('playlistDownloadViewIconButton'));
