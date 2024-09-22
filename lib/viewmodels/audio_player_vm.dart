@@ -636,8 +636,6 @@ class AudioPlayerVM extends ChangeNotifier {
     _commentVM.undoAllRecordedCommentPlayCommands(
       playlistListVM: _playlistListVM,
     );
-
-    notifyListeners();
   }
 
   /// Method called when the user clicks on the '<<' or '>>'
