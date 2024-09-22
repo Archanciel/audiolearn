@@ -269,7 +269,7 @@ void audioPlayerViewSortFilterIntregrationTest() {
       Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers610);
 
       // Now we open the AudioPlayableListDialog
       // and verify the the displayed audio titles
@@ -396,15 +396,22 @@ void audioPlayerViewSortFilterIntregrationTest() {
       await tester.pumpAndSettle();
 
       await tester.tap(find.byKey(const Key('audioPlayerViewSkipToEndButton')));
-      await tester.pumpAndSettle();
 
-      // Waiting one second so that the next audio starts playing
-      await Future.delayed(const Duration(seconds: 2));
-      await tester.pumpAndSettle();
+      // Causes infinite plaqying
+      await tester.pumpAndSettle(const Duration(milliseconds: 300));
+
+      // Playing not infinite, but pause button not displayed
+      // await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+      // Does not solve anything, what ever Duration length is !!!!
+      // await Future.delayed(const Duration(milliseconds: 3000));
+
+      // Waiting two second so that the next audio starts playing
+      // await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // Tap on pause button to pause the audio
       await tester.tap(find.byIcon(Icons.pause));
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // Verify the next audio title
       Finder nextAudioTextFinder =
