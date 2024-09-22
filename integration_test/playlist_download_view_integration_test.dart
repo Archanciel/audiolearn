@@ -14297,14 +14297,11 @@ void main() {
           typeOnPauseAfterPlay: false,
         );
 
-        // Let the comment be played during 1.5 seconds and then clixk on the
-        // playlist comment dialog close button
         await Future.delayed(const Duration(milliseconds: 1500));
-        await tester.pumpAndSettle();
 
         // Tap on Close text button
         await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-        await tester.pumpAndSettle();
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
         // Now, re-open the playlist comment dialog
         playlistCommentListDialogFinder = await openPlaylistCommentDialog(
