@@ -838,11 +838,9 @@ class IntegrationTestUtil {
 
     await tester.tap(playIconButtonFinder);
     await tester.pumpAndSettle(const Duration(milliseconds: 200));
-    // await Future.delayed(const Duration(milliseconds: 200));
 
     await Future.delayed(
         Duration(milliseconds: maxPlayDurationSeconds * 1000 ~/ 1));
-    // await tester.pumpAndSettle();
 
     if (typeOnPauseAfterPlay) {
       await tester.tap(playIconButtonFinder);
