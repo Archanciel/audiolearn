@@ -12583,7 +12583,8 @@ void main() {
       final Finder alreadyCommentedAudioFinder =
           find.text(alreadyCommentedAudioTitle);
       await tester.tap(alreadyCommentedAudioFinder);
-      await tester.pumpAndSettle(IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers610);
+      await tester.pumpAndSettle(
+          IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers610);
 
       // Tap on the comment icon button to open the comment add list
       // dialog
@@ -15049,7 +15050,8 @@ Future<void> checkAudioCommentInAudioPlayerView({
   // Tap on the ListTile to open the audio player view on the
   // passed audio finder
   await tester.tap(audioListTileWidgetFinder);
-  await tester.pumpAndSettle(IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers610);
+  await tester.pumpAndSettle(
+      IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers610);
 
   // Tap on the comment icon button to open the comment add list
   // dialog
