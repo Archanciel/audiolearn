@@ -21,14 +21,14 @@ class IntegrationTestUtil {
   static const Color unplayedAudioTitleTextColor = Colors.white;
   static const Color partiallyPlayedAudioTitleTextdColor = Colors.blue;
 
-  // The next Duration constants are necessary due to using replacing
-  // audioplayers 5.2.1 by audioplayers 6.1.0.
-  static const Duration dueToSlownessOmWindowsOfAudioplayers610 =
-      Duration(milliseconds: 2000);
-  static const Duration dueToSlownessOmWindowsOfAudioplayers610Longer =
-      Duration(milliseconds: 2400);
-  static const Duration dueToSlownessOmWindowsOfAudioplayers610Max =
-      Duration(milliseconds: 2800);
+  /// This method is necessary due to replacing audioplayers 5.2.1 by
+  /// audioplayers 6.1.0.
+  static Future<void> pumpAndSettleDueToAudioPlayers610({
+    required WidgetTester tester,
+  }) async {
+    await tester.pumpAndSettle(const Duration(milliseconds: 1200));
+    await tester.pumpAndSettle(const Duration(milliseconds: 200));
+  }
 
   static Finder validateInkWellButton({
     required WidgetTester tester,

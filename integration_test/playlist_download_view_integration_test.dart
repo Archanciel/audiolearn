@@ -1794,8 +1794,9 @@ void main() {
       final appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle(
-          IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers610);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
+        tester: tester,
+      );
 
       // Now we tap on the PlaylistDownloadView icon button to go
       // back to the PlaylistDownloadView screen
@@ -3194,8 +3195,9 @@ void main() {
       // First, tap on the source audio ListTile to open the
       // audio player view
       await tester.tap(sourceAudioListTileWidgetFinder);
-      await tester.pumpAndSettle(
-          IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers610);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
+        tester: tester,
+      );
 
       // Verify that the comment icon button is highlighted. This indiquates
       // that a comment exist for the audio
@@ -3331,8 +3333,9 @@ void main() {
       // First, tap on the source audio ListTile to open the
       // audio player view
       await tester.tap(targetAudioListTileWidgetFinder);
-      await tester.pumpAndSettle(
-          IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers610);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
+        tester: tester,
+      );
 
       // Verify that the comment icon button is highlighted. This indiquates
       // that a comment exist for the audio
@@ -7335,8 +7338,9 @@ void main() {
       Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle(
-          IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers610);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
+        tester: tester,
+      );
 
       // Verify the no selected audio title is displayed
       expect(find.text("No audio selected"), findsOneWidget);
@@ -7765,8 +7769,9 @@ void main() {
       Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle(
-          IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers610Longer);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
+        tester: tester,
+      );
 
       // Verify the displayed selected audio title
       expect(
@@ -7947,8 +7952,9 @@ void main() {
       Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle(
-          IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers610Longer);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
+        tester: tester,
+      );
 
       // Verify the displayed selected audio title
       expect(
@@ -8014,8 +8020,9 @@ void main() {
       Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle(
-          IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers610);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
+        tester: tester,
+      );
 
       // Verify the displayed current audio title
       expect(
@@ -8065,8 +8072,9 @@ void main() {
       appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle(
-          IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers610);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
+        tester: tester,
+      );
 
       // Verify the displayed current audio title
       expect(
@@ -8119,8 +8127,9 @@ void main() {
       appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle(
-          IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers610);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
+        tester: tester,
+      );
 
       // Verify the no selected audio title is displayed
       expect(find.text("No audio selected"), findsOneWidget);
@@ -8193,8 +8202,9 @@ void main() {
       appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle(
-          IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers610);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
+        tester: tester,
+      );
 
       // Verify the displayed current audio title
       expect(
@@ -8322,8 +8332,9 @@ void main() {
       Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle(
-          IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers610);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
+        tester: tester,
+      );
 
       // Verify the displayed current audio title
       expect(
@@ -8452,8 +8463,9 @@ void main() {
       Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle(
-          IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers610);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
+        tester: tester,
+      );
 
       // Verify the displayed current audio title
       expect(
@@ -8539,8 +8551,9 @@ void main() {
       Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle(
-          IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers610);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
+        tester: tester,
+      );
 
       // Verify the no selected audio title is displayed
       expect(find.text("No audio selected"), findsOneWidget);
@@ -9483,8 +9496,9 @@ void main() {
       // selected and tap on it. This switches to the AudioPlayerView
       // and sets the playlist current or past playable audio index to 0
       await tester.tap(find.text(firstDownloadedAudioTitle));
-      await tester.pumpAndSettle(
-          IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers610);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
+        tester: tester,
+      );
 
       // Verify the displayed audio title (La surpopulation mondiale par
       // Jancovici et Barrau)
@@ -9535,8 +9549,9 @@ void main() {
       appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle(
-          IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers610);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
+        tester: tester,
+      );
 
       // Verify the displayed audio title (Jancovici m'explique l’importance
       // des ordres de grandeur face au changement climatique)
@@ -9690,8 +9705,9 @@ void main() {
       final appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle(
-          IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers610);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
+        tester: tester,
+      );
 
       // Now verifying that 'No audio selected' is displayed in the
       // AudioPlayerView screen
@@ -9851,8 +9867,9 @@ void main() {
       final appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle(
-          IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers610);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
+        tester: tester,
+      );
 
       // Now verifying that 'No audio selected' is displayed in the
       // AudioPlayerView screen
@@ -12583,8 +12600,9 @@ void main() {
       final Finder alreadyCommentedAudioFinder =
           find.text(alreadyCommentedAudioTitle);
       await tester.tap(alreadyCommentedAudioFinder);
-      await tester.pumpAndSettle(
-          IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers610);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
+        tester: tester,
+      );
 
       // Tap on the comment icon button to open the comment add list
       // dialog
@@ -15047,8 +15065,9 @@ Future<void> checkAudioCommentInAudioPlayerView({
   // Tap on the ListTile to open the audio player view on the
   // passed audio finder
   await tester.tap(audioListTileWidgetFinder);
-  await tester.pumpAndSettle(
-      IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers610);
+  await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
+    tester: tester,
+  );
 
   // Tap on the comment icon button to open the comment add list
   // dialog
