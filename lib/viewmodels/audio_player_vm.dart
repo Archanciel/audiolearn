@@ -110,20 +110,19 @@ class AudioPlayerVM extends ChangeNotifier {
     required CommentVM commentVM,
   })  : _playlistListVM = playlistListVM,
         _commentVM = commentVM {
+    instanciateAudioPlayer();
     initializeAudioPlayer();
+  }
+
+  // Public method to be redefined in AudioPlayerVMTestVersion in order
+  // to avoid the use of the audio player plugin in unit tests.
+  void instanciateAudioPlayer() {
+    _audioPlayer = AudioPlayer();
   }
 
   @override
   Future<void> dispose() async {
-    if (_audioPlayer != null) {
-      try {
-        // necessary to avoid the error which causes integration test to fail
-        await _audioPlayer!.dispose();
-      } catch (e) {
-        // ignore: avoid_print
-        print('***** AudioPlayerVM.dispose() error: $e');
-      }
-    }
+    await _audioPlayer!.dispose();
 
     _durationSubscription?.cancel();
     _positionSubscription?.cancel();
@@ -226,8 +225,8 @@ class AudioPlayerVM extends ChangeNotifier {
     // necessary to avoid position error when the chosen audio is displayed
     // in the AudioPlayerView screen.
     if (_audioPlayer != null) {
-      // this test is nrcessary in order to avoid unit test failure since
-      // the AudioPlayerVMTestVersion does not instanciate audioplayers 
+      // this test is necessary in order to avoid unit test failure since
+      // the AudioPlayerVMTestVersion does not instanciate the _audioPlayer
       await _audioPlayer!.pause();
     }
 
@@ -398,25 +397,7 @@ class AudioPlayerVM extends ChangeNotifier {
   ///
   /// For this reason, the method is not private !
   Future<void> initializeAudioPlayer() async {
-    if (_audioPlayer != null) {
-      try {
-        // necessary to avoid the error which causes integration test to fail
-        await _audioPlayer!.dispose();
-      } catch (e) {
-        // ignore: avoid_print
-        print('***** AudioPlayerVM.initializeAudioPlayerPlugin() error: $e');
-      }
-    }
-
-    _audioPlayer = AudioPlayer();
-
     _initAudioPlayer();
-
-    // Available only on version 6 !
-    // _audioPlayerPlugin.positionUpdater = TimerPositionUpdater(
-    //   interval: const Duration(milliseconds: 100),
-    //   getPosition: _audioPlayerPlugin.getCurrentPosition,
-    // );
 
     // Assuming filePath is the full path to your audio file
     String audioFilePathName = _currentAudio?.filePathName ?? '';
@@ -425,8 +406,9 @@ class AudioPlayerVM extends ChangeNotifier {
     if (audioFilePathName.isNotEmpty && File(audioFilePathName).existsSync()) {
       // Load the file but don't play yet
       await _audioPlayer!.setSource(DeviceFileSource(audioFilePathName));
-      await _audioPlayer!
-          .setVolume(_currentAudio?.audioPlayVolume ?? kAudioDefaultPlayVolume);
+      await _audioPlayer!.setVolume(
+        _currentAudio?.audioPlayVolume ?? kAudioDefaultPlayVolume,
+      );
     }
   }
 
