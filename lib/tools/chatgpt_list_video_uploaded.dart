@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:file_picker/file_picker.dart'; // Import file_picker package
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:window_size/window_size.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../constants.dart';
 
 void main() {
@@ -66,7 +66,6 @@ class VideoListScreen extends StatefulWidget {
 class _VideoListScreenState extends State<VideoListScreen> {
   final String apiKey = 'AIzaSyDhywmh5EKopsNsaszzMkLJ719aQa2NHBw';
   final String channelId = 'UCP4LykxRItz7-jcvICUOvDg';
-  // final String channelId = 'UCElH9qAoRv-jCRU9RYMLZEQ';
   final int maxResults = 200;
   List videos = [];
 
@@ -115,11 +114,59 @@ class _VideoListScreenState extends State<VideoListScreen> {
     }
   }
 
+  Future<void> saveUrlsToFile() async {
+    List<String> urls = videos.map((video) {
+      return 'https://www.youtube.com/watch?v=${video['snippet']['resourceId']['videoId']}';
+    }).toList();
+
+    // Open file picker to select directory
+    String? outputFile = await FilePicker.platform.saveFile(
+      dialogTitle: 'Save URLs to text file',
+      fileName: 'youtube_urls.txt',
+    );
+
+    if (outputFile != null) {
+      // Write URLs to the selected file
+      final file = File(outputFile);
+      await file.writeAsString(urls.join('\n'));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('File saved at: $outputFile')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('YouTube Videos'),
+        title: const Text(
+          "YouTube Video URL's",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: kSliderThumbColorInLightMode,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: saveUrlsToFile,
+            style: ButtonStyle(
+              shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                  side: const BorderSide(
+                    color: kSliderThumbColorInLightMode,
+                  ),
+                ),
+              ),
+            ),
+            child: const Text(
+              "Save URL's to file",
+            ), // Save URL list to file
+          ),
+          const SizedBox(
+            width: 100.0,
+          ),
+        ],
       ),
       body: videos.isEmpty
           ? const Center(child: CircularProgressIndicator())
@@ -129,14 +176,14 @@ class _VideoListScreenState extends State<VideoListScreen> {
                 final video = videos[index]['snippet'];
                 final url =
                     'https://www.youtube.com/watch?v=${video['resourceId']['videoId']}';
-                // ignore: avoid_print
-                print(url);
                 return ListTile(
-                  title: Text("${index + 1}: ${video['title']}"),
+                  title: Text("${index + 1}: ${video['title']}",
+                      style: const TextStyle(
+                        color: kSliderThumbColorInLightMode,
+                      )),
                   subtitle: Text(video['resourceId']['videoId']),
                   onTap: () {
-                    // ignore: deprecated_member_use
-                    launch(url);
+                    launchUrl(Uri.parse(url));
                   },
                 );
               },
