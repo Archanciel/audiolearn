@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:audiolearn/models/audio.dart';
 import 'package:audiolearn/models/playlist.dart';
 import 'package:audiolearn/services/json_data_service.dart';
@@ -7,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path/path.dart' as path;
+import 'package:yaml/yaml.dart';
 
 import 'package:audiolearn/constants.dart';
 import 'package:audiolearn/services/settings_data_service.dart';
@@ -20,14 +23,46 @@ class IntegrationTestUtil {
       Colors.blue;
   static const Color unplayedAudioTitleTextColor = Colors.white;
   static const Color partiallyPlayedAudioTitleTextdColor = Colors.blue;
+  static String audioplayersVersion = '';
 
   /// This method is necessary due to replacing audioplayers 5.2.1 by
   /// audioplayers 6.1.0.
   static Future<void> pumpAndSettleDueToAudioPlayers610({
     required WidgetTester tester,
   }) async {
-    await tester.pumpAndSettle(const Duration(milliseconds: 1200));
-    await tester.pumpAndSettle(const Duration(milliseconds: 200));
+    if (audioplayersVersion == '') {
+      audioplayersVersion = await getAudioplayersVersion();
+    }
+
+    if (audioplayersVersion == '^6.1.0') {
+      await tester.pumpAndSettle(const Duration(milliseconds: 1200));
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+    } else {
+      await tester.pumpAndSettle(const Duration(milliseconds: 1200));
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+    }
+  }
+
+  static Future<String> getAudioplayersVersion() async {
+    // Path to the pubspec.yaml file
+    final file = File('pubspec.yaml');
+
+    // Check if the file exists
+    if (await file.exists()) {
+      // Read the content of pubspec.yaml
+      final content = await file.readAsString();
+
+      // Load YAML content
+      final yamlMap = loadYaml(content) as YamlMap;
+
+      // Access the dependencies section
+      final dependencies = yamlMap['dependencies'] as YamlMap;
+
+      // Get the audioplayers version
+      return dependencies['audioplayers'];
+    } else {
+      return '';
+    }
   }
 
   static Finder validateInkWellButton({
