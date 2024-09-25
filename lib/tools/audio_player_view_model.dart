@@ -10,7 +10,7 @@ class AudioPlayerViewModel extends ChangeNotifier {
   PlayerState? _playerState;
   Duration? _duration;
   Duration? _position;
-  String? _selectedFile;
+  String? _selectedFilePathName;
 
   // Stream subscriptions
   StreamSubscription? _durationSubscription;
@@ -38,7 +38,7 @@ class AudioPlayerViewModel extends ChangeNotifier {
   bool get isPaused => _playerState == PlayerState.paused;
   Duration? get duration => _duration;
   Duration? get position => _position;
-  String? get selectedFile => _selectedFile;
+  String? get selectedFile => _selectedFilePathName;
   String get durationText => _duration?.toString().split('.').first ?? '';
   String get positionText => _position?.toString().split('.').first ?? '';
 
@@ -51,16 +51,15 @@ class AudioPlayerViewModel extends ChangeNotifier {
 
     if (result != null) {
       String filePath = result.files.single.path!;
-      _selectedFile = filePath;
+      _selectedFilePathName = filePath;
       notifyListeners();
-      await _audioPlayer.setSource(DeviceFileSource(filePath));
     }
   }
 
   // Play, Pause, Stop methods
   Future<void> play() async {
-    if (_selectedFile != null) {
-      await _audioPlayer.resume();
+    if (_selectedFilePathName != null) {
+      await _audioPlayer.play(DeviceFileSource(_selectedFilePathName!));
       await _audioPlayer.setPlaybackRate(1.0);
       _playerState = PlayerState.playing;
       notifyListeners();
@@ -125,15 +124,11 @@ class AudioPlayerViewModel extends ChangeNotifier {
 
   // Load the initial file and seek to a specific position on startup
   Future<void> _loadInitialFileAndSeek() async {
-    _selectedFile = initialFilePath;
+    _selectedFilePathName = initialFilePath;
     notifyListeners(); // Notify UI that a file is loaded
 
     // Load the file but don't play yet
-    await _audioPlayer.setSource(DeviceFileSource(_selectedFile!));
-
-    // Play briefly to enable seeking, then pause and seek to the desired position
-    await _audioPlayer.resume(); // Start playback briefly to enable seek
-    await _audioPlayer.pause(); // Pause immediately
+    await _audioPlayer.setSource(DeviceFileSource(_selectedFilePathName!));
 
     // Now seek to the desired initial position
     await _audioPlayer.seek(initialSeekPosition);
