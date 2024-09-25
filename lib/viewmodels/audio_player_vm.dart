@@ -222,6 +222,14 @@ class AudioPlayerVM extends ChangeNotifier {
   Future<void> _setCurrentAudio(
     Audio audio,
   ) async {
+    // necessary to avoid position error when the chosen audio is displayed
+    // in the AudioPlayerView screen.
+    // if (_audioPlayer != null) {
+    //   // this test is necessary in order to avoid unit test failure since
+    //   // the AudioPlayerVMTestVersion does not instanciate the _audioPlayer
+    //   await _audioPlayer!.pause();
+    // }
+
     if (_currentAudio != null && !_currentAudio!.isPaused) {
       _currentAudio!.isPaused = true;
       // saving the previous current audio state before changing
