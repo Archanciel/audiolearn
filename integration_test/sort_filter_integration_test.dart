@@ -395,18 +395,16 @@ void audioPlayerViewSortFilterIntregrationTest() {
       // the next audio according to the 'Title app' sort/filter parms
 
       await tester.tap(find.byKey(const Key('audioPlayerViewSkipToEndButton')));
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       await tester.tap(find.byKey(const Key('audioPlayerViewSkipToEndButton')));
-
-      // Causes infinite plaqying
-      await tester.pumpAndSettle(const Duration(milliseconds: 300));
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // Playing not infinite, but pause button not displayed
       // await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // Does not solve anything, what ever Duration length is !!!!
-      // await Future.delayed(const Duration(milliseconds: 3000));
+      await Future.delayed(const Duration(milliseconds: 1500));
 
       // Waiting two second so that the next audio starts playing
       // await tester.pumpAndSettle(const Duration(milliseconds: 200));
