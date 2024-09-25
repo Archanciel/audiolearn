@@ -224,11 +224,11 @@ class AudioPlayerVM extends ChangeNotifier {
   ) async {
     // necessary to avoid position error when the chosen audio is displayed
     // in the AudioPlayerView screen.
-    if (_audioPlayer != null) {
-      // this test is necessary in order to avoid unit test failure since
-      // the AudioPlayerVMTestVersion does not instanciate the _audioPlayer
-      await _audioPlayer!.pause();
-    }
+    // if (_audioPlayer != null) {
+    //   // this test is necessary in order to avoid unit test failure since
+    //   // the AudioPlayerVMTestVersion does not instanciate the _audioPlayer
+    //   await _audioPlayer!.pause();
+    // }
 
     if (_currentAudio != null && !_currentAudio!.isPaused) {
       _currentAudio!.isPaused = true;
@@ -622,6 +622,13 @@ class AudioPlayerVM extends ChangeNotifier {
     _commentVM.undoAllRecordedCommentPlayCommands(
       playlistListVM: _playlistListVM,
     );
+
+    // "If commented out, the undo comments work well" no more right !
+    // But if not commented out, the play/pause icon is updated correctly,
+    // otherwise, clicking on Play icon starts playing and the Pause icon
+    // is diaplayed, but clicking on the Pause icon does pause the audio
+    // but the Play icon is not displayed.
+    notifyListeners();
   }
 
   /// Method called when the user clicks on the '<<' or '>>'
