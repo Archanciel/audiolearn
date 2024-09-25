@@ -405,7 +405,6 @@ class AudioPlayerVM extends ChangeNotifier {
     // Check if the file exists before attempting to play it
     if (audioFilePathName.isNotEmpty && File(audioFilePathName).existsSync()) {
       // Load the file but don't play yet
-      await _audioPlayer!.setSource(DeviceFileSource(audioFilePathName));
       await _audioPlayer!.setVolume(
         _currentAudio?.audioPlayVolume ?? kAudioDefaultPlayVolume,
       );
@@ -592,12 +591,7 @@ class AudioPlayerVM extends ChangeNotifier {
         await _rewindAudioPositionBasedOnPauseDuration();
       }
 
-      // Was commented out. Is it useful to enable it ? I am not sure. Try
-      // integr testing with and without this code (playlist download view
-      // integr test ok with commented out code).
-      // await _audioPlayer!.setSource(DeviceFileSource(audioFilePathName));
-
-      await _audioPlayer!.resume();
+      await _audioPlayer!.play(DeviceFileSource(audioFilePathName));
       await _audioPlayer!.setPlaybackRate(_currentAudio!.audioPlaySpeed);
 
       _currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd =
