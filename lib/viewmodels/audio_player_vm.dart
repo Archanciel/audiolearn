@@ -323,7 +323,7 @@ class AudioPlayerVM extends ChangeNotifier {
               0, _currentAudio!.audioDuration!.inSeconds));
     }
 
-    /// Must be called even if rewiding was not necessary. For example,
+    /// Must be called even if rewinding was not necessary. For example,
     /// if the user change the position of a not yet played audio and then
     /// plays an audio previously downloaded, once this audio ends, if
     /// this instruction was located inside the previous if block, the
@@ -333,15 +333,7 @@ class AudioPlayerVM extends ChangeNotifier {
     /// This test checks this bug fix:
     ///
     /// testWidgets('User modifies the position of next fully unread audio which is also the last downloaded audio of the playlist.').
-    await _audioPlayerSeekToPosition(
-      position: _currentAudioPosition,
-    );
-  }
-
-  Future<void> _audioPlayerSeekToPosition({
-    required Duration position,
-  }) async {
-    await _audioPlayer!.seek(position);
+    await _audioPlayer!.seek(_currentAudioPosition);
   }
 
   /// Method called by skipToEndNoPlay() if the audio is positioned
