@@ -33,7 +33,7 @@ enum AudioPositionModification {
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  audioPlayerViewSortFilterIntregrationTest();
+  audioPlayerViewSortFilterIntegrationTest();
 
   group('''Play/pause/start/end tests, clicking on audio title to open
          AudioPlayerView.''', () {
@@ -2535,7 +2535,8 @@ void main() {
       await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
         audioTitle: "Manger de la viande à notre époque par Aurélien Barrau",
-        expectedTitleTextColor: IntegrationTestUtil.partiallyPlayedAudioTitleTextdColor,
+        expectedTitleTextColor:
+            IntegrationTestUtil.partiallyPlayedAudioTitleTextdColor,
         expectedTitleTextBackgroundColor: null,
       );
 
@@ -2549,14 +2550,16 @@ void main() {
       await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
         audioTitle: "Quand Aurélien Barrau va dans une école de management",
-        expectedTitleTextColor: IntegrationTestUtil.partiallyPlayedAudioTitleTextdColor,
+        expectedTitleTextColor:
+            IntegrationTestUtil.partiallyPlayedAudioTitleTextdColor,
         expectedTitleTextBackgroundColor: null,
       );
 
       await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
         audioTitle: fifthDownloadedPartiallyPlayedAudioTitle,
-        expectedTitleTextColor: IntegrationTestUtil.currentlyPlayingAudioTitleTextColor,
+        expectedTitleTextColor:
+            IntegrationTestUtil.currentlyPlayingAudioTitleTextColor,
         expectedTitleTextBackgroundColor:
             IntegrationTestUtil.currentlyPlayingAudioTitleTextBackgroundColor,
       );
@@ -2603,21 +2606,24 @@ void main() {
       await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
         audioTitle: "Manger de la viande à notre époque par Aurélien Barrau",
-        expectedTitleTextColor: IntegrationTestUtil.partiallyPlayedAudioTitleTextdColor,
+        expectedTitleTextColor:
+            IntegrationTestUtil.partiallyPlayedAudioTitleTextdColor,
         expectedTitleTextBackgroundColor: null,
       );
 
       await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
         audioTitle: "Quand Aurélien Barrau va dans une école de management",
-        expectedTitleTextColor: IntegrationTestUtil.partiallyPlayedAudioTitleTextdColor,
+        expectedTitleTextColor:
+            IntegrationTestUtil.partiallyPlayedAudioTitleTextdColor,
         expectedTitleTextBackgroundColor: null,
       );
 
       await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
         audioTitle: fifthDownloadedPartiallyPlayedAudioTitle,
-        expectedTitleTextColor: IntegrationTestUtil.currentlyPlayingAudioTitleTextColor,
+        expectedTitleTextColor:
+            IntegrationTestUtil.currentlyPlayingAudioTitleTextColor,
         expectedTitleTextBackgroundColor:
             IntegrationTestUtil.currentlyPlayingAudioTitleTextBackgroundColor,
       );
@@ -2632,7 +2638,8 @@ void main() {
       await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
         audioTitle: "La résilience insulaire par Fiona Roche",
-        expectedTitleTextColor: IntegrationTestUtil.partiallyPlayedAudioTitleTextdColor,
+        expectedTitleTextColor:
+            IntegrationTestUtil.partiallyPlayedAudioTitleTextdColor,
         expectedTitleTextBackgroundColor: null,
       );
 
@@ -2701,7 +2708,8 @@ void main() {
       await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
         audioTitle: thirdDownloadedNotPlayedAudioTitle,
-        expectedTitleTextColor: IntegrationTestUtil.currentlyPlayingAudioTitleTextColor,
+        expectedTitleTextColor:
+            IntegrationTestUtil.currentlyPlayingAudioTitleTextColor,
         expectedTitleTextBackgroundColor:
             IntegrationTestUtil.currentlyPlayingAudioTitleTextBackgroundColor,
       );
@@ -2716,7 +2724,8 @@ void main() {
       await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
         audioTitle: "La résilience insulaire par Fiona Roche",
-        expectedTitleTextColor: IntegrationTestUtil.partiallyPlayedAudioTitleTextdColor,
+        expectedTitleTextColor:
+            IntegrationTestUtil.partiallyPlayedAudioTitleTextdColor,
         expectedTitleTextBackgroundColor: null,
       );
 

@@ -22,10 +22,10 @@ import 'integration_test_util.dart';
 /// this integration test !
 void main() {
   playlistDownloadViewSortFilterIntregrationTest();
-  audioPlayerViewSortFilterIntregrationTest();
+  audioPlayerViewSortFilterIntegrationTest();
 }
 
-void audioPlayerViewSortFilterIntregrationTest() {
+void audioPlayerViewSortFilterIntegrationTest() {
   group('Sort/filter audio player view tests', () {
     testWidgets(
         '''Playing last sorted audio with filter: "Fully listened" unchecked
@@ -574,7 +574,9 @@ void audioPlayerViewSortFilterIntregrationTest() {
       final Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
+        tester: tester,
+      );
 
       // Now we tap twice on the |< button in order select the previous
       // audio according to the 'Title app' with descending audio playing order
