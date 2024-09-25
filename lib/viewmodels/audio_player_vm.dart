@@ -330,7 +330,7 @@ class AudioPlayerVM extends ChangeNotifier {
     /// not yet played audio starts playing not at the changed position,
     /// but at the start position !
     ///
-    /// This test checks this bug fix:
+    /// This integration test checks this bug fix:
     ///
     /// testWidgets('User modifies the position of next fully unread audio which is also the last downloaded audio of the playlist.').
     await _audioPlayer!.seek(_currentAudioPosition);
