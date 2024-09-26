@@ -460,6 +460,13 @@ class AudioPlayerVM extends ChangeNotifier {
         return;
       }
 
+      // Ensures that the audio player view audio position slider is
+      // updated to end when the audio play was complete. Otherwise,
+      // if the audio plays while the smartphone screen is turned off,
+      // the slider won't be set to end position.
+      _currentAudioPosition = _currentAudioTotalDuration;
+      notifyListeners();
+
       // Play next audio when current audio is finished. If a next
       // audio is played, notifyListeners() is called in
       // playNextAudio().
