@@ -911,6 +911,7 @@ class AudioDownloadVM extends ChangeNotifier {
       warningMessageVM.videoTitleNotWrittenInOccidentalLetters();
     }
 
+    // The Stopwatch class in Dart is used to measure elapsed time.
     Stopwatch stopwatch = Stopwatch()..start();
 
     if (!_isDownloading) {
@@ -920,10 +921,16 @@ class AudioDownloadVM extends ChangeNotifier {
     }
 
     try {
-      await _downloadAudioFile(
+      if (!await _downloadAudioFile(
         youtubeVideoId: youtubeVideo.id,
         audio: audio,
-      );
+      )) {
+        // Before this improvement, the failed downloaded audio was
+        // added to the target playlist.
+        //
+        // notifyDownloadError() was called in _downloadAudioFile()
+        return ErrorType.downloadAudioYoutubeError;
+      }
     } catch (e) {
       _youtubeExplode!.close();
       _youtubeExplode = null;
@@ -1584,7 +1591,10 @@ class AudioDownloadVM extends ChangeNotifier {
         .toList();
   }
 
-  Future<void> _downloadAudioFile({
+  /// Downloads the audio file from the Youtube video and saves it
+  /// to the enclosing playlist directory. Returns true if the audio
+  /// file was successfully downloaded, false otherwise.
+  Future<bool> _downloadAudioFile({
     required yt.VideoId youtubeVideoId,
     required Audio audio,
   }) async {
@@ -1601,7 +1611,7 @@ class AudioDownloadVM extends ChangeNotifier {
         errorArgOne: e.toString(),
       );
 
-      return;
+      return false;
     }
 
     final yt.AudioOnlyStreamInfo audioStreamInfo;
@@ -1621,6 +1631,8 @@ class AudioDownloadVM extends ChangeNotifier {
       audioStreamInfo,
       audioFileSize,
     );
+
+    return true;
   }
 
   /// Downloads the audio file from the Youtube video and saves it
