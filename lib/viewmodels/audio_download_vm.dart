@@ -1621,6 +1621,8 @@ class AudioDownloadVM extends ChangeNotifier {
       audio.setAudioToMusicQuality();
     } else {
       audioStreamInfo = streamManifest.audioOnly.first;
+      // audioStreamInfo = streamManifest.audioOnly.reduce(
+      //     (a, b) => a.bitrate.bitsPerSecond < b.bitrate.bitsPerSecond ? a : b);
     }
 
     final int audioFileSize = audioStreamInfo.size.totalBytes;

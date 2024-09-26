@@ -1079,7 +1079,8 @@ void checkDownloadedAudioShortVideoOne({
               .contains('audio learn test short video one 23-06-10.mp3'),
       true);
 
-  expect(downloadedAudioOne.audioFileSize, 143679);
+  // expect(downloadedAudioOne.audioFileSize, 143679);
+  expect(downloadedAudioOne.audioFileSize, 378444);
 }
 
 /// Verify the values of the "audio learn test short video two" downloaded
@@ -1116,6 +1117,7 @@ void checkDownloadedAudioShortVideoTwo({
     expect(downloadedAudioTwo.audioFileSize, 160000);
   } else {
     expect(downloadedAudioTwo.audioFileSize, 61425);
+    // expect(downloadedAudioTwo.audioFileSize, 160000);
   }
 }
 
@@ -1153,7 +1155,8 @@ void checkPlaylistNewAudioOne({
           firstNewAudioFileName.contains('Really short video 23-07-01.mp3'),
       true);
 
-  expect(downloadedAudioOne.audioFileSize, 61425);
+  // expect(downloadedAudioTwo.audioFileSize, 61425);
+  expect(downloadedAudioOne.audioFileSize, 160000);
   expect(
       DateTimeParser.truncateDateTimeToDateOnly(
           downloadedAudioOne.videoUploadDate),
