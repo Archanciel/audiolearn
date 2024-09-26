@@ -125,7 +125,6 @@ class AudioPlayerViewModel extends ChangeNotifier {
   // Load the initial file and seek to a specific position on startup
   Future<void> _loadInitialFileAndSeek() async {
     _selectedFilePathName = initialFilePath;
-    notifyListeners(); // Notify UI that a file is loaded
 
     // Load the file but don't play yet
     await _audioPlayer.setSource(DeviceFileSource(_selectedFilePathName!));
