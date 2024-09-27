@@ -80,8 +80,7 @@ class AudioDownloadVM extends ChangeNotifier {
   /// directory is located in the test directory of the project.
   ///
   /// Otherwise, the windows or smartphone audio root directory
-  /// is used and the value of the kUniquePlaylistTitle constant
-  /// is used to load the playlist json file.
+  /// is used.
   AudioDownloadVM({
     required this.warningMessageVM,
     required this.settingsDataService,
@@ -1620,9 +1619,8 @@ class AudioDownloadVM extends ChangeNotifier {
       audioStreamInfo = streamManifest.audioOnly.withHighestBitrate();
       audio.setAudioToMusicQuality();
     } else {
-      audioStreamInfo = streamManifest.audioOnly.first;
-      // audioStreamInfo = streamManifest.audioOnly.reduce(
-      //     (a, b) => a.bitrate.bitsPerSecond < b.bitrate.bitsPerSecond ? a : b);
+      audioStreamInfo = streamManifest.audioOnly.reduce(
+          (a, b) => a.bitrate.bitsPerSecond < b.bitrate.bitsPerSecond ? a : b);
     }
 
     final int audioFileSize = audioStreamInfo.size.totalBytes;

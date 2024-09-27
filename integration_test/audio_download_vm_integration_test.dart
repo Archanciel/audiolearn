@@ -31,11 +31,6 @@ final String globalTestPlaylistDir =
     '$kPlaylistDownloadRootPathWindowsTest${path.separator}$globalTestPlaylistTitle';
 
 void main() {
-  // Necessary to avoid FatalFailureException (FatalFailureException: Failed
-  // to perform an HTTP request to YouTube due to a fatal failure. In most
-  // cases, this error indicates that YouTube most likely changed something,
-  // which broke the library.
-  // If this issue persists, please report it on the project's GitHub page.
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('Download 1 playlist with short audio', () {
@@ -97,7 +92,8 @@ void main() {
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName: "temp\\wrong.json");
 
-      // await tester.pumpWidget(MyApp());
+      // Building and displaying the DownloadPlaylistPage integration test
+      // application.
       await tester.pumpWidget(ChangeNotifierProvider(
         create: (BuildContext context) {
           final WarningMessageVM warningMessageVM = WarningMessageVM();
@@ -112,6 +108,7 @@ void main() {
           // forcing dark theme
           theme: ScreenMixin.themeDataDark,
           home: const DownloadPlaylistPage(
+            // integration test opened application
             playlistUrl: globalTestPlaylistUrl,
           ),
         ),
@@ -156,6 +153,8 @@ void main() {
         downloadedAudioTwo: downloadedPlaylist.downloadedAudioLst[1],
         audioOneFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
         audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
+        downloadedFileSizeOne: 378444,
+        downloadedFileSizeTwo: 73294,
       );
 
       // Checking the data of the audio contained in the playable
@@ -167,6 +166,8 @@ void main() {
         downloadedAudioTwo: downloadedPlaylist.playableAudioLst[0],
         audioOneFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
         audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
+        downloadedFileSizeOne: 378444,
+        downloadedFileSizeTwo: 73294,
       );
 
       // Checking if there are 3 files in the directory (2 mp3 and 1 json)
@@ -182,8 +183,8 @@ void main() {
       );
     });
     testWidgets(
-        'Playlist 2 short audio: playlist 1st audio was already downloaded and was deleted',
-        (WidgetTester tester) async {
+        '''Playlist 2 short audio: playlist 2nd audio was already downloaded and 
+           was deleted''', (WidgetTester tester) async {
       late AudioDownloadVM audioDownloadVM;
       final Directory directory = Directory(globalTestPlaylistDir);
 
@@ -195,10 +196,10 @@ void main() {
 
       await DirUtil.createDirIfNotExist(pathStr: globalTestPlaylistDir);
 
-      // Copying the playlist json file which contains one audio
-      // which was already downloaded and was deleted to the playlist
-      // dir. The video title of the already downloaded audio is
-      // 'audio learn test short video two'
+      // Copying to the playlist dir the playlist json file which contains
+      // one audio which was already downloaded and was deleted. The video
+      // title of the already downloaded audio is 'audio learn test short
+      // video two'.
       await DirUtil.copyFileToDirectory(
         sourceFilePathName:
             "$kDownloadAppTestSavedDataDir${path.separator}$globalTestPlaylistTitle${path.separator}${globalTestPlaylistTitle}_1_audio.json",
@@ -221,14 +222,14 @@ void main() {
         settingsDataService: settingsDataService,
         isTest: true,
       );
-      Playlist downloadedPlaylistBeforeDownload =
+      Playlist existingPlaylistBeforeNewDownload =
           audioDownloadVMbeforeDownload.listOfPlaylist[0];
 
       // Verifying the data of the copied playlist before downloading
       // the playlist
 
       checkDownloadedPlaylist(
-        downloadedPlaylist: downloadedPlaylistBeforeDownload,
+        downloadedPlaylist: existingPlaylistBeforeNewDownload,
         playlistId: globalTestPlaylistId,
         playlistTitle: globalTestPlaylistTitle,
         playlistUrl: globalTestPlaylistUrl,
@@ -236,9 +237,9 @@ void main() {
       );
 
       List<Audio> downloadedAudioLstBeforeDownload =
-          downloadedPlaylistBeforeDownload.downloadedAudioLst;
+          existingPlaylistBeforeNewDownload.downloadedAudioLst;
       List<Audio> playableAudioLstBeforeDownload =
-          downloadedPlaylistBeforeDownload.playableAudioLst;
+          existingPlaylistBeforeNewDownload.playableAudioLst;
 
       expect(downloadedAudioLstBeforeDownload.length, 1);
       expect(playableAudioLstBeforeDownload.length, 1);
@@ -248,6 +249,7 @@ void main() {
       checkDownloadedAudioShortVideoTwo(
         downloadedAudioTwo: downloadedAudioLstBeforeDownload[0],
         audioTwoFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
+        downloadedFileSize: 61425,
       );
 
       // Checking the data of the audio contained in the playable
@@ -255,9 +257,11 @@ void main() {
       checkDownloadedAudioShortVideoTwo(
         downloadedAudioTwo: playableAudioLstBeforeDownload[0],
         audioTwoFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
+        downloadedFileSize: 61425,
       );
 
-      // await tester.pumpWidget(MyApp());
+      // Building and displaying the DownloadPlaylistPage integration test
+      // application.
       await tester.pumpWidget(ChangeNotifierProvider(
         create: (BuildContext context) {
           final WarningMessageVM warningMessageVM = WarningMessageVM();
@@ -272,6 +276,7 @@ void main() {
           // forcing dark theme
           theme: ScreenMixin.themeDataDark,
           home: const DownloadPlaylistPage(
+            // integration test opened application
             playlistUrl: globalTestPlaylistUrl,
           ),
         ),
@@ -317,6 +322,8 @@ void main() {
         downloadedAudioTwo: downloadedPlaylist.downloadedAudioLst[0],
         audioOneFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
         audioTwoFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
+        downloadedFileSizeOne: 378444,
+        downloadedFileSizeTwo: 61425,
       );
 
       // playableAudioLst contains Audio's inserted at list start
@@ -325,6 +332,8 @@ void main() {
         downloadedAudioTwo: downloadedPlaylist.playableAudioLst[1],
         audioOneFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
         audioTwoFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
+        downloadedFileSizeOne: 378444,
+        downloadedFileSizeTwo: 61425,
       );
 
       // Checking if there are 3 files in the directory (1 mp3 and 1 json)
@@ -377,7 +386,8 @@ void main() {
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName: "temp\\wrong.json");
 
-      // await tester.pumpWidget(MyApp());
+      // Building and displaying the DownloadPlaylistPage integration test
+      // application.
       await tester.pumpWidget(ChangeNotifierProvider(
         create: (BuildContext context) {
           final WarningMessageVM warningMessageVM = WarningMessageVM();
@@ -392,6 +402,7 @@ void main() {
           // forcing dark theme
           theme: ScreenMixin.themeDataDark,
           home: const DownloadPlaylistPage(
+            // integration test opened application
             playlistUrl: globalTestPlaylistUrl,
           ),
         ),
@@ -441,6 +452,7 @@ void main() {
       checkDownloadedAudioShortVideoTwo(
         downloadedAudioTwo: singleVideoDownloadedPlaylist.downloadedAudioLst[0],
         audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
+        downloadedFileSize: 73294,
       );
 
       // Checking if there are 2 files in the directory (1 mp3 and 1 json)
@@ -454,6 +466,143 @@ void main() {
 
       String playlistPathFileName =
           '$localTestPlaylistDir${path.separator}$localTestPlaylistTitle.json';
+
+      Playlist loadedPlaylist = JsonDataService.loadFromFile(
+          jsonPathFileName: playlistPathFileName, type: Playlist);
+
+      compareDeserializedWithOriginalPlaylist(
+        deserializedPlaylist: loadedPlaylist,
+        originalPlaylist: singleVideoDownloadedPlaylist,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets('''Download single video in audio (speak) quality to a target local
+                   playlist containing no audio''',
+        (WidgetTester tester) async {
+      late AudioDownloadVM audioDownloadVM;
+      String localTargetPlaylistTitle =
+          'audio_learn_download_single_video_to_empty_local_playlist_test';
+      String localTestPlaylistDir =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$localTargetPlaylistTitle";
+      String savedTestPlaylistDir =
+          "$kDownloadAppTestSavedDataDir${path.separator}$localTargetPlaylistTitle";
+
+      final Directory directory = Directory(localTestPlaylistDir);
+
+      // necessary in case the previous test failed and so did not
+      // delete the its playlist dir
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      await DirUtil.createDirIfNotExist(pathStr: localTestPlaylistDir);
+
+      // Copying the initial local playlist json file with no audio
+      await DirUtil.copyFileToDirectory(
+        sourceFilePathName:
+            "$savedTestPlaylistDir${path.separator}$localTargetPlaylistTitle.json",
+        targetDirectoryPath: localTestPlaylistDir,
+      );
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+      );
+
+      // load settings from file which does not exist. This
+      // will ensure that the default playlist root path is set
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName: "temp\\wrong.json");
+
+      // Building and displaying the DownloadPlaylistPage integration test
+      // application.
+      await tester.pumpWidget(ChangeNotifierProvider(
+        create: (BuildContext context) {
+          final WarningMessageVM warningMessageVM = WarningMessageVM();
+          audioDownloadVM = AudioDownloadVM(
+            warningMessageVM: warningMessageVM,
+            settingsDataService: settingsDataService,
+            isTest: true,
+          );
+          return audioDownloadVM;
+        },
+        child: MaterialApp(
+          // forcing dark theme
+          theme: ScreenMixin.themeDataDark,
+          home: const DownloadPlaylistPage(
+            // integration test opened application
+            playlistUrl: globalTestPlaylistUrl,
+          ),
+        ),
+      ));
+
+      String singleVideoUrl = 'https://youtu.be/uv3VQoWSjBE';
+
+      await tester.enterText(
+        find.byKey(const Key('playlistUrlTextField')),
+        singleVideoUrl,
+      );
+      await tester.pumpAndSettle();
+
+      // tapping on the downl single video button in the app which
+      // calls the AudioDownloadVM.downloadSingleVideoAudio(videoUrl,
+      // singleVideoTargetPlaylist, downloadAtMusicQuality) method.
+      //
+      // In this case, the downloadAtMusicQuality is set to true.
+      await tester.tap(find
+          .byKey(const Key('downloadSingleVideoAudioInAudioQualityButton')));
+      await tester.pumpAndSettle();
+
+      // Add a delay to allow the download to finish. 5 seconds is ok
+      // when running the audio_download_vm_test only.
+      // Waiting 5 seconds only causes MissingPluginException
+      // 'No implementation found for method $method on channel $name'
+      // when all tsts are run. 7 seconds solve the problem.
+      await Future.delayed(const Duration(seconds: secondsDelay));
+      await tester.pumpAndSettle();
+
+      Playlist singleVideoDownloadedPlaylist =
+          audioDownloadVM.listOfPlaylist[0];
+
+      checkDownloadedPlaylist(
+        downloadedPlaylist: singleVideoDownloadedPlaylist,
+        playlistId: localTargetPlaylistTitle,
+        playlistTitle: localTargetPlaylistTitle,
+        playlistUrl: '',
+        playlistDir: localTestPlaylistDir,
+      );
+
+      // this check fails if the secondsDelay value is too small
+      expect(audioDownloadVM.isDownloading, false);
+
+      expect(audioDownloadVM.downloadProgress, 1.0);
+      expect(audioDownloadVM.lastSecondDownloadSpeed, 0);
+      expect(audioDownloadVM.isHighQuality, false);
+
+      // Checking the data of the single video audio contained in the
+      // target playlist in which the audio was downloaded
+      checkDownloadedAudioShortVideoTwo(
+        downloadedAudioTwo: singleVideoDownloadedPlaylist.downloadedAudioLst[0],
+        audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
+        downloadedAtMusicQuality: false,
+        downloadedFileSize: 73294,
+      );
+
+      // Checking if there are 2 files in the directory (1 mp3 and 1 json)
+      final List<FileSystemEntity> files =
+          directory.listSync(recursive: false, followLinks: false);
+
+      expect(files.length, 2);
+
+      // Checking if the playlist json file has been updated with the
+      // downloaded audio data
+
+      String playlistPathFileName =
+          '$localTestPlaylistDir${path.separator}$localTargetPlaylistTitle.json';
 
       Playlist loadedPlaylist = JsonDataService.loadFromFile(
           jsonPathFileName: playlistPathFileName, type: Playlist);
@@ -506,7 +655,8 @@ void main() {
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName: "temp\\wrong.json");
 
-      // await tester.pumpWidget(MyApp());
+      // Building and displaying the DownloadPlaylistPage integration test
+      // application.
       await tester.pumpWidget(ChangeNotifierProvider(
         create: (BuildContext context) {
           final WarningMessageVM warningMessageVM = WarningMessageVM();
@@ -521,6 +671,7 @@ void main() {
           // forcing dark theme
           theme: ScreenMixin.themeDataDark,
           home: const DownloadPlaylistPage(
+            // integration test opened application
             playlistUrl: globalTestPlaylistUrl,
           ),
         ),
@@ -575,6 +726,7 @@ void main() {
         downloadedAudioTwo: singleVideoDownloadedPlaylist.downloadedAudioLst[0],
         audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
         downloadedAtMusicQuality: true,
+        downloadedFileSize: 160000,
       );
 
       // Checking if there are 2 files in the directory (1 mp3 and 1 json)
@@ -638,7 +790,8 @@ void main() {
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName: "temp\\wrong.json");
 
-      // await tester.pumpWidget(MyApp());
+      // Building and displaying the DownloadPlaylistPage integration test
+      // application.
       await tester.pumpWidget(ChangeNotifierProvider(
         create: (BuildContext context) {
           final WarningMessageVM warningMessageVM = WarningMessageVM();
@@ -653,6 +806,7 @@ void main() {
           // forcing dark theme
           theme: ScreenMixin.themeDataDark,
           home: const DownloadPlaylistPage(
+            // integration test opened application
             playlistUrl: globalTestPlaylistUrl,
           ),
         ),
@@ -705,6 +859,8 @@ void main() {
         downloadedAudioTwo: singleVideoDownloadedPlaylist.downloadedAudioLst[1],
         audioOneFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
         audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
+        downloadedFileSizeOne: 143679,
+        downloadedFileSizeTwo: 73294,
       );
 
       // ... and the values of the 3rd and 4th audio newly downloaded
@@ -719,6 +875,8 @@ void main() {
         downloadedAudioTwo: singleVideoDownloadedPlaylist.playableAudioLst[0],
         audioOneFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
         audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
+        downloadedFileSizeOne: 143679,
+        downloadedFileSizeTwo: 73294,
       );
 
       // Checking if there are 3 files in the directory (2 mp3 and 1 json)
@@ -824,6 +982,8 @@ void main() {
         downloadedAudioTwo: downloadedAudioLstBeforeDownload[1],
         audioOneFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
         audioTwoFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
+        downloadedFileSizeOne: 143679,
+        downloadedFileSizeTwo: 61425,
       );
 
       // Checking the data of the  already downloaded audio contained
@@ -835,9 +995,12 @@ void main() {
         downloadedAudioTwo: playableAudioLstBeforeDownload[0],
         audioOneFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
         audioTwoFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
+        downloadedFileSizeOne: 143679,
+        downloadedFileSizeTwo: 61425,
       );
 
-      // await tester.pumpWidget(MyApp());
+      // Building and displaying the DownloadPlaylistPage integration test
+      // application.
       await tester.pumpWidget(ChangeNotifierProvider(
         create: (BuildContext context) {
           final WarningMessageVM warningMessageVM = WarningMessageVM();
@@ -852,6 +1015,7 @@ void main() {
           // forcing dark theme
           theme: ScreenMixin.themeDataDark,
           home: const DownloadPlaylistPage(
+            // integration test opened application
             playlistUrl: globalTestPlaylistUrl,
           ),
         ),
@@ -913,6 +1077,8 @@ void main() {
                 .downloadedAudioLst[1],
         audioOneFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
         audioTwoFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
+        downloadedFileSizeOne: 143679,
+        downloadedFileSizeTwo: 61425,
       );
 
       // ... and the values of the 3rd and 4th audio newly downloaded
@@ -940,6 +1106,8 @@ void main() {
                 .playableAudioLst[2],
         audioOneFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
         audioTwoFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
+        downloadedFileSizeOne: 143679,
+        downloadedFileSizeTwo: 61425,
       );
 
       // ... and the values of the 3rd and 4th audio newly downloaded
@@ -997,15 +1165,19 @@ void checkPlaylistDownloadedAudios({
   required Audio downloadedAudioTwo,
   required String audioOneFileNamePrefix,
   required String audioTwoFileNamePrefix,
+  required int downloadedFileSizeOne,
+  required int downloadedFileSizeTwo,
 }) {
   checkDownloadedAudioShortVideoOne(
     downloadedAudioOne: downloadedAudioOne,
     audioOneFileNamePrefix: audioOneFileNamePrefix,
+    downloadedFileSize: downloadedFileSizeOne,
   );
 
   checkDownloadedAudioShortVideoTwo(
     downloadedAudioTwo: downloadedAudioTwo,
     audioTwoFileNamePrefix: audioTwoFileNamePrefix,
+    downloadedFileSize: downloadedFileSizeTwo,
   );
 }
 
@@ -1053,6 +1225,7 @@ void compareNewRecreatedPlaylistToPreviouslyExistingPlaylist({
 void checkDownloadedAudioShortVideoOne({
   required Audio downloadedAudioOne,
   required String audioOneFileNamePrefix,
+  required int downloadedFileSize,
   bool downloadedAtMusicQuality = false,
 }) {
   expect(downloadedAudioOne.youtubeVideoChannel, "Jean-Pierre Schnyder");
@@ -1079,8 +1252,7 @@ void checkDownloadedAudioShortVideoOne({
               .contains('audio learn test short video one 23-06-10.mp3'),
       true);
 
-  // expect(downloadedAudioOne.audioFileSize, 143679);
-  expect(downloadedAudioOne.audioFileSize, 378444);
+  expect(downloadedAudioOne.audioFileSize, downloadedFileSize);
 }
 
 /// Verify the values of the "audio learn test short video two" downloaded
@@ -1088,6 +1260,7 @@ void checkDownloadedAudioShortVideoOne({
 void checkDownloadedAudioShortVideoTwo({
   required Audio downloadedAudioTwo,
   required String audioTwoFileNamePrefix,
+  required int downloadedFileSize,
   bool downloadedAtMusicQuality = false,
 }) {
   expect(downloadedAudioTwo.youtubeVideoChannel, "Jean-Pierre Schnyder");
@@ -1113,12 +1286,7 @@ void checkDownloadedAudioShortVideoTwo({
           secondAudioFileName
               .contains('audio learn test short video two 23-06-10.mp3'),
       true);
-  if (downloadedAtMusicQuality) {
-    expect(downloadedAudioTwo.audioFileSize, 160000);
-  } else {
-    expect(downloadedAudioTwo.audioFileSize, 61425);
-    // expect(downloadedAudioTwo.audioFileSize, 160000);
-  }
+  expect(downloadedAudioTwo.audioFileSize, downloadedFileSize);
 }
 
 // Verify the values of the Audio's extracted from a playlist
@@ -1155,8 +1323,7 @@ void checkPlaylistNewAudioOne({
           firstNewAudioFileName.contains('Really short video 23-07-01.mp3'),
       true);
 
-  // expect(downloadedAudioTwo.audioFileSize, 61425);
-  expect(downloadedAudioOne.audioFileSize, 160000);
+  expect(downloadedAudioOne.audioFileSize, 73294);
   expect(
       DateTimeParser.truncateDateTimeToDateOnly(
           downloadedAudioOne.videoUploadDate),
@@ -1184,7 +1351,7 @@ void checkPlaylistNewAudioTwo({
               .contains('morning _ cinematic video 23-07-01.mp3'),
       true);
 
-  expect(downloadedAudioTwo.audioFileSize, 360849);
+  expect(downloadedAudioTwo.audioFileSize, 954427);
   expect(
       DateTimeParser.truncateDateTimeToDateOnly(
           downloadedAudioTwo.videoUploadDate),
@@ -1251,6 +1418,22 @@ class _DownloadPlaylistPageState extends State<DownloadPlaylistPage> {
                 );
               },
               child: const Text('Download Single Video Audio'),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              key: const Key('downloadSingleVideoAudioInAudioQualityButton'),
+              onPressed: () {
+                AudioDownloadVM audioDownloadVM =
+                    Provider.of<AudioDownloadVM>(context, listen: false);
+
+                // the downloaded audio will be added to the unique playlist
+                // located in the test audio directory
+                audioDownloadVM.downloadSingleVideoAudio(
+                  videoUrl: _urlController.text,
+                  singleVideoTargetPlaylist: audioDownloadVM.listOfPlaylist[0],
+                );
+              },
+              child: const Text('Download Single Video Audio In Spoken Audio Quality'),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
