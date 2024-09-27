@@ -3193,7 +3193,9 @@ void main() {
       // First, tap on the source audio ListTile to open the
       // audio player view
       await tester.tap(sourceAudioListTileWidgetFinder);
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // Verify that the comment icon button is highlighted. This indiquates
       // that a comment exist for the audio
@@ -3329,7 +3331,9 @@ void main() {
       // First, tap on the source audio ListTile to open the
       // audio player view
       await tester.tap(targetAudioListTileWidgetFinder);
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // Verify that the comment icon button is highlighted. This indiquates
       // that a comment exist for the audio
@@ -5005,7 +5009,9 @@ void main() {
       // First, tap on the copied audio ListTile to open the
       // audio player view
       await tester.tap(targetAudioListTileWidgetFinder);
-      await tester.pumpAndSettle(const Duration(milliseconds: 300));
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // Verify that the comment icon button is highlighted. This indiquates
       // that a comment exist for the audio
@@ -5674,7 +5680,9 @@ void main() {
       // First, tap on the source audio ListTile to open the
       // audio player view
       await tester.tap(targetAudioListTileWidgetFinder);
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // Verify that the comment icon button is highlighted. This indiquates
       // that a comment exist for the audio
@@ -9516,7 +9524,9 @@ void main() {
       appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // Verify the displayed audio title (Jancovici m'explique l’importance
       // des ordres de grandeur face au changement climatique)
@@ -14604,168 +14614,168 @@ void main() {
       });
     });
     // group('Playing several comments', () {
-      // testWidgets(
-      //     '''Three comments partially played color verification. Play second
-      //      comment partially, then play third comment partially, then play fourth
-      //      comment partially until you close the playlist comment dialog. Then
-      //      reopen the playlist comment dialog and verify that the played comments
-      //      color was not changed, which means that the commented audio position
-      //      changes related to the comment play of the three comments were undone.
-      //      Verify as well that the played audio changes caused by the comments
-      //      playing was undone as well.''', (WidgetTester tester) async {
-      //   const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
-      //   const String secondPlayedCommentAudioTitle =
-      //       "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
-      //   const String thirdPlayedCommentAudioTitle =
-      //       "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
-      //   const String fourthPlayedCommentAudioTitle =
-      //       "La surpopulation mondiale par Jancovici et Barrau";
+    // testWidgets(
+    //     '''Three comments partially played color verification. Play second
+    //      comment partially, then play third comment partially, then play fourth
+    //      comment partially until you close the playlist comment dialog. Then
+    //      reopen the playlist comment dialog and verify that the played comments
+    //      color was not changed, which means that the commented audio position
+    //      changes related to the comment play of the three comments were undone.
+    //      Verify as well that the played audio changes caused by the comments
+    //      playing was undone as well.''', (WidgetTester tester) async {
+    //   const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+    //   const String secondPlayedCommentAudioTitle =
+    //       "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
+    //   const String thirdPlayedCommentAudioTitle =
+    //       "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
+    //   const String fourthPlayedCommentAudioTitle =
+    //       "La surpopulation mondiale par Jancovici et Barrau";
 
-      //   await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-      //     tester: tester,
-      //     savedTestDataDirName: 'audio_comment_color_test',
-      //     selectedPlaylistTitle: youtubePlaylistTitle,
-      //   );
+    //   await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+    //     tester: tester,
+    //     savedTestDataDirName: 'audio_comment_color_test',
+    //     selectedPlaylistTitle: youtubePlaylistTitle,
+    //   );
 
-      //   // First, open the playlist comment dialog
-      //   Finder playlistCommentListDialogFinder =
-      //       await openPlaylistCommentDialog(
-      //     tester: tester,
-      //     playlistTitle: youtubePlaylistTitle,
-      //   );
+    //   // First, open the playlist comment dialog
+    //   Finder playlistCommentListDialogFinder =
+    //       await openPlaylistCommentDialog(
+    //     tester: tester,
+    //     playlistTitle: youtubePlaylistTitle,
+    //   );
 
-      //   // Find the list of comments in the playlist comment dialog
-      //   final Finder listFinder = find.descendant(
-      //       of: playlistCommentListDialogFinder,
-      //       matching: find.byType(ListBody));
+    //   // Find the list of comments in the playlist comment dialog
+    //   final Finder listFinder = find.descendant(
+    //       of: playlistCommentListDialogFinder,
+    //       matching: find.byType(ListBody));
 
-      //   // Find all the list items GestureDetector's
-      //   final Finder gestureDetectorsFinder = find.descendant(
-      //       // 3 GestureDetector per comment item
-      //       of: listFinder,
-      //       matching: find.byType(GestureDetector));
+    //   // Find all the list items GestureDetector's
+    //   final Finder gestureDetectorsFinder = find.descendant(
+    //       // 3 GestureDetector per comment item
+    //       of: listFinder,
+    //       matching: find.byType(GestureDetector));
 
-      //   // Now tap on the play icon button of the unique comment of the second
-      //   // audio in order to start playing it
-      //   await IntegrationTestUtil.playComment(
-      //     tester: tester,
-      //     gestureDetectorsFinder: gestureDetectorsFinder,
-      //     itemIndex: 3,
-      //     typeOnPauseAfterPlay: false,
-      //     maxPlayDurationSeconds: 3,
-      //   );
+    //   // Now tap on the play icon button of the unique comment of the second
+    //   // audio in order to start playing it
+    //   await IntegrationTestUtil.playComment(
+    //     tester: tester,
+    //     gestureDetectorsFinder: gestureDetectorsFinder,
+    //     itemIndex: 3,
+    //     typeOnPauseAfterPlay: false,
+    //     maxPlayDurationSeconds: 3,
+    //   );
 
-      //   // Let the second comment be played during 1.5 seconds and then clixk
-      //   // on the play button of the third comment
-      //   await Future.delayed(const Duration(milliseconds: 1500));
-      //   await tester.pumpAndSettle();
+    //   // Let the second comment be played during 1.5 seconds and then clixk
+    //   // on the play button of the third comment
+    //   await Future.delayed(const Duration(milliseconds: 1500));
+    //   await tester.pumpAndSettle();
 
-      //   // Now tap on the play icon button of the unique comment of the third
-      //   // audio in order to start playing it
-      //   await IntegrationTestUtil.playComment(
-      //     tester: tester,
-      //     gestureDetectorsFinder: gestureDetectorsFinder,
-      //     itemIndex: 6,
-      //     typeOnPauseAfterPlay: false,
-      //     maxPlayDurationSeconds: 3,
-      //   );
+    //   // Now tap on the play icon button of the unique comment of the third
+    //   // audio in order to start playing it
+    //   await IntegrationTestUtil.playComment(
+    //     tester: tester,
+    //     gestureDetectorsFinder: gestureDetectorsFinder,
+    //     itemIndex: 6,
+    //     typeOnPauseAfterPlay: false,
+    //     maxPlayDurationSeconds: 3,
+    //   );
 
-      //   // Let the third comment be played during 1.5 seconds and then clixk
-      //   // on the play button of the fourth comment
-      //   await Future.delayed(const Duration(milliseconds: 1500));
-      //   await tester.pumpAndSettle();
+    //   // Let the third comment be played during 1.5 seconds and then clixk
+    //   // on the play button of the fourth comment
+    //   await Future.delayed(const Duration(milliseconds: 1500));
+    //   await tester.pumpAndSettle();
 
-      //   // Now tap on the play icon button of the unique comment of the fourth
-      //   // audio in order to start playing it
-      //   await IntegrationTestUtil.playComment(
-      //     tester: tester,
-      //     gestureDetectorsFinder: gestureDetectorsFinder,
-      //     itemIndex: 9,
-      //     typeOnPauseAfterPlay: false,
-      //     maxPlayDurationSeconds: 3,
-      //   );
+    //   // Now tap on the play icon button of the unique comment of the fourth
+    //   // audio in order to start playing it
+    //   await IntegrationTestUtil.playComment(
+    //     tester: tester,
+    //     gestureDetectorsFinder: gestureDetectorsFinder,
+    //     itemIndex: 9,
+    //     typeOnPauseAfterPlay: false,
+    //     maxPlayDurationSeconds: 3,
+    //   );
 
-      //   // Let the third comment be played during 1.5 seconds and then clixk
-      //   // on the play button of the fourth comment
-      //   await Future.delayed(const Duration(milliseconds: 1500));
-      //   await tester.pumpAndSettle();
+    //   // Let the third comment be played during 1.5 seconds and then clixk
+    //   // on the play button of the fourth comment
+    //   await Future.delayed(const Duration(milliseconds: 1500));
+    //   await tester.pumpAndSettle();
 
-      //   // Tap on Close text button
-      //   await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-      //   await tester.pumpAndSettle();
+    //   // Tap on Close text button
+    //   await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+    //   await tester.pumpAndSettle();
 
-      //   // Now, re-open the playlist comment dialog
-      //   playlistCommentListDialogFinder = await openPlaylistCommentDialog(
-      //     tester: tester,
-      //     playlistTitle: youtubePlaylistTitle,
-      //   );
+    //   // Now, re-open the playlist comment dialog
+    //   playlistCommentListDialogFinder = await openPlaylistCommentDialog(
+    //     tester: tester,
+    //     playlistTitle: youtubePlaylistTitle,
+    //   );
 
-      //   // Verify the color of the audio titles in the playlist comment dialog
+    //   // Verify the color of the audio titles in the playlist comment dialog
 
-      //   await verifyAudioTitlesColorInPlaylistCommentDialog(
-      //     tester: tester,
-      //     playlistCommentListDialogFinder: playlistCommentListDialogFinder,
-      //   );
+    //   await verifyAudioTitlesColorInPlaylistCommentDialog(
+    //     tester: tester,
+    //     playlistCommentListDialogFinder: playlistCommentListDialogFinder,
+    //   );
 
-      //   // Tap on Close text button
-      //   await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-      //   await tester.pumpAndSettle();
+    //   // Tap on Close text button
+    //   await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+    //   await tester.pumpAndSettle();
 
-      //   // Tap on the 'Toggle List' button to hide the playlist list
-      //   await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-      //   await tester.pumpAndSettle();
+    //   // Tap on the 'Toggle List' button to hide the playlist list
+    //   await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+    //   await tester.pumpAndSettle();
 
-      //   // When starting playing an other comment, the corresponding played
-      //   // comment audio modification was undone. Verifying that for second
-      //   // comment audio
-      //   await verifyUndoneListenedAudioPosition(
-      //     tester: tester,
-      //     playlistTitle: youtubePlaylistTitle,
-      //     playedCommentAudioTitle: secondPlayedCommentAudioTitle,
-      //     playableAudioLstAudioIndex: 1,
-      //     audioPositionStr: '1:17:54',
-      //     audioPositionSeconds: 4674,
-      //     audioRemainingDurationStr: '0:00',
-      //     isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
-      //     audioPausedDateTime: DateTime(2024, 9, 8, 14, 38, 43),
-      //   );
+    //   // When starting playing an other comment, the corresponding played
+    //   // comment audio modification was undone. Verifying that for second
+    //   // comment audio
+    //   await verifyUndoneListenedAudioPosition(
+    //     tester: tester,
+    //     playlistTitle: youtubePlaylistTitle,
+    //     playedCommentAudioTitle: secondPlayedCommentAudioTitle,
+    //     playableAudioLstAudioIndex: 1,
+    //     audioPositionStr: '1:17:54',
+    //     audioPositionSeconds: 4674,
+    //     audioRemainingDurationStr: '0:00',
+    //     isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+    //     audioPausedDateTime: DateTime(2024, 9, 8, 14, 38, 43),
+    //   );
 
-      //   // When starting playing an other comment, the corresponding played
-      //   // comment audio modification was undone. Verifying that for third
-      //   // comment audio
-      //   await verifyUndoneListenedAudioPosition(
-      //     tester: tester,
-      //     playlistTitle: youtubePlaylistTitle,
-      //     playedCommentAudioTitle: thirdPlayedCommentAudioTitle,
-      //     playableAudioLstAudioIndex: 3,
-      //     audioPositionStr: '5:11',
-      //     audioPositionSeconds: 311,
-      //     audioRemainingDurationStr: '1:18',
-      //     isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: true,
-      //     audioPausedDateTime: DateTime(2024, 9, 9, 19, 47, 23),
-      //   );
+    //   // When starting playing an other comment, the corresponding played
+    //   // comment audio modification was undone. Verifying that for third
+    //   // comment audio
+    //   await verifyUndoneListenedAudioPosition(
+    //     tester: tester,
+    //     playlistTitle: youtubePlaylistTitle,
+    //     playedCommentAudioTitle: thirdPlayedCommentAudioTitle,
+    //     playableAudioLstAudioIndex: 3,
+    //     audioPositionStr: '5:11',
+    //     audioPositionSeconds: 311,
+    //     audioRemainingDurationStr: '1:18',
+    //     isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: true,
+    //     audioPausedDateTime: DateTime(2024, 9, 9, 19, 47, 23),
+    //   );
 
-      //   // When starting playing an other comment, the corresponding played
-      //   // comment audio modification was undone. Verifying that for fourth
-      //   // comment audio
-      //   await verifyUndoneListenedAudioPosition(
-      //     tester: tester,
-      //     playlistTitle: youtubePlaylistTitle,
-      //     playedCommentAudioTitle: fourthPlayedCommentAudioTitle,
-      //     playableAudioLstAudioIndex: 2,
-      //     audioPositionStr: '0:00',
-      //     audioPositionSeconds: 0,
-      //     audioRemainingDurationStr: '7:38',
-      //     isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
-      //     audioPausedDateTime: null,
-      //   );
+    //   // When starting playing an other comment, the corresponding played
+    //   // comment audio modification was undone. Verifying that for fourth
+    //   // comment audio
+    //   await verifyUndoneListenedAudioPosition(
+    //     tester: tester,
+    //     playlistTitle: youtubePlaylistTitle,
+    //     playedCommentAudioTitle: fourthPlayedCommentAudioTitle,
+    //     playableAudioLstAudioIndex: 2,
+    //     audioPositionStr: '0:00',
+    //     audioPositionSeconds: 0,
+    //     audioRemainingDurationStr: '7:38',
+    //     isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+    //     audioPausedDateTime: null,
+    //   );
 
-      //   // Purge the test playlist directory so that the created test
-      //   // files are not uploaded to GitHub
-      //   DirUtil.deleteFilesInDirAndSubDirs(
-      //     rootPath: kPlaylistDownloadRootPathWindowsTest,
-      //   );
-      // });
+    //   // Purge the test playlist directory so that the created test
+    //   // files are not uploaded to GitHub
+    //   DirUtil.deleteFilesInDirAndSubDirs(
+    //     rootPath: kPlaylistDownloadRootPathWindowsTest,
+    //   );
+    // });
     // });
   });
 }
@@ -15027,7 +15037,9 @@ Future<void> checkAudioCommentInAudioPlayerView({
   // Tap on the ListTile to open the audio player view on the
   // passed audio finder
   await tester.tap(audioListTileWidgetFinder);
-  await tester.pumpAndSettle();
+  await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+    tester: tester,
+  );
 
   // Tap on the comment icon button to open the comment add list
   // dialog

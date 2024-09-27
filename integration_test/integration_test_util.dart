@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:audiolearn/models/audio.dart';
 import 'package:audiolearn/models/playlist.dart';
 import 'package:audiolearn/services/json_data_service.dart';
@@ -12,6 +14,7 @@ import 'package:audiolearn/constants.dart';
 import 'package:audiolearn/services/settings_data_service.dart';
 import 'package:audiolearn/utils/dir_util.dart';
 import 'package:audiolearn/main.dart' as app;
+import 'package:yaml/yaml.dart';
 
 class IntegrationTestUtil {
   static const Color fullyPlayedAudioTitleColor = kSliderThumbColorInDarkMode;
@@ -20,6 +23,55 @@ class IntegrationTestUtil {
       Colors.blue;
   static const Color unplayedAudioTitleTextColor = Colors.white;
   static const Color partiallyPlayedAudioTitleTextdColor = Colors.blue;
+  static String audioplayersVersion = '';
+
+  /// This method is necessary due to replacing audioplayers 5.2.1 by
+  /// audioplayers 6.1.0.
+  static Future<void> pumpAndSettleDueToAudioPlayers({
+    required WidgetTester tester,
+    int additionalMilliseconds = 0,
+  }) async {
+    if (audioplayersVersion == '') {
+      audioplayersVersion = await getAudioplayersVersion();
+    }
+
+    if (audioplayersVersion == '^6.1.0') {
+      await tester.pumpAndSettle(
+        Duration(
+          milliseconds: 1200 + additionalMilliseconds,
+        ),
+      );
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+    } else {
+      await tester.pumpAndSettle(
+        Duration(
+          milliseconds: 200 + additionalMilliseconds,
+        ),
+      );
+    }
+  }
+
+  static Future<String> getAudioplayersVersion() async {
+    // Path to the pubspec.yaml file
+    final file = File('pubspec.yaml');
+
+    // Check if the file exists
+    if (await file.exists()) {
+      // Read the content of pubspec.yaml
+      final content = await file.readAsString();
+
+      // Load YAML content
+      final yamlMap = loadYaml(content) as YamlMap;
+
+      // Access the dependencies section
+      final dependencies = yamlMap['dependencies'] as YamlMap;
+
+      // Get the audioplayers version
+      return dependencies['audioplayers'];
+    } else {
+      return '';
+    }
+  }
 
   static Finder validateInkWellButton({
     required WidgetTester tester,
@@ -828,15 +880,14 @@ class IntegrationTestUtil {
     );
 
     await tester.tap(playIconButtonFinder);
-    await tester.pumpAndSettle();
-    await Future.delayed(const Duration(milliseconds: 200));
+    await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-    await Future.delayed(Duration(milliseconds: maxPlayDurationSeconds * 1000 ~/ 1));
-    await tester.pumpAndSettle();
+    await Future.delayed(
+        Duration(milliseconds: maxPlayDurationSeconds * 1000 ~/ 1));
 
     if (typeOnPauseAfterPlay) {
       await tester.tap(playIconButtonFinder);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
     }
   }
 }
