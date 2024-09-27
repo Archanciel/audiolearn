@@ -1794,9 +1794,7 @@ void main() {
       final appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
-        tester: tester,
-      );
+      await tester.pumpAndSettle();
 
       // Now we tap on the PlaylistDownloadView icon button to go
       // back to the PlaylistDownloadView screen
@@ -3195,7 +3193,7 @@ void main() {
       // First, tap on the source audio ListTile to open the
       // audio player view
       await tester.tap(sourceAudioListTileWidgetFinder);
-      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
         tester: tester,
       );
 
@@ -3333,7 +3331,7 @@ void main() {
       // First, tap on the source audio ListTile to open the
       // audio player view
       await tester.tap(targetAudioListTileWidgetFinder);
-      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
         tester: tester,
       );
 
@@ -5011,7 +5009,9 @@ void main() {
       // First, tap on the copied audio ListTile to open the
       // audio player view
       await tester.tap(targetAudioListTileWidgetFinder);
-      await tester.pumpAndSettle(const Duration(milliseconds: 300));
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // Verify that the comment icon button is highlighted. This indiquates
       // that a comment exist for the audio
@@ -5680,7 +5680,9 @@ void main() {
       // First, tap on the source audio ListTile to open the
       // audio player view
       await tester.tap(targetAudioListTileWidgetFinder);
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // Verify that the comment icon button is highlighted. This indiquates
       // that a comment exist for the audio
@@ -7338,9 +7340,7 @@ void main() {
       Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
-        tester: tester,
-      );
+      await tester.pumpAndSettle();
 
       // Verify the no selected audio title is displayed
       expect(find.text("No audio selected"), findsOneWidget);
@@ -7496,7 +7496,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(localPlaylistListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      await tester.pumpAndSettle();
 
       // Now find the update playlist popup menu item and tap on it
       Finder popupUpdatePlayableAudioListPlaylistMenuItem =
@@ -7520,7 +7520,7 @@ void main() {
 
       // Close the warning dialog by tapping on the Ok button
       await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      await tester.pumpAndSettle();
 
       // Test that the local playlist is no longer showing the
       // deleted audio
@@ -7536,28 +7536,23 @@ void main() {
         expect(audioListTileTextWidgetFinder, findsNothing);
       }
 
-      // TODO: try uncommenting this code once Flutter or audioplayers is
-      // updated. This code fails for incomprehensible reason. Executing this
-      // test code manually happens with no problem. THIS IS CRAZY !!!
-      //
       // Now we tap on the AudioPlayerView icon button to open
       // AudioPlayerView screen
 
-      // Finder appScreenNavigationButton =
-      //     find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      // await tester.tap(appScreenNavigationButton);
-      // await tester.pumpAndSettle(
-      //     IntegrationTestUtil.dueToSlownessOmWindowsOfAudioplayers610Longer);
+      Finder appScreenNavigationButton =
+          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+      await tester.tap(appScreenNavigationButton);
+      await tester.pumpAndSettle();
 
-      // // Verify the no selected audio title is displayed
-      // expect(find.text("No audio selected"), findsOneWidget);
+      // Verify the no selected audio title is displayed
+      expect(find.text("No audio selected"), findsOneWidget);
 
-      // await IntegrationTestUtil.verifyTopButtonsState(
-      //   tester: tester,
-      //   isEnabled: false,
-      //   audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
-      //   setAudioSpeedTextButtonValue: '1.00x',
-      // );
+      await IntegrationTestUtil.verifyTopButtonsState(
+        tester: tester,
+        isEnabled: false,
+        audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
+        setAudioSpeedTextButtonValue: '1.00x',
+      );
 
       // Now execute again the playlist update of the Youtube playlist.
       // This update won't change anything in the playlist.
@@ -7577,14 +7572,14 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(localPlaylistListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      await tester.pumpAndSettle();
 
       // Now find the update playlist popup menu item and tap on it
       popupUpdatePlayableAudioListPlaylistMenuItem =
           find.byKey(const Key("popup_menu_update_playable_audio_list"));
 
       await tester.tap(popupUpdatePlayableAudioListPlaylistMenuItem);
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      await tester.pumpAndSettle();
 
       // Now verifying that no warning dialog is displayed since nothing
       // was updated in the playlist
@@ -7715,7 +7710,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(youtubePlaylistListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      await tester.pumpAndSettle();
 
       // Now find the update playlist popup menu item and tap on it
       final Finder popupUpdatePlayableAudioListPlaylistMenuItem =
@@ -7739,7 +7734,7 @@ void main() {
 
       // Close the warning dialog by tapping on the Ok button
       await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      await tester.pumpAndSettle();
 
       // Test that the youtube playlist is no longer showing the
       // deleted audio
@@ -7769,9 +7764,7 @@ void main() {
       Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
-        tester: tester,
-      );
+      await tester.pumpAndSettle();
 
       // Verify the displayed selected audio title
       expect(
@@ -7898,7 +7891,7 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(localPlaylistListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      await tester.pumpAndSettle();
 
       // Now find the update playlist popup menu item and tap on it
       final Finder popupUpdatePlayableAudioListPlaylistMenuItem =
@@ -7922,7 +7915,7 @@ void main() {
 
       // Close the warning dialog by tapping on the Ok button
       await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      await tester.pumpAndSettle();
 
       // Test that the local playlist is no longer showing the
       // deleted audio
@@ -7952,9 +7945,7 @@ void main() {
       Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
-        tester: tester,
-      );
+      await tester.pumpAndSettle();
 
       // Verify the displayed selected audio title
       expect(
@@ -8020,9 +8011,7 @@ void main() {
       Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
-        tester: tester,
-      );
+      await tester.pumpAndSettle();
 
       // Verify the displayed current audio title
       expect(
@@ -8072,9 +8061,7 @@ void main() {
       appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
-        tester: tester,
-      );
+      await tester.pumpAndSettle();
 
       // Verify the displayed current audio title
       expect(
@@ -8127,9 +8114,7 @@ void main() {
       appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
-        tester: tester,
-      );
+      await tester.pumpAndSettle();
 
       // Verify the no selected audio title is displayed
       expect(find.text("No audio selected"), findsOneWidget);
@@ -8202,9 +8187,7 @@ void main() {
       appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
-        tester: tester,
-      );
+      await tester.pumpAndSettle();
 
       // Verify the displayed current audio title
       expect(
@@ -8332,9 +8315,7 @@ void main() {
       Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
-        tester: tester,
-      );
+      await tester.pumpAndSettle();
 
       // Verify the displayed current audio title
       expect(
@@ -8463,9 +8444,7 @@ void main() {
       Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
-        tester: tester,
-      );
+      await tester.pumpAndSettle();
 
       // Verify the displayed current audio title
       expect(
@@ -8551,9 +8530,7 @@ void main() {
       Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
-        tester: tester,
-      );
+      await tester.pumpAndSettle();
 
       // Verify the no selected audio title is displayed
       expect(find.text("No audio selected"), findsOneWidget);
@@ -9496,9 +9473,7 @@ void main() {
       // selected and tap on it. This switches to the AudioPlayerView
       // and sets the playlist current or past playable audio index to 0
       await tester.tap(find.text(firstDownloadedAudioTitle));
-      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
-        tester: tester,
-      );
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // Verify the displayed audio title (La surpopulation mondiale par
       // Jancovici et Barrau)
@@ -9527,7 +9502,7 @@ void main() {
         destinationRootPath: playlistS8audioDir,
       );
 
-      // Then  execute
+      // Then return to playlist download view in order to execute
       // the playlist JSON files update
       Finder appScreenNavigationButton =
           find.byKey(const ValueKey('playlistDownloadViewIconButton'));
@@ -9549,7 +9524,7 @@ void main() {
       appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
         tester: tester,
       );
 
@@ -9705,9 +9680,7 @@ void main() {
       final appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
-        tester: tester,
-      );
+      await tester.pumpAndSettle();
 
       // Now verifying that 'No audio selected' is displayed in the
       // AudioPlayerView screen
@@ -9867,9 +9840,7 @@ void main() {
       final appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
-        tester: tester,
-      );
+      await tester.pumpAndSettle();
 
       // Now verifying that 'No audio selected' is displayed in the
       // AudioPlayerView screen
@@ -12600,9 +12571,7 @@ void main() {
       final Finder alreadyCommentedAudioFinder =
           find.text(alreadyCommentedAudioTitle);
       await tester.tap(alreadyCommentedAudioFinder);
-      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
-        tester: tester,
-      );
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // Tap on the comment icon button to open the comment add list
       // dialog
@@ -14315,11 +14284,14 @@ void main() {
           typeOnPauseAfterPlay: false,
         );
 
+        // Let the comment be played during 1.5 seconds and then clixk on the
+        // playlist comment dialog close button
         await Future.delayed(const Duration(milliseconds: 1500));
+        await tester.pumpAndSettle();
 
         // Tap on Close text button
         await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+        await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
         playlistCommentListDialogFinder = await openPlaylistCommentDialog(
@@ -15065,7 +15037,7 @@ Future<void> checkAudioCommentInAudioPlayerView({
   // Tap on the ListTile to open the audio player view on the
   // passed audio finder
   await tester.tap(audioListTileWidgetFinder);
-  await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
+  await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
     tester: tester,
   );
 
@@ -15123,7 +15095,7 @@ Future<void> checkAudioCommentUsingAudioItemMenu({
       find.byKey(const Key("popup_menu_audio_comment"));
 
   await tester.tap(popupCopyMenuItem);
-  await tester.pumpAndSettle(const Duration(milliseconds: 1000));
+  await tester.pumpAndSettle();
 
   // Verify that the comment list is displayed
   expect(find.byType(CommentListAddDialog), findsOneWidget);

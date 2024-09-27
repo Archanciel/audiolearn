@@ -9,12 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path/path.dart' as path;
-import 'package:yaml/yaml.dart';
 
 import 'package:audiolearn/constants.dart';
 import 'package:audiolearn/services/settings_data_service.dart';
 import 'package:audiolearn/utils/dir_util.dart';
 import 'package:audiolearn/main.dart' as app;
+import 'package:yaml/yaml.dart';
 
 class IntegrationTestUtil {
   static const Color fullyPlayedAudioTitleColor = kSliderThumbColorInDarkMode;
@@ -27,19 +27,27 @@ class IntegrationTestUtil {
 
   /// This method is necessary due to replacing audioplayers 5.2.1 by
   /// audioplayers 6.1.0.
-  static Future<void> pumpAndSettleDueToAudioPlayers610({
+  static Future<void> pumpAndSettleDueToAudioPlayers({
     required WidgetTester tester,
+    int additionalMilliseconds = 0,
   }) async {
     if (audioplayersVersion == '') {
       audioplayersVersion = await getAudioplayersVersion();
     }
 
     if (audioplayersVersion == '^6.1.0') {
-      await tester.pumpAndSettle(const Duration(milliseconds: 1200));
+      await tester.pumpAndSettle(
+        Duration(
+          milliseconds: 1200 + additionalMilliseconds,
+        ),
+      );
       await tester.pumpAndSettle(const Duration(milliseconds: 200));
     } else {
-      await tester.pumpAndSettle(const Duration(milliseconds: 1200));
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      await tester.pumpAndSettle(
+        Duration(
+          milliseconds: 200 + additionalMilliseconds,
+        ),
+      );
     }
   }
 

@@ -33,7 +33,7 @@ enum AudioPositionModification {
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  audioPlayerViewSortFilterIntegrationTest();
+  audioPlayerViewSortFilterIntregrationTest();
 
   group('''Play/pause/start/end tests, clicking on audio title to open
          AudioPlayerView.''', () {
@@ -352,7 +352,7 @@ void main() {
 
       await tester
           .tap(playlistDownloadViewLastDownloadedAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      await tester.pumpAndSettle(const Duration(milliseconds: 400));
 
       // Tapping 5 times on the forward 1 minute icon button. Now, the last
       // downloaded audio of the playlist is partially listened.
@@ -1141,7 +1141,7 @@ void main() {
       // checking the audio state displayed in audio information
       // dialog as well as audio right icon before playing
       // the audio
-      await goBackToPlaylistdownloadViewToCheckAudioStateAndIcon(
+      await goBackToPlaylistDownloadViewToCheckAudioStateAndIcon(
         tester: tester,
         audioTitle: lastDownloadedAudioTitle,
         audioStateExpectedValue: "Non écouté",
@@ -1160,7 +1160,9 @@ void main() {
           find.text(lastDownloadedAudioTitle);
 
       await tester.tap(lastDownloadedAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       await tester.tap(find.byIcon(Icons.play_arrow));
       await tester.pumpAndSettle();
@@ -1170,7 +1172,7 @@ void main() {
 
       // checking the audio state displayed in audio information
       // dialog as well as audio right icon while audio is playing
-      await goBackToPlaylistdownloadViewToCheckAudioStateAndIcon(
+      await goBackToPlaylistDownloadViewToCheckAudioStateAndIcon(
         tester: tester,
         audioTitle: lastDownloadedAudioTitle,
         audioStateExpectedValue: "En lecture",
@@ -1191,7 +1193,7 @@ void main() {
 
       // checking the audio state displayed in audio information
       // dialog as well as audio right icon while audio is playing
-      await goBackToPlaylistdownloadViewToCheckAudioStateAndIcon(
+      await goBackToPlaylistDownloadViewToCheckAudioStateAndIcon(
         tester: tester,
         audioTitle: lastDownloadedAudioTitle,
         audioStateExpectedValue: "En pause",
@@ -1236,7 +1238,9 @@ void main() {
           find.text(lastDownloadedAudioTitle);
 
       await tester.tap(lastDownloadedAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       await tester.tap(find.byIcon(Icons.play_arrow));
       await tester.pumpAndSettle();
@@ -1246,7 +1250,7 @@ void main() {
 
       // checking the audio state displayed in audio information
       // dialog as well as audio right icon while audio is playing
-      await goBackToPlaylistdownloadViewToCheckAudioStateAndIcon(
+      await goBackToPlaylistDownloadViewToCheckAudioStateAndIcon(
         tester: tester,
         audioTitle: lastDownloadedAudioTitle,
         audioStateExpectedValue: "En lecture",
@@ -1268,7 +1272,7 @@ void main() {
       // checking the audio state displayed in audio information
       // dialog as well as audio right icon when audio was played
       // to the end
-      await goBackToPlaylistdownloadViewToCheckAudioStateAndIcon(
+      await goBackToPlaylistDownloadViewToCheckAudioStateAndIcon(
         tester: tester,
         audioTitle: lastDownloadedAudioTitle,
         audioStateExpectedValue: "Terminé",
@@ -1305,7 +1309,9 @@ void main() {
       Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // Test play button
       Finder playButton = find.byIcon(Icons.play_arrow);
@@ -3024,7 +3030,7 @@ void main() {
           find.text(toSelectAudioTitle);
 
       await tester.tap(toSelectAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // check the current audio's position
       expect(find.text('10:00'), findsOneWidget);
@@ -3080,7 +3086,9 @@ void main() {
       // of playlists which may hide the audio title we want to
       // tap on
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // First, get the ListTile Text widget finder of the audio
       // to be selected and tap on it
@@ -3151,7 +3159,9 @@ void main() {
           find.text(toSelectAudioTitle);
 
       await tester.tap(toSelectAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // check the current audio's position
       expect(find.text('10:00'), findsOneWidget);
@@ -3215,7 +3225,9 @@ void main() {
           find.text(toSelectAudioTitle);
 
       await tester.tap(toSelectAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // check the current audio's position
       expect(find.text('10:00'), findsOneWidget);
@@ -3281,7 +3293,9 @@ void main() {
           find.text(toSelectAudioTitle);
 
       await tester.tap(toSelectAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // check the current audio's play position
       expect(find.text('10:00'), findsOneWidget);
@@ -3426,7 +3440,9 @@ void main() {
           find.text(toSelectAudioTitle);
 
       await tester.tap(toSelectAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // check the current audio's play position
       expect(find.text('10:00'), findsOneWidget);
@@ -3718,7 +3734,10 @@ void main() {
       // Tap on the InkWell to play the audio. Since the audio is fully
       // played, the audio remains at end.
       await tester.tap(secondDownloadedAudioListTileInkWellFinder);
-      await tester.pumpAndSettle(const Duration(milliseconds: 2000));
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+        additionalMilliseconds: 1500,
+      );
 
       // Tap on << 10 seconds button to go back to 10 sec before the
       // audio end
@@ -3962,7 +3981,9 @@ void main() {
       Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // Verify the no selected audio title is displayed
       expect(find.text("No audio selected"), findsOneWidget);
@@ -4087,7 +4108,9 @@ void main() {
       Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // Now, in the audio player view, select the S8 audio playlist using
       // the audio player view playlist selection button. Then start playing
@@ -4285,7 +4308,9 @@ void main() {
       Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // Verify the no selected audio title is displayed
       expect(find.text("No audio selected"), findsOneWidget);
@@ -4565,7 +4590,9 @@ void main() {
         final Finder alreadyCommentedAudioFinder =
             find.text(alreadyCommentedAudioTitle);
         await tester.tap(alreadyCommentedAudioFinder);
-        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+        await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+          tester: tester,
+        );
 
         // Tap on the comment icon button to open the comment add list
         // dialog
@@ -4768,7 +4795,9 @@ void main() {
       Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // Verify that the comment icon button is disabled since no
       // audio is available to be played or commented
@@ -5579,7 +5608,9 @@ void main() {
       final Finder alreadyCommentedAudioFinder =
           find.text(alreadyCommentedAudioTitle);
       await tester.tap(alreadyCommentedAudioFinder);
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // Verify the current audio position in the audio player view.
 
@@ -6508,7 +6539,9 @@ void main() {
       final Finder alreadyCommentedAudioFinder =
           find.text(alreadyCommentedAudioTitle);
       await tester.tap(alreadyCommentedAudioFinder);
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // Tap on the comment icon button to open the comment add list
       // dialog
@@ -7560,7 +7593,7 @@ Future<void> copyAudioFromSourceToTargetPlaylist({
   await tester.pumpAndSettle();
 }
 
-Future<void> goBackToPlaylistdownloadViewToCheckAudioStateAndIcon({
+Future<void> goBackToPlaylistDownloadViewToCheckAudioStateAndIcon({
   required WidgetTester tester,
   required String audioTitle,
   required String audioStateExpectedValue,
