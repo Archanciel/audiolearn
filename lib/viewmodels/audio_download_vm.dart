@@ -80,8 +80,7 @@ class AudioDownloadVM extends ChangeNotifier {
   /// directory is located in the test directory of the project.
   ///
   /// Otherwise, the windows or smartphone audio root directory
-  /// is used and the value of the kUniquePlaylistTitle constant
-  /// is used to load the playlist json file.
+  /// is used.
   AudioDownloadVM({
     required this.warningMessageVM,
     required this.settingsDataService,
