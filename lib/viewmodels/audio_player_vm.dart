@@ -453,6 +453,14 @@ class AudioPlayerVM extends ChangeNotifier {
       // playNextAudio().
       await _playNextAudio();
     });
+
+    // Code below does not improve anything in the integration
+    // test problems related to aidioplayers 6.1.0.
+    // _playerStateChangeSubscription =
+    //     _audioPlayer!.onPlayerStateChanged.listen((state) {
+    //   notifyListeners();
+    //
+    //});
   }
 
   /// Method passed to the audio player onPositionChanged listener.
