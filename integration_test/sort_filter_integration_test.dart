@@ -21,11 +21,11 @@ import 'integration_test_util.dart';
 /// So, if you excute those two integration tests, you do not need to execute
 /// this integration test !
 void main() {
-  playlistDownloadViewSortFilterIntregrationTest();
-  audioPlayerViewSortFilterIntregrationTest();
+  playlistDownloadViewSortFilterIntegrationTest();
+  audioPlayerViewSortFilterIntegrationTest();
 }
 
-void audioPlayerViewSortFilterIntregrationTest() {
+void audioPlayerViewSortFilterIntegrationTest() {
   group('Sort/filter audio player view tests', () {
     testWidgets(
         '''Playing last sorted audio with filter: "Fully listened" unchecked
@@ -642,7 +642,7 @@ void audioPlayerViewSortFilterIntregrationTest() {
   });
 }
 
-void playlistDownloadViewSortFilterIntregrationTest() {
+void playlistDownloadViewSortFilterIntegrationTest() {
   group('Sort/filter playlist download view tests', () {
     group('Audio sort filter dialog tests ', () {
       testWidgets(
@@ -5826,7 +5826,6 @@ void playlistDownloadViewSortFilterIntregrationTest() {
 
           // Now verify the playlist download view state with the 'Title asc'
           // sort/filter parms applied
-
 
           // Verify that the dropdown button has been updated with the
           // 'Title asc' sort/filter parms selected

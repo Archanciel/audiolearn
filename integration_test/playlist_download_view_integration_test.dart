@@ -57,7 +57,7 @@ void main() {
   // If this issue persists, please report it on the project's GitHub page.
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  playlistDownloadViewSortFilterIntregrationTest();
+  playlistDownloadViewSortFilterIntegrationTest();
 
   group('Playlist Download View test', () {
     testWidgets('Youtube playlist audio quality addition and then delete it ',

@@ -33,7 +33,7 @@ enum AudioPositionModification {
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  audioPlayerViewSortFilterIntregrationTest();
+  audioPlayerViewSortFilterIntegrationTest();
 
   group('''Play/pause/start/end tests, clicking on audio title to open
          AudioPlayerView.''', () {
