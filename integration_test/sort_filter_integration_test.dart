@@ -618,7 +618,7 @@ void audioPlayerViewSortFilterIntegrationTest() {
         audioPlayingOrder: AudioPlayingOrder.ascending,
       );
 
-      // Now we tap twice on the |< button in order select the previous
+      // Now we tap once on the |< button in order select the previous
       // audio according to the 'Title app' with audio play ascending order
 
       await tester

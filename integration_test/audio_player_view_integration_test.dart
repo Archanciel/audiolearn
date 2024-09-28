@@ -60,7 +60,9 @@ void main() {
           find.text(lastDownloadedAudioTitle);
 
       await tester.tap(lastDownloadedAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       await tester.tap(find.byIcon(Icons.play_arrow));
       await tester.pumpAndSettle();
@@ -110,7 +112,9 @@ void main() {
           find.text(lastDownloadedAudioTitle);
 
       await tester.tap(lastDownloadedAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // Now verify if the displayed audio position and remaining
       // duration are correct
@@ -268,7 +272,9 @@ void main() {
           find.text(previousEndDownloadedAudioTitle);
 
       await tester.tap(previousEndDownloadedAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // Now we tap on the play button in order to finish
       // playing the audio downloaded before the last downloaded
@@ -352,7 +358,9 @@ void main() {
 
       await tester
           .tap(playlistDownloadViewLastDownloadedAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle(const Duration(milliseconds: 400));
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // Tapping 5 times on the forward 1 minute icon button. Now, the last
       // downloaded audio of the playlist is partially listened.
@@ -455,7 +463,9 @@ void main() {
           find.text(firstDownloadedAudioTitle);
 
       await tester.tap(firstDownloadedAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // Now we tap on the play button in order to finish
       // playing the first downloaded audio and start playing
@@ -531,7 +541,9 @@ void main() {
 
       await tester
           .tap(playlistDownloadViewLastDownloadedAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // Tapping 5 times on the forward 1 minute icon button. Now, the last
       // downloaded audio of the playlist is partially listened.
@@ -662,7 +674,9 @@ void main() {
       // Now tap on the InkWell to play the audio and draw to the audio
       // player screen
       await tester.tap(previouslyDownloadedAudioListTileInkWellFinder);
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // Without delaying, the playing audio and dragging to the
       // AudioPlayerView screen will not be successful !
@@ -7181,7 +7195,9 @@ Future<void> applyRewindTesting({
       find.text(audioToListenTitle);
 
   await tester.tap(audioToListenTitleTextWidgetFinder);
-  await tester.pumpAndSettle(const Duration(milliseconds: 200));
+  await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+    tester: tester,
+  );
 
   Finder audioPlayerViewAudioPositionFinder =
       find.byKey(const Key('audioPlayerViewAudioPosition'));
