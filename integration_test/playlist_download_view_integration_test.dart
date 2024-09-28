@@ -9473,7 +9473,9 @@ void main() {
       // selected and tap on it. This switches to the AudioPlayerView
       // and sets the playlist current or past playable audio index to 0
       await tester.tap(find.text(firstDownloadedAudioTitle));
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // Verify the displayed audio title (La surpopulation mondiale par
       // Jancovici et Barrau)
@@ -12571,7 +12573,9 @@ void main() {
       final Finder alreadyCommentedAudioFinder =
           find.text(alreadyCommentedAudioTitle);
       await tester.tap(alreadyCommentedAudioFinder);
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // Tap on the comment icon button to open the comment add list
       // dialog
@@ -15091,10 +15095,10 @@ Future<void> checkAudioCommentUsingAudioItemMenu({
   await tester.pumpAndSettle();
 
   // Now find the audio comments popup menu item and tap on it
-  final Finder popupCopyMenuItem =
+  final Finder popupCommentMenuItem =
       find.byKey(const Key("popup_menu_audio_comment"));
 
-  await tester.tap(popupCopyMenuItem);
+  await tester.tap(popupCommentMenuItem);
   await tester.pumpAndSettle();
 
   // Verify that the comment list is displayed
