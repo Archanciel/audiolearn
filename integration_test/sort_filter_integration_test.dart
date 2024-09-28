@@ -269,7 +269,9 @@ void audioPlayerViewSortFilterIntegrationTest() {
       Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // Now we open the AudioPlayableListDialog
       // and verify the the displayed audio titles
@@ -567,7 +569,9 @@ void audioPlayerViewSortFilterIntegrationTest() {
       final Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // Now we tap twice on the |< button in order select the previous
       // audio according to the 'Title app' with descending audio playing order
@@ -4965,7 +4969,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
     group('''Verifying playlist selection change applies correctly their named
              sort/filter parms.''', () {
       testWidgets(
-          '''Change the SF parms in in the dropdown button list to 'Title asc'
+          '''Change the SF parms in the dropdown button list to 'Title asc'
              and then verify its application. Then go to the audio player view
              and there select another playlist. Then go back to the playlist
              download view, select the previously selected playlist and verify
