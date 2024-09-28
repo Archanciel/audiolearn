@@ -21,7 +21,7 @@ import 'integration_test_util.dart';
 /// So, if you excute those two integration tests, you do not need to execute
 /// this integration test !
 void main() {
-  playlistDownloadViewSortFilterIntregrationTest();
+  playlistDownloadViewSortFilterIntegrationTest();
   audioPlayerViewSortFilterIntegrationTest();
 }
 
@@ -269,9 +269,7 @@ void audioPlayerViewSortFilterIntegrationTest() {
       Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
-        tester: tester,
-      );
+      await tester.pumpAndSettle();
 
       // Now we open the AudioPlayableListDialog
       // and verify the the displayed audio titles
@@ -395,23 +393,18 @@ void audioPlayerViewSortFilterIntegrationTest() {
       // the next audio according to the 'Title app' sort/filter parms
 
       await tester.tap(find.byKey(const Key('audioPlayerViewSkipToEndButton')));
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      await tester.pumpAndSettle();
 
       await tester.tap(find.byKey(const Key('audioPlayerViewSkipToEndButton')));
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      await tester.pumpAndSettle();
 
-      // Playing not infinite, but pause button not displayed
-      // await tester.pumpAndSettle(const Duration(milliseconds: 200));
-
-      // Does not solve anything, what ever Duration length is !!!!
-      await Future.delayed(const Duration(milliseconds: 1500));
-
-      // Waiting two second so that the next audio starts playing
-      // await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      // Waiting one second so that the next audio starts playing
+      await Future.delayed(const Duration(seconds: 2));
+      await tester.pumpAndSettle();
 
       // Tap on pause button to pause the audio
       await tester.tap(find.byIcon(Icons.pause));
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      await tester.pumpAndSettle();
 
       // Verify the next audio title
       Finder nextAudioTextFinder =
@@ -574,9 +567,7 @@ void audioPlayerViewSortFilterIntegrationTest() {
       final Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
-        tester: tester,
-      );
+      await tester.pumpAndSettle();
 
       // Now we tap twice on the |< button in order select the previous
       // audio according to the 'Title app' with descending audio playing order
@@ -651,7 +642,7 @@ void audioPlayerViewSortFilterIntegrationTest() {
   });
 }
 
-void playlistDownloadViewSortFilterIntregrationTest() {
+void playlistDownloadViewSortFilterIntegrationTest() {
   group('Sort/filter playlist download view tests', () {
     group('Audio sort filter dialog tests ', () {
       testWidgets(
@@ -1080,9 +1071,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
         Finder appScreenNavigationButton =
             find.byKey(const ValueKey('audioPlayerViewIconButton'));
         await tester.tap(appScreenNavigationButton);
-        await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
-          tester: tester,
-        );
+        await tester.pumpAndSettle();
 
         // Then return to playlist download view in order to verify that
         // its state with the 'Title asc' sort/filter parms is still
@@ -1388,9 +1377,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
         Finder appScreenNavigationButton =
             find.byKey(const ValueKey('audioPlayerViewIconButton'));
         await tester.tap(appScreenNavigationButton);
-        await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
-          tester: tester,
-        );
+        await tester.pumpAndSettle();
 
         // Then return to playlist download view in order to verify that
         // its state with the 'Title asc' sort/filter parms is still
@@ -1761,9 +1748,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
         Finder appScreenNavigationButton =
             find.byKey(const ValueKey('audioPlayerViewIconButton'));
         await tester.tap(appScreenNavigationButton);
-        await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
-          tester: tester,
-        );
+        await tester.pumpAndSettle();
 
         // Then return to playlist download view in order to verify that
         // its state with the 'Title asc' sort/filter parms is still
@@ -2664,9 +2649,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           Finder appScreenNavigationButton =
               find.byKey(const ValueKey('audioPlayerViewIconButton'));
           await tester.tap(appScreenNavigationButton);
-          await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
-            tester: tester,
-          );
+          await tester.pumpAndSettle();
 
           // Now we open the AudioPlayableListDialog
           // and verify the the displayed audio titles
@@ -3094,9 +3077,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           Finder appScreenNavigationButton =
               find.byKey(const ValueKey('audioPlayerViewIconButton'));
           await tester.tap(appScreenNavigationButton);
-          await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
-            tester: tester,
-          );
+          await tester.pumpAndSettle();
 
           // Then return to playlist download view in order to verify that
           // its state with the 'applied' sort/filter parms is still
@@ -3398,9 +3379,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           Finder appScreenNavigationButton =
               find.byKey(const ValueKey('audioPlayerViewIconButton'));
           await tester.tap(appScreenNavigationButton);
-          await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
-            tester: tester,
-          );
+          await tester.pumpAndSettle();
 
           // Then return to playlist download view in order to verify that
           // its state with the 'Title asc' sort/filter parms is still
@@ -4214,9 +4193,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           Finder appScreenNavigationButton =
               find.byKey(const ValueKey('audioPlayerViewIconButton'));
           await tester.tap(appScreenNavigationButton);
-          await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
-            tester: tester,
-          );
+          await tester.pumpAndSettle();
 
           // Then return to playlist download view in order to verify that
           // its state with the 'applied' sort/filter parms is still
@@ -4640,9 +4617,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           Finder appScreenNavigationButton =
               find.byKey(const ValueKey('audioPlayerViewIconButton'));
           await tester.tap(appScreenNavigationButton);
-          await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
-            tester: tester,
-          );
+          await tester.pumpAndSettle();
 
           // Then return to playlist download view in order to verify that
           // its state with the 'applied' sort/filter parms is still
@@ -4778,7 +4753,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           await tester.pumpAndSettle();
 
           // Then return to playlist download view in order to verify that
-          // its state with the 'appliqué' sort/filter parms is still
+          // its state with the 'défaut' sort/filter parms is still
           // applied and correctly sorts the current playable audio.
           appScreenNavigationButton =
               find.byKey(const ValueKey('playlistDownloadViewIconButton'));
@@ -4950,9 +4925,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
           Finder appScreenNavigationButton =
               find.byKey(const ValueKey('audioPlayerViewIconButton'));
           await tester.tap(appScreenNavigationButton);
-          await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
-            tester: tester,
-          );
+          await tester.pumpAndSettle();
 
           // Then return to playlist download view in order to verify that
           // its state with the 'Title asc' sort/filter parms is still
@@ -5063,9 +5036,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
         Finder appScreenNavigationButton =
             find.byKey(const ValueKey('audioPlayerViewIconButton'));
         await tester.tap(appScreenNavigationButton);
-        await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
-          tester: tester,
-        );
+        await tester.pumpAndSettle();
 
         // Now, in the audio player view, select the 'Local' audio playlist using
         // the audio player view playlist selection button.
@@ -5101,11 +5072,11 @@ void playlistDownloadViewSortFilterIntregrationTest() {
         appScreenNavigationButton =
             find.byKey(const ValueKey('playlistDownloadViewIconButton'));
         await tester.tap(appScreenNavigationButton);
-        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+        await tester.pumpAndSettle();
 
         // Click on playlist toggle button to display the playlist list
         await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester.pumpAndSettle(const Duration(milliseconds: 400));
+        await tester.pumpAndSettle();
 
         await IntegrationTestUtil.selectPlaylist(
           tester: tester,
@@ -5115,7 +5086,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
         // Click again on playlist toggle button to hide the playlist list
         // and display the sort filter dropdown button
         await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester.pumpAndSettle(const Duration(milliseconds: 400));
+        await tester.pumpAndSettle();
 
         // Verify that the dropdown button has been updated with the
         // 'Title asc' sort/filter parms selected
@@ -6234,7 +6205,7 @@ void playlistDownloadViewSortFilterIntregrationTest() {
                 audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
           );
 
-          // Return to the plg6050aylist download view
+          // Return to the playlist download view
           Finder appScreenNavigationButton =
               find.byKey(const ValueKey('playlistDownloadViewIconButton'));
           await tester.tap(appScreenNavigationButton);
@@ -7209,9 +7180,7 @@ Future<void> verifyAudioPlayableList({
   Finder appScreenNavigationButton =
       find.byKey(const ValueKey('audioPlayerViewIconButton'));
   await tester.tap(appScreenNavigationButton);
-  await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers610(
-    tester: tester,
-  );
+  await tester.pumpAndSettle();
 
   // Now we open the AudioPlayableListDialog
   // and verify the the displayed audio titles
