@@ -67,7 +67,7 @@ class Audio {
   String audioFileName;
 
   // Duration of downloaded audio
-  final Duration? audioDuration;
+  Duration audioDuration;
 
   // Audio file size in bytes
   int audioFileSize = 0;
@@ -130,7 +130,7 @@ class Audio {
     required this.audioDownloadDateTime,
     this.audioDownloadDuration,
     required this.videoUploadDate,
-    this.audioDuration,
+    required this.audioDuration,
     required this.audioPlaySpeed,
   })  : validVideoTitle = createValidVideoTitle(originalVideoTitle),
         audioFileName =
@@ -224,7 +224,7 @@ class Audio {
           ? double.infinity
           : json['audioDownloadSpeed'],
       videoUploadDate: DateTime.parse(json['videoUploadDate']),
-      audioDuration: Duration(milliseconds: json['audioDurationMs'] ?? 0),
+      audioDuration: Duration(milliseconds: json['audioDurationMs']),
       isAudioMusicQuality: json['isAudioMusicQuality'] ?? false,
       audioPlaySpeed: json['audioPlaySpeed'] ?? kAudioDefaultPlaySpeed,
       audioPlayVolume: json['audioPlayVolume'] ?? kAudioDefaultPlayVolume,
@@ -259,7 +259,7 @@ class Audio {
           (audioDownloadSpeed.isFinite) ? audioDownloadSpeed : -1.0,
       'videoUploadDate':
           videoUploadDate.toIso8601String(), // can be null in json file
-      'audioDurationMs': audioDuration?.inMilliseconds,
+      'audioDurationMs': audioDuration.inMilliseconds,
       'isAudioMusicQuality': isAudioMusicQuality,
       'audioPlaySpeed': audioPlaySpeed,
       'audioPlayVolume': audioPlayVolume,
@@ -298,7 +298,7 @@ class Audio {
     return (audioDuration == null)
         ? false
         : (audioPositionSeconds >=
-            audioDuration!.inSeconds - fullyListenedBufferSeconds);
+            audioDuration.inSeconds - fullyListenedBufferSeconds);
   }
 
   bool isPartiallyListened() {
@@ -383,6 +383,6 @@ class Audio {
   }
 
   int getAudioRemainingMilliseconds() {
-    return audioDuration!.inMilliseconds - audioPositionSeconds * 1000;
+    return audioDuration.inMilliseconds - audioPositionSeconds * 1000;
   }
 }
