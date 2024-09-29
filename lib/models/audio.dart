@@ -298,7 +298,7 @@ class Audio {
     return (audioDuration == null)
         ? false
         : (audioPositionSeconds >=
-            audioDuration!.inSeconds - fullyListenedBufferSeconds);
+            audioDuration.inSeconds - fullyListenedBufferSeconds);
   }
 
   bool isPartiallyListened() {
@@ -383,6 +383,6 @@ class Audio {
   }
 
   int getAudioRemainingMilliseconds() {
-    return audioDuration!.inMilliseconds - audioPositionSeconds * 1000;
+    return audioDuration.inMilliseconds - audioPositionSeconds * 1000;
   }
 }
