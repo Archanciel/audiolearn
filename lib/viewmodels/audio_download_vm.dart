@@ -449,10 +449,13 @@ class AudioDownloadVM extends ChangeNotifier {
         await _getPlaylistDownloadedAudioOriginalVideoTitleLst(
             currentPlaylist: currentPlaylist);
 
+    // AudioPlayer is used to get the audio duration of the
+    // downloaded audio files
+    final AudioPlayer audioPlayer = AudioPlayer();
+
     await for (yt.Video youtubeVideo
         in _youtubeExplode!.playlists.getVideos(playlistId)) {
       _audioDownloadError = false;
-      final Duration? audioDuration = youtubeVideo.duration;
 
       DateTime? videoUploadDate =
           (await _youtubeExplode!.videos.get(youtubeVideo.id.value)).uploadDate;
@@ -513,7 +516,8 @@ class AudioDownloadVM extends ChangeNotifier {
         videoUrl: youtubeVideo.url,
         audioDownloadDateTime: DateTime.now(),
         videoUploadDate: videoUploadDate,
-        audioDuration: audioDuration!,
+        audioDuration: Duration.zero, // will be set by AudioPlayer after
+        //                               the download audio file is created
         audioPlaySpeed: _determineNewAudioPlaySpeed(currentPlaylist),
       );
 
@@ -533,6 +537,10 @@ class AudioDownloadVM extends ChangeNotifier {
       stopwatch.stop();
 
       audio.downloadDuration = stopwatch.elapsed;
+      audio.audioDuration = await getMp3DurationWithAudioPlayer(
+        audioPlayer: audioPlayer,
+        filePathName: audio.filePathName,
+      );
 
       currentPlaylist.addDownloadedAudio(audio);
 
@@ -860,7 +868,6 @@ class AudioDownloadVM extends ChangeNotifier {
       return ErrorType.downloadAudioYoutubeError;
     }
 
-    final Duration? audioDuration = youtubeVideo.duration;
     DateTime? videoUploadDate = youtubeVideo.uploadDate;
 
     videoUploadDate ??= DateTime(00, 1, 1);
@@ -878,7 +885,8 @@ class AudioDownloadVM extends ChangeNotifier {
       videoUrl: youtubeVideo.url,
       audioDownloadDateTime: DateTime.now(),
       videoUploadDate: videoUploadDate,
-      audioDuration: audioDuration!,
+      audioDuration: Duration.zero, // will be set by AudioPlayer after
+      //                               the download audio file is created
       audioPlaySpeed: _determineNewAudioPlaySpeed(singleVideoTargetPlaylist),
     );
 
@@ -949,6 +957,11 @@ class AudioDownloadVM extends ChangeNotifier {
     _youtubeExplode!.close();
     _youtubeExplode = null;
 
+    audio.audioDuration = await getMp3DurationWithAudioPlayer(
+      audioPlayer: AudioPlayer(),
+      filePathName: audio.filePathName,
+    );
+    
     singleVideoTargetPlaylist.addDownloadedAudio(audio);
 
     // fixed bug which caused the playlist including the single
@@ -1232,6 +1245,10 @@ class AudioDownloadVM extends ChangeNotifier {
           importedToPlaylistType: targetPlaylist.playlistType);
     }
 
+    // AudioPlayer is used to get the audio duration of the
+    // imported audio files
+    final AudioPlayer audioPlayer = AudioPlayer();
+
     for (String filePathName in filePathNameToImportLst) {
       String fileName = filePathName.split(path.separator).last;
       File sourceFile = File(filePathName);
@@ -1246,6 +1263,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
       Audio importedAudio = await _createImportedAudio(
         targetPlaylist: targetPlaylist,
+        audioPlayer: audioPlayer,
         targetFilePathName: targetFilePathName,
         importedFileName: fileName,
       );
@@ -1265,10 +1283,12 @@ class AudioDownloadVM extends ChangeNotifier {
 
   Future<Audio> _createImportedAudio({
     required Playlist targetPlaylist,
+    required AudioPlayer audioPlayer,
     required String targetFilePathName,
     required String importedFileName,
   }) async {
     Duration? importedAudioDuration = await getMp3DurationWithAudioPlayer(
+      audioPlayer: audioPlayer,
       filePathName: targetFilePathName,
     );
 
@@ -1301,17 +1321,13 @@ class AudioDownloadVM extends ChangeNotifier {
     return importedAudio;
   }
 
-  /// This method is called by the PlaylistListVM when the user selects
-  /// the "Import audio files to playlist" playlist menu item.
-  /// This method is called by the PlaylistListVM when the user selects
-  /// the "Import audio files to playlist" playlist menu item.
   /// This method is not private since it is redifined in the
   /// MockAudioDownloadVM so that the importAudioFilesInPlaylist()
   /// method can be tested by the unit test.
-  Future<Duration?> getMp3DurationWithAudioPlayer({
+  Future<Duration> getMp3DurationWithAudioPlayer({
+    required AudioPlayer audioPlayer,
     required String filePathName,
   }) async {
-    AudioPlayer audioPlayer = AudioPlayer();
     Duration? duration;
 
     // Load audio file into audio player
@@ -1322,7 +1338,7 @@ class AudioDownloadVM extends ChangeNotifier {
     // Dispose of audio player
     await audioPlayer.dispose();
 
-    return duration;
+    return duration ?? Duration.zero;
   }
 
   /// Physically deletes the audio file from the audio playlist
