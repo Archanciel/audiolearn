@@ -81,8 +81,8 @@ class AudioPlayerVM extends ChangeNotifier {
   final PlaylistListVM _playlistListVM;
   final CommentVM _commentVM;
   AudioPlayer? _audioPlayer;
-  Duration _currentAudioTotalDuration = const Duration();
-  Duration _currentAudioPosition = const Duration();
+  Duration _currentAudioTotalDuration = Duration.zero;
+  Duration _currentAudioPosition = Duration.zero;
 
   Duration get currentAudioPosition => _currentAudioPosition;
   Duration get currentAudioTotalDuration => _currentAudioTotalDuration;
@@ -243,7 +243,7 @@ class AudioPlayerVM extends ChangeNotifier {
     // the next instruction causes an error: Failed assertion: line 194
     // pos 15: 'value >= min && value <= max': Value 3.0 is not between
     // minimum 0.0 and maximum 0.0
-    _currentAudioTotalDuration = audio.audioDuration ?? const Duration();
+    _currentAudioTotalDuration = audio.audioDuration ?? Duration.zero;
 
     // setting the audio position to the audio position stored on the
     // audio. The advantage is that when the AudioPlayerView is opened
@@ -530,8 +530,8 @@ class AudioPlayerVM extends ChangeNotifier {
       // is correctly displayed at position 0:00 and that the
       // displayed audio duration is 0:00.
       _currentAudio = null;
-      _currentAudioPosition = const Duration();
-      _currentAudioTotalDuration = const Duration();
+      _currentAudioPosition = Duration.zero;
+      _currentAudioTotalDuration = Duration.zero;
 
       _clearUndoRedoLists();
       initializeAudioPlayer();
@@ -568,7 +568,7 @@ class AudioPlayerVM extends ChangeNotifier {
 
   Future<void> _clearCurrentAudio() async {
     _currentAudio = null;
-    _currentAudioTotalDuration = const Duration();
+    _currentAudioTotalDuration = Duration.zero;
     _currentAudioPosition = const Duration(seconds: 0);
 
     try {
