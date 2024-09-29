@@ -6555,6 +6555,7 @@ void main() {
       await tester.tap(alreadyCommentedAudioFinder);
       await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
         tester: tester,
+        additionalMilliseconds: 1000,
       );
 
       // Tap on the comment icon button to open the comment add list
@@ -7044,7 +7045,7 @@ Future<void> simulateEnteringTooBigAndTooSmallAudioPosition({
   required bool doSetStartOrEndCheckbox,
 }) async {
   // Now enter a new time position which is bigger than the audio
-  // total duration (1:17:54)
+  // total duration (1:17:53.7)
 
   // Modify the position in the dialog with tenth of seconds
   String positionTextToEnterWithTenthOfSeconds = '2:15:45.9';
@@ -7083,21 +7084,21 @@ Future<void> simulateEnteringTooBigAndTooSmallAudioPosition({
   // Check the value of the warning dialog message
   expect(
       tester.widget<Text>(find.byKey(const Key('warningDialogMessage'))).data,
-      "The entered value exceeds the maximal value (1:17:54.0). Please correct it and retry ...");
+      "The entered value exceeds the maximal value (1:17:53.7). Please correct it and retry ...");
 
   // Close the warning dialog by tapping on the Ok button
   await tester.tap(find.byKey(const Key('warningDialogOkButton')));
   await tester.pumpAndSettle();
 
   // Check that the too big invalid value in the set value to target
-  // dialog was replaced by the maximum possible value, i.i. the
-  // audio total duration (1:17:54)
+  // dialog was replaced by the maximum possible value, i.e. the
+  // audio total duration (1:17:53.7)
   expect(
     tester
         .widget<TextField>(setValueToTargetDialogEditTextFinder)
         .controller!
         .text,
-    '1:17:54.0',
+    '1:17:53.7',
   );
 
   // Now, do the same simulation, but with entering a negative
@@ -7145,9 +7146,9 @@ Future<void> simulateEnteringTooBigAndTooSmallAudioPosition({
   await tester.tap(find.byKey(const Key('warningDialogOkButton')));
   await tester.pumpAndSettle();
 
-  // Check that the too big invalid value in the set value to target
-  // dialog was replaced by the maximum possible value, i.i. the
-  // audio total duration (1:17:54)
+  // Check that the too small invalid value in the set value to target
+  // dialog was replaced by the minimum possible value, i.e. the
+  // audio start position (0:00.0)
   expect(
     tester
         .widget<TextField>(setValueToTargetDialogEditTextFinder)
