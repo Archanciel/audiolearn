@@ -1317,9 +1317,7 @@ class AudioDownloadVM extends ChangeNotifier {
     // Load audio file into audio player
     await audioPlayer.setSource(DeviceFileSource(filePathName));
     // Get duration
-    await audioPlayer.getDuration().then((value) {
-      duration = value;
-    });
+    duration = await audioPlayer.getDuration();
 
     // Dispose of audio player
     await audioPlayer.dispose();
