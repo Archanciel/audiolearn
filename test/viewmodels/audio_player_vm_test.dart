@@ -1087,7 +1087,7 @@ void main() {
       currentAudioNewPosition = audioPlayerVM.currentAudioPosition;
 
       expect(currentAudioNewPosition.inSeconds,
-          audioPlayerVM.currentAudio!.audioDuration!.inSeconds);
+          audioPlayerVM.currentAudio!.audioDuration.inSeconds);
 
       // undo the change
       audioPlayerVM.undo();
@@ -1146,7 +1146,7 @@ void main() {
       currentAudioNewPosition = audioPlayerVM.currentAudioPosition;
 
       expect(currentAudioNewPosition.inSeconds,
-          audioPlayerVM.currentAudio!.audioDuration!.inSeconds);
+          audioPlayerVM.currentAudio!.audioDuration.inSeconds);
 
       // undo the change
       audioPlayerVM.undo();
@@ -1342,7 +1342,7 @@ void main() {
       Duration currentAudioChangedPosition = audioPlayerVM.currentAudioPosition;
 
       expect(currentAudioChangedPosition.inSeconds,
-          audioPlayerVM.currentAudio!.audioDuration!.inSeconds);
+          audioPlayerVM.currentAudio!.audioDuration.inSeconds);
 
       // undo the change
       audioPlayerVM.undo();
@@ -1362,7 +1362,7 @@ void main() {
           audioPlayerVM.currentAudioPosition;
 
       expect(currentAudioPositionAfterRedo.inSeconds,
-          audioPlayerVM.currentAudio!.audioDuration!.inSeconds);
+          audioPlayerVM.currentAudio!.audioDuration.inSeconds);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -1504,7 +1504,7 @@ void main() {
       Duration currentAudioChangedPosition = audioPlayerVM.currentAudioPosition;
 
       expect(currentAudioChangedPosition.inSeconds,
-          audioPlayerVM.currentAudio!.audioDuration!.inSeconds);
+          audioPlayerVM.currentAudio!.audioDuration.inSeconds);
 
       // undo the change
       audioPlayerVM.undo();
@@ -1524,7 +1524,7 @@ void main() {
           audioPlayerVM.currentAudioPosition;
 
       expect(currentAudioPositionAfterRedo.inSeconds,
-          audioPlayerVM.currentAudio!.audioDuration!.inSeconds);
+          audioPlayerVM.currentAudio!.audioDuration.inSeconds);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub

@@ -481,7 +481,8 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets('''Download single video in audio (speak) quality to a target local
+    testWidgets(
+        '''Download single video in audio (speak) quality to a target local
                    playlist containing no audio''',
         (WidgetTester tester) async {
       late AudioDownloadVM audioDownloadVM;
@@ -1433,7 +1434,8 @@ class _DownloadPlaylistPageState extends State<DownloadPlaylistPage> {
                   singleVideoTargetPlaylist: audioDownloadVM.listOfPlaylist[0],
                 );
               },
-              child: const Text('Download Single Video Audio In Spoken Audio Quality'),
+              child: const Text(
+                  'Download Single Video Audio In Spoken Audio Quality'),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
@@ -1527,8 +1529,7 @@ void compareDeserializedWithOriginalAudio({
       deserializedAudio.audioDownloadSpeed, originalAudio.audioDownloadSpeed);
   expect(deserializedAudio.videoUploadDate.toIso8601String(),
       originalAudio.videoUploadDate.toIso8601String());
-  expect(deserializedAudio.audioDuration,
-      originalAudio.audioDuration ?? const Duration(milliseconds: 0));
+  expect(deserializedAudio.audioDuration, originalAudio.audioDuration);
   expect(
       deserializedAudio.isAudioMusicQuality, originalAudio.isAudioMusicQuality);
   expect(deserializedAudio.audioPlaySpeed, originalAudio.audioPlaySpeed);

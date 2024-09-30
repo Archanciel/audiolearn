@@ -167,7 +167,9 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
       createInfoRowFunction(
           context: context,
           label: AppLocalizations.of(context)!.audioDurationLabel,
-          value: audio.audioDuration!.HHmmss()),
+          value: audio.audioDuration.HHmmss(
+            addRemainingOneDigitTenthOfSecond: true,
+          )),
       createInfoRowFunction(
           context: context,
           label: AppLocalizations.of(context)!.audioPositionLabel,
@@ -282,7 +284,7 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
       createInfoRowFunction(
           context: context,
           label: AppLocalizations.of(context)!.audioDurationLabel,
-          value: audio.audioDuration!.HHmmss()),
+          value: audio.audioDuration.HHmmss()),
       createInfoRowFunction(
           context: context,
           label: AppLocalizations.of(context)!.audioPositionLabel,

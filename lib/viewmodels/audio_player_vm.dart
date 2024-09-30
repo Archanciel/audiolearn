@@ -243,7 +243,7 @@ class AudioPlayerVM extends ChangeNotifier {
     // the next instruction causes an error: Failed assertion: line 194
     // pos 15: 'value >= min && value <= max': Value 3.0 is not between
     // minimum 0.0 and maximum 0.0
-    _currentAudioTotalDuration = audio.audioDuration ?? Duration.zero;
+    _currentAudioTotalDuration = audio.audioDuration;
 
     // setting the audio position to the audio position stored on the
     // audio. The advantage is that when the AudioPlayerView is opened
@@ -330,7 +330,7 @@ class AudioPlayerVM extends ChangeNotifier {
       // Ensure the new position is not negative
       _currentAudioPosition = Duration(
           seconds: newPositionSeconds.clamp(
-              0, _currentAudio!.audioDuration!.inSeconds));
+              0, _currentAudio!.audioDuration.inSeconds));
     }
 
     /// Must be called even if rewiding was not necessary. For example,
@@ -657,8 +657,7 @@ class AudioPlayerVM extends ChangeNotifier {
     // on >| or clicking on << after having clicked on |<.
 
     // Total duration of audio
-    Duration currentAudioDuration =
-        _currentAudio!.audioDuration ?? Duration.zero;
+    Duration currentAudioDuration = _currentAudio!.audioDuration;
 
     if (newAudioPosition < Duration.zero) {
       newAudioPosition = Duration.zero;
@@ -709,7 +708,7 @@ class AudioPlayerVM extends ChangeNotifier {
   }) {
     if (newAudioPosition > Duration.zero &&
         newAudioPosition <
-            (_currentAudio!.audioDuration! -
+            (_currentAudio!.audioDuration -
                 Duration(seconds: Audio.fullyListenedBufferSeconds))) {
       _currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd =
           true;
@@ -974,7 +973,7 @@ class AudioPlayerVM extends ChangeNotifier {
     // next audio is not playxed. When reopening the smartphone after
     // a long time, the audio is not positioned at the end of the audio.
     _currentAudio!.audioPositionSeconds =
-        _currentAudio!.audioDuration!.inSeconds;
+        _currentAudio!.audioDuration.inSeconds;
 
     // set to false since the audio playing position is set to
     // audio end
@@ -1063,7 +1062,7 @@ class AudioPlayerVM extends ChangeNotifier {
       return null;
     }
 
-    return '${_currentAudio!.validVideoTitle}\n${_currentAudio!.audioDuration!.HHmmssZeroHH()}';
+    return '${_currentAudio!.validVideoTitle}\n${_currentAudio!.audioDuration.HHmmssZeroHH()}';
   }
 
   int getCurrentAudioIndex() {
