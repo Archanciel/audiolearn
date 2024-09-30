@@ -148,6 +148,7 @@ void main() {
           videoUrl: 'https://example.com/video1',
           audioDownloadDateTime: DateTime(2023, 3, 17, 12, 34, 6),
           videoUploadDate: DateTime(2023, 4, 12),
+          audioDuration: Duration.zero,
           audioPlaySpeed: 1.25);
 
       playlist.addDownloadedAudio(audio);
