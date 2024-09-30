@@ -1253,7 +1253,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
     // AudioPlayer is used to get the audio duration of the
     // imported audio files
-    final AudioPlayer audioPlayer = AudioPlayer();
+    final AudioPlayer? audioPlayer = instanciateAudioPlayer();
 
     for (String filePathName in filePathNameToImportLst) {
       String fileName = filePathName.split(path.separator).last;
@@ -1281,7 +1281,9 @@ class AudioDownloadVM extends ChangeNotifier {
       notifyListeners();
     }
 
-    audioPlayer.dispose();
+    if (audioPlayer != null) {
+      audioPlayer.dispose();
+    }
 
     JsonDataService.saveToFile(
       model: targetPlaylist,
@@ -1289,9 +1291,17 @@ class AudioDownloadVM extends ChangeNotifier {
     );
   }
 
+  /// This method is redifined in the MockAudioDownloadVM in a version which
+  /// returns null. This enable the unit test audio_download_vm_test.dart
+  /// to be executed without the need of the AudioPlayer package which is 
+  /// usable only in integration tests, mot in a unit tests.
+  AudioPlayer? instanciateAudioPlayer() {
+    return AudioPlayer();
+  }
+
   Future<Audio> _createImportedAudio({
     required Playlist targetPlaylist,
-    required AudioPlayer audioPlayer,
+    required AudioPlayer? audioPlayer,
     required String targetFilePathName,
     required String importedFileName,
   }) async {
@@ -1333,13 +1343,14 @@ class AudioDownloadVM extends ChangeNotifier {
   /// MockAudioDownloadVM so that the importAudioFilesInPlaylist()
   /// method can be tested by the unit test.
   Future<Duration> getMp3DurationWithAudioPlayer({
-    required AudioPlayer audioPlayer,
+    required AudioPlayer? audioPlayer,
     required String filePathName,
   }) async {
     Duration? duration;
 
     // Load audio file into audio player
-    await audioPlayer.setSource(DeviceFileSource(filePathName));
+    await audioPlayer!.setSource(DeviceFileSource(filePathName));
+
     // Get duration
     duration = await audioPlayer.getDuration();
 
