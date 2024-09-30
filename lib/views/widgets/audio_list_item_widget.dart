@@ -499,7 +499,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
               '${AppLocalizations.of(context)!.listenedOn} ${frenchDateFormat.format(lastListenedDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(lastListenedDateTime)}';
         }
 
-        return '${audioDuration.HHmmss()}. $lastSubtitlePart.';
+        return '${audioDuration.HHmmss(addRemainingOneDigitTenthOfSecond: true)}. $lastSubtitlePart.';
       case SortingOption.audioRemainingDuration:
         final DateTime? lastListenedDateTime = audio.audioPausedDateTime;
         final String lastSubtitlePart;
@@ -516,7 +516,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
               '${AppLocalizations.of(context)!.remaining} $audioRemainingHHMMSSDuration. ${AppLocalizations.of(context)!.listenedOn} ${frenchDateFormat.format(lastListenedDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(lastListenedDateTime)}';
         }
 
-        return '${audioDuration.HHmmss()}. $lastSubtitlePart.';
+        return '${audioDuration.HHmmss(addRemainingOneDigitTenthOfSecond: true)}. $lastSubtitlePart.';
       default:
         final int audioFileSize = audio.audioFileSize;
         final String audioFileSizeStr;
@@ -549,7 +549,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
               '$audioFileSizeStr ${AppLocalizations.of(context)!.atPreposition} $audioDownloadSpeedStr ${AppLocalizations.of(context)!.on} ${frenchDateFormat.format(audioDownloadDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(audioDownloadDateTime)}';
         }
 
-        return '${audioDuration.HHmmss()}. $lastSubtitlePart.';
+        return '${audioDuration.HHmmss(addRemainingOneDigitTenthOfSecond: true)}. $lastSubtitlePart.';
     }
   }
 

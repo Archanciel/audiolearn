@@ -556,6 +556,8 @@ class AudioDownloadVM extends ChangeNotifier {
       notifyListeners();
     }
 
+    audioPlayer.dispose();
+
     _isDownloading = false;
     _youtubeExplode!.close();
     _youtubeExplode = null;
@@ -957,11 +959,15 @@ class AudioDownloadVM extends ChangeNotifier {
     _youtubeExplode!.close();
     _youtubeExplode = null;
 
+    AudioPlayer audioPlayer = AudioPlayer();
+
     audio.audioDuration = await getMp3DurationWithAudioPlayer(
-      audioPlayer: AudioPlayer(),
+      audioPlayer: audioPlayer,
       filePathName: audio.filePathName,
     );
-    
+
+    audioPlayer.dispose();
+
     singleVideoTargetPlaylist.addDownloadedAudio(audio);
 
     // fixed bug which caused the playlist including the single
@@ -1275,6 +1281,8 @@ class AudioDownloadVM extends ChangeNotifier {
       notifyListeners();
     }
 
+    audioPlayer.dispose();
+
     JsonDataService.saveToFile(
       model: targetPlaylist,
       path: targetPlaylist.getPlaylistDownloadFilePathName(),
@@ -1334,9 +1342,6 @@ class AudioDownloadVM extends ChangeNotifier {
     await audioPlayer.setSource(DeviceFileSource(filePathName));
     // Get duration
     duration = await audioPlayer.getDuration();
-
-    // Dispose of audio player
-    await audioPlayer.dispose();
 
     return duration ?? Duration.zero;
   }
