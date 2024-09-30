@@ -98,7 +98,7 @@ class MockAudioDownloadVM extends AudioDownloadVM {
   /// tested.
   @override
   Future<Duration> getMp3DurationWithAudioPlayer({
-    required AudioPlayer audioPlayer,
+    required AudioPlayer? audioPlayer,
     required String filePathName,
   }) async {
     final File file = File(filePathName);
@@ -111,5 +111,10 @@ class MockAudioDownloadVM extends AudioDownloadVM {
     final int fileDurationSeconds = (fileSizeBytes * 8) ~/ (128 * 1000);
 
     return Duration(seconds: fileDurationSeconds);
+  }
+
+  @override
+  AudioPlayer? instanciateAudioPlayer() {
+    return null;
   }
 }

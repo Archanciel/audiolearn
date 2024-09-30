@@ -4963,6 +4963,7 @@ void main() {
         movedToPlaylistTitle: '',
         copiedFromPlaylistTitle: '',
         copiedToPlaylistTitle: localAudioTargetOnePlaylistTitle,
+        audioDuration: '0:00:24.0',
       );
 
       // Find the target ListTile Playlist containing the audio moved
@@ -5001,6 +5002,7 @@ void main() {
         movedToPlaylistTitle: '',
         copiedFromPlaylistTitle: youtubeAudioSourcePlaylistTitle,
         copiedToPlaylistTitle: '',
+        audioDuration: '0:00:24.0',
       );
 
       // Now verifying that the target audio can access to its copied
@@ -5096,6 +5098,7 @@ void main() {
         movedToPlaylistTitle: '',
         copiedFromPlaylistTitle: youtubeAudioSourcePlaylistTitle,
         copiedToPlaylistTitle: localAudioTargetTwoPlaylistTitle,
+        audioDuration: '0:00:24.0',
       );
 
       // Now verifying the copied audio info dialog related content
@@ -5134,6 +5137,7 @@ void main() {
         movedToPlaylistTitle: '',
         copiedFromPlaylistTitle: localAudioTargetOnePlaylistTitle,
         copiedToPlaylistTitle: '',
+        audioDuration: '0:00:24.0',
       );
 
       // Purge the test playlist directory so that the created test
@@ -5672,6 +5676,7 @@ void main() {
         movedToPlaylistTitle: '',
         copiedFromPlaylistTitle: '',
         copiedToPlaylistTitle: '',
+        audioDuration: '0:00:24.0',
       );
 
       // Now verifying that the target audio can access to its copied
@@ -5813,6 +5818,7 @@ void main() {
         movedToPlaylistTitle: youtubeAudioSourcePlaylistTitle,
         copiedFromPlaylistTitle: '',
         copiedToPlaylistTitle: '',
+        audioDuration: '0:00:24.0',
       );
 
       // *** Then move again the moved audio from the Youtube playlist
@@ -5910,6 +5916,7 @@ void main() {
         movedToPlaylistTitle: localAudioTargetPlaylistTitle,
         copiedFromPlaylistTitle: '',
         copiedToPlaylistTitle: '',
+        audioDuration: '0:00:24.0',
       );
 
       // Purge the test playlist directory so that the created test
@@ -14919,6 +14926,7 @@ Future<Finder> verifyAudioInfoDialog({
   required String movedToPlaylistTitle,
   required String copiedFromPlaylistTitle,
   required String copiedToPlaylistTitle,
+  required String audioDuration,
 }) async {
   // Now we want to tap the popup menu of the Audio ListTile
   // "audio learn test short video one" in order to display
@@ -15001,10 +15009,18 @@ Future<Finder> verifyAudioInfoDialog({
 
   expect(copiedToPlaylistTitleTextWidget.data, copiedToPlaylistTitle);
 
+  // Verify the 'Audio duration' of the moved audio
+
+  final Text audioDurationTextWidget =
+      tester.widget<Text>(find.byKey(const Key('audioDurationKey')));
+
+  expect(audioDurationTextWidget.data, audioDuration);
+
   // Now find the ok button of the audio info dialog
   // and tap on it to close the dialog
   await tester.tap(find.byKey(const Key('audioInfoOkButtonKey')));
   await tester.pumpAndSettle();
+
   return targetAudioListTileWidgetFinder;
 }
 

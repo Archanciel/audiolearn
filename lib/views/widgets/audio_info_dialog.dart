@@ -165,6 +165,7 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
             audio: audio,
           )),
       createInfoRowFunction(
+          valueTextWidgetKey: const Key('audioDurationKey'),
           context: context,
           label: AppLocalizations.of(context)!.audioDurationLabel,
           value: audio.audioDuration.HHmmss(
