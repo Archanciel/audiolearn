@@ -489,6 +489,7 @@ void addThreeDownloadedAudios(Playlist playlist) {
       videoUrl: 'https://example.com/video1',
       audioDownloadDateTime: DateTime(2023, 3, 20),
       videoUploadDate: DateTime(2022, 3, 20),
+      audioDuration: Duration.zero,
       audioPlaySpeed: 1.5));
   playlist.addDownloadedAudio(Audio(
       enclosingPlaylist: playlist,
@@ -497,6 +498,7 @@ void addThreeDownloadedAudios(Playlist playlist) {
       videoUrl: 'https://example.com/video2',
       audioDownloadDateTime: DateTime(2023, 3, 25),
       videoUploadDate: DateTime(2022, 3, 25),
+      audioDuration: Duration.zero,
       audioPlaySpeed: 1.5));
   playlist.addDownloadedAudio(Audio(
       enclosingPlaylist: playlist,
@@ -505,6 +507,7 @@ void addThreeDownloadedAudios(Playlist playlist) {
       videoUrl: 'https://example.com/video3',
       audioDownloadDateTime: DateTime(2023, 3, 18),
       videoUploadDate: DateTime(2022, 3, 18),
+      audioDuration: Duration.zero,
       audioPlaySpeed: 1.5));
 }
 
@@ -516,6 +519,7 @@ void addOneDownloadedAudio(Playlist playlist) {
       videoUrl: 'https://example.com/video1',
       audioDownloadDateTime: DateTime(2023, 3, 20),
       videoUploadDate: DateTime.now(),
+      audioDuration: Duration.zero,
       audioPlaySpeed: 1.5));
 }
 
@@ -527,6 +531,7 @@ void addOneOtherDownloadedAudio(Playlist playlist) {
       videoUrl: 'https://example.com/video1',
       audioDownloadDateTime: DateTime(2023, 3, 20),
       videoUploadDate: DateTime.now(),
+      audioDuration: Duration.zero,
       audioPlaySpeed: 1.5));
 }
 
@@ -538,6 +543,7 @@ void copyOneDownloadedAudio(Playlist playlist) {
       videoUrl: 'https://example.com/video1',
       audioDownloadDateTime: DateTime(2023, 3, 20),
       videoUploadDate: DateTime.now(),
+      audioDuration: Duration.zero,
       audioPlaySpeed: 1.5);
   audio.audioDownloadSpeed = 1000;
   playlist.addCopiedAudioToDownloadAndPlayableLst(
@@ -552,6 +558,7 @@ void copyOneOtherDownloadedAudio(Playlist playlist) {
       videoUrl: 'https://example.com/video1',
       audioDownloadDateTime: DateTime(2023, 3, 20),
       videoUploadDate: DateTime.now(),
+      audioDuration: Duration.zero,
       audioPlaySpeed: 1.5);
   audio.audioDownloadSpeed = 1000;
   playlist.addCopiedAudioToDownloadAndPlayableLst(
@@ -566,6 +573,7 @@ void moveOneDownloadedAudio(Playlist playlist) {
       videoUrl: 'https://example.com/video1',
       audioDownloadDateTime: DateTime(2023, 3, 20),
       videoUploadDate: DateTime.now(),
+      audioDuration: Duration.zero,
       audioPlaySpeed: 1.5);
   audio.audioDownloadSpeed = 1000;
   playlist.addMovedAudioToDownloadAndPlayableLst(
@@ -580,6 +588,7 @@ void moveOneOtherDownloadedAudio(Playlist playlist) {
       videoUrl: 'https://example.com/video1',
       audioDownloadDateTime: DateTime(2023, 3, 20),
       videoUploadDate: DateTime.now(),
+      audioDuration: Duration.zero,
       audioPlaySpeed: 1.5);
   audio.audioDownloadSpeed = 1000;
   playlist.addMovedAudioToDownloadAndPlayableLst(

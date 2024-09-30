@@ -295,7 +295,7 @@ class Audio {
   /// Returns true if the audio position is greater or equal to
   /// the audio duration minus 15 seconds.
   bool wasFullyListened() {
-    return (audioDuration == null)
+    return (audioDuration == Duration.zero)
         ? false
         : (audioPositionSeconds >=
             audioDuration.inSeconds - fullyListenedBufferSeconds);

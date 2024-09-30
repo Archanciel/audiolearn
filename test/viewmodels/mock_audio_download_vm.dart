@@ -4,6 +4,7 @@ import 'package:audiolearn/models/audio.dart';
 import 'package:audiolearn/models/playlist.dart';
 import 'package:audiolearn/viewmodels/audio_download_vm.dart';
 import 'package:audiolearn/viewmodels/warning_message_vm.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 /// The MockAudioDownloadVM inherits from AudioDownloadVM.
 /// It exists because when executing integration tests, using
@@ -96,7 +97,8 @@ class MockAudioDownloadVM extends AudioDownloadVM {
   /// AudioDownloadVM.importAudioFilesInPlaylist() method can be unit
   /// tested.
   @override
-  Future<Duration?> getMp3DurationWithAudioPlayer({
+  Future<Duration> getMp3DurationWithAudioPlayer({
+    required AudioPlayer audioPlayer,
     required String filePathName,
   }) async {
     final File file = File(filePathName);
