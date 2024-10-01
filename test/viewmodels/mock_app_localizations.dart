@@ -104,10 +104,6 @@ class MockAppLocalizations extends AppLocalizations {
   }
 
   @override
-  String get singleVideoAudioDownload =>
-      'Downloading single video audio in Various dir';
-
-  @override
   String get about => 'About ...';
 
   @override
