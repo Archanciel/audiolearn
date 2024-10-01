@@ -267,7 +267,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                         textButtonTapModification, // Tap feedback color
                   ),
                   onPressed: () {
-                    playlistListVM.toggleList();
+                    playlistListVM.togglePlaylistsList();
                   },
                   child: Text(
                     'Playlists',
