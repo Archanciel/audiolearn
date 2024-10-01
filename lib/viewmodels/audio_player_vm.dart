@@ -968,6 +968,8 @@ class AudioPlayerVM extends ChangeNotifier {
     // attribute is set to true
     _currentAudio!.isPaused = true;
 
+    _currentAudio!.audioPausedDateTime = DateTime.now();
+
     // This should fix the problem when the application plays an audio
     // till its end and due to a problem of the audioplayer plugin, the
     // next audio is not playxed. When reopening the smartphone after
