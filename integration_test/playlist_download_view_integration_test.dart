@@ -5357,6 +5357,7 @@ void main() {
         find.byKey(const Key('playlistLocalTitleConfirmDialogTextField')),
         newLocalAudioTargetPlaylistTitle,
       );
+      await tester.pumpAndSettle();
 
       // Confirm the addition by tapping the confirmation button in
       // the AlertDialog
@@ -5366,10 +5367,6 @@ void main() {
 
       // Close the warning dialog by tapping on the Ok button
       await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
-
-      // Tap the 'Toggle List' button to display the playlist list
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
       // Now we want to tap the popup menu of the Audio ListTile
@@ -6258,6 +6255,7 @@ void main() {
         find.byKey(const Key('playlistLocalTitleConfirmDialogTextField')),
         newLocalAudioTargetPlaylistTitle,
       );
+      await tester.pumpAndSettle();
 
       // Confirm the addition by tapping the confirmation button in
       // the AlertDialog
@@ -6267,10 +6265,6 @@ void main() {
 
       // Close the warning dialog by tapping on the Ok button
       await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
-
-      // Tap the 'Toggle List' button to display the playlist list
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
       // Now we want to tap the popup menu of the Audio ListTile
@@ -7965,7 +7959,9 @@ void main() {
       Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // Verify the displayed selected audio title
       expect(
@@ -8031,7 +8027,9 @@ void main() {
       Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // Verify the displayed current audio title
       expect(
@@ -13650,7 +13648,7 @@ void main() {
       // Verify the absence of Original video title label
       expect(find.text('Original video title'), findsNothing);
 
-      // Tap the Ok button to close the audio info dialog
+      // Tap the Close button to close the audio info dialog
       await tester.tap(find.byKey(const Key('audioInfoOkButtonKey')));
       await tester.pumpAndSettle();
 
