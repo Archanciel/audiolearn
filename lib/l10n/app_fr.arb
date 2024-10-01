@@ -241,7 +241,7 @@
   "movedFromPlaylistLabel": "Déplacé de la playlist",
   "movedToPlaylistLabel": "Déplacé vers la playlist",
   "downloadSingleVideoButtonTooltip": "Télécharger l'audio de la vidéo.",
-  "addPlaylistButtonTooltip": "Ajouter une playlist Youtube ou locale.",
+  "addPlaylistButtonTooltip": "Ajouter une playlist Youtube ou locale.\n\nPour ajouter une playlist Youtube, entrez son URL dans le champ \"Lien Playlist Youtube\" et cliquez sur le bouton Ajout. IMPORTANT: pour qu'une playlist Youtube puisse être téléchargée par l'application, sa confidentialité ne doit pas être \"Privée\", mais \"Non répertoriée\" ou \"Publique\".\n\nPour définir une playlist locale, cliquez sur le bouton Ajout alors que le champ \"Lien Playlist Youtube\" est vide.",
   "stopDownloadingButtonTooltip": "Stopper le téléchargement ...",
   "playlistToggleButtonInPlaylistDownloadViewTooltip": "Afficher/masquer les playlists.",
   "downloadSelPlaylistsButtonTooltip": "Télécharger les audio de la playlist sélectionnée.",

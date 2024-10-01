@@ -241,7 +241,7 @@
   "movedFromPlaylistLabel": "Moved from playlist",
   "movedToPlaylistLabel": "Moved to playlist",
   "downloadSingleVideoButtonTooltip": "Download single video audio.",
-  "addPlaylistButtonTooltip": "Add a YouTube or local playlist.",
+  "addPlaylistButtonTooltip": "Add a YouTube or local playlist.\n\nTo add a YouTube playlist, enter its URL in the \"YouTube Playlist Link\" field and click the Add button. IMPORTANT: for a YouTube playlist to be downloaded by the app, its privacy setting must not be \"Private\" but \"Unlisted\" or \"Public\".\n\nTo set up a local playlist, click the Add button while the \"YouTube Playlist Link\" field is empty.",
   "stopDownloadingButtonTooltip": "Stop downloading ...",
   "playlistToggleButtonInPlaylistDownloadViewTooltip": "Show/hide playlists.",
   "downloadSelPlaylistsButtonTooltip": "Download audio of the selected playlist.",
