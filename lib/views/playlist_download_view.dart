@@ -332,7 +332,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 overlayColor: textButtonTapModification, // Tap feedback color
               ),
               onPressed: () {
-                playlistListVMlistenFalse.toggleList();
+                playlistListVMlistenFalse.togglePlaylistsList();
 
                 // Storing in the settings file the state of the playlist list
                 widget.settingsDataService.set(

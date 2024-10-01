@@ -349,7 +349,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             value: playlist.isSelected,
             onChanged: (value) async {
               if (toggleListIfSelected) {
-                playlistListVM.toggleList();
+                playlistListVM.togglePlaylistsList();
               }
               playlistListVM.setPlaylistSelection(
                 playlistIndex: index,

@@ -338,6 +338,12 @@ class PlaylistListVM extends ChangeNotifier {
       _listOfSelectablePlaylists.add(addedPlaylist);
       _updateAndSavePlaylistOrder();
 
+      // This method ensures that the list of playlists is
+      // displayed
+      if (!_isListExpanded) {
+        togglePlaylistsList();
+      }
+
       notifyListeners();
 
       return true;
@@ -350,7 +356,10 @@ class PlaylistListVM extends ChangeNotifier {
     }
   }
 
-  void toggleList() {
+  /// Method called when the user clicks on the "Playlists" button of the
+  /// PlaylistDownloadView screen. This method display or hide the list
+  /// of playlists.
+  void togglePlaylistsList() {
     _isListExpanded = !_isListExpanded;
 
     if (!_isListExpanded) {
