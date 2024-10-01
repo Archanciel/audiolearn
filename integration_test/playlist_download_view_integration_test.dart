@@ -59,7 +59,7 @@ void main() {
 
   playlistDownloadViewSortFilterIntegrationTest();
 
-  group('Playlist Download View test', () {
+  group('Add or delete Youtube or local Playlist tests', () {
     testWidgets('Youtube playlist audio quality addition and then delete it ',
         (tester) async {
       // Purge the test playlist directory if it exists so that the
@@ -1747,227 +1747,6 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-
-    /// The objective of this integration test is to ensure that
-    /// the url text field will not be emptied after adding a
-    /// local playlist, in contrary of what happens after adding
-    /// a Youtube playlist.
-    testWidgets(
-        '''Entered a Youtube playlist URL. Then switch to AudioPlayerView
-           and then back to PlaylistView''', (tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
-      );
-
-      await app.main(['test']);
-      await tester.pumpAndSettle();
-
-      // Tap the 'Toggle List' button to show the list of playlist's.
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-      await tester.pumpAndSettle();
-
-      // The playlist list and audio list should exist now but be
-      // empty (no ListTile widgets)
-      expect(find.byType(ListView), findsNWidgets(2));
-      expect(find.byType(ListTile), findsNothing);
-
-      // Enter the new Youtube playlist URL into the url text field.
-      // The objective is to test that the url text field will not
-      // be emptied after adding a local playlist
-      await tester.enterText(
-        find.byKey(const Key('playlistUrlTextField')),
-        youtubePlaylistUrl,
-      );
-
-      await tester.pumpAndSettle();
-
-      // Ensure the url text field contains the entered url
-      TextField urlTextField =
-          tester.widget(find.byKey(const Key('playlistUrlTextField')));
-      expect(urlTextField.controller!.text, youtubePlaylistUrl);
-
-      // Now we tap on the AudioPlayerView icon button to open
-      // AudioPlayerView screen
-
-      final appScreenNavigationButton =
-          find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
-
-      // Now we tap on the PlaylistDownloadView icon button to go
-      // back to the PlaylistDownloadView screen
-
-      final playlistDownloadNavButton =
-          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-      await tester.tap(playlistDownloadNavButton);
-      await tester.pumpAndSettle();
-
-      // Ensure the URL TextField was emptied
-      urlTextField =
-          tester.widget(find.byKey(const Key('playlistUrlTextField')));
-      expect(urlTextField.controller!.text, '');
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
-      );
-    });
-    testWidgets('Select then unselect local playlist', (tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
-      );
-
-      const String localPlaylistTitle = 'audio_learn_local_playlist_test';
-
-      await app.main(['test']);
-      await tester.pumpAndSettle();
-
-      // Tap the 'Toggle List' button to show the list of playlist's.
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-      await tester.pumpAndSettle();
-
-      // Open the add playlist dialog by tapping the add playlist
-      // button
-      await tester.tap(find.byKey(const Key('addPlaylistButton')));
-      await tester.pumpAndSettle();
-
-      // Enter the title of the local playlist
-      await tester.enterText(
-        find.byKey(const Key('playlistLocalTitleConfirmDialogTextField')),
-        localPlaylistTitle,
-      );
-
-      // Confirm the addition by tapping the confirmation button in
-      // the AlertDialog
-      await tester
-          .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
-      await tester.pumpAndSettle();
-
-      // Close the warning dialog by tapping on the Ok button
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
-
-      // The list of Playlist's should have one item now
-      expect(find.byType(ListTile), findsOneWidget);
-
-      // Verify that the first ListTile checkbox is not
-      // selected
-      Checkbox firstListItemCheckbox = tester.widget<Checkbox>(find.descendant(
-        of: find.byType(ListTile).first,
-        matching: find.byWidgetPredicate((widget) => widget is Checkbox),
-      ));
-      expect(firstListItemCheckbox.value, isFalse);
-
-      // Verify that the selected playlist Text is empty
-      Text selectedPlaylistTitleText =
-          tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
-      expect(selectedPlaylistTitleText.data, '');
-
-      // Check the saved local playlist values in the json file,
-      // before the playlist will be selected
-
-      final String newPlaylistPath = path.join(
-        kPlaylistDownloadRootPathWindowsTest,
-        localPlaylistTitle,
-      );
-
-      final newPlaylistFilePathName = path.join(
-        newPlaylistPath,
-        '$localPlaylistTitle.json',
-      );
-
-      // Load playlist from the json file
-      Playlist loadedNewPlaylist = JsonDataService.loadFromFile(
-        jsonPathFileName: newPlaylistFilePathName,
-        type: Playlist,
-      );
-
-      expect(loadedNewPlaylist.title, localPlaylistTitle);
-      expect(loadedNewPlaylist.id, localPlaylistTitle);
-      expect(loadedNewPlaylist.url, '');
-      expect(loadedNewPlaylist.playlistType, PlaylistType.local);
-      expect(loadedNewPlaylist.playlistQuality, PlaylistQuality.voice);
-      expect(loadedNewPlaylist.downloadedAudioLst.length, 0);
-      expect(loadedNewPlaylist.playableAudioLst.length, 0);
-      expect(loadedNewPlaylist.isSelected, false);
-      expect(loadedNewPlaylist.downloadPath, newPlaylistPath);
-
-      // Tap the first ListTile checkbox to select it
-      await tester.tap(find.descendant(
-        of: find.byType(ListTile).first,
-        matching: find.byWidgetPredicate((widget) => widget is Checkbox),
-      ));
-      await tester.pumpAndSettle();
-
-      // Verify that the selected playlist TextField contains the
-      // title of the selected playlist
-      selectedPlaylistTitleText =
-          tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
-      expect(
-        selectedPlaylistTitleText.data,
-        localPlaylistTitle,
-      );
-
-      // Check the saved local playlist values in the json file
-
-      // Load playlist from the json file
-      Playlist reloadedNewPlaylist = JsonDataService.loadFromFile(
-        jsonPathFileName: newPlaylistFilePathName,
-        type: Playlist,
-      );
-
-      expect(reloadedNewPlaylist.title, localPlaylistTitle);
-      expect(reloadedNewPlaylist.id, localPlaylistTitle);
-      expect(reloadedNewPlaylist.url, '');
-      expect(reloadedNewPlaylist.playlistType, PlaylistType.local);
-      expect(reloadedNewPlaylist.playlistQuality, PlaylistQuality.voice);
-      expect(reloadedNewPlaylist.downloadedAudioLst.length, 0);
-      expect(reloadedNewPlaylist.playableAudioLst.length, 0);
-      expect(reloadedNewPlaylist.isSelected, true);
-      expect(reloadedNewPlaylist.downloadPath, newPlaylistPath);
-
-      // Now tap the first ListTile checkbox to unselect it
-      await tester.tap(find.descendant(
-        of: find.byType(ListTile).first,
-        matching: find.byWidgetPredicate((widget) => widget is Checkbox),
-      ));
-      await tester.pumpAndSettle();
-
-      // Verify that the selected playlist TextField is empty
-      selectedPlaylistTitleText =
-          tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
-      expect(selectedPlaylistTitleText.data, '');
-
-      // Check the saved local playlist values in the json file
-
-      // Load playlist from the json file
-      Playlist rereloadedNewPlaylist = JsonDataService.loadFromFile(
-        jsonPathFileName: newPlaylistFilePathName,
-        type: Playlist,
-      );
-
-      expect(rereloadedNewPlaylist.title, localPlaylistTitle);
-      expect(rereloadedNewPlaylist.id, localPlaylistTitle);
-      expect(rereloadedNewPlaylist.url, '');
-      expect(rereloadedNewPlaylist.playlistType, PlaylistType.local);
-      expect(rereloadedNewPlaylist.playlistQuality, PlaylistQuality.voice);
-      expect(rereloadedNewPlaylist.downloadedAudioLst.length, 0);
-      expect(rereloadedNewPlaylist.playableAudioLst.length, 0);
-      expect(rereloadedNewPlaylist.isSelected, false);
-      expect(rereloadedNewPlaylist.downloadPath, newPlaylistPath);
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
-      );
-    });
-
     testWidgets('''Add Youtube and local playlist, download the Youtube playlist
            and restart the app''', (tester) async {
       // Purge the test playlist directory if it exists so that the
@@ -2446,6 +2225,227 @@ void main() {
 
       // The list of Playlist's should have zero item now
       expect(find.byType(ListTile), findsNothing);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+  });
+  group('Various Tests', () {
+    testWidgets(
+        '''Entered a Youtube playlist URL. Then switch to AudioPlayerView
+           and then back to PlaylistView''', (tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      await app.main(['test']);
+      await tester.pumpAndSettle();
+
+      // Tap the 'Toggle List' button to show the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // The playlist list and audio list should exist now but be
+      // empty (no ListTile widgets)
+      expect(find.byType(ListView), findsNWidgets(2));
+      expect(find.byType(ListTile), findsNothing);
+
+      // Enter the new Youtube playlist URL into the url text field.
+      // The objective is to test that the url text field will not
+      // be emptied after adding a local playlist
+      await tester.enterText(
+        find.byKey(const Key('playlistUrlTextField')),
+        youtubePlaylistUrl,
+      );
+
+      await tester.pumpAndSettle();
+
+      // Ensure the url text field contains the entered url
+      TextField urlTextField =
+          tester.widget(find.byKey(const Key('playlistUrlTextField')));
+      expect(urlTextField.controller!.text, youtubePlaylistUrl);
+
+      // Now we tap on the AudioPlayerView icon button to open
+      // AudioPlayerView screen
+
+      final appScreenNavigationButton =
+          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+      await tester.tap(appScreenNavigationButton);
+      await tester.pumpAndSettle();
+
+      // Now we tap on the PlaylistDownloadView icon button to go
+      // back to the PlaylistDownloadView screen
+
+      final playlistDownloadNavButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(playlistDownloadNavButton);
+      await tester.pumpAndSettle();
+
+      // Ensure the URL TextField was emptied
+      urlTextField =
+          tester.widget(find.byKey(const Key('playlistUrlTextField')));
+      expect(urlTextField.controller!.text, '');
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    /// The objective of this integration test is to ensure that
+    /// the url text field will not be emptied after adding a
+    /// local playlist, in contrary of what happens after adding
+    /// a Youtube playlist.
+    testWidgets('Select then unselect local playlist', (tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      const String localPlaylistTitle = 'audio_learn_local_playlist_test';
+
+      await app.main(['test']);
+      await tester.pumpAndSettle();
+
+      // Tap the 'Toggle List' button to show the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Open the add playlist dialog by tapping the add playlist
+      // button
+      await tester.tap(find.byKey(const Key('addPlaylistButton')));
+      await tester.pumpAndSettle();
+
+      // Enter the title of the local playlist
+      await tester.enterText(
+        find.byKey(const Key('playlistLocalTitleConfirmDialogTextField')),
+        localPlaylistTitle,
+      );
+
+      // Confirm the addition by tapping the confirmation button in
+      // the AlertDialog
+      await tester
+          .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
+      await tester.pumpAndSettle();
+
+      // Close the warning dialog by tapping on the Ok button
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+      await tester.pumpAndSettle();
+
+      // The list of Playlist's should have one item now
+      expect(find.byType(ListTile), findsOneWidget);
+
+      // Verify that the first ListTile checkbox is not
+      // selected
+      Checkbox firstListItemCheckbox = tester.widget<Checkbox>(find.descendant(
+        of: find.byType(ListTile).first,
+        matching: find.byWidgetPredicate((widget) => widget is Checkbox),
+      ));
+      expect(firstListItemCheckbox.value, isFalse);
+
+      // Verify that the selected playlist Text is empty
+      Text selectedPlaylistTitleText =
+          tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
+      expect(selectedPlaylistTitleText.data, '');
+
+      // Check the saved local playlist values in the json file,
+      // before the playlist will be selected
+
+      final String newPlaylistPath = path.join(
+        kPlaylistDownloadRootPathWindowsTest,
+        localPlaylistTitle,
+      );
+
+      final newPlaylistFilePathName = path.join(
+        newPlaylistPath,
+        '$localPlaylistTitle.json',
+      );
+
+      // Load playlist from the json file
+      Playlist loadedNewPlaylist = JsonDataService.loadFromFile(
+        jsonPathFileName: newPlaylistFilePathName,
+        type: Playlist,
+      );
+
+      expect(loadedNewPlaylist.title, localPlaylistTitle);
+      expect(loadedNewPlaylist.id, localPlaylistTitle);
+      expect(loadedNewPlaylist.url, '');
+      expect(loadedNewPlaylist.playlistType, PlaylistType.local);
+      expect(loadedNewPlaylist.playlistQuality, PlaylistQuality.voice);
+      expect(loadedNewPlaylist.downloadedAudioLst.length, 0);
+      expect(loadedNewPlaylist.playableAudioLst.length, 0);
+      expect(loadedNewPlaylist.isSelected, false);
+      expect(loadedNewPlaylist.downloadPath, newPlaylistPath);
+
+      // Tap the first ListTile checkbox to select it
+      await tester.tap(find.descendant(
+        of: find.byType(ListTile).first,
+        matching: find.byWidgetPredicate((widget) => widget is Checkbox),
+      ));
+      await tester.pumpAndSettle();
+
+      // Verify that the selected playlist TextField contains the
+      // title of the selected playlist
+      selectedPlaylistTitleText =
+          tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
+      expect(
+        selectedPlaylistTitleText.data,
+        localPlaylistTitle,
+      );
+
+      // Check the saved local playlist values in the json file
+
+      // Load playlist from the json file
+      Playlist reloadedNewPlaylist = JsonDataService.loadFromFile(
+        jsonPathFileName: newPlaylistFilePathName,
+        type: Playlist,
+      );
+
+      expect(reloadedNewPlaylist.title, localPlaylistTitle);
+      expect(reloadedNewPlaylist.id, localPlaylistTitle);
+      expect(reloadedNewPlaylist.url, '');
+      expect(reloadedNewPlaylist.playlistType, PlaylistType.local);
+      expect(reloadedNewPlaylist.playlistQuality, PlaylistQuality.voice);
+      expect(reloadedNewPlaylist.downloadedAudioLst.length, 0);
+      expect(reloadedNewPlaylist.playableAudioLst.length, 0);
+      expect(reloadedNewPlaylist.isSelected, true);
+      expect(reloadedNewPlaylist.downloadPath, newPlaylistPath);
+
+      // Now tap the first ListTile checkbox to unselect it
+      await tester.tap(find.descendant(
+        of: find.byType(ListTile).first,
+        matching: find.byWidgetPredicate((widget) => widget is Checkbox),
+      ));
+      await tester.pumpAndSettle();
+
+      // Verify that the selected playlist TextField is empty
+      selectedPlaylistTitleText =
+          tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
+      expect(selectedPlaylistTitleText.data, '');
+
+      // Check the saved local playlist values in the json file
+
+      // Load playlist from the json file
+      Playlist rereloadedNewPlaylist = JsonDataService.loadFromFile(
+        jsonPathFileName: newPlaylistFilePathName,
+        type: Playlist,
+      );
+
+      expect(rereloadedNewPlaylist.title, localPlaylistTitle);
+      expect(rereloadedNewPlaylist.id, localPlaylistTitle);
+      expect(rereloadedNewPlaylist.url, '');
+      expect(rereloadedNewPlaylist.playlistType, PlaylistType.local);
+      expect(rereloadedNewPlaylist.playlistQuality, PlaylistQuality.voice);
+      expect(rereloadedNewPlaylist.downloadedAudioLst.length, 0);
+      expect(rereloadedNewPlaylist.playableAudioLst.length, 0);
+      expect(rereloadedNewPlaylist.isSelected, false);
+      expect(rereloadedNewPlaylist.downloadPath, newPlaylistPath);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
