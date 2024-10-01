@@ -135,7 +135,7 @@ void main() {
         audioPlayerVM: audioPlayerVM,
       );
 
-      // Tap the 'Toggle List' button to display the playlist list If the list
+      // Tap the 'Toggle List' button to display the playlist list. If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -145,6 +145,12 @@ void main() {
       // empty (no ListTile widgets)
       expect(find.byType(ListView), findsNWidgets(2));
       expect(find.byType(ListTile), findsNothing);
+
+      // Tap the 'Toggle List' button to hide the playlist list. Since
+      // when adding a playlist, the list is expanded, we need to hide it
+      // in order to ensure the list will be displayed.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
 
       // Enter the new Youtube playlist URL into the url text field
       await tester.enterText(
@@ -391,7 +397,7 @@ void main() {
         audioPlayerVM: audioPlayerVM,
       );
 
-      // Tap the 'Toggle List' button to display the playlist list If the list
+      // Tap the 'Toggle List' button to display the playlist list. If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -546,7 +552,7 @@ void main() {
         audioPlayerVM: audioPlayerVM,
       );
 
-      // Tap the 'Toggle List' button to display the playlist list If the list
+      // Tap the 'Toggle List' button to display the playlist list. If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -801,7 +807,7 @@ void main() {
         audioPlayerVM: audioPlayerVM,
       );
 
-      // Tap the 'Toggle List' button to display the playlist list If the list
+      // Tap the 'Toggle List' button to display the playlist list. If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -878,7 +884,7 @@ void main() {
       await app.main(['test']);
       await tester.pumpAndSettle();
 
-      // Tap the 'Toggle List' button to display the playlist list If the list
+      // Tap the 'Toggle List' button to display the playlist list. If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -888,6 +894,12 @@ void main() {
       // empty (no ListTile widgets)
       expect(find.byType(ListView), findsNWidgets(2));
       expect(find.byType(ListTile), findsNothing);
+
+      // Tap the 'Toggle List' button to hide the playlist list. Since
+      // when adding a playlist, the list is expanded, we need to hide it
+      // in order to ensure the list will be displayed.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
 
       // Open the add playlist dialog by tapping the add playlist
       // button
@@ -1122,7 +1134,7 @@ void main() {
       await app.main(['test']);
       await tester.pumpAndSettle();
 
-      // Tap the 'Toggle List' button to display the playlist list If the list
+      // Tap the 'Toggle List' button to display the playlist list. If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -1340,7 +1352,7 @@ void main() {
       await app.main(['test']);
       await tester.pumpAndSettle();
 
-      // Tap the 'Toggle List' button to display the playlist list If the list
+      // Tap the 'Toggle List' button to display the playlist list. If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -1437,7 +1449,7 @@ void main() {
       await app.main(['test']);
       await tester.pumpAndSettle();
 
-      // Tap the 'Toggle List' button to display the playlist list If the list
+      // Tap the 'Toggle List' button to display the playlist list. If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -1586,7 +1598,7 @@ void main() {
         audioPlayerVM: audioPlayerVM,
       );
 
-      // Tap the 'Toggle List' button to display the playlist list If the list
+      // Tap the 'Toggle List' button to display the playlist list. If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -1677,7 +1689,7 @@ void main() {
       await app.main(['test']);
       await tester.pumpAndSettle();
 
-      // Tap the 'Toggle List' button to display the playlist list If the list
+      // Tap the 'Toggle List' button to display the playlist list. If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -1824,7 +1836,7 @@ void main() {
         audioPlayerVM: audioPlayerVM,
       );
 
-      // Tap the 'Toggle List' button to display the playlist list If the list
+      // Tap the 'Toggle List' button to display the playlist list. If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -2008,7 +2020,7 @@ void main() {
         audioPlayerVM: audioPlayerVM,
       );
 
-      // Tap the 'Toggle List' button to display the playlist list If the list
+      // Tap the 'Toggle List' button to display the playlist list. If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -2297,6 +2309,7 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
+
     /// The objective of this integration test is to ensure that
     /// the url text field will not be emptied after adding a
     /// local playlist, in contrary of what happens after adding
@@ -2908,7 +2921,7 @@ void main() {
       await app.main(['test']);
       await tester.pumpAndSettle();
 
-      // Tap the 'Toggle List' button to display the playlist list If the list
+      // Tap the 'Toggle List' button to display the playlist list. If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -7234,7 +7247,7 @@ void main() {
 
       // *** Updating the Youtube playlist
 
-      // Tap the 'Toggle List' button to display the playlist list If the list
+      // Tap the 'Toggle List' button to display the playlist list. If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -7286,7 +7299,7 @@ void main() {
       // Now update the playable audio list of the Youtube
       // playlist
 
-      // Tap the 'Toggle List' button to display the playlist list If the list
+      // Tap the 'Toggle List' button to display the playlist list. If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -7448,7 +7461,7 @@ void main() {
 
       // *** Updating the local playlist
 
-      // Tap the 'Toggle List' button to display the playlist list If the list
+      // Tap the 'Toggle List' button to display the playlist list. If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -7651,7 +7664,7 @@ void main() {
 
       // *** Updating the Youtube playlist
 
-      // Tap the 'Toggle List' button to display the playlist list If the list
+      // Tap the 'Toggle List' button to display the playlist list. If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -7701,7 +7714,7 @@ void main() {
       // Now update the playable audio list of the Youtube
       // playlist
 
-      // Tap the 'Toggle List' button to display the playlist list If the list
+      // Tap the 'Toggle List' button to display the playlist list. If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -7843,7 +7856,7 @@ void main() {
 
       // *** Updating the local playlist
 
-      // Tap the 'Toggle List' button to display the playlist list If the list
+      // Tap the 'Toggle List' button to display the playlist list. If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));

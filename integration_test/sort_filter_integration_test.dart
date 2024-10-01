@@ -6727,7 +6727,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           const String playlistTitle = "Conversation avec Dieu";
 
-          // Tap the 'Toggle List' button to display the playlist list If the list
+          // Tap the 'Toggle List' button to display the playlist list. If the list
           // is not opened, checking that a ListTile with the title of
           // the playlist was added to the list will fail
           await tester.tap(find.byKey(const Key('playlist_toggle_button')));
