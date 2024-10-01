@@ -446,6 +446,7 @@ class AudioPlayerVM extends ChangeNotifier {
       // if the audio plays while the smartphone screen is turned off,
       // the slider won't be set to end position.
       _currentAudioPosition = _currentAudioTotalDuration;
+
       notifyListeners();
 
       // Play next audio when current audio is finished. If a next
@@ -983,6 +984,8 @@ class AudioPlayerVM extends ChangeNotifier {
     // since the current audio is no longer playing, the isPaused
     // attribute is set to true
     _currentAudio!.isPaused = true;
+
+    _currentAudio!.audioPausedDateTime = DateTime.now();
 
     // This should fix the problem when the application plays an audio
     // till its end and due to a problem of the audioplayer plugin, the
