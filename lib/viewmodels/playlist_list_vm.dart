@@ -88,7 +88,11 @@ class PlaylistListVM extends ChangeNotifier {
   })  : _warningMessageVM = warningMessageVM,
         _audioDownloadVM = audioDownloadVM,
         _commentVM = commentVM,
-        _settingsDataService = settingsDataService;
+        _settingsDataService = settingsDataService,
+        _isListExpanded = settingsDataService.get(
+          settingType: SettingType.playlists,
+          settingSubType: Playlists.arePlaylistsDisplayedInPlaylistDownloadView,
+        );
 
   List<Playlist> getUpToDateSelectablePlaylistsExceptExcludedPlaylist({
     required Playlist excludedPlaylist,

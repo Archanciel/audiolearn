@@ -352,6 +352,31 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             ),
           ),
         ),
+        SizedBox(
+          width: kSmallIconButtonWidth,
+          child: IconButton(
+            key: const Key('search_icon_button'),
+            onPressed: () {
+              if (playlistListVMlistenTrue.isListExpanded) {
+                _playlistSearch();
+              } else {
+                _audioSearch();
+              }
+            },
+            style: ButtonStyle(
+              // Highlight button when pressed
+              padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                const EdgeInsets.symmetric(
+                    horizontal: kSmallButtonInsidePadding, vertical: 0),
+              ),
+              overlayColor: iconButtonTapModification, // Tap feedback color
+            ),
+            icon: const Icon(
+              Icons.search,
+              size: kSmallIconButtonWidth,
+            ),
+          ),
+        ),
         (playlistListVMlistenTrue.isListExpanded)
             ? _buildPlaylistMoveIconButtons(
                 playlistListVMlistenFalse: playlistListVMlistenFalse,
@@ -1584,4 +1609,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       ),
     );
   }
+
+  void _playlistSearch() {}
+  void _audioSearch() {}
 }

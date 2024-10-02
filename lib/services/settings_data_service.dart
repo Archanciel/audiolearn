@@ -278,9 +278,9 @@ class SettingsDataService {
     }
 
     if (get(
-            settingType: SettingType.dataLocation,
-            settingSubType: DataLocation.playlistRootPath)
-        .isEmpty) {
+      settingType: SettingType.dataLocation,
+      settingSubType: DataLocation.playlistRootPath,
+    ).isEmpty) {
       // the case if the application is started for the first time and
       // if the settings were not saved.
       set(
@@ -578,20 +578,34 @@ Future<void> usageExample() async {
   // print initialSettings created with Settings initial values
   print('**** InitialSettings created with Settings initial values\n');
 
-  print(
-      '${initialSettings.get(settingType: SettingType.appTheme, settingSubType: SettingType.appTheme)}');
-  print(
-      '${initialSettings.get(settingType: SettingType.language, settingSubType: SettingType.language)}');
-  print(
-      '${initialSettings.get(settingType: SettingType.dataLocation, settingSubType: DataLocation.playlistRootPath)}');
-  print(
-      '${initialSettings.get(settingType: SettingType.playlists, settingSubType: Playlists.orderedTitleLst)}');
-  print(
-      '${initialSettings.get(settingType: SettingType.playlists, settingSubType: Playlists.isMusicQualityByDefault)}');
-  print(
-      '${initialSettings.get(settingType: SettingType.playlists, settingSubType: Playlists.playSpeed)}');
-  print(
-      '${initialSettings.get(settingType: SettingType.playlists, settingSubType: Playlists.arePlaylistsDisplayedInPlaylistDownloadView)}');
+  print('${initialSettings.get(
+    settingType: SettingType.appTheme,
+    settingSubType: SettingType.appTheme,
+  )}');
+  print('${initialSettings.get(
+    settingType: SettingType.language,
+    settingSubType: SettingType.language,
+  )}');
+  print('${initialSettings.get(
+    settingType: SettingType.dataLocation,
+    settingSubType: DataLocation.playlistRootPath,
+  )}');
+  print('${initialSettings.get(
+    settingType: SettingType.playlists,
+    settingSubType: Playlists.orderedTitleLst,
+  )}');
+  print('${initialSettings.get(
+    settingType: SettingType.playlists,
+    settingSubType: Playlists.isMusicQualityByDefault,
+  )}');
+  print('${initialSettings.get(
+    settingType: SettingType.playlists,
+    settingSubType: Playlists.playSpeed,
+  )}');
+  print('${initialSettings.get(
+    settingType: SettingType.playlists,
+    settingSubType: Playlists.arePlaylistsDisplayedInPlaylistDownloadView,
+  )}');
 
   // modify initialSettings values
 
@@ -629,20 +643,34 @@ Future<void> usageExample() async {
 
   print('\n**** Modified initialSettings\n');
 
-  print(
-      '${initialSettings.get(settingType: SettingType.appTheme, settingSubType: SettingType.appTheme)}');
-  print(
-      '${initialSettings.get(settingType: SettingType.language, settingSubType: SettingType.language)}');
-  print(
-      '${initialSettings.get(settingType: SettingType.dataLocation, settingSubType: DataLocation.playlistRootPath)}');
-  print(
-      '${initialSettings.get(settingType: SettingType.playlists, settingSubType: Playlists.orderedTitleLst)}');
-  print(
-      '${initialSettings.get(settingType: SettingType.playlists, settingSubType: Playlists.isMusicQualityByDefault)}');
-  print(
-      '${initialSettings.get(settingType: SettingType.playlists, settingSubType: Playlists.playSpeed)}');
-  print(
-      '${initialSettings.get(settingType: SettingType.playlists, settingSubType: Playlists.arePlaylistsDisplayedInPlaylistDownloadView)}');
+  print('${initialSettings.get(
+    settingType: SettingType.appTheme,
+    settingSubType: SettingType.appTheme,
+  )}');
+  print('${initialSettings.get(
+    settingType: SettingType.language,
+    settingSubType: SettingType.language,
+  )}');
+  print('${initialSettings.get(
+    settingType: SettingType.dataLocation,
+    settingSubType: DataLocation.playlistRootPath,
+  )}');
+  print('${initialSettings.get(
+    settingType: SettingType.playlists,
+    settingSubType: Playlists.orderedTitleLst,
+  )}');
+  print('${initialSettings.get(
+    settingType: SettingType.playlists,
+    settingSubType: Playlists.isMusicQualityByDefault,
+  )}');
+  print('${initialSettings.get(
+    settingType: SettingType.playlists,
+    settingSubType: Playlists.playSpeed,
+  )}');
+  print('${initialSettings.get(
+    settingType: SettingType.playlists,
+    settingSubType: Playlists.arePlaylistsDisplayedInPlaylistDownloadView,
+  )}');
 
   initialSettings.saveSettingsToFile(jsonPathFileName: 'settings.json');
 
@@ -653,18 +681,32 @@ Future<void> usageExample() async {
 
   print('\n**** Reloaded modified initialSettings\n');
 
-  print(
-      '${loadedSettings.get(settingType: SettingType.appTheme, settingSubType: SettingType.appTheme)}');
-  print(
-      '${loadedSettings.get(settingType: SettingType.language, settingSubType: SettingType.language)}');
-  print(
-      '${loadedSettings.get(settingType: SettingType.playlists, settingSubType: DataLocation.playlistRootPath)}');
-  print(
-      '${initialSettings.get(settingType: SettingType.playlists, settingSubType: Playlists.orderedTitleLst)}');
-  print(
-      '${loadedSettings.get(settingType: SettingType.playlists, settingSubType: Playlists.isMusicQualityByDefault)}');
-  print(
-      '${loadedSettings.get(settingType: SettingType.playlists, settingSubType: Playlists.playSpeed)}');
-  print(
-      '${loadedSettings.get(settingType: SettingType.playlists, settingSubType: Playlists.arePlaylistsDisplayedInPlaylistDownloadView)}');
+  print('${loadedSettings.get(
+    settingType: SettingType.appTheme,
+    settingSubType: SettingType.appTheme,
+  )}');
+  print('${loadedSettings.get(
+    settingType: SettingType.language,
+    settingSubType: SettingType.language,
+  )}');
+  print('${loadedSettings.get(
+    settingType: SettingType.playlists,
+    settingSubType: DataLocation.playlistRootPath,
+  )}');
+  print('${initialSettings.get(
+    settingType: SettingType.playlists,
+    settingSubType: Playlists.orderedTitleLst,
+  )}');
+  print('${loadedSettings.get(
+    settingType: SettingType.playlists,
+    settingSubType: Playlists.isMusicQualityByDefault,
+  )}');
+  print('${loadedSettings.get(
+    settingType: SettingType.playlists,
+    settingSubType: Playlists.playSpeed,
+  )}');
+  print('${loadedSettings.get(
+    settingType: SettingType.playlists,
+    settingSubType: Playlists.arePlaylistsDisplayedInPlaylistDownloadView,
+  )}');
 }
