@@ -12263,6 +12263,454 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
+    group('Open app with or without selected playlist', () {
+      group('With playlist list displayed', () {
+        testWidgets('Selected local playlist with no audio', (tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          // Copy the test initial audio data to the app dir
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath:
+                "$kDownloadAppTestSavedDataDir${path.separator}playlist_download_view_button_state_at_app_start_test",
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          final SettingsDataService settingsDataService = SettingsDataService(
+            sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
+          );
+
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the download app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+          await app.main(['test']);
+          await tester.pumpAndSettle();
+
+          // since a local playlist is selected, verify that
+          // some buttons and checkbox are enabled and some are disabled
+          verifyLocalSelectedPlaylistButtonsAndCheckbox(
+            tester: tester,
+            isPlaylistListDisplayed: true,
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
+        testWidgets('Selected Youtube playlist with no audio', (tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          // Copy the test initial audio data to the app dir
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath:
+                "$kDownloadAppTestSavedDataDir${path.separator}playlist_download_view_button_state_at_app_start_test",
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          final SettingsDataService settingsDataService = SettingsDataService(
+            sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
+          );
+
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the download app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+          const String initiallySelectedPlaylistTitle =
+              'local_audio_playlist_2';
+          const String nowSelectedPlaylistTitle =
+              'audio_player_view_2_shorts_test';
+
+          modifySelectedPlaylistBeforeStartingApplication(
+            playlistToUnselectTitle: initiallySelectedPlaylistTitle,
+            playlistToSelectTitle: nowSelectedPlaylistTitle,
+          );
+
+          await app.main(['test']);
+          await tester.pumpAndSettle();
+
+          // since a locYoutubeal playlist is selected, verify that
+          // some buttons and checkbox are enabled and some are disabled
+          verifyYoutubeSelectedPlaylistButtonsAndCheckbox(
+            tester: tester,
+            isPlaylistListDisplayed: true,
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
+        testWidgets('Selected Local playlist with audio', (tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          // Copy the test initial audio data to the app dir
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath:
+                "$kDownloadAppTestSavedDataDir${path.separator}playlist_download_view_button_state_at_app_start_test",
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          final SettingsDataService settingsDataService = SettingsDataService(
+            sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
+          );
+
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the download app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+          const String initiallySelectedPlaylistTitle =
+              'local_audio_playlist_2';
+          const String nowSelectedPlaylistTitle = 'local_3';
+
+          modifySelectedPlaylistBeforeStartingApplication(
+            playlistToUnselectTitle: initiallySelectedPlaylistTitle,
+            playlistToSelectTitle: nowSelectedPlaylistTitle,
+          );
+
+          await app.main(['test']);
+          await tester.pumpAndSettle();
+
+          // since a locYoutubeal playlist is selected, verify that
+          // some buttons and checkbox are enabled and some are disabled
+          verifyLocalSelectedPlaylistButtonsAndCheckbox(
+            tester: tester,
+            isPlaylistListDisplayed: true,
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
+        testWidgets('Selected Youtube playlist with audio', (tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          // Copy the test initial audio data to the app dir
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath:
+                "$kDownloadAppTestSavedDataDir${path.separator}playlist_download_view_button_state_at_app_start_test",
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          final SettingsDataService settingsDataService = SettingsDataService(
+            sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
+          );
+
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the download app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+          const String initiallySelectedPlaylistTitle =
+              'local_audio_playlist_2';
+          const String nowSelectedPlaylistTitle =
+              'audio_learn_new_youtube_playlist_test';
+
+          modifySelectedPlaylistBeforeStartingApplication(
+            playlistToUnselectTitle: initiallySelectedPlaylistTitle,
+            playlistToSelectTitle: nowSelectedPlaylistTitle,
+          );
+
+          await app.main(['test']);
+          await tester.pumpAndSettle();
+
+          // since a locYoutubeal playlist is selected, verify that
+          // some buttons and checkbox are enabled and some are disabled
+          verifyYoutubeSelectedPlaylistButtonsAndCheckbox(
+            tester: tester,
+            isPlaylistListDisplayed: true,
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
+      });
+      group('With playlist list not displayed', () {
+        testWidgets('Selected local playlist with no audio', (tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          // Copy the test initial audio data to the app dir
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath:
+                "$kDownloadAppTestSavedDataDir${path.separator}playlist_download_view_button_state_at_app_start_test",
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          final SettingsDataService settingsDataService = SettingsDataService(
+            sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
+          );
+
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the download app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+          // Changing the playlists list display before starting the
+          // application
+          settingsDataService.set(
+              settingType: SettingType.playlists,
+              settingSubType:
+                  Playlists.arePlaylistsDisplayedInPlaylistDownloadView,
+              value: false);
+
+          settingsDataService.saveSettings();
+
+          await app.main(['test']);
+          await tester.pumpAndSettle();
+
+          // since a local playlist is selected, verify that
+          // some buttons and checkbox are enabled and some are disabled
+          verifyLocalSelectedPlaylistButtonsAndCheckbox(
+            tester: tester,
+            isPlaylistListDisplayed: false,
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
+        testWidgets('Selected Youtube playlist with no audio', (tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          // Copy the test initial audio data to the app dir
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath:
+                "$kDownloadAppTestSavedDataDir${path.separator}playlist_download_view_button_state_at_app_start_test",
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          final SettingsDataService settingsDataService = SettingsDataService(
+            sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
+          );
+
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the download app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+          // Changing the playlists list display before starting the
+          // application
+          settingsDataService.set(
+              settingType: SettingType.playlists,
+              settingSubType:
+                  Playlists.arePlaylistsDisplayedInPlaylistDownloadView,
+              value: false);
+
+          settingsDataService.saveSettings();
+
+          const String initiallySelectedPlaylistTitle =
+              'local_audio_playlist_2';
+          const String nowSelectedPlaylistTitle =
+              'audio_player_view_2_shorts_test';
+
+          modifySelectedPlaylistBeforeStartingApplication(
+            playlistToUnselectTitle: initiallySelectedPlaylistTitle,
+            playlistToSelectTitle: nowSelectedPlaylistTitle,
+          );
+
+          await app.main(['test']);
+          await tester.pumpAndSettle();
+
+          // since a locYoutubeal playlist is selected, verify that
+          // some buttons and checkbox are enabled and some are disabled
+          verifyYoutubeSelectedPlaylistButtonsAndCheckbox(
+            tester: tester,
+            isPlaylistListDisplayed: false,
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
+        testWidgets('Selected Local playlist with audio', (tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          // Copy the test initial audio data to the app dir
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath:
+                "$kDownloadAppTestSavedDataDir${path.separator}playlist_download_view_button_state_at_app_start_test",
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          final SettingsDataService settingsDataService = SettingsDataService(
+            sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
+          );
+
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the download app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+          // Changing the playlists list display before starting the
+          // application
+          settingsDataService.set(
+              settingType: SettingType.playlists,
+              settingSubType:
+                  Playlists.arePlaylistsDisplayedInPlaylistDownloadView,
+              value: false);
+
+          settingsDataService.saveSettings();
+
+          const String initiallySelectedPlaylistTitle =
+              'local_audio_playlist_2';
+          const String nowSelectedPlaylistTitle = 'local_3';
+
+          modifySelectedPlaylistBeforeStartingApplication(
+            playlistToUnselectTitle: initiallySelectedPlaylistTitle,
+            playlistToSelectTitle: nowSelectedPlaylistTitle,
+          );
+
+          await app.main(['test']);
+          await tester.pumpAndSettle();
+
+          // since a locYoutubeal playlist is selected, verify that
+          // some buttons and checkbox are enabled and some are disabled
+          verifyLocalSelectedPlaylistButtonsAndCheckbox(
+            tester: tester,
+            isPlaylistListDisplayed: false,
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
+        testWidgets('Selected Youtube playlist with audio', (tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          // Copy the test initial audio data to the app dir
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath:
+                "$kDownloadAppTestSavedDataDir${path.separator}playlist_download_view_button_state_at_app_start_test",
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          final SettingsDataService settingsDataService = SettingsDataService(
+            sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
+          );
+
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the download app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+          // Changing the playlists list display before starting the
+          // application
+          settingsDataService.set(
+              settingType: SettingType.playlists,
+              settingSubType:
+                  Playlists.arePlaylistsDisplayedInPlaylistDownloadView,
+              value: false);
+
+          settingsDataService.saveSettings();
+
+          const String initiallySelectedPlaylistTitle =
+              'local_audio_playlist_2';
+          const String nowSelectedPlaylistTitle =
+              'audio_learn_new_youtube_playlist_test';
+
+          modifySelectedPlaylistBeforeStartingApplication(
+            playlistToUnselectTitle: initiallySelectedPlaylistTitle,
+            playlistToSelectTitle: nowSelectedPlaylistTitle,
+          );
+
+          await app.main(['test']);
+          await tester.pumpAndSettle();
+
+          // since a locYoutubeal playlist is selected, verify that
+          // some buttons and checkbox are enabled and some are disabled
+          verifyYoutubeSelectedPlaylistButtonsAndCheckbox(
+            tester: tester,
+            isPlaylistListDisplayed: false,
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
+      });
+    });
   });
   group('App settings dialog test', () {
     testWidgets(
@@ -14800,6 +15248,145 @@ void main() {
     // });
     // });
   });
+}
+
+void modifySelectedPlaylistBeforeStartingApplication({
+  required String playlistToUnselectTitle,
+  required String playlistToSelectTitle,
+}) {
+  final initiallySelectedPlaylistPath = path.join(
+    kPlaylistDownloadRootPathWindowsTest,
+    playlistToUnselectTitle,
+  );
+
+  final initiallySelectedPlaylistFilePathName = path.join(
+    initiallySelectedPlaylistPath,
+    '$playlistToUnselectTitle.json',
+  );
+
+  // Load playlist from the json file
+  Playlist initiallySelectedPlaylist = JsonDataService.loadFromFile(
+    jsonPathFileName: initiallySelectedPlaylistFilePathName,
+    type: Playlist,
+  );
+
+  initiallySelectedPlaylist.isSelected = false;
+
+  JsonDataService.saveToFile(
+    model: initiallySelectedPlaylist,
+    path: initiallySelectedPlaylistFilePathName,
+  );
+
+  final nowSelectedPlaylistPath = path.join(
+    kPlaylistDownloadRootPathWindowsTest,
+    playlistToSelectTitle,
+  );
+
+  final nowSelectedPlaylistFilePathName = path.join(
+    nowSelectedPlaylistPath,
+    '$playlistToSelectTitle.json',
+  );
+
+  // Load playlist from the json file
+  Playlist nowSelectedPlaylist = JsonDataService.loadFromFile(
+    jsonPathFileName: nowSelectedPlaylistFilePathName,
+    type: Playlist,
+  );
+
+  nowSelectedPlaylist.isSelected = true;
+
+  JsonDataService.saveToFile(
+    model: nowSelectedPlaylist,
+    path: nowSelectedPlaylistFilePathName,
+  );
+}
+
+void verifyYoutubeSelectedPlaylistButtonsAndCheckbox({
+  required WidgetTester tester,
+  required bool isPlaylistListDisplayed,
+}) {
+  IntegrationTestUtil.verifyWidgetIsEnabled(
+    tester: tester,
+    widgetKeyStr: 'search_icon_button',
+  );
+
+  if (isPlaylistListDisplayed) {
+    IntegrationTestUtil.verifyWidgetIsEnabled(
+      tester: tester,
+      widgetKeyStr: 'move_up_playlist_button',
+    );
+
+    IntegrationTestUtil.verifyWidgetIsEnabled(
+      tester: tester,
+      widgetKeyStr: 'move_down_playlist_button',
+    );
+  } else {
+    // Verify that the dropdown button is set to the playlist download
+    // view 'Title asc' sort/filter parms
+    IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+      tester: tester,
+      dropdownButtonSelectedTitle: 'Title asc',
+    );
+  }
+
+  IntegrationTestUtil.verifyWidgetIsEnabled(
+    tester: tester,
+    widgetKeyStr: 'download_sel_playlists_button',
+  );
+
+  IntegrationTestUtil.verifyWidgetIsEnabled(
+    tester: tester,
+    widgetKeyStr: 'audio_quality_checkbox',
+  );
+
+  IntegrationTestUtil.verifyWidgetIsEnabled(
+    tester: tester,
+    widgetKeyStr: 'audio_popup_menu_button',
+  );
+}
+
+void verifyLocalSelectedPlaylistButtonsAndCheckbox({
+  required WidgetTester tester,
+  required bool isPlaylistListDisplayed,
+}) {
+  IntegrationTestUtil.verifyWidgetIsEnabled(
+    tester: tester,
+    widgetKeyStr: 'search_icon_button',
+  );
+
+  if (isPlaylistListDisplayed) {
+    IntegrationTestUtil.verifyWidgetIsEnabled(
+      tester: tester,
+      widgetKeyStr: 'move_up_playlist_button',
+    );
+
+    IntegrationTestUtil.verifyWidgetIsEnabled(
+      tester: tester,
+      widgetKeyStr: 'move_down_playlist_button',
+    );
+  } else {
+    // Verify that the dropdown button is set to the playlist download
+    // view 'Title asc' sort/filter parms
+    IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+      tester: tester,
+      dropdownButtonSelectedTitle: 'Title asc',
+    );
+  }
+
+  IntegrationTestUtil.verifyWidgetIsDisabled(
+    tester: tester,
+    widgetKeyStr: 'download_sel_playlists_button',
+  );
+
+  IntegrationTestUtil.verifyWidgetIsDisabled(
+    tester: tester,
+    widgetKeyStr: 'audio_quality_checkbox',
+  );
+
+  IntegrationTestUtil.verifyWidgetIsEnabled(
+    tester: tester,
+    widgetKeyStr: 'audio_popup_menu_button',
+  );
 }
 
 Future<void> verifyUndoneListenedAudioPosition({
