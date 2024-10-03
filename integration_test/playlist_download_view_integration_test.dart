@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:audiolearn/viewmodels/comment_vm.dart';
@@ -12729,9 +12730,7 @@ void main() {
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      final String initialSettingsJsonStr = File(
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName")
-          .readAsStringSync();
+      final Map initialSettingsMap = loadSettingsMap();
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
@@ -12763,9 +12762,8 @@ void main() {
 
       // Ensure settings json file has not been modified
       expect(
-        initialSettingsJsonStr,
-        File("$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName")
-            .readAsStringSync(),
+        initialSettingsMap,
+        loadSettingsMap(),
       );
 
       // Purge the test playlist directory so that the created test
@@ -12789,9 +12787,7 @@ void main() {
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      final String initialSettingsJsonStr = File(
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName")
-          .readAsStringSync();
+      final Map initialSettingsMap = loadSettingsMap();
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
@@ -12861,9 +12857,8 @@ void main() {
 
       // Ensure settings json file has not been modified
       expect(
-        initialSettingsJsonStr,
-        File("$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName")
-            .readAsStringSync(),
+        initialSettingsMap,
+        loadSettingsMap(),
       );
 
       // Purge the test playlist directory so that the created test
@@ -13003,7 +12998,7 @@ void main() {
       expect(
         File("$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName")
             .readAsStringSync(),
-        "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.orderedTitleLst\":\"[Youtube_test]\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.playSpeed\":\"1.25\",\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\Users\\\\Jean-Pierre\\\\Development\\\\Flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\Users\\\\Jean-Pierre\\\\Development\\\\Flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\new\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInYoutubeChannelName\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":false,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}",
+        "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.orderedTitleLst\":\"[Youtube_test]\",\"Playlists.playSpeed\":\"1.25\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\Users\\\\Jean-Pierre\\\\Development\\\\Flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\Users\\\\Jean-Pierre\\\\Development\\\\Flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\new\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInYoutubeChannelName\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":false,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}",
       );
 
       // Find the Youtube playlist to select
@@ -15248,6 +15243,16 @@ void main() {
     // });
     // });
   });
+}
+
+Map loadSettingsMap() {
+  final String settingsJsonStr = File(
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName")
+      .readAsStringSync();
+  
+  Map settingsMap = jsonDecode(settingsJsonStr);
+
+  return settingsMap;
 }
 
 void modifySelectedPlaylistBeforeStartingApplication({
