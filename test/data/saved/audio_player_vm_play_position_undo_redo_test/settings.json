@@ -1,1 +1,75 @@
-{"SettingType.appTheme":{"SettingType.appTheme":"AppTheme.dark"},"SettingType.language":{"SettingType.language":"Language.english"},"SettingType.playlists":{"Playlists.isMusicQualityByDefault":"false","Playlists.orderedTitleLst":"[S8 audio, local]","Playlists.playSpeed":"1.25"},"SettingType.dataLocation":{"DataLocation.appSettingsPath":"C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio","DataLocation.playlistRootPath":"C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio"},"namedAudioSortFilterSettings":{"default":{"selectedSortItemLst":[{"sortingOption":"audioDownloadDate","isAscending":false}],"filterSentenceLst":[],"sentencesCombination":0,"ignoreCase":true,"searchAsWellInVideoCompactDescription":true,"filterMusicQuality":false,"filterFullyListened":true,"filterPartiallyListened":true,"filterNotListened":true,"downloadDateStartRange":null,"downloadDateEndRange":null,"uploadDateStartRange":null,"uploadDateEndRange":null,"fileSizeStartRangeMB":0.0,"fileSizeEndRangeMB":0.0,"durationStartRangeSec":0,"durationEndRangeSec":0},"downlDateDurationDesc":{"selectedSortItemLst":[{"sortingOption":"audioDownloadDate","isAscending":true},{"sortingOption":"audioDuration","isAscending":false}],"filterSentenceLst":[],"sentencesCombination":0,"ignoreCase":true,"searchAsWellInVideoCompactDescription":true,"filterMusicQuality":false,"filterFullyListened":true,"filterPartiallyListened":true,"filterNotListened":true,"downloadDateStartRange":null,"downloadDateEndRange":null,"uploadDateStartRange":null,"uploadDateEndRange":null,"fileSizeStartRangeMB":0.0,"fileSizeEndRangeMB":0.0,"durationStartRangeSec":0,"durationEndRangeSec":0}},"searchHistoryOfAudioSortFilterSettings":"[]"}
+{
+    "namedAudioSortFilterSettings": {
+        "default": {
+            "downloadDateEndRange": null,
+            "downloadDateStartRange": null,
+            "durationEndRangeSec": 0,
+            "durationStartRangeSec": 0,
+            "fileSizeEndRangeMB": 0.0,
+            "fileSizeStartRangeMB": 0.0,
+            "filterFullyListened": true,
+            "filterMusicQuality": false,
+            "filterNotListened": true,
+            "filterPartiallyListened": true,
+            "filterSentenceLst": [
+            ],
+            "ignoreCase": true,
+            "searchAsWellInVideoCompactDescription": true,
+            "selectedSortItemLst": [
+                {
+                    "isAscending": false,
+                    "sortingOption": "audioDownloadDate"
+                }
+            ],
+            "sentencesCombination": 0,
+            "uploadDateEndRange": null,
+            "uploadDateStartRange": null
+        },
+        "downlDateDurationDesc": {
+            "downloadDateEndRange": null,
+            "downloadDateStartRange": null,
+            "durationEndRangeSec": 0,
+            "durationStartRangeSec": 0,
+            "fileSizeEndRangeMB": 0.0,
+            "fileSizeStartRangeMB": 0.0,
+            "filterFullyListened": true,
+            "filterMusicQuality": false,
+            "filterNotListened": true,
+            "filterPartiallyListened": true,
+            "filterSentenceLst": [
+            ],
+            "ignoreCase": true,
+            "searchAsWellInVideoCompactDescription": true,
+            "selectedSortItemLst": [
+                {
+                    "isAscending": true,
+                    "sortingOption": "audioDownloadDate"
+                },
+                {
+                    "isAscending": false,
+                    "sortingOption": "audioDuration"
+                }
+            ],
+            "sentencesCombination": 0,
+            "uploadDateEndRange": null,
+            "uploadDateStartRange": null
+        }
+    },
+    "searchHistoryOfAudioSortFilterSettings": "[]",
+    "SettingType.appTheme": {
+        "SettingType.appTheme": "AppTheme.dark"
+    },
+    "SettingType.dataLocation": {
+        "DataLocation.appSettingsPath": "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio",
+        "DataLocation.playlistRootPath": "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio"
+    },
+    "SettingType.language": {
+        "SettingType.language": "Language.english"
+    },
+    "SettingType.playlists": {
+        "Playlists.arePlaylistsDisplayedInPlaylistDownloadView": "true",
+        "Playlists.isMusicQualityByDefault": "false",
+        "Playlists.orderedTitleLst": "[S8 audio, local]",
+        "Playlists.playSpeed": "1.25"
+    }
+}
