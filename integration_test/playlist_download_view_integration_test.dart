@@ -15249,7 +15249,7 @@ Map loadSettingsMap() {
   final String settingsJsonStr = File(
           "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName")
       .readAsStringSync();
-  
+
   Map settingsMap = jsonDecode(settingsJsonStr);
 
   return settingsMap;

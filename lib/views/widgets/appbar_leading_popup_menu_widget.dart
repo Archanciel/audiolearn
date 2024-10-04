@@ -557,7 +557,7 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
             await Provider.of<PlaylistListVM>(
               context,
               listen: false,
-            ).savePlaylistAndCommentsToZip(
+            ).savePlaylistsCommentsAndSettingsJsonFilesToZip(
               targetDirectoryPath: selectedFilePathNameLst,
             );
             break;

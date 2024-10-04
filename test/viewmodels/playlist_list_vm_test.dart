@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:archive/archive.dart';
 import 'package:audiolearn/viewmodels/comment_vm.dart';
 import 'package:path/path.dart' as path;
 import 'package:flutter_test/flutter_test.dart';
@@ -809,6 +810,171 @@ void main() {
       );
     });
   });
+  group('Save playlists, comments and settings json files to zip', () {
+
+    test('settings and playlists sub dirs in same root path', () async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_test",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+      WarningMessageVM warningMessageVM = WarningMessageVM();
+
+      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+        isTest: true,
+      );
+
+      PlaylistListVM playlistListVM = PlaylistListVM(
+        warningMessageVM: warningMessageVM,
+        audioDownloadVM: audioDownloadVM,
+        commentVM: CommentVM(),
+        settingsDataService: settingsDataService,
+      );
+
+      await playlistListVM.savePlaylistsCommentsAndSettingsJsonFilesToZip(
+        targetDirectoryPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      List<String> zipLst = DirUtil.listFileNamesInDir(
+        directoryPath: kApplicationPathWindowsTest,
+        fileExtension: 'zip',
+      );
+
+      List<String> expectedZipContent = [
+        "Empty/Empty.json",
+        "local/local.json",
+        "local_comment/local_comment.json",
+        "local_delete_comment/comments/240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json",
+        "local_delete_comment/local_delete_comment.json",
+        "S8 audio/comments/240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.json",
+        "S8 audio/comments/240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json",
+        "S8 audio/comments/240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.json",
+        "S8 audio/comments/New file name.json",
+        "S8 audio/S8 audio.json",
+        "settings.json",
+      ];
+
+      List<String> zipFilePathNamesLst = await listFilesInZip(
+        zipFilePathName:
+            kApplicationPathWindowsTest + path.separator + zipLst[0],
+      );
+
+      expect(
+        zipFilePathNamesLst,
+        expectedZipContent,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    test('settings in app dir and playlists in playlists root path', () async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_json_only_test",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+      WarningMessageVM warningMessageVM = WarningMessageVM();
+
+      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+        isTest: true,
+      );
+
+      PlaylistListVM playlistListVM = PlaylistListVM(
+        warningMessageVM: warningMessageVM,
+        audioDownloadVM: audioDownloadVM,
+        commentVM: CommentVM(),
+        settingsDataService: settingsDataService,
+      );
+
+      await playlistListVM.savePlaylistsCommentsAndSettingsJsonFilesToZip(
+        targetDirectoryPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      List<String> zipLst = DirUtil.listFileNamesInDir(
+        directoryPath: kApplicationPathWindowsTest,
+        fileExtension: 'zip',
+      );
+
+      List<String> expectedZipContent = [
+        "playlists/Empty/Empty.json",
+        "playlists/local/local.json",
+        "playlists/local_comment/local_comment.json",
+        "playlists/local_delete_comment/comments/240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json",
+        "playlists/local_delete_comment/local_delete_comment.json",
+        "playlists/S8 audio/comments/240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.json",
+        "playlists/S8 audio/comments/240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json",
+        "playlists/S8 audio/comments/240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.json",
+        "playlists/S8 audio/comments/New file name.json",
+        "playlists/S8 audio/S8 audio.json",
+        "settings.json",
+      ];
+
+      List<String> zipFilePathNamesLst = await listFilesInZip(
+        zipFilePathName:
+            kApplicationPathWindowsTest + path.separator + zipLst[0],
+      );
+
+      expect(
+        zipFilePathNamesLst,
+        expectedZipContent,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+  });
 }
 
 void testCopyAudioToPlaylist({
@@ -983,4 +1149,26 @@ bool ensureAudioAreEquals(Audio audio1, Audio audio2) {
       audio1.audioPausedDateTime == audio2.audioPausedDateTime &&
       audio1.audioPlaySpeed == audio2.audioPlaySpeed &&
       audio1.isAudioMusicQuality == audio2.isAudioMusicQuality;
+}
+
+Future<List<String>> listFilesInZip({
+  required String zipFilePathName,
+}) async {
+  // Open the zip file
+  File zipFile = File(zipFilePathName);
+  List<int> bytes = await zipFile.readAsBytes();
+
+  // Decode the zip file
+  Archive archive = ZipDecoder().decodeBytes(bytes);
+
+  // List to store the full paths of files
+  List<String> filePaths = [];
+
+  // Loop through the archive files and get their full paths (name includes directories)
+  for (ArchiveFile file in archive) {
+    if (!file.isFile) continue; // Skip directories
+    filePaths.add(file.name); // File name includes the full path inside the zip
+  }
+
+  return filePaths;
 }
