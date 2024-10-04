@@ -1,6 +1,9 @@
-import 'package:audiolearn/utils/dir_util.dart';
+import 'dart:io';
+
+import 'package:archive/archive.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart' as path;
 
 import '../constants.dart';
 import '../models/audio.dart';
@@ -9,6 +12,7 @@ import '../services/audio_sort_filter_service.dart';
 import '../services/json_data_service.dart';
 import '../services/settings_data_service.dart';
 import '../services/sort_filter_parameters.dart';
+import '../utils/dir_util.dart';
 import 'audio_download_vm.dart';
 import 'comment_vm.dart';
 import 'warning_message_vm.dart';
@@ -1766,5 +1770,78 @@ class PlaylistListVM extends ChangeNotifier {
     );
 
     notifyListeners();
+  }
+
+  /// Method called when the user clicks on the 'Save playlist and comments to
+  /// zip' menu item located in the appbar leading popup menu.
+  Future<void> savePlaylistAndCommentsToZip({
+    required String targetDirectoryPath,
+  }) async {
+    await _zipDirectory(
+      targetDir: targetDirectoryPath,
+    );
+  }
+
+  Future<void> _zipDirectory({
+    required String targetDir,
+  }) async {
+    String playlistsRootPath = _settingsDataService.get(
+        settingType: SettingType.dataLocation,
+        settingSubType: DataLocation.playlistRootPath);
+
+    Directory sourceDir = Directory(playlistsRootPath);
+
+    if (!sourceDir.existsSync()) {
+      return;
+    }
+
+    // Create a zip encoder
+    final archive = Archive();
+
+    // Traverse the source directory and find matching files
+    await for (var entity
+        in sourceDir.list(recursive: true, followLinks: false)) {
+      if (entity is File && path.extension(entity.path) == '.json') {
+        String relativePath =
+            path.relative(entity.path, from: playlistsRootPath);
+
+        // Add the file to the archive, preserving the relative path
+        List<int> fileBytes = await entity.readAsBytes();
+        archive.addFile(ArchiveFile(relativePath, fileBytes.length, fileBytes));
+      }
+    }
+
+    String applicationPath = _settingsDataService.get(
+      settingType: SettingType.dataLocation,
+      settingSubType: DataLocation.appSettingsPath,
+    );
+
+    if (applicationPath != playlistsRootPath) {
+      // Path to the settings.json file
+      File settingsFile = File(path.join(applicationPath, 'settings.json'));
+
+      // Check if settings.json exists before attempting to add it
+      if (settingsFile.existsSync()) {
+        // Get the relative path of the settings.json file
+        String settingsRelativePath = path.join('appSettings', 'settings.json');
+
+        // Read the file and add it to the archive
+        List<int> settingsBytes = await settingsFile.readAsBytes();
+        archive.addFile(ArchiveFile(
+            settingsRelativePath, settingsBytes.length, settingsBytes));
+      }
+    }
+
+    // Save the archive to a zip file in the target directory
+    String zipFileName =
+        "audioLearn_${englishDateTimeFormat.format(DateTime.now())}.zip";
+        
+    zipFileName = zipFileName.replaceAll(':', '_');
+    zipFileName = zipFileName.replaceAll(' ', '_');
+
+    String zipFilePath = path.join(targetDir, zipFileName);
+
+    File zipFile = File(zipFilePath);
+    zipFile.writeAsBytesSync(ZipEncoder().encode(archive)!, flush: true);
   }
 }

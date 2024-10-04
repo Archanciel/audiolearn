@@ -434,5 +434,7 @@
   "listenedOn": "Écouté le",
   "remaining": "Durée restante",
   "searchInYoutubeChannelName": "Inclure la chaîne Youtube",
-  "searchInYoutubeChannelNameTooltip": "Inclure le nom de la chaîne Youtube dans la recherche."
+  "searchInYoutubeChannelNameTooltip": "Inclure le nom de la chaîne Youtube dans la recherche.",
+  "savePlaylistAndCommentsToZipMenu": "Sauver les playlists et les commentaires dans un fichier zip ...",
+  "savePlaylistAndCommentsToZipTooltip": "Sauvegarde des playlists et les commentaires dans un fichier zip. Seuls les fichiers json sont copiés. Les fichiers audio ne sont pas inclus."
 }

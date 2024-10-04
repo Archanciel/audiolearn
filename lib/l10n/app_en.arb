@@ -434,5 +434,7 @@
   "listenedOn": "Listened on",
   "remaining": "Remaining",
   "searchInYoutubeChannelName": "Include Youtube channel",
-  "searchInYoutubeChannelNameTooltip": "If set, search words or sentences are searched on Youtube channel name as well."
+  "searchInYoutubeChannelNameTooltip": "If set, search words or sentences are searched on Youtube channel name as well.",
+  "savePlaylistAndCommentsToZipMenu": "Save playlists and comments to zip file ...",
+  "savePlaylistAndCommentsToZipTooltip": "Saving the playlists and their audio comments to a zip file. The zip file will contain the playlists JSON files as well as the comments JSON files. The audio files won't be included."
 }

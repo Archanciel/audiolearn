@@ -1331,4 +1331,12 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get searchInYoutubeChannelNameTooltip =>
       "If set, search words or sentences are searched on Youtube channel name as well.";
+
+  @override
+  String get savePlaylistAndCommentsToZipMenu =>
+      "Save playlists and comments to zip file ...";
+
+  @override
+  String get savePlaylistAndCommentsToZipTooltip =>
+      "Save the playlists and their audio comments to a zip file. The zip file will contain the playlists JSON files as well as the comments JSON files.";
 }
