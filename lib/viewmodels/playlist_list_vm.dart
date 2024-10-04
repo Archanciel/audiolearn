@@ -1774,7 +1774,7 @@ class PlaylistListVM extends ChangeNotifier {
 
   /// Method called when the user clicks on the 'Save playlist and comments to
   /// zip' menu item located in the appbar leading popup menu.
-  Future<void> savePlaylistAndCommentsToZip({
+  Future<void> savePlaylistsCommentsAndSettingsJsonFilesToZip({
     required String targetDirectoryPath,
   }) async {
     await _zipDirectory(
@@ -1835,7 +1835,7 @@ class PlaylistListVM extends ChangeNotifier {
     // Save the archive to a zip file in the target directory
     String zipFileName =
         "audioLearn_${englishDateTimeFormat.format(DateTime.now())}.zip";
-        
+
     zipFileName = zipFileName.replaceAll(':', '_');
     zipFileName = zipFileName.replaceAll(' ', '_');
 
