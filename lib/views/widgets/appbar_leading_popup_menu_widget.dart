@@ -1,4 +1,5 @@
 import 'package:audiolearn/models/comment.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -24,6 +25,7 @@ import 'playlist_one_selectable_dialog.dart';
 enum AppBarPopupMenu {
   openSettingsDialog,
   updatePlaylistJson,
+  savePlaylistAndCommentsToZip,
 }
 
 /// The AppBarLeadingPopupMenuWidget is used to display the leading
@@ -147,8 +149,7 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
           case AudioPopupMenuAction.displayAudioInfo:
             showDialog<void>(
               context: context,
-              builder: (BuildContext context) =>
-                  AudioInfoDialog(
+              builder: (BuildContext context) => AudioInfoDialog(
                 audio: audioPlayerVMlistenFalse.currentAudio!,
               ),
             );
@@ -512,10 +513,20 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
                   AppLocalizations.of(context)!.updatePlaylistJsonFilesMenu),
             ),
           ),
+          PopupMenuItem<AppBarPopupMenu>(
+            key: const Key('appBarMenuCopyPlaylistsAndCommentsToZip'),
+            value: AppBarPopupMenu.savePlaylistAndCommentsToZip,
+            child: Tooltip(
+              message: AppLocalizations.of(context)!
+                  .savePlaylistAndCommentsToZipTooltip,
+              child: Text(AppLocalizations.of(context)!
+                  .savePlaylistAndCommentsToZipMenu),
+            ),
+          ),
         ];
       },
       icon: const Icon(Icons.menu),
-      onSelected: (AppBarPopupMenu value) {
+      onSelected: (AppBarPopupMenu value) async {
         switch (value) {
           case AppBarPopupMenu.openSettingsDialog:
             showDialog<void>(
@@ -535,10 +546,29 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
               listen: false,
             ).updateSettingsAndPlaylistJsonFiles();
             break;
+          case AppBarPopupMenu.savePlaylistAndCommentsToZip:
+            String? selectedFilePathNameLst =
+                await _filePickerSelectTargetDir();
+
+            if (selectedFilePathNameLst == null) {
+              return;
+            }
+
+            await Provider.of<PlaylistListVM>(
+              context,
+              listen: false,
+            ).savePlaylistAndCommentsToZip(
+              targetDirectoryPath: selectedFilePathNameLst,
+            );
+            break;
           default:
             break;
         }
       },
     );
+  }
+
+  Future<String?> _filePickerSelectTargetDir() async {
+    return await FilePicker.platform.getDirectoryPath();
   }
 }
