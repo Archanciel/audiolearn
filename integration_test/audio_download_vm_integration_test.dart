@@ -154,9 +154,9 @@ void main() {
         audioOneFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
         audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
         downloadedFileSizeOne: 378444,
-        downloadedFileSizeTwo: 73294,
+        downloadedFileSizeTwo: 160000,
         audioDurationMillisecondsOne: 23336,
-        audioDurationMillisecondsTwo: 9801,
+        audioDurationMillisecondsTwo: 9845,
       );
 
       // Checking the data of the audio contained in the playable
@@ -169,9 +169,9 @@ void main() {
         audioOneFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
         audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
         downloadedFileSizeOne: 378444,
-        downloadedFileSizeTwo: 73294,
+        downloadedFileSizeTwo: 160000,
         audioDurationMillisecondsOne: 23336,
-        audioDurationMillisecondsTwo: 9801,
+        audioDurationMillisecondsTwo: 9845,
       );
 
       // Checking if there are 3 files in the directory (2 mp3 and 1 json)
@@ -464,8 +464,8 @@ void main() {
       checkDownloadedAudioShortVideoTwo(
         downloadedAudioTwo: singleVideoDownloadedPlaylist.downloadedAudioLst[0],
         audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
-        downloadedFileSize: 73294,
-        audioDurationMilliseconds: 9801,
+        downloadedFileSize: 160000,
+        audioDurationMilliseconds: 9845,
       );
 
       // Checking if there are 2 files in the directory (1 mp3 and 1 json)
@@ -603,8 +603,8 @@ void main() {
         downloadedAudioTwo: singleVideoDownloadedPlaylist.downloadedAudioLst[0],
         audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
         downloadedAtMusicQuality: false,
-        downloadedFileSize: 73294,
-        audioDurationMilliseconds: 9801,
+        downloadedFileSize: 160000,
+        audioDurationMilliseconds: 9845,
       );
 
       // Checking if there are 2 files in the directory (1 mp3 and 1 json)
@@ -876,9 +876,9 @@ void main() {
         audioOneFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
         audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
         downloadedFileSizeOne: 143679,
-        downloadedFileSizeTwo: 73294,
+        downloadedFileSizeTwo: 160000,
         audioDurationMillisecondsOne: 24000,
-        audioDurationMillisecondsTwo: 9801,
+        audioDurationMillisecondsTwo: 9845,
       );
 
       // ... and the values of the 3rd and 4th audio newly downloaded
@@ -894,9 +894,9 @@ void main() {
         audioOneFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
         audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
         downloadedFileSizeOne: 143679,
-        downloadedFileSizeTwo: 73294,
+        downloadedFileSizeTwo: 160000,
         audioDurationMillisecondsOne: 24000,
-        audioDurationMillisecondsTwo: 9801,
+        audioDurationMillisecondsTwo: 9845,
       );
 
       // Checking if there are 3 files in the directory (2 mp3 and 1 json)
@@ -1355,7 +1355,7 @@ void checkPlaylistNewAudioOne({
       "Jean-Pierre Schnyder\n\nCette vidéo me sert à tester AudioLearn, l'app Android que je développe. ...");
   expect(downloadedAudioOne.videoUrl,
       "https://www.youtube.com/watch?v=ADt0BYlh1Yo");
-  expect(downloadedAudioOne.audioDuration, const Duration(milliseconds: 9801));
+  expect(downloadedAudioOne.audioDuration, const Duration(milliseconds: 9845));
   expect(downloadedAudioOne.audioPlaySpeed, 1.0);
 
   String firstNewAudioFileName = downloadedAudioOne.audioFileName;
@@ -1364,7 +1364,7 @@ void checkPlaylistNewAudioOne({
           firstNewAudioFileName.contains('Really short video 23-07-01.mp3'),
       true);
 
-  expect(downloadedAudioOne.audioFileSize, 73294);
+  expect(downloadedAudioOne.audioFileSize, 160000);
   expect(
       DateTimeParser.truncateDateTimeToDateOnly(
           downloadedAudioOne.videoUploadDate),
