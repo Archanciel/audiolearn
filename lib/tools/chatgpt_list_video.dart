@@ -7,8 +7,7 @@ import 'package:window_size/window_size.dart';
 import '../constants.dart';
 
 class YoutubeService {
-  final String apiKey =
-      'AIzaSyDhywmh5EKopsNsaszzMkLJ719aQa2NHBw'; // Replace with your API key
+  final String apiKey = kGoogleApiKey; // Replace with your API key
   final String channelId = 'UCP4LykxRItz7-jcvICUOvDg';
   final String channelId_2 = 'UCElH9qAoRv-jCRU9RYMLZEQ';
   final int maxResults = 200;

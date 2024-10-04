@@ -64,7 +64,7 @@ class VideoListScreen extends StatefulWidget {
 }
 
 class _VideoListScreenState extends State<VideoListScreen> {
-  final String apiKey = 'AIzaSyDhywmh5EKopsNsaszzMkLJ719aQa2NHBw';
+  final String apiKey = kGoogleApiKey;
   final String channelId = 'UCP4LykxRItz7-jcvICUOvDg';
   final int maxResults = 200;
   List videos = [];
