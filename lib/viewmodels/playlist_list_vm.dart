@@ -846,10 +846,12 @@ class PlaylistListVM extends ChangeNotifier {
     return playlistSortingItemLst;
   }
 
+  /// Method related to the need of the AudioPlayableListDialog to obtain the
+  /// sort an filtered not fully played audios of the selected playlist.
   List<Audio>
-      getSelectedPlaylistNotFullyPlayedAudiosApplyingSortFilterParameters(
-    AudioLearnAppViewType audioLearnAppViewType,
-  ) {
+      getSelectedPlaylistNotFullyPlayedAudioApplyingSortFilterParameters({
+    required AudioLearnAppViewType audioLearnAppViewType,
+  }) {
     List<Audio> playlistPlayableAudioLst =
         getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
       audioLearnAppViewType: audioLearnAppViewType,
@@ -896,17 +898,26 @@ class PlaylistListVM extends ChangeNotifier {
   /// {audioSortFilterParameters} is the sort and filter parameters
   /// selected by the user in the download playlist view Sort and
   /// Filter dropdown menu or is the sort and filter parameters
-  /// the user set in the SortAndFilterAudioDialog.
+  /// the user did set in the SortAndFilterAudioDialog.
   void setSortFilterForSelectedPlaylistPlayableAudiosAndParms({
     required AudioLearnAppViewType audioLearnAppViewType,
     required List<Audio> sortFilteredSelectedPlaylistPlayableAudio,
     required AudioSortFilterParameters audioSortFilterParms,
     required String audioSortFilterParmsName,
+    String searchSentence = '',
     bool doNotifyListeners = true,
   }) {
     _sortedFilteredSelectedPlaylistsPlayableAudios =
         sortFilteredSelectedPlaylistPlayableAudio;
     _audioSortFilterParameters = audioSortFilterParms;
+
+    if (searchSentence.isNotEmpty) {
+      searchSentence = searchSentence.toLowerCase();
+      _sortedFilteredSelectedPlaylistsPlayableAudios =
+          _sortedFilteredSelectedPlaylistsPlayableAudios!
+              .where((audio) => audio.validVideoTitle.toLowerCase().contains(searchSentence))
+              .toList();
+    }
 
     if (audioLearnAppViewType == AudioLearnAppViewType.playlistDownloadView) {
       _playlistAudioSFparmsNamesForPlaylistDownloadViewMap[
@@ -1802,8 +1813,7 @@ class PlaylistListVM extends ChangeNotifier {
     await for (var entity
         in sourceDir.list(recursive: true, followLinks: false)) {
       if (entity is File && path.extension(entity.path) == '.json') {
-        String relativePath =
-            path.relative(entity.path, from: playlistsRootPath);
+        String relativePath = path.relative(entity.path, from: applicationPath);
 
         // Add the file to the archive, preserving the relative path
         List<int> fileBytes = await entity.readAsBytes();

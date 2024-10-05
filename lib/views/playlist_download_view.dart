@@ -55,6 +55,12 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
   String? _selectedSortFilterParametersName;
 
+  // Set to true when the user clicks on the search icon button and to
+  // false when the user empty the 'Youtube link or Search' field or if
+  // a URL is pasted in the field.
+  bool _isSearchSentenceApplied = false;
+  bool _isSearchButtonUsable = false;
+
   // @override
   // void initState() {
   //   super.initState();
@@ -356,13 +362,19 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           width: kSmallIconButtonWidth,
           child: IconButton(
             key: const Key('search_icon_button'),
-            onPressed: () {
-              if (playlistListVMlistenTrue.isListExpanded) {
-                _playlistSearch();
-              } else {
-                _audioSearch();
-              }
-            },
+            onPressed: (_isSearchButtonUsable)
+                ? () {
+                    if (playlistListVMlistenTrue.isListExpanded) {
+                      _playlistSearch();
+                    } else {
+                      _isSearchSentenceApplied = true;
+                      applySortFilterParmsNameChange(
+                        playlistListVMlistenTrue: playlistListVMlistenTrue,
+                        notifyListeners: true,
+                      );
+                    }
+                  }
+                : null,
             style: ButtonStyle(
               // Highlight button when pressed
               padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -574,7 +586,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       // playlist. Without that, the default sort and filter parameters
       // are applied to the selected playlist after the language changed
       _updatePlaylistSortedFilteredAudioList(
-        playlistListVMlistenFalse: playlistListVMlistenFalse,
+        playlistListVMlistenTrue: playlistListVMlistenFalse,
         notifyListeners: false,
       );
     }
@@ -659,12 +671,14 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                     .isEmpty)
                 ? null // causes the default sort filter parms to be applied
                 //        and its name to be displayed
-                : applySortFilterParmsNameChange(playlistListVMlistenTrue),
+                : applySortFilterParmsNameChange(
+                    playlistListVMlistenTrue: playlistListVMlistenTrue,
+                  ),
             items: dropdownMenuItems,
             onChanged: (value) {
               _selectedSortFilterParametersName = value;
               _updatePlaylistSortedFilteredAudioList(
-                  playlistListVMlistenFalse: playlistListVMlistenFalse);
+                  playlistListVMlistenTrue: playlistListVMlistenFalse);
             },
             hint: Text(
               sortFilterDefaultMenuItemNameCorrespondingToLanguage,
@@ -676,18 +690,33 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     );
   }
 
-  String applySortFilterParmsNameChange(
-      PlaylistListVM playlistListVMlistenTrue) {
+  /// Method called when the user select a sort/filter parameters in the
+  /// sort/filter dropdown button list. The selected sort/ilter parameters
+  /// are applied to the selected playlist audio list.
+  String applySortFilterParmsNameChange({
+    required PlaylistListVM playlistListVMlistenTrue,
+    notifyListeners = false,
+  }) {
     _selectedSortFilterParametersName =
         playlistListVMlistenTrue.getSelectedPlaylistAudioSortFilterParmsName(
       audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       translatedAppliedSortFilterParmsName:
           AppLocalizations.of(context)!.sortFilterParametersAppliedName,
     );
+
+    String searchSentence = '';
+
+    if (_isSearchSentenceApplied) {
+      searchSentence = _playlistUrlController.text;
+    }
+
     _updatePlaylistSortedFilteredAudioList(
-        playlistListVMlistenFalse: playlistListVMlistenTrue,
-        notifyListeners: false); // avoid rebuilding the widget and avoid
-    //                              integration test failure
+        playlistListVMlistenTrue: playlistListVMlistenTrue,
+        searchSentence: searchSentence,
+        notifyListeners: notifyListeners); // If true, causes displayed audio
+    //                                    list update.
+    //                         If false, avoids rebuilding the widget and
+    //                         avoids integration test failure
 
     return _selectedSortFilterParametersName!; // is not null
   }
@@ -696,25 +725,29 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   /// according to the sort and filter parameters selected in the dropdown
   /// button list.
   void _updatePlaylistSortedFilteredAudioList({
-    required PlaylistListVM playlistListVMlistenFalse,
+    required PlaylistListVM playlistListVMlistenTrue,
+    String searchSentence = '',
     bool notifyListeners = true,
   }) {
     AudioSortFilterParameters audioSortFilterParameters =
-        playlistListVMlistenFalse.getAudioSortFilterParameters(
+        playlistListVMlistenTrue.getAudioSortFilterParameters(
       audioSortFilterParametersName: _selectedSortFilterParametersName!,
     );
-    playlistListVMlistenFalse
+
+    playlistListVMlistenTrue
         .setSortFilterForSelectedPlaylistPlayableAudiosAndParms(
       audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
-      sortFilteredSelectedPlaylistPlayableAudio: playlistListVMlistenFalse
+      sortFilteredSelectedPlaylistPlayableAudio: playlistListVMlistenTrue
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
         audioSortFilterParameters: audioSortFilterParameters,
       ),
       audioSortFilterParms: audioSortFilterParameters,
       audioSortFilterParmsName: _selectedSortFilterParametersName!,
+      searchSentence: searchSentence,
       doNotifyListeners: notifyListeners,
     );
+
     _wasSortFilterAudioSettingsApplied = true;
   }
 
@@ -1531,6 +1564,22 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 contentPadding: const EdgeInsets.all(2),
               ),
               maxLines: 1,
+              onChanged: (String value) {
+                if (value.isEmpty ||
+                    value.toLowerCase().contains('https://') ||
+                    value.toLowerCase().contains('http://')) {
+                  _isSearchButtonUsable = false;
+                  setState(() {});
+                  _isSearchSentenceApplied = false;
+                  applySortFilterParmsNameChange(
+                    playlistListVMlistenTrue: playlistListVMlistenTrue,
+                    notifyListeners: true,
+                  );
+                } else {
+                  _isSearchButtonUsable = true;
+                  setState(() {});
+                }
+              },
             ),
           ),
           Expanded(
@@ -1611,5 +1660,4 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   }
 
   void _playlistSearch() {}
-  void _audioSearch() {}
 }
