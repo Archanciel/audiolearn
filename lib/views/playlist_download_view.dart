@@ -46,7 +46,8 @@ class PlaylistDownloadView extends StatefulWidget {
 
 class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     with ScreenMixin {
-  final TextEditingController _playlistUrlController = TextEditingController();
+  final TextEditingController _playlistUrlOrSearchController =
+      TextEditingController();
   final ScrollController _scrollController = ScrollController();
 
   List<Audio> _selectedPlaylistsPlayableAudios = [];
@@ -59,7 +60,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   // false when the user empty the 'Youtube link or Search' field or if
   // a URL is pasted in the field.
   bool _isSearchSentenceApplied = false;
-  bool _isSearchButtonUsable = false;
+  bool _isSearchButtonEnabled = false;
 
   // @override
   // void initState() {
@@ -97,7 +98,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
   @override
   void dispose() {
-    _playlistUrlController.dispose();
+    _playlistUrlOrSearchController.dispose();
     _scrollController.dispose();
     super.dispose();
   }
@@ -134,7 +135,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       children: <Widget>[
         buildWarningMessageVMConsumer(
           context: context,
-          urlController: _playlistUrlController,
+          urlController: _playlistUrlOrSearchController,
         ),
         _buildFirstLine(
           context: context,
@@ -362,7 +363,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           width: kSmallIconButtonWidth,
           child: IconButton(
             key: const Key('search_icon_button'),
-            onPressed: (_isSearchButtonUsable)
+            onPressed: (_isSearchButtonEnabled)
                 ? () {
                     if (playlistListVMlistenTrue.isListExpanded) {
                       _playlistSearch();
@@ -707,7 +708,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     String searchSentence = '';
 
     if (_isSearchSentenceApplied) {
-      searchSentence = _playlistUrlController.text;
+      searchSentence = _playlistUrlOrSearchController.text;
     }
 
     _updatePlaylistSortedFilteredAudioList(
@@ -980,7 +981,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _buildPlaylistUrlAndTitle(
+          _buildYoutubeUrlOrSearchPlusSelPlaylistTitle(
             context: context,
             playlistListVMlistenTrue: playlistListVMlistenTrue,
           ),
@@ -1492,7 +1493,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                   // the case if the user clicked on Ok button
                   ErrorType errorType =
                       await audioDownloadVMlistenFalse.downloadSingleVideoAudio(
-                    videoUrl: _playlistUrlController.text.trim(),
+                    videoUrl: _playlistUrlOrSearchController.text.trim(),
                     singleVideoTargetPlaylist: selectedTargetPlaylist!,
                     downloadAtMusicQuality: isMusicQuality,
                   );
@@ -1501,7 +1502,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                     // if the single video audio has been
                     // correctly downloaded, then the playlistUrl
                     // field is cleared
-                    _playlistUrlController.clear();
+                    _playlistUrlOrSearchController.clear();
                   }
                 }
               });
@@ -1533,15 +1534,16 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     );
   }
 
-  /// Builds the playlist URL text field and the selected playlist
-  /// title text. The playlist URL text field allows the user to
-  /// enter the URL of a Youtube playlist. The selected playlist
-  /// title text displays the title of the selected playlist.
+  /// Builds the Youtube URL or search text field and the selected playlist
+  /// title text. The Youtube URL or search text field allows the user to enter
+  /// the URL of a Youtube playlist or single video as well as a search word or
+  /// sentence. The selected playlist title text displays the title of the
+  /// selected playlist.
   ///
   /// {playlistListVMlistenTrue} is the PlaylistListVM with listen set to
   /// true. This is necessary to update the selected playlist title when
   /// the user selects another playlist.
-  Expanded _buildPlaylistUrlAndTitle({
+  Expanded _buildYoutubeUrlOrSearchPlusSelPlaylistTitle({
     required BuildContext context,
     required PlaylistListVM playlistListVMlistenTrue,
   }) {
@@ -1553,8 +1555,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           Expanded(
             flex: 6, // controls the height ratio
             child: TextField(
-              key: const Key('playlistUrlTextField'),
-              controller: _playlistUrlController,
+              key: const Key('youtubeUrlOrSearchTextField'),
+              controller: _playlistUrlOrSearchController,
               style: const TextStyle(fontSize: 15),
               decoration: InputDecoration(
                 labelText: AppLocalizations.of(context)!.ytPlaylistLinkLabel,
@@ -1568,15 +1570,17 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 if (value.isEmpty ||
                     value.toLowerCase().contains('https://') ||
                     value.toLowerCase().contains('http://')) {
-                  _isSearchButtonUsable = false;
-                  setState(() {});
-                  _isSearchSentenceApplied = false;
-                  applySortFilterParmsNameChange(
-                    playlistListVMlistenTrue: playlistListVMlistenTrue,
-                    notifyListeners: true,
-                  );
+                  if (_isSearchButtonEnabled) {
+                    _isSearchButtonEnabled = false;
+                    setState(() {});
+                    _isSearchSentenceApplied = false;
+                    applySortFilterParmsNameChange(
+                      playlistListVMlistenTrue: playlistListVMlistenTrue,
+                      notifyListeners: true,
+                    );
+                  }
                 } else {
-                  _isSearchButtonUsable = true;
+                  _isSearchButtonEnabled = true;
                   setState(() {});
                 }
               },
@@ -1626,7 +1630,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             overlayColor: textButtonTapModification, // Tap feedback color
           ),
           onPressed: () {
-            final String playlistUrl = _playlistUrlController.text.trim();
+            final String playlistUrl =
+                _playlistUrlOrSearchController.text.trim();
             showDialog<bool>(
               context: context,
               barrierDismissible:
@@ -1644,7 +1649,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 //
                 // The value is true if a Youtube playlist has been added.
                 // Then, in this case the playlist url TextField is cleared.
-                _playlistUrlController.clear();
+                _playlistUrlOrSearchController.clear();
               }
             });
           },

@@ -155,14 +155,14 @@ void main() {
 
       // Enter the new Youtube playlist URL into the url text field
       await tester.enterText(
-        find.byKey(const Key('playlistUrlTextField')),
+        find.byKey(const Key('youtubeUrlOrSearchTextField')),
         youtubePlaylistUrl,
       );
       await tester.pumpAndSettle();
 
       // Ensure the url text field contains the entered url
       TextField urlTextField =
-          tester.widget(find.byKey(const Key('playlistUrlTextField')));
+          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
       expect(urlTextField.controller!.text, youtubePlaylistUrl);
 
       // Open the add playlist dialog by tapping the add playlist
@@ -196,7 +196,7 @@ void main() {
 
       // Ensure the URL TextField was emptied
       urlTextField =
-          tester.widget(find.byKey(const Key('playlistUrlTextField')));
+          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
       expect(urlTextField.controller!.text, '');
 
       // The list of Playlist's should have one item now
@@ -411,14 +411,14 @@ void main() {
 
       // Enter the new Youtube playlist URL into the url text field
       await tester.enterText(
-        find.byKey(const Key('playlistUrlTextField')),
+        find.byKey(const Key('youtubeUrlOrSearchTextField')),
         youtubePlaylistUrl,
       );
       await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // Ensure the url text field contains the entered url
       TextField urlTextField =
-          tester.widget(find.byKey(const Key('playlistUrlTextField')));
+          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
       expect(urlTextField.controller!.text, youtubePlaylistUrl);
 
       // Open the add playlist dialog by tapping the add playlist
@@ -462,7 +462,7 @@ void main() {
 
       // Ensure the URL TextField was not emptied
       urlTextField =
-          tester.widget(find.byKey(const Key('playlistUrlTextField')));
+          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
       expect(urlTextField.controller!.text, youtubePlaylistUrl);
 
       // Purge the test playlist directory so that the created test
@@ -566,13 +566,13 @@ void main() {
 
       // Enter the new Youtube playlist URL into the url text field
       await tester.enterText(
-        find.byKey(const Key('playlistUrlTextField')),
+        find.byKey(const Key('youtubeUrlOrSearchTextField')),
         youtubePlaylistUrl,
       );
 
       // Ensure the url text field contains the entered url
       TextField urlTextField =
-          tester.widget(find.byKey(const Key('playlistUrlTextField')));
+          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
       expect(urlTextField.controller!.text, youtubePlaylistUrl);
 
       // Open the add playlist dialog by tapping the add playlist
@@ -611,7 +611,7 @@ void main() {
 
       // Ensure the URL TextField was emptied
       urlTextField =
-          tester.widget(find.byKey(const Key('playlistUrlTextField')));
+          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
       expect(urlTextField.controller!.text, '');
 
       // Check the saved Youtube playlist values in the json file
@@ -658,13 +658,14 @@ void main() {
       // I don't know why, but the next commented code does not work.
 
       // await tester.enterText(
-      //   find.byKey(const Key('playlistUrlTextField')),
+      //   find.byKey(const Key('youtubeUrlOrSearchTextField')),
       //   youtubePlaylistUrl,
       // );
 
       // Solving this problem
       tester
-          .widget<TextField>(find.byKey(const Key('playlistUrlTextField')))
+          .widget<TextField>(
+              find.byKey(const Key('youtubeUrlOrSearchTextField')))
           .controller!
           .text = youtubePlaylistUrl;
 
@@ -672,7 +673,7 @@ void main() {
 
       // Ensure the url text field contains the entered url
       urlTextField =
-          tester.widget(find.byKey(const Key('playlistUrlTextField')));
+          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
       expect(urlTextField.controller!.text, youtubePlaylistUrl);
 
       // Open the add playlist dialog by tapping the add playlist
@@ -719,7 +720,7 @@ void main() {
 
       // Ensure the URL TextField was not emptied
       urlTextField =
-          tester.widget(find.byKey(const Key('playlistUrlTextField')));
+          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
       expect(urlTextField.controller!.text, youtubePlaylistUrl);
 
       // Purge the test playlist directory so that the created test
@@ -821,13 +822,13 @@ void main() {
 
       // Enter the new Youtube playlist URL into the url text field
       await tester.enterText(
-        find.byKey(const Key('playlistUrlTextField')),
+        find.byKey(const Key('youtubeUrlOrSearchTextField')),
         youtubePlaylistUrl,
       );
 
       // Ensure the url text field contains the entered url
       TextField urlTextField =
-          tester.widget(find.byKey(const Key('playlistUrlTextField')));
+          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
       expect(urlTextField.controller!.text, youtubePlaylistUrl);
 
       // Open the add playlist dialog by tapping the add playlist
@@ -859,7 +860,7 @@ void main() {
 
       // Ensure the URL TextField was not emptied
       urlTextField =
-          tester.widget(find.byKey(const Key('playlistUrlTextField')));
+          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
       expect(urlTextField.controller!.text, youtubePlaylistUrl);
 
       // The list of Playlist's should have 0 item
@@ -1612,7 +1613,7 @@ void main() {
 
       // Enter the new Youtube playlist URL into the url text field
       await tester.enterText(
-        find.byKey(const Key('playlistUrlTextField')),
+        find.byKey(const Key('youtubeUrlOrSearchTextField')),
         youtubePlaylistUrl,
       );
 
@@ -1850,7 +1851,7 @@ void main() {
 
       // Enter the new Youtube playlist URL into the url text field
       await tester.enterText(
-        find.byKey(const Key('playlistUrlTextField')),
+        find.byKey(const Key('youtubeUrlOrSearchTextField')),
         youtubePlaylistUrl,
       );
 
@@ -2036,13 +2037,13 @@ void main() {
       // Enter the invalid Youtube playlist URL into the url text
       // field
       await tester.enterText(
-        find.byKey(const Key('playlistUrlTextField')),
+        find.byKey(const Key('youtubeUrlOrSearchTextField')),
         invalidYoutubePlaylistUrl,
       );
 
       // Ensure the url text field contains the entered url
       TextField urlTextField =
-          tester.widget(find.byKey(const Key('playlistUrlTextField')));
+          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
       expect(urlTextField.controller!.text, invalidYoutubePlaylistUrl);
 
       // Open the add playlist dialog by tapping the add playlist
@@ -2089,7 +2090,7 @@ void main() {
 
       // Ensure the URL TextField was not emptied
       urlTextField =
-          tester.widget(find.byKey(const Key('playlistUrlTextField')));
+          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
       expect(urlTextField.controller!.text, invalidYoutubePlaylistUrl);
 
       // The list of Playlist's should have zero item now
@@ -2180,13 +2181,13 @@ void main() {
       // Enter the invalid Youtube playlist URL into the url text
       // field
       await tester.enterText(
-        find.byKey(const Key('playlistUrlTextField')),
+        find.byKey(const Key('youtubeUrlOrSearchTextField')),
         invalidYoutubePlaylistUrl,
       );
 
       // Ensure the url text field contains the entered url
       TextField urlTextField =
-          tester.widget(find.byKey(const Key('playlistUrlTextField')));
+          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
       expect(urlTextField.controller!.text, invalidYoutubePlaylistUrl);
 
       // Open the add playlist dialog by tapping the add playlist
@@ -2233,7 +2234,7 @@ void main() {
 
       // Ensure the URL TextField was not emptied
       urlTextField =
-          tester.widget(find.byKey(const Key('playlistUrlTextField')));
+          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
       expect(urlTextField.controller!.text, invalidYoutubePlaylistUrl);
 
       // The list of Playlist's should have zero item now
@@ -2272,7 +2273,7 @@ void main() {
       // The objective is to test that the url text field will not
       // be emptied after adding a local playlist
       await tester.enterText(
-        find.byKey(const Key('playlistUrlTextField')),
+        find.byKey(const Key('youtubeUrlOrSearchTextField')),
         youtubePlaylistUrl,
       );
 
@@ -2280,7 +2281,7 @@ void main() {
 
       // Ensure the url text field contains the entered url
       TextField urlTextField =
-          tester.widget(find.byKey(const Key('playlistUrlTextField')));
+          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
       expect(urlTextField.controller!.text, youtubePlaylistUrl);
 
       // Now we tap on the AudioPlayerView icon button to open
@@ -2301,7 +2302,7 @@ void main() {
 
       // Ensure the URL TextField was emptied
       urlTextField =
-          tester.widget(find.byKey(const Key('playlistUrlTextField')));
+          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
       expect(urlTextField.controller!.text, '');
 
       // Purge the test playlist directory so that the created test
@@ -2558,13 +2559,13 @@ void main() {
       // Enter the invalid single video URL into the url text
       // field
       await tester.enterText(
-        find.byKey(const Key('playlistUrlTextField')),
+        find.byKey(const Key('youtubeUrlOrSearchTextField')),
         invalidSingleVideoUrl,
       );
 
       // Ensure the url text field contains the entered url
       TextField urlTextField =
-          tester.widget(find.byKey(const Key('playlistUrlTextField')));
+          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
       expect(urlTextField.controller!.text, invalidSingleVideoUrl);
 
       // Open the target playlist selection dialog by tapping the
@@ -2639,7 +2640,7 @@ void main() {
       // Ensure the URL TextField containing the invalid single
       // video URL was not emptied
       urlTextField =
-          tester.widget(find.byKey(const Key('playlistUrlTextField')));
+          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
       expect(urlTextField.controller!.text, invalidSingleVideoUrl);
 
       // Purge the test playlist directory so that the created test
@@ -2785,13 +2786,13 @@ void main() {
       // Enter the single video URL to download into the url text
       // field
       await tester.enterText(
-        find.byKey(const Key('playlistUrlTextField')),
+        find.byKey(const Key('youtubeUrlOrSearchTextField')),
         singleVideoToDownloadUrl,
       );
 
       // Ensure the url text field contains the entered url
       TextField urlTextField =
-          tester.widget(find.byKey(const Key('playlistUrlTextField')));
+          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
       expect(urlTextField.controller!.text, singleVideoToDownloadUrl);
 
       // Open the target playlist selection dialog by tapping the
@@ -2871,7 +2872,7 @@ void main() {
       // Ensure the URL TextField containing the invalid single
       // video URL was not emptied
       urlTextField =
-          tester.widget(find.byKey(const Key('playlistUrlTextField')));
+          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
       expect(urlTextField.controller!.text, singleVideoToDownloadUrl);
 
       // Purge the test playlist directory so that the created test
@@ -9931,14 +9932,14 @@ void main() {
 
       // Enter the single video URL into the url text field
       await tester.enterText(
-        find.byKey(const Key('playlistUrlTextField')),
+        find.byKey(const Key('youtubeUrlOrSearchTextField')),
         singleVideoUrl,
       );
       await tester.pumpAndSettle();
 
       // Ensure the url text field contains the entered url
       TextField urlTextField =
-          tester.widget(find.byKey(const Key('playlistUrlTextField')));
+          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
       expect(urlTextField.controller!.text, singleVideoUrl);
 
       // Tap the 'Download single video button' button. Before fixing
@@ -15243,6 +15244,350 @@ void main() {
     // });
     // });
   });
+  group('Search icon button test', () {
+    group('Audio selection', () {
+      testWidgets('''First, select the existing 'janco' sort/filter parms in the
+          SF dropdown button. Then enter the search word 'La' in the 'Youtube
+          Link or Search' text field. After entering 'L', verify that the search
+          icon button is now enabled. Then, enter 'La' search word, click on the
+          enabled search icon button and verify the reduced displayed audio list.
+          After that, delete the 'a' letter from the 'La' search word and verify
+          the changed displayed audio list. Since the search button was used,
+          modifying the search text applies at each searxh text change. Then,
+          select the 'default' dropdon icon button and verify that now, as the
+          search button was tapped, applying the 'default' sort filter parms
+          is impacted by the still existing search word.''',
+          (WidgetTester tester) async {
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'sort_and_filter_audio_dialog_widget_test',
+          tapOnPlaylistToggleButton: false,
+        );
+
+        // Select 'janco' dropdown button item to apply the existing
+        // 'janco' sort/filter parms
+        final Finder dropDownButtonFinder =
+            find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+        final Finder dropDownButtonTextFinder = find.descendant(
+          of: dropDownButtonFinder,
+          matching: find.byType(Text),
+        );
+
+        // Tap on the current dropdown button item to open the dropdown
+        // button items list
+        await tester.tap(dropDownButtonTextFinder);
+        await tester.pumpAndSettle();
+
+        // And select the 'janco' sort/filter item
+        String sortFilterParmsTitle = 'janco';
+        Finder sortFilterParmsDropDownTextFinder =
+            find.text(sortFilterParmsTitle);
+
+        await tester.tap(sortFilterParmsDropDownTextFinder);
+        await tester.pumpAndSettle();
+
+        // And verify the order of the playlist audio titles
+
+        List<String>
+            audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          "La surpopulation mondiale par Jancovici et Barrau",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        ];
+
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          tester: tester,
+          audioTitlesOrderLst:
+              audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+        );
+
+        // Verify the disabled state of the search icon button
+        IntegrationTestUtil.verifyWidgetIsDisabled(
+          tester: tester,
+          widgetKeyStr: 'search_icon_button', // this button is disabled if the
+          //                                     'Youtube Link or Search' dosn't
+          //                                     contain a search word or sentence
+        );
+
+        // Now enter the first letter of the search word
+        await tester.enterText(
+          find.byKey(const Key('youtubeUrlOrSearchTextField')),
+          'L',
+        );
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        // Verify that the search icon button is now enabled
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'search_icon_button',
+        );
+
+        // Ensure that since the search icon button was not yet pressed,
+        // the displayed audio list is the same as the one before entering
+        // the first letter of the search word.
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          tester: tester,
+          audioTitlesOrderLst:
+              audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+        );
+
+        // Enter the second letter of the 'La' search word
+        await tester.enterText(
+          find.byKey(const Key('youtubeUrlOrSearchTextField')),
+          'La',
+        );
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        // Verify that the search icon button is still enabled
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'search_icon_button',
+        );
+
+        // Ensure that since the search icon button was not yet pressed,
+        // the displayed audio list is the same as the one before entering
+        // the first letter of the search word.
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          tester: tester,
+          audioTitlesOrderLst:
+              audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+        );
+
+        // Now tap on the search icon button
+        await tester.tap(find.byKey(const Key('search_icon_button')));
+        await tester.pumpAndSettle();
+
+        // Verify that the search icon button is still enabled
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'search_icon_button',
+        );
+
+        // Now verify the order of the reduced playlist audio titles
+
+        audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
+          "La surpopulation mondiale par Jancovici et Barrau",
+        ];
+
+        // Ensure that since the search icon button was now pressed,
+        // the displayed audio list is modified.
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          tester: tester,
+          audioTitlesOrderLst:
+              audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+        );
+
+        // Now remove the second letter of the 'La' search word
+        await tester.enterText(
+          find.byKey(const Key('youtubeUrlOrSearchTextField')),
+          'L',
+        );
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        // Verify that the search icon button is still enabled
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'search_icon_button',
+        );
+
+        // And verify the order of the playlist audio titles. Since
+        // the search icon button was used, modifying the search text
+        // is applied at each search text change
+
+        audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          "La surpopulation mondiale par Jancovici et Barrau",
+        ];
+
+        // Verify that the search icon button is still enabled
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'search_icon_button',
+        );
+
+        // Then reenter the second search word letter
+        await tester.enterText(
+          find.byKey(const Key('youtubeUrlOrSearchTextField')),
+          'La',
+        );
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        // Now verify the order of the reduced playlist audio titles
+
+        audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
+          "La surpopulation mondiale par Jancovici et Barrau",
+        ];
+
+        // Ensure that since the search icon button was now pressed,
+        // the displayed audio list is modified.
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          tester: tester,
+          audioTitlesOrderLst:
+              audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+        );
+
+        // Tap on the current dropdown button item to open the dropdown
+        // button items list
+        await tester.tap(dropDownButtonTextFinder);
+        await tester.pumpAndSettle();
+
+        // And select the 'default' sort/filter item
+        sortFilterParmsTitle = 'default';
+        sortFilterParmsDropDownTextFinder = find.text(sortFilterParmsTitle);
+
+        await tester.tap(sortFilterParmsDropDownTextFinder);
+        await tester.pumpAndSettle();
+
+        // And verify the order of the playlist audio titles
+
+        audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
+          "La surpopulation mondiale par Jancovici et Barrau",
+          "La résilience insulaire par Fiona Roche",
+          "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+        ];
+
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          tester: tester,
+          audioTitlesOrderLst:
+              audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+        );
+
+        // Verify the enabled state of the search icon button
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'search_icon_button', // this button is disabled if the
+          //                                     'Youtube Link or Search' dosn't
+          //                                     contain a search word or sentence
+        );
+
+        // Now emptying the search text word
+
+        await tester.enterText(
+          find.byKey(const Key('youtubeUrlOrSearchTextField')),
+          '',
+        );
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        // Verify that the search icon button is now disabled
+        IntegrationTestUtil.verifyWidgetIsDisabled(
+          tester: tester,
+          widgetKeyStr: 'search_icon_button',
+        );
+
+        // And verify the order of the playlist audio titles
+
+        audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          "La surpopulation mondiale par Jancovici et Barrau",
+          "La résilience insulaire par Fiona Roche",
+          "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+          "Les besoins artificiels par R.Keucheyan",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        ];
+
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          tester: tester,
+          audioTitlesOrderLst:
+              audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+    });
+    group('Playlist selection', () {
+      testWidgets('''One comment partially play color verification. Play comment
+           completely. Then close the playlist comment dialog and reopen it.
+           Verify that the played comment color was not changed, which means
+           that the commented audio position change due to the comment play was
+           undone. Verify as well that the current audio change caused by the
+           played comment audio was undone as well.''',
+          (WidgetTester tester) async {
+        const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+        const String playedCommentAudioTitle =
+            "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
+
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'audio_comment_color_test',
+          selectedPlaylistTitle: youtubePlaylistTitle,
+        );
+
+        // First, open the playlist comment dialog
+        Finder playlistCommentListDialogFinder =
+            await openPlaylistCommentDialog(
+          tester: tester,
+          playlistTitle: youtubePlaylistTitle,
+        );
+
+        // Find the list of comments in the playlist comment dialog
+        final Finder listFinder = find.descendant(
+            of: playlistCommentListDialogFinder,
+            matching: find.byType(ListBody));
+
+        // Find all the list items GestureDetector's
+        final Finder gestureDetectorsFinder = find.descendant(
+            // 3 GestureDetector per comment item
+            of: listFinder,
+            matching: find.byType(GestureDetector));
+
+        // Now tap on the play icon button of the unique comment of the third
+        // audio in order to play it completely
+        await IntegrationTestUtil.playComment(
+          tester: tester,
+          gestureDetectorsFinder: gestureDetectorsFinder,
+          itemIndex: 6,
+          typeOnPauseAfterPlay: false,
+          maxPlayDurationSeconds: 3,
+        );
+
+        // Tap on Close text button
+        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.pumpAndSettle();
+
+        // Now, re-open the playlist comment dialog
+        playlistCommentListDialogFinder = await openPlaylistCommentDialog(
+          tester: tester,
+          playlistTitle: youtubePlaylistTitle,
+        );
+
+        // Verify the color of the audio titles in the playlist comment dialog
+
+        await verifyAudioTitlesColorInPlaylistCommentDialog(
+          tester: tester,
+          playlistCommentListDialogFinder: playlistCommentListDialogFinder,
+        );
+
+        // Tap on Close text button
+        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.pumpAndSettle();
+
+        // When closing the playlist comment dialog, the played comment audio
+        // modification was undone. Verifying that ...
+        await verifyUndoneListenedAudioPosition(
+          tester: tester,
+          playlistTitle: youtubePlaylistTitle,
+          playedCommentAudioTitle: playedCommentAudioTitle,
+          playableAudioLstAudioIndex: 3,
+          audioPositionStr: '5:11',
+          audioPositionSeconds: 311,
+          audioRemainingDurationStr: '1:18',
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: true,
+          audioPausedDateTime: DateTime(2024, 9, 9, 19, 47, 23),
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+    });
+  });
 }
 
 Map loadSettingsMap() {
@@ -15310,9 +15655,11 @@ void verifyYoutubeSelectedPlaylistButtonsAndCheckbox({
   required WidgetTester tester,
   required bool isPlaylistListDisplayed,
 }) {
-  IntegrationTestUtil.verifyWidgetIsEnabled(
+  IntegrationTestUtil.verifyWidgetIsDisabled(
     tester: tester,
-    widgetKeyStr: 'search_icon_button',
+    widgetKeyStr: 'search_icon_button', // this button is disabled if the
+    //                                     'Youtube Link or Search' dosn't
+    //                                     contain a search word or sentence
   );
 
   if (isPlaylistListDisplayed) {
@@ -15354,9 +15701,11 @@ void verifyLocalSelectedPlaylistButtonsAndCheckbox({
   required WidgetTester tester,
   required bool isPlaylistListDisplayed,
 }) {
-  IntegrationTestUtil.verifyWidgetIsEnabled(
+  IntegrationTestUtil.verifyWidgetIsDisabled(
     tester: tester,
-    widgetKeyStr: 'search_icon_button',
+    widgetKeyStr: 'search_icon_button', // this button is disabled if the
+    //                                     'Youtube Link or Search' dosn't
+    //                                     contain a search word or sentence
   );
 
   if (isPlaylistListDisplayed) {
