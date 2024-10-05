@@ -148,6 +148,7 @@ class IntegrationTestUtil {
     String? savedTestDataDirName,
     String? selectedPlaylistTitle,
     String? replacePlaylistJsonFileName,
+    bool tapOnPlaylistToggleButton = true,
   }) async {
     // Purge the test playlist directory if it exists so that the
     // playlist list is empty
@@ -198,11 +199,13 @@ class IntegrationTestUtil {
     await app.main(['test']);
     await tester.pumpAndSettle();
 
-    // Tap the 'Toggle List' button to show the list. If the list
-    // is not opened, checking that a ListTile with the title of
-    // the playlist was added to the list will fail
-    await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-    await tester.pumpAndSettle();
+    if (tapOnPlaylistToggleButton) {
+      // Tap the 'Toggle List' button to show the list. If the list
+      // is not opened, checking that a ListTile with the title of
+      // the playlist was added to the list will fail
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+    }
 
     if (selectedPlaylistTitle != null) {
       // Find the ListTile Playlist containing the playlist which
