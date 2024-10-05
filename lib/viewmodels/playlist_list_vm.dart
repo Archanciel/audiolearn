@@ -1788,6 +1788,10 @@ class PlaylistListVM extends ChangeNotifier {
     String playlistsRootPath = _settingsDataService.get(
         settingType: SettingType.dataLocation,
         settingSubType: DataLocation.playlistRootPath);
+    String applicationPath = _settingsDataService.get(
+      settingType: SettingType.dataLocation,
+      settingSubType: DataLocation.appSettingsPath,
+    );
 
     Directory sourceDir = Directory(playlistsRootPath);
 
@@ -1803,18 +1807,13 @@ class PlaylistListVM extends ChangeNotifier {
         in sourceDir.list(recursive: true, followLinks: false)) {
       if (entity is File && path.extension(entity.path) == '.json') {
         String relativePath =
-            path.relative(entity.path, from: playlistsRootPath);
+            path.relative(entity.path, from: applicationPath);
 
         // Add the file to the archive, preserving the relative path
         List<int> fileBytes = await entity.readAsBytes();
         archive.addFile(ArchiveFile(relativePath, fileBytes.length, fileBytes));
       }
     }
-
-    String applicationPath = _settingsDataService.get(
-      settingType: SettingType.dataLocation,
-      settingSubType: DataLocation.appSettingsPath,
-    );
 
     if (applicationPath != playlistsRootPath) {
       // Path to the settings.json file
@@ -1823,7 +1822,7 @@ class PlaylistListVM extends ChangeNotifier {
       // Check if settings.json exists before attempting to add it
       if (settingsFile.existsSync()) {
         // Get the relative path of the settings.json file
-        String settingsRelativePath = path.join('appSettings', 'settings.json');
+        String settingsRelativePath = 'settings.json';
 
         // Read the file and add it to the archive
         List<int> settingsBytes = await settingsFile.readAsBytes();
