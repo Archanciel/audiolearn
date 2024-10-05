@@ -66,7 +66,7 @@ class _AudioPlayableListDialogState extends State<AudioPlayableListDialog>
     if (_excludeFullyPlayedAudios) {
       playableAudioLst = audioPlayerVMlistenFalse
           .getNotFullyPlayedAudiosApplyingSortFilterParameters(
-        AudioLearnAppViewType.audioPlayerView,
+        audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
       );
     } else {
       playableAudioLst = audioPlayerVMlistenFalse
@@ -371,7 +371,8 @@ class _AudioPlayableListDialogState extends State<AudioPlayableListDialog>
     required int audioIndex,
     required bool isDarkTheme,
   }) {
-    List<Color?> audioTitleForeAndBackgroundColors = UiUtil.generateAudioStateColors(
+    List<Color?> audioTitleForeAndBackgroundColors =
+        UiUtil.generateAudioStateColors(
       audio: audio,
       audioIndex: audioIndex,
       currentAudioIndex: _currentAudioIndex,

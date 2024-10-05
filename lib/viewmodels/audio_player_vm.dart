@@ -1062,12 +1062,15 @@ class AudioPlayerVM extends ChangeNotifier {
     );
   }
 
-  List<Audio> getNotFullyPlayedAudiosApplyingSortFilterParameters(
-    AudioLearnAppViewType audioLearnAppViewType,
-  ) {
+  /// Method used by AudioPlayableListDialog if the 'Exclude fully played audio
+  /// checkbox is checked in order to get the not fully played audios of the
+  /// selected playlist.
+  List<Audio> getNotFullyPlayedAudiosApplyingSortFilterParameters({
+    required AudioLearnAppViewType audioLearnAppViewType,
+  }) {
     return _playlistListVM
-        .getSelectedPlaylistNotFullyPlayedAudiosApplyingSortFilterParameters(
-      audioLearnAppViewType,
+        .getSelectedPlaylistNotFullyPlayedAudioApplyingSortFilterParameters(
+      audioLearnAppViewType: audioLearnAppViewType,
     );
   }
 
