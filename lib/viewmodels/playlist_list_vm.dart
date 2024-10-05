@@ -84,13 +84,6 @@ class PlaylistListVM extends ChangeNotifier {
   final AudioSortFilterService _audioSortFilterService =
       AudioSortFilterService();
 
-  String _searchPlaylistSentence = '';
-  set searchPlaylistSentence(String searchPlaylistSentence) {
-    _searchPlaylistSentence = searchPlaylistSentence.toLowerCase();
-
-    notifyListeners();
-  }
-
   PlaylistListVM({
     required WarningMessageVM warningMessageVM,
     required AudioDownloadVM audioDownloadVM,
@@ -266,14 +259,6 @@ class PlaylistListVM extends ChangeNotifier {
       _disableAllButtonsIfNoPlaylistIsSelected();
     }
 
-    if (_searchPlaylistSentence.isNotEmpty) {
-      return _listOfSelectablePlaylists
-          .where((playlist) => playlist.title
-              .toLowerCase()
-              .contains(_searchPlaylistSentence))
-          .toList();
-    }
-
     return _listOfSelectablePlaylists;
   }
 
@@ -389,7 +374,6 @@ class PlaylistListVM extends ChangeNotifier {
       _disableExpandedListButtons();
     } else {
       int selectedPlaylistIndex = _getSelectedIndex();
-
       if (selectedPlaylistIndex != -1) {
         _setPlaylistButtonsStateIfOnePlaylistIsSelected(
           selectedPlaylist: _listOfSelectablePlaylists[selectedPlaylistIndex],
@@ -931,8 +915,7 @@ class PlaylistListVM extends ChangeNotifier {
       searchSentence = searchSentence.toLowerCase();
       _sortedFilteredSelectedPlaylistsPlayableAudios =
           _sortedFilteredSelectedPlaylistsPlayableAudios!
-              .where((audio) =>
-                  audio.validVideoTitle.toLowerCase().contains(searchSentence))
+              .where((audio) => audio.validVideoTitle.toLowerCase().contains(searchSentence))
               .toList();
     }
 

@@ -579,8 +579,8 @@ void main() {
       // Obtaining the audio from which to obtain the next playable
       // audio
       List<Audio> playableAudioLst = playlistListVM
-          .getSelectedPlaylistNotFullyPlayedAudiosApplyingSortFilterParameters(
-        AudioLearnAppViewType.playlistDownloadView,
+          .getSelectedPlaylistNotFullyPlayedAudioApplyingSortFilterParameters(
+        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
       expect(playableAudioLst.length, 2);
@@ -653,8 +653,8 @@ void main() {
       );
 
       List<Audio> playableAudioLst = playlistListVM
-          .getSelectedPlaylistNotFullyPlayedAudiosApplyingSortFilterParameters(
-        AudioLearnAppViewType.playlistDownloadView,
+          .getSelectedPlaylistNotFullyPlayedAudioApplyingSortFilterParameters(
+        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
       expect(playableAudioLst.length, 3);
@@ -726,8 +726,8 @@ void main() {
       // Obtaining the audio from which to obtain the next playable
       // audio
       List<Audio> playableAudioLst = playlistListVM
-          .getSelectedPlaylistNotFullyPlayedAudiosApplyingSortFilterParameters(
-        AudioLearnAppViewType.playlistDownloadView,
+          .getSelectedPlaylistNotFullyPlayedAudioApplyingSortFilterParameters(
+        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
       expect(playableAudioLst.length, 0);
@@ -811,7 +811,6 @@ void main() {
     });
   });
   group('Save playlists, comments and settings json files to zip', () {
-
     test('settings and playlists sub dirs in same root path', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty

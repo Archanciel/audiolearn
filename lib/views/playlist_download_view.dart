@@ -59,7 +59,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   // false when the user empty the 'Youtube link or Search' field or if
   // a URL is pasted in the field.
   bool _isSearchSentenceApplied = false;
-  bool _isSearchButtonEnabled = false;
+  bool _isSearchButtonUsable = false;
 
   // @override
   // void initState() {
@@ -154,7 +154,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             playlistListVMlistenTrue: playlistListVMlistenTrue,
             warningMessageVMlistenFalse: warningMessageVMlistenFalse),
         _buildExpandedPlaylistList(
-          playlistListVMlistenTrue: playlistListVMlistenTrue,
+          playlistListVMlistenFalse: playlistListVMlistenFalse,
         ),
         (playlistListVMlistenFalse.isListExpanded)
             ? const Divider(
@@ -223,11 +223,11 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   }
 
   Widget _buildExpandedPlaylistList({
-    required PlaylistListVM playlistListVMlistenTrue,
+    required PlaylistListVM playlistListVMlistenFalse,
   }) {
-    if (playlistListVMlistenTrue.isListExpanded) {
+    if (playlistListVMlistenFalse.isListExpanded) {
       List<Playlist> upToDateSelectablePlaylists =
-          playlistListVMlistenTrue.getUpToDateSelectablePlaylists();
+          playlistListVMlistenFalse.getUpToDateSelectablePlaylists();
       return Expanded(
         child: ListView.builder(
           key: const Key('expandable_playlist_list'),
@@ -362,11 +362,10 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           width: kSmallIconButtonWidth,
           child: IconButton(
             key: const Key('search_icon_button'),
-            onPressed: (_isSearchButtonEnabled)
+            onPressed: (_isSearchButtonUsable)
                 ? () {
                     if (playlistListVMlistenTrue.isListExpanded) {
-                      playlistListVMlistenFalse.searchPlaylistSentence =
-                          _playlistUrlController.text;
+                      _playlistSearch();
                     } else {
                       _isSearchSentenceApplied = true;
                       applySortFilterParmsNameChange(
@@ -1569,32 +1568,16 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 if (value.isEmpty ||
                     value.toLowerCase().contains('https://') ||
                     value.toLowerCase().contains('http://')) {
-                  _isSearchButtonEnabled = false;
-                  setState(() {
-                    // updating the search button state
-                    // TODO: after itegr test, use PlaylistListVM
-                    //      with listen:False and the icon button
-                    //      does not test _isSearchButtonEnabled, but
-                    //      ask to PlaylistListVM listen true if
-                    //      the search button is enabled
-                  });
+                  _isSearchButtonUsable = false;
+                  setState(() {});
                   _isSearchSentenceApplied = false;
-                  playlistListVMlistenTrue.searchPlaylistSentence = '';
                   applySortFilterParmsNameChange(
                     playlistListVMlistenTrue: playlistListVMlistenTrue,
                     notifyListeners: true,
                   );
                 } else {
-                  _isSearchButtonEnabled = true;
-
-                  setState(() {
-                    // updating the search button state
-                    // TODO: after integr test, use PlaylistListVM
-                    //      with listen:False and the icon button
-                    //      does not test _isSearchButtonEnabled, but
-                    //      ask to PlaylistListVM listen true if
-                    //      the search button is enabled
-                  });
+                  _isSearchButtonUsable = true;
+                  setState(() {});
                 }
               },
             ),
