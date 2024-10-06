@@ -1800,6 +1800,11 @@ class PlaylistListVM extends ChangeNotifier {
         settingType: SettingType.dataLocation,
         settingSubType: DataLocation.playlistRootPath);
 
+    String applicationPath = _settingsDataService.get(
+      settingType: SettingType.dataLocation,
+      settingSubType: DataLocation.appSettingsPath,
+    );
+
     Directory sourceDir = Directory(playlistsRootPath);
 
     if (!sourceDir.existsSync()) {
@@ -1820,11 +1825,6 @@ class PlaylistListVM extends ChangeNotifier {
         archive.addFile(ArchiveFile(relativePath, fileBytes.length, fileBytes));
       }
     }
-
-    String applicationPath = _settingsDataService.get(
-      settingType: SettingType.dataLocation,
-      settingSubType: DataLocation.appSettingsPath,
-    );
 
     if (applicationPath != playlistsRootPath) {
       // Path to the settings.json file
