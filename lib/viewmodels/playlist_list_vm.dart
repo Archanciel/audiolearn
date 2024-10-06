@@ -1804,6 +1804,11 @@ class PlaylistListVM extends ChangeNotifier {
       settingSubType: DataLocation.appSettingsPath,
     );
 
+    String applicationPath = _settingsDataService.get(
+      settingType: SettingType.dataLocation,
+      settingSubType: DataLocation.appSettingsPath,
+    );
+
     Directory sourceDir = Directory(playlistsRootPath);
 
     if (!sourceDir.existsSync()) {

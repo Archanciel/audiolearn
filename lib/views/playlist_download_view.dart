@@ -708,6 +708,10 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     String searchSentence = '';
 
     if (_isSearchSentenceApplied) {
+      // _isSearchSentenceApplied is true means that the user did click on
+      // the searchSentence button. Its value is set to false only after the
+      // the youtubeUrlOrSearchTextField was emptied by the user of if the
+      // user did paste a URL in the youtubeUrlOrSearchTextField field.
       searchSentence = _playlistUrlOrSearchController.text;
     }
 
@@ -1574,15 +1578,15 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                     _isSearchButtonEnabled = false;
                     setState(() {});
                     _isSearchSentenceApplied = false;
-                    applySortFilterParmsNameChange(
-                      playlistListVMlistenTrue: playlistListVMlistenTrue,
-                      notifyListeners: true,
-                    );
                   }
                 } else {
                   _isSearchButtonEnabled = true;
                   setState(() {});
                 }
+                applySortFilterParmsNameChange(
+                  playlistListVMlistenTrue: playlistListVMlistenTrue,
+                  notifyListeners: true,
+                );
               },
             ),
           ),

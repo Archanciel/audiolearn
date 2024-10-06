@@ -15246,18 +15246,20 @@ void main() {
   });
   group('Search icon button test', () {
     group('Audio selection', () {
-      testWidgets('''First, select the existing 'janco' sort/filter parms in the
-          SF dropdown button. Then enter the search word 'La' in the 'Youtube
-          Link or Search' text field. After entering 'L', verify that the search
-          icon button is now enabled. Then, enter 'La' search word, click on the
-          enabled search icon button and verify the reduced displayed audio list.
-          After that, delete the 'a' letter from the 'La' search word and verify
-          the changed displayed audio list. Since the search button was used,
-          modifying the search text applies at each searxh text change. Then,
-          select the 'default' dropdon icon button and verify that now, as the
-          search button was tapped, applying the 'default' sort filter parms
-          is impacted by the still existing search word.''',
-          (WidgetTester tester) async {
+      testWidgets('''First, select the existing 'janco' sort/filter
+          parms in the SF dropdown button. Then enter the search word 'La' in the
+          'Youtube Link''', (WidgetTester tester) async {
+        // Link or Search' text field. After entering 'L', verify that the search
+        // icon button is now enabled. Then, enter 'La' search word, click on the
+        // enabled search icon button and verify the reduced displayed audio list.
+        // After that, delete the 'a' letter from the 'La' search word and verify
+        // the changed displayed audio list. Since the search button was used,
+        // modifying the search text applies at each search text change. Then,
+        // select the 'default' dropdon icon button and verify that now, as the
+        // search button was tapped, applying the 'default' sort filter parms
+        // is impacted by the still existing search word. Then, enters a https URL
+        // in youtubeUrlOrSearchTextField and verify that the search icon button
+        // is disabled.
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'sort_and_filter_audio_dialog_widget_test',
@@ -15311,6 +15313,8 @@ void main() {
         );
 
         // Now enter the first letter of the search word
+        await tester.tap(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+        await tester.pumpAndSettle();
         await tester.enterText(
           find.byKey(const Key('youtubeUrlOrSearchTextField')),
           'L',
@@ -15333,6 +15337,8 @@ void main() {
         );
 
         // Enter the second letter of the 'La' search word
+        await tester.tap(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+        await tester.pumpAndSettle();
         await tester.enterText(
           find.byKey(const Key('youtubeUrlOrSearchTextField')),
           'La',
@@ -15379,6 +15385,8 @@ void main() {
         );
 
         // Now remove the second letter of the 'La' search word
+        await tester.tap(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+        await tester.pumpAndSettle();
         await tester.enterText(
           find.byKey(const Key('youtubeUrlOrSearchTextField')),
           'L',
@@ -15400,6 +15408,14 @@ void main() {
           "La surpopulation mondiale par Jancovici et Barrau",
         ];
 
+        // Ensure that since the search icon button was used,
+        // the displayed audio list is modified.
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          tester: tester,
+          audioTitlesOrderLst:
+              audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+        );
+
         // Verify that the search icon button is still enabled
         IntegrationTestUtil.verifyWidgetIsEnabled(
           tester: tester,
@@ -15407,6 +15423,8 @@ void main() {
         );
 
         // Then reenter the second search word letter
+        await tester.tap(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+        await tester.pumpAndSettle();
         await tester.enterText(
           find.byKey(const Key('youtubeUrlOrSearchTextField')),
           'La',
@@ -15461,8 +15479,334 @@ void main() {
           //                                     contain a search word or sentence
         );
 
+        // Now entering a URL in the search text word
+
+        await tester.tap(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+        await tester.pumpAndSettle();
+        await tester.enterText(
+          find.byKey(const Key('youtubeUrlOrSearchTextField')),
+          'https://www.youtube.com/watch?v=ctD3mbQ7RPk',
+        );
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        // Verify that the search icon button is now disabled
+        IntegrationTestUtil.verifyWidgetIsDisabled(
+          tester: tester,
+          widgetKeyStr: 'search_icon_button',
+        );
+
+        // And verify the order of the playlist audio titles
+
+        audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          "La surpopulation mondiale par Jancovici et Barrau",
+          "La résilience insulaire par Fiona Roche",
+          "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+          "Les besoins artificiels par R.Keucheyan",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        ];
+
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          tester: tester,
+          audioTitlesOrderLst:
+              audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Finish by emptying the search word. First, select the existing
+          'janco' sort/filter parms in the SF dropdown button. Then enter the search
+           word 'La' in the 'Youtube Link''', (WidgetTester tester) async {
+        // Link or Search' text field. After entering 'L', verify that the search
+        // icon button is now enabled. Then, select the 'default' dropdon icon
+        // button and verify that now, as the search button was tapped, applying
+        // the 'default' sort filter parms is impacted by the still existing search
+        // word. Then, empty the search word and verify that the search icon button
+        // is disabled.
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'sort_and_filter_audio_dialog_widget_test',
+          tapOnPlaylistToggleButton: false,
+        );
+
+        // Select 'janco' dropdown button item to apply the existing
+        // 'janco' sort/filter parms
+        final Finder dropDownButtonFinder =
+            find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+        final Finder dropDownButtonTextFinder = find.descendant(
+          of: dropDownButtonFinder,
+          matching: find.byType(Text),
+        );
+
+        // Tap on the current dropdown button item to open the dropdown
+        // button items list
+        await tester.tap(dropDownButtonTextFinder);
+        await tester.pumpAndSettle();
+
+        // And select the 'janco' sort/filter item
+        String sortFilterParmsTitle = 'janco';
+        Finder sortFilterParmsDropDownTextFinder =
+            find.text(sortFilterParmsTitle);
+
+        await tester.tap(sortFilterParmsDropDownTextFinder);
+        await tester.pumpAndSettle();
+
+        // And verify the order of the playlist audio titles
+
+        List<String>
+            audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          "La surpopulation mondiale par Jancovici et Barrau",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        ];
+
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          tester: tester,
+          audioTitlesOrderLst:
+              audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+        );
+
+        // Verify the disabled state of the search icon button
+        IntegrationTestUtil.verifyWidgetIsDisabled(
+          tester: tester,
+          widgetKeyStr: 'search_icon_button', // this button is disabled if the
+          //                                     'Youtube Link or Search' dosn't
+          //                                     contain a search word or sentence
+        );
+
+        // Now enter the first letter of the search word
+        await tester.tap(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+        await tester.pumpAndSettle();
+        await tester.enterText(
+          find.byKey(const Key('youtubeUrlOrSearchTextField')),
+          'La',
+        );
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        // Verify that the search icon button is now enabled
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'search_icon_button',
+        );
+
+        // Now tap on the search icon button
+        await tester.tap(find.byKey(const Key('search_icon_button')));
+        await tester.pumpAndSettle();
+
+        // And verify the order of the playlist audio titles. Since
+        // the search icon button was used, modifying the search text
+        // is applied at each search text change
+
+        audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
+          "La surpopulation mondiale par Jancovici et Barrau",
+        ];
+
+        // Tap on the current dropdown button item to open the dropdown
+        // button items list
+        await tester.tap(dropDownButtonTextFinder);
+        await tester.pumpAndSettle();
+
+        // And select the 'default' sort/filter item
+        sortFilterParmsTitle = 'default';
+        sortFilterParmsDropDownTextFinder = find.text(sortFilterParmsTitle);
+
+        await tester.tap(sortFilterParmsDropDownTextFinder);
+        await tester.pumpAndSettle();
+
+        // And verify the order of the playlist audio titles
+
+        audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
+          "La surpopulation mondiale par Jancovici et Barrau",
+          "La résilience insulaire par Fiona Roche",
+          "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+        ];
+
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          tester: tester,
+          audioTitlesOrderLst:
+              audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+        );
+
+        // Verify the enabled state of the search icon button
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'search_icon_button', // this button is disabled if the
+          //                                     'Youtube Link or Search' dosn't
+          //                                     contain a search word or sentence
+        );
+
         // Now emptying the search text word
 
+        await tester.tap(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+        await tester.pumpAndSettle();
+        await tester.enterText(
+          find.byKey(const Key('youtubeUrlOrSearchTextField')),
+          '',
+        );
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        // Verify that the search icon button is now disabled
+        IntegrationTestUtil.verifyWidgetIsDisabled(
+          tester: tester,
+          widgetKeyStr: 'search_icon_button',
+        );
+
+        // And verify the order of the playlist audio titles
+
+        audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          "La surpopulation mondiale par Jancovici et Barrau",
+          "La résilience insulaire par Fiona Roche",
+          "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+          "Les besoins artificiels par R.Keucheyan",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        ];
+
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          tester: tester,
+          audioTitlesOrderLst:
+              audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Finish by entering a http (not https) URL. First, select the existing
+          'janco' sort/filter parms in the SF dropdown button. Then enter the search
+           word 'La' in the 'Youtube Link''', (WidgetTester tester) async {
+        // Link or Search' text field. After entering 'L', verify that the search
+        // icon button is now enabled. Then, select the 'default' dropdon icon
+        // button and verify that now, as the search button was tapped, applying
+        // the 'default' sort filter parms is impacted by the still existing search
+        // word. Then, http URL and verify that the search icon button
+        // is disabled.
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'sort_and_filter_audio_dialog_widget_test',
+          tapOnPlaylistToggleButton: false,
+        );
+
+        // Select 'janco' dropdown button item to apply the existing
+        // 'janco' sort/filter parms
+        final Finder dropDownButtonFinder =
+            find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+        final Finder dropDownButtonTextFinder = find.descendant(
+          of: dropDownButtonFinder,
+          matching: find.byType(Text),
+        );
+
+        // Tap on the current dropdown button item to open the dropdown
+        // button items list
+        await tester.tap(dropDownButtonTextFinder);
+        await tester.pumpAndSettle();
+
+        // And select the 'janco' sort/filter item
+        String sortFilterParmsTitle = 'janco';
+        Finder sortFilterParmsDropDownTextFinder =
+            find.text(sortFilterParmsTitle);
+
+        await tester.tap(sortFilterParmsDropDownTextFinder);
+        await tester.pumpAndSettle();
+
+        // And verify the order of the playlist audio titles
+
+        List<String>
+            audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          "La surpopulation mondiale par Jancovici et Barrau",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        ];
+
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          tester: tester,
+          audioTitlesOrderLst:
+              audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+        );
+
+        // Verify the disabled state of the search icon button
+        IntegrationTestUtil.verifyWidgetIsDisabled(
+          tester: tester,
+          widgetKeyStr: 'search_icon_button', // this button is disabled if the
+          //                                     'Youtube Link or Search' dosn't
+          //                                     contain a search word or sentence
+        );
+
+        // Now enter the first letter of the search word
+        await tester.tap(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+        await tester.pumpAndSettle();
+        await tester.enterText(
+          find.byKey(const Key('youtubeUrlOrSearchTextField')),
+          'La',
+        );
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        // Verify that the search icon button is now enabled
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'search_icon_button',
+        );
+
+        // Now tap on the search icon button
+        await tester.tap(find.byKey(const Key('search_icon_button')));
+        await tester.pumpAndSettle();
+
+        // And verify the order of the playlist audio titles. Since
+        // the search icon button was used, modifying the search text
+        // is applied at each search text change
+
+        audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
+          "La surpopulation mondiale par Jancovici et Barrau",
+        ];
+
+        // Tap on the current dropdown button item to open the dropdown
+        // button items list
+        await tester.tap(dropDownButtonTextFinder);
+        await tester.pumpAndSettle();
+
+        // And select the 'default' sort/filter item
+        sortFilterParmsTitle = 'default';
+        sortFilterParmsDropDownTextFinder = find.text(sortFilterParmsTitle);
+
+        await tester.tap(sortFilterParmsDropDownTextFinder);
+        await tester.pumpAndSettle();
+
+        // And verify the order of the playlist audio titles
+
+        audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
+          "La surpopulation mondiale par Jancovici et Barrau",
+          "La résilience insulaire par Fiona Roche",
+          "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+        ];
+
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          tester: tester,
+          audioTitlesOrderLst:
+              audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+        );
+
+        // Verify the enabled state of the search icon button
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'search_icon_button', // this button is disabled if the
+          //                                     'Youtube Link or Search' dosn't
+          //                                     contain a search word or sentence
+        );
+
+        // Now emptying the search text word
+
+        await tester.tap(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+        await tester.pumpAndSettle();
         await tester.enterText(
           find.byKey(const Key('youtubeUrlOrSearchTextField')),
           '',
