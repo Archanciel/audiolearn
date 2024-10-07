@@ -56,11 +56,6 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
   String? _selectedSortFilterParametersName;
 
-  // Set to true when the user clicks on the search icon button and to
-  // false when the user empty the 'Youtube link or Search' field or if
-  // a URL is pasted in the field.
-  bool _isSearchSentenceApplied = false;
-
   // @override
   // void initState() {
   //   super.initState();
@@ -364,10 +359,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             key: const Key('search_icon_button'),
             onPressed: (playlistListVMlistenTrue.isSearchButtonEnabled)
                 ? () {
-                    if (playlistListVMlistenTrue.isListExpanded) {
-                      _playlistSearch();
-                    } else {
-                      _isSearchSentenceApplied = true;
+                    playlistListVMlistenFalse.wasSearchButtonClicked = true;
+                    if (!playlistListVMlistenTrue.isListExpanded) {
+                      playlistListVMlistenFalse.isSearchSentenceApplied = true;
                       _applySortFilterParmsNameChange(
                         playlistListVMlistenFalseOrTrue:
                             playlistListVMlistenFalse,
@@ -707,7 +701,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
     String searchSentence = '';
 
-    if (_isSearchSentenceApplied) {
+    if (playlistListVMlistenFalseOrTrue.isSearchSentenceApplied) {
       // _isSearchSentenceApplied is true means that the user did click on
       // the searchSentence button. Its value is set to false only after the
       // the youtubeUrlOrSearchTextField was emptied by the user of if the
@@ -1576,7 +1570,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                     value.toLowerCase().contains('http://')) {
                   if (playlistListVMlistenTrue.isSearchButtonEnabled) {
                     playlistListVMlistenTrue.isSearchButtonEnabled = false;
-                    _isSearchSentenceApplied = false;
+                    playlistListVMlistenTrue.isSearchSentenceApplied = false;
                   }
                 } else {
                   playlistListVMlistenTrue.isSearchButtonEnabled = true;
@@ -1670,6 +1664,4 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       ),
     );
   }
-
-  void _playlistSearch() {}
 }

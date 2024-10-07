@@ -97,6 +97,24 @@ class PlaylistListVM extends ChangeNotifier {
   set searchSentence(String searchSentence) {
     _searchSentence = searchSentence;
 
+    if (_wasSearchButtonClicked) {
+      notifyListeners();
+    }
+  }
+
+  // Set to true when the user clicks on the search icon button and to
+  // false when the user empty the 'Youtube link or Search' field or if
+  // a URL is pasted in the field.
+  bool _isSearchSentenceApplied = false;
+  bool get isSearchSentenceApplied => _isSearchSentenceApplied;
+  set isSearchSentenceApplied(bool isSearchSentenceApplied) {
+    _isSearchSentenceApplied = isSearchSentenceApplied;
+  }
+
+  bool _wasSearchButtonClicked = false;
+  bool get wasSearchButtonClicked => _wasSearchButtonClicked;
+  set wasSearchButtonClicked(bool wasSearchButtonClicked) {
+    _wasSearchButtonClicked = wasSearchButtonClicked;
     notifyListeners();
   }
 
@@ -275,14 +293,14 @@ class PlaylistListVM extends ChangeNotifier {
       _disableAllButtonsIfNoPlaylistIsSelected();
     }
 
-    if (_searchSentence.isNotEmpty) {
+    if (_wasSearchButtonClicked && _searchSentence.isNotEmpty) {
       _listOfSelectablePlaylists = _listOfSelectablePlaylists
           .where((playlist) => playlist.title
               .toLowerCase()
               .contains(_searchSentence.toLowerCase()))
           .toList();
     }
-    
+
     return _listOfSelectablePlaylists;
   }
 
