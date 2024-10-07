@@ -147,12 +147,6 @@ void main() {
       expect(find.byType(ListView), findsNWidgets(2));
       expect(find.byType(ListTile), findsNothing);
 
-      // Tap the 'Toggle List' button to hide the playlist list. Since
-      // when adding a playlist, the list is expanded, we need to hide it
-      // in order to ensure the list will be displayed.
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-      await tester.pumpAndSettle();
-
       // Enter the new Youtube playlist URL into the url text field
       await tester.enterText(
         find.byKey(
@@ -2203,6 +2197,12 @@ void main() {
         audioPlayerVM: audioPlayerVM,
       );
 
+      // Tap the 'Toggle List' button to display the playlist list. If the list
+      // is not opened, checking that a ListTile with the title of
+      // the playlist was added to the list will fail
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
       const String invalidYoutubePlaylistUrl = 'invalid';
 
       // Enter the invalid Youtube playlist URL into the url text
@@ -2590,6 +2590,12 @@ void main() {
       );
 
       const String invalidSingleVideoUrl = 'invalid';
+
+      // Tap the 'Toggle List' button to display the playlist list. If the list
+      // is not opened, checking that a ListTile with the title of
+      // the playlist was added to the list will fail
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
 
       // Enter the invalid single video URL into the url text
       // field
