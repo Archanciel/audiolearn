@@ -84,6 +84,14 @@ class PlaylistListVM extends ChangeNotifier {
   final AudioSortFilterService _audioSortFilterService =
       AudioSortFilterService();
 
+  bool _isSearchButtonEnabled = false;
+  bool get isSearchButtonEnabled => _isSearchButtonEnabled;
+  set isSearchButtonEnabled(bool isSearchButtonEnabled) {
+    _isSearchButtonEnabled = isSearchButtonEnabled;
+
+    notifyListeners();
+  }
+
   PlaylistListVM({
     required WarningMessageVM warningMessageVM,
     required AudioDownloadVM audioDownloadVM,

@@ -60,7 +60,6 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   // false when the user empty the 'Youtube link or Search' field or if
   // a URL is pasted in the field.
   bool _isSearchSentenceApplied = false;
-  bool _isSearchButtonEnabled = false;
 
   // @override
   // void initState() {
@@ -363,14 +362,14 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           width: kSmallIconButtonWidth,
           child: IconButton(
             key: const Key('search_icon_button'),
-            onPressed: (_isSearchButtonEnabled)
+            onPressed: (playlistListVMlistenTrue.isSearchButtonEnabled)
                 ? () {
                     if (playlistListVMlistenTrue.isListExpanded) {
                       _playlistSearch();
                     } else {
                       _isSearchSentenceApplied = true;
                       applySortFilterParmsNameChange(
-                        playlistListVMlistenTrue: playlistListVMlistenTrue,
+                        playlistListVMlistenFalseOrTrue: playlistListVMlistenFalse,
                         notifyListeners: true,
                       );
                     }
@@ -673,7 +672,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 ? null // causes the default sort filter parms to be applied
                 //        and its name to be displayed
                 : applySortFilterParmsNameChange(
-                    playlistListVMlistenTrue: playlistListVMlistenTrue,
+                    playlistListVMlistenFalseOrTrue: playlistListVMlistenTrue,
                   ),
             items: dropdownMenuItems,
             onChanged: (value) {
@@ -695,11 +694,11 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   /// sort/filter dropdown button list. The selected sort/ilter parameters
   /// are applied to the selected playlist audio list.
   String applySortFilterParmsNameChange({
-    required PlaylistListVM playlistListVMlistenTrue,
+    required PlaylistListVM playlistListVMlistenFalseOrTrue,
     notifyListeners = false,
   }) {
     _selectedSortFilterParametersName =
-        playlistListVMlistenTrue.getSelectedPlaylistAudioSortFilterParmsName(
+        playlistListVMlistenFalseOrTrue.getSelectedPlaylistAudioSortFilterParmsName(
       audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       translatedAppliedSortFilterParmsName:
           AppLocalizations.of(context)!.sortFilterParametersAppliedName,
@@ -716,7 +715,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     }
 
     _updatePlaylistSortedFilteredAudioList(
-        playlistListVMlistenTrue: playlistListVMlistenTrue,
+        playlistListVMlistenTrue: playlistListVMlistenFalseOrTrue,
         searchSentence: searchSentence,
         notifyListeners: notifyListeners); // If true, causes displayed audio
     //                                    list update.
@@ -1574,17 +1573,15 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 if (value.isEmpty ||
                     value.toLowerCase().contains('https://') ||
                     value.toLowerCase().contains('http://')) {
-                  if (_isSearchButtonEnabled) {
-                    _isSearchButtonEnabled = false;
-                    setState(() {});
+                  if (playlistListVMlistenTrue.isSearchButtonEnabled) {
+                    playlistListVMlistenTrue.isSearchButtonEnabled = false;
                     _isSearchSentenceApplied = false;
                   }
                 } else {
-                  _isSearchButtonEnabled = true;
-                  setState(() {});
+                  playlistListVMlistenTrue.isSearchButtonEnabled = true;
                 }
                 applySortFilterParmsNameChange(
-                  playlistListVMlistenTrue: playlistListVMlistenTrue,
+                  playlistListVMlistenFalseOrTrue: playlistListVMlistenTrue,
                   notifyListeners: true,
                 );
               },

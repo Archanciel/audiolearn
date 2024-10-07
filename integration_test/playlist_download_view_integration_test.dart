@@ -155,14 +155,17 @@ void main() {
 
       // Enter the new Youtube playlist URL into the url text field
       await tester.enterText(
-        find.byKey(const Key('youtubeUrlOrSearchTextField')),
+        find.byKey(
+          const Key('youtubeUrlOrSearchTextField'),
+        ),
         youtubePlaylistUrl,
       );
       await tester.pumpAndSettle();
 
       // Ensure the url text field contains the entered url
-      TextField urlTextField =
-          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+      TextField urlTextField = tester.widget(find.byKey(
+        const Key('youtubeUrlOrSearchTextField'),
+      ));
       expect(urlTextField.controller!.text, youtubePlaylistUrl);
 
       // Open the add playlist dialog by tapping the add playlist
@@ -195,8 +198,9 @@ void main() {
           isMusicQuality: false);
 
       // Ensure the URL TextField was emptied
-      urlTextField =
-          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+      urlTextField = tester.widget(find.byKey(
+        const Key('youtubeUrlOrSearchTextField'),
+      ));
       expect(urlTextField.controller!.text, '');
 
       // The list of Playlist's should have one item now
@@ -411,14 +415,17 @@ void main() {
 
       // Enter the new Youtube playlist URL into the url text field
       await tester.enterText(
-        find.byKey(const Key('youtubeUrlOrSearchTextField')),
+        find.byKey(
+          const Key('youtubeUrlOrSearchTextField'),
+        ),
         youtubePlaylistUrl,
       );
       await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // Ensure the url text field contains the entered url
-      TextField urlTextField =
-          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+      TextField urlTextField = tester.widget(find.byKey(
+        const Key('youtubeUrlOrSearchTextField'),
+      ));
       expect(urlTextField.controller!.text, youtubePlaylistUrl);
 
       // Open the add playlist dialog by tapping the add playlist
@@ -461,8 +468,9 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure the URL TextField was not emptied
-      urlTextField =
-          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+      urlTextField = tester.widget(find.byKey(
+        const Key('youtubeUrlOrSearchTextField'),
+      ));
       expect(urlTextField.controller!.text, youtubePlaylistUrl);
 
       // Purge the test playlist directory so that the created test
@@ -566,13 +574,16 @@ void main() {
 
       // Enter the new Youtube playlist URL into the url text field
       await tester.enterText(
-        find.byKey(const Key('youtubeUrlOrSearchTextField')),
+        find.byKey(
+          const Key('youtubeUrlOrSearchTextField'),
+        ),
         youtubePlaylistUrl,
       );
 
       // Ensure the url text field contains the entered url
-      TextField urlTextField =
-          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+      TextField urlTextField = tester.widget(find.byKey(
+        const Key('youtubeUrlOrSearchTextField'),
+      ));
       expect(urlTextField.controller!.text, youtubePlaylistUrl);
 
       // Open the add playlist dialog by tapping the add playlist
@@ -610,8 +621,9 @@ void main() {
           isMusicQuality: true);
 
       // Ensure the URL TextField was emptied
-      urlTextField =
-          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+      urlTextField = tester.widget(find.byKey(
+        const Key('youtubeUrlOrSearchTextField'),
+      ));
       expect(urlTextField.controller!.text, '');
 
       // Check the saved Youtube playlist values in the json file
@@ -658,22 +670,24 @@ void main() {
       // I don't know why, but the next commented code does not work.
 
       // await tester.enterText(
-      //   find.byKey(const Key('youtubeUrlOrSearchTextField')),
+      //   find.byKey(const Key('youtubeUrlOrSearchTextField'),),
       //   youtubePlaylistUrl,
       // );
 
       // Solving this problem
       tester
-          .widget<TextField>(
-              find.byKey(const Key('youtubeUrlOrSearchTextField')))
+          .widget<TextField>(find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ))
           .controller!
           .text = youtubePlaylistUrl;
 
       await tester.pumpAndSettle();
 
       // Ensure the url text field contains the entered url
-      urlTextField =
-          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+      urlTextField = tester.widget(find.byKey(
+        const Key('youtubeUrlOrSearchTextField'),
+      ));
       expect(urlTextField.controller!.text, youtubePlaylistUrl);
 
       // Open the add playlist dialog by tapping the add playlist
@@ -719,8 +733,9 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure the URL TextField was not emptied
-      urlTextField =
-          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+      urlTextField = tester.widget(find.byKey(
+        const Key('youtubeUrlOrSearchTextField'),
+      ));
       expect(urlTextField.controller!.text, youtubePlaylistUrl);
 
       // Purge the test playlist directory so that the created test
@@ -822,13 +837,16 @@ void main() {
 
       // Enter the new Youtube playlist URL into the url text field
       await tester.enterText(
-        find.byKey(const Key('youtubeUrlOrSearchTextField')),
+        find.byKey(
+          const Key('youtubeUrlOrSearchTextField'),
+        ),
         youtubePlaylistUrl,
       );
 
       // Ensure the url text field contains the entered url
-      TextField urlTextField =
-          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+      TextField urlTextField = tester.widget(find.byKey(
+        const Key('youtubeUrlOrSearchTextField'),
+      ));
       expect(urlTextField.controller!.text, youtubePlaylistUrl);
 
       // Open the add playlist dialog by tapping the add playlist
@@ -859,8 +877,9 @@ void main() {
       expect(find.text('WARNING'), findsNothing);
 
       // Ensure the URL TextField was not emptied
-      urlTextField =
-          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+      urlTextField = tester.widget(find.byKey(
+        const Key('youtubeUrlOrSearchTextField'),
+      ));
       expect(urlTextField.controller!.text, youtubePlaylistUrl);
 
       // The list of Playlist's should have 0 item
@@ -1613,7 +1632,9 @@ void main() {
 
       // Enter the new Youtube playlist URL into the url text field
       await tester.enterText(
-        find.byKey(const Key('youtubeUrlOrSearchTextField')),
+        find.byKey(
+          const Key('youtubeUrlOrSearchTextField'),
+        ),
         youtubePlaylistUrl,
       );
 
@@ -1851,7 +1872,9 @@ void main() {
 
       // Enter the new Youtube playlist URL into the url text field
       await tester.enterText(
-        find.byKey(const Key('youtubeUrlOrSearchTextField')),
+        find.byKey(
+          const Key('youtubeUrlOrSearchTextField'),
+        ),
         youtubePlaylistUrl,
       );
 
@@ -2037,13 +2060,16 @@ void main() {
       // Enter the invalid Youtube playlist URL into the url text
       // field
       await tester.enterText(
-        find.byKey(const Key('youtubeUrlOrSearchTextField')),
+        find.byKey(
+          const Key('youtubeUrlOrSearchTextField'),
+        ),
         invalidYoutubePlaylistUrl,
       );
 
       // Ensure the url text field contains the entered url
-      TextField urlTextField =
-          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+      TextField urlTextField = tester.widget(find.byKey(
+        const Key('youtubeUrlOrSearchTextField'),
+      ));
       expect(urlTextField.controller!.text, invalidYoutubePlaylistUrl);
 
       // Open the add playlist dialog by tapping the add playlist
@@ -2089,8 +2115,9 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure the URL TextField was not emptied
-      urlTextField =
-          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+      urlTextField = tester.widget(find.byKey(
+        const Key('youtubeUrlOrSearchTextField'),
+      ));
       expect(urlTextField.controller!.text, invalidYoutubePlaylistUrl);
 
       // The list of Playlist's should have zero item now
@@ -2181,13 +2208,16 @@ void main() {
       // Enter the invalid Youtube playlist URL into the url text
       // field
       await tester.enterText(
-        find.byKey(const Key('youtubeUrlOrSearchTextField')),
+        find.byKey(
+          const Key('youtubeUrlOrSearchTextField'),
+        ),
         invalidYoutubePlaylistUrl,
       );
 
       // Ensure the url text field contains the entered url
-      TextField urlTextField =
-          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+      TextField urlTextField = tester.widget(find.byKey(
+        const Key('youtubeUrlOrSearchTextField'),
+      ));
       expect(urlTextField.controller!.text, invalidYoutubePlaylistUrl);
 
       // Open the add playlist dialog by tapping the add playlist
@@ -2233,8 +2263,9 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure the URL TextField was not emptied
-      urlTextField =
-          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+      urlTextField = tester.widget(find.byKey(
+        const Key('youtubeUrlOrSearchTextField'),
+      ));
       expect(urlTextField.controller!.text, invalidYoutubePlaylistUrl);
 
       // The list of Playlist's should have zero item now
@@ -2273,15 +2304,18 @@ void main() {
       // The objective is to test that the url text field will not
       // be emptied after adding a local playlist
       await tester.enterText(
-        find.byKey(const Key('youtubeUrlOrSearchTextField')),
+        find.byKey(
+          const Key('youtubeUrlOrSearchTextField'),
+        ),
         youtubePlaylistUrl,
       );
 
       await tester.pumpAndSettle();
 
       // Ensure the url text field contains the entered url
-      TextField urlTextField =
-          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+      TextField urlTextField = tester.widget(find.byKey(
+        const Key('youtubeUrlOrSearchTextField'),
+      ));
       expect(urlTextField.controller!.text, youtubePlaylistUrl);
 
       // Now we tap on the AudioPlayerView icon button to open
@@ -2301,8 +2335,9 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure the URL TextField was emptied
-      urlTextField =
-          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+      urlTextField = tester.widget(find.byKey(
+        const Key('youtubeUrlOrSearchTextField'),
+      ));
       expect(urlTextField.controller!.text, '');
 
       // Purge the test playlist directory so that the created test
@@ -2559,13 +2594,16 @@ void main() {
       // Enter the invalid single video URL into the url text
       // field
       await tester.enterText(
-        find.byKey(const Key('youtubeUrlOrSearchTextField')),
+        find.byKey(
+          const Key('youtubeUrlOrSearchTextField'),
+        ),
         invalidSingleVideoUrl,
       );
 
       // Ensure the url text field contains the entered url
-      TextField urlTextField =
-          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+      TextField urlTextField = tester.widget(find.byKey(
+        const Key('youtubeUrlOrSearchTextField'),
+      ));
       expect(urlTextField.controller!.text, invalidSingleVideoUrl);
 
       // Open the target playlist selection dialog by tapping the
@@ -2639,8 +2677,9 @@ void main() {
 
       // Ensure the URL TextField containing the invalid single
       // video URL was not emptied
-      urlTextField =
-          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+      urlTextField = tester.widget(find.byKey(
+        const Key('youtubeUrlOrSearchTextField'),
+      ));
       expect(urlTextField.controller!.text, invalidSingleVideoUrl);
 
       // Purge the test playlist directory so that the created test
@@ -2786,13 +2825,16 @@ void main() {
       // Enter the single video URL to download into the url text
       // field
       await tester.enterText(
-        find.byKey(const Key('youtubeUrlOrSearchTextField')),
+        find.byKey(
+          const Key('youtubeUrlOrSearchTextField'),
+        ),
         singleVideoToDownloadUrl,
       );
 
       // Ensure the url text field contains the entered url
-      TextField urlTextField =
-          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+      TextField urlTextField = tester.widget(find.byKey(
+        const Key('youtubeUrlOrSearchTextField'),
+      ));
       expect(urlTextField.controller!.text, singleVideoToDownloadUrl);
 
       // Open the target playlist selection dialog by tapping the
@@ -2871,8 +2913,9 @@ void main() {
 
       // Ensure the URL TextField containing the invalid single
       // video URL was not emptied
-      urlTextField =
-          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+      urlTextField = tester.widget(find.byKey(
+        const Key('youtubeUrlOrSearchTextField'),
+      ));
       expect(urlTextField.controller!.text, singleVideoToDownloadUrl);
 
       // Purge the test playlist directory so that the created test
@@ -9932,14 +9975,17 @@ void main() {
 
       // Enter the single video URL into the url text field
       await tester.enterText(
-        find.byKey(const Key('youtubeUrlOrSearchTextField')),
+        find.byKey(
+          const Key('youtubeUrlOrSearchTextField'),
+        ),
         singleVideoUrl,
       );
       await tester.pumpAndSettle();
 
       // Ensure the url text field contains the entered url
-      TextField urlTextField =
-          tester.widget(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+      TextField urlTextField = tester.widget(find.byKey(
+        const Key('youtubeUrlOrSearchTextField'),
+      ));
       expect(urlTextField.controller!.text, singleVideoUrl);
 
       // Tap the 'Download single video button' button. Before fixing
@@ -15313,10 +15359,16 @@ void main() {
         );
 
         // Now enter the first letter of the search word
-        await tester.tap(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+        await tester.tap(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+        );
         await tester.pumpAndSettle();
         await tester.enterText(
-          find.byKey(const Key('youtubeUrlOrSearchTextField')),
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
           'L',
         );
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
@@ -15336,11 +15388,23 @@ void main() {
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
-        // Enter the second letter of the 'La' search word
-        await tester.tap(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+        // Enter the second letter of the 'La' search word. The crazy integration
+        // test does not always update the test field. To fix this bug, first
+        // select the text field and then enter the text.
+
+        // Select the text field
+        await tester.tap(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+        );
         await tester.pumpAndSettle();
+
+        // Enter the second letter of the 'La' search word
         await tester.enterText(
-          find.byKey(const Key('youtubeUrlOrSearchTextField')),
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
           'La',
         );
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
@@ -15385,10 +15449,16 @@ void main() {
         );
 
         // Now remove the second letter of the 'La' search word
-        await tester.tap(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+        await tester.tap(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+        );
         await tester.pumpAndSettle();
         await tester.enterText(
-          find.byKey(const Key('youtubeUrlOrSearchTextField')),
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
           'L',
         );
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
@@ -15423,10 +15493,16 @@ void main() {
         );
 
         // Then reenter the second search word letter
-        await tester.tap(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+        await tester.tap(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+        );
         await tester.pumpAndSettle();
         await tester.enterText(
-          find.byKey(const Key('youtubeUrlOrSearchTextField')),
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
           'La',
         );
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
@@ -15481,10 +15557,16 @@ void main() {
 
         // Now entering a URL in the search text word
 
-        await tester.tap(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+        await tester.tap(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+        );
         await tester.pumpAndSettle();
         await tester.enterText(
-          find.byKey(const Key('youtubeUrlOrSearchTextField')),
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
           'https://www.youtube.com/watch?v=ctD3mbQ7RPk',
         );
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
@@ -15581,10 +15663,16 @@ void main() {
         );
 
         // Now enter the first letter of the search word
-        await tester.tap(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+        await tester.tap(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+        );
         await tester.pumpAndSettle();
         await tester.enterText(
-          find.byKey(const Key('youtubeUrlOrSearchTextField')),
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
           'La',
         );
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
@@ -15643,10 +15731,16 @@ void main() {
 
         // Now emptying the search text word
 
-        await tester.tap(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+        await tester.tap(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+        );
         await tester.pumpAndSettle();
         await tester.enterText(
-          find.byKey(const Key('youtubeUrlOrSearchTextField')),
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
           '',
         );
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
@@ -15743,10 +15837,16 @@ void main() {
         );
 
         // Now enter the first letter of the search word
-        await tester.tap(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+        await tester.tap(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+        );
         await tester.pumpAndSettle();
         await tester.enterText(
-          find.byKey(const Key('youtubeUrlOrSearchTextField')),
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
           'La',
         );
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
@@ -15805,10 +15905,16 @@ void main() {
 
         // Now emptying the search text word
 
-        await tester.tap(find.byKey(const Key('youtubeUrlOrSearchTextField')));
+        await tester.tap(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+        );
         await tester.pumpAndSettle();
         await tester.enterText(
-          find.byKey(const Key('youtubeUrlOrSearchTextField')),
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
           '',
         );
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
