@@ -369,7 +369,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                     } else {
                       _isSearchSentenceApplied = true;
                       applySortFilterParmsNameChange(
-                        playlistListVMlistenFalseOrTrue: playlistListVMlistenFalse,
+                        playlistListVMlistenFalseOrTrue:
+                            playlistListVMlistenFalse,
                         notifyListeners: true,
                       );
                     }
@@ -697,8 +698,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     required PlaylistListVM playlistListVMlistenFalseOrTrue,
     notifyListeners = false,
   }) {
-    _selectedSortFilterParametersName =
-        playlistListVMlistenFalseOrTrue.getSelectedPlaylistAudioSortFilterParmsName(
+    _selectedSortFilterParametersName = playlistListVMlistenFalseOrTrue
+        .getSelectedPlaylistAudioSortFilterParmsName(
       audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       translatedAppliedSortFilterParmsName:
           AppLocalizations.of(context)!.sortFilterParametersAppliedName,
@@ -1580,10 +1581,14 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 } else {
                   playlistListVMlistenTrue.isSearchButtonEnabled = true;
                 }
-                applySortFilterParmsNameChange(
-                  playlistListVMlistenFalseOrTrue: playlistListVMlistenTrue,
-                  notifyListeners: true,
-                );
+
+                if (playlistListVMlistenTrue.isListExpanded) {
+                } else {
+                  applySortFilterParmsNameChange(
+                    playlistListVMlistenFalseOrTrue: playlistListVMlistenTrue,
+                    notifyListeners: true,
+                  );
+                }
               },
             ),
           ),
