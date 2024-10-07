@@ -368,7 +368,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                       _playlistSearch();
                     } else {
                       _isSearchSentenceApplied = true;
-                      applySortFilterParmsNameChange(
+                      _applySortFilterParmsNameChange(
                         playlistListVMlistenFalseOrTrue:
                             playlistListVMlistenFalse,
                         notifyListeners: true,
@@ -672,7 +672,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                     .isEmpty)
                 ? null // causes the default sort filter parms to be applied
                 //        and its name to be displayed
-                : applySortFilterParmsNameChange(
+                : _applySortFilterParmsNameChange(
                     playlistListVMlistenFalseOrTrue: playlistListVMlistenTrue,
                   ),
             items: dropdownMenuItems,
@@ -694,7 +694,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   /// Method called when the user select a sort/filter parameters in the
   /// sort/filter dropdown button list. The selected sort/ilter parameters
   /// are applied to the selected playlist audio list.
-  String applySortFilterParmsNameChange({
+  String _applySortFilterParmsNameChange({
     required PlaylistListVM playlistListVMlistenFalseOrTrue,
     notifyListeners = false,
   }) {
@@ -1583,8 +1583,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 }
 
                 if (playlistListVMlistenTrue.isListExpanded) {
+                  playlistListVMlistenTrue.searchSentence = value;
                 } else {
-                  applySortFilterParmsNameChange(
+                  _applySortFilterParmsNameChange(
                     playlistListVMlistenFalseOrTrue: playlistListVMlistenTrue,
                     notifyListeners: true,
                   );

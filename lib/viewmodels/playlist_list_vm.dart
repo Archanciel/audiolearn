@@ -92,6 +92,14 @@ class PlaylistListVM extends ChangeNotifier {
     notifyListeners();
   }
 
+  String _searchSentence = '';
+  String get searchSentence => _searchSentence;
+  set searchSentence(String searchSentence) {
+    _searchSentence = searchSentence;
+
+    notifyListeners();
+  }
+
   PlaylistListVM({
     required WarningMessageVM warningMessageVM,
     required AudioDownloadVM audioDownloadVM,
@@ -267,6 +275,14 @@ class PlaylistListVM extends ChangeNotifier {
       _disableAllButtonsIfNoPlaylistIsSelected();
     }
 
+    if (_searchSentence.isNotEmpty) {
+      _listOfSelectablePlaylists = _listOfSelectablePlaylists
+          .where((playlist) => playlist.title
+              .toLowerCase()
+              .contains(_searchSentence.toLowerCase()))
+          .toList();
+    }
+    
     return _listOfSelectablePlaylists;
   }
 
@@ -923,7 +939,8 @@ class PlaylistListVM extends ChangeNotifier {
       searchSentence = searchSentence.toLowerCase();
       _sortedFilteredSelectedPlaylistsPlayableAudios =
           _sortedFilteredSelectedPlaylistsPlayableAudios!
-              .where((audio) => audio.validVideoTitle.toLowerCase().contains(searchSentence))
+              .where((audio) =>
+                  audio.validVideoTitle.toLowerCase().contains(searchSentence))
               .toList();
     }
 
@@ -1807,11 +1824,6 @@ class PlaylistListVM extends ChangeNotifier {
     String playlistsRootPath = _settingsDataService.get(
         settingType: SettingType.dataLocation,
         settingSubType: DataLocation.playlistRootPath);
-
-    String applicationPath = _settingsDataService.get(
-      settingType: SettingType.dataLocation,
-      settingSubType: DataLocation.appSettingsPath,
-    );
 
     Directory sourceDir = Directory(playlistsRootPath);
 
