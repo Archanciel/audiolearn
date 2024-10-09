@@ -1571,6 +1571,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                   if (playlistListVMlistenTrue.isSearchButtonEnabled) {
                     playlistListVMlistenTrue.isSearchButtonEnabled = false;
                     playlistListVMlistenTrue.isSearchSentenceApplied = false;
+                    playlistListVMlistenTrue.wasSearchButtonClicked = false;
                   }
                 } else {
                   playlistListVMlistenTrue.isSearchButtonEnabled = true;

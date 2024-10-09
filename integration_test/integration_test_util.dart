@@ -647,7 +647,7 @@ class IntegrationTestUtil {
     await tester.pumpAndSettle();
   }
 
-  static void checkAudioTitlesOrderInListTile({
+  static void checkTitlesOrderInListTile({
     required WidgetTester tester,
     required List<String> audioTitlesOrderLst,
     int firstAudioListTileIndex = 0,
