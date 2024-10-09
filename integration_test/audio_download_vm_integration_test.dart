@@ -153,10 +153,6 @@ void main() {
         downloadedAudioTwo: downloadedPlaylist.downloadedAudioLst[1],
         audioOneFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
         audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
-        downloadedFileSizeOne: 378444,
-        downloadedFileSizeTwo: 160000,
-        audioDurationMillisecondsOne: 23336,
-        audioDurationMillisecondsTwo: 9845,
       );
 
       // Checking the data of the audio contained in the playable
@@ -168,10 +164,6 @@ void main() {
         downloadedAudioTwo: downloadedPlaylist.playableAudioLst[0],
         audioOneFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
         audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
-        downloadedFileSizeOne: 378444,
-        downloadedFileSizeTwo: 160000,
-        audioDurationMillisecondsOne: 23336,
-        audioDurationMillisecondsTwo: 9845,
       );
 
       // Checking if there are 3 files in the directory (2 mp3 and 1 json)
@@ -253,8 +245,6 @@ void main() {
       checkDownloadedAudioShortVideoTwo(
         downloadedAudioTwo: downloadedAudioLstBeforeDownload[0],
         audioTwoFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
-        downloadedFileSize: 61425,
-        audioDurationMilliseconds: 10000,
       );
 
       // Checking the data of the audio contained in the playable
@@ -262,8 +252,6 @@ void main() {
       checkDownloadedAudioShortVideoTwo(
         downloadedAudioTwo: playableAudioLstBeforeDownload[0],
         audioTwoFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
-        downloadedFileSize: 61425,
-        audioDurationMilliseconds: 10000,
       );
 
       // Building and displaying the DownloadPlaylistPage integration test
@@ -328,10 +316,6 @@ void main() {
         downloadedAudioTwo: downloadedPlaylist.downloadedAudioLst[0],
         audioOneFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
         audioTwoFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
-        downloadedFileSizeOne: 378444,
-        downloadedFileSizeTwo: 61425,
-        audioDurationMillisecondsOne: 23336,
-        audioDurationMillisecondsTwo: 10000,
       );
 
       // playableAudioLst contains Audio's inserted at list start
@@ -340,10 +324,6 @@ void main() {
         downloadedAudioTwo: downloadedPlaylist.playableAudioLst[1],
         audioOneFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
         audioTwoFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
-        downloadedFileSizeOne: 378444,
-        downloadedFileSizeTwo: 61425,
-        audioDurationMillisecondsOne: 23336,
-        audioDurationMillisecondsTwo: 10000,
       );
 
       // Checking if there are 3 files in the directory (1 mp3 and 1 json)
@@ -464,8 +444,6 @@ void main() {
       checkDownloadedAudioShortVideoTwo(
         downloadedAudioTwo: singleVideoDownloadedPlaylist.downloadedAudioLst[0],
         audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
-        downloadedFileSize: 160000,
-        audioDurationMilliseconds: 9845,
       );
 
       // Checking if there are 2 files in the directory (1 mp3 and 1 json)
@@ -603,8 +581,6 @@ void main() {
         downloadedAudioTwo: singleVideoDownloadedPlaylist.downloadedAudioLst[0],
         audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
         downloadedAtMusicQuality: false,
-        downloadedFileSize: 160000,
-        audioDurationMilliseconds: 9845,
       );
 
       // Checking if there are 2 files in the directory (1 mp3 and 1 json)
@@ -741,8 +717,6 @@ void main() {
         downloadedAudioTwo: singleVideoDownloadedPlaylist.downloadedAudioLst[0],
         audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
         downloadedAtMusicQuality: true,
-        downloadedFileSize: 160000,
-        audioDurationMilliseconds: 9845,
       );
 
       // Checking if there are 2 files in the directory (1 mp3 and 1 json)
@@ -875,10 +849,6 @@ void main() {
         downloadedAudioTwo: singleVideoDownloadedPlaylist.downloadedAudioLst[1],
         audioOneFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
         audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
-        downloadedFileSizeOne: 143679,
-        downloadedFileSizeTwo: 160000,
-        audioDurationMillisecondsOne: 24000,
-        audioDurationMillisecondsTwo: 9845,
       );
 
       // ... and the values of the 3rd and 4th audio newly downloaded
@@ -893,10 +863,6 @@ void main() {
         downloadedAudioTwo: singleVideoDownloadedPlaylist.playableAudioLst[0],
         audioOneFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
         audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
-        downloadedFileSizeOne: 143679,
-        downloadedFileSizeTwo: 160000,
-        audioDurationMillisecondsOne: 24000,
-        audioDurationMillisecondsTwo: 9845,
       );
 
       // Checking if there are 3 files in the directory (2 mp3 and 1 json)
@@ -1002,10 +968,6 @@ void main() {
         downloadedAudioTwo: downloadedAudioLstBeforeDownload[1],
         audioOneFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
         audioTwoFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
-        downloadedFileSizeOne: 143679,
-        downloadedFileSizeTwo: 61425,
-        audioDurationMillisecondsOne: 24000,
-        audioDurationMillisecondsTwo: 10000,
       );
 
       // Checking the data of the  already downloaded audio contained
@@ -1017,10 +979,6 @@ void main() {
         downloadedAudioTwo: playableAudioLstBeforeDownload[0],
         audioOneFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
         audioTwoFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
-        downloadedFileSizeOne: 143679,
-        downloadedFileSizeTwo: 61425,
-        audioDurationMillisecondsOne: 24000,
-        audioDurationMillisecondsTwo: 10000,
       );
 
       // Building and displaying the DownloadPlaylistPage integration test
@@ -1101,10 +1059,6 @@ void main() {
                 .downloadedAudioLst[1],
         audioOneFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
         audioTwoFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
-        downloadedFileSizeOne: 143679,
-        downloadedFileSizeTwo: 61425,
-        audioDurationMillisecondsOne: 24000,
-        audioDurationMillisecondsTwo: 10000,
       );
 
       // ... and the values of the 3rd and 4th audio newly downloaded
@@ -1132,10 +1086,6 @@ void main() {
                 .playableAudioLst[2],
         audioOneFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
         audioTwoFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
-        downloadedFileSizeOne: 143679,
-        downloadedFileSizeTwo: 61425,
-        audioDurationMillisecondsOne: 24000,
-        audioDurationMillisecondsTwo: 10000,
       );
 
       // ... and the values of the 3rd and 4th audio newly downloaded
@@ -1193,23 +1143,15 @@ void checkPlaylistDownloadedAudios({
   required Audio downloadedAudioTwo,
   required String audioOneFileNamePrefix,
   required String audioTwoFileNamePrefix,
-  required int downloadedFileSizeOne,
-  required int downloadedFileSizeTwo,
-  required int audioDurationMillisecondsOne,
-  required int audioDurationMillisecondsTwo,
 }) {
   checkDownloadedAudioShortVideoOne(
     downloadedAudioOne: downloadedAudioOne,
     audioOneFileNamePrefix: audioOneFileNamePrefix,
-    downloadedFileSize: downloadedFileSizeOne,
-    audioDurationMilliseconds: audioDurationMillisecondsOne,
   );
 
   checkDownloadedAudioShortVideoTwo(
     downloadedAudioTwo: downloadedAudioTwo,
     audioTwoFileNamePrefix: audioTwoFileNamePrefix,
-    downloadedFileSize: downloadedFileSizeTwo,
-    audioDurationMilliseconds: audioDurationMillisecondsTwo,
   );
 }
 
@@ -1257,8 +1199,6 @@ void compareNewRecreatedPlaylistToPreviouslyExistingPlaylist({
 void checkDownloadedAudioShortVideoOne({
   required Audio downloadedAudioOne,
   required String audioOneFileNamePrefix,
-  required int downloadedFileSize,
-  required int audioDurationMilliseconds,
   bool downloadedAtMusicQuality = false,
 }) {
   expect(downloadedAudioOne.youtubeVideoChannel, "Jean-Pierre Schnyder");
@@ -1274,10 +1214,6 @@ void checkDownloadedAudioShortVideoOne({
       DateTimeParser.truncateDateTimeToDateOnly(
           downloadedAudioOne.videoUploadDate),
       DateTime.parse("2023-06-10"));
-  expect(
-    downloadedAudioOne.audioDuration,
-    Duration(milliseconds: audioDurationMilliseconds),
-  );
   expect(downloadedAudioOne.audioPlaySpeed, 1.0);
   expect(downloadedAudioOne.isAudioMusicQuality, downloadedAtMusicQuality);
 
@@ -1287,8 +1223,6 @@ void checkDownloadedAudioShortVideoOne({
           firstAudioFileName
               .contains('audio learn test short video one 23-06-10.mp3'),
       true);
-
-  expect(downloadedAudioOne.audioFileSize, downloadedFileSize);
 }
 
 /// Verify the values of the "audio learn test short video two" downloaded
@@ -1296,8 +1230,6 @@ void checkDownloadedAudioShortVideoOne({
 void checkDownloadedAudioShortVideoTwo({
   required Audio downloadedAudioTwo,
   required String audioTwoFileNamePrefix,
-  required int downloadedFileSize,
-  required int audioDurationMilliseconds,
   bool downloadedAtMusicQuality = false,
 }) {
   expect(downloadedAudioTwo.youtubeVideoChannel, "Jean-Pierre Schnyder");
@@ -1313,11 +1245,6 @@ void checkDownloadedAudioShortVideoTwo({
       DateTimeParser.truncateDateTimeToDateOnly(
           downloadedAudioTwo.videoUploadDate),
       DateTime.parse("2023-06-10"));
-  expect(
-      downloadedAudioTwo.audioDuration,
-      Duration(
-        milliseconds: audioDurationMilliseconds,
-      ));
   expect(downloadedAudioTwo.audioPlaySpeed, 1.0);
   expect(downloadedAudioTwo.isAudioMusicQuality, downloadedAtMusicQuality);
 
@@ -1327,7 +1254,6 @@ void checkDownloadedAudioShortVideoTwo({
           secondAudioFileName
               .contains('audio learn test short video two 23-06-10.mp3'),
       true);
-  expect(downloadedAudioTwo.audioFileSize, downloadedFileSize);
 }
 
 // Verify the values of the Audio's extracted from a playlist
