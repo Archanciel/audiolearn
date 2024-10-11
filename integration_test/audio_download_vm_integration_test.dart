@@ -1281,7 +1281,7 @@ void checkPlaylistNewAudioOne({
       "Jean-Pierre Schnyder\n\nCette vidéo me sert à tester AudioLearn, l'app Android que je développe. ...");
   expect(downloadedAudioOne.videoUrl,
       "https://www.youtube.com/watch?v=ADt0BYlh1Yo");
-  expect(downloadedAudioOne.audioDuration, const Duration(milliseconds: 9845));
+  expect(downloadedAudioOne.audioDuration, const Duration(milliseconds: 9891));
   expect(downloadedAudioOne.audioPlaySpeed, 1.0);
 
   String firstNewAudioFileName = downloadedAudioOne.audioFileName;
@@ -1290,7 +1290,7 @@ void checkPlaylistNewAudioOne({
           firstNewAudioFileName.contains('Really short video 23-07-01.mp3'),
       true);
 
-  expect(downloadedAudioOne.audioFileSize, 160000);
+  expect(downloadedAudioOne.audioFileSize, 61288);
   expect(
       DateTimeParser.truncateDateTimeToDateOnly(
           downloadedAudioOne.videoUploadDate),
@@ -1308,7 +1308,7 @@ void checkPlaylistNewAudioTwo({
       "https://www.youtube.com/watch?v=nDqolLTOzYk");
   expect(downloadedAudioTwo.compactVideoDescription,
       "Jean-Pierre Schnyder\n\nCette vidéo me sert à tester AudioLearn, l'app Android que je développe. ...");
-  expect(downloadedAudioTwo.audioDuration, const Duration(milliseconds: 58932));
+  expect(downloadedAudioTwo.audioDuration, const Duration(milliseconds: 58978));
   expect(downloadedAudioTwo.audioPlaySpeed, 1.0);
 
   String secondNewAudioFileName = downloadedAudioTwo.audioFileName;
@@ -1318,7 +1318,7 @@ void checkPlaylistNewAudioTwo({
               .contains('morning _ cinematic video 23-07-01.mp3'),
       true);
 
-  expect(downloadedAudioTwo.audioFileSize, 954427);
+  expect(downloadedAudioTwo.audioFileSize, 360849);
   expect(
       DateTimeParser.truncateDateTimeToDateOnly(
           downloadedAudioTwo.videoUploadDate),

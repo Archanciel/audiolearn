@@ -70,7 +70,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
 
         // When the audio player view is displayed, playlist list is
         // collapsed
-        playlistListVM.isListExpanded = false;
+        playlistListVM.isPlaylistListExpanded = false;
       }
     });
 
@@ -732,7 +732,9 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
   Widget _buildPlayButton() {
     return Consumer2<AudioPlayerVM, PlaylistListVM>(
       builder: (context, audioPlayerVM, playlistListVM, child) {
-        if (!playlistListVM.isListExpanded) {
+        if (!playlistListVM.isPlaylistListExpanded) {
+          // the list of playlists is collapsed, so the play button is
+          // displayed
           return Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -1102,7 +1104,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
   Widget _buildExpandedPlaylistList({
     required PlaylistListVM playlistListVMListenFalse,
   }) {
-    if (playlistListVMListenFalse.isListExpanded) {
+    if (playlistListVMListenFalse.isPlaylistListExpanded) {
       List<Playlist> upToDateSelectablePlaylists =
           playlistListVMListenFalse.getUpToDateSelectablePlaylists();
       return Expanded(
@@ -1125,6 +1127,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
         ),
       );
     } else {
+      // the list of playlists is collapsed
       return const SizedBox.shrink();
     }
   }

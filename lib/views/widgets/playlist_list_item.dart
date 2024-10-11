@@ -250,7 +250,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                         builder: (BuildContext context) {
                           return ConfirmActionDialog(
                             actionFunction:
-                                downloadAudioFromVideoUrlsInPlaylist,
+                                downloadAudioFromVideoUrlsContainedInTextFileToPlaylist,
                             actionFunctionArgs: [
                               audioDownloadVM,
                               warningMessageVM,
@@ -363,14 +363,17 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
     );
   }
 
-  Future<void> downloadAudioFromVideoUrlsInPlaylist(
+  /// Method called when the user clicks on the 'Confirm' button after having
+  /// selected a text file containing video URLs whose audio are to be downloaded
+  /// to the playlist.
+  Future<void> downloadAudioFromVideoUrlsContainedInTextFileToPlaylist(
     AudioDownloadVM audioDownloadVM,
     WarningMessageVM warningMessageVM,
     Playlist targetPlaylist,
     List<String> videoUrls,
   ) async {
     int existingAudioFilesNotRedownloadedCount =
-        await audioDownloadVM.downloadAudioFromVideoUrlsInPlaylist(
+        await audioDownloadVM.downloadAudioFromVideoUrlsToPlaylist(
       targetPlaylist: targetPlaylist,
       videoUrls: videoUrls,
     );
