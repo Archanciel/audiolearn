@@ -40,9 +40,9 @@ import 'warning_message_vm.dart';
 /// It is also used by several widgets in order to display or
 /// manage the playlists.
 class PlaylistListVM extends ChangeNotifier {
-  bool _isListExpanded = false;
-  set isListExpanded(bool isListExpanded) {
-    _isListExpanded = isListExpanded;
+  bool _isPlaylistListExpanded = false;
+  set isPlaylistListExpanded(bool isListExpanded) {
+    _isPlaylistListExpanded = isListExpanded;
 
     notifyListeners();
   }
@@ -51,7 +51,7 @@ class PlaylistListVM extends ChangeNotifier {
   bool _isButtonMovePlaylistEnabled = false;
   bool _areButtonsApplicableToAudioEnabled = false;
 
-  bool get isListExpanded => _isListExpanded;
+  bool get isPlaylistListExpanded => _isPlaylistListExpanded;
   bool get isButtonDownloadSelPlaylistsEnabled =>
       _isButtonDownloadSelPlaylistsEnabled;
   bool get isButtonMovePlaylistEnabled => _isButtonMovePlaylistEnabled;
@@ -83,6 +83,10 @@ class PlaylistListVM extends ChangeNotifier {
 
   final AudioSortFilterService _audioSortFilterService =
       AudioSortFilterService();
+
+  // The next fields are used to manage the search sentence entered
+  // by the user in the 'Youtube URL or search sentence' field of the
+  // PlaylistDownloadView screen.
 
   bool _isSearchButtonEnabled = false;
   bool get isSearchButtonEnabled => _isSearchButtonEnabled;
@@ -129,7 +133,7 @@ class PlaylistListVM extends ChangeNotifier {
         _audioDownloadVM = audioDownloadVM,
         _commentVM = commentVM,
         _settingsDataService = settingsDataService,
-        _isListExpanded = settingsDataService.get(
+        _isPlaylistListExpanded = settingsDataService.get(
           settingType: SettingType.playlists,
           settingSubType: Playlists.arePlaylistsDisplayedInPlaylistDownloadView,
         );
@@ -276,7 +280,7 @@ class PlaylistListVM extends ChangeNotifier {
       }
     }
 
-    int selectedPlaylistIndex = _getSelectedIndex();
+    int selectedPlaylistIndex = _getSelectedPlaylistIndex();
 
     if (selectedPlaylistIndex != -1) {
       _isOnePlaylistSelected = true;
@@ -392,7 +396,7 @@ class PlaylistListVM extends ChangeNotifier {
 
       // This method ensures that the list of playlists is
       // displayed
-      if (!_isListExpanded) {
+      if (!_isPlaylistListExpanded) {
         togglePlaylistsList();
       }
 
@@ -412,12 +416,15 @@ class PlaylistListVM extends ChangeNotifier {
   /// PlaylistDownloadView screen. This method display or hide the list
   /// of playlists.
   void togglePlaylistsList() {
-    _isListExpanded = !_isListExpanded;
+    _isPlaylistListExpanded = !_isPlaylistListExpanded;
 
-    if (!_isListExpanded) {
-      _disableExpandedListButtons();
+    if (!_isPlaylistListExpanded) {
+      _disableExpandedPaylistListButtons();
     } else {
-      int selectedPlaylistIndex = _getSelectedIndex();
+      if (_isSearchSentenceApplied) {
+        _listOfSelectablePlaylists = getUpToDateSelectablePlaylists();
+      }
+      int selectedPlaylistIndex = _getSelectedPlaylistIndex();
       if (selectedPlaylistIndex != -1) {
         _setPlaylistButtonsStateIfOnePlaylistIsSelected(
           selectedPlaylist: _listOfSelectablePlaylists[selectedPlaylistIndex],
@@ -571,7 +578,7 @@ class PlaylistListVM extends ChangeNotifier {
   }
 
   void moveSelectedItemUp() {
-    int selectedIndex = _getSelectedIndex();
+    int selectedIndex = _getSelectedPlaylistIndex();
     if (selectedIndex != -1) {
       moveItemUp(selectedIndex);
       _updateAndSavePlaylistOrder();
@@ -670,7 +677,7 @@ class PlaylistListVM extends ChangeNotifier {
   }
 
   void moveSelectedItemDown() {
-    int selectedIndex = _getSelectedIndex();
+    int selectedIndex = _getSelectedPlaylistIndex();
     if (selectedIndex != -1) {
       moveItemDown(selectedIndex);
       _updateAndSavePlaylistOrder();
@@ -1021,7 +1028,13 @@ class PlaylistListVM extends ChangeNotifier {
     required AudioLearnAppViewType audioLearnAppViewType,
     required String translatedAppliedSortFilterParmsName,
   }) {
-    Playlist selectedPlaylist = getSelectedPlaylists()[0];
+    List<Playlist> selectedPlaylists = getSelectedPlaylists();
+
+    if (selectedPlaylists.isEmpty) {
+      return '';
+    }
+    
+    Playlist selectedPlaylist = selectedPlaylists[0];
     String selectedPlaylistAudioSortFilterParmsNameSetByUser = '';
 
     if (audioLearnAppViewType == AudioLearnAppViewType.playlistDownloadView) {
@@ -1370,7 +1383,7 @@ class PlaylistListVM extends ChangeNotifier {
     return null;
   }
 
-  int _getSelectedIndex() {
+  int _getSelectedPlaylistIndex() {
     for (int i = 0; i < _listOfSelectablePlaylists.length; i++) {
       if (_listOfSelectablePlaylists[i].isSelected) {
         return i;
@@ -1383,7 +1396,7 @@ class PlaylistListVM extends ChangeNotifier {
   void _setPlaylistButtonsStateIfOnePlaylistIsSelected({
     required Playlist selectedPlaylist,
   }) {
-    if (_isListExpanded) {
+    if (_isPlaylistListExpanded) {
       _isButtonMovePlaylistEnabled = true;
     }
 
@@ -1412,7 +1425,7 @@ class PlaylistListVM extends ChangeNotifier {
   }
 
   void _disableAllButtonsIfNoPlaylistIsSelected() {
-    _disableExpandedListButtons();
+    _disableExpandedPaylistListButtons();
     _setStateOfButtonsApplicableToAudio(
       selectedPlaylist: null,
     );
@@ -1428,10 +1441,19 @@ class PlaylistListVM extends ChangeNotifier {
   /// audio button is disabled.
   ///
   /// Finally, the move up and down buttons are disabled.
-  void _disableExpandedListButtons() {
+  void _disableExpandedPaylistListButtons() {
     if (_isOnePlaylistSelected) {
+      int selectedPlaylistIndex = _getSelectedPlaylistIndex();
+
+      if (selectedPlaylistIndex == -1) {
+        _isButtonDownloadSelPlaylistsEnabled = false;
+        _isButtonMovePlaylistEnabled = false;
+
+        return;
+      }
+
       Playlist selectedPlaylist =
-          _listOfSelectablePlaylists[_getSelectedIndex()];
+          _listOfSelectablePlaylists[selectedPlaylistIndex];
       if (selectedPlaylist.playlistType == PlaylistType.local) {
         // if the selected playlist is local, the download
         // playlist audio button is disabled

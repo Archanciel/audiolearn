@@ -81,7 +81,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
         // is collapsed or expanded corresponding to the state stored in the
         // settings file. This state is modified by the user when he clicks
         // on the playlist toggle button.
-        playlistListVM.isListExpanded = widget.settingsDataService.get(
+        playlistListVM.isPlaylistListExpanded = widget.settingsDataService.get(
                 settingType: SettingType.playlists,
                 settingSubType:
                     Playlists.arePlaylistsDisplayedInPlaylistDownloadView) ??
@@ -151,13 +151,13 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
         _buildExpandedPlaylistList(
           playlistListVMlistenFalse: playlistListVMlistenFalse,
         ),
-        (playlistListVMlistenFalse.isListExpanded)
+        (playlistListVMlistenFalse.isPlaylistListExpanded)
             ? const Divider(
                 color:
                     kDarkAndLightEnabledIconColor, // Set the color of the divider
                 thickness: 1.0, // Set the thickness of the divider
               )
-            : const SizedBox.shrink(),
+            : const SizedBox.shrink(), // the list of playlists is collapsed
         _buildExpandedAudioList(
           playlistListVMlistenFalse: playlistListVMlistenFalse,
           warningMessageVMlistenFalse: warningMessageVMlistenFalse,
@@ -220,7 +220,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   Widget _buildExpandedPlaylistList({
     required PlaylistListVM playlistListVMlistenFalse,
   }) {
-    if (playlistListVMlistenFalse.isListExpanded) {
+    if (playlistListVMlistenFalse.isPlaylistListExpanded) {
       List<Playlist> upToDateSelectablePlaylists =
           playlistListVMlistenFalse.getUpToDateSelectablePlaylists();
       return Expanded(
@@ -242,6 +242,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
         ),
       );
     } else {
+      // the list of playlists is collapsed
       return const SizedBox.shrink();
     }
   }
@@ -340,7 +341,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                   settingType: SettingType.playlists,
                   settingSubType:
                       Playlists.arePlaylistsDisplayedInPlaylistDownloadView,
-                  value: playlistListVMlistenFalse.isListExpanded,
+                  value: playlistListVMlistenFalse.isPlaylistListExpanded,
                 );
                 widget.settingsDataService.saveSettings();
               },
@@ -360,7 +361,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             onPressed: (playlistListVMlistenTrue.isSearchButtonEnabled)
                 ? () {
                     playlistListVMlistenFalse.wasSearchButtonClicked = true;
-                    if (!playlistListVMlistenTrue.isListExpanded) {
+                    if (!playlistListVMlistenTrue.isPlaylistListExpanded) {
+                      // the list of playlists is collapsed
                       playlistListVMlistenFalse.isSearchSentenceApplied = true;
                       _applySortFilterParmsNameChange(
                         playlistListVMlistenFalseOrTrue:
@@ -384,7 +386,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             ),
           ),
         ),
-        (playlistListVMlistenTrue.isListExpanded)
+        (playlistListVMlistenTrue.isPlaylistListExpanded)
             ? _buildPlaylistMoveIconButtons(
                 playlistListVMlistenFalse: playlistListVMlistenFalse,
               )
@@ -702,10 +704,10 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     String searchSentence = '';
 
     if (playlistListVMlistenFalseOrTrue.isSearchSentenceApplied) {
-      // _isSearchSentenceApplied is true means that the user did click on
+      // _isSearchSentenceApplied is true means that the user clicked on
       // the searchSentence button. Its value is set to false only after the
-      // the youtubeUrlOrSearchTextField was emptied by the user of if the
-      // user did paste a URL in the youtubeUrlOrSearchTextField field.
+      // youtubeUrlOrSearchTextField was emptied by the user of if the
+      // user did paste a URL on it.
       searchSentence = _playlistUrlOrSearchController.text;
     }
 
@@ -1577,9 +1579,10 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                   playlistListVMlistenTrue.isSearchButtonEnabled = true;
                 }
 
-                if (playlistListVMlistenTrue.isListExpanded) {
+                if (playlistListVMlistenTrue.isPlaylistListExpanded) {
                   playlistListVMlistenTrue.searchSentence = value;
                 } else {
+                  playlistListVMlistenTrue.searchSentence = value;
                   _applySortFilterParmsNameChange(
                     playlistListVMlistenFalseOrTrue: playlistListVMlistenTrue,
                     notifyListeners: true,

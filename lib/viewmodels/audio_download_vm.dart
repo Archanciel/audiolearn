@@ -1175,14 +1175,14 @@ class AudioDownloadVM extends ChangeNotifier {
   }
 
   /// This method is called by the PlaylistListVM when the user selects the
-  /// "Download URLs from text file" menu item. False is returned in case
+  /// "Download URLs from text file" playlist menu item. False is returned in case
   /// a download problen happens or if the file already exists in the target
   /// playlist directory.
   ///
   /// {existingAudioFilesNotRedownloadedCount} is the number of audio files
   /// which were not redownloaded since they already exist in the target
   /// playlist directory.
-  Future<int> downloadAudioFromVideoUrlsInPlaylist({
+  Future<int> downloadAudioFromVideoUrlsToPlaylist({
     required Playlist targetPlaylist,
     required List<String> videoUrls,
   }) async {
@@ -1293,7 +1293,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
   /// This method is redifined in the MockAudioDownloadVM in a version which
   /// returns null. This enable the unit test audio_download_vm_test.dart
-  /// to be executed without the need of the AudioPlayer package which is 
+  /// to be executed without the need of the AudioPlayer package which is
   /// usable only in integration tests, mot in a unit tests.
   AudioPlayer? instanciateAudioPlayer() {
     return AudioPlayer();
