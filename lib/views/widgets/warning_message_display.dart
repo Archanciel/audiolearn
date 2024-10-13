@@ -47,7 +47,8 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
   Widget build(BuildContext context) {
     final WarningMessageType warningMessageType =
         _warningMessageVM.warningMessageType;
-    final ThemeProviderVM themeProviderVM = Provider.of<ThemeProviderVM>(context);
+    final ThemeProviderVM themeProviderVM =
+        Provider.of<ThemeProviderVM>(context);
 
     switch (warningMessageType) {
       case WarningMessageType.errorMessage:
@@ -247,6 +248,27 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         });
 
         return const SizedBox.shrink();
+      case WarningMessageType.confirmYoutubeChannelModifications:
+        int numberOfModifiedDownloadedAudio =
+            _warningMessageVM.numberOfModifiedDownloadedAudio;
+        int numberOfModifiedPlayableAudio =
+            _warningMessageVM.numberOfModifiedPlayableAudio;
+
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _displayWarningDialog(
+            context: _context,
+            message: AppLocalizations.of(context)!
+                .confirmYoutubeChannelModifications(
+              numberOfModifiedDownloadedAudio,
+              numberOfModifiedPlayableAudio,
+            ),
+            warningMessageVM: _warningMessageVM,
+            themeProviderVM: themeProviderVM,
+            warningMode: WarningMode.confirm,
+          );
+        });
+
+        return const SizedBox.shrink();
       case WarningMessageType.renameFileNameInvalid:
         String fileName = _warningMessageVM.renameFileNameInvalid;
 
@@ -329,7 +351,8 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
             forAudioPlayerViewMessagePart = '';
           }
 
-          forViewMessage = forPlaylistDownloadViewMessagePart + forAudioPlayerViewMessagePart;
+          forViewMessage = forPlaylistDownloadViewMessagePart +
+              forAudioPlayerViewMessagePart;
         } else {
           if (_warningMessageVM.forAudioPlayerView) {
             forViewMessage =

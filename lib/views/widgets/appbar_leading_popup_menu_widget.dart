@@ -1,4 +1,5 @@
 import 'package:audiolearn/models/comment.dart';
+import 'package:audiolearn/viewmodels/audio_download_vm.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -26,6 +27,7 @@ enum AppBarPopupMenu {
   openSettingsDialog,
   updatePlaylistJson,
   savePlaylistAndCommentsToZip,
+  setYoutubeChannel,
 }
 
 /// The AppBarLeadingPopupMenuWidget is used to display the leading
@@ -523,6 +525,12 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
                   .savePlaylistAndCommentsToZipMenu),
             ),
           ),
+          PopupMenuItem<AppBarPopupMenu>(
+            key: const Key('setYoutubeChannel'),
+            value: AppBarPopupMenu.setYoutubeChannel,
+            child: Text(AppLocalizations.of(context)!
+                .setYoutubeChannelMenu),
+          ),
         ];
       },
       icon: const Icon(Icons.menu),
@@ -560,6 +568,12 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
             ).savePlaylistsCommentsAndSettingsJsonFilesToZip(
               targetDirectoryPath: selectedFilePathNameLst,
             );
+            break;
+          case AppBarPopupMenu.setYoutubeChannel:
+            await Provider.of<AudioDownloadVM>(
+              context,
+              listen: false,
+            ).ensureAllAudioYoutubeChannelOfAllPlaylistsAreSet();
             break;
           default:
             break;

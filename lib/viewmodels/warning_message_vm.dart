@@ -36,6 +36,9 @@ enum WarningMessageType {
   renameFileNameInvalid, // The case if the file name proposed
   // for renaming an audio file has not .mp3 extension.
 
+  confirmYoutubeChannelModifications, // The case if the user
+  // selected the app 'Youtube channel setting' menu item.
+
   renameFileNameAlreadyUsed, // The case if the file name proposed
   // for renaming an audio file is the name of an existing
   // file.
@@ -380,6 +383,24 @@ class WarningMessageVM extends ChangeNotifier {
   set invalidYoutubePlaylistTitle(String invalidYoutubePlaylistTitle) {
     _invalidYoutubePlaylistTitle = invalidYoutubePlaylistTitle;
     warningMessageType = WarningMessageType.invalidYoutubePlaylistTitle;
+
+    // Causes the display warning message widget to be displayed.      // Causes the display warning message widget to be displayed.
+    notifyListeners();
+  }
+
+  int _numberOfModifiedDownloadedAudio = 0;
+  int get numberOfModifiedDownloadedAudio => _numberOfModifiedDownloadedAudio;
+  int _numberOfModifiedPlayableAudio = 0;
+  int get numberOfModifiedPlayableAudio => _numberOfModifiedPlayableAudio;
+
+  void confirmYoutubeChannelModifications({
+    required int numberOfModifiedDownloadedAudio,
+    required int numberOfModifiedPlayableAudio,
+  }) {
+    _numberOfModifiedDownloadedAudio = numberOfModifiedDownloadedAudio;
+    _numberOfModifiedPlayableAudio = numberOfModifiedPlayableAudio;
+
+    warningMessageType = WarningMessageType.confirmYoutubeChannelModifications;
 
     // Causes the display warning message widget to be displayed.      // Causes the display warning message widget to be displayed.
     notifyListeners();
