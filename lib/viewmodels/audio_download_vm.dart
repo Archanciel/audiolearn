@@ -372,10 +372,112 @@ class AudioDownloadVM extends ChangeNotifier {
     );
   }
 
+  /// Method called once in order to set the channel value of all already
+  /// downloaded audio files of all playlists. This is necessary since
+  /// the channel value of the audio files was not set when those audio files
+  /// were downloaded.
+  Future<void> ensureAllAudioYoutubeChannelOfAllPlaylistsAreSet() async {
+    int numberOfModifiedDownloadedAudio = 0;
+    int numberOfModifiedPlayableAudio = 0;
+
+    for (Playlist playlist in _listOfPlaylist) {
+      if (playlist.playlistType == PlaylistType.local) {
+        continue;
+      }
+
+      List<int> modifiedAudioNumberLst =
+          await obtainPlaylistAudioYoutubeChannel(
+        playlist: playlist,
+      );
+
+      numberOfModifiedDownloadedAudio += modifiedAudioNumberLst[0];
+      numberOfModifiedPlayableAudio += modifiedAudioNumberLst[1];
+
+      JsonDataService.saveToFile(
+        model: playlist,
+        path: playlist.getPlaylistDownloadFilePathName(),
+      );
+    }
+
+    warningMessageVM.confirmYoutubeChannelModifications(
+      numberOfModifiedDownloadedAudio: numberOfModifiedDownloadedAudio,
+      numberOfModifiedPlayableAudio: numberOfModifiedPlayableAudio,
+    );
+
+    notifyListeners();
+  }
+
   /// Downloads the audio of the videos referenced in the passed
   /// playlist url. If the audio of a video has already been
   /// downloaded, it will not be downloaded again.
-  Future<void> downloadPlaylistAudios({
+  Future<List<int>> obtainPlaylistAudioYoutubeChannel({
+    required Playlist playlist,
+  }) async {
+    String playlistUrl = playlist.url;
+    _youtubeExplode ??= yt.YoutubeExplode();
+
+    // get the Youtube playlist
+    String? playlistId = yt.PlaylistId.parsePlaylistId(playlistUrl);
+
+    int numberOfModifiedDownloadedAudio = 0;
+    int numberOfModifiedPlayableAudio = 0;
+
+    Stream<yt.Video> videoStream =
+        _youtubeExplode!.playlists.getVideos(playlistId).asBroadcastStream();
+
+    try {
+      // try / catch necessary due to possible youtube explode errors
+      await for (yt.Video youtubeVideo in videoStream) {
+        final String youtubeVideoTitle = youtubeVideo.title;
+        final String youtubeVideoChannel = youtubeVideo.author;
+
+        try {
+          Audio downloadedAudio = playlist.downloadedAudioLst.firstWhere(
+            (audio) => audio.originalVideoTitle == youtubeVideoTitle,
+          );
+
+          if (downloadedAudio.youtubeVideoChannel == youtubeVideoChannel) {
+            continue;
+          } else {
+            downloadedAudio.youtubeVideoChannel = youtubeVideoChannel;
+            numberOfModifiedDownloadedAudio++;
+          }
+
+          try {
+            Audio correspondingPlayableAudio = playlist.playableAudioLst
+                .firstWhere((audio) => audio == downloadedAudio);
+            correspondingPlayableAudio.youtubeVideoChannel =
+                youtubeVideoChannel;
+            numberOfModifiedPlayableAudio++;
+          } catch (_) {
+            // If the downloaded audio is not in the playable audio list of the enclosing playlist
+            continue;
+          }
+        } catch (_) {
+          // The audio of the video has not been downloaded
+          continue;
+        }
+      }
+    } catch (e) {
+      notifyDownloadError(
+        errorType: ErrorType.downloadAudioYoutubeError,
+        errorArgOne: e.toString(),
+      );
+    }
+
+    _youtubeExplode!.close();
+    _youtubeExplode = null;
+
+    return [
+      numberOfModifiedDownloadedAudio,
+      numberOfModifiedPlayableAudio,
+    ];
+  }
+
+  /// Downloads the audio of the videos referenced in the passed
+  /// playlist url. If the audio of a video has already been
+  /// downloaded, it will not be downloaded again.
+  Future<void> downloadPlaylistAudio({
     required String playlistUrl,
   }) async {
     // if the playlist is already being downloaded, then

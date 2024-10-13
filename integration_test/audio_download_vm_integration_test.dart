@@ -1364,7 +1364,7 @@ class _DownloadPlaylistPageState extends State<DownloadPlaylistPage> {
               key: const Key('downloadPlaylistAudiosButton'),
               onPressed: () {
                 Provider.of<AudioDownloadVM>(context, listen: false)
-                    .downloadPlaylistAudios(
+                    .downloadPlaylistAudio(
                   playlistUrl: _urlController.text,
                 );
               },

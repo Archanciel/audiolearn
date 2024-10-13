@@ -441,7 +441,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                       await Provider.of<AudioDownloadVM>(
                         context,
                         listen: false,
-                      ).downloadPlaylistAudios(
+                      ).downloadPlaylistAudio(
                           playlistUrl: selectedPlaylists[0].url);
                     }
                   : null,

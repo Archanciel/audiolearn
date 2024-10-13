@@ -1339,4 +1339,14 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get savePlaylistAndCommentsToZipTooltip =>
       "Save the playlists and their audio comments to a zip file. The zip file will contain the playlists JSON files as well as the comments JSON files.";
+
+  @override
+  String get setYoutubeChannelMenu => "Youtube channel setting";
+
+  @override
+  String confirmYoutubeChannelModifications(
+    Object numberOfModifiedDownloadedAudio,
+    Object numberOfModifiedPlayableAudio,
+  ) =>
+      "The Youtube channel was modified in $numberOfModifiedDownloadedAudio downloaded audio and in $numberOfModifiedPlayableAudio playable audio.";
 }

@@ -685,11 +685,12 @@ class PlaylistListVM extends ChangeNotifier {
     }
   }
 
-  Future<void> downloadSelectedPlaylist(BuildContext context) async {
+  /// This method is not used for the moment.
+  Future<void> downloadSelectedPlaylist() async {
     List<Playlist> selectedPlaylists = getSelectedPlaylists();
 
     for (Playlist playlist in selectedPlaylists) {
-      await _audioDownloadVM.downloadPlaylistAudios(playlistUrl: playlist.url);
+      await _audioDownloadVM.downloadPlaylistAudio(playlistUrl: playlist.url);
     }
   }
 
@@ -1033,7 +1034,7 @@ class PlaylistListVM extends ChangeNotifier {
     if (selectedPlaylists.isEmpty) {
       return '';
     }
-    
+
     Playlist selectedPlaylist = selectedPlaylists[0];
     String selectedPlaylistAudioSortFilterParmsNameSetByUser = '';
 

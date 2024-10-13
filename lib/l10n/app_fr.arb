@@ -436,5 +436,14 @@
   "searchInYoutubeChannelName": "Inclure la chaîne Youtube",
   "searchInYoutubeChannelNameTooltip": "Inclure le nom de la chaîne Youtube dans la recherche.",
   "savePlaylistAndCommentsToZipMenu": "Sauver les playlists et les commentaires dans un fichier zip",
-  "savePlaylistAndCommentsToZipTooltip": "Sauvegarde des playlists et les commentaires dans un fichier zip. Seuls les fichiers json sont copiés. Les fichiers audio ne sont pas inclus."
+  "savePlaylistAndCommentsToZipTooltip": "Sauvegarde des playlists et les commentaires dans un fichier zip. Seuls les fichiers json sont copiés. Les fichiers audio ne sont pas inclus.",
+  "setYoutubeChannelMenu": "Youtube channel définition",
+  "confirmYoutubeChannelModifications": "La chaîne Youtube a été définie dans {numberOfModifiedDownloadedAudio} audio téléchargés ainsi que dans {numberOfModifiedPlayableAudio} audio écoutables.",
+  "@confirmYoutubeChannelModifications": {
+    "description": "Confirmation message indicating how many downloaded audio and playable audio were modified",
+    "placeholders": {
+      "numberOfModifiedDownloadedAudio": {},
+      "numberOfModifiedPlayableAudio": {}
+    }
+  }
 }
