@@ -386,7 +386,7 @@ class AudioDownloadVM extends ChangeNotifier {
       }
 
       List<int> modifiedAudioNumberLst =
-          await obtainPlaylistAudioYoutubeChannel(
+          await obtainPlaylistAudioYoutubeChannelAlt(
         playlist: playlist,
       );
 
@@ -455,6 +455,62 @@ class AudioDownloadVM extends ChangeNotifier {
           }
         } catch (_) {
           // The audio of the video has not been downloaded
+          continue;
+        }
+      }
+    } catch (e) {
+      notifyDownloadError(
+        errorType: ErrorType.downloadAudioYoutubeError,
+        errorArgOne: e.toString(),
+      );
+    }
+
+    _youtubeExplode!.close();
+    _youtubeExplode = null;
+
+    return [
+      numberOfModifiedDownloadedAudio,
+      numberOfModifiedPlayableAudio,
+    ];
+  }
+
+  /// Downloads the audio of the videos referenced in the passed
+  /// playlist url. If the audio of a video has already been
+  /// downloaded, it will not be downloaded again.
+  Future<List<int>> obtainPlaylistAudioYoutubeChannelAlt({
+    required Playlist playlist,
+  }) async {
+    _youtubeExplode ??= yt.YoutubeExplode();
+    List<Audio> downloadedAudioLst = playlist.downloadedAudioLst;
+
+    int numberOfModifiedDownloadedAudio = 0;
+    int numberOfModifiedPlayableAudio = 0;
+    yt.VideoId videoId;
+    yt.Video youtubeVideo;
+    String youtubeVideoChannel;
+
+    try {
+      // try / catch necessary due to possible youtube explode errors
+      for (Audio audio in downloadedAudioLst) {
+        String videoUrl = audio.videoUrl;
+        videoId = yt.VideoId(videoUrl);
+        youtubeVideo = await _youtubeExplode!.videos.get(videoId);
+        youtubeVideoChannel = youtubeVideo.author;
+
+        if (audio.youtubeVideoChannel == youtubeVideoChannel) {
+          continue;
+        } else {
+          audio.youtubeVideoChannel = youtubeVideoChannel;
+          numberOfModifiedDownloadedAudio++;
+        }
+
+        try {
+          Audio correspondingPlayableAudio = playlist.playableAudioLst
+              .firstWhere((playableAudio) => playableAudio == audio);
+          correspondingPlayableAudio.youtubeVideoChannel = youtubeVideoChannel;
+          numberOfModifiedPlayableAudio++;
+        } catch (_) {
+          // If the downloaded audio is not in the playable audio list of the enclosing playlist
           continue;
         }
       }
