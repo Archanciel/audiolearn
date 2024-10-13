@@ -1900,7 +1900,7 @@ class PlaylistListVM extends ChangeNotifier {
       // Check if settings.json exists before attempting to add it
       if (settingsFile.existsSync()) {
         // Get the relative path of the settings.json file
-        String settingsRelativePath = path.join('appSettings', 'settings.json');
+        String settingsRelativePath = 'settings.json';
 
         // Read the file and add it to the archive
         List<int> settingsBytes = await settingsFile.readAsBytes();
