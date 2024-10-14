@@ -15297,7 +15297,7 @@ void main() {
     // });
   });
   group('Search icon button test', () {
-    group('Audio selection', () {
+    group('Audio search word selection', () {
       testWidgets('''First, select the existing 'janco' sort/filter
           parms in the SF dropdown button. Then enter the search word 'La' in the
           'Youtube Link''', (WidgetTester tester) async {
@@ -15955,7 +15955,7 @@ void main() {
         );
       });
     });
-    group('Playlist selection', () {
+    group('Playlist search word selection', () {
       testWidgets('''First, enter the search word 'al' in the 'Youtube Link or
            Search' text field.''', (WidgetTester tester) async {
         // After entering 'a', verify that the search icon button is now enabled.
@@ -16459,7 +16459,7 @@ void main() {
         );
       });
     });
-    group('Audio to playlist selection', () {
+    group('Audio search word to playlist selection', () {
       testWidgets('''First, enter the search word 'al' in the
           'Youtube Link or Search' text field.''', (WidgetTester tester) async {
         // After entering 'al', verify that the search icon button is now enabled.
@@ -16470,7 +16470,8 @@ void main() {
         // word and finally empty it.
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
-          savedTestDataDirName: 'sort_and_filter_audio_dialog_widget_three_playlists_test',
+          savedTestDataDirName:
+              'sort_and_filter_audio_dialog_widget_three_playlists_test',
           tapOnPlaylistToggleButton: false,
         );
 
@@ -16574,7 +16575,6 @@ void main() {
           audioTitlesOrderLst: playlistsTitles,
         );
 
-
         // Now remove the third and second letter of the 'al_' search word
         await tester.tap(
           find.byKey(
@@ -16595,9 +16595,6 @@ void main() {
           tester: tester,
           widgetKeyStr: 'search_icon_button',
         );
-
-
-
 
         // Then erase the second search word letter
         await tester.tap(
@@ -16648,6 +16645,172 @@ void main() {
         IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'search_icon_button',
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+    });
+    group('Playlist search word to audio selection', () {
+      testWidgets('''First, enter the search word 'al' in the
+          'Youtube Link or Search' text field.''', (WidgetTester tester) async {
+        // After entering 'al', verify that the search icon button is now enabled.
+        // Then, click on the enabled search icon button and verify the reduced
+        // displayed playlist list. After that, click on the "Playlists" button in
+        // order to hide the playlists and expand the audio list and verify that
+        // the list of displayed audio corresponds to the search text field. Then
+        // modify the search word and finally empty it.
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName:
+              'sort_and_filter_audio_dialog_widget_three_playlists_test',
+          tapOnPlaylistToggleButton: true,
+        );
+
+        // Enter the two letters of the 'al' search word. The crazy integration
+        // test does not always update the test field. To fix this bug, first
+        // select the text field and then enter the text.
+
+        // Select the text field
+        await tester.tap(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+        );
+        await tester.pumpAndSettle();
+
+        // Enter the second letter of the 'La' search word
+        await tester.enterText(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+          'al',
+        );
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        // Verify that the search icon button is enabled
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'search_icon_button',
+        );
+
+        // Now tap on the search icon button
+        await tester.tap(find.byKey(const Key('search_icon_button')));
+        await tester.pumpAndSettle();
+
+        // Verify the order of the reduced playlist titles
+
+        List<String> playlistsTitles = [
+          "local",
+          "local_2",
+        ];
+
+        // Ensure that since the search icon button was now pressed,
+        // the displayed playlist list is modified.
+        IntegrationTestUtil.checkTitlesOrderInListTile(
+          tester: tester,
+          audioTitlesOrderLst: playlistsTitles,
+        );
+
+        // Now tap on the "Playlists" button to reduce the list
+        // of playlists
+        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+        await tester.pumpAndSettle();
+
+        // Now verify the order of the reduced selected playlist audio titles
+
+        List<String>
+            audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
+          "La surpopulation mondiale par Jancovici et Barrau",
+        ];
+
+        // Ensure that since the search icon button was now pressed,
+        // the displayed audio list is modified.
+        IntegrationTestUtil.checkTitlesOrderInListTile(
+          tester: tester,
+          audioTitlesOrderLst:
+              audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+        );
+
+        // Now replace the second letter 'l' of 'al' by 'u' search word
+        await tester.tap(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+        );
+        await tester.pumpAndSettle();
+        await tester.enterText(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+          'au',
+        );
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        // Verify that the search icon button is still enabled
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'search_icon_button',
+        );
+
+        // And verify the order of the playlist titles. Since
+        // the search icon button was used, modifying the search text
+        // is applied at each search text change
+
+        audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          "La surpopulation mondiale par Jancovici et Barrau",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+        ];
+
+        // Ensure that since the search icon button was used,
+        // the displayed audio list is modified.
+        IntegrationTestUtil.checkTitlesOrderInListTile(
+          tester: tester,
+          audioTitlesOrderLst:
+              audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+        );
+
+        // Now empty the search word
+        await tester.tap(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+        );
+        await tester.pumpAndSettle();
+        await tester.enterText(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+          '',
+        );
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        // Verify that the search icon button is now disabled
+        IntegrationTestUtil.verifyWidgetIsDisabled(
+          tester: tester,
+          widgetKeyStr: 'search_icon_button',
+        );
+
+        audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          "La surpopulation mondiale par Jancovici et Barrau",
+          "La résilience insulaire par Fiona Roche",
+          "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+          "Les besoins artificiels par R.Keucheyan",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        ];
+
+        // Ensure that since the search icon button was now pressed,
+        // the displayed audio list is modified.
+        IntegrationTestUtil.checkTitlesOrderInListTile(
+          tester: tester,
+          audioTitlesOrderLst:
+              audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
         // Purge the test playlist directory so that the created test
