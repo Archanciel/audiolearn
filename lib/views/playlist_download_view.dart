@@ -344,6 +344,15 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                   value: playlistListVMlistenFalse.isPlaylistListExpanded,
                 );
                 widget.settingsDataService.saveSettings();
+
+                if (!playlistListVMlistenFalse.isPlaylistListExpanded &&
+                    playlistListVMlistenFalse.wasSearchButtonClicked) {
+                  playlistListVMlistenFalse.isSearchSentenceApplied = true;
+                  _applySortFilterParmsNameChange(
+                    playlistListVMlistenFalseOrTrue: playlistListVMlistenFalse,
+                    notifyListeners: true,
+                  );
+                }
               },
               child: Text(
                 'Playlists',

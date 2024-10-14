@@ -698,7 +698,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// returns a list of Playlists containing the unique selected
   /// playlist.
   List<Playlist> getSelectedPlaylists() {
-    return _listOfSelectablePlaylists
+    return _audioDownloadVM.listOfPlaylist
         .where((playlist) => playlist.isSelected)
         .toList();
   }

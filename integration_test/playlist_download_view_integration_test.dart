@@ -16001,7 +16001,7 @@ void main() {
           find.byKey(
             const Key('youtubeUrlOrSearchTextField'),
           ),
-          '_',
+          'al_',
         );
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
@@ -16450,6 +16450,204 @@ void main() {
 
         await enteringFirstAndSecondLetterOfSearchWord(
           tester: tester,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+    });
+    group('Audio to playlist selection', () {
+      testWidgets('''First, enter the search word 'al' in the
+          'Youtube Link or Search' text field.''', (WidgetTester tester) async {
+        // After entering 'al', verify that the search icon button is now enabled.
+        // Then, click on the enabled search icon button and verify the reduced
+        // displayed audio list. After that, click on the "Playlists" button in
+        // order to display playlists and verify that the list of displayed
+        // playlists corresponds to the search tet field. Then modify the search
+        // word and finally empty it.
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'sort_and_filter_audio_dialog_widget_three_playlists_test',
+          tapOnPlaylistToggleButton: false,
+        );
+
+        // Enter the two letters of the 'al' search word. The crazy integration
+        // test does not always update the test field. To fix this bug, first
+        // select the text field and then enter the text.
+
+        // Select the text field
+        await tester.tap(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+        );
+        await tester.pumpAndSettle();
+
+        // Enter the second letter of the 'La' search word
+        await tester.enterText(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+          'al',
+        );
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        // Verify that the search icon button is enabled
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'search_icon_button',
+        );
+
+        // Now tap on the search icon button
+        await tester.tap(find.byKey(const Key('search_icon_button')));
+        await tester.pumpAndSettle();
+
+        // Now verify the order of the reduced playlist audio titles
+
+        List<String>
+            audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
+          "La surpopulation mondiale par Jancovici et Barrau",
+        ];
+
+        // Ensure that since the search icon button was now pressed,
+        // the displayed audio list is modified.
+        IntegrationTestUtil.checkTitlesOrderInListTile(
+          tester: tester,
+          audioTitlesOrderLst:
+              audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+        );
+
+        // Now tap on the "Playlists" button
+        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+        await tester.pumpAndSettle();
+
+        // Verify the order of the reduced playlist titles
+
+        List<String> playlistsTitles = [
+          "local",
+          "local_2",
+        ];
+
+        // Ensure that since the search icon button was now pressed,
+        // the displayed playlist list is modified.
+        IntegrationTestUtil.checkTitlesOrderInListTile(
+          tester: tester,
+          audioTitlesOrderLst: playlistsTitles,
+        );
+
+        // Now add the third letter of the 'al_' search word
+        await tester.tap(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+        );
+        await tester.pumpAndSettle();
+        await tester.enterText(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+          '_',
+        );
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        // Verify that the search icon button is still enabled
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'search_icon_button',
+        );
+
+        // And verify the order of the playlist titles. Since
+        // the search icon button was used, modifying the search text
+        // is applied at each search text change
+
+        playlistsTitles = [
+          "local_2",
+        ];
+
+        // Ensure that since the search icon button was used,
+        // the displayed playlist list is modified.
+        IntegrationTestUtil.checkTitlesOrderInListTile(
+          tester: tester,
+          audioTitlesOrderLst: playlistsTitles,
+        );
+
+
+        // Now remove the third and second letter of the 'al_' search word
+        await tester.tap(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+        );
+        await tester.pumpAndSettle();
+        await tester.enterText(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+          'a',
+        );
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        // Verify that the search icon button is still enabled
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'search_icon_button',
+        );
+
+
+
+
+        // Then erase the second search word letter
+        await tester.tap(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+        );
+        await tester.pumpAndSettle();
+        await tester.enterText(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+          'a',
+        );
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        // Now verify the order of the augmented playlist titles
+
+        playlistsTitles = [
+          "S8 audio",
+          "local",
+          "local_2",
+        ];
+
+        // Ensure that since the search icon button was now pressed,
+        // the displayed audio list is modified.
+        IntegrationTestUtil.checkTitlesOrderInListTile(
+          tester: tester,
+          audioTitlesOrderLst: playlistsTitles,
+        );
+
+        // Now emptying the search text word
+        await tester.tap(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+        );
+        await tester.pumpAndSettle();
+        await tester.enterText(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+          '',
+        );
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        // Verify that the search icon button is now disabled
+        IntegrationTestUtil.verifyWidgetIsDisabled(
+          tester: tester,
+          widgetKeyStr: 'search_icon_button',
         );
 
         // Purge the test playlist directory so that the created test
