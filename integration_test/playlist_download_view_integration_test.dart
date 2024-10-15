@@ -17004,6 +17004,7 @@ void main() {
         await tester.tap(lastDownloadedAudioListTileInkWellFinder);
         await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
           tester: tester,
+          additionalMilliseconds: 1500,
         );
 
         // And return to the playlist download view
