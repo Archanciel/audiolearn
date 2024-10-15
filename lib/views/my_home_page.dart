@@ -120,7 +120,8 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
       audioSortFilterParameters:
           AudioSortFilterParameters.createDefaultAudioSortFilterParameters(),
     );
-    final ThemeProviderVM themeProviderVMlistenTrue = Provider.of<ThemeProviderVM>(
+    final ThemeProviderVM themeProviderVMlistenTrue =
+        Provider.of<ThemeProviderVM>(
       context,
       listen: true,
     );
@@ -245,13 +246,24 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
   Future<void> onPageChangedFunction(int index) async {
     switch (index) {
       case ScreenMixin.PLAYLIST_DOWNLOAD_VIEW_DRAGGABLE_INDEX:
-        PlaylistListVM playlistListVM = Provider.of<PlaylistListVM>(
+        PlaylistListVM playlistListVMlistenFalse = Provider.of<PlaylistListVM>(
           context,
           listen: false,
         );
-        playlistListVM.backToPlaylistDownloadView();
+        playlistListVMlistenFalse.backToPlaylistDownloadView();
         break;
       case ScreenMixin.AUDIO_PLAYER_VIEW_DRAGGABLE_INDEX:
+        PlaylistListVM playlistListVMlistenFalse = Provider.of<PlaylistListVM>(
+          context,
+          listen: false,
+        );
+
+        if (playlistListVMlistenFalse.isSearchButtonEnabled) {
+          // Necessary to disable the search button and clear the search
+          // sentence when dragging to the AudioPlayerView screen.
+          playlistListVMlistenFalse.disableSearchSentence();
+        }
+
         // dragging to the AudioPlayerView screen requires to set
         // the current audio defined on the currently selected playlist.
         await globalAudioPlayerVM.setCurrentAudioFromSelectedPlaylist();

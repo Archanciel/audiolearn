@@ -990,6 +990,14 @@ class PlaylistListVM extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Method used to disable the search button as well as to clear the search
+  /// sentence.
+  void disableSearchSentence() {
+    isSearchButtonEnabled = false;
+    isSearchSentenceApplied = false;
+    wasSearchButtonClicked = false;
+  }
+
   /// Method called when the user clicks on the playlist menu
   /// item "Sort filter audio" in the audio popup menu button
   /// in PlaylistDownloadView or in the AudioPlayerView.
