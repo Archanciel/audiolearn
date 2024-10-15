@@ -111,11 +111,7 @@ class PlaylistListVM extends ChangeNotifier {
   // Set to true when the user clicks on the search icon button and to
   // false when the user empty the 'Youtube link or Search' field or if
   // a URL is pasted in the field.
-  bool _isSearchSentenceApplied = false;
-  bool get isSearchSentenceApplied => _isSearchSentenceApplied;
-  set isSearchSentenceApplied(bool isSearchSentenceApplied) {
-    _isSearchSentenceApplied = isSearchSentenceApplied;
-  }
+  bool isSearchSentenceApplied = false;
 
   bool _wasSearchButtonClicked = false;
   bool get wasSearchButtonClicked => _wasSearchButtonClicked;
@@ -421,7 +417,7 @@ class PlaylistListVM extends ChangeNotifier {
     if (!_isPlaylistListExpanded) {
       _disableExpandedPaylistListButtons();
     } else {
-      if (_isSearchSentenceApplied) {
+      if (isSearchSentenceApplied) {
         _listOfSelectablePlaylists = getUpToDateSelectablePlaylists();
       }
       int selectedPlaylistIndex = _getSelectedPlaylistIndex();
