@@ -1580,9 +1580,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                     value.toLowerCase().contains('https://') ||
                     value.toLowerCase().contains('http://')) {
                   if (playlistListVMlistenTrue.isSearchButtonEnabled) {
-                    playlistListVMlistenTrue.isSearchButtonEnabled = false;
-                    playlistListVMlistenTrue.isSearchSentenceApplied = false;
-                    playlistListVMlistenTrue.wasSearchButtonClicked = false;
+                    playlistListVMlistenTrue.disableSearchSentence();
                   }
                 } else {
                   playlistListVMlistenTrue.isSearchButtonEnabled = true;
