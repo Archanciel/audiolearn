@@ -12,7 +12,7 @@ void main() {
         playlistQuality: PlaylistQuality.voice,
       );
 
-      addThreeDownloadedAudios(playlist);
+      addThreeDownloadedAudio(playlist);
 
       expect(playlist.downloadedAudioLst.length, 3);
       expect(playlist.downloadedAudioLst[0].originalVideoTitle, 'C');
@@ -31,7 +31,7 @@ void main() {
         playlistQuality: PlaylistQuality.voice,
       );
 
-      addThreeDownloadedAudios(playlist);
+      addThreeDownloadedAudio(playlist);
 
       expect(
           playlist
@@ -63,7 +63,7 @@ void main() {
         playlistQuality: PlaylistQuality.voice,
       );
 
-      addThreeDownloadedAudios(playlist);
+      addThreeDownloadedAudio(playlist);
 
       expect(playlist.playableAudioLst.length, 3);
 
@@ -87,7 +87,7 @@ void main() {
         playlistQuality: PlaylistQuality.voice,
       );
 
-      addThreeDownloadedAudios(playlist);
+      addThreeDownloadedAudio(playlist);
 
       expect(playlist.playableAudioLst.length, 3);
 
@@ -112,7 +112,7 @@ void main() {
         playlistQuality: PlaylistQuality.voice,
       );
 
-      addThreeDownloadedAudios(playlist);
+      addThreeDownloadedAudio(playlist);
 
       expect(playlist.playableAudioLst.length, 3);
       expect(playlist.downloadedAudioLst[0].originalVideoTitle, 'C');
@@ -264,7 +264,7 @@ void main() {
         playlistQuality: PlaylistQuality.voice,
       );
 
-      addThreeDownloadedAudios(playlist);
+      addThreeDownloadedAudio(playlist);
 
       playlist.currentOrPastPlayableAudioIndex = 1;
       expect(
@@ -295,7 +295,7 @@ void main() {
         playlistQuality: PlaylistQuality.voice,
       );
 
-      addThreeDownloadedAudios(playlist);
+      addThreeDownloadedAudio(playlist);
 
       playlist.currentOrPastPlayableAudioIndex = 1;
       expect(
@@ -334,7 +334,7 @@ void main() {
         playlistQuality: PlaylistQuality.voice,
       );
 
-      addThreeDownloadedAudios(playlist);
+      addThreeDownloadedAudio(playlist);
 
       playlist.currentOrPastPlayableAudioIndex = 1;
       expect(
@@ -366,7 +366,7 @@ void main() {
         playlistQuality: PlaylistQuality.voice,
       );
 
-      addThreeDownloadedAudios(playlist);
+      addThreeDownloadedAudio(playlist);
 
       playlist.currentOrPastPlayableAudioIndex = 1;
       expect(
@@ -479,9 +479,71 @@ void main() {
           'A');
     });
   });
+  group('Testing Playlist duration calculation methods', () {
+    test(
+        '''Add 3 playable audio to playlist and compute the total playable duration
+           as well as the total playable remaining duration of the playlist''',
+        () {
+      Playlist playlist = Playlist(
+        url: 'https://example.com/playlist2',
+        playlistType: PlaylistType.youtube,
+        playlistQuality: PlaylistQuality.voice,
+      );
+
+      addThreePlayableAudio(playlist);
+
+      expect(
+        playlist.getPlayableAudioLstTotalDuration().inMinutes,
+        60,
+      );
+
+      expect(
+        playlist.getPlayableAudioLstTotalRemainingDuration().inMinutes,
+        30,
+      );
+    });
+  });
 }
 
-void addThreeDownloadedAudios(Playlist playlist) {
+void addThreePlayableAudio(Playlist playlist) {
+  Audio audio = Audio(
+      enclosingPlaylist: playlist,
+      originalVideoTitle: 'C',
+      compactVideoDescription: '',
+      videoUrl: 'https://example.com/video1',
+      audioDownloadDateTime: DateTime(2023, 3, 20),
+      videoUploadDate: DateTime(2022, 3, 20),
+      audioDuration: Duration(minutes: 10),
+      audioPlaySpeed: 1.5);
+  audio.audioPositionSeconds = 300;
+  playlist.addPlayableAudio(audio);
+
+  Audio audio2 = Audio(
+      enclosingPlaylist: playlist,
+      originalVideoTitle: 'A',
+      compactVideoDescription: '',
+      videoUrl: 'https://example.com/video2',
+      audioDownloadDateTime: DateTime(2023, 3, 25),
+      videoUploadDate: DateTime(2022, 3, 25),
+      audioDuration: Duration(minutes: 20),
+      audioPlaySpeed: 1.5);
+  audio2.audioPositionSeconds = 600;
+  playlist.addPlayableAudio(audio2);
+
+  Audio audio3 = Audio(
+      enclosingPlaylist: playlist,
+      compactVideoDescription: '',
+      originalVideoTitle: 'B',
+      videoUrl: 'https://example.com/video3',
+      audioDownloadDateTime: DateTime(2023, 3, 18),
+      videoUploadDate: DateTime(2022, 3, 18),
+      audioDuration: Duration(minutes: 30),
+      audioPlaySpeed: 1.5);
+  audio3.audioPositionSeconds = 900;
+  playlist.addPlayableAudio(audio3);
+}
+
+void addThreeDownloadedAudio(Playlist playlist) {
   playlist.addDownloadedAudio(Audio(
       enclosingPlaylist: playlist,
       originalVideoTitle: 'C',

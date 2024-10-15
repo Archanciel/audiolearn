@@ -1349,4 +1349,8 @@ class MockAppLocalizations extends AppLocalizations {
     Object numberOfModifiedPlayableAudio,
   ) =>
       "The Youtube channel was modified in $numberOfModifiedDownloadedAudio downloaded audio and in $numberOfModifiedPlayableAudio playable audio.";
+
+  @override
+  String get playlistPlayableAudioTotalRemainingDurationLabel =>
+      "Playable audio total remaining duration";
 }
