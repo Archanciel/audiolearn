@@ -149,6 +149,11 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
                       .playlistPlayableAudioTotalDurationLabel,
                   value: playlist.getPlayableAudioLstTotalDuration().HHmmss()),
               createInfoRowFunction(
+                  context: context,
+                  label: AppLocalizations.of(context)!
+                      .playlistPlayableAudioTotalRemainingDurationLabel,
+                  value: playlist.getPlayableAudioLstTotalRemainingDuration().HHmmss()),
+              createInfoRowFunction(
                 context: context,
                 label: AppLocalizations.of(context)!
                     .playlistPlayableAudioTotalSizeLabel,

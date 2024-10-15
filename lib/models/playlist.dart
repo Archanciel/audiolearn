@@ -441,6 +441,17 @@ class Playlist {
     return totalDuration;
   }
 
+  Duration getPlayableAudioLstTotalRemainingDuration() {
+    Duration totalRemainingDuration = Duration.zero;
+
+    for (Audio audio in playableAudioLst) {
+      totalRemainingDuration += (audio.audioDuration -
+          Duration(seconds: audio.audioPositionSeconds));
+    }
+
+    return totalRemainingDuration;
+  }
+
   int getPlayableAudioLstTotalFileSize() {
     int totalFileSize = 0;
 
