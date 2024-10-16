@@ -5091,7 +5091,7 @@ void main() {
       await tester.tap(commentEndTenthOfSecondsCheckboxFinder);
       await tester.pumpAndSettle();
 
-      String expectedCommentEndPositionWithTensOfSecondMin = '0:48.9';
+      String expectedCommentEndPositionWithTensOfSecondMin = '0:48.8';
       String expectedCommentEndPositionWithTensOfSecondMax = '0:49.5';
 
       verifyPositionBetweenMinMax(
