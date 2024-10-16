@@ -97,7 +97,7 @@
       "fileName": {}
     }
   },
-  "playlistWithUrlAlreadyInListOfPlaylists": "Playlist \"{title}\" with this URL \"{url}\" is already in the list of playlists and so won''t be recreated.",
+  "playlistWithUrlAlreadyInListOfPlaylists": "Playlist \"{title}\" with this URL \"{url}\" is already in the list of playlists and so won't be recreated.",
   "@playlistWithUrlAlreadyInListOfPlaylists": {
     "description": "Warning announcing that the playlist with the URL is already in the list of playlists.",
     "placeholders": {
@@ -105,14 +105,14 @@
       "title": {}
     }
   },
-  "localPlaylistWithTitleAlreadyInListOfPlaylists": "Local playlist \"{title}\" already exists in the list of playlists. Therefore, the local playlist with this title won''t be created.",
+  "localPlaylistWithTitleAlreadyInListOfPlaylists": "Local playlist \"{title}\" already exists in the list of playlists. Therefore, the local playlist with this title won't be created.",
   "@localPlaylistWithTitleAlreadyInListOfPlaylists": {
     "description": "Warning announcing that the local playlist with the title is already in the list of playlists and so will not be created.",
     "placeholders": {
       "title": {}
     }
   },
-  "youtubePlaylistWithTitleAlreadyInListOfPlaylists": "Youtube playlist \"{title}\" already exists in the list of playlists. Therefore, the local playlist with this title won''t be created.",
+  "youtubePlaylistWithTitleAlreadyInListOfPlaylists": "Youtube playlist \"{title}\" already exists in the list of playlists. Therefore, the local playlist with this title won't be created.",
   "@youtubePlaylistWithTitleAlreadyInListOfPlaylists": {
     "description": "Warning announcing that the Youtube playlist with the title is already in the list of playlists and so will not be created.",
     "placeholders": {
@@ -134,7 +134,7 @@
       "liveVideoString": {}
     }
   },
-  "downloadAudioFileAlreadyOnAudioDirectory": "Audio \"{audioValidVideoTitle}\" is contained in file \"{fileName}\" present in the target playlist \"{playlistTitle}\" directory and so won''t be redownloaded.",
+  "downloadAudioFileAlreadyOnAudioDirectory": "Audio \"{audioValidVideoTitle}\" is contained in file \"{fileName}\" present in the target playlist \"{playlistTitle}\" directory and so won't be redownloaded.",
   "@downloadAudioFileAlreadyOnAudioDirectory": {
     "description": "Warning announcing that the audio file is already in the target playlist directory.",
     "placeholders": {
@@ -251,7 +251,7 @@
   "authorName": "Jean-Pierre Schnyder / Switzerland",
   "aboutAppDescription": "AudioLearn allows you to download audio from videos included in Youtube playlists added to the app, or from individual Youtube videos using their links.\n\nYou can also import audio files, such as audiobooks, directly into the app.\n\nIn addition to listening to audio files, AudioLearn offers the ability to add timestamped comments to each file, making it easier to replay their most interesting parts.\n\nFinally, the app allows you to sort and filter audio files based on various criteria.\n\nIn the next version, you will be able to extract commented audio segments to share them via email or WhatsApp, or combine them to create a new summarized audio file.",
   "keepAudioEntryInSourcePlaylist": "Keep audio data in source playlist",
-  "keepAudioEntryInSourcePlaylistTooltip": "Keep audio data in the original playlist''s JSON file even after transferring the audio file to another playlist. This prevents re-downloading the audio file if it no longer exists in its original directory.",
+  "keepAudioEntryInSourcePlaylistTooltip": "Keep audio data in the original playlist's JSON file even after transferring the audio file to another playlist. This prevents re-downloading the audio file if it no longer exists in its original directory.",
   "movedFromPlaylistLabel": "Moved from playlist",
   "movedToPlaylistLabel": "Moved to playlist",
   "downloadSingleVideoButtonTooltip": "Download single video audio.\n\nTo download a single video audio, enter its URL in the \"Youtube Link\" field and click the One button. You then have to select the playlist to which the audio will be added.",
@@ -293,7 +293,7 @@
   "clickToSetAscendingOrDescendingTooltip": "Click to set ascending or descending sort order.",
   "and": "and",
   "or": "or",
-  "audioTitleSearchSentenceTextFieldTooltip": "Enter a word or a sentence to be selected in the video title and in the Youtube channel if ''înclude Youtube channel'' is checked and in the video description if ''Include description'' is checked.",
+  "audioTitleSearchSentenceTextFieldTooltip": "Enter a word or a sentence to be selected in the video title and in the Youtube channel if 'înclude Youtube channel' is checked and in the video description if 'Include description' is checked.",
   "andSentencesTooltip": "If set, only audio containing all the listed words or sentences are selected.",
   "orSentencesTooltip": "If set, audio containing one of the listed words or sentences are selected.",
   "searchInVideoCompactDescriptionTooltip": "If set, search words or sentences are searched on video description as well.",
@@ -367,7 +367,7 @@
   "commentStartPosition": "Start",
   "commentEndPosition": "End",
   "updateCommentStartEndPositionTooltip": "Update comment start or end position.",
-  "noCheckboxSelectedWarning": "No checkbox selected. Please select {atLeast}one checkbox before clicking ''Ok'', or click ''Cancel'' to exit.",
+  "noCheckboxSelectedWarning": "No checkbox selected. Please select {atLeast}one checkbox before clicking 'Ok', or click 'Cancel' to exit.",
   "atLeast": "at least ",
   "commentCreationDateTooltip": "Comment creation date",
   "commentUpdateDateTooltip": "Comment last update date",
@@ -409,7 +409,7 @@
   "sortFilterParametersAppliedName": "applied",
   "lastListenedDateTime": "Last listened date/time",
   "downloadSingleVideoAudioAtMusicQuality": "Download single video audio at music quality",
-  "videoTitleNotWrittenInOccidentalLettersWarning": "Since the original video title is not written in occidental letters, the audio title is empty. You can use the ''Modify audio title ...'' audio menu in order to define a valid title. Same remark for improving the audio file name ...",
+  "videoTitleNotWrittenInOccidentalLettersWarning": "Since the original video title is not written in occidental letters, the audio title is empty. You can use the 'Modify audio title ...' audio menu in order to define a valid title. Same remark for improving the audio file name ...",
   "renameCommentFileNameAlreadyUsed": "The comment file name \"{fileName}.json\" already exists in the comment directory and so renaming the audio file with the name \"{fileName}.mp3\" is not possible.",
   "renameFileNameInvalid": "The audio file name \"{fileName}\" has no mp3 extension and so is invalid.",
   "renameAudioFileConfirmation": "Audio file \"{oldFileIame}.mp3\" renamed to \"{newFileName}.mp3\".",
