@@ -118,10 +118,10 @@ const double kYoutubeImageAssetHeight = 38.0;
 
 const int kMaxAudioSortFilterSettingsSearchHistory = 20;
 
-DateFormat englishDateTimeFormat = DateFormat("yyyy-MM-dd HH:mm");
-DateFormat frenchDateTimeFormat = DateFormat("dd-MM-yyyy HH:mm");
-DateFormat englishDateFormat = DateFormat("yyyy-MM-dd");
-DateFormat frenchDateFormat = DateFormat("dd-MM-yyyy");
+DateFormat englishDateTimeFormat = DateFormat("MM/dd/yyyy HH:mm");
+DateFormat frenchDateTimeFormat = DateFormat("dd/MM/yyyy HH:mm");
+DateFormat englishDateFormat = DateFormat("MM/dd/yyyy");
+DateFormat frenchDateFormat = DateFormat("dd/MM/yyyy");
 DateFormat timeFormat = DateFormat("HH:mm");
 
 const TextStyle kDialogTitlesStyle = TextStyle(

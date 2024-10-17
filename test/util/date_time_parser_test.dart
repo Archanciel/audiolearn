@@ -11,11 +11,11 @@ void main() {
         'valid date time string',
         () {
           final List<String?> dateTimeComponentStrLst =
-              DateTimeParser.parseDDMMDateTime('14-12 13:35');
+              DateTimeParser.parseDDMMDateTime('14/12 13:35');
           final String? dayMonth = dateTimeComponentStrLst[0];
           final String? hourMinute = dateTimeComponentStrLst[1];
 
-          expect(dayMonth, '14-12');
+          expect(dayMonth, '14/12');
           expect(hourMinute, '13:35');
         },
       );
@@ -24,11 +24,11 @@ void main() {
         'valid date time string shorter date and hour',
         () {
           final List<String?> dateTimeComponentStrLst =
-              DateTimeParser.parseDDMMDateTime('4-2 3:35');
+              DateTimeParser.parseDDMMDateTime('4/2 3:35');
           final String? dayMonth = dateTimeComponentStrLst[0];
           final String? hourMinute = dateTimeComponentStrLst[1];
 
-          expect(dayMonth, '4-2');
+          expect(dayMonth, '4/2');
           expect(hourMinute, '3:35');
         },
       );
@@ -37,7 +37,7 @@ void main() {
         'invalid shorter date and valid hour',
         () {
           final List<String?> dateTimeComponentStrLst =
-              DateTimeParser.parseDDMMDateTime('a4-2 3:35');
+              DateTimeParser.parseDDMMDateTime('a4/2 3:35');
           final String? dayMonth = dateTimeComponentStrLst[0];
           final String? hourMinute = dateTimeComponentStrLst[1];
 
@@ -50,7 +50,7 @@ void main() {
         'valid date and invalid hour',
         () {
           final List<String?> dateTimeComponentStrLst =
-              DateTimeParser.parseDDMMDateTime('14-2 3:u5');
+              DateTimeParser.parseDDMMDateTime('14/2 3:u5');
           final String? dayMonth = dateTimeComponentStrLst[0];
           final String? hourMinute = dateTimeComponentStrLst[1];
 
@@ -63,7 +63,7 @@ void main() {
         'valid date and invalid minute',
         () {
           final List<String?> dateTimeComponentStrLst =
-              DateTimeParser.parseDDMMDateTime('14-2 3:5');
+              DateTimeParser.parseDDMMDateTime('14/2 3:5');
           final String? dayMonth = dateTimeComponentStrLst[0];
           final String? hourMinute = dateTimeComponentStrLst[1];
 
@@ -76,7 +76,7 @@ void main() {
         'valid date no time',
         () {
           final List<String?> dateTimeComponentStrLst =
-              DateTimeParser.parseDDMMDateTime('14-2 ');
+              DateTimeParser.parseDDMMDateTime('14/2 ');
           final String? dayMonth = dateTimeComponentStrLst[0];
           final String? hourMinute = dateTimeComponentStrLst[1];
 
@@ -117,7 +117,7 @@ void main() {
         'invalid format time string',
         () {
           final String? hourMinute =
-              DateTimeParser.parseHHMMorMMSSTimeStr('13-35');
+              DateTimeParser.parseHHMMorMMSSTimeStr('13/35');
 
           expect(hourMinute, null);
         },
@@ -147,7 +147,7 @@ void main() {
         'invalid time string format 1 digit hour',
         () {
           final String? hourMinute =
-              DateTimeParser.parseHHMMorMMSSTimeStr('3-05');
+              DateTimeParser.parseHHMMorMMSSTimeStr('3/05');
 
           expect(hourMinute, null);
         },
@@ -233,10 +233,10 @@ void main() {
         },
       );
       test(
-        'dd-mm-yyyy date and time string',
+        'dd/mm/yyyy date and time string',
         () {
           final String? hourMinute =
-              DateTimeParser.parseHHMMorMMSSTimeStr('14-12-2022 13:35');
+              DateTimeParser.parseHHMMorMMSSTimeStr('14/12/2022 13:35');
 
           expect(hourMinute, null);
         },
@@ -246,7 +246,7 @@ void main() {
         '1 digit day and month date and time string',
         () {
           final String? hourMinute =
-              DateTimeParser.parseHHMMorMMSSTimeStr('4-2 13:35');
+              DateTimeParser.parseHHMMorMMSSTimeStr('4/2 13:35');
 
           expect(hourMinute, null);
         },
@@ -256,7 +256,7 @@ void main() {
         'invalid date and time string',
         () {
           final String? hourMinute =
-              DateTimeParser.parseHHMMorMMSSTimeStr('a4-2 13:35');
+              DateTimeParser.parseHHMMorMMSSTimeStr('a4/2 13:35');
 
           expect(hourMinute, null);
         },
@@ -352,9 +352,9 @@ void main() {
       );
 
       test(
-        'unacceptable valid dd-mm-yyyy hh:mmm format date time string',
+        'unacceptable valid dd/mm/yyyy hh:mmm format date time string',
         () {
-          const String hourMinuteStr = '14-12-2022 13:35';
+          const String hourMinuteStr = '14/12/2022 13:35';
           final Duration? duration =
               DateTimeParser.parseHHMMDuration(hourMinuteStr);
 
@@ -364,9 +364,9 @@ void main() {
       );
 
       test(
-        'unacceptable valid dd-mm hh:mmm format date time string',
+        'unacceptable valid dd/mm hh:mmm format date time string',
         () {
-          const String hourMinuteStr = '14-12 13:35';
+          const String hourMinuteStr = '14/12 13:35';
           final Duration? duration =
               DateTimeParser.parseHHMMDuration(hourMinuteStr);
 
@@ -376,9 +376,9 @@ void main() {
       );
 
       test(
-        'unacceptable invalid <letter>d-m hh:mmm format date time string',
+        'unacceptable invalid <letter>d/m hh:mmm format date time string',
         () {
-          const String hourMinuteStr = 'a4-2 3:35';
+          const String hourMinuteStr = 'a4/2 3:35';
           final Duration? duration =
               DateTimeParser.parseHHMMDuration(hourMinuteStr);
 
@@ -735,9 +735,9 @@ void main() {
         () {
           final String? englishFormatDdateTimeStr =
               DateTimeParser.convertFrenchFormatToEnglishFormatDateTimeStr(
-                  frenchFormatDateTimeStr: '14-12-2022 13:35');
+                  frenchFormatDateTimeStr: '14/12/2022 13:35');
 
-          expect(englishFormatDdateTimeStr, '2022-12-14 13:35');
+          expect(englishFormatDdateTimeStr, '12/14/2022 13:35');
         },
       );
       test(
@@ -745,7 +745,7 @@ void main() {
         () {
           final String? englishFormatDdateTimeStr =
               DateTimeParser.convertFrenchFormatToEnglishFormatDateTimeStr(
-                  frenchFormatDateTimeStr: '14-12_022 13:35');
+                  frenchFormatDateTimeStr: '14/12_022 13:35');
 
           expect(englishFormatDdateTimeStr, null);
         },
@@ -760,9 +760,9 @@ void main() {
         () {
           final String? frenchFormatDdateTimeStr =
               DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
-                  englishFormatDateTimeStr: '2022-12-14 13:35');
+                  englishFormatDateTimeStr: '12/14/2022 13:35');
 
-          expect(frenchFormatDdateTimeStr, '14-12-2022 13:35');
+          expect(frenchFormatDdateTimeStr, '14/12/2022 13:35');
         },
       );
       test(
@@ -770,7 +770,7 @@ void main() {
         () {
           final String? frenchFormatDdateTimeStr =
               DateTimeParser.convertEnglishFormatToFrenchFormatDateTimeStr(
-                  englishFormatDateTimeStr: '202212-14 13:35');
+                  englishFormatDateTimeStr: '202212/14 13:35');
 
           expect(frenchFormatDdateTimeStr, null);
         },

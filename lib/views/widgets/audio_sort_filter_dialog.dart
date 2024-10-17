@@ -1043,7 +1043,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
   }) {
     // Initialize the TextField with the current date
     if (dateTime != null) {
-      controller.text = DateFormat('dd-MM-yyyy').format(dateTime);
+      controller.text = frenchDateFormat.format(dateTime);
     }
 
     return Row(
@@ -1083,7 +1083,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
             );
 
             if (pickedDate != null) {
-              controller.text = DateFormat('dd-MM-yyyy').format(pickedDate);
+              controller.text = frenchDateFormat.format(pickedDate);
             }
           },
         ),
