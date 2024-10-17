@@ -1,3 +1,4 @@
+import 'package:audiolearn/utils/duration_expansion.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -5,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../../constants.dart';
 import '../../utils/button_state_manager.dart';
+import '../../utils/date_time_parser.dart';
 import '../../viewmodels/playlist_list_vm.dart';
 import '../../services/sort_filter_parameters.dart';
 import '../../viewmodels/warning_message_vm.dart';
@@ -214,6 +216,35 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     _filterPartiallyListened =
         audioSortDefaultFilterParameters.filterPartiallyListened;
     _filterNotListened = audioSortDefaultFilterParameters.filterNotListened;
+    _startDownloadDateTime =
+        audioSortDefaultFilterParameters.downloadDateStartRange;
+    _endDownloadDateTime =
+        audioSortDefaultFilterParameters.downloadDateEndRange;
+    _startUploadDateTime =
+        audioSortDefaultFilterParameters.uploadDateStartRange;
+    _endUploadDateTime = audioSortDefaultFilterParameters.uploadDateEndRange;
+
+    double fileSizeStartRangeMB =
+        audioSortDefaultFilterParameters.fileSizeStartRangeMB;
+    _startFileSizeController.text =
+        (fileSizeStartRangeMB > 0.0) ? fileSizeStartRangeMB.toString() : '';
+
+    double fileSizeEndRangeMB =
+        audioSortDefaultFilterParameters.fileSizeEndRangeMB;
+    _endFileSizeController.text =
+        (fileSizeEndRangeMB > 0.0) ? fileSizeEndRangeMB.toString() : '';
+
+    int durationStartRangeSec =
+        audioSortDefaultFilterParameters.durationStartRangeSec;
+    _startAudioDurationController.text = (durationStartRangeSec > 0)
+        ? Duration(seconds: durationStartRangeSec).HHmm()
+        : '';
+
+    int durationEndRangeSec =
+        audioSortDefaultFilterParameters.durationEndRangeSec;
+    _endAudioDurationController.text = (durationEndRangeSec > 0)
+        ? Duration(seconds: durationEndRangeSec).HHmm()
+        : '';
   }
 
   @override
@@ -967,7 +998,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           context: context,
           dateTimeType: DateTimeType.startDownloadDateTime,
           controller: _startDownloadDateTimeController,
-          dateTime: _startDownloadDateTime ?? now,
+          dateTime: _startDownloadDateTime,
           label: AppLocalizations.of(context)!.startDownloadDate,
         ),
         _buildLabelDateIconTextField(
@@ -976,7 +1007,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           context: context,
           dateTimeType: DateTimeType.endDownloadDateTime,
           controller: _endDownloadDateTimeController,
-          dateTime: _endDownloadDateTime ?? now,
+          dateTime: _endDownloadDateTime,
           label: AppLocalizations.of(context)!.endDownloadDate,
         ),
         _buildLabelDateIconTextField(
@@ -985,7 +1016,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           context: context,
           dateTimeType: DateTimeType.startUploadDateTime,
           controller: _startUploadDateTimeController,
-          dateTime: _startUploadDateTime ?? now,
+          dateTime: _startUploadDateTime,
           label: AppLocalizations.of(context)!.startUploadDate,
         ),
         _buildLabelDateIconTextField(
@@ -994,7 +1025,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           context: context,
           dateTimeType: DateTimeType.endUploadDateTime,
           controller: _endUploadDateTimeController,
-          dateTime: _endUploadDateTime ?? now,
+          dateTime: _endUploadDateTime,
           label: AppLocalizations.of(context)!.endUploadDate,
         ),
       ],
@@ -1007,15 +1038,19 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     required BuildContext context,
     required DateTimeType dateTimeType,
     required TextEditingController controller,
-    required DateTime dateTime,
+    required DateTime? dateTime,
     required String label,
   }) {
-    DateTime now = DateTime.now();
+    // Initialize the TextField with the current date
+    if (dateTime != null) {
+      controller.text = DateFormat('dd-MM-yyyy').format(dateTime);
+    }
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         SizedBox(
-          width: 104,
+          width: 84,
           child: Text(label),
         ),
         IconButton(
@@ -1032,18 +1067,28 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           onPressed: () async {
             DateTime? pickedDate = await showDatePicker(
               context: context,
-              initialDate: now,
+              initialDate: dateTime,
               firstDate: DateTime(2000),
-              lastDate: now,
+              lastDate: DateTime.now(),
+              locale: const Locale(
+                'en',
+                'GB',
+              ), // Set locale to use DD/MM/YYYY format
             );
 
             // Add this check
-            _setDateTime(dateTimeType, pickedDate ?? now);
-            controller.text = DateFormat('dd-MM-yyyy').format(dateTime);
+            _setDateTime(
+              dateTimeType: dateTimeType,
+              dateTime: pickedDate,
+            );
+
+            if (pickedDate != null) {
+              controller.text = DateFormat('dd-MM-yyyy').format(pickedDate);
+            }
           },
         ),
         SizedBox(
-          width: 80,
+          width: 100,
           child: TextField(
             key: textFieldKey,
             style: kDialogTextFieldStyle,
@@ -1056,7 +1101,14 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     );
   }
 
-  void _setDateTime(DateTimeType dateTimeType, DateTime dateTime) {
+  void _setDateTime({
+    required DateTimeType dateTimeType,
+    DateTime? dateTime,
+  }) {
+    if (dateTime == null) {
+      return;
+    }
+
     switch (dateTimeType) {
       case DateTimeType.startDownloadDateTime:
         _startDownloadDateTime = dateTime;
@@ -1756,6 +1808,11 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
 
   AudioSortFilterParameters
       _generateAudioSortFilterParametersFromDialogFields() {
+    String startFileSizeTxt = _startFileSizeController.text;
+    String endFileSizeTxt = _endFileSizeController.text;
+    String startAudioDurationTxt = _startAudioDurationController.text;
+    String endAudioDurationTxt = _endAudioDurationController.text;
+
     return AudioSortFilterParameters(
       selectedSortItemLst: _selectedSortingItemLst,
       filterSentenceLst: _audioTitleFilterSentencesLst,
@@ -1768,6 +1825,17 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       filterFullyListened: _filterFullyListened,
       filterPartiallyListened: _filterPartiallyListened,
       filterNotListened: _filterNotListened,
+      downloadDateStartRange: _startDownloadDateTime,
+      downloadDateEndRange: _endDownloadDateTime,
+      uploadDateStartRange: _startUploadDateTime,
+      uploadDateEndRange: _endUploadDateTime,
+      fileSizeStartRangeMB: double.tryParse(startFileSizeTxt) ?? 0.0,
+      fileSizeEndRangeMB: double.tryParse(endFileSizeTxt) ?? 0.0,
+      durationStartRangeSec:
+          DateTimeParser.parseHHMMDuration(startAudioDurationTxt)?.inSeconds ??
+              0,
+      durationEndRangeSec:
+          DateTimeParser.parseHHMMDuration(endAudioDurationTxt)?.inSeconds ?? 0,
     );
   }
 }

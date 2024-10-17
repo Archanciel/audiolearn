@@ -159,7 +159,7 @@ class AudioSortFilterService {
   ///
   /// This method filters and sorts the audio list according to the passed
   /// AudioSortFilterParameters. It is more efficient to filter the audio
-  /// list first and then sort it than the opposite.
+  /// list first and then sort it than the contrary !
   List<Audio> filterAndSortAudioLst({
     required List<Audio> audioLst,
     required AudioSortFilterParameters audioSortFilterParameters,
@@ -181,7 +181,7 @@ class AudioSortFilterService {
       );
     }
 
-    audioLstCopy = _filterOnOtherOptions(
+    audioLstCopy = filterOnOtherOptions(
       audioLst: audioLstCopy,
       audioSortFilterParameters: audioSortFilterParameters,
     );
@@ -210,7 +210,7 @@ class AudioSortFilterService {
   /// on the video title and/or the Youtube channel name and/or the video
   /// description if required.
   ///
-  /// Not private in order to be tested
+  /// Not private in order to be unit tested.
   List<Audio> filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions({
     required List<Audio> audioLst,
     required List<String> filterSentenceLst,
@@ -398,8 +398,17 @@ class AudioSortFilterService {
   /// Method called by filterAndSortAudioLst().
   ///
   /// This method filters the passed audio list by the other filter
-  /// options set by the user in the sort and filter dialog.
-  List<Audio> _filterOnOtherOptions({
+  /// options set by the user in the sort and filter dialog, i.e.
+  /// 
+  /// Start download date,
+  /// End download date,
+  /// Start upload date,
+  /// End upload date,
+  /// File size range,
+  /// Audio duration range.
+  ///
+  /// Not private in order to be unit tested.
+  List<Audio> filterOnOtherOptions({
     required List<Audio> audioLst,
     required AudioSortFilterParameters audioSortFilterParameters,
   }) {
@@ -527,9 +536,9 @@ class AudioSortFilterService {
     required Duration endDuration,
   }) {
     return audioLst.where((audio) {
-      return (audio.audioDownloadDuration!.inMilliseconds >=
+      return (audio.audioDuration.inMilliseconds >=
               startDuration.inMilliseconds) &&
-          (audio.audioDownloadDuration!.inMilliseconds <=
+          (audio.audioDuration.inMilliseconds <=
               endDuration.inMilliseconds);
     }).toList();
   }
