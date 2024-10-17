@@ -2,8 +2,8 @@ import '../constants.dart';
 
 class DateTimeParser {
   static final RegExp regExpYYYYDateTime =
-      RegExp(r'^(\d+-\d+-\d{4})\s(\d+:\d{2})');
-  static final RegExp regExpNoYearDateTime = RegExp(r'^(\d+-\d+)\s(\d+:\d{2})');
+      RegExp(r'^(\d+/\d+/\d{4})\s(\d+:\d{2})');
+  static final RegExp regExpNoYearDateTime = RegExp(r'^(\d+/\d+)\s(\d+:\d{2})');
   static final RegExp regExpHHMMorMMSSTime = RegExp(r'(^[-]?\d+:\d{2})');
   static final RegExp regExpHHAnyMMTime = RegExp(r'(^[-]?\d+:\d+)');
   static final RegExp regExpAllHHMMTime = RegExp(r'([-]?\d+:\d{2})');
@@ -17,40 +17,6 @@ class DateTimeParser {
     final String? hourMinute = match?.group(2);
 
     return [dayMonth, hourMinute];
-  }
-
-  /// Parses the passed ddMMyyyyDateTimeStr formatted as dd-mm-yyyy hh:mm or d-m-yyyy h:mm
-  static DateTime? parseDDMMYYYYDateTime(String ddMMyyyyDateTimrStr) {
-    final RegExpMatch? match =
-        regExpYYYYDateTime.firstMatch(ddMMyyyyDateTimrStr);
-    final String? dayMonthYear = match?.group(1);
-    final String? hourMinute = match?.group(2);
-
-    DateTime? dateTime;
-
-    if (dayMonthYear != null && hourMinute != null) {
-      List<String> dayMonthYearStrLst = dayMonthYear.split('-');
-      List<int?> dayMonthYearIntLst = dayMonthYearStrLst
-          .map((element) => int.tryParse(element))
-          .toList(growable: false);
-      List<String> hourMinuteStrLst = hourMinute.split(':');
-      List<int?> hourMinuteIntLst = hourMinuteStrLst
-          .map((element) => int.tryParse(element))
-          .toList(growable: false);
-
-      if (!dayMonthYearIntLst.contains(null) &&
-          !hourMinuteIntLst.contains(null)) {
-        dateTime = DateTime(
-          dayMonthYearIntLst[2] ?? 0, // year
-          dayMonthYearIntLst[1] ?? 0, // month
-          dayMonthYearIntLst[0] ?? 0, // day
-          hourMinuteIntLst[0] ?? 0, // hour
-          hourMinuteIntLst[1] ?? 0, // minute
-        );
-      }
-    }
-
-    return dateTime;
   }
 
   /// Parses the passed hourMinuteStr or minuteSecondStr formatted
