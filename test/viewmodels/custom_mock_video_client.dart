@@ -1,4 +1,5 @@
 import 'package:audiolearn/constants.dart';
+import 'package:intl/intl.dart';
 
 import 'mock_youtube.mocks.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart' as yt;
@@ -21,6 +22,10 @@ class CustomMockVideoClient extends MockVideoClient {
           //
           // So, in order to test the error handling if the video url is
           // invalid, we need to set a channel id that is invalid.
+
+          String nowStr = englishDateTimeFormat.format(DateTime.now());
+          nowStr.replaceAll('/', '_');
+
           returnedVideo = yt.Video(
             yt.VideoId('invalid_url'), // Assuming 'id' is a valid video ID
             'Invalid URL video title',
@@ -30,7 +35,7 @@ class CustomMockVideoClient extends MockVideoClient {
             // AudioDownloadVM.downloadSingleVideoAudio().
             yt.ChannelId('invalid channel id'),
             DateTime.now(),
-            englishDateTimeFormat.format(DateTime.now()),
+            nowStr,
             DateTime.now(),
             'Invalid URL video description',
             const Duration(minutes: 50),
@@ -51,8 +56,11 @@ class CustomMockVideoClient extends MockVideoClient {
           //
           // So, in order to test the error handling if the video url is
           // invalid, we need to set a channel id that is invalid.
+
+          DateFormat mockEnglishDateTimeFormat = DateFormat("yyyy-MM-dd HH:mm");
           DateTime uploadAndPublishDate =
-              englishDateTimeFormat.parse('2023-06-10 00:00');
+              mockEnglishDateTimeFormat.parse('2023-06-10 00:00');
+          
           returnedVideo = yt.Video(
             yt.VideoId(id.value), // Assuming 'id' is a valid video ID
             'audio learn test short video one',
