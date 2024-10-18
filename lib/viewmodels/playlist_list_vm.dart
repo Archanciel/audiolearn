@@ -1915,11 +1915,11 @@ class PlaylistListVM extends ChangeNotifier {
 
     // Save the archive to a zip file in the target directory
     String zipFileName =
-        "audioLearn_${englishDateTimeFormat.format(DateTime.now())}.zip";
+        "audioLearn_${yearMonthDayDateTimeFormat.format(DateTime.now())}.zip";
 
     zipFileName = zipFileName.replaceAll(':', '_');
     zipFileName = zipFileName.replaceAll(' ', '_');
-    zipFileName = zipFileName.replaceAll('/', '_');
+    zipFileName = zipFileName.replaceAll('/', '-');
 
     String zipFilePath = path.join(targetDir, zipFileName);
 
