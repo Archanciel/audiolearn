@@ -376,6 +376,9 @@ class AudioDownloadVM extends ChangeNotifier {
   /// downloaded audio files of all playlists. This is necessary since
   /// the channel value of the audio files was not set when those audio files
   /// were downloaded.
+  ///
+  /// This functionality is no longer used since now the Youtube channel
+  /// is set when the audio is downloaded from the Youtube playlist.
   Future<void> ensureAllAudioYoutubeChannelOfAllPlaylistsAreSet() async {
     int numberOfModifiedDownloadedAudio = 0;
     int numberOfModifiedPlayableAudio = 0;

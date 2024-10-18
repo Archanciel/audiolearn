@@ -5858,16 +5858,16 @@ void main() {
       ];
 
       List<String> expectedCreationDates = [
-        '27-05-2024',
-        '28-05-2024',
+        '27/05/2024',
+        '28/05/2024',
         frenchDateFormat.format(DateTime.now()), // created comment
-        '28-05-2024',
-        '28-05-2024',
+        '28/05/2024',
+        '28/05/2024',
       ];
 
       List<String> expectedUpdateDates = [
-        '29-05-2024',
-        '30-05-2024',
+        '29/05/2024',
+        '30/05/2024',
         '', // Text widget not displayed since update date == creation date
         '', // Text widget not displayed since update date == creation date
         '', // Text widget not displayed since update date == creation date
@@ -6186,15 +6186,15 @@ void main() {
       ];
 
       List<String> expectedCreationDates = [
-        '27-05-2024',
-        '28-05-2024',
-        '28-05-2024',
-        '28-05-2024', // updated comment
+        '27/05/2024',
+        '28/05/2024',
+        '28/05/2024',
+        '28/05/2024', // updated comment
       ];
 
       List<String> expectedUpdateDates = [
-        '29-05-2024',
-        '30-05-2024',
+        '29/05/2024',
+        '30/05/2024',
         '', // Text widget not displayed since update date == creation date
         frenchDateFormat.format(DateTime.now()), // updated comment
       ];

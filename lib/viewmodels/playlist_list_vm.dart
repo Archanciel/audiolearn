@@ -1919,6 +1919,7 @@ class PlaylistListVM extends ChangeNotifier {
 
     zipFileName = zipFileName.replaceAll(':', '_');
     zipFileName = zipFileName.replaceAll(' ', '_');
+    zipFileName = zipFileName.replaceAll('/', '_');
 
     String zipFilePath = path.join(targetDir, zipFileName);
 
