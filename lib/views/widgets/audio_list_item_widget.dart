@@ -84,6 +84,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
                   audioPlayerVMlistenFalse); // dragging to the AudioPlayerView screen
         },
         child: Text(
+          key: const Key('audio_item_subtitle'),
           _buildSubTitle(context),
           style: const TextStyle(fontSize: kAudioTitleFontSize),
         ),
