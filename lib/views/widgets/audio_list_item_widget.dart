@@ -467,11 +467,18 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
   /// list item. The subtitle is built according to the applied sorting option.
   /// The subtitle displays the audio duration and the last listened date
   /// and time if the applied sorting option is last listened date time.
-  ///                                                                                                                                                 
+  ///
+  /// If the applied sorting option is audio last listened date time, the subtitle
+  /// displays the audio duration and the last listened date and time.
+  ///
   /// If the applied sorting option is audio remaining duration, the subtitle
   /// displays the audio duration, the remaining audio duration and the last
   /// listened date and time if the audio is paused.
-  /// 
+  ///
+  /// If the applied sorting option is video upload date or if the audio are filtered
+  /// according to a video start/end upload date, the subtitle displays the audio
+  /// duration and the video upload date.
+  ///
   /// If the applied sorting option is default, the subtitle displays
   /// the audio duration, the audio file size, the audio download speed and
   /// the audio download date and time.
@@ -515,6 +522,14 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
           lastSubtitlePart =
               '${AppLocalizations.of(context)!.remaining} $audioRemainingHHMMSSDuration. ${AppLocalizations.of(context)!.listenedOn} ${frenchDateFormat.format(lastListenedDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(lastListenedDateTime)}';
         }
+
+        return '${audioDuration.HHmmss(addRemainingOneDigitTenthOfSecond: true)}. $lastSubtitlePart.';
+      case SortingOption.videoUploadDate:
+        final DateTime videoUploadDate = audio.videoUploadDate;
+        final String lastSubtitlePart;
+
+        lastSubtitlePart =
+            '${AppLocalizations.of(context)!.videoUploadDate} ${frenchDateFormat.format(videoUploadDate)}';
 
         return '${audioDuration.HHmmss(addRemainingOneDigitTenthOfSecond: true)}. $lastSubtitlePart.';
       default:

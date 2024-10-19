@@ -1831,6 +1831,15 @@ class PlaylistListVM extends ChangeNotifier {
 
   SortingOption getAppliedSortingOption() {
     if (_audioSortFilterParameters != null) {
+      if (_audioSortFilterParameters!.uploadDateStartRange != null &&
+          _audioSortFilterParameters!.uploadDateEndRange != null) {
+        // returning the video upload date sorting option enables the
+        // audio list item widget to display the video upload date
+        // in its sub title, the same if the displayed audio are sorted
+        // by video upload date.
+        return SortingOption.videoUploadDate;
+      }
+
       return _audioSortFilterParameters!.selectedSortItemLst[0].sortingOption;
     } else {
       return SortingOption.audioDownloadDate;
