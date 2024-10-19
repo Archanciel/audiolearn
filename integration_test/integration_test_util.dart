@@ -670,6 +670,29 @@ class IntegrationTestUtil {
     }
   }
 
+  static void checkSubTitlesOrderInListTile({
+    required WidgetTester tester,
+    required List<String> audioTitlesOrderLst,
+    int firstAudioListTileIndex = 0,
+  }) {
+    // Obtains all the ListTile widgets present in the playlist
+    // download view
+    final Finder listTilesFinder = find.byType(ListTile);
+
+    for (String title in audioTitlesOrderLst) {
+      Finder playlistTitleTextFinder = find.descendant(
+        of: listTilesFinder.at(firstAudioListTileIndex++),
+        matching: find.byType(Text),
+      );
+
+      expect(
+        // 2 Text widgets exist in audio ListTile: the title and sub title
+        tester.widget<Text>(playlistTitleTextFinder.at(1)).data,
+        title,
+      );
+    }
+  }
+
   static void checkAudioTitlesOrderInListBody({
     required WidgetTester tester,
     required List<String> audioTitlesOrderLst,

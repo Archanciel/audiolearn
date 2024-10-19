@@ -1840,6 +1840,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     String startAudioDurationTxt = _startAudioDurationController.text;
     String endAudioDurationTxt = _endAudioDurationController.text;
 
+    double fileSizeEndRangeMB = _increaseByMinimumUnit(endFileSizeTxt);
+
     return AudioSortFilterParameters(
       selectedSortItemLst: _selectedSortingItemLst,
       filterSentenceLst: _audioTitleFilterSentencesLst,
@@ -1857,13 +1859,41 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       uploadDateStartRange: _startUploadDateTime,
       uploadDateEndRange: _endUploadDateTime,
       fileSizeStartRangeMB: double.tryParse(startFileSizeTxt) ?? 0.0,
-      fileSizeEndRangeMB: double.tryParse(endFileSizeTxt) ?? 0.0,
+      fileSizeEndRangeMB: fileSizeEndRangeMB,
       durationStartRangeSec:
           DateTimeParser.parseHHMMDuration(startAudioDurationTxt)?.inSeconds ??
               0,
       durationEndRangeSec:
           DateTimeParser.parseHHMMDuration(endAudioDurationTxt)?.inSeconds ?? 0,
     );
+  }
+
+  /// Method to increase the value of the end file size by the minimum unit.
+  /// The minimum unit is calculated based on the number of decimal places
+  /// in the input string.
+  /// 
+  /// This makes sense since an audio file size of 2.79322 MB is displayed as
+  /// a 2.79 MB file size. If the user wishes to filter the audio list based
+  /// on the start file size of 2.79 MB, the end file size will be increased
+  /// by the minimum unit which is 0.01 MB. The end file size will be 2.80 MB.
+  double _increaseByMinimumUnit(String endFileSizeTxt) {
+    // Parse the input string to a double
+    double? endFileSizeMB = double.tryParse(endFileSizeTxt);
+
+    if (endFileSizeMB == null) {
+      return 0.0;
+    }
+
+    // Determine the number of decimal places in the input
+    int decimalPlaces = endFileSizeTxt.contains('.')
+        ? endFileSizeTxt.split('.').last.length
+        : 0;
+
+    // Calculate the minimum increment based on the number of decimal places
+    double increment = decimalPlaces > 0 ? 1 / (10 * decimalPlaces) : 1.0;
+
+    // Increase the value by the minimum increment
+    return endFileSizeMB + increment;
   }
 }
 
