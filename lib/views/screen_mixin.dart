@@ -310,10 +310,19 @@ mixin ScreenMixin {
   }
 
   InputDecoration getDialogTextFieldInputDecoration({
+    String labelTxt = '',
+    double labelTxtFontSize = 0.0,
     String hintText = '',
   }) {
     return InputDecoration(
+      labelText: labelTxt,
       hintText: hintText,
+      labelStyle: (labelTxtFontSize > 0.0)
+          ? TextStyle(
+              fontSize:
+                  labelTxtFontSize, // Adjust the font size as needed to make it smaller
+            )
+          : null,
       border: const OutlineInputBorder(),
       isDense: true,
       contentPadding:

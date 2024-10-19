@@ -1,6 +1,7 @@
 import 'package:audiolearn/utils/duration_expansion.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants.dart';
@@ -61,6 +62,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     with ScreenMixin {
   late AudioSortFilterParameters _audioSortFilterParameters;
   late InputDecoration _dialogTextFieldDecoration;
+  late InputDecoration _dialogDateTextFieldDecoration;
 
   late final List<String> _audioTitleFilterSentencesLst = [];
 
@@ -128,6 +130,10 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
 
     _audioSortFilterParameters = widget.audioSortFilterParameters;
     _dialogTextFieldDecoration = getDialogTextFieldInputDecoration();
+    _dialogDateTextFieldDecoration = getDialogTextFieldInputDecoration(
+      labelTxt: 'dd/mm/yyyy',
+      labelTxtFontSize: 14.0,
+    );
 
     // Add this line to request focus on the TextField after the build
     // method has been called
@@ -1045,6 +1051,19 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       controller.text = frenchDateFormat.format(dateTime);
     }
 
+    // Add listener to handle manual input
+    controller.addListener(() {
+      try {
+        final parsedDate = DateFormat('dd/MM/yyyy').parse(controller.text);
+        _setDateTime(
+          dateTimeType: dateTimeType,
+          dateTime: parsedDate,
+        );
+      } catch (e) {
+        // If parsing fails, you can decide to show an error message or leave it
+      }
+    });
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -1056,7 +1075,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           key: dateIconButtondKey,
           style: ButtonStyle(
             // Highlight button when pressed
-            padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+            padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
               const EdgeInsets.symmetric(
                   horizontal: kSmallButtonInsidePadding, vertical: 0),
             ),
@@ -1064,9 +1083,17 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           ),
           icon: const Icon(Icons.calendar_month_rounded),
           onPressed: () async {
+            // Parse the date from the TextField if it's valid, otherwise use the original date
+            DateTime initialDate;
+            try {
+              initialDate = DateFormat('dd/MM/yyyy').parse(controller.text);
+            } catch (e) {
+              initialDate = dateTime ?? DateTime.now();
+            }
+
             DateTime? pickedDate = await showDatePicker(
               context: context,
-              initialDate: dateTime,
+              initialDate: initialDate,
               firstDate: DateTime(2000),
               lastDate: DateTime.now(),
               locale: const Locale(
@@ -1091,9 +1118,10 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           child: TextField(
             key: textFieldKey,
             style: kDialogTextFieldStyle,
-            decoration: _dialogTextFieldDecoration,
+            decoration: _dialogDateTextFieldDecoration,
             controller: controller,
-            keyboardType: TextInputType.number,
+            keyboardType: TextInputType
+                .datetime, // Updated to datetime for better keyboard options
           ),
         ),
       ],
@@ -1113,13 +1141,13 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
         _startDownloadDateTime = dateTime;
         break;
       case DateTimeType.endDownloadDateTime:
-        _endDownloadDateTime = dateTime;
+        _endDownloadDateTime = dateTime.add(Duration(hours: 23, minutes: 59));
         break;
       case DateTimeType.startUploadDateTime:
         _startUploadDateTime = dateTime;
         break;
       case DateTimeType.endUploadDateTime:
-        _endUploadDateTime = dateTime;
+        _endUploadDateTime = dateTime.add(Duration(hours: 23, minutes: 59));
         break;
     }
   }
