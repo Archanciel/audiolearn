@@ -6837,8 +6837,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
       });
     });
     group(
-        '''Creating audio download or video upload date, audio file size or audio
-             duration based sort/filter parameters''', () {
+        '''Audio download, video upload, audio file size, duration based sort/filter
+           parameters creation and application''', () {
       testWidgets('''Audio download start/end date sort/filter.''',
           (WidgetTester tester) async {
         //    Click on 'Sort/filter audio' menu item of Audio popup menu to
@@ -6958,8 +6958,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
         await tester.pumpAndSettle();
 
-        // Now verify the playlist download view state with the 'Title asc'
-        // sort/filter parms applied
+        // Now verify the playlist download view state with the
+        // 'Drop2023Title asc' sort/filter parms applied
 
         // Verify that the dropdown button has been updated with the
         // 'Drop2023Title asc' sort/filter parms selected
@@ -6986,7 +6986,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
-      testWidgets('''Video upload start/end date sort/filter.''',
+      testWidgets(
+          '''Video upload start/end date sort/filter. Audio list item subtitle
+             specific to video upload date sort/filter parms is verified.''',
           (WidgetTester tester) async {
         //    Click on 'Sort/filter audio' menu item of Audio popup menu to
         //    open sort filter audio dialog. Then creating a named video upload
@@ -7096,8 +7098,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // And verify the order of the playlist audio subtitles
 
         List<String> audioSubTitlesSortedByTitleAscending = [
-          "0:06:29.0. Video upload date 12/06/2022.",
-          "0:13:39.0. Video upload date 10/09/2023.",
+          "0:06:29.0. Video upload date: 12/06/2022.",
+          "0:13:39.0. Video upload date: 10/09/2023.",
         ];
 
         IntegrationTestUtil.checkSubTitlesOrderInListTile(
@@ -7383,7 +7385,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         await tester.enterText(
             find.byKey(const Key('startAudioDurationTextField')), '0:06');
-       await tester.pumpAndSettle(Duration(milliseconds: 200));
+        await tester.pumpAndSettle(Duration(milliseconds: 200));
 
         await tester.enterText(
             find.byKey(const Key('endAudioDurationTextField')), '0:08');
@@ -7417,6 +7419,161 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         IntegrationTestUtil.checkTitlesOrderInListTile(
           tester: tester,
           audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+    });
+    group('''Testing not yet tested sort options''', () {
+      testWidgets(
+          '''Video upload date sort. Audio list item subtitle specific to video
+          upload date sort option is verified.''',
+          (WidgetTester tester) async {
+        // Click on 'Sort/filter audio' menu item of Audio popup menu to open
+        // sort filter audio dialog. Then creating a named video upload date
+        // sort option parms and saving it. Then verifying that a Sort/filter
+        // dropdown button item has been created and is applied to the playlist
+        // download view list of audio. The sorted audio list item title as well
+        // as the subtitle specific to video upload date sort option is verified.
+
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
+          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+
+        final SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
+        );
+
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the download app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+        await app.main(['test']);
+        await tester.pumpAndSettle();
+
+        // Now open the audio popup menu
+        await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+        await tester.pumpAndSettle();
+
+        // Find the sort/filter audio menu item and tap on it to
+        // open the audio sort filter dialog
+        await tester.tap(
+            find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+        await tester.pumpAndSettle();
+
+        // Type "Video upload desc" in the 'Save as' TextField
+
+        String saveAsTitle = 'Video upload desc';
+
+        await tester.enterText(
+            find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+            saveAsTitle);
+        await tester.pumpAndSettle();
+
+        // Now select the 'Video upload date' item in the 'Sort by'
+        // dropdown button
+
+        await tester.tap(find.byKey(const Key('sortingOptionDropdownButton')));
+        await tester.pumpAndSettle();
+
+        await tester.tap(find.text('Video upload date'));
+        await tester.pumpAndSettle();
+
+        // Then delete the "Audio download date" descending sort option
+
+        // Find the Text with "Audio downl date" which is located in the
+        // selected sort parameters ListView
+        final Finder texdtFinder = find.descendant(
+          of: find.byKey(const Key('selectedSortingOptionsListView')),
+          matching: find.text('Audio downl date'),
+        );
+
+        // Then find the ListTile ancestor of the 'Audio downl date' Text
+        // widget. The ascending/descending and remove icon buttons are
+        // contained in their ListTile ancestor
+        final Finder listTileFinder = find.ancestor(
+          of: texdtFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now, within that ListTile, find the sort option delete IconButton
+        // with key 'removeSortingOptionIconButton'
+        final Finder iconButtonFinder = find.descendant(
+          of: listTileFinder,
+          matching: find.byKey(const Key('removeSortingOptionIconButton')),
+        );
+
+        // Tap on the delete icon button to delete the 'Audio downl date'
+        // descending sort option
+        await tester.tap(iconButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Click on the "Save" button. This closes the sort/filter dialog
+        // and updates the sort/filter playlist download view dropdown
+        // button with the newly created sort/filter parms
+        await tester
+            .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+        await tester.pumpAndSettle();
+
+        // Now verify the playlist download view state with the 'Video upload date'
+        // sort option applied
+
+        // Verify that the dropdown button has been updated with the
+        // 'Video upload desc' sort/filter parms selected
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+          tester: tester,
+          dropdownButtonSelectedTitle: saveAsTitle,
+        );
+
+        // Verify the order of the playlist audio titles
+
+        List<String> audioTitlesSortedByTitleAscending = [
+            "Les besoins artificiels par R.Keucheyan",
+            "La résilience insulaire par Fiona Roche",
+            "La surpopulation mondiale par Jancovici et Barrau",
+            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+            "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+            "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+        ];
+
+        IntegrationTestUtil.checkTitlesOrderInListTile(
+          tester: tester,
+          audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
+        );
+
+        // And verify the order of the playlist audio subtitles
+
+        List<String> audioSubTitlesSortedByTitleAscending = [
+          "0:19:05.0. Video upload date: 05/01/2024.",
+          "0:13:35.0. Video upload date: 03/01/2024.",
+          "0:07:38.0. Video upload date: 03/12/2023.",
+          "0:20:32.0. Video upload date: 01/12/2023.",
+          "0:06:29.0. Video upload date: 23/09/2023.",
+          "0:13:39.0. Video upload date: 10/09/2023.",
+        ];
+
+        IntegrationTestUtil.checkSubTitlesOrderInListTile(
+          tester: tester,
+          audioTitlesOrderLst: audioSubTitlesSortedByTitleAscending,
         );
 
         // Purge the test playlist directory so that the created test

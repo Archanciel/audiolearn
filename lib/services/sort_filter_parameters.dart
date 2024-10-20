@@ -16,10 +16,8 @@ enum SortingOption {
   audioRemainingDuration,
   lastListenedDateTime,
   audioFileSize,
-  audioMusicQuality,
   audioDownloadSpeed,
   audioDownloadDuration,
-  videoUrl, // useful to detect audio duplicates
 }
 
 // This enum is used to specify how to combine the filter sentences
@@ -182,12 +180,6 @@ class AudioSortFilterParameters {
       },
       sortOrder: sortDescending,
     ),
-    SortingOption.audioMusicQuality: SortCriteria<Audio>(
-      selectorFunction: (Audio audio) {
-        return audio.isAudioMusicQuality ? 1 : 0;
-      },
-      sortOrder: sortAscending,
-    ),
     SortingOption.audioDownloadSpeed: SortCriteria<Audio>(
       selectorFunction: (Audio audio) {
         return audio.audioDownloadSpeed;
@@ -199,12 +191,6 @@ class AudioSortFilterParameters {
         return audio.audioDownloadDuration!.inMilliseconds;
       },
       sortOrder: sortDescending,
-    ),
-    SortingOption.videoUrl: SortCriteria<Audio>(
-      selectorFunction: (Audio audio) {
-        return audio.videoUrl;
-      },
-      sortOrder: sortAscending,
     ),
   };
 

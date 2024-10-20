@@ -378,14 +378,10 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
         return AppLocalizations.of(context)!.lastListenedDateTime;
       case SortingOption.audioFileSize:
         return AppLocalizations.of(context)!.audioFileSize;
-      case SortingOption.audioMusicQuality:
-        return AppLocalizations.of(context)!.audioMusicQuality;
       case SortingOption.audioDownloadSpeed:
         return AppLocalizations.of(context)!.audioDownloadSpeed;
       case SortingOption.audioDownloadDuration:
         return AppLocalizations.of(context)!.audioDownloadDuration;
-      case SortingOption.videoUrl:
-        return AppLocalizations.of(context)!.videoUrlLabel;
       default:
         throw ArgumentError('Invalid sorting option');
     }
@@ -1772,9 +1768,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           !(value == SortingOption.audioEnclosingPlaylistTitle ||
               value == SortingOption.audioDownloadSpeed ||
               value == SortingOption.audioDownloadDuration ||
-              value == SortingOption.audioFileSize ||
-              value == SortingOption.audioMusicQuality ||
-              value == SortingOption.videoUrl);
+              value == SortingOption.audioFileSize);
     }).map<DropdownMenuItem<SortingOption>>((SortingOption value) {
       return DropdownMenuItem<SortingOption>(
         value: value,
