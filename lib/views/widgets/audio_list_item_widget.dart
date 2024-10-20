@@ -530,43 +530,58 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
         final String lastSubtitlePart;
 
         lastSubtitlePart =
-            '${AppLocalizations.of(context)!.videoUploadDate} ${frenchDateFormat.format(videoUploadDate)}';
+            '${AppLocalizations.of(context)!.videoUploadDate}: ${frenchDateFormat.format(videoUploadDate)}';
 
         return '${audioDuration.HHmmss(addRemainingOneDigitTenthOfSecond: true)}. $lastSubtitlePart.';
+      case SortingOption.audioDownloadDuration:
+        String lastSubtitlePart = _createDefaultLastSubTitlePart(context);
+
+        final Duration audioDownloadDuration = audio.audioDownloadDuration!;
+        final String audioDownloadDurationSubtitlePart;
+
+        audioDownloadDurationSubtitlePart =
+            '${AppLocalizations.of(context)!.audioDownloadDuration}: ${audioDownloadDuration.HHmmss()}';
+
+        return '${audioDuration.HHmmss(addRemainingOneDigitTenthOfSecond: true)}. $lastSubtitlePart. $audioDownloadDurationSubtitlePart.';
       default:
-        final int audioFileSize = audio.audioFileSize;
-        final String audioFileSizeStr;
-
-        audioFileSizeStr = UiUtil.formatLargeIntValue(
-          context: context,
-          value: audioFileSize,
-        );
-
-        final int audioDownloadSpeed = audio.audioDownloadSpeed;
-        final String audioDownloadSpeedStr;
-
-        if (audioDownloadSpeed.isInfinite) {
-          audioDownloadSpeedStr = 'infinite o/sec';
-        } else {
-          audioDownloadSpeedStr = '${UiUtil.formatLargeIntValue(
-            context: context,
-            value: audioDownloadSpeed,
-          )}/sec';
-        }
-
-        final DateTime audioDownloadDateTime = audio.audioDownloadDateTime;
-        final String lastSubtitlePart;
-
-        if (audio.isAudioImported) {
-          lastSubtitlePart =
-              '$audioFileSizeStr ${AppLocalizations.of(context)!.imported} ${AppLocalizations.of(context)!.atPreposition} ${frenchDateFormat.format(audioDownloadDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(audioDownloadDateTime)}';
-        } else {
-          lastSubtitlePart =
-              '$audioFileSizeStr ${AppLocalizations.of(context)!.atPreposition} $audioDownloadSpeedStr ${AppLocalizations.of(context)!.on} ${frenchDateFormat.format(audioDownloadDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(audioDownloadDateTime)}';
-        }
+        String lastSubtitlePart = _createDefaultLastSubTitlePart(context);
 
         return '${audioDuration.HHmmss(addRemainingOneDigitTenthOfSecond: true)}. $lastSubtitlePart.';
     }
+  }
+
+  String _createDefaultLastSubTitlePart(BuildContext context) {
+    final int audioFileSize = audio.audioFileSize;
+    final String audioFileSizeStr;
+    
+    audioFileSizeStr = UiUtil.formatLargeIntValue(
+      context: context,
+      value: audioFileSize,
+    );
+    
+    final int audioDownloadSpeed = audio.audioDownloadSpeed;
+    final String audioDownloadSpeedStr;
+    
+    if (audioDownloadSpeed.isInfinite) {
+      audioDownloadSpeedStr = 'infinite o/sec';
+    } else {
+      audioDownloadSpeedStr = '${UiUtil.formatLargeIntValue(
+        context: context,
+        value: audioDownloadSpeed,
+      )}/sec';
+    }
+    
+    final DateTime audioDownloadDateTime = audio.audioDownloadDateTime;
+    final String lastSubtitlePart;
+    
+    if (audio.isAudioImported) {
+      lastSubtitlePart =
+          '$audioFileSizeStr ${AppLocalizations.of(context)!.imported} ${AppLocalizations.of(context)!.atPreposition} ${frenchDateFormat.format(audioDownloadDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(audioDownloadDateTime)}';
+    } else {
+      lastSubtitlePart =
+          '$audioFileSizeStr ${AppLocalizations.of(context)!.atPreposition} $audioDownloadSpeedStr ${AppLocalizations.of(context)!.on} ${frenchDateFormat.format(audioDownloadDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(audioDownloadDateTime)}';
+    }
+    return lastSubtitlePart;
   }
 
   Widget _buildPlayButton() {

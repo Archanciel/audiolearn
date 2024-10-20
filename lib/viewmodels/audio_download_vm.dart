@@ -602,7 +602,6 @@ class AudioDownloadVM extends ChangeNotifier {
       );
     }
 
-    // get already downloaded audio file names
     String playlistDownloadFilePathName =
         currentPlaylist.getPlaylistDownloadFilePathName();
 
