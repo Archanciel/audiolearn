@@ -518,7 +518,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
 
         if (lastListenedDateTime == null) {
           lastSubtitlePart =
-              '${AppLocalizations.of(context)!.remaining} $audioRemainingHHMMSSDuration. ${AppLocalizations.of(context)!.audioStateNotListened}.';
+              '${AppLocalizations.of(context)!.remaining} $audioRemainingHHMMSSDuration. ${AppLocalizations.of(context)!.audioStateNotListened}';
         } else {
           lastSubtitlePart =
               '${AppLocalizations.of(context)!.remaining} $audioRemainingHHMMSSDuration. ${AppLocalizations.of(context)!.listenedOn} ${frenchDateFormat.format(lastListenedDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(lastListenedDateTime)}';

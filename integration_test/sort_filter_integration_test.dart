@@ -7104,7 +7104,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         IntegrationTestUtil.checkSubTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst: audioSubTitlesSortedByTitleAscending,
+          audioSubTitlesOrderLst: audioSubTitlesSortedByTitleAscending,
         );
 
         // Now tap on the current dropdown button item to open the dropdown
@@ -7431,8 +7431,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
     group('''Testing not yet tested sort options''', () {
       testWidgets(
           '''Video upload date sort. Audio list item subtitle specific to video
-          upload date sort option is verified.''',
-          (WidgetTester tester) async {
+          upload date sort option is verified.''', (WidgetTester tester) async {
         // Click on 'Sort/filter audio' menu item of Audio popup menu to open
         // sort filter audio dialog. Then creating a named video upload date
         // sort option parms and saving it. Then verifying that a Sort/filter
@@ -7546,13 +7545,13 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Verify the order of the playlist audio titles
 
         List<String> audioTitlesSortedByTitleAscending = [
-            "Les besoins artificiels par R.Keucheyan",
-            "La résilience insulaire par Fiona Roche",
-            "La surpopulation mondiale par Jancovici et Barrau",
-            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-            "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
-            "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          "Les besoins artificiels par R.Keucheyan",
+          "La résilience insulaire par Fiona Roche",
+          "La surpopulation mondiale par Jancovici et Barrau",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
         ];
 
         IntegrationTestUtil.checkTitlesOrderInListTile(
@@ -7573,7 +7572,451 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         IntegrationTestUtil.checkSubTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst: audioSubTitlesSortedByTitleAscending,
+          audioSubTitlesOrderLst: audioSubTitlesSortedByTitleAscending,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+      testWidgets('''Audio duration sort.''', (WidgetTester tester) async {
+        // Click on 'Sort/filter audio' menu item of Audio popup menu to open
+        // sort filter audio dialog. Then creating a named audio duration asc
+        // sort option parms and saving it. Then verifying that a Sort/filter
+        // dropdown button item has been created and is applied to the playlist
+        // download view list of audio. The sorted audio list item title is
+        // verified.
+
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
+          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+
+        final SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
+        );
+
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the download app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+        await app.main(['test']);
+        await tester.pumpAndSettle();
+
+        // Now open the audio popup menu
+        await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+        await tester.pumpAndSettle();
+
+        // Find the sort/filter audio menu item and tap on it to
+        // open the audio sort filter dialog
+        await tester.tap(
+            find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+        await tester.pumpAndSettle();
+
+        // Type "Video upload desc" in the 'Save as' TextField
+
+        String saveAsTitle = 'Audio duration asc';
+
+        await tester.enterText(
+            find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+            saveAsTitle);
+        await tester.pumpAndSettle();
+
+        // Now select the 'Audio duration' item in the 'Sort by'
+        // dropdown button
+
+        await tester.tap(find.byKey(const Key('sortingOptionDropdownButton')));
+        await tester.pumpAndSettle();
+
+        await tester.tap(find.text('Audio duration'));
+        await tester.pumpAndSettle();
+
+        // Then delete the "Audio download date" descending sort option
+
+        // Find the Text with "Audio downl date" which is located in the
+        // selected sort parameters ListView
+        final Finder texdtFinder = find.descendant(
+          of: find.byKey(const Key('selectedSortingOptionsListView')),
+          matching: find.text('Audio downl date'),
+        );
+
+        // Then find the ListTile ancestor of the 'Audio downl date' Text
+        // widget. The ascending/descending and remove icon buttons are
+        // contained in their ListTile ancestor
+        final Finder listTileFinder = find.ancestor(
+          of: texdtFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now, within that ListTile, find the sort option delete IconButton
+        // with key 'removeSortingOptionIconButton'
+        final Finder iconButtonFinder = find.descendant(
+          of: listTileFinder,
+          matching: find.byKey(const Key('removeSortingOptionIconButton')),
+        );
+
+        // Tap on the delete icon button to delete the 'Audio downl date'
+        // descending sort option
+        await tester.tap(iconButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Click on the "Save" button. This closes the sort/filter dialog
+        // and updates the sort/filter playlist download view dropdown
+        // button with the newly created sort/filter parms
+        await tester
+            .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+        await tester.pumpAndSettle();
+
+        // Now verify the playlist download view state with the 'Audio duration'
+        // sort option applied
+
+        // Verify that the dropdown button has been updated with the
+        // 'Audio duration asc' sort/filter parms selected
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+          tester: tester,
+          dropdownButtonSelectedTitle: saveAsTitle,
+        );
+
+        // Verify the order of the playlist audio titles
+
+        List<String> audioTitlesSortedByTitleAscending = [
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "La surpopulation mondiale par Jancovici et Barrau",
+          "La résilience insulaire par Fiona Roche",
+          "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+          "Les besoins artificiels par R.Keucheyan",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+        ];
+
+        IntegrationTestUtil.checkTitlesOrderInListTile(
+          tester: tester,
+          audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Audio listenable remaining duration sort. Audio list item subtitle
+          specific to Audio listenable remaining duration sort option is verified.''',
+          (WidgetTester tester) async {
+        // Click on 'Sort/filter audio' menu item of Audio popup menu to open
+        // sort filter audio dialog. Then creating a named audio remaining duration
+        // sort option parms and saving it. Then verifying that a Sort/filter
+        // dropdown button item has been created and is applied to the playlist
+        // download view list of audio. The sorted audio list item title as well
+        // as the subtitle specific to Audio listenable remaining duration sort
+        // option is verified.
+
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
+          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+
+        final SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
+        );
+
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the download app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+        await app.main(['test']);
+        await tester.pumpAndSettle();
+
+        // Now open the audio popup menu
+        await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+        await tester.pumpAndSettle();
+
+        // Find the sort/filter audio menu item and tap on it to
+        // open the audio sort filter dialog
+        await tester.tap(
+            find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+        await tester.pumpAndSettle();
+
+        // Type "Audio remaining duration" in the 'Save as' TextField
+
+        String saveAsTitle = 'Audio remaining duration';
+
+        await tester.enterText(
+            find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+            saveAsTitle);
+        await tester.pumpAndSettle();
+
+        // Now select the 'Audio listenable remaining duration' item in the
+        // 'Sort by' dropdown button
+
+        await tester.tap(find.byKey(const Key('sortingOptionDropdownButton')));
+        await tester.pumpAndSettle();
+
+        await tester.tap(find.text('Audio listenable remaining duration'));
+        await tester.pumpAndSettle();
+
+        // Then delete the "Audio download date" descending sort option
+
+        // Find the Text with "Audio downl date" which is located in the
+        // selected sort parameters ListView
+        final Finder texdtFinder = find.descendant(
+          of: find.byKey(const Key('selectedSortingOptionsListView')),
+          matching: find.text('Audio downl date'),
+        );
+
+        // Then find the ListTile ancestor of the 'Audio downl date' Text
+        // widget. The ascending/descending and remove icon buttons are
+        // contained in their ListTile ancestor
+        final Finder listTileFinder = find.ancestor(
+          of: texdtFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now, within that ListTile, find the sort option delete IconButton
+        // with key 'removeSortingOptionIconButton'
+        final Finder iconButtonFinder = find.descendant(
+          of: listTileFinder,
+          matching: find.byKey(const Key('removeSortingOptionIconButton')),
+        );
+
+        // Tap on the delete icon button to delete the 'Audio downl date'
+        // descending sort option
+        await tester.tap(iconButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Click on the "Save" button. This closes the sort/filter dialog
+        // and updates the sort/filter playlist download view dropdown
+        // button with the newly created sort/filter parms
+        await tester
+            .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+        await tester.pumpAndSettle();
+
+        // Now verify the playlist download view state with the 'Audio
+        // remaining duration' sort option applied
+
+        // Verify that the dropdown button has been updated with the
+        // 'Video upload desc' sort/filter parms selected
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+          tester: tester,
+          dropdownButtonSelectedTitle: saveAsTitle,
+        );
+
+        // Verify the order of the playlist audio titles
+
+        List<String> audioTitlesSortedByTitleAscending = [
+          "Les besoins artificiels par R.Keucheyan",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          "La surpopulation mondiale par Jancovici et Barrau",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "La résilience insulaire par Fiona Roche",
+          "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+        ];
+
+        IntegrationTestUtil.checkTitlesOrderInListTile(
+          tester: tester,
+          audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
+        );
+
+        // And verify the order of the playlist audio subtitles
+
+        List<String> audioSubTitlesSortedByTitleAscending = [
+          "0:19:05.0. Remaining 00:00:00. Listened on 16/05/2024 at 17:09.",
+          "0:06:29.0. Remaining 00:00:38. Listened on 16/03/2024 at 17:09.",
+          "0:06:29.0. Remaining 00:06:29. Not listened.",
+          "0:07:38.0. Remaining 00:07:38. Not listened.",
+          "0:20:32.0. Remaining 00:10:32. Listened on 16/06/2024 at 17:09.",
+          "0:13:35.0. Remaining 00:11:01. Listened on 16/02/2024 at 17:09.",
+          "0:13:39.0. Remaining 00:13:39. Listened on 16/01/2024 at 17:09.",
+        ];
+
+        IntegrationTestUtil.checkSubTitlesOrderInListTile(
+          tester: tester,
+          audioSubTitlesOrderLst: audioSubTitlesSortedByTitleAscending,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Audio last listened date/time sort. Audio list item subtitle
+          specific to Audio listenable remaining duration sort option is verified.''',
+          (WidgetTester tester) async {
+        // Click on 'Sort/filter audio' menu item of Audio popup menu to open
+        // sort filter audio dialog. Then creating a named audio last listened
+        // date/time sort option parms and saving it. Then verifying that a Sort/
+        // filter dropdown button item has been created and is applied to the playlist
+        // download view list of audio. The sorted audio list item title as well
+        // as the subtitle specific to Audio last listened date/time sort option
+        // is verified.
+
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
+          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+
+        final SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
+        );
+
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the download app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+        await app.main(['test']);
+        await tester.pumpAndSettle();
+
+        // Now open the audio popup menu
+        await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+        await tester.pumpAndSettle();
+
+        // Find the sort/filter audio menu item and tap on it to
+        // open the audio sort filter dialog
+        await tester.tap(
+            find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+        await tester.pumpAndSettle();
+
+        // Type "Audio last listened date/time" in the 'Save as' TextField
+
+        String saveAsTitle = 'Audio last listened date/time';
+
+        await tester.enterText(
+            find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+            saveAsTitle);
+        await tester.pumpAndSettle();
+
+        // Now select the 'Last listened date/time' item in the 'Sort by'
+        // dropdown button
+
+        await tester.tap(find.byKey(const Key('sortingOptionDropdownButton')));
+        await tester.pumpAndSettle();
+
+        await tester.tap(find.text('Last listened date/time'));
+        await tester.pumpAndSettle();
+
+        // Then delete the "Audio download date" descending sort option
+
+        // Find the Text with "Audio downl date" which is located in the
+        // selected sort parameters ListView
+        final Finder texdtFinder = find.descendant(
+          of: find.byKey(const Key('selectedSortingOptionsListView')),
+          matching: find.text('Audio downl date'),
+        );
+
+        // Then find the ListTile ancestor of the 'Audio downl date' Text
+        // widget. The ascending/descending and remove icon buttons are
+        // contained in their ListTile ancestor
+        final Finder listTileFinder = find.ancestor(
+          of: texdtFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now, within that ListTile, find the sort option delete IconButton
+        // with key 'removeSortingOptionIconButton'
+        final Finder iconButtonFinder = find.descendant(
+          of: listTileFinder,
+          matching: find.byKey(const Key('removeSortingOptionIconButton')),
+        );
+
+        // Tap on the delete icon button to delete the 'Audio downl date'
+        // descending sort option
+        await tester.tap(iconButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Click on the "Save" button. This closes the sort/filter dialog
+        // and updates the sort/filter playlist download view dropdown
+        // button with the newly created sort/filter parms
+        await tester
+            .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+        await tester.pumpAndSettle();
+
+        // Now verify the playlist download view state with the 'Audio last
+        // listened date/time' sort option applied
+
+        // Verify that the dropdown button has been updated with the
+        // 'Last listened date/time' sort/filter parms selected
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+          tester: tester,
+          dropdownButtonSelectedTitle: saveAsTitle,
+        );
+
+        // Verify the order of the playlist audio titles
+
+        List<String> audioTitlesSortedByTitleAscending = [
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "Les besoins artificiels par R.Keucheyan",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "La résilience insulaire par Fiona Roche",
+          "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+          "La surpopulation mondiale par Jancovici et Barrau",
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+        ];
+
+        IntegrationTestUtil.checkTitlesOrderInListTile(
+          tester: tester,
+          audioTitlesOrderLst: audioTitlesSortedByTitleAscending,
+        );
+
+        // And verify the order of the playlist audio subtitles
+
+        List<String> audioSubTitlesSortedByTitleAscending = [
+          "0:20:32.0. Listened on 16/06/2024 at 17:09.",
+          "0:19:05.0. Listened on 16/05/2024 at 17:09.",
+          "0:06:29.0. Listened on 16/03/2024 at 17:09.",
+          "0:13:35.0. Listened on 16/02/2024 at 17:09.",
+          "0:13:39.0. Listened on 16/01/2024 at 17:09.",
+          "0:07:38.0. Not listened.",
+          "0:06:29.0. Not listened.",
+        ];
+
+        IntegrationTestUtil.checkSubTitlesOrderInListTile(
+          tester: tester,
+          audioSubTitlesOrderLst: audioSubTitlesSortedByTitleAscending,
         );
 
         // Purge the test playlist directory so that the created test
