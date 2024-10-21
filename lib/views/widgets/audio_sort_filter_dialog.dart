@@ -1071,7 +1071,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           key: dateIconButtondKey,
           style: ButtonStyle(
             // Highlight button when pressed
-            padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+            padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
               const EdgeInsets.symmetric(
                   horizontal: kSmallButtonInsidePadding, vertical: 0),
             ),
