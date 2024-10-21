@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:audiolearn/models/comment.dart';
 import 'package:audiolearn/models/playlist.dart';
 import 'package:audiolearn/services/json_data_service.dart';
@@ -5833,7 +5831,6 @@ void main() {
     });
   });
   group('Static functions test', () {
-    late AudioSortFilterService audioSortFilterService;
     late PlaylistListVM playlistListVM;
 
     setUp(() async {
@@ -5896,8 +5893,6 @@ void main() {
       // playlistListVM to know which playlists are
       // selected and which are not
       playlistListVM.getUpToDateSelectablePlaylists();
-
-      audioSortFilterService = AudioSortFilterService();
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
