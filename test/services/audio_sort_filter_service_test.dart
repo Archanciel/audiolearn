@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:audiolearn/models/comment.dart';
 import 'package:audiolearn/models/playlist.dart';
 import 'package:audiolearn/services/json_data_service.dart';
@@ -5828,6 +5830,125 @@ void main() {
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
+    });
+  });
+  group('Static functions test', () {
+    late AudioSortFilterService audioSortFilterService;
+    late PlaylistListVM playlistListVM;
+
+    setUp(() async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}audio_sort_filter_service_test_data",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+      // Since we have to use a mock AudioDownloadVM to add the
+      // youtube playlist, we can not use app.main() to start the
+      // app because app.main() uses the real AudioDownloadVM
+      // and we don't want to make the main.dart file dependent
+      // of a mock class. So we have to start the app by hand.
+
+      WarningMessageVM warningMessageVM = WarningMessageVM();
+      // MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
+      //   warningMessageVM: warningMessageVM,
+      //   isTest: true,
+      // );
+      // mockAudioDownloadVM.youtubePlaylistTitle = youtubeNewPlaylistTitle;
+
+      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+        isTest: true,
+      );
+
+      // audioDownloadVM.youtubeExplode = mockYoutubeExplode;
+
+      playlistListVM = PlaylistListVM(
+        warningMessageVM: warningMessageVM,
+        audioDownloadVM: audioDownloadVM,
+        commentVM: CommentVM(),
+        settingsDataService: settingsDataService,
+      );
+
+      // calling getUpToDateSelectablePlaylists() loads all the
+      // playlist json files from the app dir and so enables
+      // playlistListVM to know which playlists are
+      // selected and which are not
+      playlistListVM.getUpToDateSelectablePlaylists();
+
+      audioSortFilterService = AudioSortFilterService();
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    test(
+        'increaseByMinimumUnit 0.01 test',
+        () {
+          double increasedValue = AudioSortFilterService.increaseByMinimumUnit(
+            endValueTxt: '2.79',
+          );
+
+          expect(increasedValue, 2.8);
+    });
+    test(
+        'increaseByMinimumUnit 0.001 test',
+        () {
+          double increasedValue = AudioSortFilterService.increaseByMinimumUnit(
+            endValueTxt: '200.327',
+          );
+
+          expect(increasedValue, 200.328);
+    });
+    test(
+        'setDateTimeToEndDay 0 hour',
+        () {
+          DateTime increasedValue = AudioSortFilterService.setDateTimeToEndDay(
+            date: DateTime(2024, 1, 7),
+          );
+
+          expect(increasedValue, DateTime(2024, 1, 7, 23, 59, 59));
+    });
+    test(
+        'setDateTimeToEndDay 10 hours 45 minutes 23 seconds',
+        () {
+          DateTime increasedValue = AudioSortFilterService.setDateTimeToEndDay(
+            date: DateTime(2024, 1, 7, 10, 45, 23),
+          );
+
+          expect(increasedValue, DateTime(2024, 1, 7, 23, 59, 59));
+    });
+    test(
+        'setDateTimeToEndDay 0 hours 0 minutes 23 seconds',
+        () {
+          DateTime increasedValue = AudioSortFilterService.setDateTimeToEndDay(
+            date: DateTime(2024, 1, 7, 0, 0, 23),
+          );
+
+          expect(increasedValue, DateTime(2024, 1, 7, 23, 59, 59));
     });
   });
 }
