@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import '../models/audio.dart';
 import 'sort_filter_parameters.dart';
 
@@ -258,7 +260,7 @@ class AudioSortFilterService {
               isAudioFiltered = false;
             }
           }
-          
+
           if (isAudioFiltered &&
               sentencesCombination == SentencesCombination.OR) {
             // not necessary to test the other filter sentences since
@@ -342,7 +344,7 @@ class AudioSortFilterService {
               isAudioFiltered = false;
             }
           }
-          
+
           if (isAudioFiltered &&
               sentencesCombination == SentencesCombination.OR) {
             // not necessary to test the other filter sentences since
@@ -371,7 +373,7 @@ class AudioSortFilterService {
               isAudioFiltered = false;
             }
           }
-          
+
           if (isAudioFiltered &&
               sentencesCombination == SentencesCombination.OR) {
             // not necessary to test the other filter sentences since
@@ -382,7 +384,7 @@ class AudioSortFilterService {
             // not necessary to test the other filter sentences since
             // inequality was found and 'AND' is necessary ..
             break;
-          } 
+          }
         }
       } // end of for loop on filterSentenceLst
 
@@ -399,7 +401,7 @@ class AudioSortFilterService {
   ///
   /// This method filters the passed audio list by the other filter
   /// options set by the user in the sort and filter dialog, i.e.
-  /// 
+  ///
   /// Start download date,
   /// End download date,
   /// Start upload date,
@@ -538,8 +540,45 @@ class AudioSortFilterService {
     return audioLst.where((audio) {
       return (audio.audioDuration.inMilliseconds >=
               startDuration.inMilliseconds) &&
-          (audio.audioDuration.inMilliseconds <=
-              endDuration.inMilliseconds);
+          (audio.audioDuration.inMilliseconds <= endDuration.inMilliseconds);
     }).toList();
+  }
+
+  /// Method to increase the value of the end file size by the minimum unit.
+  /// The minimum unit is calculated based on the number of decimal places
+  /// in the input string.
+  ///
+  /// This makes sense since an audio file size of 2.79322 MB is displayed as
+  /// a 2.79 MB file size. If the user wishes to filter the audio list based
+  /// on the start file size of 2.79 MB and end file size of 2.79 MB, the end file
+  /// size will be increased by the minimum unit which is 0.01 MB. As result, the
+  /// end file size will be set to 2.80 MB and so the audio whose file size is
+  /// 2.79322 MB will be included.
+  static double increaseByMinimumUnit({
+    required String endValueTxt,
+  }) {
+    // Parse the input string to a double
+    double? endValue = double.tryParse(endValueTxt);
+
+    if (endValue == null) {
+      return 0.0;
+    }
+
+    // Determine the number of decimal places in the input
+    int decimalPlaces =
+        endValueTxt.contains('.') ? endValueTxt.split('.').last.length : 0;
+
+    // Calculate the minimum increment based on the number of decimal places
+    double increment = decimalPlaces > 0 ? 1 / pow(10, decimalPlaces) : 1.0;
+
+    // Increase the value by the minimum increment
+    return endValue + increment;
+  }
+
+  static DateTime setDateTimeToEndDay({
+    required DateTime date,
+  }) {
+    // Set the time to the end of the given day (23:59:59)
+    return DateTime(date.year, date.month, date.day, 23, 59, 59);
   }
 }
