@@ -296,7 +296,7 @@ class PlaylistListVM extends ChangeNotifier {
     }
 
     if (_wasSearchButtonClicked && _searchSentence.isNotEmpty) {
-      _listOfSelectablePlaylists = _listOfSelectablePlaylists
+      return _listOfSelectablePlaylists
           .where((playlist) => playlist.title
               .toLowerCase()
               .contains(_searchSentence.toLowerCase()))
