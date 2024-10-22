@@ -42,6 +42,12 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
   final SettingsDataService settingsDataService;
   final Playlist playlist;
   final int index;
+
+  // If true, the playlist list is toggled (i.e. reduced) if a playlist is
+  // selected. This makes sense only in the audio player view where the
+  // user can click on the toggle playlist list button in order to display
+  // the selectable playlist. Once a playlist is selected, the playlist list
+  // is toggled (reduced) to make space for the audio player widget.
   final bool toggleListIfSelected;
 
   PlaylistListItem({
@@ -349,6 +355,8 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             value: playlist.isSelected,
             onChanged: (value) async {
               if (toggleListIfSelected) {
+                // usefull in the audio player view. If a playlist is
+                // selected, the playlist list is toggled (reduced).
                 playlistListVM.togglePlaylistsList();
               }
               playlistListVM.setPlaylistSelection(
