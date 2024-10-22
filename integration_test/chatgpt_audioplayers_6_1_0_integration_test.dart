@@ -18,7 +18,7 @@ void main() {
 
       // Tap the play button
       await tester.tap(playButton);
-      await tester.pumpAndSettle(const Duration(seconds: 10));
+      await tester.pumpAndSettle();
 
       await Future.delayed(const Duration(seconds: 10));
       await tester.pumpAndSettle();
