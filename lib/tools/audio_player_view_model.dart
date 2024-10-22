@@ -24,7 +24,7 @@ class AudioPlayerViewModel extends ChangeNotifier {
 
   // The initial position to seek to when the file is loaded
   final Duration initialSeekPosition =
-      const Duration(seconds: 30); // Set your desired position
+      const Duration(seconds: 0); // Set your desired position
 
   AudioPlayerViewModel() : _audioPlayer = AudioPlayer() {
     _audioPlayer.setReleaseMode(ReleaseMode.stop);
