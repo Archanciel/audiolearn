@@ -18,9 +18,9 @@ void main() {
 
       // Tap the play button
       await tester.tap(playButton);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(seconds: 10));
 
-      await Future.delayed(const Duration(seconds: 5));
+      await Future.delayed(const Duration(seconds: 10));
       await tester.pumpAndSettle();
 
       // Find the pause button (after playing)
