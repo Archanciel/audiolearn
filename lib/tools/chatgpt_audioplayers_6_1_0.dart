@@ -3,8 +3,127 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:window_size/window_size.dart';
-import '../constants.dart';
-import 'audio_player_view_model.dart';
+import 'dart:async';
+import 'package:path/path.dart' as path;
+
+import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/foundation.dart';
+
+class AudioPlayerViewModel extends ChangeNotifier {
+  final AudioPlayer _audioPlayer;
+  PlayerState? _playerState;
+  Duration? _duration;
+  Duration? _position;
+  String? _selectedFilePathName;
+
+  // Stream subscriptions
+  StreamSubscription? _durationSubscription;
+  StreamSubscription? _positionSubscription;
+  StreamSubscription? _playerCompleteSubscription;
+  StreamSubscription? _playerStateChangeSubscription;
+
+  // File path to load on start
+  final String initialFilePath =
+      "C:${path.separator}temp${path.separator}Organ_Voluntary_in_G_Major,_Op._7,_No._9-_I._Largo_Staccato.MP3";
+
+  // The initial position to seek to when the file is loaded
+  final Duration initialSeekPosition =
+      const Duration(seconds: 0); // Set your desired position
+
+  AudioPlayerViewModel() : _audioPlayer = AudioPlayer() {
+    _audioPlayer.setReleaseMode(ReleaseMode.stop);
+
+    _initPlayer();
+    _loadInitialFileAndSeek();
+  }
+
+  // Getters
+  bool get isPlaying => _playerState == PlayerState.playing;
+  bool get isPaused => _playerState == PlayerState.paused;
+  Duration? get duration => _duration;
+  Duration? get position => _position;
+  String? get selectedFile => _selectedFilePathName;
+  String get durationText => _duration?.toString().split('.').first ?? '';
+  String get positionText => _position?.toString().split('.').first ?? '';
+
+  // Play, Pause, Stop methods
+  Future<void> play() async {
+    if (_selectedFilePathName != null) {
+      await _audioPlayer.play(DeviceFileSource(_selectedFilePathName!));
+      await _audioPlayer.setPlaybackRate(1.0);
+      _playerState = PlayerState.playing;
+      notifyListeners();
+    }
+  }
+
+  Future<void> pause() async {
+    await _audioPlayer.pause();
+    _playerState = PlayerState.paused;
+    notifyListeners();
+  }
+
+  Future<void> stop() async {
+    await _audioPlayer.stop();
+    _playerState = PlayerState.stopped;
+    _position = Duration.zero;
+    notifyListeners();
+  }
+
+  void seek(double value) {
+    if (_duration != null) {
+      final position = value * _duration!.inMilliseconds;
+      _audioPlayer.seek(Duration(milliseconds: position.round()));
+    }
+  }
+
+  // Initialize streams to listen to audio events
+  void _initPlayer() {
+    _audioPlayer.setVolume(1.0);
+    _durationSubscription = _audioPlayer.onDurationChanged.listen((duration) {
+      _duration = duration;
+      notifyListeners();
+    });
+
+    _positionSubscription = _audioPlayer.onPositionChanged.listen((p) {
+      _position = p;
+      notifyListeners();
+    });
+
+    _playerCompleteSubscription = _audioPlayer.onPlayerComplete.listen((event) {
+      _playerState = PlayerState.stopped;
+      _position = Duration.zero;
+      notifyListeners();
+    });
+
+    _playerStateChangeSubscription =
+        _audioPlayer.onPlayerStateChanged.listen((state) {
+      _playerState = state;
+      notifyListeners();
+    });
+  }
+
+  @override
+  void dispose() {
+    _durationSubscription?.cancel();
+    _positionSubscription?.cancel();
+    _playerCompleteSubscription?.cancel();
+    _playerStateChangeSubscription?.cancel();
+    _audioPlayer.dispose();
+    super.dispose();
+  }
+
+  // Load the initial file and seek to a specific position on startup
+  Future<void> _loadInitialFileAndSeek() async {
+    _selectedFilePathName = initialFilePath;
+
+    // Load the file but don't play yet
+    await _audioPlayer.setSource(DeviceFileSource(_selectedFilePathName!));
+
+    // Now seek to the desired initial position
+    await _audioPlayer.seek(initialSeekPosition);
+    notifyListeners(); // Notify listeners after seeking
+  }
+}
 
 void main() {
   setWindowsAppSizeAndPosition(isTest: true);
@@ -65,25 +184,6 @@ class PlayerView extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Consumer<AudioPlayerViewModel>(
-          builder: (context, viewModel, child) {
-            return Text(
-              viewModel.selectedFile != null
-                  ? 'Selected File: ${viewModel.selectedFile!.split('/').last}'
-                  : 'No file selected',
-              style: const TextStyle(fontSize: 16),
-            );
-          },
-        ),
-        const SizedBox(height: 20),
-        Consumer<AudioPlayerViewModel>(
-          builder: (context, viewModel, child) {
-            return ElevatedButton(
-              onPressed: viewModel.selectFile,
-              child: const Text('Select MP3'),
-            );
-          },
-        ),
         const SizedBox(height: 20),
         const PlayerControls(),
         Consumer<AudioPlayerViewModel>(

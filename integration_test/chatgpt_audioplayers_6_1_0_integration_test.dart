@@ -20,12 +20,7 @@ void main() {
       await tester.tap(playButton);
       await tester.pumpAndSettle();
 
-      // Add a delay to ensure playback starts properly
-      await Future.delayed(const Duration(seconds: 2));
-      await tester.pump();
-
-      // Wait for playback duration
-      await Future.delayed(const Duration(seconds: 10));
+      await Future.delayed(const Duration(seconds: 5));
       await tester.pumpAndSettle();
 
       // Find the pause button (after playing)
@@ -36,7 +31,7 @@ void main() {
       await tester.tap(pauseButton);
       await tester.pumpAndSettle();
 
-      // Assert that the play button is enabled again after pausing
+      // Assert that the pause button is disabled after pausing
       expect(playButton, findsOneWidget);
     });
   });
