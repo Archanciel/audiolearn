@@ -20,6 +20,9 @@ void main() {
       await tester.tap(playButton);
       await tester.pumpAndSettle();
 
+      // Add a delay to ensure playback starts properly
+      await tester.pump(const Duration(seconds: 2));
+
       await Future.delayed(const Duration(seconds: 10));
       await tester.pumpAndSettle();
 
