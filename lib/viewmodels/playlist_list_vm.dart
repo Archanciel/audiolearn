@@ -458,11 +458,10 @@ class PlaylistListVM extends ChangeNotifier {
   /// the playlist item checkbox to select or unselect the playlist.
   ///
   /// Since currently only one playlist can be selected at a time,
-  /// this method unselects all the other playlists if the playlist
-  /// whose index is passed is selected, i.e. if {isPlaylistSelected}
-  /// is true.
+  /// this method unselects all other playlists if the passed playlist
+  /// is selected, i.e. if {isPlaylistSelected} is true.
   void setPlaylistSelection({
-    required int playlistIndex,
+    required Playlist playlistSelectedOrUnselected,
     required bool isPlaylistSelected,
   }) {
     // selecting another playlist or unselecting the currently
@@ -473,9 +472,6 @@ class PlaylistListVM extends ChangeNotifier {
     //                                    the previous sort and filter
     //                                    parameters will be applioed to
     //                                    the newly selected playlist
-
-    Playlist playlistSelectedOrUnselected =
-        _listOfSelectablePlaylists[playlistIndex];
 
     if (isPlaylistSelected) {
       // since only one playlist can be selected at a time, we
@@ -1714,10 +1710,9 @@ class PlaylistListVM extends ChangeNotifier {
 
   void updateIndividualPlaylistAndOrPlaylistAudiosPlaySpeed({
     required double audioPlaySpeed,
-    required int playlistIndex,
+    required Playlist playlist,
     required bool applyAudioPlaySpeedToPlayableAudios,
   }) {
-    Playlist playlist = _listOfSelectablePlaylists[playlistIndex];
     // updating the playlist audio play speed. This will imply the
     // next downloaded audio of this playlist.
     playlist.audioPlaySpeed = audioPlaySpeed;

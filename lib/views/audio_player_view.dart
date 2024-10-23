@@ -1118,7 +1118,6 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                 return PlaylistListItem(
                   settingsDataService: widget.settingsDataService,
                   playlist: playlist,
-                  index: index,
                   toggleListIfSelected: true,
                 );
               },

@@ -647,16 +647,58 @@ class IntegrationTestUtil {
     await tester.pumpAndSettle();
   }
 
-  static void checkTitlesOrderInListTile({
+  static void checkPlaylistAndAudioTitlesOrderInListTile({
     required WidgetTester tester,
-    required List<String> audioTitlesOrderLst,
+    required List<String>? playlistTitlesOrderedLst,
+    required List<String>? audioTitlesOrderedLst,
+    int firstPlaylistListTileIndex = 0,
+    int firstAudioListTileIndex = 3,
+  }) {
+    // Obtains all the ListTile widgets present in the playlist
+    // download view
+    final Finder listTilesFinder = find.byType(ListTile);
+
+    if (playlistTitlesOrderedLst != null) {
+      for (String title in playlistTitlesOrderedLst) {
+        Finder playlistTitleTextFinder = find.descendant(
+          of: listTilesFinder.at(firstPlaylistListTileIndex++),
+          matching: find.byType(Text),
+        );
+
+        expect(
+          // 2 Text widgets exist in playlist ListTile: the title and sub title
+          tester.widget<Text>(playlistTitleTextFinder.at(0)).data,
+          title,
+        );
+      }
+    }
+
+    if (audioTitlesOrderedLst != null) {
+      for (String title in audioTitlesOrderedLst) {
+        Finder playlistTitleTextFinder = find.descendant(
+          of: listTilesFinder.at(firstAudioListTileIndex++),
+          matching: find.byType(Text),
+        );
+
+        expect(
+          // 2 Text widgets exist in audio ListTile: the title and sub title
+          tester.widget<Text>(playlistTitleTextFinder.at(0)).data,
+          title,
+        );
+      }
+    }
+  }
+
+  static void checkAudioTitlesOrderInListTile({
+    required WidgetTester tester,
+    required List<String> audioTitlesOrderedLst,
     int firstAudioListTileIndex = 0,
   }) {
     // Obtains all the ListTile widgets present in the playlist
     // download view
     final Finder listTilesFinder = find.byType(ListTile);
 
-    for (String title in audioTitlesOrderLst) {
+    for (String title in audioTitlesOrderedLst) {
       Finder playlistTitleTextFinder = find.descendant(
         of: listTilesFinder.at(firstAudioListTileIndex++),
         matching: find.byType(Text),
@@ -670,7 +712,7 @@ class IntegrationTestUtil {
     }
   }
 
-  static void checkSubTitlesOrderInListTile({
+  static void checkAudioSubTitlesOrderInListTile({
     required WidgetTester tester,
     required List<String> audioSubTitlesOrderLst,
     int firstAudioListTileIndex = 0,

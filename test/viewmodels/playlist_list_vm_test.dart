@@ -646,9 +646,9 @@ void main() {
 
       // Obtaining the audio from which to obtain the next playable
       // audio
-      playlistListVM.getUpToDateSelectablePlaylists();
+      Playlist playlist = playlistListVM.getUpToDateSelectablePlaylists()[1];
       playlistListVM.setPlaylistSelection(
-        playlistIndex: 1,
+        playlistSelectedOrUnselected: playlist,
         isPlaylistSelected: true,
       );
 
@@ -717,9 +717,9 @@ void main() {
       // playlist json files from the app dir and so enables
       // playlistListVM to know which playlists are
       // selected and which are not
-      playlistListVM.getUpToDateSelectablePlaylists();
+      Playlist playlist = playlistListVM.getUpToDateSelectablePlaylists()[2];
       playlistListVM.setPlaylistSelection(
-        playlistIndex: 2,
+        playlistSelectedOrUnselected: playlist,
         isPlaylistSelected: true,
       );
 
