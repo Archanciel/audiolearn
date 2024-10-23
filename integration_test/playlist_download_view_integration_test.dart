@@ -16782,6 +16782,179 @@ void main() {
         );
       });
     });
+    group(
+        'Selecting and moving searched playlist found by applying search word',
+        () {
+      testWidgets('''First, enter the search word 'al' in the 'Youtube Link or
+           Search' text field.''', (WidgetTester tester) async {
+        // Click on the enabled search icon button and verify the reduced
+        // displayed playlist list list.
+        //
+        // Then, select one of the filtered playlist and click on the move
+        // up icon button to reposition the selected playlist. Verify the
+        // updated selected playlist title as well as its audio list.
+        // Then click again on the move up icon button to reposition the
+        // selected playlist. Remove the search word and verify the playlist
+        // titles order.
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName:
+              'sort_and_filter_audio_dialog_widget_three_playlists_test',
+          tapOnPlaylistToggleButton: true,
+        );
+
+        List<String> playlistsTitles =
+            await enteringFirstAndSecondLetterOfLocalPlaylistSearchWord(
+          tester: tester,
+        );
+
+        // Verify the currently selected playlist title
+
+        Text selectedPlaylistTitleText =
+            tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
+
+        expect(
+          selectedPlaylistTitleText.data,
+          'S8 audio',
+        );
+
+        // Find the local playlist to select
+
+        // First, find the Playlist ListTile Text widget
+        final Finder localPlaylistToSelectListTileTextWidgetFinder =
+            find.text(playlistsTitles[1]); // local_2
+
+        // Then obtain the Playlist ListTile widget enclosing the Text widget
+        // by finding its ancestor
+        final Finder localPlaylistToSelectListTileWidgetFinder = find.ancestor(
+          of: localPlaylistToSelectListTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now find the Checkbox widget located in the Playlist ListTile
+        // and tap on it to select the playlist
+        final Finder localPlaylistToSelectListTileCheckboxWidgetFinder =
+            find.descendant(
+          of: localPlaylistToSelectListTileWidgetFinder,
+          matching: find.byType(Checkbox),
+        );
+
+        // Tap the ListTile Playlist checkbox to select it
+        await tester.tap(localPlaylistToSelectListTileCheckboxWidgetFinder);
+        await tester.pumpAndSettle();
+
+        // Verify the newly selected playlist title
+
+        selectedPlaylistTitleText =
+            tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
+
+        expect(
+          selectedPlaylistTitleText.data,
+          'local_2',
+        );
+
+        // Now tap on the move up icon button to reposition the selected
+        // playlist
+
+        await tester.tap(find.byKey(const Key('move_up_playlist_button')));
+        await tester.pumpAndSettle();
+
+        // Verify the selected moved playlist title
+
+        selectedPlaylistTitleText =
+            tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
+
+        expect(
+          selectedPlaylistTitleText.data,
+          'local_2',
+        );
+
+        // verify the order of the reduced playlist titles
+
+        playlistsTitles = [
+          "local_2",
+          "local",
+        ];
+
+        IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
+          tester: tester,
+          playlistTitlesOrderedLst: playlistsTitles,
+          audioTitlesOrderedLst: null,
+          firstPlaylistListTileIndex: 0,
+          firstAudioListTileIndex: 2,
+        );
+
+        // Now re-tap on the move up icon button to reposition the selected
+        // playlist
+
+        await tester.tap(find.byKey(const Key('move_up_playlist_button')));
+        await tester.pumpAndSettle();
+
+        // Verify the selected moved playlist title
+
+        selectedPlaylistTitleText =
+            tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
+
+        expect(
+          selectedPlaylistTitleText.data,
+          'local_2',
+        );
+
+        // verify the order of the reduced playlist titles
+
+        playlistsTitles = [
+          "local_2",
+          "local",
+        ];
+
+        IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
+          tester: tester,
+          playlistTitlesOrderedLst: playlistsTitles,
+          audioTitlesOrderedLst: null,
+          firstPlaylistListTileIndex: 0,
+          firstAudioListTileIndex: 2,
+        );
+
+        // Finally, clear the search text word
+
+        await tester.tap(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+        );
+        await tester.pumpAndSettle();
+        await tester.enterText(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+          '',
+        );
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+
+        // verify the order of the complete playlist titles
+
+        playlistsTitles = [
+          "local_2",
+          "S8 audio",
+          "local",
+        ];
+
+        IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
+          tester: tester,
+          playlistTitlesOrderedLst: playlistsTitles,
+          audioTitlesOrderedLst: null,
+          firstPlaylistListTileIndex: 0,
+          firstAudioListTileIndex: 2,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+    });
     group('Audio search word to playlist selection', () {
       testWidgets('''First, enter the search word 'al' in the
           'Youtube Link or Search' text field.''', (WidgetTester tester) async {
