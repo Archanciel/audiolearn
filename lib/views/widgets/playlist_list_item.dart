@@ -41,7 +41,6 @@ enum PlaylistPopupMenuAction {
 class PlaylistListItem extends StatelessWidget with ScreenMixin {
   final SettingsDataService settingsDataService;
   final Playlist playlist;
-  final int index;
 
   // If true, the playlist list is toggled (i.e. reduced) if a playlist is
   // selected. This makes sense only in the audio player view where the
@@ -53,7 +52,6 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
   PlaylistListItem({
     required this.settingsDataService,
     required this.playlist,
-    required this.index,
     this.toggleListIfSelected = false,
     super.key,
   });
@@ -201,7 +199,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                         // comment dialog on a playlist which is not currently
                         // selected
                         playlistListVM.setPlaylistSelection(
-                          playlistIndex: index,
+                          playlistSelectedOrUnselected: playlist,
                           isPlaylistSelected: true,
                         );
                         String snackBarMessage = AppLocalizations.of(context)!
@@ -318,7 +316,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                           playlistListVM
                               .updateIndividualPlaylistAndOrPlaylistAudiosPlaySpeed(
                             audioPlaySpeed: value[0] as double,
-                            playlistIndex: index,
+                            playlist: playlist,
                             applyAudioPlaySpeedToPlayableAudios:
                                 value[2] as bool,
                           );
@@ -355,12 +353,14 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             value: playlist.isSelected,
             onChanged: (value) async {
               if (toggleListIfSelected) {
-                // usefull in the audio player view. If a playlist is
-                // selected, the playlist list is toggled (reduced).
+                // true in the audio player view. If a playlist is
+                // selected, the playlist list is toggled (reduced)
+                // and the new selected playlist current listenable
+                // audio is set in the audio player view.
                 playlistListVM.togglePlaylistsList();
               }
               playlistListVM.setPlaylistSelection(
-                playlistIndex: index,
+                playlistSelectedOrUnselected: playlist,
                 isPlaylistSelected: value!,
               );
               await audioPlayerVM.setCurrentAudioFromSelectedPlaylist();

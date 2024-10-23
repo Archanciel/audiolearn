@@ -15350,9 +15350,9 @@ void main() {
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst:
+          audioTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -15388,9 +15388,9 @@ void main() {
         // Ensure that since the search icon button was not yet pressed,
         // the displayed audio list is the same as the one before entering
         // the first letter of the search word.
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst:
+          audioTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -15424,9 +15424,9 @@ void main() {
         // Ensure that since the search icon button was not yet pressed,
         // the displayed audio list is the same as the one before entering
         // the first letter of the search word.
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst:
+          audioTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -15448,9 +15448,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst:
+          audioTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -15486,9 +15486,9 @@ void main() {
 
         // Ensure that since the search icon button was used,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst:
+          audioTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -15521,9 +15521,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst:
+          audioTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -15547,9 +15547,9 @@ void main() {
           "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
         ];
 
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst:
+          audioTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -15594,9 +15594,9 @@ void main() {
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst:
+          audioTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -15654,9 +15654,9 @@ void main() {
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst:
+          audioTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -15721,9 +15721,9 @@ void main() {
           "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
         ];
 
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst:
+          audioTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -15768,9 +15768,9 @@ void main() {
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst:
+          audioTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -15828,9 +15828,9 @@ void main() {
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst:
+          audioTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -15895,9 +15895,9 @@ void main() {
           "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
         ];
 
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst:
+          audioTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -15942,9 +15942,9 @@ void main() {
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst:
+          audioTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -15986,7 +15986,7 @@ void main() {
         );
 
         List<String> playlistsTitles =
-            await enteringFirstAndSecondLetterOfSearchWord(
+            await enteringFirstAndSecondLetterOfLocalPlaylistSearchWord(
           tester: tester,
         );
 
@@ -16021,9 +16021,9 @@ void main() {
 
         // Ensure that since the search icon button was used,
         // the displayed playlist list is modified.
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst: playlistsTitles,
+          audioTitlesOrderedLst: playlistsTitles,
         );
 
         // Verify that the search icon button is still enabled
@@ -16056,9 +16056,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst: playlistsTitles,
+          audioTitlesOrderedLst: playlistsTitles,
         );
 
         // Then erase the second search word letter
@@ -16086,9 +16086,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst: playlistsTitles,
+          audioTitlesOrderedLst: playlistsTitles,
         );
 
         // Now emptying the search text word
@@ -16112,7 +16112,7 @@ void main() {
           widgetKeyStr: 'search_icon_button',
         );
 
-        await enteringFirstAndSecondLetterOfSearchWord(
+        await enteringFirstAndSecondLetterOfLocalPlaylistSearchWord(
           tester: tester,
         );
 
@@ -16154,7 +16154,7 @@ void main() {
         );
 
         List<String> playlistsTitles =
-            await enteringFirstAndSecondLetterOfSearchWord(
+            await enteringFirstAndSecondLetterOfLocalPlaylistSearchWord(
           tester: tester,
         );
 
@@ -16189,9 +16189,9 @@ void main() {
 
         // Ensure that since the search icon button was used,
         // the displayed playlist list is modified.
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst: playlistsTitles,
+          audioTitlesOrderedLst: playlistsTitles,
         );
 
         // Verify that the search icon button is still enabled
@@ -16224,9 +16224,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst: playlistsTitles,
+          audioTitlesOrderedLst: playlistsTitles,
         );
 
         // Then erase the second search word letter
@@ -16254,9 +16254,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst: playlistsTitles,
+          audioTitlesOrderedLst: playlistsTitles,
         );
 
         // Now entering https URL instead of search text word
@@ -16280,7 +16280,7 @@ void main() {
           widgetKeyStr: 'search_icon_button',
         );
 
-        await enteringFirstAndSecondLetterOfSearchWord(
+        await enteringFirstAndSecondLetterOfLocalPlaylistSearchWord(
           tester: tester,
         );
 
@@ -16322,7 +16322,7 @@ void main() {
         );
 
         List<String> playlistsTitles =
-            await enteringFirstAndSecondLetterOfSearchWord(
+            await enteringFirstAndSecondLetterOfLocalPlaylistSearchWord(
           tester: tester,
         );
 
@@ -16357,9 +16357,9 @@ void main() {
 
         // Ensure that since the search icon button was used,
         // the displayed playlist list is modified.
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst: playlistsTitles,
+          audioTitlesOrderedLst: playlistsTitles,
         );
 
         // Verify that the search icon button is still enabled
@@ -16392,9 +16392,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst: playlistsTitles,
+          audioTitlesOrderedLst: playlistsTitles,
         );
 
         // Then erase the second search word letter
@@ -16422,9 +16422,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst: playlistsTitles,
+          audioTitlesOrderedLst: playlistsTitles,
         );
 
         // Now entering https URL instead of search text word
@@ -16448,8 +16448,331 @@ void main() {
           widgetKeyStr: 'search_icon_button',
         );
 
-        await enteringFirstAndSecondLetterOfSearchWord(
+        await enteringFirstAndSecondLetterOfLocalPlaylistSearchWord(
           tester: tester,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+    });
+    group('Selecting searched playlist found by applying search word', () {
+      testWidgets('''First, enter the search word 'al' in the 'Youtube Link or
+           Search' text field.''', (WidgetTester tester) async {
+        // Click on the enabled search icon button and verify the reduced
+        // displayed playlist list list, the currently selected playlist title
+        // and its audio list.
+        //
+        // Then, select one of the filtered playlist and verify the updated
+        // selected playlist title as well as its audio list.
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName:
+              'sort_and_filter_audio_dialog_widget_three_playlists_test',
+          tapOnPlaylistToggleButton: true,
+        );
+
+        List<String> playlistsTitles =
+            await enteringFirstAndSecondLetterOfLocalPlaylistSearchWord(
+          tester: tester,
+        );
+
+        // Verify the currently selected playlist title
+
+        Text selectedPlaylistTitleText =
+            tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
+
+        expect(
+          selectedPlaylistTitleText.data,
+          'S8 audio',
+        );
+
+        // Find the local playlist to select
+
+        // First, find the Playlist ListTile Text widget
+        final Finder localPlaylistToSelectListTileTextWidgetFinder =
+            find.text(playlistsTitles[0]); // local
+
+        // Then obtain the Playlist ListTile widget enclosing the Text widget
+        // by finding its ancestor
+        final Finder localPlaylistToSelectListTileWidgetFinder = find.ancestor(
+          of: localPlaylistToSelectListTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now find the Checkbox widget located in the Playlist ListTile
+        // and tap on it to select the playlist
+        final Finder localPlaylistToSelectListTileCheckboxWidgetFinder =
+            find.descendant(
+          of: localPlaylistToSelectListTileWidgetFinder,
+          matching: find.byType(Checkbox),
+        );
+
+        // Tap the ListTile Playlist checkbox to select it
+        await tester.tap(localPlaylistToSelectListTileCheckboxWidgetFinder);
+        await tester.pumpAndSettle();
+
+        // since a local playlist is selected, verify that
+        // some buttons are enabled and some are disabled
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'move_up_playlist_button',
+        );
+
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'move_down_playlist_button',
+        );
+
+        IntegrationTestUtil.verifyWidgetIsDisabled(
+          tester: tester,
+          widgetKeyStr: 'download_sel_playlists_button',
+        );
+
+        IntegrationTestUtil.verifyWidgetIsDisabled(
+          tester: tester,
+          widgetKeyStr: 'audio_quality_checkbox',
+        );
+
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'audio_popup_menu_button',
+        );
+
+        // Verify the newly selected playlist title
+
+        selectedPlaylistTitleText =
+            tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
+
+        expect(
+          selectedPlaylistTitleText.data,
+          'local',
+        );
+
+        // verify the newly selected playlist audio titles
+
+        List<String> audioTitles = [
+          "Really short video",
+          "morning _ cinematic video",
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          "Les besoins artificiels par R.Keucheyan",
+        ];
+
+        IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
+          tester: tester,
+          playlistTitlesOrderedLst: playlistsTitles,
+          audioTitlesOrderedLst: audioTitles,
+          firstPlaylistListTileIndex: 0,
+          firstAudioListTileIndex: 2,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+      testWidgets('''First, select a local playlist. Then, enter the search word
+          'S8' in the 'Youtube Link or Search' text field.''',
+          (WidgetTester tester) async {
+        // Click on the enabled search icon button and verify the modified
+        // displayed playlist list list, the currently selected playlist title
+        // and its audio list.
+        //
+        // Then, select the Youtube filtered playlist and verify the updated
+        // selected playlist title as well as its audio list.
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName:
+              'sort_and_filter_audio_dialog_widget_three_playlists_test',
+          tapOnPlaylistToggleButton: true,
+        );
+
+        // Find the local playlist to select
+
+        // First, find the Playlist ListTile Text widget
+        final Finder localPlaylistToSelectListTileTextWidgetFinder =
+            find.text('local');
+
+        // Then obtain the Playlist ListTile widget enclosing the Text widget
+        // by finding its ancestor
+        final Finder localPlaylistToSelectListTileWidgetFinder = find.ancestor(
+          of: localPlaylistToSelectListTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now find the Checkbox widget located in the Playlist ListTile
+        // and tap on it to select the playlist
+        final Finder localPlaylistToSelectListTileCheckboxWidgetFinder =
+            find.descendant(
+          of: localPlaylistToSelectListTileWidgetFinder,
+          matching: find.byType(Checkbox),
+        );
+
+        // Tap the ListTile Playlist checkbox to select it
+        await tester.tap(localPlaylistToSelectListTileCheckboxWidgetFinder);
+        await tester.pumpAndSettle();
+
+        // since a local playlist is selected, verify that
+        // some buttons are enabled and some are disabled
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'move_up_playlist_button',
+        );
+
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'move_down_playlist_button',
+        );
+
+        IntegrationTestUtil.verifyWidgetIsDisabled(
+          tester: tester,
+          widgetKeyStr: 'download_sel_playlists_button',
+        );
+
+        IntegrationTestUtil.verifyWidgetIsDisabled(
+          tester: tester,
+          widgetKeyStr: 'audio_quality_checkbox',
+        );
+
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'audio_popup_menu_button',
+        );
+
+        // Verify the newly selected playlist title
+
+        Text selectedPlaylistTitleText =
+            tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
+
+        expect(
+          selectedPlaylistTitleText.data,
+          'local',
+        );
+
+        // verify the local selected playlist audio titles
+
+        List<String> playlistsTitles = [
+          "S8 audio",
+          "local",
+          "local_2",
+        ];
+
+        List<String> audioTitles = [
+          "Really short video",
+          "morning _ cinematic video",
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          "Les besoins artificiels par R.Keucheyan",
+        ];
+
+        IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
+          tester: tester,
+          playlistTitlesOrderedLst: playlistsTitles,
+          audioTitlesOrderedLst: audioTitles,
+          firstPlaylistListTileIndex: 0,
+          firstAudioListTileIndex: 3,
+        );
+
+        playlistsTitles =
+            await enteringFirstAndSecondLetterOfYoutubePlaylistSearchWord(
+          tester: tester,
+        );
+
+        // Verify the currently selected playlist title
+
+        selectedPlaylistTitleText =
+            tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
+
+        expect(
+          selectedPlaylistTitleText.data,
+          'local',
+        );
+
+        // Find the Youtube playlist to select
+
+        // First, find the Playlist ListTile Text widget
+        final Finder youtubePlaylistToSelectListTileTextWidgetFinder =
+            find.text('S8 audio');
+
+        // Then obtain the Playlist ListTile widget enclosing the Text widget
+        // by finding its ancestor
+        final Finder youtubePlaylistToSelectListTileWidgetFinder =
+            find.ancestor(
+          of: youtubePlaylistToSelectListTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now find the Checkbox widget located in the Playlist ListTile
+        // and tap on it to select the playlist
+        final Finder youtubePlaylistToSelectListTileCheckboxWidgetFinder =
+            find.descendant(
+          of: youtubePlaylistToSelectListTileWidgetFinder,
+          matching: find.byType(Checkbox),
+        );
+
+        // Tap the ListTile Playlist checkbox to select it
+        await tester.tap(youtubePlaylistToSelectListTileCheckboxWidgetFinder);
+        await tester.pumpAndSettle();
+
+        // since a Youtube playlist is selected, verify that
+        // some buttons are enabled and some are disabled
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'move_up_playlist_button',
+        );
+
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'move_down_playlist_button',
+        );
+
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'download_sel_playlists_button',
+        );
+
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'audio_quality_checkbox',
+        );
+
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'audio_popup_menu_button',
+        );
+
+        // Verify the newly selected playlist title
+
+        selectedPlaylistTitleText =
+            tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
+
+        expect(
+          selectedPlaylistTitleText.data,
+          'S8 audio',
+        );
+
+        // verify the youtube selected playlist audio titles
+
+        playlistsTitles = [
+          "S8 audio",
+        ];
+
+        audioTitles = [
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          "La surpopulation mondiale par Jancovici et Barrau",
+          "La résilience insulaire par Fiona Roche",
+          "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+        ];
+
+        IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
+          tester: tester,
+          playlistTitlesOrderedLst: playlistsTitles,
+          audioTitlesOrderedLst: audioTitles,
+          firstPlaylistListTileIndex: 0,
+          firstAudioListTileIndex: 1,
         );
 
         // Purge the test playlist directory so that the created test
@@ -16515,9 +16838,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst:
+          audioTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -16534,9 +16857,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed playlist list is modified.
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst: playlistsTitles,
+          audioTitlesOrderedLst: playlistsTitles,
         );
 
         // Now add the third letter of the 'al_' search word
@@ -16570,9 +16893,9 @@ void main() {
 
         // Ensure that since the search icon button was used,
         // the displayed playlist list is modified.
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst: playlistsTitles,
+          audioTitlesOrderedLst: playlistsTitles,
         );
 
         // Now remove the third and second letter of the 'al_' search word
@@ -16621,9 +16944,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst: playlistsTitles,
+          audioTitlesOrderedLst: playlistsTitles,
         );
 
         // Now emptying the search text word
@@ -16710,9 +17033,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed playlist list is modified.
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst: playlistsTitles,
+          audioTitlesOrderedLst: playlistsTitles,
         );
 
         // Now tap on the "Playlists" button to reduce the list
@@ -16729,9 +17052,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst:
+          audioTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -16769,9 +17092,9 @@ void main() {
 
         // Ensure that since the search icon button was used,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst:
+          audioTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -16807,9 +17130,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst:
+          audioTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -16877,9 +17200,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst:
+          audioTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -16918,9 +17241,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst:
+          audioTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -16987,9 +17310,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst:
+          audioTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -17032,9 +17355,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst:
+          audioTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -17101,23 +17424,23 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst:
+          audioTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
         // Now we tap on the remaining audio title to open the AudioPlayerView
         // screen
 
-      // widget finder and tap on it
-      final Finder lastDownloadedAudioListTileTextWidgetFinder =
-          find.text(remainingAudioTitle);
+        // widget finder and tap on it
+        final Finder lastDownloadedAudioListTileTextWidgetFinder =
+            find.text(remainingAudioTitle);
 
-      await tester.tap(lastDownloadedAudioListTileTextWidgetFinder);
-      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
-        tester: tester,
-      );
+        await tester.tap(lastDownloadedAudioListTileTextWidgetFinder);
+        await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+          tester: tester,
+        );
 
         // And return to the playlist download view
         Finder playlistDownloadViewNavButton =
@@ -17144,9 +17467,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst:
+          audioTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -17214,10 +17537,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst:
-              playlistsTitles,
+          audioTitlesOrderedLst: playlistsTitles,
         );
 
         // Now we tap on the AudioPlayerView icon button to open
@@ -17252,10 +17574,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst:
-              playlistsTitles,
+          audioTitlesOrderedLst: playlistsTitles,
         );
 
         // Purge the test playlist directory so that the created test
@@ -17322,10 +17643,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst:
-              playlistsTitles,
+          audioTitlesOrderedLst: playlistsTitles,
         );
 
         // Now we tap on the remaining audio play icon button to play the audio
@@ -17364,10 +17684,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst:
-              playlistsTitles,
+          audioTitlesOrderedLst: playlistsTitles,
         );
 
         // Purge the test playlist directory so that the created test
@@ -17433,23 +17752,22 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst:
-              playlistsTitles,
+          audioTitlesOrderedLst: playlistsTitles,
         );
 
         // Now we tap on the remaining audio title to open the AudioPlayerView
         // screen
 
-      // widget finder and tap on it
-      final Finder lastDownloadedAudioListTileTextWidgetFinder =
-          find.text(remainingAudioTitle);
+        // widget finder and tap on it
+        final Finder lastDownloadedAudioListTileTextWidgetFinder =
+            find.text(remainingAudioTitle);
 
-      await tester.tap(lastDownloadedAudioListTileTextWidgetFinder);
-      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
-        tester: tester,
-      );
+        await tester.tap(lastDownloadedAudioListTileTextWidgetFinder);
+        await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+          tester: tester,
+        );
 
         // And return to the playlist download view
         Finder playlistDownloadViewNavButton =
@@ -17473,10 +17791,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderLst:
-              playlistsTitles,
+          audioTitlesOrderedLst: playlistsTitles,
         );
 
         // Purge the test playlist directory so that the created test
@@ -17489,7 +17806,7 @@ void main() {
   });
 }
 
-Future<List<String>> enteringFirstAndSecondLetterOfSearchWord({
+Future<List<String>> enteringFirstAndSecondLetterOfLocalPlaylistSearchWord({
   required WidgetTester tester,
 }) async {
   // Now enter the first letter of the search word
@@ -17523,9 +17840,19 @@ Future<List<String>> enteringFirstAndSecondLetterOfSearchWord({
     "local_2",
   ];
 
-  IntegrationTestUtil.checkTitlesOrderInListTile(
+  List<String> audioTitles = [
+    "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+    "La surpopulation mondiale par Jancovici et Barrau",
+    "La résilience insulaire par Fiona Roche",
+    "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+  ];
+
+  IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
     tester: tester,
-    audioTitlesOrderLst: playlistsTitles,
+    playlistTitlesOrderedLst: playlistsTitles,
+    audioTitlesOrderedLst: audioTitles,
+    firstPlaylistListTileIndex: 0,
+    firstAudioListTileIndex: 3,
   );
 
   // Enter the second letter of the 'al' search word. The crazy integration
@@ -17558,9 +17885,12 @@ Future<List<String>> enteringFirstAndSecondLetterOfSearchWord({
   // Ensure that since the search icon button was not yet pressed,
   // the displayed playlist list is the same as the one before entering
   // the first letter of the search word.
-  IntegrationTestUtil.checkTitlesOrderInListTile(
+  IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
     tester: tester,
-    audioTitlesOrderLst: playlistsTitles,
+    playlistTitlesOrderedLst: playlistsTitles,
+    audioTitlesOrderedLst: audioTitles,
+    firstPlaylistListTileIndex: 0,
+    firstAudioListTileIndex: 3,
   );
 
   // Now tap on the search icon button
@@ -17580,11 +17910,126 @@ Future<List<String>> enteringFirstAndSecondLetterOfSearchWord({
     "local_2",
   ];
 
-  // Ensure that since the search icon button was now pressed,
-  // the displayed playlist list is modified.
-  IntegrationTestUtil.checkTitlesOrderInListTile(
+  IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
     tester: tester,
-    audioTitlesOrderLst: playlistsTitles,
+    playlistTitlesOrderedLst: playlistsTitles,
+    audioTitlesOrderedLst: audioTitles,
+    firstPlaylistListTileIndex: 0,
+    firstAudioListTileIndex: 2,
+  );
+
+  return playlistsTitles;
+}
+
+Future<List<String>> enteringFirstAndSecondLetterOfYoutubePlaylistSearchWord({
+  required WidgetTester tester,
+}) async {
+  // Now enter the first letter of the search word
+  await tester.tap(
+    find.byKey(
+      const Key('youtubeUrlOrSearchTextField'),
+    ),
+  );
+  await tester.pumpAndSettle();
+  await tester.enterText(
+    find.byKey(
+      const Key('youtubeUrlOrSearchTextField'),
+    ),
+    'S',
+  );
+  await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+  // Verify that the search icon button is now enabled
+  IntegrationTestUtil.verifyWidgetIsEnabled(
+    tester: tester,
+    widgetKeyStr: 'search_icon_button',
+  );
+
+  // Ensure that since the search icon button was not yet pressed,
+  // the displayed playlist list is the same as the one before entering
+  // the first letter of the search word.
+
+  List<String> playlistsTitles = [
+    "S8 audio",
+    "local",
+    "local_2",
+  ];
+
+  List<String> audioTitles = [
+    "Really short video",
+    "morning _ cinematic video",
+    "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+    "Les besoins artificiels par R.Keucheyan",
+  ];
+
+  IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
+    tester: tester,
+    playlistTitlesOrderedLst: playlistsTitles,
+    audioTitlesOrderedLst: audioTitles,
+    firstPlaylistListTileIndex: 0,
+    firstAudioListTileIndex: 3,
+  );
+
+  // Enter the second letter of the 'al' search word. The crazy integration
+  // test does not always update the test field. To fix this bug, first
+  // select the text field and then enter the text.
+
+  // Select the text field
+  await tester.tap(
+    find.byKey(
+      const Key('youtubeUrlOrSearchTextField'),
+    ),
+  );
+  await tester.pumpAndSettle();
+
+  // Enter the second letter of the 'al' search word
+  await tester.enterText(
+    find.byKey(
+      const Key('youtubeUrlOrSearchTextField'),
+    ),
+    'S8',
+  );
+  await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+  // Verify that the search icon button is still enabled
+  IntegrationTestUtil.verifyWidgetIsEnabled(
+    tester: tester,
+    widgetKeyStr: 'search_icon_button',
+  );
+
+  // Ensure that since the search icon button was not yet pressed,
+  // the displayed playlist list is the same as the one before entering
+  // the first letter of the search word.
+  IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
+    tester: tester,
+    playlistTitlesOrderedLst: playlistsTitles,
+    audioTitlesOrderedLst: audioTitles,
+    firstPlaylistListTileIndex: 0,
+    firstAudioListTileIndex: 3,
+  );
+
+  // Now tap on the search icon button
+  await tester.tap(find.byKey(const Key('search_icon_button')));
+  await tester.pumpAndSettle();
+
+  // Verify that the search icon button is still enabled
+  IntegrationTestUtil.verifyWidgetIsEnabled(
+    tester: tester,
+    widgetKeyStr: 'search_icon_button',
+  );
+
+  // Now verify the order of the reduced playlist titles
+
+  playlistsTitles = [
+    "S8 audio",
+  ];
+
+  IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
+    tester: tester,
+    playlistTitlesOrderedLst: playlistsTitles,
+    audioTitlesOrderedLst: audioTitles,
+    firstPlaylistListTileIndex: 0,
+    firstAudioListTileIndex: 1,
   );
 
   return playlistsTitles;

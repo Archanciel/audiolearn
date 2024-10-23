@@ -234,7 +234,6 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 return PlaylistListItem(
                   settingsDataService: widget.settingsDataService,
                   playlist: playlist,
-                  index: index,
                 );
               },
             );
