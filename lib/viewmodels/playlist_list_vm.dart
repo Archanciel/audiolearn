@@ -14,6 +14,7 @@ import '../services/settings_data_service.dart';
 import '../services/sort_filter_parameters.dart';
 import '../utils/dir_util.dart';
 import 'audio_download_vm.dart';
+import 'audio_player_vm.dart';
 import 'comment_vm.dart';
 import 'warning_message_vm.dart';
 
@@ -1931,9 +1932,22 @@ class PlaylistListVM extends ChangeNotifier {
     zipFile.writeAsBytesSync(ZipEncoder().encode(archive)!, flush: true);
   }
 
+  /// Method called when the user clicks on the 'Rewind audio to start' playlist
+  /// menu item. The method rewinds the audio to start and saves the playlist
+  /// to its json file.
+  /// 
+  /// Passing the {audioPlayerVM} is necessary in order to rewind the current
+  /// audio to start position. Otherwise, after clicking on the play audio view
+  /// button, the current audio will be positioned to the last played position
+  /// instead of the start position.
   int rewindPlayableAudioToStart({
+    required AudioPlayerVM audioPlayerVM,
     required Playlist playlist,
   }) {
+    if (playlist.currentOrPastPlayableAudioIndex != -1) {
+      audioPlayerVM.skipToStart();
+    }
+
     int rewindedAudioNumber = playlist.rewindPlayableAudioToStart();
 
     if (rewindedAudioNumber > 0) {
@@ -1944,7 +1958,7 @@ class PlaylistListVM extends ChangeNotifier {
     }
 
     notifyListeners();
-    
+
     return rewindedAudioNumber;
   }
 }

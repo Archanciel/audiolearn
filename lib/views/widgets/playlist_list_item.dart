@@ -156,8 +156,8 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                     child: Tooltip(
                       message: AppLocalizations.of(context)!
                           .rewindAudioToStartTooltip,
-                      child:
-                          Text(AppLocalizations.of(context)!.rewindAudioToStart),
+                      child: Text(
+                          AppLocalizations.of(context)!.rewindAudioToStart),
                     ),
                   ),
                   PopupMenuItem<PlaylistPopupMenuAction>(
@@ -300,14 +300,14 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                     case PlaylistPopupMenuAction.rewindAudioToStart:
                       int rewindedPlayableAudioNumber =
                           playlistListVM.rewindPlayableAudioToStart(
+                        audioPlayerVM: audioPlayerVM,
                         playlist: playlist,
                       );
 
                       if (rewindedPlayableAudioNumber > 0) {
-                        warningMessageVM
-                            .rewindedPlayableAudioToStart(
-                                rewindedPlayableAudioNumber:
-                                    rewindedPlayableAudioNumber);
+                        warningMessageVM.rewindedPlayableAudioToStart(
+                            rewindedPlayableAudioNumber:
+                                rewindedPlayableAudioNumber);
                       }
                       break;
                     case PlaylistPopupMenuAction.setPlaylistAudioPlaySpeed:
