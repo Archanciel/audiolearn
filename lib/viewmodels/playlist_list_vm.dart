@@ -1930,4 +1930,21 @@ class PlaylistListVM extends ChangeNotifier {
     File zipFile = File(zipFilePath);
     zipFile.writeAsBytesSync(ZipEncoder().encode(archive)!, flush: true);
   }
+
+  int rewindPlayableAudioToStart({
+    required Playlist playlist,
+  }) {
+    int rewindedAudioNumber = playlist.rewindPlayableAudioToStart();
+
+    if (rewindedAudioNumber > 0) {
+      JsonDataService.saveToFile(
+        model: playlist,
+        path: playlist.getPlaylistDownloadFilePathName(),
+      );
+    }
+
+    notifyListeners();
+    
+    return rewindedAudioNumber;
+  }
 }

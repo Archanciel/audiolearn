@@ -664,4 +664,19 @@ class Playlist {
     audioSortFilterParmsNameForAudioPlayerView =
         replacedPlaylist.audioSortFilterParmsNameForAudioPlayerView;
   }
+
+  int rewindPlayableAudioToStart() {
+    int rewindedAudioNumber = 0;
+
+    for (Audio audio in playableAudioLst) {
+      if (audio.audioPositionSeconds > 0 ||
+          audio.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd) {
+        audio.audioPositionSeconds = 0;
+        audio.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd = false;
+        rewindedAudioNumber++;
+      }
+    }
+
+    return rewindedAudioNumber;
+  }
 }

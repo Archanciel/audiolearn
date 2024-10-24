@@ -461,5 +461,7 @@
       "numberOfModifiedPlayableAudio": {}
     }
   },
-  "rewindAudioToStart": "Rewind Audio to Start"
+  "rewindAudioToStart": "Rewind Audio to Start",
+  "rewindAudioToStartTooltip": "Rewind all playlist audio to start position. This is useful if you wish to replay all the audio.",
+  "rewindedPlayableAudioNumber": "{number} playlist audio were repositioned to start."
 }
