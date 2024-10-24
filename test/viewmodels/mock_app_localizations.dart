@@ -1353,4 +1353,7 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get playlistPlayableAudioTotalRemainingDurationLabel =>
       "Playable audio total remaining duration";
+
+  @override
+  String get rewindAudioToStart => "Rewind Audio to Start";
 }
