@@ -78,6 +78,10 @@ enum WarningMessageType {
   // was updated. This happens when the user clicks on the update
   // playable audio list playlist menu item.
 
+  rewindedPlayableAudioNumber, // The case if the playable audio
+  // were rewinded to start position. This happens when the user clicks
+  // on the Rewind Audio to Start playlist menu item.
+
   notRedownloadAudioFilesInPlaylistDirectory, // The case if the
   // audio files in the playlist directory were not redownloaded
   // since they are already in the target playlist directory.
@@ -821,6 +825,21 @@ class WarningMessageVM extends ChangeNotifier {
 
     if (removedPlayableAudioNumber > 0) {
       warningMessageType = WarningMessageType.updatedPlayableAudioLst;
+
+      // Causes the display warning message widget to be displayed.
+      notifyListeners();
+    }
+  }
+
+  int _rewindedPlayableAudioNumber = 0;
+  int get rewindedPlayableAudioNumber => _rewindedPlayableAudioNumber;
+  void rewindedPlayableAudioToStart({
+    required int rewindedPlayableAudioNumber,
+  }) {
+    _rewindedPlayableAudioNumber = rewindedPlayableAudioNumber;
+
+    if (rewindedPlayableAudioNumber > 0) {
+      warningMessageType = WarningMessageType.rewindedPlayableAudioNumber;
 
       // Causes the display warning message widget to be displayed.
       notifyListeners();

@@ -29,6 +29,7 @@ enum PlaylistPopupMenuAction {
   downloadVideoUrlsFromTextFileInPlaylist,
   updatePlaylistPlayableAudios, // useful if playlist audio files were
   //                               deleted from the app dir
+  rewindAudioToStart,
   setPlaylistAudioPlaySpeed,
   deletePlaylist,
 }
@@ -147,6 +148,16 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                           .updatePlaylistPlayableAudioListTooltip,
                       child: Text(AppLocalizations.of(context)!
                           .updatePlaylistPlayableAudioList),
+                    ),
+                  ),
+                  PopupMenuItem<PlaylistPopupMenuAction>(
+                    key: const Key('popup_menu_rewind_audio_to_start'),
+                    value: PlaylistPopupMenuAction.rewindAudioToStart,
+                    child: Tooltip(
+                      message: AppLocalizations.of(context)!
+                          .rewindAudioToStartTooltip,
+                      child:
+                          Text(AppLocalizations.of(context)!.rewindAudioToStart),
                     ),
                   ),
                   PopupMenuItem<PlaylistPopupMenuAction>(
@@ -284,6 +295,19 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                                     playlist.title,
                                 removedPlayableAudioNumber:
                                     removedPlayableAudioNumber);
+                      }
+                      break;
+                    case PlaylistPopupMenuAction.rewindAudioToStart:
+                      int rewindedPlayableAudioNumber =
+                          playlistListVM.rewindPlayableAudioToStart(
+                        playlist: playlist,
+                      );
+
+                      if (rewindedPlayableAudioNumber > 0) {
+                        warningMessageVM
+                            .rewindedPlayableAudioToStart(
+                                rewindedPlayableAudioNumber:
+                                    rewindedPlayableAudioNumber);
                       }
                       break;
                     case PlaylistPopupMenuAction.setPlaylistAudioPlaySpeed:

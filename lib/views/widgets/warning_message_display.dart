@@ -484,6 +484,19 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         });
 
         return const SizedBox.shrink();
+      case WarningMessageType.rewindedPlayableAudioNumber:
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _displayWarningDialog(
+            context: _context,
+            message: AppLocalizations.of(context)!.rewindedPlayableAudioNumber(
+              _warningMessageVM.rewindedPlayableAudioNumber,
+            ),
+            warningMessageVM: _warningMessageVM,
+            themeProviderVM: themeProviderVM,
+          );
+        });
+
+        return const SizedBox.shrink();
       case WarningMessageType.notRedownloadAudioFilesInPlaylistDirectory:
         WidgetsBinding.instance.addPostFrameCallback((_) {
           _displayWarningDialog(

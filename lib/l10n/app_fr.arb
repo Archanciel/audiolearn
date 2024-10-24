@@ -447,5 +447,6 @@
       "numberOfModifiedPlayableAudio": {}
     }
   },
-  "rewindAudioToStart": "Repositionner les audio au début"
+  "rewindAudioToStart": "Repositionner les audio au début",
+  "rewindAudioToStartTooltip": "Repositionner tous les audio de la playlist au début. Cela est utile si vous souhaitez réécouter tous les audio."
 }

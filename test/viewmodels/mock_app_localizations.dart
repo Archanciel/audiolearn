@@ -1356,4 +1356,14 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get rewindAudioToStart => "Rewind Audio to Start";
+
+  @override
+  String get rewindAudioToStartTooltip =>
+      "Rewind all playlist audio to start position. This is usefull in order to replay the audio.";
+
+  @override
+  String rewindedPlayableAudioNumber(
+    Object number,
+  ) =>
+      "$number playlist audio were repositioned to start.";
 }
