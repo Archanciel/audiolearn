@@ -100,7 +100,7 @@ void audioPlayerViewSortFilterIntegrationTest() {
     });
 
     testWidgets(
-        '''Menu Clear sort/filter parameters history execution verifying that
+        '''Menu Clear Sort/Filter Parameters History execution verifying that
            the confirm dialog is displayed in the audio player view.''',
         (WidgetTester tester) async {
       const String audioPlayerSelectedPlaylistTitle =
@@ -141,7 +141,7 @@ void audioPlayerViewSortFilterIntegrationTest() {
 
       // Verify that the confirm action dialog is displayed
       // with the expected text
-      expect(find.text('Clear sort/filter parameters history'), findsOneWidget);
+      expect(find.text('Clear Sort/Filter Parameters History'), findsOneWidget);
       expect(find.text('Deleting all historical sort/filter parameters.'),
           findsOneWidget);
 
@@ -651,7 +651,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
   group('Sort/filter playlist download view tests', () {
     group('Audio sort filter dialog tests ', () {
       testWidgets(
-          '''Menu Clear sort/filter parameters history execution verifying
+          '''Menu Clear Sort/Filter Parameters History execution verifying
            that the confirm dialog is displayed in the playlist download
            view.''', (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
@@ -700,7 +700,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Verify that the confirm action dialog is displayed
         // with the expected text
         expect(
-            find.text('Clear sort/filter parameters history'), findsOneWidget);
+            find.text('Clear Sort/Filter Parameters History'), findsOneWidget);
         expect(find.text('Deleting all historical sort/filter parameters.'),
             findsOneWidget);
 
@@ -871,7 +871,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Verify that the confirm action dialog is displayed
         // with the expected text
         expect(
-            find.text('Clear sort/filter parameters history'), findsOneWidget);
+            find.text('Clear Sort/Filter Parameters History'), findsOneWidget);
         expect(find.text('Deleting all historical sort/filter parameters.'),
             findsOneWidget);
 
@@ -905,7 +905,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Verify that the confirm action dialog is displayed
         // with the expected text
         expect(
-            find.text('Clear sort/filter parameters history'), findsOneWidget);
+            find.text('Clear Sort/Filter Parameters History'), findsOneWidget);
         expect(find.text('Deleting all historical sort/filter parameters.'),
             findsOneWidget);
 
