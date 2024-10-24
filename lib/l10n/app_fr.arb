@@ -446,5 +446,6 @@
       "numberOfModifiedDownloadedAudio": {},
       "numberOfModifiedPlayableAudio": {}
     }
-  }
+  },
+  "rewindAudioToStart": "Repositionner les audio au début"
 }
