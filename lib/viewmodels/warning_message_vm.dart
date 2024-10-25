@@ -838,12 +838,10 @@ class WarningMessageVM extends ChangeNotifier {
   }) {
     _rewindedPlayableAudioNumber = rewindedPlayableAudioNumber;
 
-    if (rewindedPlayableAudioNumber > 0) {
-      warningMessageType = WarningMessageType.rewindedPlayableAudioNumber;
+    warningMessageType = WarningMessageType.rewindedPlayableAudioNumber;
 
-      // Causes the display warning message widget to be displayed.
-      notifyListeners();
-    }
+    // Causes the display warning message widget to be displayed.
+    notifyListeners();
   }
 
   String _targetPlaylistTitle = '';
