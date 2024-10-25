@@ -304,11 +304,9 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                         playlist: playlist,
                       );
 
-                      if (rewindedPlayableAudioNumber > 0) {
-                        warningMessageVM.rewindedPlayableAudioToStart(
-                            rewindedPlayableAudioNumber:
-                                rewindedPlayableAudioNumber);
-                      }
+                      warningMessageVM.rewindedPlayableAudioToStart(
+                          rewindedPlayableAudioNumber:
+                              rewindedPlayableAudioNumber);
                       break;
                     case PlaylistPopupMenuAction.setPlaylistAudioPlaySpeed:
                       showDialog<List<dynamic>>(

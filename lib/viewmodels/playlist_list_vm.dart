@@ -1944,11 +1944,11 @@ class PlaylistListVM extends ChangeNotifier {
     required AudioPlayerVM audioPlayerVM,
     required Playlist playlist,
   }) {
+    int rewindedAudioNumber = playlist.rewindPlayableAudioToStart();
+
     if (playlist.currentOrPastPlayableAudioIndex != -1) {
       audioPlayerVM.skipToStart();
     }
-
-    int rewindedAudioNumber = playlist.rewindPlayableAudioToStart();
 
     if (rewindedAudioNumber > 0) {
       JsonDataService.saveToFile(
