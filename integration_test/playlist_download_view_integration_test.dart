@@ -16931,7 +16931,6 @@ void main() {
         );
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-
         // verify the order of the complete playlist titles
 
         playlistsTitles = [
@@ -17977,6 +17976,547 @@ void main() {
       });
     });
   });
+  group('Rewind playlist audio to start position test', () {
+    testWidgets('''Rewind playlist audio for selected playlist''',
+        (tester) async {
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'sort_and_filter_audio_dialog_widget_test',
+        tapOnPlaylistToggleButton: false,
+      );
+
+      const String youtubePlaylistToRewindTitle = 'S8 audio';
+
+      // Verify the play/pause icon button format and color of
+      // all audio of the selected playlist
+
+      List<String> audioTitles = [
+        "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+        "La surpopulation mondiale par Jancovici et Barrau",
+        "La résilience insulaire par Fiona Roche",
+        "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+        "Les besoins artificiels par R.Keucheyan",
+        "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+      ];
+
+      IntegrationTestUtil.validateInkWellButton(
+        tester: tester,
+        audioTitle: audioTitles[0],
+        expectedIcon: Icons.play_arrow,
+        expectedIconColor:
+            kDarkAndLightEnabledIconColor, // not played icon color
+        expectedIconBackgroundColor: Colors.black,
+      );
+
+      IntegrationTestUtil.validateInkWellButton(
+        tester: tester,
+        audioTitle: audioTitles[1],
+        expectedIcon: Icons.play_arrow,
+        expectedIconColor:
+            kDarkAndLightEnabledIconColor, // not played icon color
+        expectedIconBackgroundColor: Colors.black,
+      );
+
+      IntegrationTestUtil.validateInkWellButton(
+        tester: tester,
+        audioTitle: audioTitles[2],
+        expectedIcon: Icons.play_arrow,
+        expectedIconColor:
+            Colors.white, // currently playing or paused icon color
+        expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
+      );
+
+      IntegrationTestUtil.validateInkWellButton(
+        tester: tester,
+        audioTitle: audioTitles[3],
+        expectedIcon: Icons.play_arrow,
+        expectedIconColor:
+            kDarkAndLightEnabledIconColor, // not played icon color
+        expectedIconBackgroundColor: Colors.black,
+      );
+
+      IntegrationTestUtil.validateInkWellButton(
+        tester: tester,
+        audioTitle: audioTitles[4],
+        expectedIcon: Icons.play_arrow,
+        expectedIconColor:
+            kSliderThumbColorInDarkMode, // Fully played audio item play icon color
+        expectedIconBackgroundColor: Colors.black,
+      );
+
+      IntegrationTestUtil.validateInkWellButton(
+        tester: tester,
+        audioTitle: audioTitles[5],
+        expectedIcon: Icons.play_arrow,
+        expectedIconColor:
+            Colors.white, // currently playing or paused icon color
+        expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
+      );
+
+      IntegrationTestUtil.validateInkWellButton(
+        tester: tester,
+        audioTitle: audioTitles[6],
+        expectedIcon: Icons.play_arrow,
+        expectedIconColor:
+            kSliderThumbColorInDarkMode, // Fully played audio item play icon color
+        expectedIconBackgroundColor: Colors.black,
+      );
+
+      // Go to audio player view to verify the playlist current
+      // audio position
+      Finder appScreenNavigationButton =
+          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+      await tester.tap(appScreenNavigationButton);
+      await tester.pumpAndSettle();
+
+      // Verify the current audio position
+      Text audioPositionText = tester
+          .widget<Text>(find.byKey(const Key('audioPlayerViewAudioPosition')));
+      expect(audioPositionText.data, '2:34');
+
+      // Return to playlist download view
+      appScreenNavigationButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(appScreenNavigationButton);
+      await tester.pumpAndSettle();
+
+      // Tap the 'Toggle List' button to show the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Rewind all playlist audio to start position
+      await _tapOnRewindPlaylistAudioToStartPositionMenu(
+        tester: tester,
+        playlistToRewindTitle: youtubePlaylistToRewindTitle,
+        numberOfRewindedAudio: 4,
+      );
+
+      // Return to audio player view to verify the playlist current
+      // audio position set to start
+      appScreenNavigationButton =
+          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+      await tester.tap(appScreenNavigationButton);
+      await tester.pumpAndSettle();
+
+      // Verify the current audio position
+      audioPositionText = tester
+          .widget<Text>(find.byKey(const Key('audioPlayerViewAudioPosition')));
+      expect(audioPositionText.data, '0:00');
+
+      // Go back to playlist download view
+      appScreenNavigationButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(appScreenNavigationButton);
+      await tester.pumpAndSettle();
+
+      // Tap the 'Toggle List' button to reduce the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      _verifyAllNowUnplayedAudioPlayPauseIconColor(
+        tester: tester,
+        audioTitles: audioTitles,
+      );
+
+      // Now play then pause "Les besoins artificiels par R.Keucheyan"
+      // before rewinding the playlist audio to start position
+      await _rewindPlaylistAfterPlayThenPauseAnAudio(
+        tester: tester,
+        appScreenNavigationButton: appScreenNavigationButton,
+        doExpandPlaylistList: true,
+        playlistToRewindTitle: youtubePlaylistToRewindTitle,
+        audioToPlayTitle: "Les besoins artificiels par R.Keucheyan",
+        audioToPlayTitleAndDuration:
+            "Les besoins artificiels par R.Keucheyan\n19:05",
+      );
+
+      // Now play then pause "La surpopulation mondiale par Jancovici et Barrau"
+      // before rewinding the playlist audio to start position
+      await _rewindPlaylistAfterPlayThenPauseAnAudio(
+        tester: tester,
+        appScreenNavigationButton: appScreenNavigationButton,
+        doExpandPlaylistList: false,
+        playlistToRewindTitle: youtubePlaylistToRewindTitle,
+        audioToPlayTitle: "La surpopulation mondiale par Jancovici et Barrau",
+        audioToPlayTitleAndDuration:
+            "La surpopulation mondiale par Jancovici et Barrau\n7:38",
+        otherAudioTitleToTapOnBeforeRewinding:
+            "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+      );
+
+      // Rewind again all playlist audio to start position. Since
+      // the playlist was already rewinded, 0 audio will be rewinded !
+      await _tapOnRewindPlaylistAudioToStartPositionMenu(
+        tester: tester,
+        playlistToRewindTitle: youtubePlaylistToRewindTitle,
+        numberOfRewindedAudio: 0,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets('''Rewind playlist audio for unselected playlist. No other playlist
+        is selected.''',
+        (tester) async {
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'sort_and_filter_audio_dialog_widget_test',
+        tapOnPlaylistToggleButton: false,
+      );
+
+      const String youtubePlaylistToRewindTitle = 'S8 audio';
+
+      // Tap the 'Toggle List' button to show the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Deselect the selected playlist
+
+      // First, find the Playlist ListTile Text widget
+      final Finder localPlaylistToSelectListTileTextWidgetFinder =
+          find.text(youtubePlaylistToRewindTitle); // 'S8 audio'
+
+      // Then obtain the Playlist ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      final Finder localPlaylistToSelectListTileWidgetFinder = find.ancestor(
+        of: localPlaylistToSelectListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the Checkbox widget located in the Playlist ListTile
+      // and tap on it to unselect the playlist
+      final Finder localPlaylistToSelectListTileCheckboxWidgetFinder =
+          find.descendant(
+        of: localPlaylistToSelectListTileWidgetFinder,
+        matching: find.byType(Checkbox),
+      );
+
+      // Tap the ListTile Playlist checkbox to deselect it
+      await tester.tap(localPlaylistToSelectListTileCheckboxWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // Rewind all unselected playlist audio to start position
+      await _tapOnRewindPlaylistAudioToStartPositionMenu(
+        tester: tester,
+        playlistToRewindTitle: youtubePlaylistToRewindTitle,
+        numberOfRewindedAudio: 4,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets('''Rewind playlist audio for unselected playlist, other selected
+        playlist exist''',
+        (tester) async {
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'sort_and_filter_audio_dialog_widget_test',
+        tapOnPlaylistToggleButton: false,
+      );
+
+      const String youtubePlaylistToRewindTitle = 'S8 audio';
+      const String localPlaylistToSelectTitle = 'local';
+
+      // Tap the 'Toggle List' button to show the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Select another playlist than the one whose audio will be
+      // rewinded to start position
+
+      // First, find the Playlist ListTile Text widget
+      final Finder localPlaylistToSelectListTileTextWidgetFinder =
+          find.text(localPlaylistToSelectTitle); // 'local'
+
+      // Then obtain the Playlist ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      final Finder localPlaylistToSelectListTileWidgetFinder = find.ancestor(
+        of: localPlaylistToSelectListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the Checkbox widget located in the Playlist ListTile
+      // and tap on it to select the playlist
+      final Finder localPlaylistToSelectListTileCheckboxWidgetFinder =
+          find.descendant(
+        of: localPlaylistToSelectListTileWidgetFinder,
+        matching: find.byType(Checkbox),
+      );
+
+      // Tap the ListTile Playlist checkbox to select it
+      await tester.tap(localPlaylistToSelectListTileCheckboxWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // Rewind all unselected playlist audio to start position
+      await _tapOnRewindPlaylistAudioToStartPositionMenu(
+        tester: tester,
+        playlistToRewindTitle: youtubePlaylistToRewindTitle,
+        numberOfRewindedAudio: 4,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets('''Rewind local playlist audio for unselected playlist, other selected
+        playlist exist''',
+        (tester) async {
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'sort_and_filter_audio_dialog_widget_test',
+        tapOnPlaylistToggleButton: false,
+      );
+
+      const String localPlaylistToSelectTitle = 'local';
+
+      // Tap the 'Toggle List' button to show the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Rewind all local playlist audio to start position
+      await _tapOnRewindPlaylistAudioToStartPositionMenu(
+        tester: tester,
+        playlistToRewindTitle: localPlaylistToSelectTitle,
+        numberOfRewindedAudio: 4,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets('''Rewind local selected playlist audio to start position''',
+        (tester) async {
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'sort_and_filter_audio_dialog_widget_test',
+        tapOnPlaylistToggleButton: false,
+      );
+
+      const String localPlaylistToSelectTitle = 'local';
+
+      // Tap the 'Toggle List' button to show the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Select another playlist than the one whose audio will be
+      // rewinded to start position
+
+      // First, find the Playlist ListTile Text widget
+      final Finder localPlaylistToSelectListTileTextWidgetFinder =
+          find.text(localPlaylistToSelectTitle); // 'local'
+
+      // Then obtain the Playlist ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      final Finder localPlaylistToSelectListTileWidgetFinder = find.ancestor(
+        of: localPlaylistToSelectListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the Checkbox widget located in the Playlist ListTile
+      // and tap on it to select the playlist
+      final Finder localPlaylistToSelectListTileCheckboxWidgetFinder =
+          find.descendant(
+        of: localPlaylistToSelectListTileWidgetFinder,
+        matching: find.byType(Checkbox),
+      );
+
+      // Tap the ListTile Playlist checkbox to select it
+      await tester.tap(localPlaylistToSelectListTileCheckboxWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // Rewind all unselected playlist audio to start position
+      await _tapOnRewindPlaylistAudioToStartPositionMenu(
+        tester: tester,
+        playlistToRewindTitle: localPlaylistToSelectTitle,
+        numberOfRewindedAudio: 4,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+  });
+}
+
+Future<void> _rewindPlaylistAfterPlayThenPauseAnAudio({
+  required WidgetTester tester,
+  required Finder appScreenNavigationButton,
+  required bool doExpandPlaylistList,
+  required String playlistToRewindTitle,
+  required String audioToPlayTitle,
+  required String audioToPlayTitleAndDuration,
+  String? otherAudioTitleToTapOnBeforeRewinding,
+}) async {
+  // Now play then pause audioToPlayTitle
+
+  Finder audioToPlayTitleFinder = find.text(audioToPlayTitle);
+
+  await tester.tap(audioToPlayTitleFinder);
+  await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+    tester: tester,
+    additionalMilliseconds: 1500,
+  );
+
+  // Now play the audio and wait 5 seconds
+  await tester.tap(find.byIcon(Icons.play_arrow));
+  await tester.pumpAndSettle();
+
+  await Future.delayed(const Duration(seconds: 5));
+  await tester.pumpAndSettle();
+
+  // Now pause the audio
+  final Finder pauseIconFinder = find.byIcon(Icons.pause);
+  await tester.tap(pauseIconFinder);
+  await tester.pumpAndSettle();
+
+  // Go back to playlist download view
+  appScreenNavigationButton =
+      find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+  await tester.tap(appScreenNavigationButton);
+  await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+  if (doExpandPlaylistList) {
+    // Tap the 'Toggle List' button to show the list of playlist's.
+    await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+    await tester.pumpAndSettle();
+  }
+
+  if (otherAudioTitleToTapOnBeforeRewinding != null) {
+    // Simply click on another audio so that the playlist current
+    // audio is no longer the last played and paused audio. This verify
+    // the correction of a rewind playlist audio to start position bug
+    Finder audioToPlayTitleFinder =
+        find.text(otherAudioTitleToTapOnBeforeRewinding);
+
+    await tester.tap(audioToPlayTitleFinder);
+    await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+      tester: tester,
+      additionalMilliseconds: 1500,
+    );
+
+    // Go back to playlist download view
+    appScreenNavigationButton =
+        find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+    await tester.tap(appScreenNavigationButton);
+    await tester.pumpAndSettle(const Duration(milliseconds: 200));
+  }
+
+  // Rewind all playlist audio to start position
+  await _tapOnRewindPlaylistAudioToStartPositionMenu(
+    tester: tester,
+    playlistToRewindTitle: playlistToRewindTitle,
+    numberOfRewindedAudio: 1,
+  );
+
+  // Return to audio player view to verify the playlist current
+  // audio title audio position set to start
+  appScreenNavigationButton =
+      find.byKey(const ValueKey('audioPlayerViewIconButton'));
+  await tester.tap(appScreenNavigationButton);
+  await tester.pumpAndSettle();
+
+  final Finder currentAudioTitleFinder = find.text(audioToPlayTitleAndDuration);
+
+  expect(
+    currentAudioTitleFinder,
+    findsOneWidget,
+  );
+
+  // Verify the current audio position
+  Text audioPositionText = tester
+      .widget<Text>(find.byKey(const Key('audioPlayerViewAudioPosition')));
+  expect(audioPositionText.data, '0:00');
+
+  // Go back to playlist download view
+  appScreenNavigationButton =
+      find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+  await tester.tap(appScreenNavigationButton);
+  await tester.pumpAndSettle();
+}
+
+Future<void> _tapOnRewindPlaylistAudioToStartPositionMenu({
+  required WidgetTester tester,
+  required String playlistToRewindTitle,
+  required int numberOfRewindedAudio,
+}) async {
+  // Find the playlist to rewind audio ListTile
+
+  // First, find the Playlist ListTile Text widget
+  final Finder youtubePlaylistToRewindListTileTextWidgetFinder =
+      find.text(playlistToRewindTitle);
+
+  // Then obtain the Playlist ListTile widget enclosing the Text widget
+  // by finding its ancestor
+  final Finder youtubePlaylistToRewindListTileWidgetFinder = find.ancestor(
+    of: youtubePlaylistToRewindListTileTextWidgetFinder,
+    matching: find.byType(ListTile),
+  );
+
+  // Now test rewinding the playlist audio to start position
+
+  // Find the playlist leading menu icon button
+  final Finder firstPlaylistListTileLeadingMenuIconButton = find.descendant(
+    of: youtubePlaylistToRewindListTileWidgetFinder,
+    matching: find.byIcon(Icons.menu),
+  );
+
+  // Tap the leading menu icon button to open the popup menu
+  await tester.tap(firstPlaylistListTileLeadingMenuIconButton);
+  await tester.pumpAndSettle();
+
+  // Now find the 'Rewind Audio to Start' playlist popup menu item
+  // and tap on it
+  final Finder popupDeletePlaylistMenuItem =
+      find.byKey(const Key("popup_menu_rewind_audio_to_start"));
+
+  await tester.tap(popupDeletePlaylistMenuItem);
+  await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+  // Check the value of the Confirm dialog title
+  Text warningDialogTitle =
+      tester.widget(find.byKey(const Key('warningDialogTitle')));
+  expect(warningDialogTitle.data, 'CONFIRMATION');
+
+  // Now verifying the confirm dialog message
+
+  Text warningDialogMessageTextWidget =
+      tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
+
+  expect(warningDialogMessageTextWidget.data,
+      '$numberOfRewindedAudio playlist audio were repositioned to start.');
+
+  // Now find the ok button of the confirm dialog
+  // and tap on it
+  await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+  await tester.pumpAndSettle();
+}
+
+void _verifyAllNowUnplayedAudioPlayPauseIconColor({
+  required WidgetTester tester,
+  required List<String> audioTitles,
+}) {
+  for (String audioTitle in audioTitles) {
+    IntegrationTestUtil.validateInkWellButton(
+      tester: tester,
+      audioTitle: audioTitle,
+      expectedIcon: Icons.play_arrow,
+      expectedIconColor: kDarkAndLightEnabledIconColor, // not played icon color
+      expectedIconBackgroundColor: Colors.black,
+    );
+  }
 }
 
 Future<List<String>> enteringFirstAndSecondLetterOfLocalPlaylistSearchWord({

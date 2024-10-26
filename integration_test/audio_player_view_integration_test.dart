@@ -697,8 +697,7 @@ void main() {
       // Again, validate the play/pause button of the previously
       // downloaded Audio item InkWell widget
       previouslyDownloadedAudioListTileInkWellFinder =
-          previouslyDownloadedAudioListTileInkWellFinder =
-              IntegrationTestUtil.validateInkWellButton(
+          IntegrationTestUtil.validateInkWellButton(
         tester: tester,
         audioTitle: previouslyDownloadedAudioTitle,
         expectedIcon: Icons.pause,
@@ -2386,7 +2385,7 @@ void main() {
         audioTitle: thirdDownloadedAudioTitle,
         expectedIcon: Icons.play_arrow,
         expectedIconColor:
-            kSliderThumbColorInDarkMode, // Unplayed audio item play icon color
+            kSliderThumbColorInDarkMode,
         expectedIconBackgroundColor: Colors.black,
       );
 
