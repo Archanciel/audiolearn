@@ -366,6 +366,12 @@ class AudioPlayerVM extends ChangeNotifier {
   /// Method called by skipToStart() if the audio is positioned at
   /// start.
   Future<void> _setPreviousAudio() async {
+    if (_currentAudio == null) {
+      // the case when rewinding the audio position to start of an
+      // unselected playlist
+      return;
+    }
+
     Audio? previousAudio =
         _playlistListVM.getPreviouslyDownloadedOrSortFilteredAudio(
       audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,

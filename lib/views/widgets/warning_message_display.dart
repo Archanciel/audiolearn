@@ -484,7 +484,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         });
 
         return const SizedBox.shrink();
-      case WarningMessageType.rewindedPlayableAudioNumber:
+      case WarningMessageType.rewindedPlayableAudioToStart:
         WidgetsBinding.instance.addPostFrameCallback((_) {
           _displayWarningDialog(
             context: _context,
@@ -492,6 +492,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
               _warningMessageVM.rewindedPlayableAudioNumber,
             ),
             warningMessageVM: _warningMessageVM,
+            warningMode: WarningMode.confirm,
             themeProviderVM: themeProviderVM,
           );
         });
