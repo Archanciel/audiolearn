@@ -2,6 +2,7 @@
 
 import 'package:audiolearn/services/sort_filter_parameters.dart';
 import 'package:audiolearn/utils/date_time_util.dart';
+import 'package:audiolearn/viewmodels/date_format_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -57,6 +58,16 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
       listen: false,
     );
 
+    final PlaylistListVM playlistVMlistnedFalse = Provider.of<PlaylistListVM>(
+      context,
+      listen: false,
+    );
+
+    final DateFormatVM dateFormatVMlistenTrue = Provider.of<DateFormatVM>(
+      context,
+      listen: true,
+    );
+
     return ListTile(
       // generating the audio item left (leading) menu ...
       leading: IconButton(
@@ -85,7 +96,11 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
         },
         child: Text(
           key: const Key('audio_item_subtitle'),
-          _buildSubTitle(context),
+          _buildSubTitle(
+            context: context,
+            playlistVMlistnedFalse: playlistVMlistnedFalse,
+            dateFormatVMlistenTrue: dateFormatVMlistenTrue,
+          ),
           style: const TextStyle(fontSize: kAudioTitleFontSize),
         ),
       ),
@@ -483,12 +498,11 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
   /// If the applied sorting option is default, the subtitle displays
   /// the audio duration, the audio file size, the audio download speed and
   /// the audio download date and time.
-  String _buildSubTitle(BuildContext context) {
-    final PlaylistListVM playlistVMlistnedFalse = Provider.of<PlaylistListVM>(
-      context,
-      listen: false,
-    );
-
+  String _buildSubTitle({
+    required BuildContext context,
+    required PlaylistListVM playlistVMlistnedFalse,
+    required DateFormatVM dateFormatVMlistenTrue,
+  }) {
     Duration? audioDuration = audio.audioDuration;
 
     SortingOption appliedSortingOption =
@@ -504,7 +518,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
               AppLocalizations.of(context)!.audioStateNotListened;
         } else {
           lastSubtitlePart =
-              '${AppLocalizations.of(context)!.listenedOn} ${frenchDateFormat.format(lastListenedDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(lastListenedDateTime)}';
+              '${AppLocalizations.of(context)!.listenedOn} ${dateFormatVMlistenTrue.formatDate(lastListenedDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(lastListenedDateTime)}';
         }
 
         return '${audioDuration.HHmmss(addRemainingOneDigitTenthOfSecond: true)}. $lastSubtitlePart.';
@@ -521,7 +535,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
               '${AppLocalizations.of(context)!.remaining} $audioRemainingHHMMSSDuration. ${AppLocalizations.of(context)!.audioStateNotListened}';
         } else {
           lastSubtitlePart =
-              '${AppLocalizations.of(context)!.remaining} $audioRemainingHHMMSSDuration. ${AppLocalizations.of(context)!.listenedOn} ${frenchDateFormat.format(lastListenedDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(lastListenedDateTime)}';
+              '${AppLocalizations.of(context)!.remaining} $audioRemainingHHMMSSDuration. ${AppLocalizations.of(context)!.listenedOn} ${dateFormatVMlistenTrue.formatDate(lastListenedDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(lastListenedDateTime)}';
         }
 
         return '${audioDuration.HHmmss(addRemainingOneDigitTenthOfSecond: true)}. $lastSubtitlePart.';
@@ -530,11 +544,14 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
         final String lastSubtitlePart;
 
         lastSubtitlePart =
-            '${AppLocalizations.of(context)!.videoUploadDate}: ${frenchDateFormat.format(videoUploadDate)}';
+            '${AppLocalizations.of(context)!.videoUploadDate}: ${dateFormatVMlistenTrue.formatDate(videoUploadDate)}';
 
         return '${audioDuration.HHmmss(addRemainingOneDigitTenthOfSecond: true)}. $lastSubtitlePart.';
       case SortingOption.audioDownloadDuration:
-        String lastSubtitlePart = _createDefaultLastSubTitlePart(context);
+        String lastSubtitlePart = _createDefaultLastSubTitlePart(
+          context: context,
+          dateFormatVMlistenTrue: dateFormatVMlistenTrue,
+        );
 
         final Duration audioDownloadDuration = audio.audioDownloadDuration!;
         final String audioDownloadDurationSubtitlePart;
@@ -544,24 +561,30 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
 
         return '${audioDuration.HHmmss(addRemainingOneDigitTenthOfSecond: true)}. $lastSubtitlePart. $audioDownloadDurationSubtitlePart.';
       default:
-        String lastSubtitlePart = _createDefaultLastSubTitlePart(context);
+        String lastSubtitlePart = _createDefaultLastSubTitlePart(
+          context: context,
+          dateFormatVMlistenTrue: dateFormatVMlistenTrue,
+        );
 
         return '${audioDuration.HHmmss(addRemainingOneDigitTenthOfSecond: true)}. $lastSubtitlePart.';
     }
   }
 
-  String _createDefaultLastSubTitlePart(BuildContext context) {
+  String _createDefaultLastSubTitlePart({
+    required BuildContext context,
+    required DateFormatVM dateFormatVMlistenTrue,
+  }) {
     final int audioFileSize = audio.audioFileSize;
     final String audioFileSizeStr;
-    
+
     audioFileSizeStr = UiUtil.formatLargeIntValue(
       context: context,
       value: audioFileSize,
     );
-    
+
     final int audioDownloadSpeed = audio.audioDownloadSpeed;
     final String audioDownloadSpeedStr;
-    
+
     if (audioDownloadSpeed.isInfinite) {
       audioDownloadSpeedStr = 'infinite o/sec';
     } else {
@@ -570,16 +593,16 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
         value: audioDownloadSpeed,
       )}/sec';
     }
-    
+
     final DateTime audioDownloadDateTime = audio.audioDownloadDateTime;
     final String lastSubtitlePart;
-    
+
     if (audio.isAudioImported) {
       lastSubtitlePart =
-          '$audioFileSizeStr ${AppLocalizations.of(context)!.imported} ${AppLocalizations.of(context)!.atPreposition} ${frenchDateFormat.format(audioDownloadDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(audioDownloadDateTime)}';
+          '$audioFileSizeStr ${AppLocalizations.of(context)!.imported} ${AppLocalizations.of(context)!.atPreposition} ${dateFormatVMlistenTrue.formatDate(audioDownloadDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(audioDownloadDateTime)}';
     } else {
       lastSubtitlePart =
-          '$audioFileSizeStr ${AppLocalizations.of(context)!.atPreposition} $audioDownloadSpeedStr ${AppLocalizations.of(context)!.on} ${frenchDateFormat.format(audioDownloadDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(audioDownloadDateTime)}';
+          '$audioFileSizeStr ${AppLocalizations.of(context)!.atPreposition} $audioDownloadSpeedStr ${AppLocalizations.of(context)!.on} ${dateFormatVMlistenTrue.formatDate(audioDownloadDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(audioDownloadDateTime)}';
     }
     return lastSubtitlePart;
   }

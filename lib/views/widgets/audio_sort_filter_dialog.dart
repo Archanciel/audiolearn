@@ -1,4 +1,5 @@
 import 'package:audiolearn/utils/duration_expansion.dart';
+import 'package:audiolearn/viewmodels/date_format_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
@@ -396,6 +397,10 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       context,
       listen: false,
     );
+    final DateFormatVM dateFormatVMlistenFalse = Provider.of<DateFormatVM>(
+      context,
+      listen: false,
+    );
     return Center(
       child: AlertDialog(
         title: Text(AppLocalizations.of(context)!.sortFilterDialogTitle),
@@ -573,7 +578,11 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                       ),
                     ),
                     _buildAudioStateCheckboxes(context),
-                    _buildAudioDateFields(context, now),
+                    _buildAudioDateFields(
+                      context: context,
+                      dateFormatVMlistenFalse: dateFormatVMlistenFalse,
+                      dateNow: now,
+                    ),
                     const SizedBox(
                       height: kDialogTextFieldVerticalSeparation,
                     ),
@@ -987,16 +996,18 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     );
   }
 
-  Widget _buildAudioDateFields(
-    BuildContext context,
-    DateTime now,
-  ) {
+  Widget _buildAudioDateFields({
+    required BuildContext context,
+    required DateFormatVM dateFormatVMlistenFalse,
+    required DateTime dateNow,
+  }) {
     return Column(
       children: [
         _buildLabelDateIconTextField(
           dateIconButtondKey: const Key('startDownloadDateIconButton'),
           textFieldKey: const Key('startDownloadDateTextField'),
           context: context,
+          dateFormatVMlistenFalse: dateFormatVMlistenFalse,
           dateTimeType: DateTimeType.startDownloadDateTime,
           controller: _startDownloadDateTimeController,
           dateTime: _startDownloadDateTime,
@@ -1006,6 +1017,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           dateIconButtondKey: const Key('endDownloadDateIconButton'),
           textFieldKey: const Key('endDownloadDateTextField'),
           context: context,
+          dateFormatVMlistenFalse: dateFormatVMlistenFalse,
           dateTimeType: DateTimeType.endDownloadDateTime,
           controller: _endDownloadDateTimeController,
           dateTime: _endDownloadDateTime,
@@ -1015,6 +1027,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           dateIconButtondKey: const Key('startUploadDateIconButton'),
           textFieldKey: const Key('startUploadDateTextField'),
           context: context,
+          dateFormatVMlistenFalse: dateFormatVMlistenFalse,
           dateTimeType: DateTimeType.startUploadDateTime,
           controller: _startUploadDateTimeController,
           dateTime: _startUploadDateTime,
@@ -1024,6 +1037,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           dateIconButtondKey: const Key('endUploadDateIconButton'),
           textFieldKey: const Key('endUploadDateTextField'),
           context: context,
+          dateFormatVMlistenFalse: dateFormatVMlistenFalse,
           dateTimeType: DateTimeType.endUploadDateTime,
           controller: _endUploadDateTimeController,
           dateTime: _endUploadDateTime,
@@ -1037,6 +1051,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     required Key dateIconButtondKey,
     required Key textFieldKey,
     required BuildContext context,
+    required DateFormatVM dateFormatVMlistenFalse,
     required DateTimeType dateTimeType,
     required TextEditingController controller,
     required DateTime? dateTime,
@@ -1044,7 +1059,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
   }) {
     // Initialize the TextField with the current date
     if (dateTime != null) {
-      controller.text = frenchDateFormat.format(dateTime);
+      controller.text = dateFormatVMlistenFalse.formatDate(dateTime);
     }
 
     // Add listener to handle manual input
@@ -1105,7 +1120,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
             );
 
             if (pickedDate != null) {
-              controller.text = frenchDateFormat.format(pickedDate);
+              controller.text = dateFormatVMlistenFalse.formatDate(pickedDate);
             }
           },
         ),

@@ -5,6 +5,7 @@ import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants.dart';
@@ -14,6 +15,7 @@ import '../../services/settings_data_service.dart';
 import '../../utils/ui_util.dart';
 import '../../viewmodels/audio_player_vm.dart';
 import '../../viewmodels/comment_vm.dart';
+import '../../viewmodels/date_format_vm.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 import '../screen_mixin.dart';
 import 'confirm_action_dialog.dart';
@@ -290,6 +292,10 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                   padding: const EdgeInsets.only(bottom: 2),
                   child: _buildCommentTitlePlusIconsAndCommentDatesAndPosition(
                     audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+                    dateFormatVMlistenFalse: Provider.of<DateFormatVM>(
+                      context,
+                      listen: false,
+                    ),
                     commentTitleTextStyle: commentTitleTextStyle,
                     audioFileNameNoExt: audioFileName,
                     commentVM: commentVM,
@@ -336,6 +342,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
 
   Widget _buildCommentTitlePlusIconsAndCommentDatesAndPosition({
     required AudioPlayerVM audioPlayerVMlistenFalse,
+    required DateFormatVM dateFormatVMlistenFalse,
     required TextStyle commentTitleTextStyle,
     required String audioFileNameNoExt,
     required CommentVM commentVM,
@@ -458,7 +465,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                     // comment creation date Text
                     key: const Key('creationDateTimeKey'),
                     style: const TextStyle(fontSize: 13),
-                    frenchDateFormat.format(comment.creationDateTime),
+                    dateFormatVMlistenFalse.formatDate(comment.creationDateTime),
                   ),
                 ),
                 const SizedBox(
@@ -472,7 +479,8 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                           // comment update date Text
                           key: const Key('lastUpdateDateTimeKey'),
                           style: const TextStyle(fontSize: 13),
-                          frenchDateFormat.format(comment.lastUpdateDateTime),
+                          dateFormatVMlistenFalse
+                              .formatDate(comment.lastUpdateDateTime),
                         ),
                       )
                     : Container(),
