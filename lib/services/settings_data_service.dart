@@ -14,7 +14,6 @@ enum SettingType {
   language,
   playlists,
   dataLocation,
-  application,
 }
 
 enum AppTheme {
@@ -40,8 +39,6 @@ enum DataLocation {
   appSettingsPath,
   playlistRootPath,
 }
-
-enum AudioSortCriterion { audioDownloadDateTime, validVideoTitle }
 
 /// ChatGPT recommanded: Use JSON serialization libraries like
 /// json_serializable to simplify the JSON encoding and decoding
@@ -80,7 +77,6 @@ class SettingsDataService {
     ...Language.values,
     ...Playlists.values,
     ...DataLocation.values,
-    ...AudioSortCriterion.values,
   ];
 
   final bool _isTest;
