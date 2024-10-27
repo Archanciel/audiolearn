@@ -7,7 +7,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:path/path.dart' as path;
 
 import 'package:audiolearn/viewmodels/date_format_vm.dart';
-import 'package:audiolearn/viewmodels/warning_message_vm.dart';
 
 import '../services/mock_shared_preferences.dart';
 
@@ -28,7 +27,6 @@ void main() {
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      WarningMessageVM warningMessageVM = WarningMessageVM();
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
         isTest: true,
@@ -49,11 +47,18 @@ void main() {
         "30/11/2021",
       );
 
-      dateFormatVM.updateFormat("MM/dd/yyyy");
+      dateFormatVM.setDateFormat("MM/dd/yyyy");
 
       expect(
         dateFormatVM.formatDate(dateTime),
         "11/30/2021",
+      );
+
+      dateFormatVM.selectDateFormat(2);
+
+      expect(
+        dateFormatVM.formatDate(dateTime),
+        "2021/11/30",
       );
 
       // Purge the test playlist directory so that the created test
@@ -78,7 +83,6 @@ void main() {
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      WarningMessageVM warningMessageVM = WarningMessageVM();
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
         isTest: true,
@@ -99,7 +103,7 @@ void main() {
         "30/11/2021",
       );
 
-      dateFormatVM.updateFormat("MM/dd/yyyy");
+      dateFormatVM.setDateFormat("MM/dd/yyyy");
 
       SettingsDataService reloadedSettingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
@@ -114,9 +118,24 @@ void main() {
         settingsDataService: reloadedSettingsDataService,
       );
 
+      dateFormatVM.selectDateFormat(2);
+
+      SettingsDataService secondReloadedSettingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+        isTest: true,
+      );
+
+      await secondReloadedSettingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${Platform.pathSeparator}$kSettingsFileName");
+
+      DateFormatVM secondReloadedDateFormatVM = DateFormatVM(
+        settingsDataService: secondReloadedSettingsDataService,
+      );
+
       expect(
-        reloadedDateFormatVM.formatDate(dateTime),
-        "11/30/2021",
+        secondReloadedDateFormatVM.formatDate(dateTime),
+        "2021/11/30",
       );
 
       // Purge the test playlist directory so that the created test

@@ -1,3 +1,4 @@
+import 'package:audiolearn/views/widgets/date_format_selection_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -7,7 +8,12 @@ import '../../services/settings_data_service.dart';
 import '../../viewmodels/language_provider_vm.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 
-enum AppBarPopupMenu { en, fr, about }
+enum AppBarPopupMenu {
+  en,
+  fr,
+  dateFormat,
+  about,
+}
 
 /// This widget is the popup menu button widget which is displayed
 /// on the right side of the application appbar. It contains menu items
@@ -42,6 +48,32 @@ class AppBarApplicationRightPopupMenuWidget extends StatelessWidget {
               Provider.of<LanguageProviderVM>(context, listen: false)
                   .changeLocale(newLocale);
             });
+            break;
+          case AppBarPopupMenu.dateFormat:
+            showDialog<void>(
+              context: context,
+              builder: (BuildContext context) {
+                bool isDarkTheme = themeProvider.currentTheme == AppTheme.dark;
+                DateFormatSelectionDialog dateFormatSelectionDialog =
+                    DateFormatSelectionDialog();
+                return isDarkTheme
+                    ? Theme(
+                        // Theme is required in dark mode in order
+                        // to improve the text color of the application
+                        // version so that it is better visible (white
+                        // instead of blue)
+                        data: Theme.of(context).copyWith(
+                          textTheme: const TextTheme(
+                            bodyMedium: TextStyle(
+                                color:
+                                    Colors.white), // or another color you need
+                          ),
+                        ),
+                        child: dateFormatSelectionDialog,
+                      )
+                    : dateFormatSelectionDialog;
+              },
+            );
             break;
           case AppBarPopupMenu.about:
             showDialog<void>(
@@ -110,6 +142,11 @@ class AppBarApplicationRightPopupMenuWidget extends StatelessWidget {
             value: AppBarPopupMenu.fr,
             child: Text(AppLocalizations.of(context)!
                 .translate(AppLocalizations.of(context)!.french)),
+          ),
+          PopupMenuItem<AppBarPopupMenu>(
+            key: const Key('appBarMenuDateFormat'),
+            value: AppBarPopupMenu.dateFormat,
+            child: Text(AppLocalizations.of(context)!.dateFormat),
           ),
           PopupMenuItem<AppBarPopupMenu>(
             key: const Key('appBarMenuAbout'),
