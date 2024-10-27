@@ -4,10 +4,9 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../viewmodels/warning_message_vm.dart';
+import '../../viewmodels/audio_player_vm.dart';
 import '../../views/screen_mixin.dart';
 import '../../constants.dart';
-import '../../models/playlist.dart';
 import '../../services/settings_data_service.dart';
 import '../../viewmodels/date_format_vm.dart';
 import '../../viewmodels/theme_provider_vm.dart';
@@ -42,13 +41,24 @@ class _DateFormatSelectionDialogState extends State<DateFormatSelectionDialog>
   void initState() {
     super.initState();
 
-    DateTime now = DateTime.now();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      DateFormatVM dateFormatVM = Provider.of<DateFormatVM>(
+        context,
+        listen: false,
+      );
 
-    _nowDateFormatList = [
-      DateFormat('dd/MM/yyyy').format(now),
-      DateFormat('MM/dd/yyyy').format(now),
-      DateFormat('yyyy-MM-dd').format(now),
-    ];
+      _selectedIndex = DateFormatVM.dateFormatList.indexOf(
+        dateFormatVM.selectedFormat,
+      );
+
+      DateTime now = DateTime.now();
+
+      _nowDateFormatList = [
+        DateFormat(DateFormatVM.dateFormatList[0]).format(now),
+        DateFormat(DateFormatVM.dateFormatList[1]).format(now),
+        DateFormat(DateFormatVM.dateFormatList[2]).format(now),
+      ];
+    });
   }
 
   @override
@@ -61,12 +71,10 @@ class _DateFormatSelectionDialogState extends State<DateFormatSelectionDialog>
   @override
   Widget build(BuildContext context) {
     final ThemeProviderVM themeProvider = Provider.of<ThemeProviderVM>(context);
-    bool isDarkTheme = themeProvider.currentTheme == AppTheme.dark;
     final DateFormatVM dateFormatVMlistenFalse = Provider.of<DateFormatVM>(
       context,
       listen: false,
     );
-    List<Playlist> upToDateSelectablePlaylists;
 
     // Required so that clicking on Enter closes the dialog
     FocusScope.of(context).requestFocus(

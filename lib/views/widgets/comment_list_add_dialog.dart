@@ -2,6 +2,7 @@ import 'package:audiolearn/utils/duration_expansion.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants.dart';
@@ -10,6 +11,7 @@ import '../../models/comment.dart';
 import '../../services/settings_data_service.dart';
 import '../../viewmodels/audio_player_vm.dart';
 import '../../viewmodels/comment_vm.dart';
+import '../../viewmodels/date_format_vm.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 import '../screen_mixin.dart';
 import 'confirm_action_dialog.dart';
@@ -195,6 +197,10 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                 padding: const EdgeInsets.only(bottom: 2),
                 child: _buildCommentTitlePlusIconsAndCommentDatesAndPosition(
                   audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+                  dateFormatVMlistenFalse: Provider.of<DateFormatVM>(
+                    context,
+                    listen: false,
+                  ),
                   commentVM: commentVM,
                   comment: comment,
                 ),
@@ -235,6 +241,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
 
   Widget _buildCommentTitlePlusIconsAndCommentDatesAndPosition({
     required AudioPlayerVM audioPlayerVMlistenFalse,
+    required DateFormatVM dateFormatVMlistenFalse, 
     required CommentVM commentVM,
     required Comment comment,
   }) {
@@ -370,7 +377,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                     // comment creation date Text
                     key: const Key('creationDateTimeKey'),
                     style: const TextStyle(fontSize: 13),
-                    frenchDateFormat.format(comment.creationDateTime),
+                    dateFormatVMlistenFalse.formatDate(comment.creationDateTime),
                   ),
                 ),
                 const SizedBox(
@@ -384,7 +391,8 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                           // comment update date Text
                           key: const Key('lastUpdateDateTimeKey'),
                           style: const TextStyle(fontSize: 13),
-                          frenchDateFormat.format(comment.lastUpdateDateTime),
+                          dateFormatVMlistenFalse
+                              .formatDate(comment.lastUpdateDateTime),
                         ),
                       )
                     : Container(),

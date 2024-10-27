@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../../services/settings_data_service.dart';
 import '../../utils/duration_expansion.dart';
+import '../../viewmodels/date_format_vm.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 import '../../views/screen_mixin.dart';
 import '../../constants.dart';
@@ -83,8 +84,14 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
 
   /// Creates the list of audio information lines for downloaded audio.
   List<Widget> _createDownloadedAudioInfoLines(BuildContext context) {
-    final CommentVM commentVMlistenFalse =
-        Provider.of<CommentVM>(context, listen: false);
+    final CommentVM commentVMlistenFalse = Provider.of<CommentVM>(
+      context,
+      listen: false,
+    );
+    final DateFormatVM dateFormatVMlistenFalse = Provider.of<DateFormatVM>(
+      context,
+      listen: false,
+    );
 
     return <Widget>[
       createInfoRowFunction(
@@ -100,7 +107,7 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
       createInfoRowFunction(
           context: context,
           label: AppLocalizations.of(context)!.videoUploadDateLabel,
-          value: frenchDateFormat.format(audio.videoUploadDate)),
+          value: dateFormatVMlistenFalse.formatDate(audio.videoUploadDate)),
       createInfoRowFunction(
           context: context,
           label: AppLocalizations.of(context)!.audioDownloadDateTimeLabel,
