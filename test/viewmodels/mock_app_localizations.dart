@@ -1366,4 +1366,10 @@ class MockAppLocalizations extends AppLocalizations {
     Object number,
   ) =>
       "$number playlist audio were repositioned to start.";
+
+  @override
+  String get dateFormat => "Select Date Format ...";
+
+  @override
+  String get dateFormatSelectionDialogTitle => "Select a date format";
 }

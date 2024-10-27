@@ -4,6 +4,12 @@ import 'package:intl/intl.dart';
 import '../services/settings_data_service.dart';
 
 class DateFormatVM extends ChangeNotifier {
+  static const List<String> dateFormatList = [
+    'dd/MM/yyyy',
+    'MM/dd/yyyy',
+    'yyyy/MM/dd',
+  ];
+
   final SettingsDataService _settingsDataService;
 
   late String _selectedFormat; // Default format
@@ -24,7 +30,7 @@ class DateFormatVM extends ChangeNotifier {
   ///   - 'dd/MM/yyyy'
   ///   - 'MM/dd/yyyy'
   ///   - 'yyyy/MM/dd'
-  void updateFormat(String newDateFormat) {
+  void setDateFormat(String newDateFormat) {
     _selectedFormat = newDateFormat;
 
     _settingsDataService.set(
@@ -36,6 +42,15 @@ class DateFormatVM extends ChangeNotifier {
     _settingsDataService.saveSettings();
 
     notifyListeners(); // Notify all listeners to rebuild
+  }
+
+  /// Select a date format from the list of available formats.
+  /// 
+  /// 0 --> 'dd/MM/yyyy'
+  /// 1 --> 'MM/dd/yyyy'
+  /// 2 --> 'yyyy/MM/dd'
+  void selectDateFormat(int index) {
+    setDateFormat(dateFormatList[index]);
   }
 
   // Helper function to format dates according to the selected format
