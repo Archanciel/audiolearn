@@ -14,6 +14,7 @@ enum SettingType {
   language,
   playlists,
   dataLocation,
+  formatOfDate,
 }
 
 enum AppTheme {
@@ -40,13 +41,17 @@ enum DataLocation {
   playlistRootPath,
 }
 
+enum FormatOfDate {
+  formatOfDate, // dd/MM/yyyy or MM/dd/yyyy or yyyy/MM/dd
+}
+
 /// ChatGPT recommanded: Use JSON serialization libraries like
 /// json_serializable to simplify the JSON encoding and decoding
 /// process. This will also help you avoid writing manual string
 /// parsing code.
 class SettingsDataService {
-  // default settings are set in the constructor, namely default language
-  // and default theme
+  // default settings are set in the constructor, namely default language,
+  // default format of date and default theme
   final Map<SettingType, Map<dynamic, dynamic>> _settings = {
     SettingType.appTheme: {SettingType.appTheme: AppTheme.dark},
     SettingType.language: {SettingType.language: Language.english},
@@ -67,6 +72,9 @@ class SettingsDataService {
       DataLocation.appSettingsPath: '',
       DataLocation.playlistRootPath: '',
     },
+    SettingType.formatOfDate: {
+      FormatOfDate.formatOfDate: 'dd/MM/yyyy',
+    },
   };
 
   Map<SettingType, Map<dynamic, dynamic>> get settings => _settings;
@@ -77,25 +85,35 @@ class SettingsDataService {
     ...Language.values,
     ...Playlists.values,
     ...DataLocation.values,
+    ...FormatOfDate.values,
   ];
 
   final bool _isTest;
 
+  // This map contains the named AudioSortFilterParameters. The
+  // AudioSortFilterParameters by default is named 'default'
   final Map<String, AudioSortFilterParameters>
       _namedAudioSortFilterParametersMap = {};
-
-  // this map contains the named AudioSortFilterParameters. The
-  // AudioSortFilterParameters by default is named 'default'
   Map<String, AudioSortFilterParameters>
       get namedAudioSortFilterParametersMap =>
           _namedAudioSortFilterParametersMap;
 
+  // This list contains the search history of AudioSortFilterParameters.
+  // An AudioSortFilterParameters is added to the list when the user
+  // clicks on the search button in the audio search view. The search
+  // button which replaces the save button indicates that the defined
+  // AudioSortFilterParameters isn't named. The search history list is
+  // limited to a maximum number of elements. 
   List<AudioSortFilterParameters> _searchHistoryAudioSortFilterParametersLst =
       [];
   List<AudioSortFilterParameters>
       get searchHistoryAudioSortFilterParametersLst =>
           _searchHistoryAudioSortFilterParametersLst;
 
+  // The shared preferences are used to determine if the application is
+  // started for the first time. If so, the json settings file does not
+  // exist and the default settings are used. The shared preferences
+  // are also used to store the isFirstRun value. 
   final SharedPreferences _sharedPreferences;
 
   SettingsDataService({
@@ -457,7 +475,7 @@ class SettingsDataService {
   bool _isFilePath(String value) {
     // A simple check to determine if the value is a file path.
     // You can adjust the condition as needed.
-    return value.contains('\\') || value.contains('/');
+    return value.contains('\\') || value.contains('/storage');
   }
 
   static Future<void> removePlaylistSettingsFromJsonFile({

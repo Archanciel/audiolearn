@@ -169,7 +169,7 @@ class MainApp extends StatelessWidget with ScreenMixin {
         ),
         ChangeNotifierProvider(
           create: (_) => LanguageProviderVM(
-            appSettings: _settingsDataService,
+            settingsDataService: _settingsDataService,
           ),
         ),
         ChangeNotifierProvider(create: (_) => playlistListVM),

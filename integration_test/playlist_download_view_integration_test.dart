@@ -13051,7 +13051,7 @@ void main() {
       expect(
         File("$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName")
             .readAsStringSync(),
-        "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.orderedTitleLst\":\"[Youtube_test]\",\"Playlists.playSpeed\":\"1.25\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\Users\\\\Jean-Pierre\\\\Development\\\\Flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\Users\\\\Jean-Pierre\\\\Development\\\\Flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\new\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInYoutubeChannelName\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":false,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}",
+        "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.orderedTitleLst\":\"[Youtube_test]\",\"Playlists.playSpeed\":\"1.25\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\Users\\\\Jean-Pierre\\\\Development\\\\Flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\Users\\\\Jean-Pierre\\\\Development\\\\Flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\new\"},\"SettingType.formatOfDate\":{\"FormatOfDate.formatOfDate\":\"dd/MM/yyyy\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInYoutubeChannelName\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":false,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}",
       );
 
       // Find the Youtube playlist to select
@@ -18159,9 +18159,9 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets('''Rewind playlist audio for unselected playlist. No other playlist
-        is selected.''',
-        (tester) async {
+    testWidgets(
+        '''Rewind playlist audio for unselected playlist. No other playlist
+        is selected.''', (tester) async {
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'sort_and_filter_audio_dialog_widget_test',
@@ -18213,8 +18213,7 @@ void main() {
       );
     });
     testWidgets('''Rewind playlist audio for unselected playlist, other selected
-        playlist exist''',
-        (tester) async {
+        playlist exist''', (tester) async {
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'sort_and_filter_audio_dialog_widget_test',
@@ -18267,9 +18266,9 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets('''Rewind local playlist audio for unselected playlist, other selected
-        playlist exist''',
-        (tester) async {
+    testWidgets(
+        '''Rewind local playlist audio for unselected playlist, other selected
+        playlist exist''', (tester) async {
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'sort_and_filter_audio_dialog_widget_test',
@@ -18348,7 +18347,8 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets('''On audio player view, rewind playlist audio for selected playlist''',
+    testWidgets(
+        '''On audio player view, rewind playlist audio for selected playlist''',
         (tester) async {
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
@@ -19439,7 +19439,7 @@ Future<void> _launchExpandablePlaylistListView({
                 )),
         ChangeNotifierProvider(
             create: (_) => LanguageProviderVM(
-                  appSettings: settingsDataService,
+                  settingsDataService: settingsDataService,
                 )),
         ChangeNotifierProvider(create: (_) => playlistListVM),
         ChangeNotifierProvider(create: (_) => warningMessageVM),

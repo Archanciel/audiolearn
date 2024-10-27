@@ -1264,7 +1264,7 @@ Future<void> _createPlaylistDownloadView({
         ),
         ChangeNotifierProvider(
           create: (_) => LanguageProviderVM(
-            appSettings: settingsDataService,
+            settingsDataService: settingsDataService,
           ),
         ),
         ChangeNotifierProvider(create: (_) => warningMessageVM),
