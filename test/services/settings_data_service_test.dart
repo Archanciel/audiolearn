@@ -63,11 +63,6 @@ void main() {
           Language.english);
       expect(
           settings.get(
-              settingType: SettingType.dataLocation,
-              settingSubType: DataLocation.playlistRootPath),
-          kPlaylistDownloadRootPathWindows);
-      expect(
-          settings.get(
               settingType: SettingType.playlists,
               settingSubType: Playlists.isMusicQualityByDefault),
           false);
@@ -81,6 +76,21 @@ void main() {
               settingType: SettingType.playlists,
               settingSubType: Playlists.arePlaylistsDisplayedInPlaylistDownloadView),
           false);
+      expect(
+          settings.get(
+              settingType: SettingType.dataLocation,
+              settingSubType: DataLocation.appSettingsPath),
+          "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio");
+      expect(
+          settings.get(
+              settingType: SettingType.dataLocation,
+              settingSubType: DataLocation.playlistRootPath),
+          "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio");
+      expect(
+          settings.get(
+              settingType: SettingType.formatOfDate,
+              settingSubType: FormatOfDate.formatOfDate),
+          "dd/MM/yyyy");
 
       AudioSortFilterParameters defaultAudioSortFilterParameters =
           settings.namedAudioSortFilterParametersMap['Default']!;
@@ -110,10 +120,6 @@ void main() {
           settingSubType: SettingType.appTheme,
           value: AppTheme.light);
       settings.set(
-          settingType: SettingType.dataLocation,
-          settingSubType: DataLocation.playlistRootPath,
-          value: kPlaylistDownloadRootPathWindowsTest);
-      settings.set(
           settingType: SettingType.playlists,
           settingSubType: Playlists.isMusicQualityByDefault,
           value: true);
@@ -125,6 +131,18 @@ void main() {
           settingType: SettingType.playlists,
           settingSubType: Playlists.arePlaylistsDisplayedInPlaylistDownloadView,
           value: true);
+      settings.set(
+          settingType: SettingType.dataLocation,
+          settingSubType: DataLocation.appSettingsPath,
+          value: "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\new_audio");
+      settings.set(
+          settingType: SettingType.dataLocation,
+          settingSubType: DataLocation.playlistRootPath,
+          value: "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\new_audio\\playlists");
+      settings.set(
+          settingType: SettingType.formatOfDate,
+          settingSubType: FormatOfDate.formatOfDate,
+          value: "MM/dd/yyyy");
 
       // Save to file
       await DirUtil.createDirIfNotExist(pathStr: testSettingsDir);
@@ -151,11 +169,6 @@ void main() {
           AppTheme.light);
       expect(
           loadedSettings.get(
-              settingType: SettingType.dataLocation,
-              settingSubType: DataLocation.playlistRootPath),
-          kPlaylistDownloadRootPathWindowsTest);
-      expect(
-          loadedSettings.get(
               settingType: SettingType.playlists,
               settingSubType: Playlists.isMusicQualityByDefault),
           true);
@@ -169,6 +182,21 @@ void main() {
               settingType: SettingType.playlists,
               settingSubType: Playlists.arePlaylistsDisplayedInPlaylistDownloadView),
           true);
+      expect(
+          loadedSettings.get(
+              settingType: SettingType.dataLocation,
+              settingSubType: DataLocation.appSettingsPath),
+          "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\new_audio");
+      expect(
+          loadedSettings.get(
+              settingType: SettingType.dataLocation,
+              settingSubType: DataLocation.playlistRootPath),
+          "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\new_audio\\playlists");
+      expect(
+          loadedSettings.get(
+              settingType: SettingType.formatOfDate,
+              settingSubType: FormatOfDate.formatOfDate),
+          "MM/dd/yyyy");
 
       AudioSortFilterParameters loadedDefaultAudioSortFilterParameters =
           loadedSettings.namedAudioSortFilterParametersMap['Default']!;

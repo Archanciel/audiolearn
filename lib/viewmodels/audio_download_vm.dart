@@ -73,7 +73,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
   final WarningMessageVM warningMessageVM;
 
-  final SettingsDataService settingsDataService;
+  final SettingsDataService _settingsDataService;
 
   /// Passing true for {isTest} has the effect that the windows
   /// test directory is used as playlist root directory. This
@@ -83,10 +83,10 @@ class AudioDownloadVM extends ChangeNotifier {
   /// is used.
   AudioDownloadVM({
     required this.warningMessageVM,
-    required this.settingsDataService,
+    required SettingsDataService settingsDataService,
     bool isTest = false,
-  }) {
-    _playlistsRootPath = settingsDataService.get(
+  }) : _settingsDataService = settingsDataService {
+    _playlistsRootPath = _settingsDataService.get(
         settingType: SettingType.dataLocation,
         settingSubType: DataLocation.playlistRootPath);
 
@@ -199,7 +199,7 @@ class AudioDownloadVM extends ChangeNotifier {
       if (playlistQuality == PlaylistQuality.music) {
         addedPlaylist.audioPlaySpeed = 1.0;
       } else {
-        addedPlaylist.audioPlaySpeed = settingsDataService.get(
+        addedPlaylist.audioPlaySpeed = _settingsDataService.get(
           settingType: SettingType.playlists,
           settingSubType: Playlists.playSpeed,
         );
@@ -1147,7 +1147,7 @@ class AudioDownloadVM extends ChangeNotifier {
   double _determineNewAudioPlaySpeed(Playlist currentPlaylist) {
     return (currentPlaylist.audioPlaySpeed != 0)
         ? currentPlaylist.audioPlaySpeed
-        : settingsDataService.get(
+        : _settingsDataService.get(
             settingType: SettingType.playlists,
             settingSubType: Playlists.playSpeed,
           );
@@ -1583,7 +1583,7 @@ class AudioDownloadVM extends ChangeNotifier {
     // Obtaining the ordered list of playlist titles from the application
     // settings. The ordered list of playlist titles contains the playlists
     // title of the playlists existing before the update.
-    List<dynamic> orderedPlaylistTitleLst = settingsDataService.get(
+    List<dynamic> orderedPlaylistTitleLst = _settingsDataService.get(
           settingType: SettingType.playlists,
           settingSubType: Playlists.orderedTitleLst,
         ) ??
@@ -1739,7 +1739,7 @@ class AudioDownloadVM extends ChangeNotifier {
     if (playlistQuality == PlaylistQuality.music) {
       playlist.audioPlaySpeed = 1.0;
     } else {
-      playlist.audioPlaySpeed = settingsDataService.get(
+      playlist.audioPlaySpeed = _settingsDataService.get(
         settingType: SettingType.playlists,
         settingSubType: Playlists.playSpeed,
       );

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../services/settings_data_service.dart';
@@ -6,15 +5,15 @@ import '../services/settings_data_service.dart';
 /// This VM (View Model) class is part of the MVVM architecture.
 ///
 class LanguageProviderVM extends ChangeNotifier {
-  final SettingsDataService _appSettings;
+  final SettingsDataService _settingsDataService;
 
   late Locale _currentLocale;
   Locale get currentLocale => _currentLocale;
 
   LanguageProviderVM({
-    required SettingsDataService appSettings,
-  }) : _appSettings = appSettings {
-    Language language = appSettings.get(
+    required SettingsDataService settingsDataService,
+  }) : _settingsDataService = settingsDataService {
+    Language language = settingsDataService.get(
       settingType: SettingType.language,
       settingSubType: SettingType.language,
     );
@@ -43,12 +42,12 @@ class LanguageProviderVM extends ChangeNotifier {
       language = Language.english;
     }
 
-    _appSettings.set(
+    _settingsDataService.set(
         settingType: SettingType.language,
         settingSubType: SettingType.language,
         value: language);
 
-    _appSettings.saveSettings();
+    _settingsDataService.saveSettings();
 
     notifyListeners();
   }
