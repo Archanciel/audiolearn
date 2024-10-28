@@ -47,18 +47,33 @@ void main() {
         "30/11/2021",
       );
 
-      dateFormatVM.setDateFormat("MM/dd/yyyy");
+      expect(
+        dateFormatVM.formatDateTime(dateTime),
+        "30/11/2021 23:59", // Initial format is 'dd/MM/yyyy'
+      );
+
+      dateFormatVM.selectDateFormat(dateFormatIndex: 1);
 
       expect(
         dateFormatVM.formatDate(dateTime),
         "11/30/2021",
       );
 
-      dateFormatVM.selectDateFormat(2);
+      expect(
+        dateFormatVM.formatDateTime(dateTime),
+        "11/30/2021 23:59", // Initial format is 'dd/MM/yyyy'
+      );
+
+      dateFormatVM.selectDateFormat(dateFormatIndex: 2);
 
       expect(
         dateFormatVM.formatDate(dateTime),
         "2021/11/30",
+      );
+
+      expect(
+        dateFormatVM.formatDateTime(dateTime),
+        "2021/11/30 23:59", // Initial format is 'dd/MM/yyyy'
       );
 
       // Purge the test playlist directory so that the created test
@@ -100,10 +115,28 @@ void main() {
 
       expect(
         dateFormatVM.formatDate(dateTime),
-        "30/11/2021",
+        "30/11/2021", // Initial format is 'dd/MM/yyyy'
       );
 
-      dateFormatVM.setDateFormat("MM/dd/yyyy");
+      expect(
+        dateFormatVM.formatDateTime(dateTime),
+        "30/11/2021 23:59", // Initial format is 'dd/MM/yyyy'
+      );
+
+      // Change the date format to the second format which is 'MM/dd/yyyy'
+      // and reload the settings data service
+
+      dateFormatVM.selectDateFormat(dateFormatIndex: 1);
+
+      expect(
+        dateFormatVM.formatDate(dateTime),
+        "11/30/2021",
+      );
+
+      expect(
+        dateFormatVM.formatDateTime(dateTime),
+        "11/30/2021 23:59", // Initial format is 'dd/MM/yyyy'
+      );
 
       SettingsDataService reloadedSettingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
@@ -118,9 +151,33 @@ void main() {
         settingsDataService: reloadedSettingsDataService,
       );
 
-      dateFormatVM.selectDateFormat(2);
+      expect(
+        reloadedDateFormatVM.formatDate(dateTime),
+        "11/30/2021",
+      );
 
-      SettingsDataService secondReloadedSettingsDataService = SettingsDataService(
+      expect(
+        dateFormatVM.formatDateTime(dateTime),
+        "11/30/2021 23:59", // Initial format is 'dd/MM/yyyy'
+      );
+
+      // Change the date format to the third format which is 'yyyy-MM-dd'
+      // and reload the settings data service
+
+      dateFormatVM.selectDateFormat(dateFormatIndex: 2);
+
+      expect(
+        dateFormatVM.formatDate(dateTime),
+        "2021/11/30",
+      );
+
+      expect(
+        dateFormatVM.formatDateTime(dateTime),
+        "2021/11/30 23:59", // Initial format is 'dd/MM/yyyy'
+      );
+
+      SettingsDataService secondReloadedSettingsDataService =
+          SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
@@ -136,6 +193,11 @@ void main() {
       expect(
         secondReloadedDateFormatVM.formatDate(dateTime),
         "2021/11/30",
+      );
+
+      expect(
+        dateFormatVM.formatDateTime(dateTime),
+        "2021/11/30 23:59", // Initial format is 'dd/MM/yyyy'
       );
 
       // Purge the test playlist directory so that the created test
