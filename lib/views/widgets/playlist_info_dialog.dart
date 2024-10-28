@@ -1,3 +1,4 @@
+import 'package:audiolearn/viewmodels/date_format_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -29,9 +30,13 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
   Widget build(BuildContext context) {
     final ThemeProviderVM themeProviderVM =
         Provider.of<ThemeProviderVM>(context);
+    final DateFormatVM dateFormatVMlistenFalse = Provider.of<DateFormatVM>(
+      context,
+      listen: false,
+    );
     final DateTime? lastDownloadDateTime = playlist.getLastDownloadDateTime();
     final String lastDownloadDateTimeStr = (lastDownloadDateTime != null)
-        ? frenchDateTimeFormat.format(lastDownloadDateTime)
+        ? dateFormatVMlistenFalse.formatDateTime(lastDownloadDateTime)
         : '';
 
     // Required so that clicking on Enter closes the dialog
@@ -152,7 +157,9 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
                   context: context,
                   label: AppLocalizations.of(context)!
                       .playlistPlayableAudioTotalRemainingDurationLabel,
-                  value: playlist.getPlayableAudioLstTotalRemainingDuration().HHmmss()),
+                  value: playlist
+                      .getPlayableAudioLstTotalRemainingDuration()
+                      .HHmmss()),
               createInfoRowFunction(
                 context: context,
                 label: AppLocalizations.of(context)!

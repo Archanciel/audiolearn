@@ -12,13 +12,16 @@ class DateFormatVM extends ChangeNotifier {
 
   final SettingsDataService _settingsDataService;
 
-  late String _selectedFormat; // Default format
-  String get selectedFormat => _selectedFormat;
+  late String _selectedDateFormat; // Default format
+  String get selectedDateFormat => _selectedDateFormat;
+
+  late String _selectedDateTimeFormat; // Default format
+  String get selectedDateTimeFormat => _selectedDateTimeFormat;
 
   DateFormatVM({
     required SettingsDataService settingsDataService,
   }) : _settingsDataService = settingsDataService {
-    _selectedFormat = settingsDataService.get(
+    _selectedDateFormat = settingsDataService.get(
       settingType: SettingType.formatOfDate,
       settingSubType: FormatOfDate.formatOfDate,
     );
@@ -30,8 +33,10 @@ class DateFormatVM extends ChangeNotifier {
   ///   - 'dd/MM/yyyy'
   ///   - 'MM/dd/yyyy'
   ///   - 'yyyy/MM/dd'
-  void setDateFormat(String newDateFormat) {
-    _selectedFormat = newDateFormat;
+  void _setDateFormat({
+    required String newDateFormat,
+  }) {
+    _selectedDateFormat = newDateFormat;
 
     _settingsDataService.set(
       settingType: SettingType.formatOfDate,
@@ -45,16 +50,33 @@ class DateFormatVM extends ChangeNotifier {
   }
 
   /// Select a date format from the list of available formats.
-  /// 
+  ///
   /// 0 --> 'dd/MM/yyyy'
   /// 1 --> 'MM/dd/yyyy'
   /// 2 --> 'yyyy/MM/dd'
-  void selectDateFormat(int index) {
-    setDateFormat(dateFormatList[index]);
+  void selectDateFormat({
+    required int dateFormatIndex,
+  }) {
+    _selectedDateFormat = dateFormatList[dateFormatIndex];
+    
+    _settingsDataService.set(
+      settingType: SettingType.formatOfDate,
+      settingSubType: FormatOfDate.formatOfDate,
+      value: dateFormatList[dateFormatIndex],
+    );
+    
+    _settingsDataService.saveSettings();
+    
+    notifyListeners(); 
   }
 
-  // Helper function to format dates according to the selected format
+  /// Format the date according to the selected date format.
   String formatDate(DateTime date) {
-    return DateFormat(_selectedFormat).format(date);
+    return DateFormat(_selectedDateFormat).format(date);
+  }
+
+  /// Format the date according to the selected date format.
+  String formatDateTime(DateTime date) {
+    return DateFormat('$_selectedDateFormat HH:mm').format(date);
   }
 }
