@@ -53,10 +53,13 @@ class _DateFormatSelectionDialogState extends State<DateFormatSelectionDialog>
 
       DateTime now = DateTime.now();
 
+      // It makes sense to display the date format after the current
+      // formatted date. This is useful if the current date day is
+      //  equal to the current date month (e.g. 01/01/2024 !.
       _nowDateFormatList = [
-        '${DateFormat(DateFormatVM.dateFormatList[0]).format(now)} ${DateFormatVM.dateFormatList[0]}',
-        '${DateFormat(DateFormatVM.dateFormatList[1]).format(now)} ${DateFormatVM.dateFormatList[1]}',
-        '${DateFormat(DateFormatVM.dateFormatList[2]).format(now)} ${DateFormatVM.dateFormatList[2]}',
+        '${DateFormat(DateFormatVM.dateFormatList[0]).format(now)}\n(${DateFormatVM.dateFormatList[0]})',
+        '${DateFormat(DateFormatVM.dateFormatList[1]).format(now)}\n(${DateFormatVM.dateFormatList[1]})',
+        '${DateFormat(DateFormatVM.dateFormatList[2]).format(now)}\n(${DateFormatVM.dateFormatList[2]})',
       ];
     });
   }
@@ -105,7 +108,7 @@ class _DateFormatSelectionDialogState extends State<DateFormatSelectionDialog>
         actionsPadding: kDialogActionsPadding,
         content: SizedBox(
           width: double.maxFinite,
-          height: 140.0,
+          height: 180.0,
           child: Column(
             mainAxisSize: MainAxisSize.min, // Use minimum space
             children: [
