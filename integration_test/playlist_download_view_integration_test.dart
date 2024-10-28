@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:audiolearn/viewmodels/comment_vm.dart';
+import 'package:audiolearn/viewmodels/date_format_vm.dart';
 import 'package:audiolearn/views/widgets/confirm_action_dialog.dart';
 import 'package:audiolearn/views/widgets/audio_modification_dialog.dart';
 import 'package:audiolearn/views/widgets/comment_add_edit_dialog.dart';
@@ -127,6 +128,10 @@ void main() {
         commentVM: CommentVM(),
       );
 
+      DateFormatVM dateFormatVM = DateFormatVM(
+        settingsDataService: settingsDataService,
+      );
+
       await _launchExpandablePlaylistListView(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
@@ -134,6 +139,7 @@ void main() {
         playlistListVM: playlistListVM,
         warningMessageVM: warningMessageVM,
         audioPlayerVM: audioPlayerVM,
+        dateFormatVM: dateFormatVM,
       );
 
       // Tap the 'Toggle List' button to display the playlist list. If the list
@@ -387,6 +393,10 @@ void main() {
         commentVM: CommentVM(),
       );
 
+      DateFormatVM dateFormatVM = DateFormatVM(
+        settingsDataService: settingsDataService,
+      );
+
       await _launchExpandablePlaylistListView(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
@@ -394,6 +404,7 @@ void main() {
         playlistListVM: playlistListVM,
         warningMessageVM: warningMessageVM,
         audioPlayerVM: audioPlayerVM,
+        dateFormatVM: dateFormatVM,
       );
 
       // Tap the 'Toggle List' button to display the playlist list. If the list
@@ -546,6 +557,10 @@ void main() {
         commentVM: CommentVM(),
       );
 
+      DateFormatVM dateFormatVM = DateFormatVM(
+        settingsDataService: settingsDataService,
+      );
+
       await _launchExpandablePlaylistListView(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
@@ -553,6 +568,7 @@ void main() {
         playlistListVM: playlistListVM,
         warningMessageVM: warningMessageVM,
         audioPlayerVM: audioPlayerVM,
+        dateFormatVM: dateFormatVM,
       );
 
       // Tap the 'Toggle List' button to display the playlist list. If the list
@@ -809,6 +825,10 @@ void main() {
         commentVM: CommentVM(),
       );
 
+      DateFormatVM dateFormatVM = DateFormatVM(
+        settingsDataService: settingsDataService,
+      );
+
       await _launchExpandablePlaylistListView(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
@@ -816,6 +836,7 @@ void main() {
         playlistListVM: playlistListVM,
         warningMessageVM: warningMessageVM,
         audioPlayerVM: audioPlayerVM,
+        dateFormatVM: dateFormatVM,
       );
 
       // Tap the 'Toggle List' button to display the playlist list. If the list
@@ -1604,6 +1625,10 @@ void main() {
         commentVM: CommentVM(),
       );
 
+      DateFormatVM dateFormatVM = DateFormatVM(
+        settingsDataService: settingsDataService,
+      );
+
       await _launchExpandablePlaylistListView(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
@@ -1611,6 +1636,7 @@ void main() {
         playlistListVM: playlistListVM,
         warningMessageVM: warningMessageVM,
         audioPlayerVM: audioPlayerVM,
+        dateFormatVM: dateFormatVM,
       );
 
       // Tap the 'Toggle List' button to display the playlist list. If the list
@@ -1844,6 +1870,10 @@ void main() {
         commentVM: CommentVM(),
       );
 
+      DateFormatVM dateFormatVM = DateFormatVM(
+        settingsDataService: settingsDataService,
+      );
+
       await _launchExpandablePlaylistListView(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
@@ -1851,6 +1881,7 @@ void main() {
         playlistListVM: playlistListVM,
         warningMessageVM: warningMessageVM,
         audioPlayerVM: audioPlayerVM,
+        dateFormatVM: dateFormatVM,
       );
 
       // Tap the 'Toggle List' button to display the playlist list. If the list
@@ -1956,6 +1987,7 @@ void main() {
         playlistListVM: playlistListVM,
         warningMessageVM: warningMessageVM,
         audioPlayerVM: audioPlayerVM,
+        dateFormatVM: dateFormatVM,
       );
 
       // Purge the test playlist directory so that the created test
@@ -2030,6 +2062,10 @@ void main() {
         commentVM: CommentVM(),
       );
 
+      DateFormatVM dateFormatVM = DateFormatVM(
+        settingsDataService: settingsDataService,
+      );
+
       await _launchExpandablePlaylistListView(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
@@ -2037,6 +2073,7 @@ void main() {
         playlistListVM: playlistListVM,
         warningMessageVM: warningMessageVM,
         audioPlayerVM: audioPlayerVM,
+        dateFormatVM: dateFormatVM,
       );
 
       // Tap the 'Toggle List' button to display the playlist list. If the list
@@ -2188,6 +2225,10 @@ void main() {
         commentVM: CommentVM(),
       );
 
+      DateFormatVM dateFormatVM = DateFormatVM(
+        settingsDataService: settingsDataService,
+      );
+
       await _launchExpandablePlaylistListView(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
@@ -2195,6 +2236,7 @@ void main() {
         playlistListVM: playlistListVM,
         warningMessageVM: warningMessageVM,
         audioPlayerVM: audioPlayerVM,
+        dateFormatVM: dateFormatVM,
       );
 
       // Tap the 'Toggle List' button to display the playlist list. If the list
@@ -2580,6 +2622,10 @@ void main() {
         commentVM: CommentVM(),
       );
 
+      DateFormatVM dateFormatVM = DateFormatVM(
+        settingsDataService: settingsDataService,
+      );
+
       await _launchExpandablePlaylistListView(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
@@ -2587,6 +2633,7 @@ void main() {
         playlistListVM: playlistListVM,
         warningMessageVM: warningMessageVM,
         audioPlayerVM: audioPlayerVM,
+        dateFormatVM: dateFormatVM,
       );
 
       const String invalidSingleVideoUrl = 'invalid';
@@ -2770,6 +2817,10 @@ void main() {
         commentVM: CommentVM(),
       );
 
+      DateFormatVM dateFormatVM = DateFormatVM(
+        settingsDataService: settingsDataService,
+      );
+
       await _launchExpandablePlaylistListView(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
@@ -2777,6 +2828,7 @@ void main() {
         playlistListVM: playlistListVM,
         warningMessageVM: warningMessageVM,
         audioPlayerVM: audioPlayerVM,
+        dateFormatVM: dateFormatVM,
       );
 
       const String youtubeAudioSourceAndTargetPlaylistTitle =
@@ -19428,6 +19480,7 @@ Future<void> _launchExpandablePlaylistListView({
   required PlaylistListVM playlistListVM,
   required WarningMessageVM warningMessageVM,
   required AudioPlayerVM audioPlayerVM,
+  required DateFormatVM dateFormatVM,
 }) async {
   await tester.pumpWidget(
     MultiProvider(
@@ -19444,6 +19497,7 @@ Future<void> _launchExpandablePlaylistListView({
         ChangeNotifierProvider(create: (_) => playlistListVM),
         ChangeNotifierProvider(create: (_) => warningMessageVM),
         ChangeNotifierProvider(create: (_) => audioPlayerVM),
+        ChangeNotifierProvider(create: (_) => dateFormatVM),
       ],
       child: MaterialApp(
         // forcing dark theme
