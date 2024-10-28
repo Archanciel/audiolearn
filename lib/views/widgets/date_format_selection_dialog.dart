@@ -48,15 +48,15 @@ class _DateFormatSelectionDialogState extends State<DateFormatSelectionDialog>
       );
 
       _selectedIndex = DateFormatVM.dateFormatList.indexOf(
-        dateFormatVM.selectedFormat,
+        dateFormatVM.selectedDateFormat,
       );
 
       DateTime now = DateTime.now();
 
       _nowDateFormatList = [
-        DateFormat(DateFormatVM.dateFormatList[0]).format(now),
-        DateFormat(DateFormatVM.dateFormatList[1]).format(now),
-        DateFormat(DateFormatVM.dateFormatList[2]).format(now),
+        '${DateFormat(DateFormatVM.dateFormatList[0]).format(now)} ${DateFormatVM.dateFormatList[0]}',
+        '${DateFormat(DateFormatVM.dateFormatList[1]).format(now)} ${DateFormatVM.dateFormatList[1]}',
+        '${DateFormat(DateFormatVM.dateFormatList[2]).format(now)} ${DateFormatVM.dateFormatList[2]}',
       ];
     });
   }
@@ -105,6 +105,7 @@ class _DateFormatSelectionDialogState extends State<DateFormatSelectionDialog>
         actionsPadding: kDialogActionsPadding,
         content: SizedBox(
           width: double.maxFinite,
+          height: 140.0,
           child: Column(
             mainAxisSize: MainAxisSize.min, // Use minimum space
             children: [
@@ -169,7 +170,7 @@ class _DateFormatSelectionDialogState extends State<DateFormatSelectionDialog>
     required DateFormatVM dateFormatVMlistenFalse,
   }) {
     dateFormatVMlistenFalse.selectDateFormat(
-      _selectedIndex,
+      dateFormatIndex: _selectedIndex,
     );
 
     Navigator.of(context).pop();
