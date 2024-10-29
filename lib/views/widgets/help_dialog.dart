@@ -25,7 +25,8 @@ class HelpDialog extends StatelessWidget with ScreenMixin {
       focusNodeDialog,
     );
 
-    final ThemeProviderVM themeProviderVM = Provider.of<ThemeProviderVM>(context);
+    final ThemeProviderVM themeProviderVM =
+        Provider.of<ThemeProviderVM>(context);
 
     int number = 1;
     int helpItemsLstLength = helpItemsLst.length;
@@ -79,7 +80,7 @@ class HelpDialog extends StatelessWidget with ScreenMixin {
         ),
         actions: <Widget>[
           TextButton(
-            key: const Key('audioInfoOkButtonKey'),
+            key: const Key('audio_info_ok_button_key'),
             child: Text(
               AppLocalizations.of(context)!.closeTextButton,
               style: (themeProviderVM.currentTheme == AppTheme.dark)

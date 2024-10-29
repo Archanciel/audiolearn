@@ -34,6 +34,7 @@ import 'package:audiolearn/utils/dir_util.dart';
 import 'package:audiolearn/main.dart' as app;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../test/services/mock_shared_preferences.dart';
 import '../test/viewmodels/custom_mock_youtube_explode.dart';
 import '../test/viewmodels/mock_audio_download_vm.dart';
 import 'integration_test_util.dart';
@@ -3438,7 +3439,7 @@ void main() {
 
       // Now find the ok button of the audio info dialog
       // and tap on it
-      await tester.tap(find.byKey(const Key('audioInfoOkButtonKey')));
+      await tester.tap(find.byKey(const Key('audio_info_ok_button_key')));
       await tester.pumpAndSettle();
 
       // Now verifying that the target audio can access to its copied
@@ -3953,7 +3954,7 @@ void main() {
 
       // Now find the ok button of the audio info dialog
       // and tap on it
-      await tester.tap(find.byKey(const Key('audioInfoOkButtonKey')));
+      await tester.tap(find.byKey(const Key('audio_info_ok_button_key')));
       await tester.pumpAndSettle();
 
       // Then, we try to move the audio already copied to the same
@@ -13331,7 +13332,7 @@ void main() {
       expect(audioFileNameTitleTextWidget.data, newFileName);
 
       // Tap the Ok button to close the audio info dialog
-      await tester.tap(find.byKey(const Key('audioInfoOkButtonKey')));
+      await tester.tap(find.byKey(const Key('audio_info_ok_button_key')));
       await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
@@ -13485,7 +13486,7 @@ void main() {
       expect(audioFileNameTitleTextWidget.data, newMp3FileName);
 
       // Tap the Ok button to close the audio info dialog
-      await tester.tap(find.byKey(const Key('audioInfoOkButtonKey')));
+      await tester.tap(find.byKey(const Key('audio_info_ok_button_key')));
       await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // The audio file we could not rename still access to its comment ...
@@ -13624,7 +13625,7 @@ void main() {
       expect(audioFileNameTitleTextWidget.data, initialFileName);
 
       // Tap the Ok button to close the audio info dialog
-      await tester.tap(find.byKey(const Key('audioInfoOkButtonKey')));
+      await tester.tap(find.byKey(const Key('audio_info_ok_button_key')));
       await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
@@ -13752,7 +13753,7 @@ void main() {
       expect(audioFileNameTitleTextWidget.data, initialFileName);
 
       // Tap the Ok button to close the audio info dialog
-      await tester.tap(find.byKey(const Key('audioInfoOkButtonKey')));
+      await tester.tap(find.byKey(const Key('audio_info_ok_button_key')));
       await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
@@ -13906,7 +13907,7 @@ void main() {
       expect(audioFileNameTitleTextWidget.data, initialFileName);
 
       // Tap the Ok button to close the audio info dialog
-      await tester.tap(find.byKey(const Key('audioInfoOkButtonKey')));
+      await tester.tap(find.byKey(const Key('audio_info_ok_button_key')));
       await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
@@ -14048,7 +14049,7 @@ void main() {
       expect(find.text('Audio title'), findsNothing);
 
       // Tap the Ok button to close the audio info dialog
-      await tester.tap(find.byKey(const Key('audioInfoOkButtonKey')));
+      await tester.tap(find.byKey(const Key('audio_info_ok_button_key')));
       await tester.pumpAndSettle();
 
       // Verifying that the comment of the audio displays the modified audio title
@@ -14197,7 +14198,7 @@ void main() {
       expect(find.text('Original video title'), findsNothing);
 
       // Tap the Close button to close the audio info dialog
-      await tester.tap(find.byKey(const Key('audioInfoOkButtonKey')));
+      await tester.tap(find.byKey(const Key('audio_info_ok_button_key')));
       await tester.pumpAndSettle();
 
       // Verifying that the comment of the audio displays the modified audio title
@@ -18464,6 +18465,292 @@ void main() {
       );
     });
   });
+  group('Change application date format using the date format selection dialog',
+      () {
+    testWidgets(
+        '''Change application date format to the 3 available date formats
+        and verify the effect everywhere in the application where the date format
+        is applied.''', (tester) async {
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'date_format_dialog_test',
+        tapOnPlaylistToggleButton: false,
+      );
+
+      const String youtubePlaylistTitle = 'S8 audio';
+
+      // Verify the play/pause icon button format and color of
+      // all audio of the selected playlist
+
+      List<String> audioSubTitlesWithAudioDownloadDuration = [
+        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35. Audio download duration: 0:00:01.",
+        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16. Audio download duration: 0:00:01.",
+        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45. Audio download duration: 0:00:01.",
+      ];
+
+      List<String> audioSubTitles = [
+        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
+        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16.",
+        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45.",
+      ];
+
+      // Verifying initial dd/MM/yyyy date format application
+      await _verifyDateFormatApplication(
+        tester: tester,
+        audioSubTitles: audioSubTitles,
+        playlistTitle: youtubePlaylistTitle,
+        videoUploadDate: "12/06/2022",
+        audioDownloadDateTime: "08/01/2024 16:35",
+        playlistLastDownloadDateTime: "07/01/2024 16:36",
+      );
+
+      await _selectDateFormat(
+        tester: tester,
+        dateFormatToSelect: "MM/dd/yyyy",
+        previouslySelectedDateFormat: "dd/MM/yyyy",
+      );
+
+      audioSubTitles = [
+        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 01/08/2024 at 16:35.",
+        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 01/07/2024 at 08:16.",
+        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 12/26/2023 at 09:45.",
+      ];
+
+      // Verifying initial dd/MM/yyyy date format application
+      await _verifyDateFormatApplication(
+        tester: tester,
+        audioSubTitles: audioSubTitles,
+        playlistTitle: youtubePlaylistTitle,
+        videoUploadDate: "06/12/2022",
+        audioDownloadDateTime: "01/08/2024 16:35",
+        playlistLastDownloadDateTime: "01/07/2024 16:36",
+      );
+
+      await _selectDateFormat(
+        tester: tester,
+        dateFormatToSelect: "yyyy/MM/dd",
+        previouslySelectedDateFormat: "MM/dd/yyyy",
+      );
+
+      audioSubTitles = [
+        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 2024/01/08 at 16:35.",
+        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 2024/01/07 at 08:16.",
+        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45.",
+      ];
+
+      // Verifying initial dd/MM/yyyy date format application
+      await _verifyDateFormatApplication(
+        tester: tester,
+        audioSubTitles: audioSubTitles,
+        playlistTitle: youtubePlaylistTitle,
+        videoUploadDate: "2022/06/12",
+        audioDownloadDateTime: "2024/01/08 16:35",
+        playlistLastDownloadDateTime: "2024/01/07 16:36",
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+  });
+}
+
+Future<void> _selectDateFormat({
+  required WidgetTester tester,
+  required String dateFormatToSelect,
+  required String previouslySelectedDateFormat,
+}) async {
+  await tester.tap(find.byKey(const Key('appBarRightPopupMenu')));
+  await tester.pumpAndSettle();
+
+  // Open the date format selection dialog
+  await tester.tap(find.byKey(const Key('appBarMenuDateFormat')));
+  await tester.pumpAndSettle();
+
+  // Check the value of the date format selection dialog title
+  Text alertDialogTitle =
+      tester.widget(find.byKey(const Key('dateFormatSelectionDialogTitleKey')));
+  expect(alertDialogTitle.data, 'Select the application date format');
+
+  // Find the RadioListTile date format to select
+
+  Finder radioListTile = find.byWidgetPredicate(
+    (Widget widget) {
+      return widget is RadioListTile &&
+          widget.title is Text &&
+          (widget.title as Text).data!.contains(dateFormatToSelect);
+    },
+  );
+
+  // Tap the target playlist RadioListTile to select it
+  await tester.tap(radioListTile);
+  await tester.pumpAndSettle();
+
+  await _verifyApplicationSettingsDateFormatValue(
+    dateFormatValue: previouslySelectedDateFormat,
+  );
+
+  // Now find the confirm button and tap on it
+  await tester.tap(find.byKey(const Key('confirmButton')));
+  await tester.pumpAndSettle();
+
+  await _verifyApplicationSettingsDateFormatValue(
+    dateFormatValue: dateFormatToSelect,
+  );
+}
+
+Future<void> _verifyApplicationSettingsDateFormatValue({
+  required String dateFormatValue,
+}) async {
+  SettingsDataService settingsDataService = SettingsDataService(
+    sharedPreferences: MockSharedPreferences(),
+    isTest: true,
+  );
+
+  await settingsDataService.loadSettingsFromFile(
+      settingsJsonPathFileName:
+          "$kPlaylistDownloadRootPathWindowsTest${Platform.pathSeparator}$kSettingsFileName");
+
+  expect(
+      settingsDataService.get(
+          settingType: SettingType.formatOfDate,
+          settingSubType: FormatOfDate.formatOfDate),
+      dateFormatValue);
+}
+
+Future<void> _verifyDateFormatApplication({
+  required WidgetTester tester,
+  required List<String> audioSubTitles,
+  required String playlistTitle,
+  required String videoUploadDate,
+  required audioDownloadDateTime,
+  required String playlistLastDownloadDateTime,
+}) async {
+  IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
+    tester: tester,
+    audioSubTitlesOrderLst: audioSubTitles,
+  );
+
+  // Now we want to tap the popup menu of the Audio ListTile
+  // "Jancovici m'explique l’importance des ordres de grandeur
+  // face au changement climatique",
+
+  const String audioInfoTitle =
+      "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
+
+  // First, find the Audio sublist ListTile Text widget
+  final Finder targetAudioListTileTextWidgetFinder = find.text(audioInfoTitle);
+
+  // Then obtain the Audio ListTile widget enclosing the Text widget by
+  // finding its ancestor
+  final Finder targetAudioListTileWidgetFinder = find.ancestor(
+    of: targetAudioListTileTextWidgetFinder,
+    matching: find.byType(ListTile),
+  );
+
+  // Now find the leading menu icon button of the Audio ListTile and tap
+  // on it
+  final Finder targetAudioListTileLeadingMenuIconButton = find.descendant(
+    of: targetAudioListTileWidgetFinder,
+    matching: find.byIcon(Icons.menu),
+  );
+
+  // Tap the leading menu icon button to open the popup menu
+  await tester.tap(targetAudioListTileLeadingMenuIconButton);
+  await tester.pumpAndSettle();
+
+  // Now find the popup menu item and tap on it
+  final Finder popupDisplayAudioInfoMenuItemFinder =
+      find.byKey(const Key("popup_menu_display_audio_info"));
+
+  await tester.tap(popupDisplayAudioInfoMenuItemFinder);
+  await tester.pumpAndSettle();
+
+  // Now verifying the display audio info audio copied dialog
+  // elements
+
+  // Verify the video upload date of the audio
+
+  final Text videoUploadDateTextWidget =
+      tester.widget<Text>(find.byKey(const Key('videoUploadDateKey')));
+
+  expect(
+    videoUploadDateTextWidget.data,
+    videoUploadDate,
+  );
+
+  // Verify the audio download date time of the audio
+
+  final Text audioDownloadDateTimeTextWidget =
+      tester.widget<Text>(find.byKey(const Key('audioDownloadDateTimeKey')));
+
+  expect(
+    audioDownloadDateTimeTextWidget.data,
+    audioDownloadDateTime,
+  );
+
+  // Now find the ok button of the audio info dialog
+  // and tap on it
+  await tester.tap(find.byKey(const Key('audio_info_ok_button_key')));
+  await tester.pumpAndSettle();
+
+  // Tap the 'Toggle List' button to display the list of playlist's.
+  await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+  await tester.pumpAndSettle();
+
+  // Find the playlist whose audio are commented
+
+  // First, find the Playlist ListTile Text widget. Two exist:
+  // "S8 audio" under the 'Youtube Link or Search' text field and
+  // "S8 audio" as PlaylistItem
+  final Finder playlistToExamineInfoTextWidgetFinder =
+      find.text(playlistTitle).at(1);
+
+  // Then obtain the Playlist ListTile widget enclosing the Text widget
+  // by finding its ancestor
+  final Finder playlistWithCommentedAudioListTileWidgetFinder = find.ancestor(
+    of: playlistToExamineInfoTextWidgetFinder,
+    matching: find.byType(ListTile),
+  );
+
+  // Now find the leading menu icon button of the playlist and tap on it
+  final Finder playlistListTileLeadingMenuIconButton = find.descendant(
+    of: playlistWithCommentedAudioListTileWidgetFinder,
+    matching: find.byIcon(Icons.menu),
+  );
+
+  // Tap the leading menu icon button to open the popup menu
+  await tester.tap(playlistListTileLeadingMenuIconButton);
+  await tester.pumpAndSettle(); // Wait for popup menu to appear
+
+  // Now find the playlist info popup menu item and tap on it
+  // to open the PlaylistInfoDialog
+  final Finder popupPlaylistInfoMenuItem =
+      find.byKey(const Key("popup_menu_display_playlist_info"));
+
+  await tester.tap(popupPlaylistInfoMenuItem);
+  await tester.pumpAndSettle();
+
+  // Verify the playlist last download date time
+
+  final Text playlistLastDownloadDateTimeTextWidget = tester
+      .widget<Text>(find.byKey(const Key('playlist_last_download_date_time')));
+
+  expect(
+    playlistLastDownloadDateTimeTextWidget.data,
+    playlistLastDownloadDateTime,
+  );
+
+  // Now find the ok button of the audio info dialog
+  // and tap on it
+  await tester.tap(find.byKey(const Key('playlist_info_ok_button_key')));
+  await tester.pumpAndSettle();
+
+  // Tap the 'Toggle List' button to hide the list of playlist's.
+  await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+  await tester.pumpAndSettle();
 }
 
 Future<void> _rewindPlaylistAfterPlayThenPauseAnAudio({
@@ -19243,7 +19530,7 @@ Future<Finder> verifyAudioInfoDialog({
 
   // Now find the ok button of the audio info dialog
   // and tap on it to close the dialog
-  await tester.tap(find.byKey(const Key('audioInfoOkButtonKey')));
+  await tester.tap(find.byKey(const Key('audio_info_ok_button_key')));
   await tester.pumpAndSettle();
 
   return targetAudioListTileWidgetFinder;
@@ -19702,6 +19989,6 @@ Future<void> verifyAudioInfoDialogElements({
 
   // Now find the ok button of the audio info dialog
   // and tap on it
-  await tester.tap(find.byKey(const Key('audioInfoOkButtonKey')));
+  await tester.tap(find.byKey(const Key('audio_info_ok_button_key')));
   await tester.pumpAndSettle();
 }

@@ -27,28 +27,6 @@ class DateFormatVM extends ChangeNotifier {
     );
   }
 
-  /// Update the selected date format.
-  ///
-  /// {newDateFormat} can be any of the following:
-  ///   - 'dd/MM/yyyy'
-  ///   - 'MM/dd/yyyy'
-  ///   - 'yyyy/MM/dd'
-  void _setDateFormat({
-    required String newDateFormat,
-  }) {
-    _selectedDateFormat = newDateFormat;
-
-    _settingsDataService.set(
-      settingType: SettingType.formatOfDate,
-      settingSubType: FormatOfDate.formatOfDate,
-      value: newDateFormat,
-    );
-
-    _settingsDataService.saveSettings();
-
-    notifyListeners(); // Notify all listeners to rebuild
-  }
-
   /// Select a date format from the list of available formats.
   ///
   /// 0 --> 'dd/MM/yyyy'
