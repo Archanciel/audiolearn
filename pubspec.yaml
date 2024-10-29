@@ -40,7 +40,7 @@ dependencies:
   audioplayers: ^5.2.1
   path_provider: ^2.0.14
   provider: ^6.1.2
-  youtube_explode_dart: ^2.3.4
+  youtube_explode_dart: ^2.3.5
   just_audio: ^0.9.37
   http: ^1.1.0
   googleapis: ^13.0.0
