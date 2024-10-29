@@ -18482,22 +18482,54 @@ void main() {
       // Verify the play/pause icon button format and color of
       // all audio of the selected playlist
 
-      List<String> audioSubTitlesWithAudioDownloadDuration = [
-        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35. Audio download duration: 0:00:01.",
-        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16. Audio download duration: 0:00:01.",
-        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45. Audio download duration: 0:00:01.",
-      ];
-
       List<String> audioSubTitles = [
         "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
         "0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16.",
         "0:06:29.0. 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45.",
       ];
 
+      List<String> audioSubTitlesWithAudioDownloadDuration = [
+        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16. Audio download duration: 0:00:01.",
+        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45. Audio download duration: 0:00:01.",
+        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35. Audio download duration: 0:00:01.",
+      ];
+
+      List<String> audioSubTitlesWithAudioRemainingDuration = [
+        "0:13:39.0. Remaining 00:00:04. Listened on 19/08/2024 at 14:46.",
+        "0:06:29.0. Remaining 00:00:38. Listened on 16/03/2024 at 17:09.",
+        "0:06:29.0. Remaining 00:06:29. Not listened.",
+      ];
+
+      List<String> audioSubTitlesLastListenedDateTimeDescending = [
+        "0:13:39.0. Listened on 19/08/2024 at 14:46.",
+        "0:06:29.0. Listened on 16/03/2024 at 17:09.",
+        "0:06:29.0. Not listened.",
+      ];
+
+      List<String> audioSubTitlesTitleAsc = [
+        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45.",
+        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
+        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16.",
+      ];
+
+      List<String> audioSubTitlesVideoUploadDate = [
+        "0:06:29.0. Video upload date: 23/09/2023.",
+        "0:13:39.0. Video upload date: 10/09/2023.",
+        "0:06:29.0. Video upload date: 12/06/2022.",
+      ];
+
       // Verifying initial dd/MM/yyyy date format application
       await _verifyDateFormatApplication(
         tester: tester,
         audioSubTitles: audioSubTitles,
+        audioSubTitlesWithAudioDownloadDuration:
+            audioSubTitlesWithAudioDownloadDuration,
+        audioSubTitlesWithAudioRemainingDuration:
+            audioSubTitlesWithAudioRemainingDuration,
+        audioSubTitlesLastListenedDateTimeDescending:
+            audioSubTitlesLastListenedDateTimeDescending,
+        audioSubTitlesTitleAsc: audioSubTitlesTitleAsc,
+        audioSubTitlesVideoUploadDate: audioSubTitlesVideoUploadDate,
         playlistTitle: youtubePlaylistTitle,
         videoUploadDate: "12/06/2022",
         audioDownloadDateTime: "08/01/2024 16:35",
@@ -18516,10 +18548,48 @@ void main() {
         "0:06:29.0. 2.37 MB at 1.36 MB/sec on 12/26/2023 at 09:45.",
       ];
 
+      audioSubTitlesWithAudioDownloadDuration = [
+        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 01/07/2024 at 08:16. Audio download duration: 0:00:01.",
+        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 12/26/2023 at 09:45. Audio download duration: 0:00:01.",
+        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 01/08/2024 at 16:35. Audio download duration: 0:00:01.",
+      ];
+
+      audioSubTitlesWithAudioRemainingDuration = [
+        "0:13:39.0. Remaining 00:00:04. Listened on 08/19/2024 at 14:46.",
+        "0:06:29.0. Remaining 00:00:38. Listened on 03/16/2024 at 17:09.",
+        "0:06:29.0. Remaining 00:06:29. Not listened.",
+      ];
+
+      audioSubTitlesLastListenedDateTimeDescending = [
+        "0:13:39.0. Listened on 08/19/2024 at 14:46.",
+        "0:06:29.0. Listened on 03/16/2024 at 17:09.",
+        "0:06:29.0. Not listened.",
+      ];
+
+      audioSubTitlesTitleAsc = [
+        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 12/26/2023 at 09:45.",
+        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 01/08/2024 at 16:35.",
+        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 01/07/2024 at 08:16.",
+      ];
+
+      audioSubTitlesVideoUploadDate = [
+        "0:06:29.0. Video upload date: 09/23/2023.",
+        "0:13:39.0. Video upload date: 09/10/2023.",
+        "0:06:29.0. Video upload date: 06/12/2022.",
+      ];
+
       // Verifying initial dd/MM/yyyy date format application
       await _verifyDateFormatApplication(
         tester: tester,
         audioSubTitles: audioSubTitles,
+        audioSubTitlesWithAudioDownloadDuration:
+            audioSubTitlesWithAudioDownloadDuration,
+        audioSubTitlesWithAudioRemainingDuration:
+            audioSubTitlesWithAudioRemainingDuration,
+        audioSubTitlesLastListenedDateTimeDescending:
+            audioSubTitlesLastListenedDateTimeDescending,
+        audioSubTitlesTitleAsc: audioSubTitlesTitleAsc,
+        audioSubTitlesVideoUploadDate: audioSubTitlesVideoUploadDate,
         playlistTitle: youtubePlaylistTitle,
         videoUploadDate: "06/12/2022",
         audioDownloadDateTime: "01/08/2024 16:35",
@@ -18538,10 +18608,48 @@ void main() {
         "0:06:29.0. 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45.",
       ];
 
+      audioSubTitlesWithAudioDownloadDuration = [
+        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 2024/01/07 at 08:16. Audio download duration: 0:00:01.",
+        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45. Audio download duration: 0:00:01.",
+        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 2024/01/08 at 16:35. Audio download duration: 0:00:01.",
+      ];
+
+      audioSubTitlesWithAudioRemainingDuration = [
+        "0:13:39.0. Remaining 00:00:04. Listened on 2024/08/19 at 14:46.",
+        "0:06:29.0. Remaining 00:00:38. Listened on 2024/03/16 at 17:09.",
+        "0:06:29.0. Remaining 00:06:29. Not listened.",
+      ];
+
+      audioSubTitlesLastListenedDateTimeDescending = [
+        "0:13:39.0. Listened on 2024/08/19 at 14:46.",
+        "0:06:29.0. Listened on 2024/03/16 at 17:09.",
+        "0:06:29.0. Not listened.",
+      ];
+
+      audioSubTitlesTitleAsc = [
+        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45.",
+        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 2024/01/08 at 16:35.",
+        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 2024/01/07 at 08:16.",
+      ];
+
+      audioSubTitlesVideoUploadDate = [
+        "0:06:29.0. Video upload date: 2023/09/23.",
+        "0:13:39.0. Video upload date: 2023/09/10.",
+        "0:06:29.0. Video upload date: 2022/06/12.",
+      ];
+
       // Verifying initial dd/MM/yyyy date format application
       await _verifyDateFormatApplication(
         tester: tester,
         audioSubTitles: audioSubTitles,
+        audioSubTitlesWithAudioDownloadDuration:
+            audioSubTitlesWithAudioDownloadDuration,
+        audioSubTitlesWithAudioRemainingDuration:
+            audioSubTitlesWithAudioRemainingDuration,
+        audioSubTitlesLastListenedDateTimeDescending:
+            audioSubTitlesLastListenedDateTimeDescending,
+        audioSubTitlesTitleAsc: audioSubTitlesTitleAsc,
+        audioSubTitlesVideoUploadDate: audioSubTitlesVideoUploadDate,
         playlistTitle: youtubePlaylistTitle,
         videoUploadDate: "2022/06/12",
         audioDownloadDateTime: "2024/01/08 16:35",
@@ -18623,6 +18731,11 @@ Future<void> _verifyApplicationSettingsDateFormatValue({
 Future<void> _verifyDateFormatApplication({
   required WidgetTester tester,
   required List<String> audioSubTitles,
+  required List<String> audioSubTitlesWithAudioDownloadDuration,
+  required List<String> audioSubTitlesWithAudioRemainingDuration,
+  required List<String> audioSubTitlesLastListenedDateTimeDescending,
+  required List<String> audioSubTitlesTitleAsc,
+  required List<String> audioSubTitlesVideoUploadDate,
   required String playlistTitle,
   required String videoUploadDate,
   required audioDownloadDateTime,
@@ -18751,6 +18864,97 @@ Future<void> _verifyDateFormatApplication({
   // Tap the 'Toggle List' button to hide the list of playlist's.
   await tester.tap(find.byKey(const Key('playlist_toggle_button')));
   await tester.pumpAndSettle();
+
+  // Now, selecting 'audio downl dur' dropdown button item to
+  // apply this sort/filter parms
+  await _selectApplyAndVerifySortFilterParms(
+    tester: tester,
+    sortFilterParms: 'audio downl dur',
+    audioSubTitles: audioSubTitlesWithAudioDownloadDuration,
+  );
+
+  // Now, selecting 'audio remai. duration' dropdown button item to
+  // apply this sort/filter parms
+  await _selectApplyAndVerifySortFilterParms(
+    tester: tester,
+    sortFilterParms: 'audio remai. duration',
+    audioSubTitles: audioSubTitlesWithAudioRemainingDuration,
+  );
+
+  // Now, selecting 'desc listened' dropdown button item to
+  // apply this sort/filter parms
+  await _selectApplyAndVerifySortFilterParms(
+    tester: tester,
+    sortFilterParms: 'desc listened',
+    audioSubTitles: audioSubTitlesLastListenedDateTimeDescending,
+  );
+
+  // Now, selecting 'Title asc' dropdown button item to
+  // apply this sort/filter parms
+  await _selectApplyAndVerifySortFilterParms(
+    tester: tester,
+    sortFilterParms: 'Title asc',
+    audioSubTitles: audioSubTitlesTitleAsc,
+  );
+
+  // Now, selecting 'video upl date' dropdown button item to
+  // apply this sort/filter parms
+  await _selectApplyAndVerifySortFilterParms(
+    tester: tester,
+    sortFilterParms: 'video upl date',
+    audioSubTitles: audioSubTitlesVideoUploadDate,
+  );
+
+  // Reset 'default' sort/filter parm
+
+  final Finder dropDownButtonFinder =
+      find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+  final Finder dropDownButtonTextFinder = find.descendant(
+    of: dropDownButtonFinder,
+    matching: find.byType(Text),
+  );
+
+  // Tap on the current dropdown button item to open the dropdown
+  // button items list
+  await tester.tap(dropDownButtonTextFinder);
+  await tester.pumpAndSettle();
+
+  // And select the 'default' sort/filter item
+  final Finder defaultDropDownTextFinder = find.text('default');
+  await tester.tap(defaultDropDownTextFinder);
+  await tester.pumpAndSettle();
+}
+
+Future<void> _selectApplyAndVerifySortFilterParms({
+  required WidgetTester tester,
+  required String sortFilterParms,
+  required List<String> audioSubTitles,
+}) async {
+  final Finder dropDownButtonFinder =
+      find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+  final Finder dropDownButtonTextFinder = find.descendant(
+    of: dropDownButtonFinder,
+    matching: find.byType(Text),
+  );
+
+  // Tap on the current dropdown button item to open the dropdown
+  // button items list
+  await tester.tap(dropDownButtonTextFinder);
+  await tester.pumpAndSettle();
+
+  // And select the 'audio downl dur' sort/filter item
+  final Finder titleAscDropDownTextFinder = find.text(sortFilterParms);
+  await tester.tap(titleAscDropDownTextFinder);
+  await tester.pumpAndSettle();
+
+  // Verify the audio sub-titles order in the list tile which correspond
+  // to the audio download duration sort order selected parms
+  IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
+    tester: tester,
+    audioSubTitlesOrderLst: audioSubTitles,
+  );
 }
 
 Future<void> _rewindPlaylistAfterPlayThenPauseAnAudio({
