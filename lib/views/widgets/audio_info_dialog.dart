@@ -66,7 +66,7 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
         ),
         actions: <Widget>[
           TextButton(
-            key: const Key('audioInfoOkButtonKey'),
+            key: const Key('audio_info_ok_button_key'),
             child: Text(
               AppLocalizations.of(context)!.closeTextButton,
               style: (themeProviderVM.currentTheme == AppTheme.dark)
@@ -105,13 +105,16 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
           label: AppLocalizations.of(context)!.originalVideoTitleLabel,
           value: audio.originalVideoTitle),
       createInfoRowFunction(
+          valueTextWidgetKey: const Key('videoUploadDateKey'),
           context: context,
           label: AppLocalizations.of(context)!.videoUploadDateLabel,
           value: dateFormatVMlistenFalse.formatDate(audio.videoUploadDate)),
       createInfoRowFunction(
+          valueTextWidgetKey: const Key('audioDownloadDateTimeKey'),
           context: context,
           label: AppLocalizations.of(context)!.audioDownloadDateTimeLabel,
-          value: dateFormatVMlistenFalse.formatDateTime(audio.audioDownloadDateTime)),
+          value: dateFormatVMlistenFalse
+              .formatDateTime(audio.audioDownloadDateTime)),
       createInfoRowFunction(
           context: context,
           label: AppLocalizations.of(context)!.videoUrlLabel,

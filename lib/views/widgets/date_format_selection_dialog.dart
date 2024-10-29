@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../viewmodels/audio_player_vm.dart';
 import '../../views/screen_mixin.dart';
 import '../../constants.dart';
 import '../../services/settings_data_service.dart';
@@ -108,7 +107,7 @@ class _DateFormatSelectionDialogState extends State<DateFormatSelectionDialog>
         actionsPadding: kDialogActionsPadding,
         content: SizedBox(
           width: double.maxFinite,
-          height: 180.0,
+          height: 190.0,
           child: Column(
             mainAxisSize: MainAxisSize.min, // Use minimum space
             children: [

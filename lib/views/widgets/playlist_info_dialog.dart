@@ -96,6 +96,7 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
                       AppLocalizations.of(context)!.playlistDownloadPathLabel,
                   value: playlist.downloadPath),
               createInfoRowFunction(
+                valueTextWidgetKey: Key('playlist_last_download_date_time'),
                   context: context,
                   label: AppLocalizations.of(context)!
                       .playlistLastDownloadDateTimeLabel,
@@ -191,6 +192,7 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
         ),
         actions: <Widget>[
           TextButton(
+            key: Key('playlist_info_ok_button_key'),
             child: Text(
               AppLocalizations.of(context)!.closeTextButton,
               style: (themeProviderVM.currentTheme == AppTheme.dark)

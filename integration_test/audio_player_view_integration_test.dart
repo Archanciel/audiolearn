@@ -2384,8 +2384,7 @@ void main() {
         tester: tester,
         audioTitle: thirdDownloadedAudioTitle,
         expectedIcon: Icons.play_arrow,
-        expectedIconColor:
-            kSliderThumbColorInDarkMode,
+        expectedIconColor: kSliderThumbColorInDarkMode,
         expectedIconBackgroundColor: Colors.black,
       );
 
@@ -7667,7 +7666,7 @@ Future<void> goBackToPlaylistDownloadViewToCheckAudioStateAndIcon({
   expect(audioStateTextWidget.data, audioStateExpectedValue);
 
   // Now click on Ok button to close the audio info dialog
-  await tester.tap(find.byKey(const Key('audioInfoOkButtonKey')));
+  await tester.tap(find.byKey(const Key('audio_info_ok_button_key')));
   await tester.pumpAndSettle();
 
   // Now verifying the audio right button state
