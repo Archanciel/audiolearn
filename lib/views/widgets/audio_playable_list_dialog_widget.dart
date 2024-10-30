@@ -428,7 +428,7 @@ class _AudioPlayableListDialogState extends State<AudioPlayableListDialog>
       _scrollController.jumpTo(0.0);
       _scrollController.animateTo(
         offset,
-        duration: const Duration(seconds: 1),
+        duration: kScrollDuration,
         curve: Curves.easeInOut,
       );
     } else {

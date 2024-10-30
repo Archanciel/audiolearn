@@ -511,7 +511,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
       _scrollController.jumpTo(0.0);
       _scrollController.animateTo(
         offset,
-        duration: const Duration(seconds: 1),
+        duration: kScrollDuration,
         curve: Curves.easeInOut,
       );
     } else {
