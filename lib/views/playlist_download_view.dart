@@ -161,7 +161,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
               )
             : const SizedBox.shrink(), // the list of playlists is collapsed
         _buildExpandedAudioList(
-          playlistListVMlistenFalse: playlistListVMlistenFalse,
+          playlistListVMlistenTrue: playlistListVMlistenTrue,
           warningMessageVMlistenFalse: warningMessageVMlistenFalse,
         ),
       ],
@@ -169,7 +169,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   }
 
   Widget _buildExpandedAudioList({
-    required PlaylistListVM playlistListVMlistenFalse,
+    required PlaylistListVM playlistListVMlistenTrue,
     required WarningMessageVM warningMessageVMlistenFalse,
   }) {
     if (_wasSortFilterAudioSettingsApplied) {
@@ -179,28 +179,15 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       // if the sort and filter audio settings have been applied,
       // the possibly saved sorted and filtered options of the
       // selected playlist are used to display the audio list !
-      _selectedPlaylistsPlayableAudios = playlistListVMlistenFalse
+      _selectedPlaylistsPlayableAudios = playlistListVMlistenTrue
           .sortedFilteredSelectedPlaylistsPlayableAudios!;
       _wasSortFilterAudioSettingsApplied = false;
     } else {
-      _selectedPlaylistsPlayableAudios = playlistListVMlistenFalse
+      _selectedPlaylistsPlayableAudios = playlistListVMlistenTrue
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
     }
-    // if (playlistListVMlistenFalse.isAudioListFilteredAndSorted()) {
-    //   // Scroll the sublist to the top when the audio
-    //   // list is filtered and/or sorted
-    //   WidgetsBinding.instance.addPostFrameCallback((_) {
-    //     if (_scrollController.hasClients) {
-    //       _scrollController.animateTo(
-    //         0,
-    //         duration: const Duration(milliseconds: 300),
-    //         curve: Curves.easeOut,
-    //       );
-    //     }
-    //   });
-    // }
 
     Expanded expanded = Expanded(
       child: ListView.builder(
@@ -219,22 +206,22 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     );
 
     _scrollToCurrentAudioItem(
-      playlistListVMlistenFalse: playlistListVMlistenFalse,
+      playlistListVMlistenTrue: playlistListVMlistenTrue,
     );
 
     return expanded;
   }
 
   void _scrollToCurrentAudioItem({
-    required PlaylistListVM playlistListVMlistenFalse,
+    required PlaylistListVM playlistListVMlistenTrue,
   }) {
-    int currentOrPastPlayableAudioIndex = playlistListVMlistenFalse
+    int currentOrPastPlayableAudioIndex = playlistListVMlistenTrue
         .uniqueSelectedPlaylist!.currentOrPastPlayableAudioIndex;
-    List<Audio> selectedPlaylisPlayableAudios = playlistListVMlistenFalse
+    List<Audio> selectedPlaylisPlayableAudios = playlistListVMlistenTrue
         .uniqueSelectedPlaylist!.playableAudioLst;
         Audio currentOrPastPlayableAudio = selectedPlaylisPlayableAudios[currentOrPastPlayableAudioIndex];
     List<Audio> selectedPlaylisSortFiltertPlayableAudios =
-        playlistListVMlistenFalse.getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView);
+        playlistListVMlistenTrue.getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView);
 
     currentOrPastPlayableAudioIndex = selectedPlaylisSortFiltertPlayableAudios.indexWhere((Audio audio) => audio == currentOrPastPlayableAudio);
 
@@ -257,14 +244,11 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       multiplier *= 1.2;
     }
 
+    if (playlistListVMlistenTrue.isPlaylistListExpanded) {
+      // the list of playlists is expanded
+      multiplier *= 1.5;
+    }
     double offset = multiplier * _audioItemHeight;
-
-    // if (_backToAllAudios) {
-    //   // improves the scrolling when the user goes back to
-    //   // the list of all audio
-    //   offset *= 1.4;
-    //   _backToAllAudios = false;
-    // }
 
     if (_scrollController.hasClients) {
       _scrollController.jumpTo(0.0);
@@ -278,7 +262,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       // Schedule a callback to try again after the next frame.
       WidgetsBinding.instance
           .addPostFrameCallback((_) => _scrollToCurrentAudioItem(
-                playlistListVMlistenFalse: playlistListVMlistenFalse,
+                playlistListVMlistenTrue: playlistListVMlistenTrue,
               ));
     }
   }
