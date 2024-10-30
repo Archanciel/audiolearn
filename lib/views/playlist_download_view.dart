@@ -215,23 +215,10 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   void _scrollToCurrentAudioItem({
     required PlaylistListVM playlistListVMlistenTrue,
   }) {
-    int currentOrPastPlayableAudioIndex = playlistListVMlistenTrue
-        .uniqueSelectedPlaylist!.currentOrPastPlayableAudioIndex;
-    List<Audio> selectedPlaylisPlayableAudios =
-        playlistListVMlistenTrue.uniqueSelectedPlaylist!.playableAudioLst;
-    Audio currentOrPastPlayableAudio =
-        selectedPlaylisPlayableAudios[currentOrPastPlayableAudioIndex];
-    List<Audio> selectedPlaylisSortFiltertPlayableAudios =
-        playlistListVMlistenTrue
-            .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
-                audioLearnAppViewType:
-                    AudioLearnAppViewType.playlistDownloadView);
-
-    currentOrPastPlayableAudioIndex = selectedPlaylisSortFiltertPlayableAudios
-        .indexWhere((Audio audio) => audio == currentOrPastPlayableAudio);
+    int audioToScrollPosition = playlistListVMlistenTrue.determineAudioToScrollPosition();
 
     if (playlistListVMlistenTrue.isPlaylistListExpanded &&
-        currentOrPastPlayableAudioIndex <= 2) {
+        audioToScrollPosition <= 2) {
       // this avoids scrolling down when the current audio is
       // in the top part of the audio list. Without that, the
       // list is unusefully scrolled down and the user has to scroll
@@ -239,13 +226,13 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       return;
     }
 
-    double multiplier = currentOrPastPlayableAudioIndex.toDouble();
+    double multiplier = audioToScrollPosition.toDouble();
 
-    if (currentOrPastPlayableAudioIndex > 300) {
+    if (audioToScrollPosition > 300) {
       multiplier *= 1.23;
-    } else if (currentOrPastPlayableAudioIndex > 200) {
+    } else if (audioToScrollPosition > 200) {
       multiplier *= 1.21;
-    } else if (currentOrPastPlayableAudioIndex > 120) {
+    } else if (audioToScrollPosition > 120) {
       multiplier *= 1.2;
     }
 

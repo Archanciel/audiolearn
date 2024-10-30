@@ -236,6 +236,26 @@ class PlaylistListVM extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// This method is called when the select an audio to listen and then
+  /// come back to the playlist download view. The method scroll the playlist
+  /// audio so that the current or past audio is visible in the audio list.
+  int determineAudioToScrollPosition() {
+    int currentOrPastPlayableAudioIndex =
+        uniqueSelectedPlaylist!.currentOrPastPlayableAudioIndex;
+    List<Audio> selectedPlaylisPlayableAudios =
+        uniqueSelectedPlaylist!.playableAudioLst;
+    Audio currentOrPastPlayableAudio =
+        selectedPlaylisPlayableAudios[currentOrPastPlayableAudioIndex];
+    List<Audio> selectedPlaylisSortFiltertPlayableAudios =
+        getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
+            audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView);
+
+    int audioToScrollPosition = selectedPlaylisSortFiltertPlayableAudios
+        .indexWhere((Audio audio) => audio == currentOrPastPlayableAudio);
+
+    return audioToScrollPosition;
+  }
+
   /// Thanks to this method, when restarting the app, the playlists
   /// are displayed in the same order as when the app was closed. This
   /// is done by saving the playlist order in the settings file.
@@ -1935,7 +1955,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// Method called when the user clicks on the 'Rewind audio to start' playlist
   /// menu item. The method rewinds the audio to start and saves the playlist
   /// to its json file.
-  /// 
+  ///
   /// Passing the {audioPlayerVM} is necessary in order to rewind the current
   /// audio to start position. Otherwise, after clicking on the play audio view
   /// button, the current audio will be positioned to the last played position
