@@ -95,7 +95,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   void dispose() {
     _playlistUrlOrSearchController.dispose();
     _scrollController.dispose();
-    
+
     super.dispose();
   }
 
@@ -217,16 +217,21 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   }) {
     int currentOrPastPlayableAudioIndex = playlistListVMlistenTrue
         .uniqueSelectedPlaylist!.currentOrPastPlayableAudioIndex;
-    List<Audio> selectedPlaylisPlayableAudios = playlistListVMlistenTrue
-        .uniqueSelectedPlaylist!.playableAudioLst;
-        Audio currentOrPastPlayableAudio = selectedPlaylisPlayableAudios[currentOrPastPlayableAudioIndex];
+    List<Audio> selectedPlaylisPlayableAudios =
+        playlistListVMlistenTrue.uniqueSelectedPlaylist!.playableAudioLst;
+    Audio currentOrPastPlayableAudio =
+        selectedPlaylisPlayableAudios[currentOrPastPlayableAudioIndex];
     List<Audio> selectedPlaylisSortFiltertPlayableAudios =
-        playlistListVMlistenTrue.getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView);
+        playlistListVMlistenTrue
+            .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
+                audioLearnAppViewType:
+                    AudioLearnAppViewType.playlistDownloadView);
 
-    currentOrPastPlayableAudioIndex = selectedPlaylisSortFiltertPlayableAudios.indexWhere((Audio audio) => audio == currentOrPastPlayableAudio);
+    currentOrPastPlayableAudioIndex = selectedPlaylisSortFiltertPlayableAudios
+        .indexWhere((Audio audio) => audio == currentOrPastPlayableAudio);
 
-
-    if (currentOrPastPlayableAudioIndex <= 4) {
+    if (playlistListVMlistenTrue.isPlaylistListExpanded &&
+        currentOrPastPlayableAudioIndex <= 2) {
       // this avoids scrolling down when the current audio is
       // in the top part of the audio list. Without that, the
       // list is unusefully scrolled down and the user has to scroll
@@ -246,15 +251,16 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
     if (playlistListVMlistenTrue.isPlaylistListExpanded) {
       // the list of playlists is expanded
-      multiplier *= 1.5;
+      multiplier *= 1.4;
     }
+
     double offset = multiplier * _audioItemHeight;
 
     if (_scrollController.hasClients) {
       _scrollController.jumpTo(0.0);
       _scrollController.animateTo(
         offset,
-        duration: const Duration(seconds: 1),
+        duration: kScrollDuration,
         curve: Curves.easeInOut,
       );
     } else {

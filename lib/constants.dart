@@ -118,6 +118,8 @@ const double kYoutubeImageAssetHeight = 38.0;
 
 const int kMaxAudioSortFilterSettingsSearchHistory = 20;
 
+const Duration kScrollDuration = Duration(milliseconds: 700);
+
 DateFormat englishDateTimeFormat = DateFormat("MM/dd/yyyy HH:mm");
 DateFormat frenchDateTimeFormat = DateFormat("dd/MM/yyyy HH:mm");
 DateFormat englishDateFormat = DateFormat("MM/dd/yyyy");
