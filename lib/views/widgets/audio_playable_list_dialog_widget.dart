@@ -40,7 +40,7 @@ class _AudioPlayableListDialogState extends State<AudioPlayableListDialog>
   bool _excludeFullyPlayedAudios = false;
   final ScrollController _scrollController = ScrollController();
   late int _currentAudioIndex;
-  final double _itemHeight = 70.0;
+  final double _audioItemHeight = 70.0;
   bool _backToAllAudios = false;
 
   @override
@@ -383,7 +383,7 @@ class _AudioPlayableListDialogState extends State<AudioPlayableListDialog>
     Color? audioTitleBackgroundColor = audioTitleForeAndBackgroundColors[1];
 
     return SizedBox(
-      height: _itemHeight,
+      height: _audioItemHeight,
       child: Text(
         audio.validVideoTitle,
         maxLines: 3,
@@ -415,7 +415,7 @@ class _AudioPlayableListDialogState extends State<AudioPlayableListDialog>
       multiplier *= 1.2;
     }
 
-    double offset = multiplier * _itemHeight;
+    double offset = multiplier * _audioItemHeight;
 
     if (_backToAllAudios) {
       // improves the scrolling when the user goes back to

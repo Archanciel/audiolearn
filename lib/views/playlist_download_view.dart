@@ -49,6 +49,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   final TextEditingController _playlistUrlOrSearchController =
       TextEditingController();
   final ScrollController _scrollController = ScrollController();
+  final double _audioItemHeight = 70.0;
 
   List<Audio> _selectedPlaylistsPlayableAudios = [];
 
@@ -94,6 +95,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   void dispose() {
     _playlistUrlOrSearchController.dispose();
     _scrollController.dispose();
+    
     super.dispose();
   }
 
@@ -186,21 +188,21 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
     }
-    if (playlistListVMlistenFalse.isAudioListFilteredAndSorted()) {
-      // Scroll the sublist to the top when the audio
-      // list is filtered and/or sorted
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (_scrollController.hasClients) {
-          _scrollController.animateTo(
-            0,
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeOut,
-          );
-        }
-      });
-    }
+    // if (playlistListVMlistenFalse.isAudioListFilteredAndSorted()) {
+    //   // Scroll the sublist to the top when the audio
+    //   // list is filtered and/or sorted
+    //   WidgetsBinding.instance.addPostFrameCallback((_) {
+    //     if (_scrollController.hasClients) {
+    //       _scrollController.animateTo(
+    //         0,
+    //         duration: const Duration(milliseconds: 300),
+    //         curve: Curves.easeOut,
+    //       );
+    //     }
+    //   });
+    // }
 
-    return Expanded(
+    Expanded expanded = Expanded(
       child: ListView.builder(
         key: const Key('audio_list'),
         controller: _scrollController,
@@ -215,6 +217,70 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
         },
       ),
     );
+
+    _scrollToCurrentAudioItem(
+      playlistListVMlistenFalse: playlistListVMlistenFalse,
+    );
+
+    return expanded;
+  }
+
+  void _scrollToCurrentAudioItem({
+    required PlaylistListVM playlistListVMlistenFalse,
+  }) {
+    int currentOrPastPlayableAudioIndex = playlistListVMlistenFalse
+        .uniqueSelectedPlaylist!.currentOrPastPlayableAudioIndex;
+    List<Audio> selectedPlaylisPlayableAudios = playlistListVMlistenFalse
+        .uniqueSelectedPlaylist!.playableAudioLst;
+        Audio currentOrPastPlayableAudio = selectedPlaylisPlayableAudios[currentOrPastPlayableAudioIndex];
+    List<Audio> selectedPlaylisSortFiltertPlayableAudios =
+        playlistListVMlistenFalse.getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView);
+
+    currentOrPastPlayableAudioIndex = selectedPlaylisSortFiltertPlayableAudios.indexWhere((Audio audio) => audio == currentOrPastPlayableAudio);
+
+
+    if (currentOrPastPlayableAudioIndex <= 4) {
+      // this avoids scrolling down when the current audio is
+      // in the top part of the audio list. Without that, the
+      // list is unusefully scrolled down and the user has to scroll
+      // up to see top audio
+      return;
+    }
+
+    double multiplier = currentOrPastPlayableAudioIndex.toDouble();
+
+    if (currentOrPastPlayableAudioIndex > 300) {
+      multiplier *= 1.23;
+    } else if (currentOrPastPlayableAudioIndex > 200) {
+      multiplier *= 1.21;
+    } else if (currentOrPastPlayableAudioIndex > 120) {
+      multiplier *= 1.2;
+    }
+
+    double offset = multiplier * _audioItemHeight;
+
+    // if (_backToAllAudios) {
+    //   // improves the scrolling when the user goes back to
+    //   // the list of all audio
+    //   offset *= 1.4;
+    //   _backToAllAudios = false;
+    // }
+
+    if (_scrollController.hasClients) {
+      _scrollController.jumpTo(0.0);
+      _scrollController.animateTo(
+        offset,
+        duration: const Duration(seconds: 1),
+        curve: Curves.easeInOut,
+      );
+    } else {
+      // The scroll controller isn't attached to any scroll views.
+      // Schedule a callback to try again after the next frame.
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) => _scrollToCurrentAudioItem(
+                playlistListVMlistenFalse: playlistListVMlistenFalse,
+              ));
+    }
   }
 
   Widget _buildExpandedPlaylistList({
@@ -842,7 +908,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
               return AudioSortFilterDialog(
                 selectedPlaylistAudioLst: playlistListVMlistenFalse
                     .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
-                  audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+                  audioLearnAppViewType:
+                      AudioLearnAppViewType.playlistDownloadView,
                 ),
                 audioSortFilterParametersName: audioSortFilterParametersName,
                 audioSortFilterParameters:
