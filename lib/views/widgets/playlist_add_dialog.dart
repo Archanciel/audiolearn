@@ -43,7 +43,8 @@ class _PlaylistAddDialogState extends State<PlaylistAddDialog>
 
   @override
   Widget build(BuildContext context) {
-    final ThemeProviderVM themeProviderVM = Provider.of<ThemeProviderVM>(context);
+    final ThemeProviderVM themeProviderVM =
+        Provider.of<ThemeProviderVM>(context); // by default, listen is true
 
     if (widget.playlistUrl.isEmpty) {
       // If the playlist URL is empty, a local playlist is

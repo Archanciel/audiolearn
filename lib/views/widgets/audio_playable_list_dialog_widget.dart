@@ -55,7 +55,7 @@ class _AudioPlayableListDialogState extends State<AudioPlayableListDialog>
   @override
   Widget build(BuildContext context) {
     final ThemeProviderVM themeProviderVM =
-        Provider.of<ThemeProviderVM>(context);
+        Provider.of<ThemeProviderVM>(context); // by default, listen is true
     bool isDarkTheme = themeProviderVM.currentTheme == AppTheme.dark;
     final AudioPlayerVM audioPlayerVMlistenFalse =
         Provider.of<AudioPlayerVM>(context, listen: false);

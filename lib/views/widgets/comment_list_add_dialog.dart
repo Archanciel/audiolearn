@@ -55,7 +55,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
   @override
   Widget build(BuildContext context) {
     final ThemeProviderVM themeProviderVM =
-        Provider.of<ThemeProviderVM>(context);
+        Provider.of<ThemeProviderVM>(context); // by default, listen is true
 
     // Required so that clicking on Enter closes the dialog
     FocusScope.of(context).requestFocus(
@@ -240,7 +240,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
 
   Widget _buildCommentTitlePlusIconsAndCommentDatesAndPosition({
     required AudioPlayerVM audioPlayerVMlistenFalse,
-    required DateFormatVM dateFormatVMlistenFalse, 
+    required DateFormatVM dateFormatVMlistenFalse,
     required CommentVM commentVM,
     required Comment comment,
   }) {
@@ -376,7 +376,8 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                     // comment creation date Text
                     key: const Key('creationDateTimeKey'),
                     style: const TextStyle(fontSize: 13),
-                    dateFormatVMlistenFalse.formatDate(comment.creationDateTime),
+                    dateFormatVMlistenFalse
+                        .formatDate(comment.creationDateTime),
                   ),
                 ),
                 const SizedBox(

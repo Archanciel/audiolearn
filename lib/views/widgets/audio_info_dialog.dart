@@ -32,7 +32,7 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
     );
 
     final ThemeProviderVM themeProviderVM =
-        Provider.of<ThemeProviderVM>(context);
+        Provider.of<ThemeProviderVM>(context); // by default, listen is true
 
     return KeyboardListener(
       // Using FocusNode to enable clicking on Enter to close

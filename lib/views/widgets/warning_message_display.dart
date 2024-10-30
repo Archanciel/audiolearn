@@ -48,7 +48,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
     final WarningMessageType warningMessageType =
         _warningMessageVM.warningMessageType;
     final ThemeProviderVM themeProviderVM =
-        Provider.of<ThemeProviderVM>(context);
+        Provider.of<ThemeProviderVM>(context); // by default, listen is true
 
     switch (warningMessageType) {
       case WarningMessageType.errorMessage:

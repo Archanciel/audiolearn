@@ -72,7 +72,8 @@ class _DateFormatSelectionDialogState extends State<DateFormatSelectionDialog>
 
   @override
   Widget build(BuildContext context) {
-    final ThemeProviderVM themeProvider = Provider.of<ThemeProviderVM>(context);
+    final ThemeProviderVM themeProvider =
+        Provider.of<ThemeProviderVM>(context); // by default, listen is true
     final DateFormatVM dateFormatVMlistenFalse = Provider.of<DateFormatVM>(
       context,
       listen: false,

@@ -82,7 +82,8 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
 
   @override
   Widget build(BuildContext context) {
-    final ThemeProviderVM themeProviderVM = Provider.of<ThemeProviderVM>(context);
+    final ThemeProviderVM themeProviderVM =
+        Provider.of<ThemeProviderVM>(context); // by default, listen is true
 
     FocusScope.of(context).requestFocus(
       _focusNodePassedValueTextField,
