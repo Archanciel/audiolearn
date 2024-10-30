@@ -58,7 +58,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
   @override
   Widget build(BuildContext context) {
     final ThemeProviderVM themeProviderVM =
-        Provider.of<ThemeProviderVM>(context);
+        Provider.of<ThemeProviderVM>(context); // by default, listen is true
     final AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
       context,
       listen: false,
@@ -464,7 +464,8 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                     // comment creation date Text
                     key: const Key('creationDateTimeKey'),
                     style: const TextStyle(fontSize: 13),
-                    dateFormatVMlistenFalse.formatDate(comment.creationDateTime),
+                    dateFormatVMlistenFalse
+                        .formatDate(comment.creationDateTime),
                   ),
                 ),
                 const SizedBox(

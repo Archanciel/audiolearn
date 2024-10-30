@@ -29,7 +29,7 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
   @override
   Widget build(BuildContext context) {
     final ThemeProviderVM themeProviderVM =
-        Provider.of<ThemeProviderVM>(context);
+        Provider.of<ThemeProviderVM>(context); // by default, listen is true
     final DateFormatVM dateFormatVMlistenFalse = Provider.of<DateFormatVM>(
       context,
       listen: false,
@@ -96,7 +96,7 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
                       AppLocalizations.of(context)!.playlistDownloadPathLabel,
                   value: playlist.downloadPath),
               createInfoRowFunction(
-                valueTextWidgetKey: Key('playlist_last_download_date_time'),
+                  valueTextWidgetKey: Key('playlist_last_download_date_time'),
                   context: context,
                   label: AppLocalizations.of(context)!
                       .playlistLastDownloadDateTimeLabel,
