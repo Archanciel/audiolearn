@@ -240,10 +240,24 @@ class PlaylistListVM extends ChangeNotifier {
   /// come back to the playlist download view. The method scroll the playlist
   /// audio so that the current or past audio is visible in the audio list.
   int determineAudioToScrollPosition() {
+    if (_uniqueSelectedPlaylist == null) {
+      return 0;
+    }
+
     int currentOrPastPlayableAudioIndex =
         uniqueSelectedPlaylist!.currentOrPastPlayableAudioIndex;
+
+    if (currentOrPastPlayableAudioIndex == -1) {
+      return 0;
+    }
+    
     List<Audio> selectedPlaylisPlayableAudios =
         uniqueSelectedPlaylist!.playableAudioLst;
+
+    if (selectedPlaylisPlayableAudios.isEmpty) {
+      return 0;
+    }
+
     Audio currentOrPastPlayableAudio =
         selectedPlaylisPlayableAudios[currentOrPastPlayableAudioIndex];
     List<Audio> selectedPlaylisSortFiltertPlayableAudios =
