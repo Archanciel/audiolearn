@@ -689,16 +689,16 @@ class IntegrationTestUtil {
     }
   }
 
-  static void checkAudioTitlesOrderInListTile({
+  static void checkAudioOrPlaylistTitlesOrderInListTile({
     required WidgetTester tester,
-    required List<String> audioTitlesOrderedLst,
+    required List<String> audioOrPlaylistTitlesOrderedLst,
     int firstAudioListTileIndex = 0,
   }) {
     // Obtains all the ListTile widgets present in the playlist
     // download view
     final Finder listTilesFinder = find.byType(ListTile);
 
-    for (String title in audioTitlesOrderedLst) {
+    for (String title in audioOrPlaylistTitlesOrderedLst) {
       Finder playlistTitleTextFinder = find.descendant(
         of: listTilesFinder.at(firstAudioListTileIndex++),
         matching: find.byType(Text),

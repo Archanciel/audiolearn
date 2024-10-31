@@ -261,9 +261,9 @@ void audioPlayerViewSortFilterIntegrationTest() {
         // "Les besoins artificiels par R.Keucheyan"
       ];
 
-      IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
         tester: tester,
-        audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+        audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
       );
 
       // Then go to the audio player view
@@ -1067,9 +1067,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // "Les besoins artificiels par R.Keucheyan"
         ];
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+          audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
         );
 
         // Now go to audio player view
@@ -1096,9 +1096,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         );
 
         // And verify the order of the playlist audio titles
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+          audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
         );
 
         // Now, selecting 'Default' dropdown button item to apply the
@@ -1145,9 +1145,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
         ];
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst:
+          audioOrPlaylistTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -1173,9 +1173,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         );
 
         // And verify the order of the playlist audio titles
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst:
+          audioOrPlaylistTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -1201,9 +1201,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         // And verify the order of the playlist audio titles
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+          audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
         );
 
         // Now go to audio player view
@@ -1228,9 +1228,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         );
 
         // And verify the order of the playlist audio titles
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+          audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
         );
 
         // Purge the test playlist directory so that the created test
@@ -1375,9 +1375,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // "Les besoins artificiels par R.Keucheyan"
         ];
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+          audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
         );
 
         // Now go to audio player view
@@ -1402,9 +1402,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         );
 
         // And verify the order of the playlist audio titles
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+          audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
         );
 
         // Purge the test playlist directory so that the created test
@@ -1465,9 +1465,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
         ];
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst:
+          audioOrPlaylistTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -1491,9 +1491,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         // And verify the order of the playlist audio titles
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst:
+          audioOrPlaylistTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -1515,9 +1515,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         // And verify the order of the playlist audio titles
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst:
+          audioOrPlaylistTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -1646,9 +1646,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // "Les besoins artificiels par R.Keucheyan"
         ];
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+          audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
         );
 
         // Now tap on the current dropdown button item to open the dropdown
@@ -1746,9 +1746,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+          audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
         );
 
         // Now go to audio player view
@@ -1776,9 +1776,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         );
 
         // And verify the order of the playlist audio titles
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+          audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
         );
 
         // Purge the test playlist directory so that the created test
@@ -1903,9 +1903,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           "Expérience de mort imminente (EMI)  - je reviens de l'au-delà (1_2 ) _ RTS"
         ];
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+          audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
         );
 
         // Purge the test playlist directory so that the created test
@@ -1983,9 +1983,10 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
         ];
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: audioTitlesSortedByDateTimeListenedDescending,
+          audioOrPlaylistTitlesOrderedLst:
+              audioTitlesSortedByDateTimeListenedDescending,
         );
 
         String saveAsTitle = 'Desc listened';
@@ -2064,9 +2065,10 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         // And verify the order of the playlist audio titles
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: audioTitlesSortedByDateTimeListenedDescending,
+          audioOrPlaylistTitlesOrderedLst:
+              audioTitlesSortedByDateTimeListenedDescending,
         );
 
         // Creating a Asc listened sort/filter parms
@@ -2186,9 +2188,10 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // "Les besoins artificiels par R.Keucheyan",
         ];
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: audioTitlesSortedByDateTimeListenedAscending,
+          audioOrPlaylistTitlesOrderedLst:
+              audioTitlesSortedByDateTimeListenedAscending,
         );
 
         // Purge the test playlist directory so that the created test
@@ -2324,9 +2327,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
         ];
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+          audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
         );
 
         // Creating a Asc listened sort/filter parms
@@ -2446,9 +2449,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
         ];
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+          audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
         );
 
         // Now delete the 'Asc listened' sort/filter parms
@@ -2509,9 +2512,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
         ];
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst:
+          audioOrPlaylistTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -2649,9 +2652,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // "Les besoins artificiels par R.Keucheyan"
           ];
 
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
           );
 
           // Now go to audio player view
@@ -2689,9 +2692,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // And verify the order of the playlist audio titles
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
           );
 
           // Now, selecting 'Default' dropdown button item to apply the
@@ -2738,9 +2741,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
           ];
 
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst:
+            audioOrPlaylistTitlesOrderedLst:
                 audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
           );
 
@@ -2766,9 +2769,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // And verify the order of the playlist audio titles
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst:
+            audioOrPlaylistTitlesOrderedLst:
                 audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
           );
 
@@ -2795,9 +2798,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           // And verify the order of the playlist audio titles
 
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
           );
 
           // Now go to audio player view
@@ -2822,9 +2825,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // And verify the order of the playlist audio titles
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
           );
 
           // Purge the test playlist directory so that the created test
@@ -2954,9 +2957,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // "Les besoins artificiels par R.Keucheyan"
           ];
 
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
           );
 
           // Now reopen the audio popup menu in order to apply a new unamed
@@ -3079,9 +3082,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
           ];
 
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
           );
 
           // Now go to audio player view
@@ -3106,9 +3109,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // And verify the order of the playlist audio titles
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
           );
 
           // Now, selecting 'Default' dropdown button item to apply the
@@ -3155,9 +3158,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
           ];
 
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst:
+            audioOrPlaylistTitlesOrderedLst:
                 audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
           );
 
@@ -3183,9 +3186,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // And verify the order of the playlist audio titles
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst:
+            audioOrPlaylistTitlesOrderedLst:
                 audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
           );
 
@@ -3212,9 +3215,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           // And verify the order of the playlist audio titles
 
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
           );
 
           // Now go to audio player view
@@ -3239,9 +3242,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // And verify the order of the playlist audio titles
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
           );
 
           // Purge the test playlist directory so that the created test
@@ -3381,9 +3384,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // "Les besoins artificiels par R.Keucheyan"
           ];
 
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
           );
 
           // Now go to audio player view
@@ -3408,9 +3411,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // And verify the order of the playlist audio titles
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
           );
 
           // Purge the test playlist directory so that the created test
@@ -3471,9 +3474,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
           ];
 
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst:
+            audioOrPlaylistTitlesOrderedLst:
                 audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
           );
 
@@ -3497,9 +3500,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           // And verify the order of the playlist audio titles
 
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst:
+            audioOrPlaylistTitlesOrderedLst:
                 audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
           );
 
@@ -3521,9 +3524,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           // And verify the order of the playlist audio titles
 
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst:
+            audioOrPlaylistTitlesOrderedLst:
                 audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
           );
 
@@ -3699,9 +3702,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             "Really short video",
           ];
 
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
           );
 
           // Verify that the dropdown button has been updated with the
@@ -3758,9 +3761,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           ];
 
           // And verify the order of the playlist audio titles
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
           );
 
           // Now delete the 'applied' sort/filter parms
@@ -3818,9 +3821,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
           ];
 
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst:
+            audioOrPlaylistTitlesOrderedLst:
                 audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
           );
 
@@ -3880,9 +3883,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
           ];
 
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst:
+            audioOrPlaylistTitlesOrderedLst:
                 audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
           );
 
@@ -4035,9 +4038,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               // "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
             ];
 
-            IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+            IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
               tester: tester,
-              audioTitlesOrderedLst:
+              audioOrPlaylistTitlesOrderedLst:
                   audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
             );
 
@@ -4195,9 +4198,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // "Les besoins artificiels par R.Keucheyan"
           ];
 
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
           );
 
           // Now go to audio player view
@@ -4222,9 +4225,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // And verify the order of the playlist audio titles
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
           );
 
           // Now, selecting 'Défaut' dropdown button item to apply the
@@ -4272,9 +4275,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
           ];
 
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst:
+            audioOrPlaylistTitlesOrderedLst:
                 audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
           );
 
@@ -4300,9 +4303,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // And verify the order of the playlist audio titles
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst:
+            audioOrPlaylistTitlesOrderedLst:
                 audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
           );
 
@@ -4329,9 +4332,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           // And verify the order of the playlist audio titles
 
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
           );
 
           // Now go to audio player view
@@ -4356,9 +4359,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // And verify the order of the playlist audio titles
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
           );
 
           // Purge the test playlist directory so that the created test
@@ -4494,9 +4497,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // "Les besoins artificiels par R.Keucheyan"
           ];
 
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
           );
 
           // Now reopen the audio popup menu in order to apply a new unamed
@@ -4619,9 +4622,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
           ];
 
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
           );
 
           // Now go to audio player view
@@ -4646,9 +4649,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // And verify the order of the playlist audio titles
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
           );
 
           // Now, selecting 'Défaut' dropdown button item to apply the
@@ -4695,9 +4698,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
           ];
 
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst:
+            audioOrPlaylistTitlesOrderedLst:
                 audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
           );
 
@@ -4723,9 +4726,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // And verify the order of the playlist audio titles
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst:
+            audioOrPlaylistTitlesOrderedLst:
                 audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
           );
 
@@ -4752,9 +4755,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           // And verify the order of the playlist audio titles
 
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
           );
 
           // Now go to audio player view
@@ -4779,9 +4782,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // And verify the order of the playlist audio titles
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
           );
 
           // Purge the test playlist directory so that the created test
@@ -4927,9 +4930,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // "Les besoins artificiels par R.Keucheyan"
           ];
 
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
           );
 
           // Now go to audio player view
@@ -4954,9 +4957,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // And verify the order of the playlist audio titles
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
           );
 
           // Purge the test playlist directory so that the created test
@@ -5038,9 +5041,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // "Les besoins artificiels par R.Keucheyan"
         ];
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+          audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
         );
 
         // Then go to the audio player view
@@ -5110,9 +5113,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         // And verify the order of the playlist audio titles
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+          audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
         );
 
         // Purge the test playlist directory so that the created test
@@ -5368,9 +5371,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
           ];
 
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst:
+            audioOrPlaylistTitlesOrderedLst:
                 audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
           );
 
@@ -5544,9 +5547,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
           ];
 
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst:
+            audioOrPlaylistTitlesOrderedLst:
                 audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
           );
 
@@ -5694,9 +5697,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
           ];
 
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst:
+            audioOrPlaylistTitlesOrderedLst:
                 audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
           );
 
@@ -5749,9 +5752,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
           ];
 
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst:
+            audioOrPlaylistTitlesOrderedLst:
                 audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
           );
 
@@ -5859,9 +5862,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // "Les besoins artificiels par R.Keucheyan"
           ];
 
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
           );
 
           // Now switch to 'local' playlist
@@ -5881,9 +5884,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             "Really short video",
           ];
 
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
           );
 
           // Purge the test playlist directory so that the created test
@@ -5999,9 +6002,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
           ];
 
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst:
+            audioOrPlaylistTitlesOrderedLst:
                 audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
           );
 
@@ -6202,9 +6205,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
           ];
 
-          IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioTitlesOrderedLst:
+            audioOrPlaylistTitlesOrderedLst:
                 audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
           );
 
@@ -6975,9 +6978,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+          audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
         );
 
         // Purge the test playlist directory so that the created test
@@ -7090,9 +7093,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
         ];
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+          audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
         );
 
         // And verify the order of the playlist audio subtitles
@@ -7194,9 +7197,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
         ];
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+          audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
         );
 
         // Purge the test playlist directory so that the created test
@@ -7305,9 +7308,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+          audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
         );
 
         // Purge the test playlist directory so that the created test
@@ -7416,9 +7419,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+          audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
         );
 
         // Purge the test playlist directory so that the created test
@@ -7554,9 +7557,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
         ];
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+          audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
         );
 
         // And verify the order of the playlist audio subtitles
@@ -7704,9 +7707,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
         ];
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+          audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
         );
 
         // Purge the test playlist directory so that the created test
@@ -7842,9 +7845,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
         ];
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+          audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
         );
 
         // And verify the order of the playlist audio subtitles
@@ -7997,9 +8000,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
         ];
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+          audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
         );
 
         // And verify the order of the playlist audio subtitles
@@ -8148,9 +8151,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+          audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
         );
 
         // Purge the test playlist directory so that the created test
@@ -8283,9 +8286,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+          audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
         );
 
         // Purge the test playlist directory so that the created test
@@ -8420,9 +8423,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // "La surpopulation mondiale par Jancovici et Barrau",
         ];
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+          audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
         );
 
         // And verify the order of the playlist audio subtitles
