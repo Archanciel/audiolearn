@@ -319,8 +319,8 @@ void main() {
       verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '0:03',
-        maxPositionTimeStr: '0:06',
+        minPositionTimeStr: '0:04',
+        maxPositionTimeStr: '0:07',
       );
 
       // Purge the test playlist directory so that the created test
@@ -498,8 +498,8 @@ void main() {
       verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '0:03',
-        maxPositionTimeStr: '0:07',
+        minPositionTimeStr: '0:04',
+        maxPositionTimeStr: '0:08',
       );
 
       // Purge the test playlist directory so that the created test
@@ -626,8 +626,8 @@ void main() {
       verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '5:00',
-        maxPositionTimeStr: '5:06',
+        minPositionTimeStr: '5:02',
+        maxPositionTimeStr: '5:07',
       );
 
       // Purge the test playlist directory so that the created test
@@ -864,7 +864,7 @@ void main() {
         audioPositionModification: AudioPositionModification.forward10sec,
         audioPositionBeforePlayingStr: '1:51',
         expectedMinPositionTimeStr: '1:51',
-        expectedMaxPositionTimeStr: '1:52',
+        expectedMaxPositionTimeStr: '1:53',
       );
 
       // Purge the test playlist directory so that the created test
@@ -2137,8 +2137,8 @@ void main() {
       verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '3:02',
-        maxPositionTimeStr: '3:05',
+        minPositionTimeStr: '3:03',
+        maxPositionTimeStr: '3:06',
       );
 
       // Verify if the last downloaded audio title is displayed
@@ -2152,17 +2152,17 @@ void main() {
       );
     });
     testWidgets(
-        '''User modifies the position of next fully unread audio which is
+        '''User modifies the position of next fully played audio which is
            also the last downloaded audio of the playlist.''',
         (WidgetTester tester) async {
       const String audioPlayerSelectedPlaylistTitle =
           'S8 audio'; // Youtube playlist
       const String firstDownloadedAudioTitle =
           "L'argument anti-nuke qui m'inquiète le plus par Y.Rousselet";
-      const String lastDownloadedAudioTitle =
-          "La résilience insulaire par Fiona Roche";
-      const String lastDownloadedAudioTitleOnAudioPlayerView =
-          "$lastDownloadedAudioTitle\n13:35";
+      const String nextDownloadedAudioTitle =
+          "Les besoins artificiels par R.Keucheyan";
+      const String nextDownloadedAudioTitleOnAudioPlayerView =
+          "$nextDownloadedAudioTitle\n19:05";
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
@@ -2186,21 +2186,21 @@ void main() {
       // last downloaded audio and tap on it to open the audio
       // player view.
       final Finder toSelectAudioListTileTextWidgetFinder =
-          find.text(lastDownloadedAudioTitle);
+          find.text(nextDownloadedAudioTitle);
 
       await tester.tap(toSelectAudioListTileTextWidgetFinder);
       await tester.pumpAndSettle();
 
       // check the current audio's position
-      expect(find.text('0:00'), findsOneWidget);
+      expect(find.text('19:05'), findsOneWidget);
 
       // change the current audio's play position
 
-      await tester.tap(find.byKey(const Key('audioPlayerViewForward1mButton')));
+      await tester.tap(find.byKey(const Key('audioPlayerViewBackward1mButton')));
       await tester.pumpAndSettle();
 
       // check the current audio's changed position
-      expect(find.text('1:00'), findsOneWidget);
+      expect(find.text('18:05'), findsOneWidget);
 
       // Now, go back to the playlist download view
       final Finder appScreenNavigationButton =
@@ -2239,13 +2239,13 @@ void main() {
       verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '1:00',
-        maxPositionTimeStr: '1:05',
+        minPositionTimeStr: '18:05',
+        maxPositionTimeStr: '18:10',
       );
 
       // Verify if the last downloaded audio title is displayed
       expect(
-          find.text(lastDownloadedAudioTitleOnAudioPlayerView), findsOneWidget);
+          find.text(nextDownloadedAudioTitleOnAudioPlayerView), findsOneWidget);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -2301,7 +2301,7 @@ void main() {
           find.text(thirdDownloadedAudioTitle);
 
       await tester.tap(toSelectAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // set the current audio's play position to start
 
@@ -2489,8 +2489,8 @@ void main() {
       verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '2:00',
-        maxPositionTimeStr: '2:03',
+        minPositionTimeStr: '2:01',
+        maxPositionTimeStr: '2:04',
       );
 
       // Verify if the last downloaded audio title is displayed
@@ -5230,7 +5230,7 @@ void main() {
       // in seconds.
 
       expectedAudioPlayerAudioPositionMin = '0:48';
-      expectedAudioPlayerAudioPositionMax = '0:49';
+      expectedAudioPlayerAudioPositionMax = '0:50';
 
       verifyPositionBetweenMinMax(
         tester: tester,
