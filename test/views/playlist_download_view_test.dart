@@ -1,5 +1,6 @@
 import 'package:audiolearn/viewmodels/audio_player_vm.dart';
 import 'package:audiolearn/viewmodels/comment_vm.dart';
+import 'package:audiolearn/viewmodels/date_format_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -1250,6 +1251,10 @@ Future<void> _createPlaylistDownloadView({
     commentVM: commentVM,
   );
 
+  final DateFormatVM dateFormatVM = DateFormatVM(
+    settingsDataService: settingsDataService,
+  );
+
   await tester.pumpWidget(
     MultiProvider(
       providers: [
@@ -1269,6 +1274,7 @@ Future<void> _createPlaylistDownloadView({
         ),
         ChangeNotifierProvider(create: (_) => warningMessageVM),
         ChangeNotifierProvider(create: (_) => audioPlayerVM),
+        ChangeNotifierProvider(create: (_) => dateFormatVM),
       ],
       child: MaterialApp(
         localizationsDelegates: [
