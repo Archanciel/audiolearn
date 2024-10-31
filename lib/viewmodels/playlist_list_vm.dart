@@ -250,11 +250,16 @@ class PlaylistListVM extends ChangeNotifier {
     if (currentOrPastPlayableAudioIndex == -1) {
       return 0;
     }
-    
+
     List<Audio> selectedPlaylisPlayableAudios =
         uniqueSelectedPlaylist!.playableAudioLst;
 
     if (selectedPlaylisPlayableAudios.isEmpty) {
+      return 0;
+    }
+
+    if (currentOrPastPlayableAudioIndex >
+        selectedPlaylisPlayableAudios.length) {
       return 0;
     }
 
