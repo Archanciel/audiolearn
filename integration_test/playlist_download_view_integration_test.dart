@@ -15403,9 +15403,9 @@ void main() {
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst:
+          audioOrPlaylistTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -15441,9 +15441,9 @@ void main() {
         // Ensure that since the search icon button was not yet pressed,
         // the displayed audio list is the same as the one before entering
         // the first letter of the search word.
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst:
+          audioOrPlaylistTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -15477,9 +15477,9 @@ void main() {
         // Ensure that since the search icon button was not yet pressed,
         // the displayed audio list is the same as the one before entering
         // the first letter of the search word.
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst:
+          audioOrPlaylistTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -15501,9 +15501,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst:
+          audioOrPlaylistTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -15539,9 +15539,9 @@ void main() {
 
         // Ensure that since the search icon button was used,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst:
+          audioOrPlaylistTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -15574,9 +15574,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst:
+          audioOrPlaylistTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -15600,9 +15600,9 @@ void main() {
           "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
         ];
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst:
+          audioOrPlaylistTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -15647,9 +15647,9 @@ void main() {
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst:
+          audioOrPlaylistTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -15707,9 +15707,9 @@ void main() {
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst:
+          audioOrPlaylistTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -15774,9 +15774,9 @@ void main() {
           "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
         ];
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst:
+          audioOrPlaylistTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -15821,9 +15821,9 @@ void main() {
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst:
+          audioOrPlaylistTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -15881,9 +15881,9 @@ void main() {
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst:
+          audioOrPlaylistTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -15948,9 +15948,9 @@ void main() {
           "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
         ];
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst:
+          audioOrPlaylistTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -15995,9 +15995,9 @@ void main() {
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst:
+          audioOrPlaylistTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -16074,9 +16074,9 @@ void main() {
 
         // Ensure that since the search icon button was used,
         // the displayed playlist list is modified.
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: playlistsTitles,
+          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
         );
 
         // Verify that the search icon button is still enabled
@@ -16109,9 +16109,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: playlistsTitles,
+          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
         );
 
         // Then erase the second search word letter
@@ -16139,9 +16139,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: playlistsTitles,
+          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
         );
 
         // Now emptying the search text word
@@ -16242,9 +16242,9 @@ void main() {
 
         // Ensure that since the search icon button was used,
         // the displayed playlist list is modified.
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: playlistsTitles,
+          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
         );
 
         // Verify that the search icon button is still enabled
@@ -16277,9 +16277,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: playlistsTitles,
+          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
         );
 
         // Then erase the second search word letter
@@ -16307,9 +16307,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: playlistsTitles,
+          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
         );
 
         // Now entering https URL instead of search text word
@@ -16410,9 +16410,9 @@ void main() {
 
         // Ensure that since the search icon button was used,
         // the displayed playlist list is modified.
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: playlistsTitles,
+          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
         );
 
         // Verify that the search icon button is still enabled
@@ -16445,9 +16445,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: playlistsTitles,
+          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
         );
 
         // Then erase the second search word letter
@@ -16475,9 +16475,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: playlistsTitles,
+          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
         );
 
         // Now entering https URL instead of search text word
@@ -16608,10 +16608,10 @@ void main() {
         // verify the newly selected playlist audio titles
 
         List<String> audioTitles = [
-          "Really short video",
-          "morning _ cinematic video",
           "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
           "Les besoins artificiels par R.Keucheyan",
+          "La résilience insulaire par Fiona Roche",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
         IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
@@ -16715,10 +16715,10 @@ void main() {
         ];
 
         List<String> audioTitles = [
-          "Really short video",
-          "morning _ cinematic video",
           "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
           "Les besoins artificiels par R.Keucheyan",
+          "La résilience insulaire par Fiona Roche",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
         IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
@@ -16814,10 +16814,10 @@ void main() {
         ];
 
         audioTitles = [
-          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-          "La surpopulation mondiale par Jancovici et Barrau",
-          "La résilience insulaire par Fiona Roche",
           "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+          "Les besoins artificiels par R.Keucheyan",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
         ];
 
         IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
@@ -17063,9 +17063,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst:
+          audioOrPlaylistTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -17082,9 +17082,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed playlist list is modified.
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: playlistsTitles,
+          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
         );
 
         // Now add the third letter of the 'al_' search word
@@ -17118,9 +17118,9 @@ void main() {
 
         // Ensure that since the search icon button was used,
         // the displayed playlist list is modified.
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: playlistsTitles,
+          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
         );
 
         // Now remove the third and second letter of the 'al_' search word
@@ -17169,9 +17169,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: playlistsTitles,
+          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
         );
 
         // Now emptying the search text word
@@ -17258,9 +17258,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed playlist list is modified.
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: playlistsTitles,
+          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
         );
 
         // Now tap on the "Playlists" button to reduce the list
@@ -17277,9 +17277,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst:
+          audioOrPlaylistTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -17317,9 +17317,9 @@ void main() {
 
         // Ensure that since the search icon button was used,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst:
+          audioOrPlaylistTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -17355,9 +17355,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst:
+          audioOrPlaylistTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -17425,9 +17425,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst:
+          audioOrPlaylistTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -17466,9 +17466,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst:
+          audioOrPlaylistTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -17535,9 +17535,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst:
+          audioOrPlaylistTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -17580,9 +17580,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst:
+          audioOrPlaylistTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -17649,9 +17649,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst:
+          audioOrPlaylistTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -17692,9 +17692,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst:
+          audioOrPlaylistTitlesOrderedLst:
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
@@ -17762,9 +17762,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: playlistsTitles,
+          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
         );
 
         // Now we tap on the AudioPlayerView icon button to open
@@ -17799,9 +17799,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: playlistsTitles,
+          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
         );
 
         // Purge the test playlist directory so that the created test
@@ -17859,7 +17859,7 @@ void main() {
         // Now verify the order of the reduced playlist audio titles
 
         String remainingAudioTitle =
-            "La surpopulation mondiale par Jancovici et Barrau";
+            "Les besoins artificiels par R.Keucheyan";
 
         List<String> playlistsTitles = [
           "local",
@@ -17867,10 +17867,10 @@ void main() {
         ];
 
         // Ensure that since the search icon button was now pressed,
-        // the displayed audio list is modified.
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        // the displayed playlists list is modified.
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: playlistsTitles,
+          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
         );
 
         // Now we tap on the remaining audio play icon button to play the audio
@@ -17909,9 +17909,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: playlistsTitles,
+          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
         );
 
         // Purge the test playlist directory so that the created test
@@ -17969,7 +17969,7 @@ void main() {
         // Now verify the order of the reduced playlist audio titles
 
         String remainingAudioTitle =
-            "La surpopulation mondiale par Jancovici et Barrau";
+            "Les besoins artificiels par R.Keucheyan";
         List<String> playlistsTitles = [
           "local",
           "local_2",
@@ -17977,9 +17977,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: playlistsTitles,
+          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
         );
 
         // Now we tap on the remaining audio title to open the AudioPlayerView
@@ -18016,9 +18016,9 @@ void main() {
 
         // Ensure that since the search icon button was now pressed,
         // the displayed audio list is modified.
-        IntegrationTestUtil.checkAudioTitlesOrderInListTile(
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioTitlesOrderedLst: playlistsTitles,
+          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
         );
 
         // Purge the test playlist directory so that the created test
@@ -18197,7 +18197,7 @@ void main() {
             "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n6:29",
         otherAudioTitleToTapOnBeforeRewinding:
             "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
-            otherAudioTitleToTapOnBeforeRewindingDuration: 
+        otherAudioTitleToTapOnBeforeRewindingDuration:
             "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)\n20:32",
       );
 
@@ -19041,7 +19041,8 @@ Future<void> _rewindPlaylistAfterPlayThenPauseAnAudio({
   Finder currentAudioTitleFinder;
 
   if (otherAudioTitleToTapOnBeforeRewinding != null) {
-    currentAudioTitleFinder = find.text(otherAudioTitleToTapOnBeforeRewindingDuration!);
+    currentAudioTitleFinder =
+        find.text(otherAudioTitleToTapOnBeforeRewindingDuration!);
   } else {
     currentAudioTitleFinder = find.text(audioToPlayTitleAndDuration);
   }
@@ -19285,10 +19286,10 @@ Future<List<String>> enteringFirstAndSecondLetterOfYoutubePlaylistSearchWord({
   ];
 
   List<String> audioTitles = [
-    "Really short video",
-    "morning _ cinematic video",
     "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
     "Les besoins artificiels par R.Keucheyan",
+    "La résilience insulaire par Fiona Roche",
+    "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
   ];
 
   IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
