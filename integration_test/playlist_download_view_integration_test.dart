@@ -18029,7 +18029,7 @@ void main() {
       });
     });
   });
-  group('Rewind playlist audio to start position test', () {
+  group('Rewind all playlist audio to start position test', () {
     testWidgets('''Rewind playlist audio for selected playlist''',
         (tester) async {
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
@@ -18117,7 +18117,7 @@ void main() {
       );
 
       // Go to audio player view to verify the playlist current
-      // audio position
+      // audio position (La résilience insulaire par Fiona Roche)
       Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
@@ -18146,7 +18146,7 @@ void main() {
       );
 
       // Return to audio player view to verify the playlist current
-      // audio position set to start
+      // audio position set to start (La résilience insulaire par Fiona Roche)
       appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
@@ -18191,11 +18191,14 @@ void main() {
         appScreenNavigationButton: appScreenNavigationButton,
         doExpandPlaylistList: false,
         playlistToRewindTitle: youtubePlaylistToRewindTitle,
-        audioToPlayTitle: "La surpopulation mondiale par Jancovici et Barrau",
+        audioToPlayTitle:
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         audioToPlayTitleAndDuration:
-            "La surpopulation mondiale par Jancovici et Barrau\n7:38",
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n6:29",
         otherAudioTitleToTapOnBeforeRewinding:
-            "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+            otherAudioTitleToTapOnBeforeRewindingDuration: 
+            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)\n20:32",
       );
 
       // Rewind again all playlist audio to start position. Since
@@ -18965,6 +18968,7 @@ Future<void> _rewindPlaylistAfterPlayThenPauseAnAudio({
   required String audioToPlayTitle,
   required String audioToPlayTitleAndDuration,
   String? otherAudioTitleToTapOnBeforeRewinding,
+  String? otherAudioTitleToTapOnBeforeRewindingDuration,
 }) async {
   // Now play then pause audioToPlayTitle
 
@@ -18973,7 +18977,7 @@ Future<void> _rewindPlaylistAfterPlayThenPauseAnAudio({
   await tester.tap(audioToPlayTitleFinder);
   await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
     tester: tester,
-    additionalMilliseconds: 1500,
+    additionalMilliseconds: 2000,
   );
 
   // Now play the audio and wait 5 seconds
@@ -19032,9 +19036,15 @@ Future<void> _rewindPlaylistAfterPlayThenPauseAnAudio({
   appScreenNavigationButton =
       find.byKey(const ValueKey('audioPlayerViewIconButton'));
   await tester.tap(appScreenNavigationButton);
-  await tester.pumpAndSettle();
+  await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-  final Finder currentAudioTitleFinder = find.text(audioToPlayTitleAndDuration);
+  Finder currentAudioTitleFinder;
+
+  if (otherAudioTitleToTapOnBeforeRewinding != null) {
+    currentAudioTitleFinder = find.text(otherAudioTitleToTapOnBeforeRewindingDuration!);
+  } else {
+    currentAudioTitleFinder = find.text(audioToPlayTitleAndDuration);
+  }
 
   expect(
     currentAudioTitleFinder,
@@ -19160,10 +19170,10 @@ Future<List<String>> enteringFirstAndSecondLetterOfLocalPlaylistSearchWord({
   ];
 
   List<String> audioTitles = [
-    "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-    "La surpopulation mondiale par Jancovici et Barrau",
-    "La résilience insulaire par Fiona Roche",
     "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+    "Les besoins artificiels par R.Keucheyan",
+    "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+    "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
   ];
 
   IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
