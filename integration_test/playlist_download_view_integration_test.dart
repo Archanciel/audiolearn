@@ -17858,8 +17858,7 @@ void main() {
 
         // Now verify the order of the reduced playlist audio titles
 
-        String remainingAudioTitle =
-            "Les besoins artificiels par R.Keucheyan";
+        String remainingAudioTitle = "Les besoins artificiels par R.Keucheyan";
 
         List<String> playlistsTitles = [
           "local",
@@ -17968,8 +17967,7 @@ void main() {
 
         // Now verify the order of the reduced playlist audio titles
 
-        String remainingAudioTitle =
-            "Les besoins artificiels par R.Keucheyan";
+        String remainingAudioTitle = "Les besoins artificiels par R.Keucheyan";
         List<String> playlistsTitles = [
           "local",
           "local_2",
@@ -18537,6 +18535,8 @@ void main() {
         videoUploadDate: "12/06/2022",
         audioDownloadDateTime: "08/01/2024 16:35",
         playlistLastDownloadDateTime: "07/01/2024 16:36",
+        commentCreationDate: '12/10/2024',
+        commentUpdateDate: '01/11/2024',
       );
 
       await _selectDateFormat(
@@ -18597,6 +18597,8 @@ void main() {
         videoUploadDate: "06/12/2022",
         audioDownloadDateTime: "01/08/2024 16:35",
         playlistLastDownloadDateTime: "01/07/2024 16:36",
+        commentCreationDate: '10/12/2024',
+        commentUpdateDate: '11/01/2024',
       );
 
       await _selectDateFormat(
@@ -18657,6 +18659,8 @@ void main() {
         videoUploadDate: "2022/06/12",
         audioDownloadDateTime: "2024/01/08 16:35",
         playlistLastDownloadDateTime: "2024/01/07 16:36",
+        commentCreationDate: '2024/10/12',
+        commentUpdateDate: '2024/11/01',
       );
 
       // Purge the test playlist directory so that the created test
@@ -18743,6 +18747,8 @@ Future<void> _verifyDateFormatApplication({
   required String videoUploadDate,
   required audioDownloadDateTime,
   required String playlistLastDownloadDateTime,
+  required String commentCreationDate,
+  required String commentUpdateDate,
 }) async {
   IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
     tester: tester,
@@ -18757,18 +18763,18 @@ Future<void> _verifyDateFormatApplication({
       "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
 
   // First, find the Audio sublist ListTile Text widget
-  final Finder targetAudioListTileTextWidgetFinder = find.text(audioInfoTitle);
+  Finder targetAudioListTileTextWidgetFinder = find.text(audioInfoTitle);
 
   // Then obtain the Audio ListTile widget enclosing the Text widget by
   // finding its ancestor
-  final Finder targetAudioListTileWidgetFinder = find.ancestor(
+  Finder targetAudioListTileWidgetFinder = find.ancestor(
     of: targetAudioListTileTextWidgetFinder,
     matching: find.byType(ListTile),
   );
 
   // Now find the leading menu icon button of the Audio ListTile and tap
   // on it
-  final Finder targetAudioListTileLeadingMenuIconButton = find.descendant(
+  Finder targetAudioListTileLeadingMenuIconButton = find.descendant(
     of: targetAudioListTileWidgetFinder,
     matching: find.byIcon(Icons.menu),
   );
@@ -18859,7 +18865,7 @@ Future<void> _verifyDateFormatApplication({
     playlistLastDownloadDateTime,
   );
 
-  // Now find the ok button of the audio info dialog
+  // Now find the ok button of the playlist info dialog
   // and tap on it
   await tester.tap(find.byKey(const Key('playlist_info_ok_button_key')));
   await tester.pumpAndSettle();
@@ -18926,6 +18932,43 @@ Future<void> _verifyDateFormatApplication({
   // And select the 'default' sort/filter item
   final Finder defaultDropDownTextFinder = find.text('default');
   await tester.tap(defaultDropDownTextFinder);
+  await tester.pumpAndSettle();
+
+  // Verifying the comment date format
+
+  // First, find the Audio sublist ListTile Text widget
+  targetAudioListTileTextWidgetFinder = find.text(audioInfoTitle);
+
+  // Then obtain the Audio ListTile widget enclosing the Text widget by
+  // finding its ancestor
+  targetAudioListTileWidgetFinder = find.ancestor(
+    of: targetAudioListTileTextWidgetFinder,
+    matching: find.byType(ListTile),
+  );
+
+  // Now find the leading menu icon button of the Audio ListTile and tap
+  // on it
+  targetAudioListTileLeadingMenuIconButton = find.descendant(
+    of: targetAudioListTileWidgetFinder,
+    matching: find.byIcon(Icons.menu),
+  );
+
+  // Tap the leading menu icon button to open the popup menu
+  await tester.tap(targetAudioListTileLeadingMenuIconButton);
+  await tester.pumpAndSettle();
+
+  // Now find the popup menu item and tap on it
+  final Finder popupDisplayAudioCommentMenuItemFinder =
+      find.byKey(const Key("popup_menu_audio_comment"));
+
+  await tester.tap(popupDisplayAudioCommentMenuItemFinder);
+  await tester.pumpAndSettle();
+
+  expect(find.text(commentCreationDate), findsOneWidget);
+  expect(find.text(commentUpdateDate), findsOneWidget);
+
+  // Now close the comment list dialog
+  await tester.tap(find.byKey(const Key('closeDialogTextButton')));
   await tester.pumpAndSettle();
 }
 

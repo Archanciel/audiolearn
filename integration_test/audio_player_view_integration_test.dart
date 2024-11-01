@@ -2196,7 +2196,8 @@ void main() {
 
       // change the current audio's play position
 
-      await tester.tap(find.byKey(const Key('audioPlayerViewBackward1mButton')));
+      await tester
+          .tap(find.byKey(const Key('audioPlayerViewBackward1mButton')));
       await tester.pumpAndSettle();
 
       // check the current audio's changed position
@@ -2239,8 +2240,8 @@ void main() {
       verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '18:05',
-        maxPositionTimeStr: '18:10',
+        minPositionTimeStr: '18:06',
+        maxPositionTimeStr: '18:11',
       );
 
       // Verify if the last downloaded audio title is displayed
@@ -5872,7 +5873,7 @@ void main() {
       ];
 
       // Verify content of each list item
-      Finder itemsFinder = verifyCommentsInCommentListDialog(
+      Finder itemsFinder = _verifyCommentsInCommentListDialog(
           tester: tester,
           commentListDialogFinder: commentListDialogFinder,
           commentsNumber: 5,
@@ -6198,7 +6199,7 @@ void main() {
       ];
 
       // Verify content of each list item
-      verifyCommentsInCommentListDialog(
+      _verifyCommentsInCommentListDialog(
           tester: tester,
           commentListDialogFinder: commentListDialogFinder,
           commentsNumber: 4,
@@ -7374,7 +7375,7 @@ int roundUpTenthOfSeconds({
   return audioPositionTenthSecRounded;
 }
 
-Finder verifyCommentsInCommentListDialog({
+Finder _verifyCommentsInCommentListDialog({
   required WidgetTester tester,
   required Finder commentListDialogFinder,
   required int commentsNumber,
@@ -7423,11 +7424,11 @@ Finder verifyCommentsInCommentListDialog({
     );
     commentCreationDateFinder = find.descendant(
       of: gestureDetectorsFinder.at(i),
-      matching: find.byKey(const Key('creationDateTimeKey')),
+      matching: find.byKey(const Key('creation_date_key')),
     );
     commentUpdateDateFinder = find.descendant(
       of: gestureDetectorsFinder.at(i),
-      matching: find.byKey(const Key('lastUpdateDateTimeKey')),
+      matching: find.byKey(const Key('last_update_date_key')),
     );
 
     // Verify the text in the title, content, and position of each comment
