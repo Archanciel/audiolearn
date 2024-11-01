@@ -462,7 +462,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                       AppLocalizations.of(context)!.commentCreationDateTooltip,
                   child: Text(
                     // comment creation date Text
-                    key: const Key('creationDateTimeKey'),
+                    key: const Key('creation_date_key'),
                     style: const TextStyle(fontSize: 13),
                     dateFormatVMlistenFalse
                         .formatDate(comment.creationDateTime),
@@ -477,7 +477,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                             .commentUpdateDateTooltip,
                         child: Text(
                           // comment update date Text
-                          key: const Key('lastUpdateDateTimeKey'),
+                          key: const Key('last_update_date_key'),
                           style: const TextStyle(fontSize: 13),
                           dateFormatVMlistenFalse
                               .formatDate(comment.lastUpdateDateTime),
