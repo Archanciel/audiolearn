@@ -372,6 +372,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
           ),
           title: Text(playlist.title),
           trailing: Checkbox(
+            key: const Key('playlist_checkbox_key'),
             value: playlist.isSelected,
             onChanged: (value) async {
               if (toggleListIfSelected) {

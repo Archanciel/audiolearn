@@ -4,6 +4,7 @@ import 'package:audiolearn/models/audio.dart';
 import 'package:audiolearn/models/playlist.dart';
 import 'package:audiolearn/services/json_data_service.dart';
 import 'package:audiolearn/utils/date_time_util.dart';
+import 'package:audiolearn/views/widgets/audio_playable_list_dialog_widget.dart';
 import 'package:audiolearn/views/widgets/warning_message_display.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -335,6 +336,30 @@ class IntegrationTestUtil {
     } catch (e) {
       rethrow; // Rethrow the exception if the expectation fails
     }
+  }
+
+  static Future<void> selectAudioInAudioPlayableDialog({
+    required WidgetTester tester,
+    required String audioToSelectTitle,
+  }) async {
+    // Find the AudioPlayableListDialog
+    Finder audioPlayableListDialogFinder = find.byType(AudioPlayableListDialog);
+
+    // Then get the audio to select ListTile Text widget finder
+    // and tap on it
+
+    // Find the list body containing the audio titles
+    final Finder audioPlayableListBodyFinder = find.descendant(
+        of: audioPlayableListDialogFinder, matching: find.byType(ListBody));
+
+    // Find the ListTile containing the specific audio title
+    final Finder audioTitleFinder = find.descendant(
+        of: audioPlayableListBodyFinder,
+        matching: find.text(audioToSelectTitle));
+
+    // Tap on the ListTile containing the specific audio title
+    await tester.tap(audioTitleFinder);
+    await tester.pumpAndSettle(const Duration(milliseconds: 500));
   }
 
   static Future<void> verifyAudioMenuItemsState({
