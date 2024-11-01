@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:audiolearn/viewmodels/comment_vm.dart';
 import 'package:audiolearn/viewmodels/date_format_vm.dart';
+import 'package:audiolearn/views/widgets/audio_playable_list_dialog_widget.dart';
 import 'package:audiolearn/views/widgets/confirm_action_dialog.dart';
 import 'package:audiolearn/views/widgets/audio_modification_dialog.dart';
 import 'package:audiolearn/views/widgets/comment_add_edit_dialog.dart';
@@ -18662,6 +18663,153 @@ void main() {
         commentCreationDate: '2024/10/12',
         commentUpdateDate: '2024/11/01',
       );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+  });
+  group('Scrolling audio or playlists test', () {
+    testWidgets('''Scrolling audio to display current audio.''',
+        (tester) async {
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'scrolling_audio_and_playlists_test',
+        tapOnPlaylistToggleButton: false,
+      );
+
+      String localPlaylistToSelectTitle = 'local_2';
+      String currentAudioTitle = '99-audio learn test short video two 23-06-10';
+
+      // Verify that the current audio is displayed
+      expect(find.text(currentAudioTitle), findsOneWidget);
+
+      // Unselect the current playlist to verify no available audio
+      // are handled correctly by the audio scroll determination
+
+      // First, find the Playlist ListTile Text widget
+      Finder localPlaylistToSelectListTileTextWidgetFinder =
+          find.text(localPlaylistToSelectTitle);
+
+      // Then obtain the Playlist ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      Finder localPlaylistToSelectListTileWidgetFinder = find.ancestor(
+        of: localPlaylistToSelectListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the Checkbox widget located in the Playlist ListTile
+      // and tap on it to select the playlist
+      Finder localPlaylistToSelectListTileCheckboxWidgetFinder =
+          find.descendant(
+        of: localPlaylistToSelectListTileWidgetFinder,
+        matching: find.byKey(const Key('playlist_checkbox_key')),
+      );
+
+      // Tap the ListTile Playlist checkbox to unselect it: This ensure
+      // a bug was solved
+      await tester.tap(localPlaylistToSelectListTileCheckboxWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // Select the empty local_5 playlist to verify no available audio
+      // are handled correctly by the audio scroll determination
+
+      localPlaylistToSelectTitle = 'local_5';
+
+      // First, find the Playlist ListTile Text widget
+      localPlaylistToSelectListTileTextWidgetFinder =
+          find.text(localPlaylistToSelectTitle);
+
+      // Then obtain the Playlist ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      localPlaylistToSelectListTileWidgetFinder = find.ancestor(
+        of: localPlaylistToSelectListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the Checkbox widget located in the Playlist ListTile
+      // and tap on it to select the playlist
+      localPlaylistToSelectListTileCheckboxWidgetFinder = find.descendant(
+        of: localPlaylistToSelectListTileWidgetFinder,
+        matching: find.byKey(const Key('playlist_checkbox_key')),
+      );
+
+      // Tap the ListTile Playlist checkbox to select it: This ensure
+      // another bug was solved
+      await tester.tap(localPlaylistToSelectListTileCheckboxWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // Reselect the local_2 playlist
+
+      localPlaylistToSelectTitle = 'local_2';
+
+      // First, find the Playlist ListTile Text widget
+      localPlaylistToSelectListTileTextWidgetFinder =
+          find.text(localPlaylistToSelectTitle);
+
+      // Then obtain the Playlist ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      localPlaylistToSelectListTileWidgetFinder = find.ancestor(
+        of: localPlaylistToSelectListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the Checkbox widget located in the Playlist ListTile
+      // and tap on it to select the playlist
+      localPlaylistToSelectListTileCheckboxWidgetFinder = find.descendant(
+        of: localPlaylistToSelectListTileWidgetFinder,
+        matching: find.byKey(const Key('playlist_checkbox_key')),
+      );
+
+      // Tap the ListTile Playlist checkbox to select it: This ensure
+      // another bug was solved
+      await tester.tap(localPlaylistToSelectListTileCheckboxWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // Go to audio player view to select another audio
+      Finder appScreenNavigationButton =
+          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+      await tester.tap(appScreenNavigationButton);
+      await tester.pumpAndSettle();
+
+      // Now we open the AudioPlayableListDialog by tapping on the
+      // audio title
+      await tester.tap(find.text("$currentAudioTitle\n0:10"));
+      await tester.pumpAndSettle();
+
+      String audioToSelectTitle = '1-audio learn test short video two 23-06-10';
+
+    // Find the AudioPlayableListDialog
+    Finder audioPlayableListDialogFinder = find.byType(AudioPlayableListDialog);
+
+    // Find the list body containing the audio titles
+    final Finder audioPlayableListBodyFinder = find.descendant(
+        of: audioPlayableListDialogFinder, matching: find.byType(ListBody));
+
+      // Scrolling down the audios list in order to display the first
+      // downloaded audio title
+      // Find the audio list widget using its key
+      // final listFinder = find.byKey(const Key('audio_list'));
+      // Perform the scroll action
+      await tester.drag(audioPlayableListBodyFinder, const Offset(0, -1000));
+      await tester.pumpAndSettle();
+
+      // Select an audio in the AudioPlayableListDialog
+      await IntegrationTestUtil.selectAudioInAudioPlayableDialog(
+        tester: tester,
+        audioToSelectTitle: audioToSelectTitle,
+      );
+
+      // Return to playlist download view
+      appScreenNavigationButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(appScreenNavigationButton);
+      await tester.pumpAndSettle();
+
+      // Verify that the new current audio is displayed
+      expect(find.text(audioToSelectTitle), findsOneWidget);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub

@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:audiolearn/views/widgets/audio_playable_list_dialog_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -2826,8 +2825,8 @@ void main() {
       await tester.tap(find.text("$audioToPlayTitle\n17:59"));
       await tester.pumpAndSettle();
 
-      // Find the AudioPlayableListDialog
-      await selectAudioInAudioPlayableDialog(
+      // Select an audio in the AudioPlayableListDialog
+      await IntegrationTestUtil.selectAudioInAudioPlayableDialog(
         tester: tester,
         audioToSelectTitle: audioToSelectInAudioListTitle,
       );
@@ -2840,7 +2839,7 @@ void main() {
 
       // Then select the previously playing audio in order to open it in
       // the AudioPlayerView
-      await selectAudioInAudioPlayableDialog(
+      await IntegrationTestUtil.selectAudioInAudioPlayableDialog(
         tester: tester,
         audioToSelectTitle: audioToPlayTitle,
       );
@@ -6956,29 +6955,6 @@ void verifyPlaylistIsSelectedInPlaylistDownloadView({
     selectedPlaylistTitleText.data,
     selectedPlaylistTitle,
   );
-}
-
-Future<void> selectAudioInAudioPlayableDialog({
-  required WidgetTester tester,
-  required String audioToSelectTitle,
-}) async {
-  // Find the AudioPlayableListDialog
-  Finder audioPlayableListDialogFinder = find.byType(AudioPlayableListDialog);
-
-  // Then get the audio to select ListTile Text widget finder
-  // and tap on it
-
-  // Find the list body containing the audio titles
-  final Finder audioPlayableListBodyFinder = find.descendant(
-      of: audioPlayableListDialogFinder, matching: find.byType(ListBody));
-
-  // Find the ListTile containing the specific audio title
-  final Finder audioTitleFinder = find.descendant(
-      of: audioPlayableListBodyFinder, matching: find.text(audioToSelectTitle));
-
-  // Tap on the ListTile containing the specific audio title
-  await tester.tap(audioTitleFinder);
-  await tester.pumpAndSettle(const Duration(milliseconds: 500));
 }
 
 Future<void> deleteComment({
