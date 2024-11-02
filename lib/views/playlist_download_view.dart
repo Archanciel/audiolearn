@@ -49,7 +49,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   final TextEditingController _playlistUrlOrSearchController =
       TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  final double _audioItemHeight = 70.0;
+  final double _audioItemHeight = 85.0;
 
   List<Audio> _selectedPlaylistsPlayableAudios = [];
 
@@ -233,12 +233,12 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     } else if (audioToScrollPosition > 200) {
       multiplier *= 1.21;
     } else if (audioToScrollPosition > 120) {
-      multiplier *= 1.2;
+      multiplier *= 1.125;
     }
 
-    if (playlistListVMlistenTrue.isPlaylistListExpanded) {
+    if (!playlistListVMlistenTrue.isPlaylistListExpanded) {
       // the list of playlists is expanded
-      multiplier *= 1.4;
+      multiplier *= 1.55;
     }
 
     double offset = multiplier * _audioItemHeight;
