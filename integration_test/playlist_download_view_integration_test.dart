@@ -16815,10 +16815,10 @@ void main() {
         ];
 
         audioTitles = [
+          "La résilience insulaire par Fiona Roche",
           "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
           "Les besoins artificiels par R.Keucheyan",
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
         ];
 
         IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
@@ -18672,7 +18672,6 @@ void main() {
     });
   });
   group('Scrolling audio or playlists test', () {
-    
     testWidgets('''Scrolling audio to display current audio.''',
         (tester) async {
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
@@ -18769,7 +18768,8 @@ void main() {
       await tester.tap(localPlaylistToSelectListTileCheckboxWidgetFinder);
       await tester.pumpAndSettle();
 
-      String newAudioToSelectTitle = '1-audio learn test short video two 23-06-10';
+      String newAudioToSelectTitle =
+          '1-audio learn test short video two 23-06-10';
 
       // Go to audio player view to select another audio
       await _selectNewAudioInAudioPlayerViewAndReturnToPlaylistDownloadView(
@@ -19394,10 +19394,10 @@ Future<List<String>> enteringFirstAndSecondLetterOfLocalPlaylistSearchWord({
   ];
 
   List<String> audioTitles = [
+    "La résilience insulaire par Fiona Roche",
     "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
     "Les besoins artificiels par R.Keucheyan",
     "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-    "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
   ];
 
   IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
