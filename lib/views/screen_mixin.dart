@@ -1,5 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
+import 'dart:io';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -308,6 +310,9 @@ mixin ScreenMixin {
       return false;
     }
   }
+
+
+  static bool isHardwarePc() => (Platform.isWindows || Platform.isLinux || Platform.isMacOS);
 
   InputDecoration getDialogTextFieldInputDecoration({
     String labelTxt = '',

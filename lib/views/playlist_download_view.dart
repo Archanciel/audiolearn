@@ -33,8 +33,11 @@ class PlaylistDownloadView extends StatefulWidget {
   // This function is necessary since it is passed to the
   // constructor of AudioListItemWidget.
   final Function(int) onPageChangedFunction;
+  final double audioItemHeight = (ScreenMixin.isHardwarePc() ? 73 : 85);
+  final double playlistNotExpamdedScrollAugmentation =
+      (ScreenMixin.isHardwarePc()) ? 1.38 : 1.55;
 
-  const PlaylistDownloadView({
+  PlaylistDownloadView({
     super.key,
     required this.settingsDataService,
     required this.onPageChangedFunction,
@@ -49,7 +52,6 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   final TextEditingController _playlistUrlOrSearchController =
       TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  final double _audioItemHeight = 85.0;
 
   List<Audio> _selectedPlaylistsPlayableAudios = [];
 
@@ -215,10 +217,20 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   void _scrollToCurrentAudioItem({
     required PlaylistListVM playlistListVMlistenTrue,
   }) {
-    int audioToScrollPosition = playlistListVMlistenTrue.determineAudioToScrollPosition();
+    int audioToScrollPosition =
+        playlistListVMlistenTrue.determineAudioToScrollPosition();
 
-    if (playlistListVMlistenTrue.isPlaylistListExpanded &&
-        audioToScrollPosition <= 2) {
+    // When the download playlist view is displayed, the playlist list
+    // is collapsed or expanded corresponding to the state stored in the
+    // settings file. This state is modified by the user when he clicks
+    // on the playlist toggle button.
+    bool isPlaylistListExpanded = widget.settingsDataService.get(
+            settingType: SettingType.playlists,
+            settingSubType:
+                Playlists.arePlaylistsDisplayedInPlaylistDownloadView) ??
+        false;
+
+    if (isPlaylistListExpanded && audioToScrollPosition <= 2) {
       // this avoids scrolling down when the current audio is
       // in the top part of the audio list. Without that, the
       // list is unusefully scrolled down and the user has to scroll
@@ -236,12 +248,12 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       multiplier *= 1.125;
     }
 
-    if (!playlistListVMlistenTrue.isPlaylistListExpanded) {
+    if (!isPlaylistListExpanded) {
       // the list of playlists is expanded
-      multiplier *= 1.55;
+      multiplier *= widget.playlistNotExpamdedScrollAugmentation;
     }
 
-    double offset = multiplier * _audioItemHeight;
+    double offset = multiplier * widget.audioItemHeight;
 
     if (_scrollController.hasClients) {
       _scrollController.jumpTo(0.0);
