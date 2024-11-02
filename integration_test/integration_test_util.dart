@@ -338,12 +338,27 @@ class IntegrationTestUtil {
     }
   }
 
+  /// If {offsetValue} is negative, the list is scroll down
   static Future<void> selectAudioInAudioPlayableDialog({
     required WidgetTester tester,
     required String audioToSelectTitle,
+    double offsetValue = 0.0,
   }) async {
     // Find the AudioPlayableListDialog
     Finder audioPlayableListDialogFinder = find.byType(AudioPlayableListDialog);
+
+    if (offsetValue != 0.0) {
+      // Find the list body containing the audio titles
+      final Finder audioPlayableListBodyFinder = find.descendant(
+          of: audioPlayableListDialogFinder, matching: find.byType(ListBody));
+
+      // Scrolling down the audios list in order to display the first
+      // downloaded audio title
+
+      // Perform the scroll action
+      await tester.drag(audioPlayableListBodyFinder, Offset(0, offsetValue));
+      await tester.pumpAndSettle();
+    }
 
     // Then get the audio to select ListTile Text widget finder
     // and tap on it

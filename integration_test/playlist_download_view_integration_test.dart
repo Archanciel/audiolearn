@@ -18672,6 +18672,7 @@ void main() {
     });
   });
   group('Scrolling audio or playlists test', () {
+    
     testWidgets('''Scrolling audio to display current audio.''',
         (tester) async {
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
@@ -18768,48 +18769,47 @@ void main() {
       await tester.tap(localPlaylistToSelectListTileCheckboxWidgetFinder);
       await tester.pumpAndSettle();
 
+      String newAudioToSelectTitle = '1-audio learn test short video two 23-06-10';
+
       // Go to audio player view to select another audio
-      Finder appScreenNavigationButton =
-          find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
-
-      // Now we open the AudioPlayableListDialog by tapping on the
-      // audio title
-      await tester.tap(find.text("$currentAudioTitle\n0:10"));
-      await tester.pumpAndSettle();
-
-      String audioToSelectTitle = '1-audio learn test short video two 23-06-10';
-
-    // Find the AudioPlayableListDialog
-    Finder audioPlayableListDialogFinder = find.byType(AudioPlayableListDialog);
-
-    // Find the list body containing the audio titles
-    final Finder audioPlayableListBodyFinder = find.descendant(
-        of: audioPlayableListDialogFinder, matching: find.byType(ListBody));
-
-      // Scrolling down the audios list in order to display the first
-      // downloaded audio title
-      // Find the audio list widget using its key
-      // final listFinder = find.byKey(const Key('audio_list'));
-      // Perform the scroll action
-      await tester.drag(audioPlayableListBodyFinder, const Offset(0, -1000));
-      await tester.pumpAndSettle();
-
-      // Select an audio in the AudioPlayableListDialog
-      await IntegrationTestUtil.selectAudioInAudioPlayableDialog(
+      await _selectNewAudioInAudioPlayerViewAndReturnToPlaylistDownloadView(
         tester: tester,
-        audioToSelectTitle: audioToSelectTitle,
+        currentAudioTitle: currentAudioTitle,
+        newAudioTitle: newAudioToSelectTitle,
+        offsetValue: -1000,
       );
 
-      // Return to playlist download view
-      appScreenNavigationButton =
-          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-      await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
+      // Verify that the new current audio is displayed due to correct
+      // audio scrolling
+      expect(find.text(newAudioToSelectTitle), findsOneWidget);
 
-      // Verify that the new current audio is displayed
-      expect(find.text(audioToSelectTitle), findsOneWidget);
+      newAudioToSelectTitle = '7-audio learn test short video two 23-06-10';
+
+      // Go to audio player view to select another audio
+      await _selectNewAudioInAudioPlayerViewAndReturnToPlaylistDownloadView(
+        tester: tester,
+        currentAudioTitle: '1-audio learn test short video two 23-06-10',
+        newAudioTitle: newAudioToSelectTitle,
+        offsetValue: 300.0,
+      );
+
+      // Verify that the new current audio is displayed due to correct
+      // audio scrolling
+      expect(find.text(newAudioToSelectTitle), findsOneWidget);
+
+      newAudioToSelectTitle = '3-audio learn test short video two 23-06-10';
+
+      // Go to audio player view to select another audio
+      await _selectNewAudioInAudioPlayerViewAndReturnToPlaylistDownloadView(
+        tester: tester,
+        currentAudioTitle: '7-audio learn test short video two 23-06-10',
+        newAudioTitle: newAudioToSelectTitle,
+        offsetValue: -1000.0,
+      );
+
+      // Verify that the new current audio is displayed due to correct
+      // audio scrolling
+      expect(find.text(newAudioToSelectTitle), findsOneWidget);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -18818,6 +18818,38 @@ void main() {
       );
     });
   });
+}
+
+Future<void> _selectNewAudioInAudioPlayerViewAndReturnToPlaylistDownloadView({
+  required WidgetTester tester,
+  required String currentAudioTitle,
+  required String newAudioTitle,
+  double offsetValue = 0.0,
+}) async {
+  // Go to audio player view to select another audio
+  Finder appScreenNavigationButton =
+      find.byKey(const ValueKey('audioPlayerViewIconButton'));
+  await tester.tap(appScreenNavigationButton);
+  await tester.pumpAndSettle();
+
+  // Now we open the AudioPlayableListDialog by tapping on the
+  // audio title
+  await tester.tap(find.text("$currentAudioTitle\n0:10"));
+  await tester.pumpAndSettle();
+
+  // Select an audio in the AudioPlayableListDialog
+  await IntegrationTestUtil.selectAudioInAudioPlayableDialog(
+    tester: tester,
+    audioToSelectTitle: newAudioTitle,
+    offsetValue: offsetValue, // scrolling down may be necessary in order to
+    //                           find the audioToSelectTitle
+  );
+
+  // Return to playlist download view
+  appScreenNavigationButton =
+      find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+  await tester.tap(appScreenNavigationButton);
+  await tester.pumpAndSettle();
 }
 
 Future<void> _selectDateFormat({
