@@ -33,7 +33,7 @@ class PlaylistDownloadView extends StatefulWidget {
   // This function is necessary since it is passed to the
   // constructor of AudioListItemWidget.
   final Function(int) onPageChangedFunction;
-  final double audioItemHeight = (ScreenMixin.isHardwarePc() ? 73 : 85);
+  final double audioItemHeight = (ScreenMixin.isHardwarePc() ? 80 : 85);
   final double playlistNotExpamdedScrollAugmentation =
       (ScreenMixin.isHardwarePc()) ? 1.38 : 1.55;
 
@@ -58,6 +58,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   bool _wasSortFilterAudioSettingsApplied = false;
 
   String? _selectedSortFilterParametersName;
+
+  bool _doNotScroll = false;
 
   // @override
   // void initState() {
@@ -207,8 +209,15 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       ),
     );
 
+    final AudioDownloadVM audioDownloadVMlistenTrue =
+        Provider.of<AudioDownloadVM>(
+      context,
+      listen: true,
+    );
+
     _scrollToCurrentAudioItem(
       playlistListVMlistenTrue: playlistListVMlistenTrue,
+      audioDownloadVMlistenTrue: audioDownloadVMlistenTrue,
     );
 
     return expanded;
@@ -216,7 +225,34 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
   void _scrollToCurrentAudioItem({
     required PlaylistListVM playlistListVMlistenTrue,
+    required AudioDownloadVM audioDownloadVMlistenTrue,
   }) {
+    if (audioDownloadVMlistenTrue.isDownloading) {
+      _doNotScroll = true;
+    }
+
+    if (_doNotScroll) {
+      _applyDefaultSortFilterParms(
+        playlistListVMlistenFalseOrTrue: playlistListVMlistenTrue,
+        notifyListeners: true,
+      );
+
+      // When an audio is downloading, the list is not scrolled to the
+      // current audio item. This enables the newly downloaded audio to
+      // be displayed at the top of the audio list.
+      if (_scrollController.hasClients) {
+        _scrollController.jumpTo(0.0);
+        _scrollController.animateTo(
+          // offset,
+          0.0,
+          duration: kScrollDuration,
+          curve: Curves.easeInOut,
+        );
+      }
+
+      return;
+    }
+
     int audioToScrollPosition =
         playlistListVMlistenTrue.determineAudioToScrollPosition();
 
@@ -268,6 +304,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       WidgetsBinding.instance
           .addPostFrameCallback((_) => _scrollToCurrentAudioItem(
                 playlistListVMlistenTrue: playlistListVMlistenTrue,
+                audioDownloadVMlistenTrue: audioDownloadVMlistenTrue,
               ));
     }
   }
@@ -777,6 +814,30 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     _updatePlaylistSortedFilteredAudioList(
         playlistListVMlistenTrue: playlistListVMlistenFalseOrTrue,
         searchSentence: searchSentence,
+        notifyListeners: notifyListeners); // If true, causes displayed audio
+    //                                    list update.
+    //                         If false, avoids rebuilding the widget and
+    //                         avoids integration test failure
+
+    return _selectedSortFilterParametersName!; // is not null
+  }
+
+  /// This method is called by the _scrollToCurrentAudioItem() method when the
+  /// application is downloading new playlist audio. In this situation, the
+  /// scroll to the current audio item is disabled so that the newly downloaded
+  /// audio are displayed at the top of the audio list. The display at the top
+  /// of the audio list is only possible if the sort and filter audio settings
+  /// are set to the default settings, what is done by this method. 
+  String _applyDefaultSortFilterParms({
+    required PlaylistListVM playlistListVMlistenFalseOrTrue,
+    notifyListeners = false,
+  }) {
+    _selectedSortFilterParametersName =
+        AppLocalizations.of(context)!.sortFilterParametersDefaultName;
+
+    _updatePlaylistSortedFilteredAudioList(
+        playlistListVMlistenTrue: playlistListVMlistenFalseOrTrue,
+        searchSentence: '',
         notifyListeners: notifyListeners); // If true, causes displayed audio
     //                                    list update.
     //                         If false, avoids rebuilding the widget and
