@@ -33,7 +33,7 @@ class PlaylistDownloadView extends StatefulWidget {
   // This function is necessary since it is passed to the
   // constructor of AudioListItemWidget.
   final Function(int) onPageChangedFunction;
-  final double audioItemHeight = (ScreenMixin.isHardwarePc() ? 80 : 85);
+  final double audioItemHeight = (ScreenMixin.isHardwarePc() ? 73 : 85);
   final double playlistNotExpamdedScrollAugmentation =
       (ScreenMixin.isHardwarePc()) ? 1.38 : 1.55;
 
