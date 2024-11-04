@@ -31,8 +31,7 @@ class UiUtil {
     Color? audioTitleBackgroundColor;
 
     if (audioIndex == currentAudioIndex) {
-      audioTitleTextColor = Colors.white;
-      audioTitleBackgroundColor = Colors.blue;
+      return generateCurrentAudioStateColors();
     } else if (audio.wasFullyListened()) {
       audioTitleTextColor = (isDarkTheme)
           ? kSliderThumbColorInDarkMode
@@ -48,5 +47,9 @@ class UiUtil {
     }
 
     return [audioTitleTextColor, audioTitleBackgroundColor];
+  }
+
+  static List<Color?> generateCurrentAudioStateColors() {
+    return [Colors.white, Colors.blue];
   }
 }

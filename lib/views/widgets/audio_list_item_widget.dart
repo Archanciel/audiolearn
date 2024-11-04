@@ -3,6 +3,7 @@
 import 'package:audiolearn/services/sort_filter_parameters.dart';
 import 'package:audiolearn/utils/date_time_util.dart';
 import 'package:audiolearn/viewmodels/date_format_vm.dart';
+import 'package:audiolearn/viewmodels/theme_provider_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +13,7 @@ import '../../../models/audio.dart';
 import '../../../utils/ui_util.dart';
 import '../../models/comment.dart';
 import '../../models/playlist.dart';
+import '../../services/settings_data_service.dart';
 import '../../viewmodels/audio_player_vm.dart';
 import '../../../viewmodels/playlist_list_vm.dart';
 import '../../utils/duration_expansion.dart';
@@ -44,12 +46,18 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
   // to another screen according to the passed index.
   final Function(int) onPageChangedFunction;
 
+  final int _audioIndex;
+  final int _currentAudioIndex;
+
   AudioListItemWidget({
     super.key,
     required this.audio,
+    required int audioIndex,
+    required int currentAudioIndex,
     required this.warningMessageVM,
     required this.onPageChangedFunction,
-  });
+  })  : _audioIndex = audioIndex,
+        _currentAudioIndex = currentAudioIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +75,18 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
       context,
       listen: true,
     );
+
+    Color? audioTitleAndSubTitleTextColor;
+    Color? audioTitleAndSubTitleBackgroundColor;
+
+    if (_audioIndex == _currentAudioIndex) {
+      List<Color?> audioTitleForeAndBackgroundColors =
+          UiUtil.generateCurrentAudioStateColors();
+
+      audioTitleAndSubTitleTextColor = audioTitleForeAndBackgroundColors[0];
+      audioTitleAndSubTitleBackgroundColor =
+          audioTitleForeAndBackgroundColors[1];
+    }
 
     return ListTile(
       // generating the audio item left (leading) menu ...
@@ -86,7 +106,11 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
                   audioPlayerVMlistenFalse); // dragging to the AudioPlayerView screen
         },
         child: Text(audio.validVideoTitle,
-            style: const TextStyle(fontSize: kAudioTitleFontSize)),
+            style: TextStyle(
+              color: audioTitleAndSubTitleTextColor,
+              backgroundColor: audioTitleAndSubTitleBackgroundColor,
+              fontSize: kAudioTitleFontSize,
+            )),
       ),
       subtitle: GestureDetector(
         onTap: () async {
@@ -101,7 +125,11 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
             playlistVMlistnedFalse: playlistVMlistnedFalse,
             dateFormatVMlistenTrue: dateFormatVMlistenTrue,
           ),
-          style: const TextStyle(fontSize: kAudioTitleFontSize),
+          style: TextStyle(
+            color: audioTitleAndSubTitleTextColor,
+            backgroundColor: audioTitleAndSubTitleBackgroundColor,
+            fontSize: kAudioTitleFontSize,
+          ),
         ),
       ),
       trailing: _buildPlayButton(),
