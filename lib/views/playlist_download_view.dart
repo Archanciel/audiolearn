@@ -193,8 +193,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       );
     }
 
-    int currentAudioIndex = playlistListVMlistenTrue
-        .uniqueSelectedPlaylist!.currentOrPastPlayableAudioIndex;
+    Playlist playlist = playlistListVMlistenTrue.uniqueSelectedPlaylist!;
+    Audio currentAudio =
+        playlist.playableAudioLst[playlist.currentOrPastPlayableAudioIndex];
 
     Expanded expanded = Expanded(
       child: ListView.builder(
@@ -205,8 +206,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           final audio = _selectedPlaylistsPlayableAudios[index];
           return AudioListItemWidget(
             audio: audio,
-            audioIndex: index,
-            currentAudioIndex: currentAudioIndex,
+            isAudioCurrent: audio == currentAudio,
             warningMessageVM: warningMessageVMlistenFalse,
             onPageChangedFunction: widget.onPageChangedFunction,
           );

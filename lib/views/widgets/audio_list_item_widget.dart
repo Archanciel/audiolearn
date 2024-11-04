@@ -3,7 +3,6 @@
 import 'package:audiolearn/services/sort_filter_parameters.dart';
 import 'package:audiolearn/utils/date_time_util.dart';
 import 'package:audiolearn/viewmodels/date_format_vm.dart';
-import 'package:audiolearn/viewmodels/theme_provider_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +12,6 @@ import '../../../models/audio.dart';
 import '../../../utils/ui_util.dart';
 import '../../models/comment.dart';
 import '../../models/playlist.dart';
-import '../../services/settings_data_service.dart';
 import '../../viewmodels/audio_player_vm.dart';
 import '../../../viewmodels/playlist_list_vm.dart';
 import '../../utils/duration_expansion.dart';
@@ -46,18 +44,15 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
   // to another screen according to the passed index.
   final Function(int) onPageChangedFunction;
 
-  final int _audioIndex;
-  final int _currentAudioIndex;
+  final bool _isAudioCurrent;
 
   AudioListItemWidget({
     super.key,
     required this.audio,
-    required int audioIndex,
-    required int currentAudioIndex,
+    required bool isAudioCurrent,
     required this.warningMessageVM,
     required this.onPageChangedFunction,
-  })  : _audioIndex = audioIndex,
-        _currentAudioIndex = currentAudioIndex;
+  })  : _isAudioCurrent = isAudioCurrent;
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +74,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
     Color? audioTitleAndSubTitleTextColor;
     Color? audioTitleAndSubTitleBackgroundColor;
 
-    if (_audioIndex == _currentAudioIndex) {
+    if (_isAudioCurrent) {
       List<Color?> audioTitleForeAndBackgroundColors =
           UiUtil.generateCurrentAudioStateColors();
 
