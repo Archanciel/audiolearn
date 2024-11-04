@@ -193,6 +193,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       );
     }
 
+    int currentAudioIndex = playlistListVMlistenTrue
+        .uniqueSelectedPlaylist!.currentOrPastPlayableAudioIndex;
+
     Expanded expanded = Expanded(
       child: ListView.builder(
         key: const Key('audio_list'),
@@ -202,6 +205,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           final audio = _selectedPlaylistsPlayableAudios[index];
           return AudioListItemWidget(
             audio: audio,
+            audioIndex: index,
+            currentAudioIndex: currentAudioIndex,
             warningMessageVM: warningMessageVMlistenFalse,
             onPageChangedFunction: widget.onPageChangedFunction,
           );
@@ -827,7 +832,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   /// scroll to the current audio item is disabled so that the newly downloaded
   /// audio are displayed at the top of the audio list. The display at the top
   /// of the audio list is only possible if the sort and filter audio settings
-  /// are set to the default settings, what is done by this method. 
+  /// are set to the default settings, what is done by this method.
   String _applyDefaultSortFilterParms({
     required PlaylistListVM playlistListVMlistenFalseOrTrue,
     notifyListeners = false,
