@@ -18671,7 +18671,7 @@ void main() {
     });
   });
   group('Scrolling audio or playlists test', () {
-    testWidgets('''Scrolling audio to display current audio.''',
+     testWidgets('''Scrolling audio to display current audio.''',
         (tester) async {
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
@@ -18679,11 +18679,37 @@ void main() {
         tapOnPlaylistToggleButton: false,
       );
 
+      // Setting to this field the currently selected playlist title
       String localPlaylistToSelectTitle = 'local_2';
+
+      // Setting to this field the currently selected audio title of the
+      // 'local_2' playlist
       String currentAudioTitle = '99-audio learn test short video two 23-06-10';
+      String currentAudioSubTitle = '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:19.';
 
       // Verify that the current audio is displayed
       expect(find.text(currentAudioTitle), findsOneWidget);
+
+      // Verify that the current audio is displayed
+      expect(find.text(currentAudioSubTitle), findsOneWidget);
+
+      await IntegrationTestUtil.checkAudioTextColor(
+        tester: tester,
+        audioTitle: currentAudioTitle,
+        expectedTitleTextColor:
+            IntegrationTestUtil.currentlyPlayingAudioTitleTextColor,
+        expectedTitleTextBackgroundColor:
+            IntegrationTestUtil.currentlyPlayingAudioTitleTextBackgroundColor,
+      );
+
+      await IntegrationTestUtil.checkAudioTextColor(
+        tester: tester,
+        audioTitle: currentAudioSubTitle,
+        expectedTitleTextColor:
+            IntegrationTestUtil.currentlyPlayingAudioTitleTextColor,
+        expectedTitleTextBackgroundColor:
+            IntegrationTestUtil.currentlyPlayingAudioTitleTextBackgroundColor,
+      );
 
       // Unselect the current playlist to verify no available audio
       // are handled correctly by the audio scroll determination

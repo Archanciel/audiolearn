@@ -622,7 +622,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
 
     if (audio.isAudioImported) {
       lastSubtitlePart =
-          '$audioFileSizeStr ${AppLocalizations.of(context)!.imported} ${AppLocalizations.of(context)!.atPreposition} ${dateFormatVMlistenTrue.formatDate(audioDownloadDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(audioDownloadDateTime)}';
+          '$audioFileSizeStr ${AppLocalizations.of(context)!.imported} ${AppLocalizations.of(context)!.on} ${dateFormatVMlistenTrue.formatDate(audioDownloadDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(audioDownloadDateTime)}';
     } else {
       lastSubtitlePart =
           '$audioFileSizeStr ${AppLocalizations.of(context)!.atPreposition} $audioDownloadSpeedStr ${AppLocalizations.of(context)!.on} ${dateFormatVMlistenTrue.formatDate(audioDownloadDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(audioDownloadDateTime)}';
