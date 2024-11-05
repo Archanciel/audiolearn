@@ -236,11 +236,14 @@ class PlaylistListVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// This method is called when the select an audio to listen and then
-  /// come back to the playlist download view. The method scroll the playlist
-  /// audio so that the current or past audio is visible in the audio list.
+  /// This method is called when an audio to listen is selected and then
+  /// the playlist download view is displayed. The method calculate the
+  /// distance to which the playlist audio list must be scrolled so that the
+  /// current or past audio is visible in the audio list.
   int determineAudioToScrollPosition() {
     if (_uniqueSelectedPlaylist == null) {
+      // If no playlist is selected, the audio list is empty and no
+      // scrolling is required.
       return 0;
     }
 
@@ -248,6 +251,8 @@ class PlaylistListVM extends ChangeNotifier {
         uniqueSelectedPlaylist!.currentOrPastPlayableAudioIndex;
 
     if (currentOrPastPlayableAudioIndex == -1) {
+      // No audio is selected in the audio list of the selected playlist,
+      // so no scrolling is required.
       return 0;
     }
 
@@ -255,21 +260,28 @@ class PlaylistListVM extends ChangeNotifier {
         uniqueSelectedPlaylist!.playableAudioLst;
 
     if (selectedPlaylisPlayableAudios.isEmpty) {
+      // If the audio list is empty no scrolling is required.
       return 0;
     }
 
     if (currentOrPastPlayableAudioIndex >
         selectedPlaylisPlayableAudios.length) {
+      // Exceptional case.
       return 0;
     }
 
     Audio currentOrPastPlayableAudio =
         selectedPlaylisPlayableAudios[currentOrPastPlayableAudioIndex];
-    List<Audio> selectedPlaylisSortFiltertPlayableAudios =
-        getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
-            audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView);
 
-    int audioToScrollPosition = selectedPlaylisSortFiltertPlayableAudios
+    // Getting the currently displayed audio list of the selected playlist
+    List<Audio> selectedPlaylistSortFiltertPlayableAudios =
+        getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
+      audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+    );
+
+    // getting the index of the current or past audio in the displayed
+    // audio list of the selected playlist
+    int audioToScrollPosition = selectedPlaylistSortFiltertPlayableAudios
         .indexWhere((Audio audio) => audio == currentOrPastPlayableAudio);
 
     return audioToScrollPosition;
