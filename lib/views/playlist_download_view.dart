@@ -242,23 +242,25 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     required AudioDownloadVM audioDownloadVMlistenTrue,
   }) {
     if (audioDownloadVMlistenTrue.isDownloading) {
+      // When an audio is downloading, the list is not scrolled to the
+      // current audio item. This enables the newly downloaded audio to
+      // be displayed at the top of the audio list.
       _doNotScroll = true;
     }
 
     if (_doNotScroll) {
+      // In this case, the default sort and filter parameters are applied.
+      // This guarantees that the newly downloaded audio will be displayed
+      // at the top of the audio list.
       _applyDefaultSortFilterParms(
         playlistListVMlistenFalseOrTrue: playlistListVMlistenTrue,
         notifyListeners: true,
       );
 
-      // When an audio is downloading, the list is not scrolled to the
-      // current audio item. This enables the newly downloaded audio to
-      // be displayed at the top of the audio list.
       if (_scrollController.hasClients) {
         _scrollController.jumpTo(0.0);
         _scrollController.animateTo(
-          // offset,
-          0.0,
+          0.0, // offset
           duration: kScrollDuration,
           curve: Curves.easeInOut,
         );
@@ -271,8 +273,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
         playlistListVMlistenTrue.determineAudioToScrollPosition();
 
     // When the download playlist view is displayed, the playlist list
-    // is collapsed or expanded corresponding to the state stored in the
-    // settings file. This state is modified by the user when he clicks
+    // is collapsed or expanded. This corresponds to the state stored in the
+    // app settings file. This state is modified by the user when he clicks
     // on the playlist toggle button.
     bool isPlaylistListExpanded = widget.settingsDataService.get(
             settingType: SettingType.playlists,
@@ -281,29 +283,29 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
         false;
 
     if (isPlaylistListExpanded && audioToScrollPosition <= 2) {
-      // this avoids scrolling down when the current audio is
+      // This avoids scrolling down when the current audio is
       // in the top part of the audio list. Without that, the
       // list is unusefully scrolled down and the user has to scroll
-      // up to see top audio
+      // up to see a selected top audio.
       return;
     }
 
-    double multiplier = audioToScrollPosition.toDouble();
+    double scrollPositionNumber = audioToScrollPosition.toDouble();
 
     if (audioToScrollPosition > 300) {
-      multiplier *= 1.23;
+      scrollPositionNumber *= 1.23;
     } else if (audioToScrollPosition > 200) {
-      multiplier *= 1.21;
+      scrollPositionNumber *= 1.21;
     } else if (audioToScrollPosition > 120) {
-      multiplier *= 1.125;
+      scrollPositionNumber *= 1.125;
     }
 
     if (!isPlaylistListExpanded) {
-      // the list of playlists is expanded
-      multiplier *= widget.playlistNotExpamdedScrollAugmentation;
+      // the list of playlists is collapsed ...
+      scrollPositionNumber *= widget.playlistNotExpamdedScrollAugmentation;
     }
 
-    double offset = multiplier * widget.audioItemHeight;
+    double offset = scrollPositionNumber * widget.audioItemHeight;
 
     if (_scrollController.hasClients) {
       _scrollController.jumpTo(0.0);
