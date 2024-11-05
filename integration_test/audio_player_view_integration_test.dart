@@ -2546,7 +2546,7 @@ void main() {
 
       await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
-        audioTitle:
+        audioTitleOrSubTitle:
             "La sagesse ancestrale au service de la transition - Barrau & Bellet",
         expectedTitleTextColor: IntegrationTestUtil.fullyPlayedAudioTitleColor,
         expectedTitleTextBackgroundColor: null,
@@ -2554,7 +2554,8 @@ void main() {
 
       await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
-        audioTitle: "Manger de la viande à notre époque par Aurélien Barrau",
+        audioTitleOrSubTitle:
+            "Manger de la viande à notre époque par Aurélien Barrau",
         expectedTitleTextColor:
             IntegrationTestUtil.partiallyPlayedAudioTitleTextdColor,
         expectedTitleTextBackgroundColor: null,
@@ -2562,14 +2563,16 @@ void main() {
 
       await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
-        audioTitle: "Jancovici démonte les avantages du numérique chez Orange",
+        audioTitleOrSubTitle:
+            "Jancovici démonte les avantages du numérique chez Orange",
         expectedTitleTextColor: IntegrationTestUtil.fullyPlayedAudioTitleColor,
         expectedTitleTextBackgroundColor: null,
       );
 
       await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
-        audioTitle: "Quand Aurélien Barrau va dans une école de management",
+        audioTitleOrSubTitle:
+            "Quand Aurélien Barrau va dans une école de management",
         expectedTitleTextColor:
             IntegrationTestUtil.partiallyPlayedAudioTitleTextdColor,
         expectedTitleTextBackgroundColor: null,
@@ -2577,7 +2580,7 @@ void main() {
 
       await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
-        audioTitle: fifthDownloadedPartiallyPlayedAudioTitle,
+        audioTitleOrSubTitle: fifthDownloadedPartiallyPlayedAudioTitle,
         expectedTitleTextColor:
             IntegrationTestUtil.currentlyPlayingAudioTitleTextColor,
         expectedTitleTextBackgroundColor:
@@ -2586,7 +2589,7 @@ void main() {
 
       await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
-        audioTitle:
+        audioTitleOrSubTitle:
             "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
         expectedTitleTextColor: IntegrationTestUtil.fullyPlayedAudioTitleColor,
         expectedTitleTextBackgroundColor: null,
@@ -2594,7 +2597,7 @@ void main() {
 
       await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
-        audioTitle: "morning _ cinematic video",
+        audioTitleOrSubTitle: "morning _ cinematic video",
         expectedTitleTextColor: IntegrationTestUtil.unplayedAudioTitleTextColor,
         expectedTitleTextBackgroundColor: null,
       );
@@ -2625,7 +2628,8 @@ void main() {
 
       await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
-        audioTitle: "Manger de la viande à notre époque par Aurélien Barrau",
+        audioTitleOrSubTitle:
+            "Manger de la viande à notre époque par Aurélien Barrau",
         expectedTitleTextColor:
             IntegrationTestUtil.partiallyPlayedAudioTitleTextdColor,
         expectedTitleTextBackgroundColor: null,
@@ -2633,7 +2637,8 @@ void main() {
 
       await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
-        audioTitle: "Quand Aurélien Barrau va dans une école de management",
+        audioTitleOrSubTitle:
+            "Quand Aurélien Barrau va dans une école de management",
         expectedTitleTextColor:
             IntegrationTestUtil.partiallyPlayedAudioTitleTextdColor,
         expectedTitleTextBackgroundColor: null,
@@ -2641,7 +2646,7 @@ void main() {
 
       await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
-        audioTitle: fifthDownloadedPartiallyPlayedAudioTitle,
+        audioTitleOrSubTitle: fifthDownloadedPartiallyPlayedAudioTitle,
         expectedTitleTextColor:
             IntegrationTestUtil.currentlyPlayingAudioTitleTextColor,
         expectedTitleTextBackgroundColor:
@@ -2650,14 +2655,14 @@ void main() {
 
       await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
-        audioTitle: "morning _ cinematic video",
+        audioTitleOrSubTitle: "morning _ cinematic video",
         expectedTitleTextColor: IntegrationTestUtil.unplayedAudioTitleTextColor,
         expectedTitleTextBackgroundColor: null,
       );
 
       await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
-        audioTitle: "La résilience insulaire par Fiona Roche",
+        audioTitleOrSubTitle: "La résilience insulaire par Fiona Roche",
         expectedTitleTextColor:
             IntegrationTestUtil.partiallyPlayedAudioTitleTextdColor,
         expectedTitleTextBackgroundColor: null,
@@ -2665,14 +2670,15 @@ void main() {
 
       await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
-        audioTitle: "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+        audioTitleOrSubTitle:
+            "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
         expectedTitleTextColor: IntegrationTestUtil.unplayedAudioTitleTextColor,
         expectedTitleTextBackgroundColor: null,
       );
 
       await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
-        audioTitle: "Les besoins artificiels par R.Keucheyan",
+        audioTitleOrSubTitle: "Les besoins artificiels par R.Keucheyan",
         expectedTitleTextColor: IntegrationTestUtil.unplayedAudioTitleTextColor,
         expectedTitleTextBackgroundColor: null,
       );
@@ -2727,7 +2733,7 @@ void main() {
       // displayed at the botom of the list
       await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
-        audioTitle: thirdDownloadedNotPlayedAudioTitle,
+        audioTitleOrSubTitle: thirdDownloadedNotPlayedAudioTitle,
         expectedTitleTextColor:
             IntegrationTestUtil.currentlyPlayingAudioTitleTextColor,
         expectedTitleTextBackgroundColor:
@@ -2736,14 +2742,15 @@ void main() {
 
       await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
-        audioTitle: "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+        audioTitleOrSubTitle:
+            "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
         expectedTitleTextColor: IntegrationTestUtil.unplayedAudioTitleTextColor,
         expectedTitleTextBackgroundColor: null,
       );
 
       await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
-        audioTitle: "La résilience insulaire par Fiona Roche",
+        audioTitleOrSubTitle: "La résilience insulaire par Fiona Roche",
         expectedTitleTextColor:
             IntegrationTestUtil.partiallyPlayedAudioTitleTextdColor,
         expectedTitleTextBackgroundColor: null,
@@ -2751,21 +2758,21 @@ void main() {
 
       await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
-        audioTitle: "Really short video",
+        audioTitleOrSubTitle: "Really short video",
         expectedTitleTextColor: IntegrationTestUtil.fullyPlayedAudioTitleColor,
         expectedTitleTextBackgroundColor: null,
       );
 
       await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
-        audioTitle: "morning _ cinematic video",
+        audioTitleOrSubTitle: "morning _ cinematic video",
         expectedTitleTextColor: IntegrationTestUtil.unplayedAudioTitleTextColor,
         expectedTitleTextBackgroundColor: null,
       );
 
       await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
-        audioTitle:
+        audioTitleOrSubTitle:
             "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
         expectedTitleTextColor: IntegrationTestUtil.fullyPlayedAudioTitleColor,
         expectedTitleTextBackgroundColor: null,
