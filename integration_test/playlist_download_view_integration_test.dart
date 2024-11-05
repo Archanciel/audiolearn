@@ -16039,7 +16039,7 @@ void main() {
         );
 
         List<String> playlistsTitles =
-            await enteringFirstAndSecondLetterOfLocalPlaylistSearchWord(
+            await _enteringFirstAndSecondLetterOfLocalPlaylistSearchWord(
           tester: tester,
         );
 
@@ -16165,7 +16165,7 @@ void main() {
           widgetKeyStr: 'search_icon_button',
         );
 
-        await enteringFirstAndSecondLetterOfLocalPlaylistSearchWord(
+        await _enteringFirstAndSecondLetterOfLocalPlaylistSearchWord(
           tester: tester,
         );
 
@@ -16207,7 +16207,7 @@ void main() {
         );
 
         List<String> playlistsTitles =
-            await enteringFirstAndSecondLetterOfLocalPlaylistSearchWord(
+            await _enteringFirstAndSecondLetterOfLocalPlaylistSearchWord(
           tester: tester,
         );
 
@@ -16333,7 +16333,7 @@ void main() {
           widgetKeyStr: 'search_icon_button',
         );
 
-        await enteringFirstAndSecondLetterOfLocalPlaylistSearchWord(
+        await _enteringFirstAndSecondLetterOfLocalPlaylistSearchWord(
           tester: tester,
         );
 
@@ -16375,7 +16375,7 @@ void main() {
         );
 
         List<String> playlistsTitles =
-            await enteringFirstAndSecondLetterOfLocalPlaylistSearchWord(
+            await _enteringFirstAndSecondLetterOfLocalPlaylistSearchWord(
           tester: tester,
         );
 
@@ -16501,7 +16501,7 @@ void main() {
           widgetKeyStr: 'search_icon_button',
         );
 
-        await enteringFirstAndSecondLetterOfLocalPlaylistSearchWord(
+        await _enteringFirstAndSecondLetterOfLocalPlaylistSearchWord(
           tester: tester,
         );
 
@@ -16529,7 +16529,7 @@ void main() {
         );
 
         List<String> playlistsTitles =
-            await enteringFirstAndSecondLetterOfLocalPlaylistSearchWord(
+            await _enteringFirstAndSecondLetterOfLocalPlaylistSearchWord(
           tester: tester,
         );
 
@@ -16857,7 +16857,7 @@ void main() {
         );
 
         List<String> playlistsTitles =
-            await enteringFirstAndSecondLetterOfLocalPlaylistSearchWord(
+            await _enteringFirstAndSecondLetterOfLocalPlaylistSearchWord(
           tester: tester,
         );
 
@@ -18671,7 +18671,7 @@ void main() {
     });
   });
   group('Scrolling audio or playlists test', () {
-    testWidgets('''Scrolling audio to display current audio.''',
+    testWidgets('''Automatic scrolling audio to display current audio.''',
         (tester) async {
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
@@ -18845,7 +18845,7 @@ void main() {
       );
     });
     testWidgets(
-        '''Playlist list not displayed, scrolling audio to display current
+        '''Playlist list not displayed, automatic scrolling audio to display current
               audio.''', (tester) async {
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
@@ -18925,6 +18925,212 @@ void main() {
       await _verifyCurrentAudioTitleAndSubTitleColor(
         tester: tester,
         currentAudioTitle: newAudioToSelectTitle,
+        currentAudioSubTitle: currentAudioSubTitle,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Searching playlist and select it, verifying automatic scrolling
+           audio displaying selected playlist current audio.''', (tester) async {
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'scrolling_audio_and_playlists_test',
+        tapOnPlaylistToggleButton: false,
+      );
+
+      // Setting to this field the currently selected playlist title
+      String playlistToSelectTitle = 'local_2';
+
+      // Setting to this field the currently selected audio title of the
+      // 'local_2' playlist
+      String currentAudioTitle = '99-audio learn test short video two 23-06-10';
+      String currentAudioSubTitle =
+          '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:19.';
+
+      // Verify that the current audio is displayed with the correct
+      // title and subtitle color
+      await _verifyCurrentAudioTitleAndSubTitleColor(
+        tester: tester,
+        currentAudioTitle: currentAudioTitle,
+        currentAudioSubTitle: currentAudioSubTitle,
+      );
+
+      // Now enter the playlist search word
+      await tester.tap(
+        find.byKey(
+          const Key('youtubeUrlOrSearchTextField'),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await tester.enterText(
+        find.byKey(
+          const Key('youtubeUrlOrSearchTextField'),
+        ),
+        'jeu',
+      );
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+      // Now tap on the search icon button
+      await tester.tap(find.byKey(const Key('search_icon_button')));
+      await tester.pumpAndSettle();
+
+      // Select the 'Jeunes pianistes extraordinaires' playlist
+
+      playlistToSelectTitle = 'Jeunes pianistes extraordinaires';
+
+      // First, find the Playlist ListTile Text widget
+      Finder playlistToSelectListTileTextWidgetFinder =
+          find.text(playlistToSelectTitle);
+
+      // Then obtain the Playlist ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      Finder playlistToSelectListTileWidgetFinder = find.ancestor(
+        of: playlistToSelectListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the Checkbox widget located in the Playlist ListTile
+      // and tap on it to select the playlist
+      Finder playlistToSelectListTileCheckboxWidgetFinder = find.descendant(
+        of: playlistToSelectListTileWidgetFinder,
+        matching: find.byKey(const Key('playlist_checkbox_key')),
+      );
+
+      // Tap the ListTile Playlist checkbox to select it: This ensure
+      // another bug was solved
+      await tester.tap(playlistToSelectListTileCheckboxWidgetFinder);
+      await tester.pumpAndSettle();
+
+      String newAudioToSelectTitle =
+          'EMOTIONAL AUDITION! young piano prodigy makes the Judges CRY and gets the GOLDEN BUZZER  FGT 2022';
+
+      String newAudioSubTitle =
+          '0:10:14.0. 3.75 Mo à 1.64 Mo/sec le 03/11/2024 à 15:19.';
+
+      // Verify that the current audio is displayed with the correct
+      // title and subtitle color
+      await _verifyCurrentAudioTitleAndSubTitleColor(
+        tester: tester,
+        currentAudioTitle: newAudioToSelectTitle,
+        currentAudioSubTitle: newAudioSubTitle,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Changing sort/filter parameter, automatic scrolling audio to display current
+              audio.''', (tester) async {
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'scrolling_audio_and_playlists_test',
+        tapOnPlaylistToggleButton: true, // playlists list not expanded
+      );
+
+      // Setting to this field the currently selected audio title of the
+      // 'local_2' playlist
+      String currentAudioTitle = '99-audio learn test short video two 23-06-10';
+      String currentAudioSubTitle =
+          '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:19.';
+
+      // Verify that the current audio is displayed with the correct
+      // title and subtitle color
+      await _verifyCurrentAudioTitleAndSubTitleColor(
+        tester: tester,
+        currentAudioTitle: currentAudioTitle,
+        currentAudioSubTitle: currentAudioSubTitle,
+      );
+
+      // Now, selecting 'Défaut' dropdown button item to apply the
+      // default sort/filter parms
+      final Finder dropDownButtonFinder =
+          find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+      final Finder dropDownButtonTextFinder = find.descendant(
+        of: dropDownButtonFinder,
+        matching: find.byType(Text),
+      );
+
+      // Tap on the current dropdown button item to open the dropdown
+      // button items list
+      await tester.tap(dropDownButtonTextFinder);
+      await tester.pumpAndSettle();
+
+      // And select the default sort/filter item
+      String defaultFrenchTitle = 'défaut';
+      final Finder defaultDropDownTextFinder = find.text(defaultFrenchTitle);
+      await tester.tap(defaultDropDownTextFinder);
+      await tester.pumpAndSettle();
+
+      // Verify that the current audio is displayed with the correct
+      // title and subtitle color
+      await _verifyCurrentAudioTitleAndSubTitleColor(
+        tester: tester,
+        currentAudioTitle: currentAudioTitle,
+        currentAudioSubTitle: currentAudioSubTitle,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Setting searching audio word, automatic scrolling audio to display
+              current audio whose title contains the search word.''', (tester) async {
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'scrolling_audio_and_playlists_test',
+        tapOnPlaylistToggleButton: true, // playlists list not expanded
+      );
+
+      // Setting to this field the currently selected audio title of the
+      // 'local_2' playlist
+      String currentAudioTitle = '99-audio learn test short video two 23-06-10';
+      String currentAudioSubTitle =
+          '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:19.';
+
+      // Verify that the current audio is displayed with the correct
+      // title and subtitle color
+      await _verifyCurrentAudioTitleAndSubTitleColor(
+        tester: tester,
+        currentAudioTitle: currentAudioTitle,
+        currentAudioSubTitle: currentAudioSubTitle,
+      );
+
+      // Now enter the audio search word
+      await tester.tap(
+        find.byKey(
+          const Key('youtubeUrlOrSearchTextField'),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await tester.enterText(
+        find.byKey(
+          const Key('youtubeUrlOrSearchTextField'),
+        ),
+        '9-audio',
+      );
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+      // Now tap on the search icon button
+      await tester.tap(find.byKey(const Key('search_icon_button')));
+      await tester.pumpAndSettle();
+
+      // Verify that the current audio is displayed with the correct
+      // title and subtitle color
+      await _verifyCurrentAudioTitleAndSubTitleColor(
+        tester: tester,
+        currentAudioTitle: currentAudioTitle,
         currentAudioSubTitle: currentAudioSubTitle,
       );
 
@@ -19500,7 +19706,7 @@ void _verifyAllNowUnplayedAudioPlayPauseIconColor({
   }
 }
 
-Future<List<String>> enteringFirstAndSecondLetterOfLocalPlaylistSearchWord({
+Future<List<String>> _enteringFirstAndSecondLetterOfLocalPlaylistSearchWord({
   required WidgetTester tester,
 }) async {
   // Now enter the first letter of the search word
