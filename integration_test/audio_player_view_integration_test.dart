@@ -4022,7 +4022,7 @@ void main() {
       // the displayed audio title is the current playable audio title of
       // the S8 audio playlist, i.e. "Interview de Chat GPT  - IA,
       // intelligence, philosophie, géopolitique, post-vérité...".
-      await verifyAudioPlayerViewPlaylistSelectionImpact(
+      await _verifyAudioPlayerViewPlaylistSelectionImpact(
         tester: tester,
         playlistDownloadViewCurrentlySelectedPlaylistTitle: emptyPlaylistTitle,
         playlistToSelectTitle: youtubePlaylistTitle,
@@ -4070,7 +4070,7 @@ void main() {
       // the audio player view playlist selection button. Then verify that
       // the displayed audio title is the current playable audio title of
       // the local audio playlist, i.e. "morning _ cinematic video".
-      await verifyAudioPlayerViewPlaylistSelectionImpact(
+      await _verifyAudioPlayerViewPlaylistSelectionImpact(
         tester: tester,
         playlistDownloadViewCurrentlySelectedPlaylistTitle:
             youtubePlaylistTitle,
@@ -7785,7 +7785,7 @@ Duration parseDuration(String hhmmString) {
   return Duration(hours: hours, minutes: minutes);
 }
 
-Future<void> verifyAudioPlayerViewPlaylistSelectionImpact(
+Future<void> _verifyAudioPlayerViewPlaylistSelectionImpact(
     {required WidgetTester tester,
     required String playlistDownloadViewCurrentlySelectedPlaylistTitle,
     required String playlistToSelectTitle,
