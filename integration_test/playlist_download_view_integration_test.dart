@@ -18936,7 +18936,8 @@ void main() {
     });
     testWidgets(
         '''Searching playlist and select it, verifying automatic scrolling
-           audio displaying selected playlist current audio.''', (tester) async {
+           audio displaying selected playlist current audio.''',
+        (tester) async {
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'scrolling_audio_and_playlists_test',
@@ -19086,7 +19087,8 @@ void main() {
     });
     testWidgets(
         '''Setting searching audio word, automatic scrolling audio to display
-              current audio whose title contains the search word.''', (tester) async {
+              current audio whose title contains the search word.''',
+        (tester) async {
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'scrolling_audio_and_playlists_test',
@@ -19132,6 +19134,97 @@ void main() {
         tester: tester,
         currentAudioTitle: currentAudioTitle,
         currentAudioSubTitle: currentAudioSubTitle,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Selecting playlist in AudioPlayerView select it, verifying automatic scrolling
+           audio displaying selected playlist current audio.''',
+        (tester) async {
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'scrolling_audio_and_playlists_test',
+        tapOnPlaylistToggleButton: false,
+      );
+
+      // Setting to this field the currently selected playlist title
+      String playlistToSelectTitle = 'local_2';
+
+      // Setting to this field the currently selected audio title of the
+      // 'local_2' playlist
+      String currentAudioTitle = '99-audio learn test short video two 23-06-10';
+      String currentAudioSubTitle =
+          '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:19.';
+
+      // Verify that the current audio is displayed with the correct
+      // title and subtitle color
+      await _verifyCurrentAudioTitleAndSubTitleColor(
+        tester: tester,
+        currentAudioTitle: currentAudioTitle,
+        currentAudioSubTitle: currentAudioSubTitle,
+      );
+
+      // Go to the audio player view
+      Finder appScreenNavigationButton =
+          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+      await tester.tap(appScreenNavigationButton);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
+
+      // Display the selectable playlists
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Select the 'Jeunes pianistes extraordinaires' playlist
+
+      playlistToSelectTitle = 'Jeunes pianistes extraordinaires';
+
+      // Find the playlist to select ListTile Text widget
+      Finder playlistToSelectListTileTextWidgetFinder =
+          find.text(playlistToSelectTitle);
+
+      // Then obtain the playlist ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      Finder playlistToSelectListTileWidgetFinder = find.ancestor(
+        of: playlistToSelectListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the Checkbox widget located in the playlist ListTile
+      // and tap on it to select the playlist
+      Finder playlistToSelectListTileCheckboxWidgetFinder = find.descendant(
+        of: playlistToSelectListTileWidgetFinder,
+        matching: find.byType(Checkbox),
+      );
+
+      // Tap the ListTile Playlist checkbox to select it
+      await tester.tap(playlistToSelectListTileCheckboxWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // Now return to the playlist download view
+      appScreenNavigationButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(appScreenNavigationButton);
+      await tester.pumpAndSettle();
+
+      String newAudioToSelectTitle =
+          'EMOTIONAL AUDITION! young piano prodigy makes the Judges CRY and gets the GOLDEN BUZZER  FGT 2022';
+
+      String newAudioSubTitle =
+          '0:10:14.0. 3.75 Mo à 1.64 Mo/sec le 03/11/2024 à 15:19.';
+
+      // Verify that the current audio is displayed with the correct
+      // title and subtitle color
+      await _verifyCurrentAudioTitleAndSubTitleColor(
+        tester: tester,
+        currentAudioTitle: newAudioToSelectTitle,
+        currentAudioSubTitle: newAudioSubTitle,
       );
 
       // Purge the test playlist directory so that the created test
