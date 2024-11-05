@@ -18788,8 +18788,7 @@ void main() {
         offsetValue: -1000,
       );
 
-     currentAudioSubTitle =
-          '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:28.';
+      currentAudioSubTitle = '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:28.';
 
       // Verify that the current audio is displayed with the correct
       // title and subtitle color
@@ -18809,8 +18808,7 @@ void main() {
         offsetValue: 300.0,
       );
 
-     currentAudioSubTitle =
-          '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:22.';
+      currentAudioSubTitle = '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:22.';
 
       // Verify that the current audio is displayed with the correct
       // title and subtitle color
@@ -18830,8 +18828,97 @@ void main() {
         offsetValue: -1000.0,
       );
 
-     currentAudioSubTitle =
-          '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:26.';
+      currentAudioSubTitle = '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:26.';
+
+      // Verify that the current audio is displayed with the correct
+      // title and subtitle color
+      await _verifyCurrentAudioTitleAndSubTitleColor(
+        tester: tester,
+        currentAudioTitle: newAudioToSelectTitle,
+        currentAudioSubTitle: currentAudioSubTitle,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Playlist list not displayed, scrolling audio to display current
+              audio.''', (tester) async {
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'scrolling_audio_and_playlists_test',
+        tapOnPlaylistToggleButton: true, // playlists list not expanded
+      );
+
+      // Setting to this field the currently selected audio title of the
+      // 'local_2' playlist
+      String currentAudioTitle = '99-audio learn test short video two 23-06-10';
+      String currentAudioSubTitle =
+          '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:19.';
+
+      // Verify that the current audio is displayed with the correct
+      // title and subtitle color
+      await _verifyCurrentAudioTitleAndSubTitleColor(
+        tester: tester,
+        currentAudioTitle: currentAudioTitle,
+        currentAudioSubTitle: currentAudioSubTitle,
+      );
+
+      String newAudioToSelectTitle =
+          '1-audio learn test short video two 23-06-10';
+
+      // Go to audio player view to select another audio
+      await _selectNewAudioInAudioPlayerViewAndReturnToPlaylistDownloadView(
+        tester: tester,
+        currentAudioTitle: currentAudioTitle,
+        newAudioTitle: newAudioToSelectTitle,
+        offsetValue: -1000,
+      );
+
+      currentAudioSubTitle = '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:28.';
+
+      // Verify that the current audio is displayed with the correct
+      // title and subtitle color
+      await _verifyCurrentAudioTitleAndSubTitleColor(
+        tester: tester,
+        currentAudioTitle: newAudioToSelectTitle,
+        currentAudioSubTitle: currentAudioSubTitle,
+      );
+
+      newAudioToSelectTitle = '5-audio learn test short video two 23-06-10';
+
+      // Go to audio player view to select another audio
+      await _selectNewAudioInAudioPlayerViewAndReturnToPlaylistDownloadView(
+        tester: tester,
+        currentAudioTitle: '1-audio learn test short video two 23-06-10',
+        newAudioTitle: newAudioToSelectTitle,
+        offsetValue: 300.0,
+      );
+
+      currentAudioSubTitle = '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:24.';
+
+      // Verify that the current audio is displayed with the correct
+      // title and subtitle color
+      await _verifyCurrentAudioTitleAndSubTitleColor(
+        tester: tester,
+        currentAudioTitle: newAudioToSelectTitle,
+        currentAudioSubTitle: currentAudioSubTitle,
+      );
+
+      newAudioToSelectTitle = '3-audio learn test short video two 23-06-10';
+
+      // Go to audio player view to select another audio
+      await _selectNewAudioInAudioPlayerViewAndReturnToPlaylistDownloadView(
+        tester: tester,
+        currentAudioTitle: '5-audio learn test short video two 23-06-10',
+        newAudioTitle: newAudioToSelectTitle,
+        offsetValue: -1000.0,
+      );
+
+      currentAudioSubTitle = '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:26.';
 
       // Verify that the current audio is displayed with the correct
       // title and subtitle color
