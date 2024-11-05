@@ -14327,7 +14327,7 @@ void main() {
       await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
         enclosingWidgetFinder: playlistCommentListDialogFinder,
-        audioTitle: "Barrau one",
+        audioTitleOrSubTitle: "Barrau one",
         expectedTitleTextColor: null,
         expectedTitleTextBackgroundColor: null,
       );
@@ -14335,7 +14335,7 @@ void main() {
       await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
         enclosingWidgetFinder: playlistCommentListDialogFinder,
-        audioTitle: "One",
+        audioTitleOrSubTitle: "One",
         expectedTitleTextColor: null,
         expectedTitleTextBackgroundColor: null,
       );
@@ -14343,7 +14343,7 @@ void main() {
       await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
         enclosingWidgetFinder: playlistCommentListDialogFinder,
-        audioTitle: "Comment Jancovici",
+        audioTitleOrSubTitle: "Comment Jancovici",
         expectedTitleTextColor: null,
         expectedTitleTextBackgroundColor: null,
       );
@@ -14351,7 +14351,7 @@ void main() {
       await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
         enclosingWidgetFinder: playlistCommentListDialogFinder,
-        audioTitle: "Start",
+        audioTitleOrSubTitle: "Start",
         expectedTitleTextColor: null,
         expectedTitleTextBackgroundColor: null,
       );
@@ -18671,7 +18671,7 @@ void main() {
     });
   });
   group('Scrolling audio or playlists test', () {
-     testWidgets('''Scrolling audio to display current audio.''',
+    testWidgets('''Scrolling audio to display current audio.''',
         (tester) async {
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
@@ -18685,30 +18685,15 @@ void main() {
       // Setting to this field the currently selected audio title of the
       // 'local_2' playlist
       String currentAudioTitle = '99-audio learn test short video two 23-06-10';
-      String currentAudioSubTitle = '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:19.';
+      String currentAudioSubTitle =
+          '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:19.';
 
-      // Verify that the current audio is displayed
-      expect(find.text(currentAudioTitle), findsOneWidget);
-
-      // Verify that the current audio is displayed
-      expect(find.text(currentAudioSubTitle), findsOneWidget);
-
-      await IntegrationTestUtil.checkAudioTextColor(
+      // Verify that the current audio is displayed with the correct
+      // title and subtitle color
+      await _verifyCurrentAudioTitleAndSubTitleColor(
         tester: tester,
-        audioTitle: currentAudioTitle,
-        expectedTitleTextColor:
-            IntegrationTestUtil.currentlyPlayingAudioTitleTextColor,
-        expectedTitleTextBackgroundColor:
-            IntegrationTestUtil.currentlyPlayingAudioTitleTextBackgroundColor,
-      );
-
-      await IntegrationTestUtil.checkAudioTextColor(
-        tester: tester,
-        audioTitle: currentAudioSubTitle,
-        expectedTitleTextColor:
-            IntegrationTestUtil.currentlyPlayingAudioTitleTextColor,
-        expectedTitleTextBackgroundColor:
-            IntegrationTestUtil.currentlyPlayingAudioTitleTextBackgroundColor,
+        currentAudioTitle: currentAudioTitle,
+        currentAudioSubTitle: currentAudioSubTitle,
       );
 
       // Unselect the current playlist to verify no available audio
@@ -18726,7 +18711,6 @@ void main() {
       );
 
       // Now find the Checkbox widget located in the Playlist ListTile
-      // and tap on it to select the playlist
       Finder localPlaylistToSelectListTileCheckboxWidgetFinder =
           find.descendant(
         of: localPlaylistToSelectListTileWidgetFinder,
@@ -18804,9 +18788,16 @@ void main() {
         offsetValue: -1000,
       );
 
-      // Verify that the new current audio is displayed due to correct
-      // audio scrolling
-      expect(find.text(newAudioToSelectTitle), findsOneWidget);
+     currentAudioSubTitle =
+          '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:28.';
+
+      // Verify that the current audio is displayed with the correct
+      // title and subtitle color
+      await _verifyCurrentAudioTitleAndSubTitleColor(
+        tester: tester,
+        currentAudioTitle: newAudioToSelectTitle,
+        currentAudioSubTitle: currentAudioSubTitle,
+      );
 
       newAudioToSelectTitle = '7-audio learn test short video two 23-06-10';
 
@@ -18818,9 +18809,16 @@ void main() {
         offsetValue: 300.0,
       );
 
-      // Verify that the new current audio is displayed due to correct
-      // audio scrolling
-      expect(find.text(newAudioToSelectTitle), findsOneWidget);
+     currentAudioSubTitle =
+          '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:22.';
+
+      // Verify that the current audio is displayed with the correct
+      // title and subtitle color
+      await _verifyCurrentAudioTitleAndSubTitleColor(
+        tester: tester,
+        currentAudioTitle: newAudioToSelectTitle,
+        currentAudioSubTitle: currentAudioSubTitle,
+      );
 
       newAudioToSelectTitle = '3-audio learn test short video two 23-06-10';
 
@@ -18832,9 +18830,16 @@ void main() {
         offsetValue: -1000.0,
       );
 
-      // Verify that the new current audio is displayed due to correct
-      // audio scrolling
-      expect(find.text(newAudioToSelectTitle), findsOneWidget);
+     currentAudioSubTitle =
+          '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:26.';
+
+      // Verify that the current audio is displayed with the correct
+      // title and subtitle color
+      await _verifyCurrentAudioTitleAndSubTitleColor(
+        tester: tester,
+        currentAudioTitle: newAudioToSelectTitle,
+        currentAudioSubTitle: currentAudioSubTitle,
+      );
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -18843,6 +18848,30 @@ void main() {
       );
     });
   });
+}
+
+Future<void> _verifyCurrentAudioTitleAndSubTitleColor({
+  required WidgetTester tester,
+  required String currentAudioTitle,
+  required String currentAudioSubTitle,
+}) async {
+  await IntegrationTestUtil.checkAudioTextColor(
+    tester: tester,
+    audioTitleOrSubTitle: currentAudioTitle,
+    expectedTitleTextColor:
+        IntegrationTestUtil.currentlyPlayingAudioTitleTextColor,
+    expectedTitleTextBackgroundColor:
+        IntegrationTestUtil.currentlyPlayingAudioTitleTextBackgroundColor,
+  );
+
+  await IntegrationTestUtil.checkAudioTextColor(
+    tester: tester,
+    audioTitleOrSubTitle: currentAudioSubTitle,
+    expectedTitleTextColor:
+        IntegrationTestUtil.currentlyPlayingAudioTitleTextColor,
+    expectedTitleTextBackgroundColor:
+        IntegrationTestUtil.currentlyPlayingAudioTitleTextBackgroundColor,
+  );
 }
 
 Future<void> _selectNewAudioInAudioPlayerViewAndReturnToPlaylistDownloadView({
@@ -19858,7 +19887,8 @@ Future<void> verifyAudioTitlesColorInPlaylistCommentDialog({
   await IntegrationTestUtil.checkAudioTextColor(
     tester: tester,
     enclosingWidgetFinder: playlistCommentListDialogFinder,
-    audioTitle: "Quand Aurélien Barrau va dans une école de management",
+    audioTitleOrSubTitle:
+        "Quand Aurélien Barrau va dans une école de management",
     expectedTitleTextColor:
         IntegrationTestUtil.currentlyPlayingAudioTitleTextColor,
     expectedTitleTextBackgroundColor:
@@ -19868,7 +19898,7 @@ Future<void> verifyAudioTitlesColorInPlaylistCommentDialog({
   await IntegrationTestUtil.checkAudioTextColor(
     tester: tester,
     enclosingWidgetFinder: playlistCommentListDialogFinder,
-    audioTitle:
+    audioTitleOrSubTitle:
         "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...",
     expectedTitleTextColor: IntegrationTestUtil.fullyPlayedAudioTitleColor,
     expectedTitleTextBackgroundColor: null,
@@ -19877,7 +19907,7 @@ Future<void> verifyAudioTitlesColorInPlaylistCommentDialog({
   await IntegrationTestUtil.checkAudioTextColor(
     tester: tester,
     enclosingWidgetFinder: playlistCommentListDialogFinder,
-    audioTitle:
+    audioTitleOrSubTitle:
         "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
     expectedTitleTextColor:
         IntegrationTestUtil.partiallyPlayedAudioTitleTextdColor,
@@ -19887,7 +19917,7 @@ Future<void> verifyAudioTitlesColorInPlaylistCommentDialog({
   await IntegrationTestUtil.checkAudioTextColor(
     tester: tester,
     enclosingWidgetFinder: playlistCommentListDialogFinder,
-    audioTitle: "La surpopulation mondiale par Jancovici et Barrau",
+    audioTitleOrSubTitle: "La surpopulation mondiale par Jancovici et Barrau",
     expectedTitleTextColor: IntegrationTestUtil.unplayedAudioTitleTextColor,
     expectedTitleTextBackgroundColor: null,
   );

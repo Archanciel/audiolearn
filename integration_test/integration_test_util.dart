@@ -949,7 +949,7 @@ class IntegrationTestUtil {
   static Future<void> checkAudioTextColor({
     required WidgetTester tester,
     Finder? enclosingWidgetFinder,
-    required String audioTitle,
+    required String audioTitleOrSubTitle,
     required Color? expectedTitleTextColor,
     required Color? expectedTitleTextBackgroundColor,
   }) async {
@@ -960,10 +960,10 @@ class IntegrationTestUtil {
       // Find the Text widget within the enclosing widget
       textFinder = find.descendant(
         of: enclosingWidgetFinder,
-        matching: find.text(audioTitle),
+        matching: find.text(audioTitleOrSubTitle),
       );
     } else {
-      textFinder = find.text(audioTitle);
+      textFinder = find.text(audioTitleOrSubTitle);
     }
 
     // Retrieve the Text widget
