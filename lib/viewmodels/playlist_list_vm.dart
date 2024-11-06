@@ -239,7 +239,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// This method is called when an audio to listen is selected and then
   /// the playlist download view is displayed. The method calculate the
   /// distance to which the playlist audio list must be scrolled so that the
-  /// current or past audio is visible in the audio list.
+  /// current or past audio is visible in the list of audio.
   int determineAudioToScrollPosition() {
     if (_uniqueSelectedPlaylist == null) {
       // If no playlist is selected, the audio list is empty and no
@@ -260,7 +260,7 @@ class PlaylistListVM extends ChangeNotifier {
         uniqueSelectedPlaylist!.playableAudioLst;
 
     if (selectedPlaylisPlayableAudios.isEmpty) {
-      // If the audio list is empty no scrolling is required.
+      // If the audio list is empty, no scrolling is required.
       return 0;
     }
 
@@ -287,7 +287,42 @@ class PlaylistListVM extends ChangeNotifier {
     return audioToScrollPosition;
   }
 
-  /// Thanks to this method, when restarting the app, the playlists
+  /// This method is called when the playlist download view is displayed. The
+  /// method calculate the distance to which the playlist list must be scrolled
+  /// so that the selected playlist is visible in the list of playlists.
+  int determinePlaylistToScrollPosition() {
+    if (_uniqueSelectedPlaylist == null) {
+      // If no playlist is selected, no scrolling is required.
+      return 0;
+    }
+
+    int selectedPlaylistIndex = _getSelectedPlaylistIndex();
+
+    if (selectedPlaylistIndex == -1) {
+      // No playlist is selected, so no scrolling is required.
+      return 0;
+    }
+
+    if (_listOfSelectablePlaylists.isEmpty) {
+      // If the list of playlists is empty, no scrolling is required.
+      return 0;
+    }
+
+    if (selectedPlaylistIndex >
+        _listOfSelectablePlaylists.length) {
+      // Exceptional case.
+      return 0;
+    }
+
+    // getting the index of the current or past audio in the displayed
+    // audio list of the selected playlist
+    int playlistToScrollPosition = _listOfSelectablePlaylists
+        .indexWhere((Playlist playlist) => playlist == _uniqueSelectedPlaylist);
+
+    return playlistToScrollPosition;
+  }
+
+  /// Due to this method, when restarting the app, the playlists
   /// are displayed in the same order as when the app was closed. This
   /// is done by saving the playlist order in the settings file.
   List<Playlist> getUpToDateSelectablePlaylists() {

@@ -36,6 +36,7 @@ class PlaylistDownloadView extends StatefulWidget {
   final double audioItemHeight = (ScreenMixin.isHardwarePc() ? 73 : 85);
   final double playlistNotExpamdedScrollAugmentation =
       (ScreenMixin.isHardwarePc()) ? 1.38 : 1.55;
+  final double playlistItemHeight = (ScreenMixin.isHardwarePc() ? 30 : 85);
 
   PlaylistDownloadView({
     super.key,
@@ -51,7 +52,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     with ScreenMixin {
   final TextEditingController _playlistUrlOrSearchController =
       TextEditingController();
-  final ScrollController _scrollController = ScrollController();
+  final ScrollController _audioScrollController = ScrollController();
+  final ScrollController _playlistScrollController = ScrollController();
 
   List<Audio> _selectedPlaylistsPlayableAudios = [];
 
@@ -98,7 +100,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   @override
   void dispose() {
     _playlistUrlOrSearchController.dispose();
-    _scrollController.dispose();
+    _audioScrollController.dispose();
+    _playlistScrollController.dispose();
 
     super.dispose();
   }
@@ -208,7 +211,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     Expanded expanded = Expanded(
       child: ListView.builder(
         key: const Key('audio_list'),
-        controller: _scrollController,
+        controller: _audioScrollController,
         itemCount: _selectedPlaylistsPlayableAudios.length,
         itemBuilder: (BuildContext context, int index) {
           final audio = _selectedPlaylistsPlayableAudios[index];
@@ -252,14 +255,14 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       // In this case, the default sort and filter parameters are applied.
       // This guarantees that the newly downloaded audio will be displayed
       // at the top of the audio list.
-      _applyDefaultSortFilterParms(
+      _applyDefaultAudioSortFilterParms(
         playlistListVMlistenFalseOrTrue: playlistListVMlistenTrue,
         notifyListeners: true,
       );
 
-      if (_scrollController.hasClients) {
-        _scrollController.jumpTo(0.0);
-        _scrollController.animateTo(
+      if (_audioScrollController.hasClients) {
+        _audioScrollController.jumpTo(0.0);
+        _audioScrollController.animateTo(
           0.0, // offset
           duration: kScrollDuration,
           curve: Curves.easeInOut,
@@ -307,9 +310,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
     double offset = scrollPositionNumber * widget.audioItemHeight;
 
-    if (_scrollController.hasClients) {
-      _scrollController.jumpTo(0.0);
-      _scrollController.animateTo(
+    if (_audioScrollController.hasClients) {
+      _audioScrollController.jumpTo(0.0);
+      _audioScrollController.animateTo(
         offset,
         duration: kScrollDuration,
         curve: Curves.easeInOut,
@@ -331,9 +334,10 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     if (playlistListVMlistenFalse.isPlaylistListExpanded) {
       List<Playlist> upToDateSelectablePlaylists =
           playlistListVMlistenFalse.getUpToDateSelectablePlaylists();
-      return Expanded(
+      Expanded expanded = Expanded(
         child: ListView.builder(
           key: const Key('expandable_playlist_list'),
+          controller: _playlistScrollController,
           itemCount: upToDateSelectablePlaylists.length,
           itemBuilder: (context, index) {
             Playlist playlist = upToDateSelectablePlaylists[index];
@@ -348,9 +352,74 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           },
         ),
       );
+
+      _scrollToSelectedPlaylist(
+        playlistListVMlistenFalse: playlistListVMlistenFalse,
+      );
+
+      return expanded;
     } else {
       // the list of playlists is collapsed
       return const SizedBox.shrink();
+    }
+  }
+
+  void _scrollToSelectedPlaylist({
+    required PlaylistListVM playlistListVMlistenFalse,
+  }) {
+    int playlistToScrollPosition =
+        playlistListVMlistenFalse.determinePlaylistToScrollPosition();
+
+    // When the download playlist view is displayed, the playlist list
+    // is collapsed or expanded. This corresponds to the state stored in the
+    // app settings file. This state is modified by the user when he clicks
+    // on the playlist toggle button.
+    bool isPlaylistListExpanded = widget.settingsDataService.get(
+            settingType: SettingType.playlists,
+            settingSubType:
+                Playlists.arePlaylistsDisplayedInPlaylistDownloadView) ??
+        false;
+
+    int noScrollLimit = 3;
+
+    if (isPlaylistListExpanded && playlistToScrollPosition <= noScrollLimit) {
+      // This avoids scrolling down when the selected playlist is
+      // in the top part of the list of playlists. Without that, the
+      // list is unusefully scrolled down and the user has to scroll
+      // up to see a selected top playlist.
+      return;
+    }
+
+    double scrollPositionNumber = playlistToScrollPosition.toDouble();
+
+    if (playlistToScrollPosition > 50) {
+      scrollPositionNumber *= 0.675;
+    } else if (playlistToScrollPosition > 25) {
+      scrollPositionNumber *= 0.68;
+    } else if (playlistToScrollPosition > 20) {
+      scrollPositionNumber *= 0.69;
+    } else if (playlistToScrollPosition > 10) {
+      scrollPositionNumber *= 0.67;
+    } else if (playlistToScrollPosition > noScrollLimit) {
+      scrollPositionNumber *= 0.6;
+    }
+
+    double offset = scrollPositionNumber * widget.playlistItemHeight;
+
+    if (_playlistScrollController.hasClients) {
+      _playlistScrollController.jumpTo(0.0);
+      _playlistScrollController.animateTo(
+        offset,
+        duration: kScrollDuration,
+        curve: Curves.easeInOut,
+      );
+    } else {
+      // The scroll controller isn't attached to any scroll views.
+      // Schedule a callback to try again after the next frame.
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) => _scrollToSelectedPlaylist(
+                playlistListVMlistenFalse: playlistListVMlistenFalse,
+              ));
     }
   }
 
@@ -844,7 +913,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   /// audio are displayed at the top of the audio list. The display at the top
   /// of the audio list is only possible if the sort and filter audio settings
   /// are set to the default settings, what is done by this method.
-  String _applyDefaultSortFilterParms({
+  String _applyDefaultAudioSortFilterParms({
     required PlaylistListVM playlistListVMlistenFalseOrTrue,
     notifyListeners = false,
   }) {
