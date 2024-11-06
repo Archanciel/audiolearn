@@ -25,7 +25,7 @@ import 'widgets/audio_sort_filter_dialog.dart';
 /// position or go to a previous, next or selected audio.
 class AudioPlayerView extends StatefulWidget {
   final SettingsDataService settingsDataService;
-  final double playlistItemHeight = (ScreenMixin.isHardwarePc() ? 30 : 85);
+  final double playlistItemHeight = (ScreenMixin.isHardwarePc() ? 45 : 85);
 
   AudioPlayerView({
     super.key,
