@@ -25,8 +25,9 @@ import 'widgets/audio_sort_filter_dialog.dart';
 /// position or go to a previous, next or selected audio.
 class AudioPlayerView extends StatefulWidget {
   final SettingsDataService settingsDataService;
+  final double playlistItemHeight = (ScreenMixin.isHardwarePc() ? 30 : 85);
 
-  const AudioPlayerView({
+  AudioPlayerView({
     super.key,
     required this.settingsDataService,
   });
@@ -48,6 +49,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
   final double _audioIconSizeMedium = 40;
   final double _audioIconSizeLarge = 80;
   late double _audioPlaySpeed;
+
+  final ScrollController _playlistScrollController = ScrollController();
 
   // final bool _wasSortFilterAudioSettingsApplied = false;
 
@@ -81,6 +84,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    _playlistScrollController.dispose();
 
     super.dispose();
   }
@@ -1035,7 +1039,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                     children: [
                       Expanded(
                         child: GestureDetector(
-                            key: const Key('audioPlayerViewBackward1mButton'),
+                          key: const Key('audioPlayerViewBackward1mButton'),
                           onTap: () async =>
                               await audioPlayerVM.changeAudioPlayPosition(
                             posNegPositionDurationChange:
@@ -1108,9 +1112,10 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     if (playlistListVMListenFalse.isPlaylistListExpanded) {
       List<Playlist> upToDateSelectablePlaylists =
           playlistListVMListenFalse.getUpToDateSelectablePlaylists();
-      return Expanded(
+      Expanded expanded = Expanded(
         child: ListView.builder(
           key: const Key('expandable_playlist_list'),
+          controller: _playlistScrollController,
           itemCount: upToDateSelectablePlaylists.length,
           itemBuilder: (context, index) {
             Playlist playlist = upToDateSelectablePlaylists[index];
@@ -1126,9 +1131,64 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
           },
         ),
       );
+
+      _scrollToSelectedPlaylist(
+        playlistListVMlistenFalse: playlistListVMListenFalse,
+      );
+
+      return expanded;
     } else {
       // the list of playlists is collapsed
       return const SizedBox.shrink();
+    }
+  }
+
+  void _scrollToSelectedPlaylist({
+    required PlaylistListVM playlistListVMlistenFalse,
+  }) {
+    int playlistToScrollPosition =
+        playlistListVMlistenFalse.determinePlaylistToScrollPosition();
+
+    int noScrollLimit = 4;
+
+    if (playlistToScrollPosition <= noScrollLimit) {
+      // This avoids scrolling down when the selected playlist is
+      // in the top part of the list of playlists. Without that, the
+      // list is unusefully scrolled down and the user has to scroll
+      // up to see a selected top playlist.
+      return;
+    }
+
+    double scrollPositionNumber = playlistToScrollPosition.toDouble();
+
+    if (playlistToScrollPosition > 50) {
+      scrollPositionNumber *= 0.675;
+    } else if (playlistToScrollPosition > 25) {
+      scrollPositionNumber *= 0.68;
+    } else if (playlistToScrollPosition > 20) {
+      scrollPositionNumber *= 0.69;
+    } else if (playlistToScrollPosition > 10) {
+      scrollPositionNumber *= 0.67;
+    } else if (playlistToScrollPosition > noScrollLimit) {
+      scrollPositionNumber *= 0.6;
+    }
+
+    double offset = scrollPositionNumber * widget.playlistItemHeight;
+
+    if (_playlistScrollController.hasClients) {
+      _playlistScrollController.jumpTo(0.0);
+      _playlistScrollController.animateTo(
+        offset,
+        duration: kScrollDuration,
+        curve: Curves.easeInOut,
+      );
+    } else {
+      // The scroll controller isn't attached to any scroll views.
+      // Schedule a callback to try again after the next frame.
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) => _scrollToSelectedPlaylist(
+                playlistListVMlistenFalse: playlistListVMlistenFalse,
+              ));
     }
   }
 
