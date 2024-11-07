@@ -19281,7 +19281,7 @@ void main() {
         String playlistToSelectTitle = 'Jeunes pianistes extraordinaires';
 
         // First, find the Playlist ListTile Text widget
-        await checkOrTapOnPlaylistCheckbox(
+        await onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
           tester: tester,
           playlistToSelectTitle: playlistToSelectTitle,
           verifyIfCheckboxIsChecked: false,
@@ -19303,7 +19303,7 @@ void main() {
         );
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-        await checkOrTapOnPlaylistCheckbox(
+        await onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
           tester: tester,
           playlistToSelectTitle: playlistToSelectTitle,
           verifyIfCheckboxIsChecked: true,
@@ -19327,20 +19327,128 @@ void main() {
         ];
 
         for (String playlistToSelectTitle in playlistTitleList) {
-          await checkOrTapOnPlaylistCheckbox(
+          await onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
             tester: tester,
             playlistToSelectTitle: playlistToSelectTitle,
             verifyIfCheckboxIsChecked: false,
             tapOnCheckbox: true,
           );
 
-          await checkOrTapOnPlaylistCheckbox(
+          await onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
             tester: tester,
             playlistToSelectTitle: playlistToSelectTitle,
             verifyIfCheckboxIsChecked: true,
             tapOnCheckbox: false,
           );
         }
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''In audio player view, selecting every available playlist and verifying
+             it was scrolled correctly in playlist download view.''', (tester) async {
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'scrolling_audio_and_playlists_test',
+          tapOnPlaylistToggleButton: false,
+        );
+
+        // Now enter the playlist search word
+        await tester.tap(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+        );
+        await tester.pumpAndSettle();
+        await tester.enterText(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+          'jeu',
+        );
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        // Now tap on the search icon button
+        await tester.tap(find.byKey(const Key('search_icon_button')));
+        await tester.pumpAndSettle();
+
+        // Select the 'Jeunes pianistes extraordinaires' playlist
+
+        String playlistToSelectTitleInPlaylistDownloadView =
+            'Jeunes pianistes extraordinaires';
+
+        // First, find the Playlist ListTile Text widget
+        await onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
+          tester: tester,
+          playlistToSelectTitle: playlistToSelectTitleInPlaylistDownloadView,
+          verifyIfCheckboxIsChecked: false,
+          tapOnCheckbox: true,
+        );
+
+        await onAudioPlayerViewCheckOrTapOnPlaylistCheckbox(
+          tester: tester,
+          playlistDownloadViewCurrentlySelectedPlaylistTitle:
+              playlistToSelectTitleInPlaylistDownloadView,
+          playlistToSelectTitleInAudioPlayerView: 'local_1',
+        );
+
+        await onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
+          tester: tester,
+          playlistToSelectTitle: 'local_1',
+          verifyIfCheckboxIsChecked: true,
+          tapOnCheckbox: false,
+        );
+
+        // Now selecting and verifying all the next scrolled selected
+        // playlists
+
+        List<String> playlistTitleList = [
+          'local_1',
+          'local_2',
+          'local_3',
+          'local_4',
+          'local_5',
+          'local_6',
+          'local_7',
+          'local_8',
+          'local_9',
+          'local_10',
+        ];
+
+        for (int i = 0; i < playlistTitleList.length - 2; i++) {
+          String playlistToSelectTitle = playlistTitleList[i];
+          String playlistToSelectTitleNext = playlistTitleList[i + 1];
+          await onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
+            tester: tester,
+            playlistToSelectTitle: playlistToSelectTitle,
+            verifyIfCheckboxIsChecked: true,
+            tapOnCheckbox: false,
+          );
+
+          await onAudioPlayerViewCheckOrTapOnPlaylistCheckbox(
+            tester: tester,
+            playlistDownloadViewCurrentlySelectedPlaylistTitle:
+                playlistToSelectTitle,
+            playlistToSelectTitleInAudioPlayerView: playlistToSelectTitleNext,
+          );
+        }
+
+        await onAudioPlayerViewCheckOrTapOnPlaylistCheckbox(
+          tester: tester,
+          playlistDownloadViewCurrentlySelectedPlaylistTitle: 'local_9',
+          playlistToSelectTitleInAudioPlayerView: 'local_10',
+        );
+
+        await onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
+          tester: tester,
+          playlistToSelectTitle: 'local_10',
+          verifyIfCheckboxIsChecked: true,
+          tapOnCheckbox: false,
+        );
 
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
@@ -19356,7 +19464,7 @@ void main() {
 ///   1/ for executing the expect that the playlist checkbox is checked code,
 ///   2/ for tapping on  the playlist checkbox.
 /// The two boolean parameters define what this method does.
-Future<void> checkOrTapOnPlaylistCheckbox({
+Future<void> onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox({
   required WidgetTester tester,
   required String playlistToSelectTitle,
   required bool verifyIfCheckboxIsChecked,
@@ -19417,6 +19525,85 @@ Future<void> _verifyCurrentAudioTitleAndSubTitleColor({
     expectedTitleTextBackgroundColor:
         IntegrationTestUtil.currentlyPlayingAudioTitleTextBackgroundColor,
   );
+}
+
+Future<void> onAudioPlayerViewCheckOrTapOnPlaylistCheckbox({
+  required WidgetTester tester,
+  required String playlistDownloadViewCurrentlySelectedPlaylistTitle,
+  required String playlistToSelectTitleInAudioPlayerView,
+}) async {
+  // Go to the audio player view
+  Finder appScreenNavigationButton =
+      find.byKey(const ValueKey('audioPlayerViewIconButton'));
+  await tester.tap(appScreenNavigationButton);
+  await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+    tester: tester,
+  );
+
+  // Verify that the playlist download view currently selected playlist is
+  // also selected in the playlist download view.
+
+  // Tap on audio player view playlist button to display the playlists
+  await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+  await tester.pumpAndSettle();
+
+  // Find the currently selected playlist ListTile Text widget
+  Finder playlistDownloadViewCurrentlySelectedPlaylistListTileTextWidgetFinder =
+      find.text(playlistDownloadViewCurrentlySelectedPlaylistTitle);
+
+  // Then obtain the playlist ListTile widget enclosing the Text widget
+  // by finding its ancestor
+  Finder playlistDownloadViewCurrentlySelectedPlaylistListTileWidgetFinder =
+      find.ancestor(
+    of: playlistDownloadViewCurrentlySelectedPlaylistListTileTextWidgetFinder,
+    matching: find.byType(ListTile),
+  );
+
+  // Now find the Checkbox widget located in the playlist ListTile
+  // and verify that it is checked
+
+  Finder
+      playlistDownloadViewCurrentlySelectedPlaylistListTileCheckboxWidgetFinder =
+      find.descendant(
+    of: playlistDownloadViewCurrentlySelectedPlaylistListTileWidgetFinder,
+    matching: find.byType(Checkbox),
+  );
+
+  final Checkbox checkboxWidget = tester.widget<Checkbox>(
+      playlistDownloadViewCurrentlySelectedPlaylistListTileCheckboxWidgetFinder);
+
+  expect(checkboxWidget.value!, true);
+
+  // Select the passed playlistToSelectTitle playlist
+
+  // Find the playlist to select ListTile Text widget
+  Finder playlistToSelectListTileTextWidgetFinder =
+      find.text(playlistToSelectTitleInAudioPlayerView);
+
+  // Then obtain the playlist ListTile widget enclosing the Text widget
+  // by finding its ancestor
+  Finder playlistToSelectListTileWidgetFinder = find.ancestor(
+    of: playlistToSelectListTileTextWidgetFinder,
+    matching: find.byType(ListTile),
+  );
+
+  // Now find the Checkbox widget located in the playlist ListTile
+  // and tap on it to select the playlist
+  Finder playlistToSelectListTileCheckboxWidgetFinder = find.descendant(
+    of: playlistToSelectListTileWidgetFinder,
+    matching: find.byType(Checkbox),
+  );
+
+  // Tap the ListTile Playlist checkbox to select it
+  await tester.tap(playlistToSelectListTileCheckboxWidgetFinder);
+  await tester.pumpAndSettle();
+
+  // Now we go back to the PlayListDownloadView in order to
+  // verify the scrolled selected playlist
+  appScreenNavigationButton =
+      find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+  await tester.tap(appScreenNavigationButton);
+  await tester.pumpAndSettle();
 }
 
 Future<void> _selectNewAudioInAudioPlayerViewAndReturnToPlaylistDownloadView({
