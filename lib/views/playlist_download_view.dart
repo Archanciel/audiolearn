@@ -367,8 +367,31 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   void _scrollToSelectedPlaylist({
     required PlaylistListVM playlistListVMlistenFalse,
   }) {
-    int playlistToScrollPosition =
-        playlistListVMlistenFalse.determinePlaylistToScrollPosition();
+    List<Playlist> selectablePlaylists;
+    String searchSentence = playlistListVMlistenFalse.searchSentence;
+    int playlistToScrollPosition = 0;
+    int noScrollPositionValue = 0; // position value avoiding scrolling down
+
+    if (playlistListVMlistenFalse.wasSearchButtonClicked &&
+        searchSentence.isNotEmpty) {
+      noScrollPositionValue = -1;
+      selectablePlaylists = playlistListVMlistenFalse
+          .getUpToDateSelectablePlaylists()
+          .where((playlist) => playlist.title
+              .toLowerCase()
+              .contains(searchSentence.toLowerCase()))
+          .toList();
+      for (int i = 0; i < selectablePlaylists.length; i++) {
+        if (selectablePlaylists[i].isSelected) {
+          playlistToScrollPosition = i;
+          break;
+        }
+      }
+    } else {
+      noScrollPositionValue = 3;
+      playlistToScrollPosition =
+          playlistListVMlistenFalse.determinePlaylistToScrollPosition();
+    }
 
     // When the download playlist view is displayed, the playlist list
     // is collapsed or expanded. This corresponds to the state stored in the
@@ -380,9 +403,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 Playlists.arePlaylistsDisplayedInPlaylistDownloadView) ??
         false;
 
-    int noScrollLimit = 3;
-
-    if (isPlaylistListExpanded && playlistToScrollPosition <= noScrollLimit) {
+    if (isPlaylistListExpanded && playlistToScrollPosition <= noScrollPositionValue) {
       // This avoids scrolling down when the selected playlist is
       // in the top part of the list of playlists. Without that, the
       // list is unusefully scrolled down and the user has to scroll
@@ -400,7 +421,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       scrollPositionNumber *= 0.69;
     } else if (playlistToScrollPosition > 10) {
       scrollPositionNumber *= 0.67;
-    } else if (playlistToScrollPosition > noScrollLimit) {
+    } else if (playlistToScrollPosition > noScrollPositionValue) {
       scrollPositionNumber *= 0.6;
     }
 
