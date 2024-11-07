@@ -308,8 +308,7 @@ class PlaylistListVM extends ChangeNotifier {
       return 0;
     }
 
-    if (selectedPlaylistIndex >
-        _listOfSelectablePlaylists.length) {
+    if (selectedPlaylistIndex > _listOfSelectablePlaylists.length) {
       // Exceptional case.
       return 0;
     }
