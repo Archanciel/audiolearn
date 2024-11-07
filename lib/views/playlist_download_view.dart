@@ -36,7 +36,7 @@ class PlaylistDownloadView extends StatefulWidget {
   final double audioItemHeight = (ScreenMixin.isHardwarePc() ? 73 : 85);
   final double playlistNotExpamdedScrollAugmentation =
       (ScreenMixin.isHardwarePc()) ? 1.38 : 1.55;
-  final double playlistItemHeight = (ScreenMixin.isHardwarePc() ? 48 : 85);
+  final double playlistItemHeight = (ScreenMixin.isHardwarePc() ? 51 : 85);
 
   PlaylistDownloadView({
     super.key,
