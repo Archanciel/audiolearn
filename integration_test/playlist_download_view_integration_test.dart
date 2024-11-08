@@ -19250,7 +19250,7 @@ void main() {
     group('Scrolling playlist test', () {
       testWidgets(
           '''In playlist download view, selecting every available playlist and verifying
-           it was scrolled correctly.''', (tester) async {
+             it was scrolled correctly.''', (tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'scrolling_audio_and_playlists_test',
@@ -19349,8 +19349,70 @@ void main() {
         );
       });
       testWidgets(
+          '''With search '_1' in playlist download view, selecting available playlist
+             and verifying it was scrolled correctly.''', (tester) async {
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'scrolling_playlists_test',
+          tapOnPlaylistToggleButton: false,
+        );
+
+        // Now enter the '_1' search word
+        await tester.tap(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+        );
+        await tester.pumpAndSettle();
+        await tester.enterText(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+          '_1',
+        );
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        // Now tap on the search icon button
+        await tester.tap(find.byKey(const Key('search_icon_button')));
+        await tester.pumpAndSettle();
+
+        // Verify the 'local_10' is correctly scrolled so that it is
+        // visible
+        await onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
+          tester: tester,
+          playlistToSelectTitle: 'local_10',
+          verifyIfCheckboxIsChecked: true,
+          tapOnCheckbox: false,
+        );
+
+        await executeSearchWordScrollTest(
+          tester: tester,
+          playlistTitle: 'local_1',
+          scrollUpOrDownPlaylistsList: 1000,
+        );
+
+        await executeSearchWordScrollTest(
+          tester: tester,
+          playlistTitle: 'local_13',
+          scrollUpOrDownPlaylistsList: -1000,
+        );
+
+        await executeSearchWordScrollTest(
+          tester: tester,
+          playlistTitle: 'local_15',
+          scrollUpOrDownPlaylistsList: -1000,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+      testWidgets(
           '''In audio player view, selecting every available playlist and verifying
-             it was scrolled correctly in playlist download view.''', (tester) async {
+             it was scrolled correctly in playlist download view.''',
+          (tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'scrolling_audio_and_playlists_test',
@@ -21216,4 +21278,73 @@ Future<void> verifyAudioInfoDialogElements({
   // and tap on it
   await tester.tap(find.byKey(const Key('audio_info_ok_button_key')));
   await tester.pumpAndSettle();
+}
+
+Future<void> executeSearchWordScrollTest({
+  required WidgetTester tester,
+  required String playlistTitle,
+  double scrollUpOrDownPlaylistsList = 0,
+}) async {
+  await tester.tap(
+    find.byKey(
+      const Key('youtubeUrlOrSearchTextField'),
+    ),
+  );
+  await tester.pumpAndSettle();
+  await tester.enterText(
+    find.byKey(
+      const Key('youtubeUrlOrSearchTextField'),
+    ),
+    '',
+  );
+
+  await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+  if (scrollUpOrDownPlaylistsList != 0) {
+    // Scrolling up or down the playlist list
+    // Find the audio list widget using its key
+    final listFinder = find.byKey(const Key('expandable_playlist_list'));
+    // Perform the scroll action
+    await tester.drag(
+      listFinder,
+      Offset(0, scrollUpOrDownPlaylistsList),
+    );
+    await tester.pumpAndSettle();
+  }
+
+  // Select the playlist
+  await onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
+    tester: tester,
+    playlistToSelectTitle: playlistTitle,
+    verifyIfCheckboxIsChecked: false,
+    tapOnCheckbox: true,
+  );
+
+  // Now enter the '_1' search word
+  await tester.tap(
+    find.byKey(
+      const Key('youtubeUrlOrSearchTextField'),
+    ),
+  );
+  await tester.pumpAndSettle();
+  await tester.enterText(
+    find.byKey(
+      const Key('youtubeUrlOrSearchTextField'),
+    ),
+    '_1',
+  );
+  await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+  // Now tap on the search icon button
+  await tester.tap(find.byKey(const Key('search_icon_button')));
+  await tester.pumpAndSettle();
+
+  // Verify that the playlist is correctly scrolled so that it is
+  // visible
+  await onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
+    tester: tester,
+    playlistToSelectTitle: playlistTitle,
+    verifyIfCheckboxIsChecked: true,
+    tapOnCheckbox: false,
+  );
 }
