@@ -77,6 +77,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
   late bool _filterFullyListened;
   late bool _filterPartiallyListened;
   late bool _filterNotListened;
+  late bool _filterCommented;
+  late bool _filterNotCommented;
 
   final TextEditingController _startFileSizeController =
       TextEditingController();
@@ -222,6 +224,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     _filterPartiallyListened =
         audioSortDefaultFilterParameters.filterPartiallyListened;
     _filterNotListened = audioSortDefaultFilterParameters.filterNotListened;
+    _filterCommented = audioSortDefaultFilterParameters.filterNotListened;
+    _filterNotCommented = audioSortDefaultFilterParameters.filterNotListened;
     _startDownloadDateTime =
         audioSortDefaultFilterParameters.downloadDateStartRange;
     _endDownloadDateTime =
@@ -578,6 +582,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                       ),
                     ),
                     _buildAudioStateCheckboxes(context),
+                    _buildCommentSelectionCheckboxes(context),
                     _buildAudioDateFields(
                       context: context,
                       dateFormatVMlistenFalse: dateFormatVMlistenFalse,
@@ -1243,6 +1248,43 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
               },
             ),
           ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildCommentSelectionCheckboxes(
+    BuildContext context,
+  ) {
+    return Row(
+      children: [
+        Text(AppLocalizations.of(context)!.commented),
+        Checkbox(
+          key: const Key('filterCommentedCheckbox'),
+          value: _filterCommented,
+          onChanged: (bool? newValue) {
+            setState(() {
+              _filterCommented = newValue!;
+            });
+
+            // now clicking on Enter works since the
+            // Checkbox is not focused anymore
+            _audioTitleSearchSentenceFocusNode.requestFocus();
+          },
+        ),
+        Text(AppLocalizations.of(context)!.notCommented),
+        Checkbox(
+          key: const Key('filterNotCommentedCheckbox'),
+          value: _filterNotCommented,
+          onChanged: (bool? newValue) {
+            setState(() {
+              _filterNotCommented = newValue!;
+            });
+
+            // now clicking on Enter works since the
+            // Checkbox is not focused anymore
+            _audioTitleSearchSentenceFocusNode.requestFocus();
+          },
         ),
       ],
     );
