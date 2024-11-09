@@ -18,17 +18,13 @@ Future<void> setWindowsAppSizeAndPosition({
 
   if (!kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
     await getScreenList().then((List<Screen> screens) {
-      // Assume you want to use the primary screen
       final Screen screen = screens.first;
       final Rect screenRect = screen.visibleFrame;
 
-      // Define the window width and height
       double windowWidth = (isTest) ? 900 : 730;
       const double windowHeight = 1300;
 
-      // Calculate the position X to place the window on the right side of the screen
       final double posX = screenRect.right - windowWidth + 10;
-      // Optionally, adjust the Y position as desired
       final double posY = (screenRect.height - windowHeight) / 2;
 
       final Rect windowRect =
@@ -51,40 +47,93 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class ArticleListPage extends StatelessWidget {
+class ArticleListPage extends StatefulWidget {
   const ArticleListPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    // Sample article titles of varying lengths
-    final List<String> articles = List.generate(
-      50,
-      (index) => 'Article ${index + 1}:\n' +
-          List.generate(index % 5 + 1, (i) => 'Line ${i + 1}')
-              .join('\n'), // Generate titles with 1-5 lines
-    );
+  State<ArticleListPage> createState() => _ArticleListPageState();
+}
 
+class _ArticleListPageState extends State<ArticleListPage> {
+  final List<String> articles = List.generate(
+    50,
+    (index) => 'Article ${index + 1}:\n' +
+        List.generate(index % 5 + 1, (i) => 'Line ${i + 1}').join('\n'),
+  );
+
+  final ScrollController _scrollController = ScrollController();
+  final TextEditingController _articleNumberController =
+      TextEditingController();
+
+  void _scrollToArticle() {
+    final int articleIndex =
+        int.tryParse(_articleNumberController.text) ?? 0;
+
+    if (articleIndex >= 1 && articleIndex <= articles.length) {
+      _scrollController.animateTo(
+        (articleIndex - 1) * 100.0, // Assuming 100 pixels per article
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Invalid article number')),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Articles List'),
       ),
-      body: ListView.builder(
-        itemCount: articles.length,
-        itemBuilder: (context, index) {
-          return Padding(
+      body: Column(
+        children: [
+          Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Card(
-              elevation: 4,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  articles[index],
-                  style: const TextStyle(fontSize: 16),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _articleNumberController,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      labelText: 'Enter article number',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
                 ),
-              ),
+                const SizedBox(width: 8),
+                ElevatedButton(
+                  onPressed: _scrollToArticle,
+                  child: const Text('Scroll'),
+                ),
+              ],
             ),
-          );
-        },
+          ),
+          Expanded(
+            child: ListView.builder(
+              controller: _scrollController,
+              itemCount: articles.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Card(
+                    elevation: 4,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        articles[index],
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
