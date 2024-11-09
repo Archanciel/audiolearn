@@ -18,9 +18,16 @@ import 'package:audiolearn/services/audio_sort_filter_service.dart';
 import 'mock_shared_preferences.dart';
 
 void main() {
+      Playlist audioPlaylist = Playlist(
+      id: '1',
+      title: 'Audio Playlist',
+      playlistQuality: PlaylistQuality.voice,
+      playlistType: PlaylistType.youtube,
+    );
+
   final Audio audioOne = Audio.fullConstructor(
     youtubeVideoChannel: 'one',
-    enclosingPlaylist: null,
+    enclosingPlaylist: audioPlaylist,
     movedFromPlaylistTitle: null,
     movedToPlaylistTitle: null,
     copiedFromPlaylistTitle: null,
@@ -49,7 +56,7 @@ void main() {
 
   final Audio audioTwo = Audio.fullConstructor(
     youtubeVideoChannel: 'two',
-    enclosingPlaylist: null,
+    enclosingPlaylist: audioPlaylist,
     movedFromPlaylistTitle: null,
     movedToPlaylistTitle: null,
     copiedFromPlaylistTitle: null,
@@ -77,7 +84,7 @@ void main() {
   );
   final Audio audioThree = Audio.fullConstructor(
     youtubeVideoChannel: 'one',
-    enclosingPlaylist: null,
+    enclosingPlaylist: audioPlaylist,
     movedFromPlaylistTitle: null,
     movedToPlaylistTitle: null,
     copiedFromPlaylistTitle: null,
@@ -106,7 +113,7 @@ void main() {
   );
   final Audio audioFour = Audio.fullConstructor(
     youtubeVideoChannel: 'one',
-    enclosingPlaylist: null,
+    enclosingPlaylist: audioPlaylist,
     movedFromPlaylistTitle: null,
     movedToPlaylistTitle: null,
     copiedFromPlaylistTitle: null,
@@ -712,6 +719,152 @@ void main() {
       expect(filteredAudios, expectedFilteredAudios);
     });
   });
+  group(
+      '''filter test: by start/end download date or/and start/end video upload date.''',
+      () {
+    late AudioSortFilterService audioSortFilterService;
+
+    setUp(() {
+      audioSortFilterService = AudioSortFilterService();
+    });
+    test('filter by start/end download date', () {
+      List<Audio> expectedFilteredAudios = [
+        audioOne,
+        audioTwo,
+      ];
+
+      List<Audio> filteredAudioLst =
+          audioSortFilterService.filterOnOtherOptions(
+              audioLst: audioLst,
+              audioSortFilterParameters: AudioSortFilterParameters(
+                selectedSortItemLst: [],
+                filterSentenceLst: [],
+                sentencesCombination: SentencesCombination.AND,
+                ignoreCase: true,
+                searchAsWellInVideoCompactDescription: true,
+                searchAsWellInYoutubeChannelName: false,
+                downloadDateStartRange: DateTime(2023, 3, 24, 20, 5, 22),
+                downloadDateEndRange: DateTime(2023, 3, 24, 20, 5, 32),
+              ));
+
+      expect(filteredAudioLst, expectedFilteredAudios);
+    });
+    test('filter by start/end video upload date', () {
+      List<Audio> expectedFilteredAudios = [
+        audioOne,
+        audioThree,
+      ];
+
+      List<Audio> filteredAudioLst =
+          audioSortFilterService.filterOnOtherOptions(
+              audioLst: audioLst,
+              audioSortFilterParameters: AudioSortFilterParameters(
+                selectedSortItemLst: [],
+                filterSentenceLst: [],
+                sentencesCombination: SentencesCombination.AND,
+                ignoreCase: true,
+                searchAsWellInVideoCompactDescription: true,
+                searchAsWellInYoutubeChannelName: false,
+                uploadDateStartRange: DateTime(2023, 3, 1),
+                uploadDateEndRange: DateTime(2023, 4, 1),
+              ));
+
+      expect(filteredAudioLst, expectedFilteredAudios);
+    });
+    test('filter by start/end download date and start/end video upload date',
+        () {
+      List<Audio> expectedFilteredAudios = [
+        audioOne,
+      ];
+
+      List<Audio> filteredAudioLst =
+          audioSortFilterService.filterOnOtherOptions(
+              audioLst: audioLst,
+              audioSortFilterParameters: AudioSortFilterParameters(
+                selectedSortItemLst: [],
+                filterSentenceLst: [],
+                sentencesCombination: SentencesCombination.AND,
+                ignoreCase: true,
+                searchAsWellInVideoCompactDescription: true,
+                searchAsWellInYoutubeChannelName: false,
+                downloadDateStartRange: DateTime(2023, 3, 24, 20, 5, 22),
+                downloadDateEndRange: DateTime(2023, 3, 24, 20, 5, 32),
+                uploadDateStartRange: DateTime(2023, 3, 1),
+                uploadDateEndRange: DateTime(2023, 4, 1),
+              ));
+
+      expect(filteredAudioLst, expectedFilteredAudios);
+    });
+  });
+  group('''filter test: by file size range or/and audio duration range.''', () {
+    late AudioSortFilterService audioSortFilterService;
+
+    setUp(() {
+      audioSortFilterService = AudioSortFilterService();
+    });
+    test('filter by file size range', () {
+      List<Audio> expectedFilteredAudios = [audioOne, audioThree, audioFour];
+
+      List<Audio> filteredAudioLst =
+          audioSortFilterService.filterOnOtherOptions(
+              audioLst: audioLst,
+              audioSortFilterParameters: AudioSortFilterParameters(
+                selectedSortItemLst: [],
+                filterSentenceLst: [],
+                sentencesCombination: SentencesCombination.AND,
+                ignoreCase: true,
+                searchAsWellInVideoCompactDescription: true,
+                searchAsWellInYoutubeChannelName: false,
+                fileSizeStartRangeMB: 110,
+                fileSizeEndRangeMB: 130,
+              ));
+
+      expect(filteredAudioLst, expectedFilteredAudios);
+    });
+    test('filter by audio duration range', () {
+      List<Audio> expectedFilteredAudios = [audioOne, audioFour];
+
+      List<Audio> filteredAudioLst =
+          audioSortFilterService.filterOnOtherOptions(
+              audioLst: audioLst,
+              audioSortFilterParameters: AudioSortFilterParameters(
+                selectedSortItemLst: [],
+                filterSentenceLst: [],
+                sentencesCombination: SentencesCombination.AND,
+                ignoreCase: true,
+                searchAsWellInVideoCompactDescription: true,
+                searchAsWellInYoutubeChannelName: false,
+                fileSizeStartRangeMB: 110,
+                fileSizeEndRangeMB: 130,
+                durationStartRangeSec: 300,
+                durationEndRangeSec: 900,
+              ));
+
+      expect(filteredAudioLst, expectedFilteredAudios);
+    });
+    test('filter by file size range and audio duration range', () {
+      List<Audio> expectedFilteredAudios = [
+        audioOne,
+        audioFour,
+      ];
+
+      List<Audio> filteredAudioLst =
+          audioSortFilterService.filterOnOtherOptions(
+              audioLst: audioLst,
+              audioSortFilterParameters: AudioSortFilterParameters(
+                selectedSortItemLst: [],
+                filterSentenceLst: [],
+                sentencesCombination: SentencesCombination.AND,
+                ignoreCase: true,
+                searchAsWellInVideoCompactDescription: true,
+                searchAsWellInYoutubeChannelName: false,
+                durationStartRangeSec: 300,
+                durationEndRangeSec: 900,
+              ));
+
+      expect(filteredAudioLst, expectedFilteredAudios);
+    });
+  });
   group('sort audio lst by one SortingOption', () {
     late AudioSortFilterService audioSortFilterService;
 
@@ -721,7 +874,7 @@ void main() {
     test('sort by title', () {
       final Audio zebra = Audio.fullConstructor(
         youtubeVideoChannel: 'three',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -748,7 +901,7 @@ void main() {
       );
       final Audio apple = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -775,7 +928,7 @@ void main() {
       );
       final Audio bananna = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -860,7 +1013,7 @@ void main() {
     test('sort by title with chapter number', () {
       final Audio avantPropos = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -891,7 +1044,7 @@ void main() {
 
       final Audio note = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -922,7 +1075,7 @@ void main() {
 
       final Audio chap_1 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -953,7 +1106,7 @@ void main() {
 
       final Audio chap_2_1 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -984,7 +1137,7 @@ void main() {
 
       final Audio chap_2_2 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -1015,7 +1168,7 @@ void main() {
 
       final Audio chap_2_3 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -1046,7 +1199,7 @@ void main() {
 
       final Audio chap_3_1 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -1077,7 +1230,7 @@ void main() {
 
       final Audio chap_3_2 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -1108,7 +1261,7 @@ void main() {
 
       final Audio chap_4_1 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -1139,7 +1292,7 @@ void main() {
 
       final Audio chap_5_1 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -1170,7 +1323,7 @@ void main() {
 
       final Audio chap_6_1 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -1201,7 +1354,7 @@ void main() {
 
       final Audio chap_6_2 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -1232,7 +1385,7 @@ void main() {
 
       final Audio chap_8 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -1263,7 +1416,7 @@ void main() {
 
       final Audio chap_9_1 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -1294,7 +1447,7 @@ void main() {
 
       final Audio chap_10 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -1325,7 +1478,7 @@ void main() {
 
       final Audio chap_11_1 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -1356,7 +1509,7 @@ void main() {
 
       final Audio chap_11_2 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -1387,7 +1540,7 @@ void main() {
 
       final Audio chap_12 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -1418,7 +1571,7 @@ void main() {
 
       final Audio chap_13 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -1555,7 +1708,7 @@ void main() {
             sort was modified''', () {
       final Audio avantPropos = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -1586,7 +1739,7 @@ void main() {
 
       final Audio note = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -1617,7 +1770,7 @@ void main() {
 
       final Audio chap_1 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -1648,7 +1801,7 @@ void main() {
 
       final Audio chap_2_1 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -1679,7 +1832,7 @@ void main() {
 
       final Audio chap_2_2 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -1710,7 +1863,7 @@ void main() {
 
       final Audio chap_2_3 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -1741,7 +1894,7 @@ void main() {
 
       final Audio chap_3_1 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -1772,7 +1925,7 @@ void main() {
 
       final Audio chap_3_2 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -1803,7 +1956,7 @@ void main() {
 
       final Audio chap_4_1 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -1834,7 +1987,7 @@ void main() {
 
       final Audio chap_5_1 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -1865,7 +2018,7 @@ void main() {
 
       final Audio chap_6_1 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -1896,7 +2049,7 @@ void main() {
 
       final Audio chap_6_2 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -1927,7 +2080,7 @@ void main() {
 
       final Audio chap_8 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -1958,7 +2111,7 @@ void main() {
 
       final Audio chap_9_1 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -1989,7 +2142,7 @@ void main() {
 
       final Audio chap_10 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -2020,7 +2173,7 @@ void main() {
 
       final Audio chap_11_1 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -2051,7 +2204,7 @@ void main() {
 
       final Audio chap_11_2 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -2082,7 +2235,7 @@ void main() {
 
       final Audio chap_12 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -2113,7 +2266,7 @@ void main() {
 
       final Audio chap_13 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -2433,7 +2586,7 @@ void main() {
     test('sort by title starting with non language chars', () {
       Audio title = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -2461,7 +2614,7 @@ void main() {
 
       Audio avecPercentTitle = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -2489,7 +2642,7 @@ void main() {
 
       Audio percentTitle = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -2517,7 +2670,7 @@ void main() {
 
       Audio powerTitle = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -2545,7 +2698,7 @@ void main() {
 
       Audio amenTitle = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -2573,7 +2726,7 @@ void main() {
 
       Audio epicure = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -2601,7 +2754,7 @@ void main() {
 
       Audio ninetyFiveTitle = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -2629,7 +2782,7 @@ void main() {
 
       Audio ninetyThreeTitle = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -2657,7 +2810,7 @@ void main() {
 
       Audio ninetyFourTitle = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -2685,7 +2838,7 @@ void main() {
 
       Audio echapper = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -2713,7 +2866,7 @@ void main() {
 
       Audio evidentTitle = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -2741,7 +2894,7 @@ void main() {
 
       Audio aLireTitle = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -2769,7 +2922,7 @@ void main() {
 
       Audio nineTitle = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -2797,7 +2950,7 @@ void main() {
 
       Audio eightTitle = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -2825,7 +2978,7 @@ void main() {
 
       Audio eventuelTitle = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -2953,7 +3106,7 @@ void main() {
     test('sort by duration and title', () {
       final Audio zebra = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -2980,7 +3133,7 @@ void main() {
       );
       final Audio apple = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -3007,7 +3160,7 @@ void main() {
       );
       final Audio bananna = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -3034,7 +3187,7 @@ void main() {
       );
       final Audio banannaLonger = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -3138,7 +3291,7 @@ void main() {
     test('with search word present in in title only', () {
       final Audio zebra1 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -3165,7 +3318,7 @@ void main() {
       );
       final Audio apple = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -3192,7 +3345,7 @@ void main() {
       );
       final Audio zebra3 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -3219,7 +3372,7 @@ void main() {
       );
       final Audio bananna = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -3246,7 +3399,7 @@ void main() {
       );
       final Audio zebra2 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -3396,7 +3549,7 @@ void main() {
     test('with search word present in compact description only', () {
       final Audio zebra1 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -3423,7 +3576,7 @@ void main() {
       );
       final Audio apple = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -3450,7 +3603,7 @@ void main() {
       );
       final Audio zebra3 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -3477,7 +3630,7 @@ void main() {
       );
       final Audio bananna = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -3504,7 +3657,7 @@ void main() {
       );
       final Audio zebra2 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -3614,7 +3767,7 @@ void main() {
     test('with search word in title and in compact description', () {
       final Audio zebra1 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -3641,7 +3794,7 @@ void main() {
       );
       final Audio apple = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -3668,7 +3821,7 @@ void main() {
       );
       final Audio zebra3 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -3695,7 +3848,7 @@ void main() {
       );
       final Audio bananna = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -3722,7 +3875,7 @@ void main() {
       );
       var audio2 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -3843,7 +3996,7 @@ void main() {
     test('with search word in title and in compact description', () {
       final Audio zebra1 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -3870,7 +4023,7 @@ void main() {
       );
       final Audio apple = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -3897,7 +4050,7 @@ void main() {
       );
       final Audio zebra3 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -3924,7 +4077,7 @@ void main() {
       );
       final Audio bananna = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -3951,7 +4104,7 @@ void main() {
       );
       final Audio zebra2 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
-        enclosingPlaylist: null,
+        enclosingPlaylist: audioPlaylist,
         movedFromPlaylistTitle: null,
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
@@ -4138,8 +4291,9 @@ void main() {
       );
     });
     test(
-        'filter by one word in audio title and sort by download date descending and duration ascending',
-        () {
+        '''filter by one word in audio title and sort by download date descending
+           and duration ascending and then sort by download date ascending and
+           duration descending''', () {
       List<Audio> audioList = playlistListVM
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -4239,8 +4393,8 @@ void main() {
       );
     });
     test(
-        'filter by multiple words in audio title or in audio compact description and sort by download date descending and duration ascending',
-        () {
+        '''filter by multiple words in audio title or in audio compact description
+           and sort by download date descending and duration ascending''', () {
       List<Audio> audioList = playlistListVM
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -4338,8 +4492,9 @@ void main() {
       );
     });
     test(
-        'filter by one sentence present in audio compact description only with searchInVideoCompactDescription = false and sort by download date descending and duration ascending. Result list will be empty',
-        () {
+        '''filter by one sentence present in audio compact description only with
+           searchInVideoCompactDescription = false and sort by download date
+           descending and duration ascending. Result list will be empty''', () {
       List<Audio> audioList = playlistListVM
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -4418,8 +4573,9 @@ void main() {
       );
     });
     test(
-        "filter in 'and' mode by multiple sentences present in audio title and compact description only with searchInVideoCompactDescription = false and sort by download date descending and duration ascending",
-        () {
+        '''filter in 'and' mode by multiple sentences present in audio title and
+           compact description only with searchInVideoCompactDescription = false
+           and sort by download date descending and duration ascending''', () {
       List<Audio> audioList = playlistListVM
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -4504,8 +4660,9 @@ void main() {
       );
     });
     test(
-        "filter in 'and' mode by multiple sentences present in audio title and compact description only with searchInVideoCompactDescription = true and sort by download date descending and duration ascending",
-        () {
+        '''filter in 'and' mode by multiple sentences present in audio title and
+           compact description only with searchInVideoCompactDescription = true
+           and sort by download date descending and duration ascending''', () {
       List<Audio> audioList = playlistListVM
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -4597,8 +4754,9 @@ void main() {
       );
     });
     test(
-        "filter in 'or' mode by multiple sentences present in audio title and compact description only with searchInVideoCompactDescription = false and sort by download date descending and duration ascending",
-        () {
+        '''filter in 'or' mode by multiple sentences present in audio title and compact
+         description only with searchInVideoCompactDescription = false and sort by
+         download date descending and duration ascending''', () {
       List<Audio> audioList = playlistListVM
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -4693,9 +4851,9 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    test(
-        "filter in 'or' mode by multiple sentences present in audio title and compact description only with searchInVideoCompactDescription = true and sort by download date descending and duration ascending",
-        () {
+    test('''filter in 'or' mode by multiple sentences present in audio title and
+           compact description only with searchInVideoCompactDescription = true
+           and sort by download date descending and duration ascending''', () {
       List<Audio> audioList = playlistListVM
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -4787,6 +4945,218 @@ void main() {
             'La surpopulation mondiale par Jancovici et Barrau',
             "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
           ]);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    test('''filter by one word in audio title, by download start/end date and by
+           upload start/end date and sort by download date descending and duration
+           ascending and then sort by download date ascending and duration
+           descending.''', () {
+      List<Audio> audioList = playlistListVM
+          .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
+        audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
+      );
+
+      List<String>
+          expectedResultForFilterByWordAndSortByDownloadDateDescAndDurationAsc =
+          [
+        "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+      ];
+
+      final List<SortingItem>
+          selectedSortItemLstDownloadDateDescAndDurationAsc = [
+        SortingItem(
+          sortingOption: SortingOption.audioDownloadDate,
+          isAscending: false,
+        ),
+        SortingItem(
+          sortingOption: SortingOption.audioDuration,
+          isAscending: true,
+        ),
+      ];
+
+      AudioSortFilterParameters audioSortFilterParameters =
+          AudioSortFilterParameters(
+        selectedSortItemLst: selectedSortItemLstDownloadDateDescAndDurationAsc,
+        filterSentenceLst: [
+          'Jancovici',
+        ],
+        sentencesCombination: SentencesCombination.AND,
+        ignoreCase: true,
+        searchAsWellInVideoCompactDescription: true,
+        searchAsWellInYoutubeChannelName: false,
+        downloadDateStartRange: DateTime(2024, 7, 1),
+        downloadDateEndRange: DateTime(2024, 8, 1),
+        uploadDateStartRange: DateTime(2022, 1, 1),
+        uploadDateEndRange: DateTime(2022, 12, 31),
+      );
+
+      List<Audio> filteredByWordAndSortedByDownloadDateDescAndDurationAsc =
+          audioSortFilterService.filterAndSortAudioLst(
+        audioLst: List<Audio>.from(audioList), // copy list
+        audioSortFilterParameters: audioSortFilterParameters,
+      );
+
+      expect(
+          filteredByWordAndSortedByDownloadDateDescAndDurationAsc
+              .map((audio) => audio.validVideoTitle)
+              .toList(),
+          expectedResultForFilterByWordAndSortByDownloadDateDescAndDurationAsc);
+
+      final List<SortingItem>
+          selectedSortItemLstDownloadDateAscAndDurationDesc = [
+        SortingItem(
+          sortingOption: SortingOption.audioDownloadDate,
+          isAscending: true,
+        ),
+        SortingItem(
+          sortingOption: SortingOption.audioDuration,
+          isAscending: false,
+        ),
+      ];
+
+      audioSortFilterParameters = AudioSortFilterParameters(
+        selectedSortItemLst: selectedSortItemLstDownloadDateAscAndDurationDesc,
+        filterSentenceLst: [
+          'Janco',
+        ],
+        sentencesCombination: SentencesCombination.AND,
+        ignoreCase: true,
+        searchAsWellInVideoCompactDescription: true,
+        searchAsWellInYoutubeChannelName: false,
+        downloadDateStartRange: DateTime(2024, 1, 7),
+        downloadDateEndRange: DateTime(2024, 8, 1),
+        uploadDateStartRange: DateTime(2022, 1, 1),
+        uploadDateEndRange: DateTime(2023, 12, 31),
+      );
+
+      List<Audio> filteredByWordAndSortedByDownloadDateAscAndDurationDesc =
+          audioSortFilterService.filterAndSortAudioLst(
+        audioLst: List<Audio>.from(audioList), // copy list
+        audioSortFilterParameters: audioSortFilterParameters,
+      );
+
+      List<String>
+          expectedResultForFilterByWordAndSortByDownloadDateAscAndDurationDesc =
+          [
+        "La surpopulation mondiale par Jancovici et Barrau",
+        "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+      ];
+
+      expect(
+          filteredByWordAndSortedByDownloadDateAscAndDurationDesc
+              .map((audio) => audio.validVideoTitle)
+              .toList(),
+          expectedResultForFilterByWordAndSortByDownloadDateAscAndDurationDesc);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    test('''filter by one word in audio title, by audio file size range and by
+           audio duration range and sort by download date descending and duration
+           ascending and then sort by download date ascending and duration
+           descending.''', () {
+      List<Audio> audioList = playlistListVM
+          .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
+        audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
+      );
+
+      List<String>
+          expectedResultForFilterByWordAndSortByDownloadDateDescAndDurationAsc =
+          [
+        "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+      ];
+
+      final List<SortingItem>
+          selectedSortItemLstDownloadDateDescAndDurationAsc = [
+        SortingItem(
+          sortingOption: SortingOption.audioDownloadDate,
+          isAscending: false,
+        ),
+        SortingItem(
+          sortingOption: SortingOption.audioDuration,
+          isAscending: true,
+        ),
+      ];
+
+      AudioSortFilterParameters audioSortFilterParameters =
+          AudioSortFilterParameters(
+        selectedSortItemLst: selectedSortItemLstDownloadDateDescAndDurationAsc,
+        filterSentenceLst: [
+          'Jancovici',
+        ],
+        sentencesCombination: SentencesCombination.AND,
+        ignoreCase: true,
+        searchAsWellInVideoCompactDescription: true,
+        searchAsWellInYoutubeChannelName: false,
+        fileSizeStartRangeMB: 2.373,
+        fileSizeEndRangeMB: 2.374,
+      );
+
+      List<Audio> filteredByWordAndSortedByDownloadDateDescAndDurationAsc =
+          audioSortFilterService.filterAndSortAudioLst(
+        audioLst: List<Audio>.from(audioList), // copy list
+        audioSortFilterParameters: audioSortFilterParameters,
+      );
+
+      expect(
+          filteredByWordAndSortedByDownloadDateDescAndDurationAsc
+              .map((audio) => audio.validVideoTitle)
+              .toList(),
+          expectedResultForFilterByWordAndSortByDownloadDateDescAndDurationAsc);
+
+      final List<SortingItem>
+          selectedSortItemLstDownloadDateAscAndDurationDesc = [
+        SortingItem(
+          sortingOption: SortingOption.audioDownloadDate,
+          isAscending: true,
+        ),
+        SortingItem(
+          sortingOption: SortingOption.audioDuration,
+          isAscending: false,
+        ),
+      ];
+
+      audioSortFilterParameters = AudioSortFilterParameters(
+        selectedSortItemLst: selectedSortItemLstDownloadDateAscAndDurationDesc,
+        filterSentenceLst: [
+          'Janco',
+        ],
+        sentencesCombination: SentencesCombination.AND,
+        ignoreCase: true,
+        searchAsWellInVideoCompactDescription: true,
+        searchAsWellInYoutubeChannelName: false,
+        fileSizeStartRangeMB: 2.373,
+        fileSizeEndRangeMB: 2.8,
+        durationStartRangeSec: 389,
+        durationEndRangeSec: 458,
+      );
+
+      List<Audio> filteredByWordAndSortedByDownloadDateAscAndDurationDesc =
+          audioSortFilterService.filterAndSortAudioLst(
+        audioLst: List<Audio>.from(audioList), // copy list
+        audioSortFilterParameters: audioSortFilterParameters,
+      );
+
+      List<String>
+          expectedResultForFilterByWordAndSortByDownloadDateAscAndDurationDesc =
+          [
+        "La surpopulation mondiale par Jancovici et Barrau",
+        "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+      ];
+
+      expect(
+          filteredByWordAndSortedByDownloadDateAscAndDurationDesc
+              .map((audio) => audio.validVideoTitle)
+              .toList(),
+          expectedResultForFilterByWordAndSortByDownloadDateAscAndDurationDesc);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -5149,9 +5519,10 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    test('empty audio list. Filter commented audio. This test verify a bug fix.', () {
-      List<String> expectedFilteredAudioTitles = [
-      ];
+    test(
+        'empty audio list. Filter commented audio. This test verify a bug fix.',
+        () {
+      List<String> expectedFilteredAudioTitles = [];
 
       // Selecting only the commented audios
       AudioSortFilterParameters audioSortFilterParameters =
@@ -5215,9 +5586,10 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    test('empty audio list. Filter not commented audio. This test verify a bug fix.', () {
-      List<String> expectedFilteredAudioTitles = [
-      ];
+    test(
+        'empty audio list. Filter not commented audio. This test verify a bug fix.',
+        () {
+      List<String> expectedFilteredAudioTitles = [];
 
       AudioSortFilterParameters audioSortFilterParameters =
           AudioSortFilterParameters(
@@ -5762,50 +6134,40 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    test(
-        'increaseByMinimumUnit 0.01 test',
-        () {
-          double increasedValue = AudioSortFilterService.increaseByMinimumUnit(
-            endValueTxt: '2.79',
-          );
+    test('increaseByMinimumUnit 0.01 test', () {
+      double increasedValue = AudioSortFilterService.increaseByMinimumUnit(
+        endValueTxt: '2.79',
+      );
 
-          expect(increasedValue, 2.8);
+      expect(increasedValue, 2.8);
     });
-    test(
-        'increaseByMinimumUnit 0.001 test',
-        () {
-          double increasedValue = AudioSortFilterService.increaseByMinimumUnit(
-            endValueTxt: '200.327',
-          );
+    test('increaseByMinimumUnit 0.001 test', () {
+      double increasedValue = AudioSortFilterService.increaseByMinimumUnit(
+        endValueTxt: '200.327',
+      );
 
-          expect(increasedValue, 200.328);
+      expect(increasedValue, 200.328);
     });
-    test(
-        'setDateTimeToEndDay 0 hour',
-        () {
-          DateTime increasedValue = AudioSortFilterService.setDateTimeToEndDay(
-            date: DateTime(2024, 1, 7),
-          );
+    test('setDateTimeToEndDay 0 hour', () {
+      DateTime increasedValue = AudioSortFilterService.setDateTimeToEndDay(
+        date: DateTime(2024, 1, 7),
+      );
 
-          expect(increasedValue, DateTime(2024, 1, 7, 23, 59, 59));
+      expect(increasedValue, DateTime(2024, 1, 7, 23, 59, 59));
     });
-    test(
-        'setDateTimeToEndDay 10 hours 45 minutes 23 seconds',
-        () {
-          DateTime increasedValue = AudioSortFilterService.setDateTimeToEndDay(
-            date: DateTime(2024, 1, 7, 10, 45, 23),
-          );
+    test('setDateTimeToEndDay 10 hours 45 minutes 23 seconds', () {
+      DateTime increasedValue = AudioSortFilterService.setDateTimeToEndDay(
+        date: DateTime(2024, 1, 7, 10, 45, 23),
+      );
 
-          expect(increasedValue, DateTime(2024, 1, 7, 23, 59, 59));
+      expect(increasedValue, DateTime(2024, 1, 7, 23, 59, 59));
     });
-    test(
-        'setDateTimeToEndDay 0 hours 0 minutes 23 seconds',
-        () {
-          DateTime increasedValue = AudioSortFilterService.setDateTimeToEndDay(
-            date: DateTime(2024, 1, 7, 0, 0, 23),
-          );
+    test('setDateTimeToEndDay 0 hours 0 minutes 23 seconds', () {
+      DateTime increasedValue = AudioSortFilterService.setDateTimeToEndDay(
+        date: DateTime(2024, 1, 7, 0, 0, 23),
+      );
 
-          expect(increasedValue, DateTime(2024, 1, 7, 23, 59, 59));
+      expect(increasedValue, DateTime(2024, 1, 7, 23, 59, 59));
     });
   });
 }

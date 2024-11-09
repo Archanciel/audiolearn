@@ -1,0 +1,19 @@
+{
+    "applySortFilterParmsForAudioPlayerView": false,
+    "applySortFilterParmsForPlaylistDownloadView": false,
+    "audioPlaySpeed": 1.25,
+    "audioSortFilterParmsAudioPlayerView": null,
+    "audioSortFilterParmsPlaylistDownloadView": null,
+    "currentOrPastPlayableAudioIndex": -1,
+    "downloadedAudioLst": [
+    ],
+    "downloadPath": "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio\\Empty",
+    "id": "Empty",
+    "isSelected": true,
+    "playableAudioLst": [
+    ],
+    "playlistQuality": "voice",
+    "playlistType": "local",
+    "title": "Empty",
+    "url": ""
+}
