@@ -1,5 +1,8 @@
 import 'dart:math';
 
+import 'package:audiolearn/models/comment.dart';
+import 'package:audiolearn/viewmodels/comment_vm.dart';
+
 import '../models/audio.dart';
 import 'sort_filter_parameters.dart';
 
@@ -402,6 +405,12 @@ class AudioSortFilterService {
   /// This method filters the passed audio list by the other filter
   /// options set by the user in the sort and filter dialog, i.e.
   ///
+  /// Audio music quality,
+  /// Fully listened,
+  /// Partially listened,
+  /// Not listened,
+  /// Commented,
+  /// Not commented,
   /// Start download date,
   /// End download date,
   /// Start upload date,
@@ -454,6 +463,35 @@ class AudioSortFilterService {
       }).toList();
     }
 
+    if (filteredAudios.isEmpty) {
+      return filteredAudios;
+    }
+    
+    CommentVM commentVM = CommentVM();
+    Map<String, List<Comment>> commentsMap = commentVM.getPlaylistAudioComments(
+      playlist: filteredAudios.first.enclosingPlaylist!,
+    );
+
+    // If the 'Commented' checkbox was set to false (by
+    // default it is set to true), the returned audio list
+    // does not contain audio that have been commented.
+    if (!audioSortFilterParameters.filterCommented) {
+      filteredAudios = _filterAudioLstByRemovingCommentedAudio(
+        audioLst: filteredAudios,
+        commentsMap: commentsMap,
+      );
+    }
+
+    // If the 'Not commented' checkbox was set to false (by
+    // default it is set to true), the returned audio list
+    // does not contain audio that have not been commented.
+    if (!audioSortFilterParameters.filterNotCommented) {
+      filteredAudios = _filterAudioLstByRemovingUnCommentedAudio(
+        audioLst: filteredAudios,
+        commentsMap: commentsMap,
+      );
+    }
+
     if (audioSortFilterParameters.downloadDateStartRange != null &&
         audioSortFilterParameters.downloadDateEndRange != null) {
       filteredAudios = _filterAudioLstByAudioDownloadDateTime(
@@ -493,6 +531,24 @@ class AudioSortFilterService {
     }
 
     return filteredAudios;
+  }
+
+  List<Audio> _filterAudioLstByRemovingCommentedAudio({
+    required List<Audio> audioLst,
+    required Map<String, List<Comment>> commentsMap,
+  }) {
+    return audioLst.where((audio) {
+      return commentsMap[audio.audioFileName.replaceFirst('.mp3', '')] == null;
+    }).toList();
+  }
+
+  List<Audio> _filterAudioLstByRemovingUnCommentedAudio({
+    required List<Audio> audioLst,
+    required Map<String, List<Comment>> commentsMap,
+  }) {
+    return audioLst.where((audio) {
+      return commentsMap[audio.audioFileName.replaceFirst('.mp3', '')] != null;
+    }).toList();
   }
 
   List<Audio> _filterAudioLstByAudioDownloadDateTime({

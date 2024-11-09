@@ -306,16 +306,16 @@ class AudioSortFilterParameters {
       sentencesCombination:
           SentencesCombination.values[json['sentencesCombination']],
       ignoreCase: json['ignoreCase'],
-      searchAsWellInYoutubeChannelName: json['searchAsWellInYoutubeChannelName'] ??
-          true,
+      searchAsWellInYoutubeChannelName:
+          json['searchAsWellInYoutubeChannelName'] ?? true,
       searchAsWellInVideoCompactDescription:
           json['searchAsWellInVideoCompactDescription'],
       filterMusicQuality: json['filterMusicQuality'],
       filterFullyListened: json['filterFullyListened'],
       filterPartiallyListened: json['filterPartiallyListened'],
       filterNotListened: json['filterNotListened'],
-      filterCommented: json['filterCommented'],
-      filterNotCommented: json['filterNotCommented'],
+      filterCommented: json['filterCommented'] ?? true,
+      filterNotCommented: json['filterNotCommented'] ?? true,
       downloadDateStartRange: json['downloadDateStartRange'] == null
           ? null
           : DateTime.parse(json['downloadDateStartRange']),

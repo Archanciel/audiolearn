@@ -1372,4 +1372,10 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get dateFormatSelectionDialogTitle => "Select a date format";
+
+  @override
+  String get commented => "Commented";
+
+  @override
+  String get notCommented => "Not c.";
 }
