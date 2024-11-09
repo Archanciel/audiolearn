@@ -285,14 +285,6 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 Playlists.arePlaylistsDisplayedInPlaylistDownloadView) ??
         false;
 
-    if (isPlaylistListExpanded && audioToScrollPosition <= 2) {
-      // This avoids scrolling down when the current audio is
-      // in the top part of the audio list. Without that, the
-      // list is unusefully scrolled down and the user has to scroll
-      // up to see a selected top audio.
-      return;
-    }
-
     double scrollPositionNumber = audioToScrollPosition.toDouble();
 
     if (audioToScrollPosition > 300) {
@@ -403,7 +395,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 Playlists.arePlaylistsDisplayedInPlaylistDownloadView) ??
         false;
 
-    if (isPlaylistListExpanded && playlistToScrollPosition <= noScrollPositionValue) {
+    if (isPlaylistListExpanded &&
+        playlistToScrollPosition <= noScrollPositionValue) {
       // This avoids scrolling down when the selected playlist is
       // in the top part of the list of playlists. Without that, the
       // list is unusefully scrolled down and the user has to scroll
