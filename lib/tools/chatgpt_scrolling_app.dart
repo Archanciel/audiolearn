@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:window_size/window_size.dart';
 
@@ -55,20 +56,23 @@ class ArticleListPage extends StatefulWidget {
 }
 
 class _ArticleListPageState extends State<ArticleListPage> {
-  final List<String> articles = List.generate(
-    50,
-    (index) => 'Article ${index + 1}:\n' +
-        List.generate(index % 5 + 1, (i) => 'Line ${i + 1}').join('\n'),
-  );
-
   final ScrollController _scrollController = ScrollController();
   final TextEditingController _articleNumberController =
       TextEditingController();
 
+  late final List<String> articles = List.generate(
+    50,
+    (index) {
+      final int numberOfLines = _getRandomLineCount();
+      final String lines = List.generate(numberOfLines, (i) => 'Line ${i + 1}')
+          .join('\n');
+      return 'Article ${index + 1}:\n$lines';
+    },
+  );
+
   /// Scroll to the specified article index
   void _scrollToArticle() {
-    final int articleIndex =
-        int.tryParse(_articleNumberController.text) ?? -1;
+    final int articleIndex = int.tryParse(_articleNumberController.text) ?? -1;
 
     if (articleIndex >= 1 && articleIndex <= articles.length) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -83,16 +87,29 @@ class _ArticleListPageState extends State<ArticleListPage> {
 
   /// Compute the exact scroll offset for the desired index
   void _scrollToItem(int index) {
-    final RenderBox? renderBox =
-        _scrollController.position.context.storageContext.findRenderObject()
-            as RenderBox?;
-    if (renderBox != null) {
-      final double offset = renderBox.localToGlobal(Offset.zero).dy;
-      _scrollController.animateTo(
-        index * offset,
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.ease,
-      );
+    const double itemHeight = 120.0; // Approximate height per item
+    _scrollController.animateTo(
+      index * itemHeight,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.ease,
+    );
+  }
+
+  /// Generates a random number of lines based on a probability distribution
+  int _getRandomLineCount() {
+    final Random random = Random();
+    final double probability = random.nextDouble();
+
+    if (probability < 0.5) {
+      return 1; // 50% chance for 1 line
+    } else if (probability < 0.75) {
+      return 2; // 25% chance for 2 lines
+    } else if (probability < 0.9) {
+      return 3; // 15% chance for 3 lines
+    } else if (probability < 0.98) {
+      return 4; // 8% chance for 4 lines
+    } else {
+      return 5; // 2% chance for 5 lines
     }
   }
 
