@@ -36,6 +36,8 @@ class PlaylistDownloadView extends StatefulWidget {
   final double audioItemHeight = (ScreenMixin.isHardwarePc() ? 73 : 85);
   final double playlistNotExpamdedScrollAugmentation =
       (ScreenMixin.isHardwarePc()) ? 1.38 : 1.55;
+  final double playlistExpamdedScrollAugmentation =
+      (ScreenMixin.isHardwarePc()) ? 1 : 1.5;
   final double playlistItemHeight = (ScreenMixin.isHardwarePc() ? 51 : 85);
 
   PlaylistDownloadView({
@@ -288,7 +290,11 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     double scrollPositionNumber = audioToScrollPosition.toDouble();
 
     if (audioToScrollPosition > 300) {
-      scrollPositionNumber *= 1.23;
+      if (!isPlaylistListExpanded) {
+        scrollPositionNumber *= 1.23 / 1.29;
+      } else {
+        scrollPositionNumber *= 1.23 / 1.244;
+      }
     } else if (audioToScrollPosition > 200) {
       scrollPositionNumber *= 1.21;
     } else if (audioToScrollPosition > 120) {
@@ -298,6 +304,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     if (!isPlaylistListExpanded) {
       // the list of playlists is collapsed ...
       scrollPositionNumber *= widget.playlistNotExpamdedScrollAugmentation;
+    } else {
+      // the list of playlists is expanded ...
+      scrollPositionNumber *= widget.playlistExpamdedScrollAugmentation;
     }
 
     double offset = scrollPositionNumber * widget.audioItemHeight;
