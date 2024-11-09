@@ -224,8 +224,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     _filterPartiallyListened =
         audioSortDefaultFilterParameters.filterPartiallyListened;
     _filterNotListened = audioSortDefaultFilterParameters.filterNotListened;
-    _filterCommented = audioSortDefaultFilterParameters.filterNotListened;
-    _filterNotCommented = audioSortDefaultFilterParameters.filterNotListened;
+    _filterCommented = audioSortDefaultFilterParameters.filterCommented;
+    _filterNotCommented = audioSortDefaultFilterParameters.filterNotCommented;
     _startDownloadDateTime =
         audioSortDefaultFilterParameters.downloadDateStartRange;
     _endDownloadDateTime =
@@ -291,6 +291,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     _filterFullyListened = true;
     _filterPartiallyListened = true;
     _filterNotListened = true;
+    _filterCommented = true;
+    _filterNotCommented = true;
     _startDownloadDateTimeController.clear();
     _endDownloadDateTimeController.clear();
     _startUploadDateTimeController.clear();
@@ -330,6 +332,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     _filterPartiallyListened =
         audioSortFilterParameters.filterPartiallyListened;
     _filterNotListened = audioSortFilterParameters.filterNotListened;
+    _filterCommented = audioSortFilterParameters.filterCommented;
+    _filterNotCommented = audioSortFilterParameters.filterNotCommented;
     _startDownloadDateTimeController.clear();
     _endDownloadDateTimeController.clear();
     _startUploadDateTimeController.clear();
@@ -1911,6 +1915,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       filterFullyListened: _filterFullyListened,
       filterPartiallyListened: _filterPartiallyListened,
       filterNotListened: _filterNotListened,
+      filterCommented: _filterCommented,
+      filterNotCommented: _filterNotCommented,
       downloadDateStartRange: _startDownloadDateTime,
       downloadDateEndRange: _endDownloadDateTime,
       uploadDateStartRange: _startUploadDateTime,

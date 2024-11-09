@@ -5261,7 +5261,7 @@ void main() {
       );
 
       List<Audio> actualFilteredAudioLst =
-          audioSortFilterService.filterAndSortAudioLst(
+          audioSortFilterService.filterOnOtherOptions(
         audioLst: List<Audio>.from(audioList), // copy list
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -5331,7 +5331,7 @@ void main() {
       );
 
       List<Audio> actualFilteredAudioLst =
-          audioSortFilterService.filterAndSortAudioLst(
+          audioSortFilterService.filterOnOtherOptions(
         audioLst: List<Audio>.from(audioList), // copy list
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -5366,8 +5366,247 @@ void main() {
       );
 
       List<Audio> actualFilteredAudioLst =
-          audioSortFilterService.filterAndSortAudioLst(
+          audioSortFilterService.filterOnOtherOptions(
         audioLst: List<Audio>.from(audioList), // copy list
+        audioSortFilterParameters: audioSortFilterParameters,
+      );
+
+      expect(
+          actualFilteredAudioLst.map((audio) => audio.validVideoTitle).toList(),
+          expectedFilteredAudioTitles);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+  });
+  group("filter audio by commented or not commented options", () {
+    late AudioSortFilterService audioSortFilterService;
+    late PlaylistListVM playlistListVM;
+
+    setUp(() async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}audio_sort_filter_service_test_data",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+      // Since we have to use a mock AudioDownloadVM to add the
+      // youtube playlist, we can not use app.main() to start the
+      // app because app.main() uses the real AudioDownloadVM
+      // and we don't want to make the main.dart file dependent
+      // of a mock class. So we have to start the app by hand.
+
+      WarningMessageVM warningMessageVM = WarningMessageVM();
+      // MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
+      //   warningMessageVM: warningMessageVM,
+      //   isTest: true,
+      // );
+      // mockAudioDownloadVM.youtubePlaylistTitle = youtubeNewPlaylistTitle;
+
+      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+        isTest: true,
+      );
+
+      // audioDownloadVM.youtubeExplode = mockYoutubeExplode;
+
+      playlistListVM = PlaylistListVM(
+        warningMessageVM: warningMessageVM,
+        audioDownloadVM: audioDownloadVM,
+        commentVM: CommentVM(),
+        settingsDataService: settingsDataService,
+      );
+
+      // calling getUpToDateSelectablePlaylists() loads all the
+      // playlist json files from the app dir and so enables
+      // playlistListVM to know which playlists are
+      // selected and which are not
+      playlistListVM.getUpToDateSelectablePlaylists();
+
+      audioSortFilterService = AudioSortFilterService();
+    });
+    test('filter commented or not commented audio', () {
+      List<Audio> audioList = playlistListVM
+          .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
+        audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
+      );
+
+      List<String> expectedFilteredAudioTitles = [
+        "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+        'La surpopulation mondiale par Jancovici et Barrau',
+        'La résilience insulaire par Fiona Roche',
+        'Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik',
+        'Les besoins artificiels par R.Keucheyan',
+        'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau',
+        '3 fois où un économiste m\'a ouvert les yeux (Giraud, Lefournier, Porcher)',
+      ];
+
+      AudioSortFilterParameters audioSortFilterParameters =
+          AudioSortFilterParameters(
+        selectedSortItemLst: [],
+        sentencesCombination: SentencesCombination.AND,
+        filterCommented: true, // is true by default
+        filterNotCommented: true, // is true by default
+      );
+
+      List<Audio> actualFilteredAudioLst =
+          audioSortFilterService.filterOnOtherOptions(
+        audioLst: List<Audio>.from(audioList), // copy list
+        audioSortFilterParameters: audioSortFilterParameters,
+      );
+
+      expect(
+          actualFilteredAudioLst.map((audio) => audio.validVideoTitle).toList(),
+          expectedFilteredAudioTitles);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    test('filter commented audio', () {
+      List<Audio> audioList = playlistListVM
+          .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
+        audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
+      );
+
+      List<String> expectedFilteredAudioTitles = [
+        'La surpopulation mondiale par Jancovici et Barrau',
+        'Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik',
+        '3 fois où un économiste m\'a ouvert les yeux (Giraud, Lefournier, Porcher)',
+      ];
+
+      // Selecting only the commented audios
+      AudioSortFilterParameters audioSortFilterParameters =
+          AudioSortFilterParameters(
+        selectedSortItemLst: [],
+        sentencesCombination: SentencesCombination.AND,
+        filterCommented: true, // is true by default
+        filterNotCommented: false, // is true by default
+      );
+
+      List<Audio> actualFilteredAudioLst =
+          audioSortFilterService.filterOnOtherOptions(
+        audioLst: List<Audio>.from(audioList), // copy list
+        audioSortFilterParameters: audioSortFilterParameters,
+      );
+
+      expect(
+          actualFilteredAudioLst.map((audio) => audio.validVideoTitle).toList(),
+          expectedFilteredAudioTitles);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    test('empty audio list. Filter commented audio. This test verify a bug fix.', () {
+      List<String> expectedFilteredAudioTitles = [
+      ];
+
+      // Selecting only the commented audios
+      AudioSortFilterParameters audioSortFilterParameters =
+          AudioSortFilterParameters(
+        selectedSortItemLst: [],
+        sentencesCombination: SentencesCombination.AND,
+        filterCommented: true, // is true by default
+        filterNotCommented: false, // is true by default
+      );
+
+      List<Audio> actualFilteredAudioLst =
+          audioSortFilterService.filterOnOtherOptions(
+        audioLst: [],
+        audioSortFilterParameters: audioSortFilterParameters,
+      );
+
+      expect(
+          actualFilteredAudioLst.map((audio) => audio.validVideoTitle).toList(),
+          expectedFilteredAudioTitles);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    test('filter not commented audio', () {
+      List<Audio> audioList = playlistListVM
+          .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
+        audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
+      );
+
+      List<String> expectedFilteredAudioTitles = [
+        "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+        'La résilience insulaire par Fiona Roche',
+        'Les besoins artificiels par R.Keucheyan',
+        'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau',
+      ];
+
+      AudioSortFilterParameters audioSortFilterParameters =
+          AudioSortFilterParameters(
+        selectedSortItemLst: [],
+        sentencesCombination: SentencesCombination.AND,
+        filterCommented: false, // is true by default
+        filterNotCommented: true, // is true by default
+      );
+
+      List<Audio> actualFilteredAudioLst =
+          audioSortFilterService.filterOnOtherOptions(
+        audioLst: List<Audio>.from(audioList), // copy list
+        audioSortFilterParameters: audioSortFilterParameters,
+      );
+
+      expect(
+          actualFilteredAudioLst.map((audio) => audio.validVideoTitle).toList(),
+          expectedFilteredAudioTitles);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    test('empty audio list. Filter not commented audio. This test verify a bug fix.', () {
+      List<String> expectedFilteredAudioTitles = [
+      ];
+
+      AudioSortFilterParameters audioSortFilterParameters =
+          AudioSortFilterParameters(
+        selectedSortItemLst: [],
+        sentencesCombination: SentencesCombination.AND,
+        filterCommented: false, // is true by default
+        filterNotCommented: true, // is true by default
+      );
+
+      List<Audio> actualFilteredAudioLst =
+          audioSortFilterService.filterOnOtherOptions(
+        audioLst: [],
         audioSortFilterParameters: audioSortFilterParameters,
       );
 
