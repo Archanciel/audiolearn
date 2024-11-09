@@ -13101,12 +13101,13 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure settings json file has been modified
+      String expSettings =
+          "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.orderedTitleLst\":\"[Youtube_test]\",\"Playlists.playSpeed\":\"1.25\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\Users\\\\Jean-Pierre\\\\Development\\\\Flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\Users\\\\Jean-Pierre\\\\Development\\\\Flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\new\"},\"SettingType.formatOfDate\":{\"FormatOfDate.formatOfDate\":\"dd/MM/yyyy\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInYoutubeChannelName\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":false,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"filterCommented\":true,\"filterNotCommented\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}";
       expect(
         File("$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName")
             .readAsStringSync(),
-        "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.orderedTitleLst\":\"[Youtube_test]\",\"Playlists.playSpeed\":\"1.25\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\Users\\\\Jean-Pierre\\\\Development\\\\Flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\Users\\\\Jean-Pierre\\\\Development\\\\Flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\new\"},\"SettingType.formatOfDate\":{\"FormatOfDate.formatOfDate\":\"dd/MM/yyyy\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInYoutubeChannelName\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":false,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}",
+        expSettings,
       );
-
       // Find the Youtube playlist to select
 
       // First, find the Playlist ListTile Text widget
@@ -13774,7 +13775,7 @@ void main() {
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
-        savedTestDataDirName: 'audio_comment_test',
+        savedTestDataDirName: 'audio_comment_corrected_test',
         selectedPlaylistTitle: youtubePlaylistTitle,
       );
 
@@ -13869,8 +13870,8 @@ void main() {
       await tester.tap(find.byKey(const Key('audioModificationButton')));
       await tester.pumpAndSettle();
 
-      // Since file name is the name of an existing file in the audio
-      // directory, a warning will be displayed ...
+      // Since file name is the name of an existing comment file in the
+      // audio comment directory, a warning will be displayed ...
 
       // Ensure the warning dialog is displayed
       await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(

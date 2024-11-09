@@ -344,7 +344,7 @@ void main() {
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
-        savedTestDataDirName: 'audio_player_view_first_to_last_audio_test',
+        savedTestDataDirName: 'audio_player_view_first_to_last_audio_corrected_test',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
       );
 
