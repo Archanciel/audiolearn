@@ -65,19 +65,33 @@ class _ArticleListPageState extends State<ArticleListPage> {
   final TextEditingController _articleNumberController =
       TextEditingController();
 
+  /// Scroll to the specified article index
   void _scrollToArticle() {
     final int articleIndex =
-        int.tryParse(_articleNumberController.text) ?? 0;
+        int.tryParse(_articleNumberController.text) ?? -1;
 
     if (articleIndex >= 1 && articleIndex <= articles.length) {
-      _scrollController.animateTo(
-        (articleIndex - 1) * 100.0, // Assuming 100 pixels per article
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.easeInOut,
-      );
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _scrollToItem(articleIndex - 1);
+      });
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Invalid article number')),
+      );
+    }
+  }
+
+  /// Compute the exact scroll offset for the desired index
+  void _scrollToItem(int index) {
+    final RenderBox? renderBox =
+        _scrollController.position.context.storageContext.findRenderObject()
+            as RenderBox?;
+    if (renderBox != null) {
+      final double offset = renderBox.localToGlobal(Offset.zero).dy;
+      _scrollController.animateTo(
+        index * offset,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.ease,
       );
     }
   }
