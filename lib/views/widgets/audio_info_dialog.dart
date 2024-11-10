@@ -207,9 +207,9 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
       createInfoRowFunction(
           context: context,
           label: AppLocalizations.of(context)!.audioFileSizeLabel,
-          value: UiUtil.formatLargeIntValue(
+          value: UiUtil.formatLargeByteAmount(
             context: context,
-            value: audio.audioFileSize,
+            bytes: audio.audioFileSize,
           )),
       createInfoRowFunction(
           context: context,
@@ -322,9 +322,9 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
       createInfoRowFunction(
           context: context,
           label: AppLocalizations.of(context)!.audioFileSizeLabel,
-          value: UiUtil.formatLargeIntValue(
+          value: UiUtil.formatLargeByteAmount(
             context: context,
-            value: audio.audioFileSize,
+            bytes: audio.audioFileSize,
           )),
       createInfoRowFunction(
           context: context,
@@ -354,7 +354,7 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
           AppLocalizations.of(context)!.infiniteBytesPerSecond;
     } else {
       audioDownloadSpeedStr =
-          '${UiUtil.formatLargeIntValue(context: context, value: audioDownloadSpeed)}/sec';
+          '${UiUtil.formatLargeByteAmount(context: context, bytes: audioDownloadSpeed)}/sec';
     }
 
     return audioDownloadSpeedStr;

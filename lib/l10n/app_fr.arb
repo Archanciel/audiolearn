@@ -64,8 +64,8 @@
   "openYoutubePlaylist": "Ouvrir la playlist Youtube",
   "apply": "Appl",
   "cancelButton": "Annuler",
-  "deleteAudio": "Supprimer l'audio",
-  "deleteAudioFromPlaylistAswell": "Supprimer l'audio de la playlist également",
+  "deleteAudio": "Supprimer l'audio ...",
+  "deleteAudioFromPlaylistAswell": "Supprimer l'audio de la playlist également ...",
   "deleteAudioFromPlaylistAswellWarning": "Supprimer l'audio \"{audioTitle}\" de la playlist Youtube \"{playlistTitle}\", sinon l'audio sera téléchargé à nouveau lors du prochain téléchargement de la playlist.",
   "warningDialogTitle": "AVERTISSEMENT",
   "updatedPlaylistUrlTitle": "L'URL de la playlist \"{title}\" a été mise à jour. La playlist peut être téléchargée avec sa nouvelle URL.",
@@ -453,5 +453,23 @@
   "dateFormat": "Format des dates ...",
   "dateFormatSelectionDialogTitle": "Sélectionnez le format de date de l'application",
   "commented": "Commenté",
-  "notCommented": "Non com."
+  "notCommented": "Non com.",
+  "deleteFilteredAudio": "Supprimer les audio filtrés ...",
+  "deleteFilteredAudioConfirmationTitle": "Supprimer les audio filtrés par le paramètre \"{sortFilterParmsName}\" dans la playlist \"{playlistTitle}\"",
+  "@deleteFilteredAudioConfirmationTitle": {
+    "description": "Confirmation title for deleting filtered audio",
+    "placeholders": {
+      "sortFilterParmsName": {},
+      "playlistTitle": {}
+    }
+  },
+  "deleteFilteredAudioConfirmation": "Nombre d'audio à supprimer: {deleteAudioNumber},\nTaille totale correspondante: {deleteAudioTotalFileSize},\nDurée totale correspondante: {deleteAudioTotalDuration}.",
+  "@deleteFilteredAudioConfirmation": {
+    "description": "Confirmation message for deleting filtered audio",
+    "placeholders": {
+      "deleteAudioNumber": {},
+      "deleteAudioTotalFileSize": {},
+      "deleteAudioTotalDuration": {}
+    }
+  }
 }

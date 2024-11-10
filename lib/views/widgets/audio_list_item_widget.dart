@@ -52,7 +52,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
     required bool isAudioCurrent,
     required this.warningMessageVM,
     required this.onPageChangedFunction,
-  })  : _isAudioCurrent = isAudioCurrent;
+  }) : _isAudioCurrent = isAudioCurrent;
 
   @override
   Widget build(BuildContext context) {
@@ -600,9 +600,9 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
     final int audioFileSize = audio.audioFileSize;
     final String audioFileSizeStr;
 
-    audioFileSizeStr = UiUtil.formatLargeIntValue(
+    audioFileSizeStr = UiUtil.formatLargeByteAmount(
       context: context,
-      value: audioFileSize,
+      bytes: audioFileSize,
     );
 
     final int audioDownloadSpeed = audio.audioDownloadSpeed;
@@ -611,9 +611,9 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
     if (audioDownloadSpeed.isInfinite) {
       audioDownloadSpeedStr = 'infinite o/sec';
     } else {
-      audioDownloadSpeedStr = '${UiUtil.formatLargeIntValue(
+      audioDownloadSpeedStr = '${UiUtil.formatLargeByteAmount(
         context: context,
-        value: audioDownloadSpeed,
+        bytes: audioDownloadSpeed,
       )}/sec';
     }
 

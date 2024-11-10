@@ -781,6 +781,55 @@ class PlaylistListVM extends ChangeNotifier {
         .toList();
   }
 
+  /// This method is called when the user executes the playlist menu 'Delete
+  /// Filtered Audio' after having selected (and defined) a named Sort/Filter
+  /// parameters. For example, it makes sense to define a filter only parameters
+  /// which select fully listened audio which are not commented. With this filter
+  /// parameters applied to the playlist, using the playlist menu 'Delete
+  /// Filtered Audio' deletes the audio files and removes the deletede audio from
+  /// the playlist playable audio list. The deleted audio remain in the playlist
+  /// downloaded audio list and so will not be redownloaded !
+  deleteSortFilteredPlaylistAudio() {
+    List<Audio> filteredAudioToDelete =
+        _sortedFilteredSelectedPlaylistsPlayableAudios!;
+
+    Playlist enclosingPlaylist = filteredAudioToDelete[0].enclosingPlaylist!;
+
+    enclosingPlaylist.removePlayableAudioLst(
+        playableAudioToRemoveLst: filteredAudioToDelete);
+
+    JsonDataService.saveToFile(
+      model: enclosingPlaylist,
+      path: enclosingPlaylist.getPlaylistDownloadFilePathName(),
+    );
+
+    notifyListeners();
+  }
+
+  /// Returned int list:
+  ///  [
+  ///    numberOfDeletedAudio,
+  ///    deletedAudioFileSizeBytes,
+  ///    deletedAudioDurationTenthSec,
+  ///  ]
+  List<int> getFilteredAudioQuantities() {
+    int numberOfDeletedAudio =
+        _sortedFilteredSelectedPlaylistsPlayableAudios!.length;
+    int deletedAudioFileSizeBytes = 0;
+    int deletedAudioDurationTenthSec = 0;
+
+    for (Audio audio in _sortedFilteredSelectedPlaylistsPlayableAudios!) {
+      deletedAudioFileSizeBytes += audio.audioFileSize;
+      deletedAudioDurationTenthSec += audio.audioDuration.inSeconds;
+    }
+
+    return [
+      numberOfDeletedAudio,
+      deletedAudioFileSizeBytes,
+      deletedAudioDurationTenthSec,
+    ];
+  }
+
   /// Returns the selected playlist audio list. If the user clicked
   /// on a sort filter item in the sort filter dropdown button located
   /// in the playlist download view or if the user taped on the Apply

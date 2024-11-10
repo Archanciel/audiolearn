@@ -453,13 +453,13 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
         if (audioDownloadVM.isDownloading) {
           String downloadProgressPercent =
               '${(audioDownloadVM.downloadProgress * 100).toStringAsFixed(1)}%';
-          String downloadFileSize = UiUtil.formatLargeIntValue(
+          String downloadFileSize = UiUtil.formatLargeByteAmount(
             context: context,
-            value: audioDownloadVM.currentDownloadingAudio.audioFileSize,
+            bytes: audioDownloadVM.currentDownloadingAudio.audioFileSize,
           );
-          String downloadSpeed = '${UiUtil.formatLargeIntValue(
+          String downloadSpeed = '${UiUtil.formatLargeByteAmount(
             context: context,
-            value: audioDownloadVM.lastSecondDownloadSpeed,
+            bytes: audioDownloadVM.lastSecondDownloadSpeed,
           )}/sec';
           return Padding(
             padding: const EdgeInsets.all(16.0),

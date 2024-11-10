@@ -1378,4 +1378,18 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get notCommented => "Not c.";
+
+  @override
+  String get deleteFilteredAudio => "Delete Filtered Audio";
+
+  @override
+  String deleteFilteredAudioConfirmationTitle(
+    Object sortFilterParmsName,
+    Object playlistTitle,
+  ) =>
+      "Delete audio filtered by \"$sortFilterParmsName\" parameters from playlist \"$playlistTitle\"";
+
+  @override
+  String deleteFilteredAudioConfirmation(Object deleteAudioNumber, Object deleteAudioTotalFileSize, Object deleteAudioTotalDuration,) =>
+      "Audio to delete number: $deleteAudioNumber Corresponding total file size: $deleteAudioTotalFileSize Corresponding total duration: $deleteAudioTotalDuration.";
 }

@@ -165,9 +165,9 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
                 context: context,
                 label: AppLocalizations.of(context)!
                     .playlistPlayableAudioTotalSizeLabel,
-                value: UiUtil.formatLargeIntValue(
+                value: UiUtil.formatLargeByteAmount(
                   context: context,
-                  value: playlist.getPlayableAudioLstTotalFileSize(),
+                  bytes: playlist.getPlayableAudioLstTotalFileSize(),
                 ),
               ),
               createInfoRowFunction(
@@ -182,9 +182,9 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
               createInfoRowFunction(
                 context: context,
                 label: AppLocalizations.of(context)!.playlistJsonFileSizeLabel,
-                value: UiUtil.formatLargeIntValue(
+                value: UiUtil.formatLargeByteAmount(
                   context: context,
-                  value: playlistJsonFileSize,
+                  bytes: playlistJsonFileSize,
                 ),
               ),
             ],

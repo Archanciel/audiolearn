@@ -413,6 +413,17 @@ class Playlist {
     _removeAudioFromPlayableAudioList(playableAudio);
   }
 
+  /// Method called when physically deleting the audio file
+  /// from the device.
+  void removePlayableAudioLst
+      ({
+    required List<Audio> playableAudioToRemoveLst,
+  }) {
+    for (Audio playableAudio in playableAudioToRemoveLst) {
+      _removeAudioFromPlayableAudioList(playableAudio);
+    }
+  }
+
   @override
   String toString() {
     return '$title isSelected: $isSelected';

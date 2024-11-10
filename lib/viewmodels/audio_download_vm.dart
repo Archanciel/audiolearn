@@ -1342,7 +1342,7 @@ class AudioDownloadVM extends ChangeNotifier {
   /// {existingAudioFilesNotRedownloadedCount} is the number of audio files
   /// which were not redownloaded since they already exist in the target
   /// playlist directory.
-  /// 
+  ///
   /// The way to create a text file containing the video urls obtained from
   /// a Youtube location (not a Youtube playlist) is to execute the following
   /// ChatGPT app: chatgpt_list_video_uploaded.dart.
@@ -1533,10 +1533,43 @@ class AudioDownloadVM extends ChangeNotifier {
 
     // since the audio mp3 file has been deleted, the audio is no
     // longer in the playlist playable audio list
-    audio.enclosingPlaylist!.removePlayableAudio(
+    Playlist enclosingPlaylist = audio.enclosingPlaylist!;
+    
+    enclosingPlaylist.removePlayableAudio(
       playableAudio: audio,
     );
+
+    JsonDataService.saveToFile(
+      model: enclosingPlaylist,
+      path: enclosingPlaylist.getPlaylistDownloadFilePathName(),
+    );
   }
+
+  /// Physically deletes the audio files of the audio contained in the passed
+  /// Audio list from the audio playlist directory and removes the Audio from
+  /// the playlist playable audio list.
+  ///
+  /// The playlist json file is of course updated.
+  void deleteAudioListPhysicallyAndFromPlayableAudioListOnly({
+    required List<Audio> audioToDeleteLst,
+  }) {
+    for (Audio audio in audioToDeleteLst) {
+      DirUtil.deleteFileIfExist(pathFileName: audio.filePathName);
+    }
+
+    // since the audio mp3 files has been deleted, the audio are no
+    // longer in the playlist playable audio list
+    Playlist enclosingPlaylist = audioToDeleteLst[0].enclosingPlaylist!;
+    
+    enclosingPlaylist.removePlayableAudioLst(
+      playableAudioToRemoveLst: audioToDeleteLst,
+    );
+  
+    JsonDataService.saveToFile(
+      model: enclosingPlaylist,
+      path: enclosingPlaylist.getPlaylistDownloadFilePathName(),
+    );
+}
 
   /// User selected the audio menu item "Delete audio from
   /// playlist aswell". This method physically deletes the audio
