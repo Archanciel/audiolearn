@@ -64,8 +64,8 @@
   "openYoutubePlaylist": "Open Youtube Playlist",
   "apply": "Apply",
   "cancelButton": "Cancel",
-  "deleteAudio": "Delete Audio",
-  "deleteAudioFromPlaylistAswell": "Delete Audio from Playlist as well",
+  "deleteAudio": "Delete Audio ...",
+  "deleteAudioFromPlaylistAswell": "Delete Audio from Playlist as well ...",
   "deleteAudioFromPlaylistAswellWarning": "If the deleted audio video \"{audioTitle}\" remains in the \"{playlistTitle}\" Youtube playlist, it will be downloaded again the next time you download the playlist !",
   "warningDialogTitle": "WARNING",
   "updatedPlaylistUrlTitle": "Playlist \"{title}\" URL was updated. The playlist can be downloaded with its new URL.",
@@ -467,5 +467,23 @@
   "dateFormat": "Select Date Format ...",
   "dateFormatSelectionDialogTitle": "Select the application date format",
   "commented": "Commented",
-  "notCommented": "Not com."
+  "notCommented": "Not com.",
+  "deleteFilteredAudio": "Delete Filtered Audio ...",
+  "deleteFilteredAudioConfirmationTitle": "Delete audio filtered by \"{sortFilterParmsName}\" parms from playlist \"{playlistTitle}\"",
+  "@deleteFilteredAudioConfirmationTitle": {
+    "description": "Confirmation title for deleting filtered audio",
+    "placeholders": {
+      "sortFilterParmsName": {},
+      "playlistTitle": {}
+    }
+  },
+  "deleteFilteredAudioConfirmation": "Audio to delete number: {deleteAudioNumber},\nCorresponding total file size: {deleteAudioTotalFileSize},\nCorresponding total duration: {deleteAudioTotalDuration}.",
+  "@deleteFilteredAudioConfirmation": {
+    "description": "Confirmation message for deleting filtered audio",
+    "placeholders": {
+      "deleteAudioNumber": {},
+      "deleteAudioTotalFileSize": {},
+      "deleteAudioTotalDuration": {}
+    }
+  }
 }

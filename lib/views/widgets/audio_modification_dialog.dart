@@ -223,7 +223,7 @@ class _AudioModificationDialogState extends State<AudioModificationDialog>
           AppLocalizations.of(context)!.infiniteBytesPerSecond;
     } else {
       audioDownloadSpeedStr =
-          '${UiUtil.formatLargeIntValue(context: context, value: audioDownloadSpeed)}/sec';
+          '${UiUtil.formatLargeByteAmount(context: context, bytes: audioDownloadSpeed)}/sec';
     }
 
     return audioDownloadSpeedStr;

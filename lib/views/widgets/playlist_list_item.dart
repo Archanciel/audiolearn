@@ -1,5 +1,6 @@
 import 'package:audiolearn/constants.dart';
 import 'package:audiolearn/utils/dir_util.dart';
+import 'package:audiolearn/utils/ui_util.dart';
 import 'package:audiolearn/viewmodels/audio_download_vm.dart';
 import 'package:audiolearn/viewmodels/audio_player_vm.dart';
 import 'package:file_picker/file_picker.dart';
@@ -11,6 +12,7 @@ import 'package:provider/provider.dart';
 import '../../models/help_item.dart';
 import '../../models/playlist.dart';
 import '../../services/settings_data_service.dart';
+import '../../utils/date_time_util.dart';
 import '../../viewmodels/playlist_list_vm.dart';
 import '../../viewmodels/warning_message_vm.dart';
 import '../screen_mixin.dart';
@@ -31,6 +33,7 @@ enum PlaylistPopupMenuAction {
   //                               deleted from the app dir
   rewindAudioToStart,
   setPlaylistAudioPlaySpeed,
+  deleteFilteredAudio,
   deletePlaylist,
 }
 
@@ -169,6 +172,12 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                       child:
                           Text(AppLocalizations.of(context)!.setAudioPlaySpeed),
                     ),
+                  ),
+                  PopupMenuItem<PlaylistPopupMenuAction>(
+                    key: const Key('popup_menu_delete_filtered_audio'),
+                    value: PlaylistPopupMenuAction.deleteFilteredAudio,
+                    child:
+                        Text(AppLocalizations.of(context)!.deleteFilteredAudio),
                   ),
                   PopupMenuItem<PlaylistPopupMenuAction>(
                     key: const Key('popup_menu_delete_playlist'),
@@ -345,6 +354,44 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                         }
                       });
                       break;
+                    case PlaylistPopupMenuAction.deleteFilteredAudio:
+                      List<int> deletedAudioNumberLst =
+                          playlistListVM.getFilteredAudioQuantities();
+                      showDialog<void>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return ConfirmActionDialog(
+                            actionFunction: deleteFilteredAudio,
+                            actionFunctionArgs: [
+                              playlistListVM,
+                            ],
+                            dialogTitle: AppLocalizations.of(context)!
+                                .deleteFilteredAudioConfirmationTitle(
+                              playlistListVM
+                                  .getSelectedPlaylistAudioSortFilterParmsName(
+                                      audioLearnAppViewType:
+                                          AudioLearnAppViewType
+                                              .playlistDownloadView,
+                                      translatedAppliedSortFilterParmsName:
+                                          AppLocalizations.of(context)!
+                                              .sortFilterParametersAppliedName),
+                              playlistListVM.getSelectedPlaylists()[0].title,
+                            ),
+                            dialogContent: AppLocalizations.of(context)!
+                                .deleteFilteredAudioConfirmation(
+                              deletedAudioNumberLst[0], // total audio number
+                              UiUtil.formatLargeByteAmount(
+                                context: context,
+                                bytes: deletedAudioNumberLst[1],
+                              ), // total audio file size
+                              DateTimeUtil.formatSecondsToHHMMSS(
+                                seconds: deletedAudioNumberLst[2],
+                              ), // total audio duration
+                            ),
+                          );
+                        },
+                      );
+                      break;
                     case PlaylistPopupMenuAction.deletePlaylist:
                       showDialog<void>(
                         context: context,
@@ -414,6 +461,16 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
           targetPlaylistTitle: playlist.title,
           existingAudioNumber: existingAudioFilesNotRedownloadedCount);
     }
+  }
+
+  /// Public method passed as parameter to the ActionConfirmDialog
+  /// which, in this case, asks the user to confirm the deletion of
+  /// filtered audio from the playlist. This method is called when the
+  /// user clicks on the 'Confirm' button.
+  void deleteFilteredAudio(
+    PlaylistListVM playlistListVM,
+  ) {
+    playlistListVM.deleteSortFilteredPlaylistAudio();
   }
 
   /// Public method passed as parameter to the ActionConfirmDialog
