@@ -1342,6 +1342,10 @@ class AudioDownloadVM extends ChangeNotifier {
   /// {existingAudioFilesNotRedownloadedCount} is the number of audio files
   /// which were not redownloaded since they already exist in the target
   /// playlist directory.
+  /// 
+  /// The way to create a text file containing the video urls obtained from
+  /// a Youtube location (not a Youtube playlist) is to execute the following
+  /// ChatGPT app: chatgpt_list_video_uploaded.dart.
   Future<int> downloadAudioFromVideoUrlsToPlaylist({
     required Playlist targetPlaylist,
     required List<String> videoUrls,
