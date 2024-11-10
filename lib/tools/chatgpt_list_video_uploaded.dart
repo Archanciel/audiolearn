@@ -7,6 +7,7 @@ import 'package:window_size/window_size.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../constants.dart';
 
+// How to get the channel id is documented in Evernote !
 void main() {
   setWindowsAppSizeAndPosition(isTest: true);
   runApp(const MyApp());
