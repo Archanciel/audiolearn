@@ -793,14 +793,8 @@ class PlaylistListVM extends ChangeNotifier {
     List<Audio> filteredAudioToDelete =
         _sortedFilteredSelectedPlaylistsPlayableAudios!;
 
-    Playlist enclosingPlaylist = filteredAudioToDelete[0].enclosingPlaylist!;
-
-    enclosingPlaylist.removePlayableAudioLst(
-        playableAudioToRemoveLst: filteredAudioToDelete);
-
-    JsonDataService.saveToFile(
-      model: enclosingPlaylist,
-      path: enclosingPlaylist.getPlaylistDownloadFilePathName(),
+    _audioDownloadVM.deleteAudioListPhysicallyAndFromPlayableAudioListOnly(
+      audioToDeleteLst: filteredAudioToDelete,
     );
 
     notifyListeners();
