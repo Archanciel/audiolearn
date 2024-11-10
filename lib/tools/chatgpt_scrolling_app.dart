@@ -5,6 +5,46 @@ import 'package:window_size/window_size.dart';
 
 import '../constants.dart';
 
+// https://chatgpt.com/share/67304f80-ce4c-8004-85d2-4d090d195a31
+//
+// The value of const double itemHeight = 120.0; was an approximation based on
+// the assumed average height of each ListView item. This height includes the
+// combined height of the text content, padding, and any decorations (e.g., the
+// Card widget). Here's a breakdown of how it might have been estimated:
+
+// Breakdown of itemHeight Calculation
+// Text Height:
+
+// Each article consists of multiple lines of text.
+// The height of a single line of text can be calculated as:
+// dart
+// Copier le code
+// double lineHeight = fontSize * 1.2; // 1.2 is the typical line height multiplier
+// For example, with a font size of 16:
+// dart
+// Copier le code
+// double lineHeight = 16.0 * 1.2 = 19.2;
+// If most articles have an average of ~4 lines, the total text height would be:
+// dart
+// Copier le code
+// textHeight = lineHeight * 4 = 19.2 * 4 = 76.8;
+// Padding:
+
+// The Card widget and its inner Padding contribute additional height:
+// Outer Padding: const EdgeInsets.all(8.0) = 8 + 8 = 16
+// Inner Padding: const EdgeInsets.all(16.0) = 16 + 16 = 32
+// Total padding: 16 + 32 = 48
+// Total Estimated Height:
+
+// Adding the text height and padding:
+// dart
+// Copier le code
+// itemHeight = textHeight + totalPadding = 76.8 + 48 = ~125
+// Adjustment for Consistency:
+
+// For simplicity, the value was rounded down to 120.0, a common practice to
+// avoid overly specific constants.
+
 void main() {
   setWindowsAppSizeAndPosition(isTest: true);
   runApp(const MyApp());
@@ -61,11 +101,11 @@ class _ArticleListPageState extends State<ArticleListPage> {
       TextEditingController();
 
   late final List<String> articles = List.generate(
-    50,
+    400,
     (index) {
       final int numberOfLines = _getRandomLineCount();
-      final String lines = List.generate(numberOfLines, (i) => 'Line ${i + 1}')
-          .join('\n');
+      final String lines =
+          List.generate(numberOfLines, (i) => 'Line ${i + 1}').join('\n');
       return 'Article ${index + 1}:\n$lines';
     },
   );
@@ -87,7 +127,10 @@ class _ArticleListPageState extends State<ArticleListPage> {
 
   /// Compute the exact scroll offset for the desired index
   void _scrollToItem(int index) {
-    const double itemHeight = 120.0; // Approximate height per item
+    double itemHeight = 190.0; // Approximate height per item
+    if (index > 160) {
+      itemHeight = 192.93; // Approximate height per item
+    }
     _scrollController.animateTo(
       index * itemHeight,
       duration: const Duration(milliseconds: 500),
@@ -100,16 +143,14 @@ class _ArticleListPageState extends State<ArticleListPage> {
     final Random random = Random();
     final double probability = random.nextDouble();
 
-    if (probability < 0.5) {
-      return 1; // 50% chance for 1 line
-    } else if (probability < 0.75) {
-      return 2; // 25% chance for 2 lines
+    if (probability < 0.35) {
+      return 6; // 35% chance for 7 lines
+    } else if (probability < 0.7) {
+      return 5; // 35% chance for 6 lines
     } else if (probability < 0.9) {
-      return 3; // 15% chance for 3 lines
-    } else if (probability < 0.98) {
-      return 4; // 8% chance for 4 lines
+      return 4; // 20% chance for 5 lines
     } else {
-      return 5; // 2% chance for 5 lines
+      return 3; // 10% chance for 4 lines
     }
   }
 
