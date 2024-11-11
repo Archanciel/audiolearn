@@ -1824,16 +1824,42 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           ),
           Expanded(
             flex: 4, // controls the height ratio
-            child: Text(
-              key: const Key('selectedPlaylistTitleText'),
-              // using playlistListVM with listen:True guaranties
-              // that the selected playlist title is updated when
-              // the selected playlist changes
-              playlistListVMlistenTrue.uniqueSelectedPlaylist?.title ?? '',
-              style: const TextStyle(
-                fontSize: 12,
-              ),
-              maxLines: 1,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  key: const Key('selectedPlaylistTitleText'),
+                  // using playlistListVM with listen:True guaranties
+                  // that the selected playlist title is updated when
+                  // the selected playlist changes
+                  playlistListVMlistenTrue.uniqueSelectedPlaylist?.title ?? '',
+                  style: const TextStyle(
+                    fontSize: 12,
+                  ),
+                  maxLines: 1,
+                ),
+                SizedBox(
+                  width: kRowNormalWidthSeparator,
+                ),
+                Text(
+                  key: const Key('selectedPlaylistSFparmNameText'),
+                  // using playlistListVM with listen:True guaranties
+                  // that the selected playlist title is updated when
+                  // the selected playlist changes
+                  playlistListVMlistenTrue
+                      .getSelectedPlaylistAudioSortFilterParmsName(
+                    audioLearnAppViewType:
+                        AudioLearnAppViewType.playlistDownloadView,
+                    translatedAppliedSortFilterParmsName:
+                        AppLocalizations.of(context)!
+                            .sortFilterParametersAppliedName,
+                  ),
+                  style: const TextStyle(
+                    fontSize: 12,
+                  ),
+                  maxLines: 1,
+                ),
+              ],
             ),
           ),
         ],

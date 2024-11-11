@@ -88,6 +88,7 @@ const String kGoogleApiKey = 'AIzaSyDhywmh5EKopsNsaszzMkLJ719aQa2NHBw';
 const bool kIsWeb = bool.fromEnvironment('dart.library.js_util');
 
 const double kRowSmallWidthSeparator = 3.0;
+const double kRowNormalWidthSeparator = 10.0;
 const double kRowButtonGroupWidthSeparator = 30.0;
 const double kUpDownButtonSize = 50.0;
 const double kGreaterButtonWidth = 65.0;
