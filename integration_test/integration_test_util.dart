@@ -750,6 +750,11 @@ class IntegrationTestUtil {
         title,
       );
     }
+
+    // If the list is empty, check that no ListTile is present
+    if (audioOrPlaylistTitlesOrderedLst.isEmpty) {
+      expect(tester.widgetList(listTilesFinder).length, 0);
+    }
   }
 
   static void checkAudioSubTitlesOrderInListTile({
