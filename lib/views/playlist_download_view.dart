@@ -1780,6 +1780,22 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     required BuildContext context,
     required PlaylistListVM playlistListVMlistenTrue,
   }) {
+    String selectedPlaylistAudioSortFilterParmsName;
+
+    if (playlistListVMlistenTrue.isPlaylistListExpanded) {
+      selectedPlaylistAudioSortFilterParmsName =
+          playlistListVMlistenTrue.getSelectedPlaylistAudioSortFilterParmsName(
+        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+        translatedAppliedSortFilterParmsName:
+            AppLocalizations.of(context)!.sortFilterParametersAppliedName,
+      );
+
+      if (selectedPlaylistAudioSortFilterParmsName.isEmpty)
+        selectedPlaylistAudioSortFilterParmsName =
+            AppLocalizations.of(context)!.sortFilterParametersDefaultName;
+    } else {
+      selectedPlaylistAudioSortFilterParmsName = '';
+    }
     return Expanded(
       // necessary to avoid Exception
       child: Column(
@@ -1846,14 +1862,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                   // using playlistListVM with listen:True guaranties
                   // that the selected playlist title is updated when
                   // the selected playlist changes
-                  playlistListVMlistenTrue
-                      .getSelectedPlaylistAudioSortFilterParmsName(
-                    audioLearnAppViewType:
-                        AudioLearnAppViewType.playlistDownloadView,
-                    translatedAppliedSortFilterParmsName:
-                        AppLocalizations.of(context)!
-                            .sortFilterParametersAppliedName,
-                  ),
+                  selectedPlaylistAudioSortFilterParmsName,
                   style: const TextStyle(
                     fontSize: 12,
                   ),
