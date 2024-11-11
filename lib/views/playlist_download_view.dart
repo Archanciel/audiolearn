@@ -1790,9 +1790,10 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             AppLocalizations.of(context)!.sortFilterParametersAppliedName,
       );
 
-      if (selectedPlaylistAudioSortFilterParmsName.isEmpty)
+      if (selectedPlaylistAudioSortFilterParmsName.isEmpty) {
         selectedPlaylistAudioSortFilterParmsName =
             AppLocalizations.of(context)!.sortFilterParametersDefaultName;
+      }
     } else {
       selectedPlaylistAudioSortFilterParmsName = '';
     }

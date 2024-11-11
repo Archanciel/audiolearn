@@ -19521,6 +19521,169 @@ void main() {
       });
     });
   });
+  group('Delete filtered audio from playlist test', () {
+    testWidgets(
+        '''Select a filter SF parms and apply it. Then, click on the 'Delete
+           Filtered Audio' playlist menu and verify the audio suppression.''', (tester) async {
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'delete_filtered_audio_test',
+        tapOnPlaylistToggleButton: true,
+      );
+
+      const String youtubePlaylistTitle = 'S8 audio';
+
+      List<String> audioTitles = [
+        "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+        "La surpopulation mondiale par Jancovici et Barrau",
+        "La résilience insulaire par Fiona Roche",
+        "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+        "Les besoins artificiels par R.Keucheyan",
+        "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+      ];
+
+      // Verify the displayed audio list before selecting the 'listenedNoCom'.
+      // Sort/Filter parm.
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: audioTitles,
+      );
+
+      String sortFilterParmName = 'listenedNoCom';
+
+      // Now tap on the current dropdown button item to open the dropdown
+      // button items list
+
+      final Finder dropDownButtonFinder =
+          find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+      final Finder dropDownButtonTextFinder = find.descendant(
+        of: dropDownButtonFinder,
+        matching: find.byType(Text),
+      );
+
+      await tester.tap(dropDownButtonTextFinder);
+      await tester.pumpAndSettle();
+
+      // And find the 'listenedNoCom' sort/filter item
+      final Finder titleAscDropDownTextFinder =
+          find.text(sortFilterParmName).last;
+      await tester.tap(titleAscDropDownTextFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the audioTitles selected by applying the
+      // 'listenedNoCom' sort/filter parms
+      audioTitles = [
+        "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+        "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+      ];
+
+      // Verify the displayed audio list before selecting the 'listenedNoCom'.
+      // Sort/Filter parms.
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: audioTitles,
+      );
+
+      // Tap the 'Toggle List' button to show the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Verify that the applyed Sort/Filter parms name is displayed
+      // after the selected playlist title
+
+      Text selectedSortFilterParmsName = tester
+          .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
+
+      expect(
+        selectedSortFilterParmsName.data,
+        sortFilterParmName,
+      );
+
+      // Now test deleting the filtered audio
+
+      // Open the delete filtered audio dialog by clicking on the 'Delete
+      // Filtered Audio ...' playlist menu item
+
+      // Now find the leading menu icon button of the Playlist ListTile
+      // and tap on it
+
+      // First, find the Youtube playlist ListTile Text widget
+      final Finder youtubePlaylistListTileTextWidgetFinder =
+          find.text(youtubePlaylistTitle);
+
+      // Then obtain the Youtube source playlist ListTile widget
+      // enclosing the Text widget by finding its ancestor
+      final Finder youtubePlaylistListTileWidgetFinder = find.ancestor(
+        of: youtubePlaylistListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      final Finder firstPlaylistListTileLeadingMenuIconButton = find.descendant(
+        of: youtubePlaylistListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(firstPlaylistListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the delete playlist popup menu item and tap on it
+      final Finder popupDeletePlaylistMenuItem =
+          find.byKey(const Key("popup_menu_delete_filtered_audio"));
+
+      await tester.tap(popupDeletePlaylistMenuItem);
+      await tester.pumpAndSettle();
+
+      // Now verifying the confirm dialog message
+
+      final Text deleteFilteredAudioConfirmDialogTitleWidget =
+          tester.widget<Text>(find.byKey(const Key('confirmDialogTitleKey')));
+
+      expect(deleteFilteredAudioConfirmDialogTitleWidget.data,
+          'Delete audio filtered by "$sortFilterParmName" parms from playlist "$youtubePlaylistTitle"');
+
+      // Now verifying the confirm warning dialog message
+
+      final Text deleteFilteredAudioConfirmDialogMessageTextWidget =
+          tester.widget<Text>(find.byKey(const Key('confirmationDialogMessageKey')));
+
+      expect(deleteFilteredAudioConfirmDialogMessageTextWidget.data,
+          'Audio to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.');
+
+      // Now find the confirm button of the delete filtered audio confirm
+      // dialog and tap on it
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pumpAndSettle();
+
+      // Tap the 'Toggle List' button to hide the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Verify the audioTitles content by applying the 'listenedNoCom'
+      // sort/filter parms. Since they have been deleted, the list is
+      // empty.
+      audioTitles = [
+      ];
+
+      // Verify the displayed audio list before selecting the 'listenedNoCom'.
+      // Sort/Filter parms.
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: audioTitles,
+      );
+
+
+
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+  });
 }
 
 /// This code is used in integation tests for two purposes:

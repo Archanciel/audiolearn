@@ -360,13 +360,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                       showDialog<void>(
                         context: context,
                         builder: (BuildContext context) {
-                          return ConfirmActionDialog(
-                            actionFunction: deleteFilteredAudio,
-                            actionFunctionArgs: [
-                              playlistListVM,
-                            ],
-                            dialogTitle: AppLocalizations.of(context)!
-                                .deleteFilteredAudioConfirmationTitle(
+                          String selectedPlaylistAudioSortFilterParmsName =
                               playlistListVM
                                   .getSelectedPlaylistAudioSortFilterParmsName(
                                       audioLearnAppViewType:
@@ -374,7 +368,21 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                                               .playlistDownloadView,
                                       translatedAppliedSortFilterParmsName:
                                           AppLocalizations.of(context)!
-                                              .sortFilterParametersAppliedName),
+                                              .sortFilterParametersAppliedName);
+                          if (selectedPlaylistAudioSortFilterParmsName
+                              .isEmpty) {
+                            selectedPlaylistAudioSortFilterParmsName =
+                                AppLocalizations.of(context)!
+                                    .sortFilterParametersDefaultName;
+                          }
+                          return ConfirmActionDialog(
+                            actionFunction: deleteFilteredAudio,
+                            actionFunctionArgs: [
+                              playlistListVM,
+                            ],
+                            dialogTitle: AppLocalizations.of(context)!
+                                .deleteFilteredAudioConfirmationTitle(
+                              selectedPlaylistAudioSortFilterParmsName,
                               playlistListVM.getSelectedPlaylists()[0].title,
                             ),
                             dialogContent: AppLocalizations.of(context)!
