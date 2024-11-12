@@ -359,10 +359,17 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
           case AudioPopupMenuAction.deleteAudioFromPlaylistAswell:
             Audio audioToDelete = audioPlayerVMlistenFalse.currentAudio!;
             Audio? nextAudio;
+            final PlaylistListVM playlistListVMlistenFalse =
+                Provider.of<PlaylistListVM>(
+              context,
+              listen: false,
+            );
 
-            List<Comment> audioToDeleteCommentLst =
-                Provider.of<CommentVM>(context, listen: false)
-                    .loadAudioComments(audio: audioToDelete);
+            final List<Comment> audioToDeleteCommentLst =
+                playlistListVMlistenFalse.getAudioComments(
+              audio: audioToDelete,
+            );
+
             if (audioToDeleteCommentLst.isNotEmpty) {
               // await must be applied to showDialog() so that the nextAudio
               // variable is assigned according to the result returned by the
@@ -370,13 +377,17 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
               // called before the dialog is closed and the nextAudio variable
               // will be null, which will result in the audio title displayed
               // in the audio player view to be "No selected audio" !
+              //
+              // If the audio has comments, the ConfirmActionDialog is
+              // displayed. Otherwise, the audio is deleted from the
+              // playlist download and playable audio list.
               await showDialog<dynamic>(
                 context: context,
                 builder: (BuildContext context) {
                   return ConfirmActionDialog(
-                    actionFunction: deleteAudioFromPlaylistAswell,
+                    actionFunction: deleteAudioFromPlaylistAsWell,
                     actionFunctionArgs: [
-                      context,
+                      playlistListVMlistenFalse,
                       audioToDelete,
                     ],
                     dialogTitle: _createDeleteAudioDialogTitle(
@@ -400,7 +411,7 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
               nextAudio = Provider.of<PlaylistListVM>(
                 context,
                 listen: false,
-              ).deleteAudioFromPlaylistAswell(
+              ).deleteAudioFromPlaylistAsWell(
                 audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
                 audio: audioToDelete,
               );
@@ -437,15 +448,12 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
   /// when the Confirm button is pressed. The method deletes the audio
   /// file and its comments as well as the audio reference in the playlist
   /// json file.
-  Audio? deleteAudioFromPlaylistAswell(
-    BuildContext context,
+  Audio? deleteAudioFromPlaylistAsWell(
+    PlaylistListVM playlistListVMlistenFalse,
     Audio audio,
   ) {
-    return Provider.of<PlaylistListVM>(
-      context,
-      listen: false,
-    ).deleteAudioFromPlaylistAswell(
-      audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
+    return playlistListVMlistenFalse.deleteAudioFromPlaylistAsWell(
+      audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       audio: audio,
     );
   }

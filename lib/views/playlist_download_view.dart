@@ -883,7 +883,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             onChanged: (value) {
               _selectedSortFilterParametersName = value;
               _updatePlaylistSortedFilteredAudioList(
-                  playlistListVMlistenTrue: playlistListVMlistenFalse);
+                  playlistListVMlistenTrue: playlistListVMlistenTrue);
             },
             hint: Text(
               sortFilterDefaultMenuItemNameCorrespondingToLanguage,
