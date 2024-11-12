@@ -1778,47 +1778,40 @@ void main() {
         true,
       );
       expect(playlist.downloadedAudioLst.length, 18);
+
+      List<String> list = playlist.downloadedAudioLst
+          .map((Audio audio) => audio.validVideoTitle)
+          .toList();
+
       expect(
-        playlist.downloadedAudioLst
-            .map((Audio audio) => audio.validVideoTitle)
-            .toList()
-            .contains(audioToDeleteOneTitle),
+        list.contains(audioToDeleteOneTitle),
         true,
       );
       expect(
-        playlist.downloadedAudioLst
-            .map((Audio audio) => audio.validVideoTitle)
-            .toList()
-            .contains(audioToDeleteTwoTitle),
+        list.contains(audioToDeleteTwoTitle),
         true,
       );
       expect(
-        playlist.downloadedAudioLst
-            .map((Audio audio) => audio.validVideoTitle)
-            .toList()
-            .contains(audioToDeleteThreeTitle),
+        list.contains(audioToDeleteThreeTitle),
         true,
       );
+
       expect(playlist.playableAudioLst.length, 7);
+
+      list = playlist.playableAudioLst
+          .map((Audio audio) => audio.validVideoTitle)
+          .toList();
+
       expect(
-        playlist.playableAudioLst
-            .map((Audio audio) => audio.validVideoTitle)
-            .toList()
-            .contains(audioToDeleteOneTitle),
+        list.contains(audioToDeleteOneTitle),
         true,
       );
       expect(
-        playlist.playableAudioLst
-            .map((Audio audio) => audio.validVideoTitle)
-            .toList()
-            .contains(audioToDeleteTwoTitle),
+        list.contains(audioToDeleteTwoTitle),
         true,
       );
       expect(
-        playlist.playableAudioLst
-            .map((Audio audio) => audio.validVideoTitle)
-            .toList()
-            .contains(audioToDeleteThreeTitle),
+        list.contains(audioToDeleteThreeTitle),
         true,
       );
 
@@ -1859,47 +1852,38 @@ void main() {
       Playlist loadedPlaylist = loadPlaylist(playlist.title);
 
       expect(loadedPlaylist.downloadedAudioLst.length, 18);
+
+      list = loadedPlaylist.downloadedAudioLst
+          .map((Audio audio) => audio.validVideoTitle)
+          .toList();
       expect(
-        playlist.downloadedAudioLst
-            .map((Audio audio) => audio.validVideoTitle)
-            .toList()
-            .contains(audioToDeleteOneTitle),
+        list.contains(audioToDeleteOneTitle),
         true,
       );
       expect(
-        playlist.downloadedAudioLst
-            .map((Audio audio) => audio.validVideoTitle)
-            .toList()
-            .contains(audioToDeleteTwoTitle),
+        list.contains(audioToDeleteTwoTitle),
         true,
       );
       expect(
-        playlist.downloadedAudioLst
-            .map((Audio audio) => audio.validVideoTitle)
-            .toList()
-            .contains(audioToDeleteThreeTitle),
+        list.contains(audioToDeleteThreeTitle),
         true,
       );
       expect(loadedPlaylist.playableAudioLst.length, 4);
+
+      list = loadedPlaylist.playableAudioLst
+          .map((Audio audio) => audio.validVideoTitle)
+          .toList();
+
       expect(
-        loadedPlaylist.playableAudioLst
-            .map((Audio audio) => audio.validVideoTitle)
-            .toList()
-            .contains(audioToDeleteOneTitle),
+        list.contains(audioToDeleteOneTitle),
         false,
       );
       expect(
-        loadedPlaylist.playableAudioLst
-            .map((Audio audio) => audio.validVideoTitle)
-            .toList()
-            .contains(audioToDeleteTwoTitle),
+        list.contains(audioToDeleteTwoTitle),
         false,
       );
       expect(
-        loadedPlaylist.playableAudioLst
-            .map((Audio audio) => audio.validVideoTitle)
-            .toList()
-            .contains(audioToDeleteThreeTitle),
+        list.contains(audioToDeleteThreeTitle),
         false,
       );
 
