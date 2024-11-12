@@ -19535,7 +19535,7 @@ void main() {
 
       const String youtubePlaylistTitle = 'S8 audio';
 
-      List<String> audioTitleToDeleteLst = [
+      List<String> audioTitleBeforeDeletionLst = [
         "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
         "La surpopulation mondiale par Jancovici et Barrau",
         "La résilience insulaire par Fiona Roche",
@@ -19549,7 +19549,7 @@ void main() {
       // Sort/Filter parm.
       IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
         tester: tester,
-        audioOrPlaylistTitlesOrderedLst: audioTitleToDeleteLst,
+        audioOrPlaylistTitlesOrderedLst: audioTitleBeforeDeletionLst,
       );
 
       String sortFilterParmName = 'listenedNoCom';
@@ -19568,24 +19568,24 @@ void main() {
       await tester.tap(dropDownButtonTextFinder);
       await tester.pumpAndSettle();
 
-      // And find the 'listenedNoCom' sort/filter item
+      // Find and tap on the 'listenedNoCom' sort/filter item
        Finder titleAscDropDownTextFinder =
           find.text(sortFilterParmName).last;
       await tester.tap(titleAscDropDownTextFinder);
       await tester.pumpAndSettle();
 
-      // Verify the audioTitles selected by applying the
-      // 'listenedNoCom' sort/filter parms
-      audioTitleToDeleteLst = [
+      // Verify the audioTitles selected by applying the 'listenedNoCom'
+      // sort/filter parms
+      List<String> audioTitleToDeleteBeforeDeletionLst = [
         "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
         "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
       ];
 
-      // Verify the displayed audio list before selecting the 'listenedNoCom'.
+      // Verify the displayed audio list after selecting the 'listenedNoCom'
       // Sort/Filter parms.
       IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
         tester: tester,
-        audioOrPlaylistTitlesOrderedLst: audioTitleToDeleteLst,
+        audioOrPlaylistTitlesOrderedLst: audioTitleToDeleteBeforeDeletionLst,
       );
 
       // Verify the presence of the audio files which will be deleted
@@ -19658,7 +19658,7 @@ void main() {
       await tester.tap(popupDeletePlaylistMenuItem);
       await tester.pumpAndSettle();
 
-      // Verifying the confirm dialog message
+      // Verifying the confirm dialog title
 
       final Text deleteFilteredAudioConfirmDialogTitleWidget =
           tester.widget<Text>(find.byKey(const Key('confirmDialogTitleKey')));
@@ -19666,7 +19666,7 @@ void main() {
       expect(deleteFilteredAudioConfirmDialogTitleWidget.data,
           'Delete audio filtered by "$sortFilterParmName" parms from playlist "$youtubePlaylistTitle"');
 
-      // Verifying the confirm warning dialog message
+      // Verifying the confirm dialog message
 
       final Text deleteFilteredAudioConfirmDialogMessageTextWidget = tester
           .widget<Text>(find.byKey(const Key('confirmationDialogMessageKey')));
@@ -19699,6 +19699,7 @@ void main() {
       List<String> remainingAudioFileNameLst = [
         "231226-094526-Ce qui va vraiment sauver notre espèce par Jancovici et Barrau 23-09-23.mp3",
         "231226-094534-3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher) 23-12-01.mp3",
+        "240107-094520-Les besoins artificiels par R.Keucheyan 24-01-05.mp3",
         "240107-094546-La résilience insulaire par Fiona Roche 24-01-03.mp3",
         "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.mp3",
       ];
@@ -19716,27 +19717,35 @@ void main() {
 
       expect(loadedPlaylist.downloadedAudioLst.length, 18);
 
-      List<String> list = loadedPlaylist.downloadedAudioLst
+      List<String> downloadedAudioLst = loadedPlaylist.downloadedAudioLst
           .map((Audio audio) => audio.validVideoTitle)
           .toList();
 
-      for (String audioTitleToDelete in audioTitleToDeleteLst) {
+      for (String audioTitleToDelete in audioTitleBeforeDeletionLst) {
         expect(
-          list.contains(audioTitleToDelete),
+          downloadedAudioLst.contains(audioTitleToDelete),
           true,
         );
       }
 
       expect(loadedPlaylist.playableAudioLst.length, 5);
 
-      list = loadedPlaylist.playableAudioLst
+      List<String> audioTitleAfterDeletionLst = [
+        "La surpopulation mondiale par Jancovici et Barrau",
+        "La résilience insulaire par Fiona Roche",
+        "Les besoins artificiels par R.Keucheyan",
+        "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+      ];
+
+      List<String> playableAudioLst = loadedPlaylist.playableAudioLst
           .map((Audio audio) => audio.validVideoTitle)
           .toList();
 
-      for (String audioTitleToDelete in audioTitleToDeleteLst) {
+      for (String audioTitleAfterDeletion in audioTitleAfterDeletionLst) {
         expect(
-          list.contains(audioTitleToDelete),
-          false,
+          playableAudioLst.contains(audioTitleAfterDeletion),
+          true,
         );
       }
 
@@ -19747,13 +19756,12 @@ void main() {
       // Verify the audioTitles content by applying the 'listenedNoCom'
       // sort/filter parms. Since they have been deleted, the list is
       // empty.
-      audioTitleToDeleteLst = [];
 
-      // Verify the displayed audio list before selecting the 'listenedNoCom'.
-      // Sort/Filter parms.
+      // Verify the empty displayed audio list before selecting the
+      // 'listenedNoCom' Sort/Filter parms.
       IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
         tester: tester,
-        audioOrPlaylistTitlesOrderedLst: audioTitleToDeleteLst,
+        audioOrPlaylistTitlesOrderedLst: [],
       );
 
       // Now tap on the current dropdown button item to open the dropdown
@@ -19770,7 +19778,7 @@ void main() {
       await tester.tap(dropDownButtonTextFinder);
       await tester.pumpAndSettle();
 
-      // And find the 'default' sort/filter item
+      // Find and tap on the 'default' sort/filter item
       titleAscDropDownTextFinder =
           find.text('default').last;
       await tester.tap(titleAscDropDownTextFinder);
@@ -19778,19 +19786,12 @@ void main() {
 
       // Verify the audioTitles selected by applying the 'default'
       // sort/filter parms after having deleted the filtered audio
-      audioTitleToDeleteLst = [
-        "La surpopulation mondiale par Jancovici et Barrau",
-        "La résilience insulaire par Fiona Roche",
-        "Les besoins artificiels par R.Keucheyan",
-        "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-        "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
-      ];
 
-      // Verify the displayed audio list before selecting the 'listenedNoCom'.
+      // Verify the displayed audio list after selecting the 'default'.
       // Sort/Filter parms.
       IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
         tester: tester,
-        audioOrPlaylistTitlesOrderedLst: audioTitleToDeleteLst,
+        audioOrPlaylistTitlesOrderedLst: audioTitleAfterDeletionLst,
       );
 
       // Purge the test playlist directory so that the created test

@@ -1534,7 +1534,7 @@ class AudioDownloadVM extends ChangeNotifier {
     // since the audio mp3 file has been deleted, the audio is no
     // longer in the playlist playable audio list
     Playlist enclosingPlaylist = audio.enclosingPlaylist!;
-    
+
     enclosingPlaylist.removePlayableAudio(
       playableAudio: audio,
     );
@@ -1550,7 +1550,7 @@ class AudioDownloadVM extends ChangeNotifier {
   /// the playlist playable audio list.
   ///
   /// The playlist json file is of course updated.
-  void deleteAudioListPhysicallyAndFromPlayableAudioListOnly({
+  void deleteAudioLstPhysicallyAndFromPlayableAudioLstOnly({
     required List<Audio> audioToDeleteLst,
   }) {
     for (Audio audio in audioToDeleteLst) {
@@ -1560,16 +1560,16 @@ class AudioDownloadVM extends ChangeNotifier {
     // since the audio mp3 files has been deleted, the audio are no
     // longer in the playlist playable audio list
     Playlist enclosingPlaylist = audioToDeleteLst[0].enclosingPlaylist!;
-    
+
     enclosingPlaylist.removePlayableAudioLst(
       playableAudioToRemoveLst: audioToDeleteLst,
     );
-  
+
     JsonDataService.saveToFile(
       model: enclosingPlaylist,
       path: enclosingPlaylist.getPlaylistDownloadFilePathName(),
     );
-}
+  }
 
   /// User selected the audio menu item "Delete audio from
   /// playlist aswell". This method physically deletes the audio

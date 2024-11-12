@@ -7,6 +7,7 @@ import 'package:path/path.dart' as path;
 
 import '../constants.dart';
 import '../models/audio.dart';
+import '../models/comment.dart';
 import '../models/playlist.dart';
 import '../services/audio_sort_filter_service.dart';
 import '../services/json_data_service.dart';
@@ -789,11 +790,11 @@ class PlaylistListVM extends ChangeNotifier {
   /// Filtered Audio' deletes the audio files and removes the deletede audio from
   /// the playlist playable audio list. The deleted audio remain in the playlist
   /// downloaded audio list and so will not be redownloaded !
-  deleteSortFilteredPlaylistAudio() {
+  void deleteSortFilteredPlaylistAudioLstPhysicallyAndFromPlayableAudioLst() {
     List<Audio> filteredAudioToDelete =
         _sortedFilteredSelectedPlaylistsPlayableAudios!;
 
-    _audioDownloadVM.deleteAudioListPhysicallyAndFromPlayableAudioListOnly(
+    _audioDownloadVM.deleteAudioLstPhysicallyAndFromPlayableAudioLstOnly(
       audioToDeleteLst: filteredAudioToDelete,
     );
 
@@ -1409,6 +1410,12 @@ class PlaylistListVM extends ChangeNotifier {
     }
   }
 
+  List<Comment> getAudioComments({
+    required Audio audio,
+  }) {
+    return _commentVM.loadAudioComments(audio: audio);
+  }
+
   /// Method called when the user clicks on the 'delete audio'
   /// menu item in the audio item menu button or in
   /// the audio player screen leading popup menu.
@@ -1469,7 +1476,7 @@ class PlaylistListVM extends ChangeNotifier {
   ///
   /// playableAudioLst order: [available audio last downloaded, ...,
   ///                          available audio first downloaded]
-  Audio? deleteAudioFromPlaylistAswell({
+  Audio? deleteAudioFromPlaylistAsWell({
     required AudioLearnAppViewType audioLearnAppViewType,
     required Audio audio,
   }) {
@@ -1507,6 +1514,7 @@ class PlaylistListVM extends ChangeNotifier {
       );
       _sortedFilteredSelectedPlaylistsPlayableAudios!
           .removeWhere((audioInList) => audioInList == audio);
+
       return nextAudio;
     }
 

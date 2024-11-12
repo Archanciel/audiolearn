@@ -90,6 +90,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
         onPressed: () {
           _buildAudioListItemMenu(
             context: context,
+            playlistListVMlistenFalse: playlistVMlistnedFalse,
             audio: audio,
           );
         },
@@ -135,6 +136,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
   /// when the user clicks on the audio item left menu icon.
   void _buildAudioListItemMenu({
     required BuildContext context,
+        required PlaylistListVM playlistListVMlistenFalse,
     required Audio audio,
   }) {
     final RenderBox listTileBox = context.findRenderObject() as RenderBox;
@@ -349,6 +351,9 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
             ).loadAudioComments(audio: audioToDelete);
 
             if (audioToDeleteCommentLst.isNotEmpty) {
+              // If the audio has comments, the ConfirmActionDialog is
+              // displayed. Otherwise, the audio is deleted from the
+              // playlist playable audio list.
               showDialog<dynamic>(
                 context: context,
                 builder: (BuildContext context) {
@@ -377,18 +382,23 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
           case AudioPopupMenuAction.deleteAudioFromPlaylistAswell:
             final Audio audioToDelete = audio;
             final List<Comment> audioToDeleteCommentLst =
-                Provider.of<CommentVM>(
-              context,
-              listen: false,
-            ).loadAudioComments(audio: audioToDelete);
+                playlistListVMlistenFalse.getAudioComments(
+              audio: audioToDelete,
+            );
 
             if (audioToDeleteCommentLst.isNotEmpty) {
+              // If the audio has comments, the ConfirmActionDialog is
+              // displayed. Otherwise, the audio is deleted from the
+              // playlist download and playable audio list.
               showDialog<dynamic>(
                 context: context,
                 builder: (BuildContext context) {
                   return ConfirmActionDialog(
-                    actionFunction: deleteAudioFromPlaylistAswell,
-                    actionFunctionArgs: [context, audioToDelete],
+                    actionFunction: deleteAudioFromPlaylistAsWell,
+                    actionFunctionArgs: [
+                      playlistListVMlistenFalse,
+                      audioToDelete
+                    ],
                     dialogTitle:
                         _createDeleteAudioDialogTitle(context, audioToDelete),
                     dialogContent: AppLocalizations.of(context)!
@@ -401,7 +411,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
               Provider.of<PlaylistListVM>(
                 context,
                 listen: false,
-              ).deleteAudioFromPlaylistAswell(
+              ).deleteAudioFromPlaylistAsWell(
                 audioLearnAppViewType:
                     AudioLearnAppViewType.playlistDownloadView,
                 audio: audioToDelete,
@@ -435,14 +445,11 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
   /// when the Confirm button is pressed. The method deletes the audio
   /// file and its comments as well as the audio reference in the playlist
   /// json file.
-  Audio? deleteAudioFromPlaylistAswell(
-    BuildContext context,
+  Audio? deleteAudioFromPlaylistAsWell(
+    PlaylistListVM playlistListVMlistenFalse,
     Audio audio,
   ) {
-    return Provider.of<PlaylistListVM>(
-      context,
-      listen: false,
-    ).deleteAudioFromPlaylistAswell(
+    return playlistListVMlistenFalse.deleteAudioFromPlaylistAsWell(
       audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       audio: audio,
     );

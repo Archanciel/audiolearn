@@ -1822,7 +1822,7 @@ void main() {
       ];
 
       // Delete the audio physically and from the playlist playable audio list
-      audioDownloadVM.deleteAudioListPhysicallyAndFromPlayableAudioListOnly(
+      audioDownloadVM.deleteAudioLstPhysicallyAndFromPlayableAudioLstOnly(
         audioToDeleteLst: audioToDeleteLst,
       );
 

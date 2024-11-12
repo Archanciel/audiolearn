@@ -478,7 +478,8 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
   void deleteFilteredAudio(
     PlaylistListVM playlistListVM,
   ) {
-    playlistListVM.deleteSortFilteredPlaylistAudio();
+    playlistListVM
+        .deleteSortFilteredPlaylistAudioLstPhysicallyAndFromPlayableAudioLst();
   }
 
   /// Public method passed as parameter to the ActionConfirmDialog
