@@ -136,7 +136,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
   /// when the user clicks on the audio item left menu icon.
   void _buildAudioListItemMenu({
     required BuildContext context,
-        required PlaylistListVM playlistListVMlistenFalse,
+    required PlaylistListVM playlistListVMlistenFalse,
     required Audio audio,
   }) {
     final RenderBox listTileBox = context.findRenderObject() as RenderBox;
@@ -344,17 +344,24 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
             break;
           case AudioPopupMenuAction.deleteAudio:
             final Audio audioToDelete = audio;
+            Audio? nextAudio;
+
             final List<Comment> audioToDeleteCommentLst =
-                Provider.of<CommentVM>(
-              context,
-              listen: false,
-            ).loadAudioComments(audio: audioToDelete);
+                playlistListVMlistenFalse.getAudioComments(
+              audio: audioToDelete,
+            );
 
             if (audioToDeleteCommentLst.isNotEmpty) {
               // If the audio has comments, the ConfirmActionDialog is
               // displayed. Otherwise, the audio is deleted from the
               // playlist playable audio list.
-              showDialog<dynamic>(
+              //
+              // Await must be applied to showDialog() so that the nextAudio
+              // variable is assigned according to the result returned by the
+              // dialog. Otherwise, _replaceCurrentAudioByNextAudio() will be
+              // called before the dialog is closed and the nextAudio variable
+              // will remains null.
+              await showDialog<dynamic>(
                 context: context,
                 builder: (BuildContext context) {
                   return ConfirmActionDialog(
@@ -367,20 +374,29 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
                             audioToDeleteCommentLst.length),
                   );
                 },
-              );
+              ).then((result) {
+                if (result == ConfirmAction.cancel) {
+                  nextAudio = audioToDelete;
+                } else {
+                  nextAudio = result as Audio?;
+                }
+              });
             } else {
-              Provider.of<PlaylistListVM>(
-                context,
-                listen: false,
-              ).deleteAudioFile(
+              nextAudio = playlistListVMlistenFalse.deleteAudioFile(
                 audioLearnAppViewType:
                     AudioLearnAppViewType.playlistDownloadView,
                 audio: audioToDelete,
               );
             }
+
+            await _replaceCurrentAudioByNextAudio(
+              context: context,
+              nextAudio: nextAudio,
+            );
             break;
           case AudioPopupMenuAction.deleteAudioFromPlaylistAswell:
             final Audio audioToDelete = audio;
+            Audio? nextAudio;
             final List<Comment> audioToDeleteCommentLst =
                 playlistListVMlistenFalse.getAudioComments(
               audio: audioToDelete,
@@ -390,7 +406,13 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
               // If the audio has comments, the ConfirmActionDialog is
               // displayed. Otherwise, the audio is deleted from the
               // playlist download and playable audio list.
-              showDialog<dynamic>(
+              //
+              // Await must be applied to showDialog() so that the nextAudio
+              // variable is assigned according to the result returned by the
+              // dialog. Otherwise, _replaceCurrentAudioByNextAudio() will be
+              // called before the dialog is closed and the nextAudio variable
+              // will remains null.
+              await showDialog<dynamic>(
                 context: context,
                 builder: (BuildContext context) {
                   return ConfirmActionDialog(
@@ -406,17 +428,25 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
                             audioToDeleteCommentLst.length),
                   );
                 },
-              );
+              ).then((result) {
+                if (result == ConfirmAction.cancel) {
+                  nextAudio = audioToDelete;
+                } else {
+                  nextAudio = result as Audio?;
+                }
+              });
             } else {
-              Provider.of<PlaylistListVM>(
-                context,
-                listen: false,
-              ).deleteAudioFromPlaylistAsWell(
+              nextAudio = playlistListVMlistenFalse.deleteAudioFromPlaylistAsWell(
                 audioLearnAppViewType:
                     AudioLearnAppViewType.playlistDownloadView,
                 audio: audioToDelete,
               );
             }
+            
+            await _replaceCurrentAudioByNextAudio(
+              context: context,
+              nextAudio: nextAudio,
+            );
             break;
           default:
             break;
@@ -453,6 +483,36 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
       audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       audio: audio,
     );
+  }
+
+  /// Replaces the current audio by the next audio in the audio player
+  /// view.
+  Future<void> _replaceCurrentAudioByNextAudio({
+    required BuildContext context,
+    required Audio? nextAudio,
+  }) async {
+    AudioPlayerVM audioGlobalPlayerVM = Provider.of<AudioPlayerVM>(
+      context,
+      listen: false,
+    );
+
+    if (nextAudio != null) {
+      // Required so that the audio title displayed in the
+      // audio player view is updated with the modified title.
+      //
+      // doNotifyListeners is set to false to avoid that the
+      // Confirm warning is displayed twice when the audio
+      // moved to another playlist.
+      await audioGlobalPlayerVM.setCurrentAudio(
+        audio: nextAudio,
+        doNotifyListeners: false,
+      );
+    } else {
+      // Calling handleNoPlayableAudioAvailable() is necessary
+      // to update the audio title in the audio player view to
+      // "No selected audio"
+      await audioGlobalPlayerVM.handleNoPlayableAudioAvailable();
+    }
   }
 
   String _createDeleteAudioDialogTitle(
