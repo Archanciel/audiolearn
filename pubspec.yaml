@@ -40,7 +40,7 @@ dependencies:
   audioplayers: ^5.2.1
   path_provider: ^2.0.14
   provider: ^6.1.2
-  youtube_explode_dart: ^2.3.5
+  youtube_explode_dart: ^2.3.6
   just_audio: ^0.9.37
   http: ^1.1.0
   googleapis: ^13.0.0
@@ -59,7 +59,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
   connectivity_plus: ^6.0.3
-  file_picker: ^8.1.2
+  file_picker: ^8.1.4
   matcher: ^0.12.16+1
   yaml: ^3.1.2
   archive: ^3.6.1
