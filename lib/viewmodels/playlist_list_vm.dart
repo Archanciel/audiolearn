@@ -69,9 +69,15 @@ class PlaylistListVM extends ChangeNotifier {
   bool get isOnePlaylistSelected => _isOnePlaylistSelected;
 
   List<Playlist> _listOfSelectablePlaylists = [];
-  List<Audio>? _sortedFilteredSelectedPlaylistsPlayableAudios;
-  List<Audio>? get sortedFilteredSelectedPlaylistsPlayableAudios =>
-      _sortedFilteredSelectedPlaylistsPlayableAudios;
+
+  // This list is used to store the filtered and sorted audio list.
+  // Its content corresponds to the sorted and filtered parms selected
+  // by the user in the sf parms button or to a sf parms defined in
+  // the SortAndFilterAudioDialog and applied or saved.
+  List<Audio>? _sortedFilteredSelectedPlaylistPlayableAudioLst;
+  List<Audio>? get sortedFilteredSelectedPlaylistPlayableAudioLst =>
+      _sortedFilteredSelectedPlaylistPlayableAudioLst;
+
   AudioSortFilterParameters? _audioSortFilterParameters;
   AudioSortFilterParameters? get audioSortFilterParameters =>
       _audioSortFilterParameters;
@@ -525,7 +531,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// sorted or/and filtered. This way, the newly downloaded
   /// audio will be added at top of the displayed audio list.
   void disableSortedFilteredPlayableAudioLst() {
-    _sortedFilteredSelectedPlaylistsPlayableAudios = null;
+    _sortedFilteredSelectedPlaylistPlayableAudioLst = null;
 
     notifyListeners();
   }
@@ -553,7 +559,7 @@ class PlaylistListVM extends ChangeNotifier {
   }) {
     // selecting another playlist or unselecting the currently
     // selected playlist nullifies the filtered and sorted audio list
-    _sortedFilteredSelectedPlaylistsPlayableAudios = null;
+    _sortedFilteredSelectedPlaylistPlayableAudioLst = null;
     _audioSortFilterParameters = null; // required to reset the sort and
     //                                    filter parameters, otherwise
     //                                    the previous sort and filter
@@ -787,12 +793,12 @@ class PlaylistListVM extends ChangeNotifier {
   /// parameters. For example, it makes sense to define a filter only parameters
   /// which select fully listened audio which are not commented. With this filter
   /// parameters applied to the playlist, using the playlist menu 'Delete
-  /// Filtered Audio' deletes the audio files and removes the deletede audio from
+  /// Filtered Audio' deletes the audio files and removes the deleted audio from
   /// the playlist playable audio list. The deleted audio remain in the playlist
   /// downloaded audio list and so will not be redownloaded !
-  void deleteSortFilteredPlaylistAudioLstPhysicallyAndFromPlayableAudioLst() {
+  void deleteAudioFilesSortFilteredLst() {
     List<Audio> filteredAudioToDelete =
-        _sortedFilteredSelectedPlaylistsPlayableAudios!;
+        _sortedFilteredSelectedPlaylistPlayableAudioLst!;
 
     _audioDownloadVM.deleteAudioLstPhysicallyAndFromPlayableAudioLstOnly(
       audioToDeleteLst: filteredAudioToDelete,
@@ -809,11 +815,11 @@ class PlaylistListVM extends ChangeNotifier {
   ///  ]
   List<int> getFilteredAudioQuantities() {
     int numberOfDeletedAudio =
-        _sortedFilteredSelectedPlaylistsPlayableAudios!.length;
+        _sortedFilteredSelectedPlaylistPlayableAudioLst!.length;
     int deletedAudioFileSizeBytes = 0;
     int deletedAudioDurationTenthSec = 0;
 
-    for (Audio audio in _sortedFilteredSelectedPlaylistsPlayableAudios!) {
+    for (Audio audio in _sortedFilteredSelectedPlaylistPlayableAudioLst!) {
       deletedAudioFileSizeBytes += audio.audioFileSize;
       deletedAudioDurationTenthSec += audio.audioDuration.inSeconds;
     }
@@ -831,14 +837,15 @@ class PlaylistListVM extends ChangeNotifier {
   /// button in the SortAndFilterAudioDialog, then the filtered
   /// and sorted audio list is returned.
   ///
-  /// As well, if the selected playlist has a sort filter parameters
-  /// saved in its json file, then the sort filter parameters are applied
-  /// to the returned audio list, unless the user has changed the sort
-  /// filter parameters in the SortAndFilterAudioDialog or in
-  /// the playlist download view sort filter dropdown menu.
+  /// As well, if the selected playlist has a sort filter parameters name
+  /// saved in its json file, then this sort filter parameters obtained
+  /// from the settings data service are applied to the returned audio list,
+  /// unless the user has changed the sort filter parameters in the
+  /// SortAndFilterAudioDialog or in the playlist download view sort filter
+  /// dropdown menu.
   List<Audio> getSelectedPlaylistPlayableAudioApplyingSortFilterParameters({
     required AudioLearnAppViewType audioLearnAppViewType,
-    AudioSortFilterParameters? audioSortFilterParameters,
+    AudioSortFilterParameters? passedAudioSortFilterParameters,
   }) {
     List<Playlist> selectedPlaylists = getSelectedPlaylists();
 
@@ -869,9 +876,9 @@ class PlaylistListVM extends ChangeNotifier {
               '';
     }
 
-    // if the user has not yet defined sort and filter parameters for the
-    // selected playlist, then the sort and filter parameters name stored
-    // in the selected playlist json file is obtained.
+    // if the user has not selected a sort and filter parameters for the
+    // selected playlist, then the sort and filter parameters whose name
+    // is stored in the selected playlist json file is obtained.
     if (selectedPlaylistSortFilterParmsName.isEmpty) {
       switch (audioLearnAppViewType) {
         case AudioLearnAppViewType.playlistDownloadView:
@@ -883,7 +890,9 @@ class PlaylistListVM extends ChangeNotifier {
             // instance applicable to any playlist, which is stored the
             // application settings json file. This named sort filter
             // parameters instance was saved in the current playlist json
-            // file to be automatically applyed in the playlist download view.
+            // file to be automatically applyed in the playlist download
+            // view if the user has not selected a sort filter parameters
+            // in the sort filter parameters download button.
             _audioSortFilterParameters =
                 _settingsDataService.namedAudioSortFilterParametersMap[
                     audioSortFilterParmsNameForPlaylistDownloadView];
@@ -898,7 +907,9 @@ class PlaylistListVM extends ChangeNotifier {
             // instance applicable to any playlist, which is stored the
             // application settings json file. This named sort filter
             // parameters instance was saved in the current playlist json
-            // file to be automatically applyed in the audio player view.
+            // file to be automatically applyed in the playlist download
+            // view if the user has not selected a sort filter parameters
+            // in the sort filter parameters download button.
             _audioSortFilterParameters =
                 _settingsDataService.namedAudioSortFilterParametersMap[
                     audioSortFilterParmsNameForAudioPlayerView];
@@ -909,17 +920,17 @@ class PlaylistListVM extends ChangeNotifier {
       }
     } else {
       // If the playlist has been selected and the user has not yet
-      // defined sort and filter parameters for the playlist, then
-      // the default sort and filter parameters are applied to the
+      // defined a sort and filter parameters for the playlist, then
+      // the default sort and filter parameters will be applied to the
       // playlist audio list.
       _audioSortFilterParameters =
           _settingsDataService.namedAudioSortFilterParametersMap[
               selectedPlaylistSortFilterParmsName];
     }
 
-    _audioSortFilterParameters ??= audioSortFilterParameters;
+    _audioSortFilterParameters ??= passedAudioSortFilterParameters;
 
-    _sortedFilteredSelectedPlaylistsPlayableAudios =
+    _sortedFilteredSelectedPlaylistPlayableAudioLst =
         _audioSortFilterService.filterAndSortAudioLst(
       audioLst: selectedPlaylistsAudios,
       audioSortFilterParameters: _audioSortFilterParameters ??
@@ -935,7 +946,7 @@ class PlaylistListVM extends ChangeNotifier {
     //   }
     // }
 
-    return _sortedFilteredSelectedPlaylistsPlayableAudios!;
+    return _sortedFilteredSelectedPlaylistPlayableAudioLst!;
   }
 
   List<String>
@@ -948,7 +959,7 @@ class PlaylistListVM extends ChangeNotifier {
     List<Audio> selectedPlaylistSortedAudioLst =
         getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
       audioLearnAppViewType: audioLearnAppViewType,
-      audioSortFilterParameters: audioSortFilterParameters,
+      passedAudioSortFilterParameters: audioSortFilterParameters,
     );
 
     // First step: create a map associating each comment file name to
@@ -1039,7 +1050,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// Used to display the audio list of the selected playlist
   /// starting at the beginning.
   bool isAudioListFilteredAndSorted() {
-    return _sortedFilteredSelectedPlaylistsPlayableAudios != null;
+    return _sortedFilteredSelectedPlaylistPlayableAudioLst != null;
   }
 
   /// Returns false if the passed selected sort and filter parameters name is
@@ -1081,14 +1092,14 @@ class PlaylistListVM extends ChangeNotifier {
     String searchSentence = '',
     bool doNotifyListeners = true,
   }) {
-    _sortedFilteredSelectedPlaylistsPlayableAudios =
+    _sortedFilteredSelectedPlaylistPlayableAudioLst =
         sortFilteredSelectedPlaylistPlayableAudio;
     _audioSortFilterParameters = audioSortFilterParms;
 
     if (searchSentence.isNotEmpty) {
       searchSentence = searchSentence.toLowerCase();
-      _sortedFilteredSelectedPlaylistsPlayableAudios =
-          _sortedFilteredSelectedPlaylistsPlayableAudios!
+      _sortedFilteredSelectedPlaylistPlayableAudioLst =
+          _sortedFilteredSelectedPlaylistPlayableAudioLst!
               .where((audio) =>
                   audio.validVideoTitle.toLowerCase().contains(searchSentence))
               .toList();
@@ -1295,7 +1306,7 @@ class PlaylistListVM extends ChangeNotifier {
         path: playlist.getPlaylistDownloadFilePathName(),
       );
 
-      _sortedFilteredSelectedPlaylistsPlayableAudios = null;
+      _sortedFilteredSelectedPlaylistPlayableAudioLst = null;
 
       notifyListeners();
     }
@@ -1365,7 +1376,7 @@ class PlaylistListVM extends ChangeNotifier {
       // view audio list to be sorted and filtered by the default sort
       // filter parameters. Also necessary so the sort filter dropdown
       // button selects the default sort filter parameters.
-      _sortedFilteredSelectedPlaylistsPlayableAudios =
+      _sortedFilteredSelectedPlaylistPlayableAudioLst =
           _audioSortFilterService.filterAndSortAudioLst(
         audioLst: playlist.playableAudioLst,
         audioSortFilterParameters:
@@ -1423,13 +1434,14 @@ class PlaylistListVM extends ChangeNotifier {
   /// Physically deletes the audio mp3 file from the audio
   /// playlist directory.
   ///
+  /// The method removes the deleted audio from the playlist
+  /// playable audio list. The deleted audio remain in the playlist
+  /// downloaded audio list and so will not be redownloaded !
+  ///
   /// The method returns the next playable audio. The returned
   /// value is only useful when the user is in the audio player
   /// screen and so that the audio to move is the currently
   /// playable audio.
-  ///
-  /// playableAudioLst order: [available audio last downloaded, ...,
-  ///                          available audio first downloaded]
   Audio? deleteAudioFile({
     required AudioLearnAppViewType audioLearnAppViewType,
     required Audio audio,
@@ -1507,12 +1519,12 @@ class PlaylistListVM extends ChangeNotifier {
     required AudioLearnAppViewType audioLearnAppViewType,
     required Audio audio,
   }) {
-    if (_sortedFilteredSelectedPlaylistsPlayableAudios != null) {
+    if (_sortedFilteredSelectedPlaylistPlayableAudioLst != null) {
       Audio? nextAudio = _getNextSortFilteredNotFullyPlayedAudio(
         audioLearnAppViewType: audioLearnAppViewType,
         currentAudio: audio,
       );
-      _sortedFilteredSelectedPlaylistsPlayableAudios!
+      _sortedFilteredSelectedPlaylistPlayableAudioLst!
           .removeWhere((audioInList) => audioInList == audio);
 
       return nextAudio;

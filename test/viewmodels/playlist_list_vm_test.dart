@@ -975,8 +975,10 @@ void main() {
       );
     });
   });
-  group('''Delete Sort/Filtered audio physically and from selected playlist.''', () {
-    test('''Filtered by 'listenedNoCom' Sort/filtered parms audio deletion.''', () async {
+  group('''Delete Sort/Filtered audio physically and from selected playlist.''',
+      () {
+    test('''Filtered by 'listenedNoCom' Sort/filtered parms audio deletion.''',
+        () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -1039,7 +1041,7 @@ void main() {
         sortFilteredSelectedPlaylistPlayableAudio: playlistListVM
             .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
           audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
-          audioSortFilterParameters: audioSortFilterParameters,
+          passedAudioSortFilterParameters: audioSortFilterParameters,
         ),
         audioSortFilterParms: audioSortFilterParameters,
         audioSortFilterParmsName: audioSortFilterParametersName,
@@ -1048,7 +1050,7 @@ void main() {
       );
 
       // Deleting the filtered audio physically and from the selected playlist
-      playlistListVM.deleteSortFilteredPlaylistAudioLstPhysicallyAndFromPlayableAudioLst();
+      playlistListVM.deleteAudioFilesSortFilteredLst();
 
       // Verify that the physical audio to delete files have been deleted
 
@@ -1152,7 +1154,8 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    test('moveAudioToPlaylist moves audio and its comments to playlist', () async {
+    test('moveAudioToPlaylist moves audio and its comments to playlist',
+        () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
