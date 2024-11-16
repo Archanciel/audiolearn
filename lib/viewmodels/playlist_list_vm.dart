@@ -1671,7 +1671,7 @@ class PlaylistListVM extends ChangeNotifier {
     // getSelectedPlaylistPlayableAudiosApplyingSortFilterParameters()
     // is sorted and filtered. Otherwise, the returned audio list is the
     // full playable audio list of the selected playlist sorted by audio
-    // download date descending (the de3fault sorting).
+    // download date descending (the default sorting).
     List<Audio> sortedAndFilteredPlayableAudioLst =
         getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
       audioLearnAppViewType: audioLearnAppViewType,
