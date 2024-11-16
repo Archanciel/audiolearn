@@ -345,7 +345,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                           // is dismissed by clicking outside the dialog.
 
                           playlistListVM
-                              .updateIndividualPlaylistAndOrPlaylistAudiosPlaySpeed(
+                              .updateIndividualPlaylistAndOrAlreadyDownloadedAudioPlaySpeed(
                             audioPlaySpeed: value[0] as double,
                             playlist: playlist,
                             applyAudioPlaySpeedToPlayableAudios:

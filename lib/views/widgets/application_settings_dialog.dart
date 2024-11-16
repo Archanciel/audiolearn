@@ -204,11 +204,11 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
       Provider.of<PlaylistListVM>(
         context,
         listen: false,
-      ).updateExistingPlaylistsAndOrAudiosPlaySpeed(
+      ).updateExistingPlaylistsAndOrAlreadyDownloadedAudioPlaySpeed(
         audioPlaySpeed: _audioPlaySpeed,
         applyAudioPlaySpeedToExistingPlaylists:
             _applyAudioPlaySpeedToExistingPlaylists,
-        applyAudioPlaySpeedToAlreadyDownloadedAudios:
+        applyAudioPlaySpeedToAlreadyDownloadedAudio:
             _applyAudioPlaySpeedToAlreadyDownloadedAudios,
       );
     }

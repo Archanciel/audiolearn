@@ -1829,10 +1829,10 @@ class PlaylistListVM extends ChangeNotifier {
   /// Updating the playlists audio play speed only implies that
   /// the next downloaded audio of this playlist will be set
   /// to the audioPlaySpeed value.
-  void updateExistingPlaylistsAndOrAudiosPlaySpeed({
+  void updateExistingPlaylistsAndOrAlreadyDownloadedAudioPlaySpeed({
     required double audioPlaySpeed,
     required bool applyAudioPlaySpeedToExistingPlaylists,
-    required bool applyAudioPlaySpeedToAlreadyDownloadedAudios,
+    required bool applyAudioPlaySpeedToAlreadyDownloadedAudio,
   }) {
     for (Playlist playlist in _listOfSelectablePlaylists) {
       // updating the playlist audio play speed. This will imply the
@@ -1841,7 +1841,7 @@ class PlaylistListVM extends ChangeNotifier {
         playlist.audioPlaySpeed = audioPlaySpeed;
       }
 
-      if (applyAudioPlaySpeedToAlreadyDownloadedAudios) {
+      if (applyAudioPlaySpeedToAlreadyDownloadedAudio) {
         // updating the audio play speed of the playable audio
         // contained in the playlist.
         playlist.setAudioPlaySpeedToAllPlayableAudios(
@@ -1857,7 +1857,7 @@ class PlaylistListVM extends ChangeNotifier {
     }
   }
 
-  void updateIndividualPlaylistAndOrPlaylistAudiosPlaySpeed({
+  void updateIndividualPlaylistAndOrAlreadyDownloadedAudioPlaySpeed({
     required double audioPlaySpeed,
     required Playlist playlist,
     required bool applyAudioPlaySpeedToPlayableAudios,
@@ -1991,7 +1991,7 @@ class PlaylistListVM extends ChangeNotifier {
   }
 
   /// This method is called when the user closes the playlist comment list dialog.
-  /// It is used to undo the changs made to the playlist current audio index
+  /// It is used to undo the change made to the playlist current audio index
   /// as well as the position of the listened comments audio.
   ///
   /// Using this method located in the PlaylistListVM is necessary in order to
