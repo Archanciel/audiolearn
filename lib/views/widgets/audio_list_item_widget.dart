@@ -393,6 +393,19 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
               context: context,
               nextAudio: nextAudio,
             );
+
+            Playlist playlist =
+                playlistListVMlistenFalse.getSelectedPlaylists()[0];
+            List<Audio> audioLst = playlist.playableAudioLst;
+            int nextAudioIndex = audioLst.indexOf(nextAudio!);
+
+            // This updates the playlist download view current audio to
+            // the next audio in the playlist playable audio list.
+            playlistListVMlistenFalse.updateCurrentOrPastPlayableAudio(
+              audioCopy: nextAudio!,
+              previousAudioIndex: nextAudioIndex,
+            );
+
             break;
           case AudioPopupMenuAction.deleteAudioFromPlaylistAswell:
             final Audio audioToDelete = audio;
@@ -436,17 +449,31 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
                 }
               });
             } else {
-              nextAudio = playlistListVMlistenFalse.deleteAudioFromPlaylistAsWell(
+              nextAudio =
+                  playlistListVMlistenFalse.deleteAudioFromPlaylistAsWell(
                 audioLearnAppViewType:
                     AudioLearnAppViewType.playlistDownloadView,
                 audio: audioToDelete,
               );
             }
-            
+
             await _replaceCurrentAudioByNextAudio(
               context: context,
               nextAudio: nextAudio,
             );
+
+            Playlist playlist =
+                playlistListVMlistenFalse.getSelectedPlaylists()[0];
+            List<Audio> audioLst = playlist.playableAudioLst;
+            int nextAudioIndex = audioLst.indexOf(nextAudio!);
+
+            // This updates the playlist download view current audio to
+            // the next audio in the playlist playable audio list.
+            playlistListVMlistenFalse.updateCurrentOrPastPlayableAudio(
+              audioCopy: nextAudio!,
+              previousAudioIndex: nextAudioIndex,
+            );
+
             break;
           default:
             break;
