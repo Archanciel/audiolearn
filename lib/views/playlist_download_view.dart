@@ -57,7 +57,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   final ScrollController _audioScrollController = ScrollController();
   final ScrollController _playlistScrollController = ScrollController();
 
-  List<Audio> _selectedPlaylistsPlayableAudios = [];
+  List<Audio> _selectedPlaylistPlayableAudioLst = [];
 
   bool _wasSortFilterAudioSettingsApplied = false;
 
@@ -182,17 +182,22 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     required WarningMessageVM warningMessageVMlistenFalse,
   }) {
     if (_wasSortFilterAudioSettingsApplied) {
-      // if the sort and filter audio settings have been applied
-      // then the sortedFilteredSelectedPlaylistsPlayableAudios
-      // list is used to display the audio list. Otherwise, even
-      // if the sort and filter audio settings have been applied,
-      // the possibly saved sorted and filtered options of the
-      // selected playlist are used to display the audio list !
-      _selectedPlaylistsPlayableAudios = playlistListVMlistenTrue
-          .sortedFilteredSelectedPlaylistsPlayableAudios!;
+      // Here, the user has selected a sort filter parameters
+      // in (defined sf parms or default sf parms) in the sort
+      // filter parameters button or he has defined a sf parms
+      // in the sort filter dialog and clicked on the save or the
+      // apply button.
+      //
+      // If the sort and filter audio settings have been applied
+      // then the sortedFilteredSelectedPlaylistPlayableAudioLst
+      // which contains the audio sorted and filtered by the sf
+      // parms selected or defined by the user is used to display
+      // the audio list.
+      _selectedPlaylistPlayableAudioLst = playlistListVMlistenTrue
+          .sortedFilteredSelectedPlaylistPlayableAudioLst!;
       _wasSortFilterAudioSettingsApplied = false;
     } else {
-      _selectedPlaylistsPlayableAudios = playlistListVMlistenTrue
+      _selectedPlaylistPlayableAudioLst = playlistListVMlistenTrue
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
@@ -214,9 +219,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       child: ListView.builder(
         key: const Key('audio_list'),
         controller: _audioScrollController,
-        itemCount: _selectedPlaylistsPlayableAudios.length,
+        itemCount: _selectedPlaylistPlayableAudioLst.length,
         itemBuilder: (BuildContext context, int index) {
-          final audio = _selectedPlaylistsPlayableAudios[index];
+          final audio = _selectedPlaylistPlayableAudioLst[index];
           return AudioListItemWidget(
             audio: audio,
             isAudioCurrent:
@@ -973,7 +978,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       sortFilteredSelectedPlaylistPlayableAudio: playlistListVMlistenTrue
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
-        audioSortFilterParameters: audioSortFilterParameters,
+        passedAudioSortFilterParameters: audioSortFilterParameters,
       ),
       audioSortFilterParms: audioSortFilterParameters,
       audioSortFilterParmsName: _selectedSortFilterParametersName!,
