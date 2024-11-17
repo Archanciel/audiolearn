@@ -23,9 +23,12 @@ class MockAudioDownloadVM extends AudioDownloadVM {
     _youtubePlaylistTitle = youtubePlaylistTitle;
   }
 
+  final String mockPlaylistDirectory;
+
   MockAudioDownloadVM({
     required super.warningMessageVM,
     required super.settingsDataService,
+    this.mockPlaylistDirectory = '',
     super.isTest,
   });
 
@@ -116,5 +119,78 @@ class MockAudioDownloadVM extends AudioDownloadVM {
   @override
   AudioPlayer? instanciateAudioPlayer() {
     return null;
+  }
+
+  @override
+  Future<void> downloadPlaylistAudio({
+    required String playlistUrl,
+  }) async {
+    // Simulate checking for an existing playlist
+    Playlist? playlist;
+
+    try {
+      playlist = listOfPlaylist.firstWhere(
+        (pl) => pl.url == playlistUrl,
+      );
+    } catch (e) {
+      playlist = null;
+    }
+
+    // If the playlist doesn't exist, create it
+    if (playlist == null) {
+      playlist = Playlist(
+        url: playlistUrl,
+        id: 'mock_id',
+        title: 'Mock Playlist',
+        playlistType: PlaylistType.youtube,
+        playlistQuality: PlaylistQuality.voice,
+      );
+
+      await setPlaylistPath(
+        playlistTitle: playlist.title,
+        playlist: playlist,
+      );
+
+      listOfPlaylist.add(playlist);
+    }
+
+    // Simulate copying mock MP3 files to the playlist directory
+    final playlistDir = Directory(playlist.downloadPath);
+    if (!playlistDir.existsSync()) {
+      playlistDir.createSync(recursive: true);
+    }
+
+    final mockFiles = Directory(mockPlaylistDirectory)
+        .listSync()
+        .whereType<File>()
+        .where((file) => file.path.endsWith('.mp3'));
+
+    for (var mockFile in mockFiles) {
+      final fileName = mockFile.uri.pathSegments.last;
+      final targetFile = File('${playlistDir.path}/$fileName');
+
+      if (targetFile.existsSync()) {
+        continue;
+      }
+
+      mockFile.copySync(targetFile.path);
+
+      // Add the audio to the playlist
+      final Audio mockAudio = Audio(
+        youtubeVideoChannel: 'Mock Channel',
+        enclosingPlaylist: playlist,
+        originalVideoTitle: fileName.replaceAll('.mp3', ''),
+        compactVideoDescription: 'Mock Description',
+        videoUrl: '',
+        audioDownloadDateTime: DateTime.now(),
+        videoUploadDate: DateTime.now(),
+        audioDuration: Duration(minutes: 3),
+        audioPlaySpeed: 1.0,
+      );
+
+      playlist.addDownloadedAudio(mockAudio);
+    }
+
+    notifyListeners();
   }
 }
