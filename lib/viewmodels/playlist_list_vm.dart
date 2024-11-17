@@ -617,6 +617,14 @@ class PlaylistListVM extends ChangeNotifier {
       // below the playlist URL TextField is updated
       _uniqueSelectedPlaylist = playlistSelectedOrUnselected;
 
+      // Required, otherwise when the user selects a playlist, the
+      // audio list of the selected playlist is not displayed in the
+      // playlist download view.
+      getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
+        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+      );
+
+      notifyListeners();
       // TODO fix handling the right app view !!!
       // if (_uniqueSelectedPlaylist!.applySortFilterParmsForAudioPlayerView) {
       //   _audioSortFilterParameters =
@@ -771,12 +779,18 @@ class PlaylistListVM extends ChangeNotifier {
   }
 
   /// This method is not used for the moment.
-  Future<void> downloadSelectedPlaylist() async {
+  Future<void> downloadSelectedPlaylists() async {
     List<Playlist> selectedPlaylists = getSelectedPlaylists();
 
     for (Playlist playlist in selectedPlaylists) {
       await _audioDownloadVM.downloadPlaylistAudio(playlistUrl: playlist.url);
     }
+
+    getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
+      audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+    );
+
+    notifyListeners();
   }
 
   /// Currently, only one playlist is selectable. So, this method
@@ -1105,13 +1119,17 @@ class PlaylistListVM extends ChangeNotifier {
               .toList();
     }
 
-    if (audioLearnAppViewType == AudioLearnAppViewType.playlistDownloadView) {
-      _playlistAudioSFparmsNamesForPlaylistDownloadViewMap[
-          getSelectedPlaylists()[0].title] = audioSortFilterParmsName;
-    } else {
-      // for AudioLearnAppViewType.audioPlayerView
-      _playlistAudioSFparmsNamesForAudioPlayerViewMap[
-          getSelectedPlaylists()[0].title] = audioSortFilterParmsName;
+    List<Playlist> selectedPlaylists = getSelectedPlaylists();
+
+    if (selectedPlaylists.isNotEmpty) {
+      if (audioLearnAppViewType == AudioLearnAppViewType.playlistDownloadView) {
+        _playlistAudioSFparmsNamesForPlaylistDownloadViewMap[
+            selectedPlaylists[0].title] = audioSortFilterParmsName;
+      } else {
+        // for AudioLearnAppViewType.audioPlayerView
+        _playlistAudioSFparmsNamesForAudioPlayerViewMap[
+            selectedPlaylists[0].title] = audioSortFilterParmsName;
+      }
     }
 
     if (doNotifyListeners) {
