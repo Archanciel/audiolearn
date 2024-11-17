@@ -394,18 +394,10 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
               nextAudio: nextAudio,
             );
 
-            Playlist playlist =
-                playlistListVMlistenFalse.getSelectedPlaylists()[0];
-            List<Audio> audioLst = playlist.playableAudioLst;
-            int nextAudioIndex = audioLst.indexOf(nextAudio!);
-
-            // This updates the playlist download view current audio to
-            // the next audio in the playlist playable audio list.
-            playlistListVMlistenFalse.updateCurrentOrPastPlayableAudio(
-              audioCopy: nextAudio!,
-              previousAudioIndex: nextAudioIndex,
-            );
-
+            // This calls the PlaylistListVM notifyListeners() method
+            // so that the playlist download view current audio is
+            // updated to the next audio in the playlist playable audio list.
+            playlistListVMlistenFalse.updateCurrentAudio();
             break;
           case AudioPopupMenuAction.deleteAudioFromPlaylistAswell:
             final Audio audioToDelete = audio;
@@ -462,18 +454,10 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
               nextAudio: nextAudio,
             );
 
-            Playlist playlist =
-                playlistListVMlistenFalse.getSelectedPlaylists()[0];
-            List<Audio> audioLst = playlist.playableAudioLst;
-            int nextAudioIndex = audioLst.indexOf(nextAudio!);
-
-            // This updates the playlist download view current audio to
-            // the next audio in the playlist playable audio list.
-            playlistListVMlistenFalse.updateCurrentOrPastPlayableAudio(
-              audioCopy: nextAudio!,
-              previousAudioIndex: nextAudioIndex,
-            );
-
+            // This calls the PlaylistListVM notifyListeners() method
+            // so that the playlist download view current audio is
+            // updated to the next audio in the playlist playable audio list.
+            playlistListVMlistenFalse.updateCurrentAudio();
             break;
           default:
             break;

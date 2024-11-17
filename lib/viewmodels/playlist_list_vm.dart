@@ -2008,6 +2008,12 @@ class PlaylistListVM extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// This method simply notifies the listeners of the PlaylistListVM
+  /// in order to update the displayed playable audio list.
+  void updateCurrentAudio() {
+    notifyListeners();
+  }
+
   /// Method called when the user clicks on the 'Save playlist and comments to
   /// zip' menu item located in the appbar leading popup menu.
   Future<void> savePlaylistsCommentsAndSettingsJsonFilesToZip({
