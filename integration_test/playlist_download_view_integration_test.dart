@@ -9678,325 +9678,679 @@ void main() {
     });
   });
   group('Delete unique audio test', () {
-    testWidgets(
-        '''Delete unique audio mp3 only and then switch to AudioPlayerView
+    group('In playlist download view, delete unique audio test', () {
+      testWidgets(
+          '''Delete unique audio mp3 only and then switch to AudioPlayerView
            screen.''', (tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
-      );
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
 
-      // Copy the test initial audio data to the app dir
-      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-        sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}one_local_playlist_with_one_audio",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
-      );
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}one_local_playlist_with_one_audio",
+          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
 
-      const String localAudioPlaylistTitle = 'local_audio_playlist_2';
-      const String uniqueAudioTitle = 'audio learn test short video one';
+        const String localAudioPlaylistTitle = 'local_audio_playlist_2';
+        const String uniqueAudioTitle = 'audio learn test short video one';
 
-      final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
-      );
+        final SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
+        );
 
-      // Load the settings from the json file. This is necessary
-      // otherwise the ordered playlist titles will remain empty
-      // and the playlist list will not be filled with the
-      // playlists available in the download app test dir
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the download app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      await app.main(['test']);
-      await tester.pumpAndSettle();
+        await app.main(['test']);
+        await tester.pumpAndSettle();
 
-      // Tap the 'Toggle List' button to display the playlist list
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-      await tester.pumpAndSettle();
+        // Tap the 'Toggle List' button to display the playlist list
+        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+        await tester.pumpAndSettle();
 
-      // Find the ListTile Playlist containing the unique audio to
-      // delete to
+        // Find the ListTile Playlist containing the unique audio to
+        // delete to
 
-      // First, find the local unique audio playlist ListTile
-      // Text widget
-      final Finder localAudioPlaylistListTileTextWidgetFinder =
-          find.text(localAudioPlaylistTitle);
+        // First, find the local unique audio playlist ListTile
+        // Text widget
+        final Finder localAudioPlaylistListTileTextWidgetFinder =
+            find.text(localAudioPlaylistTitle);
 
-      // Then obtain the local unique audio playlist ListTile
-      // widget enclosing the Text widget by finding its ancestor
-      final Finder localAudioPlaylistListTileWidgetFinder = find.ancestor(
-        of: localAudioPlaylistListTileTextWidgetFinder,
-        matching: find.byType(ListTile),
-      );
+        // Then obtain the local unique audio playlist ListTile
+        // widget enclosing the Text widget by finding its ancestor
+        final Finder localAudioPlaylistListTileWidgetFinder = find.ancestor(
+          of: localAudioPlaylistListTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
 
-      // Now find the Checkbox widget located in the playlist ListTile
-      // and tap on it to select the playlist
-      final Finder localAudioPlaylistListTileCheckboxWidgetFinder =
-          find.descendant(
-        of: localAudioPlaylistListTileWidgetFinder,
-        matching: find.byType(Checkbox),
-      );
+        // Now find the Checkbox widget located in the playlist ListTile
+        // and tap on it to select the playlist
+        final Finder localAudioPlaylistListTileCheckboxWidgetFinder =
+            find.descendant(
+          of: localAudioPlaylistListTileWidgetFinder,
+          matching: find.byType(Checkbox),
+        );
 
-      // Tap the ListTile playlist checkbox to select it
-      await tester.tap(localAudioPlaylistListTileCheckboxWidgetFinder);
-      await tester.pumpAndSettle();
+        // Tap the ListTile playlist checkbox to select it
+        await tester.tap(localAudioPlaylistListTileCheckboxWidgetFinder);
+        await tester.pumpAndSettle();
 
-      // Now we want to tap the popup menu of the unique Audio ListTile
-      // "audio learn test short video one"
+        // Now we want to tap the popup menu of the unique Audio ListTile
+        // "audio learn test short video one"
 
-      // First, find the Audio sublist ListTile Text widget
-      final Finder uniqueAudioListTileTextWidgetFinder =
-          find.text(uniqueAudioTitle);
+        // First, find the Audio sublist ListTile Text widget
+        final Finder uniqueAudioListTileTextWidgetFinder =
+            find.text(uniqueAudioTitle);
 
-      // Then obtain the Audio ListTile widget enclosing the Text widget by
-      // finding its ancestor
-      final Finder uniqueAudioListTileWidgetFinder = find.ancestor(
-        of: uniqueAudioListTileTextWidgetFinder,
-        matching: find.byType(ListTile),
-      );
+        // Then obtain the Audio ListTile widget enclosing the Text widget by
+        // finding its ancestor
+        final Finder uniqueAudioListTileWidgetFinder = find.ancestor(
+          of: uniqueAudioListTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
 
-      // Now find the leading menu icon button of the Audio ListTile
-      // and tap on it
-      final Finder uniqueAudioListTileLeadingMenuIconButton = find.descendant(
-        of: uniqueAudioListTileWidgetFinder,
-        matching: find.byIcon(Icons.menu),
-      );
+        // Now find the leading menu icon button of the Audio ListTile
+        // and tap on it
+        final Finder uniqueAudioListTileLeadingMenuIconButton = find.descendant(
+          of: uniqueAudioListTileWidgetFinder,
+          matching: find.byIcon(Icons.menu),
+        );
 
-      // Tap the leading menu icon button to open the popup menu
-      await tester.tap(uniqueAudioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle();
+        // Tap the leading menu icon button to open the popup menu
+        await tester.tap(uniqueAudioListTileLeadingMenuIconButton);
+        await tester.pumpAndSettle();
 
-      // Now find the delete audio popup menu item and tap on it
-      final Finder popupCopyMenuItem =
-          find.byKey(const Key("popup_menu_delete_audio"));
+        // Now find the delete audio popup menu item and tap on it
+        final Finder popupCopyMenuItem =
+            find.byKey(const Key("popup_menu_delete_audio"));
 
-      await tester.tap(popupCopyMenuItem);
-      await tester.pumpAndSettle();
+        await tester.tap(popupCopyMenuItem);
+        await tester.pumpAndSettle();
 
-      // Now verifying the selected playlist TextField still
-      // contains the title of the source playlist
+        // Now verifying the selected playlist TextField still
+        // contains the title of the source playlist
 
-      Text selectedPlaylistTitleText = tester
-          .widget<Text>(find.byKey(const Key('selectedPlaylistTitleText')));
+        Text selectedPlaylistTitleText = tester
+            .widget<Text>(find.byKey(const Key('selectedPlaylistTitleText')));
 
-      expect(
-        selectedPlaylistTitleText.data,
-        localAudioPlaylistTitle,
-      );
+        expect(
+          selectedPlaylistTitleText.data,
+          localAudioPlaylistTitle,
+        );
 
-      // Now verifying that the audio was physically deleted from the
-      // local playlist directory.
+        // Now verifying that the audio was physically deleted from the
+        // local playlist directory.
 
-      List<String> localPlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioPlaylistTitle',
-        fileExtension: 'mp3',
-      );
+        List<String> localPlaylistMp3Lst = DirUtil.listFileNamesInDir(
+          directoryPath:
+              '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioPlaylistTitle',
+          fileExtension: 'mp3',
+        );
 
-      // Verify the local target playlist directory content
-      expect(localPlaylistMp3Lst, []);
+        // Verify the local target playlist directory content
+        expect(localPlaylistMp3Lst, []);
 
-      // Now we tap on the AudioPlayerView icon button to open
-      // AudioPlayerView screen
+        // Now we tap on the AudioPlayerView icon button to open
+        // AudioPlayerView screen
 
-      final appScreenNavigationButton =
-          find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
+        final appScreenNavigationButton =
+            find.byKey(const ValueKey('audioPlayerViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
 
-      // Now verifying that 'No audio selected' is displayed in the
-      // AudioPlayerView screen
+        // Now verifying that 'No audio selected' is displayed in the
+        // AudioPlayerView screen
 
-      final Finder noAudioSelectedTextWidgetFinder =
-          find.text('No audio selected');
-      expect(noAudioSelectedTextWidgetFinder, findsOneWidget);
+        final Finder noAudioSelectedTextWidgetFinder =
+            find.text('No audio selected');
+        expect(noAudioSelectedTextWidgetFinder, findsOneWidget);
 
-      // Now verifying that the audio player view audio position
-      // is 0:00
+        // Now verifying that the audio player view audio position
+        // is 0:00
 
-      final Finder audioPlayerViewAudioPositionFinder =
-          find.byKey(const Key('audioPlayerViewAudioPosition'));
-      final Text audioPlayerViewAudioPositionTextWidget =
-          tester.widget<Text>(audioPlayerViewAudioPositionFinder);
-      expect(audioPlayerViewAudioPositionTextWidget.data, '0:00');
+        final Finder audioPlayerViewAudioPositionFinder =
+            find.byKey(const Key('audioPlayerViewAudioPosition'));
+        final Text audioPlayerViewAudioPositionTextWidget =
+            tester.widget<Text>(audioPlayerViewAudioPositionFinder);
+        expect(audioPlayerViewAudioPositionTextWidget.data, '0:00');
 
-      // Now verifying that the audio player view audio remaining
-      // duration 0:00
+        // Now verifying that the audio player view audio remaining
+        // duration 0:00
 
-      final Finder audioPlayerViewAudioRemainingDurationFinder =
-          find.byKey(const Key('audioPlayerViewAudioRemainingDuration'));
-      final Text audioPlayerViewAudioRemainingDurationTextWidget =
-          tester.widget<Text>(audioPlayerViewAudioRemainingDurationFinder);
-      expect(audioPlayerViewAudioRemainingDurationTextWidget.data, '0:00');
+        final Finder audioPlayerViewAudioRemainingDurationFinder =
+            find.byKey(const Key('audioPlayerViewAudioRemainingDuration'));
+        final Text audioPlayerViewAudioRemainingDurationTextWidget =
+            tester.widget<Text>(audioPlayerViewAudioRemainingDurationFinder);
+        expect(audioPlayerViewAudioRemainingDurationTextWidget.data, '0:00');
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
-      );
-    });
-    testWidgets('''Delete unique audio from playlist as well and then switch to
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Delete unique audio from playlist as well and then switch to
            AudioPlayerView screen.''', (tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
-      );
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
 
-      // Copy the test initial audio data to the app dir
-      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-        sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}one_local_playlist_with_one_audio",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
-      );
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}one_local_playlist_with_one_audio",
+          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
 
-      const String localAudioPlaylistTitle = 'local_audio_playlist_2';
-      const String uniqueAudioTitle = 'audio learn test short video one';
+        const String localAudioPlaylistTitle = 'local_audio_playlist_2';
+        const String uniqueAudioTitle = 'audio learn test short video one';
 
-      final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
-      );
+        final SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
+        );
 
-      // Load the settings from the json file. This is necessary
-      // otherwise the ordered playlist titles will remain empty
-      // and the playlist list will not be filled with the
-      // playlists available in the download app test dir
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the download app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      await app.main(['test']);
-      await tester.pumpAndSettle();
+        await app.main(['test']);
+        await tester.pumpAndSettle();
 
-      // Tap the 'Toggle List' button to display the playlist list
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-      await tester.pumpAndSettle();
+        // Tap the 'Toggle List' button to display the playlist list
+        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+        await tester.pumpAndSettle();
 
-      // Find the ListTile Playlist containing the unique audio to
-      // delete to
+        // Find the ListTile Playlist containing the unique audio to
+        // delete to
 
-      // First, find the local unique audio playlist ListTile
-      // Text widget
-      final Finder localAudioPlaylistListTileTextWidgetFinder =
-          find.text(localAudioPlaylistTitle);
+        // First, find the local unique audio playlist ListTile
+        // Text widget
+        final Finder localAudioPlaylistListTileTextWidgetFinder =
+            find.text(localAudioPlaylistTitle);
 
-      // Then obtain the local unique audio playlist ListTile
-      // widget enclosing the Text widget by finding its ancestor
-      final Finder localAudioPlaylistListTileWidgetFinder = find.ancestor(
-        of: localAudioPlaylistListTileTextWidgetFinder,
-        matching: find.byType(ListTile),
-      );
+        // Then obtain the local unique audio playlist ListTile
+        // widget enclosing the Text widget by finding its ancestor
+        final Finder localAudioPlaylistListTileWidgetFinder = find.ancestor(
+          of: localAudioPlaylistListTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
 
-      // Now find the Checkbox widget located in the playlist ListTile
-      // and tap on it to select the playlist
-      final Finder localAudioPlaylistListTileCheckboxWidgetFinder =
-          find.descendant(
-        of: localAudioPlaylistListTileWidgetFinder,
-        matching: find.byType(Checkbox),
-      );
+        // Now find the Checkbox widget located in the playlist ListTile
+        // and tap on it to select the playlist
+        final Finder localAudioPlaylistListTileCheckboxWidgetFinder =
+            find.descendant(
+          of: localAudioPlaylistListTileWidgetFinder,
+          matching: find.byType(Checkbox),
+        );
 
-      // Tap the ListTile playlist checkbox to select it
-      await tester.tap(localAudioPlaylistListTileCheckboxWidgetFinder);
-      await tester.pumpAndSettle();
+        // Tap the ListTile playlist checkbox to select it
+        await tester.tap(localAudioPlaylistListTileCheckboxWidgetFinder);
+        await tester.pumpAndSettle();
 
-      // Now we want to tap the popup menu of the unique Audio ListTile
-      // "audio learn test short video one"
+        // Now we want to tap the popup menu of the unique Audio ListTile
+        // "audio learn test short video one"
 
-      // First, find the Audio sublist ListTile Text widget
-      final Finder uniqueAudioListTileTextWidgetFinder =
-          find.text(uniqueAudioTitle);
+        // First, find the Audio sublist ListTile Text widget
+        final Finder uniqueAudioListTileTextWidgetFinder =
+            find.text(uniqueAudioTitle);
 
-      // Then obtain the Audio ListTile widget enclosing the Text widget by
-      // finding its ancestor
-      final Finder uniqueAudioListTileWidgetFinder = find.ancestor(
-        of: uniqueAudioListTileTextWidgetFinder,
-        matching: find.byType(ListTile),
-      );
+        // Then obtain the Audio ListTile widget enclosing the Text widget by
+        // finding its ancestor
+        final Finder uniqueAudioListTileWidgetFinder = find.ancestor(
+          of: uniqueAudioListTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
 
-      // Now find the leading menu icon button of the Audio ListTile
-      // and tap on it
-      final Finder uniqueAudioListTileLeadingMenuIconButton = find.descendant(
-        of: uniqueAudioListTileWidgetFinder,
-        matching: find.byIcon(Icons.menu),
-      );
+        // Now find the leading menu icon button of the Audio ListTile
+        // and tap on it
+        final Finder uniqueAudioListTileLeadingMenuIconButton = find.descendant(
+          of: uniqueAudioListTileWidgetFinder,
+          matching: find.byIcon(Icons.menu),
+        );
 
-      // Tap the leading menu icon button to open the popup menu
-      await tester.tap(uniqueAudioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle();
+        // Tap the leading menu icon button to open the popup menu
+        await tester.tap(uniqueAudioListTileLeadingMenuIconButton);
+        await tester.pumpAndSettle();
 
-      // Now find the delete audio from playlist as well popup menu
-      // item and tap on it
-      final Finder popupCopyMenuItem =
-          find.byKey(const Key("popup_menu_delete_audio_from_playlist_aswell"));
+        // Now find the delete audio from playlist as well popup menu
+        // item and tap on it. Since the audio is deleted from a local
+        // plalist, no warning is displayed indicating that the audio
+        // will be redownloaded unless it is suppressed from the Youtube
+        // playlist as well !
+        final Finder popupCopyMenuItem = find
+            .byKey(const Key("popup_menu_delete_audio_from_playlist_aswell"));
 
-      await tester.tap(popupCopyMenuItem);
-      await tester.pumpAndSettle();
+        await tester.tap(popupCopyMenuItem);
+        await tester.pumpAndSettle();
 
-      // Now verifying the selected playlist TextField still
-      // contains the title of the source playlist
+        // Now verifying the selected playlist TextField still
+        // contains the title of the source playlist
 
-      Text selectedPlaylistTitleText = tester
-          .widget<Text>(find.byKey(const Key('selectedPlaylistTitleText')));
+        Text selectedPlaylistTitleText = tester
+            .widget<Text>(find.byKey(const Key('selectedPlaylistTitleText')));
 
-      expect(
-        selectedPlaylistTitleText.data,
-        localAudioPlaylistTitle,
-      );
+        expect(
+          selectedPlaylistTitleText.data,
+          localAudioPlaylistTitle,
+        );
 
-      // Now verifying that the audio was physically deleted from the
-      // local playlist directory.
+        // Now verifying that the audio was physically deleted from the
+        // local playlist directory.
 
-      List<String> localPlaylistMp3Lst = DirUtil.listFileNamesInDir(
-        directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioPlaylistTitle',
-        fileExtension: 'mp3',
-      );
+        List<String> localPlaylistMp3Lst = DirUtil.listFileNamesInDir(
+          directoryPath:
+              '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioPlaylistTitle',
+          fileExtension: 'mp3',
+        );
 
-      // Verify the local target playlist directory content
-      expect(localPlaylistMp3Lst, []);
+        // Verify the local target playlist directory content
+        expect(localPlaylistMp3Lst, []);
 
-      // Now we tap on the AudioPlayerView icon button to open
-      // AudioPlayerView screen
+        // Now we tap on the AudioPlayerView icon button to open
+        // AudioPlayerView screen
 
-      final appScreenNavigationButton =
-          find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
+        final appScreenNavigationButton =
+            find.byKey(const ValueKey('audioPlayerViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
 
-      // Now verifying that 'No audio selected' is displayed in the
-      // AudioPlayerView screen
+        // Now verifying that 'No audio selected' is displayed in the
+        // AudioPlayerView screen
 
-      final Finder noAudioSelectedTextWidgetFinder =
-          find.text('No audio selected');
-      expect(noAudioSelectedTextWidgetFinder, findsOneWidget);
+        final Finder noAudioSelectedTextWidgetFinder =
+            find.text('No audio selected');
+        expect(noAudioSelectedTextWidgetFinder, findsOneWidget);
 
-      // Now verifying that the audio player view audio position
-      // is 0:00
+        // Now verifying that the audio player view audio position
+        // is 0:00
 
-      final Finder audioPlayerViewAudioPositionFinder =
-          find.byKey(const Key('audioPlayerViewAudioPosition'));
-      final Text audioPlayerViewAudioPositionTextWidget =
-          tester.widget<Text>(audioPlayerViewAudioPositionFinder);
-      expect(audioPlayerViewAudioPositionTextWidget.data, '0:00');
+        final Finder audioPlayerViewAudioPositionFinder =
+            find.byKey(const Key('audioPlayerViewAudioPosition'));
+        final Text audioPlayerViewAudioPositionTextWidget =
+            tester.widget<Text>(audioPlayerViewAudioPositionFinder);
+        expect(audioPlayerViewAudioPositionTextWidget.data, '0:00');
 
-      // Now verifying that the audio player view audio remaining
-      // duration 0:00
+        // Now verifying that the audio player view audio remaining
+        // duration 0:00
 
-      final Finder audioPlayerViewAudioRemainingDurationFinder =
-          find.byKey(const Key('audioPlayerViewAudioRemainingDuration'));
-      final Text audioPlayerViewAudioRemainingDurationTextWidget =
-          tester.widget<Text>(audioPlayerViewAudioRemainingDurationFinder);
-      expect(audioPlayerViewAudioRemainingDurationTextWidget.data, '0:00');
+        final Finder audioPlayerViewAudioRemainingDurationFinder =
+            find.byKey(const Key('audioPlayerViewAudioRemainingDuration'));
+        final Text audioPlayerViewAudioRemainingDurationTextWidget =
+            tester.widget<Text>(audioPlayerViewAudioRemainingDurationFinder);
+        expect(audioPlayerViewAudioRemainingDurationTextWidget.data, '0:00');
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
-      );
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+    });
+    group('In audio player view, delete unique audio test', () {
+      testWidgets(
+          '''Switch to AudioPlayerView screen and then delete unique audio mp3 only.''',
+          (tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}one_local_playlist_with_one_audio",
+          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+
+        const String localAudioPlaylistTitle = 'local_audio_playlist_2';
+
+        final SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
+        );
+
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the download app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+        await app.main(['test']);
+        await tester.pumpAndSettle();
+
+        // Tap the 'Toggle List' button to display the playlist list
+        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+        await tester.pumpAndSettle();
+
+        // Find the ListTile Playlist containing the unique audio to
+        // delete to
+
+        // First, find the local unique audio playlist ListTile
+        // Text widget
+        final Finder localAudioPlaylistListTileTextWidgetFinder =
+            find.text(localAudioPlaylistTitle);
+
+        // Then obtain the local unique audio playlist ListTile
+        // widget enclosing the Text widget by finding its ancestor
+        final Finder localAudioPlaylistListTileWidgetFinder = find.ancestor(
+          of: localAudioPlaylistListTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now find the Checkbox widget located in the playlist ListTile
+        // and tap on it to select the playlist
+        final Finder localAudioPlaylistListTileCheckboxWidgetFinder =
+            find.descendant(
+          of: localAudioPlaylistListTileWidgetFinder,
+          matching: find.byType(Checkbox),
+        );
+
+        // Tap the ListTile playlist checkbox to select it
+        await tester.tap(localAudioPlaylistListTileCheckboxWidgetFinder);
+        await tester.pumpAndSettle();
+
+        // Now we tap on the AudioPlayerView icon button to open
+        // AudioPlayerView screen
+
+        Finder appScreenNavigationButton =
+            find.byKey(const ValueKey('audioPlayerViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        // Tap the appbar leading popup menu button
+        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        // Now find the delete audio popup menu item and tap on it
+        Finder popupMoveMenuItem =
+            find.byKey(const Key("popup_menu_delete_audio"));
+
+        await tester.tap(popupMoveMenuItem);
+        await tester.pumpAndSettle();
+
+        // Now verifying that 'No audio selected' is displayed in the
+        // AudioPlayerView screen
+
+        final Finder noAudioSelectedTextWidgetFinder =
+            find.text('No audio selected');
+        expect(noAudioSelectedTextWidgetFinder, findsOneWidget);
+
+        // Now verifying that the audio player view audio position
+        // is 0:00
+
+        final Finder audioPlayerViewAudioPositionFinder =
+            find.byKey(const Key('audioPlayerViewAudioPosition'));
+        final Text audioPlayerViewAudioPositionTextWidget =
+            tester.widget<Text>(audioPlayerViewAudioPositionFinder);
+        expect(audioPlayerViewAudioPositionTextWidget.data, '0:00');
+
+        // Now verifying that the audio player view audio remaining
+        // duration 0:00
+
+        final Finder audioPlayerViewAudioRemainingDurationFinder =
+            find.byKey(const Key('audioPlayerViewAudioRemainingDuration'));
+        final Text audioPlayerViewAudioRemainingDurationTextWidget =
+            tester.widget<Text>(audioPlayerViewAudioRemainingDurationFinder);
+        expect(audioPlayerViewAudioRemainingDurationTextWidget.data, '0:00');
+
+        // Now verifying the selected playlist TextField still
+        // contains the title of the source playlist
+
+        Text selectedPlaylistTitleText = tester
+            .widget<Text>(find.byKey(const Key('selectedPlaylistTitleText')));
+
+        expect(
+          selectedPlaylistTitleText.data,
+          localAudioPlaylistTitle,
+        );
+
+        // Now verifying that the audio was physically deleted from the
+        // local playlist directory.
+
+        List<String> localPlaylistMp3Lst = DirUtil.listFileNamesInDir(
+          directoryPath:
+              '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioPlaylistTitle',
+          fileExtension: 'mp3',
+        );
+
+        // Verify the local target playlist directory content
+        expect(localPlaylistMp3Lst, []);
+
+        // Now, go back to the playlist download view.
+        appScreenNavigationButton =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        // Now verifying the selected playlist TextField still
+        // contains the title of the source playlist
+
+        selectedPlaylistTitleText = tester
+            .widget<Text>(find.byKey(const Key('selectedPlaylistTitleText')));
+
+        expect(
+          selectedPlaylistTitleText.data,
+          localAudioPlaylistTitle,
+        );
+
+        // Verify the playlist audio list is empty
+
+        List<String> playlistsTitles = [
+          'local_audio_playlist_2',
+        ];
+
+        List<String> audioTitles = [];
+
+        IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
+          tester: tester,
+          playlistTitlesOrderedLst: playlistsTitles,
+          audioTitlesOrderedLst: audioTitles,
+          firstPlaylistListTileIndex: 0,
+          firstAudioListTileIndex: 3,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Switch to AudioPlayerView screen and then delete unique audio mp3 from
+          playlist as well.''', (tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}one_local_playlist_with_one_audio",
+          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+
+        const String localAudioPlaylistTitle = 'local_audio_playlist_2';
+
+        final SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
+        );
+
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the download app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+        await app.main(['test']);
+        await tester.pumpAndSettle();
+
+        // Tap the 'Toggle List' button to display the playlist list
+        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+        await tester.pumpAndSettle();
+
+        // Find the ListTile Playlist containing the unique audio to
+        // delete to
+
+        // First, find the local unique audio playlist ListTile
+        // Text widget
+        final Finder localAudioPlaylistListTileTextWidgetFinder =
+            find.text(localAudioPlaylistTitle);
+
+        // Then obtain the local unique audio playlist ListTile
+        // widget enclosing the Text widget by finding its ancestor
+        final Finder localAudioPlaylistListTileWidgetFinder = find.ancestor(
+          of: localAudioPlaylistListTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now find the Checkbox widget located in the playlist ListTile
+        // and tap on it to select the playlist
+        final Finder localAudioPlaylistListTileCheckboxWidgetFinder =
+            find.descendant(
+          of: localAudioPlaylistListTileWidgetFinder,
+          matching: find.byType(Checkbox),
+        );
+
+        // Tap the ListTile playlist checkbox to select it
+        await tester.tap(localAudioPlaylistListTileCheckboxWidgetFinder);
+        await tester.pumpAndSettle();
+
+        // Now we tap on the AudioPlayerView icon button to open
+        // AudioPlayerView screen
+
+        Finder appScreenNavigationButton =
+            find.byKey(const ValueKey('audioPlayerViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        // Tap the appbar leading popup menu button
+        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        // Now find the delete audio from playlist as well popup menu
+        // item and tap on it. Since the audio is deleted from a local
+        // plalist, no warning is displayed indicating that the audio
+        // will be redownloaded unless it is suppressed from the Youtube
+        // playlist as well !
+        Finder popupMoveMenuItem = find
+            .byKey(const Key("popup_menu_delete_audio_from_playlist_aswell"));
+
+        await tester.tap(popupMoveMenuItem);
+        await tester.pumpAndSettle();
+
+        // Now verifying that 'No audio selected' is displayed in the
+        // AudioPlayerView screen
+
+        final Finder noAudioSelectedTextWidgetFinder =
+            find.text('No audio selected');
+        expect(noAudioSelectedTextWidgetFinder, findsOneWidget);
+
+        // Now verifying that the audio player view audio position
+        // is 0:00
+
+        final Finder audioPlayerViewAudioPositionFinder =
+            find.byKey(const Key('audioPlayerViewAudioPosition'));
+        final Text audioPlayerViewAudioPositionTextWidget =
+            tester.widget<Text>(audioPlayerViewAudioPositionFinder);
+        expect(audioPlayerViewAudioPositionTextWidget.data, '0:00');
+
+        // Now verifying that the audio player view audio remaining
+        // duration 0:00
+
+        final Finder audioPlayerViewAudioRemainingDurationFinder =
+            find.byKey(const Key('audioPlayerViewAudioRemainingDuration'));
+        final Text audioPlayerViewAudioRemainingDurationTextWidget =
+            tester.widget<Text>(audioPlayerViewAudioRemainingDurationFinder);
+        expect(audioPlayerViewAudioRemainingDurationTextWidget.data, '0:00');
+
+        // Now verifying the selected playlist TextField still
+        // contains the title of the source playlist
+
+        Text selectedPlaylistTitleText = tester
+            .widget<Text>(find.byKey(const Key('selectedPlaylistTitleText')));
+
+        expect(
+          selectedPlaylistTitleText.data,
+          localAudioPlaylistTitle,
+        );
+
+        // Now verifying that the audio was physically deleted from the
+        // local playlist directory.
+
+        List<String> localPlaylistMp3Lst = DirUtil.listFileNamesInDir(
+          directoryPath:
+              '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioPlaylistTitle',
+          fileExtension: 'mp3',
+        );
+
+        // Verify the local target playlist directory content
+        expect(localPlaylistMp3Lst, []);
+
+        // Now, go back to the playlist download view.
+        appScreenNavigationButton =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        // Now verifying the selected playlist TextField still
+        // contains the title of the source playlist
+
+        selectedPlaylistTitleText = tester
+            .widget<Text>(find.byKey(const Key('selectedPlaylistTitleText')));
+
+        expect(
+          selectedPlaylistTitleText.data,
+          localAudioPlaylistTitle,
+        );
+
+        // Verify the playlist audio list is empty
+
+        List<String> playlistsTitles = [
+          'local_audio_playlist_2',
+        ];
+
+        List<String> audioTitles = [];
+
+        IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
+          tester: tester,
+          playlistTitlesOrderedLst: playlistsTitles,
+          audioTitlesOrderedLst: audioTitles,
+          firstPlaylistListTileIndex: 0,
+          firstAudioListTileIndex: 3,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
     });
   });
   group('Bug fix tests', () {
@@ -19557,10 +19911,10 @@ void main() {
       // Now tap on the current dropdown button item to open the dropdown
       // button items list
 
-       Finder dropDownButtonFinder =
+      Finder dropDownButtonFinder =
           find.byKey(const Key('sort_filter_parms_dropdown_button'));
 
-       Finder dropDownButtonTextFinder = find.descendant(
+      Finder dropDownButtonTextFinder = find.descendant(
         of: dropDownButtonFinder,
         matching: find.byType(Text),
       );
@@ -19569,8 +19923,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Find and tap on the 'listenedNoCom' sort/filter item
-       Finder titleAscDropDownTextFinder =
-          find.text(sortFilterParmName).last;
+      Finder titleAscDropDownTextFinder = find.text(sortFilterParmName).last;
       await tester.tap(titleAscDropDownTextFinder);
       await tester.pumpAndSettle();
 
@@ -19779,8 +20132,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Find and tap on the 'default' sort/filter item
-      titleAscDropDownTextFinder =
-          find.text('default').last;
+      titleAscDropDownTextFinder = find.text('default').last;
       await tester.tap(titleAscDropDownTextFinder);
       await tester.pumpAndSettle();
 
