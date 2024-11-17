@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 
 import '../../models/audio.dart';
 import '../../models/playlist.dart';
-import '../../viewmodels/comment_vm.dart';
 import '../../viewmodels/playlist_list_vm.dart';
 import '../../viewmodels/warning_message_vm.dart';
 import '../../constants.dart';

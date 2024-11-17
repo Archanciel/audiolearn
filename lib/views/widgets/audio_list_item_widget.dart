@@ -16,7 +16,6 @@ import '../../viewmodels/audio_player_vm.dart';
 import '../../../viewmodels/playlist_list_vm.dart';
 import '../../utils/duration_expansion.dart';
 import '../../constants.dart';
-import '../../viewmodels/comment_vm.dart';
 import '../../viewmodels/warning_message_vm.dart';
 import '../screen_mixin.dart';
 import 'confirm_action_dialog.dart';
