@@ -182,20 +182,28 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     required WarningMessageVM warningMessageVMlistenFalse,
   }) {
     if (_wasSortFilterAudioSettingsApplied) {
-      // Here, the user has selected a sort filter parameters
-      // in (defined sf parms or default sf parms) in the sort
-      // filter parameters button or he has defined a sf parms
-      // in the sort filter dialog and clicked on the save or the
-      // apply button.
-      //
-      // If the sort and filter audio settings have been applied
-      // then the sortedFilteredSelectedPlaylistPlayableAudioLst
-      // which contains the audio sorted and filtered by the sf
-      // parms selected or defined by the user is used to display
-      // the audio list.
-      _selectedPlaylistPlayableAudioLst = playlistListVMlistenTrue
-          .sortedFilteredSelectedPlaylistPlayableAudioLst!;
-      _wasSortFilterAudioSettingsApplied = false;
+      List<Audio>? sortedFilteredSelectedPlaylistPlayableAudioLst =
+          playlistListVMlistenTrue
+              .sortedFilteredSelectedPlaylistPlayableAudioLst;
+
+      if (sortedFilteredSelectedPlaylistPlayableAudioLst != null) {
+        // Here, the user has selected a sort filter parameters
+        // in (defined sf parms or default sf parms) in the sort
+        // filter parameters button or he has defined a sf parms
+        // in the sort filter dialog and clicked on the save or the
+        // apply button.
+        //
+        // If the sort and filter audio settings have been applied
+        // then the sortedFilteredSelectedPlaylistPlayableAudioLst
+        // which contains the audio sorted and filtered by the sf
+        // parms selected or defined by the user is used to display
+        // the audio list.
+        _selectedPlaylistPlayableAudioLst =
+            sortedFilteredSelectedPlaylistPlayableAudioLst;
+        _wasSortFilterAudioSettingsApplied = false;
+      } else {
+        _selectedPlaylistPlayableAudioLst = [];
+      }
     } else {
       _selectedPlaylistPlayableAudioLst = playlistListVMlistenTrue
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
@@ -264,7 +272,10 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       // at the top of the audio list.
       _applyDefaultAudioSortFilterParms(
         playlistListVMlistenFalseOrTrue: playlistListVMlistenTrue,
-        notifyListeners: true,
+        notifyListeners: false, // was true, but caused error in the 
+        //                         application due to the fact that the
+        //                         audio list was updated while the
+        //                         audio list was being built.
       );
 
       if (_audioScrollController.hasClients) {
@@ -493,7 +504,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
   /// Builds the second line of the playlist download view. This line
   /// contains the playlists toggle button, the sort filter dropdown
-  /// button, the download selected playlists button, the audio quality
+  /// button, the download selected playlist button, the audio quality
   /// checkbox and the audio popup menu button.
   Row _buildSecondLine({
     required BuildContext context,
@@ -646,16 +657,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                       playlistListVMlistenFalse
                           .disableSortedFilteredPlayableAudioLst();
 
-                      List<Playlist> selectedPlaylists =
-                          playlistListVMlistenFalse.getSelectedPlaylists();
-
-                      // currently only one playlist can be selected and
-                      // downloaded at a time.
-                      await Provider.of<AudioDownloadVM>(
-                        context,
-                        listen: false,
-                      ).downloadPlaylistAudio(
-                          playlistUrl: selectedPlaylists[0].url);
+                      await playlistListVMlistenFalse
+                          .downloadSelectedPlaylists();
                     }
                   : null,
               child: Row(
