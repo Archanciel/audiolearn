@@ -205,7 +205,7 @@ class AudioDownloadVM extends ChangeNotifier {
         );
       }
 
-      await _setPlaylistPath(
+      await setPlaylistPath(
         playlistTitle: localPlaylistTitle,
         playlist: addedPlaylist,
       );
@@ -1784,13 +1784,15 @@ class AudioDownloadVM extends ChangeNotifier {
 
     _listOfPlaylist.add(playlist);
 
-    return await _setPlaylistPath(
+    return await setPlaylistPath(
       playlistTitle: playlistTitle,
       playlist: playlist,
     );
   }
 
-  Future<Playlist> _setPlaylistPath({
+  /// Private method defined as public since it is used by the mock
+  /// audio download VM.
+  Future<Playlist> setPlaylistPath({
     required String playlistTitle,
     required Playlist playlist,
   }) async {
