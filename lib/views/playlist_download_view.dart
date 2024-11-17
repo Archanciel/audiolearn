@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:window_size/window_size.dart';
 
 import '../constants.dart';
 import '../models/audio.dart';
@@ -39,11 +42,14 @@ class PlaylistDownloadView extends StatefulWidget {
   final double playlistExpamdedScrollAugmentation =
       (ScreenMixin.isHardwarePc()) ? 1 : 1.5;
   final double playlistItemHeight = (ScreenMixin.isHardwarePc() ? 51 : 85);
+  final bool isTest;
 
   PlaylistDownloadView({
     super.key,
     required this.settingsDataService,
     required this.onPageChangedFunction,
+    this.isTest = false, // false reduce the app size on Windows. True
+    //                      increase it.
   });
 
   @override
@@ -97,6 +103,42 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             false;
       }
     });
+
+    if (widget.isTest) {
+      setWindowsAppSizeAndPosition(
+        isTest: true, // true increase the test app width on Windows
+      );
+    }
+  }
+
+  /// If app runs on Windows, Linux or MacOS, set the app size
+  /// and position.
+  Future<void> setWindowsAppSizeAndPosition({
+    required bool isTest,
+  }) async {
+    WidgetsFlutterBinding.ensureInitialized();
+
+    if (!kIsWeb &&
+        (Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
+      await getScreenList().then((List<Screen> screens) {
+        // Assumez que vous voulez utiliser le premier écran (principal)
+        final Screen screen = screens.first;
+        final Rect screenRect = screen.visibleFrame;
+
+        // Définissez la largeur et la hauteur de votre fenêtre
+        double windowWidth = (isTest) ? 900 : 730;
+        const double windowHeight = 1300;
+
+        // Calculez la position X pour placer la fenêtre sur le côté droit de l'écran
+        final double posX = screenRect.right - windowWidth + 10;
+        // Optionnellement, ajustez la position Y selon vos préférences
+        final double posY = (screenRect.height - windowHeight) / 2;
+
+        final Rect windowRect =
+            Rect.fromLTWH(posX, posY, windowWidth, windowHeight);
+        setWindowFrame(windowRect);
+      });
+    }
   }
 
   @override
@@ -272,7 +314,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       // at the top of the audio list.
       _applyDefaultAudioSortFilterParms(
         playlistListVMlistenFalseOrTrue: playlistListVMlistenTrue,
-        notifyListeners: false, // was true, but caused error in the 
+        notifyListeners: false, // was true, but caused error in the
         //                         application due to the fact that the
         //                         audio list was updated while the
         //                         audio list was being built.
