@@ -1840,6 +1840,7 @@ void main() {
       MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
+        mockPlaylistDirectory: kApplicationPathWindowsTest,
         isTest: true,
       );
       mockAudioDownloadVM.youtubePlaylistTitle = youtubeNewPlaylistTitle;
@@ -2321,12 +2322,19 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets('''Add and download 2 Youtube playlists using audio downloas VM
-    mock version.''', (tester) async {
+    testWidgets('''Add and download 2 Youtube playlists using audio download VM
+                   mock version.''', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}simulate_creating_and_downloading_youtube_playlist_test",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Since we have to use a mock AudioDownloadVM to add the
@@ -2357,9 +2365,9 @@ void main() {
       MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
+        mockPlaylistDirectory: kApplicationPathWindowsTest,
         isTest: true,
       );
-      mockAudioDownloadVM.youtubePlaylistTitle = youtubeNewPlaylistTitle;
 
       // using the mockAudioDownloadVM to add the playlist
       // because YoutubeExplode can not access to internet
@@ -2371,12 +2379,6 @@ void main() {
         commentVM: CommentVM(),
         settingsDataService: settingsDataService,
       );
-
-      // calling getUpToDateSelectablePlaylists() loads all the
-      // playlist json files from the app dir and so enables
-      // playlistListVM to know which playlists are
-      // selected and which are not
-      playlistListVM.getUpToDateSelectablePlaylists();
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
         playlistListVM: playlistListVM,
@@ -2397,9 +2399,7 @@ void main() {
         dateFormatVM: dateFormatVM,
       );
 
-      // Tap the 'Toggle List' button to display the playlist list. If the list
-      // is not opened, checking that a ListTile with the title of
-      // the playlist was added to the list will fail
+      // Tap the 'Toggle List' button to display the empty playlist list.
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
@@ -2408,13 +2408,17 @@ void main() {
       expect(find.byType(ListView), findsNWidgets(2));
       expect(find.byType(ListTile), findsNothing);
 
-      // Enter the new Youtube playlist URL into the url text field
+      // Enter the 'Essai' Youtube playlist URL into the url text field
       await tester.enterText(
         find.byKey(
           const Key('youtubeUrlOrSearchTextField'),
         ),
-        youtubePlaylistUrl,
+        'https://youtube.com/playlist?list=PLzwWSJNcZTMSMSrQ7LA0uSn91uZz47JOh&si=-c9fkDSormJfnB4k',
       );
+      await tester.pumpAndSettle();
+
+      // Setting fist Youtube playlist title
+      mockAudioDownloadVM.youtubePlaylistTitle = 'Essai';
 
       // Open the add playlist dialog by tapping the add playlist
       // button
@@ -2428,33 +2432,6 @@ void main() {
       await tester.pumpAndSettle();
 
       // Close the warning dialog by tapping on the Ok button.
-      // If the warning dialog is not closed, tapping on the
-      // 'Add playlist button' button will fail
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
-
-      // Adding the local playlist
-
-      const String localPlaylistTitle = 'audio_learn_local_playlist_test';
-
-      // Open the add playlist dialog by tapping the add playlist
-      // button
-      await tester.tap(find.byKey(const Key('addPlaylistButton')));
-      await tester.pumpAndSettle();
-
-      // Enter the title of the local playlist
-      await tester.enterText(
-        find.byKey(const Key('playlistLocalTitleConfirmDialogTextField')),
-        localPlaylistTitle,
-      );
-
-      // Confirm the addition by tapping the confirmation button in
-      // the AlertDialog
-      await tester
-          .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
-      await tester.pumpAndSettle();
-
-      // Close the warning dialog by tapping on the Ok button
       await tester.tap(find.byKey(const Key('warningDialogOkButton')));
       await tester.pumpAndSettle();
 
@@ -2466,42 +2443,63 @@ void main() {
       await tester.pumpAndSettle();
 
       // Tap the 'Download All' button to download the selected playlist.
-      // This download fails because YoutubeExplode can not access to
-      // internet in integration tests in order to download the
-      // audio's.
+      // This download is simulated by the mock audio download VM
       await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
       await tester.pumpAndSettle();
 
-      // Downloading the Youtube playlist audio can not be done in
-      // integration tests because YoutubeExplode can not access to
-      // internet. Instead, the audio file and the playlist json file
-      // including the audio are copied from the test save directory
-      // to the download directory
+      // Enter the 'audio_player_view_2_shorts_test' Youtube playlist URL
+      // into the url text field
+      // Enter the new Youtube playlist URL into the url text field.
+      // I don't know why, but the next commented code does not work.
+      //
+      // await tester.enterText(
+      //   find.byKey(
+      //     const Key('youtubeUrlOrSearchTextField'),
+      //   ),
+      //   'https://youtube.com/playlist?list=PLzwWSJNcZTMRrOkIdVTkV58wpWIZQCkgd&si=fBu5t1hVFDHThbwy',
+      // );
+      // await tester.pumpAndSettle(const Duration(milliseconds: 1000));
 
-      String newYoutubePlaylistTitle = 'audio_learn_new_youtube_playlist_test';
-      DirUtil.copyFileToDirectorySync(
-          sourceFilePathName:
-              "$kDownloadAppTestSavedDataDir${path.separator}$newYoutubePlaylistTitle${path.separator}$newYoutubePlaylistTitle.json",
-          targetDirectoryPath: testPlaylistDir,
-          overwriteFileIfExist: true);
-      DirUtil.copyFileToDirectorySync(
-        sourceFilePathName:
-            "$kDownloadAppTestSavedDataDir${path.separator}$newYoutubePlaylistTitle${path.separator}230701-224750-audio learn test short video two 23-06-10.mp3",
-        targetDirectoryPath: testPlaylistDir,
-      );
+      // Solving this problem
+      tester
+              .widget<TextField>(find.byKey(
+                const Key('youtubeUrlOrSearchTextField'),
+              ))
+              .controller!
+              .text =
+          'https://youtube.com/playlist?list=PLzwWSJNcZTMRrOkIdVTkV58wpWIZQCkgd&si=fBu5t1hVFDHThbwy';
+      await tester.pumpAndSettle();
 
-      // now close the app and then restart it in order to load the
-      // copied youtube playlist
+      // Setting second Youtube playlist title
+      mockAudioDownloadVM.youtubePlaylistTitle =
+          'audio_player_view_2_shorts_test';
 
-      await _launchExpandablePlaylistListView(
-        tester: tester,
-        audioDownloadVM: mockAudioDownloadVM,
-        settingsDataService: settingsDataService,
-        playlistListVM: playlistListVM,
-        warningMessageVM: warningMessageVM,
-        audioPlayerVM: audioPlayerVM,
-        dateFormatVM: dateFormatVM,
-      );
+      // Open the add playlist dialog by tapping the add playlist
+      // button
+      await tester.tap(find.byKey(const Key('addPlaylistButton')));
+      await tester.pumpAndSettle();
+
+      // Confirm the addition by tapping the confirmation button in
+      // the AlertDialog
+      await tester
+          .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
+      await tester.pumpAndSettle();
+
+      // Close the warning dialog by tapping on the Ok button.
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+      await tester.pumpAndSettle();
+
+      // Tap the second ListTile checkbox to select it
+      await tester.tap(find.descendant(
+        of: find.byType(ListTile).at(1),
+        matching: find.byWidgetPredicate((widget) => widget is Checkbox),
+      ));
+      await tester.pumpAndSettle();
+
+      // Tap the 'Download All' button to download the selected playlist.
+      // This download is simulated by the mock audio download VM
+      await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
+      await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
