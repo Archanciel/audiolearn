@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:audiolearn/constants.dart';
 import 'package:path/path.dart' as path;
 
 import 'package:audiolearn/models/audio.dart';
@@ -330,8 +331,14 @@ class MockAudioDownloadVM extends AudioDownloadVM {
       playlistDir.createSync(recursive: true);
     }
 
+    String filesPath = '$mockPlaylistDirectory${path.separator}audioFiles${path.separator}${playlist.title}';
+
+    if (mockPlaylistDirectory.isEmpty) {
+      filesPath = kApplicationPathWindowsTest;
+    }
+
     final mockFiles = Directory(
-            '$mockPlaylistDirectory${path.separator}audioFiles${path.separator}${playlist.title}')
+            filesPath)
         .listSync()
         .whereType<File>()
         .where((file) => file.path.endsWith('.mp3'));
