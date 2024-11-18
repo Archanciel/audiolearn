@@ -1840,7 +1840,6 @@ void main() {
       MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        mockPlaylistDirectory: kApplicationPathWindowsTest,
         isTest: true,
       );
       mockAudioDownloadVM.youtubePlaylistTitle = youtubeNewPlaylistTitle;
@@ -2431,6 +2430,17 @@ void main() {
           .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
       await tester.pumpAndSettle();
 
+      // Check the value of the Warning dialog title
+      Text warningDialogTitle =
+          tester.widget(find.byKey(const Key('warningDialogTitle')));
+      expect(warningDialogTitle.data, 'WARNING');
+
+      // Now verifying the warning dialog message
+      Text warningDialogMessageTextWidget =
+          tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
+      expect(warningDialogMessageTextWidget.data,
+          'Playlist "Essai" of audio quality added at end of list of playlists.');
+
       // Close the warning dialog by tapping on the Ok button.
       await tester.tap(find.byKey(const Key('warningDialogOkButton')));
       await tester.pumpAndSettle();
@@ -2447,6 +2457,19 @@ void main() {
       await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
       await tester.pumpAndSettle();
 
+      // And verify the downloaded playlist audio titles
+
+      List<String> essaiDownloadedAudioTitles = [
+        "La Chine a créé l'ARME ULTIME  - Plus PUISSANTE que l'étoilenoire",
+        "Les IA ont-elles vraiment atteint l'AGI  Analyse_ Johann Oriel",
+      ];
+
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: essaiDownloadedAudioTitles,
+        firstAudioListTileIndex: 1,
+      );
+
       // Enter the 'audio_player_view_2_shorts_test' Youtube playlist URL
       // into the url text field
       // Enter the new Youtube playlist URL into the url text field.
@@ -2459,7 +2482,7 @@ void main() {
       //   'https://youtube.com/playlist?list=PLzwWSJNcZTMRrOkIdVTkV58wpWIZQCkgd&si=fBu5t1hVFDHThbwy',
       // );
       // await tester.pumpAndSettle(const Duration(milliseconds: 1000));
-
+      //
       // Solving this problem
       tester
               .widget<TextField>(find.byKey(
@@ -2485,6 +2508,17 @@ void main() {
           .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
       await tester.pumpAndSettle();
 
+      // Check the value of the Warning dialog title
+      warningDialogTitle =
+          tester.widget(find.byKey(const Key('warningDialogTitle')));
+      expect(warningDialogTitle.data, 'WARNING');
+
+      // Now verifying the warning dialog message
+      warningDialogMessageTextWidget =
+          tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
+      expect(warningDialogMessageTextWidget.data,
+          'Playlist "audio_player_view_2_shorts_test" of audio quality added at end of list of playlists.');
+
       // Close the warning dialog by tapping on the Ok button.
       await tester.tap(find.byKey(const Key('warningDialogOkButton')));
       await tester.pumpAndSettle();
@@ -2500,6 +2534,50 @@ void main() {
       // This download is simulated by the mock audio download VM
       await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
       await tester.pumpAndSettle();
+
+      // And verify the downloaded playlist audio titles
+
+      List<String> audioPlayerView2ShortsTestDownloadedaudiotitles = [
+        "morning _ cinematic video",
+        "Really short video",
+      ];
+
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst:
+            audioPlayerView2ShortsTestDownloadedaudiotitles,
+        firstAudioListTileIndex: 2,
+      );
+
+      // Tap the first ListTile checkbox to select it
+      await tester.tap(find.descendant(
+        of: find.byType(ListTile).first,
+        matching: find.byWidgetPredicate((widget) => widget is Checkbox),
+      ));
+      await tester.pumpAndSettle();
+
+      // And verify the downloaded playlist audio titles
+
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: essaiDownloadedAudioTitles,
+        firstAudioListTileIndex: 2,
+      );
+
+      // Tap the second ListTile checkbox to select it
+      await tester.tap(find.descendant(
+        of: find.byType(ListTile).at(1),
+        matching: find.byWidgetPredicate((widget) => widget is Checkbox),
+      ));
+      await tester.pumpAndSettle();
+
+      // And verify the downloaded playlist audio titles
+
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: audioPlayerView2ShortsTestDownloadedaudiotitles,
+        firstAudioListTileIndex: 2,
+      );
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
