@@ -74,6 +74,30 @@ class IntegrationTestUtil {
     }
   }
 
+  static Future<void> verifyCurrentAudioTitleAndSubTitleColor({
+    required WidgetTester tester,
+    required String currentAudioTitle,
+    required String currentAudioSubTitle,
+  }) async {
+    await IntegrationTestUtil.checkAudioTextColor(
+      tester: tester,
+      audioTitleOrSubTitle: currentAudioTitle,
+      expectedTitleTextColor:
+          IntegrationTestUtil.currentlyPlayingAudioTitleTextColor,
+      expectedTitleTextBackgroundColor:
+          IntegrationTestUtil.currentlyPlayingAudioTitleTextBackgroundColor,
+    );
+
+    await IntegrationTestUtil.checkAudioTextColor(
+      tester: tester,
+      audioTitleOrSubTitle: currentAudioSubTitle,
+      expectedTitleTextColor:
+          IntegrationTestUtil.currentlyPlayingAudioTitleTextColor,
+      expectedTitleTextBackgroundColor:
+          IntegrationTestUtil.currentlyPlayingAudioTitleTextBackgroundColor,
+    );
+  }
+
   static Finder validateInkWellButton({
     required WidgetTester tester,
     String? audioTitle,
