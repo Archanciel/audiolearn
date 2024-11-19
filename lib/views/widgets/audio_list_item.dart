@@ -393,8 +393,8 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
               nextAudio: nextAudio,
             );
 
-            // This calls the PlaylistListVM notifyListeners() method
-            // so that the playlist download view current audio is
+            // This method only calls the PlaylistListVM notifyListeners()
+            // method so that the playlist download view current audio is
             // updated to the next audio in the playlist playable audio list.
             playlistListVMlistenFalse.updateCurrentAudio();
             break;
@@ -453,8 +453,8 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
               nextAudio: nextAudio,
             );
 
-            // This calls the PlaylistListVM notifyListeners() method
-            // so that the playlist download view current audio is
+            // This method only calls the PlaylistListVM notifyListeners()
+            // method so that the playlist download view current audio is
             // updated to the next audio in the playlist playable audio list.
             playlistListVMlistenFalse.updateCurrentAudio();
             break;
