@@ -20,7 +20,7 @@ import '../viewmodels/warning_message_vm.dart';
 import 'screen_mixin.dart';
 import 'widgets/playlist_add_dialog.dart';
 import 'widgets/application_snackbar.dart';
-import 'widgets/audio_list_item_widget.dart';
+import 'widgets/audio_list_item.dart';
 import 'widgets/confirm_action_dialog.dart';
 import 'widgets/playlist_list_item.dart';
 import 'widgets/playlist_one_selectable_dialog.dart';
@@ -272,7 +272,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
         itemCount: _selectedPlaylistPlayableAudioLst.length,
         itemBuilder: (BuildContext context, int index) {
           final audio = _selectedPlaylistPlayableAudioLst[index];
-          return AudioListItemWidget(
+          return AudioListItem(
             audio: audio,
             isAudioCurrent:
                 (currentAudio != null) ? audio == currentAudio : false,

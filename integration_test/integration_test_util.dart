@@ -4,7 +4,7 @@ import 'package:audiolearn/models/audio.dart';
 import 'package:audiolearn/models/playlist.dart';
 import 'package:audiolearn/services/json_data_service.dart';
 import 'package:audiolearn/utils/date_time_util.dart';
-import 'package:audiolearn/views/widgets/audio_playable_list_dialog_widget.dart';
+import 'package:audiolearn/views/widgets/audio_playable_list_dialog.dart';
 import 'package:audiolearn/views/widgets/warning_message_display.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
