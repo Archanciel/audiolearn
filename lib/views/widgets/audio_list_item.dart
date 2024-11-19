@@ -33,7 +33,7 @@ import 'audio_modification_dialog.dart';
 /// When the user clicks on the audio item title or subtitle or
 /// the play icon button, the screen switches to the AudioPlayerView
 /// screen and the passed {onPageChangedFunction} is executed.
-class AudioListItemWidget extends StatelessWidget with ScreenMixin {
+class AudioListItem extends StatelessWidget with ScreenMixin {
   final Audio audio;
 
   final WarningMessageVM warningMessageVM;
@@ -45,7 +45,7 @@ class AudioListItemWidget extends StatelessWidget with ScreenMixin {
 
   final bool _isAudioCurrent;
 
-  AudioListItemWidget({
+  AudioListItem({
     super.key,
     required this.audio,
     required bool isAudioCurrent,
