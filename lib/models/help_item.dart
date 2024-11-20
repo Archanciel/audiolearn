@@ -3,9 +3,11 @@
 class HelpItem {
   final String helpTitle;
   final String helpContent;
+  final bool displayHelpItemNumber;
 
   HelpItem({
     required this.helpTitle,
     required this.helpContent,
+    this.displayHelpItemNumber = true,
   });
 }
