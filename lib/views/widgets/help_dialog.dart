@@ -29,7 +29,6 @@ class HelpDialog extends StatelessWidget with ScreenMixin {
         Provider.of<ThemeProviderVM>(context); // by default, listen is true
 
     int number = 1;
-    int helpItemsLstLength = helpItemsLst.length;
 
     return KeyboardListener(
       // Using FocusNode to enable clicking on Enter to close

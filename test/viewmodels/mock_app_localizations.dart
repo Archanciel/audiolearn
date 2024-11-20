@@ -1405,6 +1405,55 @@ class MockAppLocalizations extends AppLocalizations {
       "WARNING: Delete COMMENTED and uncommented audio filtered by \"$sortFilterParmsName\" parms from playlist \"$playlistTitle\"";
 
   @override
-  String deleteFilteredCommentedAudioWarning(Object deleteAudioNumber, Object deleteCommentedAudioNumber, Object deleteAudioTotalFileSize, Object deleteAudioTotalDuration,) =>
+  String deleteFilteredCommentedAudioWarning(
+    Object deleteAudioNumber,
+    Object deleteCommentedAudioNumber,
+    Object deleteAudioTotalFileSize,
+    Object deleteAudioTotalDuration,
+  ) =>
       "Total audio to delete number: $deleteAudioNumber COMMENTED audio to delete number: $deleteCommentedAudioNumber Corresponding total file size: $deleteAudioTotalFileSize Corresponding total duration: $deleteAudioTotalDuration.";
+
+  @override
+  String get commentedAudioDeletionHelpTitle =>
+      "How to define and use a sort filter parameter in order to avoid deleting commented audio";
+
+  @override
+  String get commentedAudioDeletionHelpContent =>
+      "The description below will explain how to delete fully listened and uncommented audio.";
+
+  @override
+  String get commentedAudioDeletionOpenSFDialogHelpTitle =>
+      "Open the Sort/Filter definition dialog";
+
+  @override
+  String get commentedAudioDeletionOpenSFDialogHelpContent =>
+      "Click on the right download audio view menu icon and click on \"Sort/Filter Audio ...\"";
+
+  @override
+  String get commentedAudioDeletionCreateSFParmHelpTitle =>
+      "Create a valid Sort/Filter parameters";
+
+  @override
+  String get commentedAudioDeletionCreateSFParmHelpContent =>
+      "Enter a Sort/Filter parameters name in the Save as field (FullyListenedUncom for example).Then, uncheck the Partially listened, the Not listened and the Commented checkboxes.Finally, click on the Save button.";
+
+  @override
+  String get commentedAudioDeletionSolutionHelpTitle =>
+      "The solution is to create a Sort/Filter parameters item which will select only fully played audio which are not commented";
+
+  @override
+  String get commentedAudioDeletionSolutionHelpContent =>
+      "In the Sort/Filter definition dialog, the selection parameters are represented by checkboxes ...";
+
+  @override
+  String get commentedAudioDeletionSelectSFParmHelpTitle => "Once you have saved the Sort/Filter parameters, this SF parms is applied to the playlist audio list";
+
+  @override
+  String get commentedAudioDeletionSelectSFParmHelpContent => "If you click on the Playlists left button, you hide the list of playlists and you can see that your newly created SF parms is selected in the SF parms list dropdown menu. Note that if you select another playlist, you will be able to apply to it your created SF parms or another one.";
+
+  @override
+  String get commentedAudioDeletionApplyingNewSFParmHelpTitle => "Finally, open the playlist menu and click on Delete Filtered Audio ...";
+
+  @override
+  String get commentedAudioDeletionApplyingNewSFParmHelpContent => "This time, since a correct SF parms is applied, no warning is displayed for deleting the selected uncommented audio.";
 }
