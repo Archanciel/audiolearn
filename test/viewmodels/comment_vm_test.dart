@@ -457,7 +457,8 @@ void main() {
       DirUtil.deleteFilesAndSubDirsOfDir(
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
-    test('deleteAllAudioComments', () async {
+    test('''Of commented audio, deleteAllAudioComments. The audio is located in
+            local_delete_comment playlist''', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesAndSubDirsOfDir(
@@ -483,7 +484,7 @@ void main() {
 
       List<Comment> commentLst = commentVM.loadAudioComments(audio: audio);
 
-      // the returned Commentlist should have two elements
+      // the returned Commentlist should have three elements
       expect(commentLst.length, 3);
 
       // deleting all the comments of the audio
@@ -495,7 +496,61 @@ void main() {
 
       commentLst = commentVM.loadAudioComments(audio: audio);
 
-      // the returned Commentlist should have two elements
+      // the returned Commentlist should have 0 elements
+      expect(commentLst.length, 0);
+
+      expect(
+          commentVM.getCommentNumber(
+            audio: audio,
+          ),
+          0);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesAndSubDirsOfDir(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
+    });
+    test('''Of uncommented audio, deleteAllAudioComments. The audio is located in
+            S8 audio playlist''', () async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesAndSubDirsOfDir(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_test",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      CommentVM commentVM = CommentVM();
+
+      // This audio has no comment file
+      Audio audio = createAudio(
+        playlistTitle: 'S8 audio',
+        audioFileName:
+            "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.mp3",
+      );
+
+      // now loading the comment list from the comment file
+
+      List<Comment> commentLst = commentVM.loadAudioComments(audio: audio);
+
+      // the returned Commentlist should have three elements
+      expect(commentLst.length, 0);
+
+      // deleting all the comments of the audio
+      commentVM.deleteAllAudioComments(
+        commentedAudio: audio,
+      );
+
+      // now loading the comment list from the comment file
+
+      commentLst = commentVM.loadAudioComments(audio: audio);
+
+      // the returned Commentlist should have 0 elements
       expect(commentLst.length, 0);
 
       expect(

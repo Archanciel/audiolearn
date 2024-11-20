@@ -70,7 +70,8 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             .alreadyDownloadedAudiosPlaylistHelpContent,
       ),
     ];
-    final WarningMessageVM warningMessageVMlistenFalse = Provider.of<WarningMessageVM>(
+    final WarningMessageVM warningMessageVMlistenFalse =
+        Provider.of<WarningMessageVM>(
       context,
       listen: false,
     );
@@ -330,9 +331,10 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             );
 
             if (removedPlayableAudioNumber > 0) {
-              warningMessageVMlistenFalse.setUpdatedPlayableAudioLstPlaylistTitle(
-                  updatedPlayableAudioLstPlaylistTitle: playlist.title,
-                  removedPlayableAudioNumber: removedPlayableAudioNumber);
+              warningMessageVMlistenFalse
+                  .setUpdatedPlayableAudioLstPlaylistTitle(
+                      updatedPlayableAudioLstPlaylistTitle: playlist.title,
+                      removedPlayableAudioNumber: removedPlayableAudioNumber);
             }
             break;
           case PlaylistPopupMenuAction.rewindAudioToStart:
@@ -380,48 +382,95 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             });
             break;
           case PlaylistPopupMenuAction.deleteFilteredAudio:
+            // Content of the list:
+            //  [
+            //    numberOfDeletedAudio,
+            //    numberOfDeletedCommentedAudio,
+            //    deletedAudioFileSizeBytes,
+            //    deletedAudioDurationTenthSec,
+            //  ]
             List<int> deletedAudioNumberLst =
                 playlistListVMlistenTrue.getFilteredAudioQuantities();
-            showDialog<void>(
-              context: context,
-              builder: (BuildContext context) {
-                String selectedPlaylistAudioSortFilterParmsName =
-                    playlistListVMlistenTrue
-                        .getSelectedPlaylistAudioSortFilterParmsName(
-                            audioLearnAppViewType:
-                                AudioLearnAppViewType.playlistDownloadView,
-                            translatedAppliedSortFilterParmsName:
-                                AppLocalizations.of(context)!
-                                    .sortFilterParametersAppliedName);
-                if (selectedPlaylistAudioSortFilterParmsName.isEmpty) {
-                  selectedPlaylistAudioSortFilterParmsName =
-                      AppLocalizations.of(context)!
-                          .sortFilterParametersDefaultName;
-                }
-                return ConfirmActionDialog(
-                  actionFunction: deleteFilteredAudio,
-                  actionFunctionArgs: [
-                    playlistListVMlistenTrue,
-                  ],
-                  dialogTitle: AppLocalizations.of(context)!
-                      .deleteFilteredAudioConfirmationTitle(
-                    selectedPlaylistAudioSortFilterParmsName,
-                    playlistListVMlistenTrue.getSelectedPlaylists()[0].title,
-                  ),
-                  dialogContent: AppLocalizations.of(context)!
-                      .deleteFilteredAudioConfirmation(
-                    deletedAudioNumberLst[0], // total audio number
-                    UiUtil.formatLargeByteAmount(
-                      context: context,
-                      bytes: deletedAudioNumberLst[1],
-                    ), // total audio file size
-                    DateTimeUtil.formatSecondsToHHMMSS(
-                      seconds: deletedAudioNumberLst[2],
-                    ), // total audio duration
-                  ),
-                );
-              },
-            );
+
+            int numberOfDeletedCommentedAudio = deletedAudioNumberLst[1];
+            String selectedPlaylistAudioSortFilterParmsName =
+                playlistListVMlistenTrue
+                    .getSelectedPlaylistAudioSortFilterParmsName(
+                        audioLearnAppViewType:
+                            AudioLearnAppViewType.playlistDownloadView,
+                        translatedAppliedSortFilterParmsName:
+                            AppLocalizations.of(context)!
+                                .sortFilterParametersAppliedName);
+
+            if (selectedPlaylistAudioSortFilterParmsName.isEmpty) {
+              selectedPlaylistAudioSortFilterParmsName =
+                  AppLocalizations.of(context)!.sortFilterParametersDefaultName;
+            }
+
+            if (numberOfDeletedCommentedAudio == 0) {
+              showDialog<void>(
+                context: context,
+                barrierDismissible:
+                    false, // This line prevents the dialog from closing when
+                //            tapping outside the dialog
+                builder: (BuildContext context) {
+                  return ConfirmActionDialog(
+                    actionFunction: deleteFilteredAudio,
+                    actionFunctionArgs: [
+                      playlistListVMlistenTrue,
+                    ],
+                    dialogTitle: AppLocalizations.of(context)!
+                        .deleteFilteredAudioConfirmationTitle(
+                      selectedPlaylistAudioSortFilterParmsName,
+                      playlistListVMlistenTrue.getSelectedPlaylists()[0].title,
+                    ),
+                    dialogContent: AppLocalizations.of(context)!
+                        .deleteFilteredAudioConfirmation(
+                      deletedAudioNumberLst[0], // total audio number
+                      UiUtil.formatLargeByteAmount(
+                        context: context,
+                        bytes: deletedAudioNumberLst[2],
+                      ), // total audio file size
+                      DateTimeUtil.formatSecondsToHHMMSS(
+                        seconds: deletedAudioNumberLst[3] ~/ 10,
+                      ), // total audio duration
+                    ),
+                  );
+                },
+              );
+            } else {
+              showDialog<void>(
+                context: context,
+                barrierDismissible:
+                    false, // This line prevents the dialog from closing when
+                //            tapping outside the dialog
+                builder: (BuildContext context) {
+                  return ConfirmActionDialog(
+                    actionFunction: deleteFilteredAudio,
+                    actionFunctionArgs: [
+                      playlistListVMlistenTrue,
+                    ],
+                    dialogTitle: AppLocalizations.of(context)!
+                        .deleteFilteredCommentedAudioWarningTitle(
+                      selectedPlaylistAudioSortFilterParmsName,
+                      playlistListVMlistenTrue.getSelectedPlaylists()[0].title,
+                    ),
+                    dialogContent: AppLocalizations.of(context)!
+                        .deleteFilteredCommentedAudioWarning(
+                      deletedAudioNumberLst[0], // total audio number
+                      deletedAudioNumberLst[1], // total commented audio number
+                      UiUtil.formatLargeByteAmount(
+                        context: context,
+                        bytes: deletedAudioNumberLst[2],
+                      ), // total audio file size
+                      DateTimeUtil.formatSecondsToHHMMSS(
+                        seconds: deletedAudioNumberLst[3] ~/ 10,
+                      ), // total audio duration
+                    ),
+                  );
+                },
+              );
+            }
             break;
           case PlaylistPopupMenuAction.deletePlaylist:
             showDialog<void>(

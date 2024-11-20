@@ -485,5 +485,23 @@
       "deleteAudioTotalFileSize": {},
       "deleteAudioTotalDuration": {}
     }
+  },
+  "deleteFilteredCommentedAudioWarningTitle": "WARNING: Delete COMMENTED and uncommented audio filtered by \"{sortFilterParmsName}\" parms from playlist \"{playlistTitle}\"",
+  "@deleteFilteredCommentedAudioWarningTitle": {
+    "description": "Warning title for deleting commented and uncommented filtered audio",
+    "placeholders": {
+      "sortFilterParmsName": {},
+      "playlistTitle": {}
+    }
+  },
+  "deleteFilteredCommentedAudioWarning": "Total audio to delete number: {deleteAudioNumber},\nCOMMENTED audio to delete number: {deleteCommentedAudioNumber},\nCorresponding total file size: {deleteAudioTotalFileSize},\nCorresponding total duration: {deleteAudioTotalDuration}.",
+  "@deleteFilteredCommentedAudioWarning": {
+    "description": "Warning message for deleting commented and uncommented filtered audio",
+    "placeholders": {
+      "deleteAudioNumber": {},
+      "deleteCommentedAudioNumber": {},
+      "deleteAudioTotalFileSize": {},
+      "deleteAudioTotalDuration": {}
+    }
   }
 }

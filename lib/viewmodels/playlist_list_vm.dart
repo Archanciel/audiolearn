@@ -818,31 +818,55 @@ class PlaylistListVM extends ChangeNotifier {
       audioToDeleteLst: filteredAudioToDelete,
     );
 
+    // Deleting the comments of uncommented audio is ok
+    for (Audio audio in filteredAudioToDelete) {
+      _commentVM.deleteAllAudioComments(commentedAudio: audio);
+    }
+
     notifyListeners();
   }
 
-  /// Returned int list:
+  /// Returns this int list:
   ///  [
   ///    numberOfDeletedAudio,
+  ///    numberOfDeletedCommentedAudio,
   ///    deletedAudioFileSizeBytes,
   ///    deletedAudioDurationTenthSec,
   ///  ]
   List<int> getFilteredAudioQuantities() {
     int numberOfDeletedAudio =
         _sortedFilteredSelectedPlaylistPlayableAudioLst!.length;
+    int numberOfDeletedCommentedAudio = _getNumberOfCommentedAudio(
+      audioLst: _sortedFilteredSelectedPlaylistPlayableAudioLst!,
+    );
     int deletedAudioFileSizeBytes = 0;
     int deletedAudioDurationTenthSec = 0;
 
     for (Audio audio in _sortedFilteredSelectedPlaylistPlayableAudioLst!) {
       deletedAudioFileSizeBytes += audio.audioFileSize;
-      deletedAudioDurationTenthSec += audio.audioDuration.inSeconds;
+      deletedAudioDurationTenthSec += audio.audioDuration.inMilliseconds ~/ 100;
     }
 
     return [
       numberOfDeletedAudio,
+      numberOfDeletedCommentedAudio,
       deletedAudioFileSizeBytes,
       deletedAudioDurationTenthSec,
     ];
+  }
+
+  int _getNumberOfCommentedAudio({
+    required List<Audio> audioLst,
+  }) {
+    int numberOfCommentedAudio = 0;
+
+    for (Audio audio in audioLst) {
+      if (_commentVM.getCommentNumber(audio: audio) > 0) {
+        numberOfCommentedAudio++;
+      }
+    }
+
+    return numberOfCommentedAudio;
   }
 
   /// Returns the selected playlist audio list. If the user clicked
