@@ -126,6 +126,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             .alreadyDownloadedAudiosPlaylistHelpTitle,
         helpContent: AppLocalizations.of(context)!
             .alreadyDownloadedAudiosPlaylistHelpContent,
+        displayHelpItemNumber: false,
       ),
     ];
 

@@ -59,7 +59,7 @@ class HelpDialog extends StatelessWidget with ScreenMixin {
                     children: [
                       Expanded(
                         child: Text(
-                          (helpItemsLstLength > 1)
+                          (helpItem.displayHelpItemNumber)
                               ? "${number++}. ${helpItem.helpTitle}"
                               : helpItem.helpTitle,
                           style: const TextStyle(

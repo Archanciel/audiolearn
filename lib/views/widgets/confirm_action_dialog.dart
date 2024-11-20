@@ -74,6 +74,7 @@ class _ConfirmActionDialogState extends State<ConfirmActionDialog>
       child: AlertDialog(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
               child: Text(
