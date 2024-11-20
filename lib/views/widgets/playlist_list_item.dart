@@ -120,15 +120,6 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
   }) {
     final RenderBox listTileBox = context.findRenderObject() as RenderBox;
     final Offset listTilePosition = listTileBox.localToGlobal(Offset.zero);
-    final List<HelpItem> audioSetSpeedDialogHelpItemsLst = [
-      HelpItem(
-        helpTitle: AppLocalizations.of(context)!
-            .alreadyDownloadedAudiosPlaylistHelpTitle,
-        helpContent: AppLocalizations.of(context)!
-            .alreadyDownloadedAudiosPlaylistHelpContent,
-        displayHelpItemNumber: false,
-      ),
-    ];
 
     showMenu(
       context: context,
@@ -348,6 +339,16 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                 rewindedPlayableAudioNumber: rewindedPlayableAudioNumber);
             break;
           case PlaylistPopupMenuAction.setPlaylistAudioPlaySpeed:
+            final List<HelpItem> audioSetSpeedDialogHelpItemsLst = [
+              HelpItem(
+                helpTitle: AppLocalizations.of(context)!
+                    .alreadyDownloadedAudiosPlaylistHelpTitle,
+                helpContent: AppLocalizations.of(context)!
+                    .alreadyDownloadedAudiosPlaylistHelpContent,
+                displayHelpItemNumber: false,
+              ),
+            ];
+
             showDialog<List<dynamic>>(
               context: context,
               builder: (BuildContext context) {
@@ -439,6 +440,51 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                 },
               );
             } else {
+              final List<HelpItem> filteredCommentedAudioDeletionHelpItemsLst = [
+                HelpItem(
+                  helpTitle: AppLocalizations.of(context)!
+                      .commentedAudioDeletionHelpTitle,
+                  helpContent: AppLocalizations.of(context)!
+                      .commentedAudioDeletionHelpContent,
+                  displayHelpItemNumber: false,
+                ),
+                HelpItem(
+                  helpTitle: AppLocalizations.of(context)!
+                      .commentedAudioDeletionSolutionHelpTitle,
+                  helpContent: AppLocalizations.of(context)!
+                      .commentedAudioDeletionSolutionHelpContent,
+                  displayHelpItemNumber: true,
+                ),
+                HelpItem(
+                  helpTitle: AppLocalizations.of(context)!
+                      .commentedAudioDeletionOpenSFDialogHelpTitle,
+                  helpContent: AppLocalizations.of(context)!
+                      .commentedAudioDeletionOpenSFDialogHelpContent,
+                  displayHelpItemNumber: true,
+                ),
+                HelpItem(
+                  helpTitle: AppLocalizations.of(context)!
+                      .commentedAudioDeletionCreateSFParmHelpTitle,
+                  helpContent: AppLocalizations.of(context)!
+                      .commentedAudioDeletionCreateSFParmHelpContent,
+                  displayHelpItemNumber: true,
+                ),
+                HelpItem(
+                  helpTitle: AppLocalizations.of(context)!
+                      .commentedAudioDeletionSelectSFParmHelpTitle,
+                  helpContent: AppLocalizations.of(context)!
+                      .commentedAudioDeletionSelectSFParmHelpContent,
+                  displayHelpItemNumber: true,
+                ),
+                HelpItem(
+                  helpTitle: AppLocalizations.of(context)!
+                      .commentedAudioDeletionApplyingNewSFParmHelpTitle,
+                  helpContent: AppLocalizations.of(context)!
+                      .commentedAudioDeletionApplyingNewSFParmHelpContent,
+                  displayHelpItemNumber: true,
+                ),
+              ];
+
               showDialog<void>(
                 context: context,
                 barrierDismissible:
@@ -467,7 +513,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                         seconds: deletedAudioNumberLst[3] ~/ 10,
                       ), // total audio duration
                     ),
-                    helpItemsLst: audioSetSpeedDialogHelpItemsLst,
+                    helpItemsLst: filteredCommentedAudioDeletionHelpItemsLst,
                   );
                 },
               );

@@ -20141,7 +20141,7 @@ void main() {
       });
     });
   });
-  group('Delete filtered audio from playlist test', () {
+  group('Delete filtered uncommented audio from playlist test', () {
     testWidgets(
         '''Select a filter SF parms and apply it. Then, click on the 'Delete
            Filtered Audio' playlist menu and verify the audio suppression as
@@ -20439,6 +20439,1692 @@ void main() {
         currentAudioTitle: currentAudioTitle,
         currentAudioSubTitle: currentAudioSubTitle,
       );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Select a fully listened commented audio located in default SF parms
+           lower than the filtered SF audio which will be deleted (was downloaded
+           before them). Then select a filter SF parms and apply it. Then, click
+           on the 'Delete Filtered Audio' playlist menu and verify the audio
+           suppression as well as the audio selection.''', (tester) async {
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'delete_filtered_audio_test',
+        tapOnPlaylistToggleButton: true,
+      );
+
+      const String youtubePlaylistTitle = 'S8 audio';
+
+      List<String> audioTitleBeforeDeletionLst = [
+        "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+        "La surpopulation mondiale par Jancovici et Barrau",
+        "La résilience insulaire par Fiona Roche",
+        "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+        "Les besoins artificiels par R.Keucheyan",
+        "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+      ];
+
+      // Verify the displayed audio list before selecting the 'listenedNoCom'.
+      // Sort/Filter parm.
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: audioTitleBeforeDeletionLst,
+      );
+
+      String firstDownloadedAudioTitle =
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
+
+      // Then, tap on the first downloaded Audio ListTile Text
+      // widget finder to select this audio. This switch to the
+      // audio player view
+      final Finder lastDownloadedAudioListTileTextWidgetFinder =
+          find.text(firstDownloadedAudioTitle);
+
+      await tester.tap(lastDownloadedAudioListTileTextWidgetFinder);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
+
+      // Now, go back to the playlist download view
+      final Finder audioPlayerNavButtonFinder =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(audioPlayerNavButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the currently selected audio title/subTitle of the
+      // 'S8 audio' playlist
+      String firstDownloadedAudioSubTitle =
+          "0:20:32.0. 7.51 MB at 2.44 MB/sec on 26/12/2023 at 09:45.";
+
+      // Verify that the current audio is displayed with the correct
+      // title and subtitle color
+      await IntegrationTestUtil.verifyCurrentAudioTitleAndSubTitleColor(
+        tester: tester,
+        currentAudioTitle: firstDownloadedAudioTitle,
+        currentAudioSubTitle: firstDownloadedAudioSubTitle,
+      );
+
+      String sortFilterParmName = 'listenedNoCom';
+
+      // Now tap on the current dropdown button item to open the dropdown
+      // button items list
+
+      Finder dropDownButtonFinder =
+          find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+      Finder dropDownButtonTextFinder = find.descendant(
+        of: dropDownButtonFinder,
+        matching: find.byType(Text),
+      );
+
+      await tester.tap(dropDownButtonTextFinder);
+      await tester.pumpAndSettle();
+
+      // Find and tap on the 'listenedNoCom' sort/filter item
+      Finder titleAscDropDownTextFinder = find.text(sortFilterParmName).last;
+      await tester.tap(titleAscDropDownTextFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the audioTitles selected by applying the 'listenedNoCom'
+      // sort/filter parms
+      List<String> audioTitleToDeleteBeforeDeletionLst = [
+        "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+        "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+      ];
+
+      // Verify the displayed audio list after selecting the 'listenedNoCom'
+      // Sort/Filter parms.
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: audioTitleToDeleteBeforeDeletionLst,
+      );
+
+      // Verify the presence of the audio files which will be deleted
+
+      List<String> audioFileNameToDeleteLst = [
+        "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
+        "240107-094528-Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik 23-09-10.mp3",
+      ];
+
+      List<String> listMp3FileNames = DirUtil.listFileNamesInDir(
+        directoryPath:
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
+        fileExtension: 'mp3',
+      );
+
+      for (String audioFileNameToDelete in audioFileNameToDeleteLst) {
+        expect(
+          listMp3FileNames.contains(audioFileNameToDelete),
+          true,
+        );
+      }
+
+      // Tap the 'Toggle List' button to show the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Verify that the applyed Sort/Filter parms name is displayed
+      // after the selected playlist title
+
+      Text selectedSortFilterParmsName = tester
+          .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
+
+      expect(
+        selectedSortFilterParmsName.data,
+        sortFilterParmName,
+      );
+
+      // Now test deleting the filtered audio
+
+      // Open the delete filtered audio dialog by clicking on the 'Delete
+      // Filtered Audio ...' playlist menu item
+
+      // Now find the leading menu icon button of the Playlist ListTile
+      // and tap on it
+
+      // First, find the Youtube playlist ListTile Text widget
+      final Finder youtubePlaylistListTileTextWidgetFinder =
+          find.text(youtubePlaylistTitle);
+
+      // Then obtain the Youtube source playlist ListTile widget
+      // enclosing the Text widget by finding its ancestor
+      final Finder youtubePlaylistListTileWidgetFinder = find.ancestor(
+        of: youtubePlaylistListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      final Finder firstPlaylistListTileLeadingMenuIconButton = find.descendant(
+        of: youtubePlaylistListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(firstPlaylistListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the delete playlist popup menu item and tap on it
+      final Finder popupDeletePlaylistMenuItem =
+          find.byKey(const Key("popup_menu_delete_filtered_audio"));
+
+      await tester.tap(popupDeletePlaylistMenuItem);
+      await tester.pumpAndSettle();
+
+      // Verifying the confirm dialog title
+
+      final Text deleteFilteredAudioConfirmDialogTitleWidget =
+          tester.widget<Text>(find.byKey(const Key('confirmDialogTitleKey')));
+
+      expect(deleteFilteredAudioConfirmDialogTitleWidget.data,
+          'Delete audio filtered by "$sortFilterParmName" parms from playlist "$youtubePlaylistTitle"');
+
+      // Verifying the confirm dialog message
+
+      final Text deleteFilteredAudioConfirmDialogMessageTextWidget = tester
+          .widget<Text>(find.byKey(const Key('confirmationDialogMessageKey')));
+
+      expect(deleteFilteredAudioConfirmDialogMessageTextWidget.data,
+          'Audio to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.');
+
+      // Now find the confirm button of the delete filtered audio confirm
+      // dialog and tap on it
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pumpAndSettle();
+
+      // Verify that the audio files were deleted
+
+      listMp3FileNames = DirUtil.listFileNamesInDir(
+        directoryPath:
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
+        fileExtension: 'mp3',
+      );
+
+      for (String audioFileNameToDelete in audioFileNameToDeleteLst) {
+        expect(
+          listMp3FileNames.contains(audioFileNameToDelete),
+          false,
+        );
+      }
+
+      // Verify that the other files were not deleted
+
+      List<String> remainingAudioFileNameLst = [
+        "231226-094526-Ce qui va vraiment sauver notre espèce par Jancovici et Barrau 23-09-23.mp3",
+        "231226-094534-3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher) 23-12-01.mp3",
+        "240107-094520-Les besoins artificiels par R.Keucheyan 24-01-05.mp3",
+        "240107-094546-La résilience insulaire par Fiona Roche 24-01-03.mp3",
+        "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.mp3",
+      ];
+
+      for (String remainingAudioFileName in remainingAudioFileNameLst) {
+        expect(
+          listMp3FileNames.contains(remainingAudioFileName),
+          true,
+        );
+      }
+
+      // Verify the 'S8 audio' playlist json file
+
+      Playlist loadedPlaylist = loadPlaylist(youtubePlaylistTitle);
+
+      expect(loadedPlaylist.downloadedAudioLst.length, 18);
+
+      List<String> downloadedAudioLst = loadedPlaylist.downloadedAudioLst
+          .map((Audio audio) => audio.validVideoTitle)
+          .toList();
+
+      for (String audioTitleToDelete in audioTitleBeforeDeletionLst) {
+        expect(
+          downloadedAudioLst.contains(audioTitleToDelete),
+          true,
+        );
+      }
+
+      expect(loadedPlaylist.playableAudioLst.length, 5);
+
+      List<String> audioTitleAfterDeletionLst = [
+        "La surpopulation mondiale par Jancovici et Barrau",
+        "La résilience insulaire par Fiona Roche",
+        "Les besoins artificiels par R.Keucheyan",
+        "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+      ];
+
+      List<String> playableAudioLst = loadedPlaylist.playableAudioLst
+          .map((Audio audio) => audio.validVideoTitle)
+          .toList();
+
+      for (String audioTitleAfterDeletion in audioTitleAfterDeletionLst) {
+        expect(
+          playableAudioLst.contains(audioTitleAfterDeletion),
+          true,
+        );
+      }
+
+      // Tap the 'Toggle List' button to hide the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Verify the audioTitles content by applying the 'listenedNoCom'
+      // sort/filter parms. Since they have been deleted, the list is
+      // empty.
+
+      // Verify the empty displayed audio list before selecting the
+      // 'listenedNoCom' Sort/Filter parms.
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: [],
+      );
+
+      // Now tap on the current dropdown button item to open the dropdown
+      // button items list
+
+      dropDownButtonFinder =
+          find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+      dropDownButtonTextFinder = find.descendant(
+        of: dropDownButtonFinder,
+        matching: find.byType(Text),
+      );
+
+      await tester.tap(dropDownButtonTextFinder);
+      await tester.pumpAndSettle();
+
+      // Find and tap on the 'default' sort/filter item
+      titleAscDropDownTextFinder = find.text('default').last;
+      await tester.tap(titleAscDropDownTextFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the audioTitles selected by applying the 'default'
+      // sort/filter parms after having deleted the filtered audio
+
+      // Verify the displayed audio list after selecting the 'default'.
+      // Sort/Filter parms.
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: audioTitleAfterDeletionLst,
+      );
+
+      // Verify the currently selected audio title/subTitle of the
+      // 'S8 audio' playlist
+
+      // Verify that the current audio is displayed with the correct
+      // title and subtitle color
+      await IntegrationTestUtil.verifyCurrentAudioTitleAndSubTitleColor(
+        tester: tester,
+        currentAudioTitle: firstDownloadedAudioTitle,
+        currentAudioSubTitle: firstDownloadedAudioSubTitle,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Select a partially listened not commented audio located in default SF
+           parms lower than the filtered SF audio which will be deleted (was downloaded
+           before them). Then select a filter SF parms and apply it. Then, click
+           on the 'Delete Filtered Audio' playlist menu and verify the audio
+           suppression as well as the audio selection.''', (tester) async {
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'delete_filtered_audio_test',
+        tapOnPlaylistToggleButton: true,
+      );
+
+      const String youtubePlaylistTitle = 'S8 audio';
+
+      List<String> audioTitleBeforeDeletionLst = [
+        "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+        "La surpopulation mondiale par Jancovici et Barrau",
+        "La résilience insulaire par Fiona Roche",
+        "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+        "Les besoins artificiels par R.Keucheyan",
+        "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+      ];
+
+      // Verify the displayed audio list before selecting the 'listenedNoCom'.
+      // Sort/Filter parm.
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: audioTitleBeforeDeletionLst,
+      );
+
+      String partiallyListenedAudioTitle =
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau";
+
+      // Then, tap on the previously downloaded Audio ListTile Text
+      // widget finder to select this audio. This switch to the
+      // audio player view
+      final Finder previouslyDownloadedAudioListTileTextWidgetFinder =
+          find.text(partiallyListenedAudioTitle);
+
+      await tester.tap(previouslyDownloadedAudioListTileTextWidgetFinder);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
+
+      // Now, go back to the playlist download view
+      final Finder audioPlayerNavButtonFinder =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(audioPlayerNavButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the currently selected audio title/subTitle of the
+      // 'S8 audio' playlist
+      String partiallyListenedAudioSubTitle =
+          "0:06:29.0. 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45.";
+
+      // Verify that the current audio is displayed with the correct
+      // title and subtitle color
+      await IntegrationTestUtil.verifyCurrentAudioTitleAndSubTitleColor(
+        tester: tester,
+        currentAudioTitle: partiallyListenedAudioTitle,
+        currentAudioSubTitle: partiallyListenedAudioSubTitle,
+      );
+
+      String sortFilterParmName = 'listenedNoCom';
+
+      // Now tap on the current dropdown button item to open the dropdown
+      // button items list
+
+      Finder dropDownButtonFinder =
+          find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+      Finder dropDownButtonTextFinder = find.descendant(
+        of: dropDownButtonFinder,
+        matching: find.byType(Text),
+      );
+
+      await tester.tap(dropDownButtonTextFinder);
+      await tester.pumpAndSettle();
+
+      // Find and tap on the 'listenedNoCom' sort/filter item
+      Finder titleAscDropDownTextFinder = find.text(sortFilterParmName).last;
+      await tester.tap(titleAscDropDownTextFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the audioTitles selected by applying the 'listenedNoCom'
+      // sort/filter parms
+      List<String> audioTitleToDeleteBeforeDeletionLst = [
+        "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+        "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+      ];
+
+      // Verify the displayed audio list after selecting the 'listenedNoCom'
+      // Sort/Filter parms.
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: audioTitleToDeleteBeforeDeletionLst,
+      );
+
+      // Verify the presence of the audio files which will be deleted
+
+      List<String> audioFileNameToDeleteLst = [
+        "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
+        "240107-094528-Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik 23-09-10.mp3",
+      ];
+
+      List<String> listMp3FileNames = DirUtil.listFileNamesInDir(
+        directoryPath:
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
+        fileExtension: 'mp3',
+      );
+
+      for (String audioFileNameToDelete in audioFileNameToDeleteLst) {
+        expect(
+          listMp3FileNames.contains(audioFileNameToDelete),
+          true,
+        );
+      }
+
+      // Tap the 'Toggle List' button to show the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Verify that the applyed Sort/Filter parms name is displayed
+      // after the selected playlist title
+
+      Text selectedSortFilterParmsName = tester
+          .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
+
+      expect(
+        selectedSortFilterParmsName.data,
+        sortFilterParmName,
+      );
+
+      // Now test deleting the filtered audio
+
+      // Open the delete filtered audio dialog by clicking on the 'Delete
+      // Filtered Audio ...' playlist menu item
+
+      // Now find the leading menu icon button of the Playlist ListTile
+      // and tap on it
+
+      // First, find the Youtube playlist ListTile Text widget
+      final Finder youtubePlaylistListTileTextWidgetFinder =
+          find.text(youtubePlaylistTitle);
+
+      // Then obtain the Youtube source playlist ListTile widget
+      // enclosing the Text widget by finding its ancestor
+      final Finder youtubePlaylistListTileWidgetFinder = find.ancestor(
+        of: youtubePlaylistListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      final Finder firstPlaylistListTileLeadingMenuIconButton = find.descendant(
+        of: youtubePlaylistListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(firstPlaylistListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the delete playlist popup menu item and tap on it
+      final Finder popupDeletePlaylistMenuItem =
+          find.byKey(const Key("popup_menu_delete_filtered_audio"));
+
+      await tester.tap(popupDeletePlaylistMenuItem);
+      await tester.pumpAndSettle();
+
+      // Verifying the confirm dialog title
+
+      final Text deleteFilteredAudioConfirmDialogTitleWidget =
+          tester.widget<Text>(find.byKey(const Key('confirmDialogTitleKey')));
+
+      expect(deleteFilteredAudioConfirmDialogTitleWidget.data,
+          'Delete audio filtered by "$sortFilterParmName" parms from playlist "$youtubePlaylistTitle"');
+
+      // Verifying the confirm dialog message
+
+      final Text deleteFilteredAudioConfirmDialogMessageTextWidget = tester
+          .widget<Text>(find.byKey(const Key('confirmationDialogMessageKey')));
+
+      expect(deleteFilteredAudioConfirmDialogMessageTextWidget.data,
+          'Audio to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.');
+
+      // Now find the confirm button of the delete filtered audio confirm
+      // dialog and tap on it
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pumpAndSettle();
+
+      // Verify that the audio files were deleted
+
+      listMp3FileNames = DirUtil.listFileNamesInDir(
+        directoryPath:
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
+        fileExtension: 'mp3',
+      );
+
+      for (String audioFileNameToDelete in audioFileNameToDeleteLst) {
+        expect(
+          listMp3FileNames.contains(audioFileNameToDelete),
+          false,
+        );
+      }
+
+      // Verify that the other files were not deleted
+
+      List<String> remainingAudioFileNameLst = [
+        "231226-094526-Ce qui va vraiment sauver notre espèce par Jancovici et Barrau 23-09-23.mp3",
+        "231226-094534-3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher) 23-12-01.mp3",
+        "240107-094520-Les besoins artificiels par R.Keucheyan 24-01-05.mp3",
+        "240107-094546-La résilience insulaire par Fiona Roche 24-01-03.mp3",
+        "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.mp3",
+      ];
+
+      for (String remainingAudioFileName in remainingAudioFileNameLst) {
+        expect(
+          listMp3FileNames.contains(remainingAudioFileName),
+          true,
+        );
+      }
+
+      // Verify the 'S8 audio' playlist json file
+
+      Playlist loadedPlaylist = loadPlaylist(youtubePlaylistTitle);
+
+      expect(loadedPlaylist.downloadedAudioLst.length, 18);
+
+      List<String> downloadedAudioLst = loadedPlaylist.downloadedAudioLst
+          .map((Audio audio) => audio.validVideoTitle)
+          .toList();
+
+      for (String audioTitleToDelete in audioTitleBeforeDeletionLst) {
+        expect(
+          downloadedAudioLst.contains(audioTitleToDelete),
+          true,
+        );
+      }
+
+      expect(loadedPlaylist.playableAudioLst.length, 5);
+
+      List<String> audioTitleAfterDeletionLst = [
+        "La surpopulation mondiale par Jancovici et Barrau",
+        "La résilience insulaire par Fiona Roche",
+        "Les besoins artificiels par R.Keucheyan",
+        "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+      ];
+
+      List<String> playableAudioLst = loadedPlaylist.playableAudioLst
+          .map((Audio audio) => audio.validVideoTitle)
+          .toList();
+
+      for (String audioTitleAfterDeletion in audioTitleAfterDeletionLst) {
+        expect(
+          playableAudioLst.contains(audioTitleAfterDeletion),
+          true,
+        );
+      }
+
+      // Tap the 'Toggle List' button to hide the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Verify the audioTitles content by applying the 'listenedNoCom'
+      // sort/filter parms. Since they have been deleted, the list is
+      // empty.
+
+      // Verify the empty displayed audio list before selecting the
+      // 'listenedNoCom' Sort/Filter parms.
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: [],
+      );
+
+      // Now tap on the current dropdown button item to open the dropdown
+      // button items list
+
+      dropDownButtonFinder =
+          find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+      dropDownButtonTextFinder = find.descendant(
+        of: dropDownButtonFinder,
+        matching: find.byType(Text),
+      );
+
+      await tester.tap(dropDownButtonTextFinder);
+      await tester.pumpAndSettle();
+
+      // Find and tap on the 'default' sort/filter item
+      titleAscDropDownTextFinder = find.text('default').last;
+      await tester.tap(titleAscDropDownTextFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the audioTitles selected by applying the 'default'
+      // sort/filter parms after having deleted the filtered audio
+
+      // Verify the displayed audio list after selecting the 'default'.
+      // Sort/Filter parms.
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: audioTitleAfterDeletionLst,
+      );
+
+      // Verify the currently selected audio title/subTitle of the
+      // 'S8 audio' playlist
+
+      // Verify that the current audio is displayed with the correct
+      // title and subtitle color
+      await IntegrationTestUtil.verifyCurrentAudioTitleAndSubTitleColor(
+        tester: tester,
+        currentAudioTitle: partiallyListenedAudioTitle,
+        currentAudioSubTitle: partiallyListenedAudioSubTitle,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Select a partially listened not commented audio located in default SF
+           parms higher than the filtered SF audio which will be deleted (was downloaded
+           after them). Then select a filter SF parms and apply it. Then, click
+           on the 'Delete Filtered Audio' playlist menu and verify the audio
+           suppression as well as the audio selection.''', (tester) async {
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'delete_filtered_audio_test',
+        tapOnPlaylistToggleButton: true,
+      );
+
+      const String youtubePlaylistTitle = 'S8 audio';
+
+      List<String> audioTitleBeforeDeletionLst = [
+        "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+        "La surpopulation mondiale par Jancovici et Barrau",
+        "La résilience insulaire par Fiona Roche",
+        "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+        "Les besoins artificiels par R.Keucheyan",
+        "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+      ];
+
+      // Verify the displayed audio list before selecting the 'listenedNoCom'.
+      // Sort/Filter parm.
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: audioTitleBeforeDeletionLst,
+      );
+
+      // Scrolling up the audios list in order to display the last
+      // downloaded audio title
+      // Find the audio list widget using its key
+      final listFinder = find.byKey(const Key('audio_list'));
+      // Perform the scroll action
+      await tester.drag(listFinder, const Offset(0, 500));
+      await tester.pumpAndSettle();
+
+      String fullyThenPartiallyListenedAndFinallySelectedAudioTitle =
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
+
+      // Then, tap on the first downloaded Audio ListTile Text
+      // widget finder to select this audio. This switch to the
+      // audio player view. Since the audio is currently fully
+      // played, it will be transformed to partially played.
+      final Finder firstDownloadedAudioListTileTextWidgetFinder =
+          find.text(fullyThenPartiallyListenedAndFinallySelectedAudioTitle);
+
+      await tester.tap(firstDownloadedAudioListTileTextWidgetFinder);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
+
+      // Tapping 2 times on the backward 1 minute icon button. Now, the
+      // last downloaded audio of the playlist is partially listened.
+      for (int i = 0; i < 5; i++) {
+        await tester
+            .tap(find.byKey(const Key('audioPlayerViewRewind1mButton')));
+        await tester.pumpAndSettle();
+      }
+
+      // Now, go back to the playlist download view
+      Finder audioPlayerNavButtonFinder =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(audioPlayerNavButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the currently selected audio title/subTitle of the
+      // 'S8 audio' playlist
+      String fullyThenPartiallyListenedAndFinallySelectedAudioSubTitle =
+          "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.";
+
+      // Verify that the current audio is displayed with the correct
+      // title and subtitle color
+      await IntegrationTestUtil.verifyCurrentAudioTitleAndSubTitleColor(
+        tester: tester,
+        currentAudioTitle:
+            fullyThenPartiallyListenedAndFinallySelectedAudioTitle,
+        currentAudioSubTitle:
+            fullyThenPartiallyListenedAndFinallySelectedAudioSubTitle,
+      );
+
+      String partiallyThenFullyListenedAudioTitle =
+          "La résilience insulaire par Fiona Roche";
+
+      // Then, tap on the third downloaded Audio ListTile Text
+      // widget finder to select this partially played audio.
+      // This switch to the audio player view.
+      final Finder thirdDownloadedAudioListTileTextWidgetFinder =
+          find.text(partiallyThenFullyListenedAudioTitle);
+
+      await tester.tap(thirdDownloadedAudioListTileTextWidgetFinder);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
+
+      // Now skip to the end of the audio to set it as fully played
+      await tester.tap(find.byKey(const Key('audioPlayerViewSkipToEndButton')));
+      await tester.pumpAndSettle();
+
+      // Now, go back to the playlist download view
+      audioPlayerNavButtonFinder =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(audioPlayerNavButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the currently selected audio title/subTitle of the
+      // 'S8 audio' playlist
+      String partiallyThenFullyListenedAudioSubTitle =
+          "0:13:35.0. 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16.";
+
+      // Verify that the current audio is displayed with the correct
+      // title and subtitle color
+      await IntegrationTestUtil.verifyCurrentAudioTitleAndSubTitleColor(
+        tester: tester,
+        currentAudioTitle: partiallyThenFullyListenedAudioTitle,
+        currentAudioSubTitle: partiallyThenFullyListenedAudioSubTitle,
+      );
+
+      String sortFilterParmName = 'listenedNoCom';
+
+      // Now tap on the current dropdown button item to open the dropdown
+      // button items list
+
+      Finder dropDownButtonFinder =
+          find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+      Finder dropDownButtonTextFinder = find.descendant(
+        of: dropDownButtonFinder,
+        matching: find.byType(Text),
+      );
+
+      await tester.tap(dropDownButtonTextFinder);
+      await tester.pumpAndSettle();
+
+      // Find and tap on the 'listenedNoCom' sort/filter item
+      Finder titleAscDropDownTextFinder = find.text(sortFilterParmName).last;
+      await tester.tap(titleAscDropDownTextFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the audioTitles selected by applying the 'listenedNoCom'
+      // sort/filter parms
+      List<String> audioTitleToDeleteBeforeDeletionLst = [
+        "La résilience insulaire par Fiona Roche",
+        "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+      ];
+
+      // Verify the displayed audio list after selecting the 'listenedNoCom'
+      // Sort/Filter parms.
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: audioTitleToDeleteBeforeDeletionLst,
+      );
+
+      // Verify the presence of the audio files which will be deleted
+
+      List<String> audioFileNameToDeleteLst = [
+        "240107-094546-La résilience insulaire par Fiona Roche 24-01-03.mp3",
+        "240107-094528-Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik 23-09-10.mp3",
+      ];
+
+      List<String> listMp3FileNames = DirUtil.listFileNamesInDir(
+        directoryPath:
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
+        fileExtension: 'mp3',
+      );
+
+      for (String audioFileNameToDelete in audioFileNameToDeleteLst) {
+        expect(
+          listMp3FileNames.contains(audioFileNameToDelete),
+          true,
+        );
+      }
+
+      // Tap the 'Toggle List' button to show the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Verify that the applyed Sort/Filter parms name is displayed
+      // after the selected playlist title
+
+      Text selectedSortFilterParmsName = tester
+          .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
+
+      expect(
+        selectedSortFilterParmsName.data,
+        sortFilterParmName,
+      );
+
+      // Now test deleting the filtered audio
+
+      // Open the delete filtered audio dialog by clicking on the 'Delete
+      // Filtered Audio ...' playlist menu item
+
+      // Now find the leading menu icon button of the Playlist ListTile
+      // and tap on it
+
+      // First, find the Youtube playlist ListTile Text widget
+      final Finder youtubePlaylistListTileTextWidgetFinder =
+          find.text(youtubePlaylistTitle);
+
+      // Then obtain the Youtube source playlist ListTile widget
+      // enclosing the Text widget by finding its ancestor
+      final Finder youtubePlaylistListTileWidgetFinder = find.ancestor(
+        of: youtubePlaylistListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      final Finder firstPlaylistListTileLeadingMenuIconButton = find.descendant(
+        of: youtubePlaylistListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(firstPlaylistListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the delete playlist popup menu item and tap on it
+      final Finder popupDeletePlaylistMenuItem =
+          find.byKey(const Key("popup_menu_delete_filtered_audio"));
+
+      await tester.tap(popupDeletePlaylistMenuItem);
+      await tester.pumpAndSettle();
+
+      // Verifying the confirm dialog title
+
+      final Text deleteFilteredAudioConfirmDialogTitleWidget =
+          tester.widget<Text>(find.byKey(const Key('confirmDialogTitleKey')));
+
+      expect(deleteFilteredAudioConfirmDialogTitleWidget.data,
+          'Delete audio filtered by "$sortFilterParmName" parms from playlist "$youtubePlaylistTitle"');
+
+      // Verifying the confirm dialog message
+
+      final Text deleteFilteredAudioConfirmDialogMessageTextWidget = tester
+          .widget<Text>(find.byKey(const Key('confirmationDialogMessageKey')));
+
+      expect(deleteFilteredAudioConfirmDialogMessageTextWidget.data,
+          'Audio to delete number: 2,\nCorresponding total file size: 9.96 MB,\nCorresponding total duration: 00:27:14.');
+
+      // Now find the confirm button of the delete filtered audio confirm
+      // dialog and tap on it
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pumpAndSettle();
+
+      // Verify that the audio files were deleted
+
+      listMp3FileNames = DirUtil.listFileNamesInDir(
+        directoryPath:
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
+        fileExtension: 'mp3',
+      );
+
+      for (String audioFileNameToDelete in audioFileNameToDeleteLst) {
+        expect(
+          listMp3FileNames.contains(audioFileNameToDelete),
+          false,
+        );
+      }
+
+      // Verify that the other files were not deleted
+
+      List<String> remainingAudioFileNameLst = [
+        "231226-094526-Ce qui va vraiment sauver notre espèce par Jancovici et Barrau 23-09-23.mp3",
+        "231226-094534-3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher) 23-12-01.mp3",
+        "240107-094520-Les besoins artificiels par R.Keucheyan 24-01-05.mp3",
+        "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
+        "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.mp3",
+      ];
+
+      for (String remainingAudioFileName in remainingAudioFileNameLst) {
+        expect(
+          listMp3FileNames.contains(remainingAudioFileName),
+          true,
+        );
+      }
+
+      // Verify the 'S8 audio' playlist json file
+
+      Playlist loadedPlaylist = loadPlaylist(youtubePlaylistTitle);
+
+      expect(loadedPlaylist.downloadedAudioLst.length, 18);
+
+      List<String> downloadedAudioLst = loadedPlaylist.downloadedAudioLst
+          .map((Audio audio) => audio.validVideoTitle)
+          .toList();
+
+      for (String audioTitleToDelete in audioTitleBeforeDeletionLst) {
+        expect(
+          downloadedAudioLst.contains(audioTitleToDelete),
+          true,
+        );
+      }
+
+      expect(loadedPlaylist.playableAudioLst.length, 5);
+
+      List<String> audioTitleAfterDeletionLst = [
+        "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+        "La surpopulation mondiale par Jancovici et Barrau",
+        "Les besoins artificiels par R.Keucheyan",
+        "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+      ];
+
+      List<String> playableAudioLst = loadedPlaylist.playableAudioLst
+          .map((Audio audio) => audio.validVideoTitle)
+          .toList();
+
+      for (String audioTitleAfterDeletion in audioTitleAfterDeletionLst) {
+        expect(
+          playableAudioLst.contains(audioTitleAfterDeletion),
+          true,
+        );
+      }
+
+      // Tap the 'Toggle List' button to hide the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Verify the audioTitles content by applying the 'listenedNoCom'
+      // sort/filter parms. Since they have been deleted, the list is
+      // empty.
+
+      // Verify the empty displayed audio list before selecting the
+      // 'listenedNoCom' Sort/Filter parms.
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: [],
+      );
+
+      // Now tap on the current dropdown button item to open the dropdown
+      // button items list
+
+      dropDownButtonFinder =
+          find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+      dropDownButtonTextFinder = find.descendant(
+        of: dropDownButtonFinder,
+        matching: find.byType(Text),
+      );
+
+      await tester.tap(dropDownButtonTextFinder);
+      await tester.pumpAndSettle();
+
+      // Find and tap on the 'default' sort/filter item
+      titleAscDropDownTextFinder = find.text('default').last;
+      await tester.tap(titleAscDropDownTextFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the audioTitles selected by applying the 'default'
+      // sort/filter parms after having deleted the filtered audio
+
+      // Verify the displayed audio list after selecting the 'default'.
+      // Sort/Filter parms.
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: audioTitleAfterDeletionLst,
+      );
+
+      // Verify the currently selected audio title/subTitle of the
+      // 'S8 audio' playlist
+
+      // Verify that the current audio is displayed with the correct
+      // title and subtitle color
+      await IntegrationTestUtil.verifyCurrentAudioTitleAndSubTitleColor(
+        tester: tester,
+        currentAudioTitle:
+            fullyThenPartiallyListenedAndFinallySelectedAudioTitle,
+        currentAudioSubTitle:
+            fullyThenPartiallyListenedAndFinallySelectedAudioSubTitle,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+  });
+  group('Delete filtered commented audio from playlist test', () {
+    testWidgets(
+        '''Select the 'FullyListened' SF parms and apply it. Then, click on the 'Delete
+           Filtered Audio' playlist menu and verify the displayed warning as well
+           as the suppression of all playlist fully listened audio as well as their
+           comments.''', (tester) async {
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'delete_filtered_audio_test',
+        tapOnPlaylistToggleButton: true,
+      );
+
+      const String youtubePlaylistTitle = 'S8 audio';
+
+      List<String> audioTitleBeforeDeletionLst = [
+        "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+        "La surpopulation mondiale par Jancovici et Barrau",
+        "La résilience insulaire par Fiona Roche",
+        "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+        "Les besoins artificiels par R.Keucheyan",
+        "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+      ];
+
+      // Verify the displayed audio list before selecting the 'FullyListened'
+      // Sort/Filter parm.
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: audioTitleBeforeDeletionLst,
+      );
+
+      String sortFilterParmName = 'FullyListened';
+
+      // Now tap on the current dropdown button item to open the dropdown
+      // button items list
+
+      Finder dropDownButtonFinder =
+          find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+      Finder dropDownButtonTextFinder = find.descendant(
+        of: dropDownButtonFinder,
+        matching: find.byType(Text),
+      );
+
+      await tester.tap(dropDownButtonTextFinder);
+      await tester.pumpAndSettle();
+
+      // Find and tap on the 'FullyListened' sort/filter item
+      Finder titleAscDropDownTextFinder = find.text(sortFilterParmName).last;
+      await tester.tap(titleAscDropDownTextFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the audioTitles selected by applying the 'FullyListened'
+      // sort/filter parms
+      List<String> audioTitleToDeleteBeforeDeletionLst = [
+        "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+        "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+        "Les besoins artificiels par R.Keucheyan",
+        "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+      ];
+
+      // Verify the displayed audio list after selecting the 'listenedNoCom'
+      // Sort/Filter parms.
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: audioTitleToDeleteBeforeDeletionLst,
+      );
+
+      // Setting to this field the currently selected audio title/subTitle
+      // of the 'S8 audio' playlist
+      String currentAudioTitle =
+          "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik";
+      String currentAudioSubTitle =
+          "0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16.";
+
+      // Verify that the current audio is displayed with the correct
+      // title and subtitle color
+      await IntegrationTestUtil.verifyCurrentAudioTitleAndSubTitleColor(
+        tester: tester,
+        currentAudioTitle: currentAudioTitle,
+        currentAudioSubTitle: currentAudioSubTitle,
+      );
+
+      // Verify the presence of the audio files which will be later deleted
+
+      List<String> audioFileNameToDeleteLst = [
+        "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
+        "240107-094528-Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik 23-09-10.mp3",
+        "240107-094520-Les besoins artificiels par R.Keucheyan 24-01-05.mp3",
+        "231226-094534-3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher) 23-12-01.mp3",
+      ];
+
+      List<String> listMp3FileNames = DirUtil.listFileNamesInDir(
+        directoryPath:
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
+        fileExtension: 'mp3',
+      );
+
+      for (String audioFileNameToDelete in audioFileNameToDeleteLst) {
+        expect(
+          listMp3FileNames.contains(audioFileNameToDelete),
+          true,
+        );
+      }
+
+      // Verify the presence of the audio comment files which will be later
+      // deleted or not
+
+      List<String> audioCommentFileNameToDeleteLst = [
+        "231226-094534-3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher) 23-12-01.json",
+        "240107-094520-Les besoins artificiels par R.Keucheyan 24-01-05.json",
+      ];
+
+      List<String> listCommentJsonFileNames = DirUtil.listFileNamesInDir(
+        directoryPath:
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kCommentDirName",
+        fileExtension: 'json',
+      );
+
+      for (String audioCommentFileNameToDelete
+          in audioCommentFileNameToDeleteLst) {
+        expect(
+          listCommentJsonFileNames.contains(audioCommentFileNameToDelete),
+          true,
+        );
+      }
+
+      // Tap the 'Toggle List' button to show the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Verify that the applyed Sort/Filter parms name is displayed
+      // after the selected playlist title
+
+      Text selectedSortFilterParmsName = tester
+          .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
+
+      expect(
+        selectedSortFilterParmsName.data,
+        sortFilterParmName,
+      );
+
+      // Now test deleting the filtered audio
+
+      // Open the delete filtered audio dialog by clicking on the 'Delete
+      // Filtered Audio ...' playlist menu item
+
+      // Now find the leading menu icon button of the Playlist ListTile
+      // and tap on it
+
+      // First, find the Youtube playlist ListTile Text widget
+      final Finder youtubePlaylistListTileTextWidgetFinder =
+          find.text(youtubePlaylistTitle);
+
+      // Then obtain the Youtube source playlist ListTile widget
+      // enclosing the Text widget by finding its ancestor
+      final Finder youtubePlaylistListTileWidgetFinder = find.ancestor(
+        of: youtubePlaylistListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      final Finder firstPlaylistListTileLeadingMenuIconButton = find.descendant(
+        of: youtubePlaylistListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(firstPlaylistListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the delete playlist popup menu item and tap on it
+      final Finder popupDeletePlaylistMenuItem =
+          find.byKey(const Key("popup_menu_delete_filtered_audio"));
+
+      await tester.tap(popupDeletePlaylistMenuItem);
+      await tester.pumpAndSettle();
+
+      // Verifying the confirm dialog title
+
+      final Text deleteFilteredAudioConfirmDialogTitleWidget =
+          tester.widget<Text>(find.byKey(const Key('confirmDialogTitleKey')));
+
+      expect(deleteFilteredAudioConfirmDialogTitleWidget.data,
+          'WARNING: you are going to delete COMMENTED and uncommented audio filtered by "$sortFilterParmName" parms from playlist "$youtubePlaylistTitle". Watch the help to solve the problem ...');
+
+      // Verifying the confirm dialog message
+
+      final Text deleteFilteredAudioConfirmDialogMessageTextWidget = tester
+          .widget<Text>(find.byKey(const Key('confirmationDialogMessageKey')));
+
+      expect(deleteFilteredAudioConfirmDialogMessageTextWidget.data,
+          'Total audio to delete number: 4,\nCOMMENTED audio to delete number: 2,\nCorresponding total file size: 21.86 MB,\nCorresponding total duration: 00:59:45.');
+
+      // Now find the confirm button of the delete filtered audio confirm
+      // dialog and tap on it
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pumpAndSettle();
+
+      // Verify that the audio files were deleted
+
+      listMp3FileNames = DirUtil.listFileNamesInDir(
+        directoryPath:
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
+        fileExtension: 'mp3',
+      );
+
+      for (String audioFileNameToDelete in audioFileNameToDeleteLst) {
+        expect(
+          listMp3FileNames.contains(audioFileNameToDelete),
+          false,
+        );
+      }
+
+      // Verify that the audio comment files were deleted
+
+      listCommentJsonFileNames = DirUtil.listFileNamesInDir(
+        directoryPath:
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kCommentDirName",
+        fileExtension: 'json',
+      );
+
+      for (String audioCommentFileNameToDelete
+          in audioCommentFileNameToDeleteLst) {
+        expect(
+          listCommentJsonFileNames.contains(audioCommentFileNameToDelete),
+          false,
+        );
+      }
+
+      // Verify that the other files were not deleted
+
+      List<String> remainingAudioFileNameLst = [
+        "231226-094526-Ce qui va vraiment sauver notre espèce par Jancovici et Barrau 23-09-23.mp3",
+        "240107-094546-La résilience insulaire par Fiona Roche 24-01-03.mp3",
+        "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.mp3",
+      ];
+
+      for (String remainingAudioFileName in remainingAudioFileNameLst) {
+        expect(
+          listMp3FileNames.contains(remainingAudioFileName),
+          true,
+        );
+      }
+
+      // Verify that the other audio comment files were not deleted
+
+      listCommentJsonFileNames = DirUtil.listFileNamesInDir(
+        directoryPath:
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kCommentDirName",
+        fileExtension: 'json',
+      );
+
+      final List<String> audioCommentFileNameNotDeletedLst = [
+        "231226-094526-Ce qui va vraiment sauver notre espèce par Jancovici et Barrau 23-09-23.json",
+      ];
+
+      for (String audioCommentFileNameNotDeleted
+          in audioCommentFileNameNotDeletedLst) {
+        expect(
+          listCommentJsonFileNames.contains(audioCommentFileNameNotDeleted),
+          true,
+        );
+      }
+
+      // Verify the 'S8 audio' playlist json file
+
+      Playlist loadedPlaylist = loadPlaylist(youtubePlaylistTitle);
+
+      expect(loadedPlaylist.downloadedAudioLst.length, 18);
+
+      List<String> downloadedAudioLst = loadedPlaylist.downloadedAudioLst
+          .map((Audio audio) => audio.validVideoTitle)
+          .toList();
+
+      for (String audioTitleToDelete in audioTitleBeforeDeletionLst) {
+        expect(
+          downloadedAudioLst.contains(audioTitleToDelete),
+          true,
+        );
+      }
+
+      expect(loadedPlaylist.playableAudioLst.length, 3);
+
+      List<String> audioTitleAfterDeletionLst = [
+        "La surpopulation mondiale par Jancovici et Barrau",
+        "La résilience insulaire par Fiona Roche",
+        "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+      ];
+
+      List<String> playableAudioLst = loadedPlaylist.playableAudioLst
+          .map((Audio audio) => audio.validVideoTitle)
+          .toList();
+
+      for (String audioTitleAfterDeletion in audioTitleAfterDeletionLst) {
+        expect(
+          playableAudioLst.contains(audioTitleAfterDeletion),
+          true,
+        );
+      }
+
+      // Tap the 'Toggle List' button to hide the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Verify the audioTitles content by applying the 'listenedNoCom'
+      // sort/filter parms. Since they have been deleted, the list is
+      // empty.
+
+      // Verify the empty displayed audio list before selecting the
+      // 'listenedNoCom' Sort/Filter parms.
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: [],
+      );
+
+      // Now tap on the current dropdown button item to open the dropdown
+      // button items list
+
+      dropDownButtonFinder =
+          find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+      dropDownButtonTextFinder = find.descendant(
+        of: dropDownButtonFinder,
+        matching: find.byType(Text),
+      );
+
+      await tester.tap(dropDownButtonTextFinder);
+      await tester.pumpAndSettle();
+
+      // Find and tap on the 'default' sort/filter item
+      titleAscDropDownTextFinder = find.text('default').last;
+      await tester.tap(titleAscDropDownTextFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the audioTitles selected by applying the 'default'
+      // sort/filter parms after having deleted the filtered audio
+
+      // Verify the displayed audio list after selecting the 'default'.
+      // Sort/Filter parms.
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: audioTitleAfterDeletionLst,
+      );
+
+      // Setting to this field the currently selected audio title/subTitle
+      // of the 'S8 audio' playlist
+      currentAudioTitle = "La résilience insulaire par Fiona Roche";
+      currentAudioSubTitle =
+          "0:13:35.0. 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16.";
+
+      // Verify that the current audio is displayed with the correct
+      // title and subtitle color
+      await IntegrationTestUtil.verifyCurrentAudioTitleAndSubTitleColor(
+        tester: tester,
+        currentAudioTitle: currentAudioTitle,
+        currentAudioSubTitle: currentAudioSubTitle,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets(
+        ''''default' SF parms is applied. Then, click on the 'Delete Filtered
+            Audio' playlist menu and verify the displayed warning as well as
+            the suppression of all playlist fully listened audio as well as their
+            comments.''', (tester) async {
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'delete_filtered_audio_test',
+        tapOnPlaylistToggleButton: true,
+      );
+
+      const String youtubePlaylistTitle = 'S8 audio';
+
+      List<String> audioTitleBeforeDeletionLst = [
+        "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+        "La surpopulation mondiale par Jancovici et Barrau",
+        "La résilience insulaire par Fiona Roche",
+        "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+        "Les besoins artificiels par R.Keucheyan",
+        "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+      ];
+
+      // Verify the displayed audio list.
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: audioTitleBeforeDeletionLst,
+      );
+
+      String sortFilterParmName = 'default';
+
+      // Setting to this field the currently selected audio title/subTitle
+      // of the 'S8 audio' playlist
+      String currentAudioTitle =
+          "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik";
+      String currentAudioSubTitle =
+          "0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16.";
+
+      // Verify that the current audio is displayed with the correct
+      // title and subtitle color
+      await IntegrationTestUtil.verifyCurrentAudioTitleAndSubTitleColor(
+        tester: tester,
+        currentAudioTitle: currentAudioTitle,
+        currentAudioSubTitle: currentAudioSubTitle,
+      );
+
+      // Verify the presence of the audio files which will be later deleted
+
+      List<String> audioFileNameToDeleteLst = [
+        "231226-094526-Ce qui va vraiment sauver notre espèce par Jancovici et Barrau 23-09-23.mp3",
+        "240107-094546-La résilience insulaire par Fiona Roche 24-01-03.mp3",
+        "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
+        "240107-094528-Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik 23-09-10.mp3",
+        "240107-094520-Les besoins artificiels par R.Keucheyan 24-01-05.mp3",
+        "231226-094534-3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher) 23-12-01.mp3",
+        "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.mp3",
+      ];
+
+      List<String> listMp3FileNames = DirUtil.listFileNamesInDir(
+        directoryPath:
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
+        fileExtension: 'mp3',
+      );
+
+      for (String audioFileNameToDelete in audioFileNameToDeleteLst) {
+        expect(
+          listMp3FileNames.contains(audioFileNameToDelete),
+          true,
+        );
+      }
+
+      // Verify the presence of the audio comment files which will be later
+      // deleted
+
+      List<String> audioCommentFileNameToDeleteLst = [
+        "231226-094526-Ce qui va vraiment sauver notre espèce par Jancovici et Barrau 23-09-23.json",
+        "231226-094534-3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher) 23-12-01.json",
+        "240107-094520-Les besoins artificiels par R.Keucheyan 24-01-05.json",
+      ];
+
+      List<String> listCommentJsonFileNames = DirUtil.listFileNamesInDir(
+        directoryPath:
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kCommentDirName",
+        fileExtension: 'json',
+      );
+
+      for (String audioCommentFileNameToDelete
+          in audioCommentFileNameToDeleteLst) {
+        expect(
+          listCommentJsonFileNames.contains(audioCommentFileNameToDelete),
+          true,
+        );
+      }
+
+      // Tap the 'Toggle List' button to show the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Verify that the applyed Sort/Filter parms name is displayed
+      // after the selected playlist title
+
+      Text selectedSortFilterParmsName = tester
+          .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
+
+      expect(
+        selectedSortFilterParmsName.data,
+        sortFilterParmName,
+      );
+
+      // Now test deleting the filtered audio
+
+      // Open the delete filtered audio dialog by clicking on the 'Delete
+      // Filtered Audio ...' playlist menu item
+
+      // Now find the leading menu icon button of the Playlist ListTile
+      // and tap on it
+
+      // First, find the Youtube playlist ListTile Text widget
+      final Finder youtubePlaylistListTileTextWidgetFinder =
+          find.text(youtubePlaylistTitle);
+
+      // Then obtain the Youtube source playlist ListTile widget
+      // enclosing the Text widget by finding its ancestor
+      final Finder youtubePlaylistListTileWidgetFinder = find.ancestor(
+        of: youtubePlaylistListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      final Finder firstPlaylistListTileLeadingMenuIconButton = find.descendant(
+        of: youtubePlaylistListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(firstPlaylistListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the delete playlist popup menu item and tap on it
+      final Finder popupDeletePlaylistMenuItem =
+          find.byKey(const Key("popup_menu_delete_filtered_audio"));
+
+      await tester.tap(popupDeletePlaylistMenuItem);
+      await tester.pumpAndSettle();
+
+      // Verifying the confirm dialog title
+
+      final Text deleteFilteredAudioConfirmDialogTitleWidget =
+          tester.widget<Text>(find.byKey(const Key('confirmDialogTitleKey')));
+
+      expect(deleteFilteredAudioConfirmDialogTitleWidget.data,
+          'WARNING: you are going to delete COMMENTED and uncommented audio filtered by "$sortFilterParmName" parms from playlist "$youtubePlaylistTitle". Watch the help to solve the problem ...');
+
+      // Verifying the confirm dialog message
+
+      final Text deleteFilteredAudioConfirmDialogMessageTextWidget = tester
+          .widget<Text>(find.byKey(const Key('confirmationDialogMessageKey')));
+
+      expect(deleteFilteredAudioConfirmDialogMessageTextWidget.data,
+          'Total audio to delete number: 7,\nCOMMENTED audio to delete number: 3,\nCorresponding total file size: 31.99 MB,\nCorresponding total duration: 01:27:27.');
+
+      // Now find the confirm button of the delete filtered audio confirm
+      // dialog and tap on it
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pumpAndSettle();
+
+      // Verify that the audio files were deleted
+
+      listMp3FileNames = DirUtil.listFileNamesInDir(
+        directoryPath:
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
+        fileExtension: 'mp3',
+      );
+
+      for (String audioFileNameToDelete in audioFileNameToDeleteLst) {
+        expect(
+          listMp3FileNames.contains(audioFileNameToDelete),
+          false,
+        );
+      }
+
+      // Verify that the audio comment files were deleted
+
+      listCommentJsonFileNames = DirUtil.listFileNamesInDir(
+        directoryPath:
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kCommentDirName",
+        fileExtension: 'json',
+      );
+
+      for (String audioCommentFileNameToDelete
+          in audioCommentFileNameToDeleteLst) {
+        expect(
+          listCommentJsonFileNames.contains(audioCommentFileNameToDelete),
+          false,
+        );
+      }
+
+      // Verify that the other files were not deleted
+
+      List<String> remainingAudioFileNameLst = [
+      ];
+
+      for (String remainingAudioFileName in remainingAudioFileNameLst) {
+        expect(
+          listMp3FileNames.contains(remainingAudioFileName),
+          true,
+        );
+      }
+
+      // Verify that the other audio comment files were not deleted
+
+      listCommentJsonFileNames = DirUtil.listFileNamesInDir(
+        directoryPath:
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kCommentDirName",
+        fileExtension: 'json',
+      );
+
+      final List<String> audioCommentFileNameNotDeletedLst = [
+      ];
+
+      for (String audioCommentFileNameNotDeleted
+          in audioCommentFileNameNotDeletedLst) {
+        expect(
+          listCommentJsonFileNames.contains(audioCommentFileNameNotDeleted),
+          true,
+        );
+      }
+
+      // Verify the 'S8 audio' playlist json file
+
+      Playlist loadedPlaylist = loadPlaylist(youtubePlaylistTitle);
+
+      expect(loadedPlaylist.downloadedAudioLst.length, 18);
+
+      List<String> downloadedAudioLst = loadedPlaylist.downloadedAudioLst
+          .map((Audio audio) => audio.validVideoTitle)
+          .toList();
+
+      for (String audioTitleToDelete in audioTitleBeforeDeletionLst) {
+        expect(
+          downloadedAudioLst.contains(audioTitleToDelete),
+          true,
+        );
+      }
+
+      expect(loadedPlaylist.playableAudioLst.length, 0);
+
+      List<String> audioTitleAfterDeletionLst = [
+      ];
+
+      List<String> playableAudioLst = loadedPlaylist.playableAudioLst
+          .map((Audio audio) => audio.validVideoTitle)
+          .toList();
+
+      for (String audioTitleAfterDeletion in audioTitleAfterDeletionLst) {
+        expect(
+          playableAudioLst.contains(audioTitleAfterDeletion),
+          true,
+        );
+      }
+
+      // Tap the 'Toggle List' button to hide the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Verify the audioTitles content by applying the 'listenedNoCom'
+      // sort/filter parms. Since they have been deleted, the list is
+      // empty.
+
+      // Verify the empty displayed audio list before selecting the
+      // 'listenedNoCom' Sort/Filter parms.
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: [],
+      );
+
+      // Now tap on the current dropdown button item to open the dropdown
+      // button items list
+
+      Finder dropDownButtonFinder =
+          find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+      Finder dropDownButtonTextFinder = find.descendant(
+        of: dropDownButtonFinder,
+        matching: find.byType(Text),
+      );
+
+      await tester.tap(dropDownButtonTextFinder);
+      await tester.pumpAndSettle();
+
+      // Find and tap on the 'default' sort/filter item
+      Finder titleAscDropDownTextFinder = find.text('default').last;
+      await tester.tap(titleAscDropDownTextFinder);
+      await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
