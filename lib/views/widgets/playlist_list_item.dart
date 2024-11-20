@@ -62,14 +62,6 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
 
   @override
   Widget build(BuildContext context) {
-    List<HelpItem> helpItemsLst = [
-      HelpItem(
-        helpTitle: AppLocalizations.of(context)!
-            .alreadyDownloadedAudiosPlaylistHelpTitle,
-        helpContent: AppLocalizations.of(context)!
-            .alreadyDownloadedAudiosPlaylistHelpContent,
-      ),
-    ];
     final WarningMessageVM warningMessageVMlistenFalse =
         Provider.of<WarningMessageVM>(
       context,
@@ -92,7 +84,6 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                 playlistListVMlistenTrue: playlistListVMlistenTrue,
                 audioPlayerVMlistenTrue: audioPlayerVMlistenTrue,
                 warningMessageVMlistenFalse: warningMessageVMlistenFalse,
-                helpItemsLst: helpItemsLst,
               );
             },
           ),
@@ -126,10 +117,18 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
     required PlaylistListVM playlistListVMlistenTrue,
     required AudioPlayerVM audioPlayerVMlistenTrue,
     required WarningMessageVM warningMessageVMlistenFalse,
-    required List<HelpItem> helpItemsLst,
   }) {
     final RenderBox listTileBox = context.findRenderObject() as RenderBox;
     final Offset listTilePosition = listTileBox.localToGlobal(Offset.zero);
+    final List<HelpItem> audioSetSpeedDialogHelpItemsLst = [
+      HelpItem(
+        helpTitle: AppLocalizations.of(context)!
+            .alreadyDownloadedAudiosPlaylistHelpTitle,
+        helpContent: AppLocalizations.of(context)!
+            .alreadyDownloadedAudiosPlaylistHelpContent,
+      ),
+    ];
+
     showMenu(
       context: context,
       position: RelativeRect.fromLTRB(
@@ -363,7 +362,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                   audioPlaySpeed: playlistAudioPlaySpeed,
                   updateCurrentPlayAudioSpeed: false,
                   displayApplyToAudioAlreadyDownloadedCheckbox: true,
-                  helpItemsLst: helpItemsLst,
+                  helpItemsLst: audioSetSpeedDialogHelpItemsLst,
                 );
               },
             ).then((value) {
@@ -467,6 +466,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                         seconds: deletedAudioNumberLst[3] ~/ 10,
                       ), // total audio duration
                     ),
+                    helpItemsLst: audioSetSpeedDialogHelpItemsLst,
                   );
                 },
               );

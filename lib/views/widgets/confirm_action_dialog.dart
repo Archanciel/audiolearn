@@ -4,9 +4,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants.dart';
+import '../../models/help_item.dart';
 import '../../views/screen_mixin.dart';
 import '../../services/settings_data_service.dart';
 import '../../viewmodels/theme_provider_vm.dart';
+import 'help_dialog.dart';
 
 enum ConfirmAction { cancel, confirm }
 
@@ -17,7 +19,8 @@ class ConfirmActionDialog extends StatefulWidget {
   final String dialogContent; // Content of the dialog
   final Function? warningFunction; // The action to execute on confirmation
   final List<dynamic> warningFunctionArgs; // Arguments for the action function
-
+  final List<HelpItem> helpItemsLst;
+ 
   const ConfirmActionDialog({
     required this.actionFunction,
     required this.actionFunctionArgs,
@@ -25,6 +28,7 @@ class ConfirmActionDialog extends StatefulWidget {
     required this.dialogContent,
     this.warningFunction,
     this.warningFunctionArgs = const [],
+    this.helpItemsLst = const [],
     super.key,
   });
 
@@ -68,9 +72,43 @@ class _ConfirmActionDialogState extends State<ConfirmActionDialog>
         }
       },
       child: AlertDialog(
-        title: Text(
-          widget.dialogTitle,
-          key: const Key('confirmDialogTitleKey'),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Text(
+                widget.dialogTitle,
+                key: const Key('confirmDialogTitleKey'),
+              ),
+            ),
+            (widget.helpItemsLst.isNotEmpty)
+                // Help icon button is displayed only when the dialog is
+                // used to set the audio play speed in the application
+                // settings view or launched from the playlist set audio
+                // play speed item menu. In the audio player view, the help
+                // icon button is not displayed.
+                ? IconButton(
+                    icon: IconTheme(
+                      data: (themeProviderVM.currentTheme == AppTheme.dark
+                              ? ScreenMixin.themeDataDark
+                              : ScreenMixin.themeDataLight)
+                          .iconTheme,
+                      child: const Icon(
+                        Icons.help_outline,
+                        size: 40.0,
+                      ),
+                    ),
+                    onPressed: () {
+                      showDialog<void>(
+                        context: context,
+                        builder: (context) => HelpDialog(
+                          helpItemsLst: widget.helpItemsLst,
+                        ),
+                      );
+                    },
+                  )
+                : Container(),
+          ],
         ),
         content: Text(
           widget.dialogContent,
