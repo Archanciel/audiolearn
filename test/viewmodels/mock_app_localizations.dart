@@ -1390,6 +1390,21 @@ class MockAppLocalizations extends AppLocalizations {
       "Delete audio filtered by \"$sortFilterParmsName\" parameters from playlist \"$playlistTitle\"";
 
   @override
-  String deleteFilteredAudioConfirmation(Object deleteAudioNumber, Object deleteAudioTotalFileSize, Object deleteAudioTotalDuration,) =>
+  String deleteFilteredAudioConfirmation(
+    Object deleteAudioNumber,
+    Object deleteAudioTotalFileSize,
+    Object deleteAudioTotalDuration,
+  ) =>
       "Audio to delete number: $deleteAudioNumber Corresponding total file size: $deleteAudioTotalFileSize Corresponding total duration: $deleteAudioTotalDuration.";
+
+  @override
+  String deleteFilteredCommentedAudioWarningTitle(
+    Object sortFilterParmsName,
+    Object playlistTitle,
+  ) =>
+      "WARNING: Delete COMMENTED and uncommented audio filtered by \"$sortFilterParmsName\" parms from playlist \"$playlistTitle\"";
+
+  @override
+  String deleteFilteredCommentedAudioWarning(Object deleteAudioNumber, Object deleteCommentedAudioNumber, Object deleteAudioTotalFileSize, Object deleteAudioTotalDuration,) =>
+      "Total audio to delete number: $deleteAudioNumber COMMENTED audio to delete number: $deleteCommentedAudioNumber Corresponding total file size: $deleteAudioTotalFileSize Corresponding total duration: $deleteAudioTotalDuration.";
 }

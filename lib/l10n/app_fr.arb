@@ -471,5 +471,23 @@
       "deleteAudioTotalFileSize": {},
       "deleteAudioTotalDuration": {}
     }
+  },
+  "deleteFilteredCommentedAudioWarningTitle": "AVERTISSEMENT: Supprimer les audio COMMENTÉS et non commentés filtrés par le paramètre \"{sortFilterParmsName}\" dans la playlist \"{playlistTitle}\"",
+  "@deleteFilteredCommentedAudioWarningTitle": {
+    "description": "Warning title for deleting commented and uncommented filtered audio",
+    "placeholders": {
+      "sortFilterParmsName": {},
+      "playlistTitle": {}
+    }
+  },
+  "deleteFilteredCommentedAudioWarning": "Nombre total d'audio à supprimer: {deleteAudioNumber},\nNombre d'audio COMMENTÉS à supprimer: {deleteCommentedAudioNumber},\nTaille totale correspondante: {deleteAudioTotalFileSize},\nDurée totale correspondante: {deleteAudioTotalDuration}.",
+  "@deleteFilteredCommentedAudioWarning": {
+    "description": "Warning message for deleting commented and uncommented filtered audio",
+    "placeholders": {
+      "deleteAudioNumber": {},
+      "deleteCommentedAudioNumber": {},
+      "deleteAudioTotalFileSize": {},
+      "deleteAudioTotalDuration": {}
+    }
   }
 }
