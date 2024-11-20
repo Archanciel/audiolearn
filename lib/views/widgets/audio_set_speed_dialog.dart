@@ -37,7 +37,7 @@ class AudioSetSpeedDialog extends StatefulWidget {
   ///
   /// When the dialog is used in the playlist set speed item menu, the
   /// only {displayApplyToExistingPlaylistCheckbox} and {helpItemsLst}
-  /// parameter is are set by the caller.
+  /// parameters are set by the caller.
   const AudioSetSpeedDialog({
     super.key,
     required this.audioPlaySpeed,
