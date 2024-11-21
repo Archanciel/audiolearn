@@ -366,7 +366,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
                   return ConfirmActionDialog(
                     actionFunction: deleteAudio,
                     actionFunctionArgs: [context, audioToDelete],
-                    dialogTitle:
+                    dialogTitleOne:
                         _createDeleteAudioDialogTitle(context, audioToDelete),
                     dialogContent: AppLocalizations.of(context)!
                         .confirmCommentedAudioDeletionComment(
@@ -425,7 +425,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
                       playlistListVMlistenFalse,
                       audioToDelete
                     ],
-                    dialogTitle:
+                    dialogTitleOne:
                         _createDeleteAudioDialogTitle(context, audioToDelete),
                     dialogContent: AppLocalizations.of(context)!
                         .confirmCommentedAudioDeletionComment(

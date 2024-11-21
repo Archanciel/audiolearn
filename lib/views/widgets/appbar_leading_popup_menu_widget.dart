@@ -332,7 +332,7 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
                       context,
                       audioToDelete,
                     ],
-                    dialogTitle: _createDeleteAudioDialogTitle(
+                    dialogTitleOne: _createDeleteAudioDialogTitle(
                       context,
                       audioToDelete,
                     ),
@@ -397,7 +397,7 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
                       playlistListVMlistenFalse,
                       audioToDelete,
                     ],
-                    dialogTitle: _createDeleteAudioDialogTitle(
+                    dialogTitleOne: _createDeleteAudioDialogTitle(
                       context,
                       audioToDelete,
                     ),
@@ -415,7 +415,8 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
                 }
               });
             } else {
-              nextAudio = playlistListVMlistenFalse.deleteAudioFromPlaylistAsWell(
+              nextAudio =
+                  playlistListVMlistenFalse.deleteAudioFromPlaylistAsWell(
                 audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
                 audio: audioToDelete,
               );
