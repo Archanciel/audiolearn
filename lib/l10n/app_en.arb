@@ -504,16 +504,16 @@
       "deleteAudioTotalDuration": {}
     }
   },
-  "commentedAudioDeletionHelpTitle": "How to define and use a sort filter parameter in order to avoid deleting commented audio ?",
-  "commentedAudioDeletionHelpContent": "The description below will explain how to delete fully listened uncommented audio.",
-  "commentedAudioDeletionSolutionHelpTitle": "The solution is to create a Sort/Filter parameters item which will select only fully played audio which are not commented",
+  "commentedAudioDeletionHelpTitle": "How to create and use a Sort/Filter parameter to prevent deleting commented audio ?",
+  "commentedAudioDeletionHelpContent": "This guide explains how to delete fully listened audio that are not commented.",
+  "commentedAudioDeletionSolutionHelpTitle": "The solution is to create a Sort/Filter parameter to select only fully played uncommented audio",
   "commentedAudioDeletionSolutionHelpContent": "In the Sort/Filter definition dialog, the selection parameters are represented by checkboxes ...",
   "commentedAudioDeletionOpenSFDialogHelpTitle": "Open the Sort/Filter definition dialog",
-  "commentedAudioDeletionOpenSFDialogHelpContent": "Click on the right download audio view menu icon and click on \"Sort/Filter Audio ...\"",
-  "commentedAudioDeletionCreateSFParmHelpTitle": "Create a valid Sort/Filter parameters item",
-  "commentedAudioDeletionCreateSFParmHelpContent": "Enter a Sort/Filter parameters name in the \"Save as\" field (FullyListenedUncom for example).\nThen, uncheck the \"Partially listened\", the \"Not listened\" and the \"Commented\" checkboxes.\nFinally, click on the \"Save\" button.",
-  "commentedAudioDeletionSelectSFParmHelpTitle": "Once you have saved the Sort/Filter parameters, this SF parms is applied to the playlist audio list which is now reduced",
-  "commentedAudioDeletionSelectSFParmHelpContent": "If you click on the \"Playlists\" left button, you hide the list of playlists and you can see that your newly created SF parms is selected in the SF parms list dropdown menu. Note that if you select another playlist, you will be able to apply to it your created SF parms, or another one ...",
+  "commentedAudioDeletionOpenSFDialogHelpContent": "Click the right menu icon in the download audio view, then select \"Sort/Filter Audio ...\"",
+  "commentedAudioDeletionCreateSFParmHelpTitle": "Create a valid Sort/Filter parameter",
+  "commentedAudioDeletionCreateSFParmHelpContent": "In the \"Save as\" field, enter a name for the Sort/Filter parameter (e.g., FullyListenedUncom). Uncheck the checkboxes for \"Partially listened\", \"Not listened\" and \"Commented\". Then click on \"Save\".",
+  "commentedAudioDeletionSelectSFParmHelpTitle": "Once saved, the Sort/Filter parameter is applied to the playlist, reducing the audio list.",
+  "commentedAudioDeletionSelectSFParmHelpContent": "Click the \"Playlists\" button to hide the list of playlists. You’ll see your newly created SF parameter selected in the dropdown menu. You can apply this parameter or another one to any playlist ...",
   "commentedAudioDeletionApplyingNewSFParmHelpTitle": "Finally, open the playlist menu and click on \"Delete Filtered Audio ...\"",
-  "commentedAudioDeletionApplyingNewSFParmHelpContent": "This time, since a correct SF parms is applied, no warning is displayed for deleting the selected uncommented audio."
+  "commentedAudioDeletionApplyingNewSFParmHelpContent": "This time, since a correct SF parameter is applied, no warning will be displayed when deleting the selected uncommented audio."
 }
