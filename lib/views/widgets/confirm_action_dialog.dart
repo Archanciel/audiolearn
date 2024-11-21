@@ -86,7 +86,7 @@ class _ConfirmActionDialogState extends State<ConfirmActionDialog>
                     widget.dialogTitleOne,
                     maxLines: 2,
                     style: Theme.of(context).textTheme.headlineSmall,
-                    key: const Key('confirmDialogTitleKey'),
+                    key: const Key('confirmDialogTitleOneKey'),
                   ),
                 ),
                 if (widget.helpItemsLst.isNotEmpty)

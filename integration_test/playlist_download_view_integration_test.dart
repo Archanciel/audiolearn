@@ -298,8 +298,8 @@ void main() {
 
       // Now verifying the confirm dialog message
 
-      final Text deletePlaylistDialogTitleWidget =
-          tester.widget<Text>(find.byKey(const Key('confirmDialogTitleKey')));
+      final Text deletePlaylistDialogTitleWidget = tester
+          .widget<Text>(find.byKey(const Key('confirmDialogTitleOneKey')));
 
       expect(deletePlaylistDialogTitleWidget.data,
           'Delete Youtube Playlist "$youtubeNewPlaylistTitle"');
@@ -1098,8 +1098,8 @@ void main() {
 
       // Now verifying the confirm dialog message
 
-      final Text deletePlaylistDialogTitleWidget =
-          tester.widget<Text>(find.byKey(const Key('confirmDialogTitleKey')));
+      final Text deletePlaylistDialogTitleWidget = tester
+          .widget<Text>(find.byKey(const Key('confirmDialogTitleOneKey')));
 
       expect(deletePlaylistDialogTitleWidget.data,
           'Delete Local Playlist "$localPlaylistTitle"');
@@ -1337,8 +1337,8 @@ void main() {
 
       // Now verifying the confirm dialog message
 
-      final Text deletePlaylistDialogTitleWidget =
-          tester.widget<Text>(find.byKey(const Key('confirmDialogTitleKey')));
+      final Text deletePlaylistDialogTitleWidget = tester
+          .widget<Text>(find.byKey(const Key('confirmDialogTitleOneKey')));
 
       expect(deletePlaylistDialogTitleWidget.data,
           'Delete Local Playlist "$localPlaylistTitle"');
@@ -4667,7 +4667,7 @@ void main() {
       // Check the value of the confirm dialog title
       Finder confirmActionDialogTitleText = find.descendant(
           of: confirmActionDialogFinder,
-          matching: find.byKey(const Key("confirmDialogTitleKey")));
+          matching: find.byKey(const Key("confirmDialogTitleOneKey")));
 
       expect(
         tester.widget<Text>(confirmActionDialogTitleText).data!,
@@ -5042,7 +5042,7 @@ void main() {
       // Check the value of the confirm dialog title
       Finder confirmActionDialogTitleText = find.descendant(
           of: confirmActionDialogFinder,
-          matching: find.byKey(const Key("confirmDialogTitleKey")));
+          matching: find.byKey(const Key("confirmDialogTitleOneKey")));
 
       expect(
         tester.widget<Text>(confirmActionDialogTitleText).data!,
@@ -11039,8 +11039,8 @@ void main() {
 
       // Now verifying the confirm dialog message
 
-      final Text deletePlaylistDialogTitleWidget =
-          tester.widget<Text>(find.byKey(const Key('confirmDialogTitleKey')));
+      final Text deletePlaylistDialogTitleWidget = tester
+          .widget<Text>(find.byKey(const Key('confirmDialogTitleOneKey')));
 
       expect(deletePlaylistDialogTitleWidget.data,
           'Supprimer la playlist Youtube "$youtubePlaylistToDeleteTitle"');
@@ -11377,8 +11377,8 @@ void main() {
 
       // Now verifying the confirm dialog message
 
-      final Text deletePlaylistDialogTitleWidget =
-          tester.widget<Text>(find.byKey(const Key('confirmDialogTitleKey')));
+      final Text deletePlaylistDialogTitleWidget = tester
+          .widget<Text>(find.byKey(const Key('confirmDialogTitleOneKey')));
 
       expect(deletePlaylistDialogTitleWidget.data,
           'Supprimer la playlist locale "$localPlaylistToDeleteTitle"');
@@ -11734,8 +11734,8 @@ void main() {
 
       // Now verifying the confirm dialog message
 
-      final Text deletePlaylistDialogTitleWidget =
-          tester.widget<Text>(find.byKey(const Key('confirmDialogTitleKey')));
+      final Text deletePlaylistDialogTitleWidget = tester
+          .widget<Text>(find.byKey(const Key('confirmDialogTitleOneKey')));
 
       expect(deletePlaylistDialogTitleWidget.data,
           'Supprimer la playlist Youtube "$youtubePlaylistToDeleteTitle"');
@@ -11905,8 +11905,8 @@ void main() {
 
       // Now verifying the confirm dialog message
 
-      final Text deletePlaylistDialogTitleWidget =
-          tester.widget<Text>(find.byKey(const Key('confirmDialogTitleKey')));
+      final Text deletePlaylistDialogTitleWidget = tester
+          .widget<Text>(find.byKey(const Key('confirmDialogTitleOneKey')));
 
       expect(deletePlaylistDialogTitleWidget.data,
           'Supprimer la playlist Youtube "$youtubePlaylistToDeleteTitle"');
@@ -12519,8 +12519,8 @@ void main() {
 
       // Now verifying the confirm dialog message
 
-      final Text deletePlaylistDialogTitleWidget =
-          tester.widget<Text>(find.byKey(const Key('confirmDialogTitleKey')));
+      final Text deletePlaylistDialogTitleWidget = tester
+          .widget<Text>(find.byKey(const Key('confirmDialogTitleOneKey')));
 
       expect(deletePlaylistDialogTitleWidget.data,
           'Delete Youtube Playlist "$youtubePlaylistToSelectTitle"');
@@ -12658,8 +12658,8 @@ void main() {
 
       // Now verifying the confirm dialog message
 
-      final Text deletePlaylistDialogTitleWidget =
-          tester.widget<Text>(find.byKey(const Key('confirmDialogTitleKey')));
+      final Text deletePlaylistDialogTitleWidget = tester
+          .widget<Text>(find.byKey(const Key('confirmDialogTitleOneKey')));
 
       expect(deletePlaylistDialogTitleWidget.data,
           'Delete Local Playlist "$localPlaylistTitle"');
@@ -20293,8 +20293,8 @@ void main() {
 
       // Verifying the confirm dialog title
 
-      final Text deleteFilteredAudioConfirmDialogTitleWidget =
-          tester.widget<Text>(find.byKey(const Key('confirmDialogTitleKey')));
+      final Text deleteFilteredAudioConfirmDialogTitleWidget = tester
+          .widget<Text>(find.byKey(const Key('confirmDialogTitleOneKey')));
 
       expect(deleteFilteredAudioConfirmDialogTitleWidget.data,
           'Delete audio filtered by "$sortFilterParmName" parms from playlist "$youtubePlaylistTitle"');
@@ -20616,8 +20616,8 @@ void main() {
 
       // Verifying the confirm dialog title
 
-      final Text deleteFilteredAudioConfirmDialogTitleWidget =
-          tester.widget<Text>(find.byKey(const Key('confirmDialogTitleKey')));
+      final Text deleteFilteredAudioConfirmDialogTitleWidget = tester
+          .widget<Text>(find.byKey(const Key('confirmDialogTitleOneKey')));
 
       expect(deleteFilteredAudioConfirmDialogTitleWidget.data,
           'Delete audio filtered by "$sortFilterParmName" parms from playlist "$youtubePlaylistTitle"');
@@ -20937,8 +20937,8 @@ void main() {
 
       // Verifying the confirm dialog title
 
-      final Text deleteFilteredAudioConfirmDialogTitleWidget =
-          tester.widget<Text>(find.byKey(const Key('confirmDialogTitleKey')));
+      final Text deleteFilteredAudioConfirmDialogTitleWidget = tester
+          .widget<Text>(find.byKey(const Key('confirmDialogTitleOneKey')));
 
       expect(deleteFilteredAudioConfirmDialogTitleWidget.data,
           'Delete audio filtered by "$sortFilterParmName" parms from playlist "$youtubePlaylistTitle"');
@@ -21314,8 +21314,8 @@ void main() {
 
       // Verifying the confirm dialog title
 
-      final Text deleteFilteredAudioConfirmDialogTitleWidget =
-          tester.widget<Text>(find.byKey(const Key('confirmDialogTitleKey')));
+      final Text deleteFilteredAudioConfirmDialogTitleWidget = tester
+          .widget<Text>(find.byKey(const Key('confirmDialogTitleOneKey')));
 
       expect(deleteFilteredAudioConfirmDialogTitleWidget.data,
           'Delete audio filtered by "$sortFilterParmName" parms from playlist "$youtubePlaylistTitle"');
@@ -21646,11 +21646,17 @@ void main() {
 
       // Verifying the confirm dialog title
 
-      final Text deleteFilteredAudioConfirmDialogTitleWidget =
-          tester.widget<Text>(find.byKey(const Key('confirmDialogTitleKey')));
+      Text deleteFilteredAudioConfirmDialogTitleWidget = tester
+          .widget<Text>(find.byKey(const Key('confirmDialogTitleOneKey')));
 
       expect(deleteFilteredAudioConfirmDialogTitleWidget.data,
-          'WARNING: you are going to delete COMMENTED and uncommented audio filtered by "$sortFilterParmName" parms from playlist "$youtubePlaylistTitle". Watch the help to solve the problem ...');
+          'WARNING: you are going to delete');
+
+      deleteFilteredAudioConfirmDialogTitleWidget = tester
+          .widget<Text>(find.byKey(const Key('confirmDialogTitleTwoKey')));
+
+      expect(deleteFilteredAudioConfirmDialogTitleWidget.data,
+          'COMMENTED and uncommented audio filtered by "$sortFilterParmName" parms from playlist "$youtubePlaylistTitle". Watch the help to solve the problem ...');
 
       // Verifying the confirm dialog message
 
@@ -21978,11 +21984,17 @@ void main() {
 
       // Verifying the confirm dialog title
 
-      final Text deleteFilteredAudioConfirmDialogTitleWidget =
-          tester.widget<Text>(find.byKey(const Key('confirmDialogTitleKey')));
+      Text deleteFilteredAudioConfirmDialogTitleWidget = tester
+          .widget<Text>(find.byKey(const Key('confirmDialogTitleOneKey')));
 
       expect(deleteFilteredAudioConfirmDialogTitleWidget.data,
-          'WARNING: you are going to delete COMMENTED and uncommented audio filtered by "$defaultSortFilterParmName" parms from playlist "$youtubePlaylistTitle". Watch the help to solve the problem ...');
+          'WARNING: you are going to delete');
+
+      deleteFilteredAudioConfirmDialogTitleWidget = tester
+          .widget<Text>(find.byKey(const Key('confirmDialogTitleTwoKey')));
+
+      expect(deleteFilteredAudioConfirmDialogTitleWidget.data,
+          'COMMENTED and uncommented audio filtered by "$defaultSortFilterParmName" parms from playlist "$youtubePlaylistTitle". Watch the help to solve the problem ...');
 
       // Verifying the confirm dialog message
 
