@@ -472,8 +472,9 @@
       "deleteAudioTotalDuration": {}
     }
   },
-  "deleteFilteredCommentedAudioWarningTitle": "AVERTISSEMENT: vous aller supprimer des audio COMMENTÉS et non commentés filtrés par le paramètre \"{sortFilterParmsName}\" dans la playlist \"{playlistTitle}\". Consultez l'aide pour résoudre le problème ...",
-  "@deleteFilteredCommentedAudioWarningTitle": {
+  "deleteFilteredCommentedAudioWarningTitleOne": "AVERTISSEMENT: vous supprimez des",
+  "deleteFilteredCommentedAudioWarningTitleTwo": "audio COMMENTÉS et non commentés filtrés par le paramètre \"{sortFilterParmsName}\" dans la playlist \"{playlistTitle}\". Consultez l'aide pour résoudre le problème ...",
+  "@deleteFilteredCommentedAudioWarningTitleTwo": {
     "description": "Warning title for deleting commented and uncommented filtered audio",
     "placeholders": {
       "sortFilterParmsName": {},

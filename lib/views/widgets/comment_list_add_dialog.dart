@@ -459,7 +459,8 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
             comment.id,
             widget.currentAudio,
           ],
-          dialogTitle: AppLocalizations.of(context)!.deleteCommentConfirnTitle,
+          dialogTitleOne:
+              AppLocalizations.of(context)!.deleteCommentConfirnTitle,
           dialogContent: AppLocalizations.of(context)!
               .deleteCommentConfirnBody(comment.title),
         );

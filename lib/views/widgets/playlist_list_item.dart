@@ -305,7 +305,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                     playlist,
                     videoUrls,
                   ],
-                  dialogTitle: AppLocalizations.of(context)!
+                  dialogTitleOne: AppLocalizations.of(context)!
                       .downloadAudioFromVideoUrlsInPlaylistTitle(
                           playlist.title),
                   dialogContent: AppLocalizations.of(context)!
@@ -420,7 +420,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                     actionFunctionArgs: [
                       playlistListVMlistenTrue,
                     ],
-                    dialogTitle: AppLocalizations.of(context)!
+                    dialogTitleOne: AppLocalizations.of(context)!
                         .deleteFilteredAudioConfirmationTitle(
                       selectedPlaylistAudioSortFilterParmsName,
                       playlistListVMlistenTrue.getSelectedPlaylists()[0].title,
@@ -440,7 +440,8 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                 },
               );
             } else {
-              final List<HelpItem> filteredCommentedAudioDeletionHelpItemsLst = [
+              final List<HelpItem> filteredCommentedAudioDeletionHelpItemsLst =
+                  [
                 HelpItem(
                   helpTitle: AppLocalizations.of(context)!
                       .commentedAudioDeletionHelpTitle,
@@ -496,8 +497,10 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                     actionFunctionArgs: [
                       playlistListVMlistenTrue,
                     ],
-                    dialogTitle: AppLocalizations.of(context)!
-                        .deleteFilteredCommentedAudioWarningTitle(
+                    dialogTitleOne: AppLocalizations.of(context)!
+                        .deleteFilteredCommentedAudioWarningTitleOne,
+                    dialogTitleTwo: AppLocalizations.of(context)!
+                        .deleteFilteredCommentedAudioWarningTitleTwo(
                       selectedPlaylistAudioSortFilterParmsName,
                       playlistListVMlistenTrue.getSelectedPlaylists()[0].title,
                     ),
@@ -529,7 +532,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                     playlistListVMlistenTrue,
                     playlist,
                   ],
-                  dialogTitle: _createDeletePlaylistDialogTitle(context),
+                  dialogTitleOne: _createDeletePlaylistDialogTitle(context),
                   dialogContent:
                       AppLocalizations.of(context)!.deletePlaylistDialogComment,
                 );

@@ -15,16 +15,18 @@ enum ConfirmAction { cancel, confirm }
 class ConfirmActionDialog extends StatefulWidget {
   final Function actionFunction; // The action to execute on confirmation
   final List<dynamic> actionFunctionArgs; // Arguments for the action function
-  final String dialogTitle; // Title of the dialog
+  final String dialogTitleOne; // Title of the dialog
+  final String dialogTitleTwo; // Title of the dialog
   final String dialogContent; // Content of the dialog
   final Function? warningFunction; // The action to execute on confirmation
   final List<dynamic> warningFunctionArgs; // Arguments for the action function
   final List<HelpItem> helpItemsLst;
- 
+
   const ConfirmActionDialog({
     required this.actionFunction,
     required this.actionFunctionArgs,
-    required this.dialogTitle,
+    required this.dialogTitleOne,
+    this.dialogTitleTwo = '',
     required this.dialogContent,
     this.warningFunction,
     this.warningFunctionArgs = const [],
@@ -72,23 +74,23 @@ class _ConfirmActionDialogState extends State<ConfirmActionDialog>
         }
       },
       child: AlertDialog(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-              child: Text(
-                widget.dialogTitle,
-                key: const Key('confirmDialogTitleKey'),
-              ),
-            ),
-            (widget.helpItemsLst.isNotEmpty)
-                // Help icon button is displayed only when the dialog is
-                // used to set the audio play speed in the application
-                // settings view or launched from the playlist set audio
-                // play speed item menu. In the audio player view, the help
-                // icon button is not displayed.
-                ? IconButton(
+            // First row: first two lines of the title and help icon
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  child: Text(
+                    widget.dialogTitleOne,
+                    maxLines: 2,
+                    style: Theme.of(context).textTheme.headlineSmall,
+                    key: const Key('confirmDialogTitleKey'),
+                  ),
+                ),
+                if (widget.helpItemsLst.isNotEmpty)
+                  IconButton(
                     icon: IconTheme(
                       data: (themeProviderVM.currentTheme == AppTheme.dark
                               ? ScreenMixin.themeDataDark
@@ -107,6 +109,21 @@ class _ConfirmActionDialogState extends State<ConfirmActionDialog>
                         ),
                       );
                     },
+                  ),
+              ],
+            ),
+            // Second row: remaining title lines
+            (widget.dialogTitleTwo.isNotEmpty)
+                ? Row(
+                    children: [
+                      Flexible(
+                        child: Text(
+                          widget.dialogTitleTwo,
+                          key: const Key('confirmDialogTitleTwoKey'),
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                      ),
+                    ],
                   )
                 : Container(),
           ],

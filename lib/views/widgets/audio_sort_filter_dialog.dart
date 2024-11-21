@@ -1505,7 +1505,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
             Provider.of<PlaylistListVM>(context, listen: false),
             buttonStateManager,
           ],
-          dialogTitle: AppLocalizations.of(context)!
+          dialogTitleOne: AppLocalizations.of(context)!
               .clearSortFilterAudiosParmsHistoryMenu,
           dialogContent: AppLocalizations.of(context)!
               .allHistoricalSortFilterParametersDeleteConfirmation,

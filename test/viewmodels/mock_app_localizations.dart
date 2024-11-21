@@ -1398,7 +1398,7 @@ class MockAppLocalizations extends AppLocalizations {
       "Audio to delete number: $deleteAudioNumber Corresponding total file size: $deleteAudioTotalFileSize Corresponding total duration: $deleteAudioTotalDuration.";
 
   @override
-  String deleteFilteredCommentedAudioWarningTitle(
+  String deleteFilteredCommentedAudioWarningTitleOne(
     Object sortFilterParmsName,
     Object playlistTitle,
   ) =>
@@ -1446,14 +1446,22 @@ class MockAppLocalizations extends AppLocalizations {
       "In the Sort/Filter definition dialog, the selection parameters are represented by checkboxes ...";
 
   @override
-  String get commentedAudioDeletionSelectSFParmHelpTitle => "Once you have saved the Sort/Filter parameters, this SF parms is applied to the playlist audio list";
+  String get commentedAudioDeletionSelectSFParmHelpTitle =>
+      "Once you have saved the Sort/Filter parameters, this SF parms is applied to the playlist audio list";
 
   @override
-  String get commentedAudioDeletionSelectSFParmHelpContent => "If you click on the Playlists left button, you hide the list of playlists and you can see that your newly created SF parms is selected in the SF parms list dropdown menu. Note that if you select another playlist, you will be able to apply to it your created SF parms or another one.";
+  String get commentedAudioDeletionSelectSFParmHelpContent =>
+      "If you click on the Playlists left button, you hide the list of playlists and you can see that your newly created SF parms is selected in the SF parms list dropdown menu. Note that if you select another playlist, you will be able to apply to it your created SF parms or another one.";
 
   @override
-  String get commentedAudioDeletionApplyingNewSFParmHelpTitle => "Finally, open the playlist menu and click on Delete Filtered Audio ...";
+  String get commentedAudioDeletionApplyingNewSFParmHelpTitle =>
+      "Finally, open the playlist menu and click on Delete Filtered Audio ...";
 
   @override
-  String get commentedAudioDeletionApplyingNewSFParmHelpContent => "This time, since a correct SF parms is applied, no warning is displayed for deleting the selected uncommented audio.";
+  String get commentedAudioDeletionApplyingNewSFParmHelpContent =>
+      "This time, since a correct SF parms is applied, no warning is displayed for deleting the selected uncommented audio.";
+
+  @override
+  String get deleteFilteredCommentedAudioWarningTitleOne =>
+      "WARNING: you are going to delete";
 }

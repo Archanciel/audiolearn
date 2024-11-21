@@ -684,7 +684,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                     actionFunction: playlistListVMlistenFalse
                         .clearAudioSortFilterSettingsSearchHistory,
                     actionFunctionArgs: const [],
-                    dialogTitle: AppLocalizations.of(context)!
+                    dialogTitleOne: AppLocalizations.of(context)!
                         .clearSortFilterAudiosParmsHistoryMenu,
                     dialogContent: AppLocalizations.of(context)!
                         .allHistoricalSortFilterParametersDeleteConfirmation,
