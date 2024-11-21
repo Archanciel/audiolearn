@@ -10712,6 +10712,794 @@ void main() {
         );
       });
     });
+    group('''From playlist as well. Using SF parms, in playlist download view,
+             delete unique audio test''',
+        () {
+      testWidgets(
+          '''SF parms 'default' is applied. Then, click on the menu icon of the
+           commented audio "Les besoins artificiels par R.Keucheyan" and select
+           'Delete Audio ...'. Verify the displayed warning. Then click on the
+           'Confirm' button. Verify the suppression of the audio mp3 file as well
+           as its comment file. Verify also the updated playlist playable audio
+           list.''', (tester) async {
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'delete_filtered_audio_test',
+          tapOnPlaylistToggleButton: false,
+        );
+
+        const String youtubePlaylistTitle = 'S8 audio';
+
+        String defaultSortFilterParmName =
+            'default'; // SF parm when opening the app
+
+        // Verify the presence of the audio file which will be later deleted
+
+        String audioFileNameToDelete =
+            "240107-094520-Les besoins artificiels par R.Keucheyan 24-01-05.mp3";
+
+        List<String> listMp3FileNames = DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
+          fileExtension: 'mp3',
+        );
+
+        expect(
+          listMp3FileNames.contains(audioFileNameToDelete),
+          true,
+        );
+
+        // Verify the presence of the audio comment files which will be later
+        // deleted
+
+        String audioCommentFileNameToDelete =
+            "240107-094520-Les besoins artificiels par R.Keucheyan 24-01-05.json";
+
+        List<String> listCommentJsonFileNames = DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kCommentDirName",
+          fileExtension: 'json',
+        );
+
+        expect(
+          listCommentJsonFileNames.contains(audioCommentFileNameToDelete),
+          true,
+        );
+
+        String commentedAudioTitleToDelete =
+            "Les besoins artificiels par R.Keucheyan";
+
+        // First, find the Audio sublist ListTile Text widget
+        final Finder commentedAudioTitleToDeleteListTileTextWidgetFinder =
+            find.text(commentedAudioTitleToDelete);
+
+        // Then obtain the Audio ListTile widget enclosing the Text widget by
+        // finding its ancestor
+        final Finder commentedAudioTitleToDeleteListTileWidgetFinder =
+            find.ancestor(
+          of: commentedAudioTitleToDeleteListTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now find the leading menu icon button of the Audio ListTile
+        // and tap on it
+        final Finder commentedAudioTitleToDeleteListTileLeadingMenuIconButton =
+            find.descendant(
+          of: commentedAudioTitleToDeleteListTileWidgetFinder,
+          matching: find.byIcon(Icons.menu),
+        );
+
+        // Tap the leading menu icon button to open the popup menu
+        await tester
+            .tap(commentedAudioTitleToDeleteListTileLeadingMenuIconButton);
+        await tester.pumpAndSettle();
+
+        // Now find the delete audio popup menu item and tap on it
+        final Finder popupCopyMenuItem =
+            find.byKey(const Key("popup_menu_delete_audio_from_playlist_aswell"));
+
+        await tester.tap(popupCopyMenuItem);
+        await tester.pumpAndSettle();
+
+        // Verifying the confirm dialog title
+
+        final Text deleteFilteredAudioConfirmDialogTitleWidget = tester
+            .widget<Text>(find.byKey(const Key('confirmDialogTitleOneKey')));
+
+        expect(deleteFilteredAudioConfirmDialogTitleWidget.data,
+            'Confirm deletion of the commented audio "$commentedAudioTitleToDelete"');
+
+        // Verifying the confirm dialog message
+
+        final Text deleteFilteredAudioConfirmDialogMessageTextWidget =
+            tester.widget<Text>(
+                find.byKey(const Key('confirmationDialogMessageKey')));
+
+        expect(deleteFilteredAudioConfirmDialogMessageTextWidget.data,
+            'The audio contains 1 comment(s) which will be deleted as well. Confirm deletion ?');
+
+        // Now find the confirm button of the delete filtered audio confirm
+        // dialog and tap on it
+        await tester.tap(find.byKey(const Key('confirmButton')));
+        await tester.pumpAndSettle();
+
+        // Verify that the applyed Sort/Filter parms name is displayed
+        // after the selected playlist title
+
+        Text selectedSortFilterParmsName = tester
+            .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
+
+        expect(
+          selectedSortFilterParmsName.data,
+          defaultSortFilterParmName,
+        );
+
+        // Verify that the audio file was deleted
+
+        listMp3FileNames = DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
+          fileExtension: 'mp3',
+        );
+
+        expect(
+          listMp3FileNames.contains(audioFileNameToDelete),
+          false,
+        );
+
+        // Verify that the audio comment files were deleted
+
+        listCommentJsonFileNames = DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kCommentDirName",
+          fileExtension: 'json',
+        );
+
+        expect(
+          listCommentJsonFileNames.contains(audioCommentFileNameToDelete),
+          false,
+        );
+
+        // Verify the 'S8 audio' playlist json file
+
+        Playlist loadedPlaylist = loadPlaylist(youtubePlaylistTitle);
+
+        expect(loadedPlaylist.downloadedAudioLst.length, 18);
+
+        List<String> downloadedAudioLst = loadedPlaylist.downloadedAudioLst
+            .map((Audio audio) => audio.validVideoTitle)
+            .toList();
+
+        expect(
+          downloadedAudioLst.contains(commentedAudioTitleToDelete),
+          true,
+        );
+
+        expect(
+          loadedPlaylist.playableAudioLst.contains(commentedAudioTitleToDelete),
+          false,
+        );
+
+        // Setting to this variables the currently selected audio title/subTitle
+        // of the 'S8 audio' playlist
+        String currentAudioTitle = "La résilience insulaire par Fiona Roche";
+        String currentAudioSubTitle =
+            "0:13:35.0. 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16.";
+
+        // Verify that the current audio is displayed with the correct
+        // title and subtitle color
+        await IntegrationTestUtil.verifyCurrentAudioTitleAndSubTitleColor(
+          tester: tester,
+          currentAudioTitle: currentAudioTitle,
+          currentAudioSubTitle: currentAudioSubTitle,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''SF parms 'default' is applied. Then, click on the menu icon of the
+           uncommented audio "Les besoins artificiels par R.Keucheyan" and select
+           'Delete Audio ...'.Verify the suppression of the audio mp3. Verify
+           also the updated playlist playable audio list and the new not totally
+           played selected audio and the new not totally played selected audio.''',
+          (tester) async {
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName:
+              'delete_filtered_audio_one_uncommented_more_test',
+          tapOnPlaylistToggleButton: false,
+        );
+
+        const String youtubePlaylistTitle = 'S8 audio';
+
+        String defaultSortFilterParmName =
+            'default'; // SF parm when opening the app
+
+        // Verify the presence of the audio file which will be later deleted
+
+        String audioFileNameToDelete =
+            "240107-094520-Les besoins artificiels par R.Keucheyan 24-01-05.mp3";
+
+        List<String> listMp3FileNames = DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
+          fileExtension: 'mp3',
+        );
+
+        expect(
+          listMp3FileNames.contains(audioFileNameToDelete),
+          true,
+        );
+
+        String uncommentedAudioTitleToDelete =
+            "Les besoins artificiels par R.Keucheyan";
+
+        // First, find the Audio sublist ListTile Text widget
+        final Finder commentedAudioTitleToDeleteListTileTextWidgetFinder =
+            find.text(uncommentedAudioTitleToDelete);
+
+        // Then obtain the Audio ListTile widget enclosing the Text widget by
+        // finding its ancestor
+        final Finder commentedAudioTitleToDeleteListTileWidgetFinder =
+            find.ancestor(
+          of: commentedAudioTitleToDeleteListTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now find the leading menu icon button of the Audio ListTile
+        // and tap on it
+        final Finder commentedAudioTitleToDeleteListTileLeadingMenuIconButton =
+            find.descendant(
+          of: commentedAudioTitleToDeleteListTileWidgetFinder,
+          matching: find.byIcon(Icons.menu),
+        );
+
+        // Tap the leading menu icon button to open the popup menu
+        await tester
+            .tap(commentedAudioTitleToDeleteListTileLeadingMenuIconButton);
+        await tester.pumpAndSettle();
+
+        // Now find the delete audio popup menu item and tap on it
+        final Finder popupCopyMenuItem =
+            find.byKey(const Key("popup_menu_delete_audio_from_playlist_aswell"));
+
+        await tester.tap(popupCopyMenuItem);
+        await tester.pumpAndSettle();
+
+        // Verify that the applyed Sort/Filter parms name is displayed
+        // after the selected playlist title
+
+        Text selectedSortFilterParmsName = tester
+            .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
+
+        expect(
+          selectedSortFilterParmsName.data,
+          defaultSortFilterParmName,
+        );
+
+        // Verify that the audio file was deleted
+
+        listMp3FileNames = DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
+          fileExtension: 'mp3',
+        );
+
+        expect(
+          listMp3FileNames.contains(audioFileNameToDelete),
+          false,
+        );
+
+        // Verify the 'S8 audio' playlist json file
+
+        Playlist loadedPlaylist = loadPlaylist(youtubePlaylistTitle);
+
+        expect(loadedPlaylist.downloadedAudioLst.length, 18);
+
+        List<String> downloadedAudioLst = loadedPlaylist.downloadedAudioLst
+            .map((Audio audio) => audio.validVideoTitle)
+            .toList();
+
+        expect(
+          downloadedAudioLst.contains(uncommentedAudioTitleToDelete),
+          true,
+        );
+
+        expect(
+          loadedPlaylist.playableAudioLst
+              .contains(uncommentedAudioTitleToDelete),
+          false,
+        );
+
+        // Setting to this variables the currently selected audio title/subTitle
+        // of the 'S8 audio' playlist
+        String currentAudioTitle = "La résilience insulaire par Fiona Roche";
+        String currentAudioSubTitle =
+            "0:13:35.0. 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16.";
+
+        // Verify that the current audio is displayed with the correct
+        // title and subtitle color
+        await IntegrationTestUtil.verifyCurrentAudioTitleAndSubTitleColor(
+          tester: tester,
+          currentAudioTitle: currentAudioTitle,
+          currentAudioSubTitle: currentAudioSubTitle,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Saved defined SF parms 'Title asc' is applied. Then, click on the menu icon of the
+           commented audio "Les besoins artificiels par R.Keucheyan" and select
+           'Delete Audio ...'. Verify the displayed warning. Then click on the
+           'Confirm' button. Verify the suppression of the audio mp3 file as well
+           as its comment file. Verify also the updated playlist playable audio
+           list.''', (tester) async {
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'delete_filtered_audio_test',
+          tapOnPlaylistToggleButton: false,
+        );
+
+        const String youtubePlaylistTitle = 'S8 audio';
+
+        // Now open the audio popup menu
+        await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+        await tester.pumpAndSettle();
+
+        // Find the sort/filter audio menu item and tap on it to
+        // open the audio sort filter dialog
+        await tester.tap(
+            find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+        await tester.pumpAndSettle();
+
+        // Type "Title asc" in the 'Save as' TextField
+
+        String saveAsTitle = 'Title asc';
+
+        await tester.enterText(
+            find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+            saveAsTitle);
+        await tester.pumpAndSettle();
+
+        // Now select the 'Audio title'item in the 'Sort by' dropdown button
+
+        await tester.tap(find.byKey(const Key('sortingOptionDropdownButton')));
+        await tester.pumpAndSettle();
+
+        await tester.tap(find.text('Audio title'));
+        await tester.pumpAndSettle();
+
+        // Then delete the "Audio download date" descending sort option
+
+        // Find the Text with "Audio downl date" which is located in the
+        // selected sort parameters ListView
+        final Finder texdtFinder = find.descendant(
+          of: find.byKey(const Key('selectedSortingOptionsListView')),
+          matching: find.text('Audio downl date'),
+        );
+
+        // Then find the ListTile ancestor of the 'Audio downl date' Text
+        // widget. The ascending/descending and remove icon buttons are
+        // contained in their ListTile ancestor
+        final Finder listTileFinder = find.ancestor(
+          of: texdtFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now, within that ListTile, find the sort option delete IconButton
+        // with key 'removeSortingOptionIconButton'
+        final Finder iconButtonFinder = find.descendant(
+          of: listTileFinder,
+          matching: find.byKey(const Key('removeSortingOptionIconButton')),
+        );
+
+        // Tap on the delete icon button to delete the 'Audio downl date'
+        // descending sort option
+        await tester.tap(iconButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Click on the "Apply" button. This closes the sort/filter dialog
+        // and updates the sort/filter playlist download view dropdown
+        // button with the newly created sort/filter parms
+        await tester
+            .tap(find.byKey(const Key('applySortFilterOptionsTextButton')));
+        await tester.pumpAndSettle();
+
+        String appliedSortFilterParmName =
+            'applied'; // SF parm after clicking on 'Apply' in SF Dialog
+
+        // Verify the presence of the audio file which will be later deleted
+
+        String audioFileNameToDelete =
+            "240107-094520-Les besoins artificiels par R.Keucheyan 24-01-05.mp3";
+
+        List<String> listMp3FileNames = DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
+          fileExtension: 'mp3',
+        );
+
+        expect(
+          listMp3FileNames.contains(audioFileNameToDelete),
+          true,
+        );
+
+        // Verify the presence of the audio comment files which will be later
+        // deleted
+
+        String audioCommentFileNameToDelete =
+            "240107-094520-Les besoins artificiels par R.Keucheyan 24-01-05.json";
+
+        List<String> listCommentJsonFileNames = DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kCommentDirName",
+          fileExtension: 'json',
+        );
+
+        expect(
+          listCommentJsonFileNames.contains(audioCommentFileNameToDelete),
+          true,
+        );
+
+        String commentedAudioTitleToDelete =
+            "Les besoins artificiels par R.Keucheyan";
+
+        // First, find the Audio sublist ListTile Text widget
+        final Finder commentedAudioTitleToDeleteListTileTextWidgetFinder =
+            find.text(commentedAudioTitleToDelete);
+
+        // Then obtain the Audio ListTile widget enclosing the Text widget by
+        // finding its ancestor
+        final Finder commentedAudioTitleToDeleteListTileWidgetFinder =
+            find.ancestor(
+          of: commentedAudioTitleToDeleteListTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now find the leading menu icon button of the Audio ListTile
+        // and tap on it
+        final Finder commentedAudioTitleToDeleteListTileLeadingMenuIconButton =
+            find.descendant(
+          of: commentedAudioTitleToDeleteListTileWidgetFinder,
+          matching: find.byIcon(Icons.menu),
+        );
+
+        // Scrolling down the audios list in order to display the commented
+        // audio title to delete
+
+        // Find the audio list widget using its key
+        final listFinder = find.byKey(const Key('audio_list'));
+        // Perform the scroll action
+        await tester.drag(listFinder, const Offset(0, -1000));
+        await tester.pumpAndSettle();
+
+        // Tap the leading menu icon button to open the popup menu
+        await tester
+            .tap(commentedAudioTitleToDeleteListTileLeadingMenuIconButton);
+        await tester.pumpAndSettle();
+
+        // Now find the delete audio popup menu item and tap on it
+        final Finder popupCopyMenuItem =
+            find.byKey(const Key("popup_menu_delete_audio"));
+
+        await tester.tap(popupCopyMenuItem);
+        await tester.pumpAndSettle();
+
+        // Verifying the confirm dialog title
+
+        final Text deleteFilteredAudioConfirmDialogTitleWidget = tester
+            .widget<Text>(find.byKey(const Key('confirmDialogTitleOneKey')));
+
+        expect(deleteFilteredAudioConfirmDialogTitleWidget.data,
+            'Confirm deletion of the commented audio "$commentedAudioTitleToDelete"');
+
+        // Verifying the confirm dialog message
+
+        final Text deleteFilteredAudioConfirmDialogMessageTextWidget =
+            tester.widget<Text>(
+                find.byKey(const Key('confirmationDialogMessageKey')));
+
+        expect(deleteFilteredAudioConfirmDialogMessageTextWidget.data,
+            'The audio contains 1 comment(s) which will be deleted as well. Confirm deletion ?');
+
+        // Now find the confirm button of the delete filtered audio confirm
+        // dialog and tap on it
+        await tester.tap(find.byKey(const Key('confirmButton')));
+        await tester.pumpAndSettle();
+
+        // Verify that the applyed Sort/Filter parms name is displayed
+        // after the selected playlist title
+
+        Text selectedSortFilterParmsName = tester
+            .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
+
+        expect(
+          selectedSortFilterParmsName.data,
+          appliedSortFilterParmName,
+        );
+
+        // Verify that the audio file was deleted
+
+        listMp3FileNames = DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
+          fileExtension: 'mp3',
+        );
+
+        expect(
+          listMp3FileNames.contains(audioFileNameToDelete),
+          false,
+        );
+
+        // Verify that the audio comment files were deleted
+
+        listCommentJsonFileNames = DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kCommentDirName",
+          fileExtension: 'json',
+        );
+
+        expect(
+          listCommentJsonFileNames.contains(audioCommentFileNameToDelete),
+          false,
+        );
+
+        // Verify the 'S8 audio' playlist json file
+
+        Playlist loadedPlaylist = loadPlaylist(youtubePlaylistTitle);
+
+        expect(loadedPlaylist.downloadedAudioLst.length, 18);
+
+        List<String> downloadedAudioLst = loadedPlaylist.downloadedAudioLst
+            .map((Audio audio) => audio.validVideoTitle)
+            .toList();
+
+        expect(
+          downloadedAudioLst.contains(commentedAudioTitleToDelete),
+          true,
+        );
+
+        expect(
+          loadedPlaylist.playableAudioLst.contains(commentedAudioTitleToDelete),
+          false,
+        );
+
+        // Setting to this variables the currently selected audio title/subTitle
+        // of the 'S8 audio' playlist
+        String currentAudioTitle = "La résilience insulaire par Fiona Roche";
+        String currentAudioSubTitle =
+            "0:13:35.0. 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16.";
+
+        // Verify that the current audio is displayed with the correct
+        // title and subtitle color
+        await IntegrationTestUtil.verifyCurrentAudioTitleAndSubTitleColor(
+          tester: tester,
+          currentAudioTitle: currentAudioTitle,
+          currentAudioSubTitle: currentAudioSubTitle,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Saved defined SF parms 'Title asc' is applied. Then, click on the menu icon of the
+           uncommented audio "Les besoins artificiels par R.Keucheyan" and select
+           'Delete Audio ...'. Verify the suppression of the audio mp3. Verify
+           also the updated playlist playable audio list and the new not totally
+           played selected audio and the new not totally played selected audio.''',
+          (tester) async {
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName:
+              'delete_filtered_audio_one_uncommented_more_test',
+          tapOnPlaylistToggleButton: false,
+        );
+
+        const String youtubePlaylistTitle = 'S8 audio';
+
+        // Now open the audio popup menu
+        await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+        await tester.pumpAndSettle();
+
+        // Find the sort/filter audio menu item and tap on it to
+        // open the audio sort filter dialog
+        await tester.tap(
+            find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+        await tester.pumpAndSettle();
+
+        // Type "Title asc" in the 'Save as' TextField
+
+        String saveAsTitle = 'Title asc';
+
+        await tester.enterText(
+            find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+            saveAsTitle);
+        await tester.pumpAndSettle();
+
+        // Now select the 'Audio title'item in the 'Sort by' dropdown button
+
+        await tester.tap(find.byKey(const Key('sortingOptionDropdownButton')));
+        await tester.pumpAndSettle();
+
+        await tester.tap(find.text('Audio title'));
+        await tester.pumpAndSettle();
+
+        // Then delete the "Audio download date" descending sort option
+
+        // Find the Text with "Audio downl date" which is located in the
+        // selected sort parameters ListView
+        final Finder texdtFinder = find.descendant(
+          of: find.byKey(const Key('selectedSortingOptionsListView')),
+          matching: find.text('Audio downl date'),
+        );
+
+        // Then find the ListTile ancestor of the 'Audio downl date' Text
+        // widget. The ascending/descending and remove icon buttons are
+        // contained in their ListTile ancestor
+        final Finder listTileFinder = find.ancestor(
+          of: texdtFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now, within that ListTile, find the sort option delete IconButton
+        // with key 'removeSortingOptionIconButton'
+        final Finder iconButtonFinder = find.descendant(
+          of: listTileFinder,
+          matching: find.byKey(const Key('removeSortingOptionIconButton')),
+        );
+
+        // Tap on the delete icon button to delete the 'Audio downl date'
+        // descending sort option
+        await tester.tap(iconButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Click on the "Apply" button. This closes the sort/filter dialog
+        // and updates the sort/filter playlist download view dropdown
+        // button with the newly created sort/filter parms
+        await tester
+            .tap(find.byKey(const Key('applySortFilterOptionsTextButton')));
+        await tester.pumpAndSettle();
+
+        String appliedSortFilterParmName =
+            'applied'; // SF parm after clicking on 'Apply' in SF Dialog
+
+        // Verify the presence of the audio file which will be later deleted
+
+        String audioFileNameToDelete =
+            "240107-094520-Les besoins artificiels par R.Keucheyan 24-01-05.mp3";
+
+        List<String> listMp3FileNames = DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
+          fileExtension: 'mp3',
+        );
+
+        expect(
+          listMp3FileNames.contains(audioFileNameToDelete),
+          true,
+        );
+
+        // Scrolling down the audios list in order to display the commented
+        // audio title to delete
+
+        // Find the audio list widget using its key
+        final listFinder = find.byKey(const Key('audio_list'));
+        // Perform the scroll action
+        await tester.drag(listFinder, const Offset(0, -1000));
+        await tester.pumpAndSettle();
+
+        String uncommentedAudioTitleToDelete =
+            "Les besoins artificiels par R.Keucheyan";
+
+        // First, find the Audio sublist ListTile Text widget
+        final Finder commentedAudioTitleToDeleteListTileTextWidgetFinder =
+            find.text(uncommentedAudioTitleToDelete);
+
+        // Then obtain the Audio ListTile widget enclosing the Text widget by
+        // finding its ancestor
+        final Finder commentedAudioTitleToDeleteListTileWidgetFinder =
+            find.ancestor(
+          of: commentedAudioTitleToDeleteListTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now find the leading menu icon button of the Audio ListTile
+        // and tap on it
+        final Finder commentedAudioTitleToDeleteListTileLeadingMenuIconButton =
+            find.descendant(
+          of: commentedAudioTitleToDeleteListTileWidgetFinder,
+          matching: find.byIcon(Icons.menu),
+        );
+
+        // Tap the leading menu icon button to open the popup menu
+        await tester
+            .tap(commentedAudioTitleToDeleteListTileLeadingMenuIconButton);
+        await tester.pumpAndSettle();
+
+        // Now find the delete audio popup menu item and tap on it
+        final Finder popupCopyMenuItem =
+            find.byKey(const Key("popup_menu_delete_audio"));
+
+        await tester.tap(popupCopyMenuItem);
+        await tester.pumpAndSettle();
+
+        // Verify that the applyed Sort/Filter parms name is displayed
+        // after the selected playlist title
+
+        Text selectedSortFilterParmsName = tester
+            .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
+
+        expect(
+          selectedSortFilterParmsName.data,
+          appliedSortFilterParmName,
+        );
+
+        // Verify that the audio file was deleted
+
+        listMp3FileNames = DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
+          fileExtension: 'mp3',
+        );
+
+        expect(
+          listMp3FileNames.contains(audioFileNameToDelete),
+          false,
+        );
+
+        // Verify the 'S8 audio' playlist json file
+
+        Playlist loadedPlaylist = loadPlaylist(youtubePlaylistTitle);
+
+        expect(loadedPlaylist.downloadedAudioLst.length, 18);
+
+        List<String> downloadedAudioLst = loadedPlaylist.downloadedAudioLst
+            .map((Audio audio) => audio.validVideoTitle)
+            .toList();
+
+        expect(
+          downloadedAudioLst.contains(uncommentedAudioTitleToDelete),
+          true,
+        );
+
+        expect(
+          loadedPlaylist.playableAudioLst
+              .contains(uncommentedAudioTitleToDelete),
+          false,
+        );
+
+        // Setting to this variables the currently selected audio title/subTitle
+        // of the 'S8 audio' playlist
+        String currentAudioTitle = "La résilience insulaire par Fiona Roche";
+        String currentAudioSubTitle =
+            "0:13:35.0. 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16.";
+
+        // Verify that the current audio is displayed with the correct
+        // title and subtitle color
+        await IntegrationTestUtil.verifyCurrentAudioTitleAndSubTitleColor(
+          tester: tester,
+          currentAudioTitle: currentAudioTitle,
+          currentAudioSubTitle: currentAudioSubTitle,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+    });
     group('In playlist download view, delete unique audio test', () {
       testWidgets(
           '''Delete unique audio mp3 only and then switch to AudioPlayerView
