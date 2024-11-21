@@ -486,8 +486,8 @@
       "deleteAudioTotalDuration": {}
     }
   },
-  "deleteFilteredCommentedAudioWarningTitleOne": "WARNING: you are going to delete",
-  "deleteFilteredCommentedAudioWarningTitleTwo": "COMMENTED and uncommented audio filtered by \"{sortFilterParmsName}\" parms from playlist \"{playlistTitle}\". Watch the help to solve the problem ...",
+  "deleteFilteredCommentedAudioWarningTitleOne": "WARNING: you are going to",
+  "deleteFilteredCommentedAudioWarningTitleTwo": "delete COMMENTED and uncommented audio filtered by \"{sortFilterParmsName}\" parms from playlist \"{playlistTitle}\". Watch the help to solve the problem ...",
   "@deleteFilteredCommentedAudioWarningTitleTwo": {
     "description": "Warning title for deleting commented and uncommented filtered audio",
     "placeholders": {
