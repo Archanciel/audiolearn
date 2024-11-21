@@ -84,7 +84,6 @@ class _ConfirmActionDialogState extends State<ConfirmActionDialog>
                 Flexible(
                   child: Text(
                     widget.dialogTitleOne,
-                    maxLines: 2,
                     style: Theme.of(context).textTheme.headlineSmall,
                     key: const Key('confirmDialogTitleOneKey'),
                   ),
