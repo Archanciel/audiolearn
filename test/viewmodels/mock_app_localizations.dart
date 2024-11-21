@@ -1398,7 +1398,7 @@ class MockAppLocalizations extends AppLocalizations {
       "Audio to delete number: $deleteAudioNumber Corresponding total file size: $deleteAudioTotalFileSize Corresponding total duration: $deleteAudioTotalDuration.";
 
   @override
-  String deleteFilteredCommentedAudioWarningTitleOne(
+  String deleteFilteredCommentedAudioWarningTitleTwo(
     Object sortFilterParmsName,
     Object playlistTitle,
   ) =>
