@@ -10133,7 +10133,7 @@ void main() {
       testWidgets(
           '''SF parms 'default' is applied. Then, click on the menu icon of the
            uncommented audio "Les besoins artificiels par R.Keucheyan" and select
-           'Delete Audio ...'.Verify the suppression of the audio mp3. Verify
+           'Delete Audio ...'. Verify the suppression of the audio mp3. Verify
            also the updated playlist playable audio list and the new not totally
            played selected audio and the new not totally played selected audio.''',
           (tester) async {
@@ -10398,6 +10398,7 @@ void main() {
 
         // Find the audio list widget using its key
         final listFinder = find.byKey(const Key('audio_list'));
+
         // Perform the scroll action
         await tester.drag(listFinder, const Offset(0, -1000));
         await tester.pumpAndSettle();
@@ -10607,6 +10608,7 @@ void main() {
 
         // Find the audio list widget using its key
         final listFinder = find.byKey(const Key('audio_list'));
+
         // Perform the scroll action
         await tester.drag(listFinder, const Offset(0, -1000));
         await tester.pumpAndSettle();
@@ -10713,15 +10715,14 @@ void main() {
       });
     });
     group('''From playlist as well. Using SF parms, in playlist download view,
-             delete unique audio test''',
-        () {
+             delete unique audio test from playlist as well''', () {
       testWidgets(
           '''SF parms 'default' is applied. Then, click on the menu icon of the
            commented audio "Les besoins artificiels par R.Keucheyan" and select
-           'Delete Audio ...'. Verify the displayed warning. Then click on the
-           'Confirm' button. Verify the suppression of the audio mp3 file as well
-           as its comment file. Verify also the updated playlist playable audio
-           list.''', (tester) async {
+           'Delete Audio from Playlist as well ...'. Verify the displayed warning.
+           Then click on the 'Confirm' button. Verify the suppression of the audio
+           mp3 file as well as its comment file. Verify also the updated playlist
+           playable audio list.''', (tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'delete_filtered_audio_test',
@@ -10794,9 +10795,10 @@ void main() {
             .tap(commentedAudioTitleToDeleteListTileLeadingMenuIconButton);
         await tester.pumpAndSettle();
 
-        // Now find the delete audio popup menu item and tap on it
-        final Finder popupCopyMenuItem =
-            find.byKey(const Key("popup_menu_delete_audio_from_playlist_aswell"));
+        // Now find the delete audio from playlist as well popup menu item
+        // and tap on it
+        final Finder popupCopyMenuItem = find
+            .byKey(const Key("popup_menu_delete_audio_from_playlist_aswell"));
 
         await tester.tap(popupCopyMenuItem);
         await tester.pumpAndSettle();
@@ -10821,6 +10823,21 @@ void main() {
         // Now find the confirm button of the delete filtered audio confirm
         // dialog and tap on it
         await tester.tap(find.byKey(const Key('confirmButton')));
+        await tester.pumpAndSettle();
+
+        // Check the value of the warning dialog title
+        Text warningDialogTitle =
+            tester.widget(find.byKey(const Key('warningDialogTitle')).at(1));
+        expect(warningDialogTitle.data, 'WARNING');
+
+        // Check the value of the warning dialog message
+        Text warningDialogMessage =
+            tester.widget(find.byKey(const Key('warningDialogMessage')).at(1));
+        expect(warningDialogMessage.data,
+            'If the deleted audio video "$commentedAudioTitleToDelete" remains in the "$youtubePlaylistTitle" Youtube playlist, it will be downloaded again the next time you download the playlist !');
+
+        // Close the warning dialog by tapping on the Ok button
+        await tester.tap(find.byKey(const Key('warningDialogOkButton')).at(1));
         await tester.pumpAndSettle();
 
         // Verify that the applyed Sort/Filter parms name is displayed
@@ -10864,7 +10881,7 @@ void main() {
 
         Playlist loadedPlaylist = loadPlaylist(youtubePlaylistTitle);
 
-        expect(loadedPlaylist.downloadedAudioLst.length, 18);
+        expect(loadedPlaylist.downloadedAudioLst.length, 17);
 
         List<String> downloadedAudioLst = loadedPlaylist.downloadedAudioLst
             .map((Audio audio) => audio.validVideoTitle)
@@ -10872,7 +10889,7 @@ void main() {
 
         expect(
           downloadedAudioLst.contains(commentedAudioTitleToDelete),
-          true,
+          false,
         );
 
         expect(
@@ -10903,10 +10920,10 @@ void main() {
       testWidgets(
           '''SF parms 'default' is applied. Then, click on the menu icon of the
            uncommented audio "Les besoins artificiels par R.Keucheyan" and select
-           'Delete Audio ...'.Verify the suppression of the audio mp3. Verify
-           also the updated playlist playable audio list and the new not totally
-           played selected audio and the new not totally played selected audio.''',
-          (tester) async {
+           'Delete Audio from Playlist as well ...'. Verify the suppression of the
+           audio mp3. Verify also the updated playlist playable audio list and the
+           new not totally played selected audio and the new not totally played
+           selected audio.''', (tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName:
@@ -10963,11 +10980,27 @@ void main() {
             .tap(commentedAudioTitleToDeleteListTileLeadingMenuIconButton);
         await tester.pumpAndSettle();
 
-        // Now find the delete audio popup menu item and tap on it
-        final Finder popupCopyMenuItem =
-            find.byKey(const Key("popup_menu_delete_audio_from_playlist_aswell"));
+        // Now find the delete audio from playlist as well popup menu item
+        // and tap on it
+        final Finder popupCopyMenuItem = find
+            .byKey(const Key("popup_menu_delete_audio_from_playlist_aswell"));
 
         await tester.tap(popupCopyMenuItem);
+        await tester.pumpAndSettle();
+
+        // Check the value of the warning dialog title
+        Text warningDialogTitle =
+            tester.widget(find.byKey(const Key('warningDialogTitle')).at(1));
+        expect(warningDialogTitle.data, 'WARNING');
+
+        // Check the value of the warning dialog message
+        Text warningDialogMessage =
+            tester.widget(find.byKey(const Key('warningDialogMessage')).at(1));
+        expect(warningDialogMessage.data,
+            'If the deleted audio video "$uncommentedAudioTitleToDelete" remains in the "$youtubePlaylistTitle" Youtube playlist, it will be downloaded again the next time you download the playlist !');
+
+        // Close the warning dialog by tapping on the Ok button
+        await tester.tap(find.byKey(const Key('warningDialogOkButton')).at(1));
         await tester.pumpAndSettle();
 
         // Verify that the applyed Sort/Filter parms name is displayed
@@ -10998,7 +11031,7 @@ void main() {
 
         Playlist loadedPlaylist = loadPlaylist(youtubePlaylistTitle);
 
-        expect(loadedPlaylist.downloadedAudioLst.length, 18);
+        expect(loadedPlaylist.downloadedAudioLst.length, 17);
 
         List<String> downloadedAudioLst = loadedPlaylist.downloadedAudioLst
             .map((Audio audio) => audio.validVideoTitle)
@@ -11006,7 +11039,7 @@ void main() {
 
         expect(
           downloadedAudioLst.contains(uncommentedAudioTitleToDelete),
-          true,
+          false,
         );
 
         expect(
@@ -11036,12 +11069,12 @@ void main() {
         );
       });
       testWidgets(
-          '''Saved defined SF parms 'Title asc' is applied. Then, click on the menu icon of the
-           commented audio "Les besoins artificiels par R.Keucheyan" and select
-           'Delete Audio ...'. Verify the displayed warning. Then click on the
-           'Confirm' button. Verify the suppression of the audio mp3 file as well
-           as its comment file. Verify also the updated playlist playable audio
-           list.''', (tester) async {
+          '''Saved defined SF parms 'Title asc' is applied. Then, click on the menu
+           icon of the commented audio "Les besoins artificiels par R.Keucheyan"
+           and select 'Delete Audio from Playlist as well ...'. Verify the displayed
+           warning. Then click on the 'Confirm' button. Verify the suppression of
+           the audio mp3 file as well as its comment file. Verify also the updated
+           playlist playable audio list.''', (tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'delete_filtered_audio_test',
@@ -11106,15 +11139,39 @@ void main() {
         await tester.tap(iconButtonFinder);
         await tester.pumpAndSettle();
 
-        // Click on the "Apply" button. This closes the sort/filter dialog
+        // Click on the "Save" button. This closes the sort/filter dialog
         // and updates the sort/filter playlist download view dropdown
         // button with the newly created sort/filter parms
         await tester
-            .tap(find.byKey(const Key('applySortFilterOptionsTextButton')));
+            .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
         await tester.pumpAndSettle();
 
-        String appliedSortFilterParmName =
-            'applied'; // SF parm after clicking on 'Apply' in SF Dialog
+        // Change unplayed to fully listened status of the "La
+        // surpopulation mondiale par Jancovici et Barrau" audio
+
+        String unplayedThenFullyListenedAudioTitle =
+            "La surpopulation mondiale par Jancovici et Barrau";
+
+        // Then, tap on the unplayed Audio ListTile Text widget finder to
+        // select this unplayed audio. This switch to the audio player view.
+        final Finder thirdDownloadedAudioListTileTextWidgetFinder =
+            find.text(unplayedThenFullyListenedAudioTitle);
+
+        await tester.tap(thirdDownloadedAudioListTileTextWidgetFinder);
+        await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+          tester: tester,
+        );
+
+        // Then skip to the end of the audio to set it as fully played
+        await tester
+            .tap(find.byKey(const Key('audioPlayerViewSkipToEndButton')));
+        await tester.pumpAndSettle();
+
+        // Now, go back to the playlist download view
+        Finder audioPlayerNavButtonFinder =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(audioPlayerNavButtonFinder);
+        await tester.pumpAndSettle();
 
         // Verify the presence of the audio file which will be later deleted
 
@@ -11186,9 +11243,10 @@ void main() {
             .tap(commentedAudioTitleToDeleteListTileLeadingMenuIconButton);
         await tester.pumpAndSettle();
 
-        // Now find the delete audio popup menu item and tap on it
-        final Finder popupCopyMenuItem =
-            find.byKey(const Key("popup_menu_delete_audio"));
+        // Now find the delete audio from playlist as well popup menu item
+        // and tap on it
+        final Finder popupCopyMenuItem = find
+            .byKey(const Key("popup_menu_delete_audio_from_playlist_aswell"));
 
         await tester.tap(popupCopyMenuItem);
         await tester.pumpAndSettle();
@@ -11215,6 +11273,28 @@ void main() {
         await tester.tap(find.byKey(const Key('confirmButton')));
         await tester.pumpAndSettle();
 
+        // Ensure the warning dialog is shown
+        expect(find.byType(WarningMessageDisplayDialog), findsOneWidget);
+
+        // Check the value of the warning dialog title
+        Text warningDialogTitle =
+            tester.widget(find.byKey(const Key('warningDialogTitle')).at(1));
+        expect(warningDialogTitle.data, 'WARNING');
+
+        // Check the value of the warning dialog message
+        Text warningDialogMessage =
+            tester.widget(find.byKey(const Key('warningDialogMessage')).at(1));
+        expect(warningDialogMessage.data,
+            'If the deleted audio video "$commentedAudioTitleToDelete" remains in the "$youtubePlaylistTitle" Youtube playlist, it will be downloaded again the next time you download the playlist !');
+
+        // Close the warning dialog by tapping on the Ok button
+        await tester.tap(find.byKey(const Key('warningDialogOkButton')).at(1));
+        await tester.pumpAndSettle();
+
+        // Close the warning dialog by tapping on the Ok button
+        await tester.tap(find.byKey(const Key('warningDialogOkButton')).at(0));
+        await tester.pumpAndSettle();
+
         // Verify that the applyed Sort/Filter parms name is displayed
         // after the selected playlist title
 
@@ -11223,7 +11303,7 @@ void main() {
 
         expect(
           selectedSortFilterParmsName.data,
-          appliedSortFilterParmName,
+          saveAsTitle,
         );
 
         // Verify that the audio file was deleted
@@ -11256,7 +11336,7 @@ void main() {
 
         Playlist loadedPlaylist = loadPlaylist(youtubePlaylistTitle);
 
-        expect(loadedPlaylist.downloadedAudioLst.length, 18);
+        expect(loadedPlaylist.downloadedAudioLst.length, 17);
 
         List<String> downloadedAudioLst = loadedPlaylist.downloadedAudioLst
             .map((Audio audio) => audio.validVideoTitle)
@@ -11264,7 +11344,7 @@ void main() {
 
         expect(
           downloadedAudioLst.contains(commentedAudioTitleToDelete),
-          true,
+          false,
         );
 
         expect(
@@ -11293,12 +11373,12 @@ void main() {
         );
       });
       testWidgets(
-          '''Saved defined SF parms 'Title asc' is applied. Then, click on the menu icon of the
-           uncommented audio "Les besoins artificiels par R.Keucheyan" and select
-           'Delete Audio ...'. Verify the suppression of the audio mp3. Verify
-           also the updated playlist playable audio list and the new not totally
-           played selected audio and the new not totally played selected audio.''',
-          (tester) async {
+          '''Saved defined SF parms 'Title asc' is applied. Then, click on the menu
+           icon of the uncommented audio "Les besoins artificiels par R.Keucheyan"
+           and select 'Delete Audio from Playlist as well ...'. Verify the suppression
+           of the audio mp3. Verify also the updated playlist playable audio list
+           and the new not totally played selected audio and the new not totally
+           played selected audio.''', (tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName:
@@ -11364,15 +11444,39 @@ void main() {
         await tester.tap(iconButtonFinder);
         await tester.pumpAndSettle();
 
-        // Click on the "Apply" button. This closes the sort/filter dialog
+        // Click on the "Save" button. This closes the sort/filter dialog
         // and updates the sort/filter playlist download view dropdown
         // button with the newly created sort/filter parms
         await tester
-            .tap(find.byKey(const Key('applySortFilterOptionsTextButton')));
+            .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
         await tester.pumpAndSettle();
 
-        String appliedSortFilterParmName =
-            'applied'; // SF parm after clicking on 'Apply' in SF Dialog
+        // Change unplayed to fully listened status of the "La
+        // surpopulation mondiale par Jancovici et Barrau" audio
+
+        String unplayedThenFullyListenedAudioTitle =
+            "La surpopulation mondiale par Jancovici et Barrau";
+
+        // Then, tap on the unplayed Audio ListTile Text widget finder to
+        // select this unplayed audio. This switch to the audio player view.
+        final Finder thirdDownloadedAudioListTileTextWidgetFinder =
+            find.text(unplayedThenFullyListenedAudioTitle);
+
+        await tester.tap(thirdDownloadedAudioListTileTextWidgetFinder);
+        await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+          tester: tester,
+        );
+
+        // Then skip to the end of the audio to set it as fully played
+        await tester
+            .tap(find.byKey(const Key('audioPlayerViewSkipToEndButton')));
+        await tester.pumpAndSettle();
+
+        // Now, go back to the playlist download view
+        Finder audioPlayerNavButtonFinder =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(audioPlayerNavButtonFinder);
+        await tester.pumpAndSettle();
 
         // Verify the presence of the audio file which will be later deleted
 
@@ -11427,11 +11531,31 @@ void main() {
             .tap(commentedAudioTitleToDeleteListTileLeadingMenuIconButton);
         await tester.pumpAndSettle();
 
-        // Now find the delete audio popup menu item and tap on it
-        final Finder popupCopyMenuItem =
-            find.byKey(const Key("popup_menu_delete_audio"));
+        // Now find the delete audio from playlist as well popup menu item
+        // and tap on it
+        final Finder popupCopyMenuItem = find
+            .byKey(const Key("popup_menu_delete_audio_from_playlist_aswell"));
 
         await tester.tap(popupCopyMenuItem);
+        await tester.pumpAndSettle();
+
+        // Check the value of the warning dialog title
+        Text warningDialogTitle =
+            tester.widget(find.byKey(const Key('warningDialogTitle')).at(1));
+        expect(warningDialogTitle.data, 'WARNING');
+
+        // Check the value of the warning dialog message
+        Text warningDialogMessage =
+            tester.widget(find.byKey(const Key('warningDialogMessage')).at(1));
+        expect(warningDialogMessage.data,
+            'If the deleted audio video "$uncommentedAudioTitleToDelete" remains in the "$youtubePlaylistTitle" Youtube playlist, it will be downloaded again the next time you download the playlist !');
+
+        // Close the warning dialog by tapping on the Ok button
+        await tester.tap(find.byKey(const Key('warningDialogOkButton')).at(1));
+        await tester.pumpAndSettle();
+
+        // Close the warning dialog by tapping on the Ok button
+        await tester.tap(find.byKey(const Key('warningDialogOkButton')).at(0));
         await tester.pumpAndSettle();
 
         // Verify that the applyed Sort/Filter parms name is displayed
@@ -11442,7 +11566,7 @@ void main() {
 
         expect(
           selectedSortFilterParmsName.data,
-          appliedSortFilterParmName,
+          saveAsTitle,
         );
 
         // Verify that the audio file was deleted
@@ -11462,7 +11586,7 @@ void main() {
 
         Playlist loadedPlaylist = loadPlaylist(youtubePlaylistTitle);
 
-        expect(loadedPlaylist.downloadedAudioLst.length, 18);
+        expect(loadedPlaylist.downloadedAudioLst.length, 17);
 
         List<String> downloadedAudioLst = loadedPlaylist.downloadedAudioLst
             .map((Audio audio) => audio.validVideoTitle)
@@ -11470,7 +11594,7 @@ void main() {
 
         expect(
           downloadedAudioLst.contains(uncommentedAudioTitleToDelete),
-          true,
+          false,
         );
 
         expect(
