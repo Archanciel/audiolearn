@@ -20428,6 +20428,10 @@ void main() {
           .widget<Text>(find.byKey(const Key('audioPlayerViewAudioPosition')));
       expect(audioPositionText.data, '2:34');
 
+      Finder audioTitlePositionTextFinder =
+          find.text("La résilience insulaire par Fiona Roche\n13:35");
+      expect(audioTitlePositionTextFinder, findsOneWidget);
+
       // Return to playlist download view
       appScreenNavigationButton =
           find.byKey(const ValueKey('playlistDownloadViewIconButton'));
@@ -24264,6 +24268,7 @@ Future<void> _rewindPlaylistAfterPlayThenPauseAnAudio({
 
   Finder audioToPlayTitleFinder = find.text(audioToPlayTitle);
 
+  // This opens the play audio view
   await tester.tap(audioToPlayTitleFinder);
   await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
     tester: tester,
