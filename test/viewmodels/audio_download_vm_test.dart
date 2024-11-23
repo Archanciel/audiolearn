@@ -436,7 +436,7 @@ void main() {
 
       // Moving the audio keeping it in source playlist
       bool wasMoved = audioDownloadVM.moveAudioToPlaylist(
-        audio: movedAudio,
+        audioToMove: movedAudio,
         targetPlaylist: targetPlaylist,
         keepAudioInSourcePlaylistDownloadedAudioLst: true,
       );
@@ -481,7 +481,7 @@ void main() {
 
       // Moving again the same audio keeping it in source playlist
       wasMoved = audioDownloadVM.moveAudioToPlaylist(
-        audio: movedAudio,
+        audioToMove: movedAudio,
         targetPlaylist: targetPlaylist,
         keepAudioInSourcePlaylistDownloadedAudioLst: true,
       );
@@ -540,7 +540,7 @@ void main() {
 
       // Moving the audio not keeping it in source playlist
       bool wasMoved = audioDownloadVM.moveAudioToPlaylist(
-        audio: movedAudio,
+        audioToMove: movedAudio,
         targetPlaylist: targetPlaylist,
         keepAudioInSourcePlaylistDownloadedAudioLst: false,
       );
@@ -575,7 +575,7 @@ void main() {
 
       // Moving again the audio suppressed by the first move
       wasMoved = audioDownloadVM.moveAudioToPlaylist(
-        audio: movedAudio,
+        audioToMove: movedAudio,
         targetPlaylist: targetPlaylist,
         keepAudioInSourcePlaylistDownloadedAudioLst: false,
       );
@@ -635,7 +635,7 @@ void main() {
 
       // Moving the audio keeping it in source playlist
       bool wasMoved = audioDownloadVM.moveAudioToPlaylist(
-        audio: movedAudio,
+        audioToMove: movedAudio,
         targetPlaylist: targetPlaylist,
         keepAudioInSourcePlaylistDownloadedAudioLst: true,
       );
@@ -680,7 +680,7 @@ void main() {
 
       // Moving again the same audio not keeping it in source playlist
       wasMoved = audioDownloadVM.moveAudioToPlaylist(
-        audio: movedAudio,
+        audioToMove: movedAudio,
         targetPlaylist: targetPlaylist,
         keepAudioInSourcePlaylistDownloadedAudioLst: false,
       );
@@ -739,7 +739,7 @@ void main() {
 
       // Moving the audio keeping it in source playlist
       bool wasMoved = audioDownloadVM.moveAudioToPlaylist(
-        audio: movedAudio,
+        audioToMove: movedAudio,
         targetPlaylist: targetPlaylist,
         keepAudioInSourcePlaylistDownloadedAudioLst: true,
       );
@@ -784,7 +784,7 @@ void main() {
 
       // Moving again the same audio keeping it in source playlist
       wasMoved = audioDownloadVM.moveAudioToPlaylist(
-        audio: movedAudio,
+        audioToMove: movedAudio,
         targetPlaylist: targetPlaylist,
         keepAudioInSourcePlaylistDownloadedAudioLst: true,
       );

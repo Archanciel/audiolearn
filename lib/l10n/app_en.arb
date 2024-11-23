@@ -517,7 +517,7 @@
   "commentedAudioDeletionApplyingNewSFParmHelpTitle": "Finally, open the playlist menu and click on \"Delete Filtered Audio ...\"",
   "commentedAudioDeletionApplyingNewSFParmHelpContent": "This time, since a correct SF parameter is applied, no warning will be displayed when deleting the selected uncommented audio.",
   "filteredAudioActions": "Filtered Audio Actions ...",
-  "moveFilteredAudio": "Move Filtered Audio ...",
-  "copyFilteredAudio": "Copy Filtered Audio ...",
+  "moveFilteredAudio": "Move Filtered Audio to Playlist ...",
+  "copyFilteredAudio": "Copy Filtered Audio to Playlist ...",
   "deleteFilteredAudio": "Delete Filtered Audio ..." 
 }

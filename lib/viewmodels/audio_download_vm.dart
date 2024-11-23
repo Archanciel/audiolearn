@@ -1187,29 +1187,32 @@ class AudioDownloadVM extends ChangeNotifier {
   /// exist in the target playlist directory, the move operation does
   /// not happen and false is returned.
   bool moveAudioToPlaylist({
-    required Audio audio,
+    required Audio audioToMove,
     required Playlist targetPlaylist,
     required bool keepAudioInSourcePlaylistDownloadedAudioLst,
+    bool displayWarningIfAudioAlreadyExists = true,
   }) {
-    Playlist fromPlaylist = audio.enclosingPlaylist!;
+    Playlist fromPlaylist = audioToMove.enclosingPlaylist!;
 
     bool wasFileMoved = DirUtil.moveFileToDirectoryIfNotExistSync(
-      sourceFilePathName: audio.filePathName,
+      sourceFilePathName: audioToMove.filePathName,
       targetDirectoryPath: targetPlaylist.downloadPath,
     );
 
-    if (!wasFileMoved) {
-      // the case if the moved audio file already exist in the target
-      // playlist directory or not exist in the source playlist directory
-      warningMessageVM.setAudioNotMovedFromToPlaylistTitles(
-        movedAudioValidVideoTitle: audio.validVideoTitle,
-        movedFromPlaylistTitle: fromPlaylist.title,
-        movedFromPlaylistType: fromPlaylist.playlistType,
-        movedToPlaylistTitle: targetPlaylist.title,
-        movedToPlaylistType: targetPlaylist.playlistType,
-      );
+    if (displayWarningIfAudioAlreadyExists) {
+      if (!wasFileMoved) {
+        // the case if the moved audio file already exist in the target
+        // playlist directory or not exist in the source playlist directory
+        warningMessageVM.setAudioNotMovedFromToPlaylistTitles(
+          movedAudioValidVideoTitle: audioToMove.validVideoTitle,
+          movedFromPlaylistTitle: fromPlaylist.title,
+          movedFromPlaylistType: fromPlaylist.playlistType,
+          movedToPlaylistTitle: targetPlaylist.title,
+          movedToPlaylistType: targetPlaylist.playlistType,
+        );
 
-      return false;
+        return false;
+      }
     }
 
     if (keepAudioInSourcePlaylistDownloadedAudioLst) {
@@ -1219,22 +1222,22 @@ class AudioDownloadVM extends ChangeNotifier {
       // the audio is moved to the target playlist, it has to
       // be removed from the source playlist playableAudioLst.
       fromPlaylist.removeDownloadedAudioFromPlayableAudioLstOnly(
-        downloadedAudio: audio,
+        downloadedAudio: audioToMove,
       );
       // The moved to playlist title information is set in the
       // the audio in the source playlist downloadedAudioLst.
       fromPlaylist.setMovedAudioToPlaylistTitle(
-        movedAudio: audio,
+        movedAudio: audioToMove,
         movedToPlaylistTitle: targetPlaylist.title,
       );
     } else {
       fromPlaylist.removeDownloadedAudioFromDownloadAndPlayableAudioLst(
-        downloadedAudio: audio,
+        downloadedAudio: audioToMove,
       );
     }
 
     targetPlaylist.addMovedAudioToDownloadAndPlayableLst(
-      movedAudio: audio,
+      movedAudio: audioToMove,
       movedFromPlaylistTitle: fromPlaylist.title,
     );
 
@@ -1251,7 +1254,7 @@ class AudioDownloadVM extends ChangeNotifier {
     );
 
     warningMessageVM.setAudioMovedFromToPlaylistTitles(
-        movedAudioValidVideoTitle: audio.validVideoTitle,
+        movedAudioValidVideoTitle: audioToMove.validVideoTitle,
         movedFromPlaylistTitle: fromPlaylist.title,
         movedFromPlaylistType: fromPlaylist.playlistType,
         movedToPlaylistTitle: targetPlaylist.title,

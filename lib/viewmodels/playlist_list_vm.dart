@@ -802,15 +802,15 @@ class PlaylistListVM extends ChangeNotifier {
         .toList();
   }
 
-  /// This method is called when the user executes the playlist menu 'Delete
-  /// Filtered Audio' after having selected (and defined) a named Sort/Filter
+  /// This method is called when the user executes the playlist submenu 'Delete
+  /// Filtered Audio ...' after having selected (and defined) a named Sort/Filter
   /// parameters. For example, it makes sense to define a filter only parameters
   /// which select fully listened audio which are not commented. With this filter
-  /// parameters applied to the playlist, using the playlist menu 'Delete
-  /// Filtered Audio' deletes the audio files and removes the deleted audio from
-  /// the playlist playable audio list. The deleted audio remain in the playlist
+  /// parameters applied to the playlist, using the playlist menu 'Delete Filtered
+  /// Audio ...' deletes the audio files and removes the deleted audio from the
+  /// playlist playable audio list. The deleted audio remain in the playlist
   /// downloaded audio list and so will not be redownloaded !
-  void deleteAudioFilesSortFilteredLst() {
+  void deleteSortFilteredAudioLst() {
     List<Audio> filteredAudioToDelete =
         _sortedFilteredSelectedPlaylistPlayableAudioLst!;
 
@@ -818,9 +818,46 @@ class PlaylistListVM extends ChangeNotifier {
       audioToDeleteLst: filteredAudioToDelete,
     );
 
-    // Deleting the comments of uncommented audio is ok
+    // Deleting the comments of commented audio. This deletes comments
+    // in case the applied sort/filter parameters selected commented audio
+    // as well
     for (Audio audio in filteredAudioToDelete) {
       _commentVM.deleteAllAudioComments(commentedAudio: audio);
+    }
+
+    notifyListeners();
+  }
+
+  /// This method is called when the user executes the playlist submenu 'Move
+  /// Filtered Audio ...' after having selected (and defined) a named Sort/Filter
+  /// parameters. Using the playlist menu 'Move Filtered Audio ...' moves the
+  /// audio files to the target playlist directory, removes the moved audio from
+  /// the source playlist playable audio list and add them to the target playlist
+  /// playable audio list. The moved audio remain in the source playlist downloaded
+  /// audio list and so will not be redownloaded !
+  void moveSortFilteredAudioAndCommentLstToPlaylist({
+    required Playlist targetPlaylist,
+  }) {
+    List<Audio> filteredAudioToMove =
+        _sortedFilteredSelectedPlaylistPlayableAudioLst!;
+
+    for (Audio audio in filteredAudioToMove) {
+      _audioDownloadVM.moveAudioToPlaylist(
+        audioToMove: audio,
+        targetPlaylist: targetPlaylist,
+        keepAudioInSourcePlaylistDownloadedAudioLst: true,
+        displayWarningIfAudioAlreadyExists: false,
+      );
+    }
+
+    // Moving the comments of commented audio. This moves comments to the
+    // target playlist in case the applied sort/filter parameters selected
+    // commented audio as well
+    for (Audio audio in filteredAudioToMove) {
+      _commentVM.moveAudioCommentFileToTargetPlaylist(
+        audio: audio,
+        targetPlaylistPath: targetPlaylist.downloadPath,
+      );
     }
 
     notifyListeners();
@@ -1285,7 +1322,7 @@ class PlaylistListVM extends ChangeNotifier {
     );
 
     bool wasAudioMoved = _audioDownloadVM.moveAudioToPlaylist(
-        audio: audio,
+        audioToMove: audio,
         targetPlaylist: targetPlaylist,
         keepAudioInSourcePlaylistDownloadedAudioLst:
             keepAudioInSourcePlaylistDownloadedAudioLst);
