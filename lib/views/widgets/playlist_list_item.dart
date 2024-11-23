@@ -33,8 +33,14 @@ enum PlaylistPopupMenuAction {
   //                               deleted from the app dir
   rewindAudioToStart,
   setPlaylistAudioPlaySpeed,
-  deleteFilteredAudio,
+  filteredAudioActions,
   deletePlaylist,
+}
+
+enum FilteredAudioAction {
+  deleteFilteredAudio,
+  moveFilteredAudio,
+  copyFilteredAudio,
 }
 
 /// This widget is used to display a playlist in the
@@ -202,9 +208,9 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
           ),
         ),
         PopupMenuItem<PlaylistPopupMenuAction>(
-          key: const Key('popup_menu_delete_filtered_audio'),
-          value: PlaylistPopupMenuAction.deleteFilteredAudio,
-          child: Text(AppLocalizations.of(context)!.deleteFilteredAudio),
+          key: const Key('popup_menu_filtered_audio_actions'),
+          value: PlaylistPopupMenuAction.filteredAudioActions,
+          child: Text(AppLocalizations.of(context)!.filteredAudioActions),
         ),
         PopupMenuItem<PlaylistPopupMenuAction>(
           key: const Key('popup_menu_delete_playlist'),
@@ -382,7 +388,81 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
               }
             });
             break;
-          case PlaylistPopupMenuAction.deleteFilteredAudio:
+          case PlaylistPopupMenuAction.filteredAudioActions:
+            // Show the submenu for filtered audio actions
+            _showFilteredAudioActionsMenu(
+              context: context,
+              playlistListVMlistenTrue: playlistListVMlistenTrue,
+            );
+            break;
+          case PlaylistPopupMenuAction.deletePlaylist:
+            showDialog<void>(
+              context: context,
+              builder: (BuildContext context) {
+                return ConfirmActionDialog(
+                  actionFunction: deletePlaylist,
+                  actionFunctionArgs: [
+                    playlistListVMlistenTrue,
+                    playlist,
+                  ],
+                  dialogTitleOne: _createDeletePlaylistDialogTitle(context),
+                  dialogContent:
+                      AppLocalizations.of(context)!.deletePlaylistDialogComment,
+                );
+              },
+            );
+            break;
+          default:
+            break;
+        }
+      }
+    });
+  }
+
+  void _showFilteredAudioActionsMenu({
+    required BuildContext context,
+    required PlaylistListVM playlistListVMlistenTrue,
+  }) {
+    final RenderBox box = context.findRenderObject() as RenderBox;
+    final Offset position = box.localToGlobal(Offset.zero);
+
+    const double offsetY =
+        300; // Increase this value to push the menu further down
+
+    showMenu(
+      context: context,
+      position: RelativeRect.fromLTRB(
+        position.dx - box.size.width, // Align horizontally with the parent menu
+        position.dy + offsetY, // Push the submenu lower
+        0,
+        0,
+      ),
+      items: [
+        PopupMenuItem<FilteredAudioAction>(
+          value: FilteredAudioAction.moveFilteredAudio,
+          child: Text(AppLocalizations.of(context)?.moveFilteredAudio ??
+              'Move Filtered Audio'),
+        ),
+        PopupMenuItem<FilteredAudioAction>(
+          value: FilteredAudioAction.copyFilteredAudio,
+          child: Text(AppLocalizations.of(context)?.copyFilteredAudio ??
+              'Copy Filtered Audio'),
+        ),
+        PopupMenuItem<FilteredAudioAction>(
+          key: const Key('popup_menu_delete_filtered_audio'),
+          value: FilteredAudioAction.deleteFilteredAudio,
+          child: Text(AppLocalizations.of(context)!.deleteFilteredAudio),
+        ),
+      ],
+    ).then((action) {
+      if (action != null) {
+        switch (action) {
+          case FilteredAudioAction.moveFilteredAudio:
+            // Your moveFilteredAudio logic here
+            break;
+          case FilteredAudioAction.copyFilteredAudio:
+          // Your copyFilteredAudio logic here
+          case FilteredAudioAction.deleteFilteredAudio:
             // Content of the list:
             //  [
             //    numberOfDeletedAudio,
@@ -521,23 +601,6 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                 },
               );
             }
-            break;
-          case PlaylistPopupMenuAction.deletePlaylist:
-            showDialog<void>(
-              context: context,
-              builder: (BuildContext context) {
-                return ConfirmActionDialog(
-                  actionFunction: deletePlaylist,
-                  actionFunctionArgs: [
-                    playlistListVMlistenTrue,
-                    playlist,
-                  ],
-                  dialogTitleOne: _createDeletePlaylistDialogTitle(context),
-                  dialogContent:
-                      AppLocalizations.of(context)!.deletePlaylistDialogComment,
-                );
-              },
-            );
             break;
           default:
             break;
