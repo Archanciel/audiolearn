@@ -454,7 +454,6 @@
   "dateFormatSelectionDialogTitle": "Sélectionnez le format de date de l'application",
   "commented": "Commenté",
   "notCommented": "Non com.",
-  "deleteFilteredAudio": "Supprimer les audio filtrés ...",
   "deleteFilteredAudioConfirmationTitle": "Supprimer les audio filtrés par le paramètre \"{sortFilterParmsName}\" dans la playlist \"{playlistTitle}\"",
   "@deleteFilteredAudioConfirmationTitle": {
     "description": "Confirmation title for deleting filtered audio",
@@ -502,5 +501,9 @@
   "commentedAudioDeletionSelectSFParmHelpTitle": "Une fois enregistré, le paramètre de tri/filtrage est appliqué à la playlist, réduisant la liste des audios.",
   "commentedAudioDeletionSelectSFParmHelpContent": "Cliquez sur le bouton \"Playlists\" pour masquer la liste des playlists. Vous verrez votre nouveau paramètre de tri/filtrage sélectionné dans le menu déroulant. Vous pouvez appliquer ce paramètre ou un autre à n'importe quelle playlist ...",
   "commentedAudioDeletionApplyingNewSFParmHelpTitle": "Enfin, ouvrez le menu de la playlist et cliquez sur \"Supprimer les audios filtrés ...\"",
-  "commentedAudioDeletionApplyingNewSFParmHelpContent": "Cette fois, puisqu'un paramètre de tri/filtrage correct est appliqué, aucun avertissement ne sera affiché lors de la suppression des audios sélectionnés non commentés."
+  "commentedAudioDeletionApplyingNewSFParmHelpContent": "Cette fois, puisqu'un paramètre de tri/filtrage correct est appliqué, aucun avertissement ne sera affiché lors de la suppression des audios sélectionnés non commentés.",
+  "filteredAudioActions": "Traiter les audio filtrés ...",
+  "moveFilteredAudio": "Déplacer les audio filtrés ...",
+  "copyFilteredAudio": "Copier les audio filtrés ...",
+  "deleteFilteredAudio": "Supprimer les audio filtrés ..."
 }

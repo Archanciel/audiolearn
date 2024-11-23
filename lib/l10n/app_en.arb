@@ -468,7 +468,6 @@
   "dateFormatSelectionDialogTitle": "Select the application date format",
   "commented": "Commented",
   "notCommented": "Not com.",
-  "deleteFilteredAudio": "Delete Filtered Audio ...",
   "deleteFilteredAudioConfirmationTitle": "Delete audio filtered by \"{sortFilterParmsName}\" parms from playlist \"{playlistTitle}\"",
   "@deleteFilteredAudioConfirmationTitle": {
     "description": "Confirmation title for deleting filtered audio",
@@ -516,5 +515,9 @@
   "commentedAudioDeletionSelectSFParmHelpTitle": "Once saved, the Sort/Filter parameter is applied to the playlist, reducing the audio list.",
   "commentedAudioDeletionSelectSFParmHelpContent": "Click the \"Playlists\" button to hide the list of playlists. You’ll see your newly created SF parameter selected in the dropdown menu. You can apply this parameter or another one to any playlist ...",
   "commentedAudioDeletionApplyingNewSFParmHelpTitle": "Finally, open the playlist menu and click on \"Delete Filtered Audio ...\"",
-  "commentedAudioDeletionApplyingNewSFParmHelpContent": "This time, since a correct SF parameter is applied, no warning will be displayed when deleting the selected uncommented audio."
+  "commentedAudioDeletionApplyingNewSFParmHelpContent": "This time, since a correct SF parameter is applied, no warning will be displayed when deleting the selected uncommented audio.",
+  "filteredAudioActions": "Filtered Audio Actions ...",
+  "moveFilteredAudio": "Move Filtered Audio ...",
+  "copyFilteredAudio": "Copy Filtered Audio ...",
+  "deleteFilteredAudio": "Delete Filtered Audio ..." 
 }

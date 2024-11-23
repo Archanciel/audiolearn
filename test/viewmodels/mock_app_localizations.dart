@@ -1464,4 +1464,13 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get deleteFilteredCommentedAudioWarningTitleOne =>
       "WARNING: you are going to delete";
+
+  @override
+  String get filteredAudioActions => "Filtered Audio Actions ...";
+
+  @override
+  String get moveFilteredAudio => "Move Filtered Audio ...";
+
+  @override
+  String get copyFilteredAudio => "Copy Filtered Audio ...";
 }

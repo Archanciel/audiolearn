@@ -74,6 +74,53 @@ class IntegrationTestUtil {
     }
   }
 
+  static Future<void> typeOnPlaylistSubMenuItem({
+    required WidgetTester tester,
+    required String playlistTitle,
+    required String playlistSubMenuKeyStr,
+  }) async {
+    // Open the delete filtered audio dialog by clicking first on
+    // the 'Filtered Audio Actions ...' playlist menu item and then
+    // on the 'Delete Filtered Audio ...' sub-menu item
+
+    // Now find the leading menu icon button of the Playlist ListTile
+    // and tap on it
+
+    // First, find the Youtube playlist ListTile Text widget
+    final Finder youtubePlaylistListTileTextWidgetFinder =
+        find.text(playlistTitle);
+
+    // Then obtain the Youtube source playlist ListTile widget
+    // enclosing the Text widget by finding its ancestor
+    final Finder youtubePlaylistListTileWidgetFinder = find.ancestor(
+      of: youtubePlaylistListTileTextWidgetFinder,
+      matching: find.byType(ListTile),
+    );
+
+    final Finder firstPlaylistListTileLeadingMenuIconButton = find.descendant(
+      of: youtubePlaylistListTileWidgetFinder,
+      matching: find.byIcon(Icons.menu),
+    );
+
+    // Tap the leading menu icon button to open the popup menu
+    await tester.tap(firstPlaylistListTileLeadingMenuIconButton);
+    await tester.pumpAndSettle();
+
+    // Now find the delete playlist popup menu item and tap on it
+    final Finder popupFilteredAudioActionPlaylistMenuItem =
+        find.byKey(const Key("popup_menu_filtered_audio_actions"));
+
+    await tester.tap(popupFilteredAudioActionPlaylistMenuItem);
+    await tester.pumpAndSettle();
+
+    // Now find the delete playlist popup menu item and tap on it
+    final Finder popupDeletePlaylistSubMenuItem =
+        find.byKey(Key(playlistSubMenuKeyStr));
+
+    await tester.tap(popupDeletePlaylistSubMenuItem);
+    await tester.pumpAndSettle();
+  }
+
   static Future<void> verifyCurrentAudioTitleAndSubTitleColor({
     required WidgetTester tester,
     required String currentAudioTitle,
