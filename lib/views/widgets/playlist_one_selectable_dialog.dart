@@ -13,7 +13,8 @@ import '../../viewmodels/theme_provider_vm.dart';
 
 enum PlaylistOneSelectableDialogUsedFor {
   downloadSingleVideoAudio,
-  moveAudioToPlaylist,
+  moveSingleAudioToPlaylist,
+  moveMultipleAudioToPlaylist,
   copyAudioToPlaylist,
 }
 
@@ -140,7 +141,7 @@ class _PlaylistOneSelectableDialogState
               ),
               (widget.usedFor ==
                           PlaylistOneSelectableDialogUsedFor
-                              .moveAudioToPlaylist &&
+                              .moveSingleAudioToPlaylist &&
                       widget.excludedPlaylist!.playlistType ==
                           PlaylistType.youtube) // when moving an audio
                   //                               from a playlist, the
@@ -222,7 +223,7 @@ class _PlaylistOneSelectableDialogState
           return;
         }
         break;
-      case PlaylistOneSelectableDialogUsedFor.moveAudioToPlaylist:
+      case PlaylistOneSelectableDialogUsedFor.moveSingleAudioToPlaylist:
         if (_selectedPlaylist == null) {
           widget.warningMessageVM.isNoPlaylistSelectedForAudioMove();
           return;

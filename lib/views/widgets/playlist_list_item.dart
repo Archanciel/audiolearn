@@ -21,6 +21,7 @@ import 'confirm_action_dialog.dart';
 import 'playlist_comment_list_dialog.dart';
 import 'playlist_info_dialog.dart';
 import 'audio_set_speed_dialog.dart';
+import 'playlist_one_selectable_dialog.dart';
 
 enum PlaylistPopupMenuAction {
   openYoutubePlaylist,
@@ -458,7 +459,36 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
       if (action != null) {
         switch (action) {
           case FilteredAudioAction.moveFilteredAudio:
-            // Your moveFilteredAudio logic here
+            showDialog<dynamic>(
+              context: context,
+              builder: (context) => PlaylistOneSelectableDialog(
+                usedFor: PlaylistOneSelectableDialogUsedFor
+                    .moveMultipleAudioToPlaylist,
+                warningMessageVM: Provider.of<WarningMessageVM>(
+                  context,
+                  listen: false,
+                ),
+                excludedPlaylist: playlist,
+              ),
+            ).then((resultMap) {
+              if (resultMap is String && resultMap == 'cancel') {
+                // the case if the Cancel button was pressed
+                return;
+              }
+
+              Playlist? targetPlaylist = resultMap['selectedPlaylist'];
+
+              if (targetPlaylist == null) {
+                // the case if no playlist was selected and Confirm button was
+                // pressed. In this case, the PlaylistOneSelectableDialog
+                // uses the WarningMessageVM to display the right warning
+                return;
+              }
+              playlistListVMlistenTrue
+                  .moveSortFilteredAudioAndCommentLstToPlaylist(
+                targetPlaylist: targetPlaylist,
+              );
+            });
             break;
           case FilteredAudioAction.copyFilteredAudio:
           // Your copyFilteredAudio logic here
@@ -638,7 +668,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
   void deleteFilteredAudio(
     PlaylistListVM playlistListVM,
   ) {
-    playlistListVM.deleteAudioFilesSortFilteredLst();
+    playlistListVM.deleteSortFilteredAudioLst();
   }
 
   /// Public method passed as parameter to the ActionConfirmDialog

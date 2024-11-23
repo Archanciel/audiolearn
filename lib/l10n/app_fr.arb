@@ -503,7 +503,7 @@
   "commentedAudioDeletionApplyingNewSFParmHelpTitle": "Enfin, ouvrez le menu de la playlist et cliquez sur \"Supprimer les audios filtrés ...\"",
   "commentedAudioDeletionApplyingNewSFParmHelpContent": "Cette fois, puisqu'un paramètre de tri/filtrage correct est appliqué, aucun avertissement ne sera affiché lors de la suppression des audios sélectionnés non commentés.",
   "filteredAudioActions": "Traiter les audio filtrés ...",
-  "moveFilteredAudio": "Déplacer les audio filtrés ...",
-  "copyFilteredAudio": "Copier les audio filtrés ...",
+  "moveFilteredAudio": "Déplacer les audio filtrés dans une playlist ...",
+  "copyFilteredAudio": "Copier les audio filtrés dans une playlist ...",
   "deleteFilteredAudio": "Supprimer les audio filtrés ..."
 }
