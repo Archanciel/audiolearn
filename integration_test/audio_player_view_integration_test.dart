@@ -315,7 +315,7 @@ void main() {
       final Finder audioPlayerViewAudioPositionFinder =
           find.byKey(const Key('audioPlayerViewAudioPosition'));
 
-      verifyPositionBetweenMinMax(
+      IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
         minPositionTimeStr: '0:04',
@@ -419,7 +419,7 @@ void main() {
       final Finder audioPlayerViewAudioPositionFinder =
           find.byKey(const Key('audioPlayerViewAudioPosition'));
 
-      verifyPositionBetweenMinMax(
+      IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
         minPositionTimeStr: '5:00',
@@ -494,7 +494,7 @@ void main() {
       final Finder audioPlayerViewAudioPositionFinder =
           find.byKey(const Key('audioPlayerViewAudioPosition'));
 
-      verifyPositionBetweenMinMax(
+      IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
         minPositionTimeStr: '0:04',
@@ -622,7 +622,7 @@ void main() {
       final Finder audioPlayerViewAudioPositionFinder =
           find.byKey(const Key('audioPlayerViewAudioPosition'));
 
-      verifyPositionBetweenMinMax(
+      IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
         minPositionTimeStr: '5:02',
@@ -2040,7 +2040,7 @@ void main() {
       Finder audioPlayerViewAudioPositionFinder =
           find.byKey(const Key('audioPlayerViewAudioPosition'));
 
-      verifyPositionBetweenMinMax(
+      IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
         minPositionTimeStr: '0:02',
@@ -2133,7 +2133,7 @@ void main() {
       Finder audioPlayerViewAudioPositionFinder =
           find.byKey(const Key('audioPlayerViewAudioPosition'));
 
-      verifyPositionBetweenMinMax(
+      IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
         minPositionTimeStr: '3:03',
@@ -2236,7 +2236,7 @@ void main() {
       Finder audioPlayerViewAudioPositionFinder =
           find.byKey(const Key('audioPlayerViewAudioPosition'));
 
-      verifyPositionBetweenMinMax(
+      IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
         minPositionTimeStr: '18:06',
@@ -2357,7 +2357,7 @@ void main() {
       Finder audioPlayerViewAudioPositionFinder =
           find.byKey(const Key('audioPlayerViewAudioPosition'));
 
-      verifyPositionBetweenMinMax(
+      IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
         minPositionTimeStr: '0:02',
@@ -2486,7 +2486,7 @@ void main() {
       Finder audioPlayerViewAudioPositionFinder =
           find.byKey(const Key('audioPlayerViewAudioPosition'));
 
-      verifyPositionBetweenMinMax(
+      IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
         minPositionTimeStr: '2:01',
@@ -5099,7 +5099,7 @@ void main() {
       String expectedCommentEndPositionWithTensOfSecondMin = '0:48.8';
       String expectedCommentEndPositionWithTensOfSecondMax = '0:49.5';
 
-      verifyPositionBetweenMinMax(
+      IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: commentEndTextWidgetFinder,
         minPositionTimeStr: expectedCommentEndPositionWithTensOfSecondMin,
@@ -5162,7 +5162,7 @@ void main() {
       String expectedAudioPlayerAudioPositionMin = '0:48';
       String expectedAudioPlayerAudioPositionMax = '0:49';
 
-      verifyPositionBetweenMinMax(
+      IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
         minPositionTimeStr: expectedAudioPlayerAudioPositionMin,
@@ -5184,7 +5184,7 @@ void main() {
       String expectedCommentEndPositionMin = '0:51.8';
       String expectedCommentEndPositionMax = '0:52.3';
 
-      verifyPositionBetweenMinMax(
+      IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: commentEndTextWidgetFinder,
         minPositionTimeStr: expectedCommentEndPositionMin,
@@ -5221,7 +5221,7 @@ void main() {
       String actualCommentEndPositionWithTenthOfSecondsStr =
           tester.widget<Text>(commentEndTextWidgetFinder).data!;
 
-      verifyPositionBetweenMinMax(
+      IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: commentEndTextWidgetFinder,
         minPositionTimeStr: expectedCommentEndPositionMin,
@@ -5239,7 +5239,7 @@ void main() {
       expectedAudioPlayerAudioPositionMin = '0:48';
       expectedAudioPlayerAudioPositionMax = '0:50';
 
-      verifyPositionBetweenMinMax(
+      IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
         minPositionTimeStr: expectedAudioPlayerAudioPositionMin,
@@ -5409,7 +5409,7 @@ void main() {
       expectedAudioPlayerAudioPositionMin = '5:48';
       expectedAudioPlayerAudioPositionMax = '5:49';
 
-      verifyPositionBetweenMinMax(
+      IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
         minPositionTimeStr: expectedAudioPlayerAudioPositionMin,
@@ -5767,7 +5767,7 @@ void main() {
       String expectedCommentEndPositionMin = '1:12:52';
       String expectedCommentEndPositionMax = '1:12:52';
 
-      verifyPositionBetweenMinMax(
+      IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: commentEndTextWidgetFinder,
         minPositionTimeStr: expectedCommentEndPositionMin,
@@ -5808,7 +5808,7 @@ void main() {
       expectedCommentEndPositionMin = '1:12:52.4';
       expectedCommentEndPositionMax = '1:12:52.4';
 
-      verifyPositionBetweenMinMax(
+      IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: commentEndTextWidgetFinder,
         minPositionTimeStr: expectedCommentEndPositionMin,
@@ -7217,7 +7217,7 @@ Future<void> applyRewindTesting({
       '$audioToListenTitle\n$audioDurationStr';
   expect(find.text(audioToListenTitleWithDuration), findsOneWidget);
 
-  verifyPositionBetweenMinMax(
+  IntegrationTestUtil.verifyPositionBetweenMinMax(
     tester: tester,
     textWidgetFinder: audioPlayerViewAudioPositionFinder,
     minPositionTimeStr: expectedMinPositionTimeStr,
@@ -7329,7 +7329,7 @@ Future<void> applyRewindExcludedTesting({
   audioPlayerViewAudioPositionFinder =
       find.byKey(const Key('audioPlayerViewAudioPosition'));
 
-  verifyPositionBetweenMinMax(
+  IntegrationTestUtil.verifyPositionBetweenMinMax(
     tester: tester,
     textWidgetFinder: audioPlayerViewAudioPositionFinder,
     minPositionTimeStr: expectedMinPositionTimeStr,
@@ -7444,40 +7444,6 @@ Finder _verifyCommentsInCommentListDialog({
   }
 
   return gestureDetectorsFinder;
-}
-
-/// Verify that the position displayed in the {textWidgetFinder} text
-/// widget is between - or equal to - the minimum and maximum position
-/// time strings.
-void verifyPositionBetweenMinMax({
-  required WidgetTester tester,
-  required final Finder textWidgetFinder,
-  required String minPositionTimeStr,
-  required String maxPositionTimeStr,
-}) {
-  String actualPositionTimeString = tester.widget<Text>(textWidgetFinder).data!;
-  int actualPositionTenthOfSeconds = DateTimeUtil.convertToTenthsOfSeconds(
-    timeString: actualPositionTimeString,
-  );
-
-  int expectedMinPositionTenthSeconds =
-      DateTimeUtil.convertToTenthsOfSeconds(timeString: minPositionTimeStr);
-  int expectedMaxPositionTenthSeconds =
-      DateTimeUtil.convertToTenthsOfSeconds(timeString: maxPositionTimeStr);
-
-  IntegrationTestUtil.expectWithSuccessMessage(
-    actual: actualPositionTenthOfSeconds,
-    matcher: allOf(
-      [
-        greaterThanOrEqualTo(expectedMinPositionTenthSeconds),
-        lessThanOrEqualTo(expectedMaxPositionTenthSeconds),
-      ],
-    ),
-    reason:
-        "Expected value between $expectedMinPositionTenthSeconds and $expectedMaxPositionTenthSeconds but obtained $actualPositionTenthOfSeconds",
-    successMessage:
-        "Acceptable position between $minPositionTimeStr and $maxPositionTimeStr is $actualPositionTimeString",
-  );
 }
 
 Matcher inInclusiveRange(int min, int max) => predicate(

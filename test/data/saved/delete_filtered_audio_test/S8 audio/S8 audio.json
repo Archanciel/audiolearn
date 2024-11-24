@@ -1,6 +1,6 @@
 {
     "audioPlayingOrder": "ascending",
-    "audioPlaySpeed": 0.0,
+    "audioPlaySpeed": 1.0,
     "audioSortFilterParmsNameAudioPlayerView": "",
     "audioSortFilterParmsNamePlaylistDownloadView": "",
     "currentOrPastPlayableAudioIndex": 3,
