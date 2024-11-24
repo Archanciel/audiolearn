@@ -484,6 +484,65 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         });
 
         return const SizedBox.shrink();
+      case WarningMessageType.confirmMovedUnmovedAudioNumber:
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          String confirmationMessage;
+
+          if (_warningMessageVM.movedFromSourcePlaylistType ==
+              PlaylistType.youtube) {
+            if (_warningMessageVM.movedToTargetPlaylistType ==
+                PlaylistType.youtube) {
+              confirmationMessage = AppLocalizations.of(context)!
+                  .confirmMovedUnmovedAudioNumberFromYoutubeToYoutubePlaylist(
+                _warningMessageVM.audioMoveSourcePlaylistTitle,
+                _warningMessageVM.audioMoveTargetPlaylistTitle,
+                _warningMessageVM.appliedToMoveSortFilterParmsName,
+                _warningMessageVM.movedAudioNumber,
+                _warningMessageVM.unmovedAudioNumber,
+              );
+            } else {
+              confirmationMessage = AppLocalizations.of(context)!
+                  .confirmMovedUnmovedAudioNumberFromYoutubeToLocalPlaylist(
+                _warningMessageVM.audioMoveSourcePlaylistTitle,
+                _warningMessageVM.audioMoveTargetPlaylistTitle,
+                _warningMessageVM.appliedToMoveSortFilterParmsName,
+                _warningMessageVM.movedAudioNumber,
+                _warningMessageVM.unmovedAudioNumber,
+              );
+            }
+          } else {
+            if (_warningMessageVM.movedToTargetPlaylistType ==
+                PlaylistType.youtube) {
+              confirmationMessage = AppLocalizations.of(context)!
+                  .confirmMovedUnmovedAudioNumberFromLocalToYoutubePlaylist(
+                _warningMessageVM.audioMoveSourcePlaylistTitle,
+                _warningMessageVM.audioMoveTargetPlaylistTitle,
+                _warningMessageVM.appliedToMoveSortFilterParmsName,
+                _warningMessageVM.movedAudioNumber,
+                _warningMessageVM.unmovedAudioNumber,
+              );
+            } else {
+              confirmationMessage = AppLocalizations.of(context)!
+                  .confirmMovedUnmovedAudioNumberFromLocalToLocalPlaylist(
+                _warningMessageVM.audioMoveSourcePlaylistTitle,
+                _warningMessageVM.audioMoveTargetPlaylistTitle,
+                _warningMessageVM.appliedToMoveSortFilterParmsName,
+                _warningMessageVM.movedAudioNumber,
+                _warningMessageVM.unmovedAudioNumber,
+              );
+            }
+          }
+
+          _displayWarningDialog(
+            context: _context,
+            message: confirmationMessage,
+            warningMessageVM: _warningMessageVM,
+            themeProviderVM: themeProviderVM,
+            warningMode: WarningMode.confirm,
+          );
+        });
+
+        return const SizedBox.shrink();
       case WarningMessageType.rewindedPlayableAudioToStart:
         WidgetsBinding.instance.addPostFrameCallback((_) {
           _displayWarningDialog(

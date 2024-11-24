@@ -1191,6 +1191,7 @@ class AudioDownloadVM extends ChangeNotifier {
     required Playlist targetPlaylist,
     required bool keepAudioInSourcePlaylistDownloadedAudioLst,
     bool displayWarningIfAudioAlreadyExists = true,
+    bool displayWarningWhenAudioWasMoved = true,
   }) {
     Playlist fromPlaylist = audioToMove.enclosingPlaylist!;
 
@@ -1199,8 +1200,8 @@ class AudioDownloadVM extends ChangeNotifier {
       targetDirectoryPath: targetPlaylist.downloadPath,
     );
 
-    if (displayWarningIfAudioAlreadyExists) {
-      if (!wasFileMoved) {
+    if (!wasFileMoved) {
+      if (displayWarningIfAudioAlreadyExists) {
         // the case if the moved audio file already exist in the target
         // playlist directory or not exist in the source playlist directory
         warningMessageVM.setAudioNotMovedFromToPlaylistTitles(
@@ -1210,9 +1211,9 @@ class AudioDownloadVM extends ChangeNotifier {
           movedToPlaylistTitle: targetPlaylist.title,
           movedToPlaylistType: targetPlaylist.playlistType,
         );
-
-        return false;
       }
+
+      return false;
     }
 
     if (keepAudioInSourcePlaylistDownloadedAudioLst) {
@@ -1253,14 +1254,17 @@ class AudioDownloadVM extends ChangeNotifier {
       path: targetPlaylist.getPlaylistDownloadFilePathName(),
     );
 
-    warningMessageVM.setAudioMovedFromToPlaylistTitles(
+    if (displayWarningWhenAudioWasMoved) {
+      warningMessageVM.setAudioMovedFromToPlaylistTitles(
         movedAudioValidVideoTitle: audioToMove.validVideoTitle,
         movedFromPlaylistTitle: fromPlaylist.title,
         movedFromPlaylistType: fromPlaylist.playlistType,
         movedToPlaylistTitle: targetPlaylist.title,
         movedToPlaylistType: targetPlaylist.playlistType,
         keepAudioDataInSourcePlaylist:
-            keepAudioInSourcePlaylistDownloadedAudioLst);
+            keepAudioInSourcePlaylistDownloadedAudioLst,
+      );
+    }
 
     return true;
   }

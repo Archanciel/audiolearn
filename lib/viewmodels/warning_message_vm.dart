@@ -78,6 +78,9 @@ enum WarningMessageType {
   // was updated. This happens when the user clicks on the update
   // playable audio list playlist menu item.
 
+  confirmMovedUnmovedAudioNumber, // The case if the user clicked on
+  // Move Filtered Audio to Playlist ... menu item
+
   rewindedPlayableAudioToStart, // The case if the playable audio
   // were rewinded to start position. This happens when the user clicks
   // on the Rewind Audio to Start playlist menu item.
@@ -829,6 +832,44 @@ class WarningMessageVM extends ChangeNotifier {
       // Causes the display warning message widget to be displayed.
       notifyListeners();
     }
+  }
+
+  String _audioMoveSourcePlaylistTitle = '';
+  String get audioMoveSourcePlaylistTitle => _audioMoveSourcePlaylistTitle;
+  late PlaylistType _movedFromSourcePlaylistType;
+  PlaylistType get movedFromSourcePlaylistType => _movedFromSourcePlaylistType;
+  String _audioMoveTargetPlaylistTitle = '';
+  String get audioMoveTargetPlaylistTitle => _audioMoveTargetPlaylistTitle;
+  late PlaylistType _movedToTargetPlaylistType;
+  PlaylistType get movedToTargetPlaylistType => _movedToTargetPlaylistType;
+  String _appliedToMoveSortFilterParmsName = '';
+  String get appliedToMoveSortFilterParmsName =>
+      _appliedToMoveSortFilterParmsName;
+  int _movedAudioNumber = 0;
+  int get movedAudioNumber => _movedAudioNumber;
+  int _unmovedAudioNumber = 0;
+  int get unmovedAudioNumber => _unmovedAudioNumber;
+  void confirmMovedUnmovedAudioNumber({
+    required String sourcePlaylistTitle,
+    required PlaylistType sourcePlaylistType,
+    required String targetPlaylistTitle,
+    required PlaylistType targetPlaylistType,
+    required String appliedSortFilterParmsName,
+    required int movedAudioNumber,
+    required int unmovedAudioNumber,
+  }) {
+    _audioMoveSourcePlaylistTitle = sourcePlaylistTitle;
+    _movedFromSourcePlaylistType = sourcePlaylistType;
+    _audioMoveTargetPlaylistTitle = targetPlaylistTitle;
+    _movedToTargetPlaylistType = targetPlaylistType;
+    _appliedToMoveSortFilterParmsName = appliedSortFilterParmsName;
+    _movedAudioNumber = movedAudioNumber;
+    _unmovedAudioNumber = unmovedAudioNumber;
+
+    warningMessageType = WarningMessageType.confirmMovedUnmovedAudioNumber;
+
+    // Causes the display warning message widget to be displayed.
+    notifyListeners();
   }
 
   int _rewindedPlayableAudioNumber = 0;
