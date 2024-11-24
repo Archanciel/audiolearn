@@ -74,6 +74,40 @@ class IntegrationTestUtil {
     }
   }
 
+/// Verify that the position displayed in the {textWidgetFinder} text
+/// widget is between - or equal to - the minimum and maximum position
+/// time strings.
+static void verifyPositionBetweenMinMax({
+  required WidgetTester tester,
+  required final Finder textWidgetFinder,
+  required String minPositionTimeStr,
+  required String maxPositionTimeStr,
+}) {
+  String actualPositionTimeString = tester.widget<Text>(textWidgetFinder).data!;
+  int actualPositionTenthOfSeconds = DateTimeUtil.convertToTenthsOfSeconds(
+    timeString: actualPositionTimeString,
+  );
+
+  int expectedMinPositionTenthSeconds =
+      DateTimeUtil.convertToTenthsOfSeconds(timeString: minPositionTimeStr);
+  int expectedMaxPositionTenthSeconds =
+      DateTimeUtil.convertToTenthsOfSeconds(timeString: maxPositionTimeStr);
+
+  IntegrationTestUtil.expectWithSuccessMessage(
+    actual: actualPositionTenthOfSeconds,
+    matcher: allOf(
+      [
+        greaterThanOrEqualTo(expectedMinPositionTenthSeconds),
+        lessThanOrEqualTo(expectedMaxPositionTenthSeconds),
+      ],
+    ),
+    reason:
+        "Expected value between $expectedMinPositionTenthSeconds and $expectedMaxPositionTenthSeconds but obtained $actualPositionTenthOfSeconds",
+    successMessage:
+        "Acceptable position between $minPositionTimeStr and $maxPositionTimeStr is $actualPositionTimeString",
+  );
+}
+
   static Future<void> typeOnPlaylistSubMenuItem({
     required WidgetTester tester,
     required String playlistTitle,

@@ -3590,6 +3590,39 @@ void main() {
         expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
       );
 
+      // Now verify that the moved audio can be played
+
+      // Verify the current audio position
+      Text audioPositionText = tester
+          .widget<Text>(find.byKey(const Key('audioPlayerViewAudioPosition')));
+      expect(audioPositionText.data, '0:05');
+
+      Finder audioTitlePositionTextFinder = find.text("$copiedAudioTitle\n0:24");
+      expect(audioTitlePositionTextFinder, findsOneWidget);
+
+      // Now play then pause the moved audio
+      await tester.tap(find.byIcon(Icons.play_arrow));
+      await tester.pumpAndSettle();
+
+      await Future.delayed(const Duration(seconds: 5));
+      await tester.pumpAndSettle();
+
+      // Tap on pause button to pause the audio
+      await tester.tap(find.byIcon(Icons.pause));
+      await tester.pumpAndSettle();
+
+      // Verify the audio position
+
+      Finder audioPlayerViewAudioPositionFinder =
+          find.byKey(const Key('audioPlayerViewAudioPosition'));
+
+      IntegrationTestUtil.verifyPositionBetweenMinMax(
+        tester: tester,
+        textWidgetFinder: audioPlayerViewAudioPositionFinder,
+        minPositionTimeStr: '0:03',
+        maxPositionTimeStr: '0:05',
+      );
+
       // Return to the Playlist Download View
       final playlistDownloadViewNavButton =
           find.byKey(const ValueKey('playlistDownloadViewIconButton'));
@@ -3716,6 +3749,7 @@ void main() {
       await tester.tap(targetAudioListTileWidgetFinder);
       await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
         tester: tester,
+        additionalMilliseconds: 1000,
       );
 
       // Verify that the comment icon button is highlighted. This indiquates
@@ -6015,8 +6049,11 @@ void main() {
         fileExtension: 'mp3',
       );
 
+      // Contains only the not moved audio
       expect(sourcePlaylistMp3Lst,
           ["230628-033813-audio learn test short video two 23-06-10.mp3"]);
+
+      // Contains only the moved audio
       expect(targetPlaylistMp3Lst,
           ["230628-033811-audio learn test short video one 23-06-10.mp3"]);
 
@@ -6077,6 +6114,39 @@ void main() {
         expectedIcon: Icons.bookmark_outline_outlined,
         expectedIconColor: Colors.white,
         expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
+      );
+
+      // Now verify that the moved audio can be played
+
+      // Verify the current audio position
+      Text audioPositionText = tester
+          .widget<Text>(find.byKey(const Key('audioPlayerViewAudioPosition')));
+      expect(audioPositionText.data, '0:05');
+
+      Finder audioTitlePositionTextFinder = find.text("$movedAudioTitle\n0:24");
+      expect(audioTitlePositionTextFinder, findsOneWidget);
+
+      // Now play then pause the moved audio
+      await tester.tap(find.byIcon(Icons.play_arrow));
+      await tester.pumpAndSettle();
+
+      await Future.delayed(const Duration(seconds: 5));
+      await tester.pumpAndSettle();
+
+      // Tap on pause button to pause the audio
+      await tester.tap(find.byIcon(Icons.pause));
+      await tester.pumpAndSettle();
+
+      // Verify the audio position
+
+      Finder audioPlayerViewAudioPositionFinder =
+          find.byKey(const Key('audioPlayerViewAudioPosition'));
+
+      IntegrationTestUtil.verifyPositionBetweenMinMax(
+        tester: tester,
+        textWidgetFinder: audioPlayerViewAudioPositionFinder,
+        minPositionTimeStr: '0:03',
+        maxPositionTimeStr: '0:05',
       );
 
       // *** Then move back the moved audio from the target local playlist
