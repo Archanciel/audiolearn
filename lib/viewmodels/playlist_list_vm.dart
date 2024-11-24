@@ -835,19 +835,31 @@ class PlaylistListVM extends ChangeNotifier {
   /// the source playlist playable audio list and add them to the target playlist
   /// playable audio list. The moved audio remain in the source playlist downloaded
   /// audio list and so will not be redownloaded !
-  void moveSortFilteredAudioAndCommentLstToPlaylist({
+  ///
+  /// Returned list: [
+  ///    movedAudioNumber,
+  ///    unmovedAudioNumber,
+  /// ].
+  List<int> moveSortFilteredAudioAndCommentLstToPlaylist({
     required Playlist targetPlaylist,
   }) {
     List<Audio> filteredAudioToMove =
         _sortedFilteredSelectedPlaylistPlayableAudioLst!;
+    int movedAudioNumber = 0;
+    int unmovedAudioNumber = 0;
 
     for (Audio audio in filteredAudioToMove) {
-      _audioDownloadVM.moveAudioToPlaylist(
+      if (_audioDownloadVM.moveAudioToPlaylist(
         audioToMove: audio,
         targetPlaylist: targetPlaylist,
         keepAudioInSourcePlaylistDownloadedAudioLst: true,
         displayWarningIfAudioAlreadyExists: false,
-      );
+        displayWarningWhenAudioWasMoved: false,
+      )) {
+        movedAudioNumber++;
+      } else {
+        unmovedAudioNumber++;
+      }
     }
 
     // Moving the comments of commented audio. This moves comments to the
@@ -861,6 +873,11 @@ class PlaylistListVM extends ChangeNotifier {
     }
 
     notifyListeners();
+
+    return [
+      movedAudioNumber,
+      unmovedAudioNumber,
+    ];
   }
 
   /// Returns this int list:

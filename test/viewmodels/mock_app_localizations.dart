@@ -1473,4 +1473,44 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get copyFilteredAudio => "Copy Filtered Audio ...";
+
+  @override
+  String confirmMovedUnmovedAudioNumberFromYoutubeToYoutubePlaylist(
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object sortedFilterParmsName,
+    Object movedAudioNumber,
+    Object unmovedAudioNumber,
+  ) =>
+      "From Youtube playlist \"$sourcePlaylistTitle\" to Youtube playlist \"$targetPlaylistTitle\" applying Sort/Filter parms \"$sortedFilterParmsName\", $movedAudioNumber audio(s) were moved and $unmovedAudioNumber audio(s) unmoved.";
+
+  @override
+  String confirmMovedUnmovedAudioNumberFromYoutubeToLocalPlaylist(
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object sortedFilterParmsName,
+    Object movedAudioNumber,
+    Object unmovedAudioNumber,
+  ) =>
+      "From Youtube playlist \"$sourcePlaylistTitle\" to local playlist \"$targetPlaylistTitle\" applying Sort/Filter parms \"$sortedFilterParmsName\", $movedAudioNumber audio(s) were moved and $unmovedAudioNumber audio(s) unmoved.";
+
+  @override
+  String confirmMovedUnmovedAudioNumberFromLocalToYoutubePlaylist(
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object sortedFilterParmsName,
+    Object movedAudioNumber,
+    Object unmovedAudioNumber,
+  ) =>
+      "From local playlist \"$sourcePlaylistTitle\" to Youtube playlist \"$targetPlaylistTitle\" applying Sort/Filter parms \"$sortedFilterParmsName\", $movedAudioNumber audio(s) were moved and $unmovedAudioNumber audio(s) unmoved.";
+
+  @override
+  String confirmMovedUnmovedAudioNumberFromLocalToLocalPlaylist(
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object sortedFilterParmsName,
+    Object movedAudioNumber,
+    Object unmovedAudioNumber,
+  ) =>
+      "From local playlist \"$sourcePlaylistTitle\" to local playlist \"$targetPlaylistTitle\" applying Sort/Filter parms \"$sortedFilterParmsName\", $movedAudioNumber audio(s) were moved and $unmovedAudioNumber audio(s) unmoved.";
 }

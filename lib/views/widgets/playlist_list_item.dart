@@ -394,6 +394,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             _showFilteredAudioActionsMenu(
               context: context,
               playlistListVMlistenTrue: playlistListVMlistenTrue,
+              warningMessageVMlistenFalse: warningMessageVMlistenFalse,
             );
             break;
           case PlaylistPopupMenuAction.deletePlaylist:
@@ -423,6 +424,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
   void _showFilteredAudioActionsMenu({
     required BuildContext context,
     required PlaylistListVM playlistListVMlistenTrue,
+    required WarningMessageVM warningMessageVMlistenFalse,
   }) {
     final RenderBox box = context.findRenderObject() as RenderBox;
     final Offset position = box.localToGlobal(Offset.zero);
@@ -484,9 +486,35 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                 // uses the WarningMessageVM to display the right warning
                 return;
               }
-              playlistListVMlistenTrue
+
+              // Content of the list:
+              //  [
+              //    movedAudioNumber,
+              //    unmovedAudioNumber,
+              //  ]
+              List<int> movedUnmovedAudioNumberLst = playlistListVMlistenTrue
                   .moveSortFilteredAudioAndCommentLstToPlaylist(
                 targetPlaylist: targetPlaylist,
+              );
+
+            String selectedPlaylistAudioSortFilterParmsName =
+                playlistListVMlistenTrue
+                    .getSelectedPlaylistAudioSortFilterParmsName(
+                        audioLearnAppViewType:
+                            AudioLearnAppViewType.playlistDownloadView,
+                        translatedAppliedSortFilterParmsName:
+                            AppLocalizations.of(context)!
+                                .sortFilterParametersAppliedName);
+
+              warningMessageVMlistenFalse.confirmMovedUnmovedAudioNumber(
+                sourcePlaylistTitle: playlist.title,
+                sourcePlaylistType: playlist.playlistType,
+                targetPlaylistTitle: targetPlaylist.title,
+                targetPlaylistType: targetPlaylist.playlistType,
+                appliedSortFilterParmsName:
+                    selectedPlaylistAudioSortFilterParmsName,
+                movedAudioNumber: movedUnmovedAudioNumberLst[0],
+                unmovedAudioNumber: movedUnmovedAudioNumberLst[1],
               );
             });
             break;
