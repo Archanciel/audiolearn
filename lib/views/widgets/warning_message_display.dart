@@ -498,6 +498,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                 _warningMessageVM.audioMoveTargetPlaylistTitle,
                 _warningMessageVM.appliedToMoveSortFilterParmsName,
                 _warningMessageVM.movedAudioNumber,
+                _warningMessageVM.movedCommentedAudioNumber,
                 _warningMessageVM.unmovedAudioNumber,
               );
             } else {
@@ -507,6 +508,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                 _warningMessageVM.audioMoveTargetPlaylistTitle,
                 _warningMessageVM.appliedToMoveSortFilterParmsName,
                 _warningMessageVM.movedAudioNumber,
+                _warningMessageVM.movedCommentedAudioNumber,
                 _warningMessageVM.unmovedAudioNumber,
               );
             }
@@ -519,6 +521,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                 _warningMessageVM.audioMoveTargetPlaylistTitle,
                 _warningMessageVM.appliedToMoveSortFilterParmsName,
                 _warningMessageVM.movedAudioNumber,
+                _warningMessageVM.movedCommentedAudioNumber,
                 _warningMessageVM.unmovedAudioNumber,
               );
             } else {
@@ -528,6 +531,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                 _warningMessageVM.audioMoveTargetPlaylistTitle,
                 _warningMessageVM.appliedToMoveSortFilterParmsName,
                 _warningMessageVM.movedAudioNumber,
+                _warningMessageVM.movedCommentedAudioNumber,
                 _warningMessageVM.unmovedAudioNumber,
               );
             }

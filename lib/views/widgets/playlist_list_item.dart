@@ -487,24 +487,32 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                 return;
               }
 
+              String selectedPlaylistAudioSortFilterParmsName =
+                  playlistListVMlistenTrue
+                      .getSelectedPlaylistAudioSortFilterParmsName(
+                          audioLearnAppViewType:
+                              AudioLearnAppViewType.playlistDownloadView,
+                          translatedAppliedSortFilterParmsName:
+                              AppLocalizations.of(context)!
+                                  .sortFilterParametersAppliedName);
+
+              if (selectedPlaylistAudioSortFilterParmsName.isEmpty ||
+                  selectedPlaylistAudioSortFilterParmsName ==
+                      AppLocalizations.of(context)!
+                          .sortFilterParametersDefaultName) {
+                return;
+              }
+
               // Content of the list:
               //  [
               //    movedAudioNumber,
+              //    movedCommentedAudioNumber,
               //    unmovedAudioNumber,
               //  ]
               List<int> movedUnmovedAudioNumberLst = playlistListVMlistenTrue
                   .moveSortFilteredAudioAndCommentLstToPlaylist(
                 targetPlaylist: targetPlaylist,
               );
-
-            String selectedPlaylistAudioSortFilterParmsName =
-                playlistListVMlistenTrue
-                    .getSelectedPlaylistAudioSortFilterParmsName(
-                        audioLearnAppViewType:
-                            AudioLearnAppViewType.playlistDownloadView,
-                        translatedAppliedSortFilterParmsName:
-                            AppLocalizations.of(context)!
-                                .sortFilterParametersAppliedName);
 
               warningMessageVMlistenFalse.confirmMovedUnmovedAudioNumber(
                 sourcePlaylistTitle: playlist.title,
@@ -514,7 +522,8 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                 appliedSortFilterParmsName:
                     selectedPlaylistAudioSortFilterParmsName,
                 movedAudioNumber: movedUnmovedAudioNumberLst[0],
-                unmovedAudioNumber: movedUnmovedAudioNumberLst[1],
+                movedCommentedAudioNumber: movedUnmovedAudioNumberLst[1],
+                unmovedAudioNumber: movedUnmovedAudioNumberLst[2],
               );
             });
             break;

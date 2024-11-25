@@ -506,7 +506,7 @@
   "moveFilteredAudio": "Déplacer les audio filtrés dans une playlist ...",
   "copyFilteredAudio": "Copier les audio filtrés dans une playlist ...",
   "deleteFilteredAudio": "Supprimer les audio filtrés ...",
-  "confirmMovedUnmovedAudioNumberFromYoutubeToYoutubePlaylist": "De la playlist Youtube \"{sourcePlaylistTitle}\" à la playlist Youtube \"{targetPlaylistTitle}\" en appliquant le filtre \"{sortedFilterParmsName}\", {movedAudioNumber} audio(s) ont été déplacé(s) et {unmovedAudioNumber} audio(s) ne l'ont pas été.",
+  "confirmMovedUnmovedAudioNumberFromYoutubeToYoutubePlaylist": "En appliquant le filtre \"{sortedFilterParmsName}\", de la playlist Youtube \"{sourcePlaylistTitle}\" à la playlist Youtube \"{targetPlaylistTitle}\", {movedAudioNumber} audio(s) ont été déplacé(s) dont {movedCommentedAudioNumber} commenté(s), et {unmovedAudioNumber} audio(s) n'ont pu être déplacé(s).",
   "@confirmMovedUnmovedAudioNumberFromYoutubeToYoutubePlaylist": {
     "description": "Confirmation message indicating how many audio were moved and unmoved",
     "placeholders": {
@@ -514,10 +514,11 @@
       "targetPlaylistTitle": {},
       "sortedFilterParmsName": {},
       "movedAudioNumber": {},
+      "movedCommentedAudioNumber": {},
       "unmovedAudioNumber": {}
     }
   },
-  "confirmMovedUnmovedAudioNumberFromYoutubeToLocalPlaylist": "De la playlist Youtube \"{sourcePlaylistTitle}\" à la playlist locale \"{targetPlaylistTitle}\" en appliquant le filtre \"{sortedFilterParmsName}\", {movedAudioNumber} audio(s) ont été déplacé(s) et {unmovedAudioNumber} audio(s) ne l'ont pas été.",
+  "confirmMovedUnmovedAudioNumberFromYoutubeToLocalPlaylist": "En appliquant le filtre \"{sortedFilterParmsName}\", de la playlist Youtube \"{sourcePlaylistTitle}\" à la playlist locale \"{targetPlaylistTitle}\", {movedAudioNumber} audio(s) ont été déplacé(s) dont {movedCommentedAudioNumber} commenté(s), et {unmovedAudioNumber} audio(s) n'ont pu être déplacé(s).",
   "@confirmMovedUnmovedAudioNumberFromYoutubeToLocalPlaylist": {
     "description": "Confirmation message indicating how many audio were moved and unmoved",
     "placeholders": {
@@ -525,10 +526,11 @@
       "targetPlaylistTitle": {},
       "sortedFilterParmsName": {},
       "movedAudioNumber": {},
+      "movedCommentedAudioNumber": {},
       "unmovedAudioNumber": {}
     }
   },
-  "confirmMovedUnmovedAudioNumberFromLocalToYoutubePlaylist": "De la playlist locale \"{sourcePlaylistTitle}\" à la playlist Youtube \"{targetPlaylistTitle}\" en appliquant le filtre \"{sortedFilterParmsName}\", {movedAudioNumber} audio(s) ont été déplacé(s) et {unmovedAudioNumber} audio(s) ne l'ont pas été.",
+  "confirmMovedUnmovedAudioNumberFromLocalToYoutubePlaylist": "En appliquant le filtre \"{sortedFilterParmsName}\", de la playlist locale \"{sourcePlaylistTitle}\" à la playlist Youtube \"{targetPlaylistTitle}\", {movedAudioNumber} audio(s) ont été déplacé(s) dont {movedCommentedAudioNumber} commenté(s), et {unmovedAudioNumber} audio(s) n'ont pu être déplacé(s).",
   "@confirmMovedUnmovedAudioNumberFromLocalToYoutubePlaylist": {
     "description": "Confirmation message indicating how many audio were moved and unmoved",
     "placeholders": {
@@ -536,10 +538,11 @@
       "targetPlaylistTitle": {},
       "sortedFilterParmsName": {},
       "movedAudioNumber": {},
+      "movedCommentedAudioNumber": {},
       "unmovedAudioNumber": {}
     }
   },
-  "confirmMovedUnmovedAudioNumberFromLocalToLocalPlaylist": "De la playlist locale \"{sourcePlaylistTitle}\" à la playlist locale \"{targetPlaylistTitle}\" en appliquant le filtre \"{sortedFilterParmsName}\", {movedAudioNumber} audio(s) ont été déplacé(s) et {unmovedAudioNumber} audio(s) ne l'ont pas été.",
+  "confirmMovedUnmovedAudioNumberFromLocalToLocalPlaylist": "En appliquant le filtre \"{sortedFilterParmsName}\", de la playlist locale \"{sourcePlaylistTitle}\" à la playlist locale \"{targetPlaylistTitle}\", {movedAudioNumber} audio(s) ont été déplacé(s) dont {movedCommentedAudioNumber} commenté(s), et {unmovedAudioNumber} audio(s) n'ont pu être déplacé(s).",
   "@confirmMovedUnmovedAudioNumberFromLocalToLocalPlaylist": {
     "description": "Confirmation message indicating how many audio were moved and unmoved",
     "placeholders": {
@@ -547,6 +550,7 @@
       "targetPlaylistTitle": {},
       "sortedFilterParmsName": {},
       "movedAudioNumber": {},
+      "movedCommentedAudioNumber": {},
       "unmovedAudioNumber": {}
     }
   }

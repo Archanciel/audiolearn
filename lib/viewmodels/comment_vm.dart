@@ -221,7 +221,9 @@ class CommentVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  void moveAudioCommentFileToTargetPlaylist({
+  /// If the passed audio has a comment file, it is moved to the target playlist
+  /// and true is returned. If the audio has no comment file, false is returned.
+  bool moveAudioCommentFileToTargetPlaylist({
     required Audio audio,
     required String targetPlaylistPath,
   }) {
@@ -243,7 +245,11 @@ class CommentVM extends ChangeNotifier {
         sourceFilePathName: commentFilePathName,
         targetDirectoryPath: targetCommentDirPath,
       );
+
+      return true;
     }
+
+    return false;
   }
 
   void copyAudioCommentFileToTargetPlaylist({
@@ -353,8 +359,7 @@ class CommentVM extends ChangeNotifier {
       for (int i = _undoCommentPlayCommandLst.length - 1; i >= 0; i--) {
         CommentPlayCommand commentPlayCommand = _undoCommentPlayCommandLst[i];
 
-        playlistListVM.updateCurrentOrPastPlayableAudio
-        (
+        playlistListVM.updateCurrentOrPastPlayableAudio(
           audioCopy: commentPlayCommand.commentAudioCopy,
           previousAudioIndex: commentPlayCommand.previousAudioIndex,
         );

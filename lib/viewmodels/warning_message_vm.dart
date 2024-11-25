@@ -847,6 +847,8 @@ class WarningMessageVM extends ChangeNotifier {
       _appliedToMoveSortFilterParmsName;
   int _movedAudioNumber = 0;
   int get movedAudioNumber => _movedAudioNumber;
+  int _movedCommentedAudioNumber = 0;
+  int get movedCommentedAudioNumber => _movedCommentedAudioNumber;
   int _unmovedAudioNumber = 0;
   int get unmovedAudioNumber => _unmovedAudioNumber;
   void confirmMovedUnmovedAudioNumber({
@@ -856,6 +858,7 @@ class WarningMessageVM extends ChangeNotifier {
     required PlaylistType targetPlaylistType,
     required String appliedSortFilterParmsName,
     required int movedAudioNumber,
+    required int movedCommentedAudioNumber,
     required int unmovedAudioNumber,
   }) {
     _audioMoveSourcePlaylistTitle = sourcePlaylistTitle;
@@ -864,6 +867,7 @@ class WarningMessageVM extends ChangeNotifier {
     _movedToTargetPlaylistType = targetPlaylistType;
     _appliedToMoveSortFilterParmsName = appliedSortFilterParmsName;
     _movedAudioNumber = movedAudioNumber;
+    _movedCommentedAudioNumber = movedCommentedAudioNumber;
     _unmovedAudioNumber = unmovedAudioNumber;
 
     warningMessageType = WarningMessageType.confirmMovedUnmovedAudioNumber;

@@ -1480,6 +1480,7 @@ class MockAppLocalizations extends AppLocalizations {
     Object targetPlaylistTitle,
     Object sortedFilterParmsName,
     Object movedAudioNumber,
+    Object movedCommentedAudioNumber,
     Object unmovedAudioNumber,
   ) =>
       "From Youtube playlist \"$sourcePlaylistTitle\" to Youtube playlist \"$targetPlaylistTitle\" applying Sort/Filter parms \"$sortedFilterParmsName\", $movedAudioNumber audio(s) were moved and $unmovedAudioNumber audio(s) unmoved.";
@@ -1490,6 +1491,7 @@ class MockAppLocalizations extends AppLocalizations {
     Object targetPlaylistTitle,
     Object sortedFilterParmsName,
     Object movedAudioNumber,
+    Object movedCommentedAudioNumber,
     Object unmovedAudioNumber,
   ) =>
       "From Youtube playlist \"$sourcePlaylistTitle\" to local playlist \"$targetPlaylistTitle\" applying Sort/Filter parms \"$sortedFilterParmsName\", $movedAudioNumber audio(s) were moved and $unmovedAudioNumber audio(s) unmoved.";
@@ -1500,6 +1502,7 @@ class MockAppLocalizations extends AppLocalizations {
     Object targetPlaylistTitle,
     Object sortedFilterParmsName,
     Object movedAudioNumber,
+    Object movedCommentedAudioNumber,
     Object unmovedAudioNumber,
   ) =>
       "From local playlist \"$sourcePlaylistTitle\" to Youtube playlist \"$targetPlaylistTitle\" applying Sort/Filter parms \"$sortedFilterParmsName\", $movedAudioNumber audio(s) were moved and $unmovedAudioNumber audio(s) unmoved.";
@@ -1510,6 +1513,7 @@ class MockAppLocalizations extends AppLocalizations {
     Object targetPlaylistTitle,
     Object sortedFilterParmsName,
     Object movedAudioNumber,
+    Object movedCommentedAudioNumber,
     Object unmovedAudioNumber,
   ) =>
       "From local playlist \"$sourcePlaylistTitle\" to local playlist \"$targetPlaylistTitle\" applying Sort/Filter parms \"$sortedFilterParmsName\", $movedAudioNumber audio(s) were moved and $unmovedAudioNumber audio(s) unmoved.";
