@@ -838,6 +838,7 @@ class PlaylistListVM extends ChangeNotifier {
   ///
   /// Returned list: [
   ///    movedAudioNumber,
+  ///    movedCommentedAudioNumber,
   ///    unmovedAudioNumber,
   /// ].
   List<int> moveSortFilteredAudioAndCommentLstToPlaylist({
@@ -846,6 +847,7 @@ class PlaylistListVM extends ChangeNotifier {
     List<Audio> filteredAudioToMove =
         _sortedFilteredSelectedPlaylistPlayableAudioLst!;
     int movedAudioNumber = 0;
+    int movedCommentedAudioNumber = 0;
     int unmovedAudioNumber = 0;
 
     for (Audio audio in filteredAudioToMove) {
@@ -857,25 +859,26 @@ class PlaylistListVM extends ChangeNotifier {
         displayWarningWhenAudioWasMoved: false,
       )) {
         movedAudioNumber++;
+
+        // Moving the comments of commented audio. This moves comments
+        // to the target playlist in case the applied sort/filter
+        // parameters selected commented audio as well
+        if (_commentVM.moveAudioCommentFileToTargetPlaylist(
+          audio: audio,
+          targetPlaylistPath: targetPlaylist.downloadPath,
+        )) {
+          movedCommentedAudioNumber++;
+        }
       } else {
         unmovedAudioNumber++;
       }
-    }
-
-    // Moving the comments of commented audio. This moves comments to the
-    // target playlist in case the applied sort/filter parameters selected
-    // commented audio as well
-    for (Audio audio in filteredAudioToMove) {
-      _commentVM.moveAudioCommentFileToTargetPlaylist(
-        audio: audio,
-        targetPlaylistPath: targetPlaylist.downloadPath,
-      );
     }
 
     notifyListeners();
 
     return [
       movedAudioNumber,
+      movedCommentedAudioNumber,
       unmovedAudioNumber,
     ];
   }

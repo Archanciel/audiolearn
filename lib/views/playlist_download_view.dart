@@ -800,8 +800,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     // The problem is that the default sort and filter parameters named
     // in the previous language is still in the sort and filter
     // parameters list. This default sort and filter parameters name
-    // must be deleted from the list since that the named in current
-    // language default sort and filter parameters is in the list.
+    // must be deleted from the list since the default sort and filter
+    // parameters named in the current language is now in the list.
     if (sortFilterDefaultMenuItemNameCorrespondingToLanguage == "défaut") {
       if (playlistListVMlistenFalse.deleteAudioSortFilterParameters(
               audioSortFilterParametersName: "default") !=
@@ -1012,6 +1012,10 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     String searchSentence = '',
     bool notifyListeners = true,
   }) {
+    if (_selectedSortFilterParametersName == null) {
+      return;
+    }
+
     AudioSortFilterParameters audioSortFilterParameters =
         playlistListVMlistenTrue.getAudioSortFilterParameters(
       audioSortFilterParametersName: _selectedSortFilterParametersName!,
@@ -1841,12 +1845,16 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       );
 
       if (selectedPlaylistAudioSortFilterParmsName.isEmpty) {
+      // if (selectedPlaylistAudioSortFilterParmsName.isEmpty ||
+      //     selectedPlaylistAudioSortFilterParmsName == 'default' ||
+      //     selectedPlaylistAudioSortFilterParmsName == 'défaut') {
         selectedPlaylistAudioSortFilterParmsName =
             AppLocalizations.of(context)!.sortFilterParametersDefaultName;
       }
     } else {
       selectedPlaylistAudioSortFilterParmsName = '';
     }
+
     return Expanded(
       // necessary to avoid Exception
       child: Column(
