@@ -651,9 +651,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
   group('Sort/filter playlist download view tests', () {
     group('Audio sort filter dialog tests ', () {
       testWidgets(
-          '''Menu Clear Sort/Filter Parameters History execution verifying
-           that the confirm dialog is displayed in the playlist download
-           view.''', (WidgetTester tester) async {
+          '''Menu Clear SF Parameters History execution verifying that the confirm
+             dialog is displayed in the playlist download view.''',
+          (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -738,9 +738,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
-      testWidgets('''Sort filter audio dialog, tapping on clear sort/filter
-           parameters history icon button and verifying that the confirm
-           warning is displayed in the audio player view.''',
+      testWidgets(
+          '''Tapping on clear sort/filter parameters history icon button and verifying
+             that the confirm warning is displayed in the audio player view.''',
           (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
@@ -929,6 +929,198 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: "search_history_delete_all_button",
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Tapping on clear sort/filter parameters icon button and verifying the
+             state of SF name as well as the Apply button.''',
+          (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
+          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+
+        final SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
+        );
+
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the download app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+        await app.main(['test']);
+        await tester.pumpAndSettle();
+
+        // Now tap on the current dropdown button item to open the dropdown
+        // button items list
+
+        final Finder dropDownButtonFinder =
+            find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+        final Finder dropDownButtonTextFinder = find.descendant(
+          of: dropDownButtonFinder,
+          matching: find.byType(Text),
+        );
+
+        await tester.tap(dropDownButtonTextFinder);
+        await tester.pumpAndSettle();
+
+        // And find the 'janco' sort/filter item
+        final Finder titleAscDropDownTextFinder = find.text('janco').last;
+        await tester.tap(titleAscDropDownTextFinder);
+        await tester.pumpAndSettle();
+
+        // Now open the audio popup menu in order to modify the 'janco'
+        // sort/filter parms
+        final Finder dropdownItemEditIconButtonFinder = find.byKey(
+            const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+        await tester.tap(dropdownItemEditIconButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Now type on the clear sort/filter button in order to
+        // reinitialize all the 'janco' sort/filter parms
+        final Finder clearSFparmsIconButtonFinder =
+            find.byKey(const Key('resetSortFilterOptionsIconButton'));
+        await tester.tap(clearSFparmsIconButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Verify that the sort/filter name is empty
+        TextField sortFilterSaveAsNameTextField = tester.widget(
+            find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')));
+        expect(
+          sortFilterSaveAsNameTextField.controller!.text,
+          '',
+        );
+
+        // Verify that the delete 'Save as' name icon button is disabled
+        IntegrationTestUtil.verifyIconButtonColor(
+          tester: tester,
+          widgetKeyStr: 'deleteSaveAsNameIconButton',
+          isIconButtonEnabled: false,
+        );
+
+        // Verify that the 'Apply' button has replaced the 'Save' button
+        Finder applyButtonFinder =
+            find.byKey(const Key('applySortFilterOptionsTextButton'));
+
+        expect(
+          applyButtonFinder,
+          findsOneWidget,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Tapping on clear sort/filter name icon button and verifying the state
+             of SF name as well as the Apply button.''',
+          (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
+          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+
+        final SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
+        );
+
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the download app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+        await app.main(['test']);
+        await tester.pumpAndSettle();
+
+        // Now tap on the current dropdown button item to open the dropdown
+        // button items list
+
+        final Finder dropDownButtonFinder =
+            find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+        final Finder dropDownButtonTextFinder = find.descendant(
+          of: dropDownButtonFinder,
+          matching: find.byType(Text),
+        );
+
+        await tester.tap(dropDownButtonTextFinder);
+        await tester.pumpAndSettle();
+
+        // And find the 'janco' sort/filter item
+        final Finder titleAscDropDownTextFinder = find.text('janco').last;
+        await tester.tap(titleAscDropDownTextFinder);
+        await tester.pumpAndSettle();
+
+        // Now open the audio popup menu in order to modify the 'janco'
+        // sort/filter parms
+        final Finder dropdownItemEditIconButtonFinder = find.byKey(
+            const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+        await tester.tap(dropdownItemEditIconButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Now type on the clear sort/filter 'Save as' button in order
+        // to clear the 'janco' sort/filter name
+        final Finder clearSFparmsIconButtonFinder =
+            find.byKey(const Key('deleteSaveAsNameIconButton'));
+        await tester.tap(clearSFparmsIconButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Verify that the sort/filter name is empty
+        TextField sortFilterSaveAsNameTextField = tester.widget(
+            find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')));
+        expect(
+          sortFilterSaveAsNameTextField.controller!.text,
+          '',
+        );
+
+        // Verify that the delete 'Save as' name icon button is disabled
+        IntegrationTestUtil.verifyIconButtonColor(
+          tester: tester,
+          widgetKeyStr: 'deleteSaveAsNameIconButton',
+          isIconButtonEnabled: false,
+        );
+
+        // Verify that the 'Apply' button has replaced the 'Save' button
+        Finder applyButtonFinder =
+            find.byKey(const Key('applySortFilterOptionsTextButton'));
+
+        expect(
+          applyButtonFinder,
+          findsOneWidget,
         );
 
         // Purge the test playlist directory so that the created test
@@ -8456,8 +8648,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
              only the commented audio. Create and then edit a named and saved
              'Commented' filter parms. Then verifying that the corresponding sort/filter
              dropdown button item is applied to the playlist download view list of
-             audio.''',
-          (WidgetTester tester) async {
+             audio.''', (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -8494,8 +8685,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Scrolling down the sort filter dialog so that the 'Comment' /
         // 'No com.' checkbox are visible and so accessible by the integration test
         await tester.drag(
-          find.byType(
-              AudioSortFilterDialog),
+          find.byType(AudioSortFilterDialog),
           const Offset(
               0, -300), // Negative value for vertical drag to scroll down
         );
@@ -8576,8 +8766,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Scrolling down the sort filter dialog so that the 'Comment' /
         // 'No com.' checkbox are visible and so accessible by the integration test
         await tester.drag(
-          find.byType(
-              AudioSortFilterDialog),
+          find.byType(AudioSortFilterDialog),
           const Offset(
               0, -300), // Negative value for vertical drag to scroll down
         );
@@ -8620,8 +8809,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
              only the not commented audio. Create and then edit a named and saved
              'Uncomm' filter parms. Then verifying that the corresponding sort/filter
              dropdown button item is applied to the playlist download view list of
-             audio.''',
-          (WidgetTester tester) async {
+             audio.''', (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -8658,8 +8846,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Scrolling down the sort filter dialog so that the 'Comment' /
         // 'No com.' checkbox are visible and so accessible by the integration test
         await tester.drag(
-          find.byType(
-              AudioSortFilterDialog),
+          find.byType(AudioSortFilterDialog),
           const Offset(
               0, -300), // Negative value for vertical drag to scroll down
         );
@@ -8738,8 +8925,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Scrolling down the sort filter dialog so that the 'Comment' /
         // 'No com.' checkbox are visible and so accessible by the integration test
         await tester.drag(
-          find.byType(
-              AudioSortFilterDialog),
+          find.byType(AudioSortFilterDialog),
           const Offset(
               0, -300), // Negative value for vertical drag to scroll down
         );
@@ -8782,8 +8968,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
              the commented and not commented audio. Create and then edit a named
              and saved 'ComUncom' filter parms. Then verifying that the corresponding
              sort/filter dropdown button item is applied to the playlist download
-             view list of audio.''',
-          (WidgetTester tester) async {
+             view list of audio.''', (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -8823,8 +9008,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Scrolling down the sort filter dialog so that the 'Save' button is
         // visible and so accessible by the integration test
         await tester.drag(
-          find.byType(
-              AudioSortFilterDialog),
+          find.byType(AudioSortFilterDialog),
           const Offset(
               0, -300), // Negative value for vertical drag to scroll down
         );
@@ -8896,8 +9080,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Scrolling down the sort filter dialog so that the 'Comment' /
         // 'No com.' checkbox are visible and so accessible by the integration test
         await tester.drag(
-          find.byType(
-              AudioSortFilterDialog),
+          find.byType(AudioSortFilterDialog),
           const Offset(
               0, -300), // Negative value for vertical drag to scroll down
         );
@@ -8977,8 +9160,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Scrolling down the sort filter dialog so that the 'Comment' /
         // 'No com.' checkbox are visible and so accessible by the integration test
         await tester.drag(
-          find.byType(
-              AudioSortFilterDialog),
+          find.byType(AudioSortFilterDialog),
           const Offset(
               0, -300), // Negative value for vertical drag to scroll down
         );
@@ -9029,8 +9211,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         // And verify the order of the playlist audio titles
 
-        List<String> audioTitlesFilteredByCommented = [
-        ];
+        List<String> audioTitlesFilteredByCommented = [];
 
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
@@ -9066,8 +9247,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Scrolling down the sort filter dialog so that the 'Comment' /
         // 'No com.' checkbox are visible and so accessible by the integration test
         await tester.drag(
-          find.byType(
-              AudioSortFilterDialog),
+          find.byType(AudioSortFilterDialog),
           const Offset(
               0, -300), // Negative value for vertical drag to scroll down
         );
