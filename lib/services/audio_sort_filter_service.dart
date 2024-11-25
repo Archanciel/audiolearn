@@ -510,7 +510,7 @@ class AudioSortFilterService {
       );
     }
 
-    if (audioSortFilterParameters.fileSizeStartRangeMB != 0 &&
+    if (audioSortFilterParameters.fileSizeStartRangeMB >= 0 &&
         audioSortFilterParameters.fileSizeEndRangeMB != 0) {
       filteredAudios = _filterAudioLstByAudioFileSize(
         audioLst: filteredAudios,
@@ -519,7 +519,7 @@ class AudioSortFilterService {
       );
     }
 
-    if (audioSortFilterParameters.durationStartRangeSec != 0 &&
+    if (audioSortFilterParameters.durationStartRangeSec >= 0 &&
         audioSortFilterParameters.durationEndRangeSec != 0) {
       filteredAudios = _filterAudioByAudioDuration(
         audioLst: filteredAudios,
