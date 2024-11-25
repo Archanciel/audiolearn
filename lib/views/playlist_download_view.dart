@@ -849,8 +849,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     Map<String, AudioSortFilterParameters> audioSortFilterParametersMap =
         widget.settingsDataService.namedAudioSortFilterParametersMap;
 
-    String selectedPlaylistAudioSortFilterParmsName =
-        playlistListVMlistenFalse.getSelectedPlaylistAudioSortFilterParmsName(
+    String selectedPlaylistAudioSortFilterParmsName = playlistListVMlistenFalse
+        .getSelectedPlaylistAudioSortFilterParmsNameForView(
       audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       translatedAppliedSortFilterParmsName:
           AppLocalizations.of(context)!.sortFilterParametersAppliedName,
@@ -916,7 +916,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           child: DropdownButton<String>(
             key: const Key('sort_filter_parms_dropdown_button'),
             value: (playlistListVMlistenTrue
-                    .getSelectedPlaylistAudioSortFilterParmsName(
+                    .getSelectedPlaylistAudioSortFilterParmsNameForView(
                       audioLearnAppViewType:
                           AudioLearnAppViewType.playlistDownloadView,
                       translatedAppliedSortFilterParmsName:
@@ -953,7 +953,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     notifyListeners = false,
   }) {
     _selectedSortFilterParametersName = playlistListVMlistenFalseOrTrue
-        .getSelectedPlaylistAudioSortFilterParmsName(
+        .getSelectedPlaylistAudioSortFilterParmsNameForView(
       audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       translatedAppliedSortFilterParmsName:
           AppLocalizations.of(context)!.sortFilterParametersAppliedName,
@@ -1385,19 +1385,31 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 barrierDismissible: false, // This line prevents the dialog from
                 // closing when tapping outside the dialog
                 builder: (BuildContext context) {
+                  // List content:
+                  //   [
+                  //     sort and filter parameters name applied to the  
+                  //     playlist download view or to the audio player view,
+                  //     sort and filter parameters applied to the playlist
+                  //      download view or to the audio player view,
+                  // ]
+                  List<dynamic> selectedPlaylistAudioSortFilterParmsLstForView =
+                      playlistListVMlistenFalse
+                          .getSelectedPlaylistAudioSortFilterParmsForView(
+                    AudioLearnAppViewType.playlistDownloadView,
+                  );
                   return AudioSortFilterDialog(
                     selectedPlaylistAudioLst: playlistListVMlistenFalse
                         .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
                       audioLearnAppViewType:
                           AudioLearnAppViewType.audioPlayerView,
                     ),
+                    audioSortFilterParametersName:
+                        selectedPlaylistAudioSortFilterParmsLstForView[0],
                     audioSortFilterParameters: AudioSortFilterParameters
                         .createDefaultAudioSortFilterParameters(),
-                    audioSortPlaylistFilterParameters: playlistListVMlistenFalse
-                        .getSelectedPlaylistAudioSortFilterParamForView(
-                          AudioLearnAppViewType.playlistDownloadView,
-                        )
-                        .copy(), // copy() is necessary to avoid modifying the
+                    audioSortPlaylistFilterParameters:
+                        selectedPlaylistAudioSortFilterParmsLstForView[1]
+                            .copy(), // copy() is necessary to avoid modifying the
                     // original if saving the AudioSortFilterParameters to
                     // a new name
                     audioLearnAppViewType:
@@ -1837,8 +1849,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     String selectedPlaylistAudioSortFilterParmsName;
 
     if (playlistListVMlistenTrue.isPlaylistListExpanded) {
-      selectedPlaylistAudioSortFilterParmsName =
-          playlistListVMlistenTrue.getSelectedPlaylistAudioSortFilterParmsName(
+      selectedPlaylistAudioSortFilterParmsName = playlistListVMlistenTrue
+          .getSelectedPlaylistAudioSortFilterParmsNameForView(
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
         translatedAppliedSortFilterParmsName:
             AppLocalizations.of(context)!.sortFilterParametersAppliedName,
