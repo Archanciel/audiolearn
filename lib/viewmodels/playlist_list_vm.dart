@@ -1230,42 +1230,62 @@ class PlaylistListVM extends ChangeNotifier {
     wasSearchButtonClicked = false;
   }
 
-  /// Method called when the user clicks on the playlist menu
-  /// item "Sort filter audio" in the audio popup menu button
-  /// in PlaylistDownloadView or in the AudioPlayerView.
-  AudioSortFilterParameters getSelectedPlaylistAudioSortFilterParamForView(
+  /// Method called when the user clicked on the audio popup menu button in the
+  /// PlaylistDownloadView or in the AudioPlayerView and then clicked on the menu
+  /// item "Sort filter Audio ...". This opens the AudioSortFilterDialog.
+  ///
+  /// The returned list content is
+  /// [
+  ///   the sort and filter parameters name applied to the playlist download
+  ///   view or to the audio player view,
+  ///   the sort and filter parameters applied to the playlist download view
+  ///   or to the audio player view,
+  /// ]
+  List<dynamic> getSelectedPlaylistAudioSortFilterParmsForView(
     AudioLearnAppViewType audioLearnAppViewType,
   ) {
     Playlist selectedPlaylist = getSelectedPlaylists()[0];
     AudioSortFilterParameters? playlistAudioSortFilterParameters;
+    String playlistAudioSortFilterParametersName;
 
     switch (audioLearnAppViewType) {
       case AudioLearnAppViewType.playlistDownloadView:
-        playlistAudioSortFilterParameters = _settingsDataService
-                .namedAudioSortFilterParametersMap[
-            selectedPlaylist.audioSortFilterParmsNameForPlaylistDownloadView];
-        break;
-      case AudioLearnAppViewType.audioPlayerView:
+        playlistAudioSortFilterParametersName =
+            selectedPlaylist.audioSortFilterParmsNameForPlaylistDownloadView;
         playlistAudioSortFilterParameters =
             _settingsDataService.namedAudioSortFilterParametersMap[
-                selectedPlaylist.audioSortFilterParmsNameForAudioPlayerView];
+                playlistAudioSortFilterParametersName];
+        break;
+      case AudioLearnAppViewType.audioPlayerView:
+        playlistAudioSortFilterParametersName =
+            selectedPlaylist.audioSortFilterParmsNameForAudioPlayerView;
+        playlistAudioSortFilterParameters =
+            _settingsDataService.namedAudioSortFilterParametersMap[
+                playlistAudioSortFilterParametersName];
         break;
       default:
+        playlistAudioSortFilterParametersName = '';
         break;
     }
 
     if (playlistAudioSortFilterParameters != null) {
-      return playlistAudioSortFilterParameters;
+      return [
+        playlistAudioSortFilterParametersName,
+        playlistAudioSortFilterParameters,
+      ];
     }
 
     // if the user has not yet selected sort and filter parameters,
     // then the default sort and filter parameters which don't
     // filter and only sort by audio download date descending
     // are returned.
-    return AudioSortFilterParameters.createDefaultAudioSortFilterParameters();
+    return [
+      playlistAudioSortFilterParametersName,
+      AudioSortFilterParameters.createDefaultAudioSortFilterParameters(),
+    ];
   }
 
-  String getSelectedPlaylistAudioSortFilterParmsName({
+  String getSelectedPlaylistAudioSortFilterParmsNameForView({
     required AudioLearnAppViewType audioLearnAppViewType,
     required String translatedAppliedSortFilterParmsName,
   }) {

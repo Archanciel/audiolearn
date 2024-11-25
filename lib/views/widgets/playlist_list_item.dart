@@ -489,7 +489,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
 
               String selectedPlaylistAudioSortFilterParmsName =
                   playlistListVMlistenTrue
-                      .getSelectedPlaylistAudioSortFilterParmsName(
+                      .getSelectedPlaylistAudioSortFilterParmsNameForView(
                           audioLearnAppViewType:
                               AudioLearnAppViewType.playlistDownloadView,
                           translatedAppliedSortFilterParmsName:
@@ -543,7 +543,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             int numberOfDeletedCommentedAudio = deletedAudioNumberLst[1];
             String selectedPlaylistAudioSortFilterParmsName =
                 playlistListVMlistenTrue
-                    .getSelectedPlaylistAudioSortFilterParmsName(
+                    .getSelectedPlaylistAudioSortFilterParmsNameForView(
                         audioLearnAppViewType:
                             AudioLearnAppViewType.playlistDownloadView,
                         translatedAppliedSortFilterParmsName:
