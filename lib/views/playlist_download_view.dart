@@ -1845,9 +1845,6 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       );
 
       if (selectedPlaylistAudioSortFilterParmsName.isEmpty) {
-      // if (selectedPlaylistAudioSortFilterParmsName.isEmpty ||
-      //     selectedPlaylistAudioSortFilterParmsName == 'default' ||
-      //     selectedPlaylistAudioSortFilterParmsName == 'défaut') {
         selectedPlaylistAudioSortFilterParmsName =
             AppLocalizations.of(context)!.sortFilterParametersDefaultName;
       }
