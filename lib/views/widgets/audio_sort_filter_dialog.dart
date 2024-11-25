@@ -279,7 +279,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     _selectedSortingItemLst.clear();
     _selectedSortingItemLst
         .add(AudioSortFilterParameters.getDefaultSortingItem());
-    _sortFilterSaveAsUniqueNameController.clear();
+    _clearSortFilterSaveAsNameField();
     _audioTitleSearchSentenceController.clear();
     _audioTitleFilterSentencesLst.clear();
     _ignoreCase = true;
@@ -432,7 +432,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                   // mainAxisAlignment: MainAxisAlignment.start,
                   // crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildSaveAsFields(context),
+                    _buildSaveAsFieldAndDeleteButton(context),
                     const SizedBox(
                       height: kDialogTextFieldVerticalSeparation,
                     ),
@@ -619,7 +619,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     );
   }
 
-  Widget _buildSaveAsFields(
+  Widget _buildSaveAsFieldAndDeleteButton(
     BuildContext context,
   ) {
     return Tooltip(
@@ -663,10 +663,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                 child: IconButton(
                   key: const Key('deleteSaveAsNameIconButton'),
                   onPressed: () async {
-                    _sortFilterSaveAsUniqueNameController.text = '';
-                    _sortFilterSaveAsUniqueName = '';
-                    _audioSaveAsNameDeleteIconColor =
-                        kDarkAndLightDisabledIconColor;
+                    _clearSortFilterSaveAsNameField();
                     setState(() {}); // necessary to update Delete button color
                   },
                   padding: const EdgeInsets.all(0),
@@ -694,6 +691,12 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
         ],
       ),
     );
+  }
+
+  void _clearSortFilterSaveAsNameField() {
+    _sortFilterSaveAsUniqueNameController.clear();
+    _sortFilterSaveAsUniqueName = '';
+    _audioSaveAsNameDeleteIconColor = kDarkAndLightDisabledIconColor;
   }
 
   /// Create Reset (X), Save or Apply, Delete and Cancel buttons.
