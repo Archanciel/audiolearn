@@ -81,6 +81,9 @@ enum WarningMessageType {
   confirmMovedUnmovedAudioNumber, // The case if the user clicked on
   // Move Filtered Audio to Playlist ... menu item
 
+  confirmCopiedNotCopiedAudioNumber, // The case if the user clicked on
+  // Copy Filtered Audio to Playlist ... menu item
+
   rewindedPlayableAudioToStart, // The case if the playable audio
   // were rewinded to start position. This happens when the user clicks
   // on the Rewind Audio to Start playlist menu item.
@@ -871,6 +874,48 @@ class WarningMessageVM extends ChangeNotifier {
     _unmovedAudioNumber = unmovedAudioNumber;
 
     warningMessageType = WarningMessageType.confirmMovedUnmovedAudioNumber;
+
+    // Causes the display warning message widget to be displayed.
+    notifyListeners();
+  }
+
+  String _audioCopySourcePlaylistTitle = '';
+  String get audioCopySourcePlaylistTitle => _audioCopySourcePlaylistTitle;
+  late PlaylistType _copiedFromSourcePlaylistType;
+  PlaylistType get copiedFromSourcePlaylistType => _copiedFromSourcePlaylistType;
+  String _audioCopyTargetPlaylistTitle = '';
+  String get audioCopyTargetPlaylistTitle => _audioCopyTargetPlaylistTitle;
+  late PlaylistType _copiedToTargetPlaylistType;
+  PlaylistType get copiedToTargetPlaylistType => _copiedToTargetPlaylistType;
+  String _appliedToCopySortFilterParmsName = '';
+  String get appliedToCopySortFilterParmsName =>
+      _appliedToCopySortFilterParmsName;
+  int _copiedAudioNumber = 0;
+  int get copiedAudioNumber => _copiedAudioNumber;
+  int _copiedCommentedAudioNumber = 0;
+  int get copiedCommentedAudioNumber => _copiedCommentedAudioNumber;
+  int _notCopiedAudioNumber = 0;
+  int get notCopiedAudioNumber => _notCopiedAudioNumber;
+  void confirmCopiedNotCopiedAudioNumber({
+    required String sourcePlaylistTitle,
+    required PlaylistType sourcePlaylistType,
+    required String targetPlaylistTitle,
+    required PlaylistType targetPlaylistType,
+    required String appliedSortFilterParmsName,
+    required int copiedAudioNumber,
+    required int copiedCommentedAudioNumber,
+    required int notCopiedAudioNumber,
+  }) {
+    _audioCopySourcePlaylistTitle = sourcePlaylistTitle;
+    _copiedFromSourcePlaylistType = sourcePlaylistType;
+    _audioCopyTargetPlaylistTitle = targetPlaylistTitle;
+    _copiedToTargetPlaylistType = targetPlaylistType;
+    _appliedToCopySortFilterParmsName = appliedSortFilterParmsName;
+    _copiedAudioNumber = copiedAudioNumber;
+    _copiedCommentedAudioNumber = copiedCommentedAudioNumber;
+    _notCopiedAudioNumber = notCopiedAudioNumber;
+
+    warningMessageType = WarningMessageType.confirmCopiedNotCopiedAudioNumber;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();

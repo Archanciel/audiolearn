@@ -117,8 +117,7 @@ class AudioSortFilterParameters {
       sortCriteriaForSortingOptionMap = {
     SortingOption.audioDownloadDate: SortCriteria<Audio>(
       selectorFunction: (Audio audio) {
-        return DateTimeParser.truncateDateTimeToDateOnly(
-            audio.audioDownloadDateTime);
+        return audio.audioDownloadDateTime;
       },
       sortOrder: sortDescending,
     ),

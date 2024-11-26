@@ -553,5 +553,53 @@
       "movedCommentedAudioNumber": {},
       "unmovedAudioNumber": {}
     }
+  },
+  "confirmCopiedNotCopiedAudioNumberFromYoutubeToYoutubePlaylist": "En appliquant le filtre \"{sortedFilterParmsName}\", de la playlist Youtube \"{sourcePlaylistTitle}\" à la playlist Youtube \"{targetPlaylistTitle}\", {copiedAudioNumber} audio(s) ont été copié(s) dont {copiedCommentedAudioNumber} commenté(s), et {notCopiedAudioNumber} audio(s) n'ont pu être copié(s).",
+  "@confirmCopiedNotCopiedAudioNumberFromYoutubeToYoutubePlaylist": {
+    "description": "Confirmation message indicating how many audio were copied and notCopied",
+    "placeholders": {
+      "sourcePlaylistTitle": {},
+      "targetPlaylistTitle": {},
+      "sortedFilterParmsName": {},
+      "copiedAudioNumber": {},
+      "copiedCommentedAudioNumber": {},
+      "notCopiedAudioNumber": {}
+    }
+  },
+  "confirmCopiedNotCopiedAudioNumberFromYoutubeToLocalPlaylist": "En appliquant le filtre \"{sortedFilterParmsName}\", de la playlist Youtube \"{sourcePlaylistTitle}\" à la playlist locale \"{targetPlaylistTitle}\", {copiedAudioNumber} audio(s) ont été copié(s) dont {copiedCommentedAudioNumber} commenté(s), et {notCopiedAudioNumber} audio(s) n'ont pu être copié(s).",
+  "@confirmCopiedNotCopiedAudioNumberFromYoutubeToLocalPlaylist": {
+    "description": "Confirmation message indicating how many audio were copied and notCopied",
+    "placeholders": {
+      "sourcePlaylistTitle": {},
+      "targetPlaylistTitle": {},
+      "sortedFilterParmsName": {},
+      "copiedAudioNumber": {},
+      "copiedCommentedAudioNumber": {},
+      "notCopiedAudioNumber": {}
+    }
+  },
+  "confirmCopiedNotCopiedAudioNumberFromLocalToYoutubePlaylist": "En appliquant le filtre \"{sortedFilterParmsName}\", de la playlist locale \"{sourcePlaylistTitle}\" à la playlist Youtube \"{targetPlaylistTitle}\", {copiedAudioNumber} audio(s) ont été copié(s) dont {copiedCommentedAudioNumber} commenté(s), et {notCopiedAudioNumber} audio(s) n'ont pu être copié(s).",
+  "@confirmCopiedNotCopiedAudioNumberFromLocalToYoutubePlaylist": {
+    "description": "Confirmation message indicating how many audio were copied and notCopied",
+    "placeholders": {
+      "sourcePlaylistTitle": {},
+      "targetPlaylistTitle": {},
+      "sortedFilterParmsName": {},
+      "copiedAudioNumber": {},
+      "copiedCommentedAudioNumber": {},
+      "notCopiedAudioNumber": {}
+    }
+  },
+  "confirmCopiedNotCopiedAudioNumberFromLocalToLocalPlaylist": "En appliquant le filtre \"{sortedFilterParmsName}\", de la playlist locale \"{sourcePlaylistTitle}\" à la playlist locale \"{targetPlaylistTitle}\", {copiedAudioNumber} audio(s) ont été copié(s) dont {copiedCommentedAudioNumber} commenté(s), et {notCopiedAudioNumber} audio(s) n'ont pu être copié(s).",
+  "@confirmCopiedNotCopiedAudioNumberFromLocalToLocalPlaylist": {
+    "description": "Confirmation message indicating how many audio were copied and notCopied",
+    "placeholders": {
+      "sourcePlaylistTitle": {},
+      "targetPlaylistTitle": {},
+      "sortedFilterParmsName": {},
+      "copiedAudioNumber": {},
+      "copiedCommentedAudioNumber": {},
+      "notCopiedAudioNumber": {}
+    }
   }
 }

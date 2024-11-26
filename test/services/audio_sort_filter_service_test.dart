@@ -4939,8 +4939,8 @@ void main() {
             'La surpopulation mondiale par Jancovici et Barrau',
             'La résilience insulaire par Fiona Roche',
             'Les besoins artificiels par R.Keucheyan',
+            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
             'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau',
-            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)"
           ]);
 
       final List<SortingItem>
@@ -4978,8 +4978,8 @@ void main() {
               .map((audio) => audio.validVideoTitle)
               .toList(),
           [
-            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
             'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau',
+            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
             'Les besoins artificiels par R.Keucheyan',
             'La résilience insulaire par Fiona Roche',
             'La surpopulation mondiale par Jancovici et Barrau',
@@ -5350,8 +5350,8 @@ void main() {
         'La surpopulation mondiale par Jancovici et Barrau',
         'La résilience insulaire par Fiona Roche',
         'Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik',
-        'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau',
         '3 fois où un économiste m\'a ouvert les yeux (Giraud, Lefournier, Porcher)',
+        'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau',
       ];
 
       AudioSortFilterParameters audioSortFilterParameters =
@@ -5494,8 +5494,8 @@ void main() {
         'La résilience insulaire par Fiona Roche',
         'Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik',
         'Les besoins artificiels par R.Keucheyan',
-        'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau',
         '3 fois où un économiste m\'a ouvert les yeux (Giraud, Lefournier, Porcher)',
+        'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau',
       ];
 
       AudioSortFilterParameters audioSortFilterParameters =
@@ -5745,8 +5745,8 @@ void main() {
         'La résilience insulaire par Fiona Roche',
         'Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik',
         'Les besoins artificiels par R.Keucheyan',
-        'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau',
         '3 fois où un économiste m\'a ouvert les yeux (Giraud, Lefournier, Porcher)',
+        'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau',
       ];
 
       final List<SortingItem>

@@ -1517,4 +1517,48 @@ class MockAppLocalizations extends AppLocalizations {
     Object unmovedAudioNumber,
   ) =>
       "From local playlist \"$sourcePlaylistTitle\" to local playlist \"$targetPlaylistTitle\" applying Sort/Filter parms \"$sortedFilterParmsName\", $movedAudioNumber audio(s) were moved and $unmovedAudioNumber audio(s) unmoved.";
+
+  @override
+  String confirmCopiedNotCopiedAudioNumberFromYoutubeToYoutubePlaylist(
+    Object sortedFilterParmsName,
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object copiedAudioNumber,
+    Object copiedCommentedAudioNumber,
+    Object notCopiedAudioNumber,
+  ) =>
+      "Applying Sort/Filter parms \"$sortedFilterParmsName\", from Youtube playlist \"$sourcePlaylistTitle\" to Youtube playlist \"$targetPlaylistTitle\", $copiedAudioNumber audio(s) were copied from which $copiedCommentedAudioNumber were commented, and $notCopiedAudioNumber audio(s) were not copied.";
+
+  @override
+  String confirmCopiedNotCopiedAudioNumberFromYoutubeToLocalPlaylist(
+    Object sortedFilterParmsName,
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object copiedAudioNumber,
+    Object copiedCommentedAudioNumber,
+    Object notCopiedAudioNumber,
+  ) =>
+      "Applying Sort/Filter parms \"$sortedFilterParmsName\", from Youtube playlist \"$sourcePlaylistTitle\" to local playlist \"$targetPlaylistTitle\", $copiedAudioNumber audio(s) were copied from which $copiedCommentedAudioNumber were commented, and $notCopiedAudioNumber audio(s) were not copied.";
+
+  @override
+  String confirmCopiedNotCopiedAudioNumberFromLocalToYoutubePlaylist(
+    Object sortedFilterParmsName,
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object copiedAudioNumber,
+    Object copiedCommentedAudioNumber,
+    Object notCopiedAudioNumber,
+  ) =>
+      "Applying Sort/Filter parms \"$sortedFilterParmsName\", from local playlist \"$sourcePlaylistTitle\" to Youtube playlist \"$targetPlaylistTitle\", $copiedAudioNumber audio(s) were copied from which $copiedCommentedAudioNumber were commented, and $notCopiedAudioNumber audio(s) were not copied.";
+
+  @override
+  String confirmCopiedNotCopiedAudioNumberFromLocalToLocalPlaylist(
+    Object sortedFilterParmsName,
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object copiedAudioNumber,
+    Object copiedCommentedAudioNumber,
+    Object notCopiedAudioNumber,
+  ) =>
+      "Applying Sort/Filter parms \"$sortedFilterParmsName\", from local playlist \"$sourcePlaylistTitle\" to local playlist \"$targetPlaylistTitle\", $copiedAudioNumber audio(s) were copied from which $copiedCommentedAudioNumber were commented, and $notCopiedAudioNumber audio(s) were not copied.";
 }

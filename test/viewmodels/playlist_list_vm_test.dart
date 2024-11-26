@@ -662,9 +662,9 @@ void main() {
       expect(playableAudioLst[0].validVideoTitle,
           "Les besoins artificiels par R.Keucheyan");
       expect(playableAudioLst[1].validVideoTitle,
-          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau");
-      expect(playableAudioLst[2].validVideoTitle,
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)");
+      expect(playableAudioLst[2].validVideoTitle,
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau");
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
