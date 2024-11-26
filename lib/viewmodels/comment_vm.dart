@@ -252,7 +252,9 @@ class CommentVM extends ChangeNotifier {
     return false;
   }
 
-  void copyAudioCommentFileToTargetPlaylist({
+  /// If the passed audio has a comment file, it is copied to the target playlist
+  /// and true is returned. If the audio has no comment file, false is returned.
+  bool copyAudioCommentFileToTargetPlaylist({
     required Audio audio,
     required String targetPlaylistPath,
   }) {
@@ -277,7 +279,11 @@ class CommentVM extends ChangeNotifier {
         targetDirectoryPath: targetCommentDirPath,
         overwriteFileIfExist: false,
       );
+
+      return true;
     }
+
+    return false;
   }
 
   /// Returns all comments of all audio in the passed playlist. The

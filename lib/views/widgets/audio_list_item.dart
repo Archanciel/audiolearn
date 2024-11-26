@@ -318,7 +318,8 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
             showDialog<dynamic>(
               context: context,
               builder: (context) => PlaylistOneSelectableDialog(
-                usedFor: PlaylistOneSelectableDialogUsedFor.copyAudioToPlaylist,
+                usedFor: PlaylistOneSelectableDialogUsedFor
+                    .copySingleAudioToPlaylist,
                 warningMessageVM: Provider.of<WarningMessageVM>(
                   context,
                   listen: false,

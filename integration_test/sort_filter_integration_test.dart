@@ -288,8 +288,8 @@ void audioPlayerViewSortFilterIntegrationTest() {
         "La résilience insulaire par Fiona Roche",
         "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
         "Les besoins artificiels par R.Keucheyan",
+        "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
         "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-        // "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
       ];
 
       IntegrationTestUtil.checkAudioTitlesOrderInListBody(
@@ -1250,8 +1250,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // And verify the order of the playlist audio titles
 
         List<String> audioTitlesSortedByTitleAscending = [
-          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
           "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
           "La résilience insulaire par Fiona Roche",
           "La surpopulation mondiale par Jancovici et Barrau",
@@ -1333,8 +1333,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           "La résilience insulaire par Fiona Roche",
           "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
           "Les besoins artificiels par R.Keucheyan",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-          // "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
         ];
 
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
@@ -1558,8 +1558,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // And verify the order of the playlist audio titles
 
         List<String> audioTitlesSortedByTitleAscending = [
-          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
           "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
           "La résilience insulaire par Fiona Roche",
           "La surpopulation mondiale par Jancovici et Barrau",
@@ -1653,8 +1653,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           "La résilience insulaire par Fiona Roche",
           "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
           "Les besoins artificiels par R.Keucheyan",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-          // "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
         ];
 
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
@@ -1829,8 +1829,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // And verify the order of the playlist audio titles
 
         List<String> audioTitlesSortedByTitleAscending = [
-          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
           "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
           "La résilience insulaire par Fiona Roche",
           "La surpopulation mondiale par Jancovici et Barrau",
@@ -2700,8 +2700,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           "La résilience insulaire par Fiona Roche",
           "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
           "Les besoins artificiels par R.Keucheyan",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-          // "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
         ];
 
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
@@ -2835,8 +2835,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // And verify the order of the playlist audio titles
 
           List<String> audioTitlesSortedByTitleAscending = [
-            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
             "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
             "La résilience insulaire par Fiona Roche",
             "La surpopulation mondiale par Jancovici et Barrau",
@@ -2929,8 +2929,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             "La résilience insulaire par Fiona Roche",
             "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
             "Les besoins artificiels par R.Keucheyan",
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-            // "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
           ];
 
           IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
@@ -3140,8 +3140,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // And verify the order of the playlist audio titles
 
           List<String> audioTitlesSortedByTitleAscending = [
-            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
             "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
             "La résilience insulaire par Fiona Roche",
             "La surpopulation mondiale par Jancovici et Barrau",
@@ -3346,8 +3346,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             "La résilience insulaire par Fiona Roche",
             "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
             "Les besoins artificiels par R.Keucheyan",
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-            // "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
           ];
 
           IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
@@ -3567,8 +3567,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // And verify the order of the playlist audio titles
 
           List<String> audioTitlesSortedByTitleAscending = [
-            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
             "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
             "La résilience insulaire par Fiona Roche",
             "La surpopulation mondiale par Jancovici et Barrau",
@@ -3662,8 +3662,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             "La résilience insulaire par Fiona Roche",
             "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
             "Les besoins artificiels par R.Keucheyan",
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-            // "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
           ];
 
           IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
@@ -3943,8 +3943,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // to the 'S8 audio' playlist
 
           audioTitlesSortedByTitleAscending = [
-            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
             "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
             "La résilience insulaire par Fiona Roche",
             "La surpopulation mondiale par Jancovici et Barrau",
@@ -4009,8 +4009,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             "La résilience insulaire par Fiona Roche",
             "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
             "Les besoins artificiels par R.Keucheyan",
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-            // "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
           ];
 
           IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
@@ -4226,8 +4226,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               "La résilience insulaire par Fiona Roche",
               "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
               "Les besoins artificiels par R.Keucheyan",
-              "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-              // "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
             ];
 
             IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
@@ -4381,8 +4381,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // And verify the order of the playlist audio titles
 
           List<String> audioTitlesSortedByTitleAscending = [
-            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
             "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
             "La résilience insulaire par Fiona Roche",
             "La surpopulation mondiale par Jancovici et Barrau",
@@ -4463,8 +4463,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             "La résilience insulaire par Fiona Roche",
             "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
             "Les besoins artificiels par R.Keucheyan",
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-            // "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
           ];
 
           IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
@@ -4680,8 +4680,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // And verify the order of the playlist audio titles
 
           List<String> audioTitlesSortedByTitleAscending = [
-            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
             "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
             "La résilience insulaire par Fiona Roche",
             "La surpopulation mondiale par Jancovici et Barrau",
@@ -4886,8 +4886,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             "La résilience insulaire par Fiona Roche",
             "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
             "Les besoins artificiels par R.Keucheyan",
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-            // "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
           ];
 
           IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
@@ -5113,8 +5113,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // And verify the order of the playlist audio titles
 
           List<String> audioTitlesSortedByTitleAscending = [
-            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
             "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
             "La résilience insulaire par Fiona Roche",
             "La surpopulation mondiale par Jancovici et Barrau",
@@ -5224,8 +5224,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // And verify the order of the playlist audio titles
 
         List<String> audioTitlesSortedByTitleAscending = [
-          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
           "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
           "La résilience insulaire par Fiona Roche",
           "La surpopulation mondiale par Jancovici et Barrau",
@@ -5461,8 +5461,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.pumpAndSettle();
 
           List<String> audioTitlesSortedByTitleAscending = [
-            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
             "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
             "La résilience insulaire par Fiona Roche",
             "La surpopulation mondiale par Jancovici et Barrau",
@@ -5559,8 +5559,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             "La résilience insulaire par Fiona Roche",
             "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
             "Les besoins artificiels par R.Keucheyan",
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-            // "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
           ];
 
           IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
@@ -5735,8 +5735,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             "La résilience insulaire par Fiona Roche",
             "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
             "Les besoins artificiels par R.Keucheyan",
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-            // "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
           ];
 
           IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
@@ -5940,8 +5940,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             "La résilience insulaire par Fiona Roche",
             "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
             "Les besoins artificiels par R.Keucheyan",
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-            // "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
           ];
 
           IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
@@ -6045,8 +6045,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // And verify the order of the playlist audio titles
 
           List<String> audioTitlesSortedByTitleAscending = [
-            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
             "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
             "La résilience insulaire par Fiona Roche",
             "La surpopulation mondiale par Jancovici et Barrau",
@@ -6190,8 +6190,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             "La résilience insulaire par Fiona Roche",
             "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
             "Les besoins artificiels par R.Keucheyan",
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-            // "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
           ];
 
           IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
@@ -6393,8 +6393,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             "La résilience insulaire par Fiona Roche",
             "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
             "Les besoins artificiels par R.Keucheyan",
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-            // "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
           ];
 
           IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(

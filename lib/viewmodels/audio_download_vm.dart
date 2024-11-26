@@ -1194,6 +1194,8 @@ class AudioDownloadVM extends ChangeNotifier {
     bool displayWarningWhenAudioWasMoved = true,
   }) {
     Playlist fromPlaylist = audioToMove.enclosingPlaylist!;
+    String fromPlaylistTitle = fromPlaylist.title;
+    String targetPlaylistTitle = targetPlaylist.title;
 
     bool wasFileMoved = DirUtil.moveFileToDirectoryIfNotExistSync(
       sourceFilePathName: audioToMove.filePathName,
@@ -1206,9 +1208,9 @@ class AudioDownloadVM extends ChangeNotifier {
         // playlist directory or not exist in the source playlist directory
         warningMessageVM.setAudioNotMovedFromToPlaylistTitles(
           movedAudioValidVideoTitle: audioToMove.validVideoTitle,
-          movedFromPlaylistTitle: fromPlaylist.title,
+          movedFromPlaylistTitle: fromPlaylistTitle,
           movedFromPlaylistType: fromPlaylist.playlistType,
-          movedToPlaylistTitle: targetPlaylist.title,
+          movedToPlaylistTitle: targetPlaylistTitle,
           movedToPlaylistType: targetPlaylist.playlistType,
         );
       }
@@ -1225,11 +1227,12 @@ class AudioDownloadVM extends ChangeNotifier {
       fromPlaylist.removeDownloadedAudioFromPlayableAudioLstOnly(
         downloadedAudio: audioToMove,
       );
+
       // The moved to playlist title information is set in the
       // the audio in the source playlist downloadedAudioLst.
       fromPlaylist.setMovedAudioToPlaylistTitle(
         movedAudio: audioToMove,
-        movedToPlaylistTitle: targetPlaylist.title,
+        movedToPlaylistTitle: targetPlaylistTitle,
       );
     } else {
       fromPlaylist.removeDownloadedAudioFromDownloadAndPlayableAudioLst(
@@ -1239,7 +1242,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
     targetPlaylist.addMovedAudioToDownloadAndPlayableLst(
       movedAudio: audioToMove,
-      movedFromPlaylistTitle: fromPlaylist.title,
+      movedFromPlaylistTitle: fromPlaylistTitle,
     );
 
     // saving source playlist
@@ -1257,9 +1260,9 @@ class AudioDownloadVM extends ChangeNotifier {
     if (displayWarningWhenAudioWasMoved) {
       warningMessageVM.setAudioMovedFromToPlaylistTitles(
         movedAudioValidVideoTitle: audioToMove.validVideoTitle,
-        movedFromPlaylistTitle: fromPlaylist.title,
+        movedFromPlaylistTitle: fromPlaylistTitle,
         movedFromPlaylistType: fromPlaylist.playlistType,
-        movedToPlaylistTitle: targetPlaylist.title,
+        movedToPlaylistTitle: targetPlaylistTitle,
         movedToPlaylistType: targetPlaylist.playlistType,
         keepAudioDataInSourcePlaylist:
             keepAudioInSourcePlaylistDownloadedAudioLst,
@@ -1285,38 +1288,43 @@ class AudioDownloadVM extends ChangeNotifier {
   /// exist in the target playlist directory, the copy does not happen
   /// and false is returned.
   bool copyAudioToPlaylist({
-    required Audio audio,
+    required Audio audioToCopy,
     required Playlist targetPlaylist,
+    bool displayWarningIfAudioAlreadyExists = true,
+    bool displayWarningWhenAudioWasCopied = true,
   }) {
+    Playlist fromPlaylist = audioToCopy.enclosingPlaylist!;
+    String fromPlaylistTitle = fromPlaylist.title;
+    String targetPlaylistTitle = targetPlaylist.title;
+
     bool wasFileCopied = DirUtil.copyFileToDirectorySync(
-      sourceFilePathName: audio.filePathName,
+      sourceFilePathName: audioToCopy.filePathName,
       targetDirectoryPath: targetPlaylist.downloadPath,
     );
 
-    Playlist fromPlaylist = audio.enclosingPlaylist!;
-    String fromPlaylistTitle = fromPlaylist.title;
-
     if (!wasFileCopied) {
-      // the case if the moved audio file already exist in the target
-      // playlist directory
-      warningMessageVM.setAudioNotCopiedFromToPlaylistTitles(
-          copiedAudioValidVideoTitle: audio.validVideoTitle,
-          copiedFromPlaylistTitle: fromPlaylistTitle,
-          copiedFromPlaylistType: fromPlaylist.playlistType,
-          copiedToPlaylistTitle: targetPlaylist.title,
-          copiedToPlaylistType: targetPlaylist.playlistType);
+      if (displayWarningIfAudioAlreadyExists) {
+        // the case if the moved audio file already exist in the target
+        // playlist directory
+        warningMessageVM.setAudioNotCopiedFromToPlaylistTitles(
+            copiedAudioValidVideoTitle: audioToCopy.validVideoTitle,
+            copiedFromPlaylistTitle: fromPlaylistTitle,
+            copiedFromPlaylistType: fromPlaylist.playlistType,
+            copiedToPlaylistTitle: targetPlaylistTitle,
+            copiedToPlaylistType: targetPlaylist.playlistType);
 
-      return false;
+        return false;
+      }
     }
 
     targetPlaylist.addCopiedAudioToDownloadAndPlayableLst(
-      copiedAudio: audio,
+      copiedAudio: audioToCopy,
       copiedFromPlaylistTitle: fromPlaylistTitle,
     );
 
     fromPlaylist.setCopiedAudioToPlaylistTitle(
-      copiedAudio: audio,
-      copiedToPlaylistTitle: targetPlaylist.title,
+      copiedAudio: audioToCopy,
+      copiedToPlaylistTitle: targetPlaylistTitle,
     );
 
     // saving source playlist
@@ -1331,12 +1339,14 @@ class AudioDownloadVM extends ChangeNotifier {
       path: targetPlaylist.getPlaylistDownloadFilePathName(),
     );
 
-    warningMessageVM.setAudioCopiedFromToPlaylistTitles(
-        copiedAudioValidVideoTitle: audio.validVideoTitle,
-        copiedFromPlaylistTitle: fromPlaylistTitle,
-        copiedFromPlaylistType: fromPlaylist.playlistType,
-        copiedToPlaylistTitle: targetPlaylist.title,
-        copiedToPlaylistType: targetPlaylist.playlistType);
+    if (displayWarningWhenAudioWasCopied) {
+      warningMessageVM.setAudioCopiedFromToPlaylistTitles(
+          copiedAudioValidVideoTitle: audioToCopy.validVideoTitle,
+          copiedFromPlaylistTitle: fromPlaylistTitle,
+          copiedFromPlaylistType: fromPlaylist.playlistType,
+          copiedToPlaylistTitle: targetPlaylistTitle,
+          copiedToPlaylistType: targetPlaylist.playlistType);
+    }
 
     return true;
   }

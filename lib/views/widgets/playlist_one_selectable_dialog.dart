@@ -15,7 +15,8 @@ enum PlaylistOneSelectableDialogUsedFor {
   downloadSingleVideoAudio,
   moveSingleAudioToPlaylist,
   moveMultipleAudioToPlaylist,
-  copyAudioToPlaylist,
+  copySingleAudioToPlaylist,
+  copyMultipleAudioToPlaylist,
 }
 
 /// This dialog is used to select a single playlist among the
@@ -217,7 +218,7 @@ class _PlaylistOneSelectableDialogState
           return;
         }
         break;
-      case PlaylistOneSelectableDialogUsedFor.copyAudioToPlaylist:
+      case PlaylistOneSelectableDialogUsedFor.copySingleAudioToPlaylist:
         if (_selectedPlaylist == null) {
           widget.warningMessageVM.isNoPlaylistSelectedForAudioCopy();
           return;

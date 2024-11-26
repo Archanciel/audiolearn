@@ -528,7 +528,72 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             });
             break;
           case FilteredAudioAction.copyFilteredAudio:
-          // Your copyFilteredAudio logic here
+            showDialog<dynamic>(
+              context: context,
+              builder: (context) => PlaylistOneSelectableDialog(
+                usedFor: PlaylistOneSelectableDialogUsedFor
+                    .copyMultipleAudioToPlaylist,
+                warningMessageVM: Provider.of<WarningMessageVM>(
+                  context,
+                  listen: false,
+                ),
+                excludedPlaylist: playlist,
+              ),
+            ).then((resultMap) {
+              if (resultMap is String && resultMap == 'cancel') {
+                // the case if the Cancel button was pressed
+                return;
+              }
+
+              Playlist? targetPlaylist = resultMap['selectedPlaylist'];
+
+              if (targetPlaylist == null) {
+                // the case if no playlist was selected and Confirm button was
+                // pressed. In this case, the PlaylistOneSelectableDialog
+                // uses the WarningMessageVM to display the right warning
+                return;
+              }
+
+              String selectedPlaylistAudioSortFilterParmsName =
+                  playlistListVMlistenTrue
+                      .getSelectedPlaylistAudioSortFilterParmsNameForView(
+                          audioLearnAppViewType:
+                              AudioLearnAppViewType.playlistDownloadView,
+                          translatedAppliedSortFilterParmsName:
+                              AppLocalizations.of(context)!
+                                  .sortFilterParametersAppliedName);
+
+              if (selectedPlaylistAudioSortFilterParmsName.isEmpty ||
+                  selectedPlaylistAudioSortFilterParmsName ==
+                      AppLocalizations.of(context)!
+                          .sortFilterParametersDefaultName) {
+                return;
+              }
+
+              // Content of the list:
+              //  [
+              //    copiedAudioNumber,
+              //    copiedCommentedAudioNumber,
+              //    notCopiedAudioNumber,
+              //  ]
+              List<int> copiedNotCopiedAudioNumberLst = playlistListVMlistenTrue
+                  .copySortFilteredAudioAndCommentLstToPlaylist(
+                targetPlaylist: targetPlaylist,
+              );
+
+              warningMessageVMlistenFalse.confirmCopiedNotCopiedAudioNumber(
+                sourcePlaylistTitle: playlist.title,
+                sourcePlaylistType: playlist.playlistType,
+                targetPlaylistTitle: targetPlaylist.title,
+                targetPlaylistType: targetPlaylist.playlistType,
+                appliedSortFilterParmsName:
+                    selectedPlaylistAudioSortFilterParmsName,
+                copiedAudioNumber: copiedNotCopiedAudioNumberLst[0],
+                copiedCommentedAudioNumber: copiedNotCopiedAudioNumberLst[1],
+                notCopiedAudioNumber: copiedNotCopiedAudioNumberLst[2],
+              );
+            });
+            break;
           case FilteredAudioAction.deleteFilteredAudio:
             // Content of the list:
             //  [

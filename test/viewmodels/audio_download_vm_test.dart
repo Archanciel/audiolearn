@@ -245,7 +245,7 @@ void main() {
 
       // Copying the audio to the target playlist
       bool wasCopied = audioDownloadVM.copyAudioToPlaylist(
-        audio: copiedAudio,
+        audioToCopy: copiedAudio,
         targetPlaylist: targetPlaylist,
       );
 
@@ -315,7 +315,7 @@ void main() {
 
       // Copying again the same the audio to the target playlist
       wasCopied = audioDownloadVM.copyAudioToPlaylist(
-        audio: copiedAudio,
+        audioToCopy: copiedAudio,
         targetPlaylist: targetPlaylist,
       );
 
@@ -376,7 +376,7 @@ void main() {
 
       // Copying the audio to the target playlist
       bool wasCopied = audioDownloadVM.copyAudioToPlaylist(
-        audio: copiedAudio,
+        audioToCopy: copiedAudio,
         targetPlaylist: targetPlaylist,
       );
 

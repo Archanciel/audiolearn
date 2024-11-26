@@ -883,6 +883,59 @@ class PlaylistListVM extends ChangeNotifier {
     ];
   }
 
+  /// This method is called when the user executes the playlist submenu 'Copy
+  /// Filtered Audio ...' after having selected (and defined) a named Sort/Filter
+  /// parameters. Using the playlist menu 'Copy Filtered Audio ...' copies the
+  /// audio files to the target playlist directory and add them to the target
+  /// playlist playable audio list. The copied audio remain in the source playlist
+  /// downloaded audio list and in its playable audio list !
+  ///
+  /// Returned list: [
+  ///    copiedAudioNumber,
+  ///    copiedCommentedAudioNumber,
+  ///    notCopiedAudioNumber,
+  /// ].
+  List<int> copySortFilteredAudioAndCommentLstToPlaylist({
+    required Playlist targetPlaylist,
+  }) {
+    List<Audio> filteredAudioToCopy =
+        _sortedFilteredSelectedPlaylistPlayableAudioLst!;
+    int copiedAudioNumber = 0;
+    int copiedCommentedAudioNumber = 0;
+    int notCopiedAudioNumber = 0;
+
+    for (Audio audio in filteredAudioToCopy) {
+      if (_audioDownloadVM.copyAudioToPlaylist(
+        audioToCopy: audio,
+        targetPlaylist: targetPlaylist,
+        displayWarningIfAudioAlreadyExists: false,
+        displayWarningWhenAudioWasCopied: false,
+      )) {
+        copiedAudioNumber++;
+
+        // Copying the comments of commented audio. This copies
+        // comments to the target playlist in case the applied
+        // sort/filter parameters selected commented audio as well
+        if (_commentVM.copyAudioCommentFileToTargetPlaylist(
+          audio: audio,
+          targetPlaylistPath: targetPlaylist.downloadPath,
+        )) {
+          copiedCommentedAudioNumber++;
+        }
+      } else {
+        notCopiedAudioNumber++;
+      }
+    }
+
+    notifyListeners();
+
+    return [
+      copiedAudioNumber,
+      copiedCommentedAudioNumber,
+      notCopiedAudioNumber,
+    ];
+  }
+
   /// Returns this int list:
   ///  [
   ///    numberOfDeletedAudio,
@@ -1384,17 +1437,22 @@ class PlaylistListVM extends ChangeNotifier {
   /// Method called when the user clicks on the 'Copy audio to
   /// playlist' menu item in the audio item menu button or in
   /// the audio player screen leading popup menu.
-  void copyAudioAndCommentToPlaylist({
+  ///
+  /// True is returned if the audio file was copied to the target
+  /// playlist directory, false otherwise. If the audio file already
+  /// exist in the target playlist directory, the copy operation does
+  /// not happen and false is returned.
+  bool copyAudioAndCommentToPlaylist({
     required Audio audio,
     required Playlist targetPlaylist,
   }) {
     bool wasAudioCopied = _audioDownloadVM.copyAudioToPlaylist(
-      audio: audio,
+      audioToCopy: audio,
       targetPlaylist: targetPlaylist,
     );
 
     if (!wasAudioCopied) {
-      return;
+      return false;
     }
 
     _commentVM.copyAudioCommentFileToTargetPlaylist(
@@ -1403,6 +1461,8 @@ class PlaylistListVM extends ChangeNotifier {
     );
 
     notifyListeners();
+
+    return true;
   }
 
   /// Method called when the user selected the Update playable
