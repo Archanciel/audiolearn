@@ -251,9 +251,11 @@ void main() {
     ) async {
       const String audioPlayerSelectedPlaylistTitle = 'S8 audio';
       const String previousEndDownloadedAudioTitle =
-          'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau';
-      const String lastDownloadedAudioTitle =
+          '3 fois où Aurélien Barrau tire à balles réelles sur les riches';
+      const String previousEndDownloadedAudioTitleWithDuration =
           '3 fois où Aurélien Barrau tire à balles réelles sur les riches\n8:50';
+      const String lastDownloadedAudioTitle =
+          'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n6:29';
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
@@ -299,7 +301,8 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify the last downloaded played audio title
-      expect(find.text(lastDownloadedAudioTitle), findsOneWidget);
+      expect(find.text(previousEndDownloadedAudioTitleWithDuration),
+          findsOneWidget);
 
       // Verify that the selected playlist title is displayed
       selectedPlaylistTitleText =
@@ -335,16 +338,19 @@ void main() {
       WidgetTester tester,
     ) async {
       const String audioPlayerSelectedPlaylistTitle = 'S8 audio';
-      const String previousEndDownloadedAudioTitle =
+      const String secondDownloadedAudioTitle =
           'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau';
-      const String lastDownloadedAudioTitle =
-          '3 fois où Aurélien Barrau tire à balles réelles sur les riches\n8:50';
-      const String playlistDownloadViewlastDownloadedAudioTitle =
+      const String secondEndDownloadedAudioTitleWithDuration =
+          'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n6:29';
+      const String firstDownloadedAudioTitle =
           '3 fois où Aurélien Barrau tire à balles réelles sur les riches';
+      const String lastDownloadedAudioTitleWithDuration =
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)\n20:32";
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
-        savedTestDataDirName: 'audio_player_view_first_to_last_audio_corrected_test',
+        savedTestDataDirName:
+            'audio_player_view_first_to_last_audio_corrected_test',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
       );
 
@@ -353,7 +359,7 @@ void main() {
       // widget finder and tap on it
       final Finder
           playlistDownloadViewLastDownloadedAudioListTileTextWidgetFinder =
-          find.text(playlistDownloadViewlastDownloadedAudioTitle);
+          find.text(firstDownloadedAudioTitle);
 
       await tester
           .tap(playlistDownloadViewLastDownloadedAudioListTileTextWidgetFinder);
@@ -391,11 +397,11 @@ void main() {
 
       // Then, get the previous end downloaded audio ListTile Text
       // widget finder and tap on it
-      final Finder previousEndDownloadedAudioListTileTextWidgetFinder =
-          find.text(previousEndDownloadedAudioTitle);
+      final Finder secondDownloadedAudioListTileTextWidgetFinder =
+          find.text(secondDownloadedAudioTitle);
 
-      await tester.tap(previousEndDownloadedAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle(const Duration(milliseconds: 400));
+      await tester.tap(secondDownloadedAudioListTileTextWidgetFinder);
+      await tester.pumpAndSettle(const Duration(milliseconds: 500));
 
       // Now we tap on the play button in order to finish
       // playing the audio downloaded before the last downloaded
@@ -411,7 +417,8 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify the last downloaded played audio title
-      expect(find.text(lastDownloadedAudioTitle), findsOneWidget);
+      expect(
+          find.text(lastDownloadedAudioTitleWithDuration), findsOneWidget);
 
       // Ensure that the bug corrected on AudioPlayerVM on 06-06-2024
       // no longer happens. This bug impacted the application during
@@ -422,8 +429,8 @@ void main() {
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '5:00',
-        maxPositionTimeStr: '5:06',
+        minPositionTimeStr: '20:11',
+        maxPositionTimeStr: '20:16',
       );
 
       // Purge the test playlist directory so that the created test
@@ -439,8 +446,8 @@ void main() {
       WidgetTester tester,
     ) async {
       const String audioPlayerSelectedPlaylistTitle = 'S8 audio';
-      const String firstDownloadedAudioTitle =
-          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
+      const String secondDownloadedAudioTitle =
+          'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau';
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
@@ -459,7 +466,7 @@ void main() {
       // First, get the first downloaded Audio ListTile Text
       // widget finder and tap on it
       final Finder firstDownloadedAudioListTileTextWidgetFinder =
-          find.text(firstDownloadedAudioTitle);
+          find.text(secondDownloadedAudioTitle);
 
       await tester.tap(firstDownloadedAudioListTileTextWidgetFinder);
       await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
@@ -485,7 +492,7 @@ void main() {
       // Verify the last downloaded played audio title
       expect(
           find.text(
-              '3 fois où Aurélien Barrau tire à balles réelles sur les riches\n8:50'),
+              "L'argument anti-nuke qui m'inquiète le plus par Y.Rousselet\n9:51"),
           findsOneWidget);
 
       // Ensure that the bug corrected on AudioPlayerVM on 06-06-2024
@@ -497,8 +504,8 @@ void main() {
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '0:04',
-        maxPositionTimeStr: '0:08',
+        minPositionTimeStr: '9:23',
+        maxPositionTimeStr: '9:28',
       );
 
       // Purge the test playlist directory so that the created test
@@ -514,12 +521,8 @@ void main() {
       WidgetTester tester,
     ) async {
       const String audioPlayerSelectedPlaylistTitle = 'S8 audio';
-      const String firstDownloadedAudioTitle =
-          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
-      const String lastDownloadedAudioTitle =
-          '3 fois où Aurélien Barrau tire à balles réelles sur les riches\n8:50';
-      const String playlistDownloadViewlastDownloadedAudioTitle =
-          '3 fois où Aurélien Barrau tire à balles réelles sur les riches';
+      const String secondDownloadedAudioTitle =
+          'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau';
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
@@ -536,7 +539,7 @@ void main() {
       // widget finder and tap on it
       final Finder
           playlistDownloadViewLastDownloadedAudioListTileTextWidgetFinder =
-          find.text(playlistDownloadViewlastDownloadedAudioTitle);
+          find.text(secondDownloadedAudioTitle);
 
       await tester
           .tap(playlistDownloadViewLastDownloadedAudioListTileTextWidgetFinder);
@@ -575,10 +578,10 @@ void main() {
 
       // Then, get the first downloaded Audio ListTile Text
       // widget finder and tap on it
-      final Finder firstDownloadedAudioListTileTextWidgetFinder =
-          find.text(firstDownloadedAudioTitle);
+      final Finder secondDownloadedAudioListTileTextWidgetFinder =
+          find.text(secondDownloadedAudioTitle);
 
-      await tester.tap(firstDownloadedAudioListTileTextWidgetFinder);
+      await tester.tap(secondDownloadedAudioListTileTextWidgetFinder);
       await tester.pumpAndSettle(const Duration(milliseconds: 400));
 
       // Verify that the selected playlist title is displayed
@@ -606,7 +609,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify the last downloaded played audio title
-      expect(find.text(lastDownloadedAudioTitle), findsOneWidget);
+      expect(find.text("L'argument anti-nuke qui m'inquiète le plus par Y.Rousselet\n9:51"), findsOneWidget);
 
       // Verify that the selected playlist title is displayed
       selectedPlaylistTitleText =
@@ -625,8 +628,8 @@ void main() {
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '5:02',
-        maxPositionTimeStr: '5:07',
+        minPositionTimeStr: '9:23',
+        maxPositionTimeStr: '9:27',
       );
 
       // Purge the test playlist directory so that the created test
@@ -1483,7 +1486,7 @@ void main() {
       const String audioPlayerSelectedPlaylistTitle = 'S8 audio';
       const String lastDownloadedAudioTitle =
           '3 fois où Aurélien Barrau tire à balles réelles sur les riches';
-      const String firstDownloadedAudioTitle =
+      const String secondDownloadedAudioTitle =
           'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau';
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
@@ -1500,7 +1503,7 @@ void main() {
       // widget finder and tap on it to open the audio player
       // view
       final Finder firstDownloadedAudioListTileTextWidgetFinder =
-          find.text(firstDownloadedAudioTitle);
+          find.text(secondDownloadedAudioTitle);
 
       await tester.tap(firstDownloadedAudioListTileTextWidgetFinder);
       await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
@@ -1641,7 +1644,7 @@ void main() {
 
       // Verify if the play speed of the last downloaded audio
       // which was not modified is 1.50x
-      expect(find.text('1.50x'), findsOneWidget);
+      expect(find. text('1.50x'), findsOneWidget);
 
       playableAudioLstAudioIndex = 0;
       expectedAudioPlaySpeed = 1.5;
@@ -1869,7 +1872,7 @@ void main() {
 
       // Verify if the play speed of the last downloaded audio
       // which was not modified is 1.50x
-      expect(find.text('1.50x'), findsOneWidget);
+      expect(find.text('1.25x'), findsOneWidget);
 
       playableAudioLstAudioIndex = 0;
       expectedAudioPlaySpeed = 1.5;
@@ -1979,7 +1982,7 @@ void main() {
            playlist.''', (WidgetTester tester) async {
       const String audioPlayerSelectedPlaylistTitle =
           'S8 audio'; // Youtube playlist
-      const String firstDownloadedAudioTitle =
+      const String secondDownloadedAudioTitle =
           "L'argument anti-nuke qui m'inquiète le plus par Y.Rousselet";
       const String lastDownloadedAudioTitleOnAudioPlayerView =
           "La résilience insulaire par Fiona Roche\n13:35";
@@ -2006,7 +2009,7 @@ void main() {
 
       IntegrationTestUtil.validateInkWellButton(
         tester: tester,
-        audioTitle: firstDownloadedAudioTitle,
+        audioTitle: secondDownloadedAudioTitle,
         expectedIcon: Icons.play_arrow,
         expectedIconColor:
             kSliderThumbColorInDarkMode, // 2 seconds before end (=> fully played) audio item play icon color
@@ -2016,7 +2019,7 @@ void main() {
       // First, get the first downloaded Audio ListTile Text
       // widget finder and tap on it
       final Finder firstDownloadedAudioListTileTextWidgetFinder =
-          find.text(firstDownloadedAudioTitle);
+          find.text(secondDownloadedAudioTitle);
 
       await tester.tap(firstDownloadedAudioListTileTextWidgetFinder);
       await tester.pumpAndSettle(const Duration(milliseconds: 200));
@@ -2062,7 +2065,7 @@ void main() {
 
       IntegrationTestUtil.validateInkWellButton(
         tester: tester,
-        audioTitle: firstDownloadedAudioTitle,
+        audioTitle: secondDownloadedAudioTitle,
         expectedIcon: Icons.play_arrow,
         expectedIconColor:
             kSliderThumbColorInDarkMode, // Fully played audio item play icon color
@@ -2849,6 +2852,7 @@ void main() {
       await IntegrationTestUtil.selectAudioInAudioPlayableDialog(
         tester: tester,
         audioToSelectTitle: audioToPlayTitle,
+        offsetValue: 300,
       );
 
       // Now we are back on the AudioPlayerView displaying the previously
