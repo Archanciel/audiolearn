@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:audiolearn/models/audio.dart';
 import 'package:audiolearn/viewmodels/comment_vm.dart';
 import 'package:audiolearn/viewmodels/date_format_vm.dart';
-import 'package:audiolearn/views/widgets/audio_playable_list_dialog.dart';
 import 'package:audiolearn/views/widgets/confirm_action_dialog.dart';
 import 'package:audiolearn/views/widgets/audio_modification_dialog.dart';
 import 'package:audiolearn/views/widgets/comment_add_edit_dialog.dart';
@@ -198,7 +197,8 @@ void main() {
       await checkWarningDialog(
           tester: tester,
           playlistTitle: youtubeNewPlaylistTitle,
-          isMusicQuality: false);
+          isMusicQuality: false,
+          playlistType: PlaylistType.youtube,);
 
       // Ensure the URL TextField was emptied
       urlTextField = tester.widget(find.byKey(
@@ -631,7 +631,8 @@ void main() {
       await checkWarningDialog(
           tester: tester,
           playlistTitle: youtubeNewPlaylistTitle,
-          isMusicQuality: true);
+          isMusicQuality: true,
+          playlistType: PlaylistType.youtube,);
 
       // Ensure the URL TextField was emptied
       urlTextField = tester.widget(find.byKey(
@@ -992,6 +993,7 @@ void main() {
         tester: tester,
         playlistTitle: localPlaylistTitle,
         isMusicQuality: true,
+        playlistType: PlaylistType.local,
       );
 
       // The list of Playlist's should have one item now
@@ -1231,6 +1233,7 @@ void main() {
         tester: tester,
         playlistTitle: localPlaylistTitle,
         isMusicQuality: false,
+        playlistType: PlaylistType.local,
       );
 
       // The list of Playlist's should have one item now
@@ -1553,6 +1556,7 @@ void main() {
         tester: tester,
         playlistTitle: correctedLocalPlaylistTitle,
         isMusicQuality: false,
+        playlistType: PlaylistType.local,
       );
 
       // Purge the test playlist directory so that the created test
@@ -2440,7 +2444,7 @@ void main() {
       Text warningDialogMessageTextWidget =
           tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
       expect(warningDialogMessageTextWidget.data,
-          'Playlist "Essai" of audio quality added at end of list of playlists.');
+          'Youtube playlist "Essai" of audio quality added at end of list of playlists.');
 
       // Close the warning dialog by tapping on the Ok button.
       await tester.tap(find.byKey(const Key('warningDialogOkButton')));
@@ -2518,7 +2522,7 @@ void main() {
       warningDialogMessageTextWidget =
           tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
       expect(warningDialogMessageTextWidget.data,
-          'Playlist "audio_player_view_2_shorts_test" of audio quality added at end of list of playlists.');
+          'Youtube playlist "audio_player_view_2_shorts_test" of audio quality added at end of list of playlists.');
 
       // Close the warning dialog by tapping on the Ok button.
       await tester.tap(find.byKey(const Key('warningDialogOkButton')));
@@ -25003,6 +25007,7 @@ Future<void> checkWarningDialog({
   required WidgetTester tester,
   required String playlistTitle,
   required bool isMusicQuality,
+  required PlaylistType playlistType,
 }) async {
   // Ensure the warning dialog is shown
   expect(find.byType(WarningMessageDisplayDialog), findsOneWidget);
@@ -25016,9 +25021,13 @@ Future<void> checkWarningDialog({
   Text warningDialogMessage =
       tester.widget(find.byKey(const Key('warningDialogMessage')));
 
+  if (playlistType == PlaylistType.youtube) {
   expect(warningDialogMessage.data,
-      'Playlist "$playlistTitle" of ${isMusicQuality ? 'music' : 'audio'} quality added at end of list of playlists.');
-
+      'Youtube playlist "$playlistTitle" of ${isMusicQuality ? 'music' : 'audio'} quality added at end of list of playlists.');
+  } else {
+  expect(warningDialogMessage.data,
+      'Local playlist "$playlistTitle" of ${isMusicQuality ? 'music' : 'audio'} quality added at end of list of playlists.');
+  }
   // Close the warning dialog by tapping on the Ok button
   await tester.tap(find.byKey(const Key('warningDialogOkButton')));
   await tester.pumpAndSettle();

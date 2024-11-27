@@ -254,8 +254,6 @@ void main() {
           '3 fois où Aurélien Barrau tire à balles réelles sur les riches';
       const String previousEndDownloadedAudioTitleWithDuration =
           '3 fois où Aurélien Barrau tire à balles réelles sur les riches\n8:50';
-      const String lastDownloadedAudioTitle =
-          'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n6:29';
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
@@ -340,8 +338,6 @@ void main() {
       const String audioPlayerSelectedPlaylistTitle = 'S8 audio';
       const String secondDownloadedAudioTitle =
           'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau';
-      const String secondEndDownloadedAudioTitleWithDuration =
-          'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n6:29';
       const String firstDownloadedAudioTitle =
           '3 fois où Aurélien Barrau tire à balles réelles sur les riches';
       const String lastDownloadedAudioTitleWithDuration =

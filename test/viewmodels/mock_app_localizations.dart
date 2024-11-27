@@ -217,11 +217,6 @@ class MockAppLocalizations extends AppLocalizations {
   }
 
   @override
-  String addPlaylistTitle(Object title, Object quality) {
-    return 'Playlist "$title" of $quality quality added at end of list of playlists.';
-  }
-
-  @override
   String invalidPlaylistUrl(Object url) {
     return 'Playlist with invalid URL "$url" neither added nor modified.';
   }
@@ -1561,4 +1556,18 @@ class MockAppLocalizations extends AppLocalizations {
     Object notCopiedAudioNumber,
   ) =>
       "Applying Sort/Filter parms \"$sortedFilterParmsName\", from local playlist \"$sourcePlaylistTitle\" to local playlist \"$targetPlaylistTitle\", $copiedAudioNumber audio(s) were copied from which $copiedCommentedAudioNumber were commented, and $notCopiedAudioNumber audio(s) were not copied.";
+
+  @override
+  String addYoutubePlaylistTitle(
+    Object title,
+    Object quality,
+  ) =>
+      "Youtube playlist \"$title\" of $quality quality added at end of list of playlists.";
+
+  @override
+  String addLocalPlaylistTitle(
+    Object title,
+    Object quality,
+  ) =>
+      "Local playlist \"$title\" of $quality quality added at end of list of playlists.";
 }
