@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:audiolearn/models/audio.dart';
 import 'package:audiolearn/viewmodels/comment_vm.dart';
 import 'package:audiolearn/viewmodels/date_format_vm.dart';
+import 'package:audiolearn/views/widgets/audio_playable_list_dialog.dart';
 import 'package:audiolearn/views/widgets/confirm_action_dialog.dart';
 import 'package:audiolearn/views/widgets/audio_modification_dialog.dart';
 import 'package:audiolearn/views/widgets/comment_add_edit_dialog.dart';
@@ -3597,7 +3598,8 @@ void main() {
           .widget<Text>(find.byKey(const Key('audioPlayerViewAudioPosition')));
       expect(audioPositionText.data, '0:05');
 
-      Finder audioTitlePositionTextFinder = find.text("$copiedAudioTitle\n0:24");
+      Finder audioTitlePositionTextFinder =
+          find.text("$copiedAudioTitle\n0:24");
       expect(audioTitlePositionTextFinder, findsOneWidget);
 
       // Now play then pause the moved audio
@@ -18044,6 +18046,7 @@ void main() {
           "La résilience insulaire par Fiona Roche",
           "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
           "Les besoins artificiels par R.Keucheyan",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
@@ -18218,6 +18221,7 @@ void main() {
           "La résilience insulaire par Fiona Roche",
           "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
           "Les besoins artificiels par R.Keucheyan",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
@@ -18392,6 +18396,7 @@ void main() {
           "La résilience insulaire par Fiona Roche",
           "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
           "Les besoins artificiels par R.Keucheyan",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
@@ -19009,8 +19014,8 @@ void main() {
 
         List<String> audioTitles = [
           "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-          "Les besoins artificiels par R.Keucheyan",
           "La résilience insulaire par Fiona Roche",
+          "Les besoins artificiels par R.Keucheyan",
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
@@ -19116,8 +19121,8 @@ void main() {
 
         List<String> audioTitles = [
           "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-          "Les besoins artificiels par R.Keucheyan",
           "La résilience insulaire par Fiona Roche",
+          "Les besoins artificiels par R.Keucheyan",
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
@@ -19217,7 +19222,7 @@ void main() {
           "La résilience insulaire par Fiona Roche",
           "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
           "Les besoins artificiels par R.Keucheyan",
-          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
         ];
 
         IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
@@ -19711,8 +19716,8 @@ void main() {
         audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
           "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
           "La surpopulation mondiale par Jancovici et Barrau",
-          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
         // Ensure that since the search icon button was used,
@@ -19750,6 +19755,7 @@ void main() {
           "La résilience insulaire par Fiona Roche",
           "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
           "Les besoins artificiels par R.Keucheyan",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
@@ -19861,6 +19867,7 @@ void main() {
           "La résilience insulaire par Fiona Roche",
           "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
           "Les besoins artificiels par R.Keucheyan",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
@@ -19975,6 +19982,7 @@ void main() {
           "La résilience insulaire par Fiona Roche",
           "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
           "Les besoins artificiels par R.Keucheyan",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
@@ -20087,6 +20095,7 @@ void main() {
           "La résilience insulaire par Fiona Roche",
           "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
           "Les besoins artificiels par R.Keucheyan",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
@@ -20598,9 +20607,9 @@ void main() {
         audioToPlayTitleAndDuration:
             "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n6:29",
         otherAudioTitleToTapOnBeforeRewinding:
-            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         otherAudioTitleToTapOnBeforeRewindingDuration:
-            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)\n20:32",
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n6:29",
       );
 
       // Rewind again all playlist audio to start position. Since
@@ -21184,46 +21193,52 @@ void main() {
         await tester.pumpAndSettle();
 
         String newAudioToSelectTitle =
-            '1-audio learn test short video two 23-06-10';
+            '6-audio learn test short video two 23-06-10';
+        String newAudioToSelectSubTitle =
+            '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:23.';
 
         // Go to audio player view to select another audio
         await _selectNewAudioInAudioPlayerViewAndReturnToPlaylistDownloadView(
           tester: tester,
           currentAudioTitle: currentAudioTitle,
           newAudioTitle: newAudioToSelectTitle,
-          offsetValue: -1000,
         );
 
-        currentAudioSubTitle =
-            '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:28.';
+        // Scrolling down the audios list in order to display the commented
+        // audio title to delete
+
+        // Find the audio list widget using its key
+        final listFinder = find.byKey(const Key('audio_list'));
+
+        // Perform the scroll action
+        await tester.drag(listFinder, const Offset(0, 100));
+        await tester.pumpAndSettle();
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
         await IntegrationTestUtil.verifyCurrentAudioTitleAndSubTitleColor(
           tester: tester,
           currentAudioTitle: newAudioToSelectTitle,
-          currentAudioSubTitle: currentAudioSubTitle,
+          currentAudioSubTitle: newAudioToSelectSubTitle,
         );
 
         newAudioToSelectTitle = '7-audio learn test short video two 23-06-10';
+        String newAudioSubTitle =
+            '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:22.';
 
         // Go to audio player view to select another audio
         await _selectNewAudioInAudioPlayerViewAndReturnToPlaylistDownloadView(
           tester: tester,
-          currentAudioTitle: '1-audio learn test short video two 23-06-10',
+          currentAudioTitle: '6-audio learn test short video two 23-06-10',
           newAudioTitle: newAudioToSelectTitle,
-          offsetValue: 300.0,
         );
-
-        currentAudioSubTitle =
-            '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:22.';
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
         await IntegrationTestUtil.verifyCurrentAudioTitleAndSubTitleColor(
           tester: tester,
           currentAudioTitle: newAudioToSelectTitle,
-          currentAudioSubTitle: currentAudioSubTitle,
+          currentAudioSubTitle: newAudioSubTitle,
         );
 
         newAudioToSelectTitle = '3-audio learn test short video two 23-06-10';
@@ -21233,7 +21248,7 @@ void main() {
           tester: tester,
           currentAudioTitle: '7-audio learn test short video two 23-06-10',
           newAudioTitle: newAudioToSelectTitle,
-          offsetValue: -1000.0,
+          offsetValue: 500.0,
         );
 
         currentAudioSubTitle =
@@ -21278,25 +21293,23 @@ void main() {
         );
 
         String newAudioToSelectTitle =
-            '1-audio learn test short video two 23-06-10';
+            '8-audio learn test short video two 23-06-10';
+        String newAudioToSelectSubTitle =
+            '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:21.';
 
         // Go to audio player view to select another audio
         await _selectNewAudioInAudioPlayerViewAndReturnToPlaylistDownloadView(
           tester: tester,
           currentAudioTitle: currentAudioTitle,
           newAudioTitle: newAudioToSelectTitle,
-          offsetValue: -1000,
         );
-
-        currentAudioSubTitle =
-            '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:28.';
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
         await IntegrationTestUtil.verifyCurrentAudioTitleAndSubTitleColor(
           tester: tester,
           currentAudioTitle: newAudioToSelectTitle,
-          currentAudioSubTitle: currentAudioSubTitle,
+          currentAudioSubTitle: newAudioToSelectSubTitle,
         );
 
         newAudioToSelectTitle = '5-audio learn test short video two 23-06-10';
@@ -21304,7 +21317,7 @@ void main() {
         // Go to audio player view to select another audio
         await _selectNewAudioInAudioPlayerViewAndReturnToPlaylistDownloadView(
           tester: tester,
-          currentAudioTitle: '1-audio learn test short video two 23-06-10',
+          currentAudioTitle: '8-audio learn test short video two 23-06-10',
           newAudioTitle: newAudioToSelectTitle,
           offsetValue: 300.0,
         );
@@ -21327,7 +21340,7 @@ void main() {
           tester: tester,
           currentAudioTitle: '5-audio learn test short video two 23-06-10',
           newAudioTitle: newAudioToSelectTitle,
-          offsetValue: -1000.0,
+          offsetValue: 100.0,
         );
 
         currentAudioSubTitle =
@@ -22128,8 +22141,8 @@ void main() {
           "La surpopulation mondiale par Jancovici et Barrau",
           "La résilience insulaire par Fiona Roche",
           "Les besoins artificiels par R.Keucheyan",
-          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
         List<String> playableAudioLst = loadedPlaylist.playableAudioLst
@@ -22420,8 +22433,8 @@ void main() {
           "La surpopulation mondiale par Jancovici et Barrau",
           "La résilience insulaire par Fiona Roche",
           "Les besoins artificiels par R.Keucheyan",
-          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
         List<String> playableAudioLst = loadedPlaylist.playableAudioLst
@@ -22710,8 +22723,8 @@ void main() {
           "La surpopulation mondiale par Jancovici et Barrau",
           "La résilience insulaire par Fiona Roche",
           "Les besoins artificiels par R.Keucheyan",
-          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
         List<String> playableAudioLst = loadedPlaylist.playableAudioLst
@@ -23057,8 +23070,8 @@ void main() {
           "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
           "La surpopulation mondiale par Jancovici et Barrau",
           "Les besoins artificiels par R.Keucheyan",
-          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
         List<String> playableAudioLst = loadedPlaylist.playableAudioLst
@@ -24408,7 +24421,7 @@ Future<List<String>> _enteringFirstAndSecondLetterOfLocalPlaylistSearchWord({
     "La résilience insulaire par Fiona Roche",
     "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
     "Les besoins artificiels par R.Keucheyan",
-    "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+    "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
   ];
 
   IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
@@ -24521,8 +24534,8 @@ Future<List<String>> enteringFirstAndSecondLetterOfYoutubePlaylistSearchWord({
 
   List<String> audioTitles = [
     "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-    "Les besoins artificiels par R.Keucheyan",
     "La résilience insulaire par Fiona Roche",
+    "Les besoins artificiels par R.Keucheyan",
     "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
   ];
 
