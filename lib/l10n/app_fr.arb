@@ -75,8 +75,16 @@
       "title": {}
     }
   },
-  "addPlaylistTitle": "Nouvelle playlist \"{title}\" de qualité {quality} ajoutée à la fin de la liste des playlists.",
-  "@addPlaylistTitle": {
+  "addYoutubePlaylistTitle": "Nouvelle playlist Youtube \"{title}\" de qualité {quality} ajoutée à la fin de la liste des playlists.",
+  "@addYoutubePlaylistTitle": {
+    "description": "Message informant qu'une nouvelle playlist a été ajoutée à la liste des playlists.",
+    "placeholders": {
+      "title": {},
+      "quality": {}
+    }
+  },
+  "addLocalPlaylistTitle": "Nouvelle playlist locale \"{title}\" de qualité {quality} ajoutée à la fin de la liste des playlists.",
+  "@addLocalPlaylistTitle": {
     "description": "Message informant qu'une nouvelle playlist a été ajoutée à la liste des playlists.",
     "placeholders": {
       "title": {},

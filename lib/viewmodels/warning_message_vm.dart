@@ -319,12 +319,17 @@ class WarningMessageVM extends ChangeNotifier {
   PlaylistQuality _addedPlaylistQuality = PlaylistQuality.voice;
   PlaylistQuality get addedPlaylistQuality => _addedPlaylistQuality;
 
+  late PlaylistType _addedPlaylistType;
+  PlaylistType get addedPlaylistType => _addedPlaylistType;
+
   void annoncePlaylistAddition({
     required String playlistTitle,
     required PlaylistQuality playlistQuality,
+    required PlaylistType playlistType,
   }) {
     _addedPlaylistTitle = playlistTitle;
     _addedPlaylistQuality = playlistQuality;
+    _addedPlaylistType = playlistType;
 
     if (playlistTitle.isNotEmpty) {
       warningMessageType = WarningMessageType.addPlaylistTitle;

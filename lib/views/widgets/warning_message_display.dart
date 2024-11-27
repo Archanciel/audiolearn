@@ -160,11 +160,21 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                 AppLocalizations.of(context)!.playlistQualityMusic;
           }
 
+          String addPlaylistTitle;
+
+          if (_warningMessageVM.addedPlaylistType == PlaylistType.local) {
+            addPlaylistTitle = AppLocalizations.of(context)!
+                .addLocalPlaylistTitle(addedPlayListTitle, playlistQualityStr);
+          } else {
+            // Youtube playlist is added
+            addPlaylistTitle = AppLocalizations.of(context)!
+                .addYoutubePlaylistTitle(addedPlayListTitle, playlistQualityStr);
+          }
+
           WidgetsBinding.instance.addPostFrameCallback((_) {
             _displayWarningDialog(
                 context: _context,
-                message: AppLocalizations.of(context)!
-                    .addPlaylistTitle(addedPlayListTitle, playlistQualityStr),
+                message: addPlaylistTitle,
                 warningMessageVM: _warningMessageVM,
                 themeProviderVM: themeProviderVM);
           });

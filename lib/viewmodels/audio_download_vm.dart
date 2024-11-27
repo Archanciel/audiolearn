@@ -225,6 +225,7 @@ class AudioDownloadVM extends ChangeNotifier {
       warningMessageVM.annoncePlaylistAddition(
         playlistTitle: localPlaylistTitle,
         playlistQuality: playlistQuality,
+        playlistType: PlaylistType.local,
       );
 
       return addedPlaylist;
@@ -337,6 +338,7 @@ class AudioDownloadVM extends ChangeNotifier {
     warningMessageVM.annoncePlaylistAddition(
       playlistTitle: addedPlaylist.title,
       playlistQuality: playlistQuality,
+      playlistType: PlaylistType.youtube,
     );
 
     return addedPlaylist;
