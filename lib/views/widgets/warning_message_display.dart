@@ -557,6 +557,110 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         });
 
         return const SizedBox.shrink();
+
+
+
+
+      case WarningMessageType.notApplyingDefaultSFparmsToMoveWarning:
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          String warningMessage;
+
+          if (_warningMessageVM.movedFromSourcePlaylistType ==
+              PlaylistType.youtube) {
+            if (_warningMessageVM.movedToTargetPlaylistType ==
+                PlaylistType.youtube) {
+              warningMessage = AppLocalizations.of(context)!
+                  .defaultSFPNotApplyedToMoveAudioFromYoutubeToYoutubePlaylistWarning(
+                _warningMessageVM.audioMoveSourcePlaylistTitle,
+                _warningMessageVM.audioMoveTargetPlaylistTitle,
+                _warningMessageVM.appliedToMoveSortFilterParmsName,
+              );
+            } else {
+              warningMessage = AppLocalizations.of(context)!
+                  .defaultSFPNotApplyedToMoveAudioFromYoutubeToLocalPlaylistWarning(
+                _warningMessageVM.audioMoveSourcePlaylistTitle,
+                _warningMessageVM.audioMoveTargetPlaylistTitle,
+                _warningMessageVM.appliedToMoveSortFilterParmsName,
+              );
+            }
+          } else {
+            if (_warningMessageVM.movedToTargetPlaylistType ==
+                PlaylistType.youtube) {
+              warningMessage = AppLocalizations.of(context)!
+                  .defaultSFPNotApplyedToMoveAudioFromLocalToYoutubePlaylistWarning(
+                _warningMessageVM.audioMoveSourcePlaylistTitle,
+                _warningMessageVM.audioMoveTargetPlaylistTitle,
+                _warningMessageVM.appliedToMoveSortFilterParmsName,
+              );
+            } else {
+              warningMessage = AppLocalizations.of(context)!
+                  .defaultSFPNotApplyedToMoveAudioFromLocalToLocalPlaylistWarning(
+                _warningMessageVM.audioMoveSourcePlaylistTitle,
+                _warningMessageVM.audioMoveTargetPlaylistTitle,
+                _warningMessageVM.appliedToMoveSortFilterParmsName,
+              );
+            }
+          }
+
+          _displayWarningDialog(
+            context: _context,
+            message: warningMessage,
+            warningMessageVM: _warningMessageVM,
+            themeProviderVM: themeProviderVM,
+          );
+        });
+
+        return const SizedBox.shrink();
+      case WarningMessageType.notApplyingDefaultSFparmsToCopyWarning:
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          String warningMessage;
+
+          if (_warningMessageVM.copiedFromSourcePlaylistType ==
+              PlaylistType.youtube) {
+            if (_warningMessageVM.copiedToTargetPlaylistType ==
+                PlaylistType.youtube) {
+              warningMessage = AppLocalizations.of(context)!
+                  .defaultSFPNotApplyedToCopyAudioFromYoutubeToYoutubePlaylistWarning(
+                _warningMessageVM.audioCopySourcePlaylistTitle,
+                _warningMessageVM.audioCopyTargetPlaylistTitle,
+                _warningMessageVM.appliedToCopySortFilterParmsName,
+              );
+            } else {
+              warningMessage = AppLocalizations.of(context)!
+                  .defaultSFPNotApplyedToCopyAudioFromYoutubeToLocalPlaylistWarning(
+                _warningMessageVM.audioCopySourcePlaylistTitle,
+                _warningMessageVM.audioCopyTargetPlaylistTitle,
+                _warningMessageVM.appliedToCopySortFilterParmsName,
+              );
+            }
+          } else {
+            if (_warningMessageVM.movedToTargetPlaylistType ==
+                PlaylistType.youtube) {
+              warningMessage = AppLocalizations.of(context)!
+                  .defaultSFPNotApplyedToCopyAudioFromLocalToYoutubePlaylistWarning(
+                _warningMessageVM.audioCopySourcePlaylistTitle,
+                _warningMessageVM.audioCopyTargetPlaylistTitle,
+                _warningMessageVM.appliedToCopySortFilterParmsName,
+              );
+            } else {
+              warningMessage = AppLocalizations.of(context)!
+                  .defaultSFPNotApplyedToCopyAudioFromLocalToLocalPlaylistWarning(
+                _warningMessageVM.audioCopySourcePlaylistTitle,
+                _warningMessageVM.audioCopyTargetPlaylistTitle,
+                _warningMessageVM.appliedToCopySortFilterParmsName,
+              );
+            }
+          }
+
+          _displayWarningDialog(
+            context: _context,
+            message: warningMessage,
+            warningMessageVM: _warningMessageVM,
+            themeProviderVM: themeProviderVM,
+          );
+        });
+
+        return const SizedBox.shrink();
       case WarningMessageType.confirmCopiedNotCopiedAudioNumber:
         WidgetsBinding.instance.addPostFrameCallback((_) {
           String confirmationMessage;

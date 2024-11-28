@@ -623,5 +623,77 @@
       "copiedCommentedAudioNumber": {},
       "notCopiedAudioNumber": {}
     }
+  },
+  "defaultSFPNotApplyedToMoveAudioFromYoutubeToYoutubePlaylistWarning": "Since \"{sortedFilterParmsName}\" Sort/Filter parms is selected, no audio can be moved from Youtube playlist \"{sourcePlaylistTitle}\" to Youtube playlist \"{targetPlaylistTitle}\". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...",
+  "@defaultSFPNotApplyedToMoveAudioFromYoutubeToYoutubePlaylistWarning": {
+    "description": "Warning message indicating that the default SF parms were not applied to move audio",
+    "placeholders": {
+      "sourcePlaylistTitle": {},
+      "targetPlaylistTitle": {},
+      "sortedFilterParmsName": {}
+    }
+  },
+  "defaultSFPNotApplyedToMoveAudioFromYoutubeToLocalPlaylistWarning": "Since \"{sortedFilterParmsName}\" Sort/Filter parms is selected, no audio can be moved from Youtube playlist \"{sourcePlaylistTitle}\" to local playlist \"{targetPlaylistTitle}\". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...",
+  "@defaultSFPNotApplyedToMoveAudioFromYoutubeToLocalPlaylistWarning": {
+    "description": "Warning message indicating that the default SF parms were not applied to move audio",
+    "placeholders": {
+      "sourcePlaylistTitle": {},
+      "targetPlaylistTitle": {},
+      "sortedFilterParmsName": {}
+    }
+  },
+  "defaultSFPNotApplyedToMoveAudioFromLocalToYoutubePlaylistWarning": "Since \"{sortedFilterParmsName}\" Sort/Filter parms is selected, no audio can be moved from local playlist \"{sourcePlaylistTitle}\" to Youtube playlist \"{targetPlaylistTitle}\". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...",
+  "@defaultSFPNotApplyedToMoveAudioFromLocalToYoutubePlaylistWarning": {
+    "description": "Warning message indicating that the default SF parms were not applied to move audio",
+    "placeholders": {
+      "sourcePlaylistTitle": {},
+      "targetPlaylistTitle": {},
+      "sortedFilterParmsName": {}
+    }
+  },
+  "defaultSFPNotApplyedToMoveAudioFromLocalToLocalPlaylistWarning": "Since \"{sortedFilterParmsName}\" Sort/Filter parms is selected, no audio can be moved from local playlist \"{sourcePlaylistTitle}\" to local playlist \"{targetPlaylistTitle}\". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...",
+  "@defaultSFPNotApplyedToMoveAudioFromLocalToLocalPlaylistWarning": {
+    "description": "Warning message indicating that the default SF parms were not applied to move audio",
+    "placeholders": {
+      "sourcePlaylistTitle": {},
+      "targetPlaylistTitle": {},
+      "sortedFilterParmsName": {}
+    }
+  },
+  "defaultSFPNotApplyedToCopyAudioFromYoutubeToYoutubePlaylistWarning": "Since \"{sortedFilterParmsName}\" Sort/Filter parms is selected, no audio can be copied from Youtube playlist \"{sourcePlaylistTitle}\" to Youtube playlist \"{targetPlaylistTitle}\". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...",
+  "@defaultSFPNotApplyedToCopyAudioFromYoutubeToYoutubePlaylistWarning": {
+    "description": "Warning message indicating that the default SF parms were not applied to move audio",
+    "placeholders": {
+      "sourcePlaylistTitle": {},
+      "targetPlaylistTitle": {},
+      "sortedFilterParmsName": {}
+    }
+  },
+  "defaultSFPNotApplyedToCopyAudioFromYoutubeToLocalPlaylistWarning": "Since \"{sortedFilterParmsName}\" Sort/Filter parms is selected, no audio can be copied from Youtube playlist \"{sourcePlaylistTitle}\" to local playlist \"{targetPlaylistTitle}\". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...",
+  "@defaultSFPNotApplyedToCopyAudioFromYoutubeToLocalPlaylistWarning": {
+    "description": "Warning message indicating that the default SF parms were not applied to move audio",
+    "placeholders": {
+      "sourcePlaylistTitle": {},
+      "targetPlaylistTitle": {},
+      "sortedFilterParmsName": {}
+    }
+  },
+  "defaultSFPNotApplyedToCopyAudioFromLocalToYoutubePlaylistWarning": "Since \"{sortedFilterParmsName}\" Sort/Filter parms is selected, no audio can be copied from local playlist \"{sourcePlaylistTitle}\" to Youtube playlist \"{targetPlaylistTitle}\". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...",
+  "@defaultSFPNotApplyedToCopyAudioFromLocalToYoutubePlaylistWarning": {
+    "description": "Warning message indicating that the default SF parms were not applied to move audio",
+    "placeholders": {
+      "sourcePlaylistTitle": {},
+      "targetPlaylistTitle": {},
+      "sortedFilterParmsName": {}
+    }
+  },
+  "defaultSFPNotApplyedToCopyAudioFromLocalToLocalPlaylistWarning": "Since \"{sortedFilterParmsName}\" Sort/Filter parms is selected, no audio can be copied from local playlist \"{sourcePlaylistTitle}\" to local playlist \"{targetPlaylistTitle}\". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...",
+  "@defaultSFPNotApplyedToCopyAudioFromLocalToLocalPlaylistWarning": {
+    "description": "Warning message indicating that the default SF parms were not applied to move audio",
+    "placeholders": {
+      "sourcePlaylistTitle": {},
+      "targetPlaylistTitle": {},
+      "sortedFilterParmsName": {}
+    }
   }
 }

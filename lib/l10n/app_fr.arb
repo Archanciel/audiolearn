@@ -609,5 +609,77 @@
       "copiedCommentedAudioNumber": {},
       "notCopiedAudioNumber": {}
     }
+  },
+  "defaultSFPNotApplyedToMoveAudioFromYoutubeToYoutubePlaylistWarning": "Puisque les paramètres de tri/filtrage \"{sortedFilterParmsName}\" sont sélectionnés, aucun audio ne peut être déplacé de la playlist YouTube \"{sourcePlaylistTitle}\" vers la playlist YouTube \"{targetPlaylistTitle}\". SOLUTION : définissez des paramètres de tri/filtrage et appliquez-les avant d'exécuter cette opération ...",
+  "@defaultSFPNotApplyedToMoveAudioFromYoutubeToYoutubePlaylistWarning": {
+    "description": "Message d'avertissement indiquant que les paramètres de tri/filtrage par défaut n'ont pas été appliqués pour déplacer un audio",
+    "placeholders": {
+      "sourcePlaylistTitle": {},
+      "targetPlaylistTitle": {},
+      "sortedFilterParmsName": {}
+    }
+  },
+  "defaultSFPNotApplyedToMoveAudioFromYoutubeToLocalPlaylistWarning": "Puisque les paramètres de tri/filtrage \"{sortedFilterParmsName}\" sont sélectionnés, aucun audio ne peut être déplacé de la playlist YouTube \"{sourcePlaylistTitle}\" vers la playlist locale \"{targetPlaylistTitle}\". SOLUTION : définissez des paramètres de tri/filtrage et appliquez-les avant d'exécuter cette opération ...",
+  "@defaultSFPNotApplyedToMoveAudioFromYoutubeToLocalPlaylistWarning": {
+    "description": "Message d'avertissement indiquant que les paramètres de tri/filtrage par défaut n'ont pas été appliqués pour déplacer un audio",
+    "placeholders": {
+      "sourcePlaylistTitle": {},
+      "targetPlaylistTitle": {},
+      "sortedFilterParmsName": {}
+    }
+  },
+  "defaultSFPNotApplyedToMoveAudioFromLocalToYoutubePlaylistWarning": "Puisque les paramètres de tri/filtrage \"{sortedFilterParmsName}\" sont sélectionnés, aucun audio ne peut être déplacé de la playlist locale \"{sourcePlaylistTitle}\" vers la playlist YouTube \"{targetPlaylistTitle}\". SOLUTION : définissez des paramètres de tri/filtrage et appliquez-les avant d'exécuter cette opération ...",
+  "@defaultSFPNotApplyedToMoveAudioFromLocalToYoutubePlaylistWarning": {
+    "description": "Message d'avertissement indiquant que les paramètres de tri/filtrage par défaut n'ont pas été appliqués pour déplacer un audio",
+    "placeholders": {
+      "sourcePlaylistTitle": {},
+      "targetPlaylistTitle": {},
+      "sortedFilterParmsName": {}
+    }
+  },
+  "defaultSFPNotApplyedToMoveAudioFromLocalToLocalPlaylistWarning": "Puisque les paramètres de tri/filtrage \"{sortedFilterParmsName}\" sont sélectionnés, aucun audio ne peut être déplacé de la playlist locale \"{sourcePlaylistTitle}\" vers la playlist locale \"{targetPlaylistTitle}\". SOLUTION : définissez des paramètres de tri/filtrage et appliquez-les avant d'exécuter cette opération ...",
+  "@defaultSFPNotApplyedToMoveAudioFromLocalToLocalPlaylistWarning": {
+    "description": "Message d'avertissement indiquant que les paramètres de tri/filtrage par défaut n'ont pas été appliqués pour déplacer un audio",
+    "placeholders": {
+      "sourcePlaylistTitle": {},
+      "targetPlaylistTitle": {},
+      "sortedFilterParmsName": {}
+    }
+  },
+  "defaultSFPNotApplyedToCopyAudioFromYoutubeToYoutubePlaylistWarning": "Puisque les paramètres de tri/filtrage \"{sortedFilterParmsName}\" sont sélectionnés, aucun audio ne peut être copié de la playlist YouTube \"{sourcePlaylistTitle}\" vers la playlist YouTube \"{targetPlaylistTitle}\". SOLUTION : définissez des paramètres de tri/filtrage et appliquez-les avant d'exécuter cette opération ...",
+  "@defaultSFPNotApplyedToCopyAudioFromYoutubeToYoutubePlaylistWarning": {
+    "description": "Message d'avertissement indiquant que les paramètres de tri/filtrage par défaut n'ont pas été appliqués pour copier un audio",
+    "placeholders": {
+      "sourcePlaylistTitle": {},
+      "targetPlaylistTitle": {},
+      "sortedFilterParmsName": {}
+    }
+  },
+  "defaultSFPNotApplyedToCopyAudioFromYoutubeToLocalPlaylistWarning": "Puisque les paramètres de tri/filtrage \"{sortedFilterParmsName}\" sont sélectionnés, aucun audio ne peut être copié de la playlist YouTube \"{sourcePlaylistTitle}\" vers la playlist locale \"{targetPlaylistTitle}\". SOLUTION : définissez des paramètres de tri/filtrage et appliquez-les avant d'exécuter cette opération ...",
+  "@defaultSFPNotApplyedToCopyAudioFromYoutubeToLocalPlaylistWarning": {
+    "description": "Message d'avertissement indiquant que les paramètres de tri/filtrage par défaut n'ont pas été appliqués pour copier un audio",
+    "placeholders": {
+      "sourcePlaylistTitle": {},
+      "targetPlaylistTitle": {},
+      "sortedFilterParmsName": {}
+    }
+  },
+  "defaultSFPNotApplyedToCopyAudioFromLocalToYoutubePlaylistWarning": "Puisque les paramètres de tri/filtrage \"{sortedFilterParmsName}\" sont sélectionnés, aucun audio ne peut être copié de la playlist locale \"{sourcePlaylistTitle}\" vers la playlist YouTube \"{targetPlaylistTitle}\". SOLUTION : définissez des paramètres de tri/filtrage et appliquez-les avant d'exécuter cette opération ...",
+  "@defaultSFPNotApplyedToCopyAudioFromLocalToYoutubePlaylistWarning": {
+    "description": "Message d'avertissement indiquant que les paramètres de tri/filtrage par défaut n'ont pas été appliqués pour copier un audio",
+    "placeholders": {
+      "sourcePlaylistTitle": {},
+      "targetPlaylistTitle": {},
+      "sortedFilterParmsName": {}
+    }
+  },
+  "defaultSFPNotApplyedToCopyAudioFromLocalToLocalPlaylistWarning": "Puisque les paramètres de tri/filtrage \"{sortedFilterParmsName}\" sont sélectionnés, aucun audio ne peut être copié de la playlist locale \"{sourcePlaylistTitle}\" vers la playlist locale \"{targetPlaylistTitle}\". SOLUTION : définissez des paramètres de tri/filtrage et appliquez-les avant d'exécuter cette opération ...",
+  "@defaultSFPNotApplyedToCopyAudioFromLocalToLocalPlaylistWarning": {
+    "description": "Message d'avertissement indiquant que les paramètres de tri/filtrage par défaut n'ont pas été appliqués pour copier un audio",
+    "placeholders": {
+      "sourcePlaylistTitle": {},
+      "targetPlaylistTitle": {},
+      "sortedFilterParmsName": {}
+    }
   }
 }
