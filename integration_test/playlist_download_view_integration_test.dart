@@ -3340,7 +3340,7 @@ void main() {
       Text warningDialogMessage =
           tester.widget(find.byKey(const Key('warningDialogMessage')));
       expect(warningDialogMessage.data,
-          'Playlist "$localAudioPlaylistTitle" of audio quality added at end of list of playlists.');
+          'Local playlist "$localAudioPlaylistTitle" of audio quality added at end of list of playlists.');
 
       // Close the warning dialog by tapping on the Ok button
       await tester.tap(find.byKey(const Key('warningDialogOkButton')));

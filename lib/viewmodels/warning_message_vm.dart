@@ -81,6 +81,14 @@ enum WarningMessageType {
   confirmMovedUnmovedAudioNumber, // The case if the user clicked on
   // Move Filtered Audio to Playlist ... menu item
 
+  notApplyingDefaultSFparmsToMoveWarning, // The case if the user clicked on
+  // Move Filtered Audio to Playlist ... menu item with the default sort/filter
+  // parameters selected.
+
+  notApplyingDefaultSFparmsToCopyWarning, // The case if the user clicked on
+  // Move Filtered Audio to Playlist ... menu item with the default sort/filter
+  // parameters selected.
+
   confirmCopiedNotCopiedAudioNumber, // The case if the user clicked on
   // Copy Filtered Audio to Playlist ... menu item
 
@@ -879,6 +887,44 @@ class WarningMessageVM extends ChangeNotifier {
     _unmovedAudioNumber = unmovedAudioNumber;
 
     warningMessageType = WarningMessageType.confirmMovedUnmovedAudioNumber;
+
+    // Causes the display warning message widget to be displayed.
+    notifyListeners();
+  }
+
+  void displayNotApplyingDefaultSFparmsToMoveWarning({
+    required String sourcePlaylistTitle,
+    required PlaylistType sourcePlaylistType,
+    required String targetPlaylistTitle,
+    required PlaylistType targetPlaylistType,
+    required String appliedSortFilterParmsName,
+  }) {
+    _audioMoveSourcePlaylistTitle = sourcePlaylistTitle;
+    _movedFromSourcePlaylistType = sourcePlaylistType;
+    _audioMoveTargetPlaylistTitle = targetPlaylistTitle;
+    _movedToTargetPlaylistType = targetPlaylistType;
+    _appliedToMoveSortFilterParmsName = appliedSortFilterParmsName;
+
+    warningMessageType = WarningMessageType.notApplyingDefaultSFparmsToMoveWarning;
+
+    // Causes the display warning message widget to be displayed.
+    notifyListeners();
+  }
+
+  void displayNotApplyingDefaultSFparmsToCopyWarning({
+    required String sourcePlaylistTitle,
+    required PlaylistType sourcePlaylistType,
+    required String targetPlaylistTitle,
+    required PlaylistType targetPlaylistType,
+    required String appliedSortFilterParmsName,
+  }) {
+    _audioCopySourcePlaylistTitle = sourcePlaylistTitle;
+    _copiedFromSourcePlaylistType = sourcePlaylistType;
+    _audioCopyTargetPlaylistTitle = targetPlaylistTitle;
+    _copiedToTargetPlaylistType = targetPlaylistType;
+    _appliedToCopySortFilterParmsName = appliedSortFilterParmsName;
+
+    warningMessageType = WarningMessageType.notApplyingDefaultSFparmsToCopyWarning;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();

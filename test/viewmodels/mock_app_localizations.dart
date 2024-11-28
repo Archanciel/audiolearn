@@ -1570,4 +1570,68 @@ class MockAppLocalizations extends AppLocalizations {
     Object quality,
   ) =>
       "Local playlist \"$title\" of $quality quality added at end of list of playlists.";
+
+  @override
+  String defaultSFPNotApplyedToCopyAudioFromLocalToLocalPlaylistWarning(
+    Object sortedFilterParmsName,
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+  ) =>
+      "Since \"$sortedFilterParmsName\" Sort/Filter parms is selected, no audio can be copied from local playlist \"$sourcePlaylistTitle\" to local playlist \"$targetPlaylistTitle\". SOLUTION: define a Sort/Filter parameters and apply it before selecting this operation ...";
+
+  @override
+  String defaultSFPNotApplyedToCopyAudioFromLocalToYoutubePlaylistWarning(
+    Object sortedFilterParmsName,
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+  ) =>
+      "Since \"$sortedFilterParmsName\" Sort/Filter parms is selected, no audio can be copied from local playlist \"$sourcePlaylistTitle\" to Youtube playlist \"$targetPlaylistTitle\". SOLUTION: define a Sort/Filter parameters and apply it before selecting this operation ...";
+
+  @override
+  String defaultSFPNotApplyedToCopyAudioFromYoutubeToLocalPlaylistWarning(
+    Object sortedFilterParmsName,
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+  ) =>
+      "Since \"$sortedFilterParmsName\" Sort/Filter parms is selected, no audio can be copied from Youtube playlist \"$sourcePlaylistTitle\" to local playlist \"$targetPlaylistTitle\". SOLUTION: define a Sort/Filter parameters and apply it before selecting this operation ...";
+
+  @override
+  String defaultSFPNotApplyedToCopyAudioFromYoutubeToYoutubePlaylistWarning(
+    Object sortedFilterParmsName,
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+  ) =>
+      "Since \"$sortedFilterParmsName\" Sort/Filter parms is selected, no audio can be copied from Youtube playlist \"$sourcePlaylistTitle\" to Youtube playlist \"$targetPlaylistTitle\". SOLUTION: define a Sort/Filter parameters and apply it before selecting this operation ...";
+
+  @override
+  String defaultSFPNotApplyedToMoveAudioFromLocalToLocalPlaylistWarning(
+    Object sortedFilterParmsName,
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+  ) =>
+      "Since \"$sortedFilterParmsName\" Sort/Filter parms is selected, no audio can be moved from local playlist \"$sourcePlaylistTitle\" to local playlist \"$targetPlaylistTitle\". SOLUTION: define a Sort/Filter parameters and apply it before selecting this operation ...";
+
+  @override
+  String defaultSFPNotApplyedToMoveAudioFromLocalToYoutubePlaylistWarning(
+    Object sortedFilterParmsName,
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+  ) =>
+      "Since \"$sortedFilterParmsName\" Sort/Filter parms is selected, no audio can be moved from local playlist \"$sourcePlaylistTitle\" to Youtube playlist \"$targetPlaylistTitle\". SOLUTION: define a Sort/Filter parameters and apply it before selecting this operation ...";
+
+  @override
+  String defaultSFPNotApplyedToMoveAudioFromYoutubeToLocalPlaylistWarning(
+    Object sortedFilterParmsName,
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+  ) =>
+      "Since \"$sortedFilterParmsName\" Sort/Filter parms is selected, no audio can be moved from Youtube playlist \"$sourcePlaylistTitle\" to local playlist \"$targetPlaylistTitle\". SOLUTION: define a Sort/Filter parameters and apply it before selecting this operation ...";
+
+  @override
+  String defaultSFPNotApplyedToMoveAudioFromYoutubeToYoutubePlaylistWarning(
+    Object sortedFilterParmsName,
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+  ) =>
+      "Since \"$sortedFilterParmsName\" Sort/Filter parms is selected, no audio can be moved from Youtube playlist \"$sourcePlaylistTitle\" to Youtube playlist \"$targetPlaylistTitle\". SOLUTION: define a Sort/Filter parameters and apply it before selecting this operation ...";
 }

@@ -500,6 +500,15 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                   selectedPlaylistAudioSortFilterParmsName ==
                       AppLocalizations.of(context)!
                           .sortFilterParametersDefaultName) {
+                // The case if no sort filter parameters were applied.
+                // Then, no audio are moved to the target playlist.
+                _displayNotApplyingDefaultSFparmsToMoveWarning(
+                  context: context,
+                  sourcePlaylist: playlist,
+                  targetPlaylist: targetPlaylist,
+                  warningMessageVMlistenFalse: warningMessageVMlistenFalse,
+                );
+
                 return;
               }
 
@@ -567,6 +576,15 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                   selectedPlaylistAudioSortFilterParmsName ==
                       AppLocalizations.of(context)!
                           .sortFilterParametersDefaultName) {
+                // The case if no sort filter parameters were applied.
+                // Then, no audio are copied to the target playlist.
+                _displayNotApplyingDefaultSFparmsToCopyWarning(
+                  context: context,
+                  sourcePlaylist: playlist,
+                  targetPlaylist: targetPlaylist,
+                  warningMessageVMlistenFalse: warningMessageVMlistenFalse,
+                );
+
                 return;
               }
 
@@ -739,6 +757,38 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
         }
       }
     });
+  }
+
+  void _displayNotApplyingDefaultSFparmsToMoveWarning({
+    required BuildContext context,
+    required Playlist sourcePlaylist,
+    required Playlist targetPlaylist,
+    required WarningMessageVM warningMessageVMlistenFalse,
+  }) {
+    warningMessageVMlistenFalse.displayNotApplyingDefaultSFparmsToMoveWarning(
+      sourcePlaylistTitle: playlist.title,
+      sourcePlaylistType: playlist.playlistType,
+      targetPlaylistTitle: targetPlaylist.title,
+      targetPlaylistType: targetPlaylist.playlistType,
+      appliedSortFilterParmsName:
+          AppLocalizations.of(context)!.sortFilterParametersDefaultName,
+    );
+  }
+
+  void _displayNotApplyingDefaultSFparmsToCopyWarning({
+    required BuildContext context,
+    required Playlist sourcePlaylist,
+    required Playlist targetPlaylist,
+    required WarningMessageVM warningMessageVMlistenFalse,
+  }) {
+    warningMessageVMlistenFalse.displayNotApplyingDefaultSFparmsToCopyWarning(
+      sourcePlaylistTitle: playlist.title,
+      sourcePlaylistType: playlist.playlistType,
+      targetPlaylistTitle: targetPlaylist.title,
+      targetPlaylistType: targetPlaylist.playlistType,
+      appliedSortFilterParmsName:
+          AppLocalizations.of(context)!.sortFilterParametersDefaultName,
+    );
   }
 
   /// Method called when the user clicks on the 'Confirm' button after having
