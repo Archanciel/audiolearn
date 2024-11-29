@@ -442,11 +442,13 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
       ),
       items: [
         PopupMenuItem<FilteredAudioAction>(
+          key: const Key('popup_menu_move_filtered_audio'),
           value: FilteredAudioAction.moveFilteredAudio,
           child: Text(AppLocalizations.of(context)?.moveFilteredAudio ??
               'Move Filtered Audio'),
         ),
         PopupMenuItem<FilteredAudioAction>(
+          key: const Key('popup_menu_copy_filtered_audio'),
           value: FilteredAudioAction.copyFilteredAudio,
           child: Text(AppLocalizations.of(context)?.copyFilteredAudio ??
               'Copy Filtered Audio'),
