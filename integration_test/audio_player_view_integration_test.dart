@@ -413,8 +413,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify the last downloaded played audio title
-      expect(
-          find.text(lastDownloadedAudioTitleWithDuration), findsOneWidget);
+      expect(find.text(lastDownloadedAudioTitleWithDuration), findsOneWidget);
 
       // Ensure that the bug corrected on AudioPlayerVM on 06-06-2024
       // no longer happens. This bug impacted the application during
@@ -605,7 +604,10 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify the last downloaded played audio title
-      expect(find.text("L'argument anti-nuke qui m'inquiète le plus par Y.Rousselet\n9:51"), findsOneWidget);
+      expect(
+          find.text(
+              "L'argument anti-nuke qui m'inquiète le plus par Y.Rousselet\n9:51"),
+          findsOneWidget);
 
       // Verify that the selected playlist title is displayed
       selectedPlaylistTitleText =
@@ -1510,6 +1512,11 @@ void main() {
       await tester.tap(find.byKey(const Key('setAudioSpeedTextButton')));
       await tester.pumpAndSettle();
 
+      // Verify the abscence of the help icon button (the help icon
+      // button is only displayed when the audio play speed dialog 
+      // is opened from the application settings dialog !)
+      expect(find.byIcon(Icons.help_outline), findsNothing);
+
       // Now select the 0.7x play speed
       await tester.tap(find.text('0.7x'));
       await tester.pumpAndSettle();
@@ -1640,7 +1647,7 @@ void main() {
 
       // Verify if the play speed of the last downloaded audio
       // which was not modified is 1.50x
-      expect(find. text('1.50x'), findsOneWidget);
+      expect(find.text('1.50x'), findsOneWidget);
 
       playableAudioLstAudioIndex = 0;
       expectedAudioPlaySpeed = 1.5;
