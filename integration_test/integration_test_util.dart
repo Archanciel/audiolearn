@@ -74,39 +74,40 @@ class IntegrationTestUtil {
     }
   }
 
-/// Verify that the position displayed in the {textWidgetFinder} text
-/// widget is between - or equal to - the minimum and maximum position
-/// time strings.
-static void verifyPositionBetweenMinMax({
-  required WidgetTester tester,
-  required final Finder textWidgetFinder,
-  required String minPositionTimeStr,
-  required String maxPositionTimeStr,
-}) {
-  String actualPositionTimeString = tester.widget<Text>(textWidgetFinder).data!;
-  int actualPositionTenthOfSeconds = DateTimeUtil.convertToTenthsOfSeconds(
-    timeString: actualPositionTimeString,
-  );
+  /// Verify that the position displayed in the {textWidgetFinder} text
+  /// widget is between - or equal to - the minimum and maximum position
+  /// time strings.
+  static void verifyPositionBetweenMinMax({
+    required WidgetTester tester,
+    required final Finder textWidgetFinder,
+    required String minPositionTimeStr,
+    required String maxPositionTimeStr,
+  }) {
+    String actualPositionTimeString =
+        tester.widget<Text>(textWidgetFinder).data!;
+    int actualPositionTenthOfSeconds = DateTimeUtil.convertToTenthsOfSeconds(
+      timeString: actualPositionTimeString,
+    );
 
-  int expectedMinPositionTenthSeconds =
-      DateTimeUtil.convertToTenthsOfSeconds(timeString: minPositionTimeStr);
-  int expectedMaxPositionTenthSeconds =
-      DateTimeUtil.convertToTenthsOfSeconds(timeString: maxPositionTimeStr);
+    int expectedMinPositionTenthSeconds =
+        DateTimeUtil.convertToTenthsOfSeconds(timeString: minPositionTimeStr);
+    int expectedMaxPositionTenthSeconds =
+        DateTimeUtil.convertToTenthsOfSeconds(timeString: maxPositionTimeStr);
 
-  IntegrationTestUtil.expectWithSuccessMessage(
-    actual: actualPositionTenthOfSeconds,
-    matcher: allOf(
-      [
-        greaterThanOrEqualTo(expectedMinPositionTenthSeconds),
-        lessThanOrEqualTo(expectedMaxPositionTenthSeconds),
-      ],
-    ),
-    reason:
-        "Expected value between $expectedMinPositionTenthSeconds and $expectedMaxPositionTenthSeconds but obtained $actualPositionTenthOfSeconds",
-    successMessage:
-        "Acceptable position between $minPositionTimeStr and $maxPositionTimeStr is $actualPositionTimeString",
-  );
-}
+    IntegrationTestUtil.expectWithSuccessMessage(
+      actual: actualPositionTenthOfSeconds,
+      matcher: allOf(
+        [
+          greaterThanOrEqualTo(expectedMinPositionTenthSeconds),
+          lessThanOrEqualTo(expectedMaxPositionTenthSeconds),
+        ],
+      ),
+      reason:
+          "Expected value between $expectedMinPositionTenthSeconds and $expectedMaxPositionTenthSeconds but obtained $actualPositionTenthOfSeconds",
+      successMessage:
+          "Acceptable position between $minPositionTimeStr and $maxPositionTimeStr is $actualPositionTimeString",
+    );
+  }
 
   static Future<void> typeOnPlaylistSubMenuItem({
     required WidgetTester tester,
@@ -480,6 +481,33 @@ static void verifyPositionBetweenMinMax({
     // Tap on the ListTile containing the specific audio title
     await tester.tap(audioTitleFinder);
     await tester.pumpAndSettle(const Duration(milliseconds: 500));
+  }
+
+  static Future<void> selectPlaylistInPlaylistDownloadView({
+    required WidgetTester tester,
+    required String playlistToSelectTitle,
+  }) async {
+    // First, find the target Playlist ListTile Text widget
+    Finder targetPlaylistListTileTextWidgetFinder =
+        find.text(playlistToSelectTitle);
+
+    // Then obtain the target Playlist ListTile widget enclosing the
+    // Text widget by finding its ancestor
+    Finder targetPlaylistListTileWidgetFinder = find.ancestor(
+      of: targetPlaylistListTileTextWidgetFinder,
+      matching: find.byType(ListTile),
+    );
+
+    // Now find the Checkbox widget located in the Playlist ListTile
+    // and tap on it to select the playlist
+    Finder targetPlaylistListTileCheckboxWidgetFinder = find.descendant(
+      of: targetPlaylistListTileWidgetFinder,
+      matching: find.byType(Checkbox),
+    );
+
+    // Tap the ListTile Playlist checkbox to select it
+    await tester.tap(targetPlaylistListTileCheckboxWidgetFinder);
+    await tester.pumpAndSettle();
   }
 
   static Future<void> verifyAudioMenuItemsState({

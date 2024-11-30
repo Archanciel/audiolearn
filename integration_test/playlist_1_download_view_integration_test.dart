@@ -35,7 +35,6 @@ import 'package:audiolearn/utils/dir_util.dart';
 import 'package:audiolearn/main.dart' as app;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../test/services/mock_shared_preferences.dart';
 import '../test/viewmodels/custom_mock_youtube_explode.dart';
 import '../test/viewmodels/mock_audio_download_vm.dart';
 import 'integration_test_util.dart';
@@ -61,6 +60,7 @@ void main() {
   // If this issue persists, please report it on the project's GitHub page.
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
+  playlistDownloadViewSortFilterIntegrationTest();
   group('Add or delete Youtube or local Playlist tests', () {
     testWidgets('Youtube playlist audio quality addition and then delete it ',
         (tester) async {
@@ -3662,27 +3662,10 @@ void main() {
       // Find the target ListTile Playlist containing the audio copied
       // from the source playlist
 
-      // First, find the Playlist ListTile Text widget
-      final Finder targetPlaylistListTileTextWidgetFinder =
-          find.text(localAudioTargetPlaylistTitleTwo);
-
-      // Then obtain the Playlist ListTile widget enclosing the Text widget
-      // by finding its ancestor
-      final Finder targetPlaylistListTileWidgetFinder = find.ancestor(
-        of: targetPlaylistListTileTextWidgetFinder,
-        matching: find.byType(ListTile),
+      await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+        tester: tester,
+        playlistToSelectTitle: localAudioTargetPlaylistTitleTwo,
       );
-
-      // Now find the Checkbox widget located in the Playlist ListTile
-      // and tap on it to select the playlist
-      final Finder targetPlaylistListTileCheckboxWidgetFinder = find.descendant(
-        of: targetPlaylistListTileWidgetFinder,
-        matching: find.byType(Checkbox),
-      );
-
-      // Tap the ListTile Playlist checkbox to select it
-      await tester.tap(targetPlaylistListTileCheckboxWidgetFinder);
-      await tester.pumpAndSettle();
 
       // Now we want to tap the popup menu of the Audio ListTile
       // "audio learn test short video one"
@@ -4178,27 +4161,10 @@ void main() {
       // Find the target ListTile Playlist containing the audio copied
       // from the source playlist
 
-      // First, find the Playlist ListTile Text widget
-      final Finder targetPlaylistListTileTextWidgetFinder =
-          find.text(localAudioTargetPlaylistTitleTwo);
-
-      // Then obtain the Playlist ListTile widget enclosing the Text widget
-      // by finding its ancestor
-      final Finder targetPlaylistListTileWidgetFinder = find.ancestor(
-        of: targetPlaylistListTileTextWidgetFinder,
-        matching: find.byType(ListTile),
+      await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+        tester: tester,
+        playlistToSelectTitle: localAudioTargetPlaylistTitleTwo,
       );
-
-      // Now find the Checkbox widget located in the Playlist ListTile
-      // and tap on it to select the playlist
-      final Finder targetPlaylistListTileCheckboxWidgetFinder = find.descendant(
-        of: targetPlaylistListTileWidgetFinder,
-        matching: find.byType(Checkbox),
-      );
-
-      // Tap the ListTile Playlist checkbox to select it
-      await tester.tap(targetPlaylistListTileCheckboxWidgetFinder);
-      await tester.pumpAndSettle();
 
       // Now we want to tap the popup menu of the Audio ListTile
       // "audio learn test short video one"
@@ -4643,27 +4609,10 @@ void main() {
       // Find the target ListTile Playlist containing the audio copied
       // from the source playlist
 
-      // First, find the Playlist ListTile Text widget
-      final Finder targetPlaylistListTileTextWidgetFinder =
-          find.text(localAudioTargetPlaylistTitle);
-
-      // Then obtain the Playlist ListTile widget enclosing the Text widget
-      // by finding its ancestor
-      final Finder targetPlaylistListTileWidgetFinder = find.ancestor(
-        of: targetPlaylistListTileTextWidgetFinder,
-        matching: find.byType(ListTile),
+      await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+        tester: tester,
+        playlistToSelectTitle: localAudioTargetPlaylistTitle,
       );
-
-      // Now find the Checkbox widget located in the Playlist ListTile
-      // and tap on it to select the playlist
-      final Finder targetPlaylistListTileCheckboxWidgetFinder = find.descendant(
-        of: targetPlaylistListTileWidgetFinder,
-        matching: find.byType(Checkbox),
-      );
-
-      // Tap the ListTile Playlist checkbox to select it
-      await tester.tap(targetPlaylistListTileCheckboxWidgetFinder);
-      await tester.pumpAndSettle();
 
       // Now we want to tap the popup menu of the Audio ListTile
       // "audio learn test short video one"
@@ -5020,27 +4969,10 @@ void main() {
       // Find the target ListTile Playlist containing the audio copied
       // from the source playlist
 
-      // First, find the Playlist ListTile Text widget
-      final Finder targetPlaylistListTileTextWidgetFinder =
-          find.text(localAudioTargetPlaylistTitle);
-
-      // Then obtain the Playlist ListTile widget enclosing the Text widget
-      // by finding its ancestor
-      final Finder targetPlaylistListTileWidgetFinder = find.ancestor(
-        of: targetPlaylistListTileTextWidgetFinder,
-        matching: find.byType(ListTile),
+      await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+        tester: tester,
+        playlistToSelectTitle: localAudioTargetPlaylistTitle,
       );
-
-      // Now find the Checkbox widget located in the Playlist ListTile
-      // and tap on it to select the playlist
-      final Finder targetPlaylistListTileCheckboxWidgetFinder = find.descendant(
-        of: targetPlaylistListTileWidgetFinder,
-        matching: find.byType(Checkbox),
-      );
-
-      // Tap the ListTile Playlist checkbox to select it
-      await tester.tap(targetPlaylistListTileCheckboxWidgetFinder);
-      await tester.pumpAndSettle();
 
       // Now we want to tap the popup menu of the Audio ListTile
       // "audio learn test short video one"
@@ -5847,27 +5779,10 @@ void main() {
       // Find the target ListTile Playlist containing the audio copied
       // from the source playlist
 
-      // First, find the Playlist ListTile Text widget
-      final Finder targetPlaylistListTileTextWidgetFinder =
-          find.text(newLocalAudioTargetPlaylistTitle);
-
-      // Then obtain the Playlist ListTile widget enclosing the Text widget
-      // by finding its ancestor
-      final Finder targetPlaylistListTileWidgetFinder = find.ancestor(
-        of: targetPlaylistListTileTextWidgetFinder,
-        matching: find.byType(ListTile),
+      await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+        tester: tester,
+        playlistToSelectTitle: newLocalAudioTargetPlaylistTitle,
       );
-
-      // Now find the Checkbox widget located in the Playlist ListTile
-      // and tap on it to select the playlist
-      final Finder targetPlaylistListTileCheckboxWidgetFinder = find.descendant(
-        of: targetPlaylistListTileWidgetFinder,
-        matching: find.byType(Checkbox),
-      );
-
-      // Tap the ListTile Playlist checkbox to select it
-      await tester.tap(targetPlaylistListTileCheckboxWidgetFinder);
-      await tester.pumpAndSettle();
 
       // Now we want to tap the popup menu of the Audio ListTile
       // "audio learn test short video one"
@@ -6066,27 +5981,10 @@ void main() {
       // Find the target ListTile Playlist containing the audio moved
       // from the source playlist
 
-      // First, find the Playlist ListTile Text widget
-      Finder targetPlaylistListTileTextWidgetFinder =
-          find.text(localAudioTargetPlaylistTitle);
-
-      // Then obtain the Playlist ListTile widget enclosing the Text widget
-      // by finding its ancestor
-      Finder targetPlaylistListTileWidgetFinder = find.ancestor(
-        of: targetPlaylistListTileTextWidgetFinder,
-        matching: find.byType(ListTile),
+      await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+        tester: tester,
+        playlistToSelectTitle: localAudioTargetPlaylistTitle,
       );
-
-      // Now find the Checkbox widget located in the Playlist ListTile
-      // and tap on it to select the playlist
-      Finder targetPlaylistListTileCheckboxWidgetFinder = find.descendant(
-        of: targetPlaylistListTileWidgetFinder,
-        matching: find.byType(Checkbox),
-      );
-
-      // Tap the ListTile Playlist checkbox to select it
-      await tester.tap(targetPlaylistListTileCheckboxWidgetFinder);
-      await tester.pumpAndSettle();
 
       // Now verifying the moved audio info dialog related content
       // in the target local playlist
@@ -6102,10 +6000,10 @@ void main() {
         audioDuration: '0:00:24.0',
       );
 
-      // Now verifying that the target audio can access to its copied
+      // Now verifying that the moved audio can access to its moved
       // comments
 
-      // First, tap on the source audio ListTile to open the
+      // First, tap on the target audio ListTile to open the
       // audio player view
       await tester.tap(targetAudioListTileWidgetFinder);
       await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
@@ -6164,46 +6062,32 @@ void main() {
       await tester.tap(playlistDownloadViewNavButton);
       await tester.pumpAndSettle();
 
-      // First, find the Playlist ListTile Text widget
-      targetPlaylistListTileTextWidgetFinder =
-          find.text(localAudioTargetPlaylistTitle);
-
-      // Then obtain the Playlist ListTile widget enclosing the Text widget
-      // by finding its ancestor
-      targetPlaylistListTileWidgetFinder = find.ancestor(
-        of: targetPlaylistListTileTextWidgetFinder,
-        matching: find.byType(ListTile),
-      );
-
-      // Now find the Checkbox widget located in the Playlist ListTile
-      // and tap on it to select the playlist
-      targetPlaylistListTileCheckboxWidgetFinder = find.descendant(
-        of: targetPlaylistListTileWidgetFinder,
-        matching: find.byType(Checkbox),
-      );
+      // Click on playlist toggle button to hide the playlist list
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
 
       // Now we want to tap the popup menu of the Audio ListTile
       // "audio learn test short video one"
 
       // First, find the Audio sublist ListTile Text widget
-      sourceAudioListTileTextWidgetFinder = find.text(movedAudioTitle);
+      Finder targetAudioListTileTextWidgetFinder = find.text(movedAudioTitle);
 
       // Then obtain the Audio ListTile widget enclosing the Text widget by
       // finding its ancestor
-      sourceAudioListTileWidgetFinder = find.ancestor(
-        of: sourceAudioListTileTextWidgetFinder,
+      targetAudioListTileWidgetFinder = find.ancestor(
+        of: targetAudioListTileTextWidgetFinder,
         matching: find.byType(ListTile),
       );
 
       // Now find the leading menu icon button of the Audio ListTile and tap
       // on it
-      sourceAudioListTileLeadingMenuIconButton = find.descendant(
-        of: sourceAudioListTileWidgetFinder,
+      Finder targetAudioListTileLeadingMenuIconButton = find.descendant(
+        of: targetAudioListTileWidgetFinder,
         matching: find.byIcon(Icons.menu),
       );
 
       // Tap the leading menu icon button to open the popup menu
-      await tester.tap(sourceAudioListTileLeadingMenuIconButton);
+      await tester.tap(targetAudioListTileLeadingMenuIconButton);
       await tester.pumpAndSettle();
 
       // Now find the move audio popup menu item and tap on it
@@ -6237,34 +6121,21 @@ void main() {
       await tester.pumpAndSettle();
 
       // Now verifying the moved audio info dialog related content
-      // in the target youtube playlis
+      // in the target youtube playlist
 
       // First, select the Youtube pléaylist ...
 
-      // Find the ListTile Playlist containing the audio to copy from
-      // the source Youtube playlist
+      // Find the ListTile Playlist containing the audio removed from
+      // the target playlist
 
-      // First, find the Playlist ListTile Text widget
-      final Finder sourcePlaylistListTileTextWidgetFinder =
-          find.text(youtubeAudioSourcePlaylistTitle);
-
-      // Then obtain the Playlist ListTile widget enclosing the Text widget
-      // by finding its ancestor
-      final Finder sourcePlaylistListTileWidgetFinder = find.ancestor(
-        of: sourcePlaylistListTileTextWidgetFinder,
-        matching: find.byType(ListTile),
-      );
-
-      // Now find the Checkbox widget located in the Playlist ListTile
-      // and tap on it to select the playlist
-      final Finder sourcePlaylistListTileCheckboxWidgetFinder = find.descendant(
-        of: sourcePlaylistListTileWidgetFinder,
-        matching: find.byType(Checkbox),
-      );
-
-      // Tap the ListTile Playlist checkbox to select it
-      await tester.tap(sourcePlaylistListTileCheckboxWidgetFinder);
+      // Click on playlist toggle button to display the playlist list
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
+
+      await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+        tester: tester,
+        playlistToSelectTitle: youtubeAudioSourcePlaylistTitle,
+      );
 
       targetAudioListTileWidgetFinder = await verifyAudioInfoDialog(
         tester: tester,
@@ -6339,27 +6210,10 @@ void main() {
       // Find the target ListTile Playlist containing the audio moved
       // from the source playlist
 
-      // First, find the Playlist ListTile Text widget
-      targetPlaylistListTileTextWidgetFinder =
-          find.text(localAudioTargetPlaylistTitle);
-
-      // Then obtain the Playlist ListTile widget enclosing the Text widget
-      // by finding its ancestor
-      targetPlaylistListTileWidgetFinder = find.ancestor(
-        of: targetPlaylistListTileTextWidgetFinder,
-        matching: find.byType(ListTile),
+      await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+        tester: tester,
+        playlistToSelectTitle: localAudioTargetPlaylistTitle,
       );
-
-      // Now find the Checkbox widget located in the Playlist ListTile
-      // and tap on it to select the playlist
-      targetPlaylistListTileCheckboxWidgetFinder = find.descendant(
-        of: targetPlaylistListTileWidgetFinder,
-        matching: find.byType(Checkbox),
-      );
-
-      // Tap the ListTile Playlist checkbox to select it
-      await tester.tap(targetPlaylistListTileCheckboxWidgetFinder);
-      await tester.pumpAndSettle();
 
       // Now verifying the moved audio info dialog related content
       // in the target local playlist
@@ -6781,27 +6635,10 @@ void main() {
       // Find the target ListTile Playlist containing the audio moved
       // from the source playlist
 
-      // First, find the Playlist ListTile Text widget
-      final Finder targetPlaylistListTileTextWidgetFinder =
-          find.text(newLocalAudioTargetPlaylistTitle);
-
-      // Then obtain the Playlist ListTile widget enclosing the Text widget
-      // by finding its ancestor
-      final Finder targetPlaylistListTileWidgetFinder = find.ancestor(
-        of: targetPlaylistListTileTextWidgetFinder,
-        matching: find.byType(ListTile),
+      await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+        tester: tester,
+        playlistToSelectTitle: newLocalAudioTargetPlaylistTitle,
       );
-
-      // Now find the Checkbox widget located in the Playlist ListTile
-      // and tap on it to select the playlist
-      final Finder targetPlaylistListTileCheckboxWidgetFinder = find.descendant(
-        of: targetPlaylistListTileWidgetFinder,
-        matching: find.byType(Checkbox),
-      );
-
-      // Tap the ListTile Playlist checkbox to select it
-      await tester.tap(targetPlaylistListTileCheckboxWidgetFinder);
-      await tester.pumpAndSettle();
 
       // Now we want to tap the popup menu of the Audio ListTile
       // "audio learn test short video one"
@@ -17884,661 +17721,6 @@ Future<void> onAudioPlayerViewCheckOrTapOnPlaylistCheckbox({
       find.byKey(const ValueKey('playlistDownloadViewIconButton'));
   await tester.tap(appScreenNavigationButton);
   await tester.pumpAndSettle();
-}
-
-Future<void> _selectNewAudioInAudioPlayerViewAndReturnToPlaylistDownloadView({
-  required WidgetTester tester,
-  required String currentAudioTitle,
-  required String newAudioTitle,
-  double offsetValue = 0.0,
-}) async {
-  // Go to audio player view to select another audio
-  Finder appScreenNavigationButton =
-      find.byKey(const ValueKey('audioPlayerViewIconButton'));
-  await tester.tap(appScreenNavigationButton);
-  await tester.pumpAndSettle();
-
-  // Now we open the AudioPlayableListDialog by tapping on the
-  // audio title
-  await tester.tap(find.text("$currentAudioTitle\n0:10"));
-  await tester.pumpAndSettle();
-
-  // Select an audio in the AudioPlayableListDialog
-  await IntegrationTestUtil.selectAudioInAudioPlayableDialog(
-    tester: tester,
-    audioToSelectTitle: newAudioTitle,
-    offsetValue: offsetValue, // scrolling down may be necessary in order to
-    //                           find the audioToSelectTitle
-  );
-
-  // Return to playlist download view
-  appScreenNavigationButton =
-      find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-  await tester.tap(appScreenNavigationButton);
-  await tester.pumpAndSettle();
-}
-
-Future<void> _selectDateFormat({
-  required WidgetTester tester,
-  required String dateFormatToSelect,
-  required String previouslySelectedDateFormat,
-}) async {
-  await tester.tap(find.byKey(const Key('appBarRightPopupMenu')));
-  await tester.pumpAndSettle();
-
-  // Open the date format selection dialog
-  await tester.tap(find.byKey(const Key('appBarMenuDateFormat')));
-  await tester.pumpAndSettle();
-
-  // Check the value of the date format selection dialog title
-  Text alertDialogTitle =
-      tester.widget(find.byKey(const Key('dateFormatSelectionDialogTitleKey')));
-  expect(alertDialogTitle.data, 'Select the application date format');
-
-  // Find the RadioListTile date format to select
-
-  Finder radioListTile = find.byWidgetPredicate(
-    (Widget widget) {
-      return widget is RadioListTile &&
-          widget.title is Text &&
-          (widget.title as Text).data!.contains(dateFormatToSelect);
-    },
-  );
-
-  // Tap the target playlist RadioListTile to select it
-  await tester.tap(radioListTile);
-  await tester.pumpAndSettle();
-
-  await _verifyApplicationSettingsDateFormatValue(
-    dateFormatValue: previouslySelectedDateFormat,
-  );
-
-  // Now find the confirm button and tap on it
-  await tester.tap(find.byKey(const Key('confirmButton')));
-  await tester.pumpAndSettle();
-
-  await _verifyApplicationSettingsDateFormatValue(
-    dateFormatValue: dateFormatToSelect,
-  );
-}
-
-Future<void> _verifyApplicationSettingsDateFormatValue({
-  required String dateFormatValue,
-}) async {
-  SettingsDataService settingsDataService = SettingsDataService(
-    sharedPreferences: MockSharedPreferences(),
-    isTest: true,
-  );
-
-  await settingsDataService.loadSettingsFromFile(
-      settingsJsonPathFileName:
-          "$kPlaylistDownloadRootPathWindowsTest${Platform.pathSeparator}$kSettingsFileName");
-
-  expect(
-      settingsDataService.get(
-          settingType: SettingType.formatOfDate,
-          settingSubType: FormatOfDate.formatOfDate),
-      dateFormatValue);
-}
-
-Future<void> _verifyDateFormatApplication({
-  required WidgetTester tester,
-  required List<String> audioSubTitles,
-  required List<String> audioSubTitlesWithAudioDownloadDuration,
-  required List<String> audioSubTitlesWithAudioRemainingDuration,
-  required List<String> audioSubTitlesLastListenedDateTimeDescending,
-  required List<String> audioSubTitlesTitleAsc,
-  required List<String> audioSubTitlesVideoUploadDate,
-  required String playlistTitle,
-  required String videoUploadDate,
-  required audioDownloadDateTime,
-  required String playlistLastDownloadDateTime,
-  required String commentCreationDate,
-  required String commentUpdateDate,
-}) async {
-  IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
-    tester: tester,
-    audioSubTitlesOrderLst: audioSubTitles,
-  );
-
-  // Now we want to tap the popup menu of the Audio ListTile
-  // "Jancovici m'explique l’importance des ordres de grandeur
-  // face au changement climatique",
-
-  const String audioInfoTitle =
-      "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
-
-  // First, find the Audio sublist ListTile Text widget
-  Finder targetAudioListTileTextWidgetFinder = find.text(audioInfoTitle);
-
-  // Then obtain the Audio ListTile widget enclosing the Text widget by
-  // finding its ancestor
-  Finder targetAudioListTileWidgetFinder = find.ancestor(
-    of: targetAudioListTileTextWidgetFinder,
-    matching: find.byType(ListTile),
-  );
-
-  // Now find the leading menu icon button of the Audio ListTile and tap
-  // on it
-  Finder targetAudioListTileLeadingMenuIconButton = find.descendant(
-    of: targetAudioListTileWidgetFinder,
-    matching: find.byIcon(Icons.menu),
-  );
-
-  // Tap the leading menu icon button to open the popup menu
-  await tester.tap(targetAudioListTileLeadingMenuIconButton);
-  await tester.pumpAndSettle();
-
-  // Now find the popup menu item and tap on it
-  final Finder popupDisplayAudioInfoMenuItemFinder =
-      find.byKey(const Key("popup_menu_display_audio_info"));
-
-  await tester.tap(popupDisplayAudioInfoMenuItemFinder);
-  await tester.pumpAndSettle();
-
-  // Now verifying the display audio info audio copied dialog
-  // elements
-
-  // Verify the video upload date of the audio
-
-  final Text videoUploadDateTextWidget =
-      tester.widget<Text>(find.byKey(const Key('videoUploadDateKey')));
-
-  expect(
-    videoUploadDateTextWidget.data,
-    videoUploadDate,
-  );
-
-  // Verify the audio download date time of the audio
-
-  final Text audioDownloadDateTimeTextWidget =
-      tester.widget<Text>(find.byKey(const Key('audioDownloadDateTimeKey')));
-
-  expect(
-    audioDownloadDateTimeTextWidget.data,
-    audioDownloadDateTime,
-  );
-
-  // Now find the ok button of the audio info dialog
-  // and tap on it
-  await tester.tap(find.byKey(const Key('audio_info_ok_button_key')));
-  await tester.pumpAndSettle();
-
-  // Tap the 'Toggle List' button to display the list of playlist's.
-  await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-  await tester.pumpAndSettle();
-
-  // Find the playlist whose audio are commented
-
-  // First, find the Playlist ListTile Text widget. Two exist:
-  // "S8 audio" under the 'Youtube Link or Search' text field and
-  // "S8 audio" as PlaylistItem
-  final Finder playlistToExamineInfoTextWidgetFinder =
-      find.text(playlistTitle).at(1);
-
-  // Then obtain the Playlist ListTile widget enclosing the Text widget
-  // by finding its ancestor
-  final Finder playlistWithCommentedAudioListTileWidgetFinder = find.ancestor(
-    of: playlistToExamineInfoTextWidgetFinder,
-    matching: find.byType(ListTile),
-  );
-
-  // Now find the leading menu icon button of the playlist and tap on it
-  final Finder playlistListTileLeadingMenuIconButton = find.descendant(
-    of: playlistWithCommentedAudioListTileWidgetFinder,
-    matching: find.byIcon(Icons.menu),
-  );
-
-  // Tap the leading menu icon button to open the popup menu
-  await tester.tap(playlistListTileLeadingMenuIconButton);
-  await tester.pumpAndSettle(); // Wait for popup menu to appear
-
-  // Now find the playlist info popup menu item and tap on it
-  // to open the PlaylistInfoDialog
-  final Finder popupPlaylistInfoMenuItem =
-      find.byKey(const Key("popup_menu_display_playlist_info"));
-
-  await tester.tap(popupPlaylistInfoMenuItem);
-  await tester.pumpAndSettle();
-
-  // Verify the playlist last download date time
-
-  final Text playlistLastDownloadDateTimeTextWidget = tester
-      .widget<Text>(find.byKey(const Key('playlist_last_download_date_time')));
-
-  expect(
-    playlistLastDownloadDateTimeTextWidget.data,
-    playlistLastDownloadDateTime,
-  );
-
-  // Now find the ok button of the playlist info dialog
-  // and tap on it
-  await tester.tap(find.byKey(const Key('playlist_info_ok_button_key')));
-  await tester.pumpAndSettle();
-
-  // Tap the 'Toggle List' button to hide the list of playlist's.
-  await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-  await tester.pumpAndSettle();
-
-  // Now, selecting 'audio downl dur' dropdown button item to
-  // apply this sort/filter parms
-  await _selectApplyAndVerifySortFilterParms(
-    tester: tester,
-    sortFilterParms: 'audio downl dur',
-    audioSubTitles: audioSubTitlesWithAudioDownloadDuration,
-  );
-
-  // Now, selecting 'audio remai. duration' dropdown button item to
-  // apply this sort/filter parms
-  await _selectApplyAndVerifySortFilterParms(
-    tester: tester,
-    sortFilterParms: 'audio remai. duration',
-    audioSubTitles: audioSubTitlesWithAudioRemainingDuration,
-  );
-
-  // Now, selecting 'desc listened' dropdown button item to
-  // apply this sort/filter parms
-  await _selectApplyAndVerifySortFilterParms(
-    tester: tester,
-    sortFilterParms: 'desc listened',
-    audioSubTitles: audioSubTitlesLastListenedDateTimeDescending,
-  );
-
-  // Now, selecting 'Title asc' dropdown button item to
-  // apply this sort/filter parms
-  await _selectApplyAndVerifySortFilterParms(
-    tester: tester,
-    sortFilterParms: 'Title asc',
-    audioSubTitles: audioSubTitlesTitleAsc,
-  );
-
-  // Now, selecting 'video upl date' dropdown button item to
-  // apply this sort/filter parms
-  await _selectApplyAndVerifySortFilterParms(
-    tester: tester,
-    sortFilterParms: 'video upl date',
-    audioSubTitles: audioSubTitlesVideoUploadDate,
-  );
-
-  // Reset 'default' sort/filter parm
-
-  final Finder dropDownButtonFinder =
-      find.byKey(const Key('sort_filter_parms_dropdown_button'));
-
-  final Finder dropDownButtonTextFinder = find.descendant(
-    of: dropDownButtonFinder,
-    matching: find.byType(Text),
-  );
-
-  // Tap on the current dropdown button item to open the dropdown
-  // button items list
-  await tester.tap(dropDownButtonTextFinder);
-  await tester.pumpAndSettle();
-
-  // And select the 'default' sort/filter item
-  final Finder defaultDropDownTextFinder = find.text('default');
-  await tester.tap(defaultDropDownTextFinder);
-  await tester.pumpAndSettle();
-
-  // Verifying the comment date format
-
-  // First, find the Audio sublist ListTile Text widget
-  targetAudioListTileTextWidgetFinder = find.text(audioInfoTitle);
-
-  // Then obtain the Audio ListTile widget enclosing the Text widget by
-  // finding its ancestor
-  targetAudioListTileWidgetFinder = find.ancestor(
-    of: targetAudioListTileTextWidgetFinder,
-    matching: find.byType(ListTile),
-  );
-
-  // Now find the leading menu icon button of the Audio ListTile and tap
-  // on it
-  targetAudioListTileLeadingMenuIconButton = find.descendant(
-    of: targetAudioListTileWidgetFinder,
-    matching: find.byIcon(Icons.menu),
-  );
-
-  // Tap the leading menu icon button to open the popup menu
-  await tester.tap(targetAudioListTileLeadingMenuIconButton);
-  await tester.pumpAndSettle();
-
-  // Now find the popup menu item and tap on it
-  final Finder popupDisplayAudioCommentMenuItemFinder =
-      find.byKey(const Key("popup_menu_audio_comment"));
-
-  await tester.tap(popupDisplayAudioCommentMenuItemFinder);
-  await tester.pumpAndSettle();
-
-  expect(find.text(commentCreationDate), findsOneWidget);
-  expect(find.text(commentUpdateDate), findsOneWidget);
-
-  // Now close the comment list dialog
-  await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-  await tester.pumpAndSettle();
-}
-
-Future<void> _selectApplyAndVerifySortFilterParms({
-  required WidgetTester tester,
-  required String sortFilterParms,
-  required List<String> audioSubTitles,
-}) async {
-  final Finder dropDownButtonFinder =
-      find.byKey(const Key('sort_filter_parms_dropdown_button'));
-
-  final Finder dropDownButtonTextFinder = find.descendant(
-    of: dropDownButtonFinder,
-    matching: find.byType(Text),
-  );
-
-  // Tap on the current dropdown button item to open the dropdown
-  // button items list
-  await tester.tap(dropDownButtonTextFinder);
-  await tester.pumpAndSettle();
-
-  // And select the 'audio downl dur' sort/filter item
-  final Finder titleAscDropDownTextFinder = find.text(sortFilterParms);
-  await tester.tap(titleAscDropDownTextFinder);
-  await tester.pumpAndSettle();
-
-  // Verify the audio sub-titles order in the list tile which correspond
-  // to the audio download duration sort order selected parms
-  IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
-    tester: tester,
-    audioSubTitlesOrderLst: audioSubTitles,
-  );
-}
-
-Future<void> _rewindPlaylistAfterPlayThenPauseAnAudio({
-  required WidgetTester tester,
-  required Finder appScreenNavigationButton,
-  required bool doExpandPlaylistList,
-  required String playlistToRewindTitle,
-  required String audioToPlayTitle,
-  required String audioToPlayTitleAndDuration,
-  String? otherAudioTitleToTapOnBeforeRewinding,
-  String? otherAudioTitleToTapOnBeforeRewindingDuration,
-}) async {
-  // Now play then pause audioToPlayTitle
-
-  Finder audioToPlayTitleFinder = find.text(audioToPlayTitle);
-
-  // This opens the play audio view
-  await tester.tap(audioToPlayTitleFinder);
-  await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
-    tester: tester,
-    additionalMilliseconds: 2000,
-  );
-
-  // Now play the audio and wait 5 seconds
-  await tester.tap(find.byIcon(Icons.play_arrow));
-  await tester.pumpAndSettle();
-
-  await Future.delayed(const Duration(seconds: 5));
-  await tester.pumpAndSettle();
-
-  // Now pause the audio
-  final Finder pauseIconFinder = find.byIcon(Icons.pause);
-  await tester.tap(pauseIconFinder);
-  await tester.pumpAndSettle();
-
-  // Go back to playlist download view
-  appScreenNavigationButton =
-      find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-  await tester.tap(appScreenNavigationButton);
-  await tester.pumpAndSettle(const Duration(milliseconds: 200));
-
-  if (doExpandPlaylistList) {
-    // Tap the 'Toggle List' button to show the list of playlist's.
-    await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-    await tester.pumpAndSettle();
-  }
-
-  if (otherAudioTitleToTapOnBeforeRewinding != null) {
-    // Simply click on another audio so that the playlist current
-    // audio is no longer the last played and paused audio. This verify
-    // the correction of a rewind playlist audio to start position bug
-    Finder audioToPlayTitleFinder =
-        find.text(otherAudioTitleToTapOnBeforeRewinding);
-
-    await tester.tap(audioToPlayTitleFinder);
-    await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
-      tester: tester,
-      additionalMilliseconds: 1500,
-    );
-
-    // Go back to playlist download view
-    appScreenNavigationButton =
-        find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-    await tester.tap(appScreenNavigationButton);
-    await tester.pumpAndSettle(const Duration(milliseconds: 200));
-  }
-
-  // Rewind all playlist audio to start position
-  await _tapOnRewindPlaylistAudioToStartPositionMenu(
-    tester: tester,
-    playlistToRewindTitle: playlistToRewindTitle,
-    numberOfRewindedAudio: 1,
-  );
-
-  // Return to audio player view to verify the playlist current
-  // audio title audio position set to start
-  appScreenNavigationButton =
-      find.byKey(const ValueKey('audioPlayerViewIconButton'));
-  await tester.tap(appScreenNavigationButton);
-  await tester.pumpAndSettle(const Duration(milliseconds: 200));
-
-  Finder currentAudioTitleFinder;
-
-  if (otherAudioTitleToTapOnBeforeRewinding != null) {
-    currentAudioTitleFinder =
-        find.text(otherAudioTitleToTapOnBeforeRewindingDuration!);
-  } else {
-    currentAudioTitleFinder = find.text(audioToPlayTitleAndDuration);
-  }
-
-  expect(
-    currentAudioTitleFinder,
-    findsOneWidget,
-  );
-
-  // Verify the current audio position
-  Text audioPositionText = tester
-      .widget<Text>(find.byKey(const Key('audioPlayerViewAudioPosition')));
-  expect(audioPositionText.data, '0:00');
-
-  // Go back to playlist download view
-  appScreenNavigationButton =
-      find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-  await tester.tap(appScreenNavigationButton);
-  await tester.pumpAndSettle();
-}
-
-Future<void> _tapOnRewindPlaylistAudioToStartPositionMenu({
-  required WidgetTester tester,
-  required String playlistToRewindTitle,
-  required int numberOfRewindedAudio,
-}) async {
-  // Find the playlist to rewind audio ListTile
-
-  // First, find the Playlist ListTile Text widget
-  final Finder youtubePlaylistToRewindListTileTextWidgetFinder =
-      find.text(playlistToRewindTitle);
-
-  // Then obtain the Playlist ListTile widget enclosing the Text widget
-  // by finding its ancestor
-  final Finder youtubePlaylistToRewindListTileWidgetFinder = find.ancestor(
-    of: youtubePlaylistToRewindListTileTextWidgetFinder,
-    matching: find.byType(ListTile),
-  );
-
-  // Now test rewinding the playlist audio to start position
-
-  // Find the playlist leading menu icon button
-  final Finder firstPlaylistListTileLeadingMenuIconButton = find.descendant(
-    of: youtubePlaylistToRewindListTileWidgetFinder,
-    matching: find.byIcon(Icons.menu),
-  );
-
-  // Tap the leading menu icon button to open the popup menu
-  await tester.tap(firstPlaylistListTileLeadingMenuIconButton);
-  await tester.pumpAndSettle();
-
-  // Now find the 'Rewind Audio to Start' playlist popup menu item
-  // and tap on it
-  final Finder popupDeletePlaylistMenuItem =
-      find.byKey(const Key("popup_menu_rewind_audio_to_start"));
-
-  await tester.tap(popupDeletePlaylistMenuItem);
-  await tester.pumpAndSettle(const Duration(milliseconds: 200));
-
-  // Check the value of the Confirm dialog title
-  Text warningDialogTitle =
-      tester.widget(find.byKey(const Key('warningDialogTitle')));
-  expect(warningDialogTitle.data, 'CONFIRMATION');
-
-  // Now verifying the confirm dialog message
-
-  Text warningDialogMessageTextWidget =
-      tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
-
-  expect(warningDialogMessageTextWidget.data,
-      '$numberOfRewindedAudio playlist audio were repositioned to start.');
-
-  // Now find the ok button of the confirm dialog
-  // and tap on it
-  await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-  await tester.pumpAndSettle();
-}
-
-void _verifyAllNowUnplayedAudioPlayPauseIconColor({
-  required WidgetTester tester,
-  required List<String> audioTitles,
-}) {
-  for (String audioTitle in audioTitles) {
-    IntegrationTestUtil.validateInkWellButton(
-      tester: tester,
-      audioTitle: audioTitle,
-      expectedIcon: Icons.play_arrow,
-      expectedIconColor: kDarkAndLightEnabledIconColor, // not played icon color
-      expectedIconBackgroundColor: Colors.black,
-    );
-  }
-}
-
-Future<List<String>> _enteringFirstAndSecondLetterOfLocalPlaylistSearchWord({
-  required WidgetTester tester,
-}) async {
-  // Now enter the first letter of the search word
-  await tester.tap(
-    find.byKey(
-      const Key('youtubeUrlOrSearchTextField'),
-    ),
-  );
-  await tester.pumpAndSettle();
-  await tester.enterText(
-    find.byKey(
-      const Key('youtubeUrlOrSearchTextField'),
-    ),
-    'a',
-  );
-  await tester.pumpAndSettle(const Duration(milliseconds: 200));
-
-  // Verify that the search icon button is now enabled
-  IntegrationTestUtil.verifyWidgetIsEnabled(
-    tester: tester,
-    widgetKeyStr: 'search_icon_button',
-  );
-
-  // Ensure that since the search icon button was not yet pressed,
-  // the displayed playlist list is the same as the one before entering
-  // the first letter of the search word.
-
-  List<String> playlistsTitles = [
-    "S8 audio",
-    "local",
-    "local_2",
-  ];
-
-  List<String> audioTitles = [
-    "La résilience insulaire par Fiona Roche",
-    "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
-    "Les besoins artificiels par R.Keucheyan",
-    "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
-  ];
-
-  IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
-    tester: tester,
-    playlistTitlesOrderedLst: playlistsTitles,
-    audioTitlesOrderedLst: audioTitles,
-    firstPlaylistListTileIndex: 0,
-    firstAudioListTileIndex: 3,
-  );
-
-  // Enter the second letter of the 'al' search word. The crazy integration
-  // test does not always update the test field. To fix this bug, first
-  // select the text field and then enter the text.
-
-  // Select the text field
-  await tester.tap(
-    find.byKey(
-      const Key('youtubeUrlOrSearchTextField'),
-    ),
-  );
-  await tester.pumpAndSettle();
-
-  // Enter the second letter of the 'al' search word
-  await tester.enterText(
-    find.byKey(
-      const Key('youtubeUrlOrSearchTextField'),
-    ),
-    'al',
-  );
-  await tester.pumpAndSettle(const Duration(milliseconds: 200));
-
-  // Verify that the search icon button is still enabled
-  IntegrationTestUtil.verifyWidgetIsEnabled(
-    tester: tester,
-    widgetKeyStr: 'search_icon_button',
-  );
-
-  // Ensure that since the search icon button was not yet pressed,
-  // the displayed playlist list is the same as the one before entering
-  // the first letter of the search word.
-  IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
-    tester: tester,
-    playlistTitlesOrderedLst: playlistsTitles,
-    audioTitlesOrderedLst: audioTitles,
-    firstPlaylistListTileIndex: 0,
-    firstAudioListTileIndex: 3,
-  );
-
-  // Now tap on the search icon button
-  await tester.tap(find.byKey(const Key('search_icon_button')));
-  await tester.pumpAndSettle();
-
-  // Verify that the search icon button is still enabled
-  IntegrationTestUtil.verifyWidgetIsEnabled(
-    tester: tester,
-    widgetKeyStr: 'search_icon_button',
-  );
-
-  // Now verify the order of the reduced playlist titles
-
-  playlistsTitles = [
-    "local",
-    "local_2",
-  ];
-
-  IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
-    tester: tester,
-    playlistTitlesOrderedLst: playlistsTitles,
-    audioTitlesOrderedLst: audioTitles,
-    firstPlaylistListTileIndex: 0,
-    firstAudioListTileIndex: 2,
-  );
-
-  return playlistsTitles;
 }
 
 Future<List<String>> enteringFirstAndSecondLetterOfYoutubePlaylistSearchWord({

@@ -6122,57 +6122,16 @@ void main() {
         // Open the move filtered audio dialog by clicking first on
         // the 'Filtered Audio Actions ...' playlist menu item and then
         // on the 'Move Filtered Audio to Playlist ...' sub-menu item
-        await IntegrationTestUtil.typeOnPlaylistSubMenuItem(
+        await _testMovingOrCopyingFilteredAudio(
           tester: tester,
-          playlistTitle: sourcePlaylistTitle,
-          playlistSubMenuKeyStr: 'popup_menu_move_filtered_audio',
+          sourcePlaylistTitle: sourcePlaylistTitle,
+          targetPlaylistTitle: targetPlaylistTitle,
+          sortFilterParmName: sortFilterParmName,
+          isMove: true,
+          movedOrCopiedAudioNumber: 2,
+          commentedAudioNumber: 0,
+          unmovedOrUncopiedAudioNumber: 0,
         );
-
-        // Select the target 'temp' playlist
-
-        // Check the value of the select one playlist AlertDialog
-        // dialog title
-        Text alertDialogTitle = tester.widget(
-            find.byKey(const Key('playlistOneSelectableDialogTitleKey')));
-        expect(alertDialogTitle.data, 'Select a playlist');
-
-        // Find the RadioListTile target playlist to which the audio
-        // will be moved
-
-        Finder radioListTile = find.byWidgetPredicate(
-          (Widget widget) {
-            return widget is RadioListTile &&
-                widget.title is Text &&
-                (widget.title as Text).data == targetPlaylistTitle;
-          },
-        );
-
-        // Tap the target playlist RadioListTile to select it
-        await tester.tap(radioListTile);
-        await tester.pumpAndSettle();
-
-        // Now find the confirm button and tap on it
-        await tester.tap(find.byKey(const Key('confirmButton')));
-        await tester.pumpAndSettle();
-
-        // Verifying the confirm warning title
-
-        Text moveFilteredAudioConfirmWarningTitleWidget =
-            tester.widget<Text>(find.byKey(const Key('warningDialogTitle')));
-
-        expect(moveFilteredAudioConfirmWarningTitleWidget.data, 'CONFIRMATION');
-
-        // Verifying the confirm warning message
-
-        Text moveFilteredAudioConfirmWarningMessageWidget =
-            tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
-
-        expect(moveFilteredAudioConfirmWarningMessageWidget.data,
-            'Applying Sort/Filter parms "$sortFilterParmName", from Youtube playlist "$sourcePlaylistTitle" to local playlist "$targetPlaylistTitle", 2 audio(s) were moved from which 0 were commented, and 0 audio(s) were unmoved.');
-
-        // Now find the ok button of the confirm dialog and tap on it
-        await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-        await tester.pumpAndSettle();
 
         // Verify in source playlist directory that the audio files were
         // moved
@@ -6390,27 +6349,10 @@ void main() {
 
         // Select the 'temp' playlist
 
-        // First, find the target Playlist ListTile Text widget
-        Finder targetPlaylistListTileTextWidgetFinder =
-            find.text(targetPlaylistTitle);
-
-        // Then obtain the target Playlist ListTile widget enclosing the
-        // Text widget by finding its ancestor
-        Finder targetPlaylistListTileWidgetFinder = find.ancestor(
-          of: targetPlaylistListTileTextWidgetFinder,
-          matching: find.byType(ListTile),
+        await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+          tester: tester,
+          playlistToSelectTitle: targetPlaylistTitle,
         );
-
-        // Now find the Checkbox widget located in the Playlist ListTile
-        // and tap on it to select the playlist
-        Finder targetPlaylistListTileCheckboxWidgetFinder = find.descendant(
-          of: targetPlaylistListTileWidgetFinder,
-          matching: find.byType(Checkbox),
-        );
-
-        // Tap the ListTile Playlist checkbox to select it
-        await tester.tap(targetPlaylistListTileCheckboxWidgetFinder);
-        await tester.pumpAndSettle();
 
         // Tap the 'Toggle List' button to hide the list of playlist's.
         await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -6554,57 +6496,16 @@ void main() {
         // Open the move filtered audio dialog by clicking first on
         // the 'Filtered Audio Actions ...' playlist menu item and then
         // on the 'Move Filtered Audio to Playlist ...' sub-menu item
-        await IntegrationTestUtil.typeOnPlaylistSubMenuItem(
+        await _testMovingOrCopyingFilteredAudio(
           tester: tester,
-          playlistTitle: sourcePlaylistTitle,
-          playlistSubMenuKeyStr: 'popup_menu_move_filtered_audio',
+          sourcePlaylistTitle: sourcePlaylistTitle,
+          targetPlaylistTitle: targetPlaylistTitle,
+          sortFilterParmName: sortFilterParmName,
+          isMove: true,
+          movedOrCopiedAudioNumber: 2,
+          commentedAudioNumber: 0,
+          unmovedOrUncopiedAudioNumber: 0,
         );
-
-        // Select the target 'temp' playlist
-
-        // Check the value of the select one playlist AlertDialog
-        // dialog title
-        Text alertDialogTitle = tester.widget(
-            find.byKey(const Key('playlistOneSelectableDialogTitleKey')));
-        expect(alertDialogTitle.data, 'Select a playlist');
-
-        // Find the RadioListTile target playlist to which the audio
-        // will be moved
-
-        Finder radioListTile = find.byWidgetPredicate(
-          (Widget widget) {
-            return widget is RadioListTile &&
-                widget.title is Text &&
-                (widget.title as Text).data == targetPlaylistTitle;
-          },
-        );
-
-        // Tap the target playlist RadioListTile to select it
-        await tester.tap(radioListTile);
-        await tester.pumpAndSettle();
-
-        // Now find the confirm button and tap on it
-        await tester.tap(find.byKey(const Key('confirmButton')));
-        await tester.pumpAndSettle();
-
-        // Verifying the confirm warning title
-
-        Text moveFilteredAudioConfirmWarningTitleWidget =
-            tester.widget<Text>(find.byKey(const Key('warningDialogTitle')));
-
-        expect(moveFilteredAudioConfirmWarningTitleWidget.data, 'CONFIRMATION');
-
-        // Verifying the confirm warning message
-
-        Text moveFilteredAudioConfirmWarningMessageWidget =
-            tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
-
-        expect(moveFilteredAudioConfirmWarningMessageWidget.data,
-            'Applying Sort/Filter parms "$sortFilterParmName", from Youtube playlist "$sourcePlaylistTitle" to local playlist "$targetPlaylistTitle", 2 audio(s) were moved from which 0 were commented, and 0 audio(s) were unmoved.');
-
-        // Now find the ok button of the confirm dialog and tap on it
-        await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-        await tester.pumpAndSettle();
 
         // Verify in source playlist directory that the audio files were
         // moved
@@ -6800,57 +6701,16 @@ void main() {
         // Open the move filtered audio dialog by clicking first on
         // the 'Filtered Audio Actions ...' playlist menu item and then
         // on the 'Move Filtered Audio to Playlist ...' sub-menu item
-        await IntegrationTestUtil.typeOnPlaylistSubMenuItem(
+        await _testMovingOrCopyingFilteredAudio(
           tester: tester,
-          playlistTitle: sourcePlaylistTitle,
-          playlistSubMenuKeyStr: 'popup_menu_move_filtered_audio',
+          sourcePlaylistTitle: sourcePlaylistTitle,
+          targetPlaylistTitle: targetPlaylistTitle,
+          sortFilterParmName: sortFilterParmName,
+          isMove: true,
+          movedOrCopiedAudioNumber: 2,
+          commentedAudioNumber: 0,
+          unmovedOrUncopiedAudioNumber: 0,
         );
-
-        // Select the target 'temp' playlist
-
-        // Check the value of the select one playlist AlertDialog
-        // dialog title
-        Text alertDialogTitle = tester.widget(
-            find.byKey(const Key('playlistOneSelectableDialogTitleKey')));
-        expect(alertDialogTitle.data, 'Select a playlist');
-
-        // Find the RadioListTile target playlist to which the audio
-        // will be moved
-
-        Finder radioListTile = find.byWidgetPredicate(
-          (Widget widget) {
-            return widget is RadioListTile &&
-                widget.title is Text &&
-                (widget.title as Text).data == targetPlaylistTitle;
-          },
-        );
-
-        // Tap the target playlist RadioListTile to select it
-        await tester.tap(radioListTile);
-        await tester.pumpAndSettle();
-
-        // Now find the confirm button and tap on it
-        await tester.tap(find.byKey(const Key('confirmButton')));
-        await tester.pumpAndSettle();
-
-        // Verifying the confirm warning title
-
-        Text moveFilteredAudioConfirmWarningTitleWidget =
-            tester.widget<Text>(find.byKey(const Key('warningDialogTitle')));
-
-        expect(moveFilteredAudioConfirmWarningTitleWidget.data, 'CONFIRMATION');
-
-        // Verifying the confirm warning message
-
-        Text moveFilteredAudioConfirmWarningMessageWidget =
-            tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
-
-        expect(moveFilteredAudioConfirmWarningMessageWidget.data,
-            'Applying Sort/Filter parms "$sortFilterParmName", from Youtube playlist "$sourcePlaylistTitle" to local playlist "$targetPlaylistTitle", 2 audio(s) were moved from which 0 were commented, and 0 audio(s) were unmoved.');
-
-        // Now find the ok button of the confirm dialog and tap on it
-        await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-        await tester.pumpAndSettle();
 
         // Verify in source playlist directory that the audio files were
         // moved
@@ -7131,57 +6991,16 @@ void main() {
         // Open the move filtered audio dialog by clicking first on
         // the 'Filtered Audio Actions ...' playlist menu item and then
         // on the 'Move Filtered Audio to Playlist ...' sub-menu item
-        await IntegrationTestUtil.typeOnPlaylistSubMenuItem(
+        await _testMovingOrCopyingFilteredAudio(
           tester: tester,
-          playlistTitle: sourcePlaylistTitle,
-          playlistSubMenuKeyStr: 'popup_menu_move_filtered_audio',
+          sourcePlaylistTitle: sourcePlaylistTitle,
+          targetPlaylistTitle: targetPlaylistTitle,
+          sortFilterParmName: sortFilterParmName,
+          isMove: true,
+          movedOrCopiedAudioNumber: 1,
+          commentedAudioNumber: 0,
+          unmovedOrUncopiedAudioNumber: 1,
         );
-
-        // Select the target 'temp' playlist
-
-        // Check the value of the select one playlist AlertDialog
-        // dialog title
-        Text alertDialogTitle = tester.widget(
-            find.byKey(const Key('playlistOneSelectableDialogTitleKey')));
-        expect(alertDialogTitle.data, 'Select a playlist');
-
-        // Find the RadioListTile target playlist to which the audio
-        // will be moved
-
-        Finder radioListTile = find.byWidgetPredicate(
-          (Widget widget) {
-            return widget is RadioListTile &&
-                widget.title is Text &&
-                (widget.title as Text).data == targetPlaylistTitle;
-          },
-        );
-
-        // Tap the target playlist RadioListTile to select it
-        await tester.tap(radioListTile);
-        await tester.pumpAndSettle();
-
-        // Now find the confirm button and tap on it
-        await tester.tap(find.byKey(const Key('confirmButton')));
-        await tester.pumpAndSettle();
-
-        // Verifying the confirm warning title
-
-        Text moveFilteredAudioConfirmWarningTitleWidget =
-            tester.widget<Text>(find.byKey(const Key('warningDialogTitle')));
-
-        expect(moveFilteredAudioConfirmWarningTitleWidget.data, 'CONFIRMATION');
-
-        // Verifying the confirm warning message
-
-        Text moveFilteredAudioConfirmWarningMessageWidget =
-            tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
-
-        expect(moveFilteredAudioConfirmWarningMessageWidget.data,
-            'Applying Sort/Filter parms "$sortFilterParmName", from Youtube playlist "$sourcePlaylistTitle" to local playlist "$targetPlaylistTitle", 1 audio(s) were moved from which 0 were commented, and 1 audio(s) were unmoved.');
-
-        // Now find the ok button of the confirm dialog and tap on it
-        await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-        await tester.pumpAndSettle();
 
         // Verify in source playlist directory that the audio file were
         // moved. Only one was moved since the other was copied before
@@ -7253,27 +7072,10 @@ void main() {
 
         // Select the 'temp' playlist
 
-        // First, find the target Playlist ListTile Text widget
-        Finder targetPlaylistListTileTextWidgetFinder =
-            find.text(targetPlaylistTitle);
-
-        // Then obtain the target Playlist ListTile widget enclosing the
-        // Text widget by finding its ancestor
-        Finder targetPlaylistListTileWidgetFinder = find.ancestor(
-          of: targetPlaylistListTileTextWidgetFinder,
-          matching: find.byType(ListTile),
+        await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+          tester: tester,
+          playlistToSelectTitle: targetPlaylistTitle,
         );
-
-        // Now find the Checkbox widget located in the Playlist ListTile
-        // and tap on it to select the playlist
-        Finder targetPlaylistListTileCheckboxWidgetFinder = find.descendant(
-          of: targetPlaylistListTileWidgetFinder,
-          matching: find.byType(Checkbox),
-        );
-
-        // Tap the ListTile Playlist checkbox to select it
-        await tester.tap(targetPlaylistListTileCheckboxWidgetFinder);
-        await tester.pumpAndSettle();
 
         // Tap the 'Toggle List' button to hide the list of playlist's.
         await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -7455,57 +7257,16 @@ void main() {
         // Open the move filtered audio dialog by clicking first on
         // the 'Filtered Audio Actions ...' playlist menu item and then
         // on the 'Move Filtered Audio to Playlist ...' sub-menu item
-        await IntegrationTestUtil.typeOnPlaylistSubMenuItem(
+        await _testMovingOrCopyingFilteredAudio(
           tester: tester,
-          playlistTitle: sourcePlaylistTitle,
-          playlistSubMenuKeyStr: 'popup_menu_move_filtered_audio',
+          sourcePlaylistTitle: sourcePlaylistTitle,
+          targetPlaylistTitle: targetPlaylistTitle,
+          sortFilterParmName: sortFilterParmName,
+          isMove: true,
+          movedOrCopiedAudioNumber: 3,
+          commentedAudioNumber: 1,
+          unmovedOrUncopiedAudioNumber: 0,
         );
-
-        // Select the target 'temp' playlist
-
-        // Check the value of the select one playlist AlertDialog
-        // dialog title
-        Text alertDialogTitle = tester.widget(
-            find.byKey(const Key('playlistOneSelectableDialogTitleKey')));
-        expect(alertDialogTitle.data, 'Select a playlist');
-
-        // Find the RadioListTile target playlist to which the audio
-        // will be moved
-
-        Finder radioListTile = find.byWidgetPredicate(
-          (Widget widget) {
-            return widget is RadioListTile &&
-                widget.title is Text &&
-                (widget.title as Text).data == targetPlaylistTitle;
-          },
-        );
-
-        // Tap the target playlist RadioListTile to select it
-        await tester.tap(radioListTile);
-        await tester.pumpAndSettle();
-
-        // Now find the confirm button and tap on it
-        await tester.tap(find.byKey(const Key('confirmButton')));
-        await tester.pumpAndSettle();
-
-        // Verifying the confirm warning title
-
-        Text moveFilteredAudioConfirmWarningTitleWidget =
-            tester.widget<Text>(find.byKey(const Key('warningDialogTitle')));
-
-        expect(moveFilteredAudioConfirmWarningTitleWidget.data, 'CONFIRMATION');
-
-        // Verifying the confirm warning message
-
-        Text moveFilteredAudioConfirmWarningMessageWidget =
-            tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
-
-        expect(moveFilteredAudioConfirmWarningMessageWidget.data,
-            'Applying Sort/Filter parms "$sortFilterParmName", from Youtube playlist "$sourcePlaylistTitle" to local playlist "$targetPlaylistTitle", 3 audio(s) were moved from which 1 were commented, and 0 audio(s) were unmoved.');
-
-        // Now find the ok button of the confirm dialog and tap on it
-        await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-        await tester.pumpAndSettle();
 
         // Verify in source playlist directory that the audio files were
         // moved
@@ -7742,27 +7503,10 @@ void main() {
 
         // Select the 'temp' playlist
 
-        // First, find the target Playlist ListTile Text widget
-        Finder targetPlaylistListTileTextWidgetFinder =
-            find.text(targetPlaylistTitle);
-
-        // Then obtain the target Playlist ListTile widget enclosing the
-        // Text widget by finding its ancestor
-        Finder targetPlaylistListTileWidgetFinder = find.ancestor(
-          of: targetPlaylistListTileTextWidgetFinder,
-          matching: find.byType(ListTile),
+        await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+          tester: tester,
+          playlistToSelectTitle: targetPlaylistTitle,
         );
-
-        // Now find the Checkbox widget located in the Playlist ListTile
-        // and tap on it to select the playlist
-        Finder targetPlaylistListTileCheckboxWidgetFinder = find.descendant(
-          of: targetPlaylistListTileWidgetFinder,
-          matching: find.byType(Checkbox),
-        );
-
-        // Tap the ListTile Playlist checkbox to select it
-        await tester.tap(targetPlaylistListTileCheckboxWidgetFinder);
-        await tester.pumpAndSettle();
 
         // Tap the 'Toggle List' button to hide the list of playlist's.
         await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -7888,27 +7632,10 @@ void main() {
 
         // Select the 'temp' playlist
 
-        // First, find the target Playlist ListTile Text widget
-        Finder targetPlaylistListTileTextWidgetFinder =
-            find.text(targetPlaylistTitle);
-
-        // Then obtain the target Playlist ListTile widget enclosing
-        // the Text widget by finding its ancestor
-        Finder targetPlaylistListTileWidgetFinder = find.ancestor(
-          of: targetPlaylistListTileTextWidgetFinder,
-          matching: find.byType(ListTile),
+        await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+          tester: tester,
+          playlistToSelectTitle: targetPlaylistTitle,
         );
-
-        // Now find the Checkbox widget located in the Playlist ListTile
-        // and tap on it to select the playlist
-        Finder targetPlaylistListTileCheckboxWidgetFinder = find.descendant(
-          of: targetPlaylistListTileWidgetFinder,
-          matching: find.byType(Checkbox),
-        );
-
-        // Tap the ListTile Playlist checkbox to select it
-        await tester.tap(targetPlaylistListTileCheckboxWidgetFinder);
-        await tester.pumpAndSettle();
 
         // Tap the 'Toggle List' button to hide the list of playlist's.
         await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -7944,6 +7671,79 @@ void main() {
       });
     });
   });
+}
+
+Future<void> _testMovingOrCopyingFilteredAudio({
+  required WidgetTester tester,
+  required String sourcePlaylistTitle,
+  required String targetPlaylistTitle,
+  required String sortFilterParmName,
+  required bool isMove, // true: move, false: copy
+  required int movedOrCopiedAudioNumber,
+  required int commentedAudioNumber,
+  required int unmovedOrUncopiedAudioNumber,
+}) async {
+  // Now test moving the filtered audio
+
+  // Open the move filtered audio dialog by clicking first on
+  // the 'Filtered Audio Actions ...' playlist menu item and then
+  // on the 'Move Filtered Audio to Playlist ...' sub-menu item
+  await IntegrationTestUtil.typeOnPlaylistSubMenuItem(
+    tester: tester,
+    playlistTitle: sourcePlaylistTitle,
+    playlistSubMenuKeyStr: 'popup_menu_move_filtered_audio',
+  );
+
+  // Select the target 'temp' playlist
+
+  // Check the value of the select one playlist AlertDialog
+  // dialog title
+  Text alertDialogTitle = tester
+      .widget(find.byKey(const Key('playlistOneSelectableDialogTitleKey')));
+  expect(alertDialogTitle.data, 'Select a playlist');
+
+  // Find the RadioListTile target playlist to which the audio
+  // will be moved
+
+  Finder radioListTile = find.byWidgetPredicate(
+    (Widget widget) {
+      return widget is RadioListTile &&
+          widget.title is Text &&
+          (widget.title as Text).data == targetPlaylistTitle;
+    },
+  );
+
+  // Tap the target playlist RadioListTile to select it
+  await tester.tap(radioListTile);
+  await tester.pumpAndSettle();
+
+  // Now find the confirm button and tap on it
+  await tester.tap(find.byKey(const Key('confirmButton')));
+  await tester.pumpAndSettle();
+
+  // Verifying the confirm warning title
+
+  Text moveFilteredAudioConfirmWarningTitleWidget =
+      tester.widget<Text>(find.byKey(const Key('warningDialogTitle')));
+
+  expect(moveFilteredAudioConfirmWarningTitleWidget.data, 'CONFIRMATION');
+
+  // Verifying the confirm warning message
+
+  Text moveFilteredAudioConfirmWarningMessageWidget =
+      tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
+
+  if (isMove) {
+    expect(moveFilteredAudioConfirmWarningMessageWidget.data,
+        'Applying Sort/Filter parms "$sortFilterParmName", from Youtube playlist "$sourcePlaylistTitle" to local playlist "$targetPlaylistTitle", $movedOrCopiedAudioNumber audio(s) were moved from which $commentedAudioNumber were commented, and $unmovedOrUncopiedAudioNumber audio(s) were unmoved.');
+  } else {
+    // copying
+    expect(moveFilteredAudioConfirmWarningMessageWidget.data,
+        'Applying Sort/Filter parms "$sortFilterParmName", from Youtube playlist "$sourcePlaylistTitle" to local playlist "$targetPlaylistTitle", $movedOrCopiedAudioNumber audio(s) were copied from which $commentedAudioNumber were commented, and $unmovedOrUncopiedAudioNumber audio(s) were unmoved.');
+  }
+  // Now find the ok button of the confirm dialog and tap on it
+  await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+  await tester.pumpAndSettle();
 }
 
 Playlist loadPlaylist(String playListOneName) {
