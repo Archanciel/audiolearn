@@ -9192,15 +9192,15 @@ void main() {
           'default',
         );
 
-        // Now test moving the filtered audio
+        // Now test copying the filtered audio
 
-        // Open the move filtered audio dialog by clicking first on
+        // Open the copy filtered audio dialog by clicking first on
         // the 'Filtered Audio Actions ...' playlist menu item and then
-        // on the 'Move Filtered Audio to Playlist ...' sub-menu item
+        // on the 'Copy Filtered Audio to Playlist ...' sub-menu item
         await IntegrationTestUtil.typeOnPlaylistSubMenuItem(
           tester: tester,
           playlistTitle: sourcePlaylistTitle,
-          playlistSubMenuKeyStr: 'popup_menu_move_filtered_audio',
+          playlistSubMenuKeyStr: 'popup_menu_copy_filtered_audio',
         );
 
         // Select the target 'temp' playlist
@@ -9212,7 +9212,7 @@ void main() {
         expect(alertDialogTitle.data, 'Select a playlist');
 
         // Find the RadioListTile target playlist to which the audio
-        // will be moved
+        // will be copied
 
         Finder radioListTile = find.byWidgetPredicate(
           (Widget widget) {
@@ -9243,7 +9243,7 @@ void main() {
             tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
 
         expect(moveFilteredAudioConfirmWarningMessageWidget.data,
-            'Since "default" Sort/Filter parms is selected, no audio can be moved from Youtube playlist "$sourcePlaylistTitle" to local playlist "$targetPlaylistTitle". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...');
+            'Since "default" Sort/Filter parms is selected, no audio can be copied from Youtube playlist "$sourcePlaylistTitle" to local playlist "$targetPlaylistTitle". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...');
 
         // Now find the ok button of the confirm dialog and tap on it
         await tester.tap(find.byKey(const Key('warningDialogOkButton')));
@@ -9262,7 +9262,7 @@ void main() {
         await tester.tap(find.byKey(const Key('playlist_toggle_button')));
         await tester.pumpAndSettle();
 
-        // Verify the audioTitles with no moved audio displayed by applying
+        // Verify the audioTitles with no movcopieded audio displayed by applying
         // the 'default' SF parms
 
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
