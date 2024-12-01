@@ -6025,7 +6025,7 @@ void main() {
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
-        // Verify the displayed audio list before selecting the 'toMoveOrCopy'
+        // Verify the displayed audio list before selecting the 'listenedNoCom'
         // Sort/Filter parm.
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
@@ -6134,7 +6134,7 @@ void main() {
         );
 
         // Verify in source playlist directory that the audio files were
-        // moved
+        // moved from
 
         listMp3FileNames = DirUtil.listFileNamesInDir(
           directoryPath:
@@ -6174,16 +6174,16 @@ void main() {
           fileExtension: 'json',
         );
 
-        final List<String> audioCommentFileNameNotDeletedLst = [
+        final List<String> audioCommentFileNameNotMovedLst = [
           "231226-094526-Ce qui va vraiment sauver notre espèce par Jancovici et Barrau 23-09-23.json",
           "231226-094534-3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher) 23-12-01.json",
           "240107-094520-Les besoins artificiels par R.Keucheyan 24-01-05.json",
         ];
 
-        for (String audioCommentFileNameNotDeleted
-            in audioCommentFileNameNotDeletedLst) {
+        for (String audioCommentFileNameNotMoved
+            in audioCommentFileNameNotMovedLst) {
           expect(
-            listCommentJsonFileNames.contains(audioCommentFileNameNotDeleted),
+            listCommentJsonFileNames.contains(audioCommentFileNameNotMoved),
             true,
           );
         }
@@ -6226,7 +6226,7 @@ void main() {
           );
         }
 
-        // Verify in target playlist directory in which the audio files
+        // Verify the target playlist directory in which the audio files
         // were moved
 
         listMp3FileNames = DirUtil.listFileNamesInDir(
@@ -6242,7 +6242,7 @@ void main() {
           );
         }
 
-        // Verify in target playlist directory in which no the audio
+        // Verify in target playlist directory in which no audio
         // comment files were moved
 
         listCommentJsonFileNames = DirUtil.listFileNamesInDir(
@@ -6508,7 +6508,7 @@ void main() {
         );
 
         // Verify in source playlist directory that the audio files were
-        // moved
+        // moved from
 
         listMp3FileNames = DirUtil.listFileNamesInDir(
           directoryPath:
@@ -6713,7 +6713,7 @@ void main() {
         );
 
         // Verify in source playlist directory that the audio files were
-        // moved
+        // moved from
 
         listMp3FileNames = DirUtil.listFileNamesInDir(
           directoryPath:
@@ -7003,7 +7003,7 @@ void main() {
         );
 
         // Verify in source playlist directory that the audio file were
-        // moved. Only one was moved since the other was copied before
+        // moved from. Only one was moved since the other was copied before
         // on the target playlist
 
         List<String> audioFileNameMovedLst = [
@@ -7269,7 +7269,7 @@ void main() {
         );
 
         // Verify in source playlist directory that the audio files were
-        // moved
+        // moved from
 
         listMp3FileNames = DirUtil.listFileNamesInDir(
           directoryPath:
@@ -7285,7 +7285,7 @@ void main() {
         }
 
         // Verify in source playlist directory that the audio comment files
-        // were moved
+        // were moved from
 
         listCommentJsonFileNames = DirUtil.listFileNamesInDir(
           directoryPath:
@@ -7374,7 +7374,7 @@ void main() {
           );
         }
 
-        // Verify in target playlist directory in which the audio files
+        // Verify the target playlist directory in which the audio files
         // were moved
 
         listMp3FileNames = DirUtil.listFileNamesInDir(
@@ -7685,7 +7685,7 @@ void main() {
         const String sourcePlaylistTitle = 'S8 audio';
         const String targetPlaylistTitle = 'temp';
 
-        List<String> audioTitleBeforeMovingLst = [
+        List<String> audioTitleBeforeCopyingLst = [
           "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
           "La surpopulation mondiale par Jancovici et Barrau",
           "La résilience insulaire par Fiona Roche",
@@ -7695,11 +7695,11 @@ void main() {
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
-        // Verify the displayed audio list before selecting the 'toMoveOrCopy'
+        // Verify the displayed audio list before selecting the 'listenedNoCom'
         // Sort/Filter parm.
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioTitleBeforeMovingLst,
+          audioOrPlaylistTitlesOrderedLst: audioTitleBeforeCopyingLst,
         );
 
         String sortFilterParmName = 'listenedNoCom';
@@ -7725,7 +7725,7 @@ void main() {
 
         // Verify the audioTitles selected by applying the 'listenedNoCom'
         // sort/filter parms
-        List<String> audioTitleToMoveBeforeMovingLst = [
+        List<String> audioTitleToCopyLst = [
           "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
           "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
         ];
@@ -7734,7 +7734,7 @@ void main() {
         // Sort/Filter parms.
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioTitleToMoveBeforeMovingLst,
+          audioOrPlaylistTitlesOrderedLst: audioTitleToCopyLst,
         );
 
         // Setting to this variables the currently selected audio title/subTitle
@@ -7752,9 +7752,9 @@ void main() {
           currentAudioSubTitle: currentAudioSubTitle,
         );
 
-        // Verify the presence of the audio files which will be later moved
+        // Verify the presence of the audio files which will be later copied
 
-        List<String> audioFileNameToMoveLst = [
+        List<String> audioFileNameToCopyLst = [
           "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
           "240107-094528-Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik 23-09-10.mp3",
         ];
@@ -7765,9 +7765,9 @@ void main() {
           fileExtension: 'mp3',
         );
 
-        for (String audioFileNameToMove in audioFileNameToMoveLst) {
+        for (String audioFileNameToCopy in audioFileNameToCopyLst) {
           expect(
-            listMp3FileNames.contains(audioFileNameToMove),
+            listMp3FileNames.contains(audioFileNameToCopy),
             true,
           );
         }
@@ -7787,24 +7787,24 @@ void main() {
           sortFilterParmName,
         );
 
-        // Now test moving the filtered audio
+        // Now test copying the filtered audio
 
-        // Open the move filtered audio dialog by clicking first on
+        // Open the copy filtered audio dialog by clicking first on
         // the 'Filtered Audio Actions ...' playlist menu item and then
-        // on the 'Move Filtered Audio to Playlist ...' sub-menu item
+        // on the 'Copy Filtered Audio to Playlist ...' sub-menu item
         await _testMovingOrCopyingFilteredAudio(
           tester: tester,
           sourcePlaylistTitle: sourcePlaylistTitle,
           targetPlaylistTitle: targetPlaylistTitle,
           sortFilterParmName: sortFilterParmName,
-          isMove: true,
+          isMove: false,
           movedOrCopiedAudioNumber: 2,
           commentedAudioNumber: 0,
           unmovedOrUncopiedAudioNumber: 0,
         );
 
-        // Verify in source playlist directory that the audio files were
-        // moved
+        // Verify in source playlist directory that the audio files
+        // are present after they have been copied
 
         listMp3FileNames = DirUtil.listFileNamesInDir(
           directoryPath:
@@ -7812,48 +7812,9 @@ void main() {
           fileExtension: 'mp3',
         );
 
-        for (String audioFileNameToMove in audioFileNameToMoveLst) {
+        for (String audioFileNameToCopy in audioFileNameToCopyLst) {
           expect(
-            listMp3FileNames.contains(audioFileNameToMove),
-            false,
-          );
-        }
-
-        // Verify that the other files were not moved
-
-        List<String> remainingAudioFileNameLst = [
-          "240107-094546-La résilience insulaire par Fiona Roche 24-01-03.mp3",
-          "231226-094526-Ce qui va vraiment sauver notre espèce par Jancovici et Barrau 23-09-23.mp3",
-          "240107-094520-Les besoins artificiels par R.Keucheyan 24-01-05.mp3",
-          "231226-094534-3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher) 23-12-01.mp3",
-          "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.mp3",
-        ];
-
-        for (String remainingAudioFileName in remainingAudioFileNameLst) {
-          expect(
-            listMp3FileNames.contains(remainingAudioFileName),
-            true,
-          );
-        }
-
-        // Verify that the audio comment files were not moved
-
-        List<String> listCommentJsonFileNames = DirUtil.listFileNamesInDir(
-          directoryPath:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kCommentDirName",
-          fileExtension: 'json',
-        );
-
-        final List<String> audioCommentFileNameNotDeletedLst = [
-          "231226-094526-Ce qui va vraiment sauver notre espèce par Jancovici et Barrau 23-09-23.json",
-          "231226-094534-3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher) 23-12-01.json",
-          "240107-094520-Les besoins artificiels par R.Keucheyan 24-01-05.json",
-        ];
-
-        for (String audioCommentFileNameNotDeleted
-            in audioCommentFileNameNotDeletedLst) {
-          expect(
-            listCommentJsonFileNames.contains(audioCommentFileNameNotDeleted),
+            listMp3FileNames.contains(audioFileNameToCopy),
             true,
           );
         }
@@ -7868,36 +7829,28 @@ void main() {
             .map((Audio audio) => audio.validVideoTitle)
             .toList();
 
-        for (String audioTitleToMove in audioTitleBeforeMovingLst) {
+        for (String audioTitleToCopy in audioTitleBeforeCopyingLst) {
           expect(
-            downloadedAudioLst.contains(audioTitleToMove),
+            downloadedAudioLst.contains(audioTitleToCopy),
             true,
           );
         }
 
-        expect(loadedPlaylist.playableAudioLst.length, 5);
-
-        List<String> audioTitleAfterMovingLst = [
-          "La surpopulation mondiale par Jancovici et Barrau",
-          "La résilience insulaire par Fiona Roche",
-          "Les besoins artificiels par R.Keucheyan",
-          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
-          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-        ];
+        expect(loadedPlaylist.playableAudioLst.length, 7);
 
         List<String> playableAudioLst = loadedPlaylist.playableAudioLst
             .map((Audio audio) => audio.validVideoTitle)
             .toList();
 
-        for (String audioTitleAfterMoving in audioTitleAfterMovingLst) {
+        for (String audioTitleAfterCopying in audioTitleBeforeCopyingLst) {
           expect(
-            playableAudioLst.contains(audioTitleAfterMoving),
+            playableAudioLst.contains(audioTitleAfterCopying),
             true,
           );
         }
 
-        // Verify in target playlist directory in which the audio files
-        // were moved
+        // Verify the target playlist directory in which the audio files
+        // were copied
 
         listMp3FileNames = DirUtil.listFileNamesInDir(
           directoryPath:
@@ -7905,17 +7858,17 @@ void main() {
           fileExtension: 'mp3',
         );
 
-        for (String audioFileNameMoved in audioFileNameToMoveLst) {
+        for (String audioFileNameCopied in audioFileNameToCopyLst) {
           expect(
-            listMp3FileNames.contains(audioFileNameMoved),
+            listMp3FileNames.contains(audioFileNameCopied),
             true,
           );
         }
 
-        // Verify in target playlist directory in which no the audio
-        // comment files were moved
+        // Verify in target playlist directory in which no audio
+        // comment files were copied
 
-        listCommentJsonFileNames = DirUtil.listFileNamesInDir(
+        List<String> listCommentJsonFileNames = DirUtil.listFileNamesInDir(
           directoryPath:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$targetPlaylistTitle${path.separator}$kCommentDirName",
           fileExtension: 'json',
@@ -7933,9 +7886,9 @@ void main() {
             .map((Audio audio) => audio.validVideoTitle)
             .toList();
 
-        for (String audioTitleToMove in audioTitleToMoveBeforeMovingLst) {
+        for (String audioTitleToCopy in audioTitleToCopyLst) {
           expect(
-            downloadedAudioLst.contains(audioTitleToMove),
+            downloadedAudioLst.contains(audioTitleToCopy),
             true,
           );
         }
@@ -7946,26 +7899,27 @@ void main() {
             .map((Audio audio) => audio.validVideoTitle)
             .toList();
 
-        for (String audioTitleToMove in audioTitleToMoveBeforeMovingLst) {
+        for (String audioTitleToCopy in audioTitleToCopyLst) {
           expect(
-            playableAudioLst.contains(audioTitleToMove),
+            playableAudioLst.contains(audioTitleToCopy),
             true,
           );
         }
 
         // Tap the 'Toggle List' button to hide the list of playlist's.
+        // The source playlist is selected.
         await tester.tap(find.byKey(const Key('playlist_toggle_button')));
         await tester.pumpAndSettle();
 
         // Verify the audioTitles content by applying the 'listenedNoCom'
-        // sort/filter parms. Since they have been moved, the list is
-        // empty.
+        // sort/filter parms. Since they have been copied, the list was
+        // not changed.
 
-        // Verify the empty displayed audio list before selecting the
-        // 'default' Sort/Filter parms.
+        // Verify the filtered audio list before selecting the 'default'
+        // Sort/Filter parms.
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioOrPlaylistTitlesOrderedLst: [],
+          audioOrPlaylistTitlesOrderedLst: audioTitleToCopyLst,
         );
 
         // Now tap on the current dropdown button item to open the dropdown
@@ -7988,20 +7942,21 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify the audioTitles selected by applying the 'default'
-        // sort/filter parms after having moved the filtered audio
+        // sort/filter parms after having copied the filtered audio
 
         // Verify the displayed audio list after selecting the 'default'.
         // Sort/Filter parms.
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioTitleAfterMovingLst,
+          audioOrPlaylistTitlesOrderedLst: audioTitleBeforeCopyingLst,
         );
 
-        // Setting to this variables the currently selected audio title/subTitle
-        // of the 'S8 audio' playlist
-        currentAudioTitle = "La résilience insulaire par Fiona Roche";
+        // Setting to this variables the currently selected audio
+        // title/subTitle of the 'S8 audio' playlist
+        currentAudioTitle =
+            "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik";
         currentAudioSubTitle =
-            "0:13:35.0. 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16.";
+            "0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16.";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -8031,15 +7986,15 @@ void main() {
         // Verify the moved audioTitles displayed by applying the
         // 'default' SF parms
 
-        audioTitleToMoveBeforeMovingLst.insert(0, "morning _ cinematic video");
+        audioTitleToCopyLst.insert(0, "morning _ cinematic video");
 
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioTitleToMoveBeforeMovingLst,
+          audioOrPlaylistTitlesOrderedLst: audioTitleToCopyLst,
         );
 
-        // Setting to this variables the currently selected audio title/subTitle
-        // of the 'S8 audio' playlist
+        // Setting to this variables the currently selected audio
+        // title/subTitle of the 'S8 audio' playlist
         currentAudioTitle = "morning _ cinematic video";
         currentAudioSubTitle =
             "0:00:59.0. 360 KB at 283 KB/sec on 10/01/2024 at 18:18.";
@@ -8939,7 +8894,7 @@ void main() {
         );
 
         // Verify in source playlist directory that the audio files were
-        // copied
+        // copied from
 
         listMp3FileNames = DirUtil.listFileNamesInDir(
           directoryPath:
@@ -8955,7 +8910,7 @@ void main() {
         }
 
         // Verify in source playlist directory that the audio comment files
-        // were copied
+        // were copied from
 
         listCommentJsonFileNames = DirUtil.listFileNamesInDir(
           directoryPath:
@@ -9001,7 +8956,7 @@ void main() {
           );
         }
 
-        // Verify in target playlist directory in which the audio files
+        // Verify the target playlist directory in which the audio files
         // were copied
 
         listMp3FileNames = DirUtil.listFileNamesInDir(
