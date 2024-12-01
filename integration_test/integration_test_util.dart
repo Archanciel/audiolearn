@@ -970,14 +970,19 @@ class IntegrationTestUtil {
     required WidgetTester tester,
     required Language language,
   }) async {
-    // First, set the application language to French
-    // Tap the appbar leading popup menu button
-    await tester.tap(find.byKey(const Key('appBarRightPopupMenu')));
-    await tester.pumpAndSettle();
+      // Tap the appbar leading popup menu button
+      await tester.tap(find.byKey(const Key('appBarRightPopupMenu')));
+      await tester.pumpAndSettle();
 
-    // Select French
-    await tester.tap(find.byKey(const Key('appBarMenuFrench')));
-    await tester.pumpAndSettle();
+    if (language == Language.english) {
+      // Select English
+      await tester.tap(find.byKey(const Key('appBarMenuEnglish')));
+      await tester.pumpAndSettle();
+    } else {
+      // Select French
+      await tester.tap(find.byKey(const Key('appBarMenuFrench')));
+      await tester.pumpAndSettle();
+    }
   }
 
   static void verifyAudioDataElementsUpdatedInPlaylistJsonFile({
