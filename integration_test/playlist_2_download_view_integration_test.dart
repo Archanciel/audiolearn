@@ -4212,6 +4212,140 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
+      testWidgets(
+          '''In playlist download view, move down a playlist located at bottom of
+             the list of playlists by clicking on the move down icon button. This
+             positions the moved playlist at top of the list of playlists. Then,
+             verifying that it was scrolled correctly and it is visible.''',
+          (tester) async {
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'scrolling_audio_and_playlists_test',
+          tapOnPlaylistToggleButton: false,
+        );
+
+        // Scrolling down the playlists list in order to make accessible
+        // the lowest positioned playlist
+
+        // Find the playlist list widget using its key
+        final Finder listFinder =
+            find.byKey(const Key('expandable_playlist_list'));
+
+        // Perform the scroll action
+        await tester.drag(listFinder, const Offset(0, -2000));
+        await tester.pumpAndSettle();
+
+        // Select the 'local_10' playlist
+
+        String playlistToSelectTitle = 'local_10';
+
+        // First, find the Playlist ListTile Text widget
+        await onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
+          tester: tester,
+          playlistToSelectTitle: playlistToSelectTitle,
+          verifyIfCheckboxIsChecked: false,
+          tapOnCheckbox: true,
+        );
+
+        // Tap on the move down playlist icon button in order to move
+        // the lowest positioned playlist to top of the list of playlists
+        await tester.tap(find.byKey(Key('move_down_playlist_button')));
+        await tester.pumpAndSettle();
+
+        // Now verify that the moved playlist is visible
+
+        Finder playlistToSelectListTileTextWidgetFinder =
+            find.text(playlistToSelectTitle).last;
+
+        // Then obtain the Playlist ListTile widget enclosing the Text widget
+        // by finding its ancestor
+        Finder playlistToSelectListTileWidgetFinder = find.ancestor(
+          of: playlistToSelectListTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now find the Checkbox widget located in the Playlist ListTile
+        // and tap on it to select the playlist
+        Finder playlistToSelectListTileCheckboxWidgetFinder = find.descendant(
+          of: playlistToSelectListTileWidgetFinder,
+          matching: find.byKey(const Key('playlist_checkbox_key')),
+        );
+
+        // Verify that the Playlist ListTile checkbox is checked
+        final Checkbox checkboxWidget = tester
+            .widget<Checkbox>(playlistToSelectListTileCheckboxWidgetFinder);
+
+        expect(checkboxWidget.value!, true);
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''In playlist download view, move up a playlist located at top of
+             the list of playlists by clicking on the move up icon button. This
+             positions the moved playlist at bottom of the list of playlists. Then,
+             verifying that it was scrolled correctly and it is visible.''',
+          (tester) async {
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'scrolling_audio_and_playlists_test',
+          tapOnPlaylistToggleButton: false,
+        );
+
+        // Select the 'Jeunes pianistes extraordinaires' top
+        // playlist
+
+        String playlistToSelectTitle =
+            'Jeunes pianistes extraordinaires';
+
+        // First, find the Playlist ListTile Text widget
+        await onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
+          tester: tester,
+          playlistToSelectTitle: playlistToSelectTitle,
+          verifyIfCheckboxIsChecked: false,
+          tapOnCheckbox: true,
+        );
+
+        // Tap on the move up playlist icon button in order to move
+        // the highest positioned playlist to bottom of the list of
+        // playlists
+        await tester.tap(find.byKey(Key('move_up_playlist_button')));
+        await tester.pumpAndSettle();
+
+        // Now verify that the moved playlist is visible
+        
+        Finder playlistToSelectListTileTextWidgetFinder =
+            find.text(playlistToSelectTitle).last;
+
+        // Then obtain the Playlist ListTile widget enclosing the Text widget
+        // by finding its ancestor
+        Finder playlistToSelectListTileWidgetFinder = find.ancestor(
+          of: playlistToSelectListTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now find the Checkbox widget located in the Playlist ListTile
+        // and tap on it to select the playlist
+        Finder playlistToSelectListTileCheckboxWidgetFinder = find.descendant(
+          of: playlistToSelectListTileWidgetFinder,
+          matching: find.byKey(const Key('playlist_checkbox_key')),
+        );
+
+        // Verify that the Playlist ListTile checkbox is checked
+        final Checkbox checkboxWidget = tester
+            .widget<Checkbox>(playlistToSelectListTileCheckboxWidgetFinder);
+
+        expect(checkboxWidget.value!, true);
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
     });
   });
   group('Delete filtered audio from playlist test', () {
@@ -8017,7 +8151,8 @@ void main() {
            in default SF parms lower than the filtered SF audio which will be copied
            (was downloaded before them). Then select 'listenedNoCom' SF parms and
            apply it. Then, click on the 'Copy Filtered Audio' playlist menu and
-           verify the audio copy as well as the audio selection.''', (tester) async {
+           verify the audio copy as well as the audio selection.''',
+          (tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'delete_filtered_audio_test',
@@ -8195,12 +8330,12 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
-      testWidgets(
-          '''Select a partially listened not commented audio located
+      testWidgets('''Select a partially listened not commented audio located
            in default SF parms lower than the filtered SF audio which will be copied
            (was downloaded before them). Then select 'listenedNoCom' SF parms and
            apply it. Then, click on the 'Copy Filtered Audio' playlist menu and
-           verify the audio copy as well as the audio selection.''', (tester) async {
+           verify the audio copy as well as the audio selection.''',
+          (tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'delete_filtered_audio_test',
@@ -9259,9 +9394,9 @@ Future<void> _testMovingOrCopyingFilteredAudio({
   String playlistSubMenuKeyStr;
 
   if (isMove) {
-       playlistSubMenuKeyStr = 'popup_menu_move_filtered_audio';
+    playlistSubMenuKeyStr = 'popup_menu_move_filtered_audio';
   } else {
-       playlistSubMenuKeyStr = 'popup_menu_copy_filtered_audio';
+    playlistSubMenuKeyStr = 'popup_menu_copy_filtered_audio';
   }
 
   // Open the move or copy filtered audio dialog by clicking first on

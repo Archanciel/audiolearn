@@ -463,6 +463,10 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
         false;
 
     if (isPlaylistListExpanded &&
+        playlistToScrollPosition != 0 && // the case if aplaylist located
+        //                                  at the bottom of the list is
+        //                                  moved at top by typing on the
+        //                                  moved down icon button
         playlistToScrollPosition <= noScrollPositionValue) {
       // This avoids scrolling down when the selected playlist is
       // in the top part of the list of playlists. Without that, the
@@ -1387,7 +1391,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 builder: (BuildContext context) {
                   // List content:
                   //   [
-                  //     sort and filter parameters name applied to the  
+                  //     sort and filter parameters name applied to the
                   //     playlist download view or to the audio player view,
                   //     sort and filter parameters applied to the playlist
                   //      download view or to the audio player view,
