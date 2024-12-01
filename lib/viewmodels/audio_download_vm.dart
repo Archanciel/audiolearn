@@ -1215,6 +1215,8 @@ class AudioDownloadVM extends ChangeNotifier {
           movedToPlaylistTitle: targetPlaylistTitle,
           movedToPlaylistType: targetPlaylist.playlistType,
         );
+
+        return false;
       }
 
       return false;

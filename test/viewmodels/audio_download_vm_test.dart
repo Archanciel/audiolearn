@@ -201,7 +201,7 @@ void main() {
   group(
       '''Copy audio to playlist and then trying to copy it again in the same target
          playlist not keeping it in the source playlist''', () {
-    test('Copy audio to playlist', () async {
+    test('Copy audio to playlist and then copy it again', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -321,6 +321,16 @@ void main() {
 
       expect(wasCopied, false);
 
+      // Copying again the same the audio to the target playlist
+      wasCopied = audioDownloadVM.copyAudioToPlaylist(
+        audioToCopy: copiedAudio,
+        targetPlaylist: targetPlaylist,
+        displayWarningIfAudioAlreadyExists: false,
+        displayWarningWhenAudioWasCopied: false,
+      );
+
+      expect(wasCopied, false);
+
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -391,7 +401,7 @@ void main() {
   });
   group('Move audio to playlist', () {
     test('''Moved audio kept in source playlist and then trying to move it again
-            in the same target playlist keeping it in the source  playlist''',
+            in the same target playlist keeping it in the source playlist''',
         () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -484,6 +494,17 @@ void main() {
         audioToMove: movedAudio,
         targetPlaylist: targetPlaylist,
         keepAudioInSourcePlaylistDownloadedAudioLst: true,
+      );
+
+      expect(wasMoved, false);
+
+      // Moving again the same audio keeping it in source playlist
+      wasMoved = audioDownloadVM.moveAudioToPlaylist(
+        audioToMove: movedAudio,
+        targetPlaylist: targetPlaylist,
+        keepAudioInSourcePlaylistDownloadedAudioLst: true,
+        displayWarningIfAudioAlreadyExists: false,
+        displayWarningWhenAudioWasMoved: false,
       );
 
       expect(wasMoved, false);
