@@ -148,11 +148,11 @@ class IntegrationTestUtil {
     await tester.tap(popupFilteredAudioActionPlaylistMenuItem);
     await tester.pumpAndSettle();
 
-    // Now find the delete playlist popup menu item and tap on it
-    final Finder popupDeletePlaylistSubMenuItem =
+    // Now find the playlist submenu item and tap on it
+    final Finder popupPlaylistSubMenuItem =
         find.byKey(Key(playlistSubMenuKeyStr));
 
-    await tester.tap(popupDeletePlaylistSubMenuItem);
+    await tester.tap(popupPlaylistSubMenuItem);
     await tester.pumpAndSettle();
   }
 

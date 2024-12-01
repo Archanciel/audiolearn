@@ -8400,12 +8400,12 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
-      testWidgets('''Select a partially listened not commented audio located in
-           default SF parms higher than the filtered SF audio which will be copied
-           (was downloaded after them). Then copy a fully listened not commented
-           audio to the target playlist. Then select 'listenedNoCom' SF parms and
-           apply it. Then, click on the 'Copy Filtered Audio' playlist menu and
-           verify the audio copy as well as the audio selection.''',
+      testWidgets('''After copy, select a partially listened not commented audio
+           located in default SF parms higher than the filtered SF audio which will
+           be copied (was downloaded after them). Then copy a fully listened not
+           commented audio to the target playlist. Then select 'listenedNoCom' SF
+           parms and apply it. Then, click on the 'Copy Filtered Audio' playlist
+           menu and verify the audio copy as well as the audio selection.''',
           (tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
@@ -8417,12 +8417,13 @@ void main() {
         const String targetPlaylistTitle = 'temp';
 
         // First, select a fully listened and commented audio downloaded
-        // before the audio which will be moved and delete its comment in
-        // order for it to be able to be moved. Then copy it to the target
-        // playlist so that it won't be moved.
+        // before the audio which will be copied and delete its comment in
+        // order for it to be able to be copied. Then copy it to the target
+        // playlist so that it won't be copied when executing the filtered
+        // audio copy operation.
         //
-        // Get the ListTile Text widget finder and tap on it to go
-        // to audio player view
+        // Get the ListTile Text widget finder and tap on it to go to audio
+        // player view
         final Finder firstDownloadedAudioListTileTextWidgetFinder = find.text(
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
         );
@@ -8460,15 +8461,15 @@ void main() {
         await tester.pumpAndSettle();
 
         // Now, copy this audio to the target playlist so that when
-        // moving the uncommented and fully listened audio, this audio
-        // won't be moved.
+        // copying the uncommented and fully listened audio, this audio
+        // won't be copied.
 
         // Now we want to tap the popup menu of the Audio ListTile
         // "3 fois où un économiste m'a ouvert les yeux (Giraud,
         // Lefournier, Porcher)"
 
-        // Then obtain the Audio ListTile widget enclosing the Text widget by
-        // finding its ancestor
+        // Then obtain the Audio ListTile widget enclosing the Text widget
+        // by finding its ancestor
         Finder sourceAudioListTileWidgetFinder = find.ancestor(
           of: firstDownloadedAudioListTileTextWidgetFinder,
           matching: find.byType(ListTile),
@@ -8510,8 +8511,7 @@ void main() {
         await tester.tap(find.byKey(const Key('confirmButton')));
         await tester.pumpAndSettle();
 
-        // Now find the ok button of the confirm dialog
-        // and tap on it
+        // Now find the ok button of the confirm dialog and tap on it
         await tester.tap(find.byKey(const Key('warningDialogOkButton')));
         await tester.pumpAndSettle();
 
@@ -8526,7 +8526,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Now, select a fully listened audio downloaded after the
-        // audio which will be moved and transform it to partially
+        // audio which will be copied and transform it to partially
         // played audio
         //
         // Get the ListTile Text widget finder and tap on it to go
@@ -8574,7 +8574,7 @@ void main() {
 
         // Verify the audioTitles selected by applying the 'listenedNoCom'
         // sort/filter parms
-        List<String> audioTitleToMoveBeforeMovingLst = [
+        List<String> filteredAudioTitleToCopyLst = [
           "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
         ];
@@ -8583,13 +8583,13 @@ void main() {
         // Sort/Filter parms.
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioTitleToMoveBeforeMovingLst,
+          audioOrPlaylistTitlesOrderedLst: filteredAudioTitleToCopyLst,
         );
 
         // Verify the presence of the audio files which will be later
-        // tried to be moved
+        // tried to be copied
 
-        List<String> audioFileNameToMoveLst = [
+        List<String> audioFileNameToCopyLst = [
           "240107-094528-Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik 23-09-10.mp3",
           "231226-094534-3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher) 23-12-01.mp3",
         ];
@@ -8600,9 +8600,9 @@ void main() {
           fileExtension: 'mp3',
         );
 
-        for (String audioFileNameToMove in audioFileNameToMoveLst) {
+        for (String audioFileNameToCopy in audioFileNameToCopyLst) {
           expect(
-            listMp3FileNames.contains(audioFileNameToMove),
+            listMp3FileNames.contains(audioFileNameToCopy),
             true,
           );
         }
@@ -8611,29 +8611,24 @@ void main() {
         await tester.tap(find.byKey(const Key('playlist_toggle_button')));
         await tester.pumpAndSettle();
 
-        // Now test moving the filtered audio
+        // Now test copying the filtered audio
 
-        // Open the move filtered audio dialog by clicking first on
+        // Open the copy filtered audio dialog by clicking first on
         // the 'Filtered Audio Actions ...' playlist menu item and then
-        // on the 'Move Filtered Audio to Playlist ...' sub-menu item
+        // on the 'Copy Filtered Audio to Playlist ...' sub-menu item
         await _testMovingOrCopyingFilteredAudio(
           tester: tester,
           sourcePlaylistTitle: sourcePlaylistTitle,
           targetPlaylistTitle: targetPlaylistTitle,
           sortFilterParmName: sortFilterParmName,
-          isMove: true,
+          isMove: false, // Copy
           movedOrCopiedAudioNumber: 1,
           commentedAudioNumber: 0,
           unmovedOrUncopiedAudioNumber: 1,
         );
 
-        // Verify in source playlist directory that the audio file were
-        // moved. Only one was moved since the other was copied before
-        // on the target playlist
-
-        List<String> audioFileNameMovedLst = [
-          "240107-094528-Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik 23-09-10.mp3",
-        ];
+        // Verify in source playlist directory that the copied audio file
+        // are still present.
 
         listMp3FileNames = DirUtil.listFileNamesInDir(
           directoryPath:
@@ -8641,10 +8636,10 @@ void main() {
           fileExtension: 'mp3',
         );
 
-        for (String audioFileNameToMove in audioFileNameMovedLst) {
+        for (String audioFileNameCopied in audioFileNameToCopyLst) {
           expect(
-            listMp3FileNames.contains(audioFileNameToMove),
-            false,
+            listMp3FileNames.contains(audioFileNameCopied),
+            true,
           );
         }
 
@@ -8672,10 +8667,10 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify the audioTitles selected by applying the 'default'
-        // sort/filter parms after having moved the filtered audio
+        // sort/filter parms after having copied the filtered audio
 
-        // Setting to this variables the currently selected audio title/subTitle
-        // of the 'S8 audio' playlist
+        // Setting to this variables the currently selected audio title/
+        // subTitle of the 'S8 audio' playlist
         String currentAudioTitle =
             "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
         String currentAudioSubTitle =
@@ -8706,14 +8701,14 @@ void main() {
         await tester.tap(find.byKey(const Key('playlist_toggle_button')));
         await tester.pumpAndSettle();
 
-        // Verify the moved audioTitles displayed by applying the
+        // Verify the copied audioTitles displayed by applying the
         // 'default' SF parms
 
-        audioTitleToMoveBeforeMovingLst.insert(0, "morning _ cinematic video");
+        filteredAudioTitleToCopyLst.insert(0, "morning _ cinematic video");
 
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioTitleToMoveBeforeMovingLst,
+          audioOrPlaylistTitlesOrderedLst: filteredAudioTitleToCopyLst,
         );
 
         // Setting to this variables the currently selected audio title/subTitle
@@ -9269,9 +9264,9 @@ Future<void> _testMovingOrCopyingFilteredAudio({
        playlistSubMenuKeyStr = 'popup_menu_copy_filtered_audio';
   }
 
-  // Open the move filtered audio dialog by clicking first on
+  // Open the move or copy filtered audio dialog by clicking first on
   // the 'Filtered Audio Actions ...' playlist menu item and then
-  // on the 'Move Filtered Audio to Playlist ...' sub-menu item
+  // on the 'Move/Copy Filtered Audio to Playlist ...' sub-menu item
   await IntegrationTestUtil.typeOnPlaylistSubMenuItem(
     tester: tester,
     playlistTitle: sourcePlaylistTitle,

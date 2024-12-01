@@ -462,7 +462,7 @@ class DirUtil {
   /// have the same name than the source file name.
   ///
   /// Returns true if the file has been copied, false
-  /// otherwise in case the copied file already exist in
+  /// otherwise in case the copied file already exists in
   /// the target dir and {overwriteFileIfExist} is false.
   static bool copyFileToDirectorySync({
     required String sourceFilePathName,
