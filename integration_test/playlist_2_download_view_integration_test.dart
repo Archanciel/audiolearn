@@ -4298,8 +4298,7 @@ void main() {
         // Select the 'Jeunes pianistes extraordinaires' top
         // playlist
 
-        String playlistToSelectTitle =
-            'Jeunes pianistes extraordinaires';
+        String playlistToSelectTitle = 'Jeunes pianistes extraordinaires';
 
         // First, find the Playlist ListTile Text widget
         await onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
@@ -4316,7 +4315,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Now verify that the moved playlist is visible
-        
+
         Finder playlistToSelectListTileTextWidgetFinder =
             find.text(playlistToSelectTitle).last;
 
@@ -9375,6 +9374,81 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
+    });
+  });
+  group('Change application language', () {
+    testWidgets('''Change to french and verify translated texts. Then, change to
+        english and verify translated texts.''', (tester) async {
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'sort_and_filter_audio_dialog_widget_test',
+        tapOnPlaylistToggleButton: false,
+      );
+
+      // First, set the application language to french
+      await IntegrationTestUtil.setApplicationLanguage(
+        tester: tester,
+        language: Language.french,
+      );
+
+      // Verify the translated texts in the application
+
+      expect(find.text('Téléch. Audio'), findsOneWidget);
+      expect(find.text('Lien Youtube ou recherche'), findsOneWidget);
+      expect(find.text('défaut'), findsOneWidget);
+      expect(find.text('Ajout'), findsOneWidget);
+      expect(find.text('Un'), findsOneWidget);
+
+      // Click on playlist toggle button to display the playlist list
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Verify that the default Sort/Filter parms name value
+      // after the selected playlist title
+
+      Text selectedSortFilterParmsName = tester
+          .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
+
+      expect(
+        selectedSortFilterParmsName.data,
+        'défaut',
+      );
+
+      // Now, set the application language to english
+      await IntegrationTestUtil.setApplicationLanguage(
+        tester: tester,
+        language: Language.english,
+      );
+
+      // Verify the translated texts in the application
+
+      expect(find.text('Download Audio'), findsOneWidget);
+      expect(find.text('Youtube Link or Search'), findsOneWidget);
+      expect(find.text('Add'), findsOneWidget);
+      expect(find.text('One'), findsOneWidget);
+
+      // Verify that the default Sort/Filter parms name value
+      // after the selected playlist title
+
+      selectedSortFilterParmsName = tester
+          .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
+
+      expect(
+        selectedSortFilterParmsName.data,
+        'default',
+      );
+
+      // Click on playlist toggle button to hide the playlist list
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      expect(find.text('default'), findsOneWidget);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
   });
 }
