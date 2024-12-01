@@ -1317,6 +1317,8 @@ class AudioDownloadVM extends ChangeNotifier {
 
         return false;
       }
+
+      return false;
     }
 
     targetPlaylist.addCopiedAudioToDownloadAndPlayableLst(
