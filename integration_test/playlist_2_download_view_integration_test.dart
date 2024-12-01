@@ -7673,9 +7673,9 @@ void main() {
   });
   group('Copy filtered audio from playlist test', () {
     group('Copy filtered uncommented audio from playlist test', () {
-      testWidgets('''Apply the 'listenedNoCom' SF parms. Then, click on the
-          'Copy Filtered Audio' playlist menu and verify the audio copied as well
-          as the audio selection.''', (tester) async {
+      testWidgets('''Apply the 'listenedNoCom' SF parms. Then, click
+          on the 'Copy Filtered Audio' playlist menu and verify the audio copied
+          as well as the audio selection.''', (tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'delete_filtered_audio_test',
@@ -8013,11 +8013,11 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
-      testWidgets('''Select a fully listened commented audio located in default
-           SF parms lower than the filtered SF audio which will be copied (was
-           downloaded before them). Then select 'listenedNoCom' SF parms and apply
-           it. Then, click on the 'Copy Filtered Audio' playlist menu and verify
-           the audio copy as well as the audio selection.''', (tester) async {
+      testWidgets('''Select a fully listened commented audio located
+           in default SF parms lower than the filtered SF audio which will be copied
+           (was downloaded before them). Then select 'listenedNoCom' SF parms and
+           apply it. Then, click on the 'Copy Filtered Audio' playlist menu and
+           verify the audio copy as well as the audio selection.''', (tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'delete_filtered_audio_test',
@@ -8028,7 +8028,7 @@ void main() {
         const String targetPlaylistTitle = 'temp';
 
         // First, select a fully listened audio downloaded before the
-        // audio which will be moved
+        // audio which will be copied
         //
         // Get the ListTile Text widget finder and tap on it to go
         // to audio player view
@@ -8069,7 +8069,7 @@ void main() {
 
         // Verify the audioTitles selected by applying the 'listenedNoCom'
         // sort/filter parms
-        List<String> audioTitleToMoveBeforeMovingLst = [
+        List<String> audioTitleToCopyLst = [
           "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
           "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
         ];
@@ -8078,12 +8078,12 @@ void main() {
         // Sort/Filter parms.
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioTitleToMoveBeforeMovingLst,
+          audioOrPlaylistTitlesOrderedLst: audioTitleToCopyLst,
         );
 
-        // Verify the presence of the audio files which will be later moved
+        // Verify the presence of the audio files which will be later copied
 
-        List<String> audioFileNameToMoveLst = [
+        List<String> audioFileNameToCopyLst = [
           "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
           "240107-094528-Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik 23-09-10.mp3",
         ];
@@ -8094,9 +8094,9 @@ void main() {
           fileExtension: 'mp3',
         );
 
-        for (String audioFileNameToMove in audioFileNameToMoveLst) {
+        for (String audioFileNameToCopy in audioFileNameToCopyLst) {
           expect(
-            listMp3FileNames.contains(audioFileNameToMove),
+            listMp3FileNames.contains(audioFileNameToCopy),
             true,
           );
         }
@@ -8116,24 +8116,24 @@ void main() {
           sortFilterParmName,
         );
 
-        // Now test moving the filtered audio
+        // Now test copying the filtered audio
 
-        // Open the move filtered audio dialog by clicking first on
+        // Open the copy filtered audio dialog by clicking first on
         // the 'Filtered Audio Actions ...' playlist menu item and then
-        // on the 'Move Filtered Audio to Playlist ...' sub-menu item
+        // on the 'Copy Filtered Audio to Playlist ...' sub-menu item
         await _testMovingOrCopyingFilteredAudio(
           tester: tester,
           sourcePlaylistTitle: sourcePlaylistTitle,
           targetPlaylistTitle: targetPlaylistTitle,
           sortFilterParmName: sortFilterParmName,
-          isMove: true,
+          isMove: false, // Copy
           movedOrCopiedAudioNumber: 2,
           commentedAudioNumber: 0,
           unmovedOrUncopiedAudioNumber: 0,
         );
 
         // Verify in source playlist directory that the audio files were
-        // moved
+        // not deleted since they were copied
 
         listMp3FileNames = DirUtil.listFileNamesInDir(
           directoryPath:
@@ -8141,10 +8141,10 @@ void main() {
           fileExtension: 'mp3',
         );
 
-        for (String audioFileNameToMove in audioFileNameToMoveLst) {
+        for (String audioFileNameToCopy in audioFileNameToCopyLst) {
           expect(
-            listMp3FileNames.contains(audioFileNameToMove),
-            false,
+            listMp3FileNames.contains(audioFileNameToCopy),
+            true,
           );
         }
 
@@ -8172,7 +8172,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify the audioTitles selected by applying the 'default'
-        // sort/filter parms after having moved the filtered audio
+        // sort/filter parms after having copied the filtered audio
 
         // Setting to this variables the currently selected audio title/subTitle
         // of the 'S8 audio' playlist
@@ -8887,7 +8887,7 @@ void main() {
           sourcePlaylistTitle: sourcePlaylistTitle,
           targetPlaylistTitle: targetPlaylistTitle,
           sortFilterParmName: sortFilterParmName,
-          isMove: false,
+          isMove: false, // Copy
           movedOrCopiedAudioNumber: 3,
           commentedAudioNumber: 1,
           unmovedOrUncopiedAudioNumber: 0,
