@@ -10933,7 +10933,7 @@ void main() {
 
           // Check the value of the warning dialog title
           Text warningDialogTitle =
-              tester.widget(find.byKey(const Key('warningDialogTitle')).at(1));
+              tester.widget(find.byKey(const Key('warningDialogTitle')).last);
           expect(warningDialogTitle.data, 'WARNING');
 
           // Check the value of the warning dialog message
@@ -12430,7 +12430,7 @@ void main() {
 
       // Check the value of the warning dialog title
       Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
+          tester.widget(find.byKey(const Key('warningDialogTitle')).last);
       expect(warningDialogTitle.data, 'WARNING');
 
       // Check the value of the warning dialog message
