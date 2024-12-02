@@ -9377,8 +9377,10 @@ void main() {
     });
   });
   group('Change application language', () {
-    testWidgets('''Change to french and verify translated texts. Then, change to
-        english and verify translated texts.''', (tester) async {
+    testWidgets('''In playlist download view, change to french and verify translated
+        texts. Then, switch to audio player view verify translated texts. Then,
+        change to english, verify translation and go back to playlist download view
+        and verify translation.''', (tester) async {
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'sort_and_filter_audio_dialog_widget_test',
@@ -9393,11 +9395,7 @@ void main() {
 
       // Verify the translated texts in the application
 
-      expect(find.text('Téléch. Audio'), findsOneWidget);
-      expect(find.text('Lien Youtube ou recherche'), findsOneWidget);
-      expect(find.text('défaut'), findsOneWidget);
-      expect(find.text('Ajout'), findsOneWidget);
-      expect(find.text('Un'), findsOneWidget);
+      _verifyFrenchInPlaylistDownloadView();
 
       // Click on playlist toggle button to display the playlist list
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -9414,18 +9412,32 @@ void main() {
         'défaut',
       );
 
+      // Go to audio player view
+
+      Finder appScreenNavigationButton =
+          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+      await tester.tap(appScreenNavigationButton);
+      await tester.pumpAndSettle();
+
+      expect(find.text('Lire Audio'), findsOneWidget);
+
       // Now, set the application language to english
       await IntegrationTestUtil.setApplicationLanguage(
         tester: tester,
         language: Language.english,
       );
 
+      expect(find.text('Play Audio'), findsOneWidget);
+
+      // Return to playlist download view
+      appScreenNavigationButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(appScreenNavigationButton);
+      await tester.pumpAndSettle();
+
       // Verify the translated texts in the application
 
-      expect(find.text('Download Audio'), findsOneWidget);
-      expect(find.text('Youtube Link or Search'), findsOneWidget);
-      expect(find.text('Add'), findsOneWidget);
-      expect(find.text('One'), findsOneWidget);
+      _verifyEnglishInPlaylistDownloadView();
 
       // Verify that the default Sort/Filter parms name value
       // after the selected playlist title
@@ -9450,7 +9462,119 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
+    testWidgets('''Go to audio player view, change to french and verify translated
+        texts. Then, switch to playlist download view and verify translated texts.
+        Then, change to english, verify translation and go back to audio player view
+        and verify translation.''', (tester) async {
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'sort_and_filter_audio_dialog_widget_test',
+        tapOnPlaylistToggleButton: false,
+      );
+
+      // First, go to audio player view
+
+      Finder appScreenNavigationButton =
+          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+      await tester.tap(appScreenNavigationButton);
+      await tester.pumpAndSettle();
+
+      // Set the application language to french
+      await IntegrationTestUtil.setApplicationLanguage(
+        tester: tester,
+        language: Language.french,
+      );
+
+      expect(find.text('Lire Audio'), findsOneWidget);
+
+      // Return to playlist download view
+      appScreenNavigationButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(appScreenNavigationButton);
+      await tester.pumpAndSettle();
+
+      // Verify the translated texts in the application
+
+      _verifyFrenchInPlaylistDownloadView();
+
+      // Click on playlist toggle button to display the playlist list
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Verify that the default Sort/Filter parms name value
+      // after the selected playlist title
+
+      Text selectedSortFilterParmsName = tester
+          .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
+
+      expect(
+        selectedSortFilterParmsName.data,
+        'défaut',
+      );
+
+      // Now, set the application language to english
+      await IntegrationTestUtil.setApplicationLanguage(
+        tester: tester,
+        language: Language.english,
+      );
+
+      // Verify that the default Sort/Filter parms name value
+      // after the selected playlist title
+
+      selectedSortFilterParmsName = tester
+          .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
+
+      expect(
+        selectedSortFilterParmsName.data,
+        'default',
+      );
+
+      // Click on playlist toggle button to hide the playlist list
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Verify the translated texts in the application
+
+      _verifyEnglishInPlaylistDownloadView();
+
+      // Click on playlist toggle button to display the playlist list
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      expect(find.text('default'), findsOneWidget);
+
+      // Finally, return to audio player view
+
+      appScreenNavigationButton =
+          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+      await tester.tap(appScreenNavigationButton);
+      await tester.pumpAndSettle();
+
+      expect(find.text('Play Audio'), findsOneWidget);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
   });
+}
+
+void _verifyEnglishInPlaylistDownloadView() {
+  expect(find.text('Download Audio'), findsOneWidget);
+  expect(find.text('Youtube Link or Search'), findsOneWidget);
+  expect(find.text('default'), findsOneWidget);
+  expect(find.text('Add'), findsOneWidget);
+  expect(find.text('One'), findsOneWidget);
+}
+
+void _verifyFrenchInPlaylistDownloadView() {
+  expect(find.text('Téléch. Audio'), findsOneWidget);
+  expect(find.text('Lien Youtube ou recherche'), findsOneWidget);
+  expect(find.text('défaut'), findsOneWidget);
+  expect(find.text('Ajout'), findsOneWidget);
+  expect(find.text('Un'), findsOneWidget);
 }
 
 Future<void> _testMovingOrCopyingFilteredAudio({
