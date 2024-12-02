@@ -1513,7 +1513,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify the abscence of the help icon button (the help icon
-      // button is only displayed when the audio play speed dialog 
+      // button is only displayed when the audio play speed dialog
       // is opened from the application settings dialog !)
       expect(find.byIcon(Icons.help_outline), findsNothing);
 
@@ -3290,6 +3290,91 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
+    testWidgets('play comment and undo the resulting position change',
+        (WidgetTester tester) async {
+      const String audioPlayerSelectedPlaylistTitle =
+          'S8 audio'; // Youtube playlist
+      const String toSelectAudioTitle =
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_player_vm_play_position_undo_redo_test',
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+      );
+
+      // Now we want to tap on the first downloaded audio of the
+      // playlist in order to open the AudioPlayerView displaying
+      // the audio
+
+      // Tap the 'Toggle List' button to avoid displaying the list
+      // of playlists which may hide the audio title we want to
+      // tap on
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // First, get the ListTile Text widget finder of the audio
+      // to be selected and tap on it
+      final Finder toSelectAudioListTileTextWidgetFinder =
+          find.text(toSelectAudioTitle);
+
+      await tester.tap(toSelectAudioListTileTextWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // check the current audio's position
+      expect(find.text('10:00'), findsOneWidget);
+
+      // Tap on the comment icon button to open the comment add list
+      // dialog
+      final Finder commentInkWellButtonFinder = find.byKey(
+        const Key('commentsInkWellButton'),
+      );
+
+      await tester.tap(commentInkWellButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Now tap on the play comment icon button to start playing
+      // the comment
+      await tester.tap(find.byKey(const Key('playPauseIconButton')));
+      await tester.pumpAndSettle();
+
+      await Future.delayed(const Duration(milliseconds: 1500));
+      await tester.pumpAndSettle();
+
+      // Now tap on the pause comment icon button to stop playing
+      // the comment
+      await tester.tap(find.byKey(const Key('playPauseIconButton')));
+      await tester.pumpAndSettle();
+
+      // Now close the comment list dialog
+      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+      await tester.pumpAndSettle();
+
+      // check the current audio's changed position
+      expect(find.text('1:23'), findsOneWidget);
+
+      // undo the change
+
+      await tester.tap(find.byKey(const Key('audioPlayerViewUndoButton')));
+      await tester.pumpAndSettle();
+
+      // check the current audio's changed position after the undo
+      expect(find.text('10:00'), findsOneWidget);
+
+      // redo the change
+
+      await tester.tap(find.byKey(const Key('audioPlayerViewRedoButton')));
+      await tester.pumpAndSettle();
+
+      // check the current audio's changed position
+      expect(find.text('1:23'), findsOneWidget);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
   });
   group('undo/redo with new command between tests', () {
     testWidgets('forward 1 minute position change',
@@ -3719,6 +3804,99 @@ void main() {
 
       // check the current audio's changed position
       expect(find.text('20:32'), findsOneWidget);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets('play comment and undo the resulting position change',
+        (WidgetTester tester) async {
+      const String audioPlayerSelectedPlaylistTitle =
+          'S8 audio'; // Youtube playlist
+      const String toSelectAudioTitle =
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_player_vm_play_position_undo_redo_test',
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+      );
+
+      // Now we want to tap on the first downloaded audio of the
+      // playlist in order to open the AudioPlayerView displaying
+      // the audio
+
+      // Tap the 'Toggle List' button to avoid displaying the list
+      // of playlists which may hide the audio title we want to
+      // tap on
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // First, get the ListTile Text widget finder of the audio
+      // to be selected and tap on it
+      final Finder toSelectAudioListTileTextWidgetFinder =
+          find.text(toSelectAudioTitle);
+
+      await tester.tap(toSelectAudioListTileTextWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // check the current audio's position
+      expect(find.text('10:00'), findsOneWidget);
+
+      // Tap on the comment icon button to open the comment add list
+      // dialog
+      final Finder commentInkWellButtonFinder = find.byKey(
+        const Key('commentsInkWellButton'),
+      );
+
+      await tester.tap(commentInkWellButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Now tap on the play comment icon button to start playing
+      // the comment
+      await tester.tap(find.byKey(const Key('playPauseIconButton')));
+      await tester.pumpAndSettle();
+
+      await Future.delayed(const Duration(milliseconds: 1500));
+      await tester.pumpAndSettle();
+
+      // Now tap on the pause comment icon button to stop playing
+      // the comment
+      await tester.tap(find.byKey(const Key('playPauseIconButton')));
+      await tester.pumpAndSettle();
+
+      // Now close the comment list dialog
+      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+      await tester.pumpAndSettle();
+
+      // check the current audio's changed position
+      expect(find.text('1:23'), findsOneWidget);
+
+      // undo the change
+
+      await tester.tap(find.byKey(const Key('audioPlayerViewUndoButton')));
+      await tester.pumpAndSettle();
+
+      // check the current audio's changed position after the undo
+      expect(find.text('10:00'), findsOneWidget);
+
+      // new command: change the current audio's play position to audio start
+
+      await tester
+          .tap(find.byKey(const Key('audioPlayerViewSkipToStartButton')));
+      await tester.pumpAndSettle();
+
+      expect(find.text('0:00'), findsOneWidget);
+
+      // redo the change
+
+      await tester.tap(find.byKey(const Key('audioPlayerViewRedoButton')));
+      await tester.pumpAndSettle();
+
+      // check the current audio's changed position
+      expect(find.text('1:23'), findsOneWidget);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
