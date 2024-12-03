@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../constants.dart';
 import '../models/audio.dart';
@@ -439,73 +440,51 @@ class AudioPlayerVM extends ChangeNotifier {
       );
     });
 
-    _playerCompleteSubscription =
-        _audioPlayer!.onPlayerComplete.listen((event) async {
-      if (_isCommentPlaying) {
-        // In this situation, if a comment is playing and arrives to the
-        // audio end, the next audio is not played.
-        return;
-      }
+    // _playerCompleteSubscription =
+    //     _audioPlayer!.onPlayerComplete.listen((event) async {
+    //   if (_isCommentPlaying) {
+    //     // In this situation, if a comment is playing and arrives to the
+    //     // audio end, the next audio is not played.
+    //     return;
+    //   }
 
-      // Ensures that the audio player view audio position slider is
-      // updated to end when the audio play was complete. Otherwise,
-      // if the audio plays while the smartphone screen is turned off,
-      // the slider won't be set to end position.
-      _currentAudioPosition = _currentAudioTotalDuration;
+    //   // Ensures that the audio player view audio position slider is
+    //   // updated to end when the audio play was complete. Otherwise,
+    //   // if the audio plays while the smartphone screen is turned off,
+    //   // the slider won't be set to end position.
+    //   _currentAudioPosition = _currentAudioTotalDuration;
+    //   notifyListeners();
 
-      notifyListeners();
-
-      // Play next audio when current audio is finished. If a next
-      // audio is played, notifyListeners() is called in
-      // playNextAudio().
-      await _playNextAudio();
-    });
+    //   // Play next audio when current audio is finished. If a next
+    //   // audio is played, notifyListeners() is called in
+    //   // playNextAudio().
+    //   await _playNextAudio();
+    // });
 
     // Code below does not improve anything in the integration
     // test problems related to aidioplayers 6.1.0.
-    // _playerStateChangeSubscription =
-    //     _audioPlayer!.onPlayerStateChanged.listen((state) {
-    //   notifyListeners();
-    //
-    //});
-  }
+    _playerStateChangeSubscription =
+        _audioPlayer!.onPlayerStateChanged.listen((state) async {
+      if (state == PlayerState.completed) {
+        if (_isCommentPlaying) {
+          // In this situation, if a comment is playing and arrives to the
+          // audio end, the next audio is not played.
+          return;
+        }
 
-  /// Method passed to the audio player onPositionChanged listener.
-  void handlePositionChanged({
-    required Duration position,
-  }) {
-    if (_audioPlayer!.state == PlayerState.playing) {
-      // this test avoids that when selecting another audio
-      // the selected audio position is set to 0 since the
-      // passed position value of an AudioPlayer not playing
-      // is 0 !
-      _currentAudioPosition = position;
+        // Ensures that the audio player view audio position slider is
+        // updated to end when the audio play was complete. Otherwise,
+        // if the audio plays while the smartphone screen is turned off,
+        // the slider won't be set to end position.
+        _currentAudioPosition = _currentAudioTotalDuration;
+        notifyListeners();
 
-      notifyListeners();
-
-      // This instruction must be executed before the next if block,
-      // otherwise, if the user opens the audio info dialog while the
-      // audio is playing, the audio position displayed in the audio
-      // info dialog opened on the current audio which does display
-      // the audio position obtained from the audio player view model
-      // will display the correct audio position only every 30 seconds.
-      // This is demonstrated by the audio indo audio state integration
-      // tests.
-      //
-      // The audioPositionSeconds of the current audio will be saved
-      // in its enclosing playlist json file every 30 seconds or when
-      // the audio is paused or when the audio is at end.
-      _currentAudio!.audioPositionSeconds = _currentAudioPosition.inSeconds;
-
-      if (_currentAudioLastSaveDateTime
-          .add(const Duration(seconds: 30))
-          .isAfter(DateTime.now())) {
-        return;
+        // Play next audio when current audio is finished. If a next
+        // audio is played, notifyListeners() is called in
+        // playNextAudio().
+        await _playNextAudio();
       }
-
-      // saving the current audio position only every 30 seconds
-      updateAndSaveCurrentAudio();
-    }
+    });
   }
 
   /// Method called when the user clicks on the AudioPlayerView
@@ -626,17 +605,22 @@ class AudioPlayerVM extends ChangeNotifier {
         await _rewindAudioPositionBasedOnPauseDuration();
       }
 
-      await _audioPlayer!.play(DeviceFileSource(
-          audioFilePathName)); // <-- Directly using play method
-      await _audioPlayer!.setPlaybackRate(_currentAudio!.audioPlaySpeed);
+      WakelockPlus.enable(); // Enable wake lock plus
+      try {
+        await _audioPlayer!.play(DeviceFileSource(audioFilePathName));
+        await _audioPlayer!.play(DeviceFileSource(audioFilePathName));
+        await _audioPlayer!.setPlaybackRate(_currentAudio!.audioPlaySpeed);
 
-      _currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd =
-          true;
-      _currentAudio!.isPaused = false;
+        _currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd =
+            true;
+        _currentAudio!.isPaused = false;
 
-      updateAndSaveCurrentAudio();
+        updateAndSaveCurrentAudio();
 
-      notifyListeners();
+        notifyListeners();
+      } finally {
+        WakelockPlus.disable(); // Disable wake lock when playback stops
+      }
     }
   }
 
