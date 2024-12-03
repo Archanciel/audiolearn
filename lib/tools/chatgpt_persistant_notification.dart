@@ -3,9 +3,6 @@ import 'package:audio_service/audio_service.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:io';
-import 'package:path/path.dart' as path;
-
-import '../constants.dart';
 
 class MyAudioHandler extends BaseAudioHandler {
   final AudioPlayer _audioPlayer = AudioPlayer();
@@ -56,7 +53,7 @@ class MyAudioHandler extends BaseAudioHandler {
   @override
   Future<void> play() async {
     if (_queue.isNotEmpty && _currentIndex < _queue.length) {
-      final MediaItem currentMediaItem = _queue[_currentIndex];
+      final currentMediaItem = _queue[_currentIndex];
       mediaItem.add(
           currentMediaItem); // Notify listeners about the current MediaItem
       await _audioPlayer.play(DeviceFileSource(currentMediaItem.id));
@@ -117,34 +114,22 @@ class MyAudioHandler extends BaseAudioHandler {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Request permissions before initializing audio service
-  if (await Permission.storage.request().isGranted) {
-    print('Storage permission granted.');
+  final audioHandler = await AudioService.init(
+    builder: () => MyAudioHandler(),
+    config: AudioServiceConfig(
+      androidNotificationChannelId: 'com.example.audio',
+      androidNotificationChannelName: 'Audio Playback',
+      androidNotificationOngoing: true,
+    ),
+  );
 
-    // Initialize AudioService
-    final AudioHandler audioHandler = await AudioService.init(
-      builder: () => MyAudioHandler(),
-      config: AudioServiceConfig(
-        androidNotificationChannelId: 'com.example.audio',
-        androidNotificationChannelName: 'Audio Playback',
-        androidNotificationOngoing: true,
-      ),
-    );
-
-    runApp(MyApp(audioHandler: audioHandler));
-  } else {
-    print('Storage permission not granted.');
-    // Optionally show an error or exit the app
-  }
+  runApp(MyApp(audioHandler: audioHandler));
 }
 
 class MyApp extends StatelessWidget {
   final AudioHandler audioHandler;
 
-  const MyApp({
-    super.key,
-    required this.audioHandler,
-  });
+  const MyApp({super.key, required this.audioHandler});
 
   @override
   Widget build(BuildContext context) {
@@ -159,17 +144,14 @@ class MyApp extends StatelessWidget {
 class AudioPlayerPage extends StatefulWidget {
   final AudioHandler audioHandler;
 
-  const AudioPlayerPage({
-    super.key,
-    required this.audioHandler,
-  });
+  const AudioPlayerPage({super.key, required this.audioHandler});
 
   @override
   _AudioPlayerPageState createState() => _AudioPlayerPageState();
 }
 
 class _AudioPlayerPageState extends State<AudioPlayerPage> {
-  List<File> _audioFiles = [];
+  List<File> audioFiles = [];
 
   @override
   void initState() {
@@ -177,20 +159,18 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
     _loadAudioFiles();
   }
 
-Future<void> _loadAudioFiles() async {
-  if (mounted) {
-    // Ensure this runs in the context of a valid UI activity
+  Future<void> _loadAudioFiles() async {
     if (await Permission.storage.request().isGranted) {
-      final Directory dir = Directory('$kApplicationPath${path.separator}Jésus-Christ'); // Example directory
+      final dir = Directory('/storage/emulated/0/Music'); // Example directory
       if (dir.existsSync()) {
         final files =
             dir.listSync().where((f) => f.path.endsWith('.mp3')).toList();
         setState(() {
-          _audioFiles = files.map((f) => File(f.path)).toList();
+          audioFiles = files.map((f) => File(f.path)).toList();
         });
 
         // Create MediaItems and load them into the queue
-        final mediaItems = _audioFiles
+        final mediaItems = audioFiles
             .map((file) => MediaItem(
                   id: file.path,
                   title: file.path.split('/').last,
@@ -211,12 +191,8 @@ Future<void> _loadAudioFiles() async {
           }).toList(),
         });
       }
-    } else {
-      // Handle case where permissions are denied
-      print('Storage permission not granted.');
     }
   }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -226,10 +202,10 @@ Future<void> _loadAudioFiles() async {
         children: [
           Expanded(
             child: ListView.builder(
-              itemCount: _audioFiles.length,
+              itemCount: audioFiles.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(_audioFiles[index].path.split('/').last),
+                  title: Text(audioFiles[index].path.split('/').last),
                   onTap: () {
                     widget.audioHandler.skipToQueueItem(index);
                   },
