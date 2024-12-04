@@ -684,5 +684,6 @@
   },
   "appBarMenuEnableNextAudioAutoPlay": "Activer la lecture automatique du prochain audio ...",
   "batteryParameters": "Paramètre de la batterie",
-  "disableBatteryOptimisation": "Afficher le paramétre de la batterie afin d'en désactiver l'optimisation, ce qui permet de jouer automatiquement l'audio suivant dans la playlist."  
+  "disableBatteryOptimisation": "Afficher le paramétre de la batterie afin d'en désactiver l'optimisation, ce qui permet ensuite à l'application de jouer automatiquement l'audio suivant dans la playlist courante.\n\nCliquez sur le bouton ci-dessous et ensuite cliquez sur l'option \"Batterie\" au bas de la liste. Ensuite, sélectionnez \"Non restreinte\", puis sortez des paramètres.",
+  "openBatteryOptimisationButton": "Afficher le paramétre de la batterie"
 }

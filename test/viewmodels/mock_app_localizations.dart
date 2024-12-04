@@ -1644,4 +1644,7 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get disableBatteryOptimisation => "Disable battery optimisation ...";
+
+  @override
+  String get openBatteryOptimisationButton => "Display the battery settings";
 }
