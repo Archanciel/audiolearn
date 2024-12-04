@@ -3351,7 +3351,15 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audio's changed position
-      expect(find.text('1:23'), findsOneWidget);
+      final Finder audioPlayerViewAudioPositionFinder =
+          find.byKey(const Key('audioPlayerViewAudioPosition'));
+
+      IntegrationTestUtil.verifyPositionBetweenMinMax(
+        tester: tester,
+        textWidgetFinder: audioPlayerViewAudioPositionFinder,
+        minPositionTimeStr: '1:23',
+        maxPositionTimeStr: '1:24',
+      );
 
       // undo the change
 
@@ -3872,7 +3880,15 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audio's changed position
-      expect(find.text('1:23'), findsOneWidget);
+      final Finder audioPlayerViewAudioPositionFinder =
+          find.byKey(const Key('audioPlayerViewAudioPosition'));
+
+      IntegrationTestUtil.verifyPositionBetweenMinMax(
+        tester: tester,
+        textWidgetFinder: audioPlayerViewAudioPositionFinder,
+        minPositionTimeStr: '1:23',
+        maxPositionTimeStr: '1:24',
+      );
 
       // undo the change
 
