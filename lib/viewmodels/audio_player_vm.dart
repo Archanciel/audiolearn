@@ -494,7 +494,7 @@ class AudioPlayerVM extends ChangeNotifier {
   }) {
     if (_audioPlayer!.state == PlayerState.playing) {
       // this test avoids that when selecting another audio
-      // the selected audio position is set to 0 since the
+      // the selected audio position is set to 0 since th
       // passed position value of an AudioPlayer not playing
       // is 0 !
       _currentAudioPosition = position;
