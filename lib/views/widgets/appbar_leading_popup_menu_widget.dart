@@ -14,6 +14,7 @@ import '../../services/settings_data_service.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 import '../../viewmodels/audio_player_vm.dart';
 import '../screen_mixin.dart';
+import 'battery_settings_dialog.dart';
 import 'confirm_action_dialog.dart';
 import 'application_settings_dialog.dart';
 import 'audio_info_dialog.dart';
@@ -23,6 +24,7 @@ import 'playlist_one_selectable_dialog.dart';
 
 enum AppBarPopupMenu {
   openSettingsDialog,
+  enableNextAudioAutoPlay,
   updatePlaylistJson,
   savePlaylistAndCommentsToZip,
   setYoutubeChannel,
@@ -520,6 +522,12 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
                 AppLocalizations.of(context)!.appBarMenuOpenSettingsDialog),
           ),
           PopupMenuItem<AppBarPopupMenu>(
+            key: const Key('appBarMenuEnableNextAudioAutoPlay'),
+            value: AppBarPopupMenu.enableNextAudioAutoPlay,
+            child: Text(AppLocalizations.of(context)!
+                .appBarMenuEnableNextAudioAutoPlay),
+          ),
+          PopupMenuItem<AppBarPopupMenu>(
             key: const Key('update_playlist_json_dialog_item'),
             value: AppBarPopupMenu.updatePlaylistJson,
             child: Tooltip(
@@ -562,6 +570,16 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
                 return ApplicationSettingsDialog(
                   settingsDataService: settingsDataService,
                 );
+              },
+            );
+            break;
+          case AppBarPopupMenu.enableNextAudioAutoPlay:
+            showDialog<void>(
+              context: context,
+              barrierDismissible: false, // This line prevents the dialog from
+              // closing when tapping outside the dialog
+              builder: (BuildContext context) {
+                return BatterySettingsDialog();
               },
             );
             break;
