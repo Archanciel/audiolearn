@@ -487,7 +487,8 @@ class AudioPlayerVM extends ChangeNotifier {
     // });
   }
 
-  /// Method passed to the audio player onPositionChanged listener.
+  /// Method passed to the audio player onPositionChanged listener on
+  /// AudioPlayerVM version used in project audioplayers_5_2_1_ALL_TESTS_PASS.
   void handlePositionChanged({
     required Duration position,
   }) {
