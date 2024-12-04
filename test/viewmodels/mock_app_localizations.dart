@@ -1634,4 +1634,14 @@ class MockAppLocalizations extends AppLocalizations {
     Object targetPlaylistTitle,
   ) =>
       "Since \"$sortedFilterParmsName\" Sort/Filter parms is selected, no audio can be moved from Youtube playlist \"$sourcePlaylistTitle\" to Youtube playlist \"$targetPlaylistTitle\". SOLUTION: define a Sort/Filter parameters and apply it before selecting this operation ...";
+
+  @override
+  String get appBarMenuEnableNextAudioAutoPlay =>
+      "Enable playing next audio automatically ...";
+
+  @override
+  String get batteryParameters => "Battery Parameters";
+
+  @override
+  String get disableBatteryOptimisation => "Disable battery optimisation ...";
 }

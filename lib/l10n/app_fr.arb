@@ -681,5 +681,8 @@
       "targetPlaylistTitle": {},
       "sortedFilterParmsName": {}
     }
-  }
+  },
+  "appBarMenuEnableNextAudioAutoPlay": "Activer la lecture automatique du prochain audio ...",
+  "batteryParameters": "Paramètre de la batterie",
+  "disableBatteryOptimisation": "Afficher le paramétre de la batterie afin d'en désactiver l'optimisation, ce qui permet de jouer automatiquement l'audio suivant dans la playlist."  
 }

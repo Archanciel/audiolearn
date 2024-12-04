@@ -1,33 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:android_intent_plus/android_intent.dart';
-import 'dart:io';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:app_settings/app_settings.dart';
 
-class BatterySettingsPage extends StatelessWidget {
-  const BatterySettingsPage({super.key});
+class BatterySettingsDialog extends StatelessWidget {
+  const BatterySettingsDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!
-                .appBarMenuEnableNextAudioAutoPlay),
+        title: Text(
+          AppLocalizations.of(context)!.batteryParameters,
+        ),
       ),
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            if (Platform.isAndroid) {
-              final intent = AndroidIntent(
-                action: 'android.settings.IGNORE_BATTERY_OPTIMIZATION_SETTINGS',
-              );
-              intent.launch();
-            } else {
-              // iOS doesn't have direct access to battery optimization settings
-              print("Battery optimization settings are not available on iOS.");
-            }
+            // Open the app's settings page
+            AppSettings.openAppSettings();
           },
-          child: Text(AppLocalizations.of(context)!
-                .appBarMenuEnableNextAudioAutoPlay),
+          child: Text(
+            AppLocalizations.of(context)!.disableBatteryOptimisation,
+          ),
         ),
       ),
     );
