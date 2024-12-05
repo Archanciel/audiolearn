@@ -31,13 +31,13 @@ class BatterySettingsDialog extends StatelessWidget {
                 // Open the app's settings page
                 AppSettings.openAppSettings();
               },
-              child: Text(
-                AppLocalizations.of(context)!.openBatteryOptimisationButton,
-              ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: kButtonColor, // Set button color in dark mode
                 foregroundColor:
                     Colors.white, // Set button text color in dark mode
+              ),
+              child: Text(
+                AppLocalizations.of(context)!.openBatteryOptimisationButton,
               ),
             ),
           ],
