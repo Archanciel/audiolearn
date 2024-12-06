@@ -1647,4 +1647,11 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get openBatteryOptimisationButton => "Display the battery settings";
+
+  @override
+  String deleteSortFilterParmsWarningTitle(
+    Object sortFilterParmsName,
+    Object playlistNumber,
+  ) =>
+      "WARNING: you are going to delete the Sort/Filter parms \"$sortFilterParmsName\" which is used in $playlistNumber playlist(s) listed below";
 }
