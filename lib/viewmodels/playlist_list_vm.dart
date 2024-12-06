@@ -739,6 +739,23 @@ class PlaylistListVM extends ChangeNotifier {
     );
   }
 
+  List<Playlist> getPlaylistsUsingSortFilterParmsName({
+    required String audioSortFilterParmsName,
+  }) {
+    List<Playlist> returnedPlaylistsList = [];
+
+    for (Playlist playlist in _listOfSelectablePlaylists) {
+      if (playlist.audioSortFilterParmsNameForPlaylistDownloadView ==
+              audioSortFilterParmsName ||
+          playlist.audioSortFilterParmsNameForAudioPlayerView ==
+              audioSortFilterParmsName) {
+        returnedPlaylistsList.add(playlist);
+      }
+    }
+
+    return returnedPlaylistsList;
+  }
+
   /// Return the deleted audio sort/filter parameters if it existed,
   /// null otherwise.
   AudioSortFilterParameters? deleteAudioSortFilterParameters({

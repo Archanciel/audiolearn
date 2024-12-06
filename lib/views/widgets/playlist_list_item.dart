@@ -718,6 +718,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                 ),
               ];
 
+              // Here, the deleted commented audio number is greater than 0
               showDialog<void>(
                 context: context,
                 barrierDismissible:

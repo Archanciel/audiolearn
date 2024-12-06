@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants.dart';
+import '../../models/playlist.dart';
 import '../../utils/button_state_manager.dart';
 import '../../utils/date_time_parser.dart';
 import '../../viewmodels/playlist_list_vm.dart';
@@ -748,7 +749,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
               : '',
           child: TextButton(
             key: const Key('deleteSortFilterTextButton'),
-            onPressed: () {
+            onPressed: () async {
               _audioSortFilterParameters =
                   _generateAudioSortFilterParametersFromDialogFields();
 
@@ -794,15 +795,43 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
               } else {
                 // here, the user deletes a saved with name sort/filter
                 // parameter
-                playlistListVM.deleteAudioSortFilterParameters(
-                  audioSortFilterParametersName: _sortFilterSaveAsUniqueName,
-                );
 
-                // removing the deleted sort/filter parameters from the
-                // sort/filter dialog
-                setState(() {
-                  _resetSortFilterOptions();
-                });
+                List<Playlist> playlistsUsingSortFilterParmsName =
+                    playlistListVM.getPlaylistsUsingSortFilterParmsName(
+                        audioSortFilterParmsName: _sortFilterSaveAsUniqueName);
+                List<String> playlistsUsingSortFilterParmsNameLst =
+                    playlistsUsingSortFilterParmsName
+                        .map((playlist) => playlist.title)
+                        .toList();
+
+                if (playlistsUsingSortFilterParmsNameLst.isNotEmpty) {
+                  String playlistsUsingSortFilterParmsNameStr =
+                      playlistsUsingSortFilterParmsNameLst.join(',\n');
+                  // Here, the deleted commented audio number is greater than 0
+                  await showDialog<void>(
+                    context: context,
+                    barrierDismissible:
+                        false, // This line prevents the dialog from closing when
+                    //            tapping outside the dialog
+                    builder: (BuildContext context) {
+                      return ConfirmActionDialog(
+                        actionFunction: executeAudioSortFilterParmsDeletion,
+                        actionFunctionArgs: [
+                          playlistListVM,
+                        ],
+                        dialogTitleOne: AppLocalizations.of(context)!
+                            .deleteSortFilterParmsWarningTitle(
+                          _sortFilterSaveAsUniqueName,
+                          playlistsUsingSortFilterParmsNameLst.length,
+                        ),
+                        dialogContent:
+                            playlistsUsingSortFilterParmsNameStr, // total audio duration
+                      );
+                    },
+                  );
+                } else {
+                  executeAudioSortFilterParmsDeletion(playlistListVM);
+                }
               }
 
               Navigator.of(context).pop(['delete']);
@@ -829,6 +858,20 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
         ),
       ],
     );
+  }
+
+  void executeAudioSortFilterParmsDeletion(
+    PlaylistListVM playlistListVM,
+  ) {
+    playlistListVM.deleteAudioSortFilterParameters(
+      audioSortFilterParametersName: _sortFilterSaveAsUniqueName,
+    );
+
+    // removing the deleted sort/filter parameters from the
+    // sort/filter dialog
+    setState(() {
+      _resetSortFilterOptions();
+    });
   }
 
   /// Save button is displayed when the sort filter name is defined.
