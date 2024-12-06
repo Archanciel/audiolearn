@@ -1294,7 +1294,7 @@ void main() {
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}sort_filtered_parms_name_unit_test",
+            "$kDownloadAppTestSavedDataDir${path.separator}sort_filtered_parms_name_deletion_no_mp3_test",
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 

@@ -5715,6 +5715,13 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(find.byKey(const Key('deleteSortFilterTextButton')));
           await tester.pumpAndSettle();
 
+          await IntegrationTestUtil.verifyConfirmActionDialog(
+            tester: tester,
+            confirmDialogTitleOne:
+                'WARNING: you are going to delete the Sort/Filter parms "$titleAscSortFilterName" which is used in 1 playlist(s) listed below',
+            confirmDialogMessage: 'S8 audio',
+          );
+
           // Now verify the playlist download view state with the 'default'
           // sort/filter parms applied
 
@@ -5865,6 +5872,13 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // view dropdown button.
           await tester.tap(find.byKey(const Key('deleteSortFilterTextButton')));
           await tester.pumpAndSettle();
+
+          await IntegrationTestUtil.verifyConfirmActionDialog(
+            tester: tester,
+            confirmDialogTitleOne:
+                'WARNING: you are going to delete the Sort/Filter parms "$titleAscSortFilterName" which is used in 2 playlist(s) listed below',
+            confirmDialogMessage: 'S8 audio,\nlocal',
+          );
 
           // Now verify the playlist download view state with the 'default'
           // sort/filter parms applied
