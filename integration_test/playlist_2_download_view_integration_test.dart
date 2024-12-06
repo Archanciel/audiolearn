@@ -4474,30 +4474,15 @@ void main() {
           playlistSubMenuKeyStr: 'popup_menu_delete_filtered_audio',
         );
 
-        // Verifying the confirm dialog title
+        // Verifying the confirm dialog
 
-        final Text deleteFilteredAudioConfirmDialogTitleWidget = tester
-            .widget<Text>(find.byKey(const Key('confirmDialogTitleOneKey')));
-
-        expect(deleteFilteredAudioConfirmDialogTitleWidget.data,
-            'Delete audio filtered by "$sortFilterParmName" parms from playlist "$youtubePlaylistTitle"');
-
-        // Verify the absence of the help icon button
-        expect(find.byIcon(Icons.help_outline), findsNothing);
-
-        // Verifying the confirm dialog message
-
-        final Text deleteFilteredAudioConfirmDialogMessageTextWidget =
-            tester.widget<Text>(
-                find.byKey(const Key('confirmationDialogMessageKey')));
-
-        expect(deleteFilteredAudioConfirmDialogMessageTextWidget.data,
-            'Audio to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.');
-
-        // Now find the confirm button of the delete filtered audio confirm
-        // dialog and tap on it
-        await tester.tap(find.byKey(const Key('confirmButton')));
-        await tester.pumpAndSettle();
+        await IntegrationTestUtil.verifyConfirmActionDialog(
+          tester: tester,
+          confirmDialogTitleOne:
+              'Delete audio filtered by "$sortFilterParmName" parms from playlist "$youtubePlaylistTitle"',
+          confirmDialogMessage:
+              'Audio to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.',
+        );
 
         // Verify that the audio files were deleted
 
@@ -4777,19 +4762,15 @@ void main() {
           playlistSubMenuKeyStr: 'popup_menu_delete_filtered_audio',
         );
 
-        // Verifying the confirm dialog message
+        // Verifying the confirm dialog
 
-        final Text deleteFilteredAudioConfirmDialogMessageTextWidget =
-            tester.widget<Text>(
-                find.byKey(const Key('confirmationDialogMessageKey')));
-
-        expect(deleteFilteredAudioConfirmDialogMessageTextWidget.data,
-            'Audio to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.');
-
-        // Now find the confirm button of the delete filtered audio confirm
-        // dialog and tap on it
-        await tester.tap(find.byKey(const Key('confirmButton')));
-        await tester.pumpAndSettle();
+        await IntegrationTestUtil.verifyConfirmActionDialog(
+          tester: tester,
+          confirmDialogTitleOne:
+              'Delete audio filtered by "$sortFilterParmName" parms from playlist "$youtubePlaylistTitle"',
+          confirmDialogMessage:
+              'Audio to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.',
+        );
 
         // Verify that the audio files were deleted
 
@@ -5067,22 +5048,15 @@ void main() {
           playlistSubMenuKeyStr: 'popup_menu_delete_filtered_audio',
         );
 
-        // Verify the absence of the help icon button
-        expect(find.byIcon(Icons.help_outline), findsNothing);
+        // Verifying the confirm dialog
 
-        // Verifying the confirm dialog message
-
-        final Text deleteFilteredAudioConfirmDialogMessageTextWidget =
-            tester.widget<Text>(
-                find.byKey(const Key('confirmationDialogMessageKey')));
-
-        expect(deleteFilteredAudioConfirmDialogMessageTextWidget.data,
-            'Audio to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.');
-
-        // Now find the confirm button of the delete filtered audio confirm
-        // dialog and tap on it
-        await tester.tap(find.byKey(const Key('confirmButton')));
-        await tester.pumpAndSettle();
+        await IntegrationTestUtil.verifyConfirmActionDialog(
+          tester: tester,
+          confirmDialogTitleOne:
+              'Delete audio filtered by "$sortFilterParmName" parms from playlist "$youtubePlaylistTitle"',
+          confirmDialogMessage:
+              'Audio to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.',
+        );
 
         // Verify that the audio files were deleted
 
@@ -5417,19 +5391,15 @@ void main() {
           playlistSubMenuKeyStr: 'popup_menu_delete_filtered_audio',
         );
 
-        // Verifying the confirm dialog message
+        // Verifying the confirm dialog
 
-        final Text deleteFilteredAudioConfirmDialogMessageTextWidget =
-            tester.widget<Text>(
-                find.byKey(const Key('confirmationDialogMessageKey')));
-
-        expect(deleteFilteredAudioConfirmDialogMessageTextWidget.data,
-            'Audio to delete number: 2,\nCorresponding total file size: 9.96 MB,\nCorresponding total duration: 00:27:14.');
-
-        // Now find the confirm button of the delete filtered audio confirm
-        // dialog and tap on it
-        await tester.tap(find.byKey(const Key('confirmButton')));
-        await tester.pumpAndSettle();
+        await IntegrationTestUtil.verifyConfirmActionDialog(
+          tester: tester,
+          confirmDialogTitleOne:
+              'Delete audio filtered by "$sortFilterParmName" parms from playlist "$youtubePlaylistTitle"',
+          confirmDialogMessage:
+              'Audio to delete number: 2,\nCorresponding total file size: 9.96 MB,\nCorresponding total duration: 00:27:14.',
+        );
 
         // Verify that the audio files were deleted
 
@@ -5718,36 +5688,17 @@ void main() {
           playlistSubMenuKeyStr: 'popup_menu_delete_filtered_audio',
         );
 
-        // Verifying the confirm dialog title
+        // Verifying the confirm dialog
 
-        Text deleteFilteredAudioConfirmDialogTitleWidget = tester
-            .widget<Text>(find.byKey(const Key('confirmDialogTitleOneKey')));
-
-        expect(deleteFilteredAudioConfirmDialogTitleWidget.data,
-            'WARNING: you are going to');
-
-        deleteFilteredAudioConfirmDialogTitleWidget = tester
-            .widget<Text>(find.byKey(const Key('confirmDialogTitleTwoKey')));
-
-        expect(deleteFilteredAudioConfirmDialogTitleWidget.data,
-            'delete COMMENTED and uncommented audio filtered by "$sortFilterParmName" parms from playlist "$youtubePlaylistTitle". Watch the help to solve the problem ...');
-
-        // Verify the absence of the help icon button
-        expect(find.byIcon(Icons.help_outline), findsOneWidget);
-
-        // Verifying the confirm dialog message
-
-        final Text deleteFilteredAudioConfirmDialogMessageTextWidget =
-            tester.widget<Text>(
-                find.byKey(const Key('confirmationDialogMessageKey')));
-
-        expect(deleteFilteredAudioConfirmDialogMessageTextWidget.data,
-            'Total audio to delete number: 4,\nCOMMENTED audio to delete number: 2,\nCorresponding total file size: 21.86 MB,\nCorresponding total duration: 00:59:45.');
-
-        // Now find the confirm button of the delete filtered audio confirm
-        // dialog and tap on it
-        await tester.tap(find.byKey(const Key('confirmButton')));
-        await tester.pumpAndSettle();
+        await IntegrationTestUtil.verifyConfirmActionDialog(
+          tester: tester,
+          confirmDialogTitleOne: 'WARNING: you are going to',
+          confirmDialogTitleTwo:
+              'delete COMMENTED and uncommented audio filtered by "$sortFilterParmName" parms from playlist "$youtubePlaylistTitle". Watch the help to solve the problem ...',
+          confirmDialogMessage:
+              'Total audio to delete number: 4,\nCOMMENTED audio to delete number: 2,\nCorresponding total file size: 21.86 MB,\nCorresponding total duration: 00:59:45.',
+          isHelpIconPresent: true,
+        );
 
         // Verify that the audio files were deleted
 
@@ -6055,17 +6006,15 @@ void main() {
 
         // Verifying the confirm dialog message
 
-        final Text deleteFilteredAudioConfirmDialogMessageTextWidget =
-            tester.widget<Text>(
-                find.byKey(const Key('confirmationDialogMessageKey')));
-
-        expect(deleteFilteredAudioConfirmDialogMessageTextWidget.data,
-            'Total audio to delete number: 7,\nCOMMENTED audio to delete number: 3,\nCorresponding total file size: 31.99 MB,\nCorresponding total duration: 01:27:27.');
-
-        // Now find the confirm button of the delete filtered audio confirm
-        // dialog and tap on it
-        await tester.tap(find.byKey(const Key('confirmButton')));
-        await tester.pumpAndSettle();
+        await IntegrationTestUtil.verifyConfirmActionDialog(
+          tester: tester,
+          confirmDialogTitleOne: 'WARNING: you are going to',
+          confirmDialogTitleTwo:
+              'delete COMMENTED and uncommented audio filtered by "$defaultSortFilterParmName" parms from playlist "$youtubePlaylistTitle". Watch the help to solve the problem ...',
+          confirmDialogMessage:
+              'Total audio to delete number: 7,\nCOMMENTED audio to delete number: 3,\nCorresponding total file size: 31.99 MB,\nCorresponding total duration: 01:27:27.',
+          isHelpIconPresent: true,
+        );
 
         // Verify that the audio files were deleted
 
@@ -9377,7 +9326,8 @@ void main() {
     });
   });
   group('Change application language', () {
-    testWidgets('''In playlist download view, change to french and verify translated
+    testWidgets(
+        '''In playlist download view, change to french and verify translated
         texts. Then, switch to audio player view verify translated texts. Then,
         change to english, verify translation and go back to playlist download view
         and verify translation.''', (tester) async {
@@ -9462,7 +9412,8 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets('''Go to audio player view, change to french and verify translated
+    testWidgets(
+        '''Go to audio player view, change to french and verify translated
         texts. Then, switch to playlist download view and verify translated texts.
         Then, change to english, verify translation and go back to audio player view
         and verify translation.''', (tester) async {

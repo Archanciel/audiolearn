@@ -956,6 +956,59 @@ class IntegrationTestUtil {
     );
   }
 
+  static Future<void> verifyConfirmActionDialog({
+    required WidgetTester tester,
+    required String confirmDialogTitleOne,
+    String confirmDialogTitleTwo = '',
+    required String confirmDialogMessage,
+    bool isHelpIconPresent = false,
+  }) async {
+    // Verifying the confirm dialog title
+
+    Text confirmDialogTitleTextWidget =
+        tester.widget<Text>(find.byKey(const Key('confirmDialogTitleOneKey')));
+
+    expect(
+      confirmDialogTitleTextWidget.data,
+      confirmDialogTitleOne,
+    );
+
+    // Verifying the confirm dialog title two
+
+    if (confirmDialogTitleTwo.isNotEmpty) {
+      confirmDialogTitleTextWidget = tester
+          .widget<Text>(find.byKey(const Key('confirmDialogTitleTwoKey')));
+
+      expect(
+        confirmDialogTitleTextWidget.data,
+        confirmDialogTitleTwo,
+      );
+    }
+
+    if (isHelpIconPresent) {
+      // Verify the presence of the help icon button
+      expect(find.byIcon(Icons.help_outline), findsOneWidget);
+    } else {
+      // Verify the absence of the help icon button
+      expect(find.byIcon(Icons.help_outline), findsNothing);
+    }
+
+    // Verifying the confirm dialog message
+
+    final Text confirmDialogMessageTextWidget = tester
+        .widget<Text>(find.byKey(const Key('confirmationDialogMessageKey')));
+
+    expect(
+      confirmDialogMessageTextWidget.data,
+      confirmDialogMessage,
+    );
+
+    // Now find the confirm button of the delete filtered audio confirm
+    // dialog and tap on it
+    await tester.tap(find.byKey(const Key('confirmButton')));
+    await tester.pumpAndSettle();
+  }
+
 // A custom finder that finds an IconButton with the specified icon data.
   static Finder findIconButtonWithIcon(IconData iconData) {
     return find.byWidgetPredicate(
@@ -970,9 +1023,9 @@ class IntegrationTestUtil {
     required WidgetTester tester,
     required Language language,
   }) async {
-      // Tap the appbar leading popup menu button
-      await tester.tap(find.byKey(const Key('appBarRightPopupMenu')));
-      await tester.pumpAndSettle();
+    // Tap the appbar leading popup menu button
+    await tester.tap(find.byKey(const Key('appBarRightPopupMenu')));
+    await tester.pumpAndSettle();
 
     if (language == Language.english) {
       // Select English
