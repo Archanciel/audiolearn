@@ -157,6 +157,11 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       context,
       listen: false,
     );
+    final AudioDownloadVM audioDownloadVMlistenTrue =
+        Provider.of<AudioDownloadVM>(
+      context,
+      listen: true,
+    );
     final ThemeProviderVM themeProviderVM = Provider.of<ThemeProviderVM>(
       context,
       listen: false,
@@ -203,6 +208,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             warningMessageVMlistenFalse: warningMessageVMlistenFalse),
         _buildExpandedPlaylistList(
           playlistListVMlistenFalse: playlistListVMlistenFalse,
+          audioDownloadVMlistenTrue: audioDownloadVMlistenTrue,
         ),
         (playlistListVMlistenFalse.isPlaylistListExpanded)
             ? const Divider(
@@ -213,6 +219,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             : const SizedBox.shrink(), // the list of playlists is collapsed
         _buildExpandedAudioList(
           playlistListVMlistenTrue: playlistListVMlistenTrue,
+          audioDownloadVMlistenTrue: audioDownloadVMlistenTrue,
           warningMessageVMlistenFalse: warningMessageVMlistenFalse,
         ),
       ],
@@ -221,6 +228,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
   Widget _buildExpandedAudioList({
     required PlaylistListVM playlistListVMlistenTrue,
+    required AudioDownloadVM audioDownloadVMlistenTrue,
     required WarningMessageVM warningMessageVMlistenFalse,
   }) {
     if (_wasSortFilterAudioSettingsApplied) {
@@ -281,12 +289,6 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           );
         },
       ),
-    );
-
-    final AudioDownloadVM audioDownloadVMlistenTrue =
-        Provider.of<AudioDownloadVM>(
-      context,
-      listen: true,
     );
 
     _scrollToCurrentAudioItem(
@@ -389,6 +391,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
   Widget _buildExpandedPlaylistList({
     required PlaylistListVM playlistListVMlistenFalse,
+    required AudioDownloadVM audioDownloadVMlistenTrue,
   }) {
     if (playlistListVMlistenFalse.isPlaylistListExpanded) {
       List<Playlist> upToDateSelectablePlaylists =
@@ -414,6 +417,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
       _scrollToSelectedPlaylist(
         playlistListVMlistenFalse: playlistListVMlistenFalse,
+        audioDownloadVMlistenTrue: audioDownloadVMlistenTrue,
       );
 
       return expanded;
@@ -425,11 +429,19 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
   void _scrollToSelectedPlaylist({
     required PlaylistListVM playlistListVMlistenFalse,
+    required AudioDownloadVM audioDownloadVMlistenTrue,
   }) {
     List<Playlist> selectablePlaylists;
     String searchSentence = playlistListVMlistenFalse.searchSentence;
     int playlistToScrollPosition = 0;
     int noScrollPositionValue = 0; // position value avoiding scrolling down
+
+    if (audioDownloadVMlistenTrue.isDownloading) {
+      // When an audio is downloading, the list of playlist must not 
+      // scrolled to the current playlist, what happens if this test
+      // is not performed.
+      return;
+    }
 
     if (playlistListVMlistenFalse.wasSearchButtonClicked &&
         searchSentence.isNotEmpty) {
@@ -504,6 +516,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       WidgetsBinding.instance
           .addPostFrameCallback((_) => _scrollToSelectedPlaylist(
                 playlistListVMlistenFalse: playlistListVMlistenFalse,
+                audioDownloadVMlistenTrue: audioDownloadVMlistenTrue,
               ));
     }
   }
