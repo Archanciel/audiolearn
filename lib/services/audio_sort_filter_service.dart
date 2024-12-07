@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:audiolearn/models/comment.dart';
 import 'package:audiolearn/viewmodels/comment_vm.dart';
+import 'package:flutter/foundation.dart';
 
 import '../models/audio.dart';
 import 'sort_filter_parameters.dart';
@@ -92,7 +93,7 @@ class AudioSortFilterService {
     return audioLst;
   }
 
-  List<String> sortAudioFileNamesLstBySortingOptions({
+  List<String> _sortAudioFileNamesLstBySortingOptions({
     required List<String> audioFileNamesLst,
     required List<SortingItem> selectedSortItemLst,
   }) {
@@ -133,8 +134,8 @@ class AudioSortFilterService {
       ),
     ];
 
-    // Sorting the audio list by applying the SortCriteria of the
-    // sortCriteriaLst
+    // Sorting the audio file name list by applying the SortCriteria
+    // of the sortCriteriaLst
     audioFileNamesLst.sort((a, b) {
       for (SortCriteria<String> sortCriteria in sortCriteriaLst) {
         int comparison = sortCriteria
@@ -197,16 +198,113 @@ class AudioSortFilterService {
     );
   }
 
+  /// Method not used !
   List<String> sortAudioFileNamesLst({
     required List<String> audioFileNamesLst,
     required AudioSortFilterParameters audioSortFilterParameters,
   }) {
     List<String> audioFileNamesLstCopy = List<String>.from(audioFileNamesLst);
 
-    return sortAudioFileNamesLstBySortingOptions(
+    return _sortAudioFileNamesLstBySortingOptions(
       audioFileNamesLst: audioFileNamesLstCopy,
       selectedSortItemLst: audioSortFilterParameters.selectedSortItemLst,
     );
+  }
+
+  List<String> getListOfDifferencesBetweenSortFilterParameters({
+    required AudioSortFilterParameters audioSortFilterParametersOne,
+    required AudioSortFilterParameters audioSortFilterParametersTwo,
+  }) {
+    List<String> differencesLst = [];
+
+    if (audioSortFilterParametersOne == audioSortFilterParametersTwo) {
+      // Returning empty list if both parameters are equal
+      return differencesLst;
+    }
+
+    // Check each field and add its name to the list if values are different
+    if (!listEquals(audioSortFilterParametersOne.selectedSortItemLst,
+        audioSortFilterParametersTwo.selectedSortItemLst)) {
+      differencesLst.add('selectedSortItemLst');
+    }
+    if (!listEquals(audioSortFilterParametersOne.filterSentenceLst,
+        audioSortFilterParametersTwo.filterSentenceLst)) {
+      differencesLst.add('filterSentenceLst');
+    }
+    if (audioSortFilterParametersOne.sentencesCombination !=
+        audioSortFilterParametersTwo.sentencesCombination) {
+      differencesLst.add('sentencesCombination');
+    }
+    if (audioSortFilterParametersOne.ignoreCase !=
+        audioSortFilterParametersTwo.ignoreCase) {
+      differencesLst.add('ignoreCase');
+    }
+    if (audioSortFilterParametersOne.searchAsWellInYoutubeChannelName !=
+        audioSortFilterParametersTwo.searchAsWellInYoutubeChannelName) {
+      differencesLst.add('searchAsWellInYoutubeChannelName');
+    }
+    if (audioSortFilterParametersOne.searchAsWellInVideoCompactDescription !=
+        audioSortFilterParametersTwo.searchAsWellInVideoCompactDescription) {
+      differencesLst.add('searchAsWellInVideoCompactDescription');
+    }
+    if (audioSortFilterParametersOne.filterMusicQuality !=
+        audioSortFilterParametersTwo.filterMusicQuality) {
+      differencesLst.add('filterMusicQuality');
+    }
+    if (audioSortFilterParametersOne.filterFullyListened !=
+        audioSortFilterParametersTwo.filterFullyListened) {
+      differencesLst.add('filterFullyListened');
+    }
+    if (audioSortFilterParametersOne.filterPartiallyListened !=
+        audioSortFilterParametersTwo.filterPartiallyListened) {
+      differencesLst.add('filterPartiallyListened');
+    }
+    if (audioSortFilterParametersOne.filterNotListened !=
+        audioSortFilterParametersTwo.filterNotListened) {
+      differencesLst.add('filterNotListened');
+    }
+    if (audioSortFilterParametersOne.filterCommented !=
+        audioSortFilterParametersTwo.filterCommented) {
+      differencesLst.add('filterCommented');
+    }
+    if (audioSortFilterParametersOne.filterNotCommented !=
+        audioSortFilterParametersTwo.filterNotCommented) {
+      differencesLst.add('filterNotCommented');
+    }
+    if (audioSortFilterParametersOne.downloadDateStartRange !=
+        audioSortFilterParametersTwo.downloadDateStartRange) {
+      differencesLst.add('downloadDateStartRange');
+    }
+    if (audioSortFilterParametersOne.downloadDateEndRange !=
+        audioSortFilterParametersTwo.downloadDateEndRange) {
+      differencesLst.add('downloadDateEndRange');
+    }
+    if (audioSortFilterParametersOne.uploadDateStartRange !=
+        audioSortFilterParametersTwo.uploadDateStartRange) {
+      differencesLst.add('uploadDateStartRange');
+    }
+    if (audioSortFilterParametersOne.uploadDateEndRange !=
+        audioSortFilterParametersTwo.uploadDateEndRange) {
+      differencesLst.add('uploadDateEndRange');
+    }
+    if (audioSortFilterParametersOne.fileSizeStartRangeMB !=
+        audioSortFilterParametersTwo.fileSizeStartRangeMB) {
+      differencesLst.add('fileSizeStartRangeMB');
+    }
+    if (audioSortFilterParametersOne.fileSizeEndRangeMB !=
+        audioSortFilterParametersTwo.fileSizeEndRangeMB) {
+      differencesLst.add('fileSizeEndRangeMB');
+    }
+    if (audioSortFilterParametersOne.durationStartRangeSec !=
+        audioSortFilterParametersTwo.durationStartRangeSec) {
+      differencesLst.add('durationStartRangeSec');
+    }
+    if (audioSortFilterParametersOne.durationEndRangeSec !=
+        audioSortFilterParametersTwo.durationEndRangeSec) {
+      differencesLst.add('durationEndRangeSec');
+    }
+
+    return differencesLst;
   }
 
   /// Method called by filterAndSortAudioLst().
@@ -466,7 +564,7 @@ class AudioSortFilterService {
     if (filteredAudios.isEmpty) {
       return filteredAudios;
     }
-    
+
     CommentVM commentVM = CommentVM();
     Map<String, List<Comment>> commentsMap = commentVM.getPlaylistAudioComments(
       playlist: filteredAudios.first.enclosingPlaylist!,
