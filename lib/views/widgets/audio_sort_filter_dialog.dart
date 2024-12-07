@@ -889,12 +889,13 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
         message: AppLocalizations.of(context)!.applySortFilterOptionsTooltip,
         child: TextButton(
           key: const Key('applySortFilterOptionsTextButton'),
-          onPressed: () {
-            List<dynamic> filterSortAudioAndParmLst = _filterAndSortAudioLst(
-                playlistListVM: playlistListVM,
-                sortFilterParametersSaveAsUniqueName:
-                    AppLocalizations.of(context)!
-                        .sortFilterParametersAppliedName);
+          onPressed: () async {
+            List<dynamic> filterSortAudioAndParmLst =
+                await _filterAndSortAudioLst(
+                    playlistListVM: playlistListVM,
+                    sortFilterParametersSaveAsUniqueName:
+                        AppLocalizations.of(context)!
+                            .sortFilterParametersAppliedName);
 
             if (filterSortAudioAndParmLst[1] ==
                 AudioSortFilterParameters
@@ -929,8 +930,9 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
         message: AppLocalizations.of(context)!.saveSortFilterOptionsTooltip,
         child: TextButton(
           key: const Key('saveSortFilterOptionsTextButton'),
-          onPressed: () {
-            List<dynamic> filterSortAudioAndParmLst = _filterAndSortAudioLst(
+          onPressed: () async {
+            List<dynamic> filterSortAudioAndParmLst =
+                await _filterAndSortAudioLst(
               playlistListVM: playlistListVM,
               sortFilterParametersSaveAsUniqueName: _sortFilterSaveAsUniqueName,
             );
@@ -939,7 +941,12 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
               audioSortFilterParameters: filterSortAudioAndParmLst[1],
             );
 
-            Navigator.of(context).pop(filterSortAudioAndParmLst);
+            if (filterSortAudioAndParmLst.isNotEmpty) {
+              // The filterSortAudioAndParmLst is empty when the user
+              // cancelled saving the sort/filter parameters with the
+              // same name as an existing one
+              Navigator.of(context).pop(filterSortAudioAndParmLst);
+            }
           },
           child: Text(
             AppLocalizations.of(context)!.saveButton,
@@ -1922,31 +1929,86 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
   /// 1/ the filtered and sorted selected playlist audio list
   /// 2/ the audio sort filter parameters (AudioSortFilterParameters)
   /// 3/ the sort filter parameters save as unique name
-  List<dynamic> _filterAndSortAudioLst({
+  Future<List> _filterAndSortAudioLst({
     required PlaylistListVM playlistListVM,
     required String sortFilterParametersSaveAsUniqueName,
-  }) {
-    if (playlistListVM.doesAudioSortFilterParmsNameAlreadyExist(
-        audioSortFilterParmrsName: _sortFilterSaveAsUniqueName)) {
-      // widget.warningMessageVM
-      //     .audioSortFilterParametersNameAlreadyUsed();
-      // return;
-    }
-
+  }) async {
     _audioSortFilterParameters =
         _generateAudioSortFilterParametersFromDialogFields();
 
-    List<Audio> filteredAndSortedAudioLst =
-        _audioSortFilterService.filterAndSortAudioLst(
-      audioLst: widget.selectedPlaylistAudioLst,
-      audioSortFilterParameters: _audioSortFilterParameters,
-    );
+    bool cancelSaveSortFilterParms = false;
 
-    return [
-      filteredAndSortedAudioLst,
-      _audioSortFilterParameters,
-      sortFilterParametersSaveAsUniqueName,
-    ];
+    if (playlistListVM.doesAudioSortFilterParmsNameAlreadyExist(
+        audioSortFilterParmrsName: _sortFilterSaveAsUniqueName)) {
+      AudioSortFilterParameters existingAudioSortFilterParameters =
+          playlistListVM.getAudioSortFilterParameters(
+        audioSortFilterParametersName: _sortFilterSaveAsUniqueName,
+      );
+
+      List<String> listOfDifferencesBetweenSortFilterParameters =
+          _audioSortFilterService
+              .getListOfDifferencesBetweenSortFilterParameters(
+        audioSortFilterParametersOne: existingAudioSortFilterParameters,
+        audioSortFilterParametersTwo: _audioSortFilterParameters,
+      );
+
+      if (listOfDifferencesBetweenSortFilterParameters.isNotEmpty) {
+        String playlistsUsingSortFilterParmsNameStr =
+            listOfDifferencesBetweenSortFilterParameters.join(',\n');
+        // Here, the deleted commented audio number is greater than 0
+        await showDialog<dynamic>(
+          context: context,
+          barrierDismissible:
+              false, // This line prevents the dialog from closing when
+          //            tapping outside the dialog
+          builder: (BuildContext context) {
+            return ConfirmActionDialog(
+              actionFunction: returnConfirmAction,
+              actionFunctionArgs: [],
+              dialogTitleOne: AppLocalizations.of(context)!
+                  .deleteSortFilterParmsWarningTitle(
+                _sortFilterSaveAsUniqueName,
+                listOfDifferencesBetweenSortFilterParameters.length,
+              ),
+              dialogContent:
+                  playlistsUsingSortFilterParmsNameStr, // total audio duration
+            );
+          },
+        ).then((result) {
+          if (result == ConfirmAction.cancel) {
+            cancelSaveSortFilterParms = true;
+          }
+        });
+      }
+    }
+
+    if (cancelSaveSortFilterParms) {
+      // The case if the user was saving a sort/filter parameters
+      // with the same name as an existing one and, after having
+      // read the confirm action dialog warning, cancelled the save
+      // operation. In this situation, the sort/filter parameters
+      // are not saved and the audio sort filter dialog is not closed.
+      return [];
+    } else {
+      _audioSortFilterParameters =
+          _generateAudioSortFilterParametersFromDialogFields();
+
+      List<Audio> filteredAndSortedAudioLst =
+          _audioSortFilterService.filterAndSortAudioLst(
+        audioLst: widget.selectedPlaylistAudioLst,
+        audioSortFilterParameters: _audioSortFilterParameters,
+      );
+
+      return [
+        filteredAndSortedAudioLst,
+        _audioSortFilterParameters,
+        sortFilterParametersSaveAsUniqueName,
+      ];
+    }
+  }
+
+  ConfirmAction returnConfirmAction() {
+    return ConfirmAction.confirm;
   }
 
   AudioSortFilterParameters

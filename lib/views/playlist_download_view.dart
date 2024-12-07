@@ -437,7 +437,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     int noScrollPositionValue = 0; // position value avoiding scrolling down
 
     if (audioDownloadVMlistenTrue.isDownloading) {
-      // When an audio is downloading, the list of playlist must not 
+      // When an audio is downloading, the list of playlist must not
       // scrolled to the current playlist, what happens if this test
       // is not performed.
       return;
@@ -1159,7 +1159,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
               );
             },
           ).then((filterSortAudioAndParmLst) {
-            if (filterSortAudioAndParmLst != null) {
+            if (filterSortAudioAndParmLst != null &&
+                filterSortAudioAndParmLst.isNotEmpty) {
               // user clicked on Save or Apply or on Delete button
               // on sort and filter dialog OPENED BY EDITING A
               // SORT AND FILTER DROPDOWN MENU ITEM
