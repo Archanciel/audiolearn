@@ -1284,7 +1284,7 @@ void main() {
     });
   });
   group('''Obtain list of playlists using sort/filter parms name.''', () {
-    test('''Test.''', () async {
+    test('''Test obtaining playlists.''', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -1362,6 +1362,81 @@ void main() {
         playlistListVM: playlistListVM,
         audioSortFilterParmsName: 'Unused SF',
         expectedPlaylistTitleLst: [],
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    test('''Test if SF parms name exist.''', () async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}sort_filtered_parms_name_deletion_no_mp3_test",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+      WarningMessageVM warningMessageVM = WarningMessageVM();
+
+      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+        isTest: true,
+      );
+
+      PlaylistListVM playlistListVM = PlaylistListVM(
+        warningMessageVM: warningMessageVM,
+        audioDownloadVM: audioDownloadVM,
+        commentVM: CommentVM(),
+        settingsDataService: settingsDataService,
+      );
+
+      // calling getUpToDateSelectablePlaylists() loads all the
+      // playlist json files from the app dir and so enables
+      // playlistListVM to know which playlists are
+      // selected and which are not
+      playlistListVM.getUpToDateSelectablePlaylists();
+
+      expect(
+        playlistListVM.doesAudioSortFilterParmsNameAlreadyExist(
+          audioSortFilterParmrsName: 'Title asc',
+        ),
+        true,
+      );
+
+      expect(
+        playlistListVM.doesAudioSortFilterParmsNameAlreadyExist(
+          audioSortFilterParmrsName: 'Not exist',
+        ),
+        false,
+      );
+
+      expect(
+        playlistListVM.doesAudioSortFilterParmsNameAlreadyExist(
+          audioSortFilterParmrsName: '',
+        ),
+        false,
       );
 
       // Purge the test playlist directory so that the created test
