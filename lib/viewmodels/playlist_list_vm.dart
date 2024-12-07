@@ -687,6 +687,13 @@ class PlaylistListVM extends ChangeNotifier {
     );
   }
 
+  bool doesAudioSortFilterParmsNameAlreadyExist({
+    required String audioSortFilterParmrsName,
+  }) {
+    return _settingsDataService.namedAudioSortFilterParametersMap
+        .containsKey(audioSortFilterParmrsName);
+  }
+
   AudioSortFilterParameters getAudioSortFilterParameters({
     required String audioSortFilterParametersName,
   }) {

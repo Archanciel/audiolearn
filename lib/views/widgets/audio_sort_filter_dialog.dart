@@ -891,6 +891,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           key: const Key('applySortFilterOptionsTextButton'),
           onPressed: () {
             List<dynamic> filterSortAudioAndParmLst = _filterAndSortAudioLst(
+                playlistListVM: playlistListVM,
                 sortFilterParametersSaveAsUniqueName:
                     AppLocalizations.of(context)!
                         .sortFilterParametersAppliedName);
@@ -922,13 +923,15 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     } else {
       // In this situation, the user saves the named sort/filter
       // parameters. In this case, the named sort/filter parameters are
-      // added to the sort/filter list which is saved in the settings file.
+      // added to the sort/filter list which is saved in the application
+      // settings file.
       return Tooltip(
         message: AppLocalizations.of(context)!.saveSortFilterOptionsTooltip,
         child: TextButton(
           key: const Key('saveSortFilterOptionsTextButton'),
           onPressed: () {
             List<dynamic> filterSortAudioAndParmLst = _filterAndSortAudioLst(
+              playlistListVM: playlistListVM,
               sortFilterParametersSaveAsUniqueName: _sortFilterSaveAsUniqueName,
             );
             playlistListVM.saveAudioSortFilterParameters(
@@ -1920,8 +1923,16 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
   /// 2/ the audio sort filter parameters (AudioSortFilterParameters)
   /// 3/ the sort filter parameters save as unique name
   List<dynamic> _filterAndSortAudioLst({
+    required PlaylistListVM playlistListVM,
     required String sortFilterParametersSaveAsUniqueName,
   }) {
+    if (playlistListVM.doesAudioSortFilterParmsNameAlreadyExist(
+        audioSortFilterParmrsName: _sortFilterSaveAsUniqueName)) {
+      // widget.warningMessageVM
+      //     .audioSortFilterParametersNameAlreadyUsed();
+      // return;
+    }
+
     _audioSortFilterParameters =
         _generateAudioSortFilterParametersFromDialogFields();
 
