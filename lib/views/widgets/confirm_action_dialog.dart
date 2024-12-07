@@ -12,6 +12,13 @@ import 'help_dialog.dart';
 
 enum ConfirmAction { cancel, confirm }
 
+/// This dialog asks for confirmation before executing an action. The action is
+/// passed as a function [actionFunction] with its argument values added to the
+/// list [actionFunctionArgs] and executed on confirmation.
+/// 
+/// If [helpItemsLst] is passed to the dialog constructor, a help icon is
+/// displayed in the dialog title. Clicking on the help icon opens a dialog
+/// with displaying the help content contained in the help items.
 class ConfirmActionDialog extends StatefulWidget {
   final Function actionFunction; // The action to execute on confirmation
   final List<dynamic> actionFunctionArgs; // Arguments for the action function
