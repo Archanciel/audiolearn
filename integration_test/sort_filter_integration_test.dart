@@ -1920,6 +1920,16 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
         await tester.pumpAndSettle();
 
+        // Verifying and closing the confirm dialog
+
+        await IntegrationTestUtil.verifyConfirmActionDialog(
+          tester: tester,
+          confirmDialogTitleOne:
+              'WARNING: the sort/filter parameters \"$saveAsTitle\" were modified. Do you want to update the existing sort/filter parms by clicking on \"Confirm\", or to save it with a different name or cancel the Save operation, this by clicking on \"Cancel\" ?',
+          confirmDialogMessage:
+              'Audio to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.',
+        );
+
         // Now verify the playlist download view state with the 'Title asc' -
         // in fact now descending - sort/filter parms now applied
 
@@ -7486,7 +7496,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         await tester.pumpAndSettle(Duration(milliseconds: 200));
 
         await tester.enterText(
-            find.byKey(const Key('endFileSizeTextField')), '2.79');
+            find.byKey(const Key('endFileSizeTextField')), '2.8');
         await tester.pumpAndSettle(Duration(milliseconds: 200));
 
         // Click on the "Save" button. This closes the sort/filter dialog

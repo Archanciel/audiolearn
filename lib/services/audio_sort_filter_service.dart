@@ -242,9 +242,10 @@ class AudioSortFilterService {
               sortingOptionName;
         }).toList();
         String presentOnlyInFirst =
-            sortFilterParmNameTranslationMap['Present only in first'] ??
-                'Present only in first';
-        differencesLst.add("$presentOnlyInFirst: ${firstListNames.join(', ')}");
+            sortFilterParmNameTranslationMap['presentOnlyInFirst'] ??
+                'presentOnlyInFirst';
+        differencesLst.add(presentOnlyInFirst);
+        differencesLst.add("${firstListNames.join(', ')}");
       }
 
       if (listDiff['onlyInSecond']!.isNotEmpty) {
@@ -256,10 +257,10 @@ class AudioSortFilterService {
               sortingOptionName;
         }).toList();
         String presentOnlyInSecond =
-            sortFilterParmNameTranslationMap['Present only in second'] ??
-                'Present only in second';
-        differencesLst
-            .add("$presentOnlyInSecond: ${secondListNames.join(', ')}");
+            sortFilterParmNameTranslationMap['presentOnlyInSeond'] ??
+                'presentOnlyInSeond';
+        differencesLst.add(presentOnlyInSecond);
+        differencesLst.add("${secondListNames.join(', ')}");
       }
     }
 
@@ -278,19 +279,20 @@ class AudioSortFilterService {
 
       if (listDiff['onlyInFirst']!.isNotEmpty) {
         String presentOnlyInFirst =
-            sortFilterParmNameTranslationMap['Present only in first'] ??
-                'Present only in first';
-
+            sortFilterParmNameTranslationMap['presentOnlyInFirst'] ??
+                'presentOnlyInFirst';
+        differencesLst.add(presentOnlyInFirst);
         differencesLst
-            .add("$presentOnlyInFirst: ${listDiff['onlyInFirst']!.join(', ')}");
+            .add("${listDiff['onlyInFirst']!.join(', ')}");
       }
 
       if (listDiff['onlyInSecond']!.isNotEmpty) {
         String presentOnlyInSecond =
-            sortFilterParmNameTranslationMap['Present only in second'] ??
-                'Present only in second';
+            sortFilterParmNameTranslationMap['presentOnlyInSeond'] ??
+                'presentOnlyInSeond';
+        differencesLst.add(presentOnlyInSecond);
         differencesLst.add(
-            "$presentOnlyInSecond: ${listDiff['onlyInSecond']!.join(', ')}");
+            "${listDiff['onlyInSecond']!.join(', ')}");
       }
     }
 

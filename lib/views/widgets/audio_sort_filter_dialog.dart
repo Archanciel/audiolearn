@@ -1956,7 +1956,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
 
       if (listOfDifferencesBetweenSortFilterParameters.isNotEmpty) {
         String playlistsUsingSortFilterParmsNameStr =
-            listOfDifferencesBetweenSortFilterParameters.join(',\n');
+            constructCustomStringListItem(
+                listOfDifferencesBetweenSortFilterParameters);
         // Here, the deleted commented audio number is greater than 0
         await showDialog<dynamic>(
           context: context,
@@ -2011,11 +2012,16 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     return ConfirmAction.confirm;
   }
 
+  /// This method creates a map of keyed by the sort filter parameters names and
+  /// valued by the sort filter parameters names translated in the current language.
+  ///
+  /// This must be done that way since the AppLocalizations class is only available
+  /// in the interface classes.
   Map<String, String> _createSortFilterParmNameTranslationMap() {
     Map<String, String> translationMap = {
-      'selectedSortItemLst': AppLocalizations.of(context)!.sortBy,
-      'Present only in first': AppLocalizations.of(context)!.presentOnlyInFirst,
-      'Present only in second': AppLocalizations.of(context)!.presentOnlyInSecond,
+      'selectedSortItemLst': "${AppLocalizations.of(context)!.sortBy}startAtZeroPosition",
+      'presentOnlyInFirst': AppLocalizations.of(context)!.presentOnlyInFirst,
+      'presentOnlyInSeond': AppLocalizations.of(context)!.presentOnlyInSecond,
       'audioDownloadDate': AppLocalizations.of(context)!.audioDownloadDate,
       'videoUploadDate': AppLocalizations.of(context)!.videoUploadDate,
       'validAudioTitle': AppLocalizations.of(context)!.audioTitleLabel,
@@ -2030,36 +2036,64 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       'audioDownloadSpeed': AppLocalizations.of(context)!.audioDownloadSpeed,
       'audioDownloadDuration':
           AppLocalizations.of(context)!.audioDownloadDuration,
-      'filterSentenceLst': AppLocalizations.of(context)!.filterOptions,
+      'filterSentenceLst': "${AppLocalizations.of(context)!.filterOptions}startAtZeroPosition",
       'sentencesCombination':
-          "${AppLocalizations.of(context)!.and} / ${AppLocalizations.of(context)!.or}",
-      'ignoreCase': AppLocalizations.of(context)!.ignoreCase,
+          "${AppLocalizations.of(context)!.and} / ${AppLocalizations.of(context)!.or}startAtZeroPosition",
+      'ignoreCase': "${AppLocalizations.of(context)!.ignoreCase}startAtZeroPosition",
       'searchAsWellInYoutubeChannelName':
-          AppLocalizations.of(context)!.searchInYoutubeChannelName,
+          "${AppLocalizations.of(context)!.searchInYoutubeChannelName}startAtZeroPosition",
       'searchAsWellInVideoCompactDescription':
-          AppLocalizations.of(context)!.searchInVideoCompactDescription,
-      'filterMusicQuality': AppLocalizations.of(context)!.audioMusicQuality,
-      'filterFullyListened': AppLocalizations.of(context)!.fullyListened,
+          "${AppLocalizations.of(context)!.searchInVideoCompactDescription}startAtZeroPosition",
+      'filterMusicQuality': "${AppLocalizations.of(context)!.audioMusicQuality}startAtZeroPosition",
+      'filterFullyListened': "${AppLocalizations.of(context)!.fullyListened}startAtZeroPosition",
       'filterPartiallyListened':
-          AppLocalizations.of(context)!.partiallyListened,
-      'filterNotListened': AppLocalizations.of(context)!.notListened,
-      'filterCommented': AppLocalizations.of(context)!.commented,
-      'filterNotCommented': AppLocalizations.of(context)!.notCommented,
-      'downloadDateStartRange': AppLocalizations.of(context)!.startDownloadDate,
-      'downloadDateEndRange': AppLocalizations.of(context)!.endDownloadDate,
-      'uploadDateStartRange': AppLocalizations.of(context)!.startUploadDate,
-      'uploadDateEndRange': AppLocalizations.of(context)!.endUploadDate,
+          "${AppLocalizations.of(context)!.partiallyListened}startAtZeroPosition",
+      'filterNotListened': "${AppLocalizations.of(context)!.notListened}startAtZeroPosition",
+      'filterCommented': "${AppLocalizations.of(context)!.commented}startAtZeroPosition",
+      'filterNotCommented': "${AppLocalizations.of(context)!.notCommented}startAtZeroPosition",
+      'downloadDateStartRange': "${AppLocalizations.of(context)!.startDownloadDate}startAtZeroPosition",
+      'downloadDateEndRange': "${AppLocalizations.of(context)!.endDownloadDate}startAtZeroPosition",
+      'uploadDateStartRange': "${AppLocalizations.of(context)!.startUploadDate}startAtZeroPosition",
+      'uploadDateEndRange': "${AppLocalizations.of(context)!.endUploadDate}startAtZeroPosition",
       'fileSizeStartRangeMB':
-          "${AppLocalizations.of(context)!.fileSizeRange} ${AppLocalizations.of(context)!.start}",
+          "${AppLocalizations.of(context)!.fileSizeRange} ${AppLocalizations.of(context)!.start}startAtZeroPosition",
       'fileSizeEndRangeMB':
-          "${AppLocalizations.of(context)!.fileSizeRange} ${AppLocalizations.of(context)!.end}",
+          "${AppLocalizations.of(context)!.fileSizeRange} ${AppLocalizations.of(context)!.end}startAtZeroPosition",
       'durationStartRangeSec':
-          "${AppLocalizations.of(context)!.audioDurationRange} ${AppLocalizations.of(context)!.start}",
+          "${AppLocalizations.of(context)!.audioDurationRange} ${AppLocalizations.of(context)!.start}startAtZeroPosition",
       'durationEndRangeSec':
-          "${AppLocalizations.of(context)!.audioDurationRange} ${AppLocalizations.of(context)!.end}",
+          "${AppLocalizations.of(context)!.audioDurationRange} ${AppLocalizations.of(context)!.end}startAtZeroPosition",
     };
 
     return translationMap;
+  }
+
+  String constructCustomStringListItem(List<String> differences) {
+    StringBuffer result = StringBuffer();
+    int numberMoveRight = 0;
+
+    for (int i = 0; i < differences.length; i++) {
+      String element = differences[i];
+
+      if (element.contains('startAtZeroPosition')) {
+        numberMoveRight = 0;
+        element = element.replaceAll('startAtZeroPosition', '');
+      }
+
+      String rightSpaces = ' ' * numberMoveRight;
+      result.write('$rightSpaces$element');
+
+      // Add a comma and newline if the element does not end with ':' and is not the last element
+      if (!element.endsWith(':') && i < differences.length - 1) {
+        result.write(',\n');
+        numberMoveRight--;
+      } else if (i < differences.length - 1) {
+        String rightSpaces = ' ' * numberMoveRight++;
+        result.write('\n$rightSpaces'); // Add only newline if it ends with ':'
+      }
+    }
+
+    return result.toString();
   }
 
   AudioSortFilterParameters
