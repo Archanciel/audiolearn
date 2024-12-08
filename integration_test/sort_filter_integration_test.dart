@@ -1927,7 +1927,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           confirmDialogTitleOne:
               'WARNING: the sort/filter parameters \"$saveAsTitle\" were modified. Do you want to update the existing sort/filter parms by clicking on \"Confirm\", or to save it with a different name or cancel the Save operation, this by clicking on \"Cancel\" ?',
           confirmDialogMessage:
-              'Audio to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.',
+              'Sort by:\n Present only in initial version:\n   Audio title,\n Present only in modified version:\n   Audio title,\nFilter options:\n Present only in modified version:\n   Jancovici',
         );
 
         // Now verify the playlist download view state with the 'Title asc' -
