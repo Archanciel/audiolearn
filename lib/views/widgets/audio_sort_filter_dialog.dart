@@ -2019,7 +2019,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
   /// in the interface classes.
   Map<String, String> _createSortFilterParmNameTranslationMap() {
     Map<String, String> translationMap = {
-      'selectedSortItemLst': "${AppLocalizations.of(context)!.sortBy}startAtZeroPosition",
+      'selectedSortItemLst':
+          "${AppLocalizations.of(context)!.sortBy}$kStartAtZeroPosition",
       'presentOnlyInFirst': AppLocalizations.of(context)!.presentOnlyInFirst,
       'presentOnlyInSeond': AppLocalizations.of(context)!.presentOnlyInSecond,
       'audioDownloadDate': AppLocalizations.of(context)!.audioDownloadDate,
@@ -2036,33 +2037,44 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       'audioDownloadSpeed': AppLocalizations.of(context)!.audioDownloadSpeed,
       'audioDownloadDuration':
           AppLocalizations.of(context)!.audioDownloadDuration,
-      'filterSentenceLst': "${AppLocalizations.of(context)!.filterOptions}startAtZeroPosition",
+      'filterSentenceLst':
+          "${AppLocalizations.of(context)!.filterOptions}$kStartAtZeroPosition",
       'sentencesCombination':
-          "${AppLocalizations.of(context)!.and} / ${AppLocalizations.of(context)!.or}startAtZeroPosition",
-      'ignoreCase': "${AppLocalizations.of(context)!.ignoreCase}startAtZeroPosition",
+          "${AppLocalizations.of(context)!.and} / ${AppLocalizations.of(context)!.or}$kStartAtZeroPosition",
+      'ignoreCase':
+          "${AppLocalizations.of(context)!.ignoreCase}$kStartAtZeroPosition",
       'searchAsWellInYoutubeChannelName':
-          "${AppLocalizations.of(context)!.searchInYoutubeChannelName}startAtZeroPosition",
+          "${AppLocalizations.of(context)!.searchInYoutubeChannelName}$kStartAtZeroPosition",
       'searchAsWellInVideoCompactDescription':
-          "${AppLocalizations.of(context)!.searchInVideoCompactDescription}startAtZeroPosition",
-      'filterMusicQuality': "${AppLocalizations.of(context)!.audioMusicQuality}startAtZeroPosition",
-      'filterFullyListened': "${AppLocalizations.of(context)!.fullyListened}startAtZeroPosition",
+          "${AppLocalizations.of(context)!.searchInVideoCompactDescription}$kStartAtZeroPosition",
+      'filterMusicQuality':
+          "${AppLocalizations.of(context)!.audioMusicQuality}$kStartAtZeroPosition",
+      'filterFullyListened':
+          "${AppLocalizations.of(context)!.fullyListened}$kStartAtZeroPosition",
       'filterPartiallyListened':
-          "${AppLocalizations.of(context)!.partiallyListened}startAtZeroPosition",
-      'filterNotListened': "${AppLocalizations.of(context)!.notListened}startAtZeroPosition",
-      'filterCommented': "${AppLocalizations.of(context)!.commented}startAtZeroPosition",
-      'filterNotCommented': "${AppLocalizations.of(context)!.notCommented}startAtZeroPosition",
-      'downloadDateStartRange': "${AppLocalizations.of(context)!.startDownloadDate}startAtZeroPosition",
-      'downloadDateEndRange': "${AppLocalizations.of(context)!.endDownloadDate}startAtZeroPosition",
-      'uploadDateStartRange': "${AppLocalizations.of(context)!.startUploadDate}startAtZeroPosition",
-      'uploadDateEndRange': "${AppLocalizations.of(context)!.endUploadDate}startAtZeroPosition",
+          "${AppLocalizations.of(context)!.partiallyListened}$kStartAtZeroPosition",
+      'filterNotListened':
+          "${AppLocalizations.of(context)!.notListened}$kStartAtZeroPosition",
+      'filterCommented':
+          "${AppLocalizations.of(context)!.commented}$kStartAtZeroPosition",
+      'filterNotCommented':
+          "${AppLocalizations.of(context)!.notCommented}$kStartAtZeroPosition",
+      'downloadDateStartRange':
+          "${AppLocalizations.of(context)!.startDownloadDate}$kStartAtZeroPosition",
+      'downloadDateEndRange':
+          "${AppLocalizations.of(context)!.endDownloadDate}$kStartAtZeroPosition",
+      'uploadDateStartRange':
+          "${AppLocalizations.of(context)!.startUploadDate}$kStartAtZeroPosition",
+      'uploadDateEndRange':
+          "${AppLocalizations.of(context)!.endUploadDate}$kStartAtZeroPosition",
       'fileSizeStartRangeMB':
-          "${AppLocalizations.of(context)!.fileSizeRange} ${AppLocalizations.of(context)!.start}startAtZeroPosition",
+          "${AppLocalizations.of(context)!.fileSizeRange} ${AppLocalizations.of(context)!.start}$kStartAtZeroPosition",
       'fileSizeEndRangeMB':
-          "${AppLocalizations.of(context)!.fileSizeRange} ${AppLocalizations.of(context)!.end}startAtZeroPosition",
+          "${AppLocalizations.of(context)!.fileSizeRange} ${AppLocalizations.of(context)!.end}$kStartAtZeroPosition",
       'durationStartRangeSec':
-          "${AppLocalizations.of(context)!.audioDurationRange} ${AppLocalizations.of(context)!.start}startAtZeroPosition",
+          "${AppLocalizations.of(context)!.audioDurationRange} ${AppLocalizations.of(context)!.start}$kStartAtZeroPosition",
       'durationEndRangeSec':
-          "${AppLocalizations.of(context)!.audioDurationRange} ${AppLocalizations.of(context)!.end}startAtZeroPosition",
+          "${AppLocalizations.of(context)!.audioDurationRange} ${AppLocalizations.of(context)!.end}$kStartAtZeroPosition",
     };
 
     return translationMap;
@@ -2075,9 +2087,9 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     for (int i = 0; i < differences.length; i++) {
       String element = differences[i];
 
-      if (element.contains('startAtZeroPosition')) {
+      if (element.contains(kStartAtZeroPosition)) {
         numberMoveRight = 0;
-        element = element.replaceAll('startAtZeroPosition', '');
+        element = element.replaceAll(kStartAtZeroPosition, '');
       }
 
       String rightSpaces = ' ' * numberMoveRight;
