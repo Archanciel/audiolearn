@@ -2069,10 +2069,6 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     String startAudioDurationTxt = _startAudioDurationController.text;
     String endAudioDurationTxt = _endAudioDurationController.text;
 
-    double fileSizeEndRangeMB = AudioSortFilterService.increaseByMinimumUnit(
-      endValueTxt: endFileSizeTxt,
-    );
-
     return AudioSortFilterParameters(
       selectedSortItemLst: _selectedSortingItemLst,
       filterSentenceLst: _audioTitleFilterSentencesLst,
@@ -2092,7 +2088,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       uploadDateStartRange: _startUploadDateTime,
       uploadDateEndRange: _endUploadDateTime,
       fileSizeStartRangeMB: double.tryParse(startFileSizeTxt) ?? 0.0,
-      fileSizeEndRangeMB: fileSizeEndRangeMB,
+      fileSizeEndRangeMB: double.tryParse(endFileSizeTxt) ?? 0.0,
       durationStartRangeSec:
           DateTimeParser.parseHHMMDuration(startAudioDurationTxt)?.inSeconds ??
               0,

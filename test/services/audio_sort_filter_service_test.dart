@@ -6177,20 +6177,6 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    test('increaseByMinimumUnit 0.01 test', () {
-      double increasedValue = AudioSortFilterService.increaseByMinimumUnit(
-        endValueTxt: '2.79',
-      );
-
-      expect(increasedValue, 2.8);
-    });
-    test('increaseByMinimumUnit 0.001 test', () {
-      double increasedValue = AudioSortFilterService.increaseByMinimumUnit(
-        endValueTxt: '200.327',
-      );
-
-      expect(increasedValue, 200.328);
-    });
     test('setDateTimeToEndDay 0 hour', () {
       DateTime increasedValue = AudioSortFilterService.setDateTimeToEndDay(
         date: DateTime(2024, 1, 7),
