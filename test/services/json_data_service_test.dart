@@ -1225,7 +1225,7 @@ AudioSortFilterParameters createAudioSortFilterParameters() {
   return AudioSortFilterParameters(
     selectedSortItemLst: [sortingItem1, sortingItem2],
     filterSentenceLst: ['Janco', 'Hello world'],
-    sentencesCombination: SentencesCombination.AND,
+    sentencesCombination: SentencesCombination.and,
     ignoreCase: true,
     searchAsWellInVideoCompactDescription: true,
     filterMusicQuality: false,

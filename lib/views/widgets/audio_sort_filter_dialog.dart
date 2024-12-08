@@ -218,7 +218,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     _searchInVideoCompactDescription =
         _audioSortFilterParameters.searchAsWellInVideoCompactDescription;
     _isAnd = (audioSortDefaultFilterParameters.sentencesCombination ==
-        SentencesCombination.AND);
+        SentencesCombination.and);
     _isOr = !_isAnd;
     _filterMusicQuality = audioSortDefaultFilterParameters.filterMusicQuality;
     _filterFullyListened = audioSortDefaultFilterParameters.filterFullyListened;
@@ -326,7 +326,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     _searchInVideoCompactDescription =
         audioSortFilterParameters.searchAsWellInVideoCompactDescription;
     _isAnd = (audioSortFilterParameters.sentencesCombination ==
-        SentencesCombination.AND);
+        SentencesCombination.and);
     _isOr = !_isAnd;
     _filterMusicQuality = audioSortFilterParameters.filterMusicQuality;
     _filterFullyListened = audioSortFilterParameters.filterFullyListened;
@@ -1950,6 +1950,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
               .getListOfDifferencesBetweenSortFilterParameters(
         audioSortFilterParametersOne: existingAudioSortFilterParameters,
         audioSortFilterParametersTwo: _audioSortFilterParameters,
+        sortFilterParmNameTranslationMap:
+            _createSortFilterParmNameTranslationMap(),
       );
 
       if (listOfDifferencesBetweenSortFilterParameters.isNotEmpty) {
@@ -1966,12 +1968,10 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
               actionFunction: returnConfirmAction,
               actionFunctionArgs: [],
               dialogTitleOne: AppLocalizations.of(context)!
-                  .deleteSortFilterParmsWarningTitle(
+                  .updatingSortFilterParmsWarningTitle(
                 _sortFilterSaveAsUniqueName,
-                listOfDifferencesBetweenSortFilterParameters.length,
               ),
-              dialogContent:
-                  playlistsUsingSortFilterParmsNameStr, // total audio duration
+              dialogContent: playlistsUsingSortFilterParmsNameStr,
             );
           },
         ).then((result) {
@@ -2011,6 +2011,57 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     return ConfirmAction.confirm;
   }
 
+  Map<String, String> _createSortFilterParmNameTranslationMap() {
+    Map<String, String> translationMap = {
+      'selectedSortItemLst': AppLocalizations.of(context)!.sortBy,
+      'Present only in first': AppLocalizations.of(context)!.presentOnlyInFirst,
+      'Present only in second': AppLocalizations.of(context)!.presentOnlyInSecond,
+      'audioDownloadDate': AppLocalizations.of(context)!.audioDownloadDate,
+      'videoUploadDate': AppLocalizations.of(context)!.videoUploadDate,
+      'validAudioTitle': AppLocalizations.of(context)!.audioTitleLabel,
+      'audioEnclosingPlaylistTitle':
+          AppLocalizations.of(context)!.audioEnclosingPlaylistTitle,
+      'audioDuration': AppLocalizations.of(context)!.audioDuration,
+      'audioRemainingDuration':
+          AppLocalizations.of(context)!.audioRemainingDuration,
+      'lastListenedDateTime':
+          AppLocalizations.of(context)!.lastListenedDateTime,
+      'audioFileSize': AppLocalizations.of(context)!.audioFileSize,
+      'audioDownloadSpeed': AppLocalizations.of(context)!.audioDownloadSpeed,
+      'audioDownloadDuration':
+          AppLocalizations.of(context)!.audioDownloadDuration,
+      'filterSentenceLst': AppLocalizations.of(context)!.filterOptions,
+      'sentencesCombination':
+          "${AppLocalizations.of(context)!.and} / ${AppLocalizations.of(context)!.or}",
+      'ignoreCase': AppLocalizations.of(context)!.ignoreCase,
+      'searchAsWellInYoutubeChannelName':
+          AppLocalizations.of(context)!.searchInYoutubeChannelName,
+      'searchAsWellInVideoCompactDescription':
+          AppLocalizations.of(context)!.searchInVideoCompactDescription,
+      'filterMusicQuality': AppLocalizations.of(context)!.audioMusicQuality,
+      'filterFullyListened': AppLocalizations.of(context)!.fullyListened,
+      'filterPartiallyListened':
+          AppLocalizations.of(context)!.partiallyListened,
+      'filterNotListened': AppLocalizations.of(context)!.notListened,
+      'filterCommented': AppLocalizations.of(context)!.commented,
+      'filterNotCommented': AppLocalizations.of(context)!.notCommented,
+      'downloadDateStartRange': AppLocalizations.of(context)!.startDownloadDate,
+      'downloadDateEndRange': AppLocalizations.of(context)!.endDownloadDate,
+      'uploadDateStartRange': AppLocalizations.of(context)!.startUploadDate,
+      'uploadDateEndRange': AppLocalizations.of(context)!.endUploadDate,
+      'fileSizeStartRangeMB':
+          "${AppLocalizations.of(context)!.fileSizeRange} ${AppLocalizations.of(context)!.start}",
+      'fileSizeEndRangeMB':
+          "${AppLocalizations.of(context)!.fileSizeRange} ${AppLocalizations.of(context)!.end}",
+      'durationStartRangeSec':
+          "${AppLocalizations.of(context)!.audioDurationRange} ${AppLocalizations.of(context)!.start}",
+      'durationEndRangeSec':
+          "${AppLocalizations.of(context)!.audioDurationRange} ${AppLocalizations.of(context)!.end}",
+    };
+
+    return translationMap;
+  }
+
   AudioSortFilterParameters
       _generateAudioSortFilterParametersFromDialogFields() {
     String startFileSizeTxt = _startFileSizeController.text;
@@ -2026,7 +2077,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       selectedSortItemLst: _selectedSortingItemLst,
       filterSentenceLst: _audioTitleFilterSentencesLst,
       sentencesCombination:
-          (_isAnd) ? SentencesCombination.AND : SentencesCombination.OR,
+          (_isAnd) ? SentencesCombination.and : SentencesCombination.or,
       ignoreCase: _ignoreCase,
       searchAsWellInYoutubeChannelName: _searchInYoutubeChannelName,
       searchAsWellInVideoCompactDescription: _searchInVideoCompactDescription,

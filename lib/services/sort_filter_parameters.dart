@@ -23,8 +23,8 @@ enum SortingOption {
 // This enum is used to specify how to combine the filter sentences
 // specified by the user in the AudioSortFilterDialog.
 enum SentencesCombination {
-  AND, // all sentences must be found
-  OR, // at least one sentence must be found
+  and, // all sentences must be found
+  or, // at least one sentence must be found
 }
 
 // Constants used to specify the sort order. The plus or minus constant is
@@ -65,7 +65,7 @@ class SortCriteria<T> {
 /// the AudioSortFilterDialog. It associates a SortingOption
 /// with a boolean indicating if the sorting is ascending or descending.
 class SortingItem {
-  final SortingOption sortingOption;
+  final SortingOption sortingOption; // is an enum
   bool isAscending;
 
   SortingItem({
@@ -90,7 +90,10 @@ class SortingItem {
 
   @override
   bool operator ==(Object other) {
-    if (identical(this, other)) return true;
+    if (identical(this, other)) {
+      return true;
+    }
+
     return other is SortingItem &&
         other.sortingOption == sortingOption &&
         other.isAscending == isAscending;
@@ -192,29 +195,6 @@ class AudioSortFilterParameters {
       sortOrder: sortDescending,
     ),
   };
-
-  /// The default SortingItem is the one that is selected by default in the
-  /// AudioSortFilterDialog
-  static SortingItem getDefaultSortingItem() {
-    return SortingItem(
-      sortingOption: SortingOption.audioDownloadDate,
-      isAscending:
-          sortCriteriaForSortingOptionMap[SortingOption.audioDownloadDate]!
-                  .sortOrder ==
-              sortAscending,
-    );
-  }
-
-  /// In the PlaylistDownloadView or in theAudioPlayableListDialog,
-  /// the audio are by default sorted by the audio download date in descending
-  /// order.
-  static AudioSortFilterParameters createDefaultAudioSortFilterParameters() {
-    return AudioSortFilterParameters(
-      selectedSortItemLst: [AudioSortFilterParameters.getDefaultSortingItem()],
-      filterSentenceLst: [],
-      sentencesCombination: SentencesCombination.AND,
-    );
-  }
 
   // This list contains the SortingItem's selected by the user in the
   // AudioSortFilterDialog. A SortingItem associates a SortingOption
@@ -439,6 +419,29 @@ class AudioSortFilterParameters {
       fileSizeEndRangeMB: fileSizeEndRangeMB,
       durationStartRangeSec: durationStartRangeSec,
       durationEndRangeSec: durationEndRangeSec,
+    );
+  }
+
+  /// The default SortingItem is the one that is selected by default in the
+  /// AudioSortFilterDialog
+  static SortingItem getDefaultSortingItem() {
+    return SortingItem(
+      sortingOption: SortingOption.audioDownloadDate,
+      isAscending:
+          sortCriteriaForSortingOptionMap[SortingOption.audioDownloadDate]!
+                  .sortOrder ==
+              sortAscending,
+    );
+  }
+
+  /// In the PlaylistDownloadView or in theAudioPlayableListDialog,
+  /// the audio are by default sorted by the audio download date in descending
+  /// order.
+  static AudioSortFilterParameters createDefaultAudioSortFilterParameters() {
+    return AudioSortFilterParameters(
+      selectedSortItemLst: [AudioSortFilterParameters.getDefaultSortingItem()],
+      filterSentenceLst: [],
+      sentencesCombination: SentencesCombination.and,
     );
   }
 }

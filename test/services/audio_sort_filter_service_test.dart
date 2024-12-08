@@ -18,12 +18,12 @@ import 'package:audiolearn/services/audio_sort_filter_service.dart';
 import 'mock_shared_preferences.dart';
 
 void main() {
-      Playlist audioPlaylist = Playlist(
-      id: '1',
-      title: 'Audio Playlist',
-      playlistQuality: PlaylistQuality.voice,
-      playlistType: PlaylistType.youtube,
-    );
+  Playlist audioPlaylist = Playlist(
+    id: '1',
+    title: 'Audio Playlist',
+    playlistQuality: PlaylistQuality.voice,
+    playlistType: PlaylistType.youtube,
+  );
 
   final Audio audioOne = Audio.fullConstructor(
     youtubeVideoChannel: 'one',
@@ -168,7 +168,7 @@ void main() {
                 'tendance crypto',
                 'en 2024',
               ],
-              sentencesCombination: SentencesCombination.AND,
+              sentencesCombination: SentencesCombination.and,
               ignoreCase: true,
               searchAsWellInVideoCompactDescription: false,
               searchAsWellInYoutubeChannelName: false);
@@ -189,7 +189,7 @@ void main() {
                 'tendance crypto',
                 'en 2024',
               ],
-              sentencesCombination: SentencesCombination.OR,
+              sentencesCombination: SentencesCombination.or,
               ignoreCase: true,
               searchAsWellInVideoCompactDescription: false,
               searchAsWellInYoutubeChannelName: false);
@@ -209,7 +209,7 @@ void main() {
                 'en 2024',
                 'tendance crypto',
               ],
-              sentencesCombination: SentencesCombination.AND,
+              sentencesCombination: SentencesCombination.and,
               ignoreCase: true,
               searchAsWellInVideoCompactDescription: false,
               searchAsWellInYoutubeChannelName: false);
@@ -230,7 +230,7 @@ void main() {
                 'en 2024',
                 'tendance crypto',
               ],
-              sentencesCombination: SentencesCombination.OR,
+              sentencesCombination: SentencesCombination.or,
               ignoreCase: true,
               searchAsWellInVideoCompactDescription: false,
               searchAsWellInYoutubeChannelName: false);
@@ -250,7 +250,7 @@ void main() {
                 'quelle',
                 '2024',
               ],
-              sentencesCombination: SentencesCombination.AND,
+              sentencesCombination: SentencesCombination.and,
               ignoreCase: true,
               searchAsWellInVideoCompactDescription: false,
               searchAsWellInYoutubeChannelName: false);
@@ -272,7 +272,7 @@ void main() {
                 'quelle',
                 '2024',
               ],
-              sentencesCombination: SentencesCombination.OR,
+              sentencesCombination: SentencesCombination.or,
               ignoreCase: true,
               searchAsWellInVideoCompactDescription: false,
               searchAsWellInYoutubeChannelName: false);
@@ -292,7 +292,7 @@ void main() {
                 '2024',
                 'quelle',
               ],
-              sentencesCombination: SentencesCombination.AND,
+              sentencesCombination: SentencesCombination.and,
               ignoreCase: true,
               searchAsWellInVideoCompactDescription: false,
               searchAsWellInYoutubeChannelName: false);
@@ -314,7 +314,7 @@ void main() {
                 '2024',
                 'quelle',
               ],
-              sentencesCombination: SentencesCombination.OR,
+              sentencesCombination: SentencesCombination.or,
               ignoreCase: true,
               searchAsWellInVideoCompactDescription: false,
               searchAsWellInYoutubeChannelName: false);
@@ -334,7 +334,7 @@ void main() {
                 'intelligence',
                 'artificielle',
               ],
-              sentencesCombination: SentencesCombination.OR,
+              sentencesCombination: SentencesCombination.or,
               ignoreCase: true,
               searchAsWellInVideoCompactDescription: false,
               searchAsWellInYoutubeChannelName: false);
@@ -362,7 +362,7 @@ void main() {
                 'tendance crypto',
                 'en 2024',
               ],
-              sentencesCombination: SentencesCombination.AND,
+              sentencesCombination: SentencesCombination.and,
               ignoreCase: false,
               searchAsWellInVideoCompactDescription: false,
               searchAsWellInYoutubeChannelName: false);
@@ -383,7 +383,7 @@ void main() {
                 'tendance crypto',
                 'en 2024',
               ],
-              sentencesCombination: SentencesCombination.OR,
+              sentencesCombination: SentencesCombination.or,
               ignoreCase: false,
               searchAsWellInVideoCompactDescription: false,
               searchAsWellInYoutubeChannelName: false);
@@ -402,7 +402,7 @@ void main() {
                 'en 2024',
                 'tendance crypto',
               ],
-              sentencesCombination: SentencesCombination.AND,
+              sentencesCombination: SentencesCombination.and,
               ignoreCase: false,
               searchAsWellInVideoCompactDescription: false,
               searchAsWellInYoutubeChannelName: false);
@@ -423,7 +423,7 @@ void main() {
                 'en 2024',
                 'tendance crypto',
               ],
-              sentencesCombination: SentencesCombination.OR,
+              sentencesCombination: SentencesCombination.or,
               ignoreCase: false,
               searchAsWellInVideoCompactDescription: false,
               searchAsWellInYoutubeChannelName: false);
@@ -443,7 +443,7 @@ void main() {
                 'quelle',
                 '2024',
               ],
-              sentencesCombination: SentencesCombination.AND,
+              sentencesCombination: SentencesCombination.and,
               ignoreCase: false,
               searchAsWellInVideoCompactDescription: false,
               searchAsWellInYoutubeChannelName: false);
@@ -465,7 +465,7 @@ void main() {
                 'quelle',
                 '2024',
               ],
-              sentencesCombination: SentencesCombination.OR,
+              sentencesCombination: SentencesCombination.or,
               ignoreCase: false,
               searchAsWellInVideoCompactDescription: false,
               searchAsWellInYoutubeChannelName: false);
@@ -485,7 +485,7 @@ void main() {
                 '2024',
                 'quelle',
               ],
-              sentencesCombination: SentencesCombination.AND,
+              sentencesCombination: SentencesCombination.and,
               ignoreCase: false,
               searchAsWellInVideoCompactDescription: false,
               searchAsWellInYoutubeChannelName: false);
@@ -504,7 +504,7 @@ void main() {
                 'intelligence',
                 'artificielle',
               ],
-              sentencesCombination: SentencesCombination.OR,
+              sentencesCombination: SentencesCombination.or,
               ignoreCase: false,
               searchAsWellInVideoCompactDescription: false,
               searchAsWellInYoutubeChannelName: false);
@@ -526,7 +526,7 @@ void main() {
                 '2024',
                 'quelle',
               ],
-              sentencesCombination: SentencesCombination.OR,
+              sentencesCombination: SentencesCombination.or,
               ignoreCase: false,
               searchAsWellInVideoCompactDescription: false,
               searchAsWellInYoutubeChannelName: false);
@@ -552,7 +552,7 @@ void main() {
                 'investir en 2024',
                 'éthique et tac',
               ],
-              sentencesCombination: SentencesCombination.AND,
+              sentencesCombination: SentencesCombination.and,
               ignoreCase: true,
               searchAsWellInVideoCompactDescription: true,
               searchAsWellInYoutubeChannelName: false);
@@ -571,7 +571,7 @@ void main() {
                 'accélération',
                 'éthique et tac',
               ],
-              sentencesCombination: SentencesCombination.AND,
+              sentencesCombination: SentencesCombination.and,
               ignoreCase: true,
               searchAsWellInVideoCompactDescription: true,
               searchAsWellInYoutubeChannelName: false);
@@ -591,7 +591,7 @@ void main() {
                 'investir en 2024',
                 'éthique et tac',
               ],
-              sentencesCombination: SentencesCombination.OR,
+              sentencesCombination: SentencesCombination.or,
               ignoreCase: true,
               searchAsWellInVideoCompactDescription: true,
               searchAsWellInYoutubeChannelName: false);
@@ -611,7 +611,7 @@ void main() {
                 'on vous propose',
                 'en accélération',
               ],
-              sentencesCombination: SentencesCombination.OR,
+              sentencesCombination: SentencesCombination.or,
               ignoreCase: true,
               searchAsWellInVideoCompactDescription: true,
               searchAsWellInYoutubeChannelName: false);
@@ -637,7 +637,7 @@ void main() {
                 'investir en 2024',
                 'éthique et tac',
               ],
-              sentencesCombination: SentencesCombination.AND,
+              sentencesCombination: SentencesCombination.and,
               ignoreCase: false,
               searchAsWellInVideoCompactDescription: true,
               searchAsWellInYoutubeChannelName: false);
@@ -656,7 +656,7 @@ void main() {
                 'accélération',
                 'Éthique et tac',
               ],
-              sentencesCombination: SentencesCombination.AND,
+              sentencesCombination: SentencesCombination.and,
               ignoreCase: false,
               searchAsWellInVideoCompactDescription: true,
               searchAsWellInYoutubeChannelName: false);
@@ -673,7 +673,7 @@ void main() {
                 'investir en 2024',
                 'Éthique et tac',
               ],
-              sentencesCombination: SentencesCombination.OR,
+              sentencesCombination: SentencesCombination.or,
               ignoreCase: false,
               searchAsWellInVideoCompactDescription: true,
               searchAsWellInYoutubeChannelName: false);
@@ -692,7 +692,7 @@ void main() {
                 'investir en 2024',
                 'éthique et tac',
               ],
-              sentencesCombination: SentencesCombination.OR,
+              sentencesCombination: SentencesCombination.or,
               ignoreCase: false,
               searchAsWellInVideoCompactDescription: true,
               searchAsWellInYoutubeChannelName: false);
@@ -711,7 +711,7 @@ void main() {
                 'on vous propose',
                 'en accélération',
               ],
-              sentencesCombination: SentencesCombination.OR,
+              sentencesCombination: SentencesCombination.or,
               ignoreCase: false,
               searchAsWellInVideoCompactDescription: true,
               searchAsWellInYoutubeChannelName: false);
@@ -739,7 +739,7 @@ void main() {
               audioSortFilterParameters: AudioSortFilterParameters(
                 selectedSortItemLst: [],
                 filterSentenceLst: [],
-                sentencesCombination: SentencesCombination.AND,
+                sentencesCombination: SentencesCombination.and,
                 ignoreCase: true,
                 searchAsWellInVideoCompactDescription: true,
                 searchAsWellInYoutubeChannelName: false,
@@ -761,7 +761,7 @@ void main() {
               audioSortFilterParameters: AudioSortFilterParameters(
                 selectedSortItemLst: [],
                 filterSentenceLst: [],
-                sentencesCombination: SentencesCombination.AND,
+                sentencesCombination: SentencesCombination.and,
                 ignoreCase: true,
                 searchAsWellInVideoCompactDescription: true,
                 searchAsWellInYoutubeChannelName: false,
@@ -783,7 +783,7 @@ void main() {
               audioSortFilterParameters: AudioSortFilterParameters(
                 selectedSortItemLst: [],
                 filterSentenceLst: [],
-                sentencesCombination: SentencesCombination.AND,
+                sentencesCombination: SentencesCombination.and,
                 ignoreCase: true,
                 searchAsWellInVideoCompactDescription: true,
                 searchAsWellInYoutubeChannelName: false,
@@ -811,7 +811,7 @@ void main() {
               audioSortFilterParameters: AudioSortFilterParameters(
                 selectedSortItemLst: [],
                 filterSentenceLst: [],
-                sentencesCombination: SentencesCombination.AND,
+                sentencesCombination: SentencesCombination.and,
                 ignoreCase: true,
                 searchAsWellInVideoCompactDescription: true,
                 searchAsWellInYoutubeChannelName: false,
@@ -821,7 +821,8 @@ void main() {
 
       expect(filteredAudioLst, expectedFilteredAudios);
     });
-    test('''filter by 0 MB to 110 MB file size range. This tests a bug fix.''', () {
+    test('''filter by 0 MB to 110 MB file size range. This tests a bug fix.''',
+        () {
       List<Audio> expectedFilteredAudios = [audioTwo, audioFour];
 
       List<Audio> filteredAudioLst =
@@ -830,7 +831,7 @@ void main() {
               audioSortFilterParameters: AudioSortFilterParameters(
                 selectedSortItemLst: [],
                 filterSentenceLst: [],
-                sentencesCombination: SentencesCombination.AND,
+                sentencesCombination: SentencesCombination.and,
                 ignoreCase: true,
                 searchAsWellInVideoCompactDescription: true,
                 searchAsWellInYoutubeChannelName: false,
@@ -849,7 +850,7 @@ void main() {
               audioSortFilterParameters: AudioSortFilterParameters(
                 selectedSortItemLst: [],
                 filterSentenceLst: [],
-                sentencesCombination: SentencesCombination.AND,
+                sentencesCombination: SentencesCombination.and,
                 ignoreCase: true,
                 searchAsWellInVideoCompactDescription: true,
                 searchAsWellInYoutubeChannelName: false,
@@ -861,7 +862,9 @@ void main() {
 
       expect(filteredAudioLst, expectedFilteredAudios);
     });
-    test('''filter by 0 sec to 540 sec audio duration range. This tests a bug fix.''', () {
+    test(
+        '''filter by 0 sec to 540 sec audio duration range. This tests a bug fix.''',
+        () {
       List<Audio> expectedFilteredAudios = [audioOne, audioFour];
 
       List<Audio> filteredAudioLst =
@@ -870,7 +873,7 @@ void main() {
               audioSortFilterParameters: AudioSortFilterParameters(
                 selectedSortItemLst: [],
                 filterSentenceLst: [],
-                sentencesCombination: SentencesCombination.AND,
+                sentencesCombination: SentencesCombination.and,
                 ignoreCase: true,
                 searchAsWellInVideoCompactDescription: true,
                 searchAsWellInYoutubeChannelName: false,
@@ -894,7 +897,7 @@ void main() {
               audioSortFilterParameters: AudioSortFilterParameters(
                 selectedSortItemLst: [],
                 filterSentenceLst: [],
-                sentencesCombination: SentencesCombination.AND,
+                sentencesCombination: SentencesCombination.and,
                 ignoreCase: true,
                 searchAsWellInVideoCompactDescription: true,
                 searchAsWellInYoutubeChannelName: false,
@@ -3543,7 +3546,7 @@ void main() {
           AudioSortFilterParameters(
         selectedSortItemLst: selectedSortItemLstAsc,
         filterSentenceLst: ['Zeb'],
-        sentencesCombination: SentencesCombination.AND,
+        sentencesCombination: SentencesCombination.and,
         ignoreCase: true,
         searchAsWellInVideoCompactDescription: true,
         searchAsWellInYoutubeChannelName: false,
@@ -3566,7 +3569,7 @@ void main() {
       audioSortFilterParameters = AudioSortFilterParameters(
         selectedSortItemLst: selectedSortItemLstDesc,
         filterSentenceLst: ['Zeb'],
-        sentencesCombination: SentencesCombination.AND,
+        sentencesCombination: SentencesCombination.and,
         ignoreCase: true,
         searchAsWellInVideoCompactDescription: true,
         searchAsWellInYoutubeChannelName: false,
@@ -3754,7 +3757,7 @@ void main() {
           AudioSortFilterParameters(
         selectedSortItemLst: selectedSortItemLstAsc,
         filterSentenceLst: ['Julien'],
-        sentencesCombination: SentencesCombination.AND,
+        sentencesCombination: SentencesCombination.and,
         ignoreCase: true,
         searchAsWellInVideoCompactDescription: true,
         searchAsWellInYoutubeChannelName: false,
@@ -3784,7 +3787,7 @@ void main() {
       audioSortFilterParameters = AudioSortFilterParameters(
         selectedSortItemLst: selectedSortItemLstDesc,
         filterSentenceLst: ['Julien'],
-        sentencesCombination: SentencesCombination.AND,
+        sentencesCombination: SentencesCombination.and,
         ignoreCase: true,
         searchAsWellInVideoCompactDescription: true,
         searchAsWellInYoutubeChannelName: false,
@@ -3975,7 +3978,7 @@ void main() {
           AudioSortFilterParameters(
         selectedSortItemLst: selectedSortItemLstAsc,
         filterSentenceLst: ['Julien'],
-        sentencesCombination: SentencesCombination.AND,
+        sentencesCombination: SentencesCombination.and,
         ignoreCase: true,
         searchAsWellInVideoCompactDescription: true,
         searchAsWellInYoutubeChannelName: false,
@@ -4005,7 +4008,7 @@ void main() {
       audioSortFilterParameters = AudioSortFilterParameters(
         selectedSortItemLst: selectedSortItemLstDesc,
         filterSentenceLst: ['Julien'],
-        sentencesCombination: SentencesCombination.AND,
+        sentencesCombination: SentencesCombination.and,
         ignoreCase: true,
         searchAsWellInVideoCompactDescription: true,
         searchAsWellInYoutubeChannelName: false,
@@ -4199,7 +4202,7 @@ void main() {
           AudioSortFilterParameters(
         selectedSortItemLst: selectedSortItemLstAsc,
         filterSentenceLst: ['Julien'],
-        sentencesCombination: SentencesCombination.AND,
+        sentencesCombination: SentencesCombination.and,
         ignoreCase: true,
         searchAsWellInVideoCompactDescription: false,
         searchAsWellInYoutubeChannelName: false,
@@ -4229,7 +4232,7 @@ void main() {
       audioSortFilterParameters = AudioSortFilterParameters(
         selectedSortItemLst: selectedSortItemLstDesc,
         filterSentenceLst: ['Julien'],
-        sentencesCombination: SentencesCombination.AND,
+        sentencesCombination: SentencesCombination.and,
         ignoreCase: true,
         searchAsWellInVideoCompactDescription: false,
         searchAsWellInYoutubeChannelName: false,
@@ -4365,7 +4368,7 @@ void main() {
         filterSentenceLst: [
           'Jancovici',
         ],
-        sentencesCombination: SentencesCombination.AND,
+        sentencesCombination: SentencesCombination.and,
         ignoreCase: true,
         searchAsWellInVideoCompactDescription: true,
         searchAsWellInYoutubeChannelName: false,
@@ -4400,7 +4403,7 @@ void main() {
         filterSentenceLst: [
           'Janco',
         ],
-        sentencesCombination: SentencesCombination.AND,
+        sentencesCombination: SentencesCombination.and,
         ignoreCase: true,
         searchAsWellInVideoCompactDescription: true,
         searchAsWellInYoutubeChannelName: false,
@@ -4466,7 +4469,7 @@ void main() {
           'Éthique et tac',
           'Jancovici',
         ],
-        sentencesCombination: SentencesCombination.AND,
+        sentencesCombination: SentencesCombination.and,
         ignoreCase: true,
         searchAsWellInVideoCompactDescription: true,
         searchAsWellInYoutubeChannelName: false,
@@ -4501,7 +4504,7 @@ void main() {
           'Éthique et tac',
           'Jancovici',
         ],
-        sentencesCombination: SentencesCombination.AND,
+        sentencesCombination: SentencesCombination.and,
         ignoreCase: true,
         searchAsWellInVideoCompactDescription: true,
         searchAsWellInYoutubeChannelName: false,
@@ -4556,7 +4559,7 @@ void main() {
           AudioSortFilterParameters(
         selectedSortItemLst: selectedSortItemLstDownloadDateDescAndDurationAsc,
         filterSentenceLst: ['Éthique et tac'],
-        sentencesCombination: SentencesCombination.OR,
+        sentencesCombination: SentencesCombination.or,
         ignoreCase: true,
         searchAsWellInVideoCompactDescription: false,
         searchAsWellInYoutubeChannelName: false,
@@ -4589,7 +4592,7 @@ void main() {
       audioSortFilterParameters = AudioSortFilterParameters(
         selectedSortItemLst: selectedSortItemLstDownloadDateAscAndDurationDesc,
         filterSentenceLst: ['Éthique et tac'],
-        sentencesCombination: SentencesCombination.OR,
+        sentencesCombination: SentencesCombination.or,
         ignoreCase: true,
         searchAsWellInVideoCompactDescription: false,
         searchAsWellInYoutubeChannelName: false,
@@ -4640,7 +4643,7 @@ void main() {
           'Janco',
           'Éthique et tac',
         ],
-        sentencesCombination: SentencesCombination.AND,
+        sentencesCombination: SentencesCombination.and,
         ignoreCase: true,
         searchAsWellInVideoCompactDescription: false,
         searchAsWellInYoutubeChannelName: false,
@@ -4675,7 +4678,7 @@ void main() {
         filterSentenceLst: [
           'Éthique et tac',
         ],
-        sentencesCombination: SentencesCombination.AND,
+        sentencesCombination: SentencesCombination.and,
         ignoreCase: true,
         searchAsWellInVideoCompactDescription: false,
         searchAsWellInYoutubeChannelName: false,
@@ -4727,7 +4730,7 @@ void main() {
           'Janco',
           'Éthique et tac',
         ],
-        sentencesCombination: SentencesCombination.AND,
+        sentencesCombination: SentencesCombination.and,
         ignoreCase: true,
         searchAsWellInVideoCompactDescription: true,
         searchAsWellInYoutubeChannelName: false,
@@ -4766,7 +4769,7 @@ void main() {
           'Éthique et tac',
           'Janco',
         ],
-        sentencesCombination: SentencesCombination.AND,
+        sentencesCombination: SentencesCombination.and,
         ignoreCase: true,
         searchAsWellInVideoCompactDescription: true,
         searchAsWellInYoutubeChannelName: false,
@@ -4821,7 +4824,7 @@ void main() {
           'Janco',
           'Roche',
         ],
-        sentencesCombination: SentencesCombination.OR,
+        sentencesCombination: SentencesCombination.or,
         ignoreCase: true,
         searchAsWellInVideoCompactDescription: false,
         searchAsWellInYoutubeChannelName: false,
@@ -4862,7 +4865,7 @@ void main() {
           'Janco',
           'Roche',
         ],
-        sentencesCombination: SentencesCombination.OR,
+        sentencesCombination: SentencesCombination.or,
         ignoreCase: true,
         searchAsWellInVideoCompactDescription: false,
         searchAsWellInYoutubeChannelName: false,
@@ -4918,7 +4921,7 @@ void main() {
           'Janco',
           'Éthique et tac',
         ],
-        sentencesCombination: SentencesCombination.OR,
+        sentencesCombination: SentencesCombination.or,
         ignoreCase: true,
         searchAsWellInVideoCompactDescription: true,
         searchAsWellInYoutubeChannelName: false,
@@ -4961,7 +4964,7 @@ void main() {
           'Janco',
           'Éthique et tac',
         ],
-        sentencesCombination: SentencesCombination.OR,
+        sentencesCombination: SentencesCombination.or,
         ignoreCase: true,
         searchAsWellInVideoCompactDescription: true,
         searchAsWellInYoutubeChannelName: false,
@@ -5025,7 +5028,7 @@ void main() {
         filterSentenceLst: [
           'Jancovici',
         ],
-        sentencesCombination: SentencesCombination.AND,
+        sentencesCombination: SentencesCombination.and,
         ignoreCase: true,
         searchAsWellInVideoCompactDescription: true,
         searchAsWellInYoutubeChannelName: false,
@@ -5064,7 +5067,7 @@ void main() {
         filterSentenceLst: [
           'Janco',
         ],
-        sentencesCombination: SentencesCombination.AND,
+        sentencesCombination: SentencesCombination.and,
         ignoreCase: true,
         searchAsWellInVideoCompactDescription: true,
         searchAsWellInYoutubeChannelName: false,
@@ -5132,7 +5135,7 @@ void main() {
         filterSentenceLst: [
           'Jancovici',
         ],
-        sentencesCombination: SentencesCombination.AND,
+        sentencesCombination: SentencesCombination.and,
         ignoreCase: true,
         searchAsWellInVideoCompactDescription: true,
         searchAsWellInYoutubeChannelName: false,
@@ -5169,7 +5172,7 @@ void main() {
         filterSentenceLst: [
           'Janco',
         ],
-        sentencesCombination: SentencesCombination.AND,
+        sentencesCombination: SentencesCombination.and,
         ignoreCase: true,
         searchAsWellInVideoCompactDescription: true,
         searchAsWellInYoutubeChannelName: false,
@@ -5287,7 +5290,7 @@ void main() {
       AudioSortFilterParameters audioSortFilterParameters =
           AudioSortFilterParameters(
         selectedSortItemLst: [],
-        sentencesCombination: SentencesCombination.AND,
+        sentencesCombination: SentencesCombination.and,
         filterFullyListened: false,
         filterPartiallyListened: false,
         filterNotListened: true,
@@ -5318,7 +5321,7 @@ void main() {
 
       audioSortFilterParameters = AudioSortFilterParameters(
         selectedSortItemLst: selectedSortItemLstDurationDesc,
-        sentencesCombination: SentencesCombination.AND,
+        sentencesCombination: SentencesCombination.and,
         filterFullyListened: false,
         filterPartiallyListened: false,
         filterNotListened: true,
@@ -5357,7 +5360,7 @@ void main() {
       AudioSortFilterParameters audioSortFilterParameters =
           AudioSortFilterParameters(
         selectedSortItemLst: [],
-        sentencesCombination: SentencesCombination.AND,
+        sentencesCombination: SentencesCombination.and,
         filterFullyListened: false,
         filterPartiallyListened: true,
         filterNotListened: true,
@@ -5392,7 +5395,7 @@ void main() {
       AudioSortFilterParameters audioSortFilterParameters =
           AudioSortFilterParameters(
         selectedSortItemLst: [],
-        sentencesCombination: SentencesCombination.AND,
+        sentencesCombination: SentencesCombination.and,
         filterFullyListened: true,
         filterPartiallyListened: false,
         filterNotListened: false,
@@ -5501,7 +5504,7 @@ void main() {
       AudioSortFilterParameters audioSortFilterParameters =
           AudioSortFilterParameters(
         selectedSortItemLst: [],
-        sentencesCombination: SentencesCombination.AND,
+        sentencesCombination: SentencesCombination.and,
         filterCommented: true, // is true by default
         filterNotCommented: true, // is true by default
       );
@@ -5538,7 +5541,7 @@ void main() {
       AudioSortFilterParameters audioSortFilterParameters =
           AudioSortFilterParameters(
         selectedSortItemLst: [],
-        sentencesCombination: SentencesCombination.AND,
+        sentencesCombination: SentencesCombination.and,
         filterCommented: true, // is true by default
         filterNotCommented: false, // is true by default
       );
@@ -5568,7 +5571,7 @@ void main() {
       AudioSortFilterParameters audioSortFilterParameters =
           AudioSortFilterParameters(
         selectedSortItemLst: [],
-        sentencesCombination: SentencesCombination.AND,
+        sentencesCombination: SentencesCombination.and,
         filterCommented: true, // is true by default
         filterNotCommented: false, // is true by default
       );
@@ -5605,7 +5608,7 @@ void main() {
       AudioSortFilterParameters audioSortFilterParameters =
           AudioSortFilterParameters(
         selectedSortItemLst: [],
-        sentencesCombination: SentencesCombination.AND,
+        sentencesCombination: SentencesCombination.and,
         filterCommented: false, // is true by default
         filterNotCommented: true, // is true by default
       );
@@ -5634,7 +5637,7 @@ void main() {
       AudioSortFilterParameters audioSortFilterParameters =
           AudioSortFilterParameters(
         selectedSortItemLst: [],
-        sentencesCombination: SentencesCombination.AND,
+        sentencesCombination: SentencesCombination.and,
         filterCommented: false, // is true by default
         filterNotCommented: true, // is true by default
       );
@@ -5761,7 +5764,7 @@ void main() {
           AudioSortFilterParameters(
         selectedSortItemLst: selectedSortItemLstDownloadDateDescAndDurationAsc,
         filterSentenceLst: [],
-        sentencesCombination: SentencesCombination.AND,
+        sentencesCombination: SentencesCombination.and,
         ignoreCase: true,
         searchAsWellInVideoCompactDescription: true,
         searchAsWellInYoutubeChannelName: false,
@@ -5794,7 +5797,7 @@ void main() {
         selectedSortItemLst:
             selectedSortOptionsLstDownloadDateAscAndDurationDesc,
         filterSentenceLst: ['Janco'],
-        sentencesCombination: SentencesCombination.AND,
+        sentencesCombination: SentencesCombination.and,
         ignoreCase: true,
         searchAsWellInVideoCompactDescription: true,
         searchAsWellInYoutubeChannelName: false,
