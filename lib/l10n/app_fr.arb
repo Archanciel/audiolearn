@@ -693,5 +693,8 @@
       "sortFilterParmsName": {},
       "playlistNumber": {}
     }
-  }
+  },
+  "updatingSortFilterParmsWarningTitle": "ATTENTION: le paramètre de tri/filtre \"{sortFilterParmsName}\" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur \"Confirmer\", ou le sauver sous un nom différent ou annuler l'operation d'édition, cela en cliquant sur \"Annuler\" ?",
+  "presentOnlyInFirst": "Présent uniquement dans le premier",
+  "presentOnlyInSecond": "Présent uniquement dans le second"
 }

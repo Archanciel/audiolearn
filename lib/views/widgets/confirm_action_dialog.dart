@@ -15,7 +15,7 @@ enum ConfirmAction { cancel, confirm }
 /// This dialog asks for confirmation before executing an action. The action is
 /// passed as a function [actionFunction] with its argument values added to the
 /// list [actionFunctionArgs] and executed on confirmation.
-/// 
+///
 /// If [helpItemsLst] is passed to the dialog constructor, a help icon is
 /// displayed in the dialog title. Clicking on the help icon opens a dialog
 /// with displaying the help content contained in the help items.
@@ -134,9 +134,25 @@ class _ConfirmActionDialogState extends State<ConfirmActionDialog>
                 : Container(),
           ],
         ),
-        content: Text(
-          widget.dialogContent,
-          key: const Key('confirmationDialogMessageKey'),
+        content: SizedBox(
+          width: double.maxFinite,
+          height: 800,
+          child: DraggableScrollableSheet(
+            initialChildSize: 1,
+            minChildSize: 1,
+            maxChildSize: 1,
+            builder: (
+              BuildContext context,
+              ScrollController scrollController,
+            ) {
+              return SingleChildScrollView(
+                child: Text(
+                  widget.dialogContent,
+                  key: const Key('confirmationDialogMessageKey'),
+                ),
+              );
+            },
+          ),
         ),
         actions: <Widget>[
           TextButton(

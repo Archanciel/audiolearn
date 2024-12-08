@@ -1654,4 +1654,16 @@ class MockAppLocalizations extends AppLocalizations {
     Object playlistNumber,
   ) =>
       "WARNING: you are going to delete the Sort/Filter parms \"$sortFilterParmsName\" which is used in $playlistNumber playlist(s) listed below";
+
+  @override
+  String updatingSortFilterParmsWarningTitle(
+    Object sortFilterParmsName,
+  ) =>
+      "WARNING: the sort/filter parameters \"$sortFilterParmsName\" were modified. Do you want to update the existing sort/filter parms by clicking on \"Confirm\", or to save it with a different name or cancel the Save operation, this by clicking on \"Cancel\" ?";
+
+  @override
+  String get presentOnlyInFirst => "Present only in first";
+
+  @override
+  String get presentOnlyInSecond => "Present only in second";
 }
