@@ -4474,7 +4474,7 @@ void main() {
           playlistSubMenuKeyStr: 'popup_menu_delete_filtered_audio',
         );
 
-        // Verifying the confirm dialog
+        // Verifying and closing the confirm dialog
 
         await IntegrationTestUtil.verifyConfirmActionDialog(
           tester: tester,
@@ -4762,7 +4762,7 @@ void main() {
           playlistSubMenuKeyStr: 'popup_menu_delete_filtered_audio',
         );
 
-        // Verifying the confirm dialog
+        // Verifying and closing the confirm dialog
 
         await IntegrationTestUtil.verifyConfirmActionDialog(
           tester: tester,
@@ -5048,7 +5048,7 @@ void main() {
           playlistSubMenuKeyStr: 'popup_menu_delete_filtered_audio',
         );
 
-        // Verifying the confirm dialog
+        // Verifying and closing the confirm dialog
 
         await IntegrationTestUtil.verifyConfirmActionDialog(
           tester: tester,
@@ -5391,7 +5391,7 @@ void main() {
           playlistSubMenuKeyStr: 'popup_menu_delete_filtered_audio',
         );
 
-        // Verifying the confirm dialog
+        // Verifying and closing the confirm dialog
 
         await IntegrationTestUtil.verifyConfirmActionDialog(
           tester: tester,
@@ -5688,7 +5688,7 @@ void main() {
           playlistSubMenuKeyStr: 'popup_menu_delete_filtered_audio',
         );
 
-        // Verifying the confirm dialog
+        // Verifying and closing the confirm dialog
 
         await IntegrationTestUtil.verifyConfirmActionDialog(
           tester: tester,
@@ -5987,7 +5987,7 @@ void main() {
           playlistSubMenuKeyStr: 'popup_menu_delete_filtered_audio',
         );
 
-        // Verifying the confirm dialog title
+        // Verifying and closing the confirm dialog title
 
         Text deleteFilteredAudioConfirmDialogTitleWidget = tester
             .widget<Text>(find.byKey(const Key('confirmDialogTitleOneKey')));
@@ -6004,7 +6004,7 @@ void main() {
         // Verify the presence of the help icon button
         expect(find.byIcon(Icons.help_outline), findsOneWidget);
 
-        // Verifying the confirm dialog message
+        // Verifying and closing the confirm dialog message
 
         await IntegrationTestUtil.verifyConfirmActionDialog(
           tester: tester,
