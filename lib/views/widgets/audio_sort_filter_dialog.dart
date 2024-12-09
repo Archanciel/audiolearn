@@ -1948,9 +1948,9 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       List<String> listOfDifferencesBetweenSortFilterParameters =
           _audioSortFilterService
               .getListOfDifferencesBetweenSortFilterParameters(
-        audioSortFilterParametersOne: existingAudioSortFilterParameters,
-        audioSortFilterParametersTwo: _audioSortFilterParameters,
-        sortFilterParmNameTranslationMap:
+        existingAudioSortFilterParms: existingAudioSortFilterParameters,
+        newOrModifiedaudioSortFilterParms: _audioSortFilterParameters,
+        sortFilterParmsNameTranslationMap:
             _createSortFilterParmNameTranslationMap(),
       );
 
@@ -2022,7 +2022,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       'selectedSortItemLst':
           "${AppLocalizations.of(context)!.sortBy}$kStartAtZeroPosition",
       'presentOnlyInFirst': AppLocalizations.of(context)!.presentOnlyInFirst,
-      'presentOnlyInSeond': AppLocalizations.of(context)!.presentOnlyInSecond,
+      'presentOnlyInSecond': AppLocalizations.of(context)!.presentOnlyInSecond,
       'audioDownloadDate': AppLocalizations.of(context)!.audioDownloadDate,
       'videoUploadDate': AppLocalizations.of(context)!.videoUploadDate,
       'validAudioTitle': AppLocalizations.of(context)!.audioTitleLabel,
@@ -2037,6 +2037,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       'audioDownloadSpeed': AppLocalizations.of(context)!.audioDownloadSpeed,
       'audioDownloadDuration':
           AppLocalizations.of(context)!.audioDownloadDuration,
+      "ascending": AppLocalizations.of(context)!.ascendingShort,
+      "descending": AppLocalizations.of(context)!.descendingShort,
       'filterSentenceLst':
           "${AppLocalizations.of(context)!.filterOptions}$kStartAtZeroPosition",
       'sentencesCombination':

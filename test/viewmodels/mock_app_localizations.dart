@@ -1666,4 +1666,10 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get presentOnlyInSecond => "Present only in second";
+
+  @override
+  String get ascendingShort => "asc";
+
+  @override
+  String get descendingShort => "desc";
 }
