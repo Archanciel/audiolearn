@@ -5,6 +5,11 @@ import 'package:flutter/foundation.dart';
 import '../models/audio.dart';
 import 'sort_filter_parameters.dart';
 
+enum SortFilterParmsVersion {
+  versionOne,
+  versionTwo,
+}
+
 class AudioSortFilterService {
   /// Method called by filterAndSortAudioLst(). This method is used
   /// to sort the audio list by the given sorting items contained in
@@ -209,222 +214,281 @@ class AudioSortFilterService {
     );
   }
 
+  /// Method called by the AudioSortFilterDialog if the user clicks on the 'Save'
+  /// button in order to save a sort/filter parameters with a name already used.
+  /// This situation happens if the user creates a new sort/filter parameters and
+  /// names it with a name already used for an existing sort/filter parameters or
+  /// if the user modifies an existing sort/filter parameters and saves it with the
+  /// same name.
+  ///
+  /// This method returns a list of differences between the existing sort/filter
+  /// parameters and the new or modified sort/filter parameters. The differences
+  /// are returned as a list of translated strings which will be used to inform
+  /// the user about the differences between the two sort/filter parameters.
+  ///
+  /// The advantage of this method is to eventually prevent modifying a sort/filter
+  /// parameters used in existing playlists.
   List<String> getListOfDifferencesBetweenSortFilterParameters({
-    required AudioSortFilterParameters audioSortFilterParametersOne,
-    required AudioSortFilterParameters audioSortFilterParametersTwo,
-    required Map<String, String> sortFilterParmNameTranslationMap,
+    required AudioSortFilterParameters existingAudioSortFilterParms,
+    required AudioSortFilterParameters newOrModifiedaudioSortFilterParms,
+    required Map<String, String> sortFilterParmsNameTranslationMap,
   }) {
     List<String> differencesLst = [];
 
-    if (audioSortFilterParametersOne == audioSortFilterParametersTwo) {
+    if (existingAudioSortFilterParms == newOrModifiedaudioSortFilterParms) {
       return differencesLst; // No differences
     }
 
-    // Compare selectedSortItemLst and include specific differences
-    if (!listEquals(audioSortFilterParametersOne.selectedSortItemLst,
-        audioSortFilterParametersTwo.selectedSortItemLst)) {
+    // Compare selectedSortItemLst, the list containing the audio
+    // sorting options, and include specific differences
+    if (!listEquals(existingAudioSortFilterParms.selectedSortItemLst,
+        newOrModifiedaudioSortFilterParms.selectedSortItemLst)) {
       differencesLst.add(
-          sortFilterParmNameTranslationMap['selectedSortItemLst'] ??
+          sortFilterParmsNameTranslationMap['selectedSortItemLst'] ??
               'selectedSortItemLst');
 
       // Add specific differences between the lists
-      Map<String, List<dynamic>> listDiff = listDifferences(
-        audioSortFilterParametersOne.selectedSortItemLst,
-        audioSortFilterParametersTwo.selectedSortItemLst,
+      Map<SortFilterParmsVersion, List<SortingItem>> listDiff = listSortItemsDifferences(
+        existingAudioSortFilterParms.selectedSortItemLst,
+        newOrModifiedaudioSortFilterParms.selectedSortItemLst,
       );
 
-      if (listDiff['onlyInFirst']!.isNotEmpty) {
-        List<String> firstListNames = listDiff['onlyInFirst']!.map((item) {
-          String sortingOptionName =
-              (item as SortingItem).sortingOption.toString().split('.').last;
-
-          return sortFilterParmNameTranslationMap[sortingOptionName] ??
-              sortingOptionName;
-        }).toList();
-        String presentOnlyInFirst =
-            sortFilterParmNameTranslationMap['presentOnlyInFirst'] ??
-                'presentOnlyInFirst';
-        differencesLst.add(presentOnlyInFirst);
-        differencesLst.add("${firstListNames.join(', ')}");
+      if (listDiff[SortFilterParmsVersion.versionOne]!.isNotEmpty) {
+        addTranslatedSortFilterParmsNamePlusSortOrder(
+          listDiff: listDiff,
+          listDiffKey: SortFilterParmsVersion.versionOne,
+          sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
+          differencesLst: differencesLst,
+        );
       }
 
-      if (listDiff['onlyInSecond']!.isNotEmpty) {
-        List<String> secondListNames = listDiff['onlyInSecond']!.map((item) {
-          String sortingOptionName =
-              (item as SortingItem).sortingOption.toString().split('.').last;
-
-          return sortFilterParmNameTranslationMap[sortingOptionName] ??
-              sortingOptionName;
-        }).toList();
-        String presentOnlyInSecond =
-            sortFilterParmNameTranslationMap['presentOnlyInSeond'] ??
-                'presentOnlyInSeond';
-        differencesLst.add(presentOnlyInSecond);
-        differencesLst.add("${secondListNames.join(', ')}");
+      if (listDiff[SortFilterParmsVersion.versionTwo]!.isNotEmpty) {
+        addTranslatedSortFilterParmsNamePlusSortOrder(
+          listDiff: listDiff,
+          listDiffKey: SortFilterParmsVersion.versionTwo,
+          sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
+          differencesLst: differencesLst,
+        );
       }
     }
 
     // Compare filterSentenceLst and include specific differences
-    if (!listEquals(audioSortFilterParametersOne.filterSentenceLst,
-        audioSortFilterParametersTwo.filterSentenceLst)) {
+    if (!listEquals(existingAudioSortFilterParms.filterSentenceLst,
+        newOrModifiedaudioSortFilterParms.filterSentenceLst)) {
       differencesLst.add(
-          sortFilterParmNameTranslationMap['filterSentenceLst'] ??
+          sortFilterParmsNameTranslationMap['filterSentenceLst'] ??
               'filterSentenceLst');
 
       // Add specific differences between the lists
-      Map<String, List<dynamic>> listDiff = listDifferences(
-        audioSortFilterParametersOne.filterSentenceLst,
-        audioSortFilterParametersTwo.filterSentenceLst,
+      Map<SortFilterParmsVersion, List<String>> listDiff = listFilterSentencesDifferences(
+        existingAudioSortFilterParms.filterSentenceLst,
+        newOrModifiedaudioSortFilterParms.filterSentenceLst,
       );
 
-      if (listDiff['onlyInFirst']!.isNotEmpty) {
+      if (listDiff[SortFilterParmsVersion.versionOne]!.isNotEmpty) {
         String presentOnlyInFirst =
-            sortFilterParmNameTranslationMap['presentOnlyInFirst'] ??
+            sortFilterParmsNameTranslationMap['presentOnlyInFirst'] ??
                 'presentOnlyInFirst';
         differencesLst.add(presentOnlyInFirst);
-        differencesLst
-            .add("${listDiff['onlyInFirst']!.join(', ')}");
+        differencesLst.add("${listDiff[SortFilterParmsVersion.versionOne]!.join(', ')}");
       }
 
-      if (listDiff['onlyInSecond']!.isNotEmpty) {
+      if (listDiff[SortFilterParmsVersion.versionTwo]!.isNotEmpty) {
         String presentOnlyInSecond =
-            sortFilterParmNameTranslationMap['presentOnlyInSeond'] ??
-                'presentOnlyInSeond';
+            sortFilterParmsNameTranslationMap['presentOnlyInSecond'] ??
+                'presentOnlyInSecond';
         differencesLst.add(presentOnlyInSecond);
-        differencesLst.add(
-            "${listDiff['onlyInSecond']!.join(', ')}");
+        differencesLst.add("${listDiff[SortFilterParmsVersion.versionTwo]!.join(', ')}");
       }
     }
 
     // Compare other fields
-    if (audioSortFilterParametersOne.sentencesCombination !=
-        audioSortFilterParametersTwo.sentencesCombination) {
+    if (existingAudioSortFilterParms.sentencesCombination !=
+        newOrModifiedaudioSortFilterParms.sentencesCombination) {
       differencesLst.add(
-          sortFilterParmNameTranslationMap['sentencesCombination'] ??
+          sortFilterParmsNameTranslationMap['sentencesCombination'] ??
               'sentencesCombination');
     }
-    if (audioSortFilterParametersOne.ignoreCase !=
-        audioSortFilterParametersTwo.ignoreCase) {
+    if (existingAudioSortFilterParms.ignoreCase !=
+        newOrModifiedaudioSortFilterParms.ignoreCase) {
       differencesLst
-          .add(sortFilterParmNameTranslationMap['ignoreCase'] ?? 'ignoreCase');
+          .add(sortFilterParmsNameTranslationMap['ignoreCase'] ?? 'ignoreCase');
     }
-    if (audioSortFilterParametersOne.searchAsWellInYoutubeChannelName !=
-        audioSortFilterParametersTwo.searchAsWellInYoutubeChannelName) {
-      differencesLst.add(sortFilterParmNameTranslationMap[
+    if (existingAudioSortFilterParms.searchAsWellInYoutubeChannelName !=
+        newOrModifiedaudioSortFilterParms.searchAsWellInYoutubeChannelName) {
+      differencesLst.add(sortFilterParmsNameTranslationMap[
               'searchAsWellInYoutubeChannelName'] ??
           'searchAsWellInYoutubeChannelName');
     }
-    if (audioSortFilterParametersOne.searchAsWellInVideoCompactDescription !=
-        audioSortFilterParametersTwo.searchAsWellInVideoCompactDescription) {
-      differencesLst.add(sortFilterParmNameTranslationMap[
+    if (existingAudioSortFilterParms.searchAsWellInVideoCompactDescription !=
+        newOrModifiedaudioSortFilterParms
+            .searchAsWellInVideoCompactDescription) {
+      differencesLst.add(sortFilterParmsNameTranslationMap[
               'searchAsWellInYoutubeChannelName'] ??
           'searchAsWellInYoutubeChannelName');
     }
-    if (audioSortFilterParametersOne.filterMusicQuality !=
-        audioSortFilterParametersTwo.filterMusicQuality) {
+    if (existingAudioSortFilterParms.filterMusicQuality !=
+        newOrModifiedaudioSortFilterParms.filterMusicQuality) {
       differencesLst.add(
-          sortFilterParmNameTranslationMap['filterMusicQuality'] ??
+          sortFilterParmsNameTranslationMap['filterMusicQuality'] ??
               'filterMusicQuality');
     }
-    if (audioSortFilterParametersOne.filterFullyListened !=
-        audioSortFilterParametersTwo.filterFullyListened) {
+    if (existingAudioSortFilterParms.filterFullyListened !=
+        newOrModifiedaudioSortFilterParms.filterFullyListened) {
       differencesLst.add(
-          sortFilterParmNameTranslationMap['filterFullyListened'] ??
+          sortFilterParmsNameTranslationMap['filterFullyListened'] ??
               'filterFullyListened');
     }
-    if (audioSortFilterParametersOne.filterPartiallyListened !=
-        audioSortFilterParametersTwo.filterPartiallyListened) {
+    if (existingAudioSortFilterParms.filterPartiallyListened !=
+        newOrModifiedaudioSortFilterParms.filterPartiallyListened) {
       differencesLst.add(
-          sortFilterParmNameTranslationMap['filterPartiallyListened'] ??
+          sortFilterParmsNameTranslationMap['filterPartiallyListened'] ??
               'filterPartiallyListened');
     }
-    if (audioSortFilterParametersOne.filterNotListened !=
-        audioSortFilterParametersTwo.filterNotListened) {
+    if (existingAudioSortFilterParms.filterNotListened !=
+        newOrModifiedaudioSortFilterParms.filterNotListened) {
       differencesLst.add(
-          sortFilterParmNameTranslationMap['filterNotListened'] ??
+          sortFilterParmsNameTranslationMap['filterNotListened'] ??
               'filterNotListened');
     }
-    if (audioSortFilterParametersOne.filterCommented !=
-        audioSortFilterParametersTwo.filterCommented) {
-      differencesLst.add(sortFilterParmNameTranslationMap['filterCommented'] ??
+    if (existingAudioSortFilterParms.filterCommented !=
+        newOrModifiedaudioSortFilterParms.filterCommented) {
+      differencesLst.add(sortFilterParmsNameTranslationMap['filterCommented'] ??
           'filterCommented');
     }
-    if (audioSortFilterParametersOne.filterNotCommented !=
-        audioSortFilterParametersTwo.filterNotCommented) {
+    if (existingAudioSortFilterParms.filterNotCommented !=
+        newOrModifiedaudioSortFilterParms.filterNotCommented) {
       differencesLst.add(
-          sortFilterParmNameTranslationMap['filterNotCommented'] ??
+          sortFilterParmsNameTranslationMap['filterNotCommented'] ??
               'filterNotCommented');
     }
-    if (audioSortFilterParametersOne.downloadDateStartRange !=
-        audioSortFilterParametersTwo.downloadDateStartRange) {
+    if (existingAudioSortFilterParms.downloadDateStartRange !=
+        newOrModifiedaudioSortFilterParms.downloadDateStartRange) {
       differencesLst.add(
-          sortFilterParmNameTranslationMap['downloadDateStartRange'] ??
+          sortFilterParmsNameTranslationMap['downloadDateStartRange'] ??
               'downloadDateStartRange');
     }
-    if (audioSortFilterParametersOne.downloadDateEndRange !=
-        audioSortFilterParametersTwo.downloadDateEndRange) {
+    if (existingAudioSortFilterParms.downloadDateEndRange !=
+        newOrModifiedaudioSortFilterParms.downloadDateEndRange) {
       differencesLst.add(
-          sortFilterParmNameTranslationMap['downloadDateEndRange'] ??
+          sortFilterParmsNameTranslationMap['downloadDateEndRange'] ??
               'downloadDateEndRange');
     }
-    if (audioSortFilterParametersOne.uploadDateStartRange !=
-        audioSortFilterParametersTwo.uploadDateStartRange) {
+    if (existingAudioSortFilterParms.uploadDateStartRange !=
+        newOrModifiedaudioSortFilterParms.uploadDateStartRange) {
       differencesLst.add(
-          sortFilterParmNameTranslationMap['uploadDateStartRange'] ??
+          sortFilterParmsNameTranslationMap['uploadDateStartRange'] ??
               'uploadDateStartRange');
     }
-    if (audioSortFilterParametersOne.uploadDateEndRange !=
-        audioSortFilterParametersTwo.uploadDateEndRange) {
+    if (existingAudioSortFilterParms.uploadDateEndRange !=
+        newOrModifiedaudioSortFilterParms.uploadDateEndRange) {
       differencesLst.add(
-          sortFilterParmNameTranslationMap['uploadDateEndRange'] ??
+          sortFilterParmsNameTranslationMap['uploadDateEndRange'] ??
               'uploadDateEndRange');
     }
-    if (audioSortFilterParametersOne.fileSizeStartRangeMB !=
-        audioSortFilterParametersTwo.fileSizeStartRangeMB) {
+    if (existingAudioSortFilterParms.fileSizeStartRangeMB !=
+        newOrModifiedaudioSortFilterParms.fileSizeStartRangeMB) {
       differencesLst.add(
-          sortFilterParmNameTranslationMap['fileSizeStartRangeMB'] ??
+          sortFilterParmsNameTranslationMap['fileSizeStartRangeMB'] ??
               'fileSizeStartRangeMB');
     }
-    if (audioSortFilterParametersOne.fileSizeEndRangeMB !=
-        audioSortFilterParametersTwo.fileSizeEndRangeMB) {
+    if (existingAudioSortFilterParms.fileSizeEndRangeMB !=
+        newOrModifiedaudioSortFilterParms.fileSizeEndRangeMB) {
       differencesLst.add(
-          sortFilterParmNameTranslationMap['fileSizeEndRangeMB'] ??
+          sortFilterParmsNameTranslationMap['fileSizeEndRangeMB'] ??
               'fileSizeEndRangeMB');
     }
-    if (audioSortFilterParametersOne.durationStartRangeSec !=
-        audioSortFilterParametersTwo.durationStartRangeSec) {
+    if (existingAudioSortFilterParms.durationStartRangeSec !=
+        newOrModifiedaudioSortFilterParms.durationStartRangeSec) {
       differencesLst.add(
-          sortFilterParmNameTranslationMap['durationStartRangeSec'] ??
+          sortFilterParmsNameTranslationMap['durationStartRangeSec'] ??
               'durationStartRangeSec');
     }
-    if (audioSortFilterParametersOne.durationEndRangeSec !=
-        audioSortFilterParametersTwo.durationEndRangeSec) {
+    if (existingAudioSortFilterParms.durationEndRangeSec !=
+        newOrModifiedaudioSortFilterParms.durationEndRangeSec) {
       differencesLst.add(
-          sortFilterParmNameTranslationMap['durationEndRangeSec'] ??
+          sortFilterParmsNameTranslationMap['durationEndRangeSec'] ??
               'durationEndRangeSec');
     }
 
     return differencesLst;
   }
 
-  /// Finds the differences between two lists.
+  void addTranslatedSortFilterParmsNamePlusSortOrder({
+    required Map<SortFilterParmsVersion, List<SortingItem>> listDiff,
+    required SortFilterParmsVersion listDiffKey,
+    required Map<String, String> sortFilterParmsNameTranslationMap,
+    required List<String> differencesLst,
+  }) {
+    List<String> firstListNames = listDiff[listDiffKey]!.map((item) {
+      String sortingOptionName =
+          (item as SortingItem).sortingOption.toString().split('.').last;
+      String ascOrDesc = (item as SortingItem).isAscending
+          ? sortFilterParmsNameTranslationMap['ascending'] ?? 'asc'
+          : sortFilterParmsNameTranslationMap['descending'] ?? 'desc';
+      String translatedSortFilterName =
+          sortFilterParmsNameTranslationMap[sortingOptionName] ??
+              sortingOptionName;
+      return '$translatedSortFilterName $ascOrDesc';
+    }).toList();
+
+    String presentOnlyInFirst;
+
+    if (listDiffKey == SortFilterParmsVersion.versionOne) {
+      presentOnlyInFirst =
+          sortFilterParmsNameTranslationMap['presentOnlyInFirst'] ??
+              'presentOnlyInFirst';
+    } else {
+      presentOnlyInFirst =
+          sortFilterParmsNameTranslationMap['presentOnlyInSecond'] ??
+              'presentOnlyInSecond';
+    }
+
+    differencesLst.add(presentOnlyInFirst);
+    differencesLst.add("${firstListNames.join(', ')}");
+  }
+
+  /// Finds the differences between two lists of SortingItem's.
   ///
   /// Returns a map with:
-  /// - `onlyInFirst`: Elements present only in the first list.
-  /// - `onlyInSecond`: Elements present only in the second list.
-  Map<String, List<dynamic>> listDifferences(
-      List<dynamic> list1, List<dynamic> list2) {
-    // Elements only in the first list
-    List<dynamic> onlyInFirst =
+  /// - `onlyInFirst`: SortingItem's with specific values present only in the
+  ///    first list.
+  /// - `onlyInSecond`: SortingItem's with specific values present only in the
+  ///    second list.
+  Map<SortFilterParmsVersion, List<SortingItem>> listSortItemsDifferences(
+      List<SortingItem> list1, List<SortingItem> list2) {
+    // SortingItem's only in the first list
+    List<SortingItem> onlyInFirst =
         list1.where((item) => !list2.contains(item)).toList();
 
-    // Elements only in the second list
-    List<dynamic> onlyInSecond =
+    // SortingItem's only in the second list
+    List<SortingItem> onlyInSecond =
         list2.where((item) => !list1.contains(item)).toList();
 
     return {
-      'onlyInFirst': onlyInFirst,
-      'onlyInSecond': onlyInSecond,
+      SortFilterParmsVersion.versionOne: onlyInFirst,
+      SortFilterParmsVersion.versionTwo: onlyInSecond,
+    };
+  }
+
+  /// Finds the differences between two lists of audio filtering sentences (String's).
+  ///
+  /// Returns a map with:
+  /// - `onlyInFirst`: filtering sentences present only in the first list.
+  /// - `onlyInSecond`: filtering sentences present only in the second list.
+  Map<SortFilterParmsVersion, List<String>> listFilterSentencesDifferences(
+      List<String> list1, List<String> list2) {
+    // filtering sentences only in the first list
+    List<String> onlyInFirst =
+        list1.where((item) => !list2.contains(item)).toList();
+
+    // filtering sentences only in the second list
+    List<String> onlyInSecond =
+        list2.where((item) => !list1.contains(item)).toList();
+
+    return {
+      SortFilterParmsVersion.versionOne: onlyInFirst,
+      SortFilterParmsVersion.versionTwo: onlyInSecond,
     };
   }
 
