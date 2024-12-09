@@ -2281,6 +2281,13 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         await tester.tap(find.text('Last listened date/time'));
         await tester.pumpAndSettle();
 
+        // Find the Text with 'Last listened date/time' which is located
+        // in the selected sort parameters ListView
+        textFinder = find.descendant(
+          of: find.byKey(const Key('selectedSortingOptionsListView')),
+          matching: find.text('Last listened date/time'),
+        );
+
         // Convert descending to ascending sort order of 'Last listened date/time'.
         await invertSortingItemOrder(
           tester: tester,
@@ -2519,34 +2526,11 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         await tester.tap(find.text('Last listened date/time'));
         await tester.pumpAndSettle();
 
-        // Find the Text with 'Last listened date/time' which is located
-        // in the selected sort parameters ListView
-        textFinder = find.descendant(
-          of: find.byKey(const Key('selectedSortingOptionsListView')),
-          matching: find.text('Last listened date/time'),
+        // Convert descending to ascending sort order of 'Last listened date/time'.
+        await invertSortingItemOrder(
+          tester: tester,
+          sortingItemName: 'Last listened date/time',
         );
-
-        // Then find the ListTile ancestor of the 'Audio title' Text
-        // widget. The ascending/descending and remove icon buttons are
-        // contained in their ListTile ancestor
-        listTileFinder = find.ancestor(
-          of: textFinder,
-          matching: find.byType(ListTile),
-        );
-
-        // Now, within that ListTile, find the sort option ascending/
-        // descending IconButton with key 'sort_ascending_or_descending_button'
-        iconButtonFinder = find.descendant(
-          of: listTileFinder,
-          matching:
-              find.byKey(const Key('sort_ascending_or_descending_button')),
-        );
-
-        // Tap on the ascending/descending icon button to convert ascending
-        // to descending sort order. So, the 'Title asc? sort/filter parms
-        // will in fact be descending !!
-        await tester.tap(iconButtonFinder);
-        await tester.pumpAndSettle();
 
         // Then delete the "Audio download date" descending sort option
 
@@ -3139,36 +3123,12 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(find.text('Audio title'));
           await tester.pumpAndSettle();
 
-          // Tap on the ascending icon button in order to set descending
-          // sort option
-
-          // Find the Text with 'Audio title' which is now located in the
-          // selected sort parameters ListView
-          textFinder = find.descendant(
-            of: find.byKey(const Key('selectedSortingOptionsListView')),
-            matching: find.text('Audio title'),
+          // Convert ascending to descending sort order of 'Audio title'.
+          // So, the 'Title asc? sort/filter parms will in fact be descending !!
+          await invertSortingItemOrder(
+            tester: tester,
+            sortingItemName: 'Audio title',
           );
-
-          // Then find the ListTile ancestor of the 'Audio title' Text
-          // widget. The ascending/descending and remove icon buttons are
-          // contained in their ListTile ancestor
-          listTileFinder = find.ancestor(
-            of: textFinder,
-            matching: find.byType(ListTile),
-          );
-
-          // Now, within that ListTile, find the sort option ascending/
-          // descending IconButton with key 'sort_ascending_or_descending_button'
-          iconButtonFinder = find.descendant(
-            of: listTileFinder,
-            matching:
-                find.byKey(const Key('sort_ascending_or_descending_button')),
-          );
-
-          // Tap on the ascending/descending icon button to convert ascending
-          // to descending sort order
-          await tester.tap(iconButtonFinder);
-          await tester.pumpAndSettle();
 
           // Then delete the "Audio download date" descending sort option
 
@@ -4679,36 +4639,12 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(find.text('Titre audio'));
           await tester.pumpAndSettle();
 
-          // Tap on the ascending icon button in order to set descending
-          // sort option
-
-          // Find the Text with 'Titre audio' which is now located in the
-          // selected sort parameters ListView
-          textFinder = find.descendant(
-            of: find.byKey(const Key('selectedSortingOptionsListView')),
-            matching: find.text('Titre audio'),
+          // Convert ascending to descending sort order of 'Titre audio'.
+          // So, the 'Title asc? sort/filter parms will in fact be descending !!
+          await invertSortingItemOrder(
+            tester: tester,
+            sortingItemName: 'Titre audio',
           );
-
-          // Then find the ListTile ancestor of the 'Titre audio' Text
-          // widget. The ascending/descending and remove icon buttons are
-          // contained in their ListTile ancestor
-          listTileFinder = find.ancestor(
-            of: textFinder,
-            matching: find.byType(ListTile),
-          );
-
-          // Now, within that ListTile, find the sort option ascending/
-          // descending IconButton with key 'sort_ascending_or_descending_button'
-          iconButtonFinder = find.descendant(
-            of: listTileFinder,
-            matching:
-                find.byKey(const Key('sort_ascending_or_descending_button')),
-          );
-
-          // Tap on the ascending/descending icon button to convert ascending
-          // to descending sort order
-          await tester.tap(iconButtonFinder);
-          await tester.pumpAndSettle();
 
           // Then delete the "Date téléch audio" descending sort option
 
@@ -9272,6 +9208,10 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
+      group('''Testing creating new Sort/Filter parms with same name of existing
+          Sort/Filter parms or modifying existing Sort/Filter parms. Testing the
+          displayed ConfirmActionDialog warning about the potential of applying
+          playlists which depends of the modified Sort/Filter parms.''', () {});
     });
   });
 }
