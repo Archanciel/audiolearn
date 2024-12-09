@@ -9208,10 +9208,97 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
-      group('''Testing creating new Sort/Filter parms with same name of existing
+    });
+    group('''Testing creating new Sort/Filter parms with same name of existing
           Sort/Filter parms or modifying existing Sort/Filter parms. Testing the
           displayed ConfirmActionDialog warning about the potential of applying
-          playlists which depends of the modified Sort/Filter parms.''', () {});
+          playlists which depends of the modified Sort/Filter parms.''', () {
+      testWidgets('''Modify an existing named and saved sort/filter parms. Then
+             save it and verify ConfirmActionDialog content.''',
+          (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}sort_filtered_parms_name_deletion_no_mp3_test",
+          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+
+        // Now open the audio popup menu in order to modify the 'Title asc'
+        final SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
+        );
+
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the download app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+        await app.main(['test']);
+        await tester.pumpAndSettle();
+
+        const String saveAsTitle = 'Title asc';
+
+        final Finder dropdownItemEditIconButtonFinder = find.byKey(
+            const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+        await tester.tap(dropdownItemEditIconButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Convert ascending to descending sort order of 'Audio title'.
+        // So, the 'Title asc? sort/filter parms will in fact be descending !!
+        await invertSortingItemOrder(
+          tester: tester,
+          sortingItemName: 'Audio title',
+        );
+
+        // Now define an audio/video title or description filter word
+        final Finder audioTitleSearchSentenceTextFieldFinder =
+            find.byKey(const Key('audioTitleSearchSentenceTextField'));
+
+        // Enter a selection word in the TextField. So, only the audio
+        // whose title contain Jancovici will be selected.
+        await tester.enterText(
+          audioTitleSearchSentenceTextFieldFinder,
+          'Jancovici',
+        );
+        await tester.pumpAndSettle();
+
+        // And now click on the add icon button
+        await tester.tap(find.byKey(const Key('addSentenceIconButton')));
+        await tester.pumpAndSettle();
+
+        // Click on the "Save" button. This closes the sort/filter dialog
+        // and updates the sort/filter playlist download view dropdown
+        // button with the modified sort/filter parms
+        await tester
+            .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+        await tester.pumpAndSettle();
+
+        // Verifying and closing the confirm dialog
+
+        await IntegrationTestUtil.verifyConfirmActionDialog(
+          tester: tester,
+          confirmDialogTitleOne:
+              'WARNING: the sort/filter parameters \"$saveAsTitle\" were modified. Do you want to update the existing sort/filter parms by clicking on \"Confirm\", or to save it with a different name or cancel the Save operation, this by clicking on \"Cancel\" ?',
+          confirmDialogMessage:
+              'Sort by:\n Present only in initial version:\n   Audio title asc,\n Present only in modified version:\n   Audio title desc,\nFilter options:\n Present only in modified version:\n   Jancovici',
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
     });
   });
 }
