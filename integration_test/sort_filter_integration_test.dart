@@ -1205,7 +1205,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         // Find the Text with "Audio downl date" which is located in the
         // selected sort parameters ListView
-        final Finder texdtFinder = find.descendant(
+        final Finder textFinder = find.descendant(
           of: find.byKey(const Key('selectedSortingOptionsListView')),
           matching: find.text('Audio downl date'),
         );
@@ -1214,7 +1214,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // widget. The ascending/descending and remove icon buttons are
         // contained in their ListTile ancestor
         final Finder listTileFinder = find.ancestor(
-          of: texdtFinder,
+          of: textFinder,
           matching: find.byType(ListTile),
         );
 
@@ -1513,7 +1513,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         // Find the Text with "Audio downl date" which is located in the
         // selected sort parameters ListView
-        final Finder texdtFinder = find.descendant(
+        final Finder textFinder = find.descendant(
           of: find.byKey(const Key('selectedSortingOptionsListView')),
           matching: find.text('Audio downl date'),
         );
@@ -1522,7 +1522,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // widget. The ascending/descending and remove icon buttons are
         // contained in their ListTile ancestor
         final Finder listTileFinder = find.ancestor(
-          of: texdtFinder,
+          of: textFinder,
           matching: find.byType(ListTile),
         );
 
@@ -1784,7 +1784,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         // Find the Text with "Audio downl date" which is located in the
         // selected sort parameters ListView
-        Finder texdtFinder = find.descendant(
+        Finder textFinder = find.descendant(
           of: find.byKey(const Key('selectedSortingOptionsListView')),
           matching: find.text('Audio downl date'),
         );
@@ -1793,7 +1793,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // widget. The ascending/descending and remove icon buttons are
         // contained in their ListTile ancestor
         Finder listTileFinder = find.ancestor(
-          of: texdtFinder,
+          of: textFinder,
           matching: find.byType(ListTile),
         );
 
@@ -1868,34 +1868,12 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         await tester.tap(dropdownItemEditIconButtonFinder);
         await tester.pumpAndSettle();
 
-        // Find the Text with 'Audio title' which is now located in the
-        // selected sort parameters ListView
-        texdtFinder = find.descendant(
-          of: find.byKey(const Key('selectedSortingOptionsListView')),
-          matching: find.text('Audio title'),
+        // Convert ascending to descending sort order of 'Audio title'.
+        // So, the 'Title asc? sort/filter parms will in fact be descending !!
+        await invertSortingItemOrder(
+          tester: tester,
+          sortingItemName: 'Audio title',
         );
-
-        // Then find the ListTile ancestor of the 'Audio title' Text
-        // widget. The ascending/descending and remove icon buttons are
-        // contained in their ListTile ancestor
-        listTileFinder = find.ancestor(
-          of: texdtFinder,
-          matching: find.byType(ListTile),
-        );
-
-        // Now, within that ListTile, find the sort option ascending/
-        // descending IconButton with key 'sort_ascending_or_descending_button'
-        iconButtonFinder = find.descendant(
-          of: listTileFinder,
-          matching:
-              find.byKey(const Key('sort_ascending_or_descending_button')),
-        );
-
-        // Tap on the ascending/descending icon button to convert ascending
-        // to descending sort order. So, the 'Title asc? sort/filter parms
-        // will in fact be descending !!
-        await tester.tap(iconButtonFinder);
-        await tester.pumpAndSettle();
 
         // Now define an audio/video title or description filter word
         final Finder audioTitleSearchSentenceTextFieldFinder =
@@ -2054,7 +2032,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         // Find the Text with "Audio downl date" which is located in the
         // selected sort parameters ListView
-        final Finder texdtFinder = find.descendant(
+        final Finder textFinder = find.descendant(
           of: find.byKey(const Key('selectedSortingOptionsListView')),
           matching: find.text('Last listened date/time'),
         );
@@ -2063,7 +2041,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // widget. The ascending/descending and remove icon buttons are
         // contained in their ListTile ancestor
         final Finder listTileFinder = find.ancestor(
-          of: texdtFinder,
+          of: textFinder,
           matching: find.byType(ListTile),
         );
 
@@ -2223,7 +2201,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         // Find the Text with "Audio downl date" which is located in the
         // selected sort parameters ListView
-        Finder texdtFinder = find.descendant(
+        Finder textFinder = find.descendant(
           of: find.byKey(const Key('selectedSortingOptionsListView')),
           matching: find.text('Audio downl date'),
         );
@@ -2232,7 +2210,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // widget. The ascending/descending and remove icon buttons are
         // contained in their ListTile ancestor
         Finder listTileFinder = find.ancestor(
-          of: texdtFinder,
+          of: textFinder,
           matching: find.byType(ListTile),
         );
 
@@ -2303,40 +2281,17 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         await tester.tap(find.text('Last listened date/time'));
         await tester.pumpAndSettle();
 
-        // Find the Text with 'Last listened date/time' which is located
-        // in the selected sort parameters ListView
-        texdtFinder = find.descendant(
-          of: find.byKey(const Key('selectedSortingOptionsListView')),
-          matching: find.text('Last listened date/time'),
+        // Convert descending to ascending sort order of 'Last listened date/time'.
+        await invertSortingItemOrder(
+          tester: tester,
+          sortingItemName: 'Last listened date/time',
         );
-
-        // Then find the ListTile ancestor of the 'Audio title' Text
-        // widget. The ascending/descending and remove icon buttons are
-        // contained in their ListTile ancestor
-        listTileFinder = find.ancestor(
-          of: texdtFinder,
-          matching: find.byType(ListTile),
-        );
-
-        // Now, within that ListTile, find the sort option ascending/
-        // descending IconButton with key 'sort_ascending_or_descending_button'
-        iconButtonFinder = find.descendant(
-          of: listTileFinder,
-          matching:
-              find.byKey(const Key('sort_ascending_or_descending_button')),
-        );
-
-        // Tap on the ascending/descending icon button to convert ascending
-        // to descending sort order. So, the 'Title asc? sort/filter parms
-        // will in fact be descending !!
-        await tester.tap(iconButtonFinder);
-        await tester.pumpAndSettle();
 
         // Then delete the "Audio download date" descending sort option
 
         // Find the Text with "Audio downl date" which is located in the
         // selected sort parameters ListView
-        texdtFinder = find.descendant(
+        textFinder = find.descendant(
           of: find.byKey(const Key('selectedSortingOptionsListView')),
           matching: find.text('Audio downl date'),
         );
@@ -2345,7 +2300,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // widget. The ascending/descending and remove icon buttons are
         // contained in their ListTile ancestor
         listTileFinder = find.ancestor(
-          of: texdtFinder,
+          of: textFinder,
           matching: find.byType(ListTile),
         );
 
@@ -2475,7 +2430,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         // Find the Text with "Audio downl date" which is located in the
         // selected sort parameters ListView
-        Finder texdtFinder = find.descendant(
+        Finder textFinder = find.descendant(
           of: find.byKey(const Key('selectedSortingOptionsListView')),
           matching: find.text('Audio downl date'),
         );
@@ -2484,7 +2439,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // widget. The ascending/descending and remove icon buttons are
         // contained in their ListTile ancestor
         Finder listTileFinder = find.ancestor(
-          of: texdtFinder,
+          of: textFinder,
           matching: find.byType(ListTile),
         );
 
@@ -2566,7 +2521,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         // Find the Text with 'Last listened date/time' which is located
         // in the selected sort parameters ListView
-        texdtFinder = find.descendant(
+        textFinder = find.descendant(
           of: find.byKey(const Key('selectedSortingOptionsListView')),
           matching: find.text('Last listened date/time'),
         );
@@ -2575,7 +2530,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // widget. The ascending/descending and remove icon buttons are
         // contained in their ListTile ancestor
         listTileFinder = find.ancestor(
-          of: texdtFinder,
+          of: textFinder,
           matching: find.byType(ListTile),
         );
 
@@ -2597,7 +2552,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         // Find the Text with "Audio downl date" which is located in the
         // selected sort parameters ListView
-        texdtFinder = find.descendant(
+        textFinder = find.descendant(
           of: find.byKey(const Key('selectedSortingOptionsListView')),
           matching: find.text('Audio downl date'),
         );
@@ -2606,7 +2561,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // widget. The ascending/descending and remove icon buttons are
         // contained in their ListTile ancestor
         listTileFinder = find.ancestor(
-          of: texdtFinder,
+          of: textFinder,
           matching: find.byType(ListTile),
         );
 
@@ -2797,7 +2752,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           // Find the Text with "Audio downl date" which is located in the
           // selected sort parameters ListView
-          final Finder texdtFinder = find.descendant(
+          final Finder textFinder = find.descendant(
             of: find.byKey(const Key('selectedSortingOptionsListView')),
             matching: find.text('Audio downl date'),
           );
@@ -2806,7 +2761,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // widget. The ascending/descending and remove icon buttons are
           // contained in their ListTile ancestor
           final Finder listTileFinder = find.ancestor(
-            of: texdtFinder,
+            of: textFinder,
             matching: find.byType(ListTile),
           );
 
@@ -3103,7 +3058,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           // Find the Text with "Audio downl date" which is located in the
           // selected sort parameters ListView
-          Finder texdtFinder = find.descendant(
+          Finder textFinder = find.descendant(
             of: find.byKey(const Key('selectedSortingOptionsListView')),
             matching: find.text('Audio downl date'),
           );
@@ -3112,7 +3067,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // widget. The ascending/descending and remove icon buttons are
           // contained in their ListTile ancestor
           Finder listTileFinder = find.ancestor(
-            of: texdtFinder,
+            of: textFinder,
             matching: find.byType(ListTile),
           );
 
@@ -3189,7 +3144,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           // Find the Text with 'Audio title' which is now located in the
           // selected sort parameters ListView
-          texdtFinder = find.descendant(
+          textFinder = find.descendant(
             of: find.byKey(const Key('selectedSortingOptionsListView')),
             matching: find.text('Audio title'),
           );
@@ -3198,7 +3153,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // widget. The ascending/descending and remove icon buttons are
           // contained in their ListTile ancestor
           listTileFinder = find.ancestor(
-            of: texdtFinder,
+            of: textFinder,
             matching: find.byType(ListTile),
           );
 
@@ -3219,7 +3174,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           // Find the Text with "Audio downl date" which is located in the
           // selected sort parameters ListView
-          texdtFinder = find.descendant(
+          textFinder = find.descendant(
             of: find.byKey(const Key('selectedSortingOptionsListView')),
             matching: find.text('Audio downl date'),
           );
@@ -3228,7 +3183,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // widget. The ascending/descending and remove icon buttons are
           // contained in their ListTile ancestor
           listTileFinder = find.ancestor(
-            of: texdtFinder,
+            of: textFinder,
             matching: find.byType(ListTile),
           );
 
@@ -3530,7 +3485,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           // Find the Text with "Audio downl date" which is located in the
           // selected sort parameters ListView
-          final Finder texdtFinder = find.descendant(
+          final Finder textFinder = find.descendant(
             of: find.byKey(const Key('selectedSortingOptionsListView')),
             matching: find.text('Audio downl date'),
           );
@@ -3539,7 +3494,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // widget. The ascending/descending and remove icon buttons are
           // contained in their ListTile ancestor
           final Finder listTileFinder = find.ancestor(
-            of: texdtFinder,
+            of: textFinder,
             matching: find.byType(ListTile),
           );
 
@@ -3794,7 +3749,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           // Find the Text with "Audio downl date" which is located in the
           // selected sort parameters ListView
-          final Finder texdtFinder = find.descendant(
+          final Finder textFinder = find.descendant(
             of: find.byKey(const Key('selectedSortingOptionsListView')),
             matching: find.text('Audio downl date'),
           );
@@ -3803,7 +3758,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // widget. The ascending/descending and remove icon buttons are
           // contained in their ListTile ancestor
           final Finder listTileFinder = find.ancestor(
-            of: texdtFinder,
+            of: textFinder,
             matching: find.byType(ListTile),
           );
 
@@ -4160,7 +4115,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
             // Find the Text with "Audio downl date" which is located in the
             // selected sort parameters ListView
-            final Finder texdtFinder = find.descendant(
+            final Finder textFinder = find.descendant(
               of: find.byKey(const Key('selectedSortingOptionsListView')),
               matching: find.text('Audio downl date'),
             );
@@ -4169,7 +4124,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // widget. The ascending/descending and remove icon buttons are
             // contained in their ListTile ancestor
             final Finder listTileFinder = find.ancestor(
-              of: texdtFinder,
+              of: textFinder,
               matching: find.byType(ListTile),
             );
 
@@ -4344,7 +4299,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           // Find the Text with "Audio downl date" which is located in the
           // selected sort parameters ListView
-          final Finder texdtFinder = find.descendant(
+          final Finder textFinder = find.descendant(
             of: find.byKey(const Key('selectedSortingOptionsListView')),
             matching: find.text('Date téléch audio'),
           );
@@ -4353,7 +4308,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // widget. The ascending/descending and remove icon buttons are
           // contained in their ListTile ancestor
           final Finder listTileFinder = find.ancestor(
-            of: texdtFinder,
+            of: textFinder,
             matching: find.byType(ListTile),
           );
 
@@ -4643,7 +4598,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           // Find the Text with "Date téléch audio" which is located in the
           // selected sort parameters ListView
-          Finder texdtFinder = find.descendant(
+          Finder textFinder = find.descendant(
             of: find.byKey(const Key('selectedSortingOptionsListView')),
             matching: find.text('Date téléch audio'),
           );
@@ -4652,7 +4607,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // widget. The ascending/descending and remove icon buttons are
           // contained in their ListTile ancestor
           Finder listTileFinder = find.ancestor(
-            of: texdtFinder,
+            of: textFinder,
             matching: find.byType(ListTile),
           );
 
@@ -4729,7 +4684,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           // Find the Text with 'Titre audio' which is now located in the
           // selected sort parameters ListView
-          texdtFinder = find.descendant(
+          textFinder = find.descendant(
             of: find.byKey(const Key('selectedSortingOptionsListView')),
             matching: find.text('Titre audio'),
           );
@@ -4738,7 +4693,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // widget. The ascending/descending and remove icon buttons are
           // contained in their ListTile ancestor
           listTileFinder = find.ancestor(
-            of: texdtFinder,
+            of: textFinder,
             matching: find.byType(ListTile),
           );
 
@@ -4759,7 +4714,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           // Find the Text with "Date téléch audio" which is located in the
           // selected sort parameters ListView
-          texdtFinder = find.descendant(
+          textFinder = find.descendant(
             of: find.byKey(const Key('selectedSortingOptionsListView')),
             matching: find.text('Date téléch audio'),
           );
@@ -4768,7 +4723,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // widget. The ascending/descending and remove icon buttons are
           // contained in their ListTile ancestor
           listTileFinder = find.ancestor(
-            of: texdtFinder,
+            of: textFinder,
             matching: find.byType(ListTile),
           );
 
@@ -5076,7 +5031,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           // Find the Text with "Date téléch audio" which is located in the
           // selected sort parameters ListView
-          final Finder texdtFinder = find.descendant(
+          final Finder textFinder = find.descendant(
             of: find.byKey(const Key('selectedSortingOptionsListView')),
             matching: find.text('Date téléch audio'),
           );
@@ -5085,7 +5040,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // widget. The ascending/descending and remove icon buttons are
           // contained in their ListTile ancestor
           final Finder listTileFinder = find.ancestor(
-            of: texdtFinder,
+            of: textFinder,
             matching: find.byType(ListTile),
           );
 
@@ -6024,7 +5979,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           // Find the Text with "Audio downl date" which is located in the
           // selected sort parameters ListView
-          Finder texdtFinder = find.descendant(
+          Finder textFinder = find.descendant(
             of: find.byKey(const Key('selectedSortingOptionsListView')),
             matching: find.text('Audio downl date'),
           );
@@ -6033,7 +5988,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // widget. The ascending/descending and remove icon buttons are
           // contained in their ListTile ancestor
           Finder listTileFinder = find.ancestor(
-            of: texdtFinder,
+            of: textFinder,
             matching: find.byType(ListTile),
           );
 
@@ -7126,7 +7081,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         // Find the Text with "Audio downl date" which is located in the
         // selected sort parameters ListView
-        final Finder texdtFinder = find.descendant(
+        final Finder textFinder = find.descendant(
           of: find.byKey(const Key('selectedSortingOptionsListView')),
           matching: find.text('Audio downl date'),
         );
@@ -7135,7 +7090,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // widget. The ascending/descending and remove icon buttons are
         // contained in their ListTile ancestor
         final Finder listTileFinder = find.ancestor(
-          of: texdtFinder,
+          of: textFinder,
           matching: find.byType(ListTile),
         );
 
@@ -7364,7 +7319,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         // Find the Text with "Audio downl date" which is located in the
         // selected sort parameters ListView
-        final Finder texdtFinder = find.descendant(
+        final Finder textFinder = find.descendant(
           of: find.byKey(const Key('selectedSortingOptionsListView')),
           matching: find.text('Audio downl date'),
         );
@@ -7373,7 +7328,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // widget. The ascending/descending and remove icon buttons are
         // contained in their ListTile ancestor
         final Finder listTileFinder = find.ancestor(
-          of: texdtFinder,
+          of: textFinder,
           matching: find.byType(ListTile),
         );
 
@@ -7395,6 +7350,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         await tester
             .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
         await tester.pumpAndSettle();
+
+        await IntegrationTestUtil.verifyConfirmActionDialog(
+          tester: tester,
+          confirmDialogTitleOne:
+              'WARNING: the sort/filter parameters \"$saveAsTitle\" were modified. Do you want to update the existing sort/filter parms by clicking on \"Confirm\", or to save it with a different name or cancel the Save operation, this by clicking on \"Cancel\" ?',
+          confirmDialogMessage:
+              'Sort by:\n Present only in initial version:\n   Audio downl date desc,\n Present only in modified version:\n   Video upload date desc',
+        );
 
         // Now verify the playlist download view state with the 'UploadVideo'
         // sort/filter parms applied
@@ -7719,7 +7682,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         // Find the Text with "Audio downl date" which is located in the
         // selected sort parameters ListView
-        final Finder texdtFinder = find.descendant(
+        final Finder textFinder = find.descendant(
           of: find.byKey(const Key('selectedSortingOptionsListView')),
           matching: find.text('Audio downl date'),
         );
@@ -7728,7 +7691,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // widget. The ascending/descending and remove icon buttons are
         // contained in their ListTile ancestor
         final Finder listTileFinder = find.ancestor(
-          of: texdtFinder,
+          of: textFinder,
           matching: find.byType(ListTile),
         );
 
@@ -7869,7 +7832,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         // Find the Text with "Audio downl date" which is located in the
         // selected sort parameters ListView
-        final Finder texdtFinder = find.descendant(
+        final Finder textFinder = find.descendant(
           of: find.byKey(const Key('selectedSortingOptionsListView')),
           matching: find.text('Audio downl date'),
         );
@@ -7878,7 +7841,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // widget. The ascending/descending and remove icon buttons are
         // contained in their ListTile ancestor
         final Finder listTileFinder = find.ancestor(
-          of: texdtFinder,
+          of: textFinder,
           matching: find.byType(ListTile),
         );
 
@@ -8007,7 +7970,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         // Find the Text with "Audio downl date" which is located in the
         // selected sort parameters ListView
-        final Finder texdtFinder = find.descendant(
+        final Finder textFinder = find.descendant(
           of: find.byKey(const Key('selectedSortingOptionsListView')),
           matching: find.text('Audio downl date'),
         );
@@ -8016,7 +7979,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // widget. The ascending/descending and remove icon buttons are
         // contained in their ListTile ancestor
         final Finder listTileFinder = find.ancestor(
-          of: texdtFinder,
+          of: textFinder,
           matching: find.byType(ListTile),
         );
 
@@ -8162,7 +8125,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         // Find the Text with "Audio downl date" which is located in the
         // selected sort parameters ListView
-        final Finder texdtFinder = find.descendant(
+        final Finder textFinder = find.descendant(
           of: find.byKey(const Key('selectedSortingOptionsListView')),
           matching: find.text('Audio downl date'),
         );
@@ -8171,7 +8134,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // widget. The ascending/descending and remove icon buttons are
         // contained in their ListTile ancestor
         final Finder listTileFinder = find.ancestor(
-          of: texdtFinder,
+          of: textFinder,
           matching: find.byType(ListTile),
         );
 
@@ -8313,7 +8276,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         // Find the Text with "Audio downl date" which is located in the
         // selected sort parameters ListView
-        final Finder texdtFinder = find.descendant(
+        final Finder textFinder = find.descendant(
           of: find.byKey(const Key('selectedSortingOptionsListView')),
           matching: find.text('Audio downl date'),
         );
@@ -8322,7 +8285,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // widget. The ascending/descending and remove icon buttons are
         // contained in their ListTile ancestor
         final Finder listTileFinder = find.ancestor(
-          of: texdtFinder,
+          of: textFinder,
           matching: find.byType(ListTile),
         );
 
@@ -8448,7 +8411,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         // Find the Text with "Audio downl date" which is located in the
         // selected sort parameters ListView
-        final Finder texdtFinder = find.descendant(
+        final Finder textFinder = find.descendant(
           of: find.byKey(const Key('selectedSortingOptionsListView')),
           matching: find.text('Audio downl date'),
         );
@@ -8457,7 +8420,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // widget. The ascending/descending and remove icon buttons are
         // contained in their ListTile ancestor
         final Finder listTileFinder = find.ancestor(
-          of: texdtFinder,
+          of: textFinder,
           matching: find.byType(ListTile),
         );
 
@@ -8584,7 +8547,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         // Find the Text with "Audio downl date" which is located in the
         // selected sort parameters ListView
-        final Finder texdtFinder = find.descendant(
+        final Finder textFinder = find.descendant(
           of: find.byKey(const Key('selectedSortingOptionsListView')),
           matching: find.text('Audio downl date'),
         );
@@ -8593,7 +8556,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // widget. The ascending/descending and remove icon buttons are
         // contained in their ListTile ancestor
         final Finder listTileFinder = find.ancestor(
-          of: texdtFinder,
+          of: textFinder,
           matching: find.byType(ListTile),
         );
 
@@ -9698,5 +9661,37 @@ Future<void> verifyAudioPlayableList({
 
   // Tap on the Close button to close the AudioPlayableListDialog
   await tester.tap(find.byKey(const Key('closeTextButton')));
+  await tester.pumpAndSettle();
+}
+
+Future<void> invertSortingItemOrder({
+  required WidgetTester tester,
+  required String sortingItemName,
+}) async {
+  // Find the Text with 'Audio title' which is now located in the
+  // selected sort parameters ListView
+  Finder textFinder = find.descendant(
+    of: find.byKey(const Key('selectedSortingOptionsListView')),
+    matching: find.text(sortingItemName),
+  );
+
+  // Then find the ListTile ancestor of the sortingItemName Text
+  // widget. The ascending/descending and remove icon buttons are
+  // contained in their ListTile ancestor
+  Finder listTileFinder = find.ancestor(
+    of: textFinder,
+    matching: find.byType(ListTile),
+  );
+
+  // Now, within that ListTile, find the sort option ascending/
+  // descending IconButton with key 'sort_ascending_or_descending_button'
+  Finder iconButtonFinder = find.descendant(
+    of: listTileFinder,
+    matching: find.byKey(const Key('sort_ascending_or_descending_button')),
+  );
+
+  // Tap on the ascending/descending icon button to convert ascending
+  // to descending or descending to ascending sort order.
+  await tester.tap(iconButtonFinder);
   await tester.pumpAndSettle();
 }
