@@ -2119,18 +2119,20 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       String leftSpace = ' ' * leftSpaceNumber;
 
       if (element.contains(', ')) {
-        element = element.replaceAll(', ', ',\n$leftSpace');
+        element = _formatIndentedString(
+          input: element,
+          firstIndentSpaces: leftSpaceNumber - 2,
+          subsequentIndentSpaces: leftSpaceNumber + 1,
+        );
       }
 
       result.write('$leftSpace$element');
-
-      // element = element.substring(0, element.lastIndexOf('\n') - 1);
 
       // Add a comma and newline if the element does not end with ':' and
       // is not the last element
       if (!element.endsWith(':') &&
           i < sortFilterParmsVersionDifferenceLst.length - 1) {
-        result.write(',\n');
+        result.write('\n');
         leftSpaceNumber--;
       } else if (i < sortFilterParmsVersionDifferenceLst.length - 1) {
         leftSpace = ' ' * leftSpaceNumber++;
@@ -2139,6 +2141,51 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     }
 
     return result.toString();
+  }
+
+  String _formatIndentedString({
+    required String input,
+    required int firstIndentSpaces,
+    required int subsequentIndentSpaces,
+  }) {
+    // Define the spaces for indentation
+    String firstIndent = (firstIndentSpaces > 0) ? ' ' * firstIndentSpaces : '';
+    String subsequentIndent =
+        (subsequentIndentSpaces > 0) ? ' ' * subsequentIndentSpaces : '';
+
+    // Split the input string by the commas, preserving the delimiters
+    RegExp regExp = RegExp(r"(.*?,)");
+    Iterable<Match> matches = regExp.allMatches(input);
+
+    StringBuffer buffer = StringBuffer();
+    bool isFirst = true;
+
+    int lastMatchEnd =
+        0; // Tracks the end of the last match for appending remaining text
+
+    for (Match match in matches) {
+      String substring = match.group(
+          0)!; // Get the matched substring, e.g., "Date téléch audio asc,"
+
+      // Apply the appropriate indentation
+      if (isFirst) {
+        buffer.write('$firstIndent${substring.trim()}');
+        isFirst = false;
+      } else {
+        buffer.write('\n$subsequentIndent${substring.trim()}');
+      }
+
+      // Update the position of the last match
+      lastMatchEnd = match.end;
+    }
+
+    // Append any remaining part of the string (after the last comma)
+    if (lastMatchEnd <= input.length) {
+      buffer
+          .write('\n$subsequentIndent${input.substring(lastMatchEnd).trim()}');
+    }
+
+    return buffer.toString();
   }
 
   AudioSortFilterParameters
