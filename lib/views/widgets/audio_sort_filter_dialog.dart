@@ -2099,7 +2099,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
   String _formatModifiedSortFilterParmsStr({
     required List<String> sortFilterParmsVersionDifferenceLst,
   }) {
-    StringBuffer result = StringBuffer();
+    StringBuffer formattedString = StringBuffer();
 
     // number of ' ' to add before displaying the element
     int leftSpaceNumber = 0;
@@ -2119,31 +2119,32 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       String leftSpace = ' ' * leftSpaceNumber;
 
       if (element.contains(', ')) {
-        element = _formatIndentedString(
+        element = _formatCommaSeparatedValues(
           input: element,
           firstIndentSpaces: leftSpaceNumber - 2,
           subsequentIndentSpaces: leftSpaceNumber + 1,
         );
       }
 
-      result.write('$leftSpace$element');
+      formattedString.write('$leftSpace$element');
 
       // Add a comma and newline if the element does not end with ':' and
       // is not the last element
       if (!element.endsWith(':') &&
           i < sortFilterParmsVersionDifferenceLst.length - 1) {
-        result.write('\n');
+        formattedString.write('\n');
         leftSpaceNumber--;
       } else if (i < sortFilterParmsVersionDifferenceLst.length - 1) {
+        // element ends with ':' and is not the last element
         leftSpace = ' ' * leftSpaceNumber++;
-        result.write('\n$leftSpace'); // Add only newline if it ends with ':'
+        formattedString.write('\n$leftSpace'); // Add only newline if it ends with ':'
       }
     }
 
-    return result.toString();
+    return formattedString.toString();
   }
 
-  String _formatIndentedString({
+  String _formatCommaSeparatedValues({
     required String input,
     required int firstIndentSpaces,
     required int subsequentIndentSpaces,
