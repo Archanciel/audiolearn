@@ -2,6 +2,7 @@ import 'package:audiolearn/utils/duration_expansion.dart';
 import 'package:audiolearn/viewmodels/date_format_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:googleapis/civicinfo/v2.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -2116,7 +2117,14 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       }
 
       String leftSpace = ' ' * leftSpaceNumber;
+
+      if (element.contains(', ')) {
+        element = element.replaceAll(', ', ',\n$leftSpace');
+      }
+
       result.write('$leftSpace$element');
+
+      // element = element.substring(0, element.lastIndexOf('\n') - 1);
 
       // Add a comma and newline if the element does not end with ':' and
       // is not the last element
