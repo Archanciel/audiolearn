@@ -1955,8 +1955,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       );
 
       if (listOfDifferencesBetweenSortFilterParameters.isNotEmpty) {
-        String playlistsUsingSortFilterParmsNameStr =
-            constructCustomStringListItem(
+        String formattedModifiedSortFilterParmsStr =
+            _formatModifiedSortFilterParmsStr(
                 listOfDifferencesBetweenSortFilterParameters);
         // Here, the deleted commented audio number is greater than 0
         await showDialog<dynamic>(
@@ -1972,7 +1972,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                   .updatingSortFilterParmsWarningTitle(
                 _sortFilterSaveAsUniqueName,
               ),
-              dialogContent: playlistsUsingSortFilterParmsNameStr,
+              dialogContent: formattedModifiedSortFilterParmsStr,
             );
           },
         ).then((result) {
@@ -2021,8 +2021,17 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     Map<String, String> translationMap = {
       'selectedSortItemLst':
           "${AppLocalizations.of(context)!.sortBy}$kStartAtZeroPosition",
-      'presentOnlyInFirst': AppLocalizations.of(context)!.presentOnlyInFirst,
-      'presentOnlyInSecond': AppLocalizations.of(context)!.presentOnlyInSecond,
+
+      // Adding a ':' at the end of the string will cause it to be
+      // formatted in _formatModifiedSortFilterParmsStr() as an aligned
+      // title in the confirm action dialog
+      'presentOnlyInFirst': "${AppLocalizations.of(context)!.presentOnlyInFirst}:",
+
+      // Adding a ':' at the end of the string will cause it to be
+      // formatted in _formatModifiedSortFilterParmsStr() as an aligned
+      // title in the confirm action dialog
+      'presentOnlyInSecond': "${AppLocalizations.of(context)!.presentOnlyInSecond}:",
+      
       'audioDownloadDate': AppLocalizations.of(context)!.audioDownloadDate,
       'videoUploadDate': AppLocalizations.of(context)!.videoUploadDate,
       'validAudioTitle': AppLocalizations.of(context)!.audioTitleLabel,
@@ -2082,7 +2091,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     return translationMap;
   }
 
-  String constructCustomStringListItem(List<String> differences) {
+  String _formatModifiedSortFilterParmsStr(List<String> differences) {
     StringBuffer result = StringBuffer();
     int numberMoveRight = 0;
 

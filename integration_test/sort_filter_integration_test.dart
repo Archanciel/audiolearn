@@ -1903,7 +1903,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         await IntegrationTestUtil.verifyConfirmActionDialog(
           tester: tester,
           confirmDialogTitleOne:
-              'WARNING: the sort/filter parameters \"$saveAsTitle\" were modified. Do you want to update the existing sort/filter parms by clicking on \"Confirm\", or to save it with a different name or cancel the Save operation, this by clicking on \"Cancel\" ?',
+              'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
           confirmDialogMessage:
               'Sort by:\n Present only in initial version:\n   Audio title asc,\n Present only in modified version:\n   Audio title desc,\nFilter options:\n Present only in modified version:\n   Jancovici',
         );
@@ -7290,7 +7290,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         await IntegrationTestUtil.verifyConfirmActionDialog(
           tester: tester,
           confirmDialogTitleOne:
-              'WARNING: the sort/filter parameters \"$saveAsTitle\" were modified. Do you want to update the existing sort/filter parms by clicking on \"Confirm\", or to save it with a different name or cancel the Save operation, this by clicking on \"Cancel\" ?',
+              'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
           confirmDialogMessage:
               'Sort by:\n Present only in initial version:\n   Audio downl date desc,\n Present only in modified version:\n   Video upload date desc',
         );
@@ -9288,7 +9288,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         await IntegrationTestUtil.verifyConfirmActionDialog(
           tester: tester,
           confirmDialogTitleOne:
-              'WARNING: the sort/filter parameters \"$saveAsTitle\" were modified. Do you want to update the existing sort/filter parms by clicking on \"Confirm\", or to save it with a different name or cancel the Save operation, this by clicking on \"Cancel\" ?',
+              'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
           confirmDialogMessage:
               'Sort by:\n Present only in initial version:\n   Audio title asc,\n Present only in modified version:\n   Audio title desc,\nFilter options:\n Present only in modified version:\n   Jancovici',
         );

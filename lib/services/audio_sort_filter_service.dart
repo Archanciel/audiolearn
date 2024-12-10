@@ -240,7 +240,7 @@ class AudioSortFilterService {
     }
 
     // Compare selectedSortItemLst, the list containing the audio
-    // sorting options, and include specific differences
+    // sorting options, and include the asc or desc order
     if (!listEquals(existingAudioSortFilterParms.selectedSortItemLst,
         newOrModifiedaudioSortFilterParms.selectedSortItemLst)) {
       differencesLst.add(
@@ -290,7 +290,7 @@ class AudioSortFilterService {
             sortFilterParmsNameTranslationMap['presentOnlyInFirst'] ??
                 'presentOnlyInFirst';
         differencesLst.add(presentOnlyInFirst);
-        differencesLst.add("${listDiff[SortFilterParmsVersion.versionOne]!.join(', ')}");
+        differencesLst.add(listDiff[SortFilterParmsVersion.versionOne]!.join(', '));
       }
 
       if (listDiff[SortFilterParmsVersion.versionTwo]!.isNotEmpty) {
@@ -298,7 +298,7 @@ class AudioSortFilterService {
             sortFilterParmsNameTranslationMap['presentOnlyInSecond'] ??
                 'presentOnlyInSecond';
         differencesLst.add(presentOnlyInSecond);
-        differencesLst.add("${listDiff[SortFilterParmsVersion.versionTwo]!.join(', ')}");
+        differencesLst.add(listDiff[SortFilterParmsVersion.versionTwo]!.join(', '));
       }
     }
 
@@ -420,10 +420,10 @@ class AudioSortFilterService {
     required Map<String, String> sortFilterParmsNameTranslationMap,
     required List<String> differencesLst,
   }) {
-    List<String> firstListNames = listDiff[listDiffKey]!.map((item) {
+    List<String> namePlusOrderLst = listDiff[listDiffKey]!.map((item) {
       String sortingOptionName =
-          (item as SortingItem).sortingOption.toString().split('.').last;
-      String ascOrDesc = (item as SortingItem).isAscending
+          (item).sortingOption.toString().split('.').last;
+      String ascOrDesc = (item).isAscending
           ? sortFilterParmsNameTranslationMap['ascending'] ?? 'asc'
           : sortFilterParmsNameTranslationMap['descending'] ?? 'desc';
       String translatedSortFilterName =
@@ -432,20 +432,20 @@ class AudioSortFilterService {
       return '$translatedSortFilterName $ascOrDesc';
     }).toList();
 
-    String presentOnlyInFirst;
+    String presentOnlyInVersion;
 
     if (listDiffKey == SortFilterParmsVersion.versionOne) {
-      presentOnlyInFirst =
+      presentOnlyInVersion =
           sortFilterParmsNameTranslationMap['presentOnlyInFirst'] ??
               'presentOnlyInFirst';
     } else {
-      presentOnlyInFirst =
+      presentOnlyInVersion =
           sortFilterParmsNameTranslationMap['presentOnlyInSecond'] ??
               'presentOnlyInSecond';
     }
 
-    differencesLst.add(presentOnlyInFirst);
-    differencesLst.add("${firstListNames.join(', ')}");
+    differencesLst.add(presentOnlyInVersion);
+    differencesLst.add(namePlusOrderLst.join(', '));
   }
 
   /// Finds the differences between two lists of SortingItem's.
