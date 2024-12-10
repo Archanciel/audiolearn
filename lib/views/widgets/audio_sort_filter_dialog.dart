@@ -1957,7 +1957,9 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       if (listOfDifferencesBetweenSortFilterParameters.isNotEmpty) {
         String formattedModifiedSortFilterParmsStr =
             _formatModifiedSortFilterParmsStr(
-                listOfDifferencesBetweenSortFilterParameters);
+          sortFilterParmsVersionDifferenceLst:
+              listOfDifferencesBetweenSortFilterParameters,
+        );
         // Here, the deleted commented audio number is greater than 0
         await showDialog<dynamic>(
           context: context,
@@ -2025,13 +2027,15 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       // Adding a ':' at the end of the string will cause it to be
       // formatted in _formatModifiedSortFilterParmsStr() as an aligned
       // title in the confirm action dialog
-      'presentOnlyInFirst': "${AppLocalizations.of(context)!.presentOnlyInFirst}:",
+      'presentOnlyInFirst':
+          "${AppLocalizations.of(context)!.presentOnlyInFirst}:",
 
       // Adding a ':' at the end of the string will cause it to be
       // formatted in _formatModifiedSortFilterParmsStr() as an aligned
       // title in the confirm action dialog
-      'presentOnlyInSecond': "${AppLocalizations.of(context)!.presentOnlyInSecond}:",
-      
+      'presentOnlyInSecond':
+          "${AppLocalizations.of(context)!.presentOnlyInSecond}:",
+
       'audioDownloadDate': AppLocalizations.of(context)!.audioDownloadDate,
       'videoUploadDate': AppLocalizations.of(context)!.videoUploadDate,
       'validAudioTitle': AppLocalizations.of(context)!.audioTitleLabel,
@@ -2091,35 +2095,38 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     return translationMap;
   }
 
-  String _formatModifiedSortFilterParmsStr(List<String> differences) {
+  String _formatModifiedSortFilterParmsStr({
+    required List<String> sortFilterParmsVersionDifferenceLst,
+  }) {
     StringBuffer result = StringBuffer();
 
     // number of ' ' to add before displaying the element
     int leftSpaceNumber = 0;
 
-    for (int i = 0; i < differences.length; i++) {
-      String element = differences[i];
+    for (int i = 0; i < sortFilterParmsVersionDifferenceLst.length; i++) {
+      String element = sortFilterParmsVersionDifferenceLst[i];
 
       if (element.contains(kStartAtZeroPosition)) {
         // A new option list is started and its name is displayed at
-        // position 0. Two options exist:
-        //   1/ the sort option
-        //   2/ the filter option
+        // position 0. Two options list exist:
+        //   1/ the sort option list
+        //   2/ the filter option list
         leftSpaceNumber = 0;
         element = element.replaceAll(kStartAtZeroPosition, '');
       }
 
-      String rightSpaces = ' ' * leftSpaceNumber;
-      result.write('$rightSpaces$element');
+      String leftSpace = ' ' * leftSpaceNumber;
+      result.write('$leftSpace$element');
 
       // Add a comma and newline if the element does not end with ':' and
       // is not the last element
-      if (!element.endsWith(':') && i < differences.length - 1) {
+      if (!element.endsWith(':') &&
+          i < sortFilterParmsVersionDifferenceLst.length - 1) {
         result.write(',\n');
         leftSpaceNumber--;
-      } else if (i < differences.length - 1) {
-        String rightSpaces = ' ' * leftSpaceNumber++;
-        result.write('\n$rightSpaces'); // Add only newline if it ends with ':'
+      } else if (i < sortFilterParmsVersionDifferenceLst.length - 1) {
+        leftSpace = ' ' * leftSpaceNumber++;
+        result.write('\n$leftSpace'); // Add only newline if it ends with ':'
       }
     }
 
