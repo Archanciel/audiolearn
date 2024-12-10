@@ -709,8 +709,8 @@
     }
   },
   "updatingSortFilterParmsWarningTitle": "WARNING: the sort/filter parameters \"{sortFilterParmsName}\" were modified. Do you want to update the existing sort/filter parms by clicking on \"Confirm\", or to save it with a different name or cancel the Save operation, this by clicking on \"Cancel\" ?",
-  "presentOnlyInFirst": "Present only in initial version:",
-  "presentOnlyInSecond": "Present only in modified version:",
+  "presentOnlyInFirst": "Present only in initial version",
+  "presentOnlyInSecond": "Present only in modified version",
   "ascendingShort": "asc",
   "descendingShort": "desc"
 }
