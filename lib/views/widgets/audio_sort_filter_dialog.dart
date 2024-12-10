@@ -2093,25 +2093,32 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
 
   String _formatModifiedSortFilterParmsStr(List<String> differences) {
     StringBuffer result = StringBuffer();
-    int numberMoveRight = 0;
+
+    // number of ' ' to add before displaying the element
+    int leftSpaceNumber = 0;
 
     for (int i = 0; i < differences.length; i++) {
       String element = differences[i];
 
       if (element.contains(kStartAtZeroPosition)) {
-        numberMoveRight = 0;
+        // A new option list is started and its name is displayed at
+        // position 0. Two options exist:
+        //   1/ the sort option
+        //   2/ the filter option
+        leftSpaceNumber = 0;
         element = element.replaceAll(kStartAtZeroPosition, '');
       }
 
-      String rightSpaces = ' ' * numberMoveRight;
+      String rightSpaces = ' ' * leftSpaceNumber;
       result.write('$rightSpaces$element');
 
-      // Add a comma and newline if the element does not end with ':' and is not the last element
+      // Add a comma and newline if the element does not end with ':' and
+      // is not the last element
       if (!element.endsWith(':') && i < differences.length - 1) {
         result.write(',\n');
-        numberMoveRight--;
+        leftSpaceNumber--;
       } else if (i < differences.length - 1) {
-        String rightSpaces = ' ' * numberMoveRight++;
+        String rightSpaces = ' ' * leftSpaceNumber++;
         result.write('\n$rightSpaces'); // Add only newline if it ends with ':'
       }
     }
