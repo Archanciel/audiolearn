@@ -1900,7 +1900,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         // Verifying and closing the confirm dialog
 
-        await IntegrationTestUtil.verifyConfirmActionDialog(
+        await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
           tester: tester,
           confirmDialogTitleOne:
               'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
@@ -5616,7 +5616,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(find.byKey(const Key('deleteSortFilterTextButton')));
           await tester.pumpAndSettle();
 
-          await IntegrationTestUtil.verifyConfirmActionDialog(
+          await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
             tester: tester,
             confirmDialogTitleOne:
                 'WARNING: you are going to delete the Sort/Filter parms "$titleAscSortFilterName" which is used in 1 playlist(s) listed below',
@@ -5774,7 +5774,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(find.byKey(const Key('deleteSortFilterTextButton')));
           await tester.pumpAndSettle();
 
-          await IntegrationTestUtil.verifyConfirmActionDialog(
+          await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
             tester: tester,
             confirmDialogTitleOne:
                 'WARNING: you are going to delete the Sort/Filter parms "$titleAscSortFilterName" which is used in 2 playlist(s) listed below',
@@ -7287,7 +7287,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
         await tester.pumpAndSettle();
 
-        await IntegrationTestUtil.verifyConfirmActionDialog(
+        await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
           tester: tester,
           confirmDialogTitleOne:
               'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
@@ -9248,7 +9248,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         const String saveAsTitle = 'Title asc';
 
-        final Finder dropdownItemEditIconButtonFinder = find.byKey(
+        // Edit the 'Title asc' sort/filter parms
+        Finder dropdownItemEditIconButtonFinder = find.byKey(
             const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
         await tester.tap(dropdownItemEditIconButtonFinder);
         await tester.pumpAndSettle();
@@ -9261,36 +9262,140 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         );
 
         // Now define an audio/video title or description filter word
-        final Finder audioTitleSearchSentenceTextFieldFinder =
-            find.byKey(const Key('audioTitleSearchSentenceTextField'));
-
-        // Enter a selection word in the TextField. So, only the audio
-        // whose title contain Jancovici will be selected.
-        await tester.enterText(
-          audioTitleSearchSentenceTextFieldFinder,
-          'Jancovici',
+        await addAudioFilterString(
+          tester: tester,
+          audioFilterString: 'Jancovici',
         );
-        await tester.pumpAndSettle();
 
-        // And now click on the add icon button
-        await tester.tap(find.byKey(const Key('addSentenceIconButton')));
-        await tester.pumpAndSettle();
-
-        // Click on the "Save" button. This closes the sort/filter dialog
-        // and updates the sort/filter playlist download view dropdown
-        // button with the modified sort/filter parms
+        // Click on the "Save" button.
         await tester
             .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
         await tester.pumpAndSettle();
 
         // Verifying and closing the confirm dialog
 
-        await IntegrationTestUtil.verifyConfirmActionDialog(
+        await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
           tester: tester,
           confirmDialogTitleOne:
               'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
           confirmDialogMessage:
-              'Sort by:\n Present only in initial version:\n   Audio title asc,\n Present only in modified version:\n   Audio title desc,\nFilter options:\n Present only in modified version:\n   Jancovici',
+              'Sort by:\n Present only in initial version:\n   Audio title asc\n Present only in modified version:\n   Audio title desc\nFilter options:\n Present only in modified version:\n   Jancovici',
+        );
+
+        // Now reedit the 'Title asc' sort/filter parms
+        dropdownItemEditIconButtonFinder = find.byKey(
+            const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+        await tester.tap(dropdownItemEditIconButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Scrolling down the sort filter dialog so that the checkboxes
+        // are visible and so accessible by the integration test.
+        // WARNING: Scrolling down must be done before setting sort
+        // options, otherwise, it does not work.
+        await tester.drag(
+          find.byType(AudioSortFilterDialog),
+          const Offset(
+              0, -300), // Negative value for vertical drag to scroll down
+        );
+        await tester.pumpAndSettle();
+
+        // Tap on the Comment checkbox to unselect it
+        await tester.tap(find.byKey(const Key('filterCommentedCheckbox')));
+        await tester.pumpAndSettle();
+
+        // Tap on the Exclude ignore case checkbox to unselect it
+        await tester.tap(find.byKey(const Key('ignoreCaseCheckbox')));
+        await tester.pumpAndSettle();
+
+        // Tap on the Search in video compact description case checkbox to unselect it
+        await tester.tap(find.byKey(const Key('searchInVideoCompactDescription')));
+        await tester.pumpAndSettle();
+
+        // Tap on the Exclude ignore case checkbox to unselect it
+        await tester.tap(find.byKey(const Key('filterMusicQualityCheckbox')));
+        await tester.pumpAndSettle();
+
+        // Scrolling up the sort filter dialog to access to sort options
+        await tester.drag(
+          find.byType(AudioSortFilterDialog),
+          const Offset(
+              0, 300), // Negative value for vertical drag to scroll down
+        );
+        await tester.pumpAndSettle();
+
+        // Convert descending to ascending sort order of 'Audio title'.
+        // So, the 'Title asc? sort/filter parms will in fact be ascending !!
+        await invertSortingItemOrder(
+          tester: tester,
+          sortingItemName: 'Audio title',
+        );
+
+        // Select the 'Video upload date' item in the 'Sort by'
+        // dropdown button
+        await selectSortByOption(
+          tester: tester,
+          audioSortOption: 'Video upload date',
+        );
+
+        // Select the 'Video upload date' item in the 'Sort by'
+        // dropdown button
+        await selectSortByOption(
+          tester: tester,
+          audioSortOption: 'Audio duration',
+        );
+
+        // Select the 'Video upload date' item in the 'Sort by'
+        // dropdown button
+        await selectSortByOption(
+          tester: tester,
+          audioSortOption: 'Audio listenable remaining duration',
+        );
+
+        // Select the 'Video upload date' item in the 'Sort by'
+        // dropdown button
+        await selectSortByOption(
+          tester: tester,
+          audioSortOption: 'Audio download speed',
+        );
+
+        // Select the 'Video upload date' item in the 'Sort by'
+        // dropdown button
+        await selectSortByOption(
+          tester: tester,
+          audioSortOption: 'Audio download duration',
+        );
+
+        // Type "Jancovici" in the audio title search sentence TextField
+        await addAudioFilterString(
+          tester: tester,
+          audioFilterString: 'Jancovici',
+        );
+
+        // Type "Marine Le Pen" in the audio title search sentence TextField
+        await addAudioFilterString(
+          tester: tester,
+          audioFilterString: 'Marine Le Pen',
+        );
+
+        // Type "Emmanuel Macron" in the audio title search sentence TextField
+        await addAudioFilterString(
+          tester: tester,
+          audioFilterString: 'Emmanuel Macron',
+        );
+
+        // Click on the "Save" button.
+        await tester
+            .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+        await tester.pumpAndSettle();
+
+        // Verifying and closing the confirm dialog
+
+        await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
+          tester: tester,
+          confirmDialogTitleOne:
+              'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
+          confirmDialogMessage:
+              'Sort by:\n Present only in initial version:\n   Audio title desc\n Present only in modified version:\n   Audio title asc,\n   Video upload date desc,\n   Audio duration asc,\n   Audio listenable remaining duration asc,\n   Audio download speed desc,\n   Audio download duration desc\nFilter options:\n Present only in modified version:\n   Marine Le Pen,\n   Emmanuel Macron\nIgnore case\nInclude Youtube channel\nAudio music quality\nCommented',
         );
 
         // Purge the test playlist directory so that the created test
@@ -9301,6 +9406,35 @@ void playlistDownloadViewSortFilterIntegrationTest() {
       });
     });
   });
+}
+
+Future<void> selectSortByOption({
+  required WidgetTester tester,
+  required String audioSortOption,
+}) async {
+  await tester.tap(find.byKey(const Key('sortingOptionDropdownButton')));
+  await tester.pumpAndSettle();
+
+  await tester.tap(find.text(audioSortOption));
+  await tester.pumpAndSettle();
+}
+
+Future<void> addAudioFilterString({
+  required WidgetTester tester,
+  required String audioFilterString,
+}) async {
+  Finder audioTitleSearchSentenceTextFieldFinder =
+      find.byKey(const Key('audioTitleSearchSentenceTextField'));
+
+  await tester.enterText(
+    audioTitleSearchSentenceTextFieldFinder,
+    audioFilterString,
+  );
+  await tester.pumpAndSettle();
+
+  // And now click on the add icon button
+  await tester.tap(find.byKey(const Key('addSentenceIconButton')));
+  await tester.pumpAndSettle();
 }
 
 Future<void> verifyOrderOfPlaylistAudioComments({

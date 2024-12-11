@@ -29,10 +29,13 @@ class ConfirmActionDialog extends StatefulWidget {
   final List<dynamic> warningFunctionArgs; // Arguments for the action function
   final List<HelpItem> helpItemsLst;
 
+  final bool dialogTitleOneReducedFontSize;
+
   const ConfirmActionDialog({
     required this.actionFunction,
     required this.actionFunctionArgs,
     required this.dialogTitleOne,
+    this.dialogTitleOneReducedFontSize = false,
     this.dialogTitleTwo = '',
     required this.dialogContent,
     this.warningFunction,
@@ -91,7 +94,11 @@ class _ConfirmActionDialogState extends State<ConfirmActionDialog>
                 Flexible(
                   child: Text(
                     widget.dialogTitleOne,
-                    style: Theme.of(context).textTheme.headlineSmall,
+                    style: (widget.dialogTitleOneReducedFontSize)
+                        ? Theme.of(context).textTheme.headlineSmall?.copyWith(
+                              fontSize: kConfirmActionDialogSmallerFontSize,
+                            )
+                        : Theme.of(context).textTheme.headlineSmall,
                     key: const Key('confirmDialogTitleOneKey'),
                   ),
                 ),

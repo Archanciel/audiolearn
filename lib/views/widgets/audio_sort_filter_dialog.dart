@@ -1975,6 +1975,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                   .updatingSortFilterParmsWarningTitle(
                 _sortFilterSaveAsUniqueName,
               ),
+              dialogTitleOneReducedFontSize: true,
               dialogContent: formattedModifiedSortFilterParmsStr,
             );
           },
