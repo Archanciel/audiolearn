@@ -9209,12 +9209,12 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         );
       });
     });
-    group('''Testing creating new Sort/Filter parms with same name of existing
-          Sort/Filter parms or modifying existing Sort/Filter parms. Testing the
-          displayed ConfirmActionDialog warning about the potential of applying
-          playlists which depends of the modified Sort/Filter parms.''', () {
-      testWidgets('''Modify an existing named and saved sort/filter parms. Then
-             save it and verify ConfirmActionDialog content.''',
+    group('''Testing ConfirmActionDialog warning after creating new Sort/Filter
+          parms with same name as existing Sort/Filter parms or modifying existing
+          Sort/Filter parms...''', () {
+      testWidgets(
+          '''Modify 'Title asc' existing named and saved sort/filter parms.
+          Then save it and verify ConfirmActionDialog content.''',
           (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
@@ -9308,7 +9308,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         await tester.pumpAndSettle();
 
         // Tap on the Search in video compact description case checkbox to unselect it
-        await tester.tap(find.byKey(const Key('searchInVideoCompactDescription')));
+        await tester
+            .tap(find.byKey(const Key('searchInVideoCompactDescription')));
         await tester.pumpAndSettle();
 
         // Tap on the Exclude ignore case checkbox to unselect it
@@ -9395,7 +9396,162 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           confirmDialogTitleOne:
               'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
           confirmDialogMessage:
-              'Sort by:\n Present only in initial version:\n   Audio title desc\n Present only in modified version:\n   Audio title asc,\n   Video upload date desc,\n   Audio duration asc,\n   Audio listenable remaining duration asc,\n   Audio download speed desc,\n   Audio download duration desc\nFilter options:\n Present only in modified version:\n   Marine Le Pen,\n   Emmanuel Macron\nIgnore case\nInclude Youtube channel\nAudio music quality\nCommented',
+              'Sort by:\n Present only in initial version:\n   Audio title desc\n Present only in modified version:\n   Audio title asc,\n   Video upload date desc,\n   Audio duration asc,\n   Audio listenable remaining\n   duration asc,\n   Audio download speed desc,\n   Audio download duration desc\nFilter options:\n Present only in modified version:\n   Marine Le Pen,\n   Emmanuel Macron\nIgnore case\nInclude Youtube channel\nAudio music quality\nCommented',
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Modify 'for test' existing named and saved sort/filter parms.
+          Then save it and verify ConfirmActionDialog content.''',
+          (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}sort_filtered_parms_name_deletion_no_mp3_test",
+          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+
+        // Now open the audio popup menu in order to modify the 'Title asc'
+        final SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
+        );
+
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the download app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+        await app.main(['test']);
+        await tester.pumpAndSettle();
+
+        const String saveAsTitle = 'for test';
+
+        // Now tap on the current dropdown button item to open the dropdown
+        // button items list
+
+        final Finder dropDownButtonFinder =
+            find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+        final Finder dropDownButtonTextFinder = find.descendant(
+          of: dropDownButtonFinder,
+          matching: find.byType(Text),
+        );
+
+        await tester.tap(dropDownButtonTextFinder);
+        await tester.pumpAndSettle();
+
+        // And find the 'for test' sort/filter item
+        final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
+        await tester.tap(titleAscDropDownTextFinder);
+        await tester.pumpAndSettle();
+
+        // Now open the audio popup menu in order to modify the 'for test'
+        Finder dropdownItemEditIconButtonFinder = find.byKey(
+            const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+        await tester.tap(dropdownItemEditIconButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Convert ascending to descending sort order of 'Audio listenable
+        // remaining duration'. So, the 'for test? sort/filter parms will
+        // in fact be descending !!
+        await invertSortingItemOrder(
+          tester: tester,
+          sortingItemName: 'Audio listenable remaining duration',
+        );
+
+        await removeSortingItem(
+          tester: tester,
+          sortingItemName: 'Audio download date',
+        );
+
+        await removeSortingItem(
+          tester: tester,
+          sortingItemName: 'Video upload date',
+        );
+
+        await removeSortingItem(
+          tester: tester,
+          sortingItemName: 'Audio title',
+        );
+
+        await removeSortingItem(
+          tester: tester,
+          sortingItemName: 'Audio duration',
+        );
+
+        await removeSortingItem(
+          tester: tester,
+          sortingItemName: 'Last listened date/time',
+        );
+
+        await removeSortingItem(
+          tester: tester,
+          sortingItemName: 'Audio file size',
+        );
+
+        await removeSortingItem(
+          tester: tester,
+          sortingItemName: 'Audio download speed',
+        );
+
+        await removeSortingItem(
+          tester: tester,
+          sortingItemName: 'Audio download duration',
+        );
+
+        // Click on the "Save" button.
+        await tester
+            .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+        await tester.pumpAndSettle();
+
+        // Verifying and closing the confirm dialog
+
+        await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
+          tester: tester,
+          confirmDialogTitleOne:
+              'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
+          confirmDialogMessage:
+              'Sort by:\n Present only in initial version:\n   Audio download date asc,\n   Video upload date desc,\n   Audio title asc,\n   Audio duration asc,\n   Audio listenable remaining\n   duration asc,\n   Last listened date/time desc,\n   Audio file size desc,\n   Audio download speed desc,\n   Audio download duration desc\n Present only in modified version:\n   Audio listenable remaining\n   duration desc',
+        );
+
+        // Now close the sort/filter dialog clicking on the "Cancel"
+        // button since the previous modifications were saved by
+        // clicking on the ConfirmActionDialog "Confirm" button
+        await tester.tap(find.byKey(const Key('cancelSortFilterButton')));
+
+        // Now change the application language to french
+        await IntegrationTestUtil.setApplicationLanguage(
+          tester: tester,
+          language: Language.french,
+        );
+
+        // Reedit the 'for test' sort/filter parms
+        dropdownItemEditIconButtonFinder = find.byKey(
+            const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+        await tester.tap(dropdownItemEditIconButtonFinder);
+        await tester.pumpAndSettle();
+
+        await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
+          tester: tester,
+          confirmDialogTitleOne:
+              'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
+          confirmDialogMessage:
+              'Sort by:\n Present only in initial version:\n   Audio title desc\n Present only in modified version:\n   Audio title asc,\n   Video upload date desc,\n   Audio duration asc,\n   Audio listenable remaining\n   duration asc,\n   Audio download speed desc,\n   Audio download duration desc\nFilter options:\n Present only in modified version:\n   Marine Le Pen,\n   Emmanuel Macron\nIgnore case\nInclude Youtube channel\nAudio music quality\nCommented',
         );
 
         // Purge the test playlist directory so that the created test
@@ -9829,7 +9985,7 @@ Future<void> invertSortingItemOrder({
   required WidgetTester tester,
   required String sortingItemName,
 }) async {
-  // Find the Text with 'Audio title' which is now located in the
+  // Find the Text with sortingItemName which is now located in the
   // selected sort parameters ListView
   Finder textFinder = find.descendant(
     of: find.byKey(const Key('selectedSortingOptionsListView')),
@@ -9853,6 +10009,37 @@ Future<void> invertSortingItemOrder({
 
   // Tap on the ascending/descending icon button to convert ascending
   // to descending or descending to ascending sort order.
+  await tester.tap(iconButtonFinder);
+  await tester.pumpAndSettle();
+}
+
+Future<void> removeSortingItem({
+  required WidgetTester tester,
+  required String sortingItemName,
+}) async {
+  // Find the Text with sortingItemName which is now located in the
+  // selected sort parameters ListView
+  Finder textFinder = find.descendant(
+    of: find.byKey(const Key('selectedSortingOptionsListView')),
+    matching: find.text(sortingItemName),
+  );
+
+  // Then find the ListTile ancestor of the sortingItemName Text
+  // widget. The ascending/descending and remove icon buttons are
+  // contained in their ListTile ancestor
+  Finder listTileFinder = find.ancestor(
+    of: textFinder,
+    matching: find.byType(ListTile),
+  );
+
+  // Now, within that ListTile, find the sort remove IconButton
+  // with key 'removeSortingOptionIconButton'
+  Finder iconButtonFinder = find.descendant(
+    of: listTileFinder,
+    matching: find.byKey(const Key('removeSortingOptionIconButton')),
+  );
+
+  // Tap on the removeSortingOptionIconButton
   await tester.tap(iconButtonFinder);
   await tester.pumpAndSettle();
 }

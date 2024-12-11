@@ -961,6 +961,7 @@ class IntegrationTestUtil {
     required String confirmDialogTitleOne,
     String confirmDialogTitleTwo = '',
     required String confirmDialogMessage,
+    bool confirmAction = true,
     bool isHelpIconPresent = false,
   }) async {
     // Verifying the confirm dialog title
@@ -1003,10 +1004,17 @@ class IntegrationTestUtil {
       confirmDialogMessage,
     );
 
-    // Now find the confirm button of the delete filtered audio confirm
-    // dialog and tap on it
-    await tester.tap(find.byKey(const Key('confirmButton')));
-    await tester.pumpAndSettle();
+    if (confirmAction) {
+      // Now find the confirm button of the confirm action dialog
+      // and tap on it
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pumpAndSettle();
+    } else {
+      // Now find the cancel button of the confirm action dialog
+      // and tap on it
+      await tester.tap(find.byKey(const Key('cancelButton')));
+      await tester.pumpAndSettle();
+    }
   }
 
 // A custom finder that finds an IconButton with the specified icon data.

@@ -2,7 +2,6 @@ import 'package:audiolearn/utils/duration_expansion.dart';
 import 'package:audiolearn/viewmodels/date_format_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:googleapis/civicinfo/v2.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -2163,14 +2162,17 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     int lastSpaceIndex = strToModify.lastIndexOf(' ');
 
     // If there's no space or only one space, return the string as is
-    if (lastSpaceIndex == -1) return strToModify;
+    if (lastSpaceIndex == -1) {
+      return strToModify;
+    }
 
     // Find the penultimate space index
     int penultimateSpaceIndex =
         strToModify.substring(0, lastSpaceIndex).lastIndexOf(' ');
 
-    if (penultimateSpaceIndex == -1)
+    if (penultimateSpaceIndex == -1) {
       return strToModify; // No penultimate space found
+    }
 
     // Reconstruct the string
     return '${strToModify.substring(0, penultimateSpaceIndex)}\n$spaceStr${strToModify.substring(penultimateSpaceIndex + 1)}';
