@@ -4480,7 +4480,7 @@ void playlistTwoDownloadViewIntegrationTest() {
 
         // Verifying and closing the confirm dialog
 
-        await IntegrationTestUtil.verifyConfirmActionDialog(
+        await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
           tester: tester,
           confirmDialogTitleOne:
               'Delete audio filtered by "$sortFilterParmName" parms from playlist "$youtubePlaylistTitle"',
@@ -4768,7 +4768,7 @@ void playlistTwoDownloadViewIntegrationTest() {
 
         // Verifying and closing the confirm dialog
 
-        await IntegrationTestUtil.verifyConfirmActionDialog(
+        await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
           tester: tester,
           confirmDialogTitleOne:
               'Delete audio filtered by "$sortFilterParmName" parms from playlist "$youtubePlaylistTitle"',
@@ -5054,7 +5054,7 @@ void playlistTwoDownloadViewIntegrationTest() {
 
         // Verifying and closing the confirm dialog
 
-        await IntegrationTestUtil.verifyConfirmActionDialog(
+        await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
           tester: tester,
           confirmDialogTitleOne:
               'Delete audio filtered by "$sortFilterParmName" parms from playlist "$youtubePlaylistTitle"',
@@ -5397,7 +5397,7 @@ void playlistTwoDownloadViewIntegrationTest() {
 
         // Verifying and closing the confirm dialog
 
-        await IntegrationTestUtil.verifyConfirmActionDialog(
+        await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
           tester: tester,
           confirmDialogTitleOne:
               'Delete audio filtered by "$sortFilterParmName" parms from playlist "$youtubePlaylistTitle"',
@@ -5694,7 +5694,7 @@ void playlistTwoDownloadViewIntegrationTest() {
 
         // Verifying and closing the confirm dialog
 
-        await IntegrationTestUtil.verifyConfirmActionDialog(
+        await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
           tester: tester,
           confirmDialogTitleOne: 'WARNING: you are going to',
           confirmDialogTitleTwo:
@@ -6010,7 +6010,7 @@ void playlistTwoDownloadViewIntegrationTest() {
 
         // Verifying and closing the confirm dialog message
 
-        await IntegrationTestUtil.verifyConfirmActionDialog(
+        await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
           tester: tester,
           confirmDialogTitleOne: 'WARNING: you are going to',
           confirmDialogTitleTwo:

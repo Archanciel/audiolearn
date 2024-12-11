@@ -109,6 +109,7 @@ const Color kButtonColor = Color(0xFF3D3EC2);
 const Color kScreenButtonColor = kSliderThumbColorInDarkMode;
 const double kAudioDefaultPlayVolume = 0.5;
 const double kDropdownMenuItemMaxWidth = 90;
+const double kConfirmActionDialogSmallerFontSize = 20;
 
 // the width of the dropdown button in the dropdown menu
 // of the playlist download view can not be declared const

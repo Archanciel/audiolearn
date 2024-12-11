@@ -956,7 +956,7 @@ class IntegrationTestUtil {
     );
   }
 
-  static Future<void> verifyConfirmActionDialog({
+  static Future<void> verifyAndCloseConfirmActionDialog({
     required WidgetTester tester,
     required String confirmDialogTitleOne,
     String confirmDialogTitleTwo = '',
