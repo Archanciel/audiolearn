@@ -128,6 +128,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       AudioSortFilterService();
 
   List<AudioSortFilterParameters> _historicalAudioSortFilterParametersLst = [];
+  static const int _maxDisplayableStringLength = 34;
 
   @override
   void initState() {
@@ -2127,7 +2128,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           leftSpace: leftSpace,
         );
       } else {
-        if (element.length >= 35) {
+        if (element.length >= _maxDisplayableStringLength) {
           element = _replacePenultimateSpaceWithNewline(
             strToModify: element,
             spaceStr: '$leftSpace ',
@@ -2200,7 +2201,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       String substring = match.group(
           0)!; // Get the matched substring, e.g., "Date téléch audio asc,"
 
-      if (substring.length >= 35) {
+      if (substring.length >= _maxDisplayableStringLength) {
         substring = _replacePenultimateSpaceWithNewline(
           strToModify: substring,
           spaceStr: '$leftSpace ',
