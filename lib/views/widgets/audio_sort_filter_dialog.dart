@@ -2124,7 +2124,15 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           input: element,
           firstIndentSpaces: leftSpaceNumber - 2,
           subsequentIndentSpaces: leftSpaceNumber + 1,
+          leftSpace: leftSpace,
         );
+      } else {
+        if (element.length >= 35) {
+          element = _replacePenultimateSpaceWithNewline(
+            strToModify: element,
+            spaceStr: '$leftSpace ',
+          );
+        }
       }
 
       formattedString.write('$leftSpace$element');
@@ -2138,17 +2146,40 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       } else if (i < sortFilterParmsVersionDifferenceLst.length - 1) {
         // element ends with ':' and is not the last element
         leftSpace = ' ' * leftSpaceNumber++;
-        formattedString.write('\n$leftSpace'); // Add only newline if it ends with ':'
+        formattedString
+            .write('\n$leftSpace'); // Add only newline if it ends with ':'
       }
     }
 
     return formattedString.toString();
   }
 
+  String _replacePenultimateSpaceWithNewline({
+    required String strToModify,
+    required String spaceStr,
+  }) {
+    // Find the last space index
+    int lastSpaceIndex = strToModify.lastIndexOf(' ');
+
+    // If there's no space or only one space, return the string as is
+    if (lastSpaceIndex == -1) return strToModify;
+
+    // Find the penultimate space index
+    int penultimateSpaceIndex =
+        strToModify.substring(0, lastSpaceIndex).lastIndexOf(' ');
+
+    if (penultimateSpaceIndex == -1)
+      return strToModify; // No penultimate space found
+
+    // Reconstruct the string
+    return '${strToModify.substring(0, penultimateSpaceIndex)}\n$spaceStr${strToModify.substring(penultimateSpaceIndex + 1)}';
+  }
+
   String _formatCommaSeparatedValues({
     required String input,
     required int firstIndentSpaces,
     required int subsequentIndentSpaces,
+    required String leftSpace,
   }) {
     // Define the spaces for indentation
     String firstIndent = (firstIndentSpaces > 0) ? ' ' * firstIndentSpaces : '';
@@ -2168,6 +2199,13 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     for (Match match in matches) {
       String substring = match.group(
           0)!; // Get the matched substring, e.g., "Date téléch audio asc,"
+
+      if (substring.length >= 35) {
+        substring = _replacePenultimateSpaceWithNewline(
+          strToModify: substring,
+          spaceStr: '$leftSpace ',
+        );
+      }
 
       // Apply the appropriate indentation
       if (isFirst) {
