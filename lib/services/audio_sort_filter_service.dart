@@ -236,7 +236,7 @@ class AudioSortFilterService {
     List<String> differencesLst = [];
 
     if (existingAudioSortFilterParms == newOrModifiedaudioSortFilterParms) {
-      return differencesLst; // No differences
+      return []; // No differences
     }
 
     // Compare selectedSortItemLst, the list containing the audio
@@ -316,13 +316,6 @@ class AudioSortFilterService {
     }
     if (existingAudioSortFilterParms.searchAsWellInYoutubeChannelName !=
         newOrModifiedaudioSortFilterParms.searchAsWellInYoutubeChannelName) {
-      differencesLst.add(sortFilterParmsNameTranslationMap[
-              'searchAsWellInYoutubeChannelName'] ??
-          'searchAsWellInYoutubeChannelName');
-    }
-    if (existingAudioSortFilterParms.searchAsWellInVideoCompactDescription !=
-        newOrModifiedaudioSortFilterParms
-            .searchAsWellInVideoCompactDescription) {
       differencesLst.add(sortFilterParmsNameTranslationMap[
               'searchAsWellInYoutubeChannelName'] ??
           'searchAsWellInYoutubeChannelName');
