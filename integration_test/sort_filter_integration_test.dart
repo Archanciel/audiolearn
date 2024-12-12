@@ -9316,6 +9316,11 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               .tap(find.byKey(const Key('searchInVideoCompactDescription')));
           await tester.pumpAndSettle();
 
+          // Tap on the Search in Youtube compact description case checkbox to unselect it
+          await tester
+              .tap(find.byKey(const Key('searchInYoutubeChannelName')));
+          await tester.pumpAndSettle();
+
           // Tap on the Exclude ignore case checkbox to unselect it
           await tester.tap(find.byKey(const Key('filterMusicQualityCheckbox')));
           await tester.pumpAndSettle();
@@ -9360,14 +9365,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // dropdown button
           await selectSortByOption(
             tester: tester,
-            audioSortOption: 'Audio download speed',
+            audioSortOption: 'Audio downl speed',
           );
 
           // Select the 'Video upload date' item in the 'Sort by'
           // dropdown button
           await selectSortByOption(
             tester: tester,
-            audioSortOption: 'Audio download duration',
+            audioSortOption: 'Audio downl duration',
           );
 
           // Type "Jancovici" in the audio title search sentence TextField
@@ -9400,7 +9405,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             confirmDialogTitleOne:
                 'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
             confirmDialogMessage:
-                'Sort by:\n Present only in initial version:\n   Audio title desc\n Present only in modified version:\n   Audio title asc,\n   Video upload date desc,\n   Audio duration asc,\n   Audio listenable remaining\n   duration asc,\n   Audio download speed desc,\n   Audio download duration desc\nFilter options:\n Present only in modified version:\n   Marine Le Pen,\n   Emmanuel Macron\nIgnore case\nInclude Youtube channel\nAudio music quality\nCommented',
+                'Sort by:\n Present only in initial version:\n   Audio title desc\n Present only in modified version:\n   Audio title asc,\n   Video upload date desc,\n   Audio duration asc,\n   Audio listenable remaining\n   duration asc,\n   Audio downl speed desc,\n   Audio downl duration desc\nFilter options:\n Present only in modified version:\n   Marine Le Pen,\n   Emmanuel Macron\nIgnore case\nInclude Youtube channel\nAudio music quality\nCommented',
           );
 
           // Purge the test playlist directory so that the created test
@@ -9480,7 +9485,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           await removeSortingItem(
             tester: tester,
-            sortingItemName: 'Audio download date',
+            sortingItemName: 'Audio downl date',
           );
 
           await removeSortingItem(
@@ -9510,12 +9515,12 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           await removeSortingItem(
             tester: tester,
-            sortingItemName: 'Audio download speed',
+            sortingItemName: 'Audio downl speed',
           );
 
           await removeSortingItem(
             tester: tester,
-            sortingItemName: 'Audio download duration',
+            sortingItemName: 'Audio downl duration',
           );
 
           // Click on the "Save" button.
@@ -9530,7 +9535,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             confirmDialogTitleOne:
                 'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
             confirmDialogMessage:
-                'Sort by:\n Present only in initial version:\n   Audio download date asc,\n   Video upload date desc,\n   Audio title asc,\n   Audio duration asc,\n   Audio listenable remaining\n   duration asc,\n   Last listened date/time desc,\n   Audio file size desc,\n   Audio download speed desc,\n   Audio download duration desc\n Present only in modified version:\n   Audio listenable remaining\n   duration desc',
+                'Sort by:\n Present only in initial version:\n   Audio downl date asc,\n   Video upload date desc,\n   Audio title asc,\n   Audio duration asc,\n   Audio listenable remaining\n   duration asc,\n   Last listened date/time desc,\n   Audio file size desc,\n   Audio downl speed desc,\n   Audio downl duration desc\n Present only in modified version:\n   Audio listenable remaining\n   duration desc',
           );
 
           // Purge the test playlist directory so that the created test
@@ -9650,6 +9655,11 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               .tap(find.byKey(const Key('searchInVideoCompactDescription')));
           await tester.pumpAndSettle();
 
+          // Tap on the Search in Youtube compact description case checkbox to unselect it
+          await tester
+              .tap(find.byKey(const Key('searchInYoutubeChannelName')));
+          await tester.pumpAndSettle();
+
           // Tap on the Exclude ignore case checkbox to unselect it
           await tester.tap(find.byKey(const Key('filterMusicQualityCheckbox')));
           await tester.pumpAndSettle();
@@ -9694,14 +9704,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // dropdown button
           await selectSortByOption(
             tester: tester,
-            audioSortOption: 'Vitesse téléchargement audio',
+            audioSortOption: 'Vitesse téléch audio',
           );
 
           // Select the 'Video upload date' item in the 'Sort by'
           // dropdown button
           await selectSortByOption(
             tester: tester,
-            audioSortOption: 'Durée téléchargement audio',
+            audioSortOption: 'Durée téléch audio',
           );
 
           // Type "Jancovici" in the audio title search sentence TextField
@@ -9734,7 +9744,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             confirmDialogTitleOne:
                 'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
             confirmDialogMessage:
-                'Trier par:\n Uniquement en version initiale:\n   Titre audio desc\n Uniquement en version modifiée:\n   Titre audio asc,\n   Date mise en ligne vidéo desc,\n   Durée audio asc,\n   Durée audio écoutable\n   restante asc,\n   Vitesse téléchargement audio desc,\n   Durée téléchargement audio desc\nOptions filtre:\n Uniquement en version modifiée:\n   Marine Le Pen,\n   Emmanuel Macron\nIgnorer la casse\nInclure la chaîne Youtube\nQualité musicale\nCommenté',
+                'Trier par:\n Uniquement en version initiale:\n   Titre audio desc\n Uniquement en version modifiée:\n   Titre audio asc,\n   Date mise en ligne vidéo desc,\n   Durée audio asc,\n   Durée audio écoutable\n   restante asc,\n   Vitesse téléch audio desc,\n   Durée téléch audio desc\nOptions filtre:\n Uniquement en version modifiée:\n   Marine Le Pen,\n   Emmanuel Macron\nIgnorer la casse\nInclure la chaîne Youtube\nQualité musicale\nCommenté',
           );
 
           // Purge the test playlist directory so that the created test
@@ -9779,6 +9789,12 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           const String saveAsTitle = 'for test';
 
+          // Change the application language to french
+          await IntegrationTestUtil.setApplicationLanguage(
+            tester: tester,
+            language: Language.french,
+          );
+
           // Now tap on the current dropdown button item to open the dropdown
           // button items list
 
@@ -9809,47 +9825,47 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // in fact be descending !!
           await invertSortingItemOrder(
             tester: tester,
-            sortingItemName: 'Audio listenable remaining duration',
+            sortingItemName: 'Durée audio écoutable restante',
           );
 
           await removeSortingItem(
             tester: tester,
-            sortingItemName: 'Audio download date',
+            sortingItemName: 'Date téléch audio',
           );
 
           await removeSortingItem(
             tester: tester,
-            sortingItemName: 'Video upload date',
+            sortingItemName: 'Date mise en ligne vidéo',
           );
 
           await removeSortingItem(
             tester: tester,
-            sortingItemName: 'Audio title',
+            sortingItemName: 'Titre audio',
           );
 
           await removeSortingItem(
             tester: tester,
-            sortingItemName: 'Audio duration',
+            sortingItemName: 'Durée audio',
           );
 
           await removeSortingItem(
             tester: tester,
-            sortingItemName: 'Last listened date/time',
+            sortingItemName: 'Date/heure dernière écoute',
           );
 
           await removeSortingItem(
             tester: tester,
-            sortingItemName: 'Audio file size',
+            sortingItemName: 'Taille fichier audio',
           );
 
           await removeSortingItem(
             tester: tester,
-            sortingItemName: 'Audio download speed',
+            sortingItemName: 'Vitesse téléch audio',
           );
 
           await removeSortingItem(
             tester: tester,
-            sortingItemName: 'Audio download duration',
+            sortingItemName: 'Durée téléch audio',
           );
 
           // Click on the "Save" button.
@@ -9862,9 +9878,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
             tester: tester,
             confirmDialogTitleOne:
-                'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
+                'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
             confirmDialogMessage:
-                'Sort by:\n Present only in initial version:\n   Audio download date asc,\n   Video upload date desc,\n   Audio title asc,\n   Audio duration asc,\n   Audio listenable remaining\n   duration asc,\n   Last listened date/time desc,\n   Audio file size desc,\n   Audio download speed desc,\n   Audio download duration desc\n Present only in modified version:\n   Audio listenable remaining\n   duration desc',
+                'Trier par:\n Uniquement en version initiale:\n   Date téléch audio asc,\n   Date mise en ligne vidéo desc,\n   Titre audio asc,\n   Durée audio asc,\n   Durée audio écoutable\n   restante asc,\n   Date/heure dernière écoute desc,\n   Taille fichier audio desc,\n   Vitesse téléch audio desc,\n   Durée téléch audio desc\n Uniquement en version modifiée:\n   Durée audio écoutable\n   restante desc',
           );
 
           // Purge the test playlist directory so that the created test
