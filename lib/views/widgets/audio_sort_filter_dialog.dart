@@ -932,11 +932,20 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
         child: TextButton(
           key: const Key('saveSortFilterOptionsTextButton'),
           onPressed: () async {
+            // If an existing sort/filter parameters name is used, a
+            // confirmation dialog is displayed to enable the user to
+            // confirm the replacement of the existing sort/filter parms.
+            //
+            // Returned list:
+            //   1/ the filtered and sorted selected playlist audio list
+            //   2/ the audio sort filter parameters (AudioSortFilterParameters)
+            //   3/ the sort filter parameters save as unique name
             List<dynamic> filterSortAudioAndParmLst =
                 await _filterAndSortAudioLst(
               playlistListVM: playlistListVM,
               sortFilterParametersSaveAsUniqueName: _sortFilterSaveAsUniqueName,
             );
+
             playlistListVM.saveAudioSortFilterParameters(
               audioSortFilterParametersName: _sortFilterSaveAsUniqueName,
               audioSortFilterParameters: filterSortAudioAndParmLst[1],
@@ -1921,15 +1930,19 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     });
   }
 
-  /// Method called when the user clicks on the 'Save' or 'Apply'
-  /// button.
+  /// Method called when the user clicks on the 'Save' or 'Apply' button.
   ///
+  /// The method tests if the Save as Sort/Filter parms name already exist. If
+  /// it does, a confirm action dialog is displayed to the user listing the
+  /// differences between the existing and the new sort/filter parameters. The
+  /// user is asked to confirm the save operation or to cancel it.
+  /// 
   /// The method filters and sorts the audio list based on the selected
   /// sorting and filtering options. The method returns a list of three
   /// elements:
-  /// 1/ the filtered and sorted selected playlist audio list
-  /// 2/ the audio sort filter parameters (AudioSortFilterParameters)
-  /// 3/ the sort filter parameters save as unique name
+  ///   1/ the filtered and sorted selected playlist audio list
+  ///   2/ the audio sort filter parameters (AudioSortFilterParameters)
+  ///   3/ the sort filter parameters save as unique name
   Future<List> _filterAndSortAudioLst({
     required PlaylistListVM playlistListVM,
     required String sortFilterParametersSaveAsUniqueName,
@@ -1941,11 +1954,15 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
 
     if (playlistListVM.doesAudioSortFilterParmsNameAlreadyExist(
         audioSortFilterParmrsName: _sortFilterSaveAsUniqueName)) {
+      // Obtaining the existing sort/filter parameters in order to
+      // compare them with the new or modified ones.
       AudioSortFilterParameters existingAudioSortFilterParameters =
           playlistListVM.getAudioSortFilterParameters(
         audioSortFilterParametersName: _sortFilterSaveAsUniqueName,
       );
 
+      // Getting the list of differences between the existing and the new
+      // or modified sort/filter parameters
       List<String> listOfDifferencesBetweenSortFilterParameters =
           _audioSortFilterService
               .getListOfDifferencesBetweenSortFilterParameters(
@@ -1956,12 +1973,15 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       );
 
       if (listOfDifferencesBetweenSortFilterParameters.isNotEmpty) {
+        // If there are differences between the existing and the new or
+        // modified sort/filter parameters, a confirm action dialog is
+        // displayed to the user.
         String formattedModifiedSortFilterParmsStr =
             _formatModifiedSortFilterParmsStr(
           sortFilterParmsVersionDifferenceLst:
               listOfDifferencesBetweenSortFilterParameters,
         );
-        // Here, the deleted commented audio number is greater than 0
+
         await showDialog<dynamic>(
           context: context,
           barrierDismissible:

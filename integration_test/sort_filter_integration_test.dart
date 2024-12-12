@@ -9212,353 +9212,667 @@ void playlistDownloadViewSortFilterIntegrationTest() {
     group('''Testing ConfirmActionDialog warning after creating new Sort/Filter
           parms with same name as existing Sort/Filter parms or modifying existing
           Sort/Filter parms...''', () {
-      testWidgets(
-          '''Modify 'Title asc' existing named and saved sort/filter parms.
+      group(
+          '''Testing in english. Necessary to test in different languages since
+          handling the translation happens in the code and not only in the arb
+          translation files.''', () {
+        testWidgets(
+            '''Modify 'Title asc' existing named and saved sort/filter parms.
           Then save it and verify ConfirmActionDialog content.''',
-          (WidgetTester tester) async {
-        // Purge the test playlist directory if it exists so that the
-        // playlist list is empty
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
+            (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
 
-        // Copy the test initial audio data to the app dir
-        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-          sourceRootPath:
-              "$kDownloadAppTestSavedDataDir${path.separator}sort_filtered_parms_name_deletion_no_mp3_test",
-          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
+          // Copy the test initial audio data to the app dir
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath:
+                "$kDownloadAppTestSavedDataDir${path.separator}sort_filtered_parms_name_deletion_no_mp3_test",
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
 
-        // Now open the audio popup menu in order to modify the 'Title asc'
-        final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
-          isTest: true,
-        );
+          // Now open the audio popup menu in order to modify the 'Title asc'
+          final SettingsDataService settingsDataService = SettingsDataService(
+            sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
+          );
 
-        // Load the settings from the json file. This is necessary
-        // otherwise the ordered playlist titles will remain empty
-        // and the playlist list will not be filled with the
-        // playlists available in the download app test dir
-        await settingsDataService.loadSettingsFromFile(
-            settingsJsonPathFileName:
-                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the download app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-        await app.main(['test']);
-        await tester.pumpAndSettle();
+          await app.main(['test']);
+          await tester.pumpAndSettle();
 
-        const String saveAsTitle = 'Title asc';
+          const String saveAsTitle = 'Title asc';
 
-        // Edit the 'Title asc' sort/filter parms
-        Finder dropdownItemEditIconButtonFinder = find.byKey(
-            const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
-        await tester.tap(dropdownItemEditIconButtonFinder);
-        await tester.pumpAndSettle();
+          // Edit the 'Title asc' sort/filter parms
+          Finder dropdownItemEditIconButtonFinder = find.byKey(
+              const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+          await tester.tap(dropdownItemEditIconButtonFinder);
+          await tester.pumpAndSettle();
 
-        // Convert ascending to descending sort order of 'Audio title'.
-        // So, the 'Title asc? sort/filter parms will in fact be descending !!
-        await invertSortingItemOrder(
-          tester: tester,
-          sortingItemName: 'Audio title',
-        );
+          // Convert ascending to descending sort order of 'Audio title'.
+          // So, the 'Title asc? sort/filter parms will in fact be descending !!
+          await invertSortingItemOrder(
+            tester: tester,
+            sortingItemName: 'Audio title',
+          );
 
-        // Now define an audio/video title or description filter word
-        await addAudioFilterString(
-          tester: tester,
-          audioFilterString: 'Jancovici',
-        );
+          // Now define an audio/video title or description filter word
+          await addAudioFilterString(
+            tester: tester,
+            audioFilterString: 'Jancovici',
+          );
 
-        // Click on the "Save" button.
-        await tester
-            .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
-        await tester.pumpAndSettle();
+          // Click on the "Save" button.
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
 
-        // Verifying and closing the confirm dialog
+          // Verifying and closing the confirm dialog
 
-        await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
-          tester: tester,
-          confirmDialogTitleOne:
-              'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
-          confirmDialogMessage:
-              'Sort by:\n Present only in initial version:\n   Audio title asc\n Present only in modified version:\n   Audio title desc\nFilter options:\n Present only in modified version:\n   Jancovici',
-        );
+          await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
+            tester: tester,
+            confirmDialogTitleOne:
+                'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
+            confirmDialogMessage:
+                'Sort by:\n Present only in initial version:\n   Audio title asc\n Present only in modified version:\n   Audio title desc\nFilter options:\n Present only in modified version:\n   Jancovici',
+          );
 
-        // Now reedit the 'Title asc' sort/filter parms
-        dropdownItemEditIconButtonFinder = find.byKey(
-            const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
-        await tester.tap(dropdownItemEditIconButtonFinder);
-        await tester.pumpAndSettle();
+          // Now reedit the 'Title asc' sort/filter parms
+          dropdownItemEditIconButtonFinder = find.byKey(
+              const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+          await tester.tap(dropdownItemEditIconButtonFinder);
+          await tester.pumpAndSettle();
 
-        // Scrolling down the sort filter dialog so that the checkboxes
-        // are visible and so accessible by the integration test.
-        // WARNING: Scrolling down must be done before setting sort
-        // options, otherwise, it does not work.
-        await tester.drag(
-          find.byType(AudioSortFilterDialog),
-          const Offset(
-              0, -300), // Negative value for vertical drag to scroll down
-        );
-        await tester.pumpAndSettle();
+          // Scrolling down the sort filter dialog so that the checkboxes
+          // are visible and so accessible by the integration test.
+          // WARNING: Scrolling down must be done before setting sort
+          // options, otherwise, it does not work.
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
 
-        // Tap on the Comment checkbox to unselect it
-        await tester.tap(find.byKey(const Key('filterCommentedCheckbox')));
-        await tester.pumpAndSettle();
+          // Tap on the Comment checkbox to unselect it
+          await tester.tap(find.byKey(const Key('filterCommentedCheckbox')));
+          await tester.pumpAndSettle();
 
-        // Tap on the Exclude ignore case checkbox to unselect it
-        await tester.tap(find.byKey(const Key('ignoreCaseCheckbox')));
-        await tester.pumpAndSettle();
+          // Tap on the Exclude ignore case checkbox to unselect it
+          await tester.tap(find.byKey(const Key('ignoreCaseCheckbox')));
+          await tester.pumpAndSettle();
 
-        // Tap on the Search in video compact description case checkbox to unselect it
-        await tester
-            .tap(find.byKey(const Key('searchInVideoCompactDescription')));
-        await tester.pumpAndSettle();
+          // Tap on the Search in video compact description case checkbox to unselect it
+          await tester
+              .tap(find.byKey(const Key('searchInVideoCompactDescription')));
+          await tester.pumpAndSettle();
 
-        // Tap on the Exclude ignore case checkbox to unselect it
-        await tester.tap(find.byKey(const Key('filterMusicQualityCheckbox')));
-        await tester.pumpAndSettle();
+          // Tap on the Exclude ignore case checkbox to unselect it
+          await tester.tap(find.byKey(const Key('filterMusicQualityCheckbox')));
+          await tester.pumpAndSettle();
 
-        // Scrolling up the sort filter dialog to access to sort options
-        await tester.drag(
-          find.byType(AudioSortFilterDialog),
-          const Offset(
-              0, 300), // Negative value for vertical drag to scroll down
-        );
-        await tester.pumpAndSettle();
+          // Scrolling up the sort filter dialog to access to sort options
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, 300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
 
-        // Convert descending to ascending sort order of 'Audio title'.
-        // So, the 'Title asc? sort/filter parms will in fact be ascending !!
-        await invertSortingItemOrder(
-          tester: tester,
-          sortingItemName: 'Audio title',
-        );
+          // Convert descending to ascending sort order of 'Audio title'.
+          // So, the 'Title asc? sort/filter parms will in fact be ascending !!
+          await invertSortingItemOrder(
+            tester: tester,
+            sortingItemName: 'Audio title',
+          );
 
-        // Select the 'Video upload date' item in the 'Sort by'
-        // dropdown button
-        await selectSortByOption(
-          tester: tester,
-          audioSortOption: 'Video upload date',
-        );
+          // Select the 'Video upload date' item in the 'Sort by'
+          // dropdown button
+          await selectSortByOption(
+            tester: tester,
+            audioSortOption: 'Video upload date',
+          );
 
-        // Select the 'Video upload date' item in the 'Sort by'
-        // dropdown button
-        await selectSortByOption(
-          tester: tester,
-          audioSortOption: 'Audio duration',
-        );
+          // Select the 'Video upload date' item in the 'Sort by'
+          // dropdown button
+          await selectSortByOption(
+            tester: tester,
+            audioSortOption: 'Audio duration',
+          );
 
-        // Select the 'Video upload date' item in the 'Sort by'
-        // dropdown button
-        await selectSortByOption(
-          tester: tester,
-          audioSortOption: 'Audio listenable remaining duration',
-        );
+          // Select the 'Video upload date' item in the 'Sort by'
+          // dropdown button
+          await selectSortByOption(
+            tester: tester,
+            audioSortOption: 'Audio listenable remaining duration',
+          );
 
-        // Select the 'Video upload date' item in the 'Sort by'
-        // dropdown button
-        await selectSortByOption(
-          tester: tester,
-          audioSortOption: 'Audio download speed',
-        );
+          // Select the 'Video upload date' item in the 'Sort by'
+          // dropdown button
+          await selectSortByOption(
+            tester: tester,
+            audioSortOption: 'Audio download speed',
+          );
 
-        // Select the 'Video upload date' item in the 'Sort by'
-        // dropdown button
-        await selectSortByOption(
-          tester: tester,
-          audioSortOption: 'Audio download duration',
-        );
+          // Select the 'Video upload date' item in the 'Sort by'
+          // dropdown button
+          await selectSortByOption(
+            tester: tester,
+            audioSortOption: 'Audio download duration',
+          );
 
-        // Type "Jancovici" in the audio title search sentence TextField
-        await addAudioFilterString(
-          tester: tester,
-          audioFilterString: 'Jancovici',
-        );
+          // Type "Jancovici" in the audio title search sentence TextField
+          await addAudioFilterString(
+            tester: tester,
+            audioFilterString: 'Jancovici',
+          );
 
-        // Type "Marine Le Pen" in the audio title search sentence TextField
-        await addAudioFilterString(
-          tester: tester,
-          audioFilterString: 'Marine Le Pen',
-        );
+          // Type "Marine Le Pen" in the audio title search sentence TextField
+          await addAudioFilterString(
+            tester: tester,
+            audioFilterString: 'Marine Le Pen',
+          );
 
-        // Type "Emmanuel Macron" in the audio title search sentence TextField
-        await addAudioFilterString(
-          tester: tester,
-          audioFilterString: 'Emmanuel Macron',
-        );
+          // Type "Emmanuel Macron" in the audio title search sentence TextField
+          await addAudioFilterString(
+            tester: tester,
+            audioFilterString: 'Emmanuel Macron',
+          );
 
-        // Click on the "Save" button.
-        await tester
-            .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
-        await tester.pumpAndSettle();
+          // Click on the "Save" button.
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
 
-        // Verifying and closing the confirm dialog
+          // Verifying and closing the confirm dialog
 
-        await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
-          tester: tester,
-          confirmDialogTitleOne:
-              'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
-          confirmDialogMessage:
-              'Sort by:\n Present only in initial version:\n   Audio title desc\n Present only in modified version:\n   Audio title asc,\n   Video upload date desc,\n   Audio duration asc,\n   Audio listenable remaining\n   duration asc,\n   Audio download speed desc,\n   Audio download duration desc\nFilter options:\n Present only in modified version:\n   Marine Le Pen,\n   Emmanuel Macron\nIgnore case\nInclude Youtube channel\nAudio music quality\nCommented',
-        );
+          await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
+            tester: tester,
+            confirmDialogTitleOne:
+                'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
+            confirmDialogMessage:
+                'Sort by:\n Present only in initial version:\n   Audio title desc\n Present only in modified version:\n   Audio title asc,\n   Video upload date desc,\n   Audio duration asc,\n   Audio listenable remaining\n   duration asc,\n   Audio download speed desc,\n   Audio download duration desc\nFilter options:\n Present only in modified version:\n   Marine Le Pen,\n   Emmanuel Macron\nIgnore case\nInclude Youtube channel\nAudio music quality\nCommented',
+          );
 
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''Modify 'for test' existing named and saved sort/filter parms.
+          Then save it and verify ConfirmActionDialog content.''',
+            (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          // Copy the test initial audio data to the app dir
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath:
+                "$kDownloadAppTestSavedDataDir${path.separator}sort_filtered_parms_name_deletion_no_mp3_test",
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          // Now open the audio popup menu in order to modify the 'Title asc'
+          final SettingsDataService settingsDataService = SettingsDataService(
+            sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
+          );
+
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the download app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+          await app.main(['test']);
+          await tester.pumpAndSettle();
+
+          const String saveAsTitle = 'for test';
+
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
+
+          final Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+          final Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
+
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
+
+          // And find the 'for test' sort/filter item
+          final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
+
+          // Now open the audio popup menu in order to modify the 'for test'
+          Finder dropdownItemEditIconButtonFinder = find.byKey(
+              const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+          await tester.tap(dropdownItemEditIconButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Convert ascending to descending sort order of 'Audio listenable
+          // remaining duration'. So, the 'for test? sort/filter parms will
+          // in fact be descending !!
+          await invertSortingItemOrder(
+            tester: tester,
+            sortingItemName: 'Audio listenable remaining duration',
+          );
+
+          await removeSortingItem(
+            tester: tester,
+            sortingItemName: 'Audio download date',
+          );
+
+          await removeSortingItem(
+            tester: tester,
+            sortingItemName: 'Video upload date',
+          );
+
+          await removeSortingItem(
+            tester: tester,
+            sortingItemName: 'Audio title',
+          );
+
+          await removeSortingItem(
+            tester: tester,
+            sortingItemName: 'Audio duration',
+          );
+
+          await removeSortingItem(
+            tester: tester,
+            sortingItemName: 'Last listened date/time',
+          );
+
+          await removeSortingItem(
+            tester: tester,
+            sortingItemName: 'Audio file size',
+          );
+
+          await removeSortingItem(
+            tester: tester,
+            sortingItemName: 'Audio download speed',
+          );
+
+          await removeSortingItem(
+            tester: tester,
+            sortingItemName: 'Audio download duration',
+          );
+
+          // Click on the "Save" button.
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
+
+          // Verifying and closing the confirm dialog
+
+          await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
+            tester: tester,
+            confirmDialogTitleOne:
+                'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
+            confirmDialogMessage:
+                'Sort by:\n Present only in initial version:\n   Audio download date asc,\n   Video upload date desc,\n   Audio title asc,\n   Audio duration asc,\n   Audio listenable remaining\n   duration asc,\n   Last listened date/time desc,\n   Audio file size desc,\n   Audio download speed desc,\n   Audio download duration desc\n Present only in modified version:\n   Audio listenable remaining\n   duration desc',
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
       });
-      testWidgets(
-          '''Modify 'for test' existing named and saved sort/filter parms.
+      group('''Testing in french. Necessary to test in different languages since
+          handling the translation happens in the code and not only in the arb
+          translation files.''', () {
+        testWidgets(
+            '''Modify 'Title asc' existing named and saved sort/filter parms.
           Then save it and verify ConfirmActionDialog content.''',
-          (WidgetTester tester) async {
-        // Purge the test playlist directory if it exists so that the
-        // playlist list is empty
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
+            (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
 
-        // Copy the test initial audio data to the app dir
-        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-          sourceRootPath:
-              "$kDownloadAppTestSavedDataDir${path.separator}sort_filtered_parms_name_deletion_no_mp3_test",
-          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
+          // Copy the test initial audio data to the app dir
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath:
+                "$kDownloadAppTestSavedDataDir${path.separator}sort_filtered_parms_name_deletion_no_mp3_test",
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
 
-        // Now open the audio popup menu in order to modify the 'Title asc'
-        final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
-          isTest: true,
-        );
+          // Now open the audio popup menu in order to modify the 'Title asc'
+          final SettingsDataService settingsDataService = SettingsDataService(
+            sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
+          );
 
-        // Load the settings from the json file. This is necessary
-        // otherwise the ordered playlist titles will remain empty
-        // and the playlist list will not be filled with the
-        // playlists available in the download app test dir
-        await settingsDataService.loadSettingsFromFile(
-            settingsJsonPathFileName:
-                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the download app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-        await app.main(['test']);
-        await tester.pumpAndSettle();
+          await app.main(['test']);
+          await tester.pumpAndSettle();
 
-        const String saveAsTitle = 'for test';
+          const String saveAsTitle = 'Title asc';
 
-        // Now tap on the current dropdown button item to open the dropdown
-        // button items list
+          // Change the application language to french
+          await IntegrationTestUtil.setApplicationLanguage(
+            tester: tester,
+            language: Language.french,
+          );
 
-        final Finder dropDownButtonFinder =
-            find.byKey(const Key('sort_filter_parms_dropdown_button'));
+          // Edit the 'Title asc' sort/filter parms
+          Finder dropdownItemEditIconButtonFinder = find.byKey(
+              const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+          await tester.tap(dropdownItemEditIconButtonFinder);
+          await tester.pumpAndSettle();
 
-        final Finder dropDownButtonTextFinder = find.descendant(
-          of: dropDownButtonFinder,
-          matching: find.byType(Text),
-        );
+          // Convert ascending to descending sort order of 'Audio title'.
+          // So, the 'Title asc? sort/filter p
+          //arms will in fact be descending !!
+          await invertSortingItemOrder(
+            tester: tester,
+            sortingItemName: 'Titre audio',
+          );
 
-        await tester.tap(dropDownButtonTextFinder);
-        await tester.pumpAndSettle();
+          // Now define an audio/video title or description filter word
+          await addAudioFilterString(
+            tester: tester,
+            audioFilterString: 'Jancovici',
+          );
 
-        // And find the 'for test' sort/filter item
-        final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
-        await tester.tap(titleAscDropDownTextFinder);
-        await tester.pumpAndSettle();
+          // Click on the "Save" button.
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
 
-        // Now open the audio popup menu in order to modify the 'for test'
-        Finder dropdownItemEditIconButtonFinder = find.byKey(
-            const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
-        await tester.tap(dropdownItemEditIconButtonFinder);
-        await tester.pumpAndSettle();
+          // Verifying and closing the confirm dialog
 
-        // Convert ascending to descending sort order of 'Audio listenable
-        // remaining duration'. So, the 'for test? sort/filter parms will
-        // in fact be descending !!
-        await invertSortingItemOrder(
-          tester: tester,
-          sortingItemName: 'Audio listenable remaining duration',
-        );
+          await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
+            tester: tester,
+            confirmDialogTitleOne:
+                'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
+            confirmDialogMessage:
+                'Trier par:\n Uniquement en version initiale:\n   Titre audio asc\n Uniquement en version modifiée:\n   Titre audio desc\nOptions filtre:\n Uniquement en version modifiée:\n   Jancovici',
+          );
 
-        await removeSortingItem(
-          tester: tester,
-          sortingItemName: 'Audio download date',
-        );
+          // Now reedit the 'Title asc' sort/filter parms
+          dropdownItemEditIconButtonFinder = find.byKey(
+              const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+          await tester.tap(dropdownItemEditIconButtonFinder);
+          await tester.pumpAndSettle();
 
-        await removeSortingItem(
-          tester: tester,
-          sortingItemName: 'Video upload date',
-        );
+          // Scrolling down the sort filter dialog so that the checkboxes
+          // are visible and so accessible by the integration test.
+          // WARNING: Scrolling down must be done before setting sort
+          // options, otherwise, it does not work.
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
 
-        await removeSortingItem(
-          tester: tester,
-          sortingItemName: 'Audio title',
-        );
+          // Tap on the Comment checkbox to unselect it
+          await tester.tap(find.byKey(const Key('filterCommentedCheckbox')));
+          await tester.pumpAndSettle();
 
-        await removeSortingItem(
-          tester: tester,
-          sortingItemName: 'Audio duration',
-        );
+          // Tap on the Exclude ignore case checkbox to unselect it
+          await tester.tap(find.byKey(const Key('ignoreCaseCheckbox')));
+          await tester.pumpAndSettle();
 
-        await removeSortingItem(
-          tester: tester,
-          sortingItemName: 'Last listened date/time',
-        );
+          // Tap on the Search in video compact description case checkbox to unselect it
+          await tester
+              .tap(find.byKey(const Key('searchInVideoCompactDescription')));
+          await tester.pumpAndSettle();
 
-        await removeSortingItem(
-          tester: tester,
-          sortingItemName: 'Audio file size',
-        );
+          // Tap on the Exclude ignore case checkbox to unselect it
+          await tester.tap(find.byKey(const Key('filterMusicQualityCheckbox')));
+          await tester.pumpAndSettle();
 
-        await removeSortingItem(
-          tester: tester,
-          sortingItemName: 'Audio download speed',
-        );
+          // Scrolling up the sort filter dialog to access to sort options
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, 300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
 
-        await removeSortingItem(
-          tester: tester,
-          sortingItemName: 'Audio download duration',
-        );
+          // Convert descending to ascending sort order of 'Audio title'.
+          // So, the 'Title asc? sort/filter parms will in fact be ascending !!
+          await invertSortingItemOrder(
+            tester: tester,
+            sortingItemName: 'Titre audio',
+          );
 
-        // Click on the "Save" button.
-        await tester
-            .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
-        await tester.pumpAndSettle();
+          // Select the 'Video upload date' item in the 'Sort by'
+          // dropdown button
+          await selectSortByOption(
+            tester: tester,
+            audioSortOption: 'Date mise en ligne vidéo',
+          );
 
-        // Verifying and closing the confirm dialog
+          // Select the 'Video upload date' item in the 'Sort by'
+          // dropdown button
+          await selectSortByOption(
+            tester: tester,
+            audioSortOption: 'Durée audio',
+          );
 
-        await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
-          tester: tester,
-          confirmDialogTitleOne:
-              'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
-          confirmDialogMessage:
-              'Sort by:\n Present only in initial version:\n   Audio download date asc,\n   Video upload date desc,\n   Audio title asc,\n   Audio duration asc,\n   Audio listenable remaining\n   duration asc,\n   Last listened date/time desc,\n   Audio file size desc,\n   Audio download speed desc,\n   Audio download duration desc\n Present only in modified version:\n   Audio listenable remaining\n   duration desc',
-        );
+          // Select the 'Video upload date' item in the 'Sort by'
+          // dropdown button
+          await selectSortByOption(
+            tester: tester,
+            audioSortOption: 'Durée audio écoutable restante',
+          );
 
-        // Now close the sort/filter dialog clicking on the "Cancel"
-        // button since the previous modifications were saved by
-        // clicking on the ConfirmActionDialog "Confirm" button
-        await tester.tap(find.byKey(const Key('cancelSortFilterButton')));
+          // Select the 'Video upload date' item in the 'Sort by'
+          // dropdown button
+          await selectSortByOption(
+            tester: tester,
+            audioSortOption: 'Vitesse téléchargement audio',
+          );
 
-        // Now change the application language to french
-        await IntegrationTestUtil.setApplicationLanguage(
-          tester: tester,
-          language: Language.french,
-        );
+          // Select the 'Video upload date' item in the 'Sort by'
+          // dropdown button
+          await selectSortByOption(
+            tester: tester,
+            audioSortOption: 'Durée téléchargement audio',
+          );
 
-        // Reedit the 'for test' sort/filter parms
-        dropdownItemEditIconButtonFinder = find.byKey(
-            const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
-        await tester.tap(dropdownItemEditIconButtonFinder);
-        await tester.pumpAndSettle();
+          // Type "Jancovici" in the audio title search sentence TextField
+          await addAudioFilterString(
+            tester: tester,
+            audioFilterString: 'Jancovici',
+          );
 
-        await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
-          tester: tester,
-          confirmDialogTitleOne:
-              'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
-          confirmDialogMessage:
-              'Sort by:\n Present only in initial version:\n   Audio title desc\n Present only in modified version:\n   Audio title asc,\n   Video upload date desc,\n   Audio duration asc,\n   Audio listenable remaining\n   duration asc,\n   Audio download speed desc,\n   Audio download duration desc\nFilter options:\n Present only in modified version:\n   Marine Le Pen,\n   Emmanuel Macron\nIgnore case\nInclude Youtube channel\nAudio music quality\nCommented',
-        );
+          // Type "Marine Le Pen" in the audio title search sentence TextField
+          await addAudioFilterString(
+            tester: tester,
+            audioFilterString: 'Marine Le Pen',
+          );
 
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
+          // Type "Emmanuel Macron" in the audio title search sentence TextField
+          await addAudioFilterString(
+            tester: tester,
+            audioFilterString: 'Emmanuel Macron',
+          );
+
+          // Click on the "Save" button.
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
+
+          // Verifying and closing the confirm dialog
+
+          await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
+            tester: tester,
+            confirmDialogTitleOne:
+                'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
+            confirmDialogMessage:
+                'Trier par:\n Uniquement en version initiale:\n   Titre audio desc\n Uniquement en version modifiée:\n   Titre audio asc,\n   Date mise en ligne vidéo desc,\n   Durée audio asc,\n   Durée audio écoutable\n   restante asc,\n   Vitesse téléchargement audio desc,\n   Durée téléchargement audio desc\nOptions filtre:\n Uniquement en version modifiée:\n   Marine Le Pen,\n   Emmanuel Macron\nIgnorer la casse\nInclure la chaîne Youtube\nQualité musicale\nCommenté',
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''Modify 'for test' existing named and saved sort/filter parms.
+          Then save it and verify ConfirmActionDialog content.''',
+            (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          // Copy the test initial audio data to the app dir
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath:
+                "$kDownloadAppTestSavedDataDir${path.separator}sort_filtered_parms_name_deletion_no_mp3_test",
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          // Now open the audio popup menu in order to modify the 'Title asc'
+          final SettingsDataService settingsDataService = SettingsDataService(
+            sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
+          );
+
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the download app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+          await app.main(['test']);
+          await tester.pumpAndSettle();
+
+          const String saveAsTitle = 'for test';
+
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
+
+          final Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+          final Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
+
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
+
+          // And find the 'for test' sort/filter item
+          final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
+
+          // Now open the audio popup menu in order to modify the 'for test'
+          Finder dropdownItemEditIconButtonFinder = find.byKey(
+              const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+          await tester.tap(dropdownItemEditIconButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Convert ascending to descending sort order of 'Audio listenable
+          // remaining duration'. So, the 'for test? sort/filter parms will
+          // in fact be descending !!
+          await invertSortingItemOrder(
+            tester: tester,
+            sortingItemName: 'Audio listenable remaining duration',
+          );
+
+          await removeSortingItem(
+            tester: tester,
+            sortingItemName: 'Audio download date',
+          );
+
+          await removeSortingItem(
+            tester: tester,
+            sortingItemName: 'Video upload date',
+          );
+
+          await removeSortingItem(
+            tester: tester,
+            sortingItemName: 'Audio title',
+          );
+
+          await removeSortingItem(
+            tester: tester,
+            sortingItemName: 'Audio duration',
+          );
+
+          await removeSortingItem(
+            tester: tester,
+            sortingItemName: 'Last listened date/time',
+          );
+
+          await removeSortingItem(
+            tester: tester,
+            sortingItemName: 'Audio file size',
+          );
+
+          await removeSortingItem(
+            tester: tester,
+            sortingItemName: 'Audio download speed',
+          );
+
+          await removeSortingItem(
+            tester: tester,
+            sortingItemName: 'Audio download duration',
+          );
+
+          // Click on the "Save" button.
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
+
+          // Verifying and closing the confirm dialog
+
+          await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
+            tester: tester,
+            confirmDialogTitleOne:
+                'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
+            confirmDialogMessage:
+                'Sort by:\n Present only in initial version:\n   Audio download date asc,\n   Video upload date desc,\n   Audio title asc,\n   Audio duration asc,\n   Audio listenable remaining\n   duration asc,\n   Last listened date/time desc,\n   Audio file size desc,\n   Audio download speed desc,\n   Audio download duration desc\n Present only in modified version:\n   Audio listenable remaining\n   duration desc',
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
       });
     });
   });
