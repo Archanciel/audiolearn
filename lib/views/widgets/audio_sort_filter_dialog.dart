@@ -808,7 +808,9 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                 if (playlistsUsingSortFilterParmsNameLst.isNotEmpty) {
                   String playlistsUsingSortFilterParmsNameStr =
                       playlistsUsingSortFilterParmsNameLst.join(',\n');
-                  // Here, the deleted commented audio number is greater than 0
+                  // Here, playlists are using the sort/filter parms to
+                  // delete. A confirmation dialog is displayed to enable the
+                  // user to confirm the deletion of the sort/filter parms.
                   await showDialog<void>(
                     context: context,
                     barrierDismissible:
@@ -2015,9 +2017,6 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       // are not saved and the audio sort filter dialog is not closed.
       return [];
     } else {
-      _audioSortFilterParameters =
-          _generateAudioSortFilterParametersFromDialogFields();
-
       List<Audio> filteredAndSortedAudioLst =
           _audioSortFilterService.filterAndSortAudioLst(
         audioLst: widget.selectedPlaylistAudioLst,

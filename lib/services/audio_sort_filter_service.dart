@@ -248,7 +248,8 @@ class AudioSortFilterService {
               'selectedSortItemLst');
 
       // Add specific differences between the lists
-      Map<SortFilterParmsVersion, List<SortingItem>> listDiff = listSortItemsDifferences(
+      Map<SortFilterParmsVersion, List<SortingItem>> listDiff =
+          listSortItemsDifferences(
         existingAudioSortFilterParms.selectedSortItemLst,
         newOrModifiedaudioSortFilterParms.selectedSortItemLst,
       );
@@ -280,7 +281,8 @@ class AudioSortFilterService {
               'filterSentenceLst');
 
       // Add specific differences between the lists
-      Map<SortFilterParmsVersion, List<String>> listDiff = listFilterSentencesDifferences(
+      Map<SortFilterParmsVersion, List<String>> listDiff =
+          listFilterSentencesDifferences(
         existingAudioSortFilterParms.filterSentenceLst,
         newOrModifiedaudioSortFilterParms.filterSentenceLst,
       );
@@ -290,7 +292,8 @@ class AudioSortFilterService {
             sortFilterParmsNameTranslationMap['presentOnlyInFirst'] ??
                 'presentOnlyInFirst';
         differencesLst.add(presentOnlyInFirst);
-        differencesLst.add(listDiff[SortFilterParmsVersion.versionOne]!.join(', '));
+        differencesLst
+            .add(listDiff[SortFilterParmsVersion.versionOne]!.join(', '));
       }
 
       if (listDiff[SortFilterParmsVersion.versionTwo]!.isNotEmpty) {
@@ -298,7 +301,8 @@ class AudioSortFilterService {
             sortFilterParmsNameTranslationMap['presentOnlyInSecond'] ??
                 'presentOnlyInSecond';
         differencesLst.add(presentOnlyInSecond);
-        differencesLst.add(listDiff[SortFilterParmsVersion.versionTwo]!.join(', '));
+        differencesLst
+            .add(listDiff[SortFilterParmsVersion.versionTwo]!.join(', '));
       }
     }
 
@@ -768,7 +772,7 @@ class AudioSortFilterService {
       );
     }
 
-    if (audioSortFilterParameters.downloadDateStartRange != null &&
+    if (audioSortFilterParameters.downloadDateStartRange != null ||
         audioSortFilterParameters.downloadDateEndRange != null) {
       filteredAudios = _filterAudioLstByAudioDownloadDateTime(
         audioLst: filteredAudios,
@@ -777,7 +781,7 @@ class AudioSortFilterService {
       );
     }
 
-    if (audioSortFilterParameters.uploadDateStartRange != null &&
+    if (audioSortFilterParameters.uploadDateStartRange != null ||
         audioSortFilterParameters.uploadDateEndRange != null) {
       filteredAudios = _filterAudioLstByAudioVideoUploadDateTime(
         audioLst: filteredAudios,
@@ -786,7 +790,7 @@ class AudioSortFilterService {
       );
     }
 
-    if (audioSortFilterParameters.fileSizeStartRangeMB >= 0 &&
+    if (audioSortFilterParameters.fileSizeStartRangeMB != 0 ||
         audioSortFilterParameters.fileSizeEndRangeMB != 0) {
       filteredAudios = _filterAudioLstByAudioFileSize(
         audioLst: filteredAudios,
@@ -795,14 +799,12 @@ class AudioSortFilterService {
       );
     }
 
-    if (audioSortFilterParameters.durationStartRangeSec >= 0 &&
+    if (audioSortFilterParameters.durationStartRangeSec != 0 ||
         audioSortFilterParameters.durationEndRangeSec != 0) {
       filteredAudios = _filterAudioByAudioDuration(
         audioLst: filteredAudios,
-        startDuration:
-            Duration(seconds: audioSortFilterParameters.durationStartRangeSec),
-        endDuration:
-            Duration(seconds: audioSortFilterParameters.durationEndRangeSec),
+        startRangeSeconds: audioSortFilterParameters.durationStartRangeSec,
+        endRangeSeconds: audioSortFilterParameters.durationEndRangeSec,
       );
     }
 
@@ -829,28 +831,77 @@ class AudioSortFilterService {
 
   List<Audio> _filterAudioLstByAudioDownloadDateTime({
     required List<Audio> audioLst,
-    required DateTime startDateTime,
-    required DateTime endDateTime,
+    required DateTime? startDateTime,
+    required DateTime? endDateTime,
   }) {
-    return audioLst.where((audio) {
-      return (audio.audioDownloadDateTime.isAfter(startDateTime) ||
-              audio.audioDownloadDateTime.isAtSameMomentAs(startDateTime)) &&
-          (audio.audioDownloadDateTime.isBefore(endDateTime) ||
+    if (startDateTime != null) {
+      if (endDateTime != null) {
+        if (startDateTime.isAfter(endDateTime)) {
+          return [];
+        }
+        return audioLst.where((audio) {
+          return (audio.audioDownloadDateTime.isAfter(startDateTime) ||
+                  audio.audioDownloadDateTime
+                      .isAtSameMomentAs(startDateTime)) &&
+              (audio.audioDownloadDateTime.isBefore(endDateTime) ||
+                  audio.audioDownloadDateTime.isAtSameMomentAs(endDateTime));
+        }).toList();
+      } else {
+        // endDateTime is null
+        return audioLst.where((audio) {
+          return (audio.audioDownloadDateTime.isAfter(startDateTime) ||
+              audio.audioDownloadDateTime.isAtSameMomentAs(startDateTime));
+        }).toList();
+      }
+    } else {
+      // startDateTime is null
+      if (endDateTime != null) {
+        return audioLst.where((audio) {
+          return (audio.audioDownloadDateTime.isBefore(endDateTime) ||
               audio.audioDownloadDateTime.isAtSameMomentAs(endDateTime));
-    }).toList();
+        }).toList();
+      } else {
+        // startDateTime and endDateTime are null
+        return audioLst;
+      }
+    }
   }
 
   List<Audio> _filterAudioLstByAudioVideoUploadDateTime({
     required List<Audio> audioLst,
-    required DateTime startDateTime,
-    required DateTime endDateTime,
+    required DateTime? startDateTime,
+    required DateTime? endDateTime,
   }) {
-    return audioLst.where((audio) {
-      return (audio.videoUploadDate.isAfter(startDateTime) ||
-              audio.videoUploadDate.isAtSameMomentAs(startDateTime)) &&
-          (audio.videoUploadDate.isBefore(endDateTime) ||
+    if (startDateTime != null) {
+      if (endDateTime != null) {
+        if (startDateTime.isAfter(endDateTime)) {
+          return [];
+        }
+        return audioLst.where((audio) {
+          return (audio.videoUploadDate.isAfter(startDateTime) ||
+                  audio.videoUploadDate.isAtSameMomentAs(startDateTime)) &&
+              (audio.videoUploadDate.isBefore(endDateTime) ||
+                  audio.videoUploadDate.isAtSameMomentAs(endDateTime));
+        }).toList();
+      } else {
+        // endDateTime is null
+        return audioLst.where((audio) {
+          return (audio.videoUploadDate.isAfter(startDateTime) ||
+              audio.videoUploadDate.isAtSameMomentAs(startDateTime));
+        }).toList();
+      }
+    } else {
+      // startDateTime is null
+      if (endDateTime != null) {
+        return audioLst.where((audio) {
+          return (audio.videoUploadDate.isBefore(endDateTime) ||
               audio.videoUploadDate.isAtSameMomentAs(endDateTime));
-    }).toList();
+        }).toList();
+      } else {
+        // startDateTime and endDateTime are null
+        return audioLst;
+      }
+    }
   }
 
   List<Audio> _filterAudioLstByAudioFileSize({
@@ -858,22 +909,65 @@ class AudioSortFilterService {
     required double startFileSizeMB,
     required double endFileSizeMB,
   }) {
-    return audioLst.where((audio) {
-      return (audio.audioFileSize >= startFileSizeMB * 1000000) &&
-          (audio.audioFileSize <= endFileSizeMB * 1000000);
-    }).toList();
+    if (startFileSizeMB != 0) {
+      if (endFileSizeMB != 0) {
+        if (startFileSizeMB > endFileSizeMB) {
+          return [];
+        }
+        return audioLst.where((audio) {
+          return (audio.audioFileSize >= startFileSizeMB * 1000000) &&
+              (audio.audioFileSize <= endFileSizeMB * 1000000);
+        }).toList();
+      } else {
+        // endFileSizeMB == 0
+        return audioLst.where((audio) {
+          return audio.audioFileSize >= startFileSizeMB * 1000000;
+        }).toList();
+      }
+    } else {
+      // startFileSizeMB == 0
+      if (endFileSizeMB != 0) {
+        return audioLst.where((audio) {
+          return audio.audioFileSize <= endFileSizeMB * 1000000;
+        }).toList();
+      } else {
+        // startFileSizeMB and endFileSizeMB are 0
+        return audioLst;
+      }
+    }
   }
 
   List<Audio> _filterAudioByAudioDuration({
     required List<Audio> audioLst,
-    required Duration startDuration,
-    required Duration endDuration,
+    required int startRangeSeconds,
+    required int endRangeSeconds,
   }) {
-    return audioLst.where((audio) {
-      return (audio.audioDuration.inMilliseconds >=
-              startDuration.inMilliseconds) &&
-          (audio.audioDuration.inMilliseconds <= endDuration.inMilliseconds);
-    }).toList();
+    if (startRangeSeconds != 0) {
+      if (endRangeSeconds != 0) {
+        if (startRangeSeconds > endRangeSeconds) {
+          return [];
+        }
+        return audioLst.where((audio) {
+          return (audio.audioDuration.inSeconds >= startRangeSeconds) &&
+              (audio.audioDuration.inSeconds <= endRangeSeconds);
+        }).toList();
+      } else {
+        // endRangeSeconds == 0
+        return audioLst.where((audio) {
+          return audio.audioDuration.inSeconds >= startRangeSeconds;
+        }).toList();
+      }
+    } else {
+      // startRangeSeconds == 0
+      if (endRangeSeconds != 0) {
+        return audioLst.where((audio) {
+          return audio.audioDuration.inSeconds <= endRangeSeconds;
+        }).toList();
+      } else {
+        // startRangeSeconds and endRangeSeconds are 0
+        return audioLst;
+      }
+    }
   }
 
   static DateTime setDateTimeToEndDay({
