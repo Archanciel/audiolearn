@@ -3184,9 +3184,9 @@ void playlistTwoDownloadViewIntegrationTest() {
       ];
 
       List<String> audioSubTitlesWithAudioDownloadDuration = [
-        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16. Audio download duration: 0:00:01.",
-        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45. Audio download duration: 0:00:01.",
-        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35. Audio download duration: 0:00:01.",
+        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16. Audio downl duration: 0:00:01.",
+        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45. Audio downl duration: 0:00:01.",
+        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35. Audio downl duration: 0:00:01.",
       ];
 
       List<String> audioSubTitlesWithAudioRemainingDuration = [
@@ -3246,9 +3246,9 @@ void playlistTwoDownloadViewIntegrationTest() {
       ];
 
       audioSubTitlesWithAudioDownloadDuration = [
-        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 01/07/2024 at 08:16. Audio download duration: 0:00:01.",
-        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 12/26/2023 at 09:45. Audio download duration: 0:00:01.",
-        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 01/08/2024 at 16:35. Audio download duration: 0:00:01.",
+        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 01/07/2024 at 08:16. Audio downl duration: 0:00:01.",
+        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 12/26/2023 at 09:45. Audio downl duration: 0:00:01.",
+        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 01/08/2024 at 16:35. Audio downl duration: 0:00:01.",
       ];
 
       audioSubTitlesWithAudioRemainingDuration = [
@@ -3308,9 +3308,9 @@ void playlistTwoDownloadViewIntegrationTest() {
       ];
 
       audioSubTitlesWithAudioDownloadDuration = [
-        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 2024/01/07 at 08:16. Audio download duration: 0:00:01.",
-        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45. Audio download duration: 0:00:01.",
-        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 2024/01/08 at 16:35. Audio download duration: 0:00:01.",
+        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 2024/01/07 at 08:16. Audio downl duration: 0:00:01.",
+        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45. Audio downl duration: 0:00:01.",
+        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 2024/01/08 at 16:35. Audio downl duration: 0:00:01.",
       ];
 
       audioSubTitlesWithAudioRemainingDuration = [

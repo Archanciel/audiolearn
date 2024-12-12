@@ -1905,7 +1905,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           confirmDialogTitleOne:
               'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
           confirmDialogMessage:
-              'Sort by:\n Present only in initial version:\n   Audio title asc,\n Present only in modified version:\n   Audio title desc,\nFilter options:\n Present only in modified version:\n   Jancovici',
+              'Sort by:\n Present only in initial version:\n   Audio title asc\n Present only in modified version:\n   Audio title desc\nFilter options:\n Present only in modified version:\n   Jancovici',
         );
 
         // Now verify the playlist download view state with the 'Title asc' -
@@ -7292,7 +7292,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           confirmDialogTitleOne:
               'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
           confirmDialogMessage:
-              'Sort by:\n Present only in initial version:\n   Audio downl date desc,\n Present only in modified version:\n   Video upload date desc',
+              'Sort by:\n Present only in initial version:\n   Audio downl date desc\n Present only in modified version:\n   Video upload date desc',
         );
 
         // Now verify the playlist download view state with the 'UploadVideo'
@@ -8327,7 +8327,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         // Type "Audio download speed desc" in the 'Save as' TextField
 
-        String saveAsTitle = 'Audio download speed desc';
+        String saveAsTitle = 'Audio downl speed desc';
 
         await tester.enterText(
             find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
@@ -8340,7 +8340,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         await tester.tap(find.byKey(const Key('sortingOptionDropdownButton')));
         await tester.pumpAndSettle();
 
-        await tester.tap(find.text('Audio download speed'));
+        await tester.tap(find.text('Audio downl speed'));
         await tester.pumpAndSettle();
 
         // Then delete the "Audio download date" descending sort option
@@ -8463,7 +8463,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         // Type "Audio download duration desc" in the 'Save as' TextField
 
-        String saveAsTitle = 'Audio download duration desc';
+        String saveAsTitle = 'Audio downl duration desc';
 
         await tester.enterText(
             find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
@@ -8476,7 +8476,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         await tester.tap(find.byKey(const Key('sortingOptionDropdownButton')));
         await tester.pumpAndSettle();
 
-        await tester.tap(find.text('Audio download duration'));
+        await tester.tap(find.text('Audio downl duration'));
         await tester.pumpAndSettle();
 
         // Then delete the "Audio download date" descending sort option
@@ -8545,12 +8545,12 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // And verify the order of the playlist audio subtitles
 
         List<String> audioSubTitlesSortedByTitleAscending = [
-          "0:20:32.0. 7.51 MB at 2.44 MB/sec on 26/12/2023 at 09:45. Audio download duration: 0:00:03.",
-          "0:19:05.0. 6.98 MB at 2.28 MB/sec on 07/01/2024 at 08:16. Audio download duration: 0:00:03.",
-          "0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16. Audio download duration: 0:00:01.",
-          "0:13:35.0. 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16. Audio download duration: 0:00:01.",
-          "0:06:29.0. 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45. Audio download duration: 0:00:01.",
-          "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35. Audio download duration: 0:00:01.",
+          "0:20:32.0. 7.51 MB at 2.44 MB/sec on 26/12/2023 at 09:45. Audio downl duration: 0:00:03.",
+          "0:19:05.0. 6.98 MB at 2.28 MB/sec on 07/01/2024 at 08:16. Audio downl duration: 0:00:03.",
+          "0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16. Audio downl duration: 0:00:01.",
+          "0:13:35.0. 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16. Audio downl duration: 0:00:01.",
+          "0:06:29.0. 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45. Audio downl duration: 0:00:01.",
+          "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35. Audio downl duration: 0:00:01.",
         ];
 
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
@@ -9214,11 +9214,11 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           Sort/Filter parms...''', () {
       group(
           '''Testing in english. Necessary to test in different languages since
-          handling the translation happens in the code and not only in the arb
-          translation files.''', () {
+             handling the translation happens in the code and not only in the arb
+             translation files.''', () {
         testWidgets(
             '''Modify 'Title asc' existing named and saved sort/filter parms.
-          Then save it and verify ConfirmActionDialog content.''',
+               Then save it and verify ConfirmActionDialog content.''',
             (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
@@ -9416,7 +9416,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         });
         testWidgets(
             '''Modify 'for test' existing named and saved sort/filter parms.
-          Then save it and verify ConfirmActionDialog content.''',
+               Then save it and verify ConfirmActionDialog content.''',
             (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
@@ -9544,13 +9544,103 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             rootPath: kPlaylistDownloadRootPathWindowsTest,
           );
         });
+        testWidgets(
+            '''Modify 'for test 2' existing named and saved sort/filter parms.
+               Then save it and verify ConfirmActionDialog content.''',
+            (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          // Copy the test initial audio data to the app dir
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath:
+                "$kDownloadAppTestSavedDataDir${path.separator}sort_filtered_parms_name_deletion_no_mp3_test",
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          // Now open the audio popup menu in order to modify the 'Title asc'
+          final SettingsDataService settingsDataService = SettingsDataService(
+            sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
+          );
+
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the download app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+          await app.main(['test']);
+          await tester.pumpAndSettle();
+
+          const String saveAsTitle = 'for test 2';
+
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
+
+          final Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+          final Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
+
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
+
+          // And find the 'for test 2' sort/filter item
+          final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
+
+          // Now open the audio popup menu in order to modify the 'for test'
+          Finder dropdownItemEditIconButtonFinder = find.byKey(
+              const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+          await tester.tap(dropdownItemEditIconButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Convert ascending to descending sort order of 'Audio listenable
+          // remaining duration'. So, the 'for test? sort/filter parms will
+          // in fact be descending !!
+          await invertSortingItemOrder(
+            tester: tester,
+            sortingItemName: 'Audio listenable remaining duration',
+          );
+
+          // Click on the "Save" button.
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
+
+          // Verifying and closing the confirm dialog
+
+          await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
+            tester: tester,
+            confirmDialogTitleOne:
+                'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
+            confirmDialogMessage:
+                'Sort by:\n Present only in initial version:\n   Audio listenable remaining\n   duration desc\n Present only in modified version:\n   Audio listenable remaining\n   duration asc',
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
       });
       group('''Testing in french. Necessary to test in different languages since
           handling the translation happens in the code and not only in the arb
           translation files.''', () {
         testWidgets(
             '''Modify 'Title asc' existing named and saved sort/filter parms.
-          Then save it and verify ConfirmActionDialog content.''',
+               Then save it and verify ConfirmActionDialog content.''',
             (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
@@ -9755,7 +9845,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         });
         testWidgets(
             '''Modify 'for test' existing named and saved sort/filter parms.
-          Then save it and verify ConfirmActionDialog content.''',
+               Then save it and verify ConfirmActionDialog content.''',
             (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
@@ -9881,6 +9971,102 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                 'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
             confirmDialogMessage:
                 'Trier par:\n Uniquement en version initiale:\n   Date téléch audio asc,\n   Date mise en ligne vidéo desc,\n   Titre audio asc,\n   Durée audio asc,\n   Durée audio écoutable\n   restante asc,\n   Date/heure dernière écoute desc,\n   Taille fichier audio desc,\n   Vitesse téléch audio desc,\n   Durée téléch audio desc\n Uniquement en version modifiée:\n   Durée audio écoutable\n   restante desc',
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''Modify 'for test 2' existing named and saved sort/filter parms.
+               Then save it and verify ConfirmActionDialog content.''',
+            (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          // Copy the test initial audio data to the app dir
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath:
+                "$kDownloadAppTestSavedDataDir${path.separator}sort_filtered_parms_name_deletion_no_mp3_test",
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          // Now open the audio popup menu in order to modify the 'Title asc'
+          final SettingsDataService settingsDataService = SettingsDataService(
+            sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
+          );
+
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the download app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+          await app.main(['test']);
+          await tester.pumpAndSettle();
+
+          const String saveAsTitle = 'for test 2';
+
+          // Change the application language to french
+          await IntegrationTestUtil.setApplicationLanguage(
+            tester: tester,
+            language: Language.french,
+          );
+
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
+
+          final Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+          final Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
+
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
+
+          // And find the 'for test 2' sort/filter item
+          final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
+
+          // Now open the audio popup menu in order to modify the 'for test'
+          Finder dropdownItemEditIconButtonFinder = find.byKey(
+              const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+          await tester.tap(dropdownItemEditIconButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Convert ascending to descending sort order of 'Audio listenable
+          // remaining duration'. So, the 'for test? sort/filter parms will
+          // in fact be descending !!
+          await invertSortingItemOrder(
+            tester: tester,
+            sortingItemName: 'Durée audio écoutable restante',
+          );
+
+          // Click on the "Save" button.
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
+
+          // Verifying and closing the confirm dialog
+
+          await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
+            tester: tester,
+            confirmDialogTitleOne:
+                'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
+            confirmDialogMessage:
+                'Trier par:\n Uniquement en version initiale:\n   Durée audio écoutable\n   restante desc\n Uniquement en version modifiée:\n   Durée audio écoutable\n   restante asc',
           );
 
           // Purge the test playlist directory so that the created test
