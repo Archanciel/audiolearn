@@ -314,22 +314,26 @@ class AudioSortFilterService {
         sortFilterParmsNameTranslationMap['filterOptionLstTitle'] ??
             'filterOptionLstTitle'); // add Filter options: title
 
-    Map<SortFilterParmsVersion, List<String>> otherOptionsDifferencesMap = {};
-
     // Compare other fields
     if (existingAudioSortFilterParms.sentencesCombination !=
         newOrModifiedaudioSortFilterParms.sentencesCombination) {
-      String valueInFirstTitle =
-          sortFilterParmsNameTranslationMap['valueInFirstTitle'] ??
-              'valueInFirstTitle';
-      differencesLst.add(valueInFirstTitle);
+      String valueInInitialVersionTitle =
+          sortFilterParmsNameTranslationMap['valueInInitialVersionTitle'] ??
+              'valueInInitialVersionTitle';
+      differencesLst.add(valueInInitialVersionTitle);
 
-      String valueInFirst =
-          sortFilterParmsNameTranslationMap['valueInFirst'] ?? 'valueInFirst';
-      differencesLst.add(valueInFirst);
-      differencesLst.add(
-          sortFilterParmsNameTranslationMap['sentencesCombination'] ??
-              'sentencesCombination');
+      String valueInInitialVersion =
+          '${sortFilterParmsNameTranslationMap['sentencesCombination'] ?? 'valueInInitial'}: ${existingAudioSortFilterParms.sentencesCombination.toString().split('.').last}';
+      differencesLst.add(valueInInitialVersion);
+
+      String valueInModifiedVersionTitle =
+          sortFilterParmsNameTranslationMap['valueInModifiedVersionTitle'] ??
+              'valueInModifiedVersionTitle';
+      differencesLst.add(valueInModifiedVersionTitle);
+
+      String valueInModifiedVersion =
+          '${sortFilterParmsNameTranslationMap['sentencesCombination'] ?? 'valueInModified'}: ${newOrModifiedaudioSortFilterParms.sentencesCombination.toString().split('.').last}';
+      differencesLst.add(valueInModifiedVersion);
     }
     if (existingAudioSortFilterParms.ignoreCase !=
         newOrModifiedaudioSortFilterParms.ignoreCase) {

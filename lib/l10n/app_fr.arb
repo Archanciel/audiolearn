@@ -707,5 +707,7 @@
   "startAudioDurationSortFilterTooltip": "Si seule la durée minimale est définie, tous les audios d'une durée égale ou supérieure à la valeur définie seront listés.",
   "endAudioDurationSortFilterTooltip": "Si seule la durée maximale est définie, tous les audios d'une durée égale ou inférieure à la valeur définie seront listés.",
   "startAudioFileSizeSortFilterTooltip": "Si seule la taille minimale du fichier est définie, tous les audios d'une taille égale ou supérieure à la valeur définie seront listés.",
-  "endAudioFileSizeSortFilterTooltip": "Si seule la taille maximale du fichier est définie, tous les audios d'une taille égale ou inférieure à la valeur définie seront listés."
+  "endAudioFileSizeSortFilterTooltip": "Si seule la taille maximale du fichier est définie, tous les audios d'une taille égale ou inférieure à la valeur définie seront listés.",
+  "valueInInitialVersionTitle": "En version initiale",
+  "valueInModifiedVersionTitle": "En version modifiée"
 }

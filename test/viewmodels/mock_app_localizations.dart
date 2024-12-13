@@ -1707,4 +1707,10 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get filterSentences => "Filter sentences:";
+
+  @override
+  String get valueInInitialVersionTitle => "In initial version";
+
+  @override
+  String get valueInModifiedVersionTitle => "In modified version";
 }
