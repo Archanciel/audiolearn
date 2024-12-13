@@ -1992,8 +1992,9 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
 
       if (listOfDifferencesBetweenSortFilterParameters.isNotEmpty) {
         // If there are differences between the existing and the new or
-        // modified sort/filter parameters, a confirm action dialog is
-        // displayed to the user.
+        // modified sort/filter parameters, a confirm action dialog which
+        // contains the sort/filter parameters modifications is displayed
+        // to the user.
         String formattedModifiedSortFilterParmsStr =
             _formatModifiedSortFilterParmsStr(
           sortFilterParmsVersionDifferenceLst:
@@ -2090,7 +2091,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       "ascending": AppLocalizations.of(context)!.ascendingShort,
       "descending": AppLocalizations.of(context)!.descendingShort,
       'filterSentenceLst':
-          "${AppLocalizations.of(context)!.filterOptions}$kStartAtZeroPosition",
+          "${AppLocalizations.of(context)!.filterSentences}$kStartAtZeroPosition",
       'sentencesCombination':
           "${AppLocalizations.of(context)!.and} / ${AppLocalizations.of(context)!.or}$kStartAtZeroPosition",
       'ignoreCase':

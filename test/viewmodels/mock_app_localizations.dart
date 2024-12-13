@@ -1704,4 +1704,7 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get endAudioFileSizeSortFilterTooltip =>
       "If only the end file size range is set, all audio with size equal or greater than the defined value will be listed.";
+
+  @override
+  String get filterSentences => "Filter sentences:";
 }
