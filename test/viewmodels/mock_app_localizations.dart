@@ -1662,10 +1662,10 @@ class MockAppLocalizations extends AppLocalizations {
       "WARNING: the sort/filter parameters \"$sortFilterParmsName\" were modified. Do you want to update the existing sort/filter parms by clicking on \"Confirm\", or to save it with a different name or cancel the Save operation, this by clicking on \"Cancel\" ?";
 
   @override
-  String get presentOnlyInFirst => "Present only in first";
+  String get presentOnlyInFirstTitle => "Present only in first";
 
   @override
-  String get presentOnlyInSecond => "Present only in second";
+  String get presentOnlyInSecondTitle => "Present only in second";
 
   @override
   String get ascendingShort => "asc";

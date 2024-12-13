@@ -991,7 +991,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
               controller: _startAudioDurationController,
               label: AppLocalizations.of(context)!.start,
               labelSize: 43.0,
-              tooltipMessage: AppLocalizations.of(context)!.startAudioDurationSortFilterTooltip,
+              tooltipMessage: AppLocalizations.of(context)!
+                  .startAudioDurationSortFilterTooltip,
             ),
             const SizedBox(width: 10),
             _buildLabelTextField(
@@ -1000,7 +1001,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
               controller: _endAudioDurationController,
               label: AppLocalizations.of(context)!.end,
               labelSize: 30.0,
-              tooltipMessage: AppLocalizations.of(context)!.endAudioDurationSortFilterTooltip,
+              tooltipMessage: AppLocalizations.of(context)!
+                  .endAudioDurationSortFilterTooltip,
             ),
           ],
         ),
@@ -1028,7 +1030,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
               controller: _startFileSizeController,
               label: AppLocalizations.of(context)!.start,
               labelSize: 43.0,
-              tooltipMessage: AppLocalizations.of(context)!.startAudioFileSizeSortFilterTooltip,
+              tooltipMessage: AppLocalizations.of(context)!
+                  .startAudioFileSizeSortFilterTooltip,
             ),
             const SizedBox(width: 10),
             _buildLabelTextField(
@@ -1037,7 +1040,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
               controller: _endFileSizeController,
               label: AppLocalizations.of(context)!.end,
               labelSize: 30.0,
-              tooltipMessage: AppLocalizations.of(context)!.endAudioFileSizeSortFilterTooltip,
+              tooltipMessage: AppLocalizations.of(context)!
+                  .endAudioFileSizeSortFilterTooltip,
             ),
           ],
         ),
@@ -1097,7 +1101,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           controller: _startDownloadDateTimeController,
           dateTime: _startDownloadDateTime,
           label: AppLocalizations.of(context)!.startDownloadDate,
-          tooltipMessage: AppLocalizations.of(context)!.startAudioDownloadDateSortFilterTooltip,
+          tooltipMessage: AppLocalizations.of(context)!
+              .startAudioDownloadDateSortFilterTooltip,
         ),
         _buildLabelDateIconTextField(
           dateIconButtondKey: const Key('endDownloadDateIconButton'),
@@ -1108,7 +1113,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           controller: _endDownloadDateTimeController,
           dateTime: _endDownloadDateTime,
           label: AppLocalizations.of(context)!.endDownloadDate,
-          tooltipMessage: AppLocalizations.of(context)!.endAudioDownloadDateSortFilterTooltip,
+          tooltipMessage: AppLocalizations.of(context)!
+              .endAudioDownloadDateSortFilterTooltip,
         ),
         _buildLabelDateIconTextField(
           dateIconButtondKey: const Key('startUploadDateIconButton'),
@@ -1119,7 +1125,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           controller: _startUploadDateTimeController,
           dateTime: _startUploadDateTime,
           label: AppLocalizations.of(context)!.startUploadDate,
-          tooltipMessage: AppLocalizations.of(context)!.startVideoUploadDateSortFilterTooltip,
+          tooltipMessage: AppLocalizations.of(context)!
+              .startVideoUploadDateSortFilterTooltip,
         ),
         _buildLabelDateIconTextField(
           dateIconButtondKey: const Key('endUploadDateIconButton'),
@@ -1130,7 +1137,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           controller: _endUploadDateTimeController,
           dateTime: _endUploadDateTime,
           label: AppLocalizations.of(context)!.endUploadDate,
-          tooltipMessage: AppLocalizations.of(context)!.endVideoUploadDateSortFilterTooltip,
+          tooltipMessage:
+              AppLocalizations.of(context)!.endVideoUploadDateSortFilterTooltip,
         ),
       ],
     );
@@ -2065,14 +2073,14 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       // Adding a ':' at the end of the string will cause it to be
       // formatted in _formatModifiedSortFilterParmsStr() as an aligned
       // title in the confirm action dialog
-      'presentOnlyInFirst':
-          "${AppLocalizations.of(context)!.presentOnlyInFirst}:",
+      'presentOnlyInFirstTitle':
+          "${AppLocalizations.of(context)!.presentOnlyInFirstTitle}:",
 
       // Adding a ':' at the end of the string will cause it to be
       // formatted in _formatModifiedSortFilterParmsStr() as an aligned
       // title in the confirm action dialog
-      'presentOnlyInSecond':
-          "${AppLocalizations.of(context)!.presentOnlyInSecond}:",
+      'presentOnlyInSecondTitle':
+          "${AppLocalizations.of(context)!.presentOnlyInSecondTitle}:",
 
       'audioDownloadDate': AppLocalizations.of(context)!.audioDownloadDate,
       'videoUploadDate': AppLocalizations.of(context)!.videoUploadDate,
@@ -2092,42 +2100,38 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       "descending": AppLocalizations.of(context)!.descendingShort,
       'filterSentenceLst':
           "${AppLocalizations.of(context)!.filterSentences}$kStartAtZeroPosition",
+      'filterOptionLst':
+          "${AppLocalizations.of(context)!.filterOptions}$kStartAtZeroPosition",
       'sentencesCombination':
-          "${AppLocalizations.of(context)!.and} / ${AppLocalizations.of(context)!.or}$kStartAtZeroPosition",
-      'ignoreCase':
-          "${AppLocalizations.of(context)!.ignoreCase}$kStartAtZeroPosition",
+          "${AppLocalizations.of(context)!.and} / ${AppLocalizations.of(context)!.or}",
+      'ignoreCase': "${AppLocalizations.of(context)!.ignoreCase}",
       'searchAsWellInYoutubeChannelName':
-          "${AppLocalizations.of(context)!.searchInYoutubeChannelName}$kStartAtZeroPosition",
+          "${AppLocalizations.of(context)!.searchInYoutubeChannelName}",
       'searchAsWellInVideoCompactDescription':
-          "${AppLocalizations.of(context)!.searchInVideoCompactDescription}$kStartAtZeroPosition",
+          "${AppLocalizations.of(context)!.searchInVideoCompactDescription}",
       'filterMusicQuality':
-          "${AppLocalizations.of(context)!.audioMusicQuality}$kStartAtZeroPosition",
-      'filterFullyListened':
-          "${AppLocalizations.of(context)!.fullyListened}$kStartAtZeroPosition",
+          "${AppLocalizations.of(context)!.audioMusicQuality}",
+      'filterFullyListened': "${AppLocalizations.of(context)!.fullyListened}",
       'filterPartiallyListened':
-          "${AppLocalizations.of(context)!.partiallyListened}$kStartAtZeroPosition",
-      'filterNotListened':
-          "${AppLocalizations.of(context)!.notListened}$kStartAtZeroPosition",
-      'filterCommented':
-          "${AppLocalizations.of(context)!.commented}$kStartAtZeroPosition",
-      'filterNotCommented':
-          "${AppLocalizations.of(context)!.notCommented}$kStartAtZeroPosition",
+          "${AppLocalizations.of(context)!.partiallyListened}",
+      'filterNotListened': "${AppLocalizations.of(context)!.notListened}",
+      'filterCommented': "${AppLocalizations.of(context)!.commented}",
+      'filterNotCommented': "${AppLocalizations.of(context)!.notCommented}",
       'downloadDateStartRange':
-          "${AppLocalizations.of(context)!.startDownloadDate}$kStartAtZeroPosition",
+          "${AppLocalizations.of(context)!.startDownloadDate}",
       'downloadDateEndRange':
-          "${AppLocalizations.of(context)!.endDownloadDate}$kStartAtZeroPosition",
+          "${AppLocalizations.of(context)!.endDownloadDate}",
       'uploadDateStartRange':
-          "${AppLocalizations.of(context)!.startUploadDate}$kStartAtZeroPosition",
-      'uploadDateEndRange':
-          "${AppLocalizations.of(context)!.endUploadDate}$kStartAtZeroPosition",
+          "${AppLocalizations.of(context)!.startUploadDate}",
+      'uploadDateEndRange': "${AppLocalizations.of(context)!.endUploadDate}",
       'fileSizeStartRangeMB':
-          "${AppLocalizations.of(context)!.fileSizeRange} ${AppLocalizations.of(context)!.start}$kStartAtZeroPosition",
+          "${AppLocalizations.of(context)!.fileSizeRange} ${AppLocalizations.of(context)!.start}",
       'fileSizeEndRangeMB':
-          "${AppLocalizations.of(context)!.fileSizeRange} ${AppLocalizations.of(context)!.end}$kStartAtZeroPosition",
+          "${AppLocalizations.of(context)!.fileSizeRange} ${AppLocalizations.of(context)!.end}",
       'durationStartRangeSec':
-          "${AppLocalizations.of(context)!.audioDurationRange} ${AppLocalizations.of(context)!.start}$kStartAtZeroPosition",
+          "${AppLocalizations.of(context)!.audioDurationRange} ${AppLocalizations.of(context)!.start}",
       'durationEndRangeSec':
-          "${AppLocalizations.of(context)!.audioDurationRange} ${AppLocalizations.of(context)!.end}$kStartAtZeroPosition",
+          "${AppLocalizations.of(context)!.audioDurationRange} ${AppLocalizations.of(context)!.end}",
     };
 
     return translationMap;
