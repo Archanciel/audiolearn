@@ -776,8 +776,8 @@ class AudioSortFilterService {
         audioSortFilterParameters.downloadDateEndRange != null) {
       filteredAudios = _filterAudioLstByAudioDownloadDateTime(
         audioLst: filteredAudios,
-        startDateTime: audioSortFilterParameters.downloadDateStartRange!,
-        endDateTime: audioSortFilterParameters.downloadDateEndRange!,
+        startDateTime: audioSortFilterParameters.downloadDateStartRange,
+        endDateTime: audioSortFilterParameters.downloadDateEndRange,
       );
     }
 
@@ -785,8 +785,8 @@ class AudioSortFilterService {
         audioSortFilterParameters.uploadDateEndRange != null) {
       filteredAudios = _filterAudioLstByAudioVideoUploadDateTime(
         audioLst: filteredAudios,
-        startDateTime: audioSortFilterParameters.uploadDateStartRange!,
-        endDateTime: audioSortFilterParameters.uploadDateEndRange!,
+        startDateTime: audioSortFilterParameters.uploadDateStartRange,
+        endDateTime: audioSortFilterParameters.uploadDateEndRange,
       );
     }
 
