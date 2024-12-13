@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:app_settings/app_settings.dart';
+// import 'package:app_settings/app_settings.dart';
 
 import '../../constants.dart';
 
@@ -29,7 +29,7 @@ class BatterySettingsDialog extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 // Open the app's settings page
-                AppSettings.openAppSettings();
+                // AppSettings.openAppSettings();
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: kButtonColor, // Set button color in dark mode

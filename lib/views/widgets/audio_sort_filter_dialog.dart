@@ -991,6 +991,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
               controller: _startAudioDurationController,
               label: AppLocalizations.of(context)!.start,
               labelSize: 43.0,
+              tooltipMessage: AppLocalizations.of(context)!.startAudioDurationSortFilterTooltip,
             ),
             const SizedBox(width: 10),
             _buildLabelTextField(
@@ -999,6 +1000,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
               controller: _endAudioDurationController,
               label: AppLocalizations.of(context)!.end,
               labelSize: 30.0,
+              tooltipMessage: AppLocalizations.of(context)!.endAudioDurationSortFilterTooltip,
             ),
           ],
         ),
@@ -1026,6 +1028,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
               controller: _startFileSizeController,
               label: AppLocalizations.of(context)!.start,
               labelSize: 43.0,
+              tooltipMessage: AppLocalizations.of(context)!.startAudioFileSizeSortFilterTooltip,
             ),
             const SizedBox(width: 10),
             _buildLabelTextField(
@@ -1034,6 +1037,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
               controller: _endFileSizeController,
               label: AppLocalizations.of(context)!.end,
               labelSize: 30.0,
+              tooltipMessage: AppLocalizations.of(context)!.endAudioFileSizeSortFilterTooltip,
             ),
           ],
         ),
@@ -1047,6 +1051,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     required TextEditingController controller,
     required String label,
     required double labelSize,
+    required String tooltipMessage,
   }) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
@@ -1061,12 +1066,15 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
         ),
         SizedBox(
           width: 70,
-          child: TextField(
-            key: key,
-            style: kDialogTextFieldStyle,
-            decoration: _dialogTextFieldDecoration,
-            controller: controller,
-            keyboardType: TextInputType.number,
+          child: Tooltip(
+            message: tooltipMessage,
+            child: TextField(
+              key: key,
+              style: kDialogTextFieldStyle,
+              decoration: _dialogTextFieldDecoration,
+              controller: controller,
+              keyboardType: TextInputType.number,
+            ),
           ),
         ),
       ],
@@ -1089,6 +1097,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           controller: _startDownloadDateTimeController,
           dateTime: _startDownloadDateTime,
           label: AppLocalizations.of(context)!.startDownloadDate,
+          tooltipMessage: AppLocalizations.of(context)!.startAudioDownloadDateSortFilterTooltip,
         ),
         _buildLabelDateIconTextField(
           dateIconButtondKey: const Key('endDownloadDateIconButton'),
@@ -1099,6 +1108,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           controller: _endDownloadDateTimeController,
           dateTime: _endDownloadDateTime,
           label: AppLocalizations.of(context)!.endDownloadDate,
+          tooltipMessage: AppLocalizations.of(context)!.endAudioDownloadDateSortFilterTooltip,
         ),
         _buildLabelDateIconTextField(
           dateIconButtondKey: const Key('startUploadDateIconButton'),
@@ -1109,6 +1119,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           controller: _startUploadDateTimeController,
           dateTime: _startUploadDateTime,
           label: AppLocalizations.of(context)!.startUploadDate,
+          tooltipMessage: AppLocalizations.of(context)!.startVideoUploadDateSortFilterTooltip,
         ),
         _buildLabelDateIconTextField(
           dateIconButtondKey: const Key('endUploadDateIconButton'),
@@ -1119,6 +1130,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           controller: _endUploadDateTimeController,
           dateTime: _endUploadDateTime,
           label: AppLocalizations.of(context)!.endUploadDate,
+          tooltipMessage: AppLocalizations.of(context)!.endVideoUploadDateSortFilterTooltip,
         ),
       ],
     );
@@ -1133,6 +1145,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     required TextEditingController controller,
     required DateTime? dateTime,
     required String label,
+    required String tooltipMessage,
   }) {
     // Initialize the TextField with the current date
     if (dateTime != null) {
@@ -1203,13 +1216,16 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
         ),
         SizedBox(
           width: 100,
-          child: TextField(
-            key: textFieldKey,
-            style: kDialogTextFieldStyle,
-            decoration: _dialogDateTextFieldDecoration,
-            controller: controller,
-            keyboardType: TextInputType
-                .datetime, // Updated to datetime for better keyboard options
+          child: Tooltip(
+            message: tooltipMessage,
+            child: TextField(
+              key: textFieldKey,
+              style: kDialogTextFieldStyle,
+              decoration: _dialogDateTextFieldDecoration,
+              controller: controller,
+              keyboardType: TextInputType
+                  .datetime, // Updated to datetime for better keyboard options
+            ),
           ),
         ),
       ],
@@ -1631,7 +1647,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
   Widget _buildAudioFilterSentence() {
     return Tooltip(
       message: AppLocalizations.of(context)!
-          .audioTitleSearchSentenceTextFieldTooltip,
+          .videoTitleSearchSentenceTextFieldTooltip,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -1938,7 +1954,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
   /// it does, a confirm action dialog is displayed to the user listing the
   /// differences between the existing and the new sort/filter parameters. The
   /// user is asked to confirm the save operation or to cancel it.
-  /// 
+  ///
   /// The method filters and sorts the audio list based on the selected
   /// sorting and filtering options. The method returns a list of three
   /// elements:
