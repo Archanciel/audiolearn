@@ -248,24 +248,24 @@ class AudioSortFilterService {
               'selectedSortItemLst');
 
       // Add specific differences between the lists
-      Map<SortFilterParmsVersion, List<SortingItem>> listDiff =
+      Map<SortFilterParmsVersion, List<SortingItem>> sortDifferencesMap =
           listSortItemsDifferences(
         existingAudioSortFilterParms.selectedSortItemLst,
         newOrModifiedaudioSortFilterParms.selectedSortItemLst,
       );
 
-      if (listDiff[SortFilterParmsVersion.versionOne]!.isNotEmpty) {
+      if (sortDifferencesMap[SortFilterParmsVersion.versionOne]!.isNotEmpty) {
         addTranslatedSortFilterParmsNamePlusSortOrder(
-          listDiff: listDiff,
+          listDiff: sortDifferencesMap,
           listDiffKey: SortFilterParmsVersion.versionOne,
           sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
           differencesLst: differencesLst,
         );
       }
 
-      if (listDiff[SortFilterParmsVersion.versionTwo]!.isNotEmpty) {
+      if (sortDifferencesMap[SortFilterParmsVersion.versionTwo]!.isNotEmpty) {
         addTranslatedSortFilterParmsNamePlusSortOrder(
-          listDiff: listDiff,
+          listDiff: sortDifferencesMap,
           listDiffKey: SortFilterParmsVersion.versionTwo,
           sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
           differencesLst: differencesLst,
@@ -281,34 +281,51 @@ class AudioSortFilterService {
               'filterSentenceLst');
 
       // Add specific differences between the lists
-      Map<SortFilterParmsVersion, List<String>> listDiff =
+      Map<SortFilterParmsVersion, List<String>> sentenceDifferencesMap =
           listFilterSentencesDifferences(
         existingAudioSortFilterParms.filterSentenceLst,
         newOrModifiedaudioSortFilterParms.filterSentenceLst,
       );
 
-      if (listDiff[SortFilterParmsVersion.versionOne]!.isNotEmpty) {
-        String presentOnlyInFirst =
-            sortFilterParmsNameTranslationMap['presentOnlyInFirst'] ??
-                'presentOnlyInFirst';
-        differencesLst.add(presentOnlyInFirst);
-        differencesLst
-            .add(listDiff[SortFilterParmsVersion.versionOne]!.join(', '));
+      if (sentenceDifferencesMap[SortFilterParmsVersion.versionOne]!
+          .isNotEmpty) {
+        String presentOnlyInFirstTitle =
+            sortFilterParmsNameTranslationMap['presentOnlyInFirstTitle'] ??
+                'presentOnlyInFirstTitle';
+        differencesLst.add(presentOnlyInFirstTitle);
+        differencesLst.add(
+            sentenceDifferencesMap[SortFilterParmsVersion.versionOne]!
+                .join(', '));
       }
 
-      if (listDiff[SortFilterParmsVersion.versionTwo]!.isNotEmpty) {
-        String presentOnlyInSecond =
-            sortFilterParmsNameTranslationMap['presentOnlyInSecond'] ??
-                'presentOnlyInSecond';
-        differencesLst.add(presentOnlyInSecond);
-        differencesLst
-            .add(listDiff[SortFilterParmsVersion.versionTwo]!.join(', '));
+      if (sentenceDifferencesMap[SortFilterParmsVersion.versionTwo]!
+          .isNotEmpty) {
+        String presentOnlyInSecondTitle =
+            sortFilterParmsNameTranslationMap['presentOnlyInSecondTitle'] ??
+                'presentOnlyInSecondTitle';
+        differencesLst.add(presentOnlyInSecondTitle);
+        differencesLst.add(
+            sentenceDifferencesMap[SortFilterParmsVersion.versionTwo]!
+                .join(', '));
       }
     }
+
+    differencesLst.add(sortFilterParmsNameTranslationMap['filterOptionLst'] ??
+        'filterOptionLst');
+
+    Map<SortFilterParmsVersion, List<String>> otherOptionsDifferencesMap = {};
 
     // Compare other fields
     if (existingAudioSortFilterParms.sentencesCombination !=
         newOrModifiedaudioSortFilterParms.sentencesCombination) {
+      String valueInFirstTitle =
+          sortFilterParmsNameTranslationMap['valueInFirstTitle'] ??
+              'valueInFirstTitle';
+      differencesLst.add(valueInFirstTitle);
+
+      String valueInFirst =
+          sortFilterParmsNameTranslationMap['valueInFirst'] ?? 'valueInFirst';
+      differencesLst.add(valueInFirst);
       differencesLst.add(
           sortFilterParmsNameTranslationMap['sentencesCombination'] ??
               'sentencesCombination');
@@ -429,19 +446,19 @@ class AudioSortFilterService {
       return '$translatedSortFilterName $ascOrDesc';
     }).toList();
 
-    String presentOnlyInVersion;
+    String presentOnlyInVersionTitle;
 
     if (listDiffKey == SortFilterParmsVersion.versionOne) {
-      presentOnlyInVersion =
-          sortFilterParmsNameTranslationMap['presentOnlyInFirst'] ??
-              'presentOnlyInFirst';
+      presentOnlyInVersionTitle =
+          sortFilterParmsNameTranslationMap['presentOnlyInFirstTitle'] ??
+              'presentOnlyInFirstTitle';
     } else {
-      presentOnlyInVersion =
-          sortFilterParmsNameTranslationMap['presentOnlyInSecond'] ??
-              'presentOnlyInSecond';
+      presentOnlyInVersionTitle =
+          sortFilterParmsNameTranslationMap['presentOnlyInSecondTitle'] ??
+              'presentOnlyInSecondTitle';
     }
 
-    differencesLst.add(presentOnlyInVersion);
+    differencesLst.add(presentOnlyInVersionTitle);
     differencesLst.add(namePlusOrderLst.join(', '));
   }
 
