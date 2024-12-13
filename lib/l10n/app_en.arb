@@ -721,5 +721,7 @@
   "startAudioDurationSortFilterTooltip": "Lists all audio with a duration equal to or greater than the specified minimum duration if set.",
   "endAudioDurationSortFilterTooltip": "Lists all audio with a duration equal to or less than the specified maximum duration if set.",
   "startAudioFileSizeSortFilterTooltip": "Lists all audio with a file size equal to or greater than the specified minimum size if set.",
-  "endAudioFileSizeSortFilterTooltip": "Lists all audio with a file size equal to or less than the specified maximum size if set."
+  "endAudioFileSizeSortFilterTooltip": "Lists all audio with a file size equal to or less than the specified maximum size if set.",
+  "valueInInitialVersionTitle": "In initial version",
+  "valueInModifiedVersionTitle": "In modified version"
 }

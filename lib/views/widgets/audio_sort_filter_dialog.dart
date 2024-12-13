@@ -2102,6 +2102,10 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           "${AppLocalizations.of(context)!.filterSentences}$kStartAtZeroPosition",
       'filterOptionLstTitle':
           "${AppLocalizations.of(context)!.filterOptions}$kStartAtZeroPosition",
+      'valueInInitialVersionTitle':
+          "${AppLocalizations.of(context)!.valueInInitialVersionTitle}:",
+      'valueInModifiedVersionTitle':
+          "${AppLocalizations.of(context)!.valueInModifiedVersionTitle}:",
       'sentencesCombination':
           "${AppLocalizations.of(context)!.and} / ${AppLocalizations.of(context)!.or}",
       'ignoreCase': "${AppLocalizations.of(context)!.ignoreCase}",
