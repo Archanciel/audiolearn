@@ -723,5 +723,7 @@
   "startAudioFileSizeSortFilterTooltip": "Lists all audio with a file size equal to or greater than the specified minimum size if set.",
   "endAudioFileSizeSortFilterTooltip": "Lists all audio with a file size equal to or less than the specified maximum size if set.",
   "valueInInitialVersionTitle": "In initial version",
-  "valueInModifiedVersionTitle": "In modified version"
+  "valueInModifiedVersionTitle": "In modified version",
+  "checked": "checked",
+  "unchecked": "unchecked"
 }

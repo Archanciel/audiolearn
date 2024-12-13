@@ -2108,26 +2108,30 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           "${AppLocalizations.of(context)!.valueInModifiedVersionTitle}:",
       'sentencesCombination':
           "${AppLocalizations.of(context)!.and} / ${AppLocalizations.of(context)!.or}",
-      'ignoreCase': "${AppLocalizations.of(context)!.ignoreCase}",
+      'and': AppLocalizations.of(context)!.and,
+      'or': AppLocalizations.of(context)!.or,
+      'ignoreCase': AppLocalizations.of(context)!.ignoreCase,
+      'checked':  AppLocalizations.of(context)!.checked,
+      'unchecked':  AppLocalizations.of(context)!.unchecked,
       'searchAsWellInYoutubeChannelName':
-          "${AppLocalizations.of(context)!.searchInYoutubeChannelName}",
+          AppLocalizations.of(context)!.searchInYoutubeChannelName,
       'searchAsWellInVideoCompactDescription':
-          "${AppLocalizations.of(context)!.searchInVideoCompactDescription}",
+          AppLocalizations.of(context)!.searchInVideoCompactDescription,
       'filterMusicQuality':
-          "${AppLocalizations.of(context)!.audioMusicQuality}",
-      'filterFullyListened': "${AppLocalizations.of(context)!.fullyListened}",
+          AppLocalizations.of(context)!.audioMusicQuality,
+      'filterFullyListened': AppLocalizations.of(context)!.fullyListened,
       'filterPartiallyListened':
-          "${AppLocalizations.of(context)!.partiallyListened}",
-      'filterNotListened': "${AppLocalizations.of(context)!.notListened}",
-      'filterCommented': "${AppLocalizations.of(context)!.commented}",
-      'filterNotCommented': "${AppLocalizations.of(context)!.notCommented}",
+          AppLocalizations.of(context)!.partiallyListened,
+      'filterNotListened': AppLocalizations.of(context)!.notListened,
+      'filterCommented': AppLocalizations.of(context)!.commented,
+      'filterNotCommented': AppLocalizations.of(context)!.notCommented,
       'downloadDateStartRange':
-          "${AppLocalizations.of(context)!.startDownloadDate}",
+          AppLocalizations.of(context)!.startDownloadDate,
       'downloadDateEndRange':
-          "${AppLocalizations.of(context)!.endDownloadDate}",
+          AppLocalizations.of(context)!.endDownloadDate,
       'uploadDateStartRange':
-          "${AppLocalizations.of(context)!.startUploadDate}",
-      'uploadDateEndRange': "${AppLocalizations.of(context)!.endUploadDate}",
+          AppLocalizations.of(context)!.startUploadDate,
+      'uploadDateEndRange': AppLocalizations.of(context)!.endUploadDate,
       'fileSizeStartRangeMB':
           "${AppLocalizations.of(context)!.fileSizeRange} ${AppLocalizations.of(context)!.start}",
       'fileSizeEndRangeMB':

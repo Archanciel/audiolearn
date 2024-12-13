@@ -317,28 +317,32 @@ class AudioSortFilterService {
     // Compare other fields
     if (existingAudioSortFilterParms.sentencesCombination !=
         newOrModifiedaudioSortFilterParms.sentencesCombination) {
-      String valueInInitialVersionTitle =
-          sortFilterParmsNameTranslationMap['valueInInitialVersionTitle'] ??
-              'valueInInitialVersionTitle';
-      differencesLst.add(valueInInitialVersionTitle);
-
-      String valueInInitialVersion =
-          '${sortFilterParmsNameTranslationMap['sentencesCombination'] ?? 'valueInInitial'}: ${existingAudioSortFilterParms.sentencesCombination.toString().split('.').last}';
-      differencesLst.add(valueInInitialVersion);
-
-      String valueInModifiedVersionTitle =
-          sortFilterParmsNameTranslationMap['valueInModifiedVersionTitle'] ??
-              'valueInModifiedVersionTitle';
-      differencesLst.add(valueInModifiedVersionTitle);
-
-      String valueInModifiedVersion =
-          '${sortFilterParmsNameTranslationMap['sentencesCombination'] ?? 'valueInModified'}: ${newOrModifiedaudioSortFilterParms.sentencesCombination.toString().split('.').last}';
-      differencesLst.add(valueInModifiedVersion);
+      _addToDifferencesLstOtherOptionDisplayedStr(
+          existingAudioSortFilterParms: existingAudioSortFilterParms,
+          newOrModifiedaudioSortFilterParms: newOrModifiedaudioSortFilterParms,
+          initialValueStr: existingAudioSortFilterParms.sentencesCombination
+              .toString()
+              .split('.')
+              .last,
+          modifiedValueStr: newOrModifiedaudioSortFilterParms
+              .sentencesCombination
+              .toString()
+              .split('.')
+              .last,
+          sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
+          optionNameTranslationKey: 'sentencesCombination',
+          differencesLst: differencesLst);
     }
     if (existingAudioSortFilterParms.ignoreCase !=
         newOrModifiedaudioSortFilterParms.ignoreCase) {
-      differencesLst
-          .add(sortFilterParmsNameTranslationMap['ignoreCase'] ?? 'ignoreCase');
+      _addToDifferencesLstOtherOptionDisplayedStr(
+          existingAudioSortFilterParms: existingAudioSortFilterParms,
+          newOrModifiedaudioSortFilterParms: newOrModifiedaudioSortFilterParms,
+          initialValueStr: (existingAudioSortFilterParms.ignoreCase) ? 'checked' : 'unchecked',
+          modifiedValueStr: (newOrModifiedaudioSortFilterParms.ignoreCase) ? 'checked' : 'unchecked',
+          sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
+          optionNameTranslationKey: 'ignoreCase',
+          differencesLst: differencesLst);
     }
     if (existingAudioSortFilterParms.searchAsWellInYoutubeChannelName !=
         newOrModifiedaudioSortFilterParms.searchAsWellInYoutubeChannelName) {
@@ -431,6 +435,35 @@ class AudioSortFilterService {
     }
 
     return differencesLst;
+  }
+
+  void _addToDifferencesLstOtherOptionDisplayedStr({
+    required AudioSortFilterParameters existingAudioSortFilterParms,
+    required AudioSortFilterParameters newOrModifiedaudioSortFilterParms,
+    required String initialValueStr,
+    required String modifiedValueStr,
+    required Map<String, String> sortFilterParmsNameTranslationMap,
+    required String optionNameTranslationKey,
+    required List<String> differencesLst,
+  }) {
+    String valueInInitialVersionTitle =
+        sortFilterParmsNameTranslationMap['valueInInitialVersionTitle'] ??
+            'valueInInitialVersionTitle';
+    differencesLst.add(valueInInitialVersionTitle);
+
+    String translatedOptionName = sortFilterParmsNameTranslationMap[optionNameTranslationKey]!;
+    String valueInInitialVersion =
+        '$translatedOptionName: ${sortFilterParmsNameTranslationMap[initialValueStr]}';
+    differencesLst.add(valueInInitialVersion);
+
+    String valueInModifiedVersionTitle =
+        sortFilterParmsNameTranslationMap['valueInModifiedVersionTitle'] ??
+            'valueInModifiedVersionTitle';
+    differencesLst.add(valueInModifiedVersionTitle);
+
+    String valueInModifiedVersion =
+        '$translatedOptionName: ${sortFilterParmsNameTranslationMap[modifiedValueStr]}';
+    differencesLst.add(valueInModifiedVersion);
   }
 
   void addTranslatedSortFilterParmsNamePlusSortOrder({

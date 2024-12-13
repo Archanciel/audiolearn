@@ -709,5 +709,7 @@
   "startAudioFileSizeSortFilterTooltip": "Si seule la taille minimale du fichier est définie, tous les audios d'une taille égale ou supérieure à la valeur définie seront listés.",
   "endAudioFileSizeSortFilterTooltip": "Si seule la taille maximale du fichier est définie, tous les audios d'une taille égale ou inférieure à la valeur définie seront listés.",
   "valueInInitialVersionTitle": "En version initiale",
-  "valueInModifiedVersionTitle": "En version modifiée"
+  "valueInModifiedVersionTitle": "En version modifiée",
+  "checked": "coché",
+  "unchecked": "décoché"
 }
