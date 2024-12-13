@@ -287,7 +287,7 @@
   "clickToSetAscendingOrDescendingTooltip": "Cliquez pour définir l'ordre de tri croissant ou décroissant.",
   "and": "et",
   "or": "ou",
-  "audioTitleSearchSentenceTextFieldTooltip": "Entrez un mot ou une phrase à rechercher le titre de la vidéo et dans la chaîne Youtube si 'Inclure la chaîne Youtube' est coché et dans la description de la vidéo si 'Inclure la description' est coché.",
+  "videoTitleSearchSentenceTextFieldTooltip": "Entrez un mot ou une phrase à rechercher le titre de la vidéo et dans la chaîne Youtube si 'Inclure la chaîne Youtube' est coché et dans la description de la vidéo si 'Inclure la description' est coché. ENSUITE, CLIQUEZ SUR LE BOUTON '+'.",
   "andSentencesTooltip": "Sélectionne les audio qui contiennent tous les mots ou phrases listés.",
   "orSentencesTooltip": "Sélectionne les audio qui contienneoptionsnt l'un des mots ou phrases listés.",
   "searchInVideoCompactDescriptionTooltip": "Inclure la description de la vidéo dans la recherche.",
@@ -698,5 +698,13 @@
   "presentOnlyInFirst": "Uniquement en version initiale",
   "presentOnlyInSecond": "Uniquement en version modifiée",
   "ascendingShort": "asc",
-  "descendingShort": "desc"
+  "descendingShort": "desc",
+  "startAudioDownloadDateSortFilterTooltip": "Si seule la date de début du téléchargement est définie, tous les audios téléchargés à partir de la date définie seront listés.",
+  "endAudioDownloadDateSortFilterTooltip": "Si seule la date de fin du téléchargement est définie, tous les audios téléchargés jusqu'à la date définie seront listés.",
+  "startVideoUploadDateSortFilterTooltip": "Si seule la date de début de mise en ligne est définie, toutes les vidéos mises en ligne à partir de la date définie seront listées.",
+  "endVideoUploadDateSortFilterTooltip": "Si seule la date de fin de mise en ligne est définie, toutes les vidéos mises en ligne jusqu'à la date définie seront listées.",
+  "startAudioDurationSortFilterTooltip": "Si seule la durée minimale est définie, tous les audios d'une durée égale ou supérieure à la valeur définie seront listés.",
+  "endAudioDurationSortFilterTooltip": "Si seule la durée maximale est définie, tous les audios d'une durée égale ou inférieure à la valeur définie seront listés.",
+  "startAudioFileSizeSortFilterTooltip": "Si seule la taille minimale du fichier est définie, tous les audios d'une taille égale ou supérieure à la valeur définie seront listés.",
+  "endAudioFileSizeSortFilterTooltip": "Si seule la taille maximale du fichier est définie, tous les audios d'une taille égale ou inférieure à la valeur définie seront listés."
 }

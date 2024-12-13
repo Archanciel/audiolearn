@@ -301,7 +301,7 @@
   "clickToSetAscendingOrDescendingTooltip": "Click to set ascending or descending sort order.",
   "and": "and",
   "or": "or",
-  "audioTitleSearchSentenceTextFieldTooltip": "Enter a word or a sentence to be selected in the video title and in the Youtube channel if 'înclude Youtube channel' is checked and in the video description if 'Include description' is checked.",
+  "videoTitleSearchSentenceTextFieldTooltip": "Enter a word or a sentence to be selected in the video title and in the Youtube channel if 'înclude Youtube channel' is checked and in the video description if 'Include description' is checked. THEN, CLICK ON THE '+' BUTTON.",
   "andSentencesTooltip": "If set, only audio containing all the listed words or sentences are selected.",
   "orSentencesTooltip": "If set, audio containing one of the listed words or sentences are selected.",
   "searchInVideoCompactDescriptionTooltip": "If set, search words or sentences are searched on video description as well.",
@@ -712,5 +712,13 @@
   "presentOnlyInFirst": "Present only in initial version",
   "presentOnlyInSecond": "Present only in modified version",
   "ascendingShort": "asc",
-  "descendingShort": "desc"
+  "descendingShort": "desc",
+  "startAudioDownloadDateSortFilterTooltip": "Lists all audio downloaded on or after the specified start date if set.",
+  "endAudioDownloadDateSortFilterTooltip": "Lists all audio downloaded on or before the specified end date if set.",
+  "startVideoUploadDateSortFilterTooltip": "Lists all videos uploaded on or after the specified start date if set.",
+  "endVideoUploadDateSortFilterTooltip": "Lists all videos uploaded on or before the specified end date if set.",
+  "startAudioDurationSortFilterTooltip": "Lists all audio with a duration equal to or greater than the specified minimum duration if set.",
+  "endAudioDurationSortFilterTooltip": "Lists all audio with a duration equal to or less than the specified maximum duration if set.",
+  "startAudioFileSizeSortFilterTooltip": "Lists all audio with a file size equal to or greater than the specified minimum size if set.",
+  "endAudioFileSizeSortFilterTooltip": "Lists all audio with a file size equal to or less than the specified maximum size if set."
 }

@@ -645,7 +645,7 @@ class MockAppLocalizations extends AppLocalizations {
   String get or => 'Or';
 
   @override
-  String get audioTitleSearchSentenceTextFieldTooltip =>
+  String get videoTitleSearchSentenceTextFieldTooltip =>
       "Contains a word or a sentence searched on video title and on video description if checkbox 'Include description' is set";
 
   @override
@@ -1672,4 +1672,36 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get descendingShort => "desc";
+
+  @override
+  String get startAudioDownloadDateSortFilterTooltip =>
+      "If only the start download date is set, all audio downloaded at or after the defined date will be listed.";
+
+  @override
+  String get endAudioDownloadDateSortFilterTooltip =>
+      "If only the end download date is set, all audio downloaded at or before the defined date will be listed.";
+
+  @override
+  String get startVideoUploadDateSortFilterTooltip =>
+      "If only the start upload date is set, all video uploaded at or after the defined date will be listed.";
+
+  @override
+  String get endVideoUploadDateSortFilterTooltip =>
+      "If only the end upload date is set, all video uploaded at or before the defined date will be listed.";
+
+  @override
+  String get startAudioDurationSortFilterTooltip =>
+      "If only the start duration range is set, all audio with duration equal or greater than the defined value will be listed.";
+
+  @override
+  String get endAudioDurationSortFilterTooltip =>
+      "If only the end duration range is set, all audio with duration equal or greater than the defined value will be listed.";
+
+  @override
+  String get startAudioFileSizeSortFilterTooltip =>
+      "If only the start file size range is set, all audio with size equal or greater than the defined value will be listed.";
+
+  @override
+  String get endAudioFileSizeSortFilterTooltip =>
+      "If only the end file size range is set, all audio with size equal or greater than the defined value will be listed.";
 }
