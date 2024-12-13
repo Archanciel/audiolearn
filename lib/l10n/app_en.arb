@@ -50,6 +50,7 @@
   "audioDownloadDuration": "Audio downl duration",
   "sortAscending": "Asc",
   "sortDescending": "Desc",
+  "filterSentences": "Filter words:",
   "filterOptions": "Filter options:",
   "videoTitleOrDescription": "Video title (word or sentence)",
   "startDownloadDate": "Start downl date",

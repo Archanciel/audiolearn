@@ -50,6 +50,7 @@
   "audioDownloadDuration": "Durée téléch audio",
   "sortAscending": "Asc",
   "sortDescending": "Desc",
+  "filterSentences": "Mots filtre:",
   "filterOptions": "Options filtre:",
   "videoTitleOrDescription": "Titre vidéo (mot ou phrase)",
   "startDownloadDate": "Date début téléch",
