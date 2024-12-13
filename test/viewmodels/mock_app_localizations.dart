@@ -1713,4 +1713,10 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get valueInModifiedVersionTitle => "In modified version";
+
+  @override
+  String get checked => "checked";
+
+  @override
+  String get unchecked => "unchecked";
 }
