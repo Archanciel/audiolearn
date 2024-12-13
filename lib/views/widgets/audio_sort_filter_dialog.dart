@@ -2067,7 +2067,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
   /// in the interface classes.
   Map<String, String> _createSortFilterParmNameTranslationMap() {
     Map<String, String> translationMap = {
-      'selectedSortItemLst':
+      'selectedSortItemLstTitle':
           "${AppLocalizations.of(context)!.sortBy}$kStartAtZeroPosition",
 
       // Adding a ':' at the end of the string will cause it to be
@@ -2098,9 +2098,9 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           AppLocalizations.of(context)!.audioDownloadDuration,
       "ascending": AppLocalizations.of(context)!.ascendingShort,
       "descending": AppLocalizations.of(context)!.descendingShort,
-      'filterSentenceLst':
+      'filterSentenceLstTitle':
           "${AppLocalizations.of(context)!.filterSentences}$kStartAtZeroPosition",
-      'filterOptionLst':
+      'filterOptionLstTitle':
           "${AppLocalizations.of(context)!.filterOptions}$kStartAtZeroPosition",
       'sentencesCombination':
           "${AppLocalizations.of(context)!.and} / ${AppLocalizations.of(context)!.or}",

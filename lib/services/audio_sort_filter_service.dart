@@ -244,12 +244,12 @@ class AudioSortFilterService {
     if (!listEquals(existingAudioSortFilterParms.selectedSortItemLst,
         newOrModifiedaudioSortFilterParms.selectedSortItemLst)) {
       differencesLst.add(
-          sortFilterParmsNameTranslationMap['selectedSortItemLst'] ??
-              'selectedSortItemLst');
+          sortFilterParmsNameTranslationMap['selectedSortItemLstTitle'] ??
+              'selectedSortItemLstTitle'); // add Sort by: title
 
       // Add specific differences between the lists
       Map<SortFilterParmsVersion, List<SortingItem>> sortDifferencesMap =
-          listSortItemsDifferences(
+          getSortItemsDifferences(
         existingAudioSortFilterParms.selectedSortItemLst,
         newOrModifiedaudioSortFilterParms.selectedSortItemLst,
       );
@@ -277,12 +277,12 @@ class AudioSortFilterService {
     if (!listEquals(existingAudioSortFilterParms.filterSentenceLst,
         newOrModifiedaudioSortFilterParms.filterSentenceLst)) {
       differencesLst.add(
-          sortFilterParmsNameTranslationMap['filterSentenceLst'] ??
-              'filterSentenceLst');
+          sortFilterParmsNameTranslationMap['filterSentenceLstTitle'] ??
+              'filterSentenceLstTitle'); // add Filter words: title
 
       // Add specific differences between the lists
       Map<SortFilterParmsVersion, List<String>> sentenceDifferencesMap =
-          listFilterSentencesDifferences(
+          getFilterSentencesDifferences(
         existingAudioSortFilterParms.filterSentenceLst,
         newOrModifiedaudioSortFilterParms.filterSentenceLst,
       );
@@ -310,8 +310,9 @@ class AudioSortFilterService {
       }
     }
 
-    differencesLst.add(sortFilterParmsNameTranslationMap['filterOptionLst'] ??
-        'filterOptionLst');
+    differencesLst.add(
+        sortFilterParmsNameTranslationMap['filterOptionLstTitle'] ??
+            'filterOptionLstTitle'); // add Filter options: title
 
     Map<SortFilterParmsVersion, List<String>> otherOptionsDifferencesMap = {};
 
@@ -469,7 +470,7 @@ class AudioSortFilterService {
   ///    first list.
   /// - `onlyInSecond`: SortingItem's with specific values present only in the
   ///    second list.
-  Map<SortFilterParmsVersion, List<SortingItem>> listSortItemsDifferences(
+  Map<SortFilterParmsVersion, List<SortingItem>> getSortItemsDifferences(
       List<SortingItem> list1, List<SortingItem> list2) {
     // SortingItem's only in the first list
     List<SortingItem> onlyInFirst =
@@ -490,7 +491,7 @@ class AudioSortFilterService {
   /// Returns a map with:
   /// - `onlyInFirst`: filtering sentences present only in the first list.
   /// - `onlyInSecond`: filtering sentences present only in the second list.
-  Map<SortFilterParmsVersion, List<String>> listFilterSentencesDifferences(
+  Map<SortFilterParmsVersion, List<String>> getFilterSentencesDifferences(
       List<String> list1, List<String> list2) {
     // filtering sentences only in the first list
     List<String> onlyInFirst =
