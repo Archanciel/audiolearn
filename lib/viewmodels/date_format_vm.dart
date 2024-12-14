@@ -15,9 +15,6 @@ class DateFormatVM extends ChangeNotifier {
   late String _selectedDateFormat; // Default format
   String get selectedDateFormat => _selectedDateFormat;
 
-  late String _selectedDateTimeFormat; // Default format
-  String get selectedDateTimeFormat => _selectedDateTimeFormat;
-
   DateFormatVM({
     required SettingsDataService settingsDataService,
   }) : _settingsDataService = settingsDataService {
@@ -27,7 +24,8 @@ class DateFormatVM extends ChangeNotifier {
     );
   }
 
-  /// Select a date format from the list of available formats.
+  /// Select a date format from the list of available formats
+  /// and save it to the application settings.
   ///
   /// 0 --> 'dd/MM/yyyy'
   /// 1 --> 'MM/dd/yyyy'
@@ -36,16 +34,16 @@ class DateFormatVM extends ChangeNotifier {
     required int dateFormatIndex,
   }) {
     _selectedDateFormat = dateFormatList[dateFormatIndex];
-    
+
     _settingsDataService.set(
       settingType: SettingType.formatOfDate,
       settingSubType: FormatOfDate.formatOfDate,
       value: dateFormatList[dateFormatIndex],
     );
-    
+
     _settingsDataService.saveSettings();
-    
-    notifyListeners(); 
+
+    notifyListeners();
   }
 
   /// Format the date according to the selected date format.
@@ -56,5 +54,21 @@ class DateFormatVM extends ChangeNotifier {
   /// Format the date according to the selected date format.
   String formatDateTime(DateTime date) {
     return DateFormat('$_selectedDateFormat HH:mm').format(date);
+  }
+
+  /// Parses a date string into a DateTime object based on the application date
+  /// format.
+  ///
+  /// Returns the parsed DateTime if successful, otherwise throws a FormatException.
+  DateTime parseDateStrUsinAppDateFormat(String dateString) {
+    // Try parsing the date string using each format.
+      try {
+        return DateFormat(_selectedDateFormat).parseStrict(dateString);
+      } catch (_) {
+        // Ignore and try the next format.
+      }
+
+    // If no format matches, throw an exception.
+    throw FormatException('Invalid date format: $dateString');
   }
 }

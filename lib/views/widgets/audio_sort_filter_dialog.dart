@@ -2,7 +2,6 @@ import 'package:audiolearn/utils/duration_expansion.dart';
 import 'package:audiolearn/viewmodels/date_format_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants.dart';
@@ -135,16 +134,22 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
 
     _audioSortFilterParameters = widget.audioSortFilterParameters;
     _dialogTextFieldDecoration = getDialogTextFieldInputDecoration();
-    _dialogDateTextFieldDecoration = getDialogTextFieldInputDecoration(
-      labelTxt: 'dd/mm/yyyy',
-      labelTxtFontSize: 14.0,
-    );
 
     // Add this line to request focus on the TextField after the build
     // method has been called
     WidgetsBinding.instance.addPostFrameCallback((_) {
       // When opening the sort/filter dialog, the focus is set
       // depending from where the dialog was opened.
+
+      final DateFormatVM dateFormatVMlistenFalse = Provider.of<DateFormatVM>(
+        context,
+        listen: false,
+      );
+
+      _dialogDateTextFieldDecoration = getDialogTextFieldInputDecoration(
+        labelTxt: dateFormatVMlistenFalse.selectedDateFormat,
+        labelTxtFontSize: 13.0,
+      );
 
       switch (widget.calledFrom) {
         case CalledFrom.playlistDownloadView:
@@ -1163,7 +1168,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     // Add listener to handle manual input
     controller.addListener(() {
       try {
-        final parsedDate = DateFormat('dd/MM/yyyy').parse(controller.text);
+        final DateTime parsedDate = dateFormatVMlistenFalse
+            .parseDateStrUsinAppDateFormat(controller.text);
         _setDateTime(
           dateTimeType: dateTimeType,
           dateTime: parsedDate,
@@ -1195,7 +1201,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
             // Parse the date from the TextField if it's valid, otherwise use the original date
             DateTime initialDate;
             try {
-              initialDate = DateFormat('dd/MM/yyyy').parse(controller.text);
+              initialDate = dateFormatVMlistenFalse
+                  .parseDateStrUsinAppDateFormat(controller.text);
             } catch (e) {
               initialDate = dateTime ?? DateTime.now();
             }
@@ -2111,26 +2118,22 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       'and': AppLocalizations.of(context)!.and,
       'or': AppLocalizations.of(context)!.or,
       'ignoreCase': AppLocalizations.of(context)!.ignoreCase,
-      'checked':  AppLocalizations.of(context)!.checked,
-      'unchecked':  AppLocalizations.of(context)!.unchecked,
+      'checked': AppLocalizations.of(context)!.checked,
+      'unchecked': AppLocalizations.of(context)!.unchecked,
       'searchAsWellInYoutubeChannelName':
           AppLocalizations.of(context)!.searchInYoutubeChannelName,
       'searchAsWellInVideoCompactDescription':
           AppLocalizations.of(context)!.searchInVideoCompactDescription,
-      'filterMusicQuality':
-          AppLocalizations.of(context)!.audioMusicQuality,
+      'filterMusicQuality': AppLocalizations.of(context)!.audioMusicQuality,
       'filterFullyListened': AppLocalizations.of(context)!.fullyListened,
       'filterPartiallyListened':
           AppLocalizations.of(context)!.partiallyListened,
       'filterNotListened': AppLocalizations.of(context)!.notListened,
       'filterCommented': AppLocalizations.of(context)!.commented,
       'filterNotCommented': AppLocalizations.of(context)!.notCommented,
-      'downloadDateStartRange':
-          AppLocalizations.of(context)!.startDownloadDate,
-      'downloadDateEndRange':
-          AppLocalizations.of(context)!.endDownloadDate,
-      'uploadDateStartRange':
-          AppLocalizations.of(context)!.startUploadDate,
+      'downloadDateStartRange': AppLocalizations.of(context)!.startDownloadDate,
+      'downloadDateEndRange': AppLocalizations.of(context)!.endDownloadDate,
+      'uploadDateStartRange': AppLocalizations.of(context)!.startUploadDate,
       'uploadDateEndRange': AppLocalizations.of(context)!.endUploadDate,
       'fileSizeStartRangeMB':
           "${AppLocalizations.of(context)!.fileSizeRange} ${AppLocalizations.of(context)!.start}",
