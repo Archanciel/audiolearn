@@ -135,6 +135,14 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     _audioSortFilterParameters = widget.audioSortFilterParameters;
     _dialogTextFieldDecoration = getDialogTextFieldInputDecoration();
 
+    // Necessary to fix a bug applying if getDialogTextFieldInputDecoration()
+    // for the _dialogDateTextFieldDecoration is called only in the
+    // addPostFrameCallback method below.
+    _dialogDateTextFieldDecoration = getDialogTextFieldInputDecoration(
+      labelTxt: '',
+      labelTxtFontSize: 14.0,
+    );
+
     // Add this line to request focus on the TextField after the build
     // method has been called
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -147,8 +155,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       );
 
       _dialogDateTextFieldDecoration = getDialogTextFieldInputDecoration(
-        labelTxt: dateFormatVMlistenFalse.selectedDateFormat,
-        labelTxtFontSize: 13.0,
+        labelTxt: dateFormatVMlistenFalse.selectedDateFormatLowCase,
+        labelTxtFontSize: 14.0,
       );
 
       switch (widget.calledFrom) {
@@ -1235,7 +1243,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
             message: tooltipMessage,
             child: TextField(
               key: textFieldKey,
-              style: kDialogTextFieldStyle,
+              style: kDialogDateTextFieldStyle,
               decoration: _dialogDateTextFieldDecoration,
               controller: controller,
               keyboardType: TextInputType

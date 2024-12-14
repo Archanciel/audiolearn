@@ -46,7 +46,7 @@ class _DateFormatSelectionDialogState extends State<DateFormatSelectionDialog>
         listen: false,
       );
 
-      _selectedIndex = DateFormatVM.dateFormatList.indexOf(
+      _selectedIndex = DateFormatVM.dateFormatLst.indexOf(
         dateFormatVM.selectedDateFormat,
       );
 
@@ -56,9 +56,9 @@ class _DateFormatSelectionDialogState extends State<DateFormatSelectionDialog>
       // formatted date. This is useful if the current date day is
       //  equal to the current date month (e.g. 01/01/2024 !.
       _nowDateFormatList = [
-        '${DateFormat(DateFormatVM.dateFormatList[0]).format(now)}\n(${DateFormatVM.dateFormatList[0]})',
-        '${DateFormat(DateFormatVM.dateFormatList[1]).format(now)}\n(${DateFormatVM.dateFormatList[1]})',
-        '${DateFormat(DateFormatVM.dateFormatList[2]).format(now)}\n(${DateFormatVM.dateFormatList[2]})',
+        '${DateFormat(DateFormatVM.dateFormatLst[0]).format(now)}\n(${DateFormatVM.dateFormatLowCaseLst[0]})',
+        '${DateFormat(DateFormatVM.dateFormatLst[1]).format(now)}\n(${DateFormatVM.dateFormatLowCaseLst[1]})',
+        '${DateFormat(DateFormatVM.dateFormatLst[2]).format(now)}\n(${DateFormatVM.dateFormatLowCaseLst[2]})',
       ];
     });
   }
