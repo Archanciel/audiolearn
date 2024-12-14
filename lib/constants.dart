@@ -147,7 +147,7 @@ const TextStyle kDialogTextFieldStyle = TextStyle(
 
 // Used by the audio sort filter dialog.
 const TextStyle kDialogDateTextFieldStyle = TextStyle(
-  fontSize: 14,
+  fontSize: 15,
 );
 
 const TextStyle kDialogTextFieldBoldStyle = TextStyle(
