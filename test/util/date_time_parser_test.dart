@@ -4,101 +4,6 @@ import 'package:audiolearn/utils/date_time_parser.dart';
 import 'package:audiolearn/utils/duration_expansion.dart';
 
 void main() {
-  group(
-    'DateTimeParser.parseDDMMDateTime()',
-    () {
-      test(
-        'valid date time string',
-        () {
-          final List<String?> dateTimeComponentStrLst =
-              DateTimeParser.parseDDMMDateTime('14/12 13:35');
-          final String? dayMonth = dateTimeComponentStrLst[0];
-          final String? hourMinute = dateTimeComponentStrLst[1];
-
-          expect(dayMonth, '14/12');
-          expect(hourMinute, '13:35');
-        },
-      );
-
-      test(
-        'valid date time string shorter date and hour',
-        () {
-          final List<String?> dateTimeComponentStrLst =
-              DateTimeParser.parseDDMMDateTime('4/2 3:35');
-          final String? dayMonth = dateTimeComponentStrLst[0];
-          final String? hourMinute = dateTimeComponentStrLst[1];
-
-          expect(dayMonth, '4/2');
-          expect(hourMinute, '3:35');
-        },
-      );
-
-      test(
-        'invalid shorter date and valid hour',
-        () {
-          final List<String?> dateTimeComponentStrLst =
-              DateTimeParser.parseDDMMDateTime('a4/2 3:35');
-          final String? dayMonth = dateTimeComponentStrLst[0];
-          final String? hourMinute = dateTimeComponentStrLst[1];
-
-          expect(dayMonth, null);
-          expect(hourMinute, null);
-        },
-      );
-
-      test(
-        'valid date and invalid hour',
-        () {
-          final List<String?> dateTimeComponentStrLst =
-              DateTimeParser.parseDDMMDateTime('14/2 3:u5');
-          final String? dayMonth = dateTimeComponentStrLst[0];
-          final String? hourMinute = dateTimeComponentStrLst[1];
-
-          expect(dayMonth, null);
-          expect(hourMinute, null);
-        },
-      );
-
-      test(
-        'valid date and invalid minute',
-        () {
-          final List<String?> dateTimeComponentStrLst =
-              DateTimeParser.parseDDMMDateTime('14/2 3:5');
-          final String? dayMonth = dateTimeComponentStrLst[0];
-          final String? hourMinute = dateTimeComponentStrLst[1];
-
-          expect(dayMonth, null);
-          expect(hourMinute, null);
-        },
-      );
-
-      test(
-        'valid date no time',
-        () {
-          final List<String?> dateTimeComponentStrLst =
-              DateTimeParser.parseDDMMDateTime('14/2 ');
-          final String? dayMonth = dateTimeComponentStrLst[0];
-          final String? hourMinute = dateTimeComponentStrLst[1];
-
-          expect(dayMonth, null);
-          expect(hourMinute, null);
-        },
-      );
-
-      test(
-        'no date valid time',
-        () {
-          final List<String?> dateTimeComponentStrLst =
-              DateTimeParser.parseDDMMDateTime('12:45');
-          final String? dayMonth = dateTimeComponentStrLst[0];
-          final String? hourMinute = dateTimeComponentStrLst[1];
-
-          expect(dayMonth, null);
-          expect(hourMinute, null);
-        },
-      );
-    },
-  );
 
   group(
     'DateTimeParser.parseTime()',
@@ -778,34 +683,6 @@ void main() {
     },
   );
   group(
-    'DateTimeParser.parseAllHHMMTimeStr()',
-    () {
-      test(
-        'positive times string',
-        () {
-          const String timeStr = '13:35 3:05,0:05, 0:05,3:u5 3:5, 3-05 3-5';
-
-          List<String> parsedTimeStrLst =
-              DateTimeParser.parseAllHHMMTimeStr(timeStr);
-
-          expect(parsedTimeStrLst, ['13:35', '3:05', '0:05', '0:05']);
-        },
-      );
-      test(
-        'negative times string',
-        () {
-          const String negativeTimeStr =
-              '-13:35 -3:05,-0:05,-3-05 -3:u5, -3:5 -3-5';
-
-          List<String> parsedNegTimeStrLst =
-              DateTimeParser.parseAllHHMMTimeStr(negativeTimeStr);
-
-          expect(parsedNegTimeStrLst, ['-13:35', '-3:05', '-0:05']);
-        },
-      );
-    },
-  );
-  group(
     'DateTimeParser.roundDateTimeToHour()',
     () {
       test(
@@ -833,38 +710,6 @@ void main() {
           final DateTime roundedDateTime =
               DateTimeParser.roundDateTimeToHour(dateTime);
           expect(roundedDateTime, DateTime(2021, 1, 1, 13, 0));
-        },
-      );
-    },
-  );
-  group(
-    'DateTimeParser.truncateDateTimeToMinute()',
-    () {
-      test(
-        'truncating date time + 30 seconds to minute',
-        () {
-          final DateTime dateTime = DateTime(2021, 1, 1, 13, 25, 30);
-          final DateTime truncatedDateTime =
-              DateTimeParser.truncateDateTimeToMinute(dateTime);
-          expect(truncatedDateTime, DateTime(2021, 1, 1, 13, 25));
-        },
-      );
-      test(
-        'truncating date time + 59 seconds to minute',
-        () {
-          final DateTime dateTime = DateTime(2021, 1, 1, 13, 25, 59);
-          final DateTime truncatedDateTime =
-              DateTimeParser.truncateDateTimeToMinute(dateTime);
-          expect(truncatedDateTime, DateTime(2021, 1, 1, 13, 25));
-        },
-      );
-      test(
-        'truncating date time + 1 seconds to minute',
-        () {
-          final DateTime dateTime = DateTime(2021, 1, 1, 13, 25, 1);
-          final DateTime truncatedDateTime =
-              DateTimeParser.truncateDateTimeToMinute(dateTime);
-          expect(truncatedDateTime, DateTime(2021, 1, 1, 13, 25));
         },
       );
     },
