@@ -4,16 +4,27 @@ import 'package:intl/intl.dart';
 import '../services/settings_data_service.dart';
 
 class DateFormatVM extends ChangeNotifier {
-  static const List<String> dateFormatList = [
+  static const List<String> dateFormatLst = [
     'dd/MM/yyyy',
     'MM/dd/yyyy',
     'yyyy/MM/dd',
   ];
 
+  
+  static const List<String> dateFormatLowCaseLst = [
+    'dd/mm/yyyy',
+    'mm/dd/yyyy',
+    'yyyy/mm/dd',
+  ];
+
   final SettingsDataService _settingsDataService;
 
-  late String _selectedDateFormat; // Default format
+  late int _dateFormatIndex;
+  late String _selectedDateFormat;
   String get selectedDateFormat => _selectedDateFormat;
+
+  // Used by the audio sort filter dialog.
+  String get selectedDateFormatLowCase => dateFormatLowCaseLst[_dateFormatIndex];
 
   DateFormatVM({
     required SettingsDataService settingsDataService,
@@ -22,6 +33,7 @@ class DateFormatVM extends ChangeNotifier {
       settingType: SettingType.formatOfDate,
       settingSubType: FormatOfDate.formatOfDate,
     );
+    _dateFormatIndex = dateFormatLst.indexOf(_selectedDateFormat);
   }
 
   /// Select a date format from the list of available formats
@@ -33,12 +45,13 @@ class DateFormatVM extends ChangeNotifier {
   void selectDateFormat({
     required int dateFormatIndex,
   }) {
-    _selectedDateFormat = dateFormatList[dateFormatIndex];
+    _dateFormatIndex = dateFormatIndex;
+    _selectedDateFormat = dateFormatLst[dateFormatIndex];
 
     _settingsDataService.set(
       settingType: SettingType.formatOfDate,
       settingSubType: FormatOfDate.formatOfDate,
-      value: dateFormatList[dateFormatIndex],
+      value: dateFormatLst[dateFormatIndex],
     );
 
     _settingsDataService.saveSettings();
@@ -62,11 +75,11 @@ class DateFormatVM extends ChangeNotifier {
   /// Returns the parsed DateTime if successful, otherwise throws a FormatException.
   DateTime parseDateStrUsinAppDateFormat(String dateString) {
     // Try parsing the date string using each format.
-      try {
-        return DateFormat(_selectedDateFormat).parseStrict(dateString);
-      } catch (_) {
-        // Ignore and try the next format.
-      }
+    try {
+      return DateFormat(_selectedDateFormat).parseStrict(dateString);
+    } catch (_) {
+      // Ignore and try the next format.
+    }
 
     // If no format matches, throw an exception.
     throw FormatException('Invalid date format: $dateString');
