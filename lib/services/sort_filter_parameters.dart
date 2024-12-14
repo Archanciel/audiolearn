@@ -278,11 +278,11 @@ class AudioSortFilterParameters {
 
   factory AudioSortFilterParameters.fromJson(Map<String, dynamic> json) {
     return AudioSortFilterParameters(
-      selectedSortItemLst: (json['selectedSortItemLstTitle'] as List)
+      selectedSortItemLst: (json['selectedSortItemLst'] as List)
           .map((e) => SortingItem.fromJson(e))
           .toList(),
       filterSentenceLst:
-          (json['filterSentenceLstTitle'] as List).cast<String>(),
+          (json['filterSentenceLst'] as List).cast<String>(),
       sentencesCombination:
           SentencesCombination.values[json['sentencesCombination']],
       ignoreCase: json['ignoreCase'],
@@ -317,8 +317,8 @@ class AudioSortFilterParameters {
 
   Map<String, dynamic> toJson() {
     return {
-      'selectedSortItemLstTitle': selectedSortItemLst,
-      'filterSentenceLstTitle': filterSentenceLst,
+      'selectedSortItemLst': selectedSortItemLst,
+      'filterSentenceLst': filterSentenceLst,
       'sentencesCombination': sentencesCombination.index,
       'ignoreCase': ignoreCase,
       'searchAsWellInYoutubeChannelName': searchAsWellInYoutubeChannelName,
