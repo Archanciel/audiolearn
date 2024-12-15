@@ -3163,7 +3163,7 @@ void playlistTwoDownloadViewIntegrationTest() {
   group('Change application date format using the date format selection dialog',
       () {
     testWidgets(
-        '''Change application date format to the 3 available date formats
+        '''Check application date format set to the 3 available date formats
         and verify the effect everywhere in the application where the date format
         is applied.''', (tester) async {
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
@@ -3173,9 +3173,6 @@ void playlistTwoDownloadViewIntegrationTest() {
       );
 
       const String youtubePlaylistTitle = 'S8 audio';
-
-      // Verify the play/pause icon button format and color of
-      // all audio of the selected playlist
 
       List<String> audioSubTitles = [
         "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
@@ -3332,6 +3329,231 @@ void playlistTwoDownloadViewIntegrationTest() {
       ];
 
       audioSubTitlesVideoUploadDate = [
+        "0:06:29.0. Video upload date: 2023/09/23.",
+        "0:13:39.0. Video upload date: 2023/09/10.",
+        "0:06:29.0. Video upload date: 2022/06/12.",
+      ];
+
+      // Verifying initial dd/MM/yyyy date format application
+      await _verifyDateFormatApplication(
+        tester: tester,
+        audioSubTitles: audioSubTitles,
+        audioSubTitlesWithAudioDownloadDuration:
+            audioSubTitlesWithAudioDownloadDuration,
+        audioSubTitlesWithAudioRemainingDuration:
+            audioSubTitlesWithAudioRemainingDuration,
+        audioSubTitlesLastListenedDateTimeDescending:
+            audioSubTitlesLastListenedDateTimeDescending,
+        audioSubTitlesTitleAsc: audioSubTitlesTitleAsc,
+        audioSubTitlesVideoUploadDate: audioSubTitlesVideoUploadDate,
+        playlistTitle: youtubePlaylistTitle,
+        videoUploadDate: "2022/06/12",
+        audioDownloadDateTime: "2024/01/08 16:35",
+        playlistLastDownloadDateTime: "2024/01/07 16:36",
+        commentCreationDate: '2024/10/12',
+        commentUpdateDate: '2024/11/01',
+      );
+
+      await _selectDateFormat(
+        tester: tester,
+        dateFormatToSelect: "MM/dd/yyyy",
+        previouslySelectedDateFormat: "dd/MM/yyyy",
+      );
+    });
+    testWidgets(
+        '''Restart app after changing application date format to the 3 available
+        date formats and verify the effect everywhere in the application where the date format
+        is applied.''', (tester) async {
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'date_format_dialog_test',
+        tapOnPlaylistToggleButton: false,
+      );
+
+      const String youtubePlaylistTitle = 'S8 audio';
+
+      List<String> audioSubTitles = [
+        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
+        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16.",
+        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45.",
+      ];
+
+      List<String> audioSubTitlesWithAudioDownloadDuration = [
+        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16. Audio download duration: 0:00:01.",
+        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45. Audio download duration: 0:00:01.",
+        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35. Audio download duration: 0:00:01.",
+      ];
+
+      List<String> audioSubTitlesWithAudioRemainingDuration = [
+        "0:13:39.0. Remaining 00:00:04. Listened on 19/08/2024 at 14:46.",
+        "0:06:29.0. Remaining 00:00:38. Listened on 16/03/2024 at 17:09.",
+        "0:06:29.0. Remaining 00:06:29. Not listened.",
+      ];
+
+      List<String> audioSubTitlesLastListenedDateTimeDescending = [
+        "0:13:39.0. Listened on 19/08/2024 at 14:46.",
+        "0:06:29.0. Listened on 16/03/2024 at 17:09.",
+        "0:06:29.0. Not listened.",
+      ];
+
+      List<String> audioSubTitlesTitleAsc = [
+        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45.",
+        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
+        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16.",
+      ];
+
+      List<String> audioSubTitlesVideoUploadDate = [
+        "0:06:29.0. Video upload date: 23/09/2023.",
+        "0:13:39.0. Video upload date: 10/09/2023.",
+        "0:06:29.0. Video upload date: 12/06/2022.",
+      ];
+
+      // Verifying initial dd/MM/yyyy date format application
+      await _verifyDateFormatApplication(
+        tester: tester,
+        audioSubTitles: audioSubTitles,
+        audioSubTitlesWithAudioDownloadDuration:
+            audioSubTitlesWithAudioDownloadDuration,
+        audioSubTitlesWithAudioRemainingDuration:
+            audioSubTitlesWithAudioRemainingDuration,
+        audioSubTitlesLastListenedDateTimeDescending:
+            audioSubTitlesLastListenedDateTimeDescending,
+        audioSubTitlesTitleAsc: audioSubTitlesTitleAsc,
+        audioSubTitlesVideoUploadDate: audioSubTitlesVideoUploadDate,
+        playlistTitle: youtubePlaylistTitle,
+        videoUploadDate: "12/06/2022",
+        audioDownloadDateTime: "08/01/2024 16:35",
+        playlistLastDownloadDateTime: "07/01/2024 16:36",
+        commentCreationDate: '12/10/2024',
+        commentUpdateDate: '01/11/2024',
+      );
+
+      await _selectDateFormat(
+        tester: tester,
+        dateFormatToSelect: "MM/dd/yyyy",
+        previouslySelectedDateFormat: "dd/MM/yyyy",
+      );
+    });
+    testWidgets(
+        '''After restarting the application, verify the application date format
+        set in previous testWidgets() function to the 'MM/dd/yyyy' and verify the
+        effect everywhere in the application where the date format is applied.''',
+        (tester) async {
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'date_format_dialog_test',
+        tapOnPlaylistToggleButton: false,
+      );
+
+      const String youtubePlaylistTitle = 'S8 audio';
+
+      List<String> audioSubTitles = [
+        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 01/08/2024 at 16:35.",
+        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 01/07/2024 at 08:16.",
+        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 12/26/2023 at 09:45.",
+      ];
+
+      List<String> audioSubTitlesWithAudioDownloadDuration = [
+        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 01/07/2024 at 08:16. Audio download duration: 0:00:01.",
+        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 12/26/2023 at 09:45. Audio download duration: 0:00:01.",
+        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 01/08/2024 at 16:35. Audio download duration: 0:00:01.",
+      ];
+
+      List<String> audioSubTitlesWithAudioRemainingDuration = [
+        "0:13:39.0. Remaining 00:00:04. Listened on 08/19/2024 at 14:46.",
+        "0:06:29.0. Remaining 00:00:38. Listened on 03/16/2024 at 17:09.",
+        "0:06:29.0. Remaining 00:06:29. Not listened.",
+      ];
+
+      List<String> audioSubTitlesLastListenedDateTimeDescending = [
+        "0:13:39.0. Listened on 08/19/2024 at 14:46.",
+        "0:06:29.0. Listened on 03/16/2024 at 17:09.",
+        "0:06:29.0. Not listened.",
+      ];
+
+      List<String> audioSubTitlesTitleAsc = [
+        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 12/26/2023 at 09:45.",
+        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 01/08/2024 at 16:35.",
+        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 01/07/2024 at 08:16.",
+      ];
+
+      List<String> audioSubTitlesVideoUploadDate = [
+        "0:06:29.0. Video upload date: 09/23/2023.",
+        "0:13:39.0. Video upload date: 09/10/2023.",
+        "0:06:29.0. Video upload date: 06/12/2022.",
+      ];
+
+      // Verifying MM/dd/yyyy date format application set in
+      // previous testWidgets() function
+      await _verifyDateFormatApplication(
+        tester: tester,
+        audioSubTitles: audioSubTitles,
+        audioSubTitlesWithAudioDownloadDuration:
+            audioSubTitlesWithAudioDownloadDuration,
+        audioSubTitlesWithAudioRemainingDuration:
+            audioSubTitlesWithAudioRemainingDuration,
+        audioSubTitlesLastListenedDateTimeDescending:
+            audioSubTitlesLastListenedDateTimeDescending,
+        audioSubTitlesTitleAsc: audioSubTitlesTitleAsc,
+        audioSubTitlesVideoUploadDate: audioSubTitlesVideoUploadDate,
+        playlistTitle: youtubePlaylistTitle,
+        videoUploadDate: "06/12/2022",
+        audioDownloadDateTime: "01/08/2024 16:35",
+        playlistLastDownloadDateTime: "01/07/2024 16:36",
+        commentCreationDate: '10/12/2024',
+        commentUpdateDate: '11/01/2024',
+      );
+
+      await _selectDateFormat(
+        tester: tester,
+        dateFormatToSelect: "yyyy/MM/dd",
+        previouslySelectedDateFormat: "MM/dd/yyyy",
+      );
+    });
+    testWidgets(
+        '''After restarting the application, verify the application date format
+        set in previous testWidgets() function to the ''yyyy/MM/dd'' and verify the
+        effect everywhere in the application where the date format is applied.''',
+        (tester) async {
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'date_format_dialog_test',
+        tapOnPlaylistToggleButton: false,
+      );
+
+      const String youtubePlaylistTitle = 'S8 audio';
+
+      List<String> audioSubTitles = [
+        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 2024/01/08 at 16:35.",
+        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 2024/01/07 at 08:16.",
+        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45.",
+      ];
+
+      List<String> audioSubTitlesWithAudioDownloadDuration = [
+        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 2024/01/07 at 08:16. Audio download duration: 0:00:01.",
+        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45. Audio download duration: 0:00:01.",
+        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 2024/01/08 at 16:35. Audio download duration: 0:00:01.",
+      ];
+
+      List<String> audioSubTitlesWithAudioRemainingDuration = [
+        "0:13:39.0. Remaining 00:00:04. Listened on 2024/08/19 at 14:46.",
+        "0:06:29.0. Remaining 00:00:38. Listened on 2024/03/16 at 17:09.",
+        "0:06:29.0. Remaining 00:06:29. Not listened.",
+      ];
+
+      List<String> audioSubTitlesLastListenedDateTimeDescending = [
+        "0:13:39.0. Listened on 2024/08/19 at 14:46.",
+        "0:06:29.0. Listened on 2024/03/16 at 17:09.",
+        "0:06:29.0. Not listened.",
+      ];
+
+      List<String> audioSubTitlesTitleAsc = [
+        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45.",
+        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 2024/01/08 at 16:35.",
+        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 2024/01/07 at 08:16.",
+      ];
+
+      List<String> audioSubTitlesVideoUploadDate = [
         "0:06:29.0. Video upload date: 2023/09/23.",
         "0:13:39.0. Video upload date: 2023/09/10.",
         "0:06:29.0. Video upload date: 2022/06/12.",
