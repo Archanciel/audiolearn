@@ -1136,8 +1136,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           an existing Sort/Filter parms...''', () {
         group(
             '''Testing in english. Necessary to test in different languages since
-             handling the translation happens in the code and not only in the arb
-             translation files.''', () {
+             handling the translation happens in the widget code and not only in
+             the arb translation files.''', () {
           testWidgets(
               '''Modify 'Title asc' existing named and saved sort/filter parms.
                Then save it and verify ConfirmActionDialog content.''',
@@ -1155,7 +1155,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
             );
 
-            // Now open the audio popup menu in order to modify the 'Title asc'
             final SettingsDataService settingsDataService = SettingsDataService(
               sharedPreferences: await SharedPreferences.getInstance(),
               isTest: true,
@@ -1205,7 +1204,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               confirmDialogTitleOne:
                   'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
               confirmDialogMessage:
-                  'Sort by:\n Present only in initial version:\n   Audio title asc\n Present only in modified version:\n   Audio title desc\nFilter options:\n Present only in modified version:\n   Jancovici',
+                  'Sort by:\n Present only in initial version:\n   Audio title asc\n Present only in modified version:\n   Audio title desc\nFilter words:\n Present only in modified version:\n   Jancovici',
             );
 
             // Now reedit the 'Title asc' sort/filter parms
@@ -1328,7 +1327,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               confirmDialogTitleOne:
                   'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
               confirmDialogMessage:
-                  'Sort by:\n Present only in initial version:\n   Audio title desc\n Present only in modified version:\n   Audio title asc,\n   Video upload date desc,\n   Audio duration asc,\n   Audio listenable remaining\n   duration asc,\n   Audio downl speed desc,\n   Audio downl duration desc\nFilter options:\n Present only in modified version:\n   Marine Le Pen,\n   Emmanuel Macron\nIgnore case\nInclude Youtube channel\nAudio music quality\nCommented',
+                  'Sort by:\n Present only in initial version:\n   Audio title desc\n Present only in modified version:\n   Audio title asc,\n   Video upload date desc,\n   Audio duration asc,\n   Audio listenable remaining\n   duration asc,\n   Audio downl speed desc,\n   Audio downl duration desc\nFilter words:\n Present only in modified version:\n   Marine Le Pen,\n   Emmanuel Macron\nFilter options:\n In initial version:\n   Ignore case: checked\n In modified version:\n   Ignore case: unchecked\n In initial version:\n   Include Youtube channel: checked\n In modified version:\n   Include Youtube\n   channel: unchecked\n In initial version:\n   Audio music quality: unchecked\n In modified version:\n   Audio music quality: checked\n In initial version:\n   Commented: checked\n In modified version:\n   Commented: unchecked',
             );
 
             // Purge the test playlist directory so that the created test
@@ -1354,7 +1353,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
             );
 
-            // Now open the audio popup menu in order to modify the 'Title asc'
             final SettingsDataService settingsDataService = SettingsDataService(
               sharedPreferences: await SharedPreferences.getInstance(),
               isTest: true,
@@ -1485,7 +1483,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
             );
 
-            // Now open the audio popup menu in order to modify the 'Title asc'
             final SettingsDataService settingsDataService = SettingsDataService(
               sharedPreferences: await SharedPreferences.getInstance(),
               isTest: true,
@@ -1562,8 +1559,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         });
         group(
             '''Testing in french. Necessary to test in different languages since
-          handling the translation happens in the code and not only in the arb
-          translation files.''', () {
+          handling the translation happens in the widget code and not only in the
+          arb translation files.''', () {
           testWidgets(
               '''Modify 'Title asc' existing named and saved sort/filter parms.
                Then save it and verify ConfirmActionDialog content.''',
@@ -1581,7 +1578,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
             );
 
-            // Now open the audio popup menu in order to modify the 'Title asc'
             final SettingsDataService settingsDataService = SettingsDataService(
               sharedPreferences: await SharedPreferences.getInstance(),
               isTest: true,
@@ -1638,7 +1634,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               confirmDialogTitleOne:
                   'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
               confirmDialogMessage:
-                  'Trier par:\n Uniquement en version initiale:\n   Titre audio asc\n Uniquement en version modifiée:\n   Titre audio desc\nOptions filtre:\n Uniquement en version modifiée:\n   Jancovici',
+                  'Trier par:\n Uniquement en version initiale:\n   Titre audio asc\n Uniquement en version modifiée:\n   Titre audio desc\nMots filtre:\n Uniquement en version modifiée:\n   Jancovici',
             );
 
             // Now reedit the 'Title asc' sort/filter parms
@@ -1761,7 +1757,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               confirmDialogTitleOne:
                   'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
               confirmDialogMessage:
-                  'Trier par:\n Uniquement en version initiale:\n   Titre audio desc\n Uniquement en version modifiée:\n   Titre audio asc,\n   Date mise en ligne vidéo desc,\n   Durée audio asc,\n   Durée audio écoutable\n   restante asc,\n   Vitesse téléch audio desc,\n   Durée téléch audio desc\nOptions filtre:\n Uniquement en version modifiée:\n   Marine Le Pen,\n   Emmanuel Macron\nIgnorer la casse\nInclure la chaîne Youtube\nQualité musicale\nCommenté',
+                  'Trier par:\n Uniquement en version initiale:\n   Titre audio desc\n Uniquement en version modifiée:\n   Titre audio asc,\n   Date mise en ligne vidéo desc,\n   Durée audio asc,\n   Durée audio écoutable\n   restante asc,\n   Vitesse téléch audio desc,\n   Durée téléch audio desc\nMots filtre:\n Uniquement en version modifiée:\n   Marine Le Pen,\n   Emmanuel Macron\nIgnorer la casse\nInclure la chaîne Youtube\nQualité musicale\nCommenté',
             );
 
             // Purge the test playlist directory so that the created test
@@ -1787,7 +1783,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
             );
 
-            // Now open the audio popup menu in order to modify the 'Title asc'
             final SettingsDataService settingsDataService = SettingsDataService(
               sharedPreferences: await SharedPreferences.getInstance(),
               isTest: true,
@@ -1924,7 +1919,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
             );
 
-            // Now open the audio popup menu in order to modify the 'Title asc'
             final SettingsDataService settingsDataService = SettingsDataService(
               sharedPreferences: await SharedPreferences.getInstance(),
               isTest: true,

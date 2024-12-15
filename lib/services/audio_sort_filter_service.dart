@@ -313,14 +313,12 @@ class AudioSortFilterService {
       }
     }
 
-    differencesLst.add(
-        sortFilterParmsNameTranslationMap['filterOptionLstTitle'] ??
-            'filterOptionLstTitle'); // add Filter options: title
+    bool wasFilterOptionsTitleAddedToDifferencesLst = false;
 
     // Compare other fields
     if (existingAudioSortFilterParms.sentencesCombination !=
         newOrModifiedaudioSortFilterParms.sentencesCombination) {
-      _addToDifferencesLstOtherOptionDisplayedStr(
+      wasFilterOptionsTitleAddedToDifferencesLst = _addToDifferencesLstOtherOptionDisplayedStr(
           initialValueStr: existingAudioSortFilterParms.sentencesCombination
               .toString()
               .split('.')
@@ -333,93 +331,111 @@ class AudioSortFilterService {
           sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
           optionNameTranslationKey: 'sentencesCombination',
           differencesLst: differencesLst,
+          wasFilterOptionsTitleAddedToDifferencesLst:
+              wasFilterOptionsTitleAddedToDifferencesLst,
           isValueTranslated: true);
     }
     if (existingAudioSortFilterParms.ignoreCase !=
         newOrModifiedaudioSortFilterParms.ignoreCase) {
-      _addToDifferencesLstOtherOptionCheckboxValueStr(
+      wasFilterOptionsTitleAddedToDifferencesLst = _addToDifferencesLstOtherOptionCheckboxValueStr(
           initialCheckBoxState: existingAudioSortFilterParms.ignoreCase,
           modifiedCheckBoxState: newOrModifiedaudioSortFilterParms.ignoreCase,
           sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
           optionNameTranslationKey: 'ignoreCase',
-          differencesLst: differencesLst);
+          differencesLst: differencesLst,
+          wasFilterOptionsTitleAddedToDifferencesLst:
+              wasFilterOptionsTitleAddedToDifferencesLst);
     }
     if (existingAudioSortFilterParms.searchAsWellInYoutubeChannelName !=
         newOrModifiedaudioSortFilterParms.searchAsWellInYoutubeChannelName) {
-      _addToDifferencesLstOtherOptionCheckboxValueStr(
+      wasFilterOptionsTitleAddedToDifferencesLst = _addToDifferencesLstOtherOptionCheckboxValueStr(
           initialCheckBoxState:
               existingAudioSortFilterParms.searchAsWellInYoutubeChannelName,
           modifiedCheckBoxState: newOrModifiedaudioSortFilterParms
               .searchAsWellInYoutubeChannelName,
           sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
           optionNameTranslationKey: 'searchAsWellInYoutubeChannelName',
-          differencesLst: differencesLst);
+          differencesLst: differencesLst,
+          wasFilterOptionsTitleAddedToDifferencesLst:
+              wasFilterOptionsTitleAddedToDifferencesLst);
     }
     if (existingAudioSortFilterParms.filterMusicQuality !=
         newOrModifiedaudioSortFilterParms.filterMusicQuality) {
-      _addToDifferencesLstOtherOptionCheckboxValueStr(
+      wasFilterOptionsTitleAddedToDifferencesLst = _addToDifferencesLstOtherOptionCheckboxValueStr(
           initialCheckBoxState: existingAudioSortFilterParms.filterMusicQuality,
           modifiedCheckBoxState:
               newOrModifiedaudioSortFilterParms.filterMusicQuality,
           sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
           optionNameTranslationKey: 'filterMusicQuality',
-          differencesLst: differencesLst);
+          differencesLst: differencesLst,
+          wasFilterOptionsTitleAddedToDifferencesLst:
+              wasFilterOptionsTitleAddedToDifferencesLst);
     }
     if (existingAudioSortFilterParms.filterFullyListened !=
         newOrModifiedaudioSortFilterParms.filterFullyListened) {
-      _addToDifferencesLstOtherOptionCheckboxValueStr(
+      wasFilterOptionsTitleAddedToDifferencesLst = _addToDifferencesLstOtherOptionCheckboxValueStr(
           initialCheckBoxState:
               existingAudioSortFilterParms.filterFullyListened,
           modifiedCheckBoxState:
               newOrModifiedaudioSortFilterParms.filterFullyListened,
           sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
           optionNameTranslationKey: 'filterFullyListened',
-          differencesLst: differencesLst);
+          differencesLst: differencesLst,
+          wasFilterOptionsTitleAddedToDifferencesLst:
+              wasFilterOptionsTitleAddedToDifferencesLst);
     }
     if (existingAudioSortFilterParms.filterPartiallyListened !=
         newOrModifiedaudioSortFilterParms.filterPartiallyListened) {
-      _addToDifferencesLstOtherOptionCheckboxValueStr(
+      wasFilterOptionsTitleAddedToDifferencesLst = _addToDifferencesLstOtherOptionCheckboxValueStr(
           initialCheckBoxState:
               existingAudioSortFilterParms.filterPartiallyListened,
           modifiedCheckBoxState:
               newOrModifiedaudioSortFilterParms.filterPartiallyListened,
           sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
           optionNameTranslationKey: 'filterPartiallyListened',
-          differencesLst: differencesLst);
+          differencesLst: differencesLst,
+          wasFilterOptionsTitleAddedToDifferencesLst:
+              wasFilterOptionsTitleAddedToDifferencesLst);
     }
     if (existingAudioSortFilterParms.filterNotListened !=
         newOrModifiedaudioSortFilterParms.filterNotListened) {
-      _addToDifferencesLstOtherOptionCheckboxValueStr(
+      wasFilterOptionsTitleAddedToDifferencesLst = _addToDifferencesLstOtherOptionCheckboxValueStr(
           initialCheckBoxState: existingAudioSortFilterParms.filterNotListened,
           modifiedCheckBoxState:
               newOrModifiedaudioSortFilterParms.filterNotListened,
           sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
           optionNameTranslationKey: 'filterNotListened',
-          differencesLst: differencesLst);
+          differencesLst: differencesLst,
+          wasFilterOptionsTitleAddedToDifferencesLst:
+              wasFilterOptionsTitleAddedToDifferencesLst);
     }
     if (existingAudioSortFilterParms.filterCommented !=
         newOrModifiedaudioSortFilterParms.filterCommented) {
-      _addToDifferencesLstOtherOptionCheckboxValueStr(
+      wasFilterOptionsTitleAddedToDifferencesLst = _addToDifferencesLstOtherOptionCheckboxValueStr(
           initialCheckBoxState: existingAudioSortFilterParms.filterCommented,
           modifiedCheckBoxState:
               newOrModifiedaudioSortFilterParms.filterCommented,
           sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
           optionNameTranslationKey: 'filterCommented',
-          differencesLst: differencesLst);
+          differencesLst: differencesLst,
+          wasFilterOptionsTitleAddedToDifferencesLst:
+              wasFilterOptionsTitleAddedToDifferencesLst);
     }
     if (existingAudioSortFilterParms.filterNotCommented !=
         newOrModifiedaudioSortFilterParms.filterNotCommented) {
-      _addToDifferencesLstOtherOptionCheckboxValueStr(
+      wasFilterOptionsTitleAddedToDifferencesLst = _addToDifferencesLstOtherOptionCheckboxValueStr(
           initialCheckBoxState: existingAudioSortFilterParms.filterNotCommented,
           modifiedCheckBoxState:
               newOrModifiedaudioSortFilterParms.filterNotCommented,
           sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
           optionNameTranslationKey: 'filterNotCommented',
-          differencesLst: differencesLst);
+          differencesLst: differencesLst,
+          wasFilterOptionsTitleAddedToDifferencesLst:
+              wasFilterOptionsTitleAddedToDifferencesLst);
     }
     if (existingAudioSortFilterParms.downloadDateStartRange !=
         newOrModifiedaudioSortFilterParms.downloadDateStartRange) {
-      _addToDifferencesLstOtherOptionDateValueStr(
+      wasFilterOptionsTitleAddedToDifferencesLst = _addToDifferencesLstOtherOptionDateValueStr(
           dateFormatVMlistenFalse: dateFormatVMlistenFalse,
           initialDateTimeValue:
               existingAudioSortFilterParms.downloadDateStartRange,
@@ -427,11 +443,13 @@ class AudioSortFilterService {
               newOrModifiedaudioSortFilterParms.downloadDateStartRange,
           sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
           optionNameTranslationKey: 'downloadDateStartRange',
-          differencesLst: differencesLst);
+          differencesLst: differencesLst,
+          wasFilterOptionsTitleAddedToDifferencesLst:
+              wasFilterOptionsTitleAddedToDifferencesLst);
     }
     if (existingAudioSortFilterParms.downloadDateEndRange !=
         newOrModifiedaudioSortFilterParms.downloadDateEndRange) {
-      _addToDifferencesLstOtherOptionDateValueStr(
+      wasFilterOptionsTitleAddedToDifferencesLst = _addToDifferencesLstOtherOptionDateValueStr(
           dateFormatVMlistenFalse: dateFormatVMlistenFalse,
           initialDateTimeValue:
               existingAudioSortFilterParms.downloadDateEndRange,
@@ -439,11 +457,13 @@ class AudioSortFilterService {
               newOrModifiedaudioSortFilterParms.downloadDateEndRange,
           sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
           optionNameTranslationKey: 'downloadDateEndRange',
-          differencesLst: differencesLst);
+          differencesLst: differencesLst,
+          wasFilterOptionsTitleAddedToDifferencesLst:
+              wasFilterOptionsTitleAddedToDifferencesLst);
     }
     if (existingAudioSortFilterParms.uploadDateStartRange !=
         newOrModifiedaudioSortFilterParms.uploadDateStartRange) {
-      _addToDifferencesLstOtherOptionDateValueStr(
+      wasFilterOptionsTitleAddedToDifferencesLst = _addToDifferencesLstOtherOptionDateValueStr(
           dateFormatVMlistenFalse: dateFormatVMlistenFalse,
           initialDateTimeValue:
               existingAudioSortFilterParms.uploadDateStartRange,
@@ -451,44 +471,52 @@ class AudioSortFilterService {
               newOrModifiedaudioSortFilterParms.uploadDateStartRange,
           sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
           optionNameTranslationKey: 'uploadDateStartRange',
-          differencesLst: differencesLst);
+          differencesLst: differencesLst,
+          wasFilterOptionsTitleAddedToDifferencesLst:
+              wasFilterOptionsTitleAddedToDifferencesLst);
     }
     if (existingAudioSortFilterParms.uploadDateEndRange !=
         newOrModifiedaudioSortFilterParms.uploadDateEndRange) {
-      _addToDifferencesLstOtherOptionDateValueStr(
+      wasFilterOptionsTitleAddedToDifferencesLst = _addToDifferencesLstOtherOptionDateValueStr(
           dateFormatVMlistenFalse: dateFormatVMlistenFalse,
           initialDateTimeValue: existingAudioSortFilterParms.uploadDateEndRange,
           modifiedDateTimeValue:
               newOrModifiedaudioSortFilterParms.uploadDateEndRange,
           sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
           optionNameTranslationKey: 'uploadDateEndRange',
-          differencesLst: differencesLst);
+          differencesLst: differencesLst,
+          wasFilterOptionsTitleAddedToDifferencesLst:
+              wasFilterOptionsTitleAddedToDifferencesLst);
     }
     if (existingAudioSortFilterParms.fileSizeStartRangeMB !=
         newOrModifiedaudioSortFilterParms.fileSizeStartRangeMB) {
-      _addToDifferencesLstOtherOptionDisplayedStr(
+      wasFilterOptionsTitleAddedToDifferencesLst = _addToDifferencesLstOtherOptionDisplayedStr(
           initialValueStr:
               existingAudioSortFilterParms.fileSizeStartRangeMB.toString(),
           modifiedValueStr:
               newOrModifiedaudioSortFilterParms.fileSizeStartRangeMB.toString(),
           sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
           optionNameTranslationKey: 'fileSizeStartRangeMB',
-          differencesLst: differencesLst);
+          differencesLst: differencesLst,
+          wasFilterOptionsTitleAddedToDifferencesLst:
+              wasFilterOptionsTitleAddedToDifferencesLst);
     }
     if (existingAudioSortFilterParms.fileSizeEndRangeMB !=
         newOrModifiedaudioSortFilterParms.fileSizeEndRangeMB) {
-      _addToDifferencesLstOtherOptionDisplayedStr(
+      wasFilterOptionsTitleAddedToDifferencesLst = _addToDifferencesLstOtherOptionDisplayedStr(
           initialValueStr:
               existingAudioSortFilterParms.fileSizeEndRangeMB.toString(),
           modifiedValueStr:
               newOrModifiedaudioSortFilterParms.fileSizeEndRangeMB.toString(),
           sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
           optionNameTranslationKey: 'fileSizeEndRangeMB',
-          differencesLst: differencesLst);
+          differencesLst: differencesLst,
+          wasFilterOptionsTitleAddedToDifferencesLst:
+              wasFilterOptionsTitleAddedToDifferencesLst);
     }
     if (existingAudioSortFilterParms.durationStartRangeSec !=
         newOrModifiedaudioSortFilterParms.durationStartRangeSec) {
-      _addToDifferencesLstOtherOptionDisplayedStr(
+      wasFilterOptionsTitleAddedToDifferencesLst = _addToDifferencesLstOtherOptionDisplayedStr(
           initialValueStr: DateTimeUtil.formatSecondsToHHMM(
             seconds: existingAudioSortFilterParms.durationStartRangeSec,
           ),
@@ -497,11 +525,13 @@ class AudioSortFilterService {
           ),
           sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
           optionNameTranslationKey: 'durationStartRangeSec',
-          differencesLst: differencesLst);
+          differencesLst: differencesLst,
+          wasFilterOptionsTitleAddedToDifferencesLst:
+              wasFilterOptionsTitleAddedToDifferencesLst);
     }
     if (existingAudioSortFilterParms.durationEndRangeSec !=
         newOrModifiedaudioSortFilterParms.durationEndRangeSec) {
-      _addToDifferencesLstOtherOptionDisplayedStr(
+      wasFilterOptionsTitleAddedToDifferencesLst = _addToDifferencesLstOtherOptionDisplayedStr(
           initialValueStr: DateTimeUtil.formatSecondsToHHMM(
             seconds: existingAudioSortFilterParms.durationEndRangeSec,
           ),
@@ -510,20 +540,30 @@ class AudioSortFilterService {
           ),
           sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
           optionNameTranslationKey: 'durationEndRangeSec',
-          differencesLst: differencesLst);
+          differencesLst: differencesLst,
+          wasFilterOptionsTitleAddedToDifferencesLst:
+              wasFilterOptionsTitleAddedToDifferencesLst);
     }
 
     return differencesLst;
   }
 
-  void _addToDifferencesLstOtherOptionDisplayedStr({
+  bool _addToDifferencesLstOtherOptionDisplayedStr({
     required String initialValueStr,
     required String modifiedValueStr,
     required Map<String, String> sortFilterParmsNameTranslationMap,
     required String optionNameTranslationKey,
     required List<String> differencesLst,
+    required bool wasFilterOptionsTitleAddedToDifferencesLst,
     bool isValueTranslated = false,
   }) {
+    if (!wasFilterOptionsTitleAddedToDifferencesLst) {
+      differencesLst.add(
+          sortFilterParmsNameTranslationMap['filterOptionLstTitle'] ??
+              'filterOptionLstTitle'); // add Filter options: title
+      wasFilterOptionsTitleAddedToDifferencesLst = true;
+    }
+
     String valueInInitialVersionTitle =
         sortFilterParmsNameTranslationMap['valueInInitialVersionTitle'] ??
             'valueInInitialVersionTitle';
@@ -543,15 +583,25 @@ class AudioSortFilterService {
     String valueInModifiedVersion =
         '$translatedOptionName: ${(isValueTranslated) ? sortFilterParmsNameTranslationMap[modifiedValueStr] : modifiedValueStr}';
     differencesLst.add(valueInModifiedVersion);
+
+    return wasFilterOptionsTitleAddedToDifferencesLst;
   }
 
-  void _addToDifferencesLstOtherOptionCheckboxValueStr({
+  bool _addToDifferencesLstOtherOptionCheckboxValueStr({
     required bool initialCheckBoxState,
     required bool modifiedCheckBoxState,
     required Map<String, String> sortFilterParmsNameTranslationMap,
     required String optionNameTranslationKey,
     required List<String> differencesLst,
+    required bool wasFilterOptionsTitleAddedToDifferencesLst,
   }) {
+    if (!wasFilterOptionsTitleAddedToDifferencesLst) {
+      differencesLst.add(
+          sortFilterParmsNameTranslationMap['filterOptionLstTitle'] ??
+              'filterOptionLstTitle'); // add Filter options: title
+      wasFilterOptionsTitleAddedToDifferencesLst = true;
+    }
+
     String valueInInitialVersionTitle =
         sortFilterParmsNameTranslationMap['valueInInitialVersionTitle'] ??
             'valueInInitialVersionTitle';
@@ -575,16 +625,26 @@ class AudioSortFilterService {
     String valueInModifiedVersion =
         '$translatedOptionName: ${sortFilterParmsNameTranslationMap[modifiedCheckBoxStateStr]}';
     differencesLst.add(valueInModifiedVersion);
+
+    return wasFilterOptionsTitleAddedToDifferencesLst;
   }
 
-  void _addToDifferencesLstOtherOptionDateValueStr({
+  bool _addToDifferencesLstOtherOptionDateValueStr({
     required DateFormatVM dateFormatVMlistenFalse,
     required DateTime? initialDateTimeValue,
     required DateTime? modifiedDateTimeValue,
     required Map<String, String> sortFilterParmsNameTranslationMap,
     required String optionNameTranslationKey,
     required List<String> differencesLst,
+    required bool wasFilterOptionsTitleAddedToDifferencesLst,
   }) {
+    if (!wasFilterOptionsTitleAddedToDifferencesLst) {
+      differencesLst.add(
+          sortFilterParmsNameTranslationMap['filterOptionLstTitle'] ??
+              'filterOptionLstTitle'); // add Filter options: title
+      wasFilterOptionsTitleAddedToDifferencesLst = true;
+    }
+
     String translatedOptionName =
         sortFilterParmsNameTranslationMap[optionNameTranslationKey]!;
 
@@ -609,6 +669,8 @@ class AudioSortFilterService {
           '$translatedOptionName: ${dateFormatVMlistenFalse.formatDate(modifiedDateTimeValue)}';
       differencesLst.add(valueInModifiedVersion);
     }
+
+    return wasFilterOptionsTitleAddedToDifferencesLst;
   }
 
   void _addTranslatedSortFilterParmsNamePlusSortOrder({
