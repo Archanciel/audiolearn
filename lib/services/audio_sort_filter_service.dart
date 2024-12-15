@@ -435,13 +435,8 @@ class AudioSortFilterService {
     }
     if (existingAudioSortFilterParms.downloadDateStartRange !=
         newOrModifiedaudioSortFilterParms.downloadDateStartRange) {
-      differencesLst.add(
-          sortFilterParmsNameTranslationMap['downloadDateStartRange'] ??
-              'downloadDateStartRange');
       _addToDifferencesLstOtherOptionDateValueStr(
           dateFormatVMlistenFalse: dateFormatVMlistenFalse,
-          existingAudioSortFilterParms: existingAudioSortFilterParms,
-          newOrModifiedaudioSortFilterParms: newOrModifiedaudioSortFilterParms,
           initialDateTimeValue:
               existingAudioSortFilterParms.downloadDateStartRange,
           modifiedDateTimeValue:
@@ -452,21 +447,39 @@ class AudioSortFilterService {
     }
     if (existingAudioSortFilterParms.downloadDateEndRange !=
         newOrModifiedaudioSortFilterParms.downloadDateEndRange) {
-      differencesLst.add(
-          sortFilterParmsNameTranslationMap['downloadDateEndRange'] ??
-              'downloadDateEndRange');
+      _addToDifferencesLstOtherOptionDateValueStr(
+          dateFormatVMlistenFalse: dateFormatVMlistenFalse,
+          initialDateTimeValue:
+              existingAudioSortFilterParms.downloadDateEndRange,
+          modifiedDateTimeValue:
+              newOrModifiedaudioSortFilterParms.downloadDateEndRange,
+          sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
+          optionNameTranslationKey: 'downloadDateEndRange',
+          differencesLst: differencesLst);
     }
     if (existingAudioSortFilterParms.uploadDateStartRange !=
         newOrModifiedaudioSortFilterParms.uploadDateStartRange) {
-      differencesLst.add(
-          sortFilterParmsNameTranslationMap['uploadDateStartRange'] ??
-              'uploadDateStartRange');
+      _addToDifferencesLstOtherOptionDateValueStr(
+          dateFormatVMlistenFalse: dateFormatVMlistenFalse,
+          initialDateTimeValue:
+              existingAudioSortFilterParms.uploadDateStartRange,
+          modifiedDateTimeValue:
+              newOrModifiedaudioSortFilterParms.uploadDateStartRange,
+          sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
+          optionNameTranslationKey: 'uploadDateStartRange',
+          differencesLst: differencesLst);
     }
     if (existingAudioSortFilterParms.uploadDateEndRange !=
         newOrModifiedaudioSortFilterParms.uploadDateEndRange) {
-      differencesLst.add(
-          sortFilterParmsNameTranslationMap['uploadDateEndRange'] ??
-              'uploadDateEndRange');
+      _addToDifferencesLstOtherOptionDateValueStr(
+          dateFormatVMlistenFalse: dateFormatVMlistenFalse,
+          initialDateTimeValue:
+              existingAudioSortFilterParms.uploadDateEndRange,
+          modifiedDateTimeValue:
+              newOrModifiedaudioSortFilterParms.uploadDateEndRange,
+          sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
+          optionNameTranslationKey: 'uploadDateEndRange',
+          differencesLst: differencesLst);
     }
     if (existingAudioSortFilterParms.fileSizeStartRangeMB !=
         newOrModifiedaudioSortFilterParms.fileSizeStartRangeMB) {
@@ -562,8 +575,6 @@ class AudioSortFilterService {
 
   void _addToDifferencesLstOtherOptionDateValueStr({
     required DateFormatVM dateFormatVMlistenFalse,
-    required AudioSortFilterParameters existingAudioSortFilterParms,
-    required AudioSortFilterParameters newOrModifiedaudioSortFilterParms,
     required DateTime? initialDateTimeValue,
     required DateTime? modifiedDateTimeValue,
     required Map<String, String> sortFilterParmsNameTranslationMap,
