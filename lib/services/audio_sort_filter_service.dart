@@ -338,8 +338,6 @@ class AudioSortFilterService {
     if (existingAudioSortFilterParms.ignoreCase !=
         newOrModifiedaudioSortFilterParms.ignoreCase) {
       _addToDifferencesLstOtherOptionCheckboxValueStr(
-          existingAudioSortFilterParms: existingAudioSortFilterParms,
-          newOrModifiedaudioSortFilterParms: newOrModifiedaudioSortFilterParms,
           initialCheckBoxState: existingAudioSortFilterParms.ignoreCase,
           modifiedCheckBoxState: newOrModifiedaudioSortFilterParms.ignoreCase,
           sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
@@ -349,8 +347,6 @@ class AudioSortFilterService {
     if (existingAudioSortFilterParms.searchAsWellInYoutubeChannelName !=
         newOrModifiedaudioSortFilterParms.searchAsWellInYoutubeChannelName) {
       _addToDifferencesLstOtherOptionCheckboxValueStr(
-          existingAudioSortFilterParms: existingAudioSortFilterParms,
-          newOrModifiedaudioSortFilterParms: newOrModifiedaudioSortFilterParms,
           initialCheckBoxState:
               existingAudioSortFilterParms.searchAsWellInYoutubeChannelName,
           modifiedCheckBoxState: newOrModifiedaudioSortFilterParms
@@ -362,8 +358,6 @@ class AudioSortFilterService {
     if (existingAudioSortFilterParms.filterMusicQuality !=
         newOrModifiedaudioSortFilterParms.filterMusicQuality) {
       _addToDifferencesLstOtherOptionCheckboxValueStr(
-          existingAudioSortFilterParms: existingAudioSortFilterParms,
-          newOrModifiedaudioSortFilterParms: newOrModifiedaudioSortFilterParms,
           initialCheckBoxState: existingAudioSortFilterParms.filterMusicQuality,
           modifiedCheckBoxState:
               newOrModifiedaudioSortFilterParms.filterMusicQuality,
@@ -374,8 +368,6 @@ class AudioSortFilterService {
     if (existingAudioSortFilterParms.filterFullyListened !=
         newOrModifiedaudioSortFilterParms.filterFullyListened) {
       _addToDifferencesLstOtherOptionCheckboxValueStr(
-          existingAudioSortFilterParms: existingAudioSortFilterParms,
-          newOrModifiedaudioSortFilterParms: newOrModifiedaudioSortFilterParms,
           initialCheckBoxState:
               existingAudioSortFilterParms.filterFullyListened,
           modifiedCheckBoxState:
@@ -387,8 +379,6 @@ class AudioSortFilterService {
     if (existingAudioSortFilterParms.filterPartiallyListened !=
         newOrModifiedaudioSortFilterParms.filterPartiallyListened) {
       _addToDifferencesLstOtherOptionCheckboxValueStr(
-          existingAudioSortFilterParms: existingAudioSortFilterParms,
-          newOrModifiedaudioSortFilterParms: newOrModifiedaudioSortFilterParms,
           initialCheckBoxState:
               existingAudioSortFilterParms.filterPartiallyListened,
           modifiedCheckBoxState:
@@ -400,8 +390,6 @@ class AudioSortFilterService {
     if (existingAudioSortFilterParms.filterNotListened !=
         newOrModifiedaudioSortFilterParms.filterNotListened) {
       _addToDifferencesLstOtherOptionCheckboxValueStr(
-          existingAudioSortFilterParms: existingAudioSortFilterParms,
-          newOrModifiedaudioSortFilterParms: newOrModifiedaudioSortFilterParms,
           initialCheckBoxState: existingAudioSortFilterParms.filterNotListened,
           modifiedCheckBoxState:
               newOrModifiedaudioSortFilterParms.filterNotListened,
@@ -412,8 +400,6 @@ class AudioSortFilterService {
     if (existingAudioSortFilterParms.filterCommented !=
         newOrModifiedaudioSortFilterParms.filterCommented) {
       _addToDifferencesLstOtherOptionCheckboxValueStr(
-          existingAudioSortFilterParms: existingAudioSortFilterParms,
-          newOrModifiedaudioSortFilterParms: newOrModifiedaudioSortFilterParms,
           initialCheckBoxState: existingAudioSortFilterParms.filterCommented,
           modifiedCheckBoxState:
               newOrModifiedaudioSortFilterParms.filterCommented,
@@ -424,8 +410,6 @@ class AudioSortFilterService {
     if (existingAudioSortFilterParms.filterNotCommented !=
         newOrModifiedaudioSortFilterParms.filterNotCommented) {
       _addToDifferencesLstOtherOptionCheckboxValueStr(
-          existingAudioSortFilterParms: existingAudioSortFilterParms,
-          newOrModifiedaudioSortFilterParms: newOrModifiedaudioSortFilterParms,
           initialCheckBoxState: existingAudioSortFilterParms.filterNotCommented,
           modifiedCheckBoxState:
               newOrModifiedaudioSortFilterParms.filterNotCommented,
@@ -540,8 +524,6 @@ class AudioSortFilterService {
   }
 
   void _addToDifferencesLstOtherOptionCheckboxValueStr({
-    required AudioSortFilterParameters existingAudioSortFilterParms,
-    required AudioSortFilterParameters newOrModifiedaudioSortFilterParms,
     required bool initialCheckBoxState,
     required bool modifiedCheckBoxState,
     required Map<String, String> sortFilterParmsNameTranslationMap,
