@@ -320,8 +320,6 @@ class AudioSortFilterService {
     if (existingAudioSortFilterParms.sentencesCombination !=
         newOrModifiedaudioSortFilterParms.sentencesCombination) {
       _addToDifferencesLstOtherOptionDisplayedStr(
-          existingAudioSortFilterParms: existingAudioSortFilterParms,
-          newOrModifiedaudioSortFilterParms: newOrModifiedaudioSortFilterParms,
           initialValueStr: existingAudioSortFilterParms.sentencesCombination
               .toString()
               .split('.')
@@ -494,8 +492,6 @@ class AudioSortFilterService {
   }
 
   void _addToDifferencesLstOtherOptionDisplayedStr({
-    required AudioSortFilterParameters existingAudioSortFilterParms,
-    required AudioSortFilterParameters newOrModifiedaudioSortFilterParms,
     required String initialValueStr,
     required String modifiedValueStr,
     required Map<String, String> sortFilterParmsNameTranslationMap,
