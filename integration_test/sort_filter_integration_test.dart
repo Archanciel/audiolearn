@@ -4129,7 +4129,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             await tester.pumpAndSettle();
 
             // The app was restarted. Since the in previous test defined and
-            // applied sort filter parms wass not saved to the playlist,
+            // applied sort filter parms was not saved to the playlist,
             // the default SF parms is applied in the restarted app. Vverify
             // that.
 
