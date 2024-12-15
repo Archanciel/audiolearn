@@ -155,4 +155,17 @@ class DateTimeUtil {
 
     return formattedTime;
   }
+
+  static String formatSecondsToHHMM({
+    required int seconds,
+  }) {
+    int hours = seconds ~/ 3600;
+    int minutes = (seconds % 3600) ~/ 60;
+
+    // Format the result with leading zeros for single digits
+    String formattedTime = '${hours.toString().padLeft(2, '0')}:'
+        '${minutes.toString().padLeft(2, '0')}';
+
+    return formattedTime;
+  }
 }

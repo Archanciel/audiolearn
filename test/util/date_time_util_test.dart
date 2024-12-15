@@ -386,4 +386,164 @@ void main() {
       );
     },
   );
+  group('DateTimeUtil.formatSecondsToHHMMSS()', () {
+    test(
+      '0',
+      () {
+        expect(DateTimeUtil.formatSecondsToHHMMSS(seconds: 0), '00:00:00');
+      },
+    );
+    test(
+      '1',
+      () {
+        expect(DateTimeUtil.formatSecondsToHHMMSS(seconds: 1), '00:00:01');
+      },
+    );
+    test(
+      '60',
+      () {
+        expect(DateTimeUtil.formatSecondsToHHMMSS(seconds: 60), '00:01:00');
+      },
+    );
+    test(
+      '61',
+      () {
+        expect(DateTimeUtil.formatSecondsToHHMMSS(seconds: 61), '00:01:01');
+      },
+    );
+    test(
+      '3600',
+      () {
+        expect(DateTimeUtil.formatSecondsToHHMMSS(seconds: 3600), '01:00:00');
+      },
+    );
+    test(
+      '3601',
+      () {
+        expect(DateTimeUtil.formatSecondsToHHMMSS(seconds: 3601), '01:00:01');
+      },
+    );
+    test(
+      '3661',
+      () {
+        expect(DateTimeUtil.formatSecondsToHHMMSS(seconds: 3661), '01:01:01');
+      },
+    );
+    test(
+      '7200',
+      () {
+        expect(DateTimeUtil.formatSecondsToHHMMSS(seconds: 7200), '02:00:00');
+      },
+    );
+    test(
+      '7260',
+      () {
+        expect(DateTimeUtil.formatSecondsToHHMMSS(seconds: 7260), '02:01:00');
+      },
+    );
+    test(
+      '7261',
+      () {
+        expect(DateTimeUtil.formatSecondsToHHMMSS(seconds: 7261), '02:01:01');
+      },
+    );
+    test(
+      '7320',
+      () {
+        expect(DateTimeUtil.formatSecondsToHHMMSS(seconds: 7320), '02:02:00');
+      },
+    );
+    test(
+      '7321',
+      () {
+        expect(DateTimeUtil.formatSecondsToHHMMSS(seconds: 7321), '02:02:01');
+      },
+    );
+  });
+  group('DateTimeUtil.formatSecondsToHHMM()', () {
+    test(
+      '0',
+      () {
+        expect(DateTimeUtil.formatSecondsToHHMM(seconds: 0), '00:00');
+      },
+    );
+    test(
+      '1',
+      () {
+        expect(DateTimeUtil.formatSecondsToHHMM(seconds: 1), '00:00');
+      },
+    );
+    test(
+      '59',
+      () {
+        expect(DateTimeUtil.formatSecondsToHHMM(seconds: 1), '00:00');
+      },
+    );
+    test(
+      '60',
+      () {
+        expect(DateTimeUtil.formatSecondsToHHMM(seconds: 60), '00:01');
+      },
+    );
+    test(
+      '61',
+      () {
+        expect(DateTimeUtil.formatSecondsToHHMM(seconds: 61), '00:01');
+      },
+    );
+    test(
+      '3600',
+      () {
+        expect(DateTimeUtil.formatSecondsToHHMM(seconds: 3600), '01:00');
+      },
+    );
+    test(
+      '3601',
+      () {
+        expect(DateTimeUtil.formatSecondsToHHMM(seconds: 3601), '01:00');
+      },
+    );
+    test(
+      '3661',
+      () {
+        expect(DateTimeUtil.formatSecondsToHHMM(seconds: 3661), '01:01');
+      },
+    );
+    test(
+      '3719',
+      () {
+        expect(DateTimeUtil.formatSecondsToHHMM(seconds: 3661), '01:01');
+      },
+    );
+    test(
+      '7200',
+      () {
+        expect(DateTimeUtil.formatSecondsToHHMM(seconds: 7200), '02:00');
+      },
+    );
+    test(
+      '7260',
+      () {
+        expect(DateTimeUtil.formatSecondsToHHMM(seconds: 7260), '02:01');
+      },
+    );
+    test(
+      '7261',
+      () {
+        expect(DateTimeUtil.formatSecondsToHHMM(seconds: 7261), '02:01');
+      },
+    );
+    test(
+      '7320',
+      () {
+        expect(DateTimeUtil.formatSecondsToHHMM(seconds: 7320), '02:02');
+      },
+    );
+    test(
+      '7321',
+      () {
+        expect(DateTimeUtil.formatSecondsToHHMM(seconds: 7321), '02:02');
+      },
+    );
+  });
 }

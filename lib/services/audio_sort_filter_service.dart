@@ -1,4 +1,5 @@
 import 'package:audiolearn/models/comment.dart';
+import 'package:audiolearn/utils/date_time_util.dart';
 import 'package:audiolearn/viewmodels/comment_vm.dart';
 import 'package:flutter/foundation.dart';
 
@@ -331,7 +332,8 @@ class AudioSortFilterService {
               .last,
           sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
           optionNameTranslationKey: 'sentencesCombination',
-          differencesLst: differencesLst);
+          differencesLst: differencesLst,
+          isValueTranslated: true);
     }
     if (existingAudioSortFilterParms.ignoreCase !=
         newOrModifiedaudioSortFilterParms.ignoreCase) {
@@ -455,8 +457,7 @@ class AudioSortFilterService {
         newOrModifiedaudioSortFilterParms.uploadDateEndRange) {
       _addToDifferencesLstOtherOptionDateValueStr(
           dateFormatVMlistenFalse: dateFormatVMlistenFalse,
-          initialDateTimeValue:
-              existingAudioSortFilterParms.uploadDateEndRange,
+          initialDateTimeValue: existingAudioSortFilterParms.uploadDateEndRange,
           modifiedDateTimeValue:
               newOrModifiedaudioSortFilterParms.uploadDateEndRange,
           sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
@@ -465,27 +466,51 @@ class AudioSortFilterService {
     }
     if (existingAudioSortFilterParms.fileSizeStartRangeMB !=
         newOrModifiedaudioSortFilterParms.fileSizeStartRangeMB) {
-      differencesLst.add(
-          sortFilterParmsNameTranslationMap['fileSizeStartRangeMB'] ??
-              'fileSizeStartRangeMB');
+      _addToDifferencesLstOtherOptionDisplayedStr(
+          initialValueStr:
+              existingAudioSortFilterParms.fileSizeStartRangeMB.toString(),
+          modifiedValueStr:
+              newOrModifiedaudioSortFilterParms.fileSizeStartRangeMB.toString(),
+          sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
+          optionNameTranslationKey: 'fileSizeStartRangeMB',
+          differencesLst: differencesLst);
     }
     if (existingAudioSortFilterParms.fileSizeEndRangeMB !=
         newOrModifiedaudioSortFilterParms.fileSizeEndRangeMB) {
-      differencesLst.add(
-          sortFilterParmsNameTranslationMap['fileSizeEndRangeMB'] ??
-              'fileSizeEndRangeMB');
+      _addToDifferencesLstOtherOptionDisplayedStr(
+          initialValueStr:
+              existingAudioSortFilterParms.fileSizeEndRangeMB.toString(),
+          modifiedValueStr:
+              newOrModifiedaudioSortFilterParms.fileSizeEndRangeMB.toString(),
+          sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
+          optionNameTranslationKey: 'fileSizeEndRangeMB',
+          differencesLst: differencesLst);
     }
     if (existingAudioSortFilterParms.durationStartRangeSec !=
         newOrModifiedaudioSortFilterParms.durationStartRangeSec) {
-      differencesLst.add(
-          sortFilterParmsNameTranslationMap['durationStartRangeSec'] ??
-              'durationStartRangeSec');
+      _addToDifferencesLstOtherOptionDisplayedStr(
+          initialValueStr: DateTimeUtil.formatSecondsToHHMM(
+            seconds: existingAudioSortFilterParms.durationStartRangeSec,
+          ),
+          modifiedValueStr: DateTimeUtil.formatSecondsToHHMM(
+            seconds: newOrModifiedaudioSortFilterParms.durationStartRangeSec,
+          ),
+          sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
+          optionNameTranslationKey: 'durationStartRangeSec',
+          differencesLst: differencesLst);
     }
     if (existingAudioSortFilterParms.durationEndRangeSec !=
         newOrModifiedaudioSortFilterParms.durationEndRangeSec) {
-      differencesLst.add(
-          sortFilterParmsNameTranslationMap['durationEndRangeSec'] ??
-              'durationEndRangeSec');
+      _addToDifferencesLstOtherOptionDisplayedStr(
+          initialValueStr: DateTimeUtil.formatSecondsToHHMM(
+            seconds: existingAudioSortFilterParms.durationEndRangeSec,
+          ),
+          modifiedValueStr: DateTimeUtil.formatSecondsToHHMM(
+            seconds: newOrModifiedaudioSortFilterParms.durationEndRangeSec,
+          ),
+          sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
+          optionNameTranslationKey: 'durationEndRangeSec',
+          differencesLst: differencesLst);
     }
 
     return differencesLst;
@@ -497,6 +522,7 @@ class AudioSortFilterService {
     required Map<String, String> sortFilterParmsNameTranslationMap,
     required String optionNameTranslationKey,
     required List<String> differencesLst,
+    bool isValueTranslated = false,
   }) {
     String valueInInitialVersionTitle =
         sortFilterParmsNameTranslationMap['valueInInitialVersionTitle'] ??
@@ -506,7 +532,7 @@ class AudioSortFilterService {
     String translatedOptionName =
         sortFilterParmsNameTranslationMap[optionNameTranslationKey]!;
     String valueInInitialVersion =
-        '$translatedOptionName: ${sortFilterParmsNameTranslationMap[initialValueStr]}';
+        '$translatedOptionName: ${(isValueTranslated) ? sortFilterParmsNameTranslationMap[initialValueStr] : initialValueStr}';
     differencesLst.add(valueInInitialVersion);
 
     String valueInModifiedVersionTitle =
@@ -515,7 +541,7 @@ class AudioSortFilterService {
     differencesLst.add(valueInModifiedVersionTitle);
 
     String valueInModifiedVersion =
-        '$translatedOptionName: ${sortFilterParmsNameTranslationMap[modifiedValueStr]}';
+        '$translatedOptionName: ${(isValueTranslated) ? sortFilterParmsNameTranslationMap[modifiedValueStr] : modifiedValueStr}';
     differencesLst.add(valueInModifiedVersion);
   }
 
