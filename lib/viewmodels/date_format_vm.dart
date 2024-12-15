@@ -9,8 +9,8 @@ class DateFormatVM extends ChangeNotifier {
     'MM/dd/yyyy',
     'yyyy/MM/dd',
   ];
-
   
+  // Values used in the audio sort/filter dialog
   static const List<String> dateFormatLowCaseLst = [
     'dd/mm/yyyy',
     'mm/dd/yyyy',
@@ -19,12 +19,12 @@ class DateFormatVM extends ChangeNotifier {
 
   final SettingsDataService _settingsDataService;
 
-  late int _dateFormatIndex;
   late String _selectedDateFormat;
   String get selectedDateFormat => _selectedDateFormat;
 
-  // Used by the audio sort filter dialog.
-  String get selectedDateFormatLowCase => dateFormatLowCaseLst[_dateFormatIndex];
+  // Value used in the audio sort/filter dialog
+  late String _selectedDateFormatLowCase;
+  String get selectedDateFormatLowCase => _selectedDateFormatLowCase;
 
   DateFormatVM({
     required SettingsDataService settingsDataService,
@@ -33,7 +33,10 @@ class DateFormatVM extends ChangeNotifier {
       settingType: SettingType.formatOfDate,
       settingSubType: FormatOfDate.formatOfDate,
     );
-    _dateFormatIndex = dateFormatLst.indexOf(_selectedDateFormat);
+    
+    int dateFormatIndex = dateFormatLst.indexOf(_selectedDateFormat);
+
+    _selectedDateFormatLowCase = dateFormatLowCaseLst[dateFormatIndex];
   }
 
   /// Select a date format from the list of available formats
@@ -45,8 +48,8 @@ class DateFormatVM extends ChangeNotifier {
   void selectDateFormat({
     required int dateFormatIndex,
   }) {
-    _dateFormatIndex = dateFormatIndex;
     _selectedDateFormat = dateFormatLst[dateFormatIndex];
+    _selectedDateFormatLowCase = dateFormatLowCaseLst[dateFormatIndex];
 
     _settingsDataService.set(
       settingType: SettingType.formatOfDate,
