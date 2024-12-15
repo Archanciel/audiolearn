@@ -171,7 +171,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       context,
       listen: false,
     );
-    final PlaylistListVM playlistListVMlistenTrue = Provider.of<PlaylistListVM>(
+    final PlaylistListVM playlistListVMlistenTrue =
+        Provider.of<PlaylistListVM>(
       context,
       listen: true,
     );

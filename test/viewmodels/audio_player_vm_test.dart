@@ -386,7 +386,7 @@ void main() {
       expect(
           currentAudioPositionAfterRedo.inSeconds -
               currentAudioInitialPosition.inSeconds,
-        38);
+          38);
 
       // undo the last forward change (forward two), the new
       // command and the previous backward change (backward one)

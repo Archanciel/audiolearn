@@ -157,7 +157,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
       context,
       listen: false,
     );
-    PlaylistListVM playlistListVMlistenTrue = Provider.of<PlaylistListVM>(
+    PlaylistListVM playlistListVMlistenTrue =
+        Provider.of<PlaylistListVM>(
       context,
       listen: true,
     );
