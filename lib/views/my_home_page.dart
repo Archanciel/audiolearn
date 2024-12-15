@@ -246,14 +246,16 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
   Future<void> onPageChangedFunction(int index) async {
     switch (index) {
       case ScreenMixin.PLAYLIST_DOWNLOAD_VIEW_DRAGGABLE_INDEX:
-        PlaylistListVM playlistListVMlistenFalse = Provider.of<PlaylistListVM>(
+        PlaylistListVM playlistListVMlistenFalse =
+            Provider.of<PlaylistListVM>(
           context,
           listen: false,
         );
         playlistListVMlistenFalse.backToPlaylistDownloadView();
         break;
       case ScreenMixin.AUDIO_PLAYER_VIEW_DRAGGABLE_INDEX:
-        PlaylistListVM playlistListVMlistenFalse = Provider.of<PlaylistListVM>(
+        PlaylistListVM playlistListVMlistenFalse =
+            Provider.of<PlaylistListVM>(
           context,
           listen: false,
         );

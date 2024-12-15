@@ -10771,14 +10771,13 @@ void playlistOneDownloadViewIntegrationTest() {
           expect(warningDialogTitle.data, 'WARNING');
 
           // Check the value of the warning dialog message
-          Text warningDialogMessage = tester
-              .widget(find.byKey(const Key('warningDialogMessage')).last);
+          Text warningDialogMessage =
+              tester.widget(find.byKey(const Key('warningDialogMessage')).last);
           expect(warningDialogMessage.data,
               'If the deleted audio video "$commentedAudioTitleToDelete" remains in the "$youtubePlaylistTitle" Youtube playlist, it will be downloaded again the next time you download the playlist !');
 
           // Close the warning dialog by tapping on the Ok button
-          await tester
-              .tap(find.byKey(const Key('warningDialogOkButton')).last);
+          await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
           await tester.pumpAndSettle();
 
           // Verify that the applyed Sort/Filter parms name is displayed
@@ -10941,14 +10940,13 @@ void playlistOneDownloadViewIntegrationTest() {
           expect(warningDialogTitle.data, 'WARNING');
 
           // Check the value of the warning dialog message
-          Text warningDialogMessage = tester
-              .widget(find.byKey(const Key('warningDialogMessage')).last);
+          Text warningDialogMessage =
+              tester.widget(find.byKey(const Key('warningDialogMessage')).last);
           expect(warningDialogMessage.data,
               'If the deleted audio video "$uncommentedAudioTitleToDelete" remains in the "$youtubePlaylistTitle" Youtube playlist, it will be downloaded again the next time you download the playlist !');
 
           // Close the warning dialog by tapping on the Ok button
-          await tester
-              .tap(find.byKey(const Key('warningDialogOkButton')).last);
+          await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
           await tester.pumpAndSettle();
 
           // Verify that the applyed Sort/Filter parms name is displayed
@@ -11235,14 +11233,13 @@ void playlistOneDownloadViewIntegrationTest() {
           expect(warningDialogTitle.data, 'WARNING');
 
           // Check the value of the warning dialog message
-          Text warningDialogMessage = tester
-              .widget(find.byKey(const Key('warningDialogMessage')).last);
+          Text warningDialogMessage =
+              tester.widget(find.byKey(const Key('warningDialogMessage')).last);
           expect(warningDialogMessage.data,
               'If the deleted audio video "$commentedAudioTitleToDelete" remains in the "$youtubePlaylistTitle" Youtube playlist, it will be downloaded again the next time you download the playlist !');
 
           // Close the warning dialog by tapping on the Ok button
-          await tester
-              .tap(find.byKey(const Key('warningDialogOkButton')).last);
+          await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
           await tester.pumpAndSettle();
 
           // Close the warning dialog by tapping on the Ok button
@@ -11506,14 +11503,13 @@ void playlistOneDownloadViewIntegrationTest() {
           expect(warningDialogTitle.data, 'WARNING');
 
           // Check the value of the warning dialog message
-          Text warningDialogMessage = tester
-              .widget(find.byKey(const Key('warningDialogMessage')).last);
+          Text warningDialogMessage =
+              tester.widget(find.byKey(const Key('warningDialogMessage')).last);
           expect(warningDialogMessage.data,
               'If the deleted audio video "$uncommentedAudioTitleToDelete" remains in the "$youtubePlaylistTitle" Youtube playlist, it will be downloaded again the next time you download the playlist !');
 
           // Close the warning dialog by tapping on the Ok button
-          await tester
-              .tap(find.byKey(const Key('warningDialogOkButton')).last);
+          await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
           await tester.pumpAndSettle();
 
           // Close the warning dialog by tapping on the Ok button

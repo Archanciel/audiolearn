@@ -3,6 +3,7 @@ import 'package:audiolearn/viewmodels/comment_vm.dart';
 import 'package:flutter/foundation.dart';
 
 import '../models/audio.dart';
+import '../viewmodels/date_format_vm.dart';
 import 'sort_filter_parameters.dart';
 
 enum SortFilterParmsVersion {
@@ -229,6 +230,7 @@ class AudioSortFilterService {
   /// The advantage of this method is to eventually prevent modifying a sort/filter
   /// parameters used in existing playlists.
   List<String> getListOfDifferencesBetweenSortFilterParameters({
+    required DateFormatVM dateFormatVMlistenFalse,
     required AudioSortFilterParameters existingAudioSortFilterParms,
     required AudioSortFilterParameters newOrModifiedaudioSortFilterParms,
     required Map<String, String> sortFilterParmsNameTranslationMap,
@@ -255,7 +257,7 @@ class AudioSortFilterService {
       );
 
       if (sortDifferencesMap[SortFilterParmsVersion.versionOne]!.isNotEmpty) {
-        addTranslatedSortFilterParmsNamePlusSortOrder(
+        _addTranslatedSortFilterParmsNamePlusSortOrder(
           listDiff: sortDifferencesMap,
           listDiffKey: SortFilterParmsVersion.versionOne,
           sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
@@ -264,7 +266,7 @@ class AudioSortFilterService {
       }
 
       if (sortDifferencesMap[SortFilterParmsVersion.versionTwo]!.isNotEmpty) {
-        addTranslatedSortFilterParmsNamePlusSortOrder(
+        _addTranslatedSortFilterParmsNamePlusSortOrder(
           listDiff: sortDifferencesMap,
           listDiffKey: SortFilterParmsVersion.versionTwo,
           sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
@@ -335,88 +337,98 @@ class AudioSortFilterService {
     }
     if (existingAudioSortFilterParms.ignoreCase !=
         newOrModifiedaudioSortFilterParms.ignoreCase) {
-      _addToDifferencesLstOtherOptionDisplayedStr(
+      _addToDifferencesLstOtherOptionCheckboxValueStr(
           existingAudioSortFilterParms: existingAudioSortFilterParms,
           newOrModifiedaudioSortFilterParms: newOrModifiedaudioSortFilterParms,
-          initialValueStr: (existingAudioSortFilterParms.ignoreCase) ? 'checked' : 'unchecked',
-          modifiedValueStr: (newOrModifiedaudioSortFilterParms.ignoreCase) ? 'checked' : 'unchecked',
+          initialCheckBoxState: existingAudioSortFilterParms.ignoreCase,
+          modifiedCheckBoxState: newOrModifiedaudioSortFilterParms.ignoreCase,
           sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
           optionNameTranslationKey: 'ignoreCase',
           differencesLst: differencesLst);
     }
     if (existingAudioSortFilterParms.searchAsWellInYoutubeChannelName !=
         newOrModifiedaudioSortFilterParms.searchAsWellInYoutubeChannelName) {
-      _addToDifferencesLstOtherOptionDisplayedStr(
+      _addToDifferencesLstOtherOptionCheckboxValueStr(
           existingAudioSortFilterParms: existingAudioSortFilterParms,
           newOrModifiedaudioSortFilterParms: newOrModifiedaudioSortFilterParms,
-          initialValueStr: (existingAudioSortFilterParms.searchAsWellInYoutubeChannelName) ? 'checked' : 'unchecked',
-          modifiedValueStr: (newOrModifiedaudioSortFilterParms.searchAsWellInYoutubeChannelName) ? 'checked' : 'unchecked',
+          initialCheckBoxState:
+              existingAudioSortFilterParms.searchAsWellInYoutubeChannelName,
+          modifiedCheckBoxState: newOrModifiedaudioSortFilterParms
+              .searchAsWellInYoutubeChannelName,
           sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
           optionNameTranslationKey: 'searchAsWellInYoutubeChannelName',
           differencesLst: differencesLst);
     }
     if (existingAudioSortFilterParms.filterMusicQuality !=
         newOrModifiedaudioSortFilterParms.filterMusicQuality) {
-      _addToDifferencesLstOtherOptionDisplayedStr(
+      _addToDifferencesLstOtherOptionCheckboxValueStr(
           existingAudioSortFilterParms: existingAudioSortFilterParms,
           newOrModifiedaudioSortFilterParms: newOrModifiedaudioSortFilterParms,
-          initialValueStr: (existingAudioSortFilterParms.filterMusicQuality) ? 'checked' : 'unchecked',
-          modifiedValueStr: (newOrModifiedaudioSortFilterParms.filterMusicQuality) ? 'checked' : 'unchecked',
+          initialCheckBoxState: existingAudioSortFilterParms.filterMusicQuality,
+          modifiedCheckBoxState:
+              newOrModifiedaudioSortFilterParms.filterMusicQuality,
           sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
           optionNameTranslationKey: 'filterMusicQuality',
           differencesLst: differencesLst);
     }
     if (existingAudioSortFilterParms.filterFullyListened !=
         newOrModifiedaudioSortFilterParms.filterFullyListened) {
-      _addToDifferencesLstOtherOptionDisplayedStr(
+      _addToDifferencesLstOtherOptionCheckboxValueStr(
           existingAudioSortFilterParms: existingAudioSortFilterParms,
           newOrModifiedaudioSortFilterParms: newOrModifiedaudioSortFilterParms,
-          initialValueStr: (existingAudioSortFilterParms.filterFullyListened) ? 'checked' : 'unchecked',
-          modifiedValueStr: (newOrModifiedaudioSortFilterParms.filterFullyListened) ? 'checked' : 'unchecked',
+          initialCheckBoxState:
+              existingAudioSortFilterParms.filterFullyListened,
+          modifiedCheckBoxState:
+              newOrModifiedaudioSortFilterParms.filterFullyListened,
           sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
           optionNameTranslationKey: 'filterFullyListened',
           differencesLst: differencesLst);
     }
     if (existingAudioSortFilterParms.filterPartiallyListened !=
         newOrModifiedaudioSortFilterParms.filterPartiallyListened) {
-      _addToDifferencesLstOtherOptionDisplayedStr(
+      _addToDifferencesLstOtherOptionCheckboxValueStr(
           existingAudioSortFilterParms: existingAudioSortFilterParms,
           newOrModifiedaudioSortFilterParms: newOrModifiedaudioSortFilterParms,
-          initialValueStr: (existingAudioSortFilterParms.filterPartiallyListened) ? 'checked' : 'unchecked',
-          modifiedValueStr: (newOrModifiedaudioSortFilterParms.filterPartiallyListened) ? 'checked' : 'unchecked',
+          initialCheckBoxState:
+              existingAudioSortFilterParms.filterPartiallyListened,
+          modifiedCheckBoxState:
+              newOrModifiedaudioSortFilterParms.filterPartiallyListened,
           sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
           optionNameTranslationKey: 'filterPartiallyListened',
           differencesLst: differencesLst);
     }
     if (existingAudioSortFilterParms.filterNotListened !=
         newOrModifiedaudioSortFilterParms.filterNotListened) {
-      _addToDifferencesLstOtherOptionDisplayedStr(
+      _addToDifferencesLstOtherOptionCheckboxValueStr(
           existingAudioSortFilterParms: existingAudioSortFilterParms,
           newOrModifiedaudioSortFilterParms: newOrModifiedaudioSortFilterParms,
-          initialValueStr: (existingAudioSortFilterParms.filterNotListened) ? 'checked' : 'unchecked',
-          modifiedValueStr: (newOrModifiedaudioSortFilterParms.filterNotListened) ? 'checked' : 'unchecked',
+          initialCheckBoxState: existingAudioSortFilterParms.filterNotListened,
+          modifiedCheckBoxState:
+              newOrModifiedaudioSortFilterParms.filterNotListened,
           sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
           optionNameTranslationKey: 'filterNotListened',
           differencesLst: differencesLst);
     }
     if (existingAudioSortFilterParms.filterCommented !=
         newOrModifiedaudioSortFilterParms.filterCommented) {
-      _addToDifferencesLstOtherOptionDisplayedStr(
+      _addToDifferencesLstOtherOptionCheckboxValueStr(
           existingAudioSortFilterParms: existingAudioSortFilterParms,
           newOrModifiedaudioSortFilterParms: newOrModifiedaudioSortFilterParms,
-          initialValueStr: (existingAudioSortFilterParms.filterCommented) ? 'checked' : 'unchecked',
-          modifiedValueStr: (newOrModifiedaudioSortFilterParms.filterCommented) ? 'checked' : 'unchecked',
+          initialCheckBoxState: existingAudioSortFilterParms.filterCommented,
+          modifiedCheckBoxState:
+              newOrModifiedaudioSortFilterParms.filterCommented,
           sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
           optionNameTranslationKey: 'filterCommented',
           differencesLst: differencesLst);
     }
     if (existingAudioSortFilterParms.filterNotCommented !=
         newOrModifiedaudioSortFilterParms.filterNotCommented) {
-      _addToDifferencesLstOtherOptionDisplayedStr(
+      _addToDifferencesLstOtherOptionCheckboxValueStr(
           existingAudioSortFilterParms: existingAudioSortFilterParms,
           newOrModifiedaudioSortFilterParms: newOrModifiedaudioSortFilterParms,
-          initialValueStr: (existingAudioSortFilterParms.filterNotCommented) ? 'checked' : 'unchecked',
-          modifiedValueStr: (newOrModifiedaudioSortFilterParms.filterNotCommented) ? 'checked' : 'unchecked',
+          initialCheckBoxState: existingAudioSortFilterParms.filterNotCommented,
+          modifiedCheckBoxState:
+              newOrModifiedaudioSortFilterParms.filterNotCommented,
           sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
           optionNameTranslationKey: 'filterNotCommented',
           differencesLst: differencesLst);
@@ -426,6 +438,17 @@ class AudioSortFilterService {
       differencesLst.add(
           sortFilterParmsNameTranslationMap['downloadDateStartRange'] ??
               'downloadDateStartRange');
+      _addToDifferencesLstOtherOptionDateValueStr(
+          dateFormatVMlistenFalse: dateFormatVMlistenFalse,
+          existingAudioSortFilterParms: existingAudioSortFilterParms,
+          newOrModifiedaudioSortFilterParms: newOrModifiedaudioSortFilterParms,
+          initialDateTimeValue:
+              existingAudioSortFilterParms.downloadDateStartRange,
+          modifiedDateTimeValue:
+              newOrModifiedaudioSortFilterParms.downloadDateStartRange,
+          sortFilterParmsNameTranslationMap: sortFilterParmsNameTranslationMap,
+          optionNameTranslationKey: 'downloadDateStartRange',
+          differencesLst: differencesLst);
     }
     if (existingAudioSortFilterParms.downloadDateEndRange !=
         newOrModifiedaudioSortFilterParms.downloadDateEndRange) {
@@ -487,7 +510,8 @@ class AudioSortFilterService {
             'valueInInitialVersionTitle';
     differencesLst.add(valueInInitialVersionTitle);
 
-    String translatedOptionName = sortFilterParmsNameTranslationMap[optionNameTranslationKey]!;
+    String translatedOptionName =
+        sortFilterParmsNameTranslationMap[optionNameTranslationKey]!;
     String valueInInitialVersion =
         '$translatedOptionName: ${sortFilterParmsNameTranslationMap[initialValueStr]}';
     differencesLst.add(valueInInitialVersion);
@@ -502,7 +526,77 @@ class AudioSortFilterService {
     differencesLst.add(valueInModifiedVersion);
   }
 
-  void addTranslatedSortFilterParmsNamePlusSortOrder({
+  void _addToDifferencesLstOtherOptionCheckboxValueStr({
+    required AudioSortFilterParameters existingAudioSortFilterParms,
+    required AudioSortFilterParameters newOrModifiedaudioSortFilterParms,
+    required bool initialCheckBoxState,
+    required bool modifiedCheckBoxState,
+    required Map<String, String> sortFilterParmsNameTranslationMap,
+    required String optionNameTranslationKey,
+    required List<String> differencesLst,
+  }) {
+    String valueInInitialVersionTitle =
+        sortFilterParmsNameTranslationMap['valueInInitialVersionTitle'] ??
+            'valueInInitialVersionTitle';
+    differencesLst.add(valueInInitialVersionTitle);
+
+    String initialCheckBoxStateStr =
+        initialCheckBoxState ? 'checked' : 'unchecked';
+    String translatedOptionName =
+        sortFilterParmsNameTranslationMap[optionNameTranslationKey]!;
+    String valueInInitialVersion =
+        '$translatedOptionName: ${sortFilterParmsNameTranslationMap[initialCheckBoxStateStr]}';
+    differencesLst.add(valueInInitialVersion);
+
+    String valueInModifiedVersionTitle =
+        sortFilterParmsNameTranslationMap['valueInModifiedVersionTitle'] ??
+            'valueInModifiedVersionTitle';
+    differencesLst.add(valueInModifiedVersionTitle);
+
+    String modifiedCheckBoxStateStr =
+        modifiedCheckBoxState ? 'checked' : 'unchecked';
+    String valueInModifiedVersion =
+        '$translatedOptionName: ${sortFilterParmsNameTranslationMap[modifiedCheckBoxStateStr]}';
+    differencesLst.add(valueInModifiedVersion);
+  }
+
+  void _addToDifferencesLstOtherOptionDateValueStr({
+    required DateFormatVM dateFormatVMlistenFalse,
+    required AudioSortFilterParameters existingAudioSortFilterParms,
+    required AudioSortFilterParameters newOrModifiedaudioSortFilterParms,
+    required DateTime? initialDateTimeValue,
+    required DateTime? modifiedDateTimeValue,
+    required Map<String, String> sortFilterParmsNameTranslationMap,
+    required String optionNameTranslationKey,
+    required List<String> differencesLst,
+  }) {
+    String translatedOptionName =
+        sortFilterParmsNameTranslationMap[optionNameTranslationKey]!;
+
+    if (initialDateTimeValue != null) {
+      String valueInInitialVersionTitle =
+          sortFilterParmsNameTranslationMap['valueInInitialVersionTitle'] ??
+              'valueInInitialVersionTitle';
+      differencesLst.add(valueInInitialVersionTitle);
+
+      String valueInInitialVersion =
+          '$translatedOptionName: ${dateFormatVMlistenFalse.formatDate(initialDateTimeValue)}';
+      differencesLst.add(valueInInitialVersion);
+    }
+
+    if (modifiedDateTimeValue != null) {
+      String valueInModifiedVersionTitle =
+          sortFilterParmsNameTranslationMap['valueInModifiedVersionTitle'] ??
+              'valueInModifiedVersionTitle';
+      differencesLst.add(valueInModifiedVersionTitle);
+
+      String valueInModifiedVersion =
+          '$translatedOptionName: ${dateFormatVMlistenFalse.formatDate(modifiedDateTimeValue)}';
+      differencesLst.add(valueInModifiedVersion);
+    }
+  }
+
+  void _addTranslatedSortFilterParmsNamePlusSortOrder({
     required Map<SortFilterParmsVersion, List<SortingItem>> listDiff,
     required SortFilterParmsVersion listDiffKey,
     required Map<String, String> sortFilterParmsNameTranslationMap,

@@ -626,8 +626,9 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
         ),
         actions: [
           _buildActionButtonsLine(
-            context,
-            themeProviderVM,
+            context: context,
+            themeProviderVM: themeProviderVM,
+            dateFormatVMlistenFalse: dateFormatVMlistenFalse,
           ),
         ],
       ),
@@ -718,11 +719,12 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
   ///
   /// Save button is displayed when the sort filter name is defined.
   /// If the sort filter name is empty, the Apply button is displayed.
-  Row _buildActionButtonsLine(
-    BuildContext context,
-    ThemeProviderVM themeProviderVM,
-  ) {
-    PlaylistListVM playlistListVM = Provider.of<PlaylistListVM>(
+  Row _buildActionButtonsLine({
+    required BuildContext context,
+    required ThemeProviderVM themeProviderVM,
+    required DateFormatVM dateFormatVMlistenFalse,
+  }) {
+    PlaylistListVM playlistListVMlistenFalse = Provider.of<PlaylistListVM>(
       context,
       listen: false,
     );
@@ -754,7 +756,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           ),
         ),
         _buildSaveOrApplyButton(
-          playlistListVM: playlistListVM,
+          playlistListVMlistenFalse: playlistListVMlistenFalse,
+          dateFormatVMlistenFalse: dateFormatVMlistenFalse,
           themeProviderVM: themeProviderVM,
         ),
         Tooltip(
@@ -779,7 +782,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                 return;
               } else if (_sortFilterSaveAsUniqueName.isEmpty) {
                 // here, the user deletes an historical sort/filter parameter
-                if (!playlistListVM
+                if (!playlistListVMlistenFalse
                     .clearAudioSortFilterSettingsSearchHistoryElement(
                         _audioSortFilterParameters)) {
                   // here, the sort/filter parameter to delete was not present
@@ -811,8 +814,10 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                 // parameter
 
                 List<Playlist> playlistsUsingSortFilterParmsName =
-                    playlistListVM.getPlaylistsUsingSortFilterParmsName(
-                        audioSortFilterParmsName: _sortFilterSaveAsUniqueName);
+                    playlistListVMlistenFalse
+                        .getPlaylistsUsingSortFilterParmsName(
+                            audioSortFilterParmsName:
+                                _sortFilterSaveAsUniqueName);
                 List<String> playlistsUsingSortFilterParmsNameLst =
                     playlistsUsingSortFilterParmsName
                         .map((playlist) => playlist.title)
@@ -833,7 +838,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                       return ConfirmActionDialog(
                         actionFunction: executeAudioSortFilterParmsDeletion,
                         actionFunctionArgs: [
-                          playlistListVM,
+                          playlistListVMlistenFalse,
                         ],
                         dialogTitleOne: AppLocalizations.of(context)!
                             .deleteSortFilterParmsWarningTitle(
@@ -846,7 +851,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                     },
                   );
                 } else {
-                  executeAudioSortFilterParmsDeletion(playlistListVM);
+                  executeAudioSortFilterParmsDeletion(
+                      playlistListVMlistenFalse);
                 }
               }
 
@@ -893,7 +899,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
   /// Save button is displayed when the sort filter name is defined.
   /// If the sort filter name is empty, the Apply button is displayed.
   Widget _buildSaveOrApplyButton({
-    required PlaylistListVM playlistListVM,
+    required PlaylistListVM playlistListVMlistenFalse,
+    required DateFormatVM dateFormatVMlistenFalse,
     required ThemeProviderVM themeProviderVM,
   }) {
     if (_sortFilterSaveAsUniqueName.isEmpty) {
@@ -908,7 +915,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           onPressed: () async {
             List<dynamic> filterSortAudioAndParmLst =
                 await _filterAndSortAudioLst(
-                    playlistListVM: playlistListVM,
+                    playlistListVMlistenFalse: playlistListVMlistenFalse,
+                    dateFormatVMlistenFalse: dateFormatVMlistenFalse,
                     sortFilterParametersSaveAsUniqueName:
                         AppLocalizations.of(context)!
                             .sortFilterParametersAppliedName);
@@ -921,7 +929,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
               return;
             }
 
-            playlistListVM.addSearchHistoryAudioSortFilterParameters(
+            playlistListVMlistenFalse.addSearchHistoryAudioSortFilterParameters(
               audioSortFilterParameters: filterSortAudioAndParmLst[1],
             );
 
@@ -957,11 +965,12 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
             //   3/ the sort filter parameters save as unique name
             List<dynamic> filterSortAudioAndParmLst =
                 await _filterAndSortAudioLst(
-              playlistListVM: playlistListVM,
+              playlistListVMlistenFalse: playlistListVMlistenFalse,
+              dateFormatVMlistenFalse: dateFormatVMlistenFalse,
               sortFilterParametersSaveAsUniqueName: _sortFilterSaveAsUniqueName,
             );
 
-            playlistListVM.saveAudioSortFilterParameters(
+            playlistListVMlistenFalse.saveAudioSortFilterParameters(
               audioSortFilterParametersName: _sortFilterSaveAsUniqueName,
               audioSortFilterParameters: filterSortAudioAndParmLst[1],
             );
@@ -1985,7 +1994,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
   ///   2/ the audio sort filter parameters (AudioSortFilterParameters)
   ///   3/ the sort filter parameters save as unique name
   Future<List> _filterAndSortAudioLst({
-    required PlaylistListVM playlistListVM,
+    required PlaylistListVM playlistListVMlistenFalse,
+    required DateFormatVM dateFormatVMlistenFalse,
     required String sortFilterParametersSaveAsUniqueName,
   }) async {
     _audioSortFilterParameters =
@@ -1993,12 +2003,12 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
 
     bool cancelSaveSortFilterParms = false;
 
-    if (playlistListVM.doesAudioSortFilterParmsNameAlreadyExist(
+    if (playlistListVMlistenFalse.doesAudioSortFilterParmsNameAlreadyExist(
         audioSortFilterParmrsName: _sortFilterSaveAsUniqueName)) {
       // Obtaining the existing sort/filter parameters in order to
       // compare them with the new or modified ones.
       AudioSortFilterParameters existingAudioSortFilterParameters =
-          playlistListVM.getAudioSortFilterParameters(
+          playlistListVMlistenFalse.getAudioSortFilterParameters(
         audioSortFilterParametersName: _sortFilterSaveAsUniqueName,
       );
 
@@ -2007,6 +2017,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       List<String> listOfDifferencesBetweenSortFilterParameters =
           _audioSortFilterService
               .getListOfDifferencesBetweenSortFilterParameters(
+        dateFormatVMlistenFalse: dateFormatVMlistenFalse,
         existingAudioSortFilterParms: existingAudioSortFilterParameters,
         newOrModifiedaudioSortFilterParms: _audioSortFilterParameters,
         sortFilterParmsNameTranslationMap:
