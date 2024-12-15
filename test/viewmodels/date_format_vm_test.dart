@@ -52,6 +52,16 @@ void main() {
         "30/11/2021 23:59", // Initial format is 'dd/MM/yyyy'
       );
 
+      expect(
+        dateFormatVM.selectedDateFormat,
+        'dd/MM/yyyy',
+      );
+
+      expect(
+        dateFormatVM.selectedDateFormatLowCase,
+        'dd/mm/yyyy',
+      );
+      
       dateFormatVM.selectDateFormat(dateFormatIndex: 1);
 
       expect(
@@ -64,6 +74,14 @@ void main() {
         "11/30/2021 23:59", // Initial format is 'dd/MM/yyyy'
       );
 
+      expect(
+        dateFormatVM.selectedDateFormat,
+        'MM/dd/yyyy',);
+
+      expect(
+        dateFormatVM.selectedDateFormatLowCase,
+        'mm/dd/yyyy',);
+
       dateFormatVM.selectDateFormat(dateFormatIndex: 2);
 
       expect(
@@ -74,6 +92,16 @@ void main() {
       expect(
         dateFormatVM.formatDateTime(dateTime),
         "2021/11/30 23:59", // Initial format is 'dd/MM/yyyy'
+      );
+
+      expect(
+        dateFormatVM.selectedDateFormat,
+        'yyyy/MM/dd',
+      );
+
+      expect(
+        dateFormatVM.selectedDateFormatLowCase,
+        'yyyy/mm/dd',
       );
 
       // Purge the test playlist directory so that the created test
@@ -123,6 +151,16 @@ void main() {
         "30/11/2021 23:59", // Initial format is 'dd/MM/yyyy'
       );
 
+      expect(
+        dateFormatVM.selectedDateFormat,
+        'dd/MM/yyyy',
+      );
+
+      expect(
+        dateFormatVM.selectedDateFormatLowCase,
+        'dd/mm/yyyy',
+      );
+
       // Change the date format to the second format which is 'MM/dd/yyyy'
       // and reload the settings data service
 
@@ -137,6 +175,14 @@ void main() {
         dateFormatVM.formatDateTime(dateTime),
         "11/30/2021 23:59", // Initial format is 'dd/MM/yyyy'
       );
+  
+      expect(
+        dateFormatVM.selectedDateFormat,
+        'MM/dd/yyyy',);
+
+      expect(
+        dateFormatVM.selectedDateFormatLowCase,
+        'mm/dd/yyyy',);
 
       SettingsDataService reloadedSettingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
@@ -161,7 +207,16 @@ void main() {
         "11/30/2021 23:59", // Initial format is 'dd/MM/yyyy'
       );
 
-      // Change the date format to the third format which is 'yyyy-MM-dd'
+
+      expect(
+        dateFormatVM.selectedDateFormat,
+        'MM/dd/yyyy',);
+
+      expect(
+        dateFormatVM.selectedDateFormatLowCase,
+        'mm/dd/yyyy',);
+
+      // Change the date format to the third format which is 'yyyy/MM/dd'
       // and reload the settings data service
 
       dateFormatVM.selectDateFormat(dateFormatIndex: 2);
@@ -175,6 +230,14 @@ void main() {
         dateFormatVM.formatDateTime(dateTime),
         "2021/11/30 23:59", // Initial format is 'dd/MM/yyyy'
       );
+
+      expect(
+        dateFormatVM.selectedDateFormat,
+        'yyyy/MM/dd',);
+
+      expect(
+        dateFormatVM.selectedDateFormatLowCase,
+        'yyyy/mm/dd',);
 
       SettingsDataService secondReloadedSettingsDataService =
           SettingsDataService(
@@ -199,6 +262,14 @@ void main() {
         dateFormatVM.formatDateTime(dateTime),
         "2021/11/30 23:59", // Initial format is 'dd/MM/yyyy'
       );
+
+      expect(
+        dateFormatVM.selectedDateFormat,
+        'yyyy/MM/dd',);
+
+      expect(
+        dateFormatVM.selectedDateFormatLowCase,
+        'yyyy/mm/dd',);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
