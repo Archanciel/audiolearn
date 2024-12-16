@@ -85,6 +85,122 @@
             "uploadDateEndRange": null,
             "uploadDateStartRange": null
         },
+        "duration0:00-2:00": {
+            "downloadDateEndRange": null,
+            "downloadDateStartRange": null,
+            "durationEndRangeSec": 7200,
+            "durationStartRangeSec": 0,
+            "fileSizeEndRangeMB": 0.0,
+            "fileSizeStartRangeMB": 0.0,
+            "filterCommented": true,
+            "filterFullyListened": true,
+            "filterMusicQuality": false,
+            "filterNotCommented": true,
+            "filterNotListened": true,
+            "filterPartiallyListened": true,
+            "filterSentenceLst": [
+                "one"
+            ],
+            "ignoreCase": true,
+            "searchAsWellInVideoCompactDescription": true,
+            "searchAsWellInYoutubeChannelName": true,
+            "selectedSortItemLst": [
+                {
+                    "isAscending": true,
+                    "sortingOption": "validAudioTitle"
+                }
+            ],
+            "sentencesCombination": 0,
+            "uploadDateEndRange": null,
+            "uploadDateStartRange": null
+        },
+        "duration0:15-0:00": {
+            "downloadDateEndRange": null,
+            "downloadDateStartRange": null,
+            "durationEndRangeSec": 0,
+            "durationStartRangeSec": 900,
+            "fileSizeEndRangeMB": 0.0,
+            "fileSizeStartRangeMB": 0.0,
+            "filterCommented": true,
+            "filterFullyListened": true,
+            "filterMusicQuality": false,
+            "filterNotCommented": true,
+            "filterNotListened": true,
+            "filterPartiallyListened": true,
+            "filterSentenceLst": [
+                "one"
+            ],
+            "ignoreCase": true,
+            "searchAsWellInVideoCompactDescription": true,
+            "searchAsWellInYoutubeChannelName": true,
+            "selectedSortItemLst": [
+                {
+                    "isAscending": true,
+                    "sortingOption": "validAudioTitle"
+                }
+            ],
+            "sentencesCombination": 0,
+            "uploadDateEndRange": null,
+            "uploadDateStartRange": null
+        },
+        "fileSize0-10": {
+            "downloadDateEndRange": null,
+            "downloadDateStartRange": null,
+            "durationEndRangeSec": 0,
+            "durationStartRangeSec": 0,
+            "fileSizeEndRangeMB": 10.0,
+            "fileSizeStartRangeMB": 0.0,
+            "filterCommented": true,
+            "filterFullyListened": true,
+            "filterMusicQuality": false,
+            "filterNotCommented": true,
+            "filterNotListened": true,
+            "filterPartiallyListened": true,
+            "filterSentenceLst": [
+                "one"
+            ],
+            "ignoreCase": true,
+            "searchAsWellInVideoCompactDescription": true,
+            "searchAsWellInYoutubeChannelName": true,
+            "selectedSortItemLst": [
+                {
+                    "isAscending": true,
+                    "sortingOption": "validAudioTitle"
+                }
+            ],
+            "sentencesCombination": 0,
+            "uploadDateEndRange": null,
+            "uploadDateStartRange": null
+        },
+        "fileSize2-0": {
+            "downloadDateEndRange": null,
+            "downloadDateStartRange": null,
+            "durationEndRangeSec": 0,
+            "durationStartRangeSec": 0,
+            "fileSizeEndRangeMB": 0.0,
+            "fileSizeStartRangeMB": 2.0,
+            "filterCommented": true,
+            "filterFullyListened": true,
+            "filterMusicQuality": false,
+            "filterNotCommented": true,
+            "filterNotListened": true,
+            "filterPartiallyListened": true,
+            "filterSentenceLst": [
+                "one"
+            ],
+            "ignoreCase": true,
+            "searchAsWellInVideoCompactDescription": true,
+            "searchAsWellInYoutubeChannelName": true,
+            "selectedSortItemLst": [
+                {
+                    "isAscending": true,
+                    "sortingOption": "validAudioTitle"
+                }
+            ],
+            "sentencesCombination": 0,
+            "uploadDateEndRange": null,
+            "uploadDateStartRange": null
+        },
         "for test": {
             "downloadDateEndRange": "2024-12-11T23:59:59.000",
             "downloadDateStartRange": "2024-12-04T00:00:00.000",
