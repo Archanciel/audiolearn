@@ -1130,6 +1130,609 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         );
       });
       group(
+          '''Audio download, video upload, audio file size, duration based sort/filter
+           parameters creation and application''', () {
+        testWidgets('''Audio download start/end date sort/filter.''',
+            (WidgetTester tester) async {
+          //    Click on 'Sort/filter audio' menu item of Audio popup menu to
+          //    open sort filter audio dialog. Then creating a named audio download
+          //    start/end date sort/filter parms and saving it. Then verifying that
+          //    a Sort/filter dropdown button item has been created and is applied
+          //    to the playlist download view list of audio.
+
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          // Copy the test initial audio data to the app dir
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath:
+                "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          final SettingsDataService settingsDataService = SettingsDataService(
+            sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
+          );
+
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the download app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+          await app.main(['test']);
+          await tester.pumpAndSettle();
+
+          // Now open the audio popup menu
+          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+          await tester.pumpAndSettle();
+
+          // Find the sort/filter audio menu item and tap on it to
+          // open the audio sort filter dialog
+          await tester.tap(
+              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+          await tester.pumpAndSettle();
+
+          // Type "Drop2023Title asc" in the 'Save as' TextField
+
+          String saveAsTitle = 'Drop2023Title asc';
+
+          await tester.enterText(
+              find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+              saveAsTitle);
+          await tester.pumpAndSettle();
+
+          // Now select the 'Audio title'item in the 'Sort by' dropdown button
+
+          await tester
+              .tap(find.byKey(const Key('sortingOptionDropdownButton')));
+          await tester.pumpAndSettle();
+
+          await tester.tap(find.text('Audio title'));
+          await tester.pumpAndSettle();
+
+          // Then delete the "Audio download date" descending sort option
+
+          // Find the Text with "Audio downl date" which is located in the
+          // selected sort parameters ListView
+          final Finder textFinder = find.descendant(
+            of: find.byKey(const Key('selectedSortingOptionsListView')),
+            matching: find.text('Audio downl date'),
+          );
+
+          // Then find the ListTile ancestor of the 'Audio downl date' Text
+          // widget. The ascending/descending and remove icon buttons are
+          // contained in their ListTile ancestor
+          final Finder listTileFinder = find.ancestor(
+            of: textFinder,
+            matching: find.byType(ListTile),
+          );
+
+          // Now, within that ListTile, find the sort option delete IconButton
+          // with key 'removeSortingOptionIconButton'
+          final Finder iconButtonFinder = find.descendant(
+            of: listTileFinder,
+            matching: find.byKey(const Key('removeSortingOptionIconButton')),
+          );
+
+          // Tap on the delete icon button to delete the 'Audio downl date'
+          // descending sort option
+          await tester.tap(iconButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Now enter the start and end dates for the audio download date
+          // sort/filter parms, but first scroll down the dialog so that
+          // the date text fields are visible.
+
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          await tester.enterText(
+              find.byKey(const Key('startDownloadDateTextField')),
+              '26/12/2023');
+          await tester.pumpAndSettle(Duration(milliseconds: 200));
+
+          await tester.enterText(
+              find.byKey(const Key('endDownloadDateTextField')), '26/12/2023');
+          await tester.pumpAndSettle(Duration(milliseconds: 200));
+
+          // Click on the "Save" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the newly created sort/filter parms
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
+
+          // Now verify the playlist download view state with the
+          // 'Drop2023Title asc' sort/filter parms applied
+
+          // Verify that the dropdown button has been updated with the
+          // 'Drop2023Title asc' sort/filter parms selected
+          IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+            tester: tester,
+            dropdownButtonSelectedTitle: saveAsTitle,
+          );
+
+          // And verify the order of the playlist audio titles
+
+          List<String> audioTitlesSortedByTitleAscending = [
+            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          ];
+
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''Video upload start/end date sort/filter. Audio list item subtitle
+             specific to video upload date sort/filter parms is verified.''',
+            (WidgetTester tester) async {
+          //    Click on 'Sort/filter audio' menu item of Audio popup menu to
+          //    open sort filter audio dialog. Then creating a named video upload
+          //    start/end date sort/filter parms and saving it. Then verifying that
+          //    a Sort/filter dropdown button item has been created and is applied
+          //    to the playlist download view list of audio. Then, edit the created
+          //    video upload start/end date sort/filter parms in order to add to it
+          //    sorting the filtered audios by descending video upload date. Finally,
+          //    the modified sorted audio list.
+
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          // Copy the test initial audio data to the app dir
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath:
+                "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          final SettingsDataService settingsDataService = SettingsDataService(
+            sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
+          );
+
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the download app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+          await app.main(['test']);
+          await tester.pumpAndSettle();
+
+          // Now open the audio popup menu
+          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+          await tester.pumpAndSettle();
+
+          // Find the sort/filter audio menu item and tap on it to
+          // open the audio sort filter dialog
+          await tester.tap(
+              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+          await tester.pumpAndSettle();
+
+          // Type "UploadVideo" in the 'Save as' TextField
+
+          String saveAsTitle = 'UploadVideo';
+
+          await tester.enterText(
+              find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+              saveAsTitle);
+          await tester.pumpAndSettle();
+
+          // Enter the start and end dates for the video upload date
+          // sort/filter parms, but first scroll down the dialog so that
+          // the date text fields are visible.
+
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          await tester.enterText(
+              find.byKey(const Key('startUploadDateTextField')), '12/06/2022');
+          await tester.pumpAndSettle(Duration(milliseconds: 200));
+
+          await tester.enterText(
+              find.byKey(const Key('endUploadDateTextField')), '19/09/2023');
+          await tester.pumpAndSettle(Duration(milliseconds: 200));
+
+          // Click on the "Save" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the newly created sort/filter parms
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
+
+          // Now verify the playlist download view state with the 'UploadVideo'
+          // sort/filter parms applied
+
+          // Verify that the dropdown button has been updated with the
+          // 'UploadVideo' sort/filter parms selected
+          IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+            tester: tester,
+            dropdownButtonSelectedTitle: saveAsTitle,
+          );
+
+          // And verify the order of the playlist audio titles
+
+          List<String> audioTitlesSortedByTitleAscending = [
+            "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+            "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+          ];
+
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+          );
+
+          // And verify the order of the playlist audio subtitles
+
+          List<String> audioSubTitlesSortedByTitleAscending = [
+            "0:06:29.0. Video upload date: 12/06/2022.",
+            "0:13:39.0. Video upload date: 10/09/2023.",
+          ];
+
+          IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
+            tester: tester,
+            audioSubTitlesOrderLst: audioSubTitlesSortedByTitleAscending,
+          );
+
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
+
+          final Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+          final Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
+
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
+
+          // And find the 'UploadVideo' sort/filter item
+          final Finder uploadVideoDropDownTextFinder =
+              find.text(saveAsTitle).last;
+          await tester.tap(uploadVideoDropDownTextFinder);
+          await tester.pumpAndSettle();
+
+          // Now open the audio popup menu in order to modify the 'UploadVideo'
+          final Finder dropdownItemEditIconButtonFinder = find.byKey(
+              const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+          await tester.tap(dropdownItemEditIconButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Now select the 'Video upload date' item in the 'Sort by' dropdown button
+
+          await tester
+              .tap(find.byKey(const Key('sortingOptionDropdownButton')));
+          await tester.pumpAndSettle();
+
+          await tester.tap(find.text('Video upload date'));
+          await tester.pumpAndSettle();
+
+          // Then delete the "Audio download date" descending sort option
+
+          // Find the Text with "Audio downl date" which is located in the
+          // selected sort parameters ListView
+          final Finder textFinder = find.descendant(
+            of: find.byKey(const Key('selectedSortingOptionsListView')),
+            matching: find.text('Audio downl date'),
+          );
+
+          // Then find the ListTile ancestor of the 'Audio downl date' Text
+          // widget. The ascending/descending and remove icon buttons are
+          // contained in their ListTile ancestor
+          final Finder listTileFinder = find.ancestor(
+            of: textFinder,
+            matching: find.byType(ListTile),
+          );
+
+          // Now, within that ListTile, find the sort option delete IconButton
+          // with key 'removeSortingOptionIconButton'
+          final Finder iconButtonFinder = find.descendant(
+            of: listTileFinder,
+            matching: find.byKey(const Key('removeSortingOptionIconButton')),
+          );
+
+          // Tap on the delete icon button to delete the 'Audio downl date'
+          // descending sort option
+          await tester.tap(iconButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Click on the "Save" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the newly created sort/filter parms
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
+
+          await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
+            tester: tester,
+            confirmDialogTitleOne:
+                'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
+            confirmDialogMessage:
+                'Sort by:\n Present only in initial version:\n   Audio downl date desc\n Present only in modified version:\n   Video upload date desc',
+          );
+
+          // Now verify the playlist download view state with the 'UploadVideo'
+          // sort/filter parms applied
+
+          // Verify that the dropdown button has been updated with the
+          // 'UploadVideo' sort/filter parms selected
+          IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+            tester: tester,
+            dropdownButtonSelectedTitle: saveAsTitle,
+          );
+
+          // And verify the order of the playlist audio titles
+
+          audioTitlesSortedByTitleAscending = [
+            "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+            "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          ];
+
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
+        testWidgets('''Audio file size sort/filter.''',
+            (WidgetTester tester) async {
+          //    Click on 'Sort/filter audio' menu item of Audio popup menu to
+          //    open sort filter audio dialog. Then creating a named audio file size
+          //    sort/filter parms and saving it. Then verifying that
+          //    a Sort/filter dropdown button item has been created and is applied
+          //    to the playlist download view list of audio.
+
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          // Copy the test initial audio data to the app dir
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath:
+                "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          final SettingsDataService settingsDataService = SettingsDataService(
+            sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
+          );
+
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the download app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+          await app.main(['test']);
+          await tester.pumpAndSettle();
+
+          // Now open the audio popup menu
+          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+          await tester.pumpAndSettle();
+
+          // Find the sort/filter audio menu item and tap on it to
+          // open the audio sort filter dialog
+          await tester.tap(
+              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+          await tester.pumpAndSettle();
+
+          // Type "audioFileSize" in the 'Save as' TextField
+
+          String saveAsTitle = 'audioFileSize';
+
+          await tester.enterText(
+              find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+              saveAsTitle);
+          await tester.pumpAndSettle();
+
+          // Enter the start and end file size MB range in the corresponding fields,
+          // but first scroll down the dialog so that the date file size fields are
+          // visible.
+
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -350), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          await tester.enterText(
+              find.byKey(const Key('startFileSizeTextField')), '2.37');
+          await tester.pumpAndSettle(Duration(milliseconds: 200));
+
+          await tester.enterText(
+              find.byKey(const Key('endFileSizeTextField')), '2.8');
+          await tester.pumpAndSettle(Duration(milliseconds: 200));
+
+          // Click on the "Save" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the newly created sort/filter parms
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
+
+          // Now verify the playlist download view state with the 'UploadVideo'
+          // sort/filter parms applied
+
+          // Verify that the dropdown button has been updated with the
+          // 'UploadVideo' sort/filter parms selected
+          IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+            tester: tester,
+            dropdownButtonSelectedTitle: saveAsTitle,
+          );
+
+          // And verify the order of the playlist audio titles
+
+          List<String> audioTitlesSortedByTitleAscending = [
+            "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+            "La surpopulation mondiale par Jancovici et Barrau",
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          ];
+
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
+        testWidgets('''Audio duration sort/filter.''',
+            (WidgetTester tester) async {
+          //    Click on 'Sort/filter audio' menu item of Audio popup menu to
+          //    open sort filter audio dialog. Then creating a named audio duration
+          //    sort/filter parms and saving it. Then verifying that
+          //    a Sort/filter dropdown button item has been created and is applied
+          //    to the playlist download view list of audio.
+
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          // Copy the test initial audio data to the app dir
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath:
+                "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          final SettingsDataService settingsDataService = SettingsDataService(
+            sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
+          );
+
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the download app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+          await app.main(['test']);
+          await tester.pumpAndSettle();
+
+          // Now open the audio popup menu
+          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+          await tester.pumpAndSettle();
+
+          // Find the sort/filter audio menu item and tap on it to
+          // open the audio sort filter dialog
+          await tester.tap(
+              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+          await tester.pumpAndSettle();
+
+          // Type "audioFileSize" in the 'Save as' TextField
+
+          String saveAsTitle = 'audioFileSize';
+
+          await tester.enterText(
+              find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+              saveAsTitle);
+          await tester.pumpAndSettle();
+
+          // Enter the start and end file size MB range in the corresponding fields,
+          // but first scroll down the dialog so that the date file size fields are
+          // visible.
+
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -350), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          await tester.enterText(
+              find.byKey(const Key('startAudioDurationTextField')), '0:06');
+          await tester.pumpAndSettle(Duration(milliseconds: 200));
+
+          await tester.enterText(
+              find.byKey(const Key('endAudioDurationTextField')), '0:08');
+          await tester.pumpAndSettle(Duration(milliseconds: 200));
+
+          // Click on the "Save" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the newly created sort/filter parms
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
+
+          // Now verify the playlist download view state with the 'UploadVideo'
+          // sort/filter parms applied
+
+          // Verify that the dropdown button has been updated with the
+          // 'UploadVideo' sort/filter parms selected
+          IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+            tester: tester,
+            dropdownButtonSelectedTitle: saveAsTitle,
+          );
+
+          // And verify the order of the playlist audio titles
+
+          List<String> audioTitlesSortedByTitleAscending = [
+            "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+            "La surpopulation mondiale par Jancovici et Barrau",
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          ];
+
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
+      });
+      group(
           '''Testing ConfirmActionDialog warning displayed when clicking on the
           save button of the audio sort filter dialog after creating new Sort/Filter
           parms with same name as existing Sort/Filter parms or after modifying
@@ -1757,7 +2360,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               confirmDialogTitleOne:
                   'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
               confirmDialogMessage:
-                  'Trier par:\n Uniquement en version initiale:\n   Titre audio desc\n Uniquement en version modifiée:\n   Titre audio asc,\n   Date mise en ligne vidéo desc,\n   Durée audio asc,\n   Durée audio écoutable\n   restante asc,\n   Vitesse téléch audio desc,\n   Durée téléch audio desc\nMots filtre:\n Uniquement en version modifiée:\n   Marine Le Pen,\n   Emmanuel Macron\nIgnorer la casse\nInclure la chaîne Youtube\nQualité musicale\nCommenté',
+                  'Trier par:\n Uniquement en version initiale:\n   Titre audio desc\n Uniquement en version modifiée:\n   Titre audio asc,\n   Date mise en ligne vidéo desc,\n   Durée audio asc,\n   Durée audio écoutable\n   restante asc,\n   Vitesse téléch audio desc,\n   Durée téléch audio desc\nMots filtre:\n Uniquement en version modifiée:\n   Marine Le Pen,\n   Emmanuel Macron\nOptions filtre:\n En version initiale:\n   Ignorer la casse: coché\n En version modifiée:\n   Ignorer la casse: décoché\n En version initiale:\n   Inclure la chaîne Youtube: coché\n En version modifiée:\n   Inclure la chaîne\n   Youtube: décoché\n En version initiale:\n   Qualité musicale: décoché\n En version modifiée:\n   Qualité musicale: coché\n En version initiale:\n   Commenté: coché\n En version modifiée:\n   Commenté: décoché',
             );
 
             // Purge the test playlist directory so that the created test
@@ -2776,7 +3379,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           confirmDialogTitleOne:
               'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
           confirmDialogMessage:
-              'Sort by:\n Present only in initial version:\n   Audio title asc,\n Present only in modified version:\n   Audio title desc,\nFilter options:\n Present only in modified version:\n   Jancovici',
+              'Sort by:\n Present only in initial version:\n   Audio title asc\n Present only in modified version:\n   Audio title desc\nFilter words:\n Present only in modified version:\n   Jancovici',
         );
 
         // Now verify the playlist download view state with the 'Title asc' -
@@ -7815,606 +8418,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             rootPath: kPlaylistDownloadRootPathWindowsTest,
           );
         });
-      });
-    });
-    group(
-        '''Audio download, video upload, audio file size, duration based sort/filter
-           parameters creation and application''', () {
-      testWidgets('''Audio download start/end date sort/filter.''',
-          (WidgetTester tester) async {
-        //    Click on 'Sort/filter audio' menu item of Audio popup menu to
-        //    open sort filter audio dialog. Then creating a named audio download
-        //    start/end date sort/filter parms and saving it. Then verifying that
-        //    a Sort/filter dropdown button item has been created and is applied
-        //    to the playlist download view list of audio.
-
-        // Purge the test playlist directory if it exists so that the
-        // playlist list is empty
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
-
-        // Copy the test initial audio data to the app dir
-        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-          sourceRootPath:
-              "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
-
-        final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
-          isTest: true,
-        );
-
-        // Load the settings from the json file. This is necessary
-        // otherwise the ordered playlist titles will remain empty
-        // and the playlist list will not be filled with the
-        // playlists available in the download app test dir
-        await settingsDataService.loadSettingsFromFile(
-            settingsJsonPathFileName:
-                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
-
-        await app.main(['test']);
-        await tester.pumpAndSettle();
-
-        // Now open the audio popup menu
-        await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-        await tester.pumpAndSettle();
-
-        // Find the sort/filter audio menu item and tap on it to
-        // open the audio sort filter dialog
-        await tester.tap(
-            find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
-        await tester.pumpAndSettle();
-
-        // Type "Drop2023Title asc" in the 'Save as' TextField
-
-        String saveAsTitle = 'Drop2023Title asc';
-
-        await tester.enterText(
-            find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
-            saveAsTitle);
-        await tester.pumpAndSettle();
-
-        // Now select the 'Audio title'item in the 'Sort by' dropdown button
-
-        await tester.tap(find.byKey(const Key('sortingOptionDropdownButton')));
-        await tester.pumpAndSettle();
-
-        await tester.tap(find.text('Audio title'));
-        await tester.pumpAndSettle();
-
-        // Then delete the "Audio download date" descending sort option
-
-        // Find the Text with "Audio downl date" which is located in the
-        // selected sort parameters ListView
-        final Finder textFinder = find.descendant(
-          of: find.byKey(const Key('selectedSortingOptionsListView')),
-          matching: find.text('Audio downl date'),
-        );
-
-        // Then find the ListTile ancestor of the 'Audio downl date' Text
-        // widget. The ascending/descending and remove icon buttons are
-        // contained in their ListTile ancestor
-        final Finder listTileFinder = find.ancestor(
-          of: textFinder,
-          matching: find.byType(ListTile),
-        );
-
-        // Now, within that ListTile, find the sort option delete IconButton
-        // with key 'removeSortingOptionIconButton'
-        final Finder iconButtonFinder = find.descendant(
-          of: listTileFinder,
-          matching: find.byKey(const Key('removeSortingOptionIconButton')),
-        );
-
-        // Tap on the delete icon button to delete the 'Audio downl date'
-        // descending sort option
-        await tester.tap(iconButtonFinder);
-        await tester.pumpAndSettle();
-
-        // Now enter the start and end dates for the audio download date
-        // sort/filter parms, but first scroll down the dialog so that
-        // the date text fields are visible.
-
-        await tester.drag(
-          find.byType(AudioSortFilterDialog),
-          const Offset(
-              0, -300), // Negative value for vertical drag to scroll down
-        );
-        await tester.pumpAndSettle();
-
-        await tester.enterText(
-            find.byKey(const Key('startDownloadDateTextField')), '26/12/2023');
-        await tester.pumpAndSettle(Duration(milliseconds: 200));
-
-        await tester.enterText(
-            find.byKey(const Key('endDownloadDateTextField')), '26/12/2023');
-        await tester.pumpAndSettle(Duration(milliseconds: 200));
-
-        // Click on the "Save" button. This closes the sort/filter dialog
-        // and updates the sort/filter playlist download view dropdown
-        // button with the newly created sort/filter parms
-        await tester
-            .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
-        await tester.pumpAndSettle();
-
-        // Now verify the playlist download view state with the
-        // 'Drop2023Title asc' sort/filter parms applied
-
-        // Verify that the dropdown button has been updated with the
-        // 'Drop2023Title asc' sort/filter parms selected
-        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
-          tester: tester,
-          dropdownButtonSelectedTitle: saveAsTitle,
-        );
-
-        // And verify the order of the playlist audio titles
-
-        List<String> audioTitlesSortedByTitleAscending = [
-          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
-          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-        ];
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
-        );
-
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
-      });
-      testWidgets(
-          '''Video upload start/end date sort/filter. Audio list item subtitle
-             specific to video upload date sort/filter parms is verified.''',
-          (WidgetTester tester) async {
-        //    Click on 'Sort/filter audio' menu item of Audio popup menu to
-        //    open sort filter audio dialog. Then creating a named video upload
-        //    start/end date sort/filter parms and saving it. Then verifying that
-        //    a Sort/filter dropdown button item has been created and is applied
-        //    to the playlist download view list of audio. Then, edit the created
-        //    video upload start/end date sort/filter parms in order to add to it
-        //    sorting the filtered audios by descending video upload date. Finally,
-        //    the modified sorted audio list.
-
-        // Purge the test playlist directory if it exists so that the
-        // playlist list is empty
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
-
-        // Copy the test initial audio data to the app dir
-        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-          sourceRootPath:
-              "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
-
-        final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
-          isTest: true,
-        );
-
-        // Load the settings from the json file. This is necessary
-        // otherwise the ordered playlist titles will remain empty
-        // and the playlist list will not be filled with the
-        // playlists available in the download app test dir
-        await settingsDataService.loadSettingsFromFile(
-            settingsJsonPathFileName:
-                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
-
-        await app.main(['test']);
-        await tester.pumpAndSettle();
-
-        // Now open the audio popup menu
-        await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-        await tester.pumpAndSettle();
-
-        // Find the sort/filter audio menu item and tap on it to
-        // open the audio sort filter dialog
-        await tester.tap(
-            find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
-        await tester.pumpAndSettle();
-
-        // Type "UploadVideo" in the 'Save as' TextField
-
-        String saveAsTitle = 'UploadVideo';
-
-        await tester.enterText(
-            find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
-            saveAsTitle);
-        await tester.pumpAndSettle();
-
-        // Enter the start and end dates for the video upload date
-        // sort/filter parms, but first scroll down the dialog so that
-        // the date text fields are visible.
-
-        await tester.drag(
-          find.byType(AudioSortFilterDialog),
-          const Offset(
-              0, -300), // Negative value for vertical drag to scroll down
-        );
-        await tester.pumpAndSettle();
-
-        await tester.enterText(
-            find.byKey(const Key('startUploadDateTextField')), '12/06/2022');
-        await tester.pumpAndSettle(Duration(milliseconds: 200));
-
-        await tester.enterText(
-            find.byKey(const Key('endUploadDateTextField')), '19/09/2023');
-        await tester.pumpAndSettle(Duration(milliseconds: 200));
-
-        // Click on the "Save" button. This closes the sort/filter dialog
-        // and updates the sort/filter playlist download view dropdown
-        // button with the newly created sort/filter parms
-        await tester
-            .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
-        await tester.pumpAndSettle();
-
-        // Now verify the playlist download view state with the 'UploadVideo'
-        // sort/filter parms applied
-
-        // Verify that the dropdown button has been updated with the
-        // 'UploadVideo' sort/filter parms selected
-        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
-          tester: tester,
-          dropdownButtonSelectedTitle: saveAsTitle,
-        );
-
-        // And verify the order of the playlist audio titles
-
-        List<String> audioTitlesSortedByTitleAscending = [
-          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-          "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
-        ];
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
-        );
-
-        // And verify the order of the playlist audio subtitles
-
-        List<String> audioSubTitlesSortedByTitleAscending = [
-          "0:06:29.0. Video upload date: 12/06/2022.",
-          "0:13:39.0. Video upload date: 10/09/2023.",
-        ];
-
-        IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
-          tester: tester,
-          audioSubTitlesOrderLst: audioSubTitlesSortedByTitleAscending,
-        );
-
-        // Now tap on the current dropdown button item to open the dropdown
-        // button items list
-
-        final Finder dropDownButtonFinder =
-            find.byKey(const Key('sort_filter_parms_dropdown_button'));
-
-        final Finder dropDownButtonTextFinder = find.descendant(
-          of: dropDownButtonFinder,
-          matching: find.byType(Text),
-        );
-
-        await tester.tap(dropDownButtonTextFinder);
-        await tester.pumpAndSettle();
-
-        // And find the 'UploadVideo' sort/filter item
-        final Finder uploadVideoDropDownTextFinder =
-            find.text(saveAsTitle).last;
-        await tester.tap(uploadVideoDropDownTextFinder);
-        await tester.pumpAndSettle();
-
-        // Now open the audio popup menu in order to modify the 'UploadVideo'
-        final Finder dropdownItemEditIconButtonFinder = find.byKey(
-            const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
-        await tester.tap(dropdownItemEditIconButtonFinder);
-        await tester.pumpAndSettle();
-
-        // Now select the 'Video upload date' item in the 'Sort by' dropdown button
-
-        await tester.tap(find.byKey(const Key('sortingOptionDropdownButton')));
-        await tester.pumpAndSettle();
-
-        await tester.tap(find.text('Video upload date'));
-        await tester.pumpAndSettle();
-
-        // Then delete the "Audio download date" descending sort option
-
-        // Find the Text with "Audio downl date" which is located in the
-        // selected sort parameters ListView
-        final Finder textFinder = find.descendant(
-          of: find.byKey(const Key('selectedSortingOptionsListView')),
-          matching: find.text('Audio downl date'),
-        );
-
-        // Then find the ListTile ancestor of the 'Audio downl date' Text
-        // widget. The ascending/descending and remove icon buttons are
-        // contained in their ListTile ancestor
-        final Finder listTileFinder = find.ancestor(
-          of: textFinder,
-          matching: find.byType(ListTile),
-        );
-
-        // Now, within that ListTile, find the sort option delete IconButton
-        // with key 'removeSortingOptionIconButton'
-        final Finder iconButtonFinder = find.descendant(
-          of: listTileFinder,
-          matching: find.byKey(const Key('removeSortingOptionIconButton')),
-        );
-
-        // Tap on the delete icon button to delete the 'Audio downl date'
-        // descending sort option
-        await tester.tap(iconButtonFinder);
-        await tester.pumpAndSettle();
-
-        // Click on the "Save" button. This closes the sort/filter dialog
-        // and updates the sort/filter playlist download view dropdown
-        // button with the newly created sort/filter parms
-        await tester
-            .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
-        await tester.pumpAndSettle();
-
-        await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
-          tester: tester,
-          confirmDialogTitleOne:
-              'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
-          confirmDialogMessage:
-              'Sort by:\n Present only in initial version:\n   Audio downl date desc,\n Present only in modified version:\n   Video upload date desc',
-        );
-
-        // Now verify the playlist download view state with the 'UploadVideo'
-        // sort/filter parms applied
-
-        // Verify that the dropdown button has been updated with the
-        // 'UploadVideo' sort/filter parms selected
-        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
-          tester: tester,
-          dropdownButtonSelectedTitle: saveAsTitle,
-        );
-
-        // And verify the order of the playlist audio titles
-
-        audioTitlesSortedByTitleAscending = [
-          "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
-          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-        ];
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
-        );
-
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
-      });
-      testWidgets('''Audio file size sort/filter.''',
-          (WidgetTester tester) async {
-        //    Click on 'Sort/filter audio' menu item of Audio popup menu to
-        //    open sort filter audio dialog. Then creating a named audio file size
-        //    sort/filter parms and saving it. Then verifying that
-        //    a Sort/filter dropdown button item has been created and is applied
-        //    to the playlist download view list of audio.
-
-        // Purge the test playlist directory if it exists so that the
-        // playlist list is empty
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
-
-        // Copy the test initial audio data to the app dir
-        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-          sourceRootPath:
-              "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
-
-        final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
-          isTest: true,
-        );
-
-        // Load the settings from the json file. This is necessary
-        // otherwise the ordered playlist titles will remain empty
-        // and the playlist list will not be filled with the
-        // playlists available in the download app test dir
-        await settingsDataService.loadSettingsFromFile(
-            settingsJsonPathFileName:
-                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
-
-        await app.main(['test']);
-        await tester.pumpAndSettle();
-
-        // Now open the audio popup menu
-        await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-        await tester.pumpAndSettle();
-
-        // Find the sort/filter audio menu item and tap on it to
-        // open the audio sort filter dialog
-        await tester.tap(
-            find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
-        await tester.pumpAndSettle();
-
-        // Type "audioFileSize" in the 'Save as' TextField
-
-        String saveAsTitle = 'audioFileSize';
-
-        await tester.enterText(
-            find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
-            saveAsTitle);
-        await tester.pumpAndSettle();
-
-        // Enter the start and end file size MB range in the corresponding fields,
-        // but first scroll down the dialog so that the date file size fields are
-        // visible.
-
-        await tester.drag(
-          find.byType(AudioSortFilterDialog),
-          const Offset(
-              0, -350), // Negative value for vertical drag to scroll down
-        );
-        await tester.pumpAndSettle();
-
-        await tester.enterText(
-            find.byKey(const Key('startFileSizeTextField')), '2.37');
-        await tester.pumpAndSettle(Duration(milliseconds: 200));
-
-        await tester.enterText(
-            find.byKey(const Key('endFileSizeTextField')), '2.8');
-        await tester.pumpAndSettle(Duration(milliseconds: 200));
-
-        // Click on the "Save" button. This closes the sort/filter dialog
-        // and updates the sort/filter playlist download view dropdown
-        // button with the newly created sort/filter parms
-        await tester
-            .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
-        await tester.pumpAndSettle();
-
-        // Now verify the playlist download view state with the 'UploadVideo'
-        // sort/filter parms applied
-
-        // Verify that the dropdown button has been updated with the
-        // 'UploadVideo' sort/filter parms selected
-        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
-          tester: tester,
-          dropdownButtonSelectedTitle: saveAsTitle,
-        );
-
-        // And verify the order of the playlist audio titles
-
-        List<String> audioTitlesSortedByTitleAscending = [
-          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-          "La surpopulation mondiale par Jancovici et Barrau",
-          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-        ];
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
-        );
-
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
-      });
-      testWidgets('''Audio duration sort/filter.''',
-          (WidgetTester tester) async {
-        //    Click on 'Sort/filter audio' menu item of Audio popup menu to
-        //    open sort filter audio dialog. Then creating a named audio duration
-        //    sort/filter parms and saving it. Then verifying that
-        //    a Sort/filter dropdown button item has been created and is applied
-        //    to the playlist download view list of audio.
-
-        // Purge the test playlist directory if it exists so that the
-        // playlist list is empty
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
-
-        // Copy the test initial audio data to the app dir
-        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-          sourceRootPath:
-              "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
-
-        final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
-          isTest: true,
-        );
-
-        // Load the settings from the json file. This is necessary
-        // otherwise the ordered playlist titles will remain empty
-        // and the playlist list will not be filled with the
-        // playlists available in the download app test dir
-        await settingsDataService.loadSettingsFromFile(
-            settingsJsonPathFileName:
-                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
-
-        await app.main(['test']);
-        await tester.pumpAndSettle();
-
-        // Now open the audio popup menu
-        await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-        await tester.pumpAndSettle();
-
-        // Find the sort/filter audio menu item and tap on it to
-        // open the audio sort filter dialog
-        await tester.tap(
-            find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
-        await tester.pumpAndSettle();
-
-        // Type "audioFileSize" in the 'Save as' TextField
-
-        String saveAsTitle = 'audioFileSize';
-
-        await tester.enterText(
-            find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
-            saveAsTitle);
-        await tester.pumpAndSettle();
-
-        // Enter the start and end file size MB range in the corresponding fields,
-        // but first scroll down the dialog so that the date file size fields are
-        // visible.
-
-        await tester.drag(
-          find.byType(AudioSortFilterDialog),
-          const Offset(
-              0, -350), // Negative value for vertical drag to scroll down
-        );
-        await tester.pumpAndSettle();
-
-        await tester.enterText(
-            find.byKey(const Key('startAudioDurationTextField')), '0:06');
-        await tester.pumpAndSettle(Duration(milliseconds: 200));
-
-        await tester.enterText(
-            find.byKey(const Key('endAudioDurationTextField')), '0:08');
-        await tester.pumpAndSettle(Duration(milliseconds: 200));
-
-        // Click on the "Save" button. This closes the sort/filter dialog
-        // and updates the sort/filter playlist download view dropdown
-        // button with the newly created sort/filter parms
-        await tester
-            .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
-        await tester.pumpAndSettle();
-
-        // Now verify the playlist download view state with the 'UploadVideo'
-        // sort/filter parms applied
-
-        // Verify that the dropdown button has been updated with the
-        // 'UploadVideo' sort/filter parms selected
-        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
-          tester: tester,
-          dropdownButtonSelectedTitle: saveAsTitle,
-        );
-
-        // And verify the order of the playlist audio titles
-
-        List<String> audioTitlesSortedByTitleAscending = [
-          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-          "La surpopulation mondiale par Jancovici et Barrau",
-          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-        ];
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
-        );
-
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
       });
     });
     group('''Testing not yet tested sort options''', () {
