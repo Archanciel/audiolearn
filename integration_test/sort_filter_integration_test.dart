@@ -3046,7 +3046,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               confirmDialogTitleOne:
                   'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
               confirmDialogMessage:
-                  'Trier par:\n Uniquement en version initiale:\n   Titre audio desc\n Uniquement en version modifiée:\n   Titre audio asc,\n   Date mise en ligne vidéo desc,\n   Durée audio asc,\n   Durée audio écoutable\n   restante asc,\n   Vitesse téléch audio desc,\n   Durée téléch audio desc\nMots filtre:\n Uniquement en version modifiée:\n   Marine Le Pen,\n   Emmanuel Macron\nOptions filtre:\n En version initiale:\n   Ignorer la casse: coché\n En version modifiée:\n   Ignorer la casse: décoché\n En version initiale:\n   Inclure la chaîne Youtube: coché\n En version modifiée:\n   Inclure la chaîne\n   Youtube: décoché\n En version initiale:\n   Qualité musicale: décoché\n En version modifiée:\n   Qualité musicale: coché\n En version initiale:\n   Commenté: coché\n En version modifiée:\n   Commenté: décoché',
+                  'Trier par:\n Uniquement en version initiale:\n   Titre audio desc\n Uniquement en version modifiée:\n   Titre audio asc,\n   Date mise en ligne vidéo desc,\n   Durée audio asc,\n   Durée audio écoutable\n   restante asc,\n   Vitesse téléch audio desc,\n   Durée téléch audio desc\nMots filtre:\n Uniquement en version modifiée:\n   Marine Le Pen,\n   Emmanuel Macron\nOptions filtre:\n En version initiale:\n   Ignorer la casse: coché\n En version modifiée:\n   Ignorer la casse: décoché\n En version initiale:\n   Inclure la chaîne Youtube: coché\n En version modifiée:\n   Inclure la chaîne\n   Youtube: décoché\n En version initiale:\n   Qualité musicale: décoché\n En version modifiée:\n   Qualité musicale: coché\n En version initiale:\n   Commenté: coché\n En version modifiée:\n   Commenté: décoché\n En version modifiée:\n   Date début téléch: 26/12/2023\n En version modifiée:\n   Date fin téléch: 06/01/2024\n En version modifiée:\n   Date début mise en\n   ligne: 12/06/2022\n En version modifiée:\n   Date fin mise en\n   ligne: 19/09/2023\n En version modifiée:\n   Intervalle taille fichier (MB)\n   Début: 2.37\n En version modifiée:\n   Intervalle taille fichier (MB)\n   Fin: 2.8\n En version modifiée:\n   Intervalle durée audio (hh:mm)\n   Début: 00:06\n En version modifiée:\n   Intervalle durée audio (hh:mm)\n   Fin: 00:08',
             );
 
             // Purge the test playlist directory so that the created test
@@ -3055,6 +3055,12 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               rootPath: kPlaylistDownloadRootPathWindowsTest,
             );
           });
+
+            // Purge the test playlist directory so that the created test
+            // files are not uploaded to GitHub
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kPlaylistDownloadRootPathWindowsTest,
+            );
           testWidgets(
               '''In 'Title asc' click on 'or' only after adding two filter
                words, modified in the existing named and saved sort/filter parms.
@@ -3140,9 +3146,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
               tester: tester,
               confirmDialogTitleOne:
-                  'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
+                  'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
               confirmDialogMessage:
-                  'Filter words:\n Present only in modified version:\n   Jancovici,\n   Marine Le Pen\nFilter options:\n In initial version:\n   and / or: and\n In modified version:\n   and / or: or',
+                  'Mots filtre:\n Uniquement en version modifiée:\n   Jancovici,\n   Marine Le Pen\nOptions filtre:\n En version initiale:\n   et / ou: et\n En version modifiée:\n   et / ou: ou',
             );
 
             // Purge the test playlist directory so that the created test
@@ -3239,9 +3245,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
               tester: tester,
               confirmDialogTitleOne:
-                  'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
+                  'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
               confirmDialogMessage:
-                  'Filter words:\n Present only in modified version:\n   Jancovici,\n   Marine Le Pen\nFilter options:\n In initial version:\n   and / or: and\n In modified version:\n   and / or: or',
+                  'Mots filtre:\n Uniquement en version modifiée:\n   Jancovici,\n   Marine Le Pen\nOptions filtre:\n En version initiale:\n   et / ou: et\n En version modifiée:\n   et / ou: ou',
             );
 
             // Purge the test playlist directory so that the created test
@@ -3329,9 +3335,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
               tester: tester,
               confirmDialogTitleOne:
-                  'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
+                  'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
               confirmDialogMessage:
-                  'Filter options:\n In modified version:\n   Start downl date: 26/12/2023\n In modified version:\n   End downl date: 06/01/2024',
+                  'Options filtre:\n En version modifiée:\n   Date début téléch: 26/12/2023\n En version modifiée:\n   Date fin téléch: 06/01/2024',
             );
 
             // Purge the test playlist directory so that the created test
@@ -3419,15 +3425,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
               tester: tester,
               confirmDialogTitleOne:
-                  'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
+                  'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
               confirmDialogMessage:
-                  'Filter options:\n In modified version:\n   Start upl date: 12/06/2022\n In modified version:\n   End upl date: 19/09/2023',
-            );
-
-            // Purge the test playlist directory so that the created test
-            // files are not uploaded to GitHub
-            DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+                  'Options filtre:\n En version modifiée:\n   Date début mise en\n   ligne: 12/06/2022\n En version modifiée:\n   Date fin mise en\n   ligne: 19/09/2023',
             );
           });
           testWidgets(
@@ -3508,9 +3508,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
               tester: tester,
               confirmDialogTitleOne:
-                  'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
+                  'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
               confirmDialogMessage:
-                  'Filter options:\n In modified version:\n   File size range (MB) Start: 2.37\n In modified version:\n   File size range (MB) End: 2.8',
+                  'Options filtre:\n En version modifiée:\n   Intervalle taille fichier (MB)\n   Début: 2.37\n En version modifiée:\n   Intervalle taille fichier (MB)\n   Fin: 2.8',
             );
 
             // Purge the test playlist directory so that the created test
@@ -3597,9 +3597,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
               tester: tester,
               confirmDialogTitleOne:
-                  'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
+                  'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
               confirmDialogMessage:
-                  'Filter options:\n In modified version:\n   Audio duration range (hh:mm)\n   Start: 00:06\n In modified version:\n   Audio duration range (hh:mm)\n   End: 00:08',
+                  'Options filtre:\n En version modifiée:\n   Intervalle durée audio (hh:mm)\n   Début: 00:06\n En version modifiée:\n   Intervalle durée audio (hh:mm)\n   Fin: 00:08',
             );
 
             // Purge the test playlist directory so that the created test
