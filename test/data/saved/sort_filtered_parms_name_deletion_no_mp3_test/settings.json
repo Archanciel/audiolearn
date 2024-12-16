@@ -85,10 +85,10 @@
             "uploadDateEndRange": null,
             "uploadDateStartRange": null
         },
-        "duration0:00-2:00": {
+        "duration0:00-0:13": {
             "downloadDateEndRange": null,
             "downloadDateStartRange": null,
-            "durationEndRangeSec": 7200,
+            "durationEndRangeSec": 780,
             "durationStartRangeSec": 0,
             "fileSizeEndRangeMB": 0.0,
             "fileSizeStartRangeMB": 0.0,
@@ -99,7 +99,6 @@
             "filterNotListened": true,
             "filterPartiallyListened": true,
             "filterSentenceLst": [
-                "one"
             ],
             "ignoreCase": true,
             "searchAsWellInVideoCompactDescription": true,
@@ -128,7 +127,6 @@
             "filterNotListened": true,
             "filterPartiallyListened": true,
             "filterSentenceLst": [
-                "one"
             ],
             "ignoreCase": true,
             "searchAsWellInVideoCompactDescription": true,
@@ -143,12 +141,12 @@
             "uploadDateEndRange": null,
             "uploadDateStartRange": null
         },
-        "fileSize0-10": {
+        "fileSize0-6": {
             "downloadDateEndRange": null,
             "downloadDateStartRange": null,
             "durationEndRangeSec": 0,
             "durationStartRangeSec": 0,
-            "fileSizeEndRangeMB": 10.0,
+            "fileSizeEndRangeMB": 6.0,
             "fileSizeStartRangeMB": 0.0,
             "filterCommented": true,
             "filterFullyListened": true,
@@ -157,7 +155,6 @@
             "filterNotListened": true,
             "filterPartiallyListened": true,
             "filterSentenceLst": [
-                "one"
             ],
             "ignoreCase": true,
             "searchAsWellInVideoCompactDescription": true,
@@ -172,13 +169,13 @@
             "uploadDateEndRange": null,
             "uploadDateStartRange": null
         },
-        "fileSize2-0": {
+        "fileSize4-0": {
             "downloadDateEndRange": null,
             "downloadDateStartRange": null,
             "durationEndRangeSec": 0,
             "durationStartRangeSec": 0,
             "fileSizeEndRangeMB": 0.0,
-            "fileSizeStartRangeMB": 2.0,
+            "fileSizeStartRangeMB": 4.0,
             "filterCommented": true,
             "filterFullyListened": true,
             "filterMusicQuality": false,
@@ -186,7 +183,6 @@
             "filterNotListened": true,
             "filterPartiallyListened": true,
             "filterSentenceLst": [
-                "one"
             ],
             "ignoreCase": true,
             "searchAsWellInVideoCompactDescription": true,
