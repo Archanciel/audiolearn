@@ -485,7 +485,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                           ),
                           value: _isAnd,
                           onChanged: (_audioTitleFilterSentencesLst.length > 1)
-                              ? _toggleCheckboxAnd
+                              ? _toggleCheckboxAndOr
                               : null,
                         ),
                         Tooltip(
@@ -505,7 +505,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                           ),
                           value: _isOr,
                           onChanged: (_audioTitleFilterSentencesLst.length > 1)
-                              ? _toggleCheckboxOr
+                              ? _toggleCheckboxOrAnd
                               : null,
                         ),
                       ],
@@ -1964,19 +1964,33 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     }).toList();
   }
 
-  void _toggleCheckboxAnd(bool? value) {
+  /// If checkbox 'and' is checked, checkbox 'or' is unchecked, If checkbox 'and'
+  /// is unchecked, checkbox 'or' is checked
+  void _toggleCheckboxAndOr(bool? value) {
     setState(() {
       _isAnd = !_isAnd;
-      // When checkbox 1 is checked, ensure checkbox 2 is unchecked
-      if (_isAnd) _isOr = false;
+      if (_isAnd) {
+        // When checkbox 'and' is checked, checkbox 'or' is unchecked
+        _isOr = false;
+      } else {
+        // When checkbox 'and' is cunhecked, checkbox 'or' is checked
+        _isOr = true;
+      }
     });
   }
 
-  void _toggleCheckboxOr(bool? value) {
+  /// If checkbox 'or' is checked, checkbox 'and' is unchecked, If checkbox 'or'
+  /// is unchecked, checkbox 'and' is checked
+  void _toggleCheckboxOrAnd(bool? value) {
     setState(() {
       _isOr = !_isOr;
-      // When checkbox 2 is checked, ensure checkbox 1 is unchecked
-      if (_isOr) _isAnd = false;
+        // When checkbox 'or' is checked, checkbox 'and' is unchecked
+      if (_isOr) {
+        _isAnd = false;
+      } else {
+      // When checkbox 'or' is unchecked, checkbox 'and' is checked
+        _isAnd = true;
+      }
     });
   }
 
