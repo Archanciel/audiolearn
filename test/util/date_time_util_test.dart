@@ -546,4 +546,27 @@ void main() {
       },
     );
   });
+  group('DateTimeUtil.setDateTimeToEndDay()', () {
+    test('setDateTimeToEndDay 0 hour', () {
+      DateTime increasedValue = DateTimeUtil.setDateTimeToEndDay(
+        date: DateTime(2024, 1, 7),
+      );
+
+      expect(increasedValue, DateTime(2024, 1, 7, 23, 59, 59));
+    });
+    test('setDateTimeToEndDay 10 hours 45 minutes 23 seconds', () {
+      DateTime increasedValue = DateTimeUtil.setDateTimeToEndDay(
+        date: DateTime(2024, 1, 7, 10, 45, 23),
+      );
+
+      expect(increasedValue, DateTime(2024, 1, 7, 23, 59, 59));
+    });
+    test('setDateTimeToEndDay 0 hours 0 minutes 23 seconds', () {
+      DateTime increasedValue = DateTimeUtil.setDateTimeToEndDay(
+        date: DateTime(2024, 1, 7, 0, 0, 23),
+      );
+
+      expect(increasedValue, DateTime(2024, 1, 7, 23, 59, 59));
+    });
+  });
 }

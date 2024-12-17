@@ -8,6 +8,7 @@ import '../../constants.dart';
 import '../../models/playlist.dart';
 import '../../utils/button_state_manager.dart';
 import '../../utils/date_time_parser.dart';
+import '../../utils/date_time_util.dart';
 import '../../viewmodels/playlist_list_vm.dart';
 import '../../services/sort_filter_parameters.dart';
 import '../../viewmodels/warning_message_vm.dart';
@@ -1187,7 +1188,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       try {
         final DateTime parsedDate = dateFormatVMlistenFalse
             .parseDateStrUsinAppDateFormat(controller.text);
-        _setDateTime(
+        _setDateToPrivateVariable(
           dateTimeType: dateTimeType,
           dateTime: parsedDate,
         );
@@ -1236,7 +1237,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
             );
 
             // Add this check
-            _setDateTime(
+            _setDateToPrivateVariable(
               dateTimeType: dateTimeType,
               dateTime: pickedDate,
             );
@@ -1264,7 +1265,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     );
   }
 
-  void _setDateTime({
+  void _setDateToPrivateVariable({
     required DateTimeType dateTimeType,
     DateTime? dateTime,
   }) {
@@ -1277,17 +1278,13 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
         _startDownloadDateTime = dateTime;
         break;
       case DateTimeType.endDownloadDateTime:
-        _endDownloadDateTime = AudioSortFilterService.setDateTimeToEndDay(
-          date: dateTime,
-        );
+        _endDownloadDateTime = dateTime;
         break;
       case DateTimeType.startUploadDateTime:
         _startUploadDateTime = dateTime;
         break;
       case DateTimeType.endUploadDateTime:
-        _endUploadDateTime = AudioSortFilterService.setDateTimeToEndDay(
-          date: dateTime,
-        );
+        _endUploadDateTime = dateTime;
         break;
     }
   }

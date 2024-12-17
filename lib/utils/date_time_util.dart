@@ -168,4 +168,11 @@ class DateTimeUtil {
 
     return formattedTime;
   }
+
+  static DateTime setDateTimeToEndDay({
+    required DateTime date,
+  }) {
+    // Set the time to the end of the given day (23:59:59)
+    return DateTime(date.year, date.month, date.day, 23, 59, 59);
+  }
 }
