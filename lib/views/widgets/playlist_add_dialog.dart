@@ -229,7 +229,7 @@ class _PlaylistAddDialogState extends State<PlaylistAddDialog>
           AppLocalizations.of(context)!.infiniteBytesPerSecond;
     } else {
       audioDownloadSpeedStr =
-          '${UiUtil.formatLargeByteAmount(context: context, bytes: audioDownloadSpeed)}/sec';
+          '${UiUtil.formatLargeSizeToKbOrMb(context: context, sizeInBytes: audioDownloadSpeed)}/sec';
     }
 
     return audioDownloadSpeedStr;

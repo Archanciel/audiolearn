@@ -5,19 +5,20 @@ import '../constants.dart';
 import '../models/audio.dart';
 
 class UiUtil {
-  static String formatLargeByteAmount({
+  static String formatLargeSizeToKbOrMb({
     required BuildContext context,
-    required int bytes,
+    required int sizeInBytes,
   }) {
     String formattedValueStr;
 
-    if (bytes < 1000000) {
+    if (sizeInBytes < 1000000) {
       formattedValueStr =
-          '${bytes ~/ 1000} K${AppLocalizations.of(context)!.octetShort}';
+          '${sizeInBytes ~/ 1000} K${AppLocalizations.of(context)!.octetShort}';
     } else {
       formattedValueStr =
-          '${(bytes / 1000000).toStringAsFixed(2)} M${AppLocalizations.of(context)!.octetShort}';
+          '${(sizeInBytes / 1000000).toStringAsFixed(2)} M${AppLocalizations.of(context)!.octetShort}';
     }
+
     return formattedValueStr;
   }
 

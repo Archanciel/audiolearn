@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:audiolearn/models/comment.dart';
 import 'package:audiolearn/utils/date_time_util.dart';
 import 'package:audiolearn/viewmodels/comment_vm.dart';
@@ -810,7 +812,7 @@ class AudioSortFilterService {
     };
   }
 
-  /// Method called by filterAndSortAudioLst().
+  /// Method called by filterAndSortAudioLst(). The video title is
   ///
   /// This method filters the audio list by the given filter sentences applied
   /// on the video title and/or the Youtube channel name and/or the video
@@ -1122,7 +1124,7 @@ class AudioSortFilterService {
 
     if (audioSortFilterParameters.durationStartRangeSec != 0 ||
         audioSortFilterParameters.durationEndRangeSec != 0) {
-      filteredAudios = _filterAudioByAudioDuration(
+      filteredAudios = _filterAudioLstByAudioDuration(
         audioLst: filteredAudios,
         startRangeSeconds: audioSortFilterParameters.durationStartRangeSec,
         endRangeSeconds: audioSortFilterParameters.durationEndRangeSec,
@@ -1247,7 +1249,7 @@ class AudioSortFilterService {
         }
         return audioLst.where((audio) {
           return (audio.audioFileSize >= startFileSizeMB * 1000000) &&
-              (audio.audioFileSize <= endFileSizeMB * 1000000);
+              (audio.audioFileSize < (_addSmallIncrement(endFileSizeMB)) * 1000000);
         }).toList();
       } else {
         // endFileSizeMB == 0
@@ -1259,7 +1261,7 @@ class AudioSortFilterService {
       // startFileSizeMB == 0
       if (endFileSizeMB != 0) {
         return audioLst.where((audio) {
-          return audio.audioFileSize <= endFileSizeMB * 1000000;
+          return audio.audioFileSize < (_addSmallIncrement(endFileSizeMB)) * 1000000;
         }).toList();
       } else {
         // startFileSizeMB and endFileSizeMB are 0
@@ -1268,7 +1270,24 @@ class AudioSortFilterService {
     }
   }
 
-  List<Audio> _filterAudioByAudioDuration({
+  double _addSmallIncrement(double value) {
+    // Determine the precision (number of decimals) in the value
+    String valueStr = value.toString();
+    int decimalPlaces = 0;
+
+    if (valueStr.contains('.')) {
+      decimalPlaces =
+          valueStr.split('.')[1].length; // Length of the fraction part
+    }
+
+    // Calculate the increment dynamically based on decimal places
+    double increment = 1 / (10 * pow(10, decimalPlaces - 1));
+
+    // Add the increment and return the result
+    return value + increment;
+  }
+
+  List<Audio> _filterAudioLstByAudioDuration({
     required List<Audio> audioLst,
     required int startRangeSeconds,
     required int endRangeSeconds,

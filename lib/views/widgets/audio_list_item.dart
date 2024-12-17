@@ -679,9 +679,9 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
     final int audioFileSize = audio.audioFileSize;
     final String audioFileSizeStr;
 
-    audioFileSizeStr = UiUtil.formatLargeByteAmount(
+    audioFileSizeStr = UiUtil.formatLargeSizeToKbOrMb(
       context: context,
-      bytes: audioFileSize,
+      sizeInBytes: audioFileSize,
     );
 
     final int audioDownloadSpeed = audio.audioDownloadSpeed;
@@ -690,9 +690,9 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
     if (audioDownloadSpeed.isInfinite) {
       audioDownloadSpeedStr = 'infinite o/sec';
     } else {
-      audioDownloadSpeedStr = '${UiUtil.formatLargeByteAmount(
+      audioDownloadSpeedStr = '${UiUtil.formatLargeSizeToKbOrMb(
         context: context,
-        bytes: audioDownloadSpeed,
+        sizeInBytes: audioDownloadSpeed,
       )}/sec';
     }
 
