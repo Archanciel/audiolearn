@@ -1155,16 +1155,21 @@ class AudioSortFilterService {
     required DateTime? startDateTime,
     required DateTime? endDateTime,
   }) {
+    if (endDateTime != null) {
+      endDateTime = DateTimeUtil.setDateTimeToEndDay(date: endDateTime);
+    }
+
     if (startDateTime != null) {
       if (endDateTime != null) {
         if (startDateTime.isAfter(endDateTime)) {
           return [];
         }
+
         return audioLst.where((audio) {
           return (audio.audioDownloadDateTime.isAfter(startDateTime) ||
                   audio.audioDownloadDateTime
                       .isAtSameMomentAs(startDateTime)) &&
-              (audio.audioDownloadDateTime.isBefore(endDateTime) ||
+              (audio.audioDownloadDateTime.isBefore(endDateTime!) ||
                   audio.audioDownloadDateTime.isAtSameMomentAs(endDateTime));
         }).toList();
       } else {
@@ -1178,7 +1183,7 @@ class AudioSortFilterService {
       // startDateTime is null
       if (endDateTime != null) {
         return audioLst.where((audio) {
-          return (audio.audioDownloadDateTime.isBefore(endDateTime) ||
+          return (audio.audioDownloadDateTime.isBefore(endDateTime!) ||
               audio.audioDownloadDateTime.isAtSameMomentAs(endDateTime));
         }).toList();
       } else {
@@ -1193,15 +1198,20 @@ class AudioSortFilterService {
     required DateTime? startDateTime,
     required DateTime? endDateTime,
   }) {
+    if (endDateTime != null) {
+      endDateTime = DateTimeUtil.setDateTimeToEndDay(date: endDateTime);
+    }
+
     if (startDateTime != null) {
       if (endDateTime != null) {
         if (startDateTime.isAfter(endDateTime)) {
           return [];
         }
+
         return audioLst.where((audio) {
           return (audio.videoUploadDate.isAfter(startDateTime) ||
                   audio.videoUploadDate.isAtSameMomentAs(startDateTime)) &&
-              (audio.videoUploadDate.isBefore(endDateTime) ||
+              (audio.videoUploadDate.isBefore(endDateTime!) ||
                   audio.videoUploadDate.isAtSameMomentAs(endDateTime));
         }).toList();
       } else {
@@ -1215,7 +1225,7 @@ class AudioSortFilterService {
       // startDateTime is null
       if (endDateTime != null) {
         return audioLst.where((audio) {
-          return (audio.videoUploadDate.isBefore(endDateTime) ||
+          return (audio.videoUploadDate.isBefore(endDateTime!) ||
               audio.videoUploadDate.isAtSameMomentAs(endDateTime));
         }).toList();
       } else {
@@ -1289,12 +1299,5 @@ class AudioSortFilterService {
         return audioLst;
       }
     }
-  }
-
-  static DateTime setDateTimeToEndDay({
-    required DateTime date,
-  }) {
-    // Set the time to the end of the given day (23:59:59)
-    return DateTime(date.year, date.month, date.day, 23, 59, 59);
   }
 }

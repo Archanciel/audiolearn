@@ -1024,7 +1024,7 @@ void main() {
 
       List<Audio> sortedByTitleAsc =
           audioSortFilterService.sortAudioLstBySortingOptions(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         selectedSortItemLst: selectedSortItemLstAsc,
       );
 
@@ -1043,7 +1043,7 @@ void main() {
 
       List<Audio> sortedByTitleDesc =
           audioSortFilterService.sortAudioLstBySortingOptions(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         selectedSortItemLst: selectedSortItemLstDesc,
       );
 
@@ -1718,7 +1718,7 @@ void main() {
 
       List<Audio> sortedByTitleAsc =
           audioSortFilterService.sortAudioLstBySortingOptions(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         selectedSortItemLst: selectedSortItemLstAsc,
       );
 
@@ -1737,7 +1737,7 @@ void main() {
 
       List<Audio> sortedByTitleDesc =
           audioSortFilterService.sortAudioLstBySortingOptions(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         selectedSortItemLst: selectedSortItemLstDesc,
       );
 
@@ -2413,7 +2413,7 @@ void main() {
 
       List<Audio> sortedByTitleAsc =
           audioSortFilterService.sortAudioLstBySortingOptions(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         selectedSortItemLst: selectedSortItemLstAsc,
       );
 
@@ -2432,7 +2432,7 @@ void main() {
 
       List<Audio> sortedByTitleDesc =
           audioSortFilterService.sortAudioLstBySortingOptions(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         selectedSortItemLst: selectedSortItemLstDesc,
       );
 
@@ -2478,7 +2478,7 @@ void main() {
 
       List<Audio> actualAudioSortedByTitleAscLst =
           audioSortFilterService.sortAudioLstBySortingOptions(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         selectedSortItemLst: selectedSortItemLstAsc,
       );
 
@@ -2504,7 +2504,7 @@ void main() {
 
       List<Audio> actualAudioSortedByTitleDescLst =
           audioSortFilterService.sortAudioLstBySortingOptions(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         selectedSortItemLst: selectedSortItemLstDesc,
       );
 
@@ -2569,7 +2569,7 @@ void main() {
 
       List<Audio> actualAudioSortedByTitleAscLst =
           audioSortFilterService.sortAudioLstBySortingOptions(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         selectedSortItemLst: selectedSortItemLstAsc,
       );
 
@@ -2595,7 +2595,7 @@ void main() {
 
       List<Audio> actualAudioSortedByTitleDescLst =
           audioSortFilterService.sortAudioLstBySortingOptions(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         selectedSortItemLst: selectedSortItemLstDesc,
       );
 
@@ -3290,7 +3290,7 @@ void main() {
 
       List<Audio> sortedByTitleAsc =
           audioSortFilterService.sortAudioLstBySortingOptions(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         selectedSortItemLst: selectedSortItemLstDurationAscAndTitleAsc,
       );
 
@@ -3313,7 +3313,7 @@ void main() {
 
       List<Audio> sortedByTitleDesc =
           audioSortFilterService.sortAudioLstBySortingOptions(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         selectedSortItemLst: selectedSortItemLstDurationDescAndTitleDesc,
       );
 
@@ -3501,7 +3501,7 @@ void main() {
 
       List<Audio> sortedByTitleAsc =
           audioSortFilterService.sortAudioLstBySortingOptions(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         selectedSortItemLst: selectedSortItemLstAsc,
       );
 
@@ -3520,7 +3520,7 @@ void main() {
 
       List<Audio> sortedByTitleDesc =
           audioSortFilterService.sortAudioLstBySortingOptions(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         selectedSortItemLst: selectedSortItemLstDesc,
       );
 
@@ -3554,7 +3554,7 @@ void main() {
 
       List<Audio> filteredAndSortedByTitleAsc =
           audioSortFilterService.filterAndSortAudioLst(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
 
@@ -3577,7 +3577,7 @@ void main() {
 
       List<Audio> filteredAndSortedByTitleDesc =
           audioSortFilterService.filterAndSortAudioLst(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
 
@@ -3765,7 +3765,7 @@ void main() {
 
       List<Audio> filteredAndSortedByTitleAsc =
           audioSortFilterService.filterAndSortAudioLst(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
 
@@ -3795,7 +3795,7 @@ void main() {
 
       List<Audio> filteredAndSortedByTitleDesc =
           audioSortFilterService.filterAndSortAudioLst(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
 
@@ -3986,7 +3986,7 @@ void main() {
 
       List<Audio> filteredAndSortedByTitleAsc =
           audioSortFilterService.filterAndSortAudioLst(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
 
@@ -4016,7 +4016,7 @@ void main() {
 
       List<Audio> filteredAndSortedByTitleDesc =
           audioSortFilterService.filterAndSortAudioLst(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
 
@@ -4210,7 +4210,7 @@ void main() {
 
       List<Audio> filteredAndSortedByTitleAsc =
           audioSortFilterService.filterAndSortAudioLst(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
 
@@ -4240,7 +4240,7 @@ void main() {
 
       List<Audio> filteredAndSortedByTitleDesc =
           audioSortFilterService.filterAndSortAudioLst(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
 
@@ -4376,7 +4376,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateDescAndDurationAsc =
           audioSortFilterService.filterAndSortAudioLst(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
 
@@ -4411,7 +4411,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateAscAndDurationDesc =
           audioSortFilterService.filterAndSortAudioLst(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
 
@@ -4477,7 +4477,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateDescAndDurationAsc =
           audioSortFilterService.filterAndSortAudioLst(
-              audioLst: List<Audio>.from(audioList), // copy list
+              audioLst: audioList,
               audioSortFilterParameters: audioSortFilterParameters);
 
       expect(
@@ -4512,7 +4512,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateAscAndDurationDesc =
           audioSortFilterService.filterAndSortAudioLst(
-              audioLst: List<Audio>.from(audioList), // copy list
+              audioLst: audioList,
               audioSortFilterParameters: audioSortFilterParameters);
 
       List<String>
@@ -4567,7 +4567,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateDescAndDurationAsc =
           audioSortFilterService.filterAndSortAudioLst(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
 
@@ -4599,7 +4599,7 @@ void main() {
       );
       List<Audio> filteredByWordAndSortedByDownloadDateAscAndDurationDesc =
           audioSortFilterService.filterAndSortAudioLst(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
 
@@ -4651,7 +4651,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateDescAndDurationAsc =
           audioSortFilterService.filterAndSortAudioLst(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
 
@@ -4686,7 +4686,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateAscAndDurationDesc =
           audioSortFilterService.filterAndSortAudioLst(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
 
@@ -4738,7 +4738,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateDescAndDurationAsc =
           audioSortFilterService.filterAndSortAudioLst(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
 
@@ -4777,7 +4777,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateAscAndDurationDesc =
           audioSortFilterService.filterAndSortAudioLst(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
 
@@ -4832,7 +4832,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateDescAndDurationAsc =
           audioSortFilterService.filterAndSortAudioLst(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
 
@@ -4873,7 +4873,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateAscAndDurationDesc =
           audioSortFilterService.filterAndSortAudioLst(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
 
@@ -4929,7 +4929,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateDescAndDurationAsc =
           audioSortFilterService.filterAndSortAudioLst(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
 
@@ -4972,7 +4972,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateAscAndDurationDesc =
           audioSortFilterService.filterAndSortAudioLst(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
 
@@ -5040,7 +5040,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateDescAndDurationAsc =
           audioSortFilterService.filterAndSortAudioLst(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
 
@@ -5079,7 +5079,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateAscAndDurationDesc =
           audioSortFilterService.filterAndSortAudioLst(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
 
@@ -5145,7 +5145,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateDescAndDurationAsc =
           audioSortFilterService.filterAndSortAudioLst(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
 
@@ -5184,7 +5184,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateAscAndDurationDesc =
           audioSortFilterService.filterAndSortAudioLst(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
 
@@ -5298,7 +5298,7 @@ void main() {
 
       List<Audio> actualFilteredAudioLst =
           audioSortFilterService.filterOnOtherOptions(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
 
@@ -5328,7 +5328,7 @@ void main() {
       );
 
       actualFilteredAudioLst = audioSortFilterService.filterAndSortAudioLst(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
 
@@ -5368,7 +5368,7 @@ void main() {
 
       List<Audio> actualFilteredAudioLst =
           audioSortFilterService.filterOnOtherOptions(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
 
@@ -5403,7 +5403,7 @@ void main() {
 
       List<Audio> actualFilteredAudioLst =
           audioSortFilterService.filterOnOtherOptions(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
 
@@ -5511,7 +5511,7 @@ void main() {
 
       List<Audio> actualFilteredAudioLst =
           audioSortFilterService.filterOnOtherOptions(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
 
@@ -5548,7 +5548,7 @@ void main() {
 
       List<Audio> actualFilteredAudioLst =
           audioSortFilterService.filterOnOtherOptions(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
 
@@ -5615,7 +5615,7 @@ void main() {
 
       List<Audio> actualFilteredAudioLst =
           audioSortFilterService.filterOnOtherOptions(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
 
@@ -5725,12 +5725,6 @@ void main() {
       playlistListVM.getUpToDateSelectablePlaylists();
 
       audioSortFilterService = AudioSortFilterService();
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
-      );
     });
     test(
         'filter by no word in audio title or video compact description and sort by download date descending',
@@ -5752,8 +5746,7 @@ void main() {
         'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau',
       ];
 
-      final List<SortingItem>
-          selectedSortItemLstDownloadDateDescAndDurationAsc = [
+      final List<SortingItem> selectedSortItemLstDownloadDateDesc = [
         SortingItem(
           sortingOption: SortingOption.audioDownloadDate,
           isAscending: false,
@@ -5762,7 +5755,7 @@ void main() {
 
       AudioSortFilterParameters audioSortFilterParameters =
           AudioSortFilterParameters(
-        selectedSortItemLst: selectedSortItemLstDownloadDateDescAndDurationAsc,
+        selectedSortItemLst: selectedSortItemLstDownloadDateDesc,
         filterSentenceLst: [],
         sentencesCombination: SentencesCombination.and,
         ignoreCase: true,
@@ -5772,7 +5765,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateDescAndDurationAsc =
           audioSortFilterService.filterAndSortAudioLst(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
 
@@ -5805,7 +5798,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateAscAndDurationDesc =
           audioSortFilterService.filterAndSortAudioLst(
-        audioLst: List<Audio>.from(audioList), // copy list
+        audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
 
@@ -6177,26 +6170,199 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    test('setDateTimeToEndDay 0 hour', () {
-      DateTime increasedValue = AudioSortFilterService.setDateTimeToEndDay(
-        date: DateTime(2024, 1, 7),
-      );
+    group(
+        '''By download or upload date, file size or duration of audio filtering
+        test''', () {
+      late AudioSortFilterService audioSortFilterService;
+      late PlaylistListVM playlistListVM;
 
-      expect(increasedValue, DateTime(2024, 1, 7, 23, 59, 59));
-    });
-    test('setDateTimeToEndDay 10 hours 45 minutes 23 seconds', () {
-      DateTime increasedValue = AudioSortFilterService.setDateTimeToEndDay(
-        date: DateTime(2024, 1, 7, 10, 45, 23),
-      );
+      setUp(() async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
 
-      expect(increasedValue, DateTime(2024, 1, 7, 23, 59, 59));
-    });
-    test('setDateTimeToEndDay 0 hours 0 minutes 23 seconds', () {
-      DateTime increasedValue = AudioSortFilterService.setDateTimeToEndDay(
-        date: DateTime(2024, 1, 7, 0, 0, 23),
-      );
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
+          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
 
-      expect(increasedValue, DateTime(2024, 1, 7, 23, 59, 59));
+        SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: MockSharedPreferences(),
+          isTest: true,
+        );
+
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the download app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+        // Since we have to use a mock AudioDownloadVM to add the
+        // youtube playlist, we can not use app.main() to start the
+        // app because app.main() uses the real AudioDownloadVM
+        // and we don't want to make the main.dart file dependent
+        // of a mock class. So we have to start the app by hand.
+
+        WarningMessageVM warningMessageVM = WarningMessageVM();
+        // MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
+        //   warningMessageVM: warningMessageVM,
+        //   isTest: true,
+        // );
+        // mockAudioDownloadVM.youtubePlaylistTitle = youtubeNewPlaylistTitle;
+
+        AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+          warningMessageVM: warningMessageVM,
+          settingsDataService: settingsDataService,
+          isTest: true,
+        );
+
+        // audioDownloadVM.youtubeExplode = mockYoutubeExplode;
+
+        playlistListVM = PlaylistListVM(
+          warningMessageVM: warningMessageVM,
+          audioDownloadVM: audioDownloadVM,
+          commentVM: CommentVM(),
+          settingsDataService: settingsDataService,
+        );
+
+        // calling getUpToDateSelectablePlaylists() loads all the
+        // playlist json files from the app dir and so enables
+        // playlistListVM to know which playlists are
+        // selected and which are not
+        playlistListVM.getUpToDateSelectablePlaylists();
+
+        audioSortFilterService = AudioSortFilterService();
+      });
+      test('''Set start + end audio download date and verify filtered audio list''',
+          () {
+        List<Audio> audioNotFilteredLst = playlistListVM
+            .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
+          audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
+        );
+
+        List<String> expectedAudioNotFilteredLst = [
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          'La surpopulation mondiale par Jancovici et Barrau',
+          'La résilience insulaire par Fiona Roche',
+          'Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik',
+          'Les besoins artificiels par R.Keucheyan',
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau',
+        ];
+
+        expect(
+          audioNotFilteredLst.map((audio) => audio.validVideoTitle).toList(),
+          expectedAudioNotFilteredLst,
+        );
+
+        final List<SortingItem> selectedSortItemLstDownloadDateDesc = [
+          SortingItem(
+            sortingOption: SortingOption.audioDownloadDate,
+            isAscending: false,
+          ),
+        ];
+
+        AudioSortFilterParameters audioSortFilterParameters =
+            AudioSortFilterParameters(
+          selectedSortItemLst: selectedSortItemLstDownloadDateDesc,
+          sentencesCombination: SentencesCombination.and,
+          downloadDateStartRange: DateTime(2024, 1, 1),
+          downloadDateEndRange: DateTime(2024, 1, 7),
+        );
+
+        List<String> expectedAudioFilteredLst = [
+          'La surpopulation mondiale par Jancovici et Barrau',
+          'La résilience insulaire par Fiona Roche',
+          'Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik',
+          'Les besoins artificiels par R.Keucheyan',
+        ];
+
+        List<Audio> filteredByStartEndDownloadDate =
+            audioSortFilterService.filterAndSortAudioLst(
+          audioLst: audioNotFilteredLst,
+          audioSortFilterParameters: audioSortFilterParameters,
+        );
+
+        expect(
+            filteredByStartEndDownloadDate
+                .map((audio) => audio.validVideoTitle)
+                .toList(),
+            expectedAudioFilteredLst);
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+      test('''Set start + end video upload date and verify filtered audio list''',
+          () {
+        List<Audio> audioNotFilteredLst = playlistListVM
+            .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
+          audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
+        );
+
+        List<String> expectedAudioNotFilteredLst = [
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          'La surpopulation mondiale par Jancovici et Barrau',
+          'La résilience insulaire par Fiona Roche',
+          'Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik',
+          'Les besoins artificiels par R.Keucheyan',
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau',
+        ];
+
+        expect(
+          audioNotFilteredLst.map((audio) => audio.validVideoTitle).toList(),
+          expectedAudioNotFilteredLst,
+        );
+
+        final List<SortingItem> selectedSortItemLstDownloadDateDesc = [
+          SortingItem(
+            sortingOption: SortingOption.audioDownloadDate,
+            isAscending: false,
+          ),
+        ];
+
+        AudioSortFilterParameters audioSortFilterParameters =
+            AudioSortFilterParameters(
+          selectedSortItemLst: selectedSortItemLstDownloadDateDesc,
+          sentencesCombination: SentencesCombination.and,
+          uploadDateStartRange: DateTime(2023, 1, 1),
+          uploadDateEndRange: DateTime(2023, 12, 3),
+        );
+
+        List<String> expectedAudioFilteredLst = [
+          'La surpopulation mondiale par Jancovici et Barrau',
+          'Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik',
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau',
+        ];
+
+        List<Audio> filteredByStartEndDownloadDate =
+            audioSortFilterService.filterAndSortAudioLst(
+          audioLst: audioNotFilteredLst,
+          audioSortFilterParameters: audioSortFilterParameters,
+        );
+
+        expect(
+            filteredByStartEndDownloadDate
+                .map((audio) => audio.validVideoTitle)
+                .toList(),
+            expectedAudioFilteredLst);
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
     });
   });
 }
