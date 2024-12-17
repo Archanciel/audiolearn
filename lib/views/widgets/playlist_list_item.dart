@@ -660,9 +660,9 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                     dialogContent: AppLocalizations.of(context)!
                         .deleteFilteredAudioConfirmation(
                       deletedAudioNumberLst[0], // total audio number
-                      UiUtil.formatLargeByteAmount(
+                      UiUtil.formatLargeSizeToKbOrMb(
                         context: context,
-                        bytes: deletedAudioNumberLst[2],
+                        sizeInBytes: deletedAudioNumberLst[2],
                       ), // total audio file size
                       DateTimeUtil.formatSecondsToHHMMSS(
                         seconds: deletedAudioNumberLst[3] ~/ 10,
@@ -741,9 +741,9 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                         .deleteFilteredCommentedAudioWarning(
                       deletedAudioNumberLst[0], // total audio number
                       deletedAudioNumberLst[1], // total commented audio number
-                      UiUtil.formatLargeByteAmount(
+                      UiUtil.formatLargeSizeToKbOrMb(
                         context: context,
-                        bytes: deletedAudioNumberLst[2],
+                        sizeInBytes: deletedAudioNumberLst[2],
                       ), // total audio file size
                       DateTimeUtil.formatSecondsToHHMMSS(
                         seconds: deletedAudioNumberLst[3] ~/ 10,

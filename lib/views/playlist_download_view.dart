@@ -171,8 +171,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       context,
       listen: false,
     );
-    final PlaylistListVM playlistListVMlistenTrue =
-        Provider.of<PlaylistListVM>(
+    final PlaylistListVM playlistListVMlistenTrue = Provider.of<PlaylistListVM>(
       context,
       listen: true,
     );
@@ -529,13 +528,13 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
         if (audioDownloadVM.isDownloading) {
           String downloadProgressPercent =
               '${(audioDownloadVM.downloadProgress * 100).toStringAsFixed(1)}%';
-          String downloadFileSize = UiUtil.formatLargeByteAmount(
+          String downloadFileSize = UiUtil.formatLargeSizeToKbOrMb(
             context: context,
-            bytes: audioDownloadVM.currentDownloadingAudio.audioFileSize,
+            sizeInBytes: audioDownloadVM.currentDownloadingAudio.audioFileSize,
           );
-          String downloadSpeed = '${UiUtil.formatLargeByteAmount(
+          String downloadSpeed = '${UiUtil.formatLargeSizeToKbOrMb(
             context: context,
-            bytes: audioDownloadVM.lastSecondDownloadSpeed,
+            sizeInBytes: audioDownloadVM.lastSecondDownloadSpeed,
           )}/sec';
           return Padding(
             padding: const EdgeInsets.all(16.0),
