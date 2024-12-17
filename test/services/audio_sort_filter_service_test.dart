@@ -6301,6 +6301,186 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
+      test('''Set start only audio download date and verify filtered audio list''',
+          () {
+        List<Audio> audioNotFilteredLst = playlistListVM
+            .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
+          audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
+        );
+
+        List<String> expectedAudioNotFilteredLst = [
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          'La surpopulation mondiale par Jancovici et Barrau',
+          'La résilience insulaire par Fiona Roche',
+          'Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik',
+          'Les besoins artificiels par R.Keucheyan',
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau',
+        ];
+
+        expect(
+          audioNotFilteredLst.map((audio) => audio.validVideoTitle).toList(),
+          expectedAudioNotFilteredLst,
+        );
+
+        final List<SortingItem> selectedSortItemLstDownloadDateDesc = [
+          SortingItem(
+            sortingOption: SortingOption.audioDownloadDate,
+            isAscending: false,
+          ),
+        ];
+
+        AudioSortFilterParameters audioSortFilterParameters =
+            AudioSortFilterParameters(
+          selectedSortItemLst: selectedSortItemLstDownloadDateDesc,
+          sentencesCombination: SentencesCombination.and,
+          downloadDateStartRange: DateTime(2024, 1, 7),
+        );
+
+        List<String> expectedAudioFilteredLst = [
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          'La surpopulation mondiale par Jancovici et Barrau',
+          'La résilience insulaire par Fiona Roche',
+          'Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik',
+          'Les besoins artificiels par R.Keucheyan',
+        ];
+
+        List<Audio> filteredByStartEndDownloadDate =
+            audioSortFilterService.filterAndSortAudioLst(
+          audioLst: audioNotFilteredLst,
+          audioSortFilterParameters: audioSortFilterParameters,
+        );
+
+        expect(
+            filteredByStartEndDownloadDate
+                .map((audio) => audio.validVideoTitle)
+                .toList(),
+            expectedAudioFilteredLst);
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+      test('''Set end only audio download date and verify filtered audio list''',
+          () {
+        List<Audio> audioNotFilteredLst = playlistListVM
+            .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
+          audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
+        );
+
+        List<String> expectedAudioNotFilteredLst = [
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          'La surpopulation mondiale par Jancovici et Barrau',
+          'La résilience insulaire par Fiona Roche',
+          'Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik',
+          'Les besoins artificiels par R.Keucheyan',
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau',
+        ];
+
+        expect(
+          audioNotFilteredLst.map((audio) => audio.validVideoTitle).toList(),
+          expectedAudioNotFilteredLst,
+        );
+
+        final List<SortingItem> selectedSortItemLstDownloadDateDesc = [
+          SortingItem(
+            sortingOption: SortingOption.audioDownloadDate,
+            isAscending: false,
+          ),
+        ];
+
+        AudioSortFilterParameters audioSortFilterParameters =
+            AudioSortFilterParameters(
+          selectedSortItemLst: selectedSortItemLstDownloadDateDesc,
+          sentencesCombination: SentencesCombination.and,
+          downloadDateEndRange: DateTime(2023, 12, 26),
+        );
+
+        List<String> expectedAudioFilteredLst = [
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau',
+        ];
+
+        List<Audio> filteredByStartEndDownloadDate =
+            audioSortFilterService.filterAndSortAudioLst(
+          audioLst: audioNotFilteredLst,
+          audioSortFilterParameters: audioSortFilterParameters,
+        );
+
+        expect(
+            filteredByStartEndDownloadDate
+                .map((audio) => audio.validVideoTitle)
+                .toList(),
+            expectedAudioFilteredLst);
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+      test('''Set start == end audio download date and verify filtered audio list''',
+          () {
+        List<Audio> audioNotFilteredLst = playlistListVM
+            .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
+          audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
+        );
+
+        List<String> expectedAudioNotFilteredLst = [
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          'La surpopulation mondiale par Jancovici et Barrau',
+          'La résilience insulaire par Fiona Roche',
+          'Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik',
+          'Les besoins artificiels par R.Keucheyan',
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau',
+        ];
+
+        expect(
+          audioNotFilteredLst.map((audio) => audio.validVideoTitle).toList(),
+          expectedAudioNotFilteredLst,
+        );
+
+        final List<SortingItem> selectedSortItemLstDownloadDateDesc = [
+          SortingItem(
+            sortingOption: SortingOption.audioDownloadDate,
+            isAscending: false,
+          ),
+        ];
+
+        AudioSortFilterParameters audioSortFilterParameters =
+            AudioSortFilterParameters(
+          selectedSortItemLst: selectedSortItemLstDownloadDateDesc,
+          sentencesCombination: SentencesCombination.and,
+          downloadDateStartRange: DateTime(2024, 1, 8),
+          downloadDateEndRange: DateTime(2024, 1, 8),
+        );
+
+        List<String> expectedAudioFilteredLst = [
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+        ];
+
+        List<Audio> filteredByStartEndDownloadDate =
+            audioSortFilterService.filterAndSortAudioLst(
+          audioLst: audioNotFilteredLst,
+          audioSortFilterParameters: audioSortFilterParameters,
+        );
+
+        expect(
+            filteredByStartEndDownloadDate
+                .map((audio) => audio.validVideoTitle)
+                .toList(),
+            expectedAudioFilteredLst);
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
       test('''Set start + end video upload date and verify filtered audio list''',
           () {
         List<Audio> audioNotFilteredLst = playlistListVM
@@ -6343,6 +6523,188 @@ void main() {
           'Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik',
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
           'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau',
+        ];
+
+        List<Audio> filteredByStartEndDownloadDate =
+            audioSortFilterService.filterAndSortAudioLst(
+          audioLst: audioNotFilteredLst,
+          audioSortFilterParameters: audioSortFilterParameters,
+        );
+
+        expect(
+            filteredByStartEndDownloadDate
+                .map((audio) => audio.validVideoTitle)
+                .toList(),
+            expectedAudioFilteredLst);
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+      test('''Set start only video upload date and verify filtered audio list''',
+          () {
+        List<Audio> audioNotFilteredLst = playlistListVM
+            .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
+          audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
+        );
+
+        List<String> expectedAudioNotFilteredLst = [
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          'La surpopulation mondiale par Jancovici et Barrau',
+          'La résilience insulaire par Fiona Roche',
+          'Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik',
+          'Les besoins artificiels par R.Keucheyan',
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau',
+        ];
+
+        expect(
+          audioNotFilteredLst.map((audio) => audio.validVideoTitle).toList(),
+          expectedAudioNotFilteredLst,
+        );
+
+        final List<SortingItem> selectedSortItemLstDownloadDateDesc = [
+          SortingItem(
+            sortingOption: SortingOption.audioDownloadDate,
+            isAscending: false,
+          ),
+        ];
+
+        AudioSortFilterParameters audioSortFilterParameters =
+            AudioSortFilterParameters(
+          selectedSortItemLst: selectedSortItemLstDownloadDateDesc,
+          sentencesCombination: SentencesCombination.and,
+          uploadDateStartRange: DateTime(2023, 12, 1),
+        );
+
+        List<String> expectedAudioFilteredLst = [
+          'La surpopulation mondiale par Jancovici et Barrau',
+          'La résilience insulaire par Fiona Roche',
+          'Les besoins artificiels par R.Keucheyan',
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+        ];
+
+        List<Audio> filteredByStartEndDownloadDate =
+            audioSortFilterService.filterAndSortAudioLst(
+          audioLst: audioNotFilteredLst,
+          audioSortFilterParameters: audioSortFilterParameters,
+        );
+
+        expect(
+            filteredByStartEndDownloadDate
+                .map((audio) => audio.validVideoTitle)
+                .toList(),
+            expectedAudioFilteredLst);
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+      test('''Set end only video upload date and verify filtered audio list''',
+          () {
+        List<Audio> audioNotFilteredLst = playlistListVM
+            .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
+          audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
+        );
+
+        List<String> expectedAudioNotFilteredLst = [
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          'La surpopulation mondiale par Jancovici et Barrau',
+          'La résilience insulaire par Fiona Roche',
+          'Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik',
+          'Les besoins artificiels par R.Keucheyan',
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau',
+        ];
+
+        expect(
+          audioNotFilteredLst.map((audio) => audio.validVideoTitle).toList(),
+          expectedAudioNotFilteredLst,
+        );
+
+        final List<SortingItem> selectedSortItemLstDownloadDateDesc = [
+          SortingItem(
+            sortingOption: SortingOption.audioDownloadDate,
+            isAscending: false,
+          ),
+        ];
+
+        AudioSortFilterParameters audioSortFilterParameters =
+            AudioSortFilterParameters(
+          selectedSortItemLst: selectedSortItemLstDownloadDateDesc,
+          sentencesCombination: SentencesCombination.and,
+          uploadDateEndRange: DateTime(2023, 12, 3),
+        );
+
+        List<String> expectedAudioFilteredLst = [
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          'La surpopulation mondiale par Jancovici et Barrau',
+          'Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik',
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau',
+        ];
+
+        List<Audio> filteredByStartEndDownloadDate =
+            audioSortFilterService.filterAndSortAudioLst(
+          audioLst: audioNotFilteredLst,
+          audioSortFilterParameters: audioSortFilterParameters,
+        );
+
+        expect(
+            filteredByStartEndDownloadDate
+                .map((audio) => audio.validVideoTitle)
+                .toList(),
+            expectedAudioFilteredLst);
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+      test('''Set start == end video upload date and verify filtered audio list''',
+          () {
+        List<Audio> audioNotFilteredLst = playlistListVM
+            .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
+          audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
+        );
+
+        List<String> expectedAudioNotFilteredLst = [
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          'La surpopulation mondiale par Jancovici et Barrau',
+          'La résilience insulaire par Fiona Roche',
+          'Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik',
+          'Les besoins artificiels par R.Keucheyan',
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau',
+        ];
+
+        expect(
+          audioNotFilteredLst.map((audio) => audio.validVideoTitle).toList(),
+          expectedAudioNotFilteredLst,
+        );
+
+        final List<SortingItem> selectedSortItemLstDownloadDateDesc = [
+          SortingItem(
+            sortingOption: SortingOption.audioDownloadDate,
+            isAscending: false,
+          ),
+        ];
+
+        AudioSortFilterParameters audioSortFilterParameters =
+            AudioSortFilterParameters(
+          selectedSortItemLst: selectedSortItemLstDownloadDateDesc,
+          sentencesCombination: SentencesCombination.and,
+          uploadDateStartRange: DateTime(2023, 9, 10),
+          uploadDateEndRange: DateTime(2023, 9, 10),
+        );
+
+        List<String> expectedAudioFilteredLst = [
+          'Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik',
         ];
 
         List<Audio> filteredByStartEndDownloadDate =
