@@ -9,7 +9,7 @@ class DateFormatVM extends ChangeNotifier {
     'MM/dd/yyyy',
     'yyyy/MM/dd',
   ];
-  
+
   // Values used in the audio sort/filter dialog
   static const List<String> dateFormatLowCaseLst = [
     'dd/mm/yyyy',
@@ -33,7 +33,7 @@ class DateFormatVM extends ChangeNotifier {
       settingType: SettingType.formatOfDate,
       settingSubType: FormatOfDate.formatOfDate,
     );
-    
+
     int dateFormatIndex = dateFormatLst.indexOf(_selectedDateFormat);
 
     _selectedDateFormatLowCase = dateFormatLowCaseLst[dateFormatIndex];
@@ -75,16 +75,21 @@ class DateFormatVM extends ChangeNotifier {
   /// Parses a date string into a DateTime object based on the application date
   /// format.
   ///
-  /// Returns the parsed DateTime if successful, otherwise throws a FormatException.
-  DateTime parseDateStrUsinAppDateFormat(String dateString) {
-    // Try parsing the date string using each format.
-    try {
-      return DateFormat(_selectedDateFormat).parseStrict(dateString);
-    } catch (_) {
-      // Ignore and try the next format.
+  /// If the passed dateStr is empty, null is returned.
+  ///
+  /// Returns the parsed DateTime if successful, otherwise return null.
+  DateTime? parseDateStrUsinAppDateFormat({
+    required String dateStr,
+  }) {
+    if (dateStr.isEmpty) {
+      return null;
     }
 
-    // If no format matches, throw an exception.
-    throw FormatException('Invalid date format: $dateString');
+    // Try parsing the date string using each format.
+    try {
+      return DateFormat(_selectedDateFormat).parseStrict(dateStr);
+    } catch (_) {
+      return null;
+    }
   }
 }

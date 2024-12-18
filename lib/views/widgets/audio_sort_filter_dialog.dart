@@ -1185,8 +1185,10 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     // Add listener to handle manual input
     controller.addListener(() {
       try {
-        final DateTime parsedDate = dateFormatVMlistenFalse
-            .parseDateStrUsinAppDateFormat(controller.text);
+        final DateTime? parsedDate =
+            dateFormatVMlistenFalse.parseDateStrUsinAppDateFormat(
+          dateStr: controller.text,
+        );
         _setDateToPrivateVariable(
           dateTimeType: dateTimeType,
           dateTime: parsedDate,
@@ -1216,11 +1218,13 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           icon: const Icon(Icons.calendar_month_rounded),
           onPressed: () async {
             // Parse the date from the TextField if it's valid, otherwise use the original date
-            DateTime initialDate;
-            try {
-              initialDate = dateFormatVMlistenFalse
-                  .parseDateStrUsinAppDateFormat(controller.text);
-            } catch (e) {
+            DateTime? initialDate;
+
+            initialDate = dateFormatVMlistenFalse.parseDateStrUsinAppDateFormat(
+              dateStr: controller.text,
+            );
+
+            if (initialDate == null) {
               initialDate = dateTime ?? DateTime.now();
             }
 
@@ -1268,10 +1272,6 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     required DateTimeType dateTimeType,
     DateTime? dateTime,
   }) {
-    if (dateTime == null) {
-      return;
-    }
-
     switch (dateTimeType) {
       case DateTimeType.startDownloadDateTime:
         _startDownloadDateTime = dateTime;
@@ -1980,11 +1980,11 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
   void _toggleCheckboxOrAnd(bool? value) {
     setState(() {
       _isOr = !_isOr;
-        // When checkbox 'or' is checked, checkbox 'and' is unchecked
+      // When checkbox 'or' is checked, checkbox 'and' is unchecked
       if (_isOr) {
         _isAnd = false;
       } else {
-      // When checkbox 'or' is unchecked, checkbox 'and' is checked
+        // When checkbox 'or' is unchecked, checkbox 'and' is checked
         _isAnd = true;
       }
     });

@@ -2251,7 +2251,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           testWidgets(
               '''In 'Title asc' audio download date only, modified in the existing
                named and saved sort/filter parms. Then save it and verify
-               ConfirmActionDialog content.''', (WidgetTester tester) async {
+               ConfirmActionDialog content. Then delete it and verify date deletion
+               application.''', (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -4007,7 +4008,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
         );
 
-        // Now, selecting 'Default' dropdown button item to apply the
+        // Now, selecting 'default' dropdown button item to apply the
         // default sort/filter parms
         final Finder dropDownButtonFinder =
             find.byKey(const Key('sort_filter_parms_dropdown_button'));
@@ -4145,7 +4146,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
-      testWidgets('''Click on 'Default' dropdown button item edit icon button to
+      testWidgets('''Click on 'default' dropdown button item edit icon button to
              open sort filter audio dialog. Then creating a named title
              ascending sort/filter parms and saving it. Then verifying that
              a Sort/filter dropdown button item has been created and is applied
@@ -4191,7 +4192,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           matching: find.byType(Text),
         );
 
-        // Tap twice on the dropdown button 'Default' item so that its edit
+        // Tap twice on the dropdown button 'default' item so that its edit
         // icon button is displayed
         await tester.tap(dropDownButtonTextFinder);
         await tester.pumpAndSettle();
@@ -5553,7 +5554,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
           );
 
-          // Now, selecting 'Default' dropdown button item to apply the
+          // Now, selecting 'default' dropdown button item to apply the
           // default sort/filter parms
           final Finder dropDownButtonFinder =
               find.byKey(const Key('sort_filter_parms_dropdown_button'));
@@ -5946,7 +5947,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
           );
 
-          // Now, selecting 'Default' dropdown button item to apply the
+          // Now, selecting 'default' dropdown button item to apply the
           // default sort/filter parms
           final Finder dropDownButtonFinder =
               find.byKey(const Key('sort_filter_parms_dropdown_button'));
@@ -6132,7 +6133,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             matching: find.byType(Text),
           );
 
-          // Tap twice on the dropdown button 'Default' item so that its edit
+          // Tap twice on the dropdown button 'default' item so that its edit
           // icon button is displayed
           await tester.tap(dropDownButtonTextFinder);
           await tester.pumpAndSettle();
@@ -7062,7 +7063,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
           );
 
-          // Now, selecting 'Défaut' dropdown button item to apply the
+          // Now, selecting 'défaut' dropdown button item to apply the
           // default sort/filter parms
           final Finder dropDownButtonFinder =
               find.byKey(const Key('sort_filter_parms_dropdown_button'));
@@ -7462,7 +7463,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
           );
 
-          // Now, selecting 'Défaut' dropdown button item to apply the
+          // Now, selecting 'défaut' dropdown button item to apply the
           // défaut sort/filter parms
           final Finder dropDownButtonFinder =
               find.byKey(const Key('sort_filter_parms_dropdown_button'));
@@ -8852,34 +8853,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                 'remove_sort_and_filter_audio_parms_from_playlist_item',
             isEnabled: false,
           );
-
-          // // Verify that the 'default' dropdown button sort/filter parms is
-          // // selected
-
-          // const String defaultTitle = 'default';
-
-          // IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
-          //   tester: tester,
-          //   dropdownButtonSelectedTitle: defaultTitle,
-          // );
-
-          // // And verify the order of the playlist audio titles
-          // List<String>
-          //     audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
-          //   "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-          //   "La surpopulation mondiale par Jancovici et Barrau",
-          //   "La résilience insulaire par Fiona Roche",
-          //   "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
-          //   "Les besoins artificiels par R.Keucheyan",
-          //   "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-          //   "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
-          // ];
-
-          // IntegrationTestUtil.checkAudioTitlesOrderInListTile(
-          //   tester: tester,
-          //   audioTitlesOrderLst:
-          //       audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
-          // );
 
           // Go to audio player view
           Finder appScreenNavigationButton =
