@@ -1114,7 +1114,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
   }) {
     return Column(
       children: [
-        _buildLabelDateIconTextField(
+        _buildDateTextFieldWithDateEditorIcon(
           dateIconButtondKey: const Key('startDownloadDateIconButton'),
           textFieldKey: const Key('startDownloadDateTextField'),
           context: context,
@@ -1126,7 +1126,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           tooltipMessage: AppLocalizations.of(context)!
               .startAudioDownloadDateSortFilterTooltip,
         ),
-        _buildLabelDateIconTextField(
+        _buildDateTextFieldWithDateEditorIcon(
           dateIconButtondKey: const Key('endDownloadDateIconButton'),
           textFieldKey: const Key('endDownloadDateTextField'),
           context: context,
@@ -1138,7 +1138,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           tooltipMessage: AppLocalizations.of(context)!
               .endAudioDownloadDateSortFilterTooltip,
         ),
-        _buildLabelDateIconTextField(
+        _buildDateTextFieldWithDateEditorIcon(
           dateIconButtondKey: const Key('startUploadDateIconButton'),
           textFieldKey: const Key('startUploadDateTextField'),
           context: context,
@@ -1150,7 +1150,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           tooltipMessage: AppLocalizations.of(context)!
               .startVideoUploadDateSortFilterTooltip,
         ),
-        _buildLabelDateIconTextField(
+        _buildDateTextFieldWithDateEditorIcon(
           dateIconButtondKey: const Key('endUploadDateIconButton'),
           textFieldKey: const Key('endUploadDateTextField'),
           context: context,
@@ -1166,7 +1166,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     );
   }
 
-  Row _buildLabelDateIconTextField({
+  Row _buildDateTextFieldWithDateEditorIcon({
     required Key dateIconButtondKey,
     required Key textFieldKey,
     required BuildContext context,

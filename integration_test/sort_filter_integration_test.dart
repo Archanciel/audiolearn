@@ -2290,10 +2290,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             await tester.tap(dropdownItemEditIconButtonFinder);
             await tester.pumpAndSettle();
 
-            // Scrolling down the sort filter dialog so that the checkboxes
-            // are visible and so accessible by the integration test.
-            // WARNING: Scrolling down must be done before setting sort
-            // options, otherwise, it does not work.
+            // Scrolling down the sort filter dialog so that the date
+            // fields are visible and so accessible by the integration test.
             await tester.drag(
               find.byType(AudioSortFilterDialog),
               const Offset(
@@ -2325,6 +2323,53 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                   'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
               confirmDialogMessage:
                   'Filter options:\n In modified version:\n   Start downl date: 26/12/2023\n In modified version:\n   End downl date: 06/01/2024',
+            );
+
+            // Now re-edit the 'Title asc' sort/filter parms in order to
+            // delete the start and end download dates
+            dropdownItemEditIconButtonFinder = find.byKey(
+                const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+            await tester.tap(dropdownItemEditIconButtonFinder);
+            await tester.pumpAndSettle();
+
+            // Scrolling down the sort filter dialog so that the date
+            // fields are visible and so accessible by the integration test.
+            await tester.drag(
+              find.byType(AudioSortFilterDialog),
+              const Offset(
+                  0, -300), // Negative value for vertical drag to scroll down
+            );
+            await tester.pumpAndSettle();
+
+            // Delete start and end audio download dates
+
+            await tester.enterText(
+                find.byKey(const Key('startDownloadDateTextField')), '');
+            await tester.pumpAndSettle(Duration(milliseconds: 200));
+
+            await tester.enterText(
+                find.byKey(const Key('endDownloadDateTextField')), '');
+            await tester.pumpAndSettle(Duration(milliseconds: 200));
+
+            // Necessary, otherwise the start download date field is not
+            // emptied !
+            await tester.enterText(
+                find.byKey(const Key('startDownloadDateTextField')), '');
+            await tester.pumpAndSettle(Duration(milliseconds: 200));
+
+            // Click on the "Save" button.
+            await tester
+                .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+            await tester.pumpAndSettle();
+
+            // Verifying and closing the confirm dialog
+
+            await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
+              tester: tester,
+              confirmDialogTitleOne:
+                  'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
+              confirmDialogMessage:
+                  'Filter options:\n In initial version:\n   Start downl date: 26/12/2023\n In initial version:\n   End downl date: 06/01/2024',
             );
 
             // Purge the test playlist directory so that the created test
@@ -7647,32 +7692,31 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             language: Language.french,
           );
 
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
 
-        // Now tap on the current dropdown button item to open the dropdown
-        // button items list
+          final Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
 
-        final Finder dropDownButtonFinder =
-            find.byKey(const Key('sort_filter_parms_dropdown_button'));
+          final Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
 
-        final Finder dropDownButtonTextFinder = find.descendant(
-          of: dropDownButtonFinder,
-          matching: find.byType(Text),
-        );
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
 
-        await tester.tap(dropDownButtonTextFinder);
-        await tester.pumpAndSettle();
+          // And find the 'défaut' sort/filter item
+          final Finder titleAscDropDownTextFinder = find.text('défaut').last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
 
-        // And find the 'défaut' sort/filter item
-        final Finder titleAscDropDownTextFinder = find.text('défaut').last;
-        await tester.tap(titleAscDropDownTextFinder);
-        await tester.pumpAndSettle();
-
-        // Now open the audio popup menu in order to modify the 'janco'
-        // sort/filter parms
-        final Finder dropdownItemEditIconButtonFinder = find.byKey(
-            const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
-        await tester.tap(dropdownItemEditIconButtonFinder);
-        await tester.pumpAndSettle();
+          // Now open the audio popup menu in order to modify the 'janco'
+          // sort/filter parms
+          final Finder dropdownItemEditIconButtonFinder = find.byKey(
+              const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+          await tester.tap(dropdownItemEditIconButtonFinder);
+          await tester.pumpAndSettle();
 
           // Now select the 'Titre audio' item in the 'Sort by' dropdown button
 
