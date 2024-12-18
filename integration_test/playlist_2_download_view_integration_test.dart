@@ -4819,6 +4819,7 @@ void playlistTwoDownloadViewIntegrationTest() {
               'Delete audio filtered by "$sortFilterParmName" parms from playlist "$youtubePlaylistTitle"',
           confirmDialogMessage:
               'Audio to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.',
+          confirmOrCancelAction: true, // Confirm button is tapped
         );
 
         // Verify that the audio files were deleted
@@ -5107,6 +5108,7 @@ void playlistTwoDownloadViewIntegrationTest() {
               'Delete audio filtered by "$sortFilterParmName" parms from playlist "$youtubePlaylistTitle"',
           confirmDialogMessage:
               'Audio to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.',
+          confirmOrCancelAction: true, // Confirm button is tapped
         );
 
         // Verify that the audio files were deleted
@@ -5393,6 +5395,7 @@ void playlistTwoDownloadViewIntegrationTest() {
               'Delete audio filtered by "$sortFilterParmName" parms from playlist "$youtubePlaylistTitle"',
           confirmDialogMessage:
               'Audio to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.',
+          confirmOrCancelAction: true, // Confirm button is tapped
         );
 
         // Verify that the audio files were deleted
@@ -5736,6 +5739,7 @@ void playlistTwoDownloadViewIntegrationTest() {
               'Delete audio filtered by "$sortFilterParmName" parms from playlist "$youtubePlaylistTitle"',
           confirmDialogMessage:
               'Audio to delete number: 2,\nCorresponding total file size: 9.96 MB,\nCorresponding total duration: 00:27:14.',
+          confirmOrCancelAction: true, // Confirm button is tapped
         );
 
         // Verify that the audio files were deleted
@@ -6035,6 +6039,7 @@ void playlistTwoDownloadViewIntegrationTest() {
           confirmDialogMessage:
               'Total audio to delete number: 4,\nCOMMENTED audio to delete number: 2,\nCorresponding total file size: 21.86 MB,\nCorresponding total duration: 00:59:45.',
           isHelpIconPresent: true,
+          confirmOrCancelAction: true, // Confirm button is tapped
         );
 
         // Verify that the audio files were deleted
@@ -6351,6 +6356,7 @@ void playlistTwoDownloadViewIntegrationTest() {
           confirmDialogMessage:
               'Total audio to delete number: 7,\nCOMMENTED audio to delete number: 3,\nCorresponding total file size: 31.99 MB,\nCorresponding total duration: 01:27:27.',
           isHelpIconPresent: true,
+          confirmOrCancelAction: true, // Confirm button is tapped
         );
 
         // Verify that the audio files were deleted

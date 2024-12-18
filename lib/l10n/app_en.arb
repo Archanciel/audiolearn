@@ -725,5 +725,6 @@
   "valueInInitialVersionTitle": "In initial version",
   "valueInModifiedVersionTitle": "In modified version",
   "checked": "checked",
-  "unchecked": "unchecked"
+  "unchecked": "unchecked",
+  "emptyDate": "empty"
 }

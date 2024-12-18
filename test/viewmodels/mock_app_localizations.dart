@@ -1719,4 +1719,7 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get unchecked => "unchecked";
+
+  @override
+  String get emptyDate => "empty";
 }

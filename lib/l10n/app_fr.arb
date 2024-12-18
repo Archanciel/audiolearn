@@ -711,5 +711,6 @@
   "valueInInitialVersionTitle": "En version initiale",
   "valueInModifiedVersionTitle": "En version modifiée",
   "checked": "coché",
-  "unchecked": "décoché"
+  "unchecked": "décoché",
+  "emptyDate": "vide"
 }
