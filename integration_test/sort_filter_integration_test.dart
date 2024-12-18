@@ -2161,8 +2161,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                words. Clicking on 'and' which is initially checked does uncheck it
                and checks the 'or' checkbox. This modifies the existing named and
                saved sort/filter parms. Then save it and verify ConfirmActionDialog
-               content.''',
-              (WidgetTester tester) async {
+               content.''', (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -3056,11 +3055,11 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             );
           });
 
-            // Purge the test playlist directory so that the created test
-            // files are not uploaded to GitHub
-            DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
-            );
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
           testWidgets(
               '''In 'Title asc' click on 'or' only after adding two filter
                words, modified in the existing named and saved sort/filter parms.
@@ -3162,8 +3161,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                words. Clicking on 'and' which is initially checked does uncheck it
                and checks the 'or' checkbox. This modifies the existing named and
                saved sort/filter parms. Then save it and verify ConfirmActionDialog
-               content.''',
-              (WidgetTester tester) async {
+               content.''', (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -3843,6 +3841,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         });
       });
     });
+    group('''Testing date fields setting, modification and deletion in existing
+               sF parms. Concerns audio download date and video upload date.''',
+        () {});
     group('''Saving defined sort/filter parms in sort/filter dialog in relation
              with Sort/filter dropdown button test''', () {
       testWidgets(
@@ -5379,7 +5380,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         );
       });
     });
-    group('Applying unnamed sort/filter parms', () {
+    group('''Applying unnamed sort/filter parms, i.e defined SF parms which are
+             not named, and so are applied.''', () {
       group(
           '''In english applying defined unnamed sort/filter parms in sort/filter
            dialog in relation with Sort/filter dropdown button test''', () {
@@ -6084,7 +6086,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
         });
         testWidgets(
-            '''Click on 'Default' dropdown button item edit icon button to
+            '''Click on 'default' dropdown button item edit icon button to
              open sort filter audio dialog. Then creating a ascending unamed
              sort/filter parms and applying it. Then verifying that a Sort/filter
              dropdown button item has been created with the title 'applied' and
@@ -7600,7 +7602,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
         });
         testWidgets(
-            '''Click on 'Default' dropdown button item edit icon button to
+            '''Click on 'défaut' dropdown button item edit icon button to
              open sort filter audio dialog. Then creating a ascending unamed
              sort/filter parms and applying it. Then verifying that a Sort/filter
              dropdown button item has been created with the title 'appliqué' and
@@ -7644,28 +7646,32 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             language: Language.french,
           );
 
-          final Finder dropDownButtonFinder =
-              find.byKey(const Key('sort_filter_parms_dropdown_button'));
 
-          final Finder dropDownButtonTextFinder = find.descendant(
-            of: dropDownButtonFinder,
-            matching: find.byType(Text),
-          );
+        // Now tap on the current dropdown button item to open the dropdown
+        // button items list
 
-          // Tap twice on the dropdown button 'Défaut' item so that its edit
-          // icon button is displayed
-          await tester.tap(dropDownButtonTextFinder);
-          await tester.pumpAndSettle();
-          await tester.tap(dropDownButtonTextFinder);
-          await tester.pumpAndSettle();
+        final Finder dropDownButtonFinder =
+            find.byKey(const Key('sort_filter_parms_dropdown_button'));
 
-          Finder dropdownItemEditIconButtonFinder = find.byKey(
-            const Key('sort_filter_parms_dropdown_item_edit_icon_button'),
-          );
+        final Finder dropDownButtonTextFinder = find.descendant(
+          of: dropDownButtonFinder,
+          matching: find.byType(Text),
+        );
 
-          // Tap on the edit icon button to open the sort/filter dialog
-          await tester.tap(dropdownItemEditIconButtonFinder);
-          await tester.pumpAndSettle();
+        await tester.tap(dropDownButtonTextFinder);
+        await tester.pumpAndSettle();
+
+        // And find the 'défaut' sort/filter item
+        final Finder titleAscDropDownTextFinder = find.text('défaut').last;
+        await tester.tap(titleAscDropDownTextFinder);
+        await tester.pumpAndSettle();
+
+        // Now open the audio popup menu in order to modify the 'janco'
+        // sort/filter parms
+        final Finder dropdownItemEditIconButtonFinder = find.byKey(
+            const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+        await tester.tap(dropdownItemEditIconButtonFinder);
+        await tester.pumpAndSettle();
 
           // Now select the 'Titre audio' item in the 'Sort by' dropdown button
 
@@ -7705,7 +7711,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(iconButtonFinder);
           await tester.pumpAndSettle();
 
-          // Click on the "Save" button. This closes the sort/filter dialog
+          // Click on the "Apply" button. This closes the sort/filter dialog
           // and updates the sort/filter playlist download view dropdown
           // button with the newly created sort/filter parms
           await tester
@@ -7718,7 +7724,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           String appliedFrenchTitle = 'appliqué';
 
           // Verify that the dropdown button has been updated with the
-          // 'Title asc' sort/filter parms selected
+          // 'appliqué' sort/filter parms selected
           IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
             tester: tester,
             dropdownButtonSelectedTitle: appliedFrenchTitle,
@@ -7756,13 +7762,13 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.pumpAndSettle();
 
           // Verify that the dropdown button has been updated with the
-          // 'Title asc' sort/filter parms selected
+          // 'appliqué' sort/filter parms selected
           IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
             tester: tester,
             dropdownButtonSelectedTitle: appliedFrenchTitle,
           );
 
-          // And verify the order of the playlist audio titles
+          // And verifyagain the order of the playlist audio titles
           IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
             audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
