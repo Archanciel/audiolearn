@@ -956,12 +956,14 @@ class IntegrationTestUtil {
     );
   }
 
+  /// {confirmOrCancelAction} is true if the confirm button will be tapped.
+  /// Otherwise, the cancel button will be tapped.
   static Future<void> verifyAndCloseConfirmActionDialog({
     required WidgetTester tester,
     required String confirmDialogTitleOne,
     String confirmDialogTitleTwo = '',
     required String confirmDialogMessage,
-    bool confirmAction = true,
+    required bool confirmOrCancelAction,
     bool isHelpIconPresent = false,
   }) async {
     // Verifying the confirm dialog title
@@ -1004,7 +1006,7 @@ class IntegrationTestUtil {
       confirmDialogMessage,
     );
 
-    if (confirmAction) {
+    if (confirmOrCancelAction) {
       // Now find the confirm button of the confirm action dialog
       // and tap on it
       await tester.tap(find.byKey(const Key('confirmButton')));

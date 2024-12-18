@@ -1224,9 +1224,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
               dateStr: controller.text,
             );
 
-            if (initialDate == null) {
-              initialDate = dateTime ?? DateTime.now();
-            }
+            // If dateTime is null, the current date is used
+            initialDate ??= dateTime ?? DateTime.now();
 
             DateTime? pickedDate = await showDatePicker(
               context: context,
@@ -2164,6 +2163,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       'downloadDateEndRange': AppLocalizations.of(context)!.endDownloadDate,
       'uploadDateStartRange': AppLocalizations.of(context)!.startUploadDate,
       'uploadDateEndRange': AppLocalizations.of(context)!.endUploadDate,
+      'emptyDate': AppLocalizations.of(context)!.emptyDate,
       'fileSizeStartRangeMB':
           "${AppLocalizations.of(context)!.fileSizeRange} ${AppLocalizations.of(context)!.start}",
       'fileSizeEndRangeMB':

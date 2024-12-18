@@ -720,16 +720,22 @@ class AudioSortFilterService {
       differencesLst.add(valueInInitialVersion);
     }
 
-    if (modifiedDateTimeValue != null) {
-      String valueInModifiedVersionTitle =
-          sortFilterParmsNameTranslationMap['valueInModifiedVersionTitle'] ??
-              'valueInModifiedVersionTitle';
-      differencesLst.add(valueInModifiedVersionTitle);
+    String valueInModifiedVersionTitle =
+        sortFilterParmsNameTranslationMap['valueInModifiedVersionTitle'] ??
+            'valueInModifiedVersionTitle';
+    differencesLst.add(valueInModifiedVersionTitle);
 
-      String valueInModifiedVersion =
+    String valueInModifiedVersion;
+
+    if (modifiedDateTimeValue != null) {
+      valueInModifiedVersion =
           '$translatedOptionName: ${dateFormatVMlistenFalse.formatDate(modifiedDateTimeValue)}';
-      differencesLst.add(valueInModifiedVersion);
+    } else {
+      valueInModifiedVersion =
+          '$translatedOptionName: ${sortFilterParmsNameTranslationMap['emptyDate']}';
     }
+
+    differencesLst.add(valueInModifiedVersion);
 
     return wasFilterOptionsTitleAddedToDifferencesLst;
   }
@@ -1249,7 +1255,8 @@ class AudioSortFilterService {
         }
         return audioLst.where((audio) {
           return (audio.audioFileSize >= startFileSizeMB * 1000000) &&
-              (audio.audioFileSize < (_addSmallIncrement(endFileSizeMB)) * 1000000);
+              (audio.audioFileSize <
+                  (_addSmallIncrement(endFileSizeMB)) * 1000000);
         }).toList();
       } else {
         // endFileSizeMB == 0
@@ -1261,7 +1268,8 @@ class AudioSortFilterService {
       // startFileSizeMB == 0
       if (endFileSizeMB != 0) {
         return audioLst.where((audio) {
-          return audio.audioFileSize < (_addSmallIncrement(endFileSizeMB)) * 1000000;
+          return audio.audioFileSize <
+              (_addSmallIncrement(endFileSizeMB)) * 1000000;
         }).toList();
       } else {
         // startFileSizeMB and endFileSizeMB are 0

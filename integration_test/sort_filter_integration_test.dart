@@ -1479,6 +1479,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                 'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
             confirmDialogMessage:
                 'Sort by:\n Present only in initial version:\n   Audio downl date desc\n Present only in modified version:\n   Video upload date desc',
+            confirmOrCancelAction: true, // Confirm button is tapped
           );
 
           // Now verify the playlist download view state with the 'UploadVideo'
@@ -1808,6 +1809,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                   'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
               confirmDialogMessage:
                   'Sort by:\n Present only in initial version:\n   Audio title asc\n Present only in modified version:\n   Audio title desc\nFilter words:\n Present only in modified version:\n   Jancovici',
+              confirmOrCancelAction: true, // Confirm button is tapped
             );
 
             // Now reedit the 'Title asc' sort/filter parms
@@ -1973,6 +1975,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                   'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
               confirmDialogMessage:
                   'Sort by:\n Present only in initial version:\n   Audio title desc\n Present only in modified version:\n   Audio title asc,\n   Video upload date desc,\n   Audio duration asc,\n   Audio listenable remaining\n   duration asc,\n   Audio downl speed desc,\n   Audio downl duration desc\nFilter words:\n Present only in modified version:\n   Marine Le Pen,\n   Emmanuel Macron\nFilter options:\n In initial version:\n   Ignore case: checked\n In modified version:\n   Ignore case: unchecked\n In initial version:\n   Include Youtube channel: checked\n In modified version:\n   Include Youtube\n   channel: unchecked\n In initial version:\n   Audio music quality: unchecked\n In modified version:\n   Audio music quality: checked\n In initial version:\n   Commented: checked\n In modified version:\n   Commented: unchecked\n In modified version:\n   Start downl date: 26/12/2023\n In modified version:\n   End downl date: 06/01/2024\n In modified version:\n   Start upl date: 12/06/2022\n In modified version:\n   End upl date: 19/09/2023\n In modified version:\n   File size range (MB) Start: 2.37\n In modified version:\n   File size range (MB) End: 2.8\n In modified version:\n   Audio duration range (hh:mm)\n   Start: 00:06\n In modified version:\n   Audio duration range (hh:mm)\n   End: 00:08',
+              confirmOrCancelAction: true, // Confirm button is tapped
             );
 
             // Purge the test playlist directory so that the created test
@@ -2058,6 +2061,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                   'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
               confirmDialogMessage:
                   'Filter words:\n Present only in modified version:\n   Jancovici,\n   Marine Le Pen',
+              confirmOrCancelAction: true, // Confirm button is tapped
             );
 
             // Purge the test playlist directory so that the created test
@@ -2148,6 +2152,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                   'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
               confirmDialogMessage:
                   'Filter words:\n Present only in modified version:\n   Jancovici,\n   Marine Le Pen\nFilter options:\n In initial version:\n   and / or: and\n In modified version:\n   and / or: or',
+              confirmOrCancelAction: true, // Confirm button is tapped
             );
 
             // Purge the test playlist directory so that the created test
@@ -2240,6 +2245,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                   'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
               confirmDialogMessage:
                   'Filter words:\n Present only in modified version:\n   Jancovici,\n   Marine Le Pen\nFilter options:\n In initial version:\n   and / or: and\n In modified version:\n   and / or: or',
+              confirmOrCancelAction: true, // Confirm button is tapped
             );
 
             // Purge the test playlist directory so that the created test
@@ -2251,8 +2257,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           testWidgets(
               '''In 'Title asc' audio download date only, modified in the existing
                named and saved sort/filter parms. Then save it and verify
-               ConfirmActionDialog content. Then delete it and verify date deletion
-               application.''', (WidgetTester tester) async {
+               ConfirmActionDialog content. Then delete the download dates and
+               verify date deletion in ConfirmActionDialog.''',
+              (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -2323,6 +2330,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                   'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
               confirmDialogMessage:
                   'Filter options:\n In modified version:\n   Start downl date: 26/12/2023\n In modified version:\n   End downl date: 06/01/2024',
+              confirmOrCancelAction: true, // Confirm button is tapped
             );
 
             // Now re-edit the 'Title asc' sort/filter parms in order to
@@ -2369,7 +2377,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               confirmDialogTitleOne:
                   'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
               confirmDialogMessage:
-                  'Filter options:\n In initial version:\n   Start downl date: 26/12/2023\n In initial version:\n   End downl date: 06/01/2024',
+                  'Filter options:\n In initial version:\n   Start downl date: 26/12/2023\n In modified version:\n   Start downl date: empty\n In initial version:\n   End downl date: 06/01/2024\n In modified version:\n   End downl date: empty',
+              confirmOrCancelAction: true, // Confirm button is tapped
             );
 
             // Purge the test playlist directory so that the created test
@@ -2381,7 +2390,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           testWidgets(
               '''In 'Title asc' video upload date only, modified in the existing
                named and saved sort/filter parms. Then save it and verify
-               ConfirmActionDialog content.''', (WidgetTester tester) async {
+               ConfirmActionDialog content. Then delete the video upload dates and
+               verify date deletion in ConfirmActionDialog.''',
+              (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -2454,6 +2465,55 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                   'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
               confirmDialogMessage:
                   'Filter options:\n In modified version:\n   Start upl date: 12/06/2022\n In modified version:\n   End upl date: 19/09/2023',
+              confirmOrCancelAction: true, // Confirm button is tapped
+            );
+
+            // Now re-edit the 'Title asc' sort/filter parms in order to
+            // delete the start and end video upload date dates
+            dropdownItemEditIconButtonFinder = find.byKey(
+                const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+            await tester.tap(dropdownItemEditIconButtonFinder);
+            await tester.pumpAndSettle();
+
+            // Scrolling down the sort filter dialog so that the date
+            // fields are visible and so accessible by the integration test.
+            await tester.drag(
+              find.byType(AudioSortFilterDialog),
+              const Offset(
+                  0, -300), // Negative value for vertical drag to scroll down
+            );
+            await tester.pumpAndSettle();
+
+            // Delete start and end audio download dates
+
+            await tester.enterText(
+                find.byKey(const Key('startUploadDateTextField')), '');
+            await tester.pumpAndSettle(Duration(milliseconds: 200));
+
+            await tester.enterText(
+                find.byKey(const Key('endUploadDateTextField')), '');
+            await tester.pumpAndSettle(Duration(milliseconds: 200));
+
+            // Necessary, otherwise the start download date field is not
+            // emptied !
+            await tester.enterText(
+                find.byKey(const Key('startUploadDateTextField')), '');
+            await tester.pumpAndSettle(Duration(milliseconds: 200));
+
+            // Click on the "Save" button.
+            await tester
+                .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+            await tester.pumpAndSettle();
+
+            // Verifying and closing the confirm dialog
+
+            await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
+              tester: tester,
+              confirmDialogTitleOne:
+                  'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
+              confirmDialogMessage:
+                  'Filter options:\n In initial version:\n   Start upl date: 12/06/2022\n In modified version:\n   Start upl date: empty\n In initial version:\n   End upl date: 19/09/2023\n In modified version:\n   End upl date: empty',
+              confirmOrCancelAction: true, // Confirm button is tapped
             );
 
             // Purge the test playlist directory so that the created test
@@ -2465,7 +2525,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           testWidgets(
               '''In 'Title asc' audio file size only, modified in the existing
                named and saved sort/filter parms. Then save it and verify
-               ConfirmActionDialog content.''', (WidgetTester tester) async {
+               ConfirmActionDialog content. Then, delete the start and end file
+               size and verify the ConfirmActionDialog content.''',
+              (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -2537,6 +2599,51 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                   'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
               confirmDialogMessage:
                   'Filter options:\n In modified version:\n   File size range (MB) Start: 2.37\n In modified version:\n   File size range (MB) End: 2.8',
+              confirmOrCancelAction: true, // Confirm button is tapped
+            );
+
+            // Re-edit the 'Title asc' sort/filter parms in order to
+            // delete the start and end file size range
+            dropdownItemEditIconButtonFinder = find.byKey(
+                const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+            await tester.tap(dropdownItemEditIconButtonFinder);
+            await tester.pumpAndSettle();
+
+            // Scrolling down the sort filter dialog so that the checkboxes
+            // are visible and so accessible by the integration test.
+            // WARNING: Scrolling down must be done before setting sort
+            // options, otherwise, it does not work.
+            await tester.drag(
+              find.byType(AudioSortFilterDialog),
+              const Offset(
+                  0, -300), // Negative value for vertical drag to scroll down
+            );
+            await tester.pumpAndSettle();
+
+            // Delete start and end audio file size MB range
+
+            await tester.enterText(
+                find.byKey(const Key('startFileSizeTextField')), '');
+            await tester.pumpAndSettle(Duration(milliseconds: 200));
+
+            await tester.enterText(
+                find.byKey(const Key('endFileSizeTextField')), '');
+            await tester.pumpAndSettle(Duration(milliseconds: 200));
+
+            // Click on the "Save" button.
+            await tester
+                .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+            await tester.pumpAndSettle();
+
+            // Verifying and closing the confirm dialog
+
+            await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
+              tester: tester,
+              confirmDialogTitleOne:
+                  'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
+              confirmDialogMessage:
+                  'Filter options:\n In initial version:\n   File size range (MB) Start: 2.37\n In modified version:\n   File size range (MB) Start: 0.0\n In initial version:\n   File size range (MB) End: 2.8\n In modified version:\n   File size range (MB) End: 0.0',
+              confirmOrCancelAction: true, // Confirm button is tapped
             );
 
             // Purge the test playlist directory so that the created test
@@ -2548,7 +2655,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           testWidgets(
               '''In 'Title asc' audio duration only, modified in the existing
                named and saved sort/filter parms. Then save it and verify
-               ConfirmActionDialog content.''', (WidgetTester tester) async {
+               ConfirmActionDialog content. Then, delete the start and end audio
+               duration and verify the ConfirmActionDialog content.''',
+              (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -2620,6 +2729,51 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                   'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
               confirmDialogMessage:
                   'Filter options:\n In modified version:\n   Audio duration range (hh:mm)\n   Start: 00:06\n In modified version:\n   Audio duration range (hh:mm)\n   End: 00:08',
+              confirmOrCancelAction: true, // Confirm button is tapped
+            );
+
+            // Re-edit the 'Title asc' sort/filter parms in order to
+            // delete the start and end audi duration
+            dropdownItemEditIconButtonFinder = find.byKey(
+                const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+            await tester.tap(dropdownItemEditIconButtonFinder);
+            await tester.pumpAndSettle();
+
+            // Scrolling down the sort filter dialog so that the checkboxes
+            // are visible and so accessible by the integration test.
+            // WARNING: Scrolling down must be done before setting sort
+            // options, otherwise, it does not work.
+            await tester.drag(
+              find.byType(AudioSortFilterDialog),
+              const Offset(
+                  0, -300), // Negative value for vertical drag to scroll down
+            );
+            await tester.pumpAndSettle();
+
+            // Set start and end audio duration hh:mm range
+
+            await tester.enterText(
+                find.byKey(const Key('startAudioDurationTextField')), '');
+            await tester.pumpAndSettle(Duration(milliseconds: 200));
+
+            await tester.enterText(
+                find.byKey(const Key('endAudioDurationTextField')), '');
+            await tester.pumpAndSettle(Duration(milliseconds: 200));
+
+            // Click on the "Save" button.
+            await tester
+                .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+            await tester.pumpAndSettle();
+
+            // Verifying and closing the confirm dialog
+
+            await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
+              tester: tester,
+              confirmDialogTitleOne:
+                  'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
+              confirmDialogMessage:
+                  'Filter options:\n In initial version:\n   Audio duration range (hh:mm)\n   Start: 00:06\n In modified version:\n   Audio duration range (hh:mm)\n   Start: 00:00\n In initial version:\n   Audio duration range (hh:mm)\n   End: 00:08\n In modified version:\n   Audio duration range (hh:mm)\n   End: 00:00',
+              confirmOrCancelAction: true, // Confirm button is tapped
             );
 
             // Purge the test playlist directory so that the created test
@@ -2750,6 +2904,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                   'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
               confirmDialogMessage:
                   'Sort by:\n Present only in initial version:\n   Audio downl date asc,\n   Video upload date desc,\n   Audio title asc,\n   Audio duration asc,\n   Audio listenable remaining\n   duration asc,\n   Last listened date/time desc,\n   Audio file size desc,\n   Audio downl speed desc,\n   Audio downl duration desc\n Present only in modified version:\n   Audio listenable remaining\n   duration desc',
+              confirmOrCancelAction: true, // Confirm button is tapped
             );
 
             // Purge the test playlist directory so that the created test
@@ -2840,6 +2995,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                   'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
               confirmDialogMessage:
                   'Sort by:\n Present only in initial version:\n   Audio listenable remaining\n   duration desc\n Present only in modified version:\n   Audio listenable remaining\n   duration asc',
+              confirmOrCancelAction: true, // Confirm button is tapped
             );
 
             // Purge the test playlist directory so that the created test
@@ -2927,6 +3083,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                   'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
               confirmDialogMessage:
                   'Trier par:\n Uniquement en version initiale:\n   Titre audio asc\n Uniquement en version modifiée:\n   Titre audio desc\nMots filtre:\n Uniquement en version modifiée:\n   Jancovici',
+              confirmOrCancelAction: true, // Confirm button is tapped
             );
 
             // Now reedit the 'Title asc' sort/filter parms
@@ -3092,6 +3249,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                   'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
               confirmDialogMessage:
                   'Trier par:\n Uniquement en version initiale:\n   Titre audio desc\n Uniquement en version modifiée:\n   Titre audio asc,\n   Date mise en ligne vidéo desc,\n   Durée audio asc,\n   Durée audio écoutable\n   restante asc,\n   Vitesse téléch audio desc,\n   Durée téléch audio desc\nMots filtre:\n Uniquement en version modifiée:\n   Marine Le Pen,\n   Emmanuel Macron\nOptions filtre:\n En version initiale:\n   Ignorer la casse: coché\n En version modifiée:\n   Ignorer la casse: décoché\n En version initiale:\n   Inclure la chaîne Youtube: coché\n En version modifiée:\n   Inclure la chaîne\n   Youtube: décoché\n En version initiale:\n   Qualité musicale: décoché\n En version modifiée:\n   Qualité musicale: coché\n En version initiale:\n   Commenté: coché\n En version modifiée:\n   Commenté: décoché\n En version modifiée:\n   Date début téléch: 26/12/2023\n En version modifiée:\n   Date fin téléch: 06/01/2024\n En version modifiée:\n   Date début mise en\n   ligne: 12/06/2022\n En version modifiée:\n   Date fin mise en\n   ligne: 19/09/2023\n En version modifiée:\n   Intervalle taille fichier (MB)\n   Début: 2.37\n En version modifiée:\n   Intervalle taille fichier (MB)\n   Fin: 2.8\n En version modifiée:\n   Intervalle durée audio (hh:mm)\n   Début: 00:06\n En version modifiée:\n   Intervalle durée audio (hh:mm)\n   Fin: 00:08',
+              confirmOrCancelAction: true, // Confirm button is tapped
             );
 
             // Purge the test playlist directory so that the created test
@@ -3194,6 +3352,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                   'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
               confirmDialogMessage:
                   'Mots filtre:\n Uniquement en version modifiée:\n   Jancovici,\n   Marine Le Pen\nOptions filtre:\n En version initiale:\n   et / ou: et\n En version modifiée:\n   et / ou: ou',
+              confirmOrCancelAction: true, // Confirm button is tapped
             );
 
             // Purge the test playlist directory so that the created test
@@ -3292,6 +3451,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                   'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
               confirmDialogMessage:
                   'Mots filtre:\n Uniquement en version modifiée:\n   Jancovici,\n   Marine Le Pen\nOptions filtre:\n En version initiale:\n   et / ou: et\n En version modifiée:\n   et / ou: ou',
+              confirmOrCancelAction: true, // Confirm button is tapped
             );
 
             // Purge the test playlist directory so that the created test
@@ -3382,6 +3542,54 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                   'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
               confirmDialogMessage:
                   'Options filtre:\n En version modifiée:\n   Date début téléch: 26/12/2023\n En version modifiée:\n   Date fin téléch: 06/01/2024',
+              confirmOrCancelAction: true, // Confirm button is tapped
+            );
+            // Now re-edit the 'Title asc' sort/filter parms in order to
+            // delete the start and end download dates
+            dropdownItemEditIconButtonFinder = find.byKey(
+                const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+            await tester.tap(dropdownItemEditIconButtonFinder);
+            await tester.pumpAndSettle();
+
+            // Scrolling down the sort filter dialog so that the date
+            // fields are visible and so accessible by the integration test.
+            await tester.drag(
+              find.byType(AudioSortFilterDialog),
+              const Offset(
+                  0, -300), // Negative value for vertical drag to scroll down
+            );
+            await tester.pumpAndSettle();
+
+            // Delete start and end audio download dates
+
+            await tester.enterText(
+                find.byKey(const Key('startDownloadDateTextField')), '');
+            await tester.pumpAndSettle(Duration(milliseconds: 200));
+
+            await tester.enterText(
+                find.byKey(const Key('endDownloadDateTextField')), '');
+            await tester.pumpAndSettle(Duration(milliseconds: 200));
+
+            // Necessary, otherwise the start download date field is not
+            // emptied !
+            await tester.enterText(
+                find.byKey(const Key('startDownloadDateTextField')), '');
+            await tester.pumpAndSettle(Duration(milliseconds: 200));
+
+            // Click on the "Save" button.
+            await tester
+                .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+            await tester.pumpAndSettle();
+
+            // Verifying and closing the confirm dialog
+
+            await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
+              tester: tester,
+              confirmDialogTitleOne:
+                  'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
+              confirmDialogMessage:
+                  'Options filtre:\n En version initiale:\n   Date début téléch: 26/12/2023\n En version modifiée:\n   Date début téléch: vide\n En version initiale:\n   Date fin téléch: 06/01/2024\n En version modifiée:\n   Date fin téléch: vide',
+              confirmOrCancelAction: true, // Confirm button is tapped
             );
 
             // Purge the test playlist directory so that the created test
@@ -3472,12 +3680,67 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                   'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
               confirmDialogMessage:
                   'Options filtre:\n En version modifiée:\n   Date début mise en\n   ligne: 12/06/2022\n En version modifiée:\n   Date fin mise en\n   ligne: 19/09/2023',
+              confirmOrCancelAction: true, // Confirm button is tapped
+            );
+            // Now re-edit the 'Title asc' sort/filter parms in order to
+            // delete the start and end video upload date dates
+            dropdownItemEditIconButtonFinder = find.byKey(
+                const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+            await tester.tap(dropdownItemEditIconButtonFinder);
+            await tester.pumpAndSettle();
+
+            // Scrolling down the sort filter dialog so that the date
+            // fields are visible and so accessible by the integration test.
+            await tester.drag(
+              find.byType(AudioSortFilterDialog),
+              const Offset(
+                  0, -300), // Negative value for vertical drag to scroll down
+            );
+            await tester.pumpAndSettle();
+
+            // Delete start and end audio download dates
+
+            await tester.enterText(
+                find.byKey(const Key('startUploadDateTextField')), '');
+            await tester.pumpAndSettle(Duration(milliseconds: 200));
+
+            await tester.enterText(
+                find.byKey(const Key('endUploadDateTextField')), '');
+            await tester.pumpAndSettle(Duration(milliseconds: 200));
+
+            // Necessary, otherwise the start download date field is not
+            // emptied !
+            await tester.enterText(
+                find.byKey(const Key('startUploadDateTextField')), '');
+            await tester.pumpAndSettle(Duration(milliseconds: 200));
+
+            // Click on the "Save" button.
+            await tester
+                .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+            await tester.pumpAndSettle();
+
+            // Verifying and closing the confirm dialog
+
+            await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
+              tester: tester,
+              confirmDialogTitleOne:
+                  'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
+              confirmDialogMessage:
+                  'Options filtre:\n En version initiale:\n   Date début mise en\n   ligne: 12/06/2022\n En version modifiée:\n   Date début mise en ligne: vide\n En version initiale:\n   Date fin mise en\n   ligne: 19/09/2023\n En version modifiée:\n   Date fin mise en ligne: vide',
+              confirmOrCancelAction: true, // Confirm button is tapped
+            );
+
+            // Purge the test playlist directory so that the created test
+            // files are not uploaded to GitHub
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kPlaylistDownloadRootPathWindowsTest,
             );
           });
           testWidgets(
               '''In 'Title asc' audio file size only, modified in the existing
                named and saved sort/filter parms. Then save it and verify
-               ConfirmActionDialog content.''', (WidgetTester tester) async {
+               ConfirmActionDialog content. Then, delete the start and end file
+               size and verify the ConfirmActionDialog content.''', (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -3555,6 +3818,50 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                   'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
               confirmDialogMessage:
                   'Options filtre:\n En version modifiée:\n   Intervalle taille fichier (MB)\n   Début: 2.37\n En version modifiée:\n   Intervalle taille fichier (MB)\n   Fin: 2.8',
+              confirmOrCancelAction: true, // Confirm button is tapped
+            );
+            // Re-edit the 'Title asc' sort/filter parms in order to
+            // delete the start and end file size range
+            dropdownItemEditIconButtonFinder = find.byKey(
+                const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+            await tester.tap(dropdownItemEditIconButtonFinder);
+            await tester.pumpAndSettle();
+
+            // Scrolling down the sort filter dialog so that the checkboxes
+            // are visible and so accessible by the integration test.
+            // WARNING: Scrolling down must be done before setting sort
+            // options, otherwise, it does not work.
+            await tester.drag(
+              find.byType(AudioSortFilterDialog),
+              const Offset(
+                  0, -300), // Negative value for vertical drag to scroll down
+            );
+            await tester.pumpAndSettle();
+
+            // Delete start and end audio file size MB range
+
+            await tester.enterText(
+                find.byKey(const Key('startFileSizeTextField')), '');
+            await tester.pumpAndSettle(Duration(milliseconds: 200));
+
+            await tester.enterText(
+                find.byKey(const Key('endFileSizeTextField')), '');
+            await tester.pumpAndSettle(Duration(milliseconds: 200));
+
+            // Click on the "Save" button.
+            await tester
+                .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+            await tester.pumpAndSettle();
+
+            // Verifying and closing the confirm dialog
+
+            await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
+              tester: tester,
+              confirmDialogTitleOne:
+                  'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
+              confirmDialogMessage:
+                  'Options filtre:\n En version initiale:\n   Intervalle taille fichier (MB)\n   Début: 2.37\n En version modifiée:\n   Intervalle taille fichier (MB)\n   Début: 0.0\n En version initiale:\n   Intervalle taille fichier (MB)\n   Fin: 2.8\n En version modifiée:\n   Intervalle taille fichier (MB)\n   Fin: 0.0',
+              confirmOrCancelAction: true, // Confirm button is tapped
             );
 
             // Purge the test playlist directory so that the created test
@@ -3566,7 +3873,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           testWidgets(
               '''In 'Title asc' audio duration only, modified in the existing
                named and saved sort/filter parms. Then save it and verify
-               ConfirmActionDialog content.''', (WidgetTester tester) async {
+               ConfirmActionDialog content. Then, delete the start and end audio
+               duration and verify the ConfirmActionDialog content.''', (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -3644,6 +3952,50 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                   'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
               confirmDialogMessage:
                   'Options filtre:\n En version modifiée:\n   Intervalle durée audio (hh:mm)\n   Début: 00:06\n En version modifiée:\n   Intervalle durée audio (hh:mm)\n   Fin: 00:08',
+              confirmOrCancelAction: true, // Confirm button is tapped
+            );
+            // Re-edit the 'Title asc' sort/filter parms in order to
+            // delete the start and end audi duration
+            dropdownItemEditIconButtonFinder = find.byKey(
+                const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+            await tester.tap(dropdownItemEditIconButtonFinder);
+            await tester.pumpAndSettle();
+
+            // Scrolling down the sort filter dialog so that the checkboxes
+            // are visible and so accessible by the integration test.
+            // WARNING: Scrolling down must be done before setting sort
+            // options, otherwise, it does not work.
+            await tester.drag(
+              find.byType(AudioSortFilterDialog),
+              const Offset(
+                  0, -300), // Negative value for vertical drag to scroll down
+            );
+            await tester.pumpAndSettle();
+
+            // Set start and end audio duration hh:mm range
+
+            await tester.enterText(
+                find.byKey(const Key('startAudioDurationTextField')), '');
+            await tester.pumpAndSettle(Duration(milliseconds: 200));
+
+            await tester.enterText(
+                find.byKey(const Key('endAudioDurationTextField')), '');
+            await tester.pumpAndSettle(Duration(milliseconds: 200));
+
+            // Click on the "Save" button.
+            await tester
+                .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+            await tester.pumpAndSettle();
+
+            // Verifying and closing the confirm dialog
+
+            await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
+              tester: tester,
+              confirmDialogTitleOne:
+                  'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
+              confirmDialogMessage:
+                  'Options filtre:\n En version initiale:\n   Intervalle durée audio (hh:mm)\n   Début: 00:06\n En version modifiée:\n   Intervalle durée audio (hh:mm)\n   Début: 00:00\n En version initiale:\n   Intervalle durée audio (hh:mm)\n   Fin: 00:08\n En version modifiée:\n   Intervalle durée audio (hh:mm)\n   Fin: 00:00',
+              confirmOrCancelAction: true, // Confirm button is tapped
             );
 
             // Purge the test playlist directory so that the created test
@@ -3780,6 +4132,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                   'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
               confirmDialogMessage:
                   'Trier par:\n Uniquement en version initiale:\n   Date téléch audio asc,\n   Date mise en ligne vidéo desc,\n   Titre audio asc,\n   Durée audio asc,\n   Durée audio écoutable\n   restante asc,\n   Date/heure dernière écoute desc,\n   Taille fichier audio desc,\n   Vitesse téléch audio desc,\n   Durée téléch audio desc\n Uniquement en version modifiée:\n   Durée audio écoutable\n   restante desc',
+              confirmOrCancelAction: true, // Confirm button is tapped
             );
 
             // Purge the test playlist directory so that the created test
@@ -3876,6 +4229,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                   'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
               confirmDialogMessage:
                   'Trier par:\n Uniquement en version initiale:\n   Durée audio écoutable\n   restante desc\n Uniquement en version modifiée:\n   Durée audio écoutable\n   restante asc',
+              confirmOrCancelAction: true, // Confirm button is tapped
             );
 
             // Purge the test playlist directory so that the created test
@@ -4666,6 +5020,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
           confirmDialogMessage:
               'Sort by:\n Present only in initial version:\n   Audio title asc\n Present only in modified version:\n   Audio title desc\nFilter words:\n Present only in modified version:\n   Jancovici',
+          confirmOrCancelAction: true, // Confirm button is tapped
         );
 
         // Now verify the playlist download view state with the 'Title asc' -
@@ -8385,6 +8740,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             confirmDialogTitleOne:
                 'WARNING: you are going to delete the Sort/Filter parms "$titleAscSortFilterName" which is used in 1 playlist(s) listed below',
             confirmDialogMessage: 'S8 audio',
+            confirmOrCancelAction: true, // Confirm button is tapped
           );
 
           // Now verify the playlist download view state with the 'default'
@@ -8543,6 +8899,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             confirmDialogTitleOne:
                 'WARNING: you are going to delete the Sort/Filter parms "$titleAscSortFilterName" which is used in 2 playlist(s) listed below',
             confirmDialogMessage: 'S8 audio,\nlocal',
+            confirmOrCancelAction: true, // Confirm button is tapped
           );
 
           // Now verify the playlist download view state with the 'default'
