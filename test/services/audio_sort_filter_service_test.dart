@@ -6980,7 +6980,10 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
-      test('''Set start == end audio file size and verify filtered audio list''',
+      test('''Set start == end audio file size and verify filtered audio list.
+              In this test, 2 files have those file size: 2373715 bytes and
+              2370022 bytes. Setting start and end filter file size to 2.37 MB
+              returns those files.''',
           () {
         List<Audio> audioNotFilteredLst = playlistListVM
             .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
