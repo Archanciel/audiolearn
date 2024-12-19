@@ -3214,6 +3214,8 @@ void playlistTwoDownloadViewIntegrationTest() {
         "0:06:29.0. Video upload date: 12/06/2022.",
       ];
 
+      DateTime now = DateTime.now();
+
       // Verifying initial dd/MM/yyyy date format application
       await _verifyDateFormatApplication(
         tester: tester,
@@ -3232,6 +3234,7 @@ void playlistTwoDownloadViewIntegrationTest() {
         playlistLastDownloadDateTime: "07/01/2024 16:36",
         commentCreationDate: '12/10/2024',
         commentUpdateDate: '01/11/2024',
+        datePickerDateStr: '${now.day}/${now.month}/${now.year}',
       );
 
       await _selectDateFormat(
@@ -3277,7 +3280,7 @@ void playlistTwoDownloadViewIntegrationTest() {
         "0:06:29.0. Video upload date: 06/12/2022.",
       ];
 
-      // Verifying initial dd/MM/yyyy date format application
+      // Verifying initial MM/dd/yyyy date format application
       await _verifyDateFormatApplication(
         tester: tester,
         audioSubTitles: audioSubTitles,
@@ -3295,6 +3298,7 @@ void playlistTwoDownloadViewIntegrationTest() {
         playlistLastDownloadDateTime: "01/07/2024 16:36",
         commentCreationDate: '10/12/2024',
         commentUpdateDate: '11/01/2024',
+        datePickerDateStr: '${now.month}/${now.day}/${now.year}',
       );
 
       await _selectDateFormat(
@@ -3340,7 +3344,7 @@ void playlistTwoDownloadViewIntegrationTest() {
         "0:06:29.0. Video upload date: 2022/06/12.",
       ];
 
-      // Verifying initial dd/MM/yyyy date format application
+      // Verifying initial yyyy/MM/dd date format application
       await _verifyDateFormatApplication(
         tester: tester,
         audioSubTitles: audioSubTitles,
@@ -3358,6 +3362,7 @@ void playlistTwoDownloadViewIntegrationTest() {
         playlistLastDownloadDateTime: "2024/01/07 16:36",
         commentCreationDate: '2024/10/12',
         commentUpdateDate: '2024/11/01',
+        datePickerDateStr: '${now.year}/${now.month}/${now.day}',
       );
 
       await _selectDateFormat(
@@ -3421,6 +3426,7 @@ void playlistTwoDownloadViewIntegrationTest() {
         playlistLastDownloadDateTime: "07/01/2024 16:36",
         commentCreationDate: '12/10/2024',
         commentUpdateDate: '01/11/2024',
+        datePickerDateStr: '${now.day}/${now.month}/${now.year}',
       );
 
       await _selectDateFormat(
@@ -3452,6 +3458,8 @@ void playlistTwoDownloadViewIntegrationTest() {
       // Restarting the app
       await app.main(['test']);
       await tester.pumpAndSettle();
+
+      DateTime now = DateTime.now();
 
       // The app was restarted after that 'mm/dd/yyyy' date format was set
 
@@ -3493,7 +3501,7 @@ void playlistTwoDownloadViewIntegrationTest() {
         "0:06:29.0. Video upload date: 06/12/2022.",
       ];
 
-      // Verifying initial dd/MM/yyyy date format application
+      // Verifying initial MM/dd/yyyy date format application
       await _verifyDateFormatApplication(
         tester: tester,
         audioSubTitles: audioSubTitles,
@@ -3511,6 +3519,7 @@ void playlistTwoDownloadViewIntegrationTest() {
         playlistLastDownloadDateTime: "01/07/2024 16:36",
         commentCreationDate: '10/12/2024',
         commentUpdateDate: '11/01/2024',
+        datePickerDateStr: '${now.month}/${now.day}/${now.year}',
       );
 
       await _selectDateFormat(
@@ -3541,6 +3550,8 @@ void playlistTwoDownloadViewIntegrationTest() {
       // Restarting the app
       await app.main(['test']);
       await tester.pumpAndSettle();
+
+      DateTime now = DateTime.now();
 
       // The app was restarted after that 'yyyy/mm/dd' date format was set
 
@@ -3600,6 +3611,7 @@ void playlistTwoDownloadViewIntegrationTest() {
         playlistLastDownloadDateTime: "2024/01/07 16:36",
         commentCreationDate: '2024/10/12',
         commentUpdateDate: '2024/11/01',
+        datePickerDateStr: '${now.year}/${now.month}/${now.day}',
       );
 
       await _selectDateFormat(
@@ -3630,6 +3642,8 @@ void playlistTwoDownloadViewIntegrationTest() {
       // Restarting the app
       await app.main(['test']);
       await tester.pumpAndSettle();
+
+      DateTime now = DateTime.now();
 
       // The app was restarted after that 'dd/mm/yyyy' date format was set
 
@@ -3689,6 +3703,7 @@ void playlistTwoDownloadViewIntegrationTest() {
         playlistLastDownloadDateTime: "07/01/2024 16:36",
         commentCreationDate: '12/10/2024',
         commentUpdateDate: '01/11/2024',
+        datePickerDateStr: '${now.day}/${now.month}/${now.year}',
       );
 
       // Purge the test playlist directory so that the created test
@@ -9890,29 +9905,7 @@ Future<void> _verifyDatePickerTitleTranslation({
   required String datePickerTranslatedTitleStr,
   required String datePickerCancelButtonTranslatedStr,
 }) async {
-  // Open the audio popup menu
-  await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-  await tester.pumpAndSettle();
-
-  // Find the sort/filter audio menu item and tap on it to
-  // open the audio sort filter dialog
-  await tester
-      .tap(find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
-  await tester.pumpAndSettle();
-
-  // Now enter open the DatePicker dialog, but first scroll down the dialog so that
-  // the date text fields are visible.
-
-  await tester.drag(
-    find.byType(AudioSortFilterDialog),
-    const Offset(0, -300), // Negative value for vertical drag to scroll down
-  );
-  await tester.pumpAndSettle();
-
-  // Find the DatePicker dialog icon button and tap on it to
-  // open the dialog
-  await tester.tap(find.byKey(const Key('startDownloadDateIconButton')));
-  await tester.pumpAndSettle();
+  await _openSortFilterThenDatePickerDialog(tester);
 
   // Verify the translated title in the DatePicker dialog
   expect(find.text(datePickerTranslatedTitleStr), findsOneWidget);
@@ -9924,6 +9917,32 @@ Future<void> _verifyDatePickerTitleTranslation({
   // Now close the audio sort filter dialog by tapping on its cancel
   // button
   await tester.tap(find.byKey(const Key('cancelSortFilterButton')));
+  await tester.pumpAndSettle();
+}
+
+Future<void> _openSortFilterThenDatePickerDialog(WidgetTester tester) async {
+  // Open the audio popup menu
+  await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+  await tester.pumpAndSettle();
+
+  // Find the sort/filter audio menu item and tap on it to
+  // open the audio sort filter dialog
+  await tester
+      .tap(find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+  await tester.pumpAndSettle();
+
+  // Now open the DatePicker dialog, but first scroll down the dialog so that
+  // the date text fields are visible.
+
+  await tester.drag(
+    find.byType(AudioSortFilterDialog),
+    const Offset(0, -300), // Negative value for vertical drag to scroll down
+  );
+  await tester.pumpAndSettle();
+
+  // Find the DatePicker dialog icon button and tap on it to
+  // open the dialog
+  await tester.tap(find.byKey(const Key('startDownloadDateIconButton')));
   await tester.pumpAndSettle();
 }
 
@@ -10264,6 +10283,7 @@ Future<void> _verifyDateFormatApplication({
   required String playlistLastDownloadDateTime,
   required String commentCreationDate,
   required String commentUpdateDate,
+  required String datePickerDateStr,
 }) async {
   IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
     tester: tester,
@@ -10274,11 +10294,11 @@ Future<void> _verifyDateFormatApplication({
   // "Jancovici m'explique l’importance des ordres de grandeur
   // face au changement climatique",
 
-  const String audioInfoTitle =
+  const String audioTitle =
       "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
 
   // First, find the Audio sublist ListTile Text widget
-  Finder targetAudioListTileTextWidgetFinder = find.text(audioInfoTitle);
+  Finder targetAudioListTileTextWidgetFinder = find.text(audioTitle);
 
   // Then obtain the Audio ListTile widget enclosing the Text widget by
   // finding its ancestor
@@ -10452,7 +10472,7 @@ Future<void> _verifyDateFormatApplication({
   // Verifying the comment date format
 
   // First, find the Audio sublist ListTile Text widget
-  targetAudioListTileTextWidgetFinder = find.text(audioInfoTitle);
+  targetAudioListTileTextWidgetFinder = find.text(audioTitle);
 
   // Then obtain the Audio ListTile widget enclosing the Text widget by
   // finding its ancestor
@@ -10484,6 +10504,32 @@ Future<void> _verifyDateFormatApplication({
 
   // Now close the comment list dialog
   await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+  await tester.pumpAndSettle();
+
+  // Now verify the date picker date format usage in the
+  // start download date field
+
+  await _openSortFilterThenDatePickerDialog(tester);
+
+  // Confirm the date picker dialog
+  final Finder confirmButton = find.text('OK');
+  await tester.tap(confirmButton);
+  await tester.pumpAndSettle();
+
+  // Verify the set date displayed in the start download date text
+  // field
+  final Finder selectedDateText = find.byKey(const Key('startDownloadDateTextField'));
+      expect(
+        tester
+            .widget<TextField>(selectedDateText)
+            .controller!
+            .text,
+        datePickerDateStr,
+      );
+
+  // Now close the audio sort filter dialog by tapping on its cancel
+  // button
+  await tester.tap(find.byKey(const Key('cancelSortFilterButton')));
   await tester.pumpAndSettle();
 }
 
