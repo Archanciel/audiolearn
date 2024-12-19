@@ -1278,6 +1278,11 @@ class AudioSortFilterService {
     }
   }
 
+  /// Adds a small increment to the value in order to include for example those
+  /// file size of 2373715 bytes and 2370022 bytes in the filter result if the
+  /// start and end filter file size were set to the same value of 2.37 MB. Without
+  /// converting the end value to 2.38 MB, the file sizes of 2373715 and 2370022
+  /// bytes would not be included in the filter result.
   double _addSmallIncrement(double value) {
     // Determine the precision (number of decimals) in the value
     String valueStr = value.toString();
