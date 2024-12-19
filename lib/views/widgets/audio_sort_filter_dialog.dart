@@ -1,5 +1,6 @@
 import 'package:audiolearn/utils/duration_expansion.dart';
 import 'package:audiolearn/viewmodels/date_format_vm.dart';
+import 'package:audiolearn/viewmodels/language_provider_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
@@ -1112,9 +1113,15 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     required DateFormatVM dateFormatVMlistenFalse,
     required DateTime dateNow,
   }) {
+    LanguageProviderVM languageProviderVMlistenFalse = Provider.of<LanguageProviderVM>(
+      context,
+      listen: false,
+    );
+
     return Column(
       children: [
         _buildDateTextFieldWithDateEditorIcon(
+          languageProviderVMlistenFalse: languageProviderVMlistenFalse,
           dateIconButtondKey: const Key('startDownloadDateIconButton'),
           textFieldKey: const Key('startDownloadDateTextField'),
           context: context,
@@ -1127,6 +1134,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
               .startAudioDownloadDateSortFilterTooltip,
         ),
         _buildDateTextFieldWithDateEditorIcon(
+          languageProviderVMlistenFalse: languageProviderVMlistenFalse,
           dateIconButtondKey: const Key('endDownloadDateIconButton'),
           textFieldKey: const Key('endDownloadDateTextField'),
           context: context,
@@ -1139,6 +1147,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
               .endAudioDownloadDateSortFilterTooltip,
         ),
         _buildDateTextFieldWithDateEditorIcon(
+          languageProviderVMlistenFalse: languageProviderVMlistenFalse,
           dateIconButtondKey: const Key('startUploadDateIconButton'),
           textFieldKey: const Key('startUploadDateTextField'),
           context: context,
@@ -1151,6 +1160,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
               .startVideoUploadDateSortFilterTooltip,
         ),
         _buildDateTextFieldWithDateEditorIcon(
+          languageProviderVMlistenFalse: languageProviderVMlistenFalse,
           dateIconButtondKey: const Key('endUploadDateIconButton'),
           textFieldKey: const Key('endUploadDateTextField'),
           context: context,
@@ -1167,6 +1177,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
   }
 
   Row _buildDateTextFieldWithDateEditorIcon({
+    required LanguageProviderVM languageProviderVMlistenFalse,
     required Key dateIconButtondKey,
     required Key textFieldKey,
     required BuildContext context,
@@ -1232,10 +1243,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
               initialDate: initialDate,
               firstDate: DateTime(2000),
               lastDate: DateTime.now(),
-              locale: const Locale(
-                'en',
-                'GB',
-              ), // Set locale to use DD/MM/YYYY format
+              locale: languageProviderVMlistenFalse.currentLocale,
             );
 
             // Add this check
