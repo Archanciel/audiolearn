@@ -3610,7 +3610,7 @@ void playlistOneDownloadViewIntegrationTest() {
           find.text("$copiedAudioTitle\n0:24");
       expect(audioTitlePositionTextFinder, findsOneWidget);
 
-      // Now play then pause the moved audio
+      // Now play then pause the copied audio
       await tester.tap(find.byIcon(Icons.play_arrow));
       await tester.pumpAndSettle();
 
@@ -11244,7 +11244,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
           // Close the warning dialog by tapping on the Ok button
           await tester
-              .tap(find.byKey(const Key('warningDialogOkButton')).at(0));
+              .tap(find.byKey(const Key('warningDialogOkButton')).last);
           await tester.pumpAndSettle();
 
           // Verify that the applyed Sort/Filter parms name is displayed
@@ -11514,7 +11514,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
           // Close the warning dialog by tapping on the Ok button
           await tester
-              .tap(find.byKey(const Key('warningDialogOkButton')).at(0));
+              .tap(find.byKey(const Key('warningDialogOkButton')).last);
           await tester.pumpAndSettle();
 
           // Verify that the applyed Sort/Filter parms name is displayed
