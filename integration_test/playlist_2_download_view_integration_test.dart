@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:audiolearn/models/audio.dart';
+import 'package:audiolearn/views/widgets/audio_sort_filter_dialog.dart';
 import 'package:audiolearn/views/widgets/comment_add_edit_dialog.dart';
 import 'package:audiolearn/views/widgets/comment_list_add_dialog.dart';
 import 'package:audiolearn/views/widgets/playlist_comment_list_dialog.dart';
@@ -9670,10 +9671,11 @@ void playlistTwoDownloadViewIntegrationTest() {
   });
   group('Change application language', () {
     testWidgets(
-        '''In playlist download view, change to french and verify translated
-        texts. Then, switch to audio player view verify translated texts. Then,
-        change to english, verify translation and go back to playlist download view
-        and verify translation.''', (tester) async {
+        '''In playlist download view, change to french and verify translated texts,
+        in DatePicker dialog used in audio sort filter dialog as well. Then, switch
+        to audio player view verify translated texts. Then, change to english, verify
+        translation and go back to playlist download view and verify translation.''',
+        (tester) async {
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'sort_and_filter_audio_dialog_widget_test',
@@ -9690,12 +9692,19 @@ void playlistTwoDownloadViewIntegrationTest() {
 
       _verifyFrenchInPlaylistDownloadView();
 
+      // Verifying translated texts in DatePicker dialog
+      await _verifyDatePickerTitleTranslation(
+        tester: tester,
+        datePickerTranslatedTitleStr: 'Sélectionner une date',
+        datePickerCancelButtonTranslatedStr: 'Annuler',
+      );
+
       // Click on playlist toggle button to display the playlist list
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
-      // Verify that the default Sort/Filter parms name value
-      // after the selected playlist title
+      // Verify the default Sort/Filter parms name value after the
+      // selected playlist title
 
       Text selectedSortFilterParmsName = tester
           .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
@@ -9732,8 +9741,15 @@ void playlistTwoDownloadViewIntegrationTest() {
 
       _verifyEnglishInPlaylistDownloadView();
 
-      // Verify that the default Sort/Filter parms name value
-      // after the selected playlist title
+      // Verify the translated texts in the DatePicker dialog
+      await _verifyDatePickerTitleTranslation(
+        tester: tester,
+        datePickerTranslatedTitleStr: 'Select date',
+        datePickerCancelButtonTranslatedStr: 'Cancel',
+      );
+
+      // Verify the default Sort/Filter parms name value after the
+      // selected playlist title
 
       selectedSortFilterParmsName = tester
           .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
@@ -9791,12 +9807,19 @@ void playlistTwoDownloadViewIntegrationTest() {
 
       _verifyFrenchInPlaylistDownloadView();
 
+      // Verify the translated texts in the DatePicker dialog
+      await _verifyDatePickerTitleTranslation(
+        tester: tester,
+        datePickerTranslatedTitleStr: 'Sélectionner une date',
+        datePickerCancelButtonTranslatedStr: 'Annuler',
+      );
+
       // Click on playlist toggle button to display the playlist list
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
-      // Verify that the default Sort/Filter parms name value
-      // after the selected playlist title
+      // Verify the default Sort/Filter parms name value after the
+      // selected playlist title
 
       Text selectedSortFilterParmsName = tester
           .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
@@ -9812,8 +9835,8 @@ void playlistTwoDownloadViewIntegrationTest() {
         language: Language.english,
       );
 
-      // Verify that the default Sort/Filter parms name value
-      // after the selected playlist title
+      // Verify the default Sort/Filter parms name value after the
+      // selected playlist title
 
       selectedSortFilterParmsName = tester
           .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
@@ -9830,6 +9853,13 @@ void playlistTwoDownloadViewIntegrationTest() {
       // Verify the translated texts in the application
 
       _verifyEnglishInPlaylistDownloadView();
+
+      // Verify the translated texts in the DatePicker dialog
+      await _verifyDatePickerTitleTranslation(
+        tester: tester,
+        datePickerTranslatedTitleStr: 'Select date',
+        datePickerCancelButtonTranslatedStr: 'Cancel',
+      );
 
       // Click on playlist toggle button to display the playlist list
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -9853,6 +9883,48 @@ void playlistTwoDownloadViewIntegrationTest() {
       );
     });
   });
+}
+
+Future<void> _verifyDatePickerTitleTranslation({
+  required WidgetTester tester,
+  required String datePickerTranslatedTitleStr,
+  required String datePickerCancelButtonTranslatedStr,
+}) async {
+  // Open the audio popup menu
+  await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+  await tester.pumpAndSettle();
+
+  // Find the sort/filter audio menu item and tap on it to
+  // open the audio sort filter dialog
+  await tester
+      .tap(find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+  await tester.pumpAndSettle();
+
+  // Now enter open the DatePicker dialog, but first scroll down the dialog so that
+  // the date text fields are visible.
+
+  await tester.drag(
+    find.byType(AudioSortFilterDialog),
+    const Offset(0, -300), // Negative value for vertical drag to scroll down
+  );
+  await tester.pumpAndSettle();
+
+  // Find the DatePicker dialog icon button and tap on it to
+  // open the dialog
+  await tester.tap(find.byKey(const Key('startDownloadDateIconButton')));
+  await tester.pumpAndSettle();
+
+  // Verify the translated title in the DatePicker dialog
+  expect(find.text(datePickerTranslatedTitleStr), findsOneWidget);
+
+  // Now close the DatePicker dialog by tapping on the cancel button
+  await tester.tap(find.text(datePickerCancelButtonTranslatedStr).last);
+  await tester.pumpAndSettle();
+
+  // Now close the audio sort filter dialog by tapping on its cancel
+  // button
+  await tester.tap(find.byKey(const Key('cancelSortFilterButton')));
+  await tester.pumpAndSettle();
 }
 
 void _verifyEnglishInPlaylistDownloadView() {
