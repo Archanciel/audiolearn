@@ -3740,7 +3740,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               '''In 'Title asc' audio file size only, modified in the existing
                named and saved sort/filter parms. Then save it and verify
                ConfirmActionDialog content. Then, delete the start and end file
-               size and verify the ConfirmActionDialog content.''', (WidgetTester tester) async {
+               size and verify the ConfirmActionDialog content.''',
+              (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -3874,7 +3875,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               '''In 'Title asc' audio duration only, modified in the existing
                named and saved sort/filter parms. Then save it and verify
                ConfirmActionDialog content. Then, delete the start and end audio
-               duration and verify the ConfirmActionDialog content.''', (WidgetTester tester) async {
+               duration and verify the ConfirmActionDialog content.''',
+              (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -4241,9 +4243,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         });
       });
     });
-    group('''Testing date fields setting, modification and deletion in existing
-               sF parms. Concerns audio download date and video upload date.''',
-        () {});
     group('''Saving defined sort/filter parms in sort/filter dialog in relation
              with Sort/filter dropdown button test''', () {
       testWidgets(
