@@ -3,9 +3,9 @@ import 'package:permission_handler/permission_handler.dart';
 class PermissionRequesterService {
   /// Requires adding the lines below to the main and debug AndroidManifest.xml
   /// files in order to work on S20 - Android 13 !
-  ///     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
-  ///     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/>
-  ///     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO"/>
+  ///     `<uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>`
+  ///     `<uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/>`
+  ///     `<uses-permission android:name="android.permission.READ_MEDIA_AUDIO"/>`
   static Future<void> requestMultiplePermissions() async {
     Map<Permission, PermissionStatus> statuses = await [
       Permission.storage,

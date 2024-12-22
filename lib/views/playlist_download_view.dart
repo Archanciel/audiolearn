@@ -1603,8 +1603,6 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 }
               });
               break;
-            default:
-              break;
           }
         },
       ),

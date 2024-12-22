@@ -1162,8 +1162,6 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
       case WarningMode.confirm:
         alertDialogTitle = AppLocalizations.of(context)!.confirmDialogTitle;
         break;
-      default:
-        break;
     }
 
     showDialog<void>(
