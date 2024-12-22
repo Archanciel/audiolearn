@@ -7495,8 +7495,6 @@ Future<void> applyRewindExcludedTesting({
       await tester.pumpAndSettle();
 
       break;
-    default:
-      break;
   }
 
   Finder audioPlayerViewAudioPositionFinder =

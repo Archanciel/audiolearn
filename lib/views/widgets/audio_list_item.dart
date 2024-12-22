@@ -460,8 +460,6 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
             // updated to the next audio in the playlist playable audio list.
             playlistListVMlistenFalse.updateCurrentAudio();
             break;
-          default:
-            break;
         }
       }
     });

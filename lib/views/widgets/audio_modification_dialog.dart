@@ -184,8 +184,6 @@ class _AudioModificationDialogState extends State<AudioModificationDialog>
       case AudioModificationType.modifyAudioTitle:
         _modifyAudioTitle(context);
         break;
-      default:
-        break;
     }
   }
 

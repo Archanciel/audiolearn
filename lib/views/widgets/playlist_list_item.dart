@@ -414,8 +414,6 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
               },
             );
             break;
-          default:
-            break;
         }
       }
     });
@@ -754,8 +752,6 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                 },
               );
             }
-            break;
-          default:
             break;
         }
       }

@@ -433,8 +433,6 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
               nextAudio: nextAudio,
             );
             break;
-          default:
-            break;
         }
       },
     );

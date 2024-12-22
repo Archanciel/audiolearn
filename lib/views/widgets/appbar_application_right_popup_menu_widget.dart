@@ -125,8 +125,6 @@ class AppBarApplicationRightPopupMenuWidget extends StatelessWidget {
               },
             );
             break;
-          default:
-            break;
         }
       },
       itemBuilder: (BuildContext context) {

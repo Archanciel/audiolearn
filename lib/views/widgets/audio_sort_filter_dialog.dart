@@ -181,11 +181,6 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
             _audioTitleSearchSentenceFocusNode,
           );
           break;
-        default:
-          FocusScope.of(context).requestFocus(
-            _sortFilterSaveAsUniqueNameFocusNode,
-          );
-          break;
       }
     });
 
@@ -407,8 +402,6 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
         return AppLocalizations.of(context)!.audioDownloadSpeed;
       case SortingOption.audioDownloadDuration:
         return AppLocalizations.of(context)!.audioDownloadDuration;
-      default:
-        throw ArgumentError('Invalid sorting option');
     }
   }
 
@@ -1914,14 +1907,14 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     );
   }
 
-  /// The returned list of DropdownMenuItem<SortingOption> is based on the
+  /// The returned list of `DropdownMenuItem<SortingOption>` is based on the
   /// app view type. Most sorting options are excluded for the Audio Player
   /// View.
   ///
   /// This code first filters out the SortingOption values that should not
   /// be included when widget.audioLearnAppViewType is AudioLearnAppViewType.
   /// audioPlayerView using .where(), and then maps over the filtered list
-  /// to create DropdownMenuItem<SortingOption> widgets. This approach
+  /// to create `DropdownMenuItem<SortingOption>` widgets. This approach
   /// ensures that you only include the relevant options in your
   /// DropdownButton.
   List<DropdownMenuItem<SortingOption>>

@@ -77,13 +77,13 @@ mixin ScreenMixin {
   // changed shortly to the color defined in the following
   // property.
   final WidgetStateProperty<Color> textButtonTapModification =
-      WidgetStateProperty.all(Colors.grey.withOpacity(0.6));
+      WidgetStateProperty.all(Colors.grey.withAlpha((0.6 * 255).toInt()));
 
   // When clicking on IconButton, the color of the button is
   // changed shortly to the color defined in the following
   // property.
   final WidgetStateProperty<Color> iconButtonTapModification =
-      WidgetStateProperty.all(Colors.blue.withOpacity(0.3));
+      WidgetStateProperty.all(Colors.blue.withAlpha((0.3 * 255).toInt()));
 
   // Defining custom icon themes for dark theme
   final IconThemeData activeScreenIconDarkTheme = const IconThemeData(
@@ -158,8 +158,8 @@ mixin ScreenMixin {
     ),
     textSelectionTheme: TextSelectionThemeData(
       cursorColor: Colors.white,
-      selectionColor: Colors.white.withOpacity(0.3),
-      selectionHandleColor: Colors.white.withOpacity(0.5),
+      selectionColor: Colors.white.withAlpha((0.3 * 255).toInt()),
+      selectionHandleColor: Colors.white.withAlpha((0.5 * 255).toInt()),
     ),
   );
 
@@ -214,8 +214,8 @@ mixin ScreenMixin {
     ),
     textSelectionTheme: TextSelectionThemeData(
       cursorColor: Colors.black,
-      selectionColor: Colors.grey.withOpacity(0.3),
-      selectionHandleColor: Colors.grey.withOpacity(0.5),
+      selectionColor: Colors.grey.withAlpha((0.3 * 255).toInt()),
+      selectionHandleColor: Colors.grey.withAlpha((0.5 * 255).toInt()),
     ),
     // is required so that the icon color of the
     // ListTile items are correct. In dark mode, this
@@ -269,10 +269,10 @@ mixin ScreenMixin {
   /// Lightens a color by a given percentage [0-1]
   static Color lighten(Color color, double amount) {
     assert(amount >= 0 && amount <= 1, 'Amount should be between 0 and 1');
-    int r = color.red + ((255 - color.red) * amount).toInt();
-    int g = color.green + ((255 - color.green) * amount).toInt();
-    int b = color.blue + ((255 - color.blue) * amount).toInt();
-    return Color.fromARGB(color.alpha, r, g, b);
+    int r = color.r.toInt() + ((255 - color.r.toInt()) * amount).toInt();
+    int g = color.g.toInt() + ((255 - color.g.toInt()) * amount).toInt();
+    int b = color.b.toInt() + ((255 - color.b.toInt()) * amount).toInt();
+    return Color.fromARGB(color.a.toInt(), r, g, b);
   }
 
   Future<void> openUrlInExternalApp({
@@ -311,8 +311,8 @@ mixin ScreenMixin {
     }
   }
 
-
-  static bool isHardwarePc() => (Platform.isWindows || Platform.isLinux || Platform.isMacOS);
+  static bool isHardwarePc() =>
+      (Platform.isWindows || Platform.isLinux || Platform.isMacOS);
 
   InputDecoration getDialogTextFieldInputDecoration({
     String labelTxt = '',
@@ -562,7 +562,7 @@ mixin ScreenMixin {
     );
   }
 
-  /// This consumer<WarningMessageVM> must be installed on every
+  /// This `Consumer<WarningMessageVM>` must be installed on every
   /// view, otherwise the warning message will not be displayed
   /// on the view in which it was created.
   Consumer<WarningMessageVM> buildWarningMessageVMConsumer({

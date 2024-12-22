@@ -65,7 +65,7 @@ class SetAudioPositionCommand implements Command {
 /// playing position modifications as well as the reference on the
 /// current playing audio.
 ///
-/// As Consumer<AudioPlayerVM> in the AudioPlayerView screen, it
+/// As `Consumer<AudioPlayerVM>` in the AudioPlayerView screen, it
 /// updates the different widgets showing the current audio playing
 /// position and the current audio title.
 ///
