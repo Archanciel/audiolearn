@@ -21,8 +21,8 @@ enum AppBarPopupMenu {
 ///
 /// The menu items are defined in the enum AppBarPopupMenu. Up to now
 /// the popup menu widget is identical for all screens.
-class AppBarApplicationRightPopupMenuWidget extends StatelessWidget {
-  const AppBarApplicationRightPopupMenuWidget({
+class AppBarRightPopupMenu extends StatelessWidget {
+  const AppBarRightPopupMenu({
     super.key,
     required this.themeProvider,
   });

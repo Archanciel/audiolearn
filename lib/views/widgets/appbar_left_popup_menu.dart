@@ -33,7 +33,7 @@ enum AppBarPopupMenu {
 /// The AppBarLeadingPopupMenuWidget is used to display the leading
 /// popup menu icon of the AppBar. The displayed items are specific
 /// to the currently displayed screen.
-class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
+class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
   final ThemeProviderVM themeProvider;
   final SettingsDataService settingsDataService;
   final AudioLearnAppViewType audioLearnAppViewType;
@@ -41,7 +41,7 @@ class AppBarLeadingPopupMenuWidget extends StatelessWidget with ScreenMixin {
   /// The AppBarLeadingPopupMenuWidget key is defined in the parent
   /// widget, i.e. MyHomePageState instance, to facilitate the widget
   /// test.
-  AppBarLeadingPopupMenuWidget({
+  AppBarLeftPopupMenuWidget({
     required super.key,
     required this.audioLearnAppViewType,
     required this.themeProvider,

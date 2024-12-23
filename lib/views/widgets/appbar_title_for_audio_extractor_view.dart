@@ -3,8 +3,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../views/screen_mixin.dart';
 
-/// When the PlaylistView screen is displayed, the
-/// AppBarTitleForPlaylistView is set in the AppBar title:
+/// When the AudioExtractorView screen is displayed, the
+/// AppBarTitleForAudioExtractorView is set in the AppBar title:
 /// parameter.
 class AppBarTitleForAudioExtractorView extends StatelessWidget
     with ScreenMixin {
