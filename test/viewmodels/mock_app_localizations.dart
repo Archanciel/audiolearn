@@ -1722,4 +1722,14 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get emptyDate => "empty";
+
+  @override
+  String get help => "Help ...";
+
+  @override
+  String get helpMainTitle => "Audio Learn Help";
+
+  @override
+  String get helpMainIntroduction =>
+      "Consulting the Audio Player Introduction Help is necessary the first time you use the application.";
 }
