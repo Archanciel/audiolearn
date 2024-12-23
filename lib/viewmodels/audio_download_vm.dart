@@ -301,7 +301,6 @@ class AudioDownloadVM extends ChangeNotifier {
           playlistQuality: playlistQuality,
           playlistType: PlaylistType.youtube,
         );
-        ;
 
         return null;
       }

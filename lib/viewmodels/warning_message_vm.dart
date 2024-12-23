@@ -19,6 +19,10 @@ enum WarningMessageType {
   addPlaylistTitle, // The playlist with this title is added
   // to the application.
 
+  privatePlaylistAddition, // A private Youtube playlist is
+  // added to the application. Such playlist can not be
+  // downloaded
+
   invalidValueWarning, // The value entered in the SetValueToTargetDialog
   // text field is invalid.
 
@@ -341,6 +345,26 @@ class WarningMessageVM extends ChangeNotifier {
 
     if (playlistTitle.isNotEmpty) {
       warningMessageType = WarningMessageType.addPlaylistTitle;
+
+      // Causes the display warning message widget to be displayed.
+      notifyListeners();
+    }
+  }
+
+  String _addedPlaylistUrl = '';
+  String get addedPlaylistUtl => _addedPlaylistUrl;
+
+  void signalPrivatePlaylistAddition({
+    required String playlistUrl,
+    required PlaylistQuality playlistQuality,
+    required PlaylistType playlistType,
+  }) {
+    _addedPlaylistUrl = playlistUrl;
+    _addedPlaylistQuality = playlistQuality;
+    _addedPlaylistType = playlistType;
+
+    if (playlistUrl.isNotEmpty) {
+      warningMessageType = WarningMessageType.privatePlaylistAddition;
 
       // Causes the display warning message widget to be displayed.
       notifyListeners();
