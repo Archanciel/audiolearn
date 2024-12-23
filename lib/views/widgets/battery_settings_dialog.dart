@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:app_settings/app_settings.dart';
+import 'package:provider/provider.dart';
 
 import '../../constants.dart';
+import '../../viewmodels/language_provider_vm.dart';
 
 class BatterySettingsDialog extends StatelessWidget {
   const BatterySettingsDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
+    LanguageProviderVM languageProviderVMlistenFalse =
+        Provider.of<LanguageProviderVM>(
+      context,
+      listen: false,
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -42,12 +50,15 @@ class BatterySettingsDialog extends StatelessWidget {
                   AppLocalizations.of(context)!.openBatteryOptimisationButton,
                 ),
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 40),
               // Add the first image with width constraints
               LayoutBuilder(
                 builder: (context, constraints) {
                   return Image.asset(
-                    'assets/images/batterie_option_access_fr.jpg',
+                    (languageProviderVMlistenFalse.currentLocale ==
+                            const Locale('en'))
+                        ? 'assets/images/battery_option_access_en.jpg'
+                        : 'assets/images/battery_option_access_fr.jpg',
                     fit: BoxFit.contain,
                     width:
                         constraints.maxWidth, // Limit width to the screen width
@@ -59,7 +70,10 @@ class BatterySettingsDialog extends StatelessWidget {
               LayoutBuilder(
                 builder: (context, constraints) {
                   return Image.asset(
-                    'assets/images/batterie_option_selection_fr.jpg',
+                    (languageProviderVMlistenFalse.currentLocale ==
+                            const Locale('en'))
+                        ? 'assets/images/battery_option_selection_en.jpg'
+                        : 'assets/images/battery_option_selection_fr.jpg',
                     fit: BoxFit.contain,
                     width:
                         constraints.maxWidth, // Limit width to the screen width
