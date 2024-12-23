@@ -716,12 +716,12 @@
   "emptyDate": "vide",
   "helpMainTitle": "Aide Audio Learn",
   "helpMainIntroduction": "Consultez l'aide d'introduction d'Audio Learn lors de votre première utilisation de l'application afin de l'initialiser correctement.",
-  "helpAudioLearnIntroductionTitle": "Audio Learn Introduction",
-  "helpAudioLearnIntroductionSubTitle": "Defining, adding and downloading a Youtube playlist",
-  "helpLocalPlaylistTitle": "Local Playlist",
-  "helpLocalPlaylistSubTitle": "Defining and using a local playlist",
-  "helpPlaylistMenuTitle": "Playlist Menu",
-  "helpPlaylistMenuSubTitle": "Playlist menu functionalities",
-  "helpAudioMenuTitle": "Audio Menu",
-  "helpAudioMenuSubTitle": "Audio menu functionalities"
+  "helpAudioLearnIntroductionTitle": "Introduction d'Audio Learn",
+  "helpAudioLearnIntroductionSubTitle": "Définir, ajouter et télécharger une playlist YouTube",
+  "helpLocalPlaylistTitle": "Playlist Locale",
+  "helpLocalPlaylistSubTitle": "Définir et utiliser une playlist locale",
+  "helpPlaylistMenuTitle": "Menu Playlist",
+  "helpPlaylistMenuSubTitle": "Fonctionnalités du menu playlist",
+  "helpAudioMenuTitle": "Menu Audio",
+  "helpAudioMenuSubTitle": "Fonctionnalités du menu audio"
 }
