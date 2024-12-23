@@ -729,5 +729,13 @@
   "unchecked": "unchecked",
   "emptyDate": "empty",
   "helpMainTitle": "Audio Learn Help",
-  "helpMainIntroduction": "Consult the Audio Learn Introduction Help the first time you use the application in order to initialize it correctly !"
+  "helpMainIntroduction": "Consult the Audio Learn Introduction Help the first time you use the application in order to initialize it correctly !",
+  "helpAudioLearnIntroductionTitle": "Audio Learn Introduction",
+  "helpAudioLearnIntroductionSubTitle": "Defining, adding and downloading a Youtube playlist",
+  "helpLocalPlaylistTitle": "Local Playlist",
+  "helpLocalPlaylistSubTitle": "Defining and using a local playlist",
+  "helpPlaylistMenuTitle": "Playlist Menu",
+  "helpPlaylistMenuSubTitle": "Playlist menu functionalities",
+  "helpAudioMenuTitle": "Audio Menu",
+  "helpAudioMenuSubTitle": "Audio menu functionalities"
 }
