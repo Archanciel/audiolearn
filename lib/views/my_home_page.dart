@@ -8,8 +8,8 @@ import '../services/sort_filter_parameters.dart';
 import '../viewmodels/audio_player_vm.dart';
 import '../viewmodels/theme_provider_vm.dart';
 import '../services/settings_data_service.dart';
-import '../views/widgets/appbar_leading_popup_menu_widget.dart';
-import '../views/widgets/appbar_application_right_popup_menu_widget.dart';
+import 'widgets/appbar_left_popup_menu.dart';
+import 'widgets/appbar_right_popup_menu.dart';
 import '../views/screen_mixin.dart';
 import '../views/playlist_download_view.dart';
 import '../views/audio_player_view.dart';
@@ -144,14 +144,13 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
             ? Icons.light_mode
             : Icons.dark_mode),
       ),
-      AppBarApplicationRightPopupMenuWidget(
-          themeProvider: themeProviderVMlistenTrue),
+      AppBarRightPopupMenu(themeProvider: themeProviderVMlistenTrue),
     ];
 
     return Scaffold(
       appBar: AppBar(
         title: _appBarTitleWidgetLst[_currentIndex],
-        leading: AppBarLeadingPopupMenuWidget(
+        leading: AppBarLeftPopupMenuWidget(
             key: const Key('appBarLeadingPopupMenuWidget'),
             audioLearnAppViewType: _audioLearnAppViewTypeLst[_currentIndex],
             themeProvider: themeProviderVMlistenTrue,
@@ -246,16 +245,14 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
   Future<void> onPageChangedFunction(int index) async {
     switch (index) {
       case ScreenMixin.PLAYLIST_DOWNLOAD_VIEW_DRAGGABLE_INDEX:
-        PlaylistListVM playlistListVMlistenFalse =
-            Provider.of<PlaylistListVM>(
+        PlaylistListVM playlistListVMlistenFalse = Provider.of<PlaylistListVM>(
           context,
           listen: false,
         );
         playlistListVMlistenFalse.backToPlaylistDownloadView();
         break;
       case ScreenMixin.AUDIO_PLAYER_VIEW_DRAGGABLE_INDEX:
-        PlaylistListVM playlistListVMlistenFalse =
-            Provider.of<PlaylistListVM>(
+        PlaylistListVM playlistListVMlistenFalse = Provider.of<PlaylistListVM>(
           context,
           listen: false,
         );
