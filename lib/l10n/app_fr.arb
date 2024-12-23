@@ -715,5 +715,13 @@
   "unchecked": "décoché",
   "emptyDate": "vide",
   "helpMainTitle": "Aide Audio Learn",
-  "helpMainIntroduction": "Consultez l'aide d'introduction d'Audio Learn lors de votre première utilisation de l'application afin de l'initialiser correctement."
+  "helpMainIntroduction": "Consultez l'aide d'introduction d'Audio Learn lors de votre première utilisation de l'application afin de l'initialiser correctement.",
+  "helpAudioLearnIntroductionTitle": "Audio Learn Introduction",
+  "helpAudioLearnIntroductionSubTitle": "Defining, adding and downloading a Youtube playlist",
+  "helpLocalPlaylistTitle": "Local Playlist",
+  "helpLocalPlaylistSubTitle": "Defining and using a local playlist",
+  "helpPlaylistMenuTitle": "Playlist Menu",
+  "helpPlaylistMenuSubTitle": "Playlist menu functionalities",
+  "helpAudioMenuTitle": "Audio Menu",
+  "helpAudioMenuSubTitle": "Audio menu functionalities"
 }

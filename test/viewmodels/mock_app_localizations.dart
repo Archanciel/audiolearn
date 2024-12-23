@@ -1732,4 +1732,29 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get helpMainIntroduction =>
       "Consulting the Audio Player Introduction Help is necessary the first time you use the application.";
+
+  @override
+  String get helpAudioLearnIntroductionTitle => "Audio Learn Introduction";
+
+  @override
+  String get helpAudioLearnIntroductionSubTitle =>
+      "Defining, adding and downloading a Youtube playlist";
+
+  @override
+  String get helpLocalPlaylistTitle => "Local Playlist";
+
+  @override
+  String get helpLocalPlaylistSubTitle => "Defining and using a local playlist";
+
+  @override
+  String get helpPlaylistMenuTitle => "Playlist Menu";
+
+  @override
+  String get helpPlaylistMenuSubTitle => "Playlist menu functionalities";
+
+  @override
+  String get helpAudioMenuTitle => "Audio Menu";
+
+  @override
+  String get helpAudioMenuSubTitle => "Audio menu functionalities";
 }
