@@ -1,4 +1,5 @@
 import 'package:audiolearn/views/widgets/date_format_selection_dialog.dart';
+import 'package:audiolearn/views/widgets/help_main_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -12,6 +13,7 @@ enum AppBarPopupMenu {
   en,
   fr,
   dateFormat,
+  help,
   about,
 }
 
@@ -72,6 +74,16 @@ class AppBarRightPopupMenu extends StatelessWidget {
                         child: dateFormatSelectionDialog,
                       )
                     : dateFormatSelectionDialog;
+              },
+            );
+            break;
+          case AppBarPopupMenu.help:
+            showDialog<void>(
+              context: context,
+              barrierDismissible: false, // This line prevents the dialog from
+              // closing when tapping outside the dialog
+              builder: (BuildContext context) {
+                return HelpMainDialog();
               },
             );
             break;
@@ -145,6 +157,11 @@ class AppBarRightPopupMenu extends StatelessWidget {
             key: const Key('appBarMenuDateFormat'),
             value: AppBarPopupMenu.dateFormat,
             child: Text(AppLocalizations.of(context)!.dateFormat),
+          ),
+          PopupMenuItem<AppBarPopupMenu>(
+            key: const Key('appBarMenuHelp'),
+            value: AppBarPopupMenu.help,
+            child: Text(AppLocalizations.of(context)!.help),
           ),
           PopupMenuItem<AppBarPopupMenu>(
             key: const Key('appBarMenuAbout'),

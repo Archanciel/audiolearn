@@ -34,6 +34,7 @@
   "audioDownloadingStopping": "Stopping download ...",
   "audioDownloadError": "Error downloading audio: {error}",
   "about": "About ...",
+  "help": "Help ...",
   "defineSortFilterAudiosMenu": "Sort/Filter Audio ...",
   "clearSortFilterAudiosParmsHistoryMenu": "Clear Sort/Filter Parameters History",
   "saveSortFilterAudiosOptionsToPlaylistMenu": "Save Sort/Filter Parameters to Playlist ...",
@@ -726,5 +727,7 @@
   "valueInModifiedVersionTitle": "In modified version",
   "checked": "checked",
   "unchecked": "unchecked",
-  "emptyDate": "empty"
+  "emptyDate": "empty",
+  "helpMainTitle": "Audio Learn Help",
+  "helpMainIntroduction": "Consult the Audio Learn Introduction Help the first time you use the application in order to initialize it correctly !"
 }

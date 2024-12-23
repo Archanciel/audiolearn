@@ -34,6 +34,7 @@
   "audioDownloadingStopping": "Téléch en cessation ...",
   "audioDownloadError": "Erreur de téléchargement: {error}",
   "about": "Version ...",
+  "help": "Aide ...",
   "defineSortFilterAudiosMenu": "Trier/filtrer audio ...",
   "clearSortFilterAudiosParmsHistoryMenu": "Effacer l'historique des paramètres de tri/filtre",
   "saveSortFilterAudiosOptionsToPlaylistMenu": "Sauvegarder les paramètres tri/filtre dans la playlist ...",
@@ -712,5 +713,7 @@
   "valueInModifiedVersionTitle": "En version modifiée",
   "checked": "coché",
   "unchecked": "décoché",
-  "emptyDate": "vide"
+  "emptyDate": "vide",
+  "helpMainTitle": "Aide Audio Learn",
+  "helpMainIntroduction": "Consultez l'aide d'introduction d'Audio Learn lors de votre première utilisation de l'application afin de l'initialiser correctement."
 }
