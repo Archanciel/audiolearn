@@ -294,6 +294,16 @@ class AudioDownloadVM extends ChangeNotifier {
         warningMessageVM.invalidYoutubePlaylistTitle = playlistTitle;
 
         return null;
+      } else if (playlistTitle == '') {
+        // The case if the Youtube playlist is private
+        warningMessageVM.signalPrivatePlaylistAddition(
+          playlistUrl: playlistUrl,
+          playlistQuality: playlistQuality,
+          playlistType: PlaylistType.youtube,
+        );
+        ;
+
+        return null;
       }
 
       int playlistIndex = _listOfPlaylist
