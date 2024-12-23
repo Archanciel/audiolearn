@@ -14,129 +14,139 @@ class HelpMainDialog extends StatelessWidget {
           AppLocalizations.of(context)!.helpMainTitle,
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                AppLocalizations.of(context)!.helpMainIntroduction,
-                style: kDialogTextFieldStyle,
-              ),
-              const SizedBox(height: 10),
-              _buildMenuItem(
-                context: context,
-                icon: Icons.key,
-                title: "Compte",
-                subtitle: "Notifications de sécurité, changer de numéro",
-                onTap: () {
-                  // Navigate to Account settings or show details
-                },
-              ),
-              _buildMenuItem(
-                context: context,
-                icon: Icons.lock,
-                title: "Confidentialité",
-                subtitle: "Bloquer des contacts, messages éphémères",
-                onTap: () {
-                  // Navigate to Privacy settings
-                },
-              ),
-              _buildMenuItem(
-                context: context,
-                icon: Icons.key,
-                title: "Compte",
-                subtitle: "Notifications de sécurité, changer de numéro",
-                onTap: () {
-                  // Navigate to Account settings or show details
-                },
-              ),
-              _buildMenuItem(
-                context: context,
-                icon: Icons.lock,
-                title: "Confidentialité",
-                subtitle: "Bloquer des contacts, messages éphémères",
-                onTap: () {
-                  // Navigate to Privacy settings
-                },
-              ),
-              _buildMenuItem(
-                context: context,
-                icon: Icons.key,
-                title: "Compte",
-                subtitle: "Notifications de sécurité, changer de numéro",
-                onTap: () {
-                  // Navigate to Account settings or show details
-                },
-              ),
-              _buildMenuItem(
-                context: context,
-                icon: Icons.lock,
-                title: "Confidentialité",
-                subtitle: "Bloquer des contacts, messages éphémères",
-                onTap: () {
-                  // Navigate to Privacy settings
-                },
-              ),
-              _buildMenuItem(
-                context: context,
-                icon: Icons.key,
-                title: "Compte",
-                subtitle: "Notifications de sécurité, changer de numéro",
-                onTap: () {
-                  // Navigate to Account settings or show details
-                },
-              ),
-              _buildMenuItem(
-                context: context,
-                icon: Icons.lock,
-                title: "Confidentialité",
-                subtitle: "Bloquer des contacts, messages éphémères",
-                onTap: () {
-                  // Navigate to Privacy settings
-                },
-              ),
-              _buildMenuItem(
-                context: context,
-                icon: Icons.key,
-                title: "Compte",
-                subtitle: "Notifications de sécurité, changer de numéro",
-                onTap: () {
-                  // Navigate to Account settings or show details
-                },
-              ),
-              _buildMenuItem(
-                context: context,
-                icon: Icons.lock,
-                title: "Confidentialité",
-                subtitle: "Bloquer des contacts, messages éphémères",
-                onTap: () {
-                  // Navigate to Privacy settings
-                },
-              ),
-              _buildMenuItem(
-                context: context,
-                icon: Icons.key,
-                title: "Compte",
-                subtitle: "Notifications de sécurité, changer de numéro",
-                onTap: () {
-                  // Navigate to Account settings or show details
-                },
-              ),
-              _buildMenuItem(
-                context: context,
-                icon: Icons.lock,
-                title: "Confidentialité",
-                subtitle: "Bloquer des contacts, messages éphémères",
-                onTap: () {
-                  // Navigate to Privacy settings
-                },
-              ),
-            ],
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              AppLocalizations.of(context)!.helpMainIntroduction,
+              style: kDialogTextFieldStyle,
+            ),
           ),
-        ),
+          const Divider(),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildMenuItem(
+                      context: context,
+                      icon: Icons.key,
+                      title: "Compte",
+                      subtitle: "Notifications de sécurité, changer de numéro",
+                      onTap: () {
+                        // Navigate to Account settings or show details
+                      },
+                    ),
+                    _buildMenuItem(
+                      context: context,
+                      icon: Icons.lock,
+                      title: "Confidentialité",
+                      subtitle: "Bloquer des contacts, messages éphémères",
+                      onTap: () {
+                        // Navigate to Privacy settings
+                      },
+                    ),
+                    _buildMenuItem(
+                      context: context,
+                      icon: Icons.key,
+                      title: "Compte",
+                      subtitle: "Notifications de sécurité, changer de numéro",
+                      onTap: () {
+                        // Navigate to Account settings or show details
+                      },
+                    ),
+                    _buildMenuItem(
+                      context: context,
+                      icon: Icons.lock,
+                      title: "Confidentialité",
+                      subtitle: "Bloquer des contacts, messages éphémères",
+                      onTap: () {
+                        // Navigate to Privacy settings
+                      },
+                    ),
+                    _buildMenuItem(
+                      context: context,
+                      icon: Icons.key,
+                      title: "Compte",
+                      subtitle: "Notifications de sécurité, changer de numéro",
+                      onTap: () {
+                        // Navigate to Account settings or show details
+                      },
+                    ),
+                    _buildMenuItem(
+                      context: context,
+                      icon: Icons.lock,
+                      title: "Confidentialité",
+                      subtitle: "Bloquer des contacts, messages éphémères",
+                      onTap: () {
+                        // Navigate to Privacy settings
+                      },
+                    ),
+                    _buildMenuItem(
+                      context: context,
+                      icon: Icons.key,
+                      title: "Compte",
+                      subtitle: "Notifications de sécurité, changer de numéro",
+                      onTap: () {
+                        // Navigate to Account settings or show details
+                      },
+                    ),
+                    _buildMenuItem(
+                      context: context,
+                      icon: Icons.lock,
+                      title: "Confidentialité",
+                      subtitle: "Bloquer des contacts, messages éphémères",
+                      onTap: () {
+                        // Navigate to Privacy settings
+                      },
+                    ),
+                    _buildMenuItem(
+                      context: context,
+                      icon: Icons.key,
+                      title: "Compte",
+                      subtitle: "Notifications de sécurité, changer de numéro",
+                      onTap: () {
+                        // Navigate to Account settings or show details
+                      },
+                    ),
+                    _buildMenuItem(
+                      context: context,
+                      icon: Icons.lock,
+                      title: "Confidentialité",
+                      subtitle: "Bloquer des contacts, messages éphémères",
+                      onTap: () {
+                        // Navigate to Privacy settings
+                      },
+                    ),
+                    _buildMenuItem(
+                      context: context,
+                      icon: Icons.key,
+                      title: "Compte",
+                      subtitle: "Notifications de sécurité, changer de numéro",
+                      onTap: () {
+                        // Navigate to Account settings or show details
+                      },
+                    ),
+                    _buildMenuItem(
+                      context: context,
+                      icon: Icons.lock,
+                      title: "Confidentialité",
+                      subtitle: "Bloquer des contacts, messages éphémères",
+                      onTap: () {
+                        // Navigate to Privacy settings
+                      },
+                    ),
+                    // Repeat menu items as needed
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
