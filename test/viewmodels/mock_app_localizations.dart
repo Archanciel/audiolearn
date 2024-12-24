@@ -1757,4 +1757,7 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get helpAudioMenuSubTitle => "Audio menu functionalities";
+
+  @override
+  String get addPrivateYoutubePlaylist => "Trying to add a private Youtube playlist is not possible since the audio of a private playlist can not be downloaded. To solve the problem, edit the playlist on Youtube and change its visibility from Private to Unlisted or to Public and then re-add it to the application.";
 }
