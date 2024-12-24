@@ -168,7 +168,8 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
           } else {
             // Youtube playlist is added
             addPlaylistTitle = AppLocalizations.of(context)!
-                .addYoutubePlaylistTitle(addedPlayListTitle, playlistQualityStr);
+                .addYoutubePlaylistTitle(
+                    addedPlayListTitle, playlistQualityStr);
           }
 
           WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -179,6 +180,17 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                 themeProviderVM: themeProviderVM);
           });
         }
+
+        return const SizedBox.shrink();
+      case WarningMessageType.privatePlaylistAddition:
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _displayWarningDialog(
+                context: _context,
+                message: AppLocalizations.of(context)!
+              .addPrivateYoutubePlaylist,
+                warningMessageVM: _warningMessageVM,
+                themeProviderVM: themeProviderVM);
+          });
 
         return const SizedBox.shrink();
       case WarningMessageType.invalidValueWarning:
@@ -557,9 +569,6 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         });
 
         return const SizedBox.shrink();
-
-
-
 
       case WarningMessageType.notApplyingDefaultSFparmsToMoveWarning:
         WidgetsBinding.instance.addPostFrameCallback((_) {

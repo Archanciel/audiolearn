@@ -131,14 +131,14 @@
   },
   "downloadAudioYoutubeError": "Error downloading audio from Youtube: \"{exceptionMessage}\"",
   "@downloadAudioYoutubeError": {
-    "description": "Warning announcing that downloading the audio from Youtube failed.",
+    "description": "Warning announcing that downloading the audio's from Youtube failed.",
     "placeholders": {
       "exceptionMessage": {}
     }
   },
   "downloadAudioYoutubeErrorDueToLiveVideoInPlaylist": "Error downloading audio from Youtube. The playlist \"{playlistTitle}\" contains a live video which causes the playlist audio downloading failure. To solve the problem, after having downloaded the audio of the live video as explained below, remove the live video from the playlist, then restart the application and retry.\n\nThe live video URL contains the following string: \"{liveVideoString}\". In order to add the live video audio to the playlist \"{playlistTitle}\", download it separately as single video download adding it to the playlist \"{playlistTitle}\".",
   "@downloadAudioYoutubeErrorDueToLiveVideoInPlaylist": {
-    "description": "Warning announcing that downloading the audio from Youtube failed due to presence of live video in the playlist.",
+    "description": "Warning announcing that downloading the audio from Youtube failed due to presence of this audio in the playlist.",
     "placeholders": {
       "playlistTitle": {},
       "liveVideoString": {}
@@ -472,7 +472,7 @@
     }
   },
   "rewindAudioToStart": "Rewind all Audio to Start",
-  "rewindAudioToStartTooltip": "Rewind all playlist audio to start position. This is useful if you wish to replay all the audio.",
+  "rewindAudioToStartTooltip": "Rewind all playlist audio to start position. This is useful if you wish to replay all the audio's.",
   "rewindedPlayableAudioNumber": "{number} playlist audio were repositioned to start.",
   "dateFormat": "Select Date Format ...",
   "dateFormatSelectionDialogTitle": "Select the application date format",
@@ -737,5 +737,6 @@
   "helpPlaylistMenuTitle": "Playlist Menu",
   "helpPlaylistMenuSubTitle": "Playlist menu functionalities",
   "helpAudioMenuTitle": "Audio Menu",
-  "helpAudioMenuSubTitle": "Audio menu functionalities"
+  "helpAudioMenuSubTitle": "Audio menu functionalities",
+  "addPrivateYoutubePlaylist": "Trying to add a private Youtube playlist is not possible since the audio's of a private playlist can not be downloaded. To solve the problem, edit the playlist on Youtube and change its visibility from \"Private\" to \"Unlisted\" or to \"Public\" and then re-add it to the application."
 }

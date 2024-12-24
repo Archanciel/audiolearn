@@ -351,24 +351,11 @@ class WarningMessageVM extends ChangeNotifier {
     }
   }
 
-  String _addedPlaylistUrl = '';
-  String get addedPlaylistUtl => _addedPlaylistUrl;
+  void signalPrivatePlaylistAddition() {
+    warningMessageType = WarningMessageType.privatePlaylistAddition;
 
-  void signalPrivatePlaylistAddition({
-    required String playlistUrl,
-    required PlaylistQuality playlistQuality,
-    required PlaylistType playlistType,
-  }) {
-    _addedPlaylistUrl = playlistUrl;
-    _addedPlaylistQuality = playlistQuality;
-    _addedPlaylistType = playlistType;
-
-    if (playlistUrl.isNotEmpty) {
-      warningMessageType = WarningMessageType.privatePlaylistAddition;
-
-      // Causes the display warning message widget to be displayed.
-      notifyListeners();
-    }
+    // Causes the display warning message widget to be displayed.
+    notifyListeners();
   }
 
   InvalidValueState _invalidValueState = InvalidValueState.tooBig;
@@ -929,7 +916,8 @@ class WarningMessageVM extends ChangeNotifier {
     _movedToTargetPlaylistType = targetPlaylistType;
     _appliedToMoveSortFilterParmsName = appliedSortFilterParmsName;
 
-    warningMessageType = WarningMessageType.notApplyingDefaultSFparmsToMoveWarning;
+    warningMessageType =
+        WarningMessageType.notApplyingDefaultSFparmsToMoveWarning;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();
@@ -948,7 +936,8 @@ class WarningMessageVM extends ChangeNotifier {
     _copiedToTargetPlaylistType = targetPlaylistType;
     _appliedToCopySortFilterParmsName = appliedSortFilterParmsName;
 
-    warningMessageType = WarningMessageType.notApplyingDefaultSFparmsToCopyWarning;
+    warningMessageType =
+        WarningMessageType.notApplyingDefaultSFparmsToCopyWarning;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();
@@ -957,7 +946,8 @@ class WarningMessageVM extends ChangeNotifier {
   String _audioCopySourcePlaylistTitle = '';
   String get audioCopySourcePlaylistTitle => _audioCopySourcePlaylistTitle;
   late PlaylistType _copiedFromSourcePlaylistType;
-  PlaylistType get copiedFromSourcePlaylistType => _copiedFromSourcePlaylistType;
+  PlaylistType get copiedFromSourcePlaylistType =>
+      _copiedFromSourcePlaylistType;
   String _audioCopyTargetPlaylistTitle = '';
   String get audioCopyTargetPlaylistTitle => _audioCopyTargetPlaylistTitle;
   late PlaylistType _copiedToTargetPlaylistType;
