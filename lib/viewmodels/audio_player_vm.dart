@@ -613,7 +613,21 @@ class AudioPlayerVM extends ChangeNotifier {
   Future<void> playCurrentAudio({
     bool rewindAudioPositionBasedOnPauseDuration = true,
     bool isCommentPlaying = false,
+    bool isFromAudioPlayerView = false,
   }) async {
+    // if (isFromAudioPlayerView) {
+    //   // Set the source again
+    //   await _audioPlayer!.setSource(DeviceFileSource(_currentAudio!.filePathName));
+
+    //   // Seek to the saved position
+    //   await _audioPlayer!.seek(Duration(seconds: _currentAudio!.audioPositionSeconds));
+
+    //   // Start playing again if needed
+    //   await _audioPlayer!.resume();
+
+    //   return;
+    // }
+
     _isCommentPlaying = isCommentPlaying;
 
     if (_currentAudio == null) {
@@ -640,6 +654,13 @@ class AudioPlayerVM extends ChangeNotifier {
 
     // Check if the file exists before attempting to play it
     if (File(audioFilePathName).existsSync()) {
+      if (isFromAudioPlayerView) {
+        // Set the source again since clicking on the pause icon
+        // stopped the audio player.
+        await _audioPlayer!
+            .setSource(DeviceFileSource(_currentAudio!.filePathName));
+      }
+
       if (rewindAudioPositionBasedOnPauseDuration) {
         await _rewindAudioPositionBasedOnPauseDuration();
       }
@@ -658,7 +679,8 @@ class AudioPlayerVM extends ChangeNotifier {
   }
 
   Future<void> pause() async {
-    await _audioPlayer!.pause();
+    // await _audioPlayer!.pause();
+    await _audioPlayer!.stop();
 
     if (_currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd) {
       _currentAudio!.isPaused = true;
