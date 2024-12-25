@@ -596,19 +596,6 @@ class AudioPlayerVM extends ChangeNotifier {
     bool isCommentPlaying = false,
     bool isFromAudioPlayerView = false,
   }) async {
-    // if (isFromAudioPlayerView) {
-    //   // Set the source again
-    //   await _audioPlayer!.setSource(DeviceFileSource(_currentAudio!.filePathName));
-
-    //   // Seek to the saved position
-    //   await _audioPlayer!.seek(Duration(seconds: _currentAudio!.audioPositionSeconds));
-
-    //   // Start playing again if needed
-    //   await _audioPlayer!.resume();
-
-    //   return;
-    // }
-
     _isCommentPlaying = isCommentPlaying;
 
     if (_currentAudio == null) {
@@ -660,7 +647,10 @@ class AudioPlayerVM extends ChangeNotifier {
   }
 
   Future<void> pause() async {
-    // await _audioPlayer!.pause();
+    // Calling _audioPlayer!.stop() instead of _audioPlayer!.pause()
+    // avoids that the paused audio starts when an alarm or a call
+    // happens on the smartphone. This requires to call _audioPlayer!.
+    // setSource() in the playCurrentAudio() method ...
     await _audioPlayer!.stop();
 
     if (_currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd) {
