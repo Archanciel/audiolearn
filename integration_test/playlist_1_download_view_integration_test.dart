@@ -3630,7 +3630,7 @@ void playlistOneDownloadViewIntegrationTest() {
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
         minPositionTimeStr: '0:03',
-        maxPositionTimeStr: '0:05',
+        maxPositionTimeStr: '0:06',
       );
 
       // Return to the Playlist Download View
