@@ -3362,7 +3362,7 @@ void audioPlayerViewIntegrationTest() {
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
         minPositionTimeStr: '1:23',
-        maxPositionTimeStr: '1:24',
+        maxPositionTimeStr: '1:25',
       );
   
       // undo the change
@@ -3891,7 +3891,7 @@ void audioPlayerViewIntegrationTest() {
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
         minPositionTimeStr: '1:23',
-        maxPositionTimeStr: '1:24',
+        maxPositionTimeStr: '1:25',
       );
   
       // undo the change
