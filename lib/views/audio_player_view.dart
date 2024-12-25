@@ -157,8 +157,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
       context,
       listen: false,
     );
-    PlaylistListVM playlistListVMlistenTrue =
-        Provider.of<PlaylistListVM>(
+    PlaylistListVM playlistListVMlistenTrue = Provider.of<PlaylistListVM>(
       context,
       listen: true,
     );
@@ -762,7 +761,9 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                   onPressed: (() async {
                     audioPlayerVM.isPlaying
                         ? await audioPlayerVM.pause()
-                        : await audioPlayerVM.playCurrentAudio();
+                        : await audioPlayerVM.playCurrentAudio(
+                            isFromAudioPlayerView: true,
+                          );
                   }),
                   style: ButtonStyle(
                     // Highlight button when pressed
