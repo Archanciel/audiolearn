@@ -151,6 +151,15 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
                   value: playlist.playableAudioLst.length.toString()),
               createInfoRowFunction(
                   context: context,
+                  label:
+                      AppLocalizations.of(context)!.playlistAudioCommentsLabel,
+                  value: commentVMlistenFalse
+                      .getPlaylistAudioCommentNumber(
+                        playlist: playlist,
+                      )
+                      .toString()),
+              createInfoRowFunction(
+                  context: context,
                   label: AppLocalizations.of(context)!
                       .playlistPlayableAudioTotalDurationLabel,
                   value: playlist.getPlayableAudioLstTotalDuration().HHmmss()),
@@ -170,15 +179,6 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
                   sizeInBytes: playlist.getPlayableAudioLstTotalFileSize(),
                 ),
               ),
-              createInfoRowFunction(
-                  context: context,
-                  label:
-                      AppLocalizations.of(context)!.playlistAudioCommentsLabel,
-                  value: commentVMlistenFalse
-                      .getPlaylistAudioCommentNumber(
-                        playlist: playlist,
-                      )
-                      .toString()),
               createInfoRowFunction(
                 context: context,
                 label: AppLocalizations.of(context)!.playlistJsonFileSizeLabel,
