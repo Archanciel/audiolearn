@@ -110,28 +110,28 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
       _focusNodePlaylistRootPath,
     );
 
-    return KeyboardListener(
-      // Using FocusNode to enable clicking on Enter to close
-      // the dialog
-      focusNode: _focusNodeDialog,
-      onKeyEvent: (event) {
-        if (event is KeyDownEvent) {
-          if (event.logicalKey == LogicalKeyboardKey.enter ||
-              event.logicalKey == LogicalKeyboardKey.numpadEnter) {
-            // executing the same code as in the 'Save' TextButton
-            // onPressed callback
-            _handleSaveButton(context);
-            Navigator.of(context).pop();
-          }
-        }
-      },
-      child: AlertDialog(
+    return Scaffold(
+      appBar: AppBar(
         title: Text(
-          key: const Key('appSettingsDialogTitleKey'),
           AppLocalizations.of(context)!.appSettingsDialogTitle,
         ),
-        actionsPadding: kDialogActionsPadding,
-        content: SingleChildScrollView(
+      ),
+      body: KeyboardListener(
+        // Using FocusNode to enable clicking on Enter to close
+        // the dialog
+        focusNode: _focusNodeDialog,
+        onKeyEvent: (event) {
+          if (event is KeyDownEvent) {
+            if (event.logicalKey == LogicalKeyboardKey.enter ||
+                event.logicalKey == LogicalKeyboardKey.numpadEnter) {
+              // executing the same code as in the 'Save' TextButton
+              // onPressed callback
+              _handleSaveButton(context);
+              Navigator.of(context).pop();
+            }
+          }
+        },
+        child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -164,36 +164,34 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
                 isCursorAtStart: false,
                 flexValue: 2,
               ),
+              TextButton(
+                key: const Key('saveButton'),
+                onPressed: () {
+                  _handleSaveButton(context);
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  AppLocalizations.of(context)!.saveButton,
+                  style: (themeProviderVM.currentTheme == AppTheme.dark)
+                      ? kTextButtonStyleDarkMode
+                      : kTextButtonStyleLightMode,
+                ),
+              ),
+              TextButton(
+                key: const Key('cancelButton'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  AppLocalizations.of(context)!.cancelButton,
+                  style: (themeProviderVM.currentTheme == AppTheme.dark)
+                      ? kTextButtonStyleDarkMode
+                      : kTextButtonStyleLightMode,
+                ),
+              ),
             ],
           ),
         ),
-        actions: [
-          TextButton(
-            key: const Key('saveButton'),
-            onPressed: () {
-              _handleSaveButton(context);
-              Navigator.of(context).pop();
-            },
-            child: Text(
-              AppLocalizations.of(context)!.saveButton,
-              style: (themeProviderVM.currentTheme == AppTheme.dark)
-                  ? kTextButtonStyleDarkMode
-                  : kTextButtonStyleLightMode,
-            ),
-          ),
-          TextButton(
-            key: const Key('cancelButton'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text(
-              AppLocalizations.of(context)!.cancelButton,
-              style: (themeProviderVM.currentTheme == AppTheme.dark)
-                  ? kTextButtonStyleDarkMode
-                  : kTextButtonStyleLightMode,
-            ),
-          ),
-        ],
       ),
     );
   }
