@@ -2330,6 +2330,166 @@ void playlistOneDownloadViewIntegrationTest() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
+    testWidgets('Add private Youtube playlist', (tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Since we have to use a mock AudioDownloadVM to add the
+      // youtube playlist, we can not use app.main() to start the
+      // app because app.main() uses the real AudioDownloadVM
+      // and we don't want to make the main.dart file dependent
+      // of a mock class. So we have to start the app by hand.
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
+      );
+
+      // load settings from file which does not exist. This
+      // will ensure that the default playlist root path is set
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName: "temp\\wrong.json");
+
+      // setting default playlist audio play speed to 1.25
+      settingsDataService.set(
+          settingType: SettingType.playlists,
+          settingSubType: Playlists.playSpeed,
+          value: 1.25);
+
+      WarningMessageVM warningMessageVM = WarningMessageVM();
+      MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+        isTest: true,
+      );
+      mockAudioDownloadVM.youtubePlaylistTitle = '';
+
+      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+        isTest: true,
+      );
+
+      // using the mockAudioDownloadVM to add the playlist
+      // because YoutubeExplode can not access to internet
+      // in integration tests in order to download the playlist
+      // and so obtain the playlist title
+      PlaylistListVM playlistListVM = PlaylistListVM(
+        warningMessageVM: warningMessageVM,
+        audioDownloadVM: mockAudioDownloadVM,
+        commentVM: CommentVM(),
+        settingsDataService: settingsDataService,
+      );
+
+      // calling getUpToDateSelectablePlaylists() loads all the
+      // playlist json files from the app dir and so enables
+      // playlistListVM to know which playlists are
+      // selected and which are not
+      playlistListVM.getUpToDateSelectablePlaylists();
+
+      AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+        playlistListVM: playlistListVM,
+        commentVM: CommentVM(),
+      );
+
+      DateFormatVM dateFormatVM = DateFormatVM(
+        settingsDataService: settingsDataService,
+      );
+
+      await _launchExpandablePlaylistListView(
+        tester: tester,
+        audioDownloadVM: audioDownloadVM,
+        settingsDataService: settingsDataService,
+        playlistListVM: playlistListVM,
+        warningMessageVM: warningMessageVM,
+        audioPlayerVM: audioPlayerVM,
+        dateFormatVM: dateFormatVM,
+      );
+
+      // Tap the 'Toggle List' button to display the playlist list. If the list
+      // is not opened, checking that a ListTile with the title of
+      // the playlist was added to the list will fail
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      const String privateYoutubePlaylistUrl =
+          'https://www.youtube.com/playlist?list=PLzwWSJNcZTMRw_Gl0qL60O7TQgYq8DuCu';
+
+      // Enter the private Youtube playlist URL into the url text
+      // field
+      await tester.enterText(
+        find.byKey(
+          const Key('youtubeUrlOrSearchTextField'),
+        ),
+        privateYoutubePlaylistUrl,
+      );
+
+      // Ensure the url text field contains the entered url
+      TextField urlTextField = tester.widget(find.byKey(
+        const Key('youtubeUrlOrSearchTextField'),
+      ));
+      expect(urlTextField.controller!.text, privateYoutubePlaylistUrl);
+
+      // Open the add playlist dialog by tapping the add playlist
+      // button
+      await tester.tap(find.byKey(const Key('addPlaylistButton')));
+      await tester.pumpAndSettle();
+
+      // Ensure the dialog is shown
+      expect(find.byType(AlertDialog), findsOneWidget);
+
+      // Check the value of the AlertDialog dialog title
+      Text alertDialogTitle =
+          tester.widget(find.byKey(const Key('playlistConfirmDialogTitleKey')));
+      expect(alertDialogTitle.data, 'Add Youtube Playlist');
+
+      // Check the value of the AlertDialog url Text
+      Text confirmUrlText =
+          tester.widget(find.byKey(const Key('playlistUrlConfirmDialogText')));
+      expect(confirmUrlText.data, privateYoutubePlaylistUrl);
+
+      // Confirm the addition by tapping the confirmation button in
+      // the AlertDialog
+      await tester
+          .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
+      await tester.pumpAndSettle();
+
+      // Ensure the warning dialog is shown
+      expect(find.byType(WarningMessageDisplayDialog), findsOneWidget);
+
+      // Check the value of the warning dialog title
+      Text warningDialogTitle =
+          tester.widget(find.byKey(const Key('warningDialogTitle')));
+      expect(warningDialogTitle.data, 'WARNING');
+
+      // Check the value of the warning dialog message
+      Text warningDialogMessage =
+          tester.widget(find.byKey(const Key('warningDialogMessage')));
+      expect(warningDialogMessage.data,
+          "Trying to add a private Youtube playlist is not possible since the audio's of a private playlist can not be downloaded. To solve the problem, edit the playlist on Youtube and change its visibility from \"Private\" to \"Unlisted\" or to \"Public\" and then re-add it to the application.");
+
+      // Close the warning dialog by tapping on the Ok button
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+      await tester.pumpAndSettle();
+
+      // Ensure the URL TextField was not emptied
+      urlTextField = tester.widget(find.byKey(
+        const Key('youtubeUrlOrSearchTextField'),
+      ));
+      expect(urlTextField.controller!.text, privateYoutubePlaylistUrl);
+
+      // The list of Playlist's should have zero item now
+      expect(find.byType(ListTile), findsNothing);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
     testWidgets('''Add and download 2 Youtube playlists using audio download VM
                    mock version.''', (tester) async {
       // Purge the test playlist directory if it exists so that the
@@ -11243,8 +11403,7 @@ void playlistOneDownloadViewIntegrationTest() {
           await tester.pumpAndSettle();
 
           // Close the warning dialog by tapping on the Ok button
-          await tester
-              .tap(find.byKey(const Key('warningDialogOkButton')).last);
+          await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
           await tester.pumpAndSettle();
 
           // Verify that the applyed Sort/Filter parms name is displayed
@@ -11513,8 +11672,7 @@ void playlistOneDownloadViewIntegrationTest() {
           await tester.pumpAndSettle();
 
           // Close the warning dialog by tapping on the Ok button
-          await tester
-              .tap(find.byKey(const Key('warningDialogOkButton')).last);
+          await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
           await tester.pumpAndSettle();
 
           // Verify that the applyed Sort/Filter parms name is displayed
@@ -12683,18 +12841,16 @@ void playlistOneDownloadViewIntegrationTest() {
       await tester.tap(popupDeletePlaylistMenuItem);
       await tester.pumpAndSettle();
 
-      // Now verifying the confirm dialog message
+      // Now verifying and closing the confirm dialog
 
-      final Text deletePlaylistDialogTitleWidget = tester
-          .widget<Text>(find.byKey(const Key('confirmDialogTitleOneKey')));
-
-      expect(deletePlaylistDialogTitleWidget.data,
-          'Supprimer la playlist Youtube "$youtubePlaylistToDeleteTitle"');
-
-      // Now find the delete button of the delete playlist confirm
-      // dialog and tap on it
-      await tester.tap(find.byKey(const Key('confirmButton')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
+        tester: tester,
+        confirmDialogTitleOne:
+            'Supprimer la playlist Youtube "$youtubePlaylistToDeleteTitle"',
+        confirmDialogMessage:
+            'Suppression de la playlist, de ses 2 fichiers audio, de ses 3 commentaire(s) audio ainsi que de son fichier JSON et de son répertoire.',
+        confirmOrCancelAction: true, // Confirm button is tapped
+      );
 
       // Reload the settings from the json file.
       await settingsDataService.loadSettingsFromFile(
@@ -13021,18 +13177,15 @@ void playlistOneDownloadViewIntegrationTest() {
       await tester.tap(popupDeletePlaylistMenuItem);
       await tester.pumpAndSettle();
 
-      // Now verifying the confirm dialog message
-
-      final Text deletePlaylistDialogTitleWidget = tester
-          .widget<Text>(find.byKey(const Key('confirmDialogTitleOneKey')));
-
-      expect(deletePlaylistDialogTitleWidget.data,
-          'Supprimer la playlist locale "$localPlaylistToDeleteTitle"');
-
-      // Now find the delete button of the delete playlist confirm
-      // dialog and tap on it
-      await tester.tap(find.byKey(const Key('confirmButton')));
-      await tester.pumpAndSettle();
+      // Now verifying and closing the confirm dialog
+      await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
+        tester: tester,
+        confirmDialogTitleOne:
+            'Supprimer la playlist locale "$localPlaylistToDeleteTitle"',
+        confirmDialogMessage:
+            'Suppression de la playlist, de ses 0 fichiers audio, de ses 0 commentaire(s) audio ainsi que de son fichier JSON et de son répertoire.',
+        confirmOrCancelAction: true, // Confirm button is tapped
+      );
 
       // Reload the settings from the json file.
       await settingsDataService.loadSettingsFromFile(
@@ -18502,6 +18655,7 @@ Future<void> _launchExpandablePlaylistListView({
         ChangeNotifierProvider(create: (_) => warningMessageVM),
         ChangeNotifierProvider(create: (_) => audioPlayerVM),
         ChangeNotifierProvider(create: (_) => dateFormatVM),
+        ChangeNotifierProvider(create: (_) => CommentVM()),
       ],
       child: MaterialApp(
         // forcing dark theme
