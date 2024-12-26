@@ -609,7 +609,7 @@ class AudioDownloadVM extends ChangeNotifier {
       );
     }
 
-    String playlistDownloadFilePathName =
+    String downloadedPlaylistFilePathName =
         currentPlaylist.getPlaylistDownloadFilePathName();
 
     final List<String> downloadedAudioOriginalVideoTitleLst =
@@ -713,7 +713,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
       JsonDataService.saveToFile(
         model: currentPlaylist,
-        path: playlistDownloadFilePathName,
+        path: downloadedPlaylistFilePathName,
       );
 
       // should avoid that the last downloaded audio is
