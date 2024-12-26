@@ -1,4 +1,5 @@
 import 'package:audiolearn/constants.dart';
+import 'package:audiolearn/models/comment.dart';
 import 'package:audiolearn/utils/dir_util.dart';
 import 'package:audiolearn/utils/ui_util.dart';
 import 'package:audiolearn/viewmodels/audio_download_vm.dart';
@@ -13,6 +14,7 @@ import '../../models/help_item.dart';
 import '../../models/playlist.dart';
 import '../../services/settings_data_service.dart';
 import '../../utils/date_time_util.dart';
+import '../../viewmodels/comment_vm.dart';
 import '../../viewmodels/playlist_list_vm.dart';
 import '../../viewmodels/warning_message_vm.dart';
 import '../screen_mixin.dart';
@@ -401,6 +403,8 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             showDialog<void>(
               context: context,
               builder: (BuildContext context) {
+                CommentVM commentVMlistenFalse =
+                    Provider.of<CommentVM>(context, listen: false);
                 return ConfirmActionDialog(
                   actionFunction: deletePlaylist,
                   actionFunctionArgs: [
@@ -409,7 +413,11 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                   ],
                   dialogTitleOne: _createDeletePlaylistDialogTitle(context),
                   dialogContent:
-                      AppLocalizations.of(context)!.deletePlaylistDialogComment,
+                      AppLocalizations.of(context)!.deletePlaylistDialogComment(
+                    playlist.downloadedAudioLst.length,
+                    commentVMlistenFalse.getPlaylistAudioCommentNumber(
+                        playlist: playlist),
+                  ),
                 );
               },
             );

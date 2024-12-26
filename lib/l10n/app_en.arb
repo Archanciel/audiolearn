@@ -290,8 +290,15 @@
   "deletePlaylist": "Delete Playlist ...",
   "deleteYoutubePlaylistDialogTitle": "Delete Youtube Playlist \"{title}\"",
   "deleteLocalPlaylistDialogTitle": "Delete Local Playlist \"{title}\"",
-  "deletePlaylistDialogComment": "Deleting the playlist and all its audio as well as its JSON file and its directory.",
-  "appBarTitleAudioExtractor": "Extract Audio",
+  "deletePlaylistDialogComment": "Deleting the playlist and its {audioNumber} audio's, {audioCommentsNumber} audio comment(s) as well as its JSON file and its directory.",
+  "@deletePlaylistDialogComment": {
+    "description": "Confirm message for deleting the playlist",
+    "placeholders": {
+      "audioNumber": {},
+      "audioCommentsNumber": {}
+    }
+  },
+"appBarTitleAudioExtractor": "Extract Audio",
   "setAudioPlaySpeedDialogTitle": "Playback speed",
   "setAudioPlaySpeedTooltip": "Set Audio Play Speed.",
   "exclude": "Exclude ",
