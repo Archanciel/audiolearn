@@ -175,7 +175,7 @@ class MockAudioDownloadVM extends AudioDownloadVM {
     // Use firstWhere with orElse to handle not found cases
     final Map<String, String> entry = youtubePlaylistData.values.firstWhere(
       (value) => value['url'] == url,
-      orElse: () => {'title': ''}, // Return a default map with an empty title
+      orElse: () => {'title': ''}, // Return a default empty title
     );
 
     return entry['title']!; // The title is never null due to orElse !
