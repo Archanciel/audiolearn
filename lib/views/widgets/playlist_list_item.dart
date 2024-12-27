@@ -1,5 +1,4 @@
 import 'package:audiolearn/constants.dart';
-import 'package:audiolearn/models/comment.dart';
 import 'package:audiolearn/utils/dir_util.dart';
 import 'package:audiolearn/utils/ui_util.dart';
 import 'package:audiolearn/viewmodels/audio_download_vm.dart';
