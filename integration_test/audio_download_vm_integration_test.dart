@@ -33,10 +33,6 @@ final String globalTestPlaylistDir =
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  audioDownloadVMIntegrationTest();
-}
-
-void audioDownloadVMIntegrationTest() {
   group('Download 1 playlist with short audio', () {
     test('Check initial values', () async {
       DirUtil.deleteFilesInDirAndSubDirs(
