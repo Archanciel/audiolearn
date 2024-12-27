@@ -15342,7 +15342,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
       // Find the TextField using the Key
       final Finder textFieldFinder =
-          find.byKey(const Key('playlistRootpathTextField'));
+          find.byKey(const Key('playlistsRootPathTextField'));
 
       // Retrieve the TextField widget
       final TextField textField = tester.widget<TextField>(textFieldFinder);
@@ -15499,7 +15499,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
       // Find the TextField using the Key
       final Finder textFieldFinder =
-          find.byKey(const Key('playlistRootpathTextField'));
+          find.byKey(const Key('playlistsRootPathTextField'));
 
       // Retrieve the TextField widget
       final TextField textField = tester.widget<TextField>(textFieldFinder);
