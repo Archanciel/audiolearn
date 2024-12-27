@@ -1,8 +1,11 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 import '../constants.dart';
 import '../models/audio.dart';
+import '../viewmodels/playlist_list_vm.dart';
 
 class UiUtil {
   static String formatLargeSizeToKbOrMb({
@@ -53,4 +56,27 @@ class UiUtil {
   static List<Color?> generateCurrentAudioStateColors() {
     return [Colors.white, Colors.blue];
   }
+
+  static Future<void> savePlaylistAndCommentsToZip({
+    required BuildContext context,
+  }) async {
+    String? selectedFilePathNameLst = await filePickerSelectTargetDir();
+
+    if (selectedFilePathNameLst == null) {
+      return;
+    }
+
+    await Provider.of<PlaylistListVM>(
+      context,
+      listen: false,
+    ).savePlaylistsCommentsAndSettingsJsonFilesToZip(
+      targetDirectoryPath: selectedFilePathNameLst,
+    );
+  }
+
+  static
+  Future<String?> filePickerSelectTargetDir() async {
+    return await FilePicker.platform.getDirectoryPath();
+  }
+
 }

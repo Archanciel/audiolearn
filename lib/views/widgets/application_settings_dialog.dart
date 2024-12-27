@@ -8,12 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
+import '../../utils/ui_util.dart';
 import '../../viewmodels/warning_message_vm.dart';
 import '../../views/screen_mixin.dart';
 import '../../constants.dart';
 import '../../services/settings_data_service.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 import 'audio_set_speed_dialog.dart';
+import 'confirm_action_dialog.dart';
 
 class ApplicationSettingsDialog extends StatefulWidget {
   final SettingsDataService settingsDataService;
@@ -405,6 +407,35 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
                   overlayColor: iconButtonTapModification, // Tap feedback color
                 ),
                 onPressed: () async {
+                  bool doSavePlaylistsAnCommentsToZipFile = false;
+
+                  // Await must be applied to showDialog(), otherwise,
+                  // _filePickerSelectDirectory() will be called before
+                  // the dialog is closed.
+                  await showDialog<dynamic>(
+                    context: context,
+                    barrierDismissible:
+                        false, // This line prevents the dialog from closing when
+                    //            tapping outside the dialog
+                    builder: (BuildContext context) {
+                      return ConfirmActionDialog(
+                        actionFunction: deleteFilteredAudio,
+                        actionFunctionArgs: [],
+                        dialogTitleOne: AppLocalizations.of(context)!
+                            .deleteFilteredAudioConfirmationTitle(
+                          'temp',
+                          'temp2',
+                        ),
+                        dialogContent: AppLocalizations.of(context)!
+                            .deleteFilteredAudioConfirmation(
+                          '0', // total audio number
+                          '0', // total audio file size
+                          '0', // total audio duration
+                        ),
+                      );
+                    },
+                  );
+
                   String? selectedDir = await _filePickerSelectDirectory();
 
                   if (selectedDir != null) {
@@ -419,6 +450,12 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
           ],
         );
       },
+    );
+  }
+
+  void deleteFilteredAudio() async {
+    await UiUtil.savePlaylistAndCommentsToZip(
+      context: context,
     );
   }
 

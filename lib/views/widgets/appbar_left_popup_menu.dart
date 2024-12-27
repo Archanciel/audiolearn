@@ -1,4 +1,5 @@
 import 'package:audiolearn/models/comment.dart';
+import 'package:audiolearn/utils/ui_util.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -579,18 +580,8 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
             ).updateSettingsAndPlaylistJsonFiles();
             break;
           case AppBarPopupMenu.savePlaylistAndCommentsToZip:
-            String? selectedFilePathNameLst =
-                await _filePickerSelectTargetDir();
-
-            if (selectedFilePathNameLst == null) {
-              return;
-            }
-
-            await Provider.of<PlaylistListVM>(
-              context,
-              listen: false,
-            ).savePlaylistsCommentsAndSettingsJsonFilesToZip(
-              targetDirectoryPath: selectedFilePathNameLst,
+            await UiUtil.savePlaylistAndCommentsToZip(
+              context: context,
             );
             break;
           default:
@@ -598,9 +589,5 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
         }
       },
     );
-  }
-
-  Future<String?> _filePickerSelectTargetDir() async {
-    return await FilePicker.platform.getDirectoryPath();
   }
 }
