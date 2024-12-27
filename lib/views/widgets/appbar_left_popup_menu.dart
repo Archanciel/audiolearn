@@ -545,15 +545,6 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                   .savePlaylistAndCommentsToZipMenu),
             ),
           ),
-          // This functionality is no longer used since now the Youtube channel
-          // is set when the audio is downloaded from the Youtube playlist.
-          //
-          // PopupMenuItem<AppBarPopupMenu>(
-          //   key: const Key('setYoutubeChannel'),
-          //   value: AppBarPopupMenu.setYoutubeChannel,
-          //   child: Text(AppLocalizations.of(context)!
-          //       .setYoutubeChannelMenu),
-          // ),
         ];
       },
       icon: const Icon(Icons.menu),
@@ -602,16 +593,6 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
               targetDirectoryPath: selectedFilePathNameLst,
             );
             break;
-          // case AppBarPopupMenu.setYoutubeChannel:
-          //
-          // This functionality is no longer used since now the Youtube channel
-          // is set when the audio is downloaded from the Youtube playlist.
-          //
-          //   await Provider.of<AudioDownloadVM>(
-          //     context,
-          //     listen: false,
-          //   ).ensureAllAudioYoutubeChannelOfAllPlaylistsAreSet();
-          //   break;
           default:
             break;
         }
