@@ -31,10 +31,6 @@ void main() {
   // If this issue persists, please report it on the project's GitHub page.
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  playlistTwoDownloadViewIntegrationTest();
-}
-
-void playlistTwoDownloadViewIntegrationTest() {
   group('Search icon button test', () {
     group('Audio search word selection', () {
       testWidgets('''First, select the existing 'janco' sort/filter
@@ -10518,14 +10514,12 @@ Future<void> _verifyDateFormatApplication({
 
   // Verify the set date displayed in the start download date text
   // field
-  final Finder selectedDateText = find.byKey(const Key('startDownloadDateTextField'));
-      expect(
-        tester
-            .widget<TextField>(selectedDateText)
-            .controller!
-            .text,
-        datePickerDateStr,
-      );
+  final Finder selectedDateText =
+      find.byKey(const Key('startDownloadDateTextField'));
+  expect(
+    tester.widget<TextField>(selectedDateText).controller!.text,
+    datePickerDateStr,
+  );
 
   // Now close the audio sort filter dialog by tapping on its cancel
   // button
