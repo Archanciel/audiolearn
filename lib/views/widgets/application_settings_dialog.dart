@@ -121,103 +121,94 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
           AppLocalizations.of(context)!.appSettingsDialogTitle,
         ),
       ),
-      body: KeyboardListener(
-        // Using FocusNode to enable clicking on Enter to close
-        // the dialog
-        focusNode: _focusNodeDialog,
-        onKeyEvent: (event) {
-          if (event is KeyDownEvent) {
-            if (event.logicalKey == LogicalKeyboardKey.enter ||
-                event.logicalKey == LogicalKeyboardKey.numpadEnter) {
-              // executing the same code as in the 'Save' TextButton
-              // onPressed callback
-              _handleSaveButton(context);
-              Navigator.of(context).pop();
-            }
-          }
-        },
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        AppLocalizations.of(context)!
-                            .setAudioPlaySpeedDialogTitle,
+      body: Column(
+        children: [
+          // Content at the top
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          AppLocalizations.of(context)!
+                              .setAudioPlaySpeedDialogTitle,
+                        ),
                       ),
-                    ),
-                    Expanded(
-                      child: SizedBox(
-                        height: 37,
-                        child: _buildSetAudioSpeedTextButton(context),
+                      Expanded(
+                        child: SizedBox(
+                          height: 37,
+                          child: _buildSetAudioSpeedTextButton(context),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              Text(
-                AppLocalizations.of(context)!.playlistRootpathLabel,
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              SizedBox(
-                height: kDialogTextFieldHeight,
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: TextField(
-                    key: const Key('playlistsRootPathTextField'),
-                    focusNode: _focusNodePlaylistRootPath,
-                    style: kDialogTextFieldStyle,
-                    decoration: getDialogTextFieldInputDecoration(),
-                    controller: _playlistRootpathTextEditingController,
-                    keyboardType: TextInputType.text,
-                    onChanged: (value) {},
+                    ],
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 500,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextButton(
-                    key: const Key('saveButton'),
-                    onPressed: () {
-                      _handleSaveButton(context);
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(
-                      AppLocalizations.of(context)!.saveButton,
-                      style: (themeProviderVM.currentTheme == AppTheme.dark)
-                          ? kTextButtonStyleDarkMode
-                          : kTextButtonStyleLightMode,
+                Text(
+                  AppLocalizations.of(context)!.playlistRootpathLabel,
+                ),
+                const SizedBox(height: 5),
+                SizedBox(
+                  height: kDialogTextFieldHeight,
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: TextField(
+                      key: const Key('playlistsRootPathTextField'),
+                      focusNode: _focusNodePlaylistRootPath,
+                      style: kDialogTextFieldStyle,
+                      decoration: getDialogTextFieldInputDecoration(),
+                      controller: _playlistRootpathTextEditingController,
+                      keyboardType: TextInputType.text,
+                      onChanged: (value) {},
                     ),
                   ),
-                  TextButton(
-                    key: const Key('cancelButton'),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(
-                      AppLocalizations.of(context)!.cancelButton,
-                      style: (themeProviderVM.currentTheme == AppTheme.dark)
-                          ? kTextButtonStyleDarkMode
-                          : kTextButtonStyleLightMode,
-                    ),
-                  ),
-                ],
-              ),
-            ],
+                ),
+              ],
+            ),
           ),
-        ),
+          // Spacer to push buttons to the bottom
+          const Spacer(),
+          // Save and Cancel buttons at the bottom
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  key: const Key('saveButton'),
+                  onPressed: () {
+                    _handleSaveButton(context);
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    AppLocalizations.of(context)!.saveButton,
+                    style: (themeProviderVM.currentTheme == AppTheme.dark)
+                        ? kTextButtonStyleDarkMode
+                        : kTextButtonStyleLightMode,
+                  ),
+                ),
+                const SizedBox(width: 16), // Space between the buttons
+                TextButton(
+                  key: const Key('cancelButton'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    AppLocalizations.of(context)!.cancelButton,
+                    style: (themeProviderVM.currentTheme == AppTheme.dark)
+                        ? kTextButtonStyleDarkMode
+                        : kTextButtonStyleLightMode,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
