@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:audiolearn/models/help_item.dart';
 import 'package:audiolearn/viewmodels/audio_download_vm.dart';
 import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
@@ -103,8 +103,11 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
 
   @override
   Widget build(BuildContext context) {
-    final ThemeProviderVM themeProviderVM =
-        Provider.of<ThemeProviderVM>(context); // by default, listen is true
+    final ThemeProviderVM themeProviderVMlistenFalse =
+        Provider.of<ThemeProviderVM>(
+      context,
+      listen: false,
+    ); // by default, listen is true
 
     // Set focus to the text field and move the cursor to the end
     _playlistRootpathTextEditingController.selection = TextSelection.collapsed(
@@ -115,100 +118,122 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
       _focusNodePlaylistRootPath,
     );
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          AppLocalizations.of(context)!.appSettingsDialogTitle,
+    return Theme(
+      data: themeProviderVMlistenFalse.currentTheme == AppTheme.dark
+          ? ScreenMixin.themeDataDark
+          : ScreenMixin.themeDataLight,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            AppLocalizations.of(context)!.appSettingsDialogTitle,
+          ),
         ),
-      ),
-      body: Column(
-        children: [
-          // Content at the top
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          AppLocalizations.of(context)!
-                              .setAudioPlaySpeedDialogTitle,
+        body: Column(
+          children: [
+            // Content at the top
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 5.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            AppLocalizations.of(context)!
+                                .setAudioPlaySpeedDialogTitle,
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        child: SizedBox(
-                          height: 37,
-                          child: _buildSetAudioSpeedTextButton(context),
+                        Expanded(
+                          child: SizedBox(
+                            height: 37,
+                            child: _buildSetAudioSpeedTextButton(context),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-                Text(
-                  AppLocalizations.of(context)!.playlistRootpathLabel,
-                ),
-                const SizedBox(height: 5),
-                SizedBox(
-                  height: kDialogTextFieldHeight,
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: TextField(
-                      key: const Key('playlistsRootPathTextField'),
-                      focusNode: _focusNodePlaylistRootPath,
-                      style: kDialogTextFieldStyle,
-                      decoration: getDialogTextFieldInputDecoration(),
-                      controller: _playlistRootpathTextEditingController,
-                      keyboardType: TextInputType.text,
-                      onChanged: (value) {},
+                      ],
                     ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          // Spacer to push buttons to the bottom
-          const Spacer(),
-          // Save and Cancel buttons at the bottom
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextButton(
-                  key: const Key('saveButton'),
-                  onPressed: () {
-                    _handleSaveButton(context);
-                    Navigator.of(context).pop();
-                  },
-                  child: Text(
-                    AppLocalizations.of(context)!.saveButton,
-                    style: (themeProviderVM.currentTheme == AppTheme.dark)
-                        ? kTextButtonStyleDarkMode
-                        : kTextButtonStyleLightMode,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 5.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            AppLocalizations.of(context)!.playlistRootpathLabel,
+                          ),
+                        ),
+                        Expanded(
+                          child: SizedBox(
+                            height: 37,
+                            child: _buildOpenDirectoryIconButton(context),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(width: 16), // Space between the buttons
-                TextButton(
-                  key: const Key('cancelButton'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text(
-                    AppLocalizations.of(context)!.cancelButton,
-                    style: (themeProviderVM.currentTheme == AppTheme.dark)
-                        ? kTextButtonStyleDarkMode
-                        : kTextButtonStyleLightMode,
+                  SizedBox(
+                    height: kDialogTextFieldHeight,
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: TextField(
+                        key: const Key('playlistsRootPathTextField'),
+                        focusNode: _focusNodePlaylistRootPath,
+                        style: kDialogTextFieldStyle,
+                        decoration: getDialogTextFieldInputDecoration(),
+                        controller: _playlistRootpathTextEditingController,
+                        keyboardType: TextInputType.text,
+                        onChanged: (value) {},
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+            // Spacer to push buttons to the bottom
+            const Spacer(),
+            // Save and Cancel buttons at the bottom
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    key: const Key('saveButton'),
+                    onPressed: () {
+                      _handleSaveButton(context);
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      AppLocalizations.of(context)!.saveButton,
+                      style: (themeProviderVMlistenFalse.currentTheme ==
+                              AppTheme.dark)
+                          ? kTextButtonStyleDarkMode
+                          : kTextButtonStyleLightMode,
+                    ),
+                  ),
+                  const SizedBox(width: 16), // Space between the buttons
+                  TextButton(
+                    key: const Key('cancelButton'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      AppLocalizations.of(context)!.cancelButton,
+                      style: (themeProviderVMlistenFalse.currentTheme ==
+                              AppTheme.dark)
+                          ? kTextButtonStyleDarkMode
+                          : kTextButtonStyleLightMode,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -296,59 +321,54 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
               // between the button text and its boarder
               width: kNormalButtonWidth - 18.0,
               height: kNormalButtonHeight,
-              child: Tooltip(
-                message: AppLocalizations.of(context)!.setAudioPlaySpeedTooltip,
-                child: TextButton(
-                  key: const Key('setAudioSpeedTextButton'),
-                  style: ButtonStyle(
-                    shape: getButtonRoundedShape(
-                        currentTheme: themeProviderVM.currentTheme),
-                    padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-                      const EdgeInsets.symmetric(
-                          horizontal: kSmallButtonInsidePadding, vertical: 0),
-                    ),
-                    overlayColor:
-                        textButtonTapModification, // Tap feedback color
+              child: TextButton(
+                key: const Key('setAudioSpeedTextButton'),
+                style: ButtonStyle(
+                  shape: getButtonRoundedShape(
+                      currentTheme: themeProviderVM.currentTheme),
+                  padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                    const EdgeInsets.symmetric(
+                        horizontal: kSmallButtonInsidePadding, vertical: 0),
                   ),
-                  onPressed: () {
-                    showDialog<List<dynamic>>(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AudioSetSpeedDialog(
-                          audioPlaySpeed: _audioPlaySpeed,
-                          updateCurrentPlayAudioSpeed: false,
-                          displayApplyToExistingPlaylistCheckbox: true,
-                          displayApplyToAudioAlreadyDownloadedCheckbox: true,
-                          helpItemsLst: _helpItemsLst,
-                        );
-                      },
-                    ).then((value) {
-                      // not null value is boolean
-                      if (value != null) {
-                        // value is null if clicking on Cancel or if the dialog
-                        // is dismissed by clicking outside the dialog.
+                  overlayColor: textButtonTapModification, // Tap feedback color
+                ),
+                onPressed: () {
+                  showDialog<List<dynamic>>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AudioSetSpeedDialog(
+                        audioPlaySpeed: _audioPlaySpeed,
+                        updateCurrentPlayAudioSpeed: false,
+                        displayApplyToExistingPlaylistCheckbox: true,
+                        displayApplyToAudioAlreadyDownloadedCheckbox: true,
+                        helpItemsLst: _helpItemsLst,
+                      );
+                    },
+                  ).then((value) {
+                    // not null value is boolean
+                    if (value != null) {
+                      // value is null if clicking on Cancel or if the dialog
+                      // is dismissed by clicking outside the dialog.
 
-                        _audioPlaySpeed = value[0] as double;
-                        _applyAudioPlaySpeedToExistingPlaylists = value[1];
-                        _applyAudioPlaySpeedToAlreadyDownloadedAudios =
-                            value[2];
+                      _audioPlaySpeed = value[0] as double;
+                      _applyAudioPlaySpeedToExistingPlaylists = value[1];
+                      _applyAudioPlaySpeedToAlreadyDownloadedAudios = value[2];
 
-                        setState(() {}); // required, otherwise the TextButton
-                        // text in the application settings dialog is not
-                        // updated
-                      }
-                    });
-                  },
-                  child: Tooltip(
-                    message:
-                        AppLocalizations.of(context)!.setAudioPlaySpeedTooltip,
-                    child: Text(
-                      '${_audioPlaySpeed.toStringAsFixed(2)}x',
-                      textAlign: TextAlign.center,
-                      style: (themeProviderVM.currentTheme == AppTheme.dark)
-                          ? kTextButtonStyleDarkMode
-                          : kTextButtonStyleLightMode,
-                    ),
+                      setState(() {}); // required, otherwise the TextButton
+                      // text in the application settings dialog is not
+                      // updated
+                    }
+                  });
+                },
+                child: Tooltip(
+                  message:
+                      AppLocalizations.of(context)!.setAudioPlaySpeedTooltip,
+                  child: Text(
+                    '${_audioPlaySpeed.toStringAsFixed(2)}x',
+                    textAlign: TextAlign.center,
+                    style: (themeProviderVM.currentTheme == AppTheme.dark)
+                        ? kTextButtonStyleDarkMode
+                        : kTextButtonStyleLightMode,
                   ),
                 ),
               ),
@@ -357,5 +377,61 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
         );
       },
     );
+  }
+
+  Widget _buildOpenDirectoryIconButton(
+    BuildContext context,
+  ) {
+    return Consumer<ThemeProviderVM>(
+      builder: (context, themeProviderVM, child) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              // sets the rounded TextButton size improving the distance
+              // between the button text and its boarder
+              width: kNormalButtonWidth,
+              height: kNormalButtonHeight,
+              child: IconButton(
+                iconSize: 30,
+                key: const Key('openDirectoryIconButton'),
+                style: ButtonStyle(
+                  // Highlight button when pressed
+                  padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                    const EdgeInsets.symmetric(
+                        horizontal: kSmallButtonInsidePadding, vertical: 0),
+                  ),
+                  overlayColor: iconButtonTapModification, // Tap feedback color
+                ),
+                onPressed: () async {
+                  String? selectedDir = await _filePickerSelectDirectory();
+
+                  if (selectedDir != null) {
+                    _playlistRootpathTextEditingController.text = selectedDir;
+                  }
+                },
+                icon: Icon(
+                  Icons.folder_open,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<String?> _filePickerSelectDirectory() async {
+    // Pick a single directory
+    String? directoryPath = await FilePicker.platform.getDirectoryPath(
+      initialDirectory: widget.settingsDataService.get(
+              settingType: SettingType.dataLocation,
+              settingSubType: DataLocation.playlistRootPath) ??
+          '',
+    );
+
+    // Return the selected directory path or null if no selection
+    return directoryPath;
   }
 }
