@@ -134,6 +134,7 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 5.0),
@@ -155,14 +156,26 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
                   ],
                 ),
               ),
-              createFlexibleEditableRowFunction(
-                valueTextFieldWidgetKey: const Key('playlistRootpathTextField'),
-                context: context,
-                label: AppLocalizations.of(context)!.playlistRootpathLabel,
-                controller: _playlistRootpathTextEditingController,
-                textFieldFocusNode: _focusNodePlaylistRootPath,
-                isCursorAtStart: false,
-                flexValue: 2,
+              Text(
+                AppLocalizations.of(context)!.playlistRootpathLabel,
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              SizedBox(
+                height: kDialogTextFieldHeight,
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: TextField(
+                    key: const Key('playlistsRootPathTextField'),
+                    focusNode: _focusNodePlaylistRootPath,
+                    style: kDialogTextFieldStyle,
+                    decoration: getDialogTextFieldInputDecoration(),
+                    controller: _playlistRootpathTextEditingController,
+                    keyboardType: TextInputType.text,
+                    onChanged: (value) {},
+                  ),
+                ),
               ),
               TextButton(
                 key: const Key('saveButton'),
