@@ -106,6 +106,11 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
     final ThemeProviderVM themeProviderVM =
         Provider.of<ThemeProviderVM>(context); // by default, listen is true
 
+    // Set focus to the text field and move the cursor to the end
+    _playlistRootpathTextEditingController.selection = TextSelection.collapsed(
+      offset: _playlistRootpathTextEditingController.text.length,
+    );
+
     FocusScope.of(context).requestFocus(
       _focusNodePlaylistRootPath,
     );
@@ -133,7 +138,7 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
         },
         child: SingleChildScrollView(
           child: Column(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
@@ -177,30 +182,38 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
                   ),
                 ),
               ),
-              TextButton(
-                key: const Key('saveButton'),
-                onPressed: () {
-                  _handleSaveButton(context);
-                  Navigator.of(context).pop();
-                },
-                child: Text(
-                  AppLocalizations.of(context)!.saveButton,
-                  style: (themeProviderVM.currentTheme == AppTheme.dark)
-                      ? kTextButtonStyleDarkMode
-                      : kTextButtonStyleLightMode,
-                ),
+              const SizedBox(
+                height: 500,
               ),
-              TextButton(
-                key: const Key('cancelButton'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text(
-                  AppLocalizations.of(context)!.cancelButton,
-                  style: (themeProviderVM.currentTheme == AppTheme.dark)
-                      ? kTextButtonStyleDarkMode
-                      : kTextButtonStyleLightMode,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    key: const Key('saveButton'),
+                    onPressed: () {
+                      _handleSaveButton(context);
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      AppLocalizations.of(context)!.saveButton,
+                      style: (themeProviderVM.currentTheme == AppTheme.dark)
+                          ? kTextButtonStyleDarkMode
+                          : kTextButtonStyleLightMode,
+                    ),
+                  ),
+                  TextButton(
+                    key: const Key('cancelButton'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      AppLocalizations.of(context)!.cancelButton,
+                      style: (themeProviderVM.currentTheme == AppTheme.dark)
+                          ? kTextButtonStyleDarkMode
+                          : kTextButtonStyleLightMode,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
