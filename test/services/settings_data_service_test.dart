@@ -74,7 +74,8 @@ void main() {
       expect(
           settings.get(
               settingType: SettingType.playlists,
-              settingSubType: Playlists.arePlaylistsDisplayedInPlaylistDownloadView),
+              settingSubType:
+                  Playlists.arePlaylistsDisplayedInPlaylistDownloadView),
           false);
       expect(
           settings.get(
@@ -134,17 +135,20 @@ void main() {
       settings.set(
           settingType: SettingType.dataLocation,
           settingSubType: DataLocation.appSettingsPath,
-          value: "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\new_audio");
+          value:
+              "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\new_audio");
       settings.set(
           settingType: SettingType.dataLocation,
           settingSubType: DataLocation.playlistRootPath,
-          value: "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\new_audio\\playlists");
+          value:
+              "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\new_audio\\playlists");
       settings.set(
           settingType: SettingType.formatOfDate,
           settingSubType: FormatOfDate.formatOfDate,
           value: "MM/dd/yyyy");
 
-      // Save to file
+      // Save settings to file
+
       await DirUtil.createDirIfNotExist(pathStr: testSettingsDir);
 
       final String testSettingsPathFileName =
@@ -180,7 +184,8 @@ void main() {
       expect(
           loadedSettings.get(
               settingType: SettingType.playlists,
-              settingSubType: Playlists.arePlaylistsDisplayedInPlaylistDownloadView),
+              settingSubType:
+                  Playlists.arePlaylistsDisplayedInPlaylistDownloadView),
           true);
       expect(
           loadedSettings.get(
@@ -227,9 +232,8 @@ void main() {
         directory.deleteSync(recursive: true);
       }
     });
-    test(
-        'Test initial, modified, saved and loaded values with 2 AudioSortFilterParameters in collections',
-        () async {
+    test('''With 2 AudioSortFilterParameters, test initial, modified, saved and
+           loaded values''', () async {
       final Directory directory = Directory(testSettingsDir);
 
       if (directory.existsSync()) {
@@ -273,7 +277,8 @@ void main() {
         audioSortFilterParameters: audioSortFilterParametersJancovici,
       );
 
-      // Save to file
+      // Save settings to file
+
       await DirUtil.createDirIfNotExist(pathStr: testSettingsDir);
 
       final String testSettingsPathFileName =
@@ -346,9 +351,8 @@ void main() {
         directory.deleteSync(recursive: true);
       }
     });
-    test(
-        'Test initial, modified, saved and loaded values with 3 AudioSortFilterParameters in collections',
-        () async {
+    test('''With 3 AudioSortFilterParameters, test initial, modified, saved and
+           loaded values''', () async {
       final Directory directory = Directory(testSettingsDir);
 
       // if (directory.existsSync()) {
@@ -402,7 +406,8 @@ void main() {
         audioSortFilterParameters: audioSortFilterParametersBarrau,
       );
 
-      // Save to file
+      // Save settings to file
+
       await DirUtil.createDirIfNotExist(pathStr: testSettingsDir);
 
       final String testSettingsPathFileName =
@@ -496,9 +501,8 @@ void main() {
         directory.deleteSync(recursive: true);
       }
     });
-    test(
-        'Test initial, modified, saved and loaded values with empty AudioSortFilterParameters collections',
-        () async {
+    test('''With empty AudioSortFilterParameters, test initial, modified, saved
+           and loaded values''', () async {
       final Directory directory = Directory(testSettingsDir);
 
       if (directory.existsSync()) {
@@ -510,7 +514,8 @@ void main() {
         isTest: true,
       );
 
-      // Save to file
+      // Save settings to file
+
       await DirUtil.createDirIfNotExist(pathStr: testSettingsDir);
 
       final String testSettingsPathFileName =
@@ -542,6 +547,143 @@ void main() {
       if (directory.existsSync()) {
         directory.deleteSync(recursive: true);
       }
+    });
+    test('''savePlaylistTitleOrder + getPlaylistTitleOrderIfExist test''',
+        () async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      final String initialPlaylistRootPath =
+          '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlistInitialPath';
+      final String modifiedPlaylistRootPath =
+          '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlistModifiedPath';
+
+      await DirUtil.createDirIfNotExist(pathStr: testSettingsDir);
+      await DirUtil.createDirIfNotExist(pathStr: initialPlaylistRootPath);
+      await DirUtil.createDirIfNotExist(pathStr: modifiedPlaylistRootPath);
+
+      final SettingsDataService settings = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+        isTest: true,
+      );
+
+      // load settings from file which does not exist. This
+      // will ensure that the default playlist root path is set
+      await settings.loadSettingsFromFile(
+          settingsJsonPathFileName: 'not_exist/settings.json');
+
+      final String testSettingsPathFileName =
+          path.join(kPlaylistDownloadRootPathWindowsTest, 'settings.json');
+
+      // Setting the playlist root path to the initial playlist root path
+      settings.set(
+        settingType: SettingType.dataLocation,
+        settingSubType: DataLocation.playlistRootPath,
+        value: initialPlaylistRootPath,
+      );
+
+      List<String> initialPlaylistOrder = [
+        'playlist1',
+        'playlist2',
+        'playlist3',
+      ];
+
+      settings.updatePlaylistOrderAndSaveSettings(
+        playlistOrder: initialPlaylistOrder,
+      );
+
+      // Now change the playlist root path, but first save the playlist
+      // order so that it can be restored after changing the playlist
+      // root path
+      settings.savePlaylistTitleOrder(
+        directory: initialPlaylistRootPath,
+      );
+
+      // Change the playlist root path
+      settings.set(
+        settingType: SettingType.dataLocation,
+        settingSubType: DataLocation.playlistRootPath,
+        value: modifiedPlaylistRootPath,
+      );
+
+      List<String> modifiedPlaylistOrder = [
+        'playlist3',
+        'playlist2',
+        'playlist1',
+      ];
+
+      // Updating the playlist order list and saving the settings.
+      settings.updatePlaylistOrderAndSaveSettings(
+        playlistOrder: modifiedPlaylistOrder,
+      );
+
+      // Check that the playlist order list has been updated
+      expect(
+        settings.get(
+          settingType: SettingType.playlists,
+          settingSubType: Playlists.orderedTitleLst,
+        ),
+        modifiedPlaylistOrder,
+      );
+
+      // Load from file
+      SettingsDataService loadedSettings = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+      );
+
+      await loadedSettings.loadSettingsFromFile(
+        settingsJsonPathFileName: testSettingsPathFileName,
+      );
+
+      // Check that the updated playlist order list has been saved
+      expect(
+        loadedSettings.get(
+          settingType: SettingType.playlists,
+          settingSubType: Playlists.orderedTitleLst,
+        ),
+        modifiedPlaylistOrder,
+      );
+
+      settings.restorePlaylistTitleOrderIfExistAndSaveSettings(
+        directoryContainingPreviouslySavedPlaylistTitleOrder:
+            initialPlaylistRootPath,
+      );
+
+      // Check that the playlist order list has been restored
+      expect(
+        settings.get(
+          settingType: SettingType.playlists,
+          settingSubType: Playlists.orderedTitleLst,
+        ),
+        initialPlaylistOrder,
+      );
+
+      // Load from file
+      loadedSettings = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+      );
+
+      await loadedSettings.loadSettingsFromFile(
+        settingsJsonPathFileName: testSettingsPathFileName,
+      );
+
+      // Check that the restored playlist order list has been saved
+      expect(
+        loadedSettings.get(
+          settingType: SettingType.playlists,
+          settingSubType: Playlists.orderedTitleLst,
+        ),
+        initialPlaylistOrder,
+      );
+
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
   });
 }
