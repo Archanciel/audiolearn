@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:path/path.dart' as path;
 
 import '../constants.dart';
 import '../utils/dir_util.dart';
@@ -103,7 +104,7 @@ class SettingsDataService {
   // clicks on the search button in the audio search view. The search
   // button which replaces the save button indicates that the defined
   // AudioSortFilterParameters isn't named. The search history list is
-  // limited to a maximum number of elements. 
+  // limited to a maximum number of elements.
   List<AudioSortFilterParameters> _searchHistoryAudioSortFilterParametersLst =
       [];
   List<AudioSortFilterParameters>
@@ -113,7 +114,7 @@ class SettingsDataService {
   // The shared preferences are used to determine if the application is
   // started for the first time. If so, the json settings file does not
   // exist and the default settings are used. The shared preferences
-  // are also used to store the isFirstRun value. 
+  // are also used to store the isFirstRun value.
   final SharedPreferences _sharedPreferences;
 
   SettingsDataService({
@@ -177,7 +178,10 @@ class SettingsDataService {
     _saveSettings();
   }
 
-  void savePlaylistOrder({
+  /// Method called by PlaylistListVM when the user clicks on the up or
+  /// down icon button in the playlist download view. The method updates
+  /// the playlist order list and saves the settings.
+  void updatePlaylistOrderAndSaveSettings({
     required List<String> playlistOrder,
   }) {
     _settings[SettingType.playlists]![Playlists.orderedTitleLst] =
@@ -303,6 +307,44 @@ class SettingsDataService {
         value: await DirUtil.getPlaylistDownloadRootPath(isTest: _isTest),
       );
     }
+  }
+
+  void savePlaylistTitleOrder({
+    required String directory,
+  }) {
+    final List<String> orderedPlaylistTitleLst =
+        _settings[SettingType.playlists]![Playlists.orderedTitleLst];
+
+    final String orderedPlaylistTitlesStr = orderedPlaylistTitleLst.join(', ');
+
+    DirUtil.saveStringToFile(
+      pathFileName:
+          "$directory${path.separator}$kOrderedPlaylistTitlesFileName",
+      content: orderedPlaylistTitlesStr,
+    );
+  }
+
+  /// Once the playlist root path is changed, before the change, the playlist
+  /// title order is saved in the initial playlist root path. If after the
+  /// change, the user reset the playlist root path to the initial playlist
+  /// root path, then the previously saved playlist title order is restored.
+  void restorePlaylistTitleOrderIfExistAndSaveSettings({
+    required String directoryContainingPreviouslySavedPlaylistTitleOrder,
+  }) {
+    final String orderedPlaylistTitlesStr = DirUtil.readStringFromFile(
+      pathFileName:
+          "$directoryContainingPreviouslySavedPlaylistTitleOrder${path.separator}$kOrderedPlaylistTitlesFileName",
+    );
+
+    final List<String> orderedPlaylistTitleLst = orderedPlaylistTitlesStr
+        .split(', ')
+        .where((element) => element.isNotEmpty)
+        .toList();
+
+    _settings[SettingType.playlists]![Playlists.orderedTitleLst] =
+        orderedPlaylistTitleLst;
+
+    _saveSettings();
   }
 
   Future<void> _checkFirstRun({

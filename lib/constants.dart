@@ -28,7 +28,7 @@ enum AudioPopupMenuAction {
 }
 
 const String kApplicationName = "Audio Learn";
-const String kApplicationVersion = '1.3.11';
+const String kApplicationVersion = '1.3.12';
 const String kApplicationPath = "/storage/emulated/0/Download/audiolearn";
 const String kApplicationPathTest = "/storage/emulated/0/Download/audiolearn";
 const String kPlaylistDownloadRootPath =
@@ -36,6 +36,8 @@ const String kPlaylistDownloadRootPath =
 const String kPlaylistDownloadRootPathTest =
     "/storage/emulated/0/Download/audiolearn/playlists";
 const String kSettingsFileName = 'settings.json';
+const String kOrderedPlaylistTitlesFileName = 'savedOrderedPlaylistTitles.txt';
+
 // not working: getDownloadedAudioNameLst() returns empty list !
 //const String kDownloadAppDir = "/storage/9016-4EF8/Audio';
 
