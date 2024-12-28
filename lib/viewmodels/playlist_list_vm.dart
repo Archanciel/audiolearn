@@ -792,7 +792,8 @@ class PlaylistListVM extends ChangeNotifier {
     List<String> playlistOrder =
         _listOfSelectablePlaylists.map((playlist) => playlist.title).toList();
 
-    _settingsDataService.savePlaylistOrder(playlistOrder: playlistOrder);
+    _settingsDataService.updatePlaylistOrderAndSaveSettings(
+        playlistOrder: playlistOrder);
   }
 
   void moveSelectedItemDown() {
@@ -2032,8 +2033,11 @@ class PlaylistListVM extends ChangeNotifier {
   /// the playlists.
   ///
   /// Updating the playlists audio play speed only implies that
-  /// the next downloaded audio of this playlist will be set
+  /// the next downloaded audio's of this playlist will be set
   /// to the audioPlaySpeed value.
+  ///
+  /// The method modifies the playlist default play speed in the
+  /// application settings file and saves the file.
   void updateExistingPlaylistsAndOrAlreadyDownloadedAudioPlaySpeed({
     required double audioPlaySpeed,
     required bool applyAudioPlaySpeedToExistingPlaylists,
@@ -2060,6 +2064,16 @@ class PlaylistListVM extends ChangeNotifier {
         path: playlist.getPlaylistDownloadFilePathName(),
       );
     }
+
+    // Updating the application settings file with the new default
+    // audio play speed (this play speed will be applied to the next
+    // created playlist).
+    _settingsDataService.set(
+        settingType: SettingType.playlists,
+        settingSubType: Playlists.playSpeed,
+        value: audioPlaySpeed);
+
+    _settingsDataService.saveSettings();
   }
 
   void updateIndividualPlaylistAndOrAlreadyDownloadedAudioPlaySpeed({
@@ -2319,5 +2333,33 @@ class PlaylistListVM extends ChangeNotifier {
     notifyListeners();
 
     return rewindedAudioNumber;
+  }
+
+  void updatePlaylistRootPathAndSavePlaylistTitleOrder({
+    required BuildContext context,
+    required String actualPlaylistRootPath,
+    required String modifiedPlaylistRootPath,
+  }) {
+    _settingsDataService.savePlaylistTitleOrder(
+      directory: actualPlaylistRootPath,
+    );
+
+    _settingsDataService.restorePlaylistTitleOrderIfExistAndSaveSettings(
+      directoryContainingPreviouslySavedPlaylistTitleOrder:
+          modifiedPlaylistRootPath,
+    );
+
+    _settingsDataService.set(
+        settingType: SettingType.dataLocation,
+        settingSubType: DataLocation.playlistRootPath,
+        value: modifiedPlaylistRootPath);
+
+    _settingsDataService.saveSettings();
+
+    _audioDownloadVM.playlistsRootPath = modifiedPlaylistRootPath;
+
+    // Since the playlists root path was changed, the playlists managed
+    // by the application must be updated
+    updateSettingsAndPlaylistJsonFiles();
   }
 }

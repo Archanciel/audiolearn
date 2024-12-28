@@ -15,7 +15,6 @@ import '../../constants.dart';
 import '../../services/settings_data_service.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 import 'audio_set_speed_dialog.dart';
-import 'confirm_action_dialog.dart';
 
 class ApplicationSettingsDialog extends StatefulWidget {
   final SettingsDataService settingsDataService;
@@ -241,12 +240,17 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
   }
 
   void _handleSaveButton(BuildContext context) {
+    PlaylistListVM playlistListVMlistenFalse = Provider.of<PlaylistListVM>(
+      context,
+      listen: false,
+    );
+
     if (_applyAudioPlaySpeedToExistingPlaylists ||
         _applyAudioPlaySpeedToAlreadyDownloadedAudios) {
-      Provider.of<PlaylistListVM>(
-        context,
-        listen: false,
-      ).updateExistingPlaylistsAndOrAlreadyDownloadedAudioPlaySpeed(
+      // This method modifies also the playlist default play speed in
+      // the application settings file and saves the file.
+      playlistListVMlistenFalse
+          .updateExistingPlaylistsAndOrAlreadyDownloadedAudioPlaySpeed(
         audioPlaySpeed: _audioPlaySpeed,
         applyAudioPlaySpeedToExistingPlaylists:
             _applyAudioPlaySpeedToExistingPlaylists,
@@ -255,58 +259,44 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
       );
     }
 
-    _updateAndSaveSettings(context);
-  }
+    // Updating the playlist root path in the application settings if
+    // the path was changed and saving the playlists title order list in
+    // the previous root path.
 
-  void _updateAndSaveSettings(BuildContext context) {
-    widget.settingsDataService.set(
-        settingType: SettingType.playlists,
-        settingSubType: Playlists.playSpeed,
-        value: _audioPlaySpeed);
+    String modifiedPlaylistRootPath =
+        _playlistRootpathTextEditingController.text;
 
-    String playlistRootPath = _playlistRootpathTextEditingController.text;
+    String actualPlaylistRootPath = widget.settingsDataService.get(
+      settingType: SettingType.dataLocation,
+      settingSubType: DataLocation.playlistRootPath,
+    );
 
-    if (widget.settingsDataService.get(
-          // if the playlist root path is not changed, do not update the
-          // settings and the playlist json files
-          settingType: SettingType.playlists,
-          settingSubType: Playlists.playSpeed,
-        ) ==
-        playlistRootPath) {
+    if (actualPlaylistRootPath == modifiedPlaylistRootPath) {
+      // If the playlist root path is not changed, doesn't update the
+      // settings and the playlist json files.
       return;
     }
 
-    final Directory directory = Directory(playlistRootPath);
+    final Directory directory = Directory(modifiedPlaylistRootPath);
 
     if (!directory.existsSync()) {
-      // if playlist root path is not modified, return is performed,
-      // avoiding unusefull call to PlaylistListVM
-      // updateSettingsAndPlaylistJsonFiles()
+      // If the modified playlist root path does not exist, a warning
+      // is displayed and return is performed.
       Provider.of<WarningMessageVM>(
         context,
         listen: false,
       ).setPlaylistInexistingRootPath(
-        playlistInexistingRootPath: playlistRootPath,
+        playlistInexistingRootPath: modifiedPlaylistRootPath,
       );
+
       return;
     }
 
-    widget.settingsDataService.set(
-        settingType: SettingType.dataLocation,
-        settingSubType: DataLocation.playlistRootPath,
-        value: playlistRootPath);
-
-    widget.settingsDataService.saveSettings();
-
-    Provider.of<AudioDownloadVM>(
-      context,
-      listen: false,
-    ).playlistsRootPath = playlistRootPath;
-
-    Provider.of<PlaylistListVM>(
-      context,
-      listen: false,
-    ).updateSettingsAndPlaylistJsonFiles();
+    playlistListVMlistenFalse.updatePlaylistRootPathAndSavePlaylistTitleOrder(
+      context: context,
+      actualPlaylistRootPath: actualPlaylistRootPath,
+      modifiedPlaylistRootPath: modifiedPlaylistRootPath,
+    );
   }
 
   Widget _buildSetAudioSpeedTextButton(
@@ -407,35 +397,6 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
                   overlayColor: iconButtonTapModification, // Tap feedback color
                 ),
                 onPressed: () async {
-                  bool doSavePlaylistsAnCommentsToZipFile = false;
-
-                  // Await must be applied to showDialog(), otherwise,
-                  // _filePickerSelectDirectory() will be called before
-                  // the dialog is closed.
-                  await showDialog<dynamic>(
-                    context: context,
-                    barrierDismissible:
-                        false, // This line prevents the dialog from closing when
-                    //            tapping outside the dialog
-                    builder: (BuildContext context) {
-                      return ConfirmActionDialog(
-                        actionFunction: deleteFilteredAudio,
-                        actionFunctionArgs: [],
-                        dialogTitleOne: AppLocalizations.of(context)!
-                            .deleteFilteredAudioConfirmationTitle(
-                          'temp',
-                          'temp2',
-                        ),
-                        dialogContent: AppLocalizations.of(context)!
-                            .deleteFilteredAudioConfirmation(
-                          '0', // total audio number
-                          '0', // total audio file size
-                          '0', // total audio duration
-                        ),
-                      );
-                    },
-                  );
-
                   String? selectedDir = await _filePickerSelectDirectory();
 
                   if (selectedDir != null) {
@@ -450,12 +411,6 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
           ],
         );
       },
-    );
-  }
-
-  void deleteFilteredAudio() async {
-    await UiUtil.savePlaylistAndCommentsToZip(
-      context: context,
     );
   }
 
