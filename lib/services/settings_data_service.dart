@@ -312,9 +312,12 @@ class SettingsDataService {
   void savePlaylistTitleOrder({
     required String directory,
   }) {
+    // Safely retrieve and convert the list to a List<String>
     final List<String> orderedPlaylistTitleLst =
-        _settings[SettingType.playlists]![Playlists.orderedTitleLst];
-
+        (_settings[SettingType.playlists]![Playlists.orderedTitleLst]
+                as List<dynamic>)
+            .map((e) => e.toString())
+            .toList();
     final String orderedPlaylistTitlesStr = orderedPlaylistTitleLst.join(', ');
 
     DirUtil.saveStringToFile(
@@ -331,9 +334,16 @@ class SettingsDataService {
   void restorePlaylistTitleOrderIfExistAndSaveSettings({
     required String directoryContainingPreviouslySavedPlaylistTitleOrder,
   }) {
+    String pathFileName = "$directoryContainingPreviouslySavedPlaylistTitleOrder${path.separator}$kOrderedPlaylistTitlesFileName";
+    final File file = File(pathFileName);
+
+    if (!file.existsSync()) {
+      return;
+    }
+
     final String orderedPlaylistTitlesStr = DirUtil.readStringFromFile(
       pathFileName:
-          "$directoryContainingPreviouslySavedPlaylistTitleOrder${path.separator}$kOrderedPlaylistTitlesFileName",
+          pathFileName,
     );
 
     final List<String> orderedPlaylistTitleLst = orderedPlaylistTitlesStr
