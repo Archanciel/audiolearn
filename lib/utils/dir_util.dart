@@ -550,27 +550,25 @@ class DirUtil {
       file.writeAsStringSync(newContent);
     }
   }
-}
 
-Future<void> main() async {
-  List<String> fileNames = DirUtil.listPathFileNamesInSubDirs(
-    rootPath: 'C:\\Users\\Jean-Pierre\\Downloads\\Audio\\',
-    fileExtension: 'json',
-  );
+  /// Function to save a string to a text file
+  static void saveStringToFile({
+    required String pathFileName,
+    required String content,
+  }) {
+    File file = File(pathFileName);
 
-  print(fileNames);
+    // Write the content to the file
+    file.writeAsStringSync(content);
+  }
 
-  List<String> fileNames2 = DirUtil.listFileNamesInDir(
-    directoryPath: 'C:\\Users\\Jean-Pierre\\Downloads\\Audio\\new\\',
-    fileExtension: 'mp3',
-  );
+  /// Function to read a string from a text file
+  static String readStringFromFile({
+    required String pathFileName,
+  }) {
+    File file = File(pathFileName);
 
-  print(fileNames2);
-  try {
-    String firstMatch =
-        fileNames2.firstWhere((fileName) => fileName.contains('Peter Deunov'));
-    print(firstMatch);
-  } catch (e) {
-    print('No file found containing the word');
+    // Read the content of the file
+    return file.readAsStringSync();
   }
 }

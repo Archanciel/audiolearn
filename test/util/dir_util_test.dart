@@ -123,11 +123,51 @@ void main() {
         );
 
         List<String> listJsonPathFileNames = DirUtil.listPathFileNamesInDir(
-          directoryPath: "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kCommentDirName",
+          directoryPath:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kCommentDirName",
           fileExtension: 'json',
         );
 
         expect(listJsonPathFileNames.length, 1);
+
+        // Cleanup the test data directory
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      },
+    );
+    test(
+      'saveStringToFile and readStringFromFile',
+      () {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+
+        // Copy the test initial audio data to the app dir
+        String sourceRootPath =
+            "$kDownloadAppTestSavedDataDir${path.separator}dir_util_test";
+
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath: sourceRootPath,
+          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+
+        String testString = 'test string';
+        String testPathFileName =
+            '$sourceRootPath${path.separator}test_file.txt';
+
+        DirUtil.saveStringToFile(
+          pathFileName: testPathFileName,
+          content: testString,
+        );
+
+        String readString = DirUtil.readStringFromFile(
+          pathFileName: testPathFileName,
+        );
+
+        expect(readString, testString);
 
         // Cleanup the test data directory
         DirUtil.deleteFilesInDirAndSubDirs(
