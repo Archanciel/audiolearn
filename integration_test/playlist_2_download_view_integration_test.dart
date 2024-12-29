@@ -9894,6 +9894,46 @@ void main() {
       );
     });
   });
+  testWidgets(
+      '''Click on 0 play speed audio, ensuring that its play speed is corrected
+         to the app default playlist play speed defined in the app settings.json
+         file. If the audio play speed would remain to zero, the audio would not
+         be playable''', (
+    WidgetTester tester,
+  ) async {
+    const String audioPlayerSelectedPlaylistTitle =
+        'audio_player_view_0_speed_test';
+    const String zeroPlaySpeedAudioTitle = 'morning _ cinematic video';
+
+    await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+      tester: tester,
+      savedTestDataDirName: 'audio_player_view_zero_speed_test',
+      selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+    );
+
+    // Now we want to tap on the audio downloaded before the last
+    // downloaded audio of the playlist in order to open the
+    // AudioPlayerView displaying the audio.
+
+    // First, get the previous end downloaded audio ListTile Text
+    // widget finder and tap on it
+    final Finder zeroPlaySpeedAudioTitleListTileTextWidgetFinder =
+        find.text(zeroPlaySpeedAudioTitle);
+
+    await tester.tap(zeroPlaySpeedAudioTitleListTileTextWidgetFinder);
+    await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+      tester: tester,
+    );
+
+    // Verify that audio play speed was corrected
+    expect(find.text('1.25x'), findsOneWidget);
+
+    // Purge the test playlist directory so that the created test
+    // files are not uploaded to GitHub
+    DirUtil.deleteFilesInDirAndSubDirs(
+      rootPath: kPlaylistDownloadRootPathWindowsTest,
+    );
+  });
 }
 
 Future<void> _verifyDatePickerTitleTranslation({
