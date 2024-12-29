@@ -8,10 +8,12 @@ import '../constants.dart';
 import '../models/audio.dart';
 import '../models/playlist.dart';
 import '../services/json_data_service.dart';
+import '../services/settings_data_service.dart';
 import '../services/sort_filter_parameters.dart';
 import '../utils/duration_expansion.dart';
 import 'comment_vm.dart';
 import 'playlist_list_vm.dart';
+import 'warning_message_vm.dart';
 
 /// Abstract class used to implement the Command design pattern
 /// for the undo/redo functionality.
@@ -105,10 +107,14 @@ class AudioPlayerVM extends ChangeNotifier {
   StreamSubscription? _playerCompleteSubscription;
   StreamSubscription? _playerStateChangeSubscription;
 
+  final SettingsDataService _settingsDataService;
+
   AudioPlayerVM({
+    required SettingsDataService settingsDataService,
     required PlaylistListVM playlistListVM,
     required CommentVM commentVM,
-  })  : _playlistListVM = playlistListVM,
+  })  : _settingsDataService = settingsDataService,
+        _playlistListVM = playlistListVM,
         _commentVM = commentVM {
     instanciateAudioPlayer();
     initializeAudioPlayer();
@@ -187,6 +193,20 @@ class AudioPlayerVM extends ChangeNotifier {
     audio.enclosingPlaylist!.setCurrentOrPastPlayableAudio(
       audio: audio,
     );
+
+    // This fixes a surprising bug: when the user clicks on an audio
+    // whose play speed is 0.0, the audio speed is set to the default
+    // playlist play speed, otherwise, the audio can not be played and
+    // the app is considered as bugged.
+    if (audio.audioPlaySpeed == 0.0) {
+      audio.audioPlaySpeed = _settingsDataService.get(
+        settingType: SettingType.playlists,
+        settingSubType: Playlists.playSpeed,
+      );
+
+      return;
+    }
+
     updateAndSaveCurrentAudio();
     _clearUndoRedoLists();
 

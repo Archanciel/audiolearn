@@ -137,6 +137,7 @@ class MainApp extends StatelessWidget with ScreenMixin {
     );
 
     final AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+      settingsDataService: _settingsDataService,
       playlistListVM: playlistListVM,
       commentVM: commentVM,
     );

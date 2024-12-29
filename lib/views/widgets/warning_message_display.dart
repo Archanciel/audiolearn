@@ -183,14 +183,13 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
 
         return const SizedBox.shrink();
       case WarningMessageType.privatePlaylistAddition:
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            _displayWarningDialog(
-                context: _context,
-                message: AppLocalizations.of(context)!
-              .addPrivateYoutubePlaylist,
-                warningMessageVM: _warningMessageVM,
-                themeProviderVM: themeProviderVM);
-          });
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _displayWarningDialog(
+              context: _context,
+              message: AppLocalizations.of(context)!.addPrivateYoutubePlaylist,
+              warningMessageVM: _warningMessageVM,
+              themeProviderVM: themeProviderVM);
+        });
 
         return const SizedBox.shrink();
       case WarningMessageType.invalidValueWarning:

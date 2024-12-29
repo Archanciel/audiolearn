@@ -1666,6 +1666,7 @@ Future<AudioPlayerVM> createAudioPlayerVM() async {
   playlistListVM.getUpToDateSelectablePlaylists();
 
   final AudioPlayerVM audioPlayerVM = AudioPlayerVMTestVersion(
+    settingsDataService: settingsDataService,
     playlistListVM: playlistListVM,
     commentVM: commentVM,
   );

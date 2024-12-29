@@ -125,6 +125,7 @@ void main() {
       playlistListVM.getUpToDateSelectablePlaylists();
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+        settingsDataService: settingsDataService,
         playlistListVM: playlistListVM,
         commentVM: CommentVM(),
       );
@@ -392,6 +393,7 @@ void main() {
       playlistListVM.getUpToDateSelectablePlaylists();
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+        settingsDataService: settingsDataService,
         playlistListVM: playlistListVM,
         commentVM: CommentVM(),
       );
@@ -556,6 +558,7 @@ void main() {
       playlistListVM.getUpToDateSelectablePlaylists();
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+        settingsDataService: settingsDataService,
         playlistListVM: playlistListVM,
         commentVM: CommentVM(),
       );
@@ -826,6 +829,7 @@ void main() {
       playlistListVM.getUpToDateSelectablePlaylists();
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+        settingsDataService: settingsDataService,
         playlistListVM: playlistListVM,
         commentVM: CommentVM(),
       );
@@ -1629,6 +1633,7 @@ void main() {
       playlistListVM.getUpToDateSelectablePlaylists();
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+        settingsDataService: settingsDataService,
         playlistListVM: playlistListVM,
         commentVM: CommentVM(),
       );
@@ -1874,6 +1879,7 @@ void main() {
       playlistListVM.getUpToDateSelectablePlaylists();
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+        settingsDataService: settingsDataService,
         playlistListVM: playlistListVM,
         commentVM: CommentVM(),
       );
@@ -2066,6 +2072,7 @@ void main() {
       playlistListVM.getUpToDateSelectablePlaylists();
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+        settingsDataService: settingsDataService,
         playlistListVM: playlistListVM,
         commentVM: CommentVM(),
       );
@@ -2229,6 +2236,7 @@ void main() {
       playlistListVM.getUpToDateSelectablePlaylists();
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+        settingsDataService: settingsDataService,
         playlistListVM: playlistListVM,
         commentVM: CommentVM(),
       );
@@ -2388,6 +2396,7 @@ void main() {
       playlistListVM.getUpToDateSelectablePlaylists();
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+        settingsDataService: settingsDataService,
         playlistListVM: playlistListVM,
         commentVM: CommentVM(),
       );
@@ -2546,6 +2555,7 @@ void main() {
       );
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+        settingsDataService: settingsDataService,
         playlistListVM: playlistListVM,
         commentVM: CommentVM(),
       );
@@ -3051,6 +3061,7 @@ void main() {
       playlistListVM.getUpToDateSelectablePlaylists();
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+        settingsDataService: settingsDataService,
         playlistListVM: playlistListVM,
         commentVM: CommentVM(),
       );
@@ -3246,6 +3257,7 @@ void main() {
       playlistListVM.getUpToDateSelectablePlaylists();
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+        settingsDataService: settingsDataService,
         playlistListVM: playlistListVM,
         commentVM: CommentVM(),
       );
@@ -17844,6 +17856,7 @@ void playlistOneDownloadViewIntegrationTest() {
       playlistListVM.getUpToDateSelectablePlaylists();
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+        settingsDataService: settingsDataService,
         playlistListVM: playlistListVM,
         commentVM: CommentVM(),
       );
@@ -18111,6 +18124,7 @@ void playlistOneDownloadViewIntegrationTest() {
       playlistListVM.getUpToDateSelectablePlaylists();
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+        settingsDataService: settingsDataService,
         playlistListVM: playlistListVM,
         commentVM: CommentVM(),
       );
@@ -18275,6 +18289,7 @@ void playlistOneDownloadViewIntegrationTest() {
       playlistListVM.getUpToDateSelectablePlaylists();
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+        settingsDataService: settingsDataService,
         playlistListVM: playlistListVM,
         commentVM: CommentVM(),
       );
@@ -18545,6 +18560,7 @@ void playlistOneDownloadViewIntegrationTest() {
       playlistListVM.getUpToDateSelectablePlaylists();
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+        settingsDataService: settingsDataService,
         playlistListVM: playlistListVM,
         commentVM: CommentVM(),
       );
@@ -19348,6 +19364,7 @@ void playlistOneDownloadViewIntegrationTest() {
       playlistListVM.getUpToDateSelectablePlaylists();
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+        settingsDataService: settingsDataService,
         playlistListVM: playlistListVM,
         commentVM: CommentVM(),
       );
@@ -19593,6 +19610,7 @@ void playlistOneDownloadViewIntegrationTest() {
       playlistListVM.getUpToDateSelectablePlaylists();
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+        settingsDataService: settingsDataService,
         playlistListVM: playlistListVM,
         commentVM: CommentVM(),
       );
@@ -19785,6 +19803,7 @@ void playlistOneDownloadViewIntegrationTest() {
       playlistListVM.getUpToDateSelectablePlaylists();
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+        settingsDataService: settingsDataService,
         playlistListVM: playlistListVM,
         commentVM: CommentVM(),
       );
@@ -19948,6 +19967,7 @@ void playlistOneDownloadViewIntegrationTest() {
       playlistListVM.getUpToDateSelectablePlaylists();
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+        settingsDataService: settingsDataService,
         playlistListVM: playlistListVM,
         commentVM: CommentVM(),
       );
@@ -20107,6 +20127,7 @@ void playlistOneDownloadViewIntegrationTest() {
       playlistListVM.getUpToDateSelectablePlaylists();
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+        settingsDataService: settingsDataService,
         playlistListVM: playlistListVM,
         commentVM: CommentVM(),
       );
@@ -20265,6 +20286,7 @@ void playlistOneDownloadViewIntegrationTest() {
       );
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+        settingsDataService: settingsDataService,
         playlistListVM: playlistListVM,
         commentVM: CommentVM(),
       );
@@ -20770,6 +20792,7 @@ void playlistOneDownloadViewIntegrationTest() {
       playlistListVM.getUpToDateSelectablePlaylists();
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+        settingsDataService: settingsDataService,
         playlistListVM: playlistListVM,
         commentVM: CommentVM(),
       );
@@ -20965,6 +20988,7 @@ void playlistOneDownloadViewIntegrationTest() {
       playlistListVM.getUpToDateSelectablePlaylists();
 
       AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+        settingsDataService: settingsDataService,
         playlistListVM: playlistListVM,
         commentVM: CommentVM(),
       );
