@@ -2,12 +2,15 @@ import 'dart:io';
 
 import 'package:audiolearn/constants.dart';
 import 'package:audiolearn/models/audio.dart';
+import 'package:audiolearn/models/playlist.dart';
+import 'package:audiolearn/services/json_data_service.dart';
 import 'package:audiolearn/services/settings_data_service.dart';
 import 'package:audiolearn/utils/dir_util.dart';
 import 'package:audiolearn/viewmodels/audio_player_vm.dart';
 import 'package:audiolearn/viewmodels/comment_vm.dart';
 import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:path/path.dart' as path;
 
 import 'package:audiolearn/viewmodels/audio_download_vm.dart';
 import 'package:audiolearn/viewmodels/warning_message_vm.dart';
@@ -1163,6 +1166,44 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
+    test(
+        '''Test audio speed zero bug fix. Now audio with speed zero can be played
+           since its peed is set to default playlist speed.''', () async {
+      AudioPlayerVM audioPlayerVM = await createAudioPlayerVM(
+        savedTestDataDirName: 'audio_player_view_zero_speed_test',
+      );
+
+      // obtain the list of playable audio of the selected
+      // playlist ordered by download date
+      List<Audio> selectedPlaylistAudioList =
+          audioPlayerVM.getPlayableAudiosApplyingSortFilterParameters(
+        AudioLearnAppViewType.playlistDownloadView,
+      );
+
+      Audio currentAudio = selectedPlaylistAudioList[0];
+
+      expect(currentAudio.audioPlaySpeed, 0.0);
+
+      // set the current audio to the first audio in the list
+      await audioPlayerVM.setCurrentAudio(
+        audio: currentAudio,
+      );
+
+      expect(currentAudio.audioPlaySpeed, 1.25);
+
+      const String playListOneName = "audio_player_view_0_speed_test";
+
+      // Load Playlist from the file
+      Playlist loadedPlaylistOne = loadPlaylist(playListOneName);
+
+      expect(loadedPlaylistOne.playableAudioLst[0].audioPlaySpeed, 1.25);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
   });
   group('AudioPlayerVM skipToStart undo/redo', () {
     test('Test single undo/redo of skipToStart position change', () async {
@@ -1640,10 +1681,12 @@ void main() {
   });
 }
 
-Future<AudioPlayerVM> createAudioPlayerVM() async {
+Future<AudioPlayerVM> createAudioPlayerVM({
+  String savedTestDataDirName = 'audio_player_vm_play_position_undo_redo_test',
+}) async {
   final SettingsDataService settingsDataService =
       await initializeTestDataAndLoadSettingsDataService(
-    savedTestDataDirName: 'audio_player_vm_play_position_undo_redo_test',
+    savedTestDataDirName: savedTestDataDirName,
   );
   final WarningMessageVM warningMessageVM = WarningMessageVM();
   final AudioDownloadVM audioDownloadVM = AudioDownloadVM(
@@ -1709,3 +1752,11 @@ Future<SettingsDataService> initializeTestDataAndLoadSettingsDataService({
 
   return settingsDataService;
 }
+
+Playlist loadPlaylist(String playListOneName) {
+  return JsonDataService.loadFromFile(
+      jsonPathFileName:
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$playListOneName${path.separator}$playListOneName.json",
+      type: Playlist);
+}
+

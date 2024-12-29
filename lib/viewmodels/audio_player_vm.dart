@@ -13,7 +13,6 @@ import '../services/sort_filter_parameters.dart';
 import '../utils/duration_expansion.dart';
 import 'comment_vm.dart';
 import 'playlist_list_vm.dart';
-import 'warning_message_vm.dart';
 
 /// Abstract class used to implement the Command design pattern
 /// for the undo/redo functionality.
@@ -203,8 +202,6 @@ class AudioPlayerVM extends ChangeNotifier {
         settingType: SettingType.playlists,
         settingSubType: Playlists.playSpeed,
       );
-
-      return;
     }
 
     updateAndSaveCurrentAudio();
