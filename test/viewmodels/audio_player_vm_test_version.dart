@@ -11,6 +11,7 @@ import 'package:audiolearn/viewmodels/audio_player_vm.dart';
 /// player plugin.
 class AudioPlayerVMTestVersion extends AudioPlayerVM {
   AudioPlayerVMTestVersion({
+    required super.settingsDataService,
     required super.playlistListVM,
     required super.commentVM,
   });

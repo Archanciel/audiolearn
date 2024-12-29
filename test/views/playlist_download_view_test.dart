@@ -1247,6 +1247,7 @@ Future<void> _createPlaylistDownloadView({
   playlistListVM.getUpToDateSelectablePlaylists();
 
   final AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+    settingsDataService: settingsDataService,
     playlistListVM: playlistListVM,
     commentVM: commentVM,
   );
