@@ -29,14 +29,11 @@ class ApplicationSettingsDialog extends StatefulWidget {
 
 class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
     with ScreenMixin {
-  final TextEditingController _playlistRootpathTextEditingController =
-      TextEditingController();
   late double _audioPlaySpeed;
   bool _applyAudioPlaySpeedToExistingPlaylists = false;
   bool _applyAudioPlaySpeedToAlreadyDownloadedAudios = false;
-  final FocusNode _focusNodeDialog = FocusNode();
-  final FocusNode _focusNodePlaylistRootPath = FocusNode();
   late final List<HelpItem> _helpItemsLst;
+  String _playlistRootPath = '';
 
   @override
   void initState() {
@@ -48,21 +45,12 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
             settingSubType: Playlists.playSpeed) ??
         1.0;
 
+    _playlistRootPath = widget.settingsDataService.get(
+            settingType: SettingType.dataLocation,
+            settingSubType: DataLocation.playlistRootPath) ??
+        '';
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _playlistRootpathTextEditingController.text = widget.settingsDataService
-              .get(
-                  settingType: SettingType.dataLocation,
-                  settingSubType: DataLocation.playlistRootPath) ??
-          '';
-
-      // Setting cursor at the end of the text. Does not work !
-      _playlistRootpathTextEditingController.selection =
-          TextSelection.fromPosition(
-        TextPosition(
-          offset: _playlistRootpathTextEditingController.text.length,
-        ),
-      );
-
       _helpItemsLst = [
         HelpItem(
           helpTitle: AppLocalizations.of(context)!.defaultApplicationHelpTitle,
@@ -92,30 +80,12 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
   }
 
   @override
-  void dispose() {
-    _focusNodeDialog.dispose();
-    _focusNodePlaylistRootPath.dispose();
-    _playlistRootpathTextEditingController.dispose();
-
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final ThemeProviderVM themeProviderVMlistenFalse =
         Provider.of<ThemeProviderVM>(
       context,
       listen: false,
     ); // by default, listen is true
-
-    // Set focus to the text field and move the cursor to the end
-    _playlistRootpathTextEditingController.selection = TextSelection.collapsed(
-      offset: _playlistRootpathTextEditingController.text.length,
-    );
-
-    FocusScope.of(context).requestFocus(
-      _focusNodePlaylistRootPath,
-    );
 
     return Theme(
       data: themeProviderVMlistenFalse.currentTheme == AppTheme.dark
@@ -175,17 +145,11 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
                     ),
                   ),
                   SizedBox(
-                    height: kDialogTextFieldHeight,
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width,
-                      child: TextField(
-                        key: const Key('playlistsRootPathTextField'),
-                        focusNode: _focusNodePlaylistRootPath,
-                        style: kDialogTextFieldStyle,
-                        decoration: getDialogTextFieldInputDecoration(),
-                        controller: _playlistRootpathTextEditingController,
-                        keyboardType: TextInputType.text,
-                        onChanged: (value) {},
+                      child: Text(
+                        _playlistRootPath,
+                        key: const Key('playlistsRootPathText'),
                       ),
                     ),
                   ),
@@ -261,21 +225,18 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
     // the path was changed and saving the playlists title order list in
     // the previous root path.
 
-    String modifiedPlaylistRootPath =
-        _playlistRootpathTextEditingController.text;
-
     String actualPlaylistRootPath = widget.settingsDataService.get(
       settingType: SettingType.dataLocation,
       settingSubType: DataLocation.playlistRootPath,
     );
 
-    if (actualPlaylistRootPath == modifiedPlaylistRootPath) {
+    if (actualPlaylistRootPath == _playlistRootPath) {
       // If the playlist root path is not changed, doesn't update the
       // settings and the playlist json files.
       return;
     }
 
-    final Directory directory = Directory(modifiedPlaylistRootPath);
+    final Directory directory = Directory(_playlistRootPath);
 
     if (!directory.existsSync()) {
       // If the modified playlist root path does not exist, a warning
@@ -284,16 +245,15 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
         context,
         listen: false,
       ).setPlaylistInexistingRootPath(
-        playlistInexistingRootPath: modifiedPlaylistRootPath,
+        playlistInexistingRootPath: _playlistRootPath,
       );
 
       return;
     }
 
     playlistListVMlistenFalse.updatePlaylistRootPathAndSavePlaylistTitleOrder(
-      context: context,
       actualPlaylistRootPath: actualPlaylistRootPath,
-      modifiedPlaylistRootPath: modifiedPlaylistRootPath,
+      modifiedPlaylistRootPath: _playlistRootPath,
     );
   }
 
@@ -398,8 +358,10 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
                   String? selectedDir = await _filePickerSelectDirectory();
 
                   if (selectedDir != null) {
-                    _playlistRootpathTextEditingController.text = selectedDir;
+                    _playlistRootPath = selectedDir;
                   }
+
+                  setState(() {}); // required, otherwise the TextButton
                 },
                 icon: Icon(
                   Icons.folder_open,

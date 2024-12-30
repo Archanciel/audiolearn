@@ -748,6 +748,8 @@ class PlaylistListVM extends ChangeNotifier {
     );
   }
 
+  /// This method returns the list of playlists which use the passed audio sort/filter
+  /// parms name either for the playlist download view or for the audio player view.
   List<Playlist> getPlaylistsUsingSortFilterParmsName({
     required String audioSortFilterParmsName,
   }) {
@@ -2336,17 +2338,11 @@ class PlaylistListVM extends ChangeNotifier {
   }
 
   void updatePlaylistRootPathAndSavePlaylistTitleOrder({
-    required BuildContext context,
     required String actualPlaylistRootPath,
     required String modifiedPlaylistRootPath,
   }) {
     _settingsDataService.savePlaylistTitleOrder(
       directory: actualPlaylistRootPath,
-    );
-
-    _settingsDataService.restorePlaylistTitleOrderIfExistAndSaveSettings(
-      directoryContainingPreviouslySavedPlaylistTitleOrder:
-          modifiedPlaylistRootPath,
     );
 
     _settingsDataService.set(
@@ -2361,5 +2357,10 @@ class PlaylistListVM extends ChangeNotifier {
     // Since the playlists root path was changed, the playlists managed
     // by the application must be updated
     updateSettingsAndPlaylistJsonFiles();
+
+    _settingsDataService.restorePlaylistTitleOrderIfExistAndSaveSettings(
+      directoryContainingPreviouslySavedPlaylistTitleOrder:
+          modifiedPlaylistRootPath,
+    );
   }
 }

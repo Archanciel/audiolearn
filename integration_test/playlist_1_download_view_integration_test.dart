@@ -15351,7 +15351,7 @@ void main() {
 
       // Find the TextField using the Key
       final Finder textFieldFinder =
-          find.byKey(const Key('playlistsRootPathTextField'));
+          find.byKey(const Key('playlistsRootPathText'));
 
       // Retrieve the TextField widget
       final TextField textField = tester.widget<TextField>(textFieldFinder);
@@ -15508,7 +15508,7 @@ void main() {
 
       // Find the TextField using the Key
       final Finder textFieldFinder =
-          find.byKey(const Key('playlistsRootPathTextField'));
+          find.byKey(const Key('playlistsRootPathText'));
 
       // Retrieve the TextField widget
       final TextField textField = tester.widget<TextField>(textFieldFinder);
@@ -33082,7 +33082,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
       // Find the TextField using the Key
       final Finder textFieldFinder =
-          find.byKey(const Key('playlistsRootPathTextField'));
+          find.byKey(const Key('playlistsRootPathText'));
 
       // Retrieve the TextField widget
       final TextField textField = tester.widget<TextField>(textFieldFinder);
@@ -33239,7 +33239,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
       // Find the TextField using the Key
       final Finder textFieldFinder =
-          find.byKey(const Key('playlistsRootPathTextField'));
+          find.byKey(const Key('playlistsRootPathText'));
 
       // Retrieve the TextField widget
       final TextField textField = tester.widget<TextField>(textFieldFinder);
