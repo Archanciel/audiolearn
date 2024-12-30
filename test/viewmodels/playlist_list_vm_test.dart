@@ -1332,6 +1332,8 @@ void main() {
       // selected and which are not
       playlistListVM.getUpToDateSelectablePlaylists();
 
+      // Verify that the playlists using the 'Title asc' SF parms are
+      // obtained correctly
       _testGetPlaylistsUsingSortFilterParmsName(
         playlistListVM: playlistListVM,
         audioSortFilterParmsName: 'Title asc',
@@ -1341,6 +1343,8 @@ void main() {
         ],
       );
 
+      // Verify that the playlists using the 'asc listened' SF parms are
+      // obtained correctly
       _testGetPlaylistsUsingSortFilterParmsName(
         playlistListVM: playlistListVM,
         audioSortFilterParmsName: 'asc listened',
@@ -1350,6 +1354,8 @@ void main() {
         ],
       );
 
+      // Verify that the playlists using the 'desc listened' SF parms are
+      // obtained correctly
       _testGetPlaylistsUsingSortFilterParmsName(
         playlistListVM: playlistListVM,
         audioSortFilterParmsName: 'desc listened',
@@ -1358,6 +1364,8 @@ void main() {
         ],
       );
 
+      // Verify that the playlists using the 'Unused SF' SF parms are
+      // obtained correctly
       _testGetPlaylistsUsingSortFilterParmsName(
         playlistListVM: playlistListVM,
         audioSortFilterParmsName: 'Unused SF',
@@ -1437,6 +1445,91 @@ void main() {
           audioSortFilterParmrsName: '',
         ),
         false,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+  });
+  group('''Playlist rootpath modification.''', () {
+    test('''Modify path and reset it to initial value. Verify that the playlist
+         sort order was reset to initial order. Then, remodify the path to the
+         previous new value and verify that the playlist sort order was reset to
+         the new order.''', () async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_test",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Create a new directory containing playlists to which the playlist
+      // root path will be modified
+
+      String modifiedPlaylistRootPath =
+          '$kPlaylistDownloadRootPathWindowsTest${path.separator}newPlaylistRootDirectory';
+
+      DirUtil.createDirIfNotExistSync(
+        pathStr: modifiedPlaylistRootPath,
+      );
+
+      // Fill the new directory with playlists
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}2_youtube_2_local_playlists_integr_test_data",
+        destinationRootPath: modifiedPlaylistRootPath,
+      );
+
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+      WarningMessageVM warningMessageVM = WarningMessageVM();
+
+      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+        isTest: true,
+      );
+
+      PlaylistListVM playlistListVM = PlaylistListVM(
+        warningMessageVM: warningMessageVM,
+        audioDownloadVM: audioDownloadVM,
+        commentVM: CommentVM(),
+        settingsDataService: settingsDataService,
+      );
+
+      // calling getUpToDateSelectablePlaylists() loads all the
+      // playlist json files from the app dir and so enables
+      // playlistListVM to know which playlists are
+      // selected and which are not
+      playlistListVM.getUpToDateSelectablePlaylists();
+
+      const String initialRootSelectedPlaylistTitle = 'S8 audio';
+      
+      expect(playlistListVM.getSelectedPlaylists()[0].title, initialRootSelectedPlaylistTitle);
+
+      playlistListVM.updatePlaylistRootPathAndSavePlaylistTitleOrder(
+        actualPlaylistRootPath: kPlaylistDownloadRootPathWindowsTest,
+        modifiedPlaylistRootPath: modifiedPlaylistRootPath,
       );
 
       // Purge the test playlist directory so that the created test
