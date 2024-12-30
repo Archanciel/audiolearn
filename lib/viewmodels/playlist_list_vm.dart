@@ -2370,6 +2370,8 @@ class PlaylistListVM extends ChangeNotifier {
     // and displayed in the right order after changing the playlists root
     // path to the initial root path will not be selected.
 
+    // Forcing audio download VM to reload the playlists, otherwise the
+    // playlists contained in its list of playlists will all be unselected !
     _audioDownloadVM.loadExistingPlaylists();
 
     Playlist? playlistListVMselectedPlaylist =
