@@ -2362,5 +2362,25 @@ class PlaylistListVM extends ChangeNotifier {
       directoryContainingPreviouslySavedPlaylistTitleOrder:
           modifiedPlaylistRootPath,
     );
+
+    // The next instructions are necessary in order to select the
+    // playlist which was in selection state before the playlists root path
+    // was changed previously. Without these instructions, the playlist
+    // selected before changing the playlists root path to a new root path
+    // and displayed in the right order after changing the playlists root
+    // path to the initial root path will not be selected.
+
+    _audioDownloadVM.loadExistingPlaylists();
+
+    Playlist? playlistListVMselectedPlaylist =
+        getSelectedPlaylists().firstWhereOrNull(
+      (element) => element.isSelected,
+    );
+
+    if (playlistListVMselectedPlaylist != null) {
+      // required so that the selected playlist title text field
+      // of the playlist download view is updated
+      _uniqueSelectedPlaylist = playlistListVMselectedPlaylist;
+    }
   }
 }
