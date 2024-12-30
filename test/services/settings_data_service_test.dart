@@ -233,7 +233,7 @@ void main() {
       }
     });
     test('''With 2 AudioSortFilterParameters, test initial, modified, saved and
-           loaded values''', () async {
+            loaded values''', () async {
       final Directory directory = Directory(testSettingsDir);
 
       if (directory.existsSync()) {
@@ -352,7 +352,7 @@ void main() {
       }
     });
     test('''With 3 AudioSortFilterParameters, test initial, modified, saved and
-           loaded values''', () async {
+            loaded values''', () async {
       final Directory directory = Directory(testSettingsDir);
 
       // if (directory.existsSync()) {
@@ -502,7 +502,7 @@ void main() {
       }
     });
     test('''With empty AudioSortFilterParameters, test initial, modified, saved
-           and loaded values''', () async {
+            and loaded values''', () async {
       final Directory directory = Directory(testSettingsDir);
 
       if (directory.existsSync()) {
@@ -548,7 +548,9 @@ void main() {
         directory.deleteSync(recursive: true);
       }
     });
-    test('''savePlaylistTitleOrder + restorePlaylistTitleOrderIfExistAndSaveSettings test''',
+    test(
+        '''savePlaylistTitleOrder + restorePlaylistTitleOrderIfExistAndSaveSettings
+           test''',
         () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -685,8 +687,9 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    test('''savePlaylistTitleOrder + delete it + restorePlaylistTitleOrderIfExistAndSaveSettings test''',
-        () async {
+    test(
+        '''savePlaylistTitleOrder + delete it + restorePlaylistTitleOrderIfExistAndSaveSettings
+           test''', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -784,7 +787,9 @@ void main() {
         modifiedPlaylistOrder,
       );
 
-      DirUtil.deleteFileIfExist(pathFileName: '$initialPlaylistRootPath${path.separator}$kOrderedPlaylistTitlesFileName');
+      DirUtil.deleteFileIfExist(
+          pathFileName:
+              '$initialPlaylistRootPath${path.separator}$kOrderedPlaylistTitlesFileName');
 
       settings.restorePlaylistTitleOrderIfExistAndSaveSettings(
         directoryContainingPreviouslySavedPlaylistTitleOrder:
