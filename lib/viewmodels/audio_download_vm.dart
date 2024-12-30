@@ -105,6 +105,10 @@ class AudioDownloadVM extends ChangeNotifier {
       excludeDirName: kCommentDirName,
     );
 
+    playlistPathFileNameLst.removeWhere(
+      (filePath) => filePath.contains(kSettingsFileName),
+    );
+
     try {
       for (String playlistPathFileName in playlistPathFileNameLst) {
         Playlist currentPlaylist = JsonDataService.loadFromFile(
