@@ -1764,4 +1764,7 @@ class MockAppLocalizations extends AppLocalizations {
     Object audioCommentsNumber,
   ) =>
       "Deleting the playlist and its $audioNumber audio's, $audioCommentsNumber audio comments as well as its JSON file and its directory.";
+
+  @override
+  String get chapterAudioTitleLabel => "Chapter Audio title";
 }

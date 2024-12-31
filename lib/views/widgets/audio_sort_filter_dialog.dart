@@ -388,6 +388,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
         return AppLocalizations.of(context)!.videoUploadDate;
       case SortingOption.validAudioTitle:
         return AppLocalizations.of(context)!.audioTitleLabel;
+      case SortingOption.chapterAudioTitle:
+        return AppLocalizations.of(context)!.chapterAudioTitleLabel;
       case SortingOption.audioEnclosingPlaylistTitle:
         return AppLocalizations.of(context)!.audioEnclosingPlaylistTitle;
       case SortingOption.audioDuration:
@@ -2121,6 +2123,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       'audioDownloadDate': AppLocalizations.of(context)!.audioDownloadDate,
       'videoUploadDate': AppLocalizations.of(context)!.videoUploadDate,
       'validAudioTitle': AppLocalizations.of(context)!.audioTitleLabel,
+      'chapterAudioTitle': AppLocalizations.of(context)!.chapterAudioTitleLabel,
       'audioEnclosingPlaylistTitle':
           AppLocalizations.of(context)!.audioEnclosingPlaylistTitle,
       'audioDuration': AppLocalizations.of(context)!.audioDuration,

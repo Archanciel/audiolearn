@@ -1056,7 +1056,7 @@ void main() {
               .map((audio) => audio.validVideoTitle)
               .toList()));
     });
-    test('sort by title with chapter number', () {
+    test('sort by chapter title number', () {
       final Audio avantPropos = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
         enclosingPlaylist: audioPlaylist,
@@ -1714,6 +1714,326 @@ void main() {
 
       final List<SortingItem> selectedSortItemLstAsc = [
         SortingItem(
+          sortingOption: SortingOption.chapterAudioTitle,
+          isAscending: true,
+        ),
+      ];
+
+      List<Audio> sortedByTitleAsc =
+          audioSortFilterService.sortAudioLstBySortingOptions(
+        audioLst: audioList,
+        selectedSortItemLst: selectedSortItemLstAsc,
+      );
+
+      expect(
+          sortedByTitleAsc.map((audio) => audio.validVideoTitle).toList(),
+          equals(expectedResultForTitleAsc
+              .map((audio) => audio.validVideoTitle)
+              .toList()));
+
+      final List<SortingItem> selectedSortItemLstDesc = [
+        SortingItem(
+          sortingOption: SortingOption.chapterAudioTitle,
+          isAscending: false,
+        ),
+      ];
+
+      List<Audio> sortedByTitleDesc =
+          audioSortFilterService.sortAudioLstBySortingOptions(
+        audioLst: audioList,
+        selectedSortItemLst: selectedSortItemLstDesc,
+      );
+
+      expect(
+          sortedByTitleDesc.map((audio) => audio.validVideoTitle).toList(),
+          equals(expectedResultForTitleDesc
+              .map((audio) => audio.validVideoTitle)
+              .toList()));
+    });
+    test('sort by title containing a number reference', () {
+      final Audio thirdAudioOneOfTwo = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
+        enclosingPlaylist: audioPlaylist,
+        movedFromPlaylistTitle: null,
+        movedToPlaylistTitle: null,
+        copiedFromPlaylistTitle: null,
+        copiedToPlaylistTitle: null,
+        originalVideoTitle:
+            "La foi contre la peur (1_2 - Joyce Meyer -  Avoir des relations saines",
+        compactVideoDescription: '',
+        validVideoTitle:
+            "La foi contre la peur (1_2 - Joyce Meyer -  Avoir des relations saines",
+        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+        audioDownloadSpeed: 1000000,
+        videoUploadDate: DateTime(2023, 3, 1),
+        audioDuration: const Duration(minutes: 5, seconds: 30),
+        isAudioMusicQuality: false,
+        audioPlaySpeed: kAudioDefaultPlaySpeed,
+        audioPlayVolume: kAudioDefaultPlayVolume,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        isPaused: true,
+        audioPausedDateTime: null,
+        audioPositionSeconds: 0,
+        audioFileName:
+            "La foi contre la peur (1_2 - Joyce Meyer -  Avoir des relations saines.mp3",
+        audioFileSize: 330000000,
+        isAudioImported: false,
+      );
+
+      final Audio thirdAudioTwoOfTwo = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
+        enclosingPlaylist: audioPlaylist,
+        movedFromPlaylistTitle: null,
+        movedToPlaylistTitle: null,
+        copiedFromPlaylistTitle: null,
+        copiedToPlaylistTitle: null,
+        originalVideoTitle:
+            "La foi contre la peur (2_2 - Joyce Meyer -  Avoir des relations saines",
+        compactVideoDescription: '',
+        validVideoTitle:
+            "La foi contre la peur (2_2 - Joyce Meyer -  Avoir des relations saines",
+        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+        audioDownloadSpeed: 1000000,
+        videoUploadDate: DateTime(2023, 3, 1),
+        audioDuration: const Duration(minutes: 5, seconds: 30),
+        isAudioMusicQuality: false,
+        audioPlaySpeed: kAudioDefaultPlaySpeed,
+        audioPlayVolume: kAudioDefaultPlayVolume,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        isPaused: true,
+        audioPausedDateTime: null,
+        audioPositionSeconds: 0,
+        audioFileName:
+            "La foi contre la peur (2_2 - Joyce Meyer -  Avoir des relations saines.mp3",
+        audioFileSize: 330000000,
+        isAudioImported: false,
+      );
+
+      final Audio secondAudioTwoOfTwo = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
+        enclosingPlaylist: audioPlaylist,
+        movedFromPlaylistTitle: null,
+        movedToPlaylistTitle: null,
+        copiedFromPlaylistTitle: null,
+        copiedToPlaylistTitle: null,
+        originalVideoTitle:
+            "Il est temps d'être sérieux avec Dieu ! (2_2 - Joyce Meyer - Grandir avec Dieu",
+        compactVideoDescription: '',
+        validVideoTitle:
+            "Il est temps d'être sérieux avec Dieu ! (2_2 - Joyce Meyer - Grandir avec Dieu",
+        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+        audioDownloadSpeed: 1000000,
+        videoUploadDate: DateTime(2023, 3, 1),
+        audioDuration: const Duration(minutes: 5, seconds: 30),
+        isAudioMusicQuality: false,
+        audioPlaySpeed: kAudioDefaultPlaySpeed,
+        audioPlayVolume: kAudioDefaultPlayVolume,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        isPaused: true,
+        audioPausedDateTime: null,
+        audioPositionSeconds: 0,
+        audioFileName:
+            "Il est temps d'être sérieux avec Dieu ! (2_2 - Joyce Meyer - Grandir avec Dieu.mp3",
+        audioFileSize: 330000000,
+        isAudioImported: false,
+      );
+
+      final Audio secondAudioOneOfTwo = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
+        enclosingPlaylist: audioPlaylist,
+        movedFromPlaylistTitle: null,
+        movedToPlaylistTitle: null,
+        copiedFromPlaylistTitle: null,
+        copiedToPlaylistTitle: null,
+        originalVideoTitle:
+            "Il est temps d'être sérieux avec Dieu ! (1_2 - Joyce Meyer - Grandir avec Dieu",
+        compactVideoDescription: '',
+        validVideoTitle:
+            "Il est temps d'être sérieux avec Dieu ! (1_2 - Joyce Meyer - Grandir avec Dieu",
+        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+        audioDownloadSpeed: 1000000,
+        videoUploadDate: DateTime(2023, 3, 1),
+        audioDuration: const Duration(minutes: 5, seconds: 30),
+        isAudioMusicQuality: false,
+        audioPlaySpeed: kAudioDefaultPlaySpeed,
+        audioPlayVolume: kAudioDefaultPlayVolume,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        isPaused: true,
+        audioPausedDateTime: null,
+        audioPositionSeconds: 0,
+        audioFileName:
+            "Il est temps d'être sérieux avec Dieu ! (1_2 - Joyce Meyer - Grandir avec Dieu.mp3",
+        audioFileSize: 330000000,
+        isAudioImported: false,
+      );
+
+      final Audio fourthAudio = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
+        enclosingPlaylist: audioPlaylist,
+        movedFromPlaylistTitle: null,
+        movedToPlaylistTitle: null,
+        copiedFromPlaylistTitle: null,
+        copiedToPlaylistTitle: null,
+        originalVideoTitle:
+            "Laisser Dieu au contrôle - Joyce Meyer - Grandir avec Dieu",
+        compactVideoDescription: '',
+        validVideoTitle:
+            "Laisser Dieu au contrôle - Joyce Meyer - Grandir avec Dieu",
+        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+        audioDownloadSpeed: 1000000,
+        videoUploadDate: DateTime(2023, 3, 1),
+        audioDuration: const Duration(minutes: 5, seconds: 30),
+        isAudioMusicQuality: false,
+        audioPlaySpeed: kAudioDefaultPlaySpeed,
+        audioPlayVolume: kAudioDefaultPlayVolume,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        isPaused: true,
+        audioPausedDateTime: null,
+        audioPositionSeconds: 0,
+        audioFileName:
+            "Laisser Dieu au contrôle - Joyce Meyer - Grandir avec Dieu.mp3",
+        audioFileSize: 330000000,
+        isAudioImported: false,
+      );
+
+      final Audio fifthAudio = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
+        enclosingPlaylist: audioPlaylist,
+        movedFromPlaylistTitle: null,
+        movedToPlaylistTitle: null,
+        copiedFromPlaylistTitle: null,
+        copiedToPlaylistTitle: null,
+        originalVideoTitle:
+            "VOICI COMMENT ÊTRE GUIDÉ PAR LE SAINT ESPRIT _ JOYCE MEYER",
+        compactVideoDescription: '',
+        validVideoTitle:
+            "VOICI COMMENT ÊTRE GUIDÉ PAR LE SAINT ESPRIT _ JOYCE MEYER",
+        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+        audioDownloadSpeed: 1000000,
+        videoUploadDate: DateTime(2023, 3, 1),
+        audioDuration: const Duration(minutes: 5, seconds: 30),
+        isAudioMusicQuality: false,
+        audioPlaySpeed: kAudioDefaultPlaySpeed,
+        audioPlayVolume: kAudioDefaultPlayVolume,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        isPaused: true,
+        audioPausedDateTime: null,
+        audioPositionSeconds: 0,
+        audioFileName:
+            "VOICI COMMENT ÊTRE GUIDÉ PAR LE SAINT ESPRIT _ JOYCE MEYER.mp3",
+        audioFileSize: 330000000,
+        isAudioImported: false,
+      );
+
+      final Audio firstAudioOneOfTwo = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
+        enclosingPlaylist: audioPlaylist,
+        movedFromPlaylistTitle: null,
+        movedToPlaylistTitle: null,
+        copiedFromPlaylistTitle: null,
+        copiedToPlaylistTitle: null,
+        originalVideoTitle:
+            "Communiquer avec Dieu (1_2 - Joyce Meyer - Grandir avec Dieu",
+        compactVideoDescription: '',
+        validVideoTitle:
+            "Communiquer avec Dieu (1_2 - Joyce Meyer - Grandir avec Dieu",
+        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+        audioDownloadSpeed: 1000000,
+        videoUploadDate: DateTime(2023, 3, 1),
+        audioDuration: const Duration(minutes: 5, seconds: 30),
+        isAudioMusicQuality: false,
+        audioPlaySpeed: kAudioDefaultPlaySpeed,
+        audioPlayVolume: kAudioDefaultPlayVolume,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        isPaused: true,
+        audioPausedDateTime: null,
+        audioPositionSeconds: 0,
+        audioFileName:
+            "Communiquer avec Dieu (1_2 - Joyce Meyer - Grandir avec Dieu.mp3",
+        audioFileSize: 330000000,
+        isAudioImported: false,
+      );
+
+      final Audio firstAudioTwoOfTwo = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
+        enclosingPlaylist: audioPlaylist,
+        movedFromPlaylistTitle: null,
+        movedToPlaylistTitle: null,
+        copiedFromPlaylistTitle: null,
+        copiedToPlaylistTitle: null,
+        originalVideoTitle:
+            "Communiquer avec Dieu (2_2 - Joyce Meyer - Grandir avec Dieu",
+        compactVideoDescription: '',
+        validVideoTitle:
+            "Communiquer avec Dieu (2_2 - Joyce Meyer - Grandir avec Dieu",
+        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+        audioDownloadSpeed: 1000000,
+        videoUploadDate: DateTime(2023, 3, 1),
+        audioDuration: const Duration(minutes: 5, seconds: 30),
+        isAudioMusicQuality: false,
+        audioPlaySpeed: kAudioDefaultPlaySpeed,
+        audioPlayVolume: kAudioDefaultPlayVolume,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        isPaused: true,
+        audioPausedDateTime: null,
+        audioPositionSeconds: 0,
+        audioFileName:
+            "Communiquer avec Dieu (2_2 - Joyce Meyer - Grandir avec Dieu.mp3",
+        audioFileSize: 330000000,
+        isAudioImported: false,
+      );
+
+      List<Audio> audioList = [
+        thirdAudioOneOfTwo,
+        thirdAudioTwoOfTwo,
+        secondAudioTwoOfTwo,
+        secondAudioOneOfTwo,
+        fourthAudio,
+        fifthAudio,
+        firstAudioOneOfTwo,
+        firstAudioTwoOfTwo,
+      ];
+
+      List<Audio> expectedResultForTitleAsc = [
+        firstAudioOneOfTwo,
+        firstAudioTwoOfTwo,
+        secondAudioOneOfTwo,
+        secondAudioTwoOfTwo,
+        thirdAudioOneOfTwo,
+        thirdAudioTwoOfTwo,
+        fourthAudio,
+        fifthAudio,
+      ];
+
+      List<Audio> expectedResultForTitleDesc = [
+        fifthAudio,
+        fourthAudio,
+        thirdAudioTwoOfTwo,
+        thirdAudioOneOfTwo,
+        secondAudioTwoOfTwo,
+        secondAudioOneOfTwo,
+        firstAudioTwoOfTwo,
+        firstAudioOneOfTwo,
+      ];
+
+      final List<SortingItem> selectedSortItemLstAsc = [
+        SortingItem(
           sortingOption: SortingOption.validAudioTitle,
           isAscending: true,
         ),
@@ -1750,7 +2070,7 @@ void main() {
               .map((audio) => audio.validVideoTitle)
               .toList()));
     });
-    test('''sort by title with chapter number. The order of the list of audio to
+    test('''sort by chapter title number. The order of the list of audio to
             sort was modified''', () {
       final Audio avantPropos = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
@@ -2409,7 +2729,7 @@ void main() {
 
       final List<SortingItem> selectedSortItemLstAsc = [
         SortingItem(
-          sortingOption: SortingOption.validAudioTitle,
+          sortingOption: SortingOption.chapterAudioTitle,
           isAscending: true,
         ),
       ];
@@ -2428,7 +2748,7 @@ void main() {
 
       final List<SortingItem> selectedSortItemLstDesc = [
         SortingItem(
-          sortingOption: SortingOption.validAudioTitle,
+          sortingOption: SortingOption.chapterAudioTitle,
           isAscending: false,
         ),
       ];
@@ -2537,8 +2857,7 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    test(
-        '''sort by title with chapter number. The valid video title of the audio
+    test('''sort by chapter title number. The valid video title of the audio
             contained in the 'Gary Renard - Et l'univers disparaîtra imported'
             json file are original and so not modified.''', () {
       // Purge the test playlist directory if it exists so that the
@@ -2565,7 +2884,7 @@ void main() {
 
       final List<SortingItem> selectedSortItemLstAsc = [
         SortingItem(
-          sortingOption: SortingOption.validAudioTitle,
+          sortingOption: SortingOption.chapterAudioTitle,
           isAscending: true,
         ),
       ];
@@ -2591,7 +2910,7 @@ void main() {
 
       final List<SortingItem> selectedSortItemLstDesc = [
         SortingItem(
-          sortingOption: SortingOption.validAudioTitle,
+          sortingOption: SortingOption.chapterAudioTitle,
           isAscending: false,
         ),
       ];
@@ -6173,8 +6492,7 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    group(
-        '''By audio downl or vid upl date filter tests
+    group('''By audio downl or vid upl date filter tests
         test''', () {
       late AudioSortFilterService audioSortFilterService;
       late PlaylistListVM playlistListVM;
@@ -6242,7 +6560,8 @@ void main() {
 
         audioSortFilterService = AudioSortFilterService();
       });
-      test('''Set start + end audio download date and verify filtered audio list''',
+      test(
+          '''Set start + end audio download date and verify filtered audio list''',
           () {
         List<Audio> audioNotFilteredLst = playlistListVM
             .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
@@ -6304,7 +6623,8 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
-      test('''Set start only audio download date and verify filtered audio list''',
+      test(
+          '''Set start only audio download date and verify filtered audio list''',
           () {
         List<Audio> audioNotFilteredLst = playlistListVM
             .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
@@ -6366,7 +6686,8 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
-      test('''Set end only audio download date and verify filtered audio list''',
+      test(
+          '''Set end only audio download date and verify filtered audio list''',
           () {
         List<Audio> audioNotFilteredLst = playlistListVM
             .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
@@ -6425,7 +6746,8 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
-      test('''Set start == end audio download date and verify filtered audio list''',
+      test(
+          '''Set start == end audio download date and verify filtered audio list''',
           () {
         List<Audio> audioNotFilteredLst = playlistListVM
             .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
@@ -6484,7 +6806,8 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
-      test('''Set start + end video upload date and verify filtered audio list''',
+      test(
+          '''Set start + end video upload date and verify filtered audio list''',
           () {
         List<Audio> audioNotFilteredLst = playlistListVM
             .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
@@ -6546,7 +6869,8 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
-      test('''Set start only video upload date and verify filtered audio list''',
+      test(
+          '''Set start only video upload date and verify filtered audio list''',
           () {
         List<Audio> audioNotFilteredLst = playlistListVM
             .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
@@ -6669,7 +6993,8 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
-      test('''Set start == end video upload date and verify filtered audio list''',
+      test(
+          '''Set start == end video upload date and verify filtered audio list''',
           () {
         List<Audio> audioNotFilteredLst = playlistListVM
             .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
@@ -6729,8 +7054,7 @@ void main() {
         );
       });
     });
-    group(
-        '''By audio file size or duration filter tests
+    group('''By audio file size or duration filter tests
         test''', () {
       late AudioSortFilterService audioSortFilterService;
       late PlaylistListVM playlistListVM;
@@ -6983,8 +7307,7 @@ void main() {
       test('''Set start == end audio file size and verify filtered audio list.
               In this test, 2 files have those file size: 2373715 bytes and
               2370022 bytes. Setting start and end filter file size to 2.37 MB
-              returns those files.''',
-          () {
+              returns those files.''', () {
         List<Audio> audioNotFilteredLst = playlistListVM
             .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
           audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -7043,7 +7366,8 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
-      test('''Set start ==almost end audio file size and verify filtered audio list''',
+      test(
+          '''Set start ==almost end audio file size and verify filtered audio list''',
           () {
         List<Audio> audioNotFilteredLst = playlistListVM
             .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
@@ -7136,8 +7460,10 @@ void main() {
             AudioSortFilterParameters(
           selectedSortItemLst: selectedSortItemLstDownloadDateDesc,
           sentencesCombination: SentencesCombination.and,
-          durationStartRangeSec: DateTimeParser.parseHHMMDuration('0:07')!.inSeconds,
-          durationEndRangeSec: DateTimeParser.parseHHMMDuration('0:14')!.inSeconds,
+          durationStartRangeSec:
+              DateTimeParser.parseHHMMDuration('0:07')!.inSeconds,
+          durationEndRangeSec:
+              DateTimeParser.parseHHMMDuration('0:14')!.inSeconds,
         );
 
         List<String> expectedAudioFilteredLst = [
@@ -7197,7 +7523,8 @@ void main() {
             AudioSortFilterParameters(
           selectedSortItemLst: selectedSortItemLstDownloadDateDesc,
           sentencesCombination: SentencesCombination.and,
-          durationStartRangeSec: DateTimeParser.parseHHMMDuration('0:13')!.inSeconds,
+          durationStartRangeSec:
+              DateTimeParser.parseHHMMDuration('0:13')!.inSeconds,
         );
 
         List<String> expectedAudioFilteredLst = [
@@ -7258,7 +7585,8 @@ void main() {
             AudioSortFilterParameters(
           selectedSortItemLst: selectedSortItemLstDownloadDateDesc,
           sentencesCombination: SentencesCombination.and,
-          durationEndRangeSec: DateTimeParser.parseHHMMDuration('0:08')!.inSeconds,
+          durationEndRangeSec:
+              DateTimeParser.parseHHMMDuration('0:08')!.inSeconds,
         );
 
         List<String> expectedAudioFilteredLst = [
@@ -7288,8 +7616,7 @@ void main() {
       test('''Set start == end audio duration and verify filtered audio list.
            Since the audio duration contain are defined in hour, minute and seconds,
            trying to filter audio based on start hour minute == end hour minute
-           has no sence and an empty list is returned as result.''',
-          () {
+           has no sence and an empty list is returned as result.''', () {
         List<Audio> audioNotFilteredLst = playlistListVM
             .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
           audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -7321,12 +7648,13 @@ void main() {
             AudioSortFilterParameters(
           selectedSortItemLst: selectedSortItemLstDownloadDateDesc,
           sentencesCombination: SentencesCombination.and,
-          durationStartRangeSec: DateTimeParser.parseHHMMDuration('0:19')!.inSeconds,
-          durationEndRangeSec: DateTimeParser.parseHHMMDuration('0:19')!.inSeconds,
+          durationStartRangeSec:
+              DateTimeParser.parseHHMMDuration('0:19')!.inSeconds,
+          durationEndRangeSec:
+              DateTimeParser.parseHHMMDuration('0:19')!.inSeconds,
         );
 
-        List<String> expectedAudioFilteredLst = [
-        ];
+        List<String> expectedAudioFilteredLst = [];
 
         List<Audio> filteredByStartEndDownloadDate =
             audioSortFilterService.filterAndSortAudioLst(
