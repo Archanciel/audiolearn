@@ -420,6 +420,7 @@
   "imported": "imported",
   "audioImportedInfoDialogTitle": "Imported Audio Info",
   "audioTitleLabel": "Audio title",
+  "chapterAudioTitleLabel": "Audio chapter",
   "importedAudioDateTimeLabel": "Imported audio date time",
   "importedAudioUrlLabel": "Imported audio URL",
   "importedAudioDescriptionLabel": "Audio description",

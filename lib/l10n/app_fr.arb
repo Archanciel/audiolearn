@@ -406,6 +406,7 @@
   "imported": "importé",
   "audioImportedInfoDialogTitle": "Informations sur l'audio importé",
   "audioTitleLabel": "Titre audio",
+  "chapterAudioTitleLabel": "Chapitre audio",
   "importedAudioDateTimeLabel": "Date/heure import",
   "importedAudioUrlLabel": "URL audio importé",
   "importedAudioDescriptionLabel": "Description audio importé",
