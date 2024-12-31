@@ -1517,20 +1517,61 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      // calling getUpToDateSelectablePlaylists() loads all the
-      // playlist json files from the app dir and so enables
-      // playlistListVM to know which playlists are
-      // selected and which are not
-      playlistListVM.getUpToDateSelectablePlaylists();
+      const List<String> initialOrderedPlaylistTitles = [
+        "Empty",
+        "local",
+        "local_comment",
+        "local_delete_comment",
+        "S8 audio",
+      ];
 
+      const String initialPlaylistRootPath = kPlaylistDownloadRootPathWindowsTest;
       const String initialRootSelectedPlaylistTitle = 'S8 audio';
-      
-      expect(playlistListVM.getSelectedPlaylists()[0].title, initialRootSelectedPlaylistTitle);
 
+      // Verify the initial playlist data
+      _verifyPlaylistRelatedData(
+          settingsDataService: settingsDataService,
+          playlistListVM: playlistListVM,
+          playlistDownloadRootPath: initialPlaylistRootPath,
+          orderedPlaylistTitles: initialOrderedPlaylistTitles,
+          selectedPlaylistTitle: initialRootSelectedPlaylistTitle);
+
+      // Now, modify the playlist root path
       playlistListVM.updatePlaylistRootPathAndSavePlaylistTitleOrder(
-        actualPlaylistRootPath: kPlaylistDownloadRootPathWindowsTest,
+        actualPlaylistRootPath: initialPlaylistRootPath,
         modifiedPlaylistRootPath: modifiedPlaylistRootPath,
       );
+
+      const List<String> modifiedOrderedPlaylistTitles = [
+        "audio_learn_test_download_2_small_videos",
+        "audio_player_view_2_shorts_test",
+        "local_3",
+        "local_audio_playlist_2",
+      ];
+
+      const String modifiedRootSelectedPlaylistTitle = 'local_3';
+
+      // Verify the modified playlist data
+      _verifyPlaylistRelatedData(
+          settingsDataService: settingsDataService,
+          playlistListVM: playlistListVM,
+          playlistDownloadRootPath: modifiedPlaylistRootPath,
+          orderedPlaylistTitles: modifiedOrderedPlaylistTitles,
+          selectedPlaylistTitle: modifiedRootSelectedPlaylistTitle);
+
+      // Now, reset the playlist root path to the initial value
+      playlistListVM.updatePlaylistRootPathAndSavePlaylistTitleOrder(
+        actualPlaylistRootPath: modifiedPlaylistRootPath,
+        modifiedPlaylistRootPath: initialPlaylistRootPath,
+      );
+
+      // Verify the resetted initial playlist data
+      _verifyPlaylistRelatedData(
+          settingsDataService: settingsDataService,
+          playlistListVM: playlistListVM,
+          playlistDownloadRootPath: initialPlaylistRootPath,
+          orderedPlaylistTitles: initialOrderedPlaylistTitles,
+          selectedPlaylistTitle: initialRootSelectedPlaylistTitle);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -1539,6 +1580,45 @@ void main() {
       );
     });
   });
+}
+
+void _verifyPlaylistRelatedData({
+  required SettingsDataService settingsDataService,
+  required PlaylistListVM playlistListVM,
+  required String playlistDownloadRootPath,
+  required List<String> orderedPlaylistTitles,
+  required String selectedPlaylistTitle,
+}) {
+  // Verify the playlist root path
+  expect(
+    settingsDataService.get(
+      settingType: SettingType.dataLocation,
+      settingSubType: DataLocation.playlistRootPath,
+    ),
+    playlistDownloadRootPath,
+  );
+
+  // Verify the ordered playlist titles
+  expect(
+    settingsDataService.get(
+      settingType: SettingType.playlists,
+      settingSubType: Playlists.orderedTitleLst,
+    ),
+    orderedPlaylistTitles,
+  );
+
+  // calling getUpToDateSelectablePlaylists() loads all the
+  // playlist json files from the app dir and so enables
+  // playlistListVM to know which playlists are
+  // selected and which are not
+  playlistListVM.getUpToDateSelectablePlaylists();
+
+  // Verify the selected playlist title
+
+  expect(
+    playlistListVM.getSelectedPlaylists()[0].title,
+    selectedPlaylistTitle,
+  );
 }
 
 void _testGetPlaylistsUsingSortFilterParmsName(
