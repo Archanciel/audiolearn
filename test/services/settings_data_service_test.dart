@@ -23,17 +23,17 @@ void main() {
         directory.deleteSync(recursive: true);
       }
 
-      final SettingsDataService settings = SettingsDataService(
+      final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
       // load settings from file which does not exist. This
       // will ensure that the default playlist root path is set
-      await settings.loadSettingsFromFile(
+      await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName: 'not_exist/settings.json');
 
-      settings.addOrReplaceNamedAudioSortFilterParameters(
+      settingsDataService.addOrReplaceNamedAudioSortFilterParameters(
         audioSortFilterParametersName: 'Default',
         audioSortFilterParameters:
             AudioSortFilterParameters.createDefaultAudioSortFilterParameters(),
@@ -46,55 +46,55 @@ void main() {
         isAscending: true,
       ));
 
-      settings.addAudioSortFilterParametersToSearchHistory(
+      settingsDataService.addAudioSortFilterParametersToSearchHistory(
         audioSortFilterParameters: historicalAudioSortFilterParameters,
       );
 
       // Initial values
       expect(
-          settings.get(
+          settingsDataService.get(
               settingType: SettingType.appTheme,
               settingSubType: SettingType.appTheme),
           AppTheme.dark);
       expect(
-          settings.get(
+          settingsDataService.get(
               settingType: SettingType.language,
               settingSubType: SettingType.language),
           Language.english);
       expect(
-          settings.get(
+          settingsDataService.get(
               settingType: SettingType.playlists,
               settingSubType: Playlists.isMusicQualityByDefault),
           false);
       expect(
-          settings.get(
+          settingsDataService.get(
               settingType: SettingType.playlists,
               settingSubType: Playlists.playSpeed),
           kAudioDefaultPlaySpeed);
       expect(
-          settings.get(
+          settingsDataService.get(
               settingType: SettingType.playlists,
               settingSubType:
                   Playlists.arePlaylistsDisplayedInPlaylistDownloadView),
           false);
       expect(
-          settings.get(
+          settingsDataService.get(
               settingType: SettingType.dataLocation,
               settingSubType: DataLocation.appSettingsPath),
           "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio");
       expect(
-          settings.get(
+          settingsDataService.get(
               settingType: SettingType.dataLocation,
               settingSubType: DataLocation.playlistRootPath),
           "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio");
       expect(
-          settings.get(
+          settingsDataService.get(
               settingType: SettingType.formatOfDate,
               settingSubType: FormatOfDate.formatOfDate),
           "dd/MM/yyyy");
 
       AudioSortFilterParameters defaultAudioSortFilterParameters =
-          settings.namedAudioSortFilterParametersMap['Default']!;
+          settingsDataService.namedAudioSortFilterParametersMap['Default']!;
 
       expect(
           defaultAudioSortFilterParameters ==
@@ -103,7 +103,7 @@ void main() {
           true);
 
       AudioSortFilterParameters firstHistoricalAudioSortFilterParameters =
-          settings.searchHistoryAudioSortFilterParametersLst[0];
+          settingsDataService.searchHistoryAudioSortFilterParametersLst[0];
 
       expect(
           firstHistoricalAudioSortFilterParameters.filterSentenceLst
@@ -116,33 +116,33 @@ void main() {
           true);
 
       // Modify values
-      settings.set(
+      settingsDataService.set(
           settingType: SettingType.appTheme,
           settingSubType: SettingType.appTheme,
           value: AppTheme.light);
-      settings.set(
+      settingsDataService.set(
           settingType: SettingType.playlists,
           settingSubType: Playlists.isMusicQualityByDefault,
           value: true);
-      settings.set(
+      settingsDataService.set(
           settingType: SettingType.playlists,
           settingSubType: Playlists.playSpeed,
           value: 1.1);
-      settings.set(
+      settingsDataService.set(
           settingType: SettingType.playlists,
           settingSubType: Playlists.arePlaylistsDisplayedInPlaylistDownloadView,
           value: true);
-      settings.set(
+      settingsDataService.set(
           settingType: SettingType.dataLocation,
           settingSubType: DataLocation.appSettingsPath,
           value:
               "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\new_audio");
-      settings.set(
+      settingsDataService.set(
           settingType: SettingType.dataLocation,
           settingSubType: DataLocation.playlistRootPath,
           value:
               "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\new_audio\\playlists");
-      settings.set(
+      settingsDataService.set(
           settingType: SettingType.formatOfDate,
           settingSubType: FormatOfDate.formatOfDate,
           value: "MM/dd/yyyy");
@@ -153,7 +153,7 @@ void main() {
 
       final String testSettingsPathFileName =
           path.join(testSettingsDir, 'settings.json');
-      settings.saveSettingsToFile(
+      settingsDataService.saveSettingsToFile(
         jsonPathFileName: testSettingsPathFileName,
       );
 
@@ -240,17 +240,17 @@ void main() {
         directory.deleteSync(recursive: true);
       }
 
-      final SettingsDataService settings = SettingsDataService(
+      final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
       // load settings from file which does not exist. This
       // will ensure that the default playlist root path is set
-      await settings.loadSettingsFromFile(
+      await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName: 'test/settings.json');
 
-      settings.addOrReplaceNamedAudioSortFilterParameters(
+      settingsDataService.addOrReplaceNamedAudioSortFilterParameters(
         audioSortFilterParametersName: 'Default',
         audioSortFilterParameters:
             AudioSortFilterParameters.createDefaultAudioSortFilterParameters(),
@@ -258,7 +258,7 @@ void main() {
       AudioSortFilterParameters audioSortFilterParametersJancovici =
           AudioSortFilterParameters.createDefaultAudioSortFilterParameters();
       audioSortFilterParametersJancovici.filterSentenceLst.add("Jancovici");
-      settings.addOrReplaceNamedAudioSortFilterParameters(
+      settingsDataService.addOrReplaceNamedAudioSortFilterParameters(
         audioSortFilterParametersName: 'Jancovici',
         audioSortFilterParameters: audioSortFilterParametersJancovici,
       );
@@ -270,10 +270,10 @@ void main() {
         isAscending: true,
       ));
 
-      settings.addAudioSortFilterParametersToSearchHistory(
+      settingsDataService.addAudioSortFilterParametersToSearchHistory(
         audioSortFilterParameters: historicalAudioSortFilterParameters,
       );
-      settings.addAudioSortFilterParametersToSearchHistory(
+      settingsDataService.addAudioSortFilterParametersToSearchHistory(
         audioSortFilterParameters: audioSortFilterParametersJancovici,
       );
 
@@ -283,7 +283,7 @@ void main() {
 
       final String testSettingsPathFileName =
           path.join(testSettingsDir, 'settings.json');
-      settings.saveSettingsToFile(
+      settingsDataService.saveSettingsToFile(
         jsonPathFileName: testSettingsPathFileName,
       );
 
@@ -359,17 +359,17 @@ void main() {
       //   directory.deleteSync(recursive: true);
       // }
 
-      final SettingsDataService settings = SettingsDataService(
+      final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
       // load settings from file which does not exist. This
       // will ensure that the default playlist root path is set
-      await settings.loadSettingsFromFile(
+      await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName: 'test/settings.json');
 
-      settings.addOrReplaceNamedAudioSortFilterParameters(
+      settingsDataService.addOrReplaceNamedAudioSortFilterParameters(
         audioSortFilterParametersName: 'Default',
         audioSortFilterParameters:
             AudioSortFilterParameters.createDefaultAudioSortFilterParameters(),
@@ -377,14 +377,14 @@ void main() {
       AudioSortFilterParameters audioSortFilterParametersJancovici =
           AudioSortFilterParameters.createDefaultAudioSortFilterParameters();
       audioSortFilterParametersJancovici.filterSentenceLst.add("Jancovici");
-      settings.addOrReplaceNamedAudioSortFilterParameters(
+      settingsDataService.addOrReplaceNamedAudioSortFilterParameters(
         audioSortFilterParametersName: 'Jancovici',
         audioSortFilterParameters: audioSortFilterParametersJancovici,
       );
       AudioSortFilterParameters audioSortFilterParametersBarrau =
           AudioSortFilterParameters.createDefaultAudioSortFilterParameters();
       audioSortFilterParametersBarrau.filterSentenceLst.add("Barrau");
-      settings.addOrReplaceNamedAudioSortFilterParameters(
+      settingsDataService.addOrReplaceNamedAudioSortFilterParameters(
         audioSortFilterParametersName: 'Barrau',
         audioSortFilterParameters: audioSortFilterParametersBarrau,
       );
@@ -396,13 +396,13 @@ void main() {
         isAscending: true,
       ));
 
-      settings.addAudioSortFilterParametersToSearchHistory(
+      settingsDataService.addAudioSortFilterParametersToSearchHistory(
         audioSortFilterParameters: historicalAudioSortFilterParameters,
       );
-      settings.addAudioSortFilterParametersToSearchHistory(
+      settingsDataService.addAudioSortFilterParametersToSearchHistory(
         audioSortFilterParameters: audioSortFilterParametersJancovici,
       );
-      settings.addAudioSortFilterParametersToSearchHistory(
+      settingsDataService.addAudioSortFilterParametersToSearchHistory(
         audioSortFilterParameters: audioSortFilterParametersBarrau,
       );
 
@@ -412,7 +412,7 @@ void main() {
 
       final String testSettingsPathFileName =
           path.join(testSettingsDir, 'settings.json');
-      settings.saveSettingsToFile(
+      settingsDataService.saveSettingsToFile(
         jsonPathFileName: testSettingsPathFileName,
       );
 
@@ -509,7 +509,7 @@ void main() {
         directory.deleteSync(recursive: true);
       }
 
-      final SettingsDataService settings = SettingsDataService(
+      final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
@@ -520,7 +520,7 @@ void main() {
 
       final String testSettingsPathFileName =
           path.join(testSettingsDir, 'settings.json');
-      settings.saveSettingsToFile(
+      settingsDataService.saveSettingsToFile(
         jsonPathFileName: testSettingsPathFileName,
       );
 
@@ -567,21 +567,21 @@ void main() {
       await DirUtil.createDirIfNotExist(pathStr: initialPlaylistRootPath);
       await DirUtil.createDirIfNotExist(pathStr: modifiedPlaylistRootPath);
 
-      final SettingsDataService settings = SettingsDataService(
+      final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
       // load settings from file which does not exist. This
       // will ensure that the default playlist root path is set
-      await settings.loadSettingsFromFile(
+      await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName: 'not_exist/settings.json');
 
       final String testSettingsPathFileName =
           path.join(kPlaylistDownloadRootPathWindowsTest, 'settings.json');
 
       // Setting the playlist root path to the initial playlist root path
-      settings.set(
+      settingsDataService.set(
         settingType: SettingType.dataLocation,
         settingSubType: DataLocation.playlistRootPath,
         value: initialPlaylistRootPath,
@@ -593,19 +593,19 @@ void main() {
         'playlist3',
       ];
 
-      settings.updatePlaylistOrderAndSaveSettings(
+      settingsDataService.updatePlaylistOrderAndSaveSettings(
         playlistOrder: initialPlaylistOrder,
       );
 
       // Now change the playlist root path, but first save the playlist
       // order so that it can be restored after changing the playlist
       // root path
-      settings.savePlaylistTitleOrder(
+      settingsDataService.savePlaylistTitleOrder(
         directory: initialPlaylistRootPath,
       );
 
       // Change the playlist root path
-      settings.set(
+      settingsDataService.set(
         settingType: SettingType.dataLocation,
         settingSubType: DataLocation.playlistRootPath,
         value: modifiedPlaylistRootPath,
@@ -618,13 +618,13 @@ void main() {
       ];
 
       // Updating the playlist order list and saving the settings.
-      settings.updatePlaylistOrderAndSaveSettings(
+      settingsDataService.updatePlaylistOrderAndSaveSettings(
         playlistOrder: modifiedPlaylistOrder,
       );
 
       // Check that the playlist order list has been updated
       expect(
-        settings.get(
+        settingsDataService.get(
           settingType: SettingType.playlists,
           settingSubType: Playlists.orderedTitleLst,
         ),
@@ -649,14 +649,14 @@ void main() {
         modifiedPlaylistOrder,
       );
 
-      settings.restorePlaylistTitleOrderIfExistAndSaveSettings(
+      settingsDataService.restorePlaylistTitleOrderIfExistAndSaveSettings(
         directoryContainingPreviouslySavedPlaylistTitleOrder:
             initialPlaylistRootPath,
       );
 
       // Check that the playlist order list has been restored
       expect(
-        settings.get(
+        settingsDataService.get(
           settingType: SettingType.playlists,
           settingSubType: Playlists.orderedTitleLst,
         ),
@@ -705,21 +705,21 @@ void main() {
       await DirUtil.createDirIfNotExist(pathStr: initialPlaylistRootPath);
       await DirUtil.createDirIfNotExist(pathStr: modifiedPlaylistRootPath);
 
-      final SettingsDataService settings = SettingsDataService(
+      final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
       // load settings from file which does not exist. This
       // will ensure that the default playlist root path is set
-      await settings.loadSettingsFromFile(
+      await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName: 'not_exist/settings.json');
 
       final String testSettingsPathFileName =
           path.join(kPlaylistDownloadRootPathWindowsTest, 'settings.json');
 
       // Setting the playlist root path to the initial playlist root path
-      settings.set(
+      settingsDataService.set(
         settingType: SettingType.dataLocation,
         settingSubType: DataLocation.playlistRootPath,
         value: initialPlaylistRootPath,
@@ -731,19 +731,19 @@ void main() {
         'playlist3',
       ];
 
-      settings.updatePlaylistOrderAndSaveSettings(
+      settingsDataService.updatePlaylistOrderAndSaveSettings(
         playlistOrder: initialPlaylistOrder,
       );
 
       // Now change the playlist root path, but first save the playlist
       // order so that it can be restored after changing the playlist
       // root path
-      settings.savePlaylistTitleOrder(
+      settingsDataService.savePlaylistTitleOrder(
         directory: initialPlaylistRootPath,
       );
 
       // Change the playlist root path
-      settings.set(
+      settingsDataService.set(
         settingType: SettingType.dataLocation,
         settingSubType: DataLocation.playlistRootPath,
         value: modifiedPlaylistRootPath,
@@ -756,13 +756,13 @@ void main() {
       ];
 
       // Updating the playlist order list and saving the settings.
-      settings.updatePlaylistOrderAndSaveSettings(
+      settingsDataService.updatePlaylistOrderAndSaveSettings(
         playlistOrder: modifiedPlaylistOrder,
       );
 
       // Check that the playlist order list has been updated
       expect(
-        settings.get(
+        settingsDataService.get(
           settingType: SettingType.playlists,
           settingSubType: Playlists.orderedTitleLst,
         ),
@@ -787,18 +787,21 @@ void main() {
         modifiedPlaylistOrder,
       );
 
+      // Deleting the playlist order file in the initial playlist
+      // root path and verifying that it can not be restored
+
       DirUtil.deleteFileIfExist(
           pathFileName:
               '$initialPlaylistRootPath${path.separator}$kOrderedPlaylistTitlesFileName');
 
-      settings.restorePlaylistTitleOrderIfExistAndSaveSettings(
+      settingsDataService.restorePlaylistTitleOrderIfExistAndSaveSettings(
         directoryContainingPreviouslySavedPlaylistTitleOrder:
             initialPlaylistRootPath,
       );
 
       // Check that the playlist order list has NOT been restored
       expect(
-        settings.get(
+        settingsDataService.get(
           settingType: SettingType.playlists,
           settingSubType: Playlists.orderedTitleLst,
         ),
