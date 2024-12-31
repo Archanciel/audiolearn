@@ -158,13 +158,21 @@ class PlaylistListVM extends ChangeNotifier {
     return listOfSelectablePlaylistsCopy;
   }
 
-  /// Method called when the user choose the "Update playlist
-  /// JSON files" menu item. The method is also executed when
-  /// the user modifies the application settings through the
-  /// ApplicationSettingsWidget opened by clicking on the
+  /// Method called when the user choose the "Update playlist JSON files" menu
+  /// item. The method is also executed when the user modifies the application
+  /// settings through the ApplicationSettingsWidget opened by clicking on the
   /// Application settings menu item.
-  void updateSettingsAndPlaylistJsonFiles() {
-    _audioDownloadVM.updatePlaylistJsonFiles();
+  /// 
+  /// When the user changes the "Update playlist JSON files", the added playlists
+  /// are unselected by default.
+  /// 
+  /// Whenthe user modifies the application settings, unselecting added playlist
+  /// is not adequate.
+  void updateSettingsAndPlaylistJsonFiles({
+    bool unselectAddedPlaylist = true,
+  }) {
+    _audioDownloadVM.updatePlaylistJsonFiles(
+        unselectAddedPlaylist: unselectAddedPlaylist);
 
     List<Playlist> updatedListOfPlaylist = _audioDownloadVM.listOfPlaylist;
 
@@ -2356,7 +2364,9 @@ class PlaylistListVM extends ChangeNotifier {
 
     // Since the playlists root path was changed, the playlists managed
     // by the application must be updated
-    updateSettingsAndPlaylistJsonFiles();
+    updateSettingsAndPlaylistJsonFiles(
+      unselectAddedPlaylist: false,
+    );
 
     _settingsDataService.restorePlaylistTitleOrderIfExistAndSaveSettings(
       directoryContainingPreviouslySavedPlaylistTitleOrder:

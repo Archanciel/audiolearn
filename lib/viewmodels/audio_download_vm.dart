@@ -1643,7 +1643,9 @@ class AudioDownloadVM extends ChangeNotifier {
 
   /// Method called by PlaylistListVM when the user selects the update
   /// playlist JSON files menu item.
-  void updatePlaylistJsonFiles() {
+  void updatePlaylistJsonFiles({
+    bool unselectAddedPlaylist = true,
+  }) {
     // Loading again the list of playlists since the list of playlists
     // existing in the application playlist directory may have been
     // manually modified: playlist(s) suppression or playlist(s) addition.
@@ -1658,12 +1660,14 @@ class AudioDownloadVM extends ChangeNotifier {
         ) ??
         [];
 
-    // Ensure that the playlist(s) added to the application directory are
-    // not selected. Otherwise, more than one playlist may be selected
-    // after updating the available list of playlists.
-    for (Playlist playlist in _listOfPlaylist) {
-      if (!orderedPlaylistTitleLst.contains(playlist.title)) {
-        playlist.isSelected = false;
+    if (unselectAddedPlaylist) {
+      // Ensure that the playlist(s) added to the application directory are
+      // not selected. Otherwise, more than one playlist may be selected
+      // after updating the available list of playlists.
+      for (Playlist playlist in _listOfPlaylist) {
+        if (!orderedPlaylistTitleLst.contains(playlist.title)) {
+          playlist.isSelected = false;
+        }
       }
     }
 
