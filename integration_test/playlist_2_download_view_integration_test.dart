@@ -9895,6 +9895,296 @@ void main() {
       );
     });
   });
+  group('App settings dialog test', () {
+    testWidgets(
+        'Bug fix: open app settings dialog and save it without modification.',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}app_settings_set_play_speed",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      final Map initialSettingsMap = loadSettingsMap();
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+      await app.main(['test']);
+      await tester.pumpAndSettle();
+
+      // Tap the appbar leading popup menu button
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+      await tester.pumpAndSettle();
+
+      // Now open the app settings dialog
+      await tester.tap(find.byKey(const Key('appBarMenuOpenSettingsDialog')));
+      await tester.pumpAndSettle();
+
+      // And tap on save button
+      await tester.tap(find.byKey(const Key('saveButton')));
+      await tester.pumpAndSettle();
+
+      // Ensure settings json file has not been modified
+      expect(
+        initialSettingsMap,
+        loadSettingsMap(),
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Modify playlist root path and then reset it to the initial value. Verify
+        that the playlist sort order was reset to the initial sort order. Then,
+        remodify the path to the previously modified value and verify that the
+        playlist sort order was reset to the new order.''',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_test",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+      await app.main(['test']);
+      await tester.pumpAndSettle();
+
+      // Create a new directory containing playlists to which the playlist
+      // root path will be modified
+
+      String modifiedPlaylistRootPath =
+          '$kPlaylistDownloadRootPathWindowsTest${path.separator}newPlaylistRootDirectory';
+
+      DirUtil.createDirIfNotExistSync(
+        pathStr: modifiedPlaylistRootPath,
+      );
+
+      // Fill the new directory with playlists
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}2_youtube_2_local_playlists_integr_test_data",
+        destinationRootPath: modifiedPlaylistRootPath,
+      );
+
+      // Tap the 'Toggle List' button to show the list of playlists in the
+      // initial playlist root directory.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Obtains all the ListTile widgets present in the playlist
+      // download view
+      final Finder lisTilesFinder = find.byType(ListTile);
+
+      // Verify the playlist titles and the audio titles of the selected
+      // playlist
+
+      // S8 playlist title
+      Finder playlistTitleTextFinder = find.descendant(
+        of: lisTilesFinder.at(0),
+        matching: find.byType(Text),
+      );
+      expect(tester.widget<Text>(playlistTitleTextFinder).data, 'S8 audio');
+
+      // local playlist title
+      playlistTitleTextFinder = find.descendant(
+        of: lisTilesFinder.at(1),
+        matching: find.byType(Text),
+      );
+      expect(tester.widget<Text>(playlistTitleTextFinder).data, 'local');
+
+      // first audio of S8 audio playlist
+      playlistTitleTextFinder = find.descendant(
+        of: lisTilesFinder.at(2),
+        matching: find.byType(Text),
+      );
+      expect(
+        // 2 Text widgets exist in audio ListTile: the title and sub title
+        tester.widget<Text>(playlistTitleTextFinder.at(0)).data,
+        "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+      );
+
+      // second audio of S8 audio playlist
+      playlistTitleTextFinder = find.descendant(
+        of: lisTilesFinder.at(3),
+        matching: find.byType(Text),
+      );
+      expect(
+        // 2 Text widgets exist in audio ListTile: the title and sub title
+        tester.widget<Text>(playlistTitleTextFinder.at(0)).data,
+        "La surpopulation mondiale par Jancovici et Barrau",
+      );
+
+      // Tap the appbar leading popup menu button
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+      await tester.pumpAndSettle();
+
+      // Now open the app settings dialog
+      await tester.tap(find.byKey(const Key('appBarMenuOpenSettingsDialog')));
+      await tester.pumpAndSettle();
+
+      // Enter existing dir path
+
+      // Find the TextField using the Key
+      final Finder textFieldFinder =
+          find.byKey(const Key('playlistsRootPathText'));
+
+      // Retrieve the TextField widget
+      final TextField textField = tester.widget<TextField>(textFieldFinder);
+
+      // Obtain the current text value of the text field
+      String text = textField.controller!.text;
+
+      // Now enter the text in the text field
+      await tester.enterText(
+        textFieldFinder,
+        '$text${path.separator}new',
+      );
+
+      await tester.pumpAndSettle();
+
+      // And tap on save button
+      await tester.tap(find.byKey(const Key('saveButton')));
+      await tester.pumpAndSettle();
+
+      // Ensure settings json file has been modified
+      String expSettings =
+          "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.orderedTitleLst\":\"[Youtube_test]\",\"Playlists.playSpeed\":\"1.25\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\Users\\\\Jean-Pierre\\\\Development\\\\Flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\Users\\\\Jean-Pierre\\\\Development\\\\Flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\new\"},\"SettingType.formatOfDate\":{\"FormatOfDate.formatOfDate\":\"dd/MM/yyyy\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInYoutubeChannelName\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":false,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"filterCommented\":true,\"filterNotCommented\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}";
+      expect(
+        File("$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName")
+            .readAsStringSync(),
+        expSettings,
+      );
+      // Find the Youtube playlist to select
+
+      // First, find the Playlist ListTile Text widget
+      final Finder localPlaylistToSelectListTileTextWidgetFinder =
+          find.text('Youtube_test');
+
+      // Then obtain the Playlist ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      final Finder localPlaylistToSelectListTileWidgetFinder = find.ancestor(
+        of: localPlaylistToSelectListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the Checkbox widget located in the Playlist ListTile
+      // and tap on it to select the playlist
+      final Finder localPlaylistToSelectListTileCheckboxWidgetFinder =
+          find.descendant(
+        of: localPlaylistToSelectListTileWidgetFinder,
+        matching: find.byType(Checkbox),
+      );
+
+      // Tap the ListTile Playlist checkbox to select it
+      await tester.tap(localPlaylistToSelectListTileCheckboxWidgetFinder);
+      await tester.pumpAndSettle();
+
+      const String alreadyCommentedAudioTitle =
+          "5 minutes d'éco-anxiété pour se motiver à bouger (Ringenbach, Janco, Barrau, Servigne)";
+
+      // Then, get the ListTile Text widget finder of the already commented
+      // audio and tap on it to open the AudioPlayerView
+      final Finder alreadyCommentedAudioFinder =
+          find.text(alreadyCommentedAudioTitle);
+      await tester.tap(alreadyCommentedAudioFinder);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
+
+      // Tap on the comment icon button to open the comment add list
+      // dialog
+      final Finder commentInkWellButtonFinder = find.byKey(
+        const Key('commentsInkWellButton'),
+      );
+
+      await tester.tap(commentInkWellButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Find the comment list add dialog widget
+      final Finder commentListDialogFinder = find.byType(CommentListAddDialog);
+
+      // Find the list body containing the comments
+      final Finder listFinder = find.descendant(
+          of: commentListDialogFinder, matching: find.byType(ListBody));
+
+      // Find all the list items
+      final Finder itemsFinder = find.descendant(
+          // 3 GestureDetector per comment item
+          of: listFinder,
+          matching: find.byType(GestureDetector));
+
+      // Unique comment index
+      int uniqueCommentFinderIndex = 0;
+
+      final Finder playIconButtonFinder = find.descendant(
+        of: itemsFinder.at(uniqueCommentFinderIndex),
+        matching: find.byKey(const Key('playPauseIconButton')),
+      );
+
+      // Tap on the play/pause icon button to play the audio from the
+      // comment start position
+      await tester.tap(playIconButtonFinder);
+      await tester.pumpAndSettle();
+
+      await Future.delayed(const Duration(milliseconds: 2000));
+      await tester.pumpAndSettle();
+
+      // Tap on the play/pause icon button to pause the audio
+      await tester.tap(playIconButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Tap on the Close button to close the comment list add dialog
+      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+      await tester.pumpAndSettle();
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    // group('App settings set speed test', () {});
+  });
   testWidgets(
       '''Click on 0 play speed audio, ensuring that its play speed is corrected
          to the app default playlist play speed defined in the app settings.json
