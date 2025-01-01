@@ -9,6 +9,7 @@ import 'package:audiolearn/views/widgets/playlist_comment_list_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
+import 'package:intl/intl.dart';
 import 'package:path/path.dart' as path;
 import 'package:audiolearn/main.dart' as app;
 
@@ -3230,7 +3231,7 @@ void main() {
         playlistLastDownloadDateTime: "07/01/2024 16:36",
         commentCreationDate: '12/10/2024',
         commentUpdateDate: '01/11/2024',
-        datePickerDateStr: '${now.day}/${now.month}/${now.year}',
+        datePickerDateStr: DateFormat('dd/MM/yyyy').format(now),
       );
 
       await _selectDateFormat(
@@ -3294,7 +3295,7 @@ void main() {
         playlistLastDownloadDateTime: "01/07/2024 16:36",
         commentCreationDate: '10/12/2024',
         commentUpdateDate: '11/01/2024',
-        datePickerDateStr: '${now.month}/${now.day}/${now.year}',
+        datePickerDateStr: DateFormat('MM/dd/yyyy').format(now),
       );
 
       await _selectDateFormat(
@@ -3358,7 +3359,7 @@ void main() {
         playlistLastDownloadDateTime: "2024/01/07 16:36",
         commentCreationDate: '2024/10/12',
         commentUpdateDate: '2024/11/01',
-        datePickerDateStr: '${now.year}/${now.month}/${now.day}',
+        datePickerDateStr: DateFormat('yyyy/MM/dd').format(now),
       );
 
       await _selectDateFormat(
@@ -3422,7 +3423,7 @@ void main() {
         playlistLastDownloadDateTime: "07/01/2024 16:36",
         commentCreationDate: '12/10/2024',
         commentUpdateDate: '01/11/2024',
-        datePickerDateStr: '${now.day}/${now.month}/${now.year}',
+        datePickerDateStr: DateFormat('dd/MM/yyyy').format(now),
       );
 
       await _selectDateFormat(
@@ -3515,7 +3516,7 @@ void main() {
         playlistLastDownloadDateTime: "01/07/2024 16:36",
         commentCreationDate: '10/12/2024',
         commentUpdateDate: '11/01/2024',
-        datePickerDateStr: '${now.month}/${now.day}/${now.year}',
+        datePickerDateStr: DateFormat('MM/dd/yyyy').format(now),
       );
 
       await _selectDateFormat(
@@ -3607,7 +3608,7 @@ void main() {
         playlistLastDownloadDateTime: "2024/01/07 16:36",
         commentCreationDate: '2024/10/12',
         commentUpdateDate: '2024/11/01',
-        datePickerDateStr: '${now.year}/${now.month}/${now.day}',
+        datePickerDateStr: DateFormat('yyyy/MM/dd').format(now),
       );
 
       await _selectDateFormat(
@@ -3699,7 +3700,7 @@ void main() {
         playlistLastDownloadDateTime: "07/01/2024 16:36",
         commentCreationDate: '12/10/2024',
         commentUpdateDate: '01/11/2024',
-        datePickerDateStr: '${now.day}/${now.month}/${now.year}',
+        datePickerDateStr: DateFormat('dd/MM/yyyy').format(now),
       );
 
       // Purge the test playlist directory so that the created test
@@ -10585,13 +10586,13 @@ Future<void> _selectApplyAndVerifySortFilterParms({
   await tester.tap(dropDownButtonTextFinder);
   await tester.pumpAndSettle();
 
-  // And select the 'audio downl dur' sort/filter item
+  // And select the sortFilterParms sort/filter item
   final Finder titleAscDropDownTextFinder = find.text(sortFilterParms);
   await tester.tap(titleAscDropDownTextFinder);
   await tester.pumpAndSettle();
 
   // Verify the audio sub-titles order in the list tile which correspond
-  // to the audio download duration sort order selected parms
+  // to the sortFilterParms sort order selected parms
   IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
     tester: tester,
     audioSubTitlesOrderLst: audioSubTitles,

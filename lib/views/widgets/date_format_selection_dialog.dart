@@ -10,12 +10,6 @@ import '../../services/settings_data_service.dart';
 import '../../viewmodels/date_format_vm.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 
-enum PlaylistOneSelectableDialogUsedFor {
-  downloadSingleVideoAudio,
-  moveAudioToPlaylist,
-  copyAudioToPlaylist,
-}
-
 /// This dialog is used to select a date format applied in the entire application.
 /// The selected date format is saved in the application settings. The proposed
 /// date formats are 'dd/MM/yyyy', 'MM/dd/yyyy' and 'yyyy-MM-dd'.
@@ -54,7 +48,7 @@ class _DateFormatSelectionDialogState extends State<DateFormatSelectionDialog>
 
       // It makes sense to display the date format after the current
       // formatted date. This is useful if the current date day is
-      //  equal to the current date month (e.g. 01/01/2024 !.
+      // equal to the current date month (e.g. 01/01/2024 !.
       _nowDateFormatList = [
         '${DateFormat(DateFormatVM.dateFormatLst[0]).format(now)}\n(${DateFormatVM.dateFormatLowCaseLst[0]})',
         '${DateFormat(DateFormatVM.dateFormatLst[1]).format(now)}\n(${DateFormatVM.dateFormatLowCaseLst[1]})',
