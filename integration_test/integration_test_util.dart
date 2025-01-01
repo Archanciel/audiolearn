@@ -907,7 +907,7 @@ class IntegrationTestUtil {
 
       expect(
         // 2 Text widgets exist in audio ListTile: the title and sub title
-        tester.widget<Text>(playlistTitleTextFinder.at(1)).data,
+        tester.widget<Text>(playlistTitleTextFinder.last).data,
         subTitle,
       );
     }
