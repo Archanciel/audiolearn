@@ -45,6 +45,11 @@ const int sortDescending = -1;
 /// The instances of this class contain the sort function and the sort order
 /// for a specific sorting option. The sort function is used to extract the
 /// value to sort on from T instance, currently only Audio instance.
+/// 
+/// main() contains an example of how to use this class to sort a list of strings.
+/// The list is sorted by chapter number or by title. The chapter number is
+/// extracted from the string using a regular expression. The sort is done in
+/// ascending order.
 class SortCriteria<T> {
   final Comparable Function(T) selectorFunction;
   int sortOrder;
@@ -113,7 +118,7 @@ class SortingItem {
 
 /// This class contains a Map of SortCriteria keyed by SortingOption. The
 /// SortCriteria contains the function used to compute the audio sort order
-/// as well as an ascending or descending sort order modification.The class
+/// as well as an ascending or descending sort order parameter. The class
 /// also contains the default SortingItem definition and a method to create
 /// a default AudioSortFilterParameters instance.
 class AudioSortFilterParameters {
@@ -132,9 +137,8 @@ class AudioSortFilterParameters {
       sortOrder: sortDescending,
     ),
     SortingOption.validAudioTitle: SortCriteria<Audio>(
-
       selectorFunction: (Audio audio) {
-      //   final regex = RegExp(r'(\d+)_\d+');
+        //   final regex = RegExp(r'(\d+)_\d+');
 
         String validVideoTitleLow = audio.validVideoTitle.toLowerCase();
 
@@ -150,7 +154,6 @@ class AudioSortFilterParameters {
       sortOrder: sortAscending,
     ),
     SortingOption.chapterAudioTitle: SortCriteria<Audio>(
-
       selectorFunction: (Audio audio) {
         final regex = RegExp(r'(\d+)_\d+');
 
@@ -163,6 +166,7 @@ class AudioSortFilterParameters {
 
           return firstMatchInt;
         }
+
         return validVideoTitleLow;
       },
       sortOrder: sortAscending,
@@ -300,8 +304,7 @@ class AudioSortFilterParameters {
       selectedSortItemLst: (json['selectedSortItemLst'] as List)
           .map((e) => SortingItem.fromJson(e))
           .toList(),
-      filterSentenceLst:
-          (json['filterSentenceLst'] as List).cast<String>(),
+      filterSentenceLst: (json['filterSentenceLst'] as List).cast<String>(),
       sentencesCombination:
           SentencesCombination.values[json['sentencesCombination']],
       ignoreCase: json['ignoreCase'],
@@ -464,4 +467,190 @@ class AudioSortFilterParameters {
       sentencesCombination: SentencesCombination.and,
     );
   }
+}
+
+// https://chat.openai.com/share/4e661b29-3cd0-41eb-9a66-2fbb0cdb7a7f
+
+void main() {
+  const int ascending = 1;
+  // const int descending = -1;
+
+  List<String> titles = [
+    "La foi contre la peur (1_2 - Joyce Meyer -  Avoir des relations saines",
+    "La foi contre la peur (2_2 - Joyce Meyer -  Avoir des relations saines",
+    "Il est temps d'être sérieux avec Dieu ! (2_2 - Joyce Meyer - Grandir avec Dieu",
+    "Il est temps d'être sérieux avec Dieu ! (1_2 - Joyce Meyer - Grandir avec Dieu",
+    "Laisser Dieu au contrôle - Joyce Meyer - Grandir avec Dieu",
+    "VOICI COMMENT ÊTRE GUIDÉ PAR LE SAINT ESPRIT _ JOYCE MEYER",
+    "Communiquer avec Dieu (1_2 - Joyce Meyer - Grandir avec Dieu",
+    "Communiquer avec Dieu (2_2 - Joyce Meyer - Grandir avec Dieu",
+  ];
+
+  List<String> audioChapters = [
+    "Audio Et l'Univers disparaitra 1_37 - Avant - propos de l'éditeur américain.mp3",
+    "Audio Et l'Univers disparaitra 2_37 - Note et remerciements de l'auteur.mp3",
+    "Audio Et l'Univers disparaitra de Gary Renard 3_37 - Partie 1 chapitre 1.mp3",
+    "Audio Et l'Univers disparaitra de Gary Renard 4_37 - chapitre 2-1.mp3",
+    "Audio Et l'Univers disparaitra de Gary Renard 5_37 - chapitre 2 - 2.mp3",
+    "Audio Et l'Univers disparaitra de Gary Renard 6_37 - chapitre 2 - 3.mp3",
+    "Audio Et l'Univers disparaitra de Gary Renard 7_37 - chapitre 2 - 4.mp3",
+    "Audio Et l'Univers disparaitra de Gary Renard 8_37 - chapitre 2 - 5.mp3",
+    "Audio Et l'Univers disparaitra de Gary Renard 9_37 - chapitre 2 - 6.mp3",
+    "Audio Et l'Univers disparaitra de Gary Renard 10_37 - chapitre 3 - 1.mp3",
+    "Audio Et l'Univers disparaitra de Gary Renard 11_37 - chapitre 3 - 2.mp3",
+    "Audio Et l'Univers disparaitra de Gary Renard 12_37 - chapitre 3 - 3.mp3",
+    "Audio Et l'Univers disparaitra de Gary Renard 13_37 - chapitre 4 - 1.mp3",
+    "Audio Et l'Univers disparaitra de Gary Renard 14_37 - chapitre 4 - 2.mp3",
+    "Audio Et l'Univers disparaitra de Gary Renard 15_37 - chapitre 4 - 3.mp3",
+    "Audio Et l'Univers disparaitra de Gary Renard 16_37 - Chapitre 5 - 1.mp3",
+    "Audio Et l'Univers disparaitra de Gary Renard 17_37 - chapitre 5 - 2.mp3",
+    "Audio Et l'Univers disparaitra de Gary Renard 18_37 - chapitre 5 - 3.mp3",
+    "Audio Et l'Univers disparaitra de Gary Renard 19_37 - chapitre 5 - 4.mp3",
+    "Audio Et l'Univers disparaitra de Gary Renard 20_37 - chapitre 5 - 5.mp3",
+    "Audio Et l'Univers disparaitra de Gary Renard 21_37 - Partie 2 chapitre 6 - 1.mp3",
+    "Audio Et l'Univers disparaitra de Gary Renard 22_37 - chapitre 6 - 2.mp3",
+    "Audio Et l'Univers disparaitra de Gary Renard 23_37 - chapitre 7 - 1.mp3",
+    "Audio Et l'Univers disparaitra de Gary Renard 24_37 - chapitre 7 - 2.mp3",
+    "Audio Et l'Univers disparaitra de Gary Renard 25_37 - chapitre 7 - 3.mp3",
+    "Audio Et l'Univers disparaitra de Gary Renard 26_37 - chapitre 8.mp3",
+    "Audio Et l'Univers disparaitra de Gary Renard 27_37 - chapitre 9 - 1.mp3",
+    "Audio Et l'Univers disparaitra de Gary Renard 28_37 - chapitre 9 - 2.mp3",
+    "Audio Et l'Univers disparaitra de Gary Renard 29_37 - chapitre 10.mp3",
+    "Audio Et l'Univers disparaitra de Gary Renard 30_37 - chapitre 11 - 1.mp3",
+    "Audio Et l'Univers disparaitra de Gary Renard 31_37 - chapitre 11 - 2.mp3",
+    "Audio Et l'Univers disparaitra de Gary Renard 32_37 - chapitre 12.mp3",
+    "Audio Et l'Univers disparaitra de Gary Renard 33_37 - chapitre 13.mp3",
+    "Audio Et l'Univers disparaitra de Gary Renard 34_37 - chapitre 14.mp3",
+    "Audio Et l'Univers disparaitra de Gary Renard 35_37 - chapitre 15.mp3",
+    "Audio Et l'Univers disparaitra de Gary Renard 36_37 - chapitre 16.mp3",
+    "Audio Et l'Univers disparaitra de Gary Renard 37_37 - chapitre 17.mp3",
+  ];
+
+  print('\nTitles list');
+
+  for (String title in titles) {
+    print(title);
+  }
+
+  SortCriteria<String> chapterSortCriteria = SortCriteria<String>(
+    selectorFunction: (String str) {
+      final regex = RegExp(r'(\d+)_\d+');
+
+      String strLow = str.toLowerCase();
+
+      RegExpMatch? firstMatch = regex.firstMatch(strLow);
+
+      if (firstMatch != null) {
+        int firstMatchInt = int.parse(firstMatch.group(1)!);
+
+        return firstMatchInt;
+      }
+      return strLow;
+    },
+    sortOrder: ascending,
+  );
+
+  List<dynamic> sortedChapters = sortChaptersByChapterCriteria(
+    titles: titles,
+    sortCriteria: chapterSortCriteria,
+  );
+
+  print('\nList sorted by chapter criteria ascending. BAD SORT !');
+
+  for (String chapter in sortedChapters) {
+    print(chapter);
+  }
+
+  SortCriteria<String> titleSortCriteria = SortCriteria<String>(
+    selectorFunction: (String str) {
+      return str.toLowerCase();
+    },
+    sortOrder: ascending,
+  );
+
+  List<dynamic> sortedTitles = sortTitlesByTitleCriteria(
+    titles: titles,
+    sortCriteria: titleSortCriteria,
+  );
+
+  print('\nList sorted by title criteria ascending. GOOD SORT !');
+
+  for (String title in sortedTitles) {
+    print(title);
+  }
+
+  print('\nTitles list');
+
+  for (String title in audioChapters) {
+    print(title);
+  }
+
+  sortedChapters = sortChaptersByChapterCriteria(
+    titles: audioChapters,
+    sortCriteria: chapterSortCriteria,
+  );
+
+  print('\nList sorted by chapter criteria ascending. GOOD SORT !');
+
+  for (String chapter in sortedChapters) {
+    print(chapter);
+  }
+
+  sortedTitles = sortTitlesByTitleCriteria(
+    titles: audioChapters,
+    sortCriteria: titleSortCriteria,
+  );
+
+  print('\nList sorted by title criteria ascending. BAD SORT !');
+
+  for (String title in sortedTitles) {
+    print(title);
+  }
+}
+
+List<String> sortChaptersByChapterCriteria({
+  required List<String> titles,
+  required SortCriteria<String> sortCriteria,
+}) {
+  List<String> titlesLstCopy = List<String>.from(titles);
+
+  titlesLstCopy.sort((a, b) {
+    dynamic comparableA = sortCriteria.selectorFunction(a);
+    dynamic comparableB = sortCriteria.selectorFunction(b);
+    int comparison;
+
+    if (comparableA.runtimeType == comparableB.runtimeType) {
+      // sortOrder is 1 for ascending and -1 for descending
+      comparison = comparableA.compareTo(comparableB) * sortCriteria.sortOrder;
+    } else {
+      comparison = a.compareTo(b) * sortCriteria.sortOrder;
+    }
+
+    if (comparison != 0) {
+      return comparison;
+    }
+
+    return 0;
+  });
+
+  return titlesLstCopy;
+}
+
+List<String> sortTitlesByTitleCriteria({
+  required List<String> titles,
+  required SortCriteria<String> sortCriteria,
+}) {
+  List<String> titlesLstCopy = List<String>.from(titles);
+
+  titlesLstCopy.sort((a, b) {
+    int comparison = a.compareTo(b) * sortCriteria.sortOrder;
+
+    if (comparison != 0) {
+      return comparison;
+    }
+
+    return 0;
+  });
+
+  return titlesLstCopy;
 }
