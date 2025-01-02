@@ -483,33 +483,6 @@ class IntegrationTestUtil {
     await tester.pumpAndSettle(const Duration(milliseconds: 500));
   }
 
-  static Future<void> selectPlaylistInPlaylistDownloadView({
-    required WidgetTester tester,
-    required String playlistToSelectTitle,
-  }) async {
-    // First, find the target Playlist ListTile Text widget
-    Finder targetPlaylistListTileTextWidgetFinder =
-        find.text(playlistToSelectTitle);
-
-    // Then obtain the target Playlist ListTile widget enclosing the
-    // Text widget by finding its ancestor
-    Finder targetPlaylistListTileWidgetFinder = find.ancestor(
-      of: targetPlaylistListTileTextWidgetFinder,
-      matching: find.byType(ListTile),
-    );
-
-    // Now find the Checkbox widget located in the Playlist ListTile
-    // and tap on it to select the playlist
-    Finder targetPlaylistListTileCheckboxWidgetFinder = find.descendant(
-      of: targetPlaylistListTileWidgetFinder,
-      matching: find.byType(Checkbox),
-    );
-
-    // Tap the ListTile Playlist checkbox to select it
-    await tester.tap(targetPlaylistListTileCheckboxWidgetFinder);
-    await tester.pumpAndSettle();
-  }
-
   static void verifyPlaylistIsSelected({
     required WidgetTester tester,
     required String playlistTitle,
