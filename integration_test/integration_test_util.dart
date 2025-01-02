@@ -808,7 +808,7 @@ class IntegrationTestUtil {
       matching: find.byType(Checkbox),
     );
 
-    // Tap the ListTile Playlist checkbox to select it
+    // Tap the ListTile Playlist checkbox to select or unselect it
     await tester.tap(playlistListTileCheckboxWidgetFinder);
     await tester.pumpAndSettle();
   }
