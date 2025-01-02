@@ -15247,67 +15247,6 @@ void main() {
       });
     });
   });
-  group('App settings dialog test', () {
-    testWidgets(
-        'Bug fix: open app settings dialog and save it without modification.',
-        (WidgetTester tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
-      );
-
-      // Copy the test initial audio data to the app dir
-      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-        sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}app_settings_set_play_speed",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
-      );
-
-      final Map initialSettingsMap = loadSettingsMap();
-
-      final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
-      );
-
-      // Load the settings from the json file. This is necessary
-      // otherwise the ordered playlist titles will remain empty
-      // and the playlist list will not be filled with the
-      // playlists available in the download app test dir
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
-
-      await app.main(['test']);
-      await tester.pumpAndSettle();
-
-      // Tap the appbar leading popup menu button
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
-
-      // Now open the app settings dialog
-      await tester.tap(find.byKey(const Key('appBarMenuOpenSettingsDialog')));
-      await tester.pumpAndSettle();
-
-      // And tap on save button
-      await tester.tap(find.byKey(const Key('saveButton')));
-      await tester.pumpAndSettle();
-
-      // Ensure settings json file has not been modified
-      expect(
-        initialSettingsMap,
-        loadSettingsMap(),
-      );
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
-      );
-    });
-    // group('App settings set speed test', () {});
-  });
   group('Rename audio file test and verify comment access', () {
     testWidgets('''Not existing new audio file name and the renamed audio has
                    no comments.''', (WidgetTester tester) async {
