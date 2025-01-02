@@ -6808,7 +6808,7 @@ void main() {
 
         // Select the 'temp' playlist
 
-        await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+        await IntegrationTestUtil.selectPlaylist(
           tester: tester,
           playlistToSelectTitle: targetPlaylistTitle,
         );
@@ -7531,7 +7531,7 @@ void main() {
 
         // Select the 'temp' playlist
 
-        await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+        await IntegrationTestUtil.selectPlaylist(
           tester: tester,
           playlistToSelectTitle: targetPlaylistTitle,
         );
@@ -7962,7 +7962,7 @@ void main() {
 
         // Select the 'temp' playlist
 
-        await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+        await IntegrationTestUtil.selectPlaylist(
           tester: tester,
           playlistToSelectTitle: targetPlaylistTitle,
         );
@@ -8091,7 +8091,7 @@ void main() {
 
         // Select the 'temp' playlist
 
-        await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+        await IntegrationTestUtil.selectPlaylist(
           tester: tester,
           playlistToSelectTitle: targetPlaylistTitle,
         );
@@ -8433,7 +8433,7 @@ void main() {
 
         // Select the 'temp' playlist
 
-        await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+        await IntegrationTestUtil.selectPlaylist(
           tester: tester,
           playlistToSelectTitle: targetPlaylistTitle,
         );
@@ -9152,7 +9152,7 @@ void main() {
 
         // Select the 'temp' playlist
 
-        await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+        await IntegrationTestUtil.selectPlaylist(
           tester: tester,
           playlistToSelectTitle: targetPlaylistTitle,
         );
@@ -9534,7 +9534,7 @@ void main() {
 
         // Select the 'temp' playlist
 
-        await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+        await IntegrationTestUtil.selectPlaylist(
           tester: tester,
           playlistToSelectTitle: targetPlaylistTitle,
         );
@@ -9663,7 +9663,7 @@ void main() {
 
         // Select the 'temp' playlist
 
-        await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+        await IntegrationTestUtil.selectPlaylist(
           tester: tester,
           playlistToSelectTitle: targetPlaylistTitle,
         );

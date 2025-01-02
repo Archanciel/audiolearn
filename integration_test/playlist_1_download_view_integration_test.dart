@@ -3835,7 +3835,7 @@ void main() {
       // Find the target ListTile Playlist containing the audio copied
       // from the source playlist
 
-      await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+      await IntegrationTestUtil.selectPlaylist(
         tester: tester,
         playlistToSelectTitle: localAudioTargetPlaylistTitleTwo,
       );
@@ -4334,7 +4334,7 @@ void main() {
       // Find the target ListTile Playlist containing the audio copied
       // from the source playlist
 
-      await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+      await IntegrationTestUtil.selectPlaylist(
         tester: tester,
         playlistToSelectTitle: localAudioTargetPlaylistTitleTwo,
       );
@@ -4782,7 +4782,7 @@ void main() {
       // Find the target ListTile Playlist containing the audio copied
       // from the source playlist
 
-      await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+      await IntegrationTestUtil.selectPlaylist(
         tester: tester,
         playlistToSelectTitle: localAudioTargetPlaylistTitle,
       );
@@ -5142,7 +5142,7 @@ void main() {
       // Find the target ListTile Playlist containing the audio copied
       // from the source playlist
 
-      await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+      await IntegrationTestUtil.selectPlaylist(
         tester: tester,
         playlistToSelectTitle: localAudioTargetPlaylistTitle,
       );
@@ -5952,7 +5952,7 @@ void main() {
       // Find the target ListTile Playlist containing the audio copied
       // from the source playlist
 
-      await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+      await IntegrationTestUtil.selectPlaylist(
         tester: tester,
         playlistToSelectTitle: newLocalAudioTargetPlaylistTitle,
       );
@@ -6154,7 +6154,7 @@ void main() {
       // Find the target ListTile Playlist containing the audio moved
       // from the source playlist
 
-      await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+      await IntegrationTestUtil.selectPlaylist(
         tester: tester,
         playlistToSelectTitle: localAudioTargetPlaylistTitle,
       );
@@ -6305,7 +6305,7 @@ void main() {
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+      await IntegrationTestUtil.selectPlaylist(
         tester: tester,
         playlistToSelectTitle: youtubeAudioSourcePlaylistTitle,
       );
@@ -6383,7 +6383,7 @@ void main() {
       // Find the target ListTile Playlist containing the audio moved
       // from the source playlist
 
-      await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+      await IntegrationTestUtil.selectPlaylist(
         tester: tester,
         playlistToSelectTitle: localAudioTargetPlaylistTitle,
       );
@@ -6808,7 +6808,7 @@ void main() {
       // Find the target ListTile Playlist containing the audio moved
       // from the source playlist
 
-      await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+      await IntegrationTestUtil.selectPlaylist(
         tester: tester,
         playlistToSelectTitle: newLocalAudioTargetPlaylistTitle,
       );
@@ -21186,7 +21186,7 @@ void playlistOneDownloadViewIntegrationTest() {
       // Find the target ListTile Playlist containing the audio copied
       // from the source playlist
 
-      await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+      await IntegrationTestUtil.selectPlaylist(
         tester: tester,
         playlistToSelectTitle: localAudioTargetPlaylistTitleTwo,
       );
@@ -21685,7 +21685,7 @@ void playlistOneDownloadViewIntegrationTest() {
       // Find the target ListTile Playlist containing the audio copied
       // from the source playlist
 
-      await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+      await IntegrationTestUtil.selectPlaylist(
         tester: tester,
         playlistToSelectTitle: localAudioTargetPlaylistTitleTwo,
       );
@@ -22133,7 +22133,7 @@ void playlistOneDownloadViewIntegrationTest() {
       // Find the target ListTile Playlist containing the audio copied
       // from the source playlist
 
-      await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+      await IntegrationTestUtil.selectPlaylist(
         tester: tester,
         playlistToSelectTitle: localAudioTargetPlaylistTitle,
       );
@@ -22493,7 +22493,7 @@ void playlistOneDownloadViewIntegrationTest() {
       // Find the target ListTile Playlist containing the audio copied
       // from the source playlist
 
-      await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+      await IntegrationTestUtil.selectPlaylist(
         tester: tester,
         playlistToSelectTitle: localAudioTargetPlaylistTitle,
       );
@@ -23303,7 +23303,7 @@ void playlistOneDownloadViewIntegrationTest() {
       // Find the target ListTile Playlist containing the audio copied
       // from the source playlist
 
-      await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+      await IntegrationTestUtil.selectPlaylist(
         tester: tester,
         playlistToSelectTitle: newLocalAudioTargetPlaylistTitle,
       );
@@ -23505,7 +23505,7 @@ void playlistOneDownloadViewIntegrationTest() {
       // Find the target ListTile Playlist containing the audio moved
       // from the source playlist
 
-      await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+      await IntegrationTestUtil.selectPlaylist(
         tester: tester,
         playlistToSelectTitle: localAudioTargetPlaylistTitle,
       );
@@ -23656,7 +23656,7 @@ void playlistOneDownloadViewIntegrationTest() {
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+      await IntegrationTestUtil.selectPlaylist(
         tester: tester,
         playlistToSelectTitle: youtubeAudioSourcePlaylistTitle,
       );
@@ -23734,7 +23734,7 @@ void playlistOneDownloadViewIntegrationTest() {
       // Find the target ListTile Playlist containing the audio moved
       // from the source playlist
 
-      await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+      await IntegrationTestUtil.selectPlaylist(
         tester: tester,
         playlistToSelectTitle: localAudioTargetPlaylistTitle,
       );
@@ -24159,7 +24159,7 @@ void playlistOneDownloadViewIntegrationTest() {
       // Find the target ListTile Playlist containing the audio moved
       // from the source playlist
 
-      await IntegrationTestUtil.selectPlaylistInPlaylistDownloadView(
+      await IntegrationTestUtil.selectPlaylist(
         tester: tester,
         playlistToSelectTitle: newLocalAudioTargetPlaylistTitle,
       );
