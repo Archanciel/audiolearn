@@ -6,6 +6,7 @@ import 'package:audiolearn/views/widgets/audio_sort_filter_dialog.dart';
 import 'package:audiolearn/views/widgets/comment_add_edit_dialog.dart';
 import 'package:audiolearn/views/widgets/comment_list_add_dialog.dart';
 import 'package:audiolearn/views/widgets/playlist_comment_list_dialog.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -23,6 +24,26 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../test/services/mock_shared_preferences.dart';
 import 'integration_test_util.dart';
+
+// Custom Mock FilePicker
+class MockFilePicker extends FilePicker {
+  String _pathToSelectStr = '';
+
+  @override
+  Future<String?> getDirectoryPath({
+    String? dialogTitle,
+    bool lockParentWindow = false,
+    String? initialDirectory,
+  }) async {
+    return _pathToSelectStr;
+  }
+
+  void setPathToSelect({
+    required String pathToSelectStr,
+  }) {
+    _pathToSelectStr = pathToSelectStr;
+  }
+}
 
 void main() {
   // Necessary to avoid FatalFailureException (FatalFailureException: Failed
@@ -9986,6 +10007,10 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
+      // Replace the platform instance with your mock
+      MockFilePicker mockFilePicker = MockFilePicker();
+      FilePicker.platform = mockFilePicker;
+
       await app.main(['test']);
       await tester.pumpAndSettle();
 
@@ -10011,171 +10036,92 @@ void main() {
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
-      // Obtains all the ListTile widgets present in the playlist
-      // download view
-      final Finder lisTilesFinder = find.byType(ListTile);
+      // Verify the initial playlist titles
 
-      // Verify the playlist titles and the audio titles of the selected
-      // playlist
+      List<String> initialPlaylistTitles = [
+        "Empty",
+        "local",
+        "local_comment",
+        "local_delete_comment",
+        "S8 audio",
+      ];
 
-      // S8 playlist title
-      Finder playlistTitleTextFinder = find.descendant(
-        of: lisTilesFinder.at(0),
-        matching: find.byType(Text),
-      );
-      expect(tester.widget<Text>(playlistTitleTextFinder).data, 'S8 audio');
-
-      // local playlist title
-      playlistTitleTextFinder = find.descendant(
-        of: lisTilesFinder.at(1),
-        matching: find.byType(Text),
-      );
-      expect(tester.widget<Text>(playlistTitleTextFinder).data, 'local');
-
-      // first audio of S8 audio playlist
-      playlistTitleTextFinder = find.descendant(
-        of: lisTilesFinder.at(2),
-        matching: find.byType(Text),
-      );
-      expect(
-        // 2 Text widgets exist in audio ListTile: the title and sub title
-        tester.widget<Text>(playlistTitleTextFinder.at(0)).data,
-        "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-      );
-
-      // second audio of S8 audio playlist
-      playlistTitleTextFinder = find.descendant(
-        of: lisTilesFinder.at(3),
-        matching: find.byType(Text),
-      );
-      expect(
-        // 2 Text widgets exist in audio ListTile: the title and sub title
-        tester.widget<Text>(playlistTitleTextFinder.at(0)).data,
-        "La surpopulation mondiale par Jancovici et Barrau",
-      );
-
-      // Tap the appbar leading popup menu button
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
-
-      // Now open the app settings dialog
-      await tester.tap(find.byKey(const Key('appBarMenuOpenSettingsDialog')));
-      await tester.pumpAndSettle();
-
-      // Enter existing dir path
-
-      // Find the TextField using the Key
-      final Finder textFieldFinder =
-          find.byKey(const Key('playlistsRootPathText'));
-
-      // Retrieve the TextField widget
-      final TextField textField = tester.widget<TextField>(textFieldFinder);
-
-      // Obtain the current text value of the text field
-      String text = textField.controller!.text;
-
-      // Now enter the text in the text field
-      await tester.enterText(
-        textFieldFinder,
-        '$text${path.separator}new',
-      );
-
-      await tester.pumpAndSettle();
-
-      // And tap on save button
-      await tester.tap(find.byKey(const Key('saveButton')));
-      await tester.pumpAndSettle();
-
-      // Ensure settings json file has been modified
-      String expSettings =
-          "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.orderedTitleLst\":\"[Youtube_test]\",\"Playlists.playSpeed\":\"1.25\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\Users\\\\Jean-Pierre\\\\Development\\\\Flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\Users\\\\Jean-Pierre\\\\Development\\\\Flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\new\"},\"SettingType.formatOfDate\":{\"FormatOfDate.formatOfDate\":\"dd/MM/yyyy\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInYoutubeChannelName\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":false,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"filterCommented\":true,\"filterNotCommented\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}";
-      expect(
-        File("$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName")
-            .readAsStringSync(),
-        expSettings,
-      );
-      // Find the Youtube playlist to select
-
-      // First, find the Playlist ListTile Text widget
-      final Finder localPlaylistToSelectListTileTextWidgetFinder =
-          find.text('Youtube_test');
-
-      // Then obtain the Playlist ListTile widget enclosing the Text widget
-      // by finding its ancestor
-      final Finder localPlaylistToSelectListTileWidgetFinder = find.ancestor(
-        of: localPlaylistToSelectListTileTextWidgetFinder,
-        matching: find.byType(ListTile),
-      );
-
-      // Now find the Checkbox widget located in the Playlist ListTile
-      // and tap on it to select the playlist
-      final Finder localPlaylistToSelectListTileCheckboxWidgetFinder =
-          find.descendant(
-        of: localPlaylistToSelectListTileWidgetFinder,
-        matching: find.byType(Checkbox),
-      );
-
-      // Tap the ListTile Playlist checkbox to select it
-      await tester.tap(localPlaylistToSelectListTileCheckboxWidgetFinder);
-      await tester.pumpAndSettle();
-
-      const String alreadyCommentedAudioTitle =
-          "5 minutes d'éco-anxiété pour se motiver à bouger (Ringenbach, Janco, Barrau, Servigne)";
-
-      // Then, get the ListTile Text widget finder of the already commented
-      // audio and tap on it to open the AudioPlayerView
-      final Finder alreadyCommentedAudioFinder =
-          find.text(alreadyCommentedAudioTitle);
-      await tester.tap(alreadyCommentedAudioFinder);
-      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
         tester: tester,
+        audioOrPlaylistTitlesOrderedLst: initialPlaylistTitles,
       );
 
-      // Tap on the comment icon button to open the comment add list
-      // dialog
-      final Finder commentInkWellButtonFinder = find.byKey(
-        const Key('commentsInkWellButton'),
+      // Now, set the playlist root path to the modified value
+
+      List<String> modifiedDirPlaylistTitles = [
+        "audio_learn_test_download_2_small_videos",
+        "audio_player_view_2_shorts_test",
+        "local_3",
+        "local_audio_playlist_2",
+      ];
+
+      await changePlaylistRootPath(
+        tester: tester,
+        mockFilePicker: mockFilePicker,
+        pathToSelectStr:
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}newPlaylistRootDirectory',
+        playlistTitlesInModifiedDir: modifiedDirPlaylistTitles,
+        expectedSettingsContent:
+            "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.orderedTitleLst\":\"[audio_learn_test_download_2_small_videos, audio_player_view_2_shorts_test, local_3, local_audio_playlist_2]\",\"Playlists.playSpeed\":\"1.0\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\Users\\\\Jean-Pierre\\\\Development\\\\Flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\Users\\\\Jean-Pierre\\\\Development\\\\Flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\newPlaylistRootDirectory\"},\"SettingType.formatOfDate\":{\"FormatOfDate.formatOfDate\":\"dd/MM/yyyy\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInYoutubeChannelName\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":false,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"filterCommented\":true,\"filterNotCommented\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}",
+        selectedPlaylistTitle: 'local_3',
       );
 
-      await tester.tap(commentInkWellButtonFinder);
+      // Move up twice the selected "local_3" playlist to position
+      // it at top of playlists list
+
+      await tester.tap(find.byKey(const Key('move_up_playlist_button')));
       await tester.pumpAndSettle();
 
-      // Find the comment list add dialog widget
-      final Finder commentListDialogFinder = find.byType(CommentListAddDialog);
+      await tester.tap(find.byKey(const Key('move_up_playlist_button')));
+      await tester.pumpAndSettle();
 
-      // Find the list body containing the comments
-      final Finder listFinder = find.descendant(
-          of: commentListDialogFinder, matching: find.byType(ListBody));
+      // Select another playlist
+      String playlistSelectedTitle = "local_audio_playlist_2";
 
-      // Find all the list items
-      final Finder itemsFinder = find.descendant(
-          // 3 GestureDetector per comment item
-          of: listFinder,
-          matching: find.byType(GestureDetector));
-
-      // Unique comment index
-      int uniqueCommentFinderIndex = 0;
-
-      final Finder playIconButtonFinder = find.descendant(
-        of: itemsFinder.at(uniqueCommentFinderIndex),
-        matching: find.byKey(const Key('playPauseIconButton')),
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: playlistSelectedTitle,
       );
 
-      // Tap on the play/pause icon button to play the audio from the
-      // comment start position
-      await tester.tap(playIconButtonFinder);
-      await tester.pumpAndSettle();
+      // Now reset the playlist root path to the initial value
 
-      await Future.delayed(const Duration(milliseconds: 2000));
-      await tester.pumpAndSettle();
+      await changePlaylistRootPath(
+        tester: tester,
+        mockFilePicker: mockFilePicker,
+        pathToSelectStr: kPlaylistDownloadRootPathWindowsTest,
+        playlistTitlesInModifiedDir: initialPlaylistTitles,
+        expectedSettingsContent:
+            "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.orderedTitleLst\":\"[Empty, local, local_comment, local_delete_comment, S8 audio]\",\"Playlists.playSpeed\":\"1.0\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\Users\\\\Jean-Pierre\\\\Development\\\\Flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\Users\\\\Jean-Pierre\\\\Development\\\\Flutter\\\\audiolearn\\\\test\\\\data\\\\audio\"},\"SettingType.formatOfDate\":{\"FormatOfDate.formatOfDate\":\"dd/MM/yyyy\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInYoutubeChannelName\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":false,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"filterCommented\":true,\"filterNotCommented\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}",
+        selectedPlaylistTitle: 'S8 audio',
+      );
 
-      // Tap on the play/pause icon button to pause the audio
-      await tester.tap(playIconButtonFinder);
-      await tester.pumpAndSettle();
+      // And finally, set again the playlist root path to the modified
+      // value
 
-      // Tap on the Close button to close the comment list add dialog
-      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-      await tester.pumpAndSettle();
+      // Taken in consideration the fact that the 'local_3' playlist
+      // was moved up twice
+      modifiedDirPlaylistTitles = [
+        "local_3",
+        "audio_learn_test_download_2_small_videos",
+        "audio_player_view_2_shorts_test",
+        "local_audio_playlist_2",
+      ];
+
+      await changePlaylistRootPath(
+        tester: tester,
+        mockFilePicker: mockFilePicker,
+        pathToSelectStr:
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}newPlaylistRootDirectory',
+        playlistTitlesInModifiedDir: modifiedDirPlaylistTitles,
+        expectedSettingsContent:
+            "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.orderedTitleLst\":\"[local_3, audio_learn_test_download_2_small_videos, audio_player_view_2_shorts_test, local_audio_playlist_2]\",\"Playlists.playSpeed\":\"1.0\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\Users\\\\Jean-Pierre\\\\Development\\\\Flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\Users\\\\Jean-Pierre\\\\Development\\\\Flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\newPlaylistRootDirectory\"},\"SettingType.formatOfDate\":{\"FormatOfDate.formatOfDate\":\"dd/MM/yyyy\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInYoutubeChannelName\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":false,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"filterCommented\":true,\"filterNotCommented\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}",
+        selectedPlaylistTitle: playlistSelectedTitle,
+      );
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -10183,7 +10129,7 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    // group('App settings set speed test', () {});
+    group('App settings set speed test', () {});
   });
   testWidgets(
       '''Click on 0 play speed audio, ensuring that its play speed is corrected
@@ -10225,6 +10171,72 @@ void main() {
       rootPath: kPlaylistDownloadRootPathWindowsTest,
     );
   });
+}
+
+Future<void> changePlaylistRootPath({
+  required WidgetTester tester,
+  required MockFilePicker mockFilePicker,
+  required String pathToSelectStr,
+  required List<String> playlistTitlesInModifiedDir,
+  required String expectedSettingsContent,
+  required String selectedPlaylistTitle,
+}) async {
+  // Tap the appbar leading popup menu button
+  await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+  await tester.pumpAndSettle();
+
+  // Now open the app settings dialog
+  await tester.tap(find.byKey(const Key('appBarMenuOpenSettingsDialog')));
+  await tester.pumpAndSettle();
+
+  // Select the modified dir path. Tapping on the select directory
+  // icon button does not open the directory picker dialog. Instead,
+  // the FilePicker mock is used to simulate the selection of the
+  // directory.
+
+  // Setting the path value returned by the FilePicker mock.
+  mockFilePicker.setPathToSelect(
+    pathToSelectStr: pathToSelectStr,
+  );
+
+  await tester.tap(find.byKey(const Key('openDirectoryIconButton')));
+  await tester.pumpAndSettle();
+
+  // Find the Text using the Key
+  final Finder textFinder = find.byKey(const Key('playlistsRootPathText'));
+
+  // Retrieve the Text widget
+  String text = tester.widget<Text>(textFinder).data ?? '';
+
+  // Verify the selected directory path
+  expect(
+    text,
+    pathToSelectStr,
+  );
+
+  // And tap on save button
+  await tester.tap(find.byKey(const Key('saveButton')));
+  await tester.pumpAndSettle();
+
+  // Verify the modified directory playlist titles
+
+  IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    tester: tester,
+    audioOrPlaylistTitlesOrderedLst: playlistTitlesInModifiedDir,
+  );
+
+  // Verify that the selected playlist
+  IntegrationTestUtil.verifyPlaylistIsSelected(
+    tester: tester,
+    playlistTitle: selectedPlaylistTitle,
+  );
+
+  // Ensure settings json file has been modified
+  expect(
+    File("$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName")
+        .readAsStringSync(),
+    expectedSettingsContent,
+  );
 }
 
 Future<void> _verifyDatePickerTitleTranslation({

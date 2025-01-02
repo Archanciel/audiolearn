@@ -510,6 +510,26 @@ class IntegrationTestUtil {
     await tester.pumpAndSettle();
   }
 
+  static void verifyPlaylistIsSelected({
+    required WidgetTester tester,
+    required String playlistTitle,
+    bool isSelected = true,
+  }) async {
+    Finder listItemTileFinder = find.widgetWithText(ListTile, playlistTitle);
+
+    // Find the Checkbox widget inside the ListTile
+    Finder checkboxFinder = find.descendant(
+      of: listItemTileFinder,
+      matching: find.byType(Checkbox),
+    );
+
+    // Assert that the checkbox is not selected
+    expect(
+      tester.widget<Checkbox>(checkboxFinder).value,
+      isSelected,
+    );
+  }
+
   static Future<void> verifyAudioMenuItemsState({
     required WidgetTester tester,
     required bool areAudioMenuItemsDisabled,
