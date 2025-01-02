@@ -155,7 +155,7 @@ class AudioSortFilterParameters {
     ),
     SortingOption.chapterAudioTitle: SortCriteria<Audio>(
       selectorFunction: (Audio audio) {
-        final regex = RegExp(r'(\d+)_\d+');
+        final regex = RegExp(r'(\d+)[_\-/:]\d+');
 
         String validVideoTitleLow = audio.validVideoTitle.toLowerCase();
 
