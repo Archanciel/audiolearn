@@ -917,1071 +917,2035 @@ void main() {
     setUp(() {
       audioSortFilterService = AudioSortFilterService();
     });
-    test('sort by title', () {
-      final Audio zebra = Audio.fullConstructor(
-        youtubeVideoChannel: 'three',
-        enclosingPlaylist: audioPlaylist,
-        movedFromPlaylistTitle: null,
-        movedToPlaylistTitle: null,
-        copiedFromPlaylistTitle: null,
-        copiedToPlaylistTitle: null,
-        originalVideoTitle: 'Zebra ?',
-        compactVideoDescription: '',
-        validVideoTitle: 'Zebra',
-        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
-        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
-        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
-        audioDownloadSpeed: 1000000,
-        videoUploadDate: DateTime(2023, 3, 1),
-        audioDuration: const Duration(minutes: 5, seconds: 30),
-        isAudioMusicQuality: false,
-        audioPlaySpeed: kAudioDefaultPlaySpeed,
-        audioPlayVolume: kAudioDefaultPlayVolume,
-        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
-        isPaused: true,
-        audioPausedDateTime: null,
-        audioPositionSeconds: 0,
-        audioFileName: 'Test Video Title.mp3',
-        audioFileSize: 330000000,
-        isAudioImported: false,
-      );
-      final Audio apple = Audio.fullConstructor(
-        youtubeVideoChannel: 'one',
-        enclosingPlaylist: audioPlaylist,
-        movedFromPlaylistTitle: null,
-        movedToPlaylistTitle: null,
-        copiedFromPlaylistTitle: null,
-        copiedToPlaylistTitle: null,
-        originalVideoTitle: 'Apple ?',
-        compactVideoDescription: '',
-        validVideoTitle: 'Apple',
-        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
-        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
-        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
-        audioDownloadSpeed: 1000000,
-        videoUploadDate: DateTime(2023, 3, 1),
-        audioDuration: const Duration(minutes: 5, seconds: 30),
-        isAudioMusicQuality: false,
-        audioPlaySpeed: kAudioDefaultPlaySpeed,
-        audioPlayVolume: kAudioDefaultPlayVolume,
-        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
-        isPaused: true,
-        audioPausedDateTime: null,
-        audioPositionSeconds: 0,
-        audioFileName: 'Test Video Title.mp3',
-        audioFileSize: 330000000,
-        isAudioImported: false,
-      );
-      final Audio bananna = Audio.fullConstructor(
-        youtubeVideoChannel: 'one',
-        enclosingPlaylist: audioPlaylist,
-        movedFromPlaylistTitle: null,
-        movedToPlaylistTitle: null,
-        copiedFromPlaylistTitle: null,
-        copiedToPlaylistTitle: null,
-        originalVideoTitle: 'Bananna ?',
-        compactVideoDescription: '',
-        validVideoTitle: 'Bananna',
-        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
-        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
-        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
-        audioDownloadSpeed: 1000000,
-        videoUploadDate: DateTime(2023, 3, 1),
-        audioDuration: const Duration(minutes: 5, seconds: 30),
-        isAudioMusicQuality: false,
-        audioPlaySpeed: kAudioDefaultPlaySpeed,
-        audioPlayVolume: kAudioDefaultPlayVolume,
-        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
-        isPaused: true,
-        audioPausedDateTime: null,
-        audioPositionSeconds: 0,
-        audioFileName: 'Test Video Title.mp3',
-        audioFileSize: 330000000,
-        isAudioImported: true,
-      );
+    group('sort audio lst by title SortingOption', () {
+      test('sort by title', () {
+        final Audio zebra = Audio.fullConstructor(
+          youtubeVideoChannel: 'three',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle: 'Zebra ?',
+          compactVideoDescription: '',
+          validVideoTitle: 'Zebra',
+          videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+          audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime(2023, 3, 1),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName: 'Test Video Title.mp3',
+          audioFileSize: 330000000,
+          isAudioImported: false,
+        );
+        final Audio apple = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle: 'Apple ?',
+          compactVideoDescription: '',
+          validVideoTitle: 'Apple',
+          videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+          audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime(2023, 3, 1),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName: 'Test Video Title.mp3',
+          audioFileSize: 330000000,
+          isAudioImported: false,
+        );
+        final Audio bananna = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle: 'Bananna ?',
+          compactVideoDescription: '',
+          validVideoTitle: 'Bananna',
+          videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+          audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime(2023, 3, 1),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName: 'Test Video Title.mp3',
+          audioFileSize: 330000000,
+          isAudioImported: true,
+        );
 
-      List<Audio> audioList = [
-        zebra,
-        apple,
-        bananna,
-      ];
+        List<Audio> audioList = [
+          zebra,
+          apple,
+          bananna,
+        ];
 
-      List<Audio> expectedResultForTitleAsc = [
-        apple,
-        bananna,
-        zebra,
-      ];
+        List<Audio> expectedResultForTitleAsc = [
+          apple,
+          bananna,
+          zebra,
+        ];
 
-      List<Audio> expectedResultForTitleDesc = [
-        zebra,
-        bananna,
-        apple,
-      ];
+        List<Audio> expectedResultForTitleDesc = [
+          zebra,
+          bananna,
+          apple,
+        ];
 
-      final List<SortingItem> selectedSortItemLstAsc = [
-        SortingItem(
-          sortingOption: SortingOption.validAudioTitle,
-          isAscending: true,
-        ),
-      ];
+        final List<SortingItem> selectedSortItemLstAsc = [
+          SortingItem(
+            sortingOption: SortingOption.validAudioTitle,
+            isAscending: true,
+          ),
+        ];
 
-      List<Audio> sortedByTitleAsc =
-          audioSortFilterService.sortAudioLstBySortingOptions(
-        audioLst: audioList,
-        selectedSortItemLst: selectedSortItemLstAsc,
-      );
+        List<Audio> sortedByTitleAsc =
+            audioSortFilterService.sortAudioLstBySortingOptions(
+          audioLst: audioList,
+          selectedSortItemLst: selectedSortItemLstAsc,
+        );
 
-      expect(
-          sortedByTitleAsc.map((audio) => audio.validVideoTitle).toList(),
-          equals(expectedResultForTitleAsc
-              .map((audio) => audio.validVideoTitle)
-              .toList()));
+        expect(
+            sortedByTitleAsc.map((audio) => audio.validVideoTitle).toList(),
+            equals(expectedResultForTitleAsc
+                .map((audio) => audio.validVideoTitle)
+                .toList()));
 
-      final List<SortingItem> selectedSortItemLstDesc = [
-        SortingItem(
-          sortingOption: SortingOption.validAudioTitle,
-          isAscending: false,
-        ),
-      ];
+        final List<SortingItem> selectedSortItemLstDesc = [
+          SortingItem(
+            sortingOption: SortingOption.validAudioTitle,
+            isAscending: false,
+          ),
+        ];
 
-      List<Audio> sortedByTitleDesc =
-          audioSortFilterService.sortAudioLstBySortingOptions(
-        audioLst: audioList,
-        selectedSortItemLst: selectedSortItemLstDesc,
-      );
+        List<Audio> sortedByTitleDesc =
+            audioSortFilterService.sortAudioLstBySortingOptions(
+          audioLst: audioList,
+          selectedSortItemLst: selectedSortItemLstDesc,
+        );
 
-      expect(
-          sortedByTitleDesc.map((audio) => audio.validVideoTitle).toList(),
-          equals(expectedResultForTitleDesc
-              .map((audio) => audio.validVideoTitle)
-              .toList()));
-    });
-    test('sort by title containing a number reference', () {
-      final Audio thirdAudioOneOfTwo = Audio.fullConstructor(
-        youtubeVideoChannel: 'one',
-        enclosingPlaylist: audioPlaylist,
-        movedFromPlaylistTitle: null,
-        movedToPlaylistTitle: null,
-        copiedFromPlaylistTitle: null,
-        copiedToPlaylistTitle: null,
-        originalVideoTitle:
-            "La foi contre la peur (1_2 - Joyce Meyer -  Avoir des relations saines",
-        compactVideoDescription: '',
-        validVideoTitle:
-            "La foi contre la peur (1_2 - Joyce Meyer -  Avoir des relations saines",
-        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
-        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
-        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
-        audioDownloadSpeed: 1000000,
-        videoUploadDate: DateTime(2023, 3, 1),
-        audioDuration: const Duration(minutes: 5, seconds: 30),
-        isAudioMusicQuality: false,
-        audioPlaySpeed: kAudioDefaultPlaySpeed,
-        audioPlayVolume: kAudioDefaultPlayVolume,
-        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
-        isPaused: true,
-        audioPausedDateTime: null,
-        audioPositionSeconds: 0,
-        audioFileName:
-            "La foi contre la peur (1_2 - Joyce Meyer -  Avoir des relations saines.mp3",
-        audioFileSize: 330000000,
-        isAudioImported: false,
-      );
+        expect(
+            sortedByTitleDesc.map((audio) => audio.validVideoTitle).toList(),
+            equals(expectedResultForTitleDesc
+                .map((audio) => audio.validVideoTitle)
+                .toList()));
+      });
+      test('sort by title containing _ number reference', () {
+        final Audio thirdAudioOneOfTwo = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle:
+              "La foi contre la peur (1_2 - Joyce Meyer -  Avoir des relations saines",
+          compactVideoDescription: '',
+          validVideoTitle:
+              "La foi contre la peur (1_2 - Joyce Meyer -  Avoir des relations saines",
+          videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+          audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime(2023, 3, 1),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName:
+              "La foi contre la peur (1_2 - Joyce Meyer -  Avoir des relations saines.mp3",
+          audioFileSize: 330000000,
+          isAudioImported: false,
+        );
 
-      final Audio thirdAudioTwoOfTwo = Audio.fullConstructor(
-        youtubeVideoChannel: 'one',
-        enclosingPlaylist: audioPlaylist,
-        movedFromPlaylistTitle: null,
-        movedToPlaylistTitle: null,
-        copiedFromPlaylistTitle: null,
-        copiedToPlaylistTitle: null,
-        originalVideoTitle:
-            "La foi contre la peur (2_2 - Joyce Meyer -  Avoir des relations saines",
-        compactVideoDescription: '',
-        validVideoTitle:
-            "La foi contre la peur (2_2 - Joyce Meyer -  Avoir des relations saines",
-        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
-        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
-        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
-        audioDownloadSpeed: 1000000,
-        videoUploadDate: DateTime(2023, 3, 1),
-        audioDuration: const Duration(minutes: 5, seconds: 30),
-        isAudioMusicQuality: false,
-        audioPlaySpeed: kAudioDefaultPlaySpeed,
-        audioPlayVolume: kAudioDefaultPlayVolume,
-        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
-        isPaused: true,
-        audioPausedDateTime: null,
-        audioPositionSeconds: 0,
-        audioFileName:
-            "La foi contre la peur (2_2 - Joyce Meyer -  Avoir des relations saines.mp3",
-        audioFileSize: 330000000,
-        isAudioImported: false,
-      );
+        final Audio thirdAudioTwoOfTwo = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle:
+              "La foi contre la peur (2_2 - Joyce Meyer -  Avoir des relations saines",
+          compactVideoDescription: '',
+          validVideoTitle:
+              "La foi contre la peur (2_2 - Joyce Meyer -  Avoir des relations saines",
+          videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+          audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime(2023, 3, 1),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName:
+              "La foi contre la peur (2_2 - Joyce Meyer -  Avoir des relations saines.mp3",
+          audioFileSize: 330000000,
+          isAudioImported: false,
+        );
 
-      final Audio secondAudioTwoOfTwo = Audio.fullConstructor(
-        youtubeVideoChannel: 'one',
-        enclosingPlaylist: audioPlaylist,
-        movedFromPlaylistTitle: null,
-        movedToPlaylistTitle: null,
-        copiedFromPlaylistTitle: null,
-        copiedToPlaylistTitle: null,
-        originalVideoTitle:
-            "Il est temps d'être sérieux avec Dieu ! (2_2 - Joyce Meyer - Grandir avec Dieu",
-        compactVideoDescription: '',
-        validVideoTitle:
-            "Il est temps d'être sérieux avec Dieu ! (2_2 - Joyce Meyer - Grandir avec Dieu",
-        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
-        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
-        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
-        audioDownloadSpeed: 1000000,
-        videoUploadDate: DateTime(2023, 3, 1),
-        audioDuration: const Duration(minutes: 5, seconds: 30),
-        isAudioMusicQuality: false,
-        audioPlaySpeed: kAudioDefaultPlaySpeed,
-        audioPlayVolume: kAudioDefaultPlayVolume,
-        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
-        isPaused: true,
-        audioPausedDateTime: null,
-        audioPositionSeconds: 0,
-        audioFileName:
-            "Il est temps d'être sérieux avec Dieu ! (2_2 - Joyce Meyer - Grandir avec Dieu.mp3",
-        audioFileSize: 330000000,
-        isAudioImported: false,
-      );
+        final Audio secondAudioTwoOfTwo = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle:
+              "Il est temps d'être sérieux avec Dieu ! (2_2 - Joyce Meyer - Grandir avec Dieu",
+          compactVideoDescription: '',
+          validVideoTitle:
+              "Il est temps d'être sérieux avec Dieu ! (2_2 - Joyce Meyer - Grandir avec Dieu",
+          videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+          audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime(2023, 3, 1),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName:
+              "Il est temps d'être sérieux avec Dieu ! (2_2 - Joyce Meyer - Grandir avec Dieu.mp3",
+          audioFileSize: 330000000,
+          isAudioImported: false,
+        );
 
-      final Audio secondAudioOneOfTwo = Audio.fullConstructor(
-        youtubeVideoChannel: 'one',
-        enclosingPlaylist: audioPlaylist,
-        movedFromPlaylistTitle: null,
-        movedToPlaylistTitle: null,
-        copiedFromPlaylistTitle: null,
-        copiedToPlaylistTitle: null,
-        originalVideoTitle:
-            "Il est temps d'être sérieux avec Dieu ! (1_2 - Joyce Meyer - Grandir avec Dieu",
-        compactVideoDescription: '',
-        validVideoTitle:
-            "Il est temps d'être sérieux avec Dieu ! (1_2 - Joyce Meyer - Grandir avec Dieu",
-        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
-        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
-        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
-        audioDownloadSpeed: 1000000,
-        videoUploadDate: DateTime(2023, 3, 1),
-        audioDuration: const Duration(minutes: 5, seconds: 30),
-        isAudioMusicQuality: false,
-        audioPlaySpeed: kAudioDefaultPlaySpeed,
-        audioPlayVolume: kAudioDefaultPlayVolume,
-        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
-        isPaused: true,
-        audioPausedDateTime: null,
-        audioPositionSeconds: 0,
-        audioFileName:
-            "Il est temps d'être sérieux avec Dieu ! (1_2 - Joyce Meyer - Grandir avec Dieu.mp3",
-        audioFileSize: 330000000,
-        isAudioImported: false,
-      );
+        final Audio secondAudioOneOfTwo = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle:
+              "Il est temps d'être sérieux avec Dieu ! (1_2 - Joyce Meyer - Grandir avec Dieu",
+          compactVideoDescription: '',
+          validVideoTitle:
+              "Il est temps d'être sérieux avec Dieu ! (1_2 - Joyce Meyer - Grandir avec Dieu",
+          videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+          audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime(2023, 3, 1),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName:
+              "Il est temps d'être sérieux avec Dieu ! (1_2 - Joyce Meyer - Grandir avec Dieu.mp3",
+          audioFileSize: 330000000,
+          isAudioImported: false,
+        );
 
-      final Audio fourthAudio = Audio.fullConstructor(
-        youtubeVideoChannel: 'one',
-        enclosingPlaylist: audioPlaylist,
-        movedFromPlaylistTitle: null,
-        movedToPlaylistTitle: null,
-        copiedFromPlaylistTitle: null,
-        copiedToPlaylistTitle: null,
-        originalVideoTitle:
-            "Laisser Dieu au contrôle - Joyce Meyer - Grandir avec Dieu",
-        compactVideoDescription: '',
-        validVideoTitle:
-            "Laisser Dieu au contrôle - Joyce Meyer - Grandir avec Dieu",
-        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
-        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
-        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
-        audioDownloadSpeed: 1000000,
-        videoUploadDate: DateTime(2023, 3, 1),
-        audioDuration: const Duration(minutes: 5, seconds: 30),
-        isAudioMusicQuality: false,
-        audioPlaySpeed: kAudioDefaultPlaySpeed,
-        audioPlayVolume: kAudioDefaultPlayVolume,
-        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
-        isPaused: true,
-        audioPausedDateTime: null,
-        audioPositionSeconds: 0,
-        audioFileName:
-            "Laisser Dieu au contrôle - Joyce Meyer - Grandir avec Dieu.mp3",
-        audioFileSize: 330000000,
-        isAudioImported: false,
-      );
+        final Audio fourthAudio = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle:
+              "Laisser Dieu au contrôle - Joyce Meyer - Grandir avec Dieu",
+          compactVideoDescription: '',
+          validVideoTitle:
+              "Laisser Dieu au contrôle - Joyce Meyer - Grandir avec Dieu",
+          videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+          audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime(2023, 3, 1),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName:
+              "Laisser Dieu au contrôle - Joyce Meyer - Grandir avec Dieu.mp3",
+          audioFileSize: 330000000,
+          isAudioImported: false,
+        );
 
-      final Audio fifthAudio = Audio.fullConstructor(
-        youtubeVideoChannel: 'one',
-        enclosingPlaylist: audioPlaylist,
-        movedFromPlaylistTitle: null,
-        movedToPlaylistTitle: null,
-        copiedFromPlaylistTitle: null,
-        copiedToPlaylistTitle: null,
-        originalVideoTitle:
-            "VOICI COMMENT ÊTRE GUIDÉ PAR LE SAINT ESPRIT _ JOYCE MEYER",
-        compactVideoDescription: '',
-        validVideoTitle:
-            "VOICI COMMENT ÊTRE GUIDÉ PAR LE SAINT ESPRIT _ JOYCE MEYER",
-        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
-        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
-        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
-        audioDownloadSpeed: 1000000,
-        videoUploadDate: DateTime(2023, 3, 1),
-        audioDuration: const Duration(minutes: 5, seconds: 30),
-        isAudioMusicQuality: false,
-        audioPlaySpeed: kAudioDefaultPlaySpeed,
-        audioPlayVolume: kAudioDefaultPlayVolume,
-        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
-        isPaused: true,
-        audioPausedDateTime: null,
-        audioPositionSeconds: 0,
-        audioFileName:
-            "VOICI COMMENT ÊTRE GUIDÉ PAR LE SAINT ESPRIT _ JOYCE MEYER.mp3",
-        audioFileSize: 330000000,
-        isAudioImported: false,
-      );
+        final Audio fifthAudio = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle:
+              "VOICI COMMENT ÊTRE GUIDÉ PAR LE SAINT ESPRIT _ JOYCE MEYER",
+          compactVideoDescription: '',
+          validVideoTitle:
+              "VOICI COMMENT ÊTRE GUIDÉ PAR LE SAINT ESPRIT _ JOYCE MEYER",
+          videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+          audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime(2023, 3, 1),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName:
+              "VOICI COMMENT ÊTRE GUIDÉ PAR LE SAINT ESPRIT _ JOYCE MEYER.mp3",
+          audioFileSize: 330000000,
+          isAudioImported: false,
+        );
 
-      final Audio firstAudioOneOfTwo = Audio.fullConstructor(
-        youtubeVideoChannel: 'one',
-        enclosingPlaylist: audioPlaylist,
-        movedFromPlaylistTitle: null,
-        movedToPlaylistTitle: null,
-        copiedFromPlaylistTitle: null,
-        copiedToPlaylistTitle: null,
-        originalVideoTitle:
-            "Communiquer avec Dieu (1_2 - Joyce Meyer - Grandir avec Dieu",
-        compactVideoDescription: '',
-        validVideoTitle:
-            "Communiquer avec Dieu (1_2 - Joyce Meyer - Grandir avec Dieu",
-        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
-        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
-        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
-        audioDownloadSpeed: 1000000,
-        videoUploadDate: DateTime(2023, 3, 1),
-        audioDuration: const Duration(minutes: 5, seconds: 30),
-        isAudioMusicQuality: false,
-        audioPlaySpeed: kAudioDefaultPlaySpeed,
-        audioPlayVolume: kAudioDefaultPlayVolume,
-        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
-        isPaused: true,
-        audioPausedDateTime: null,
-        audioPositionSeconds: 0,
-        audioFileName:
-            "Communiquer avec Dieu (1_2 - Joyce Meyer - Grandir avec Dieu.mp3",
-        audioFileSize: 330000000,
-        isAudioImported: false,
-      );
+        final Audio firstAudioOneOfTwo = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle:
+              "Communiquer avec Dieu (1_2 - Joyce Meyer - Grandir avec Dieu",
+          compactVideoDescription: '',
+          validVideoTitle:
+              "Communiquer avec Dieu (1_2 - Joyce Meyer - Grandir avec Dieu",
+          videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+          audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime(2023, 3, 1),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName:
+              "Communiquer avec Dieu (1_2 - Joyce Meyer - Grandir avec Dieu.mp3",
+          audioFileSize: 330000000,
+          isAudioImported: false,
+        );
 
-      final Audio firstAudioTwoOfTwo = Audio.fullConstructor(
-        youtubeVideoChannel: 'one',
-        enclosingPlaylist: audioPlaylist,
-        movedFromPlaylistTitle: null,
-        movedToPlaylistTitle: null,
-        copiedFromPlaylistTitle: null,
-        copiedToPlaylistTitle: null,
-        originalVideoTitle:
-            "Communiquer avec Dieu (2_2 - Joyce Meyer - Grandir avec Dieu",
-        compactVideoDescription: '',
-        validVideoTitle:
-            "Communiquer avec Dieu (2_2 - Joyce Meyer - Grandir avec Dieu",
-        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
-        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
-        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
-        audioDownloadSpeed: 1000000,
-        videoUploadDate: DateTime(2023, 3, 1),
-        audioDuration: const Duration(minutes: 5, seconds: 30),
-        isAudioMusicQuality: false,
-        audioPlaySpeed: kAudioDefaultPlaySpeed,
-        audioPlayVolume: kAudioDefaultPlayVolume,
-        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
-        isPaused: true,
-        audioPausedDateTime: null,
-        audioPositionSeconds: 0,
-        audioFileName:
-            "Communiquer avec Dieu (2_2 - Joyce Meyer - Grandir avec Dieu.mp3",
-        audioFileSize: 330000000,
-        isAudioImported: false,
-      );
+        final Audio firstAudioTwoOfTwo = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle:
+              "Communiquer avec Dieu (2_2 - Joyce Meyer - Grandir avec Dieu",
+          compactVideoDescription: '',
+          validVideoTitle:
+              "Communiquer avec Dieu (2_2 - Joyce Meyer - Grandir avec Dieu",
+          videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+          audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime(2023, 3, 1),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName:
+              "Communiquer avec Dieu (2_2 - Joyce Meyer - Grandir avec Dieu.mp3",
+          audioFileSize: 330000000,
+          isAudioImported: false,
+        );
 
-      List<Audio> audioList = [
-        thirdAudioOneOfTwo,
-        thirdAudioTwoOfTwo,
-        secondAudioTwoOfTwo,
-        secondAudioOneOfTwo,
-        fourthAudio,
-        fifthAudio,
-        firstAudioOneOfTwo,
-        firstAudioTwoOfTwo,
-      ];
+        List<Audio> audioList = [
+          thirdAudioOneOfTwo,
+          thirdAudioTwoOfTwo,
+          secondAudioTwoOfTwo,
+          secondAudioOneOfTwo,
+          fourthAudio,
+          fifthAudio,
+          firstAudioOneOfTwo,
+          firstAudioTwoOfTwo,
+        ];
 
-      List<Audio> expectedResultForTitleAsc = [
-        firstAudioOneOfTwo,
-        firstAudioTwoOfTwo,
-        secondAudioOneOfTwo,
-        secondAudioTwoOfTwo,
-        thirdAudioOneOfTwo,
-        thirdAudioTwoOfTwo,
-        fourthAudio,
-        fifthAudio,
-      ];
+        List<Audio> expectedResultForTitleAsc = [
+          firstAudioOneOfTwo,
+          firstAudioTwoOfTwo,
+          secondAudioOneOfTwo,
+          secondAudioTwoOfTwo,
+          thirdAudioOneOfTwo,
+          thirdAudioTwoOfTwo,
+          fourthAudio,
+          fifthAudio,
+        ];
 
-      List<Audio> expectedResultForTitleDesc = [
-        fifthAudio,
-        fourthAudio,
-        thirdAudioTwoOfTwo,
-        thirdAudioOneOfTwo,
-        secondAudioTwoOfTwo,
-        secondAudioOneOfTwo,
-        firstAudioTwoOfTwo,
-        firstAudioOneOfTwo,
-      ];
+        List<Audio> expectedResultForTitleDesc = [
+          fifthAudio,
+          fourthAudio,
+          thirdAudioTwoOfTwo,
+          thirdAudioOneOfTwo,
+          secondAudioTwoOfTwo,
+          secondAudioOneOfTwo,
+          firstAudioTwoOfTwo,
+          firstAudioOneOfTwo,
+        ];
 
-      final List<SortingItem> selectedSortItemLstAsc = [
-        SortingItem(
-          sortingOption: SortingOption.validAudioTitle,
-          isAscending: true,
-        ),
-      ];
+        final List<SortingItem> selectedSortItemLstAsc = [
+          SortingItem(
+            sortingOption: SortingOption.validAudioTitle,
+            isAscending: true,
+          ),
+        ];
 
-      List<Audio> sortedByTitleAsc =
-          audioSortFilterService.sortAudioLstBySortingOptions(
-        audioLst: audioList,
-        selectedSortItemLst: selectedSortItemLstAsc,
-      );
+        List<Audio> sortedByTitleAsc =
+            audioSortFilterService.sortAudioLstBySortingOptions(
+          audioLst: audioList,
+          selectedSortItemLst: selectedSortItemLstAsc,
+        );
 
-      expect(
-          sortedByTitleAsc.map((audio) => audio.validVideoTitle).toList(),
-          equals(expectedResultForTitleAsc
-              .map((audio) => audio.validVideoTitle)
-              .toList()));
+        expect(
+            sortedByTitleAsc.map((audio) => audio.validVideoTitle).toList(),
+            equals(expectedResultForTitleAsc
+                .map((audio) => audio.validVideoTitle)
+                .toList()));
 
-      final List<SortingItem> selectedSortItemLstDesc = [
-        SortingItem(
-          sortingOption: SortingOption.validAudioTitle,
-          isAscending: false,
-        ),
-      ];
+        final List<SortingItem> selectedSortItemLstDesc = [
+          SortingItem(
+            sortingOption: SortingOption.validAudioTitle,
+            isAscending: false,
+          ),
+        ];
 
-      List<Audio> sortedByTitleDesc =
-          audioSortFilterService.sortAudioLstBySortingOptions(
-        audioLst: audioList,
-        selectedSortItemLst: selectedSortItemLstDesc,
-      );
+        List<Audio> sortedByTitleDesc =
+            audioSortFilterService.sortAudioLstBySortingOptions(
+          audioLst: audioList,
+          selectedSortItemLst: selectedSortItemLstDesc,
+        );
 
-      expect(
-          sortedByTitleDesc.map((audio) => audio.validVideoTitle).toList(),
-          equals(expectedResultForTitleDesc
-              .map((audio) => audio.validVideoTitle)
-              .toList()));
-    });
-    test('''sort by edited title with chapter number. The valid video titles of
+        expect(
+            sortedByTitleDesc.map((audio) => audio.validVideoTitle).toList(),
+            equals(expectedResultForTitleDesc
+                .map((audio) => audio.validVideoTitle)
+                .toList()));
+      });
+      test('sort by title containing - number reference', () {
+        final Audio thirdAudioOneOfTwo = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle:
+              "La foi contre la peur (1-2 - Joyce Meyer -  Avoir des relations saines",
+          compactVideoDescription: '',
+          validVideoTitle:
+              "La foi contre la peur (1-2 - Joyce Meyer -  Avoir des relations saines",
+          videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+          audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime(2023, 3, 1),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName:
+              "La foi contre la peur (1-2 - Joyce Meyer -  Avoir des relations saines.mp3",
+          audioFileSize: 330000000,
+          isAudioImported: false,
+        );
+
+        final Audio thirdAudioTwoOfTwo = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle:
+              "La foi contre la peur (2-2 - Joyce Meyer -  Avoir des relations saines",
+          compactVideoDescription: '',
+          validVideoTitle:
+              "La foi contre la peur (2-2 - Joyce Meyer -  Avoir des relations saines",
+          videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+          audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime(2023, 3, 1),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName:
+              "La foi contre la peur (2-2 - Joyce Meyer -  Avoir des relations saines.mp3",
+          audioFileSize: 330000000,
+          isAudioImported: false,
+        );
+
+        final Audio secondAudioTwoOfTwo = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle:
+              "Il est temps d'être sérieux avec Dieu ! (2-2 - Joyce Meyer - Grandir avec Dieu",
+          compactVideoDescription: '',
+          validVideoTitle:
+              "Il est temps d'être sérieux avec Dieu ! (2-2 - Joyce Meyer - Grandir avec Dieu",
+          videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+          audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime(2023, 3, 1),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName:
+              "Il est temps d'être sérieux avec Dieu ! (2-2 - Joyce Meyer - Grandir avec Dieu.mp3",
+          audioFileSize: 330000000,
+          isAudioImported: false,
+        );
+
+        final Audio secondAudioOneOfTwo = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle:
+              "Il est temps d'être sérieux avec Dieu ! (1-2 - Joyce Meyer - Grandir avec Dieu",
+          compactVideoDescription: '',
+          validVideoTitle:
+              "Il est temps d'être sérieux avec Dieu ! (1-2 - Joyce Meyer - Grandir avec Dieu",
+          videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+          audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime(2023, 3, 1),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName:
+              "Il est temps d'être sérieux avec Dieu ! (1-2 - Joyce Meyer - Grandir avec Dieu.mp3",
+          audioFileSize: 330000000,
+          isAudioImported: false,
+        );
+
+        final Audio fourthAudio = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle:
+              "Laisser Dieu au contrôle - Joyce Meyer - Grandir avec Dieu",
+          compactVideoDescription: '',
+          validVideoTitle:
+              "Laisser Dieu au contrôle - Joyce Meyer - Grandir avec Dieu",
+          videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+          audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime(2023, 3, 1),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName:
+              "Laisser Dieu au contrôle - Joyce Meyer - Grandir avec Dieu.mp3",
+          audioFileSize: 330000000,
+          isAudioImported: false,
+        );
+
+        final Audio fifthAudio = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle:
+              "VOICI COMMENT ÊTRE GUIDÉ PAR LE SAINT ESPRIT _ JOYCE MEYER",
+          compactVideoDescription: '',
+          validVideoTitle:
+              "VOICI COMMENT ÊTRE GUIDÉ PAR LE SAINT ESPRIT _ JOYCE MEYER",
+          videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+          audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime(2023, 3, 1),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName:
+              "VOICI COMMENT ÊTRE GUIDÉ PAR LE SAINT ESPRIT _ JOYCE MEYER.mp3",
+          audioFileSize: 330000000,
+          isAudioImported: false,
+        );
+
+        final Audio firstAudioOneOfTwo = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle:
+              "Communiquer avec Dieu (1-2 - Joyce Meyer - Grandir avec Dieu",
+          compactVideoDescription: '',
+          validVideoTitle:
+              "Communiquer avec Dieu (1-2 - Joyce Meyer - Grandir avec Dieu",
+          videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+          audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime(2023, 3, 1),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName:
+              "Communiquer avec Dieu (1-2 - Joyce Meyer - Grandir avec Dieu.mp3",
+          audioFileSize: 330000000,
+          isAudioImported: false,
+        );
+
+        final Audio firstAudioTwoOfTwo = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle:
+              "Communiquer avec Dieu (2-2 - Joyce Meyer - Grandir avec Dieu",
+          compactVideoDescription: '',
+          validVideoTitle:
+              "Communiquer avec Dieu (2-2 - Joyce Meyer - Grandir avec Dieu",
+          videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+          audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime(2023, 3, 1),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName:
+              "Communiquer avec Dieu (2-2 - Joyce Meyer - Grandir avec Dieu.mp3",
+          audioFileSize: 330000000,
+          isAudioImported: false,
+        );
+
+        List<Audio> audioList = [
+          thirdAudioOneOfTwo,
+          thirdAudioTwoOfTwo,
+          secondAudioTwoOfTwo,
+          secondAudioOneOfTwo,
+          fourthAudio,
+          fifthAudio,
+          firstAudioOneOfTwo,
+          firstAudioTwoOfTwo,
+        ];
+
+        List<Audio> expectedResultForTitleAsc = [
+          firstAudioOneOfTwo,
+          firstAudioTwoOfTwo,
+          secondAudioOneOfTwo,
+          secondAudioTwoOfTwo,
+          thirdAudioOneOfTwo,
+          thirdAudioTwoOfTwo,
+          fourthAudio,
+          fifthAudio,
+        ];
+
+        List<Audio> expectedResultForTitleDesc = [
+          fifthAudio,
+          fourthAudio,
+          thirdAudioTwoOfTwo,
+          thirdAudioOneOfTwo,
+          secondAudioTwoOfTwo,
+          secondAudioOneOfTwo,
+          firstAudioTwoOfTwo,
+          firstAudioOneOfTwo,
+        ];
+
+        final List<SortingItem> selectedSortItemLstAsc = [
+          SortingItem(
+            sortingOption: SortingOption.validAudioTitle,
+            isAscending: true,
+          ),
+        ];
+
+        List<Audio> sortedByTitleAsc =
+            audioSortFilterService.sortAudioLstBySortingOptions(
+          audioLst: audioList,
+          selectedSortItemLst: selectedSortItemLstAsc,
+        );
+
+        expect(
+            sortedByTitleAsc.map((audio) => audio.validVideoTitle).toList(),
+            equals(expectedResultForTitleAsc
+                .map((audio) => audio.validVideoTitle)
+                .toList()));
+
+        final List<SortingItem> selectedSortItemLstDesc = [
+          SortingItem(
+            sortingOption: SortingOption.validAudioTitle,
+            isAscending: false,
+          ),
+        ];
+
+        List<Audio> sortedByTitleDesc =
+            audioSortFilterService.sortAudioLstBySortingOptions(
+          audioLst: audioList,
+          selectedSortItemLst: selectedSortItemLstDesc,
+        );
+
+        expect(
+            sortedByTitleDesc.map((audio) => audio.validVideoTitle).toList(),
+            equals(expectedResultForTitleDesc
+                .map((audio) => audio.validVideoTitle)
+                .toList()));
+      });
+      test('sort by title containing / number reference', () {
+        final Audio thirdAudioOneOfTwo = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle:
+              "La foi contre la peur (1/2 - Joyce Meyer -  Avoir des relations saines",
+          compactVideoDescription: '',
+          validVideoTitle:
+              "La foi contre la peur (1/2 - Joyce Meyer -  Avoir des relations saines",
+          videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+          audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime(2023, 3, 1),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName:
+              "La foi contre la peur (1/2 - Joyce Meyer -  Avoir des relations saines.mp3",
+          audioFileSize: 330000000,
+          isAudioImported: false,
+        );
+
+        final Audio thirdAudioTwoOfTwo = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle:
+              "La foi contre la peur (2/2 - Joyce Meyer -  Avoir des relations saines",
+          compactVideoDescription: '',
+          validVideoTitle:
+              "La foi contre la peur (2/2 - Joyce Meyer -  Avoir des relations saines",
+          videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+          audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime(2023, 3, 1),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName:
+              "La foi contre la peur (2/2 - Joyce Meyer -  Avoir des relations saines.mp3",
+          audioFileSize: 330000000,
+          isAudioImported: false,
+        );
+
+        final Audio secondAudioTwoOfTwo = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle:
+              "Il est temps d'être sérieux avec Dieu ! (2/2 - Joyce Meyer - Grandir avec Dieu",
+          compactVideoDescription: '',
+          validVideoTitle:
+              "Il est temps d'être sérieux avec Dieu ! (2/2 - Joyce Meyer - Grandir avec Dieu",
+          videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+          audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime(2023, 3, 1),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName:
+              "Il est temps d'être sérieux avec Dieu ! (2/2 - Joyce Meyer - Grandir avec Dieu.mp3",
+          audioFileSize: 330000000,
+          isAudioImported: false,
+        );
+
+        final Audio secondAudioOneOfTwo = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle:
+              "Il est temps d'être sérieux avec Dieu ! (1/2 - Joyce Meyer - Grandir avec Dieu",
+          compactVideoDescription: '',
+          validVideoTitle:
+              "Il est temps d'être sérieux avec Dieu ! (1/2 - Joyce Meyer - Grandir avec Dieu",
+          videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+          audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime(2023, 3, 1),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName:
+              "Il est temps d'être sérieux avec Dieu ! (1/2 - Joyce Meyer - Grandir avec Dieu.mp3",
+          audioFileSize: 330000000,
+          isAudioImported: false,
+        );
+
+        final Audio fourthAudio = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle:
+              "Laisser Dieu au contrôle - Joyce Meyer - Grandir avec Dieu",
+          compactVideoDescription: '',
+          validVideoTitle:
+              "Laisser Dieu au contrôle - Joyce Meyer - Grandir avec Dieu",
+          videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+          audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime(2023, 3, 1),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName:
+              "Laisser Dieu au contrôle - Joyce Meyer - Grandir avec Dieu.mp3",
+          audioFileSize: 330000000,
+          isAudioImported: false,
+        );
+
+        final Audio fifthAudio = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle:
+              "VOICI COMMENT ÊTRE GUIDÉ PAR LE SAINT ESPRIT _ JOYCE MEYER",
+          compactVideoDescription: '',
+          validVideoTitle:
+              "VOICI COMMENT ÊTRE GUIDÉ PAR LE SAINT ESPRIT _ JOYCE MEYER",
+          videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+          audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime(2023, 3, 1),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName:
+              "VOICI COMMENT ÊTRE GUIDÉ PAR LE SAINT ESPRIT _ JOYCE MEYER.mp3",
+          audioFileSize: 330000000,
+          isAudioImported: false,
+        );
+
+        final Audio firstAudioOneOfTwo = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle:
+              "Communiquer avec Dieu (1/2 - Joyce Meyer - Grandir avec Dieu",
+          compactVideoDescription: '',
+          validVideoTitle:
+              "Communiquer avec Dieu (1/2 - Joyce Meyer - Grandir avec Dieu",
+          videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+          audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime(2023, 3, 1),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName:
+              "Communiquer avec Dieu (1/2 - Joyce Meyer - Grandir avec Dieu.mp3",
+          audioFileSize: 330000000,
+          isAudioImported: false,
+        );
+
+        final Audio firstAudioTwoOfTwo = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle:
+              "Communiquer avec Dieu (2/2 - Joyce Meyer - Grandir avec Dieu",
+          compactVideoDescription: '',
+          validVideoTitle:
+              "Communiquer avec Dieu (2/2 - Joyce Meyer - Grandir avec Dieu",
+          videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+          audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime(2023, 3, 1),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName:
+              "Communiquer avec Dieu (2/2 - Joyce Meyer - Grandir avec Dieu.mp3",
+          audioFileSize: 330000000,
+          isAudioImported: false,
+        );
+
+        List<Audio> audioList = [
+          thirdAudioOneOfTwo,
+          thirdAudioTwoOfTwo,
+          secondAudioTwoOfTwo,
+          secondAudioOneOfTwo,
+          fourthAudio,
+          fifthAudio,
+          firstAudioOneOfTwo,
+          firstAudioTwoOfTwo,
+        ];
+
+        List<Audio> expectedResultForTitleAsc = [
+          firstAudioOneOfTwo,
+          firstAudioTwoOfTwo,
+          secondAudioOneOfTwo,
+          secondAudioTwoOfTwo,
+          thirdAudioOneOfTwo,
+          thirdAudioTwoOfTwo,
+          fourthAudio,
+          fifthAudio,
+        ];
+
+        List<Audio> expectedResultForTitleDesc = [
+          fifthAudio,
+          fourthAudio,
+          thirdAudioTwoOfTwo,
+          thirdAudioOneOfTwo,
+          secondAudioTwoOfTwo,
+          secondAudioOneOfTwo,
+          firstAudioTwoOfTwo,
+          firstAudioOneOfTwo,
+        ];
+
+        final List<SortingItem> selectedSortItemLstAsc = [
+          SortingItem(
+            sortingOption: SortingOption.validAudioTitle,
+            isAscending: true,
+          ),
+        ];
+
+        List<Audio> sortedByTitleAsc =
+            audioSortFilterService.sortAudioLstBySortingOptions(
+          audioLst: audioList,
+          selectedSortItemLst: selectedSortItemLstAsc,
+        );
+
+        expect(
+            sortedByTitleAsc.map((audio) => audio.validVideoTitle).toList(),
+            equals(expectedResultForTitleAsc
+                .map((audio) => audio.validVideoTitle)
+                .toList()));
+
+        final List<SortingItem> selectedSortItemLstDesc = [
+          SortingItem(
+            sortingOption: SortingOption.validAudioTitle,
+            isAscending: false,
+          ),
+        ];
+
+        List<Audio> sortedByTitleDesc =
+            audioSortFilterService.sortAudioLstBySortingOptions(
+          audioLst: audioList,
+          selectedSortItemLst: selectedSortItemLstDesc,
+        );
+
+        expect(
+            sortedByTitleDesc.map((audio) => audio.validVideoTitle).toList(),
+            equals(expectedResultForTitleDesc
+                .map((audio) => audio.validVideoTitle)
+                .toList()));
+      });
+      test('sort by title containing : number reference', () {
+        final Audio thirdAudioOneOfTwo = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle:
+              "La foi contre la peur (1:2 - Joyce Meyer -  Avoir des relations saines",
+          compactVideoDescription: '',
+          validVideoTitle:
+              "La foi contre la peur (1:2 - Joyce Meyer -  Avoir des relations saines",
+          videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+          audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime(2023, 3, 1),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName:
+              "La foi contre la peur (1:2 - Joyce Meyer -  Avoir des relations saines.mp3",
+          audioFileSize: 330000000,
+          isAudioImported: false,
+        );
+
+        final Audio thirdAudioTwoOfTwo = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle:
+              "La foi contre la peur (2:2 - Joyce Meyer -  Avoir des relations saines",
+          compactVideoDescription: '',
+          validVideoTitle:
+              "La foi contre la peur (2:2 - Joyce Meyer -  Avoir des relations saines",
+          videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+          audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime(2023, 3, 1),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName:
+              "La foi contre la peur (2:2 - Joyce Meyer -  Avoir des relations saines.mp3",
+          audioFileSize: 330000000,
+          isAudioImported: false,
+        );
+
+        final Audio secondAudioTwoOfTwo = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle:
+              "Il est temps d'être sérieux avec Dieu ! (2:2 - Joyce Meyer - Grandir avec Dieu",
+          compactVideoDescription: '',
+          validVideoTitle:
+              "Il est temps d'être sérieux avec Dieu ! (2:2 - Joyce Meyer - Grandir avec Dieu",
+          videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+          audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime(2023, 3, 1),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName:
+              "Il est temps d'être sérieux avec Dieu ! (2:2 - Joyce Meyer - Grandir avec Dieu.mp3",
+          audioFileSize: 330000000,
+          isAudioImported: false,
+        );
+
+        final Audio secondAudioOneOfTwo = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle:
+              "Il est temps d'être sérieux avec Dieu ! (1:2 - Joyce Meyer - Grandir avec Dieu",
+          compactVideoDescription: '',
+          validVideoTitle:
+              "Il est temps d'être sérieux avec Dieu ! (1:2 - Joyce Meyer - Grandir avec Dieu",
+          videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+          audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime(2023, 3, 1),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName:
+              "Il est temps d'être sérieux avec Dieu ! (1:2 - Joyce Meyer - Grandir avec Dieu.mp3",
+          audioFileSize: 330000000,
+          isAudioImported: false,
+        );
+
+        final Audio fourthAudio = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle:
+              "Laisser Dieu au contrôle - Joyce Meyer - Grandir avec Dieu",
+          compactVideoDescription: '',
+          validVideoTitle:
+              "Laisser Dieu au contrôle - Joyce Meyer - Grandir avec Dieu",
+          videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+          audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime(2023, 3, 1),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName:
+              "Laisser Dieu au contrôle - Joyce Meyer - Grandir avec Dieu.mp3",
+          audioFileSize: 330000000,
+          isAudioImported: false,
+        );
+
+        final Audio fifthAudio = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle:
+              "VOICI COMMENT ÊTRE GUIDÉ PAR LE SAINT ESPRIT _ JOYCE MEYER",
+          compactVideoDescription: '',
+          validVideoTitle:
+              "VOICI COMMENT ÊTRE GUIDÉ PAR LE SAINT ESPRIT _ JOYCE MEYER",
+          videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+          audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime(2023, 3, 1),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName:
+              "VOICI COMMENT ÊTRE GUIDÉ PAR LE SAINT ESPRIT _ JOYCE MEYER.mp3",
+          audioFileSize: 330000000,
+          isAudioImported: false,
+        );
+
+        final Audio firstAudioOneOfTwo = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle:
+              "Communiquer avec Dieu (1:2 - Joyce Meyer - Grandir avec Dieu",
+          compactVideoDescription: '',
+          validVideoTitle:
+              "Communiquer avec Dieu (1:2 - Joyce Meyer - Grandir avec Dieu",
+          videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+          audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime(2023, 3, 1),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName:
+              "Communiquer avec Dieu (1:2 - Joyce Meyer - Grandir avec Dieu.mp3",
+          audioFileSize: 330000000,
+          isAudioImported: false,
+        );
+
+        final Audio firstAudioTwoOfTwo = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle:
+              "Communiquer avec Dieu (2:2 - Joyce Meyer - Grandir avec Dieu",
+          compactVideoDescription: '',
+          validVideoTitle:
+              "Communiquer avec Dieu (2:2 - Joyce Meyer - Grandir avec Dieu",
+          videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+          audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+          audioDownloadSpeed: 1000000,
+          videoUploadDate: DateTime(2023, 3, 1),
+          audioDuration: const Duration(minutes: 5, seconds: 30),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName:
+              "Communiquer avec Dieu (2:2 - Joyce Meyer - Grandir avec Dieu.mp3",
+          audioFileSize: 330000000,
+          isAudioImported: false,
+        );
+
+        List<Audio> audioList = [
+          thirdAudioOneOfTwo,
+          thirdAudioTwoOfTwo,
+          secondAudioTwoOfTwo,
+          secondAudioOneOfTwo,
+          fourthAudio,
+          fifthAudio,
+          firstAudioOneOfTwo,
+          firstAudioTwoOfTwo,
+        ];
+
+        List<Audio> expectedResultForTitleAsc = [
+          firstAudioOneOfTwo,
+          firstAudioTwoOfTwo,
+          secondAudioOneOfTwo,
+          secondAudioTwoOfTwo,
+          thirdAudioOneOfTwo,
+          thirdAudioTwoOfTwo,
+          fourthAudio,
+          fifthAudio,
+        ];
+
+        List<Audio> expectedResultForTitleDesc = [
+          fifthAudio,
+          fourthAudio,
+          thirdAudioTwoOfTwo,
+          thirdAudioOneOfTwo,
+          secondAudioTwoOfTwo,
+          secondAudioOneOfTwo,
+          firstAudioTwoOfTwo,
+          firstAudioOneOfTwo,
+        ];
+
+        final List<SortingItem> selectedSortItemLstAsc = [
+          SortingItem(
+            sortingOption: SortingOption.validAudioTitle,
+            isAscending: true,
+          ),
+        ];
+
+        List<Audio> sortedByTitleAsc =
+            audioSortFilterService.sortAudioLstBySortingOptions(
+          audioLst: audioList,
+          selectedSortItemLst: selectedSortItemLstAsc,
+        );
+
+        expect(
+            sortedByTitleAsc.map((audio) => audio.validVideoTitle).toList(),
+            equals(expectedResultForTitleAsc
+                .map((audio) => audio.validVideoTitle)
+                .toList()));
+
+        final List<SortingItem> selectedSortItemLstDesc = [
+          SortingItem(
+            sortingOption: SortingOption.validAudioTitle,
+            isAscending: false,
+          ),
+        ];
+
+        List<Audio> sortedByTitleDesc =
+            audioSortFilterService.sortAudioLstBySortingOptions(
+          audioLst: audioList,
+          selectedSortItemLst: selectedSortItemLstDesc,
+        );
+
+        expect(
+            sortedByTitleDesc.map((audio) => audio.validVideoTitle).toList(),
+            equals(expectedResultForTitleDesc
+                .map((audio) => audio.validVideoTitle)
+                .toList()));
+      });
+      test(
+          '''sort by edited title with chapter number. The valid video titles of
             the audio contained in the 'Gary Renard - Et l'univers disparaîtra'
             json file were edited in order for their titles to be sorted correctly
             before the SortingOption.validAudioTitle sort function was improved.''',
-        () {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
-      );
+          () {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
 
-      // Copy the test initial audio data to the app dir
-      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-        sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}sort_filter_unit_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
-      );
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}sort_filter_unit_test",
+          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
 
-      // Load Playlist from the file
-      Playlist loadedPlaylist = JsonDataService.loadFromFile(
-        jsonPathFileName:
-            "$kPlaylistDownloadRootPathWindowsTest${path.separator}Gary Renard - Et l'univers disparaîtra.json",
-        type: Playlist,
-      );
+        // Load Playlist from the file
+        Playlist loadedPlaylist = JsonDataService.loadFromFile(
+          jsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}Gary Renard - Et l'univers disparaîtra.json",
+          type: Playlist,
+        );
 
-      List<Audio> audioList = loadedPlaylist.playableAudioLst;
+        List<Audio> audioList = loadedPlaylist.playableAudioLst;
 
-      final List<SortingItem> selectedSortItemLstAsc = [
-        SortingItem(
-          sortingOption: SortingOption.validAudioTitle,
-          isAscending: true,
-        ),
-      ];
+        final List<SortingItem> selectedSortItemLstAsc = [
+          SortingItem(
+            sortingOption: SortingOption.validAudioTitle,
+            isAscending: true,
+          ),
+        ];
 
-      List<Audio> actualAudioSortedByTitleAscLst =
-          audioSortFilterService.sortAudioLstBySortingOptions(
-        audioLst: audioList,
-        selectedSortItemLst: selectedSortItemLstAsc,
-      );
+        List<Audio> actualAudioSortedByTitleAscLst =
+            audioSortFilterService.sortAudioLstBySortingOptions(
+          audioLst: audioList,
+          selectedSortItemLst: selectedSortItemLstAsc,
+        );
 
-      // Load the expected sorted audio list from the file
-      List<Audio> expectedAudioSortedByTitleAscLst =
-          JsonDataService.loadListFromFile(
-        jsonPathFileName:
-            "$kPlaylistDownloadRootPathWindowsTest${path.separator}expected audio list asc Et l'univers disparaîtra.json",
-        type: Audio,
-      );
+        // Load the expected sorted audio list from the file
+        List<Audio> expectedAudioSortedByTitleAscLst =
+            JsonDataService.loadListFromFile(
+          jsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}expected audio list asc Et l'univers disparaîtra.json",
+          type: Audio,
+        );
 
-      expect(
-        actualAudioSortedByTitleAscLst,
-        expectedAudioSortedByTitleAscLst,
-      );
+        expect(
+          actualAudioSortedByTitleAscLst,
+          expectedAudioSortedByTitleAscLst,
+        );
 
-      final List<SortingItem> selectedSortItemLstDesc = [
-        SortingItem(
-          sortingOption: SortingOption.validAudioTitle,
-          isAscending: false,
-        ),
-      ];
+        final List<SortingItem> selectedSortItemLstDesc = [
+          SortingItem(
+            sortingOption: SortingOption.validAudioTitle,
+            isAscending: false,
+          ),
+        ];
 
-      List<Audio> actualAudioSortedByTitleDescLst =
-          audioSortFilterService.sortAudioLstBySortingOptions(
-        audioLst: audioList,
-        selectedSortItemLst: selectedSortItemLstDesc,
-      );
+        List<Audio> actualAudioSortedByTitleDescLst =
+            audioSortFilterService.sortAudioLstBySortingOptions(
+          audioLst: audioList,
+          selectedSortItemLst: selectedSortItemLstDesc,
+        );
 
-      // Save the list to a file
-      // JsonDataService.saveListToFile(
-      //   data: actualAudioSortedByTitleDescLst,
-      //   jsonPathFileName:
-      //       "$kPlaylistDownloadRootPathWindowsTest${path.separator}expected audio list desc Et l'univers disparaîtra.json",
-      // );
+        // Save the list to a file
+        // JsonDataService.saveListToFile(
+        //   data: actualAudioSortedByTitleDescLst,
+        //   jsonPathFileName:
+        //       "$kPlaylistDownloadRootPathWindowsTest${path.separator}expected audio list desc Et l'univers disparaîtra.json",
+        // );
 
-      // Load the expected sorted audio list from the file
-      List<Audio> expectedAudioSortedByTitleDescLst =
-          JsonDataService.loadListFromFile(
-        jsonPathFileName:
-            "$kPlaylistDownloadRootPathWindowsTest${path.separator}expected audio list desc Et l'univers disparaîtra.json",
-        type: Audio,
-      );
+        // Load the expected sorted audio list from the file
+        List<Audio> expectedAudioSortedByTitleDescLst =
+            JsonDataService.loadListFromFile(
+          jsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}expected audio list desc Et l'univers disparaîtra.json",
+          type: Audio,
+        );
 
-      expect(
-        actualAudioSortedByTitleDescLst,
-        expectedAudioSortedByTitleDescLst,
-      );
+        expect(
+          actualAudioSortedByTitleDescLst,
+          expectedAudioSortedByTitleDescLst,
+        );
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
-      );
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+
+      test('sort by title starting with non language chars', () {
+        Audio title = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle: "'title",
+          compactVideoDescription: 'compactVideoDescription',
+          validVideoTitle: "'title",
+          videoUrl: 'videoUrl',
+          audioDownloadDateTime: DateTime.now(),
+          audioDownloadDuration: const Duration(seconds: 1),
+          audioDownloadSpeed: 1,
+          videoUploadDate: DateTime.now(),
+          audioDuration: const Duration(seconds: 1),
+          isAudioMusicQuality: true,
+          audioPlaySpeed: 1.0,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName: 'audioFileName',
+          audioFileSize: 1,
+          isAudioImported: false,
+        );
+
+        Audio avecPercentTitle = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle: "%avec percent title",
+          compactVideoDescription: 'compactVideoDescription',
+          validVideoTitle: "%avec percent title",
+          videoUrl: 'videoUrl',
+          audioDownloadDateTime: DateTime.now(),
+          audioDownloadDuration: const Duration(seconds: 1),
+          audioDownloadSpeed: 1,
+          videoUploadDate: DateTime.now(),
+          audioDuration: const Duration(seconds: 1),
+          isAudioMusicQuality: true,
+          audioPlaySpeed: 1.0,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName: 'audioFileName',
+          audioFileSize: 1,
+          isAudioImported: false,
+        );
+
+        Audio percentTitle = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle: "%percent title",
+          compactVideoDescription: 'compactVideoDescription',
+          validVideoTitle: "%percent title",
+          videoUrl: 'videoUrl',
+          audioDownloadDateTime: DateTime.now(),
+          audioDownloadDuration: const Duration(seconds: 1),
+          audioDownloadSpeed: 1,
+          videoUploadDate: DateTime.now(),
+          audioDuration: const Duration(seconds: 1),
+          isAudioMusicQuality: true,
+          audioPlaySpeed: 1.0,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName: 'audioFileName',
+          audioFileSize: 1,
+          isAudioImported: false,
+        );
+
+        Audio powerTitle = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle: "power title",
+          compactVideoDescription: 'compactVideoDescription',
+          validVideoTitle: "power title",
+          videoUrl: 'videoUrl',
+          audioDownloadDateTime: DateTime.now(),
+          audioDownloadDuration: const Duration(seconds: 1),
+          audioDownloadSpeed: 1,
+          videoUploadDate: DateTime.now(),
+          audioDuration: const Duration(seconds: 1),
+          isAudioMusicQuality: true,
+          audioPlaySpeed: 1.0,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName: 'audioFileName',
+          audioFileSize: 1,
+          isAudioImported: false,
+        );
+
+        Audio amenTitle = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle: "#'amen title",
+          compactVideoDescription: 'compactVideoDescription',
+          validVideoTitle: "#'amen title",
+          videoUrl: 'videoUrl',
+          audioDownloadDateTime: DateTime.now(),
+          audioDownloadDuration: const Duration(seconds: 1),
+          audioDownloadSpeed: 1,
+          videoUploadDate: DateTime.now(),
+          audioDuration: const Duration(seconds: 1),
+          isAudioMusicQuality: true,
+          audioPlaySpeed: 1.0,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName: 'audioFileName',
+          audioFileSize: 1,
+          isAudioImported: true,
+        );
+
+        Audio epicure = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle: "ÉPICURE - La mort n'est rien 📏",
+          compactVideoDescription: 'compactVideoDescription',
+          validVideoTitle: "ÉPICURE - La mort n'est rien",
+          videoUrl: 'videoUrl',
+          audioDownloadDateTime: DateTime.now(),
+          audioDownloadDuration: const Duration(seconds: 1),
+          audioDownloadSpeed: 1,
+          videoUploadDate: DateTime.now(),
+          audioDuration: const Duration(seconds: 1),
+          isAudioMusicQuality: true,
+          audioPlaySpeed: 1.0,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName: 'audioFileName',
+          audioFileSize: 1,
+          isAudioImported: false,
+        );
+
+        Audio ninetyFiveTitle = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle: "%95 title",
+          compactVideoDescription: 'compactVideoDescription',
+          validVideoTitle: "%95 title",
+          videoUrl: 'videoUrl',
+          audioDownloadDateTime: DateTime.now(),
+          audioDownloadDuration: const Duration(seconds: 1),
+          audioDownloadSpeed: 1,
+          videoUploadDate: DateTime.now(),
+          audioDuration: const Duration(seconds: 1),
+          isAudioMusicQuality: true,
+          audioPlaySpeed: 1.0,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName: 'audioFileName',
+          audioFileSize: 1,
+          isAudioImported: true,
+        );
+
+        Audio ninetyThreeTitle = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle: "93 title",
+          compactVideoDescription: 'compactVideoDescription',
+          validVideoTitle: "93 title",
+          videoUrl: 'videoUrl',
+          audioDownloadDateTime: DateTime.now(),
+          audioDownloadDuration: const Duration(seconds: 1),
+          audioDownloadSpeed: 1,
+          videoUploadDate: DateTime.now(),
+          audioDuration: const Duration(seconds: 1),
+          isAudioMusicQuality: true,
+          audioPlaySpeed: 1.0,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName: 'audioFileName',
+          audioFileSize: 1,
+          isAudioImported: false,
+        );
+
+        Audio ninetyFourTitle = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle: "#94 title",
+          compactVideoDescription: 'compactVideoDescription',
+          validVideoTitle: "#94 title",
+          videoUrl: 'videoUrl',
+          audioDownloadDateTime: DateTime.now(),
+          audioDownloadDuration: const Duration(seconds: 1),
+          audioDownloadSpeed: 1,
+          videoUploadDate: DateTime.now(),
+          audioDuration: const Duration(seconds: 1),
+          isAudioMusicQuality: true,
+          audioPlaySpeed: 1.0,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName: 'audioFileName',
+          audioFileSize: 1,
+          isAudioImported: true,
+        );
+
+        Audio echapper = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle: "Échapper à l'illusion de l'esprit",
+          compactVideoDescription: 'compactVideoDescription',
+          validVideoTitle: "Échapper à l'illusion de l'esprit",
+          videoUrl: 'videoUrl',
+          audioDownloadDateTime: DateTime.now(),
+          audioDownloadDuration: const Duration(seconds: 1),
+          audioDownloadSpeed: 1,
+          videoUploadDate: DateTime.now(),
+          audioDuration: const Duration(seconds: 1),
+          isAudioMusicQuality: true,
+          audioPlaySpeed: 1.0,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName: 'audioFileName',
+          audioFileSize: 1,
+          isAudioImported: false,
+        );
+
+        Audio evidentTitle = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle: "évident title",
+          compactVideoDescription: 'compactVideoDescription',
+          validVideoTitle: "évident title",
+          videoUrl: 'videoUrl',
+          audioDownloadDateTime: DateTime.now(),
+          audioDownloadDuration: const Duration(seconds: 1),
+          audioDownloadSpeed: 1,
+          videoUploadDate: DateTime.now(),
+          audioDuration: const Duration(seconds: 1),
+          isAudioMusicQuality: true,
+          audioPlaySpeed: 1.0,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName: 'audioFileName',
+          audioFileSize: 1,
+          isAudioImported: true,
+        );
+
+        Audio aLireTitle = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle: "à lire title",
+          compactVideoDescription: 'compactVideoDescription',
+          validVideoTitle: "à lire title",
+          videoUrl: 'videoUrl',
+          audioDownloadDateTime: DateTime.now(),
+          audioDownloadDuration: const Duration(seconds: 1),
+          audioDownloadSpeed: 1,
+          videoUploadDate: DateTime.now(),
+          audioDuration: const Duration(seconds: 1),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioFileName: 'audioFileName',
+          audioFileSize: 1,
+          isAudioImported: false,
+        );
+
+        Audio nineTitle = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle: "9 title",
+          compactVideoDescription: 'compactVideoDescription',
+          validVideoTitle: "9 title",
+          videoUrl: 'videoUrl',
+          audioDownloadDateTime: DateTime.now(),
+          audioDownloadDuration: const Duration(seconds: 1),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: true,
+          isPaused: true,
+          audioPausedDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioPositionSeconds: 500,
+          audioDownloadSpeed: 1,
+          videoUploadDate: DateTime.now(),
+          audioDuration: const Duration(seconds: 10000),
+          audioFileName: 'audioFileName',
+          audioFileSize: 1,
+          isAudioImported: false,
+        );
+
+        Audio eightTitle = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle: "8 title",
+          compactVideoDescription: 'compactVideoDescription',
+          validVideoTitle: "8 title",
+          videoUrl: 'videoUrl',
+          audioDownloadDateTime: DateTime.now(),
+          audioDownloadDuration: const Duration(seconds: 1),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: true,
+          isPaused: true,
+          audioPausedDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+          audioPositionSeconds: 500,
+          audioDownloadSpeed: 1,
+          videoUploadDate: DateTime.now(),
+          audioDuration: const Duration(seconds: 10000),
+          audioFileName: 'audioFileName',
+          audioFileSize: 1,
+          isAudioImported: false,
+        );
+
+        Audio eventuelTitle = Audio.fullConstructor(
+          youtubeVideoChannel: 'one',
+          enclosingPlaylist: audioPlaylist,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          originalVideoTitle: "éventuel title",
+          compactVideoDescription: 'compactVideoDescription',
+          validVideoTitle: "éventuel title",
+          videoUrl: 'videoUrl',
+          audioDownloadDateTime: DateTime.now(),
+          isAudioMusicQuality: false,
+          audioPlaySpeed: kAudioDefaultPlaySpeed,
+          audioPlayVolume: kAudioDefaultPlayVolume,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          isPaused: true,
+          audioPausedDateTime: null,
+          audioPositionSeconds: 0,
+          audioDownloadDuration: const Duration(seconds: 1),
+          audioDownloadSpeed: 1,
+          videoUploadDate: DateTime.now(),
+          audioDuration: const Duration(seconds: 1),
+          audioFileName: 'audioFileName',
+          audioFileSize: 1,
+          isAudioImported: true,
+        );
+
+        List<Audio?> audioLst = [
+          title,
+          avecPercentTitle,
+          percentTitle,
+          powerTitle,
+          amenTitle,
+          epicure,
+          ninetyFiveTitle,
+          ninetyThreeTitle,
+          ninetyFourTitle,
+          echapper,
+          evidentTitle,
+          aLireTitle,
+          nineTitle,
+          eightTitle,
+          eventuelTitle,
+        ];
+
+        List<Audio?> expectedResultForTitleAsc = [
+          amenTitle,
+          ninetyFourTitle,
+          ninetyFiveTitle,
+          avecPercentTitle,
+          percentTitle,
+          title,
+          eightTitle,
+          nineTitle,
+          ninetyThreeTitle,
+          powerTitle,
+          aLireTitle,
+          echapper,
+          epicure,
+          eventuelTitle,
+          evidentTitle,
+        ];
+
+        List<Audio?> expectedResultForTitleDesc = [
+          evidentTitle,
+          eventuelTitle,
+          epicure,
+          echapper,
+          aLireTitle,
+          powerTitle,
+          ninetyThreeTitle,
+          nineTitle,
+          eightTitle,
+          title,
+          percentTitle,
+          avecPercentTitle,
+          ninetyFiveTitle,
+          ninetyFourTitle,
+          amenTitle,
+        ];
+
+        final List<SortingItem> selectedSortItemLstAsc = [
+          SortingItem(
+            sortingOption: SortingOption.validAudioTitle,
+            isAscending: true,
+          ),
+        ];
+
+        List<Audio> sortedByTitleAsc =
+            audioSortFilterService.sortAudioLstBySortingOptions(
+          audioLst: List<Audio>.from(audioLst), // copy list
+          selectedSortItemLst: selectedSortItemLstAsc,
+        );
+
+        expect(
+            sortedByTitleAsc.map((audio) => audio.validVideoTitle).toList(),
+            equals(expectedResultForTitleAsc
+                .map((audio) => audio!.validVideoTitle)
+                .toList()));
+
+        final List<SortingItem> selectedSortItemLstDesc = [
+          SortingItem(
+            sortingOption: SortingOption.validAudioTitle,
+            isAscending: false,
+          ),
+        ];
+
+        List<Audio> sortedByTitleDesc =
+            audioSortFilterService.sortAudioLstBySortingOptions(
+          audioLst: List<Audio>.from(audioLst), // copy list
+          selectedSortItemLst: selectedSortItemLstDesc,
+        );
+
+        expect(
+            sortedByTitleDesc.map((audio) => audio.validVideoTitle).toList(),
+            equals(expectedResultForTitleDesc
+                .map((audio) => audio!.validVideoTitle)
+                .toList()));
+      });
     });
 
-    test('sort by title starting with non language chars', () {
-      Audio title = Audio.fullConstructor(
-        youtubeVideoChannel: 'one',
-        enclosingPlaylist: audioPlaylist,
-        movedFromPlaylistTitle: null,
-        movedToPlaylistTitle: null,
-        copiedFromPlaylistTitle: null,
-        copiedToPlaylistTitle: null,
-        originalVideoTitle: "'title",
-        compactVideoDescription: 'compactVideoDescription',
-        validVideoTitle: "'title",
-        videoUrl: 'videoUrl',
-        audioDownloadDateTime: DateTime.now(),
-        audioDownloadDuration: const Duration(seconds: 1),
-        audioDownloadSpeed: 1,
-        videoUploadDate: DateTime.now(),
-        audioDuration: const Duration(seconds: 1),
-        isAudioMusicQuality: true,
-        audioPlaySpeed: 1.0,
-        audioPlayVolume: kAudioDefaultPlayVolume,
-        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
-        isPaused: true,
-        audioPausedDateTime: null,
-        audioPositionSeconds: 0,
-        audioFileName: 'audioFileName',
-        audioFileSize: 1,
-        isAudioImported: false,
-      );
-
-      Audio avecPercentTitle = Audio.fullConstructor(
-        youtubeVideoChannel: 'one',
-        enclosingPlaylist: audioPlaylist,
-        movedFromPlaylistTitle: null,
-        movedToPlaylistTitle: null,
-        copiedFromPlaylistTitle: null,
-        copiedToPlaylistTitle: null,
-        originalVideoTitle: "%avec percent title",
-        compactVideoDescription: 'compactVideoDescription',
-        validVideoTitle: "%avec percent title",
-        videoUrl: 'videoUrl',
-        audioDownloadDateTime: DateTime.now(),
-        audioDownloadDuration: const Duration(seconds: 1),
-        audioDownloadSpeed: 1,
-        videoUploadDate: DateTime.now(),
-        audioDuration: const Duration(seconds: 1),
-        isAudioMusicQuality: true,
-        audioPlaySpeed: 1.0,
-        audioPlayVolume: kAudioDefaultPlayVolume,
-        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
-        isPaused: true,
-        audioPausedDateTime: null,
-        audioPositionSeconds: 0,
-        audioFileName: 'audioFileName',
-        audioFileSize: 1,
-        isAudioImported: false,
-      );
-
-      Audio percentTitle = Audio.fullConstructor(
-        youtubeVideoChannel: 'one',
-        enclosingPlaylist: audioPlaylist,
-        movedFromPlaylistTitle: null,
-        movedToPlaylistTitle: null,
-        copiedFromPlaylistTitle: null,
-        copiedToPlaylistTitle: null,
-        originalVideoTitle: "%percent title",
-        compactVideoDescription: 'compactVideoDescription',
-        validVideoTitle: "%percent title",
-        videoUrl: 'videoUrl',
-        audioDownloadDateTime: DateTime.now(),
-        audioDownloadDuration: const Duration(seconds: 1),
-        audioDownloadSpeed: 1,
-        videoUploadDate: DateTime.now(),
-        audioDuration: const Duration(seconds: 1),
-        isAudioMusicQuality: true,
-        audioPlaySpeed: 1.0,
-        audioPlayVolume: kAudioDefaultPlayVolume,
-        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
-        isPaused: true,
-        audioPausedDateTime: null,
-        audioPositionSeconds: 0,
-        audioFileName: 'audioFileName',
-        audioFileSize: 1,
-        isAudioImported: false,
-      );
-
-      Audio powerTitle = Audio.fullConstructor(
-        youtubeVideoChannel: 'one',
-        enclosingPlaylist: audioPlaylist,
-        movedFromPlaylistTitle: null,
-        movedToPlaylistTitle: null,
-        copiedFromPlaylistTitle: null,
-        copiedToPlaylistTitle: null,
-        originalVideoTitle: "power title",
-        compactVideoDescription: 'compactVideoDescription',
-        validVideoTitle: "power title",
-        videoUrl: 'videoUrl',
-        audioDownloadDateTime: DateTime.now(),
-        audioDownloadDuration: const Duration(seconds: 1),
-        audioDownloadSpeed: 1,
-        videoUploadDate: DateTime.now(),
-        audioDuration: const Duration(seconds: 1),
-        isAudioMusicQuality: true,
-        audioPlaySpeed: 1.0,
-        audioPlayVolume: kAudioDefaultPlayVolume,
-        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
-        isPaused: true,
-        audioPausedDateTime: null,
-        audioPositionSeconds: 0,
-        audioFileName: 'audioFileName',
-        audioFileSize: 1,
-        isAudioImported: false,
-      );
-
-      Audio amenTitle = Audio.fullConstructor(
-        youtubeVideoChannel: 'one',
-        enclosingPlaylist: audioPlaylist,
-        movedFromPlaylistTitle: null,
-        movedToPlaylistTitle: null,
-        copiedFromPlaylistTitle: null,
-        copiedToPlaylistTitle: null,
-        originalVideoTitle: "#'amen title",
-        compactVideoDescription: 'compactVideoDescription',
-        validVideoTitle: "#'amen title",
-        videoUrl: 'videoUrl',
-        audioDownloadDateTime: DateTime.now(),
-        audioDownloadDuration: const Duration(seconds: 1),
-        audioDownloadSpeed: 1,
-        videoUploadDate: DateTime.now(),
-        audioDuration: const Duration(seconds: 1),
-        isAudioMusicQuality: true,
-        audioPlaySpeed: 1.0,
-        audioPlayVolume: kAudioDefaultPlayVolume,
-        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
-        isPaused: true,
-        audioPausedDateTime: null,
-        audioPositionSeconds: 0,
-        audioFileName: 'audioFileName',
-        audioFileSize: 1,
-        isAudioImported: true,
-      );
-
-      Audio epicure = Audio.fullConstructor(
-        youtubeVideoChannel: 'one',
-        enclosingPlaylist: audioPlaylist,
-        movedFromPlaylistTitle: null,
-        movedToPlaylistTitle: null,
-        copiedFromPlaylistTitle: null,
-        copiedToPlaylistTitle: null,
-        originalVideoTitle: "ÉPICURE - La mort n'est rien 📏",
-        compactVideoDescription: 'compactVideoDescription',
-        validVideoTitle: "ÉPICURE - La mort n'est rien",
-        videoUrl: 'videoUrl',
-        audioDownloadDateTime: DateTime.now(),
-        audioDownloadDuration: const Duration(seconds: 1),
-        audioDownloadSpeed: 1,
-        videoUploadDate: DateTime.now(),
-        audioDuration: const Duration(seconds: 1),
-        isAudioMusicQuality: true,
-        audioPlaySpeed: 1.0,
-        audioPlayVolume: kAudioDefaultPlayVolume,
-        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
-        isPaused: true,
-        audioPausedDateTime: null,
-        audioPositionSeconds: 0,
-        audioFileName: 'audioFileName',
-        audioFileSize: 1,
-        isAudioImported: false,
-      );
-
-      Audio ninetyFiveTitle = Audio.fullConstructor(
-        youtubeVideoChannel: 'one',
-        enclosingPlaylist: audioPlaylist,
-        movedFromPlaylistTitle: null,
-        movedToPlaylistTitle: null,
-        copiedFromPlaylistTitle: null,
-        copiedToPlaylistTitle: null,
-        originalVideoTitle: "%95 title",
-        compactVideoDescription: 'compactVideoDescription',
-        validVideoTitle: "%95 title",
-        videoUrl: 'videoUrl',
-        audioDownloadDateTime: DateTime.now(),
-        audioDownloadDuration: const Duration(seconds: 1),
-        audioDownloadSpeed: 1,
-        videoUploadDate: DateTime.now(),
-        audioDuration: const Duration(seconds: 1),
-        isAudioMusicQuality: true,
-        audioPlaySpeed: 1.0,
-        audioPlayVolume: kAudioDefaultPlayVolume,
-        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
-        isPaused: true,
-        audioPausedDateTime: null,
-        audioPositionSeconds: 0,
-        audioFileName: 'audioFileName',
-        audioFileSize: 1,
-        isAudioImported: true,
-      );
-
-      Audio ninetyThreeTitle = Audio.fullConstructor(
-        youtubeVideoChannel: 'one',
-        enclosingPlaylist: audioPlaylist,
-        movedFromPlaylistTitle: null,
-        movedToPlaylistTitle: null,
-        copiedFromPlaylistTitle: null,
-        copiedToPlaylistTitle: null,
-        originalVideoTitle: "93 title",
-        compactVideoDescription: 'compactVideoDescription',
-        validVideoTitle: "93 title",
-        videoUrl: 'videoUrl',
-        audioDownloadDateTime: DateTime.now(),
-        audioDownloadDuration: const Duration(seconds: 1),
-        audioDownloadSpeed: 1,
-        videoUploadDate: DateTime.now(),
-        audioDuration: const Duration(seconds: 1),
-        isAudioMusicQuality: true,
-        audioPlaySpeed: 1.0,
-        audioPlayVolume: kAudioDefaultPlayVolume,
-        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
-        isPaused: true,
-        audioPausedDateTime: null,
-        audioPositionSeconds: 0,
-        audioFileName: 'audioFileName',
-        audioFileSize: 1,
-        isAudioImported: false,
-      );
-
-      Audio ninetyFourTitle = Audio.fullConstructor(
-        youtubeVideoChannel: 'one',
-        enclosingPlaylist: audioPlaylist,
-        movedFromPlaylistTitle: null,
-        movedToPlaylistTitle: null,
-        copiedFromPlaylistTitle: null,
-        copiedToPlaylistTitle: null,
-        originalVideoTitle: "#94 title",
-        compactVideoDescription: 'compactVideoDescription',
-        validVideoTitle: "#94 title",
-        videoUrl: 'videoUrl',
-        audioDownloadDateTime: DateTime.now(),
-        audioDownloadDuration: const Duration(seconds: 1),
-        audioDownloadSpeed: 1,
-        videoUploadDate: DateTime.now(),
-        audioDuration: const Duration(seconds: 1),
-        isAudioMusicQuality: true,
-        audioPlaySpeed: 1.0,
-        audioPlayVolume: kAudioDefaultPlayVolume,
-        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
-        isPaused: true,
-        audioPausedDateTime: null,
-        audioPositionSeconds: 0,
-        audioFileName: 'audioFileName',
-        audioFileSize: 1,
-        isAudioImported: true,
-      );
-
-      Audio echapper = Audio.fullConstructor(
-        youtubeVideoChannel: 'one',
-        enclosingPlaylist: audioPlaylist,
-        movedFromPlaylistTitle: null,
-        movedToPlaylistTitle: null,
-        copiedFromPlaylistTitle: null,
-        copiedToPlaylistTitle: null,
-        originalVideoTitle: "Échapper à l'illusion de l'esprit",
-        compactVideoDescription: 'compactVideoDescription',
-        validVideoTitle: "Échapper à l'illusion de l'esprit",
-        videoUrl: 'videoUrl',
-        audioDownloadDateTime: DateTime.now(),
-        audioDownloadDuration: const Duration(seconds: 1),
-        audioDownloadSpeed: 1,
-        videoUploadDate: DateTime.now(),
-        audioDuration: const Duration(seconds: 1),
-        isAudioMusicQuality: true,
-        audioPlaySpeed: 1.0,
-        audioPlayVolume: kAudioDefaultPlayVolume,
-        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
-        isPaused: true,
-        audioPausedDateTime: null,
-        audioPositionSeconds: 0,
-        audioFileName: 'audioFileName',
-        audioFileSize: 1,
-        isAudioImported: false,
-      );
-
-      Audio evidentTitle = Audio.fullConstructor(
-        youtubeVideoChannel: 'one',
-        enclosingPlaylist: audioPlaylist,
-        movedFromPlaylistTitle: null,
-        movedToPlaylistTitle: null,
-        copiedFromPlaylistTitle: null,
-        copiedToPlaylistTitle: null,
-        originalVideoTitle: "évident title",
-        compactVideoDescription: 'compactVideoDescription',
-        validVideoTitle: "évident title",
-        videoUrl: 'videoUrl',
-        audioDownloadDateTime: DateTime.now(),
-        audioDownloadDuration: const Duration(seconds: 1),
-        audioDownloadSpeed: 1,
-        videoUploadDate: DateTime.now(),
-        audioDuration: const Duration(seconds: 1),
-        isAudioMusicQuality: true,
-        audioPlaySpeed: 1.0,
-        audioPlayVolume: kAudioDefaultPlayVolume,
-        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
-        isPaused: true,
-        audioPausedDateTime: null,
-        audioPositionSeconds: 0,
-        audioFileName: 'audioFileName',
-        audioFileSize: 1,
-        isAudioImported: true,
-      );
-
-      Audio aLireTitle = Audio.fullConstructor(
-        youtubeVideoChannel: 'one',
-        enclosingPlaylist: audioPlaylist,
-        movedFromPlaylistTitle: null,
-        movedToPlaylistTitle: null,
-        copiedFromPlaylistTitle: null,
-        copiedToPlaylistTitle: null,
-        originalVideoTitle: "à lire title",
-        compactVideoDescription: 'compactVideoDescription',
-        validVideoTitle: "à lire title",
-        videoUrl: 'videoUrl',
-        audioDownloadDateTime: DateTime.now(),
-        audioDownloadDuration: const Duration(seconds: 1),
-        audioDownloadSpeed: 1,
-        videoUploadDate: DateTime.now(),
-        audioDuration: const Duration(seconds: 1),
-        isAudioMusicQuality: false,
-        audioPlaySpeed: kAudioDefaultPlaySpeed,
-        audioPlayVolume: kAudioDefaultPlayVolume,
-        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
-        isPaused: true,
-        audioPausedDateTime: null,
-        audioPositionSeconds: 0,
-        audioFileName: 'audioFileName',
-        audioFileSize: 1,
-        isAudioImported: false,
-      );
-
-      Audio nineTitle = Audio.fullConstructor(
-        youtubeVideoChannel: 'one',
-        enclosingPlaylist: audioPlaylist,
-        movedFromPlaylistTitle: null,
-        movedToPlaylistTitle: null,
-        copiedFromPlaylistTitle: null,
-        copiedToPlaylistTitle: null,
-        originalVideoTitle: "9 title",
-        compactVideoDescription: 'compactVideoDescription',
-        validVideoTitle: "9 title",
-        videoUrl: 'videoUrl',
-        audioDownloadDateTime: DateTime.now(),
-        audioDownloadDuration: const Duration(seconds: 1),
-        isAudioMusicQuality: false,
-        audioPlaySpeed: kAudioDefaultPlaySpeed,
-        audioPlayVolume: kAudioDefaultPlayVolume,
-        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: true,
-        isPaused: true,
-        audioPausedDateTime: DateTime(2023, 3, 24, 20, 5, 32),
-        audioPositionSeconds: 500,
-        audioDownloadSpeed: 1,
-        videoUploadDate: DateTime.now(),
-        audioDuration: const Duration(seconds: 10000),
-        audioFileName: 'audioFileName',
-        audioFileSize: 1,
-        isAudioImported: false,
-      );
-
-      Audio eightTitle = Audio.fullConstructor(
-        youtubeVideoChannel: 'one',
-        enclosingPlaylist: audioPlaylist,
-        movedFromPlaylistTitle: null,
-        movedToPlaylistTitle: null,
-        copiedFromPlaylistTitle: null,
-        copiedToPlaylistTitle: null,
-        originalVideoTitle: "8 title",
-        compactVideoDescription: 'compactVideoDescription',
-        validVideoTitle: "8 title",
-        videoUrl: 'videoUrl',
-        audioDownloadDateTime: DateTime.now(),
-        audioDownloadDuration: const Duration(seconds: 1),
-        isAudioMusicQuality: false,
-        audioPlaySpeed: kAudioDefaultPlaySpeed,
-        audioPlayVolume: kAudioDefaultPlayVolume,
-        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: true,
-        isPaused: true,
-        audioPausedDateTime: DateTime(2023, 3, 24, 20, 5, 32),
-        audioPositionSeconds: 500,
-        audioDownloadSpeed: 1,
-        videoUploadDate: DateTime.now(),
-        audioDuration: const Duration(seconds: 10000),
-        audioFileName: 'audioFileName',
-        audioFileSize: 1,
-        isAudioImported: false,
-      );
-
-      Audio eventuelTitle = Audio.fullConstructor(
-        youtubeVideoChannel: 'one',
-        enclosingPlaylist: audioPlaylist,
-        movedFromPlaylistTitle: null,
-        movedToPlaylistTitle: null,
-        copiedFromPlaylistTitle: null,
-        copiedToPlaylistTitle: null,
-        originalVideoTitle: "éventuel title",
-        compactVideoDescription: 'compactVideoDescription',
-        validVideoTitle: "éventuel title",
-        videoUrl: 'videoUrl',
-        audioDownloadDateTime: DateTime.now(),
-        isAudioMusicQuality: false,
-        audioPlaySpeed: kAudioDefaultPlaySpeed,
-        audioPlayVolume: kAudioDefaultPlayVolume,
-        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
-        isPaused: true,
-        audioPausedDateTime: null,
-        audioPositionSeconds: 0,
-        audioDownloadDuration: const Duration(seconds: 1),
-        audioDownloadSpeed: 1,
-        videoUploadDate: DateTime.now(),
-        audioDuration: const Duration(seconds: 1),
-        audioFileName: 'audioFileName',
-        audioFileSize: 1,
-        isAudioImported: true,
-      );
-
-      List<Audio?> audioLst = [
-        title,
-        avecPercentTitle,
-        percentTitle,
-        powerTitle,
-        amenTitle,
-        epicure,
-        ninetyFiveTitle,
-        ninetyThreeTitle,
-        ninetyFourTitle,
-        echapper,
-        evidentTitle,
-        aLireTitle,
-        nineTitle,
-        eightTitle,
-        eventuelTitle,
-      ];
-
-      List<Audio?> expectedResultForTitleAsc = [
-        amenTitle,
-        ninetyFourTitle,
-        ninetyFiveTitle,
-        avecPercentTitle,
-        percentTitle,
-        title,
-        eightTitle,
-        nineTitle,
-        ninetyThreeTitle,
-        powerTitle,
-        aLireTitle,
-        echapper,
-        epicure,
-        eventuelTitle,
-        evidentTitle,
-      ];
-
-      List<Audio?> expectedResultForTitleDesc = [
-        evidentTitle,
-        eventuelTitle,
-        epicure,
-        echapper,
-        aLireTitle,
-        powerTitle,
-        ninetyThreeTitle,
-        nineTitle,
-        eightTitle,
-        title,
-        percentTitle,
-        avecPercentTitle,
-        ninetyFiveTitle,
-        ninetyFourTitle,
-        amenTitle,
-      ];
-
-      final List<SortingItem> selectedSortItemLstAsc = [
-        SortingItem(
-          sortingOption: SortingOption.validAudioTitle,
-          isAscending: true,
-        ),
-      ];
-
-      List<Audio> sortedByTitleAsc =
-          audioSortFilterService.sortAudioLstBySortingOptions(
-        audioLst: List<Audio>.from(audioLst), // copy list
-        selectedSortItemLst: selectedSortItemLstAsc,
-      );
-
-      expect(
-          sortedByTitleAsc.map((audio) => audio.validVideoTitle).toList(),
-          equals(expectedResultForTitleAsc
-              .map((audio) => audio!.validVideoTitle)
-              .toList()));
-
-      final List<SortingItem> selectedSortItemLstDesc = [
-        SortingItem(
-          sortingOption: SortingOption.validAudioTitle,
-          isAscending: false,
-        ),
-      ];
-
-      List<Audio> sortedByTitleDesc =
-          audioSortFilterService.sortAudioLstBySortingOptions(
-        audioLst: List<Audio>.from(audioLst), // copy list
-        selectedSortItemLst: selectedSortItemLstDesc,
-      );
-
-      expect(
-          sortedByTitleDesc.map((audio) => audio.validVideoTitle).toList(),
-          equals(expectedResultForTitleDesc
-              .map((audio) => audio!.validVideoTitle)
-              .toList()));
-    });
     group('sort audio lst by chapter SortingOption', () {
       test('''sort by _ chapter title number. Example: ... 1_1 ..., ... 1_2 ...,
             ... 2_1 ...''', () {
@@ -4764,7 +5728,8 @@ void main() {
                 .toList()));
       });
       test('''sort by _ chapter title number. The order of the list of audio to
-            sort (included in the variable audioList below) was modified.''', () {
+            sort (included in the variable audioList below) was modified.''',
+          () {
         final Audio avantPropos = Audio.fullConstructor(
           youtubeVideoChannel: 'one',
           enclosingPlaylist: audioPlaylist,
@@ -5459,7 +6424,8 @@ void main() {
                 .toList()));
       });
       test('''sort by - chapter title number. The order of the list of audio to
-            sort (included in the variable audioList below) was modified.''', () {
+            sort (included in the variable audioList below) was modified.''',
+          () {
         final Audio avantPropos = Audio.fullConstructor(
           youtubeVideoChannel: 'one',
           enclosingPlaylist: audioPlaylist,
