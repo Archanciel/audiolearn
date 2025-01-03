@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:audiolearn/views/widgets/comment_list_add_dialog.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -201,7 +204,18 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
         _buildExpandedPlaylistList(
           playlistListVMListenFalse: playlistListVMlistenFalse,
         ),
-        _buildPlayButton(),
+        (audioPlayerVMlistenTrue.currentAudio == null ||
+                playlistListVMlistenTrue.getAudioPictureFile(
+                        audio: audioPlayerVMlistenTrue.currentAudio!) ==
+                    null)
+            ? _buildPlayButton(
+                playlistListVMlistenTrue: playlistListVMlistenTrue,
+                audioPlayerVMlistenTrue: audioPlayerVMlistenTrue,
+              )
+            : _displayAudioPicture(
+                playlistListVMlistenTrue: playlistListVMlistenTrue,
+                audioPlayerVMlistenTrue: audioPlayerVMlistenTrue,
+              ),
         Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
@@ -709,34 +723,6 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                 },
               );
               break;
-            // case PopupMenuButtonType.saveSortFilterAudioParmsToPlaylist:
-            //   showDialog<List<bool>>(
-            //     context: context,
-            //     barrierDismissible: false, // This line prevents the dialog from
-            //     // closing when tapping outside the dialog
-            //     builder: (BuildContext context) {
-            //       return PlaylistAddRemoveSortFilterOptionsDialog(
-            //         playlistTitle:
-            //             playlistListVMlistenFalse.uniqueSelectedPlaylist!.title,
-            //         sortFilterParametersName: '', // TODO once you refactored
-            //         //                              playlist download view sort
-            //         //                              filter parms code, correct that
-            //       );
-            //     },
-            //   ).then((forViewLst) {
-            //     if (forViewLst == null) {
-            //       // the user clicked on Cancel button
-            //       return;
-            //     }
-
-            //     // if the user clicked on Save, not on Cancel button
-            //     playlistListVMlistenFalse
-            //         .savePlaylistAudioSortFilterParmsToPlaylist(
-            //       forPlaylistDownloadView: forViewLst[0],
-            //       forAudioPlayerView: forViewLst[1],
-            //     );
-            //   });
-            //   break;
             default:
               break;
           }
@@ -745,45 +731,89 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     );
   }
 
-  Widget _buildPlayButton() {
-    return Consumer2<AudioPlayerVM, PlaylistListVM>(
-      builder: (context, audioPlayerVM, playlistListVM, child) {
-        if (!playlistListVM.isPlaylistListExpanded) {
-          // the list of playlists is collapsed, so the play button is
-          // displayed
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(90.0),
-                child: IconButton(
-                  iconSize: _audioIconSizeLarge,
-                  onPressed: (() async {
-                    audioPlayerVM.isPlaying
-                        ? await audioPlayerVM.pause()
-                        : await audioPlayerVM.playCurrentAudio(
-                            isFromAudioPlayerView: true,
-                          );
-                  }),
-                  style: ButtonStyle(
-                    // Highlight button when pressed
-                    padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-                      const EdgeInsets.symmetric(
-                          horizontal: kSmallButtonInsidePadding, vertical: 0),
-                    ),
-                    overlayColor:
-                        iconButtonTapModification, // Tap feedback color
-                  ),
-                  icon: Icon(
-                      audioPlayerVM.isPlaying ? Icons.pause : Icons.play_arrow),
+  Widget _buildPlayButton({
+    required PlaylistListVM playlistListVMlistenTrue,
+    required AudioPlayerVM audioPlayerVMlistenTrue,
+  }) {
+    if (!playlistListVMlistenTrue.isPlaylistListExpanded) {
+      // the list of playlists is collapsed, so the play button is
+      // displayed
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(90.0),
+            child: IconButton(
+              iconSize: _audioIconSizeLarge,
+              onPressed: (() async {
+                audioPlayerVMlistenTrue.isPlaying
+                    ? await audioPlayerVMlistenTrue.pause()
+                    : await audioPlayerVMlistenTrue.playCurrentAudio(
+                        isFromAudioPlayerView: true,
+                      );
+              }),
+              style: ButtonStyle(
+                // Highlight button when pressed
+                padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                  const EdgeInsets.symmetric(
+                      horizontal: kSmallButtonInsidePadding, vertical: 0),
                 ),
+                overlayColor: iconButtonTapModification, // Tap feedback color
               ),
-            ],
-          );
-        } else {
-          return const SizedBox.shrink();
-        }
-      },
+              icon: Icon(audioPlayerVMlistenTrue.isPlaying
+                  ? Icons.pause
+                  : Icons.play_arrow),
+            ),
+          ),
+        ],
+      );
+    } else {
+      return const SizedBox.shrink();
+    }
+  }
+
+  Widget _displayAudioPicture({
+    required PlaylistListVM playlistListVMlistenTrue,
+    required AudioPlayerVM audioPlayerVMlistenTrue,
+  }) {
+    File? audioPictureFile = playlistListVMlistenTrue.getAudioPictureFile(
+      audio: audioPlayerVMlistenTrue.currentAudio!,
+    );
+
+    // Check if the audio picture file exists and read its bytes
+    Uint8List? imageBytes;
+
+    if (audioPictureFile != null) {
+      imageBytes = audioPictureFile.readAsBytesSync();
+    }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: kDefaultMargin,
+        vertical: kDefaultMargin,
+      ),
+      child: Column(
+        children: [
+          CircleAvatar(
+            radius: 150,
+            backgroundColor: Colors.transparent,
+            child: ClipOval(
+              child: imageBytes != null
+                  ? Image.memory(
+                      imageBytes,
+                      fit: BoxFit.cover,
+                      width: 270,
+                      height: 270,
+                    )
+                  : const Icon(
+                      Icons.music_note,
+                      size: 50,
+                      color: Colors.grey,
+                    ), // Default icon if no image is available
+            ),
+          ),
+        ],
+      ),
     );
   }
 
