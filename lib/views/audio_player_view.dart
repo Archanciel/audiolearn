@@ -184,6 +184,12 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
       _audioPlaySpeed = audioPlayerVMlistenTrue.currentAudio!.audioPlaySpeed;
     }
 
+    bool isAudioPictureDisplayed =
+        audioPlayerVMlistenTrue.currentAudio != null &&
+            playlistListVMlistenTrue.getAudioPictureFile(
+                    audio: audioPlayerVMlistenTrue.currentAudio!) !=
+                null;
+
     Widget viewContent = Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -200,19 +206,17 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
           playlistListVM: playlistListVMlistenFalse,
           audioPlayerVMlistenTrue: audioPlayerVMlistenTrue,
           areAudioButtonsEnabled: areAudioButtonsEnabled,
+          isAudioPictureDisplayed: isAudioPictureDisplayed,
         ),
         _buildExpandedPlaylistList(
           playlistListVMListenFalse: playlistListVMlistenFalse,
         ),
-        (audioPlayerVMlistenTrue.currentAudio == null ||
-                playlistListVMlistenTrue.getAudioPictureFile(
-                        audio: audioPlayerVMlistenTrue.currentAudio!) ==
-                    null)
-            ? _buildPlayButton(
+        isAudioPictureDisplayed
+            ? _displayAudioPicture(
                 playlistListVMlistenTrue: playlistListVMlistenTrue,
                 audioPlayerVMlistenTrue: audioPlayerVMlistenTrue,
               )
-            : _displayAudioPicture(
+            : _buildPlayButton(
                 playlistListVMlistenTrue: playlistListVMlistenTrue,
                 audioPlayerVMlistenTrue: audioPlayerVMlistenTrue,
               ),
@@ -255,6 +259,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     required PlaylistListVM playlistListVM,
     required AudioPlayerVM audioPlayerVMlistenTrue,
     required bool areAudioButtonsEnabled,
+    required bool isAudioPictureDisplayed,
   }) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -296,6 +301,33 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                 ),
               ),
             ),
+            (isAudioPictureDisplayed)
+              // Display the play button in the second line only if the
+              // audio picture is displayed instead of the normal play
+              // button
+                ? IconButton(
+                    iconSize: _audioIconSizeMedium,
+                    onPressed: (() async {
+                      audioPlayerVMlistenTrue.isPlaying
+                          ? await audioPlayerVMlistenTrue.pause()
+                          : await audioPlayerVMlistenTrue.playCurrentAudio(
+                              isFromAudioPlayerView: true,
+                            );
+                    }),
+                    style: ButtonStyle(
+                      // Highlight button when pressed
+                      padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                        const EdgeInsets.symmetric(
+                            horizontal: kSmallButtonInsidePadding, vertical: 0),
+                      ),
+                      overlayColor:
+                          iconButtonTapModification, // Tap feedback color
+                    ),
+                    icon: Icon(audioPlayerVMlistenTrue.isPlaying
+                        ? Icons.pause
+                        : Icons.play_arrow),
+                  )
+                : const SizedBox.shrink(),
           ],
         ),
         Row(
@@ -787,6 +819,13 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
       imageBytes = audioPictureFile.readAsBytesSync();
     }
 
+    // Get screen size
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    // Set sizes relative to the screen width
+    double circleAvatarRadius = screenWidth * 0.34; // 40% of screen width
+    double imageWidthHeight = circleAvatarRadius * 2;
+
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: kDefaultMargin,
@@ -795,19 +834,20 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
       child: Column(
         children: [
           CircleAvatar(
-            radius: 150,
+            radius: circleAvatarRadius,
             backgroundColor: Colors.transparent,
             child: ClipOval(
               child: imageBytes != null
                   ? Image.memory(
                       imageBytes,
                       fit: BoxFit.cover,
-                      width: 270,
-                      height: 270,
+                      width: imageWidthHeight,
+                      height: imageWidthHeight,
                     )
-                  : const Icon(
+                  : Icon(
                       Icons.music_note,
-                      size: 50,
+                      size:
+                          circleAvatarRadius, // Icon size proportional to radius
                       color: Colors.grey,
                     ), // Default icon if no image is available
             ),
