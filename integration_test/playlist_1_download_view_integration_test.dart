@@ -11253,11 +11253,11 @@ void main() {
 
           // Close the warning dialog by tapping on the Ok button
           await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
-          await tester.pumpAndSettle();
+          await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
           // Close the warning dialog by tapping on the Ok button
           await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
-          await tester.pumpAndSettle();
+          await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
           // Verify that the applyed Sort/Filter parms name is displayed
           // after the selected playlist title
@@ -28896,10 +28896,10 @@ void playlistOneDownloadViewIntegrationTest() {
         // Find the ListTile Playlist containing the unique audio to
         // delete to
 
-          await IntegrationTestUtil.selectPlaylist(
-            tester: tester,
-            playlistToSelectTitle: localAudioPlaylistTitle,
-          );
+        await IntegrationTestUtil.selectPlaylist(
+          tester: tester,
+          playlistToSelectTitle: localAudioPlaylistTitle,
+        );
 
         // Now we tap on the AudioPlayerView icon button to open
         // AudioPlayerView screen
@@ -29048,10 +29048,10 @@ void playlistOneDownloadViewIntegrationTest() {
         // Find the ListTile Playlist containing the unique audio to
         // delete to
 
-          await IntegrationTestUtil.selectPlaylist(
-            tester: tester,
-            playlistToSelectTitle: localAudioPlaylistTitle,
-          );
+        await IntegrationTestUtil.selectPlaylist(
+          tester: tester,
+          playlistToSelectTitle: localAudioPlaylistTitle,
+        );
 
         // Now we tap on the AudioPlayerView icon button to open
         // AudioPlayerView screen
@@ -29272,10 +29272,10 @@ void playlistOneDownloadViewIntegrationTest() {
       // Select the playlist containing the audio to move to the
       // target local playlist
 
-          await IntegrationTestUtil.selectPlaylist(
-            tester: tester,
-            playlistToSelectTitle: youtubeAudioPlaylistTitle,
-          );
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: youtubeAudioPlaylistTitle,
+      );
 
       // Now we want to tap the popup menu of the Audio ListTile
       // "audio learn test short video one"
@@ -29416,30 +29416,12 @@ void playlistOneDownloadViewIntegrationTest() {
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
-      // Find the Youtube playlist to select
+      // Select the Youtube playlist
 
-      // First, find the Playlist ListTile Text widget
-      final Finder youtubePlaylistToSelectListTileTextWidgetFinder =
-          find.text('audio_player_view_2_shorts_test');
-
-      // Then obtain the Playlist ListTile widget enclosing the Text widget
-      // by finding its ancestor
-      final Finder youtubePlaylistToSelectListTileWidgetFinder = find.ancestor(
-        of: youtubePlaylistToSelectListTileTextWidgetFinder,
-        matching: find.byType(ListTile),
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: 'audio_player_view_2_shorts_test',
       );
-
-      // Now find the Checkbox widget located in the Playlist ListTile
-      // and tap on it to select the playlist
-      final Finder youtubePlaylistToSelectListTileCheckboxWidgetFinder =
-          find.descendant(
-        of: youtubePlaylistToSelectListTileWidgetFinder,
-        matching: find.byType(Checkbox),
-      );
-
-      // Tap the ListTile Playlist checkbox to select it
-      await tester.tap(youtubePlaylistToSelectListTileCheckboxWidgetFinder);
-      await tester.pumpAndSettle();
 
       // Now tap the download at musical quality checkbox
       await tester.tap(find.byKey(const Key('audio_quality_checkbox')));
@@ -30597,30 +30579,12 @@ void playlistOneDownloadViewIntegrationTest() {
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
-      // Find the local playlist to select
+      // Select the Youtube playlist
 
-      // First, find the Playlist ListTile Text widget
-      final Finder localPlaylistToSelectListTileTextWidgetFinder =
-          find.text('local_audio_playlist_2');
-
-      // Then obtain the Playlist ListTile widget enclosing the Text widget
-      // by finding its ancestor
-      final Finder localPlaylistToSelectListTileWidgetFinder = find.ancestor(
-        of: localPlaylistToSelectListTileTextWidgetFinder,
-        matching: find.byType(ListTile),
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: 'local_audio_playlist_2',
       );
-
-      // Now find the Checkbox widget located in the Playlist ListTile
-      // and tap on it to select the playlist
-      final Finder localPlaylistToSelectListTileCheckboxWidgetFinder =
-          find.descendant(
-        of: localPlaylistToSelectListTileWidgetFinder,
-        matching: find.byType(Checkbox),
-      );
-
-      // Tap the ListTile Playlist checkbox to select it
-      await tester.tap(localPlaylistToSelectListTileCheckboxWidgetFinder);
-      await tester.pumpAndSettle();
 
       // since a local playlist is selected, verify that
       // some buttons are enabled and some are disabled
@@ -30701,30 +30665,12 @@ void playlistOneDownloadViewIntegrationTest() {
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
-      // Find the Youtube playlist to select
+      // Select the Youtube playlist
 
-      // First, find the Playlist ListTile Text widget
-      final Finder youtubePlaylistToSelectListTileTextWidgetFinder =
-          find.text('audio_player_view_2_shorts_test');
-
-      // Then obtain the Playlist ListTile widget enclosing the Text widget
-      // by finding its ancestor
-      final Finder youtubePlaylistToSelectListTileWidgetFinder = find.ancestor(
-        of: youtubePlaylistToSelectListTileTextWidgetFinder,
-        matching: find.byType(ListTile),
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: 'audio_player_view_2_shorts_test',
       );
-
-      // Now find the Checkbox widget located in the Playlist ListTile
-      // and tap on it to select the playlist
-      final Finder youtubePlaylistToSelectListTileCheckboxWidgetFinder =
-          find.descendant(
-        of: youtubePlaylistToSelectListTileWidgetFinder,
-        matching: find.byType(Checkbox),
-      );
-
-      // Tap the ListTile Playlist checkbox to select it
-      await tester.tap(youtubePlaylistToSelectListTileCheckboxWidgetFinder);
-      await tester.pumpAndSettle();
 
       // since a Youtube playlist is selected, verify that all
       // buttons are enabled
@@ -30805,30 +30751,12 @@ void playlistOneDownloadViewIntegrationTest() {
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
-      // Find the local playlist to select
+      // Select the Youtube playlist
 
-      // First, find the Playlist ListTile Text widget
-      final Finder localPlaylistToSelectListTileTextWidgetFinder =
-          find.text('local_3');
-
-      // Then obtain the Playlist ListTile widget enclosing the Text widget
-      // by finding its ancestor
-      final Finder localPlaylistToSelectListTileWidgetFinder = find.ancestor(
-        of: localPlaylistToSelectListTileTextWidgetFinder,
-        matching: find.byType(ListTile),
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: 'local_3',
       );
-
-      // Now find the Checkbox widget located in the Playlist ListTile
-      // and tap on it to select the playlist
-      final Finder localPlaylistToSelectListTileCheckboxWidgetFinder =
-          find.descendant(
-        of: localPlaylistToSelectListTileWidgetFinder,
-        matching: find.byType(Checkbox),
-      );
-
-      // Tap the ListTile Playlist checkbox to select it
-      await tester.tap(localPlaylistToSelectListTileCheckboxWidgetFinder);
-      await tester.pumpAndSettle();
 
       // since a local playlist is selected, verify that
       // some buttons are enabled and some are disabled
@@ -30899,30 +30827,12 @@ void playlistOneDownloadViewIntegrationTest() {
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
-      // Find the Youtube playlist to select
+      // Select the Youtube playlist
 
-      // First, find the Playlist ListTile Text widget
-      final Finder youtubePlaylistToSelectListTileTextWidgetFinder =
-          find.text('audio_learn_test_download_2_small_videos');
-
-      // Then obtain the Playlist ListTile widget enclosing the Text widget
-      // by finding its ancestor
-      final Finder youtubePlaylistToSelectListTileWidgetFinder = find.ancestor(
-        of: youtubePlaylistToSelectListTileTextWidgetFinder,
-        matching: find.byType(ListTile),
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: 'audio_learn_test_download_2_small_videos',
       );
-
-      // Now find the Checkbox widget located in the Playlist ListTile
-      // and tap on it to select the playlist
-      final Finder youtubePlaylistToSelectListTileCheckboxWidgetFinder =
-          find.descendant(
-        of: youtubePlaylistToSelectListTileWidgetFinder,
-        matching: find.byType(Checkbox),
-      );
-
-      // Tap the ListTile Playlist checkbox to select it
-      await tester.tap(youtubePlaylistToSelectListTileCheckboxWidgetFinder);
-      await tester.pumpAndSettle();
 
       // since a Youtube playlist is selected, verify that all
       // buttons are enabled
@@ -31273,31 +31183,12 @@ void playlistOneDownloadViewIntegrationTest() {
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
-      // Find the local playlist to select
+      // Select the Youtube playlist
 
-      // First, find the Playlist ListTile Text widget
-      const String localPlaylistTitle = 'local_3';
-      final Finder localPlaylistToSelectListTileTextWidgetFinder =
-          find.text(localPlaylistTitle);
-
-      // Then obtain the Playlist ListTile widget enclosing the Text widget
-      // by finding its ancestor
-      final Finder localPlaylistToSelectListTileWidgetFinder = find.ancestor(
-        of: localPlaylistToSelectListTileTextWidgetFinder,
-        matching: find.byType(ListTile),
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: 'local_3',
       );
-
-      // Now find the Checkbox widget located in the Playlist ListTile
-      // and tap on it to select the playlist
-      final Finder localPlaylistToSelectListTileCheckboxWidgetFinder =
-          find.descendant(
-        of: localPlaylistToSelectListTileWidgetFinder,
-        matching: find.byType(Checkbox),
-      );
-
-      // Tap the ListTile Playlist checkbox to select it
-      await tester.tap(localPlaylistToSelectListTileCheckboxWidgetFinder);
-      await tester.pumpAndSettle();
 
       // now delete the unique audio of the playlist
 
@@ -31410,33 +31301,12 @@ void playlistOneDownloadViewIntegrationTest() {
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
-      // Find the Youtube playlist to select
+      // Select the Youtube playlist
 
-      // First, find the Playlist ListTile Text widget
-      const String youtubePlaylistToSelectTitle =
-          'audio_learn_new_youtube_playlist_test';
-
-      final Finder youtubePlaylistToSelectListTileTextWidgetFinder =
-          find.text(youtubePlaylistToSelectTitle);
-
-      // Then obtain the Playlist ListTile widget enclosing the Text widget
-      // by finding its ancestor
-      final Finder youtubePlaylistToSelectListTileWidgetFinder = find.ancestor(
-        of: youtubePlaylistToSelectListTileTextWidgetFinder,
-        matching: find.byType(ListTile),
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: 'audio_learn_new_youtube_playlist_test',
       );
-
-      // Now find the Checkbox widget located in the Playlist ListTile
-      // and tap on it to select the playlist
-      final Finder youtubePlaylistToSelectListTileCheckboxWidgetFinder =
-          find.descendant(
-        of: youtubePlaylistToSelectListTileWidgetFinder,
-        matching: find.byType(Checkbox),
-      );
-
-      // Tap the ListTile Playlist checkbox to select it
-      await tester.tap(youtubePlaylistToSelectListTileCheckboxWidgetFinder);
-      await tester.pumpAndSettle();
 
       // now delete the unique audio of the playlist
 
@@ -34216,27 +34086,10 @@ Future<void> onAudioPlayerViewCheckOrTapOnPlaylistCheckbox({
 
   // Select the passed playlistToSelectTitle playlist
 
-  // Find the playlist to select ListTile Text widget
-  Finder playlistToSelectListTileTextWidgetFinder =
-      find.text(playlistToSelectTitleInAudioPlayerView);
-
-  // Then obtain the playlist ListTile widget enclosing the Text widget
-  // by finding its ancestor
-  Finder playlistToSelectListTileWidgetFinder = find.ancestor(
-    of: playlistToSelectListTileTextWidgetFinder,
-    matching: find.byType(ListTile),
-  );
-
-  // Now find the Checkbox widget located in the playlist ListTile
-  // and tap on it to select the playlist
-  Finder playlistToSelectListTileCheckboxWidgetFinder = find.descendant(
-    of: playlistToSelectListTileWidgetFinder,
-    matching: find.byType(Checkbox),
-  );
-
-  // Tap the ListTile Playlist checkbox to select it
-  await tester.tap(playlistToSelectListTileCheckboxWidgetFinder);
-  await tester.pumpAndSettle();
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: playlistToSelectTitleInAudioPlayerView,
+      );
 
   // Now we go back to the PlayListDownloadView in order to
   // verify the scrolled selected playlist
