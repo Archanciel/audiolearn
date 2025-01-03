@@ -1250,30 +1250,12 @@ void main() {
           'S8 audio',
         );
 
-        // Find the local playlist to select
+        // Select the local playlist
 
-        // First, find the Playlist ListTile Text widget
-        final Finder localPlaylistToSelectListTileTextWidgetFinder =
-            find.text(playlistsTitles[0]); // local
-
-        // Then obtain the Playlist ListTile widget enclosing the Text widget
-        // by finding its ancestor
-        final Finder localPlaylistToSelectListTileWidgetFinder = find.ancestor(
-          of: localPlaylistToSelectListTileTextWidgetFinder,
-          matching: find.byType(ListTile),
+        await IntegrationTestUtil.selectPlaylist(
+          tester: tester,
+          playlistToSelectTitle: playlistsTitles[0],
         );
-
-        // Now find the Checkbox widget located in the Playlist ListTile
-        // and tap on it to select the playlist
-        final Finder localPlaylistToSelectListTileCheckboxWidgetFinder =
-            find.descendant(
-          of: localPlaylistToSelectListTileWidgetFinder,
-          matching: find.byType(Checkbox),
-        );
-
-        // Tap the ListTile Playlist checkbox to select it
-        await tester.tap(localPlaylistToSelectListTileCheckboxWidgetFinder);
-        await tester.pumpAndSettle();
 
         // since a local playlist is selected, verify that
         // some buttons are enabled and some are disabled
@@ -1351,32 +1333,13 @@ void main() {
           tapOnPlaylistToggleButton: true,
         );
 
-        // Find the local playlist to select
+        // Select the local playlist
 
-        // First, find the Playlist ListTile Text widget
-        final Finder localPlaylistToSelectListTileTextWidgetFinder =
-            find.text('local');
-
-        // Then obtain the Playlist ListTile widget enclosing the Text widget
-        // by finding its ancestor
-        final Finder localPlaylistToSelectListTileWidgetFinder = find.ancestor(
-          of: localPlaylistToSelectListTileTextWidgetFinder,
-          matching: find.byType(ListTile),
+        await IntegrationTestUtil.selectPlaylist(
+          tester: tester,
+          playlistToSelectTitle: 'local',
         );
 
-        // Now find the Checkbox widget located in the Playlist ListTile
-        // and tap on it to select the playlist
-        final Finder localPlaylistToSelectListTileCheckboxWidgetFinder =
-            find.descendant(
-          of: localPlaylistToSelectListTileWidgetFinder,
-          matching: find.byType(Checkbox),
-        );
-
-        // Tap the ListTile Playlist checkbox to select it
-        await tester.tap(localPlaylistToSelectListTileCheckboxWidgetFinder);
-        await tester.pumpAndSettle();
-
-        // since a local playlist is selected, verify that
         // some buttons are enabled and some are disabled
         IntegrationTestUtil.verifyWidgetIsEnabled(
           tester: tester,
@@ -1451,31 +1414,12 @@ void main() {
           'local',
         );
 
-        // Find the Youtube playlist to select
+        // Select the Youtube playlist
 
-        // First, find the Playlist ListTile Text widget
-        final Finder youtubePlaylistToSelectListTileTextWidgetFinder =
-            find.text('S8 audio');
-
-        // Then obtain the Playlist ListTile widget enclosing the Text widget
-        // by finding its ancestor
-        final Finder youtubePlaylistToSelectListTileWidgetFinder =
-            find.ancestor(
-          of: youtubePlaylistToSelectListTileTextWidgetFinder,
-          matching: find.byType(ListTile),
+        await IntegrationTestUtil.selectPlaylist(
+          tester: tester,
+          playlistToSelectTitle: 'S8 audio',
         );
-
-        // Now find the Checkbox widget located in the Playlist ListTile
-        // and tap on it to select the playlist
-        final Finder youtubePlaylistToSelectListTileCheckboxWidgetFinder =
-            find.descendant(
-          of: youtubePlaylistToSelectListTileWidgetFinder,
-          matching: find.byType(Checkbox),
-        );
-
-        // Tap the ListTile Playlist checkbox to select it
-        await tester.tap(youtubePlaylistToSelectListTileCheckboxWidgetFinder);
-        await tester.pumpAndSettle();
 
         // since a Youtube playlist is selected, verify that
         // some buttons are enabled and some are disabled
@@ -1578,30 +1522,12 @@ void main() {
           'S8 audio',
         );
 
-        // Find the local playlist to select
+        // Select the local playlist
 
-        // First, find the Playlist ListTile Text widget
-        final Finder localPlaylistToSelectListTileTextWidgetFinder =
-            find.text(playlistsTitles[1]); // local_2
-
-        // Then obtain the Playlist ListTile widget enclosing the Text widget
-        // by finding its ancestor
-        final Finder localPlaylistToSelectListTileWidgetFinder = find.ancestor(
-          of: localPlaylistToSelectListTileTextWidgetFinder,
-          matching: find.byType(ListTile),
+        await IntegrationTestUtil.selectPlaylist(
+          tester: tester,
+          playlistToSelectTitle: playlistsTitles[1], // local_2
         );
-
-        // Now find the Checkbox widget located in the Playlist ListTile
-        // and tap on it to select the playlist
-        final Finder localPlaylistToSelectListTileCheckboxWidgetFinder =
-            find.descendant(
-          of: localPlaylistToSelectListTileWidgetFinder,
-          matching: find.byType(Checkbox),
-        );
-
-        // Tap the ListTile Playlist checkbox to select it
-        await tester.tap(localPlaylistToSelectListTileCheckboxWidgetFinder);
-        await tester.pumpAndSettle();
 
         // Verify the newly selected playlist title
 
@@ -2943,30 +2869,12 @@ void main() {
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
-      // Deselect the selected playlist
+      // Deelect the Youtube playlist
 
-      // First, find the Playlist ListTile Text widget
-      final Finder localPlaylistToSelectListTileTextWidgetFinder =
-          find.text(youtubePlaylistToRewindTitle); // 'S8 audio'
-
-      // Then obtain the Playlist ListTile widget enclosing the Text widget
-      // by finding its ancestor
-      final Finder localPlaylistToSelectListTileWidgetFinder = find.ancestor(
-        of: localPlaylistToSelectListTileTextWidgetFinder,
-        matching: find.byType(ListTile),
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: youtubePlaylistToRewindTitle,
       );
-
-      // Now find the Checkbox widget located in the Playlist ListTile
-      // and tap on it to unselect the playlist
-      final Finder localPlaylistToSelectListTileCheckboxWidgetFinder =
-          find.descendant(
-        of: localPlaylistToSelectListTileWidgetFinder,
-        matching: find.byType(Checkbox),
-      );
-
-      // Tap the ListTile Playlist checkbox to deselect it
-      await tester.tap(localPlaylistToSelectListTileCheckboxWidgetFinder);
-      await tester.pumpAndSettle();
 
       // Rewind all unselected playlist audio to start position
       await _tapOnRewindPlaylistAudioToStartPositionMenu(
@@ -2999,28 +2907,10 @@ void main() {
       // Select another playlist than the one whose audio will be
       // rewinded to start position
 
-      // First, find the Playlist ListTile Text widget
-      final Finder localPlaylistToSelectListTileTextWidgetFinder =
-          find.text(localPlaylistToSelectTitle); // 'local'
-
-      // Then obtain the Playlist ListTile widget enclosing the Text widget
-      // by finding its ancestor
-      final Finder localPlaylistToSelectListTileWidgetFinder = find.ancestor(
-        of: localPlaylistToSelectListTileTextWidgetFinder,
-        matching: find.byType(ListTile),
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: localPlaylistToSelectTitle,
       );
-
-      // Now find the Checkbox widget located in the Playlist ListTile
-      // and tap on it to select the playlist
-      final Finder localPlaylistToSelectListTileCheckboxWidgetFinder =
-          find.descendant(
-        of: localPlaylistToSelectListTileWidgetFinder,
-        matching: find.byType(Checkbox),
-      );
-
-      // Tap the ListTile Playlist checkbox to select it
-      await tester.tap(localPlaylistToSelectListTileCheckboxWidgetFinder);
-      await tester.pumpAndSettle();
 
       // Rewind all unselected playlist audio to start position
       await _tapOnRewindPlaylistAudioToStartPositionMenu(
@@ -3080,28 +2970,10 @@ void main() {
       // Select another playlist than the one whose audio will be
       // rewinded to start position
 
-      // First, find the Playlist ListTile Text widget
-      final Finder localPlaylistToSelectListTileTextWidgetFinder =
-          find.text(localPlaylistToSelectTitle); // 'local'
-
-      // Then obtain the Playlist ListTile widget enclosing the Text widget
-      // by finding its ancestor
-      final Finder localPlaylistToSelectListTileWidgetFinder = find.ancestor(
-        of: localPlaylistToSelectListTileTextWidgetFinder,
-        matching: find.byType(ListTile),
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: localPlaylistToSelectTitle,
       );
-
-      // Now find the Checkbox widget located in the Playlist ListTile
-      // and tap on it to select the playlist
-      final Finder localPlaylistToSelectListTileCheckboxWidgetFinder =
-          find.descendant(
-        of: localPlaylistToSelectListTileWidgetFinder,
-        matching: find.byType(Checkbox),
-      );
-
-      // Tap the ListTile Playlist checkbox to select it
-      await tester.tap(localPlaylistToSelectListTileCheckboxWidgetFinder);
-      await tester.pumpAndSettle();
 
       // Rewind all unselected playlist audio to start position
       await _tapOnRewindPlaylistAudioToStartPositionMenu(
@@ -4263,27 +4135,10 @@ void main() {
 
         playlistToSelectTitle = 'Jeunes pianistes extraordinaires';
 
-        // Find the playlist to select ListTile Text widget
-        Finder playlistToSelectListTileTextWidgetFinder =
-            find.text(playlistToSelectTitle);
-
-        // Then obtain the playlist ListTile widget enclosing the Text widget
-        // by finding its ancestor
-        Finder playlistToSelectListTileWidgetFinder = find.ancestor(
-          of: playlistToSelectListTileTextWidgetFinder,
-          matching: find.byType(ListTile),
+        await IntegrationTestUtil.selectPlaylist(
+          tester: tester,
+          playlistToSelectTitle: playlistToSelectTitle,
         );
-
-        // Now find the Checkbox widget located in the playlist ListTile
-        // and tap on it to select the playlist
-        Finder playlistToSelectListTileCheckboxWidgetFinder = find.descendant(
-          of: playlistToSelectListTileWidgetFinder,
-          matching: find.byType(Checkbox),
-        );
-
-        // Tap the ListTile Playlist checkbox to select it
-        await tester.tap(playlistToSelectListTileCheckboxWidgetFinder);
-        await tester.pumpAndSettle();
 
         // Now return to the playlist download view
         appScreenNavigationButton =
@@ -10482,27 +10337,10 @@ Future<void> onAudioPlayerViewCheckOrTapOnPlaylistCheckbox({
 
   // Select the passed playlistToSelectTitle playlist
 
-  // Find the playlist to select ListTile Text widget
-  Finder playlistToSelectListTileTextWidgetFinder =
-      find.text(playlistToSelectTitleInAudioPlayerView);
-
-  // Then obtain the playlist ListTile widget enclosing the Text widget
-  // by finding its ancestor
-  Finder playlistToSelectListTileWidgetFinder = find.ancestor(
-    of: playlistToSelectListTileTextWidgetFinder,
-    matching: find.byType(ListTile),
+  await IntegrationTestUtil.selectPlaylist(
+    tester: tester,
+    playlistToSelectTitle: playlistToSelectTitleInAudioPlayerView,
   );
-
-  // Now find the Checkbox widget located in the playlist ListTile
-  // and tap on it to select the playlist
-  Finder playlistToSelectListTileCheckboxWidgetFinder = find.descendant(
-    of: playlistToSelectListTileWidgetFinder,
-    matching: find.byType(Checkbox),
-  );
-
-  // Tap the ListTile Playlist checkbox to select it
-  await tester.tap(playlistToSelectListTileCheckboxWidgetFinder);
-  await tester.pumpAndSettle();
 
   // Now we go back to the PlayListDownloadView in order to
   // verify the scrolled selected playlist
@@ -12031,8 +11869,7 @@ Future<void> verifyAudioInfoDialogElements({
     await tester.pumpAndSettle();
   }
 
-  // Now we want to tap the popup menu of the Audio ListTile
-  // "audio learn test short video one"
+  // Now we want to tap the popup menu of audioTitle
 
   // First, find the Audio sublist ListTile Text widget
   final Finder targetAudioListTileTextWidgetFinder = find.text(audioTitle);
