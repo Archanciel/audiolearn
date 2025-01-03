@@ -99,9 +99,8 @@ class CommentVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Returns a list of two strings. The first string is the path to the
-  /// comment directory, and the second string is the path file name to the
-  /// maybe not yet existing comment file.
+  /// Returns a string which is the combination of the path of the comment directory
+  /// and the file name to the maybe not yet existing comment file.
   static String buildCommentFilePathName({
     required String playlistDownloadPath,
     required String audioFileName,

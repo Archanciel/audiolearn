@@ -162,10 +162,10 @@ class PlaylistListVM extends ChangeNotifier {
   /// item. The method is also executed when the user modifies the application
   /// settings through the ApplicationSettingsWidget opened by clicking on the
   /// Application settings menu item.
-  /// 
+  ///
   /// When the user changes the "Update playlist JSON files", the added playlists
   /// are unselected by default.
-  /// 
+  ///
   /// Whenthe user modifies the application settings, unselecting added playlist
   /// is not adequate.
   void updateSettingsAndPlaylistJsonFiles({
@@ -643,6 +643,47 @@ class PlaylistListVM extends ChangeNotifier {
     }
 
     notifyListeners();
+  }
+
+  File? getAudioPictureFile({
+    required Audio audio,
+  }) {
+    String? audioPictureFilePathName = _buildAudioPictureFilePathName(
+      playlistDownloadPath: audio.enclosingPlaylist!.downloadPath,
+      audioFileName: audio.audioFileName,
+    );
+
+    // If the file path is null, return null
+    if (audioPictureFilePathName == null) {
+      return null;
+    }
+
+    // Return the File instance
+    return File(audioPictureFilePathName);
+  }
+
+  /// Returns a string which is the combination of the path of the picture directory
+  /// and the file name to the maybe not existing audio picture file.
+  ///
+  /// If the audio picture file does not exist, the method returns null.
+  String? _buildAudioPictureFilePathName({
+    required String playlistDownloadPath,
+    required String audioFileName,
+  }) {
+    final String playlistPicturePath =
+        "$playlistDownloadPath${path.separator}$kPictureDirName";
+
+    final String createdAudioPictureFileName =
+        audioFileName.replaceAll('.mp3', '.jpg');
+
+    String audioPicturePathFileName =
+        "$playlistPicturePath${path.separator}$createdAudioPictureFileName";
+
+    if (!File(audioPicturePathFileName).existsSync()) {
+      return null;
+    }
+
+    return audioPicturePathFileName;
   }
 
   /// Method called when the user confirms deleting the playlist.
