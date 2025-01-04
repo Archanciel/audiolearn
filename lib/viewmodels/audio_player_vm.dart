@@ -594,13 +594,13 @@ class AudioPlayerVM extends ChangeNotifier {
     _currentAudioTotalDuration = Duration.zero;
     _currentAudioPosition = const Duration(seconds: 0);
 
-    try {
-      // necessary to avoid the error which causes integration test to fail
-      await _audioPlayer!.dispose();
-    } catch (e) {
-      // ignore: avoid_print
-      print('***** AudioPlayerVM._clearCurrentAudio() error: $e');
-    }
+  //   try {
+  //     // necessary to avoid the error which causes integration test to fail
+  //     await _audioPlayer!.dispose();
+  //   } catch (e) {
+  //     // ignore: avoid_print
+  //     print('***** AudioPlayerVM._clearCurrentAudio() error: $e');
+  //   }
   }
 
   /// Method called when the user clicks on the audio play icon
