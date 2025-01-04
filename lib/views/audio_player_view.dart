@@ -211,9 +211,10 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
           areAudioButtonsEnabled: areAudioButtonsEnabled,
           isAudioPictureDisplayed: isAudioPictureDisplayed,
         ),
-        _buildExpandedPlaylistList(
-          playlistListVMListenFalse: playlistListVMlistenFalse,
-        ),
+        (playlistListVMlistenFalse.isPlaylistListExpanded)
+            ? _buildExpandedPlaylistList(
+                playlistListVMlistenFalse: playlistListVMlistenFalse)
+            : const SizedBox.shrink(),
         isAudioPictureDisplayed
             ? _displayAudioPicture(
                 audioPictureFile: audioPictureFile,
@@ -1183,40 +1184,35 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
   }
 
   Widget _buildExpandedPlaylistList({
-    required PlaylistListVM playlistListVMListenFalse,
+    required PlaylistListVM playlistListVMlistenFalse,
   }) {
-    if (playlistListVMListenFalse.isPlaylistListExpanded) {
-      List<Playlist> upToDateSelectablePlaylists =
-          playlistListVMListenFalse.getUpToDateSelectablePlaylists();
-      Expanded expanded = Expanded(
-        child: ListView.builder(
-          key: const Key('expandable_playlist_list'),
-          controller: _playlistScrollController,
-          itemCount: upToDateSelectablePlaylists.length,
-          itemBuilder: (context, index) {
-            Playlist playlist = upToDateSelectablePlaylists[index];
-            return Builder(
-              builder: (listTileContext) {
-                return PlaylistListItem(
-                  settingsDataService: widget.settingsDataService,
-                  playlist: playlist,
-                  toggleListIfSelected: true,
-                );
-              },
-            );
-          },
-        ),
-      );
+    List<Playlist> upToDateSelectablePlaylists =
+        playlistListVMlistenFalse.getUpToDateSelectablePlaylists();
+    Expanded expanded = Expanded(
+      child: ListView.builder(
+        key: const Key('expandable_playlist_list'),
+        controller: _playlistScrollController,
+        itemCount: upToDateSelectablePlaylists.length,
+        itemBuilder: (context, index) {
+          Playlist playlist = upToDateSelectablePlaylists[index];
+          return Builder(
+            builder: (listTileContext) {
+              return PlaylistListItem(
+                settingsDataService: widget.settingsDataService,
+                playlist: playlist,
+                toggleListIfSelected: true,
+              );
+            },
+          );
+        },
+      ),
+    );
 
-      _scrollToSelectedPlaylist(
-        playlistListVMlistenFalse: playlistListVMListenFalse,
-      );
+    _scrollToSelectedPlaylist(
+      playlistListVMlistenFalse: playlistListVMlistenFalse,
+    );
 
-      return expanded;
-    } else {
-      // the list of playlists is collapsed
-      return const SizedBox.shrink();
-    }
+    return expanded;
   }
 
   void _scrollToSelectedPlaylist({
