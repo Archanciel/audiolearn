@@ -114,6 +114,9 @@ class AudioPlayerVM extends ChangeNotifier {
   // Tracks the last time the currentAudioPositionNotifier was updated
   DateTime? _lastPositionUpdate;
 
+  final ValueNotifier<bool> currentAudioPlayPauseNotifier =
+      ValueNotifier(false);
+
   AudioPlayerVM({
     required SettingsDataService settingsDataService,
     required PlaylistListVM playlistListVM,
@@ -463,6 +466,7 @@ class AudioPlayerVM extends ChangeNotifier {
           _lastPositionUpdate = DateTime.now();
           currentAudioPositionNotifier.value = position;
         }
+
         // This instruction must be executed before the next if block,
         // otherwise, if the user opens the audio info dialog while the
         // audio is playing, the audio position displayed in the audio
@@ -636,9 +640,11 @@ class AudioPlayerVM extends ChangeNotifier {
 
   /// Method called when the user clicks on the audio play icon
   /// of the AudioListItemWidget displayed in the PlaylistDownloadView
-  /// or on the audio play icon in the AudioPlayerView or in the play
+  /// or on the audio play icon in the AudioPlayerView or on the play
   /// icon in the CommentListAddDialog or PlaylistCommentDialog
-  /// or in the play icon in the CommentAddEditDialog.
+  /// or on the play icon in the CommentAddEditDialog or on the play
+  /// icon in the second audio player line which exist if a picture is
+  /// displayed instead the regular play/pause icon.
   Future<void> playCurrentAudio({
     bool rewindAudioPositionBasedOnPauseDuration = true,
     bool isCommentPlaying = false,
@@ -690,7 +696,8 @@ class AudioPlayerVM extends ChangeNotifier {
 
       updateAndSaveCurrentAudio();
 
-      notifyListeners();
+      currentAudioPlayPauseNotifier.value = true; // true means the play/pause
+      //                                             button must be pause
     }
   }
 
@@ -716,7 +723,8 @@ class AudioPlayerVM extends ChangeNotifier {
     // otherwise, clicking on Play icon starts playing and the Pause icon
     // is diaplayed, but clicking on the Pause icon does pause the audio
     // but the Play icon is not displayed.
-    notifyListeners();
+    currentAudioPlayPauseNotifier.value = false; // false means the play/pause
+    //                                              button must be play
   }
 
   /// Method called when the user clicks on the '<<' or '>>'

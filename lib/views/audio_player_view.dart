@@ -235,7 +235,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
               audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
             ),
             _buildAudioSliderWithPositionTexts(
-              audioPlayerVM: audioPlayerVMlistenFalse,
+              audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
             ),
             _buildPositionButtons(),
           ],
@@ -314,27 +314,32 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                 // Display the play button in the second line only if the
                 // audio picture is displayed instead of the normal play
                 // button
-                ? IconButton(
-                    iconSize: _audioIconSizeMedium,
-                    onPressed: (() async {
-                      audioPlayerVMlistenFalse.isPlaying
-                          ? await audioPlayerVMlistenFalse.pause()
-                          : await audioPlayerVMlistenFalse.playCurrentAudio(
-                              isFromAudioPlayerView: true,
-                            );
-                    }),
-                    style: ButtonStyle(
-                      // Highlight button when pressed
-                      padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-                        const EdgeInsets.symmetric(
-                            horizontal: kSmallButtonInsidePadding, vertical: 0),
-                      ),
-                      overlayColor:
-                          iconButtonTapModification, // Tap feedback color
-                    ),
-                    icon: Icon(audioPlayerVMlistenFalse.isPlaying
-                        ? Icons.pause
-                        : Icons.play_arrow),
+                ? ValueListenableBuilder<bool>(
+                    valueListenable:
+                        audioPlayerVMlistenFalse.currentAudioPlayPauseNotifier,
+                    builder: (context, isPaused, child) {
+                      return IconButton(
+                        iconSize: _audioIconSizeMedium,
+                        onPressed: (() async {
+                          audioPlayerVMlistenFalse.isPlaying
+                              ? await audioPlayerVMlistenFalse.pause()
+                              : await audioPlayerVMlistenFalse.playCurrentAudio(
+                                  isFromAudioPlayerView: true,
+                                );
+                        }),
+                        style: ButtonStyle(
+                          // Highlight button when pressed
+                          padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                            const EdgeInsets.symmetric(
+                                horizontal: kSmallButtonInsidePadding,
+                                vertical: 0),
+                          ),
+                          overlayColor:
+                              iconButtonTapModification, // Tap feedback color
+                        ),
+                        icon: Icon(isPaused ? Icons.pause : Icons.play_arrow),
+                      );
+                    },
                   )
                 : const SizedBox.shrink(),
           ],
@@ -779,34 +784,38 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     if (!playlistListVMlistenTrue.isPlaylistListExpanded) {
       // the list of playlists is collapsed, so the play button is
       // displayed
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(90.0),
-            child: IconButton(
-              iconSize: _audioIconSizeLarge,
-              onPressed: (() async {
-                audioPlayerVMlistenFalse.isPlaying
-                    ? await audioPlayerVMlistenFalse.pause()
-                    : await audioPlayerVMlistenFalse.playCurrentAudio(
-                        isFromAudioPlayerView: true,
-                      );
-              }),
-              style: ButtonStyle(
-                // Highlight button when pressed
-                padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-                  const EdgeInsets.symmetric(
-                      horizontal: kSmallButtonInsidePadding, vertical: 0),
+      return ValueListenableBuilder<bool>(
+        valueListenable: audioPlayerVMlistenFalse.currentAudioPlayPauseNotifier,
+        builder: (context, isPaused, child) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(90.0),
+                child: IconButton(
+                  iconSize: _audioIconSizeLarge,
+                  onPressed: (() async {
+                    audioPlayerVMlistenFalse.isPlaying
+                        ? await audioPlayerVMlistenFalse.pause()
+                        : await audioPlayerVMlistenFalse.playCurrentAudio(
+                            isFromAudioPlayerView: true,
+                          );
+                  }),
+                  style: ButtonStyle(
+                    // Highlight button when pressed
+                    padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                      const EdgeInsets.symmetric(
+                          horizontal: kSmallButtonInsidePadding, vertical: 0),
+                    ),
+                    overlayColor:
+                        iconButtonTapModification, // Tap feedback color
+                  ),
+                  icon: Icon(isPaused ? Icons.pause : Icons.play_arrow),
                 ),
-                overlayColor: iconButtonTapModification, // Tap feedback color
               ),
-              icon: Icon(audioPlayerVMlistenFalse.isPlaying
-                  ? Icons.pause
-                  : Icons.play_arrow),
-            ),
-          ),
-        ],
+            ],
+          );
+        },
       );
     } else {
       return const SizedBox.shrink();
@@ -948,19 +957,20 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
   }
 
   Widget _buildAudioSliderWithPositionTexts({
-    required AudioPlayerVM audioPlayerVM,
+    required AudioPlayerVM audioPlayerVMlistenFalse,
   }) {
     return ValueListenableBuilder<Duration>(
-      valueListenable: audioPlayerVM.currentAudioPositionNotifier,
+      valueListenable: audioPlayerVMlistenFalse.currentAudioPositionNotifier,
       builder: (context, currentPosition, child) {
         // Obtaining the slider values here (when audioPlayerVM
         // call notifyListeners()) avoids that the slider generate
         // a 'Value xxx.x is not between minimum 0.0 and maximum 0.0'
         // error
         double sliderValue =
-            audioPlayerVM.currentAudioPosition.inSeconds.toDouble();
-        double maxDuration =
-            audioPlayerVM.currentAudioTotalDuration.inSeconds.toDouble();
+            audioPlayerVMlistenFalse.currentAudioPosition.inSeconds.toDouble();
+        double maxDuration = audioPlayerVMlistenFalse
+            .currentAudioTotalDuration.inSeconds
+            .toDouble();
 
         // Ensure the slider value is within the range
         sliderValue = sliderValue.clamp(0.0, maxDuration);
@@ -972,7 +982,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
             children: [
               Text(
                 key: const Key('audioPlayerViewAudioPosition'),
-                audioPlayerVM.currentAudioPosition.HHmmssZeroHH(),
+                audioPlayerVMlistenFalse.currentAudioPosition.HHmmssZeroHH(),
                 style: kSliderValueTextStyle,
               ),
               Expanded(
@@ -989,7 +999,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                     max: maxDuration,
                     value: sliderValue,
                     onChanged: (double value) async {
-                      await audioPlayerVM.slideToAudioPlayPosition(
+                      await audioPlayerVMlistenFalse.slideToAudioPlayPosition(
                         durationPosition: Duration(seconds: value.toInt()),
                       );
                     },
@@ -998,7 +1008,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
               ),
               Text(
                 key: const Key('audioPlayerViewAudioRemainingDuration'),
-                audioPlayerVM.currentAudioRemainingDuration.HHmmssZeroHH(),
+                audioPlayerVMlistenFalse.currentAudioRemainingDuration
+                    .HHmmssZeroHH(),
                 style: kSliderValueTextStyle,
               ),
             ],
