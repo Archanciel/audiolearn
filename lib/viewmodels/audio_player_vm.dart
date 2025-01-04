@@ -725,6 +725,12 @@ class AudioPlayerVM extends ChangeNotifier {
     // but the Play icon is not displayed.
     currentAudioPlayPauseNotifier.value = false; // false means the play/pause
     //                                              button must be play
+
+    // Required so that the audio item play/pause button is correctly
+    // updated when clicking on it to pause the playing audio. Otherwise,
+    // the audio is paused, but the button is nor converted to play
+    // button.
+    notifyListeners();
   }
 
   /// Method called when the user clicks on the '<<' or '>>'
