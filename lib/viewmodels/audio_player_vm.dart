@@ -108,6 +108,12 @@ class AudioPlayerVM extends ChangeNotifier {
 
   final SettingsDataService _settingsDataService;
 
+  final ValueNotifier<Duration> currentAudioPositionNotifier =
+      ValueNotifier(Duration.zero);
+
+  // Tracks the last time the currentAudioPositionNotifier was updated
+  DateTime? _lastPositionUpdate;
+
   AudioPlayerVM({
     required SettingsDataService settingsDataService,
     required PlaylistListVM playlistListVM,
@@ -449,8 +455,14 @@ class AudioPlayerVM extends ChangeNotifier {
         // passed position value of an AudioPlayer not playing
         // is 0 !
         _currentAudioPosition = position;
-        notifyListeners();
 
+        // Only update the currentAudioPositionNotifier every 1 second
+        if (_lastPositionUpdate == null ||
+            DateTime.now().difference(_lastPositionUpdate!) >=
+                const Duration(seconds: 1)) {
+          _lastPositionUpdate = DateTime.now();
+          currentAudioPositionNotifier.value = position;
+        }
         // This instruction must be executed before the next if block,
         // otherwise, if the user opens the audio info dialog while the
         // audio is playing, the audio position displayed in the audio
@@ -613,13 +625,13 @@ class AudioPlayerVM extends ChangeNotifier {
     _currentAudioTotalDuration = Duration.zero;
     _currentAudioPosition = Duration.zero;
 
-  //   try {
-  //     // necessary to avoid the error which causes integration test to fail
-  //     await _audioPlayer!.dispose();
-  //   } catch (e) {
-  //     // ignore: avoid_print
-  //     print('***** AudioPlayerVM._clearCurrentAudio() error: $e');
-  //   }
+    //   try {
+    //     // necessary to avoid the error which causes integration test to fail
+    //     await _audioPlayer!.dispose();
+    //   } catch (e) {
+    //     // ignore: avoid_print
+    //     print('***** AudioPlayerVM._clearCurrentAudio() error: $e');
+    //   }
   }
 
   /// Method called when the user clicks on the audio play icon

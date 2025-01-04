@@ -164,9 +164,13 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
       context,
       listen: true,
     );
+    AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
+      context,
+      listen: false,
+    );
     AudioPlayerVM audioPlayerVMlistenTrue = Provider.of<AudioPlayerVM>(
       context,
-      listen: true,
+      listen: false,
     );
 
     final ThemeProviderVM themeProviderVMlistenFalse =
@@ -186,12 +190,12 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
 
     File? audioPictureFile;
 
-    if (audioPlayerVMlistenTrue.currentAudio != null) {
-      audioPictureFile = playlistListVMlistenTrue.getAudioPictureFile(
-          audio: audioPlayerVMlistenTrue.currentAudio!);
+    if (audioPlayerVMlistenFalse.currentAudio != null) {
+      audioPictureFile = playlistListVMlistenFalse.getAudioPictureFile(
+          audio: audioPlayerVMlistenFalse.currentAudio!);
     }
 
-    bool isAudioPictureDisplayed = audioPictureFile != null;
+    bool isAudioPictureAvailable = audioPictureFile != null;
 
     Widget viewContent = Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -207,30 +211,32 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
           context: context,
           themeProviderVM: themeProviderVMlistenFalse,
           playlistListVM: playlistListVMlistenFalse,
-          audioPlayerVMlistenTrue: audioPlayerVMlistenTrue,
+          audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
           areAudioButtonsEnabled: areAudioButtonsEnabled,
-          isAudioPictureDisplayed: isAudioPictureDisplayed,
+          isAudioPictureDisplayed: isAudioPictureAvailable,
         ),
         (playlistListVMlistenFalse.isPlaylistListExpanded)
             ? _buildExpandedPlaylistList(
                 playlistListVMlistenFalse: playlistListVMlistenFalse)
             : const SizedBox.shrink(),
-        isAudioPictureDisplayed
-            ? _displayAudioPicture(
+        (isAudioPictureAvailable)
+            ? _buildAudioPicture(
                 audioPictureFile: audioPictureFile,
               )
             : _buildPlayButton(
                 playlistListVMlistenTrue: playlistListVMlistenTrue,
-                audioPlayerVMlistenTrue: audioPlayerVMlistenTrue,
+                audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
               ),
         Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             _buildStartEndButtonsWithTitle(
               context: context,
-              audioPlayerVMlistenTrue: audioPlayerVMlistenTrue,
+              audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
             ),
-            _buildAudioSliderWithPositionTexts(),
+            _buildAudioSliderWithPositionTexts(
+              audioPlayerVM: audioPlayerVMlistenFalse,
+            ),
             _buildPositionButtons(),
           ],
         ),
@@ -260,7 +266,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     required BuildContext context,
     required ThemeProviderVM themeProviderVM,
     required PlaylistListVM playlistListVM,
-    required AudioPlayerVM audioPlayerVMlistenTrue,
+    required AudioPlayerVM audioPlayerVMlistenFalse,
     required bool areAudioButtonsEnabled,
     required bool isAudioPictureDisplayed,
   }) {
@@ -311,9 +317,9 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                 ? IconButton(
                     iconSize: _audioIconSizeMedium,
                     onPressed: (() async {
-                      audioPlayerVMlistenTrue.isPlaying
-                          ? await audioPlayerVMlistenTrue.pause()
-                          : await audioPlayerVMlistenTrue.playCurrentAudio(
+                      audioPlayerVMlistenFalse.isPlaying
+                          ? await audioPlayerVMlistenFalse.pause()
+                          : await audioPlayerVMlistenFalse.playCurrentAudio(
                               isFromAudioPlayerView: true,
                             );
                     }),
@@ -326,7 +332,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                       overlayColor:
                           iconButtonTapModification, // Tap feedback color
                     ),
-                    icon: Icon(audioPlayerVMlistenTrue.isPlaying
+                    icon: Icon(audioPlayerVMlistenFalse.isPlaying
                         ? Icons.pause
                         : Icons.play_arrow),
                   )
@@ -349,7 +355,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
             ),
             _buildCommentsInkWellButton(
               context: context,
-              audioPlayerVMlistenTrue: audioPlayerVMlistenTrue,
+              audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
               areAudioButtonsEnabled: areAudioButtonsEnabled,
             ),
             _buildAudioPopupMenuButton(
@@ -552,7 +558,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
   /// a colored circle.
   Widget _buildCommentsInkWellButton({
     required BuildContext context,
-    required AudioPlayerVM audioPlayerVMlistenTrue,
+    required AudioPlayerVM audioPlayerVMlistenFalse,
     required bool areAudioButtonsEnabled,
   }) {
     CircleAvatar circleAvatar;
@@ -565,12 +571,12 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     Audio? currentAudio;
 
     if (areAudioButtonsEnabled) {
-      currentAudio = audioPlayerVMlistenTrue.currentAudio;
+      currentAudio = audioPlayerVMlistenFalse.currentAudio;
     }
 
     if (currentAudio != null) {
       if (commentVM
-          .loadAudioComments(audio: audioPlayerVMlistenTrue.currentAudio!)
+          .loadAudioComments(audio: audioPlayerVMlistenFalse.currentAudio!)
           .isEmpty) {
         circleAvatar = formatIconBackAndForGroundColor(
           context: context,
@@ -768,7 +774,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
 
   Widget _buildPlayButton({
     required PlaylistListVM playlistListVMlistenTrue,
-    required AudioPlayerVM audioPlayerVMlistenTrue,
+    required AudioPlayerVM audioPlayerVMlistenFalse,
   }) {
     if (!playlistListVMlistenTrue.isPlaylistListExpanded) {
       // the list of playlists is collapsed, so the play button is
@@ -781,9 +787,9 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
             child: IconButton(
               iconSize: _audioIconSizeLarge,
               onPressed: (() async {
-                audioPlayerVMlistenTrue.isPlaying
-                    ? await audioPlayerVMlistenTrue.pause()
-                    : await audioPlayerVMlistenTrue.playCurrentAudio(
+                audioPlayerVMlistenFalse.isPlaying
+                    ? await audioPlayerVMlistenFalse.pause()
+                    : await audioPlayerVMlistenFalse.playCurrentAudio(
                         isFromAudioPlayerView: true,
                       );
               }),
@@ -795,7 +801,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                 ),
                 overlayColor: iconButtonTapModification, // Tap feedback color
               ),
-              icon: Icon(audioPlayerVMlistenTrue.isPlaying
+              icon: Icon(audioPlayerVMlistenFalse.isPlaying
                   ? Icons.pause
                   : Icons.play_arrow),
             ),
@@ -807,7 +813,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     }
   }
 
-  Widget _displayAudioPicture({
+  Widget _buildAudioPicture({
     required File? audioPictureFile,
   }) {
     // Check if the audio picture file exists and read its bytes
@@ -852,14 +858,14 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
 
   Widget _buildStartEndButtonsWithTitle({
     required BuildContext context,
-    required AudioPlayerVM audioPlayerVMlistenTrue,
+    required AudioPlayerVM audioPlayerVMlistenFalse,
   }) {
     // The reason why this widget is consumer of the AudioPlayerVM
     // that by clicking on the current audio title, the user can
     // select another audio to play. This action will require to
     // update the current audio title displayed in the audio player.
     String? currentAudioTitleWithDuration =
-        audioPlayerVMlistenTrue.getCurrentAudioTitleWithDuration();
+        audioPlayerVMlistenFalse.getCurrentAudioTitleWithDuration();
 
     // If the current audio title is null, set it to the
     // 'no current audio' translated title
@@ -872,7 +878,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
         IconButton(
           key: const Key('audioPlayerViewSkipToStartButton'),
           iconSize: _audioIconSizeMedium,
-          onPressed: () async => await audioPlayerVMlistenTrue.skipToStart(),
+          onPressed: () async => await audioPlayerVMlistenFalse.skipToStart(),
           style: ButtonStyle(
             // Highlight button when pressed
             padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -886,7 +892,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
         Expanded(
           child: GestureDetector(
             onTap: () {
-              if (audioPlayerVMlistenTrue
+              if (audioPlayerVMlistenFalse
                   .getPlayableAudiosApplyingSortFilterParameters(
                     AudioLearnAppViewType.audioPlayerView,
                   )
@@ -906,7 +912,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                 return Text(
                   key: const Key('audioPlayerViewCurrentAudioTitle'),
                   currentAudioTitleWithDuration ?? '', // Current audio title
-                  // obtained from the audioPlayerVMlistenTrue. Since it is
+                  // obtained from the audioPlayerVMlistenFalse. Since it is
                   // listen == true, the current audio title is updated when
                   // the user selects another audio to play.
                   style: TextStyle(
@@ -926,7 +932,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
           key: const Key('audioPlayerViewSkipToEndButton'),
           iconSize: _audioIconSizeMedium,
           onPressed: () async =>
-              await audioPlayerVMlistenTrue.skipToEndAndPlay(),
+              await audioPlayerVMlistenFalse.skipToEndAndPlay(),
           style: ButtonStyle(
             // Highlight button when pressed
             padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -941,9 +947,12 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     );
   }
 
-  Widget _buildAudioSliderWithPositionTexts() {
-    return Consumer<AudioPlayerVM>(
-      builder: (context, audioPlayerVM, child) {
+  Widget _buildAudioSliderWithPositionTexts({
+    required AudioPlayerVM audioPlayerVM,
+  }) {
+    return ValueListenableBuilder<Duration>(
+      valueListenable: audioPlayerVM.currentAudioPositionNotifier,
+      builder: (context, currentPosition, child) {
         // Obtaining the slider values here (when audioPlayerVM
         // call notifyListeners()) avoids that the slider generate
         // a 'Value xxx.x is not between minimum 0.0 and maximum 0.0'
