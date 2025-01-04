@@ -184,11 +184,14 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
       _audioPlaySpeed = audioPlayerVMlistenTrue.currentAudio!.audioPlaySpeed;
     }
 
-    bool isAudioPictureDisplayed =
-        audioPlayerVMlistenTrue.currentAudio != null &&
-            playlistListVMlistenTrue.getAudioPictureFile(
-                    audio: audioPlayerVMlistenTrue.currentAudio!) !=
-                null;
+    File? audioPictureFile;
+
+    if (audioPlayerVMlistenTrue.currentAudio != null) {
+      audioPictureFile = playlistListVMlistenTrue.getAudioPictureFile(
+          audio: audioPlayerVMlistenTrue.currentAudio!);
+    }
+
+    bool isAudioPictureDisplayed = audioPictureFile != null;
 
     Widget viewContent = Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -213,8 +216,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
         ),
         isAudioPictureDisplayed
             ? _displayAudioPicture(
-                playlistListVMlistenTrue: playlistListVMlistenTrue,
-                audioPlayerVMlistenTrue: audioPlayerVMlistenTrue,
+                audioPictureFile: audioPictureFile,
               )
             : _buildPlayButton(
                 playlistListVMlistenTrue: playlistListVMlistenTrue,
@@ -302,9 +304,9 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
               ),
             ),
             (isAudioPictureDisplayed)
-              // Display the play button in the second line only if the
-              // audio picture is displayed instead of the normal play
-              // button
+                // Display the play button in the second line only if the
+                // audio picture is displayed instead of the normal play
+                // button
                 ? IconButton(
                     iconSize: _audioIconSizeMedium,
                     onPressed: (() async {
@@ -805,13 +807,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
   }
 
   Widget _displayAudioPicture({
-    required PlaylistListVM playlistListVMlistenTrue,
-    required AudioPlayerVM audioPlayerVMlistenTrue,
+    required File? audioPictureFile,
   }) {
-    File? audioPictureFile = playlistListVMlistenTrue.getAudioPictureFile(
-      audio: audioPlayerVMlistenTrue.currentAudio!,
-    );
-
     // Check if the audio picture file exists and read its bytes
     Uint8List? imageBytes;
 
@@ -844,12 +841,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                       width: imageWidthHeight,
                       height: imageWidthHeight,
                     )
-                  : Icon(
-                      Icons.music_note,
-                      size:
-                          circleAvatarRadius, // Icon size proportional to radius
-                      color: Colors.grey,
-                    ), // Default icon if no image is available
+                  : const SizedBox.shrink(),
             ),
           ),
         ],
