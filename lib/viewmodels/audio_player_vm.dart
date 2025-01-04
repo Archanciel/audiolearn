@@ -627,15 +627,7 @@ class AudioPlayerVM extends ChangeNotifier {
   Future<void> _clearCurrentAudio() async {
     _currentAudio = null;
     _currentAudioTotalDuration = Duration.zero;
-    _currentAudioPosition = Duration.zero;
-
-    //   try {
-    //     // necessary to avoid the error which causes integration test to fail
-    //     await _audioPlayer!.dispose();
-    //   } catch (e) {
-    //     // ignore: avoid_print
-    //     print('***** AudioPlayerVM._clearCurrentAudio() error: $e');
-    //   }
+    _currentAudioPosition = const Duration(seconds: 0);
   }
 
   /// Method called when the user clicks on the audio play icon
