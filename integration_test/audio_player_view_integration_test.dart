@@ -2514,7 +2514,8 @@ void main() {
       );
     });
   });
-  group('Display of audio playable list.', () {
+  group('''Audio playable list usage. The list is opened by clicking
+        on the current audio of the play audio view.''', () {
     testWidgets('All, then only no played or partially played, audio displayed',
         (WidgetTester tester) async {
       const String audioPlayerSelectedPlaylistTitle =
