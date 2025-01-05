@@ -241,7 +241,7 @@ void audioPlayerViewSortFilterIntegrationTest() {
       );
 
       await tester.tap(dropDownButtonTextFinder);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds:200));
 
       // And find the 'Title asc' sort/filter item
       String titleAscendingSFparmsName = 'Title asc';
@@ -258,7 +258,7 @@ void audioPlayerViewSortFilterIntegrationTest() {
         "La résilience insulaire par Fiona Roche",
         "La surpopulation mondiale par Jancovici et Barrau",
         "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
-        // "Les besoins artificiels par R.Keucheyan"
+        "Les besoins artificiels par R.Keucheyan",
       ];
 
       IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
