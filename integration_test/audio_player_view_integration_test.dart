@@ -151,6 +151,10 @@ void main() {
       await Future.delayed(const Duration(seconds: 5));
       await tester.pumpAndSettle();
 
+      // Not tapping on pause button to pause the audio. This is done
+      // after the verifyAudioDataElementsUpdatedInPlaylistJsonFile()
+      // method called below.
+
       IntegrationTestUtil.verifyAudioDataElementsUpdatedInPlaylistJsonFile(
         audioPlayerSelectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         playableAudioLstAudioIndex: 0,
@@ -165,9 +169,9 @@ void main() {
       final Finder pauseIconFinder = find.byIcon(Icons.pause);
       expect(pauseIconFinder, findsOneWidget);
 
-      // Now pause the audio and wait 1 second
+      // Now pause the audio
       await tester.tap(pauseIconFinder);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       DateTime pausedAudioAtDateTime = DateTime.now();
 
