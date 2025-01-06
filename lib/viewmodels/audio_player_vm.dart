@@ -217,7 +217,7 @@ class AudioPlayerVM extends ChangeNotifier {
     _clearUndoRedoLists();
 
     if (doNotifyListeners) {
-      notifyListeners();
+      currentAudioPositionNotifier.value = _currentAudioPosition;
     }
   }
 
@@ -735,11 +735,11 @@ class AudioPlayerVM extends ChangeNotifier {
   /// undo or redo methods. In this case, the method does not add a
   /// command to the undo list.
   Future<void> changeAudioPlayPosition({
-    required Duration posNegPositionDurationChange,
+    required Duration posOrNegPositionDurationChange,
     bool isUndoRedo = false,
   }) async {
     Duration newAudioPosition =
-        _currentAudioPosition + posNegPositionDurationChange;
+        _currentAudioPosition + posOrNegPositionDurationChange;
 
     // Check if the new audio position is within the audio duration.
     // If not, set the audio position to the beginning or the end
@@ -757,7 +757,7 @@ class AudioPlayerVM extends ChangeNotifier {
       newAudioPosition = currentAudioDuration;
     }
 
-    modifyCurrentAudioPlayingOrPausedWithPositionBetweenAudioStartAndEnd(
+    _modifyCurrentAudioPlayingOrPausedWithPositionBetweenAudioStartAndEnd(
       newAudioPosition: newAudioPosition,
     );
 
@@ -786,7 +786,7 @@ class AudioPlayerVM extends ChangeNotifier {
     // is updated
     updateAndSaveCurrentAudio();
 
-    notifyListeners();
+    currentAudioPositionNotifier.value = newAudioPosition;
   }
 
   /// Method called when the user clicks on the audio slider or on the
@@ -795,7 +795,7 @@ class AudioPlayerVM extends ChangeNotifier {
   /// isPlayingOrPausedWithPositionBetweenAudioStartAndEnd value. This
   /// instance variable is used to modify the inkwell audio play icon color
   /// in the AudioListItemWidget used in the PlaylistDownloadView.
-  void modifyCurrentAudioPlayingOrPausedWithPositionBetweenAudioStartAndEnd({
+  void _modifyCurrentAudioPlayingOrPausedWithPositionBetweenAudioStartAndEnd({
     required Duration newAudioPosition,
   }) {
     if (newAudioPosition > Duration.zero &&
@@ -842,7 +842,7 @@ class AudioPlayerVM extends ChangeNotifier {
     required Duration durationPosition,
     bool isUndoRedo = false,
   }) async {
-    modifyCurrentAudioPlayingOrPausedWithPositionBetweenAudioStartAndEnd(
+    _modifyCurrentAudioPlayingOrPausedWithPositionBetweenAudioStartAndEnd(
       newAudioPosition: durationPosition,
     );
 
@@ -914,7 +914,7 @@ class AudioPlayerVM extends ChangeNotifier {
       // is set.
       await _setPreviousAudio();
 
-      notifyListeners();
+      currentAudioPositionNotifier.value = _currentAudioPosition;
 
       return;
     }
@@ -939,7 +939,7 @@ class AudioPlayerVM extends ChangeNotifier {
       durationPosition: _currentAudioPosition,
     );
 
-    notifyListeners();
+    currentAudioPositionNotifier.value = _currentAudioPosition;
   }
 
   /// Method not used for the moment
@@ -958,7 +958,7 @@ class AudioPlayerVM extends ChangeNotifier {
       // clicks twice on the >| icon.
       await _setNextNotFullyPlayedAudioAsCurrentAudio();
 
-      notifyListeners();
+      currentAudioPositionNotifier.value = _currentAudioPosition;
 
       return;
     }
@@ -990,7 +990,7 @@ class AudioPlayerVM extends ChangeNotifier {
       durationPosition: _currentAudioTotalDuration,
     );
 
-    notifyListeners();
+    currentAudioPositionNotifier.value = _currentAudioPosition;
   }
 
   /// Method called when the user clicks on the >| icon,
@@ -1032,7 +1032,7 @@ class AudioPlayerVM extends ChangeNotifier {
       durationPosition: _currentAudioTotalDuration,
     );
 
-    notifyListeners();
+    currentAudioPositionNotifier.value = _currentAudioPosition;
   }
 
   /// Method called when _audioPlayer!.onPlayerComplete happens,
