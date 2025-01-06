@@ -109,6 +109,16 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
             value: AudioPopupMenuAction.modifyAudioTitle,
             child: Text(AppLocalizations.of(context)!.modifyAudioTitle),
           ),
+        PopupMenuItem<AudioPopupMenuAction>(
+          key: const Key('popup_menu_add_audio_picture'),
+          value: AudioPopupMenuAction.addAudioPicture,
+          child: Text(AppLocalizations.of(context)!.addAudioPicture),
+        ),
+        PopupMenuItem<AudioPopupMenuAction>(
+          key: const Key('popup_menu_remove_audio_picture'),
+          value: AudioPopupMenuAction.removeAudioPicture,
+          child: Text(AppLocalizations.of(context)!.removeAudioPicture),
+        ),
           PopupMenuItem<AudioPopupMenuAction>(
             key: const Key('popup_menu_move_audio_to_playlist'),
             value: AudioPopupMenuAction.moveAudioToPlaylist,
@@ -211,6 +221,10 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                 audio: audio,
               );
             });
+            break;
+          case AudioPopupMenuAction.addAudioPicture:
+            break;
+          case AudioPopupMenuAction.removeAudioPicture:
             break;
           case AudioPopupMenuAction.moveAudioToPlaylist:
             PlaylistListVM playlistVMlistnedFalse = Provider.of<PlaylistListVM>(

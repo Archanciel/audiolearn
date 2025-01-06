@@ -333,6 +333,11 @@ class DirUtil {
     String? targetFileName,
   }) async {
     File sourceFile = File(sourceFilePathName);
+
+    if (!await sourceFile.exists()) {
+      return;
+    }
+
     String copiedFileName = targetFileName ?? sourceFile.uri.pathSegments.last;
     String targetPathFileName =
         '$targetDirectoryPath${path.separator}$copiedFileName';

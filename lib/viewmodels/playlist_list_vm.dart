@@ -645,6 +645,32 @@ class PlaylistListVM extends ChangeNotifier {
     notifyListeners();
   }
 
+  void storeAudioPictureFileInPlaylistPictureDir({
+    required Audio audio,
+    required String pictureFilePathName,
+  }) {
+    String playlistDownloadPath = audio.enclosingPlaylist!.downloadPath;
+    String audioFileName = audio.audioFileName;
+
+    final String playlistPicturePath =
+        "$playlistDownloadPath${path.separator}$kPictureDirName";
+
+    // Ensure the directory exists, otherwise create it
+    Directory targetDirectory = Directory(playlistPicturePath);
+
+    if (!targetDirectory.existsSync()) {
+      targetDirectory.createSync();
+    }
+
+    final String createdAudioPictureFileName =
+        audioFileName.replaceAll('.mp3', '.jpg');
+
+    DirUtil.copyFileToDirectory(
+        sourceFilePathName: pictureFilePathName,
+        targetDirectoryPath: playlistPicturePath,
+        targetFileName: createdAudioPictureFileName);
+  }
+
   File? getAudioPictureFile({
     required Audio audio,
   }) {

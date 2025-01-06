@@ -1767,4 +1767,10 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get chapterAudioTitleLabel => "Chapter Audio title";
+
+  @override
+  String get addAudioPicture => "Add Audio Picture ...";
+
+  @override
+  String get removeAudioPicture => "Remove Audio Picture";
 }

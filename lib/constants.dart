@@ -25,10 +25,12 @@ enum AudioPopupMenuAction {
   deleteAudioFromPlaylistAswell,
   audioComment,
   modifyAudioTitle,
+  addAudioPicture,
+  removeAudioPicture,
 }
 
 const String kApplicationName = "Audio Learn";
-const String kApplicationVersion = '1.3.15';
+const String kApplicationVersion = '1.3.16';
 const String kApplicationPath = "/storage/emulated/0/Download/audiolearn";
 const String kApplicationPathTest = "/storage/emulated/0/Download/audiolearn";
 const String kPlaylistDownloadRootPath =
