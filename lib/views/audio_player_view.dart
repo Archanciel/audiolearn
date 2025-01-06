@@ -1041,7 +1041,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                             iconSize: _audioIconSizeMedium,
                             onPressed: () async =>
                                 await audioPlayerVM.changeAudioPlayPosition(
-                              posNegPositionDurationChange:
+                              posOrNegPositionDurationChange:
                                   const Duration(minutes: -1),
                             ),
                             style: ButtonStyle(
@@ -1064,7 +1064,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                             iconSize: _audioIconSizeMedium,
                             onPressed: () async =>
                                 await audioPlayerVM.changeAudioPlayPosition(
-                              posNegPositionDurationChange:
+                              posOrNegPositionDurationChange:
                                   const Duration(seconds: -10),
                             ),
                             style: ButtonStyle(
@@ -1087,7 +1087,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                             iconSize: _audioIconSizeMedium,
                             onPressed: () async =>
                                 await audioPlayerVM.changeAudioPlayPosition(
-                              posNegPositionDurationChange:
+                              posOrNegPositionDurationChange:
                                   const Duration(seconds: 10),
                             ),
                             style: ButtonStyle(
@@ -1110,7 +1110,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                             iconSize: _audioIconSizeMedium,
                             onPressed: () async =>
                                 await audioPlayerVM.changeAudioPlayPosition(
-                              posNegPositionDurationChange:
+                              posOrNegPositionDurationChange:
                                   const Duration(minutes: 1),
                             ),
                             style: ButtonStyle(
@@ -1139,7 +1139,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                           key: const Key('audioPlayerViewBackward1mButton'),
                           onTap: () async =>
                               await audioPlayerVM.changeAudioPlayPosition(
-                            posNegPositionDurationChange:
+                            posOrNegPositionDurationChange:
                                 const Duration(minutes: -1),
                           ),
                           child: const Text(
@@ -1153,7 +1153,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                         child: GestureDetector(
                           onTap: () async =>
                               await audioPlayerVM.changeAudioPlayPosition(
-                            posNegPositionDurationChange:
+                            posOrNegPositionDurationChange:
                                 const Duration(seconds: -10),
                           ),
                           child: const Text(
@@ -1167,7 +1167,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                         child: GestureDetector(
                           onTap: () async =>
                               await audioPlayerVM.changeAudioPlayPosition(
-                            posNegPositionDurationChange:
+                            posOrNegPositionDurationChange:
                                 const Duration(seconds: 10),
                           ),
                           child: const Text(
@@ -1181,7 +1181,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                         child: GestureDetector(
                           onTap: () async =>
                               await audioPlayerVM.changeAudioPlayPosition(
-                            posNegPositionDurationChange:
+                            posOrNegPositionDurationChange:
                                 const Duration(minutes: 1),
                           ),
                           child: const Text(
