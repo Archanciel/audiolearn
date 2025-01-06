@@ -865,96 +865,87 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     );
   }
 
-  Widget _buildStartEndButtonsWithTitle({
-    required BuildContext context,
-    required AudioPlayerVM audioPlayerVMlistenFalse,
-  }) {
-    // The reason why this widget is consumer of the AudioPlayerVM
-    // that by clicking on the current audio title, the user can
-    // select another audio to play. This action will require to
-    // update the current audio title displayed in the audio player.
-    String? currentAudioTitleWithDuration =
-        audioPlayerVMlistenFalse.getCurrentAudioTitleWithDuration();
+Widget _buildStartEndButtonsWithTitle({
+  required BuildContext context,
+  required AudioPlayerVM audioPlayerVMlistenFalse,
+}) {
+  return ValueListenableBuilder<String?>(
+    valueListenable: audioPlayerVMlistenFalse.currentAudioTitleNotifier,
+    builder: (context, currentAudioTitle, child) {
+      // If the current audio title is null, set it to the default value
+      currentAudioTitle ??=
+          AppLocalizations.of(context)!.audioPlayerViewNoCurrentAudio;
 
-    // If the current audio title is null, set it to the
-    // 'no current audio' translated title
-    currentAudioTitleWithDuration ??=
-        AppLocalizations.of(context)!.audioPlayerViewNoCurrentAudio;
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        IconButton(
-          key: const Key('audioPlayerViewSkipToStartButton'),
-          iconSize: _audioIconSizeMedium,
-          onPressed: () async => await audioPlayerVMlistenFalse.skipToStart(),
-          style: ButtonStyle(
-            // Highlight button when pressed
-            padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-              const EdgeInsets.symmetric(
-                  horizontal: kSmallButtonInsidePadding, vertical: 0),
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IconButton(
+            key: const Key('audioPlayerViewSkipToStartButton'),
+            iconSize: _audioIconSizeMedium,
+            onPressed: () async =>
+                await audioPlayerVMlistenFalse.skipToStart(),
+            style: ButtonStyle(
+              padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                const EdgeInsets.symmetric(
+                    horizontal: kSmallButtonInsidePadding, vertical: 0),
+              ),
+              overlayColor: iconButtonTapModification, // Tap feedback color
             ),
-            overlayColor: iconButtonTapModification, // Tap feedback color
+            icon: const Icon(Icons.skip_previous),
           ),
-          icon: const Icon(Icons.skip_previous),
-        ),
-        Expanded(
-          child: GestureDetector(
-            onTap: () {
-              if (audioPlayerVMlistenFalse
-                  .getPlayableAudiosApplyingSortFilterParameters(
-                    AudioLearnAppViewType.audioPlayerView,
-                  )
-                  .isEmpty) {
-                // there is no audio to play, so tapping on the
-                // current audio title does not perform anything
-                return;
-              }
+          Expanded(
+            child: GestureDetector(
+              onTap: () {
+                if (audioPlayerVMlistenFalse
+                    .getPlayableAudiosApplyingSortFilterParameters(
+                      AudioLearnAppViewType.audioPlayerView,
+                    )
+                    .isEmpty) {
+                  return;
+                }
 
-              showDialog<void>(
-                context: context,
-                builder: (context) => const AudioPlayableListDialog(),
-              );
-            },
-            child: Consumer<ThemeProviderVM>(
-              builder: (context, themeProviderVM, child) {
-                return Text(
-                  key: const Key('audioPlayerViewCurrentAudioTitle'),
-                  currentAudioTitleWithDuration ?? '', // Current audio title
-                  // obtained from the audioPlayerVMlistenFalse. Since it is
-                  // listen == true, the current audio title is updated when
-                  // the user selects another audio to play.
-                  style: TextStyle(
-                    fontSize: kAudioTitleFontSize,
-                    color: (themeProviderVM.currentTheme == AppTheme.dark)
-                        ? Colors.white
-                        : Colors.black,
-                  ),
-                  maxLines: 5,
-                  textAlign: TextAlign.center,
+                showDialog<void>(
+                  context: context,
+                  builder: (context) => const AudioPlayableListDialog(),
                 );
               },
+              child: Consumer<ThemeProviderVM>(
+                builder: (context, themeProviderVM, child) {
+                  return Text(
+                    key: const Key('audioPlayerViewCurrentAudioTitle'),
+                    currentAudioTitle!, // Display the title from ValueNotifier
+                    style: TextStyle(
+                      fontSize: kAudioTitleFontSize,
+                      color: (themeProviderVM.currentTheme == AppTheme.dark)
+                          ? Colors.white
+                          : Colors.black,
+                    ),
+                    maxLines: 5,
+                    textAlign: TextAlign.center,
+                  );
+                },
+              ),
             ),
           ),
-        ),
-        IconButton(
-          key: const Key('audioPlayerViewSkipToEndButton'),
-          iconSize: _audioIconSizeMedium,
-          onPressed: () async =>
-              await audioPlayerVMlistenFalse.skipToEndAndPlay(),
-          style: ButtonStyle(
-            // Highlight button when pressed
-            padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-              const EdgeInsets.symmetric(
-                  horizontal: kSmallButtonInsidePadding, vertical: 0),
+          IconButton(
+            key: const Key('audioPlayerViewSkipToEndButton'),
+            iconSize: _audioIconSizeMedium,
+            onPressed: () async =>
+                await audioPlayerVMlistenFalse.skipToEndAndPlay(),
+            style: ButtonStyle(
+              padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                const EdgeInsets.symmetric(
+                    horizontal: kSmallButtonInsidePadding, vertical: 0),
+              ),
+              overlayColor: iconButtonTapModification, // Tap feedback color
             ),
-            overlayColor: iconButtonTapModification, // Tap feedback color
+            icon: const Icon(Icons.skip_next),
           ),
-          icon: const Icon(Icons.skip_next),
-        ),
-      ],
-    );
-  }
+        ],
+      );
+    },
+  );
+}
 
   Widget _buildAudioSliderWithPositionTexts({
     required AudioPlayerVM audioPlayerVMlistenFalse,
