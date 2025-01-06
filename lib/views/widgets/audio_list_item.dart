@@ -3,6 +3,7 @@
 import 'package:audiolearn/services/sort_filter_parameters.dart';
 import 'package:audiolearn/utils/date_time_util.dart';
 import 'package:audiolearn/viewmodels/date_format_vm.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +13,7 @@ import '../../../models/audio.dart';
 import '../../../utils/ui_util.dart';
 import '../../models/comment.dart';
 import '../../models/playlist.dart';
+import '../../utils/dir_util.dart';
 import '../../viewmodels/audio_player_vm.dart';
 import '../../../viewmodels/playlist_list_vm.dart';
 import '../../utils/duration_expansion.dart';
@@ -181,6 +183,16 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
           child: Text(AppLocalizations.of(context)!.modifyAudioTitle),
         ),
         PopupMenuItem<AudioPopupMenuAction>(
+          key: const Key('popup_menu_add_audio_picture'),
+          value: AudioPopupMenuAction.addAudioPicture,
+          child: Text(AppLocalizations.of(context)!.addAudioPicture),
+        ),
+        PopupMenuItem<AudioPopupMenuAction>(
+          key: const Key('popup_menu_remove_audio_picture'),
+          value: AudioPopupMenuAction.removeAudioPicture,
+          child: Text(AppLocalizations.of(context)!.removeAudioPicture),
+        ),
+        PopupMenuItem<AudioPopupMenuAction>(
           key: const Key('popup_menu_move_audio_to_playlist'),
           value: AudioPopupMenuAction.moveAudioToPlaylist,
           child: Text(AppLocalizations.of(context)!.moveAudioToPlaylist),
@@ -263,6 +275,21 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
                 audioModificationType: AudioModificationType.modifyAudioTitle,
               ),
             );
+            break;
+          case AudioPopupMenuAction.addAudioPicture:
+            String selectedPictureFilePathName =
+                await _filePickerSelectPictureFilePathName();
+
+            if (selectedPictureFilePathName.isEmpty) {
+              return;
+            }
+            
+            playlistListVMlistenFalse.storeAudioPictureFileInPlaylistPictureDir(
+              audio: audio,
+              pictureFilePathName: selectedPictureFilePathName,
+            );
+            break;
+          case AudioPopupMenuAction.removeAudioPicture:
             break;
           case AudioPopupMenuAction.moveAudioToPlaylist:
             final PlaylistListVM playlistVMlistnedFalse =
@@ -805,5 +832,20 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
         child: Center(child: circleAvatar),
       ),
     );
+  }
+
+  Future<String> _filePickerSelectPictureFilePathName() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['jpg'],
+      allowMultiple: false,
+      initialDirectory: await DirUtil.getApplicationPath(),
+    );
+
+    if (result != null && result.files.isNotEmpty) {
+      return result.files.first.path ?? '';
+    }
+
+    return '';
   }
 }

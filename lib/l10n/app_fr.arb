@@ -732,5 +732,7 @@
   "helpPlaylistMenuSubTitle": "Fonctionnalités du menu playlist",
   "helpAudioMenuTitle": "Menu Audio",
   "helpAudioMenuSubTitle": "Fonctionnalités du menu audio",
-  "addPrivateYoutubePlaylist": "Ajouter une playlist YouTube privée n'est pas possible car les audio's d'une playlist privée ne peuvent pas être téléchargés. Pour résoudre le problème, éditez la playlist sur YouTube et changez sa confidentialité de \"Privée\" à \"Non répertoriée\" ou à \"Publique\", puis réajoutez-la à l'application."
+  "addPrivateYoutubePlaylist": "Ajouter une playlist YouTube privée n'est pas possible car les audio's d'une playlist privée ne peuvent pas être téléchargés. Pour résoudre le problème, éditez la playlist sur YouTube et changez sa confidentialité de \"Privée\" à \"Non répertoriée\" ou à \"Publique\", puis réajoutez-la à l'application.",
+  "addAudioPicture": "Ajouter une photo à l'audio ...",
+  "removeAudioPicture": "Eliminer la photo de l'audio ..."
 }
