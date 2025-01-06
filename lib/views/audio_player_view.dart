@@ -168,10 +168,6 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
       context,
       listen: false,
     );
-    AudioPlayerVM audioPlayerVMlistenTrue = Provider.of<AudioPlayerVM>(
-      context,
-      listen: false,
-    );
 
     final ThemeProviderVM themeProviderVMlistenFalse =
         Provider.of<ThemeProviderVM>(
@@ -181,21 +177,12 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
 
     bool areAudioButtonsEnabled = true;
 
-    if (audioPlayerVMlistenTrue.currentAudio == null) {
+    if (audioPlayerVMlistenFalse.currentAudio == null) {
       _audioPlaySpeed = 1.0;
       areAudioButtonsEnabled = false;
     } else {
-      _audioPlaySpeed = audioPlayerVMlistenTrue.currentAudio!.audioPlaySpeed;
+      _audioPlaySpeed = audioPlayerVMlistenFalse.currentAudio!.audioPlaySpeed;
     }
-
-    File? audioPictureFile;
-
-    if (audioPlayerVMlistenFalse.currentAudio != null) {
-      audioPictureFile = playlistListVMlistenFalse.getAudioPictureFile(
-          audio: audioPlayerVMlistenFalse.currentAudio!);
-    }
-
-    bool isAudioPictureAvailable = audioPictureFile != null;
 
     Widget viewContent = Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -210,23 +197,17 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
         _buildSecondLine(
           context: context,
           themeProviderVM: themeProviderVMlistenFalse,
-          playlistListVM: playlistListVMlistenFalse,
+          playlistListVMlistenFalse: playlistListVMlistenFalse,
           audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
           areAudioButtonsEnabled: areAudioButtonsEnabled,
-          isAudioPictureDisplayed: isAudioPictureAvailable,
         ),
         (playlistListVMlistenFalse.isPlaylistListExpanded)
             ? _buildExpandedPlaylistList(
                 playlistListVMlistenFalse: playlistListVMlistenFalse)
             : const SizedBox.shrink(),
-        (isAudioPictureAvailable)
-            ? _buildAudioPicture(
-                audioPictureFile: audioPictureFile,
-              )
-            : _buildPlayButton(
-                playlistListVMlistenTrue: playlistListVMlistenTrue,
-                audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
-              ),
+        _buildPlayButtonOrAudioPicture(
+            playlistListVMlistenTrue: playlistListVMlistenTrue,
+            audioPlayerVMlistenFalse: audioPlayerVMlistenFalse),
         Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
@@ -259,16 +240,41 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     );
   }
 
+  Widget _buildPlayButtonOrAudioPicture({
+    required PlaylistListVM playlistListVMlistenTrue,
+    required AudioPlayerVM audioPlayerVMlistenFalse,
+  }) {
+    return ValueListenableBuilder<String?>(
+      valueListenable: audioPlayerVMlistenFalse.currentAudioTitleNotifier,
+      builder: (context, currentAudioTitle, child) {
+        File? audioPictureFile;
+
+        if (audioPlayerVMlistenFalse.currentAudio != null) {
+          audioPictureFile = playlistListVMlistenTrue.getAudioPictureFile(
+              audio: audioPlayerVMlistenFalse.currentAudio!);
+        }
+
+        return (audioPictureFile != null)
+            ? _buildAudioPicture(
+                audioPictureFile: audioPictureFile,
+              )
+            : _buildPlayButton(
+                playlistListVMlistenTrue: playlistListVMlistenTrue,
+                audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+              );
+      },
+    );
+  }
+
   /// Builds the second line of the audio player view. This line contains
   /// the playlist toggle button, the audio volume buttons, the audio
   /// speed button, the comments button and the audio popup menu button.
   Row _buildSecondLine({
     required BuildContext context,
     required ThemeProviderVM themeProviderVM,
-    required PlaylistListVM playlistListVM,
+    required PlaylistListVM playlistListVMlistenFalse,
     required AudioPlayerVM audioPlayerVMlistenFalse,
     required bool areAudioButtonsEnabled,
-    required bool isAudioPictureDisplayed,
   }) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -299,7 +305,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                         textButtonTapModification, // Tap feedback color
                   ),
                   onPressed: () {
-                    playlistListVM.togglePlaylistsList();
+                    playlistListVMlistenFalse.togglePlaylistsList();
                   },
                   child: Text(
                     'Playlists',
@@ -310,38 +316,54 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                 ),
               ),
             ),
-            (isAudioPictureDisplayed)
-                // Display the play button in the second line only if the
-                // audio picture is displayed instead of the normal play
-                // button
-                ? ValueListenableBuilder<bool>(
-                    valueListenable:
-                        audioPlayerVMlistenFalse.currentAudioPlayPauseNotifier,
-                    builder: (context, isPaused, child) {
-                      return IconButton(
-                        iconSize: _audioIconSizeMedium,
-                        onPressed: (() async {
-                          audioPlayerVMlistenFalse.isPlaying
-                              ? await audioPlayerVMlistenFalse.pause()
-                              : await audioPlayerVMlistenFalse.playCurrentAudio(
-                                  isFromAudioPlayerView: true,
-                                );
-                        }),
-                        style: ButtonStyle(
-                          // Highlight button when pressed
-                          padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-                            const EdgeInsets.symmetric(
-                                horizontal: kSmallButtonInsidePadding,
-                                vertical: 0),
-                          ),
-                          overlayColor:
-                              iconButtonTapModification, // Tap feedback color
-                        ),
-                        icon: Icon(isPaused ? Icons.pause : Icons.play_arrow),
-                      );
-                    },
-                  )
-                : const SizedBox.shrink(),
+            ValueListenableBuilder<String?>(
+              valueListenable:
+                  audioPlayerVMlistenFalse.currentAudioTitleNotifier,
+              builder: (context, currentAudioTitle, child) {
+                File? audioPictureFile;
+
+                if (audioPlayerVMlistenFalse.currentAudio != null) {
+                  audioPictureFile = playlistListVMlistenFalse.getAudioPictureFile(
+                      audio: audioPlayerVMlistenFalse.currentAudio!);
+                }
+
+                return (audioPictureFile != null)
+                    // Display the play button in the second line only if the
+                    // audio picture is displayed instead of the normal play
+                    // button
+                    ? ValueListenableBuilder<bool>(
+                        valueListenable: audioPlayerVMlistenFalse
+                            .currentAudioPlayPauseNotifier,
+                        builder: (context, isPaused, child) {
+                          return IconButton(
+                            iconSize: _audioIconSizeMedium,
+                            onPressed: (() async {
+                              audioPlayerVMlistenFalse.isPlaying
+                                  ? await audioPlayerVMlistenFalse.pause()
+                                  : await audioPlayerVMlistenFalse
+                                      .playCurrentAudio(
+                                      isFromAudioPlayerView: true,
+                                    );
+                            }),
+                            style: ButtonStyle(
+                              // Highlight button when pressed
+                              padding:
+                                  WidgetStateProperty.all<EdgeInsetsGeometry>(
+                                const EdgeInsets.symmetric(
+                                    horizontal: kSmallButtonInsidePadding,
+                                    vertical: 0),
+                              ),
+                              overlayColor:
+                                  iconButtonTapModification, // Tap feedback color
+                            ),
+                            icon:
+                                Icon(isPaused ? Icons.pause : Icons.play_arrow),
+                          );
+                        },
+                      )
+                    : const SizedBox.shrink();
+              },
+            ),
           ],
         ),
         Row(
@@ -365,7 +387,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
             ),
             _buildAudioPopupMenuButton(
               context: context,
-              playlistListVMlistenFalse: playlistListVM,
+              playlistListVMlistenFalse: playlistListVMlistenFalse,
               warningMessageVMlistenFalse: Provider.of<WarningMessageVM>(
                 context,
                 listen: false,
@@ -865,87 +887,87 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     );
   }
 
-Widget _buildStartEndButtonsWithTitle({
-  required BuildContext context,
-  required AudioPlayerVM audioPlayerVMlistenFalse,
-}) {
-  return ValueListenableBuilder<String?>(
-    valueListenable: audioPlayerVMlistenFalse.currentAudioTitleNotifier,
-    builder: (context, currentAudioTitle, child) {
-      // If the current audio title is null, set it to the default value
-      currentAudioTitle ??=
-          AppLocalizations.of(context)!.audioPlayerViewNoCurrentAudio;
+  Widget _buildStartEndButtonsWithTitle({
+    required BuildContext context,
+    required AudioPlayerVM audioPlayerVMlistenFalse,
+  }) {
+    return ValueListenableBuilder<String?>(
+      valueListenable: audioPlayerVMlistenFalse.currentAudioTitleNotifier,
+      builder: (context, currentAudioTitle, child) {
+        // If the current audio title is null, set it to the default value
+        currentAudioTitle ??=
+            AppLocalizations.of(context)!.audioPlayerViewNoCurrentAudio;
 
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          IconButton(
-            key: const Key('audioPlayerViewSkipToStartButton'),
-            iconSize: _audioIconSizeMedium,
-            onPressed: () async =>
-                await audioPlayerVMlistenFalse.skipToStart(),
-            style: ButtonStyle(
-              padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-                const EdgeInsets.symmetric(
-                    horizontal: kSmallButtonInsidePadding, vertical: 0),
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconButton(
+              key: const Key('audioPlayerViewSkipToStartButton'),
+              iconSize: _audioIconSizeMedium,
+              onPressed: () async =>
+                  await audioPlayerVMlistenFalse.skipToStart(),
+              style: ButtonStyle(
+                padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                  const EdgeInsets.symmetric(
+                      horizontal: kSmallButtonInsidePadding, vertical: 0),
+                ),
+                overlayColor: iconButtonTapModification, // Tap feedback color
               ),
-              overlayColor: iconButtonTapModification, // Tap feedback color
+              icon: const Icon(Icons.skip_previous),
             ),
-            icon: const Icon(Icons.skip_previous),
-          ),
-          Expanded(
-            child: GestureDetector(
-              onTap: () {
-                if (audioPlayerVMlistenFalse
-                    .getPlayableAudiosApplyingSortFilterParameters(
-                      AudioLearnAppViewType.audioPlayerView,
-                    )
-                    .isEmpty) {
-                  return;
-                }
+            Expanded(
+              child: GestureDetector(
+                onTap: () {
+                  if (audioPlayerVMlistenFalse
+                      .getPlayableAudiosApplyingSortFilterParameters(
+                        AudioLearnAppViewType.audioPlayerView,
+                      )
+                      .isEmpty) {
+                    return;
+                  }
 
-                showDialog<void>(
-                  context: context,
-                  builder: (context) => const AudioPlayableListDialog(),
-                );
-              },
-              child: Consumer<ThemeProviderVM>(
-                builder: (context, themeProviderVM, child) {
-                  return Text(
-                    key: const Key('audioPlayerViewCurrentAudioTitle'),
-                    currentAudioTitle!, // Display the title from ValueNotifier
-                    style: TextStyle(
-                      fontSize: kAudioTitleFontSize,
-                      color: (themeProviderVM.currentTheme == AppTheme.dark)
-                          ? Colors.white
-                          : Colors.black,
-                    ),
-                    maxLines: 5,
-                    textAlign: TextAlign.center,
+                  showDialog<void>(
+                    context: context,
+                    builder: (context) => const AudioPlayableListDialog(),
                   );
                 },
+                child: Consumer<ThemeProviderVM>(
+                  builder: (context, themeProviderVM, child) {
+                    return Text(
+                      key: const Key('audioPlayerViewCurrentAudioTitle'),
+                      currentAudioTitle!, // Display the title from ValueNotifier
+                      style: TextStyle(
+                        fontSize: kAudioTitleFontSize,
+                        color: (themeProviderVM.currentTheme == AppTheme.dark)
+                            ? Colors.white
+                            : Colors.black,
+                      ),
+                      maxLines: 5,
+                      textAlign: TextAlign.center,
+                    );
+                  },
+                ),
               ),
             ),
-          ),
-          IconButton(
-            key: const Key('audioPlayerViewSkipToEndButton'),
-            iconSize: _audioIconSizeMedium,
-            onPressed: () async =>
-                await audioPlayerVMlistenFalse.skipToEndAndPlay(),
-            style: ButtonStyle(
-              padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-                const EdgeInsets.symmetric(
-                    horizontal: kSmallButtonInsidePadding, vertical: 0),
+            IconButton(
+              key: const Key('audioPlayerViewSkipToEndButton'),
+              iconSize: _audioIconSizeMedium,
+              onPressed: () async =>
+                  await audioPlayerVMlistenFalse.skipToEndAndPlay(),
+              style: ButtonStyle(
+                padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                  const EdgeInsets.symmetric(
+                      horizontal: kSmallButtonInsidePadding, vertical: 0),
+                ),
+                overlayColor: iconButtonTapModification, // Tap feedback color
               ),
-              overlayColor: iconButtonTapModification, // Tap feedback color
+              icon: const Icon(Icons.skip_next),
             ),
-            icon: const Icon(Icons.skip_next),
-          ),
-        ],
-      );
-    },
-  );
-}
+          ],
+        );
+      },
+    );
+  }
 
   Widget _buildAudioSliderWithPositionTexts({
     required AudioPlayerVM audioPlayerVMlistenFalse,
