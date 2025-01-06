@@ -117,6 +117,9 @@ class AudioPlayerVM extends ChangeNotifier {
   final ValueNotifier<bool> currentAudioPlayPauseNotifier =
       ValueNotifier(false);
 
+  final ValueNotifier<String?> currentAudioTitleNotifier =
+      ValueNotifier<String?>(null);
+
   AudioPlayerVM({
     required SettingsDataService settingsDataService,
     required PlaylistListVM playlistListVM,
@@ -226,7 +229,7 @@ class AudioPlayerVM extends ChangeNotifier {
     _clearUndoRedoLists();
 
     if (doNotifyListeners) {
-      currentAudioPositionNotifier.value = _currentAudioPosition;
+      currentAudioTitleNotifier.value = getCurrentAudioTitleWithDuration();
     }
   }
 
@@ -641,7 +644,7 @@ class AudioPlayerVM extends ChangeNotifier {
   Future<void> handleNoPlayableAudioAvailable() async {
     await _handleNoPlayableAudioAvailable();
 
-    notifyListeners();
+    // notifyListeners();
 
     return;
   }
@@ -660,6 +663,8 @@ class AudioPlayerVM extends ChangeNotifier {
     _currentAudio = null;
     _currentAudioTotalDuration = Duration.zero;
     _currentAudioPosition = const Duration(seconds: 0);
+
+    currentAudioTitleNotifier.value = null;
   }
 
   /// Method called when the user clicks on the audio play icon
