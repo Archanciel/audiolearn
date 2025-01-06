@@ -230,6 +230,7 @@ class AudioPlayerVM extends ChangeNotifier {
 
     if (doNotifyListeners) {
       currentAudioTitleNotifier.value = getCurrentAudioTitleWithDuration();
+      currentAudioPositionNotifier.value = _currentAudioPosition;
     }
   }
 
@@ -632,6 +633,9 @@ class AudioPlayerVM extends ChangeNotifier {
       return;
     }
 
+    currentAudioTitleNotifier.value =
+        currentOrPastPlaylistAudio.validVideoTitle;
+
     if (_currentAudio == currentOrPastPlaylistAudio) {
       return;
     }
@@ -643,8 +647,6 @@ class AudioPlayerVM extends ChangeNotifier {
   /// player view the unique audio available in the current playlist.
   Future<void> handleNoPlayableAudioAvailable() async {
     await _handleNoPlayableAudioAvailable();
-
-    // notifyListeners();
 
     return;
   }
@@ -681,7 +683,10 @@ class AudioPlayerVM extends ChangeNotifier {
   }) async {
     _isCommentPlaying = isCommentPlaying;
 
-    if (_currentAudio == null) {
+    List<Playlist> selectedPlaylistsLst =
+        _playlistListVM.getSelectedPlaylists();
+
+    if (_currentAudio == null && selectedPlaylistsLst.isNotEmpty) {
       // the case if the AudioPlayerView is opened directly by
       // dragging to it or clicking on the title or sub title
       // of an audio and not after the user has clicked on the
@@ -690,15 +695,13 @@ class AudioPlayerVM extends ChangeNotifier {
       // Getting the first selected playlist makes sense since
       // currently only one playlist can be selected at a time
       // in the PlaylistDownloadView.
-      _currentAudio = _playlistListVM
-          .getSelectedPlaylists()
-          .first
+      _currentAudio = selectedPlaylistsLst.first
           .getCurrentOrLastlyPlayedAudioContainedInPlayableAudioLst();
+    }
 
-      if (_currentAudio == null) {
-        // the case if no audio in the selected playlist was ever played
-        return;
-      }
+    if (_currentAudio == null) {
+      // the case if no audio in the selected playlist was ever played
+      return;
     }
 
     String audioFilePathName = _currentAudio!.filePathName;
@@ -1040,6 +1043,10 @@ class AudioPlayerVM extends ChangeNotifier {
   Future<void> skipToEndAndPlay({
     bool isUndoRedo = false,
   }) async {
+    if (_currentAudio == null) {
+      return;
+    }
+    
     if (_currentAudioPosition == _currentAudioTotalDuration) {
       // Situation when the user clicks on >| when the audio
       // position is at audio end. This is also the case when
