@@ -320,11 +320,17 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
               valueListenable:
                   audioPlayerVMlistenFalse.currentAudioTitleNotifier,
               builder: (context, currentAudioTitle, child) {
+                // Even though currentAudioTitle is not directly used,
+                // this ensures that the second line part containing or
+                // not a play//pause button is rebuilt whenever the audio
+                // title changes, which is zhe case when a new audio is
+                // selected in the audio playable list dialog.
                 File? audioPictureFile;
 
                 if (audioPlayerVMlistenFalse.currentAudio != null) {
-                  audioPictureFile = playlistListVMlistenFalse.getAudioPictureFile(
-                      audio: audioPlayerVMlistenFalse.currentAudio!);
+                  audioPictureFile =
+                      playlistListVMlistenFalse.getAudioPictureFile(
+                          audio: audioPlayerVMlistenFalse.currentAudio!);
                 }
 
                 return (audioPictureFile != null)
@@ -378,6 +384,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
             ),
             _buildSetAudioSpeedTextButton(
               context: context,
+              audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
               areAudioButtonsEnabled: areAudioButtonsEnabled,
             ),
             _buildCommentsInkWellButton(
@@ -503,76 +510,90 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
 
   Widget _buildSetAudioSpeedTextButton({
     required BuildContext context,
+    required AudioPlayerVM audioPlayerVMlistenFalse,
     required bool areAudioButtonsEnabled,
   }) {
-    return Consumer2<ThemeProviderVM, AudioPlayerVM>(
-      builder: (context, themeProviderVM, audioPlayerVM, child) {
-        _audioPlaySpeed =
-            audioPlayerVM.currentAudio?.audioPlaySpeed ?? _audioPlaySpeed;
+    return Consumer<ThemeProviderVM>(
+      builder: (context, themeProviderVM, child) {
+        return ValueListenableBuilder<String?>(
+          valueListenable: audioPlayerVMlistenFalse.currentAudioTitleNotifier,
+          builder: (context, currentAudioTitle, child) {
+            // Even though currentAudioTitle is not directly used,
+            // this ensures that the second line part containing or
+            // not a play//pause button is rebuilt whenever the audio
+            // title changes, which is zhe case when a new audio is
+            // selected in the audio playable list dialog.
+            _audioPlaySpeed =
+                audioPlayerVMlistenFalse.currentAudio?.audioPlaySpeed ??
+                    _audioPlaySpeed;
 
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              // sets the rounded TextButton size improving the distance
-              // between the button text and its boarder
-              width: kNormalButtonWidth - 18.0,
-              height: kNormalButtonHeight,
-              child: Tooltip(
-                message: AppLocalizations.of(context)!.setAudioPlaySpeedTooltip,
-                child: TextButton(
-                  key: const Key('setAudioSpeedTextButton'),
-                  style: ButtonStyle(
-                    shape: getButtonRoundedShape(
-                      currentTheme: themeProviderVM.currentTheme,
-                      isButtonEnabled: areAudioButtonsEnabled,
-                      context: context,
-                    ),
-                    padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-                      const EdgeInsets.symmetric(
-                          horizontal: kSmallButtonInsidePadding, vertical: 0),
-                    ),
-                    overlayColor:
-                        textButtonTapModification, // Tap feedback color
-                  ),
-                  onPressed: areAudioButtonsEnabled
-                      ? () {
-                          showDialog<List<dynamic>>(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AudioSetSpeedDialog(
-                                audioPlaySpeed: _audioPlaySpeed,
-                                updateCurrentPlayAudioSpeed: true,
-                              );
-                            },
-                          ).then((value) {
-                            // not null value is double
-                            if (value != null) {
-                              // value is null if clicking on Cancel or if the dialog
-                              // is dismissed by clicking outside the dialog.
-                              _audioPlaySpeed = value[0];
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  // sets the rounded TextButton size improving the distance
+                  // between the button text and its boarder
+                  width: kNormalButtonWidth - 18.0,
+                  height: kNormalButtonHeight,
+                  child: Tooltip(
+                    message:
+                        AppLocalizations.of(context)!.setAudioPlaySpeedTooltip,
+                    child: TextButton(
+                      key: const Key('setAudioSpeedTextButton'),
+                      style: ButtonStyle(
+                        shape: getButtonRoundedShape(
+                          currentTheme: themeProviderVM.currentTheme,
+                          isButtonEnabled: areAudioButtonsEnabled,
+                          context: context,
+                        ),
+                        padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                          const EdgeInsets.symmetric(
+                              horizontal: kSmallButtonInsidePadding,
+                              vertical: 0),
+                        ),
+                        overlayColor:
+                            textButtonTapModification, // Tap feedback color
+                      ),
+                      onPressed: areAudioButtonsEnabled
+                          ? () {
+                              showDialog<List<dynamic>>(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AudioSetSpeedDialog(
+                                    audioPlaySpeed: _audioPlaySpeed,
+                                    updateCurrentPlayAudioSpeed: true,
+                                  );
+                                },
+                              ).then((value) {
+                                // not null value is double
+                                if (value != null) {
+                                  // value is null if clicking on Cancel or if the dialog
+                                  // is dismissed by clicking outside the dialog.
+                                  _audioPlaySpeed = value[0];
+                                }
+                              });
                             }
-                          });
-                        }
-                      : null,
-                  child: Text(
-                    '${_audioPlaySpeed.toStringAsFixed(2)}x',
-                    textAlign: TextAlign.center,
-                    style: (areAudioButtonsEnabled)
-                        ? (themeProviderVM.currentTheme == AppTheme.dark)
-                            ? kTextButtonStyleDarkMode
-                            : kTextButtonStyleLightMode
-                        : const TextStyle(
-                            // required to display the button in grey if
-                            // the button is disabled
-                            fontSize: kTextButtonFontSize,
-                          ),
+                          : null,
+                      child: Text(
+                        '${_audioPlaySpeed.toStringAsFixed(2)}x',
+                        textAlign: TextAlign.center,
+                        style: (areAudioButtonsEnabled)
+                            ? (themeProviderVM.currentTheme == AppTheme.dark)
+                                ? kTextButtonStyleDarkMode
+                                : kTextButtonStyleLightMode
+                            : const TextStyle(
+                                // required to display the button in grey if
+                                // the button is disabled
+                                fontSize: kTextButtonFontSize,
+                              ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-          ],
+              ],
+            );
+          },
         );
       },
     );
