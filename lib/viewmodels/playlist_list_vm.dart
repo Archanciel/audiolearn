@@ -671,28 +671,28 @@ class PlaylistListVM extends ChangeNotifier {
         targetFileName: createdAudioPictureFileName);
   }
 
+  /// Returns the audio picture file if it exists, null otherwise.
   File? getAudioPictureFile({
     required Audio audio,
   }) {
-    String? audioPictureFilePathName = _buildAudioPictureFilePathName(
+    String audioPicturePathFileName = _buildAudioPictureFilePathName(
       playlistDownloadPath: audio.enclosingPlaylist!.downloadPath,
       audioFileName: audio.audioFileName,
     );
 
-    // If the file path is null, return null
-    if (audioPictureFilePathName == null) {
+    File file = File(audioPicturePathFileName);
+
+    if (!file.existsSync()) {
       return null;
     }
 
     // Return the File instance
-    return File(audioPictureFilePathName);
+    return file;
   }
 
   /// Returns a string which is the combination of the path of the picture directory
   /// and the file name to the maybe not existing audio picture file.
-  ///
-  /// If the audio picture file does not exist, the method returns null.
-  String? _buildAudioPictureFilePathName({
+  String _buildAudioPictureFilePathName({
     required String playlistDownloadPath,
     required String audioFileName,
   }) {
@@ -702,14 +702,7 @@ class PlaylistListVM extends ChangeNotifier {
     final String createdAudioPictureFileName =
         audioFileName.replaceAll('.mp3', '.jpg');
 
-    String audioPicturePathFileName =
-        "$playlistPicturePath${path.separator}$createdAudioPictureFileName";
-
-    if (!File(audioPicturePathFileName).existsSync()) {
-      return null;
-    }
-
-    return audioPicturePathFileName;
+    return "$playlistPicturePath${path.separator}$createdAudioPictureFileName";
   }
 
   /// Method called when the user confirms deleting the playlist.
