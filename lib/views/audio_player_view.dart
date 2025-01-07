@@ -175,11 +175,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
       listen: false,
     );
 
-    bool areAudioButtonsEnabled = true;
-
     if (audioPlayerVMlistenFalse.currentAudio == null) {
       _audioPlaySpeed = 1.0;
-      areAudioButtonsEnabled = false;
     } else {
       _audioPlaySpeed = audioPlayerVMlistenFalse.currentAudio!.audioPlaySpeed;
     }
@@ -199,7 +196,6 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
           themeProviderVM: themeProviderVMlistenFalse,
           playlistListVMlistenFalse: playlistListVMlistenFalse,
           audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
-          areAudioButtonsEnabled: areAudioButtonsEnabled,
         ),
         (playlistListVMlistenFalse.isPlaylistListExpanded)
             ? _buildExpandedPlaylistList(
@@ -274,7 +270,6 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     required ThemeProviderVM themeProviderVM,
     required PlaylistListVM playlistListVMlistenFalse,
     required AudioPlayerVM audioPlayerVMlistenFalse,
-    required bool areAudioButtonsEnabled,
   }) {
     return ValueListenableBuilder<String?>(
       valueListenable: audioPlayerVMlistenFalse.currentAudioTitleNotifier,
@@ -371,7 +366,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
               children: [
                 _buildSetAudioVolumeIconButton(
                   context: context,
-                  areAudioButtonsEnabled: areAudioButtonsEnabled,
+                  areAudioButtonsEnabled: currentAudioTitle != null,
                 ),
                 const SizedBox(
                   width: kRowButtonGroupWidthSeparator,
@@ -379,12 +374,12 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                 _buildSetAudioSpeedTextButton(
                   context: context,
                   audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
-                  areAudioButtonsEnabled: areAudioButtonsEnabled,
+                  areAudioButtonsEnabled: currentAudioTitle != null,
                 ),
                 _buildCommentsInkWellButton(
                   context: context,
                   audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
-                  areAudioButtonsEnabled: areAudioButtonsEnabled,
+                  areAudioButtonsEnabled: currentAudioTitle != null,
                 ),
                 _buildAudioPopupMenuButton(
                   context: context,
@@ -393,7 +388,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                     context,
                     listen: false,
                   ),
-                  isAudioPopumMenuEnabled: areAudioButtonsEnabled,
+                  isAudioPopumMenuEnabled: currentAudioTitle != null,
                 ),
               ],
             ),
