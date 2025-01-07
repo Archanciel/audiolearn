@@ -513,8 +513,7 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets(
-        '''Click on play button to finish playing the first downloaded
+    testWidgets('''Click on play button to finish playing the first downloaded
            audio and start playing the partially listened last downloaded audio,
            ignoring the 2 precendent audio already fully played.''', (
       WidgetTester tester,
@@ -527,7 +526,8 @@ void main() {
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
-        savedTestDataDirName: 'audio_player_view_first_to_last_audio_test_modified',
+        savedTestDataDirName:
+            'audio_player_view_first_to_last_audio_test_modified',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         tapOnPlaylistToggleButton: false,
       );
@@ -539,8 +539,8 @@ void main() {
           playlistDownloadViewSecondDownloadedAudioListTileTextWidgetFinder =
           find.text(secondDownloadedAudioTitle);
 
-      await tester
-          .tap(playlistDownloadViewSecondDownloadedAudioListTileTextWidgetFinder);
+      await tester.tap(
+          playlistDownloadViewSecondDownloadedAudioListTileTextWidgetFinder);
       await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
         tester: tester,
       );
@@ -1322,8 +1322,8 @@ void main() {
       );
 
       // Now we tap on the AudioPlayerView icon button to open
-      // AudioPlayerView screen which displays the current
-      // playable audio which is paused
+      // AudioPlayerView screen which displays No selected audio
+      // title
 
       Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
@@ -1337,12 +1337,30 @@ void main() {
       await tester.tap(playButton);
       await tester.pumpAndSettle();
 
-      // Verify the no selected audio title is displayed
+      // Verify the no selected audio title is displayed in french
       expect(find.text("Aucun audio sélectionné"), findsOneWidget);
+
+      // Verify the start and end position values
+
+      Text audioPositionText = tester
+          .widget<Text>(find.byKey(const Key('audioPlayerViewAudioPosition')));
+      expect(audioPositionText.data, '0:00');
+
+      Text audioRemainingDurationText = tester.widget<Text>(
+          find.byKey(const Key('audioPlayerViewAudioRemainingDuration')));
+      expect(audioRemainingDurationText.data, '0:00');
+
+      // Verify that the selected playlist title is displayed
+      Text selectedPlaylistTitleText =
+          tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
+      expect(
+        selectedPlaylistTitleText.data,
+        audioPlayerSelectedPlaylistTitle,
+      );
 
       await IntegrationTestUtil.verifyTopButtonsState(
         tester: tester,
-        isEnabled: false,
+        areEnabled: false,
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
         setAudioSpeedTextButtonValue: '1.00x',
       );
@@ -1350,26 +1368,27 @@ void main() {
       // Select a playlist audio
 
       // Now we open the AudioPlayableListDialog by tapping on the
-      // audio title
+      // "Aucun audio sélectionné" title
       await tester.tap(find.text("Aucun audio sélectionné"));
       await tester.pumpAndSettle();
 
+      // Select the "Really short video" audio
       await tester.tap(find.text("Really short video"));
       await tester.pumpAndSettle();
 
-      // Verify if the play button remained the same since
-      // there is no audio to play
-      expect(find.byIcon(Icons.play_arrow), findsOneWidget);
+      // Verify the start and end position values
 
-      // Verify that the selected playlist title is displayed, even if
-      // no audio is selected
-      Text selectedPlaylistTitleText =
-          tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
-      expect(selectedPlaylistTitleText.data, audioPlayerSelectedPlaylistTitle);
+      audioPositionText = tester
+          .widget<Text>(find.byKey(const Key('audioPlayerViewAudioPosition')));
+      expect(audioPositionText.data, '0:00');
+
+      audioRemainingDurationText = tester.widget<Text>(
+          find.byKey(const Key('audioPlayerViewAudioRemainingDuration')));
+      expect(audioRemainingDurationText.data, '0:10');
 
       await IntegrationTestUtil.verifyTopButtonsState(
         tester: tester,
-        isEnabled: true,
+        areEnabled: true,
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
         setAudioSpeedTextButtonValue: '1.25x',
       );
@@ -1416,7 +1435,7 @@ void main() {
 
       await IntegrationTestUtil.verifyTopButtonsState(
         tester: tester,
-        isEnabled: false,
+        areEnabled: false,
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
         setAudioSpeedTextButtonValue: '1.00x',
       );
@@ -1463,7 +1482,7 @@ void main() {
 
       await IntegrationTestUtil.verifyTopButtonsState(
         tester: tester,
-        isEnabled: false,
+        areEnabled: false,
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
         setAudioSpeedTextButtonValue: '1.00x',
       );
@@ -8329,7 +8348,7 @@ void audioPlayerViewIntegrationTest() {
 
       await IntegrationTestUtil.verifyTopButtonsState(
         tester: tester,
-        isEnabled: false,
+        areEnabled: false,
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
         setAudioSpeedTextButtonValue: '1.00x',
       );
@@ -8356,7 +8375,7 @@ void audioPlayerViewIntegrationTest() {
 
       await IntegrationTestUtil.verifyTopButtonsState(
         tester: tester,
-        isEnabled: true,
+        areEnabled: true,
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
         setAudioSpeedTextButtonValue: '1.25x',
       );
@@ -8403,7 +8422,7 @@ void audioPlayerViewIntegrationTest() {
 
       await IntegrationTestUtil.verifyTopButtonsState(
         tester: tester,
-        isEnabled: false,
+        areEnabled: false,
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
         setAudioSpeedTextButtonValue: '1.00x',
       );
@@ -8450,7 +8469,7 @@ void audioPlayerViewIntegrationTest() {
 
       await IntegrationTestUtil.verifyTopButtonsState(
         tester: tester,
-        isEnabled: false,
+        areEnabled: false,
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
         setAudioSpeedTextButtonValue: '1.00x',
       );

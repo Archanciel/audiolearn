@@ -7678,7 +7678,7 @@ void main() {
 
       await IntegrationTestUtil.verifyTopButtonsState(
         tester: tester,
-        isEnabled: false,
+        areEnabled: false,
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
         setAudioSpeedTextButtonValue: '1.00x',
       );
@@ -7880,7 +7880,7 @@ void main() {
 
       await IntegrationTestUtil.verifyTopButtonsState(
         tester: tester,
-        isEnabled: false,
+        areEnabled: false,
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
         setAudioSpeedTextButtonValue: '1.00x',
       );
@@ -8105,7 +8105,7 @@ void main() {
 
       await IntegrationTestUtil.verifyTopButtonsState(
         tester: tester,
-        isEnabled: true,
+        areEnabled: true,
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
         setAudioSpeedTextButtonValue: '1.25x',
       );
@@ -8288,7 +8288,7 @@ void main() {
 
       await IntegrationTestUtil.verifyTopButtonsState(
         tester: tester,
-        isEnabled: true,
+        areEnabled: true,
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
         setAudioSpeedTextButtonValue: '1.25x',
       );
@@ -24649,7 +24649,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
       await IntegrationTestUtil.verifyTopButtonsState(
         tester: tester,
-        isEnabled: false,
+        areEnabled: false,
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
         setAudioSpeedTextButtonValue: '1.00x',
       );
@@ -24851,7 +24851,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
       await IntegrationTestUtil.verifyTopButtonsState(
         tester: tester,
-        isEnabled: false,
+        areEnabled: false,
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
         setAudioSpeedTextButtonValue: '1.00x',
       );
@@ -25076,7 +25076,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
       await IntegrationTestUtil.verifyTopButtonsState(
         tester: tester,
-        isEnabled: true,
+        areEnabled: true,
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
         setAudioSpeedTextButtonValue: '1.25x',
       );
@@ -25259,7 +25259,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
       await IntegrationTestUtil.verifyTopButtonsState(
         tester: tester,
-        isEnabled: true,
+        areEnabled: true,
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
         setAudioSpeedTextButtonValue: '1.25x',
       );
@@ -34086,10 +34086,10 @@ Future<void> onAudioPlayerViewCheckOrTapOnPlaylistCheckbox({
 
   // Select the passed playlistToSelectTitle playlist
 
-      await IntegrationTestUtil.selectPlaylist(
-        tester: tester,
-        playlistToSelectTitle: playlistToSelectTitleInAudioPlayerView,
-      );
+  await IntegrationTestUtil.selectPlaylist(
+    tester: tester,
+    playlistToSelectTitle: playlistToSelectTitleInAudioPlayerView,
+  );
 
   // Now we go back to the PlayListDownloadView in order to
   // verify the scrolled selected playlist

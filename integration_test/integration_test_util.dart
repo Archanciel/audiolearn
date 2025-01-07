@@ -665,11 +665,11 @@ class IntegrationTestUtil {
 
   static Future<void> verifyTopButtonsState({
     required WidgetTester tester,
-    required bool isEnabled,
+    required bool areEnabled,
     required AudioLearnAppViewType audioLearnAppViewType,
     required String setAudioSpeedTextButtonValue,
   }) async {
-    if (isEnabled) {
+    if (areEnabled) {
       verifyWidgetIsEnabled(
         tester: tester,
         widgetKeyStr: 'decreaseAudioVolumeIconButton',
@@ -739,7 +739,7 @@ class IntegrationTestUtil {
       setAudioSpeedTextButtonValue,
     );
 
-    if (isEnabled) {
+    if (areEnabled) {
       // Open the audio popup menu
       await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
       await tester.pumpAndSettle();
