@@ -220,7 +220,7 @@ class AudioPlayerVM extends ChangeNotifier {
     _clearUndoRedoLists();
 
     if (doNotifyListeners) {
-      currentAudioTitleNotifier.value = getCurrentAudioTitleWithDuration();
+      currentAudioTitleNotifier.value = _getCurrentAudioTitleWithDuration();
       currentAudioPositionNotifier.value = _currentAudioPosition;
     }
   }
@@ -601,8 +601,7 @@ class AudioPlayerVM extends ChangeNotifier {
       return;
     }
 
-    currentAudioTitleNotifier.value =
-        currentOrPastPlaylistAudio.validVideoTitle;
+    currentAudioTitleNotifier.value = _getCurrentAudioTitleWithDuration();
 
     if (_currentAudio == currentOrPastPlaylistAudio) {
       return;
@@ -1166,24 +1165,12 @@ class AudioPlayerVM extends ChangeNotifier {
     return _playlistListVM.getSortingItemLstForViewType(audioLearnAppViewType);
   }
 
-  String? getCurrentAudioTitleWithDuration() {
+  String? _getCurrentAudioTitleWithDuration() {
     if (_currentAudio == null) {
       return null;
     }
 
     return '${_currentAudio!.validVideoTitle}\n${_currentAudio!.audioDuration.HHmmssZeroHH()}';
-  }
-
-  int getCurrentAudioIndex() {
-    if (_currentAudio == null) {
-      // the case if "No audio selected" audio title is
-      // displayed in the AudioPlayerView screen
-      return -1;
-    }
-
-    return _currentAudio!.enclosingPlaylist!.playableAudioLst.reversed
-        .toList()
-        .indexWhere((element) => element == _currentAudio);
   }
 
   Future<void> changeAudioPlaySpeed(double speed) async {
