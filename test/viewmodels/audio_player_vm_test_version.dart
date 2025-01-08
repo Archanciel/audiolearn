@@ -36,9 +36,20 @@ class AudioPlayerVMTestVersion extends AudioPlayerVM {
   @override
   Future<void> modifyAudioPlayerPosition({
     required Duration durationPosition,
-    bool addUndoCommand = false,
+    bool isUndoCommandAdded = false,
   }) async {
     // does not access to the audio player plugin so that unit
     // tests can be run without throwing an exception
+
+    if (isUndoCommandAdded) {
+      addUndoCommand(
+        newDurationPosition: durationPosition,
+      );
+    }
+
+    // Necessary so that the audio position is updated in the
+    // position text fields and the slider in the AudioPlayerView
+    // screen.
+    currentAudioPositionNotifier.value = durationPosition;
   }
 }
