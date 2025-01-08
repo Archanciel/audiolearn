@@ -772,6 +772,12 @@ class AudioPlayerVM extends ChangeNotifier {
     // clicking on it
     currentAudioPlayPauseNotifier.value = false; // false means the play/pause
     //                                              button will be set to play
+
+    // Required so that the audio item in the playlist download view
+    // play/pause button is correctly updated when clicking on it in
+    // order to pause the playing audio. Otherwise, the audio is paused,
+    // but the button is not converted to play button.
+    notifyListeners();
   }
 
   /// Method called when the user clicks on the '<<' or '>>'
@@ -1223,8 +1229,6 @@ class AudioPlayerVM extends ChangeNotifier {
     _currentAudio!.audioPlaySpeed = speed;
     await _audioPlayer!.setPlaybackRate(speed);
     updateAndSaveCurrentAudio();
-
-    notifyListeners();
   }
 
   void undo() {

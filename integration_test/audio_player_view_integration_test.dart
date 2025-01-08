@@ -632,8 +632,8 @@ void main() {
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '9:02',
-        maxPositionTimeStr: '9:05',
+        minPositionTimeStr: '8:51',
+        maxPositionTimeStr: '8:54',
       );
 
       // Purge the test playlist directory so that the created test
@@ -711,12 +711,15 @@ void main() {
         expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
       );
 
-      // Now tap on the InkWell to pause the audio
+      // Now tap on the InkWell pause button to pause the audio.
+      // This will pause the audio and convert the pause button to
+      // play button
       await tester.tap(previouslyDownloadedAudioListTileInkWellFinder);
       await tester.pumpAndSettle();
 
-      // Verify if the play icon is present as well as its color and
-      // its enclosing CircleAvatar background color
+      // Verify if the pause icon button was changed to play icon
+      // as well as its color and its enclosing CircleAvatar background
+      // color
 
       previouslyDownloadedAudioListTileInkWellFinder =
           IntegrationTestUtil.validateInkWellButton(
