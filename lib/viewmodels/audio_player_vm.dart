@@ -615,13 +615,13 @@ class AudioPlayerVM extends ChangeNotifier {
       return;
     }
 
-    currentAudioTitleNotifier.value = _getCurrentAudioTitleWithDuration();
-
     if (_currentAudio == currentOrPastPlaylistAudio) {
       return;
     }
 
     await _setCurrentAudio(currentOrPastPlaylistAudio);
+
+    currentAudioTitleNotifier.value = _getCurrentAudioTitleWithDuration();
   }
 
   /// Used as well when the user moves or deletes in the audio

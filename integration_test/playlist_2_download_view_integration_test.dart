@@ -2823,8 +2823,9 @@ void main() {
             "Les besoins artificiels par R.Keucheyan\n19:05",
       );
 
-      // Now play then pause "La surpopulation mondiale par Jancovici et Barrau"
-      // before rewinding the playlist audio to start position
+      // Now play then pause "Ce qui va vraiment sauver notre espèce
+      // par Jancovici et Barrau" before rewinding the playlist audio
+      // to start position
       await _rewindPlaylistAfterPlayThenPauseAnAudio(
         tester: tester,
         appScreenNavigationButton: appScreenNavigationButton,

@@ -956,7 +956,10 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                   builder: (context, themeProviderVM, child) {
                     return Text(
                       key: const Key('audioPlayerViewCurrentAudioTitle'),
-                      currentAudioTitle!, // Display the title from ValueNotifier
+                      (audioPlayerVMlistenFalse.currentAudio == null)
+                          ? AppLocalizations.of(context)!
+                              .audioPlayerViewNoCurrentAudio
+                          : currentAudioTitle!, // Display the title from ValueNotifier
                       style: TextStyle(
                         fontSize: kAudioTitleFontSize,
                         color: (themeProviderVM.currentTheme == AppTheme.dark)
