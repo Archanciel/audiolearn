@@ -130,6 +130,12 @@ class AudioPlayerVM extends ChangeNotifier {
   final ValueNotifier<double> currentAudioPlaySpeedNotifier =
       ValueNotifier(1.0);
 
+  // Necessary so that the value of the audio speed text button
+  // is updated when the user clicks on the audio speed text button
+  // in the audio player view and otherwise is set to the audio
+  // speed stored in the playlist json file.
+  bool wasPlaySpeedNotifierChanged = false;
+
   AudioPlayerVM({
     required SettingsDataService settingsDataService,
     required PlaylistListVM playlistListVM,
