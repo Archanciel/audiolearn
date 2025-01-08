@@ -214,7 +214,9 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
             _buildAudioSliderWithPositionTexts(
               audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
             ),
-            _buildPositionButtons(),
+            _buildPositionAndUndoRedoButtons(
+              audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+            ),
           ],
         ),
       ],
@@ -569,7 +571,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                         audioPlayerVMlistenFalse.wasPlaySpeedNotifierChanged =
                             false;
                       } else {
-                        currentSpeedStr = '${_audioPlaySpeed.toStringAsFixed(2)}x';
+                        currentSpeedStr =
+                            '${_audioPlaySpeed.toStringAsFixed(2)}x';
                       }
 
                       return Text(
@@ -1058,187 +1061,187 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     );
   }
 
-  Widget _buildPositionButtons() {
-    return Consumer<AudioPlayerVM>(
-      builder: (context, audioPlayerVM, child) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(
-              height: 120,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
+  Widget _buildPositionAndUndoRedoButtons({
+    required AudioPlayerVM audioPlayerVMlistenFalse,
+  }) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SizedBox(
+          height: 120,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                height: _audioIconSizeMedium - 7,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: IconButton(
+                        key: const Key('audioPlayerViewRewind1mButton'),
+                        iconSize: _audioIconSizeMedium,
+                        onPressed: () async =>
+                            await audioPlayerVMlistenFalse.changeAudioPlayPosition(
+                          posOrNegPositionDurationChange:
+                              const Duration(minutes: -1),
+                        ),
+                        style: ButtonStyle(
+                          // Highlight button when pressed
+                          padding:
+                              WidgetStateProperty.all<EdgeInsetsGeometry>(
+                            const EdgeInsets.symmetric(
+                                horizontal: kSmallButtonInsidePadding,
+                                vertical: 0),
+                          ),
+                          overlayColor:
+                              iconButtonTapModification, // Tap feedback color
+                        ),
+                        icon: const Icon(Icons.fast_rewind),
+                      ),
+                    ),
+                    Expanded(
+                      child: IconButton(
+                        key: const Key('audioPlayerViewRewind10sButton'),
+                        iconSize: _audioIconSizeMedium,
+                        onPressed: () async =>
+                            await audioPlayerVMlistenFalse.changeAudioPlayPosition(
+                          posOrNegPositionDurationChange:
+                              const Duration(seconds: -10),
+                        ),
+                        style: ButtonStyle(
+                          // Highlight button when pressed
+                          padding:
+                              WidgetStateProperty.all<EdgeInsetsGeometry>(
+                            const EdgeInsets.symmetric(
+                                horizontal: kSmallButtonInsidePadding,
+                                vertical: 0),
+                          ),
+                          overlayColor:
+                              iconButtonTapModification, // Tap feedback color
+                        ),
+                        icon: const Icon(Icons.fast_rewind),
+                      ),
+                    ),
+                    Expanded(
+                      child: IconButton(
+                        key: const Key('audioPlayerViewForward10sButton'),
+                        iconSize: _audioIconSizeMedium,
+                        onPressed: () async =>
+                            await audioPlayerVMlistenFalse.changeAudioPlayPosition(
+                          posOrNegPositionDurationChange:
+                              const Duration(seconds: 10),
+                        ),
+                        style: ButtonStyle(
+                          // Highlight button when pressed
+                          padding:
+                              WidgetStateProperty.all<EdgeInsetsGeometry>(
+                            const EdgeInsets.symmetric(
+                                horizontal: kSmallButtonInsidePadding,
+                                vertical: 0),
+                          ),
+                          overlayColor:
+                              iconButtonTapModification, // Tap feedback color
+                        ),
+                        icon: const Icon(Icons.fast_forward),
+                      ),
+                    ),
+                    Expanded(
+                      child: IconButton(
+                        key: const Key('audioPlayerViewForward1mButton'),
+                        iconSize: _audioIconSizeMedium,
+                        onPressed: () async =>
+                            await audioPlayerVMlistenFalse.changeAudioPlayPosition(
+                          posOrNegPositionDurationChange:
+                              const Duration(minutes: 1),
+                        ),
+                        style: ButtonStyle(
+                          // Highlight button when pressed
+                          padding:
+                              WidgetStateProperty.all<EdgeInsetsGeometry>(
+                            const EdgeInsets.symmetric(
+                                horizontal: kSmallButtonInsidePadding,
+                                vertical: 0),
+                          ),
+                          overlayColor:
+                              iconButtonTapModification, // Tap feedback color
+                        ),
+                        icon: const Icon(Icons.fast_forward),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 4.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(
-                    height: _audioIconSizeMedium - 7,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: IconButton(
-                            key: const Key('audioPlayerViewRewind1mButton'),
-                            iconSize: _audioIconSizeMedium,
-                            onPressed: () async =>
-                                await audioPlayerVM.changeAudioPlayPosition(
-                              posOrNegPositionDurationChange:
-                                  const Duration(minutes: -1),
-                            ),
-                            style: ButtonStyle(
-                              // Highlight button when pressed
-                              padding:
-                                  WidgetStateProperty.all<EdgeInsetsGeometry>(
-                                const EdgeInsets.symmetric(
-                                    horizontal: kSmallButtonInsidePadding,
-                                    vertical: 0),
-                              ),
-                              overlayColor:
-                                  iconButtonTapModification, // Tap feedback color
-                            ),
-                            icon: const Icon(Icons.fast_rewind),
-                          ),
-                        ),
-                        Expanded(
-                          child: IconButton(
-                            key: const Key('audioPlayerViewRewind10sButton'),
-                            iconSize: _audioIconSizeMedium,
-                            onPressed: () async =>
-                                await audioPlayerVM.changeAudioPlayPosition(
-                              posOrNegPositionDurationChange:
-                                  const Duration(seconds: -10),
-                            ),
-                            style: ButtonStyle(
-                              // Highlight button when pressed
-                              padding:
-                                  WidgetStateProperty.all<EdgeInsetsGeometry>(
-                                const EdgeInsets.symmetric(
-                                    horizontal: kSmallButtonInsidePadding,
-                                    vertical: 0),
-                              ),
-                              overlayColor:
-                                  iconButtonTapModification, // Tap feedback color
-                            ),
-                            icon: const Icon(Icons.fast_rewind),
-                          ),
-                        ),
-                        Expanded(
-                          child: IconButton(
-                            key: const Key('audioPlayerViewForward10sButton'),
-                            iconSize: _audioIconSizeMedium,
-                            onPressed: () async =>
-                                await audioPlayerVM.changeAudioPlayPosition(
-                              posOrNegPositionDurationChange:
-                                  const Duration(seconds: 10),
-                            ),
-                            style: ButtonStyle(
-                              // Highlight button when pressed
-                              padding:
-                                  WidgetStateProperty.all<EdgeInsetsGeometry>(
-                                const EdgeInsets.symmetric(
-                                    horizontal: kSmallButtonInsidePadding,
-                                    vertical: 0),
-                              ),
-                              overlayColor:
-                                  iconButtonTapModification, // Tap feedback color
-                            ),
-                            icon: const Icon(Icons.fast_forward),
-                          ),
-                        ),
-                        Expanded(
-                          child: IconButton(
-                            key: const Key('audioPlayerViewForward1mButton'),
-                            iconSize: _audioIconSizeMedium,
-                            onPressed: () async =>
-                                await audioPlayerVM.changeAudioPlayPosition(
-                              posOrNegPositionDurationChange:
-                                  const Duration(minutes: 1),
-                            ),
-                            style: ButtonStyle(
-                              // Highlight button when pressed
-                              padding:
-                                  WidgetStateProperty.all<EdgeInsetsGeometry>(
-                                const EdgeInsets.symmetric(
-                                    horizontal: kSmallButtonInsidePadding,
-                                    vertical: 0),
-                              ),
-                              overlayColor:
-                                  iconButtonTapModification, // Tap feedback color
-                            ),
-                            icon: const Icon(Icons.fast_forward),
-                          ),
-                        ),
-                      ],
+                  Expanded(
+                    child: GestureDetector(
+                      key: const Key('audioPlayerViewBackward1mButton'),
+                      onTap: () async =>
+                          await audioPlayerVMlistenFalse.changeAudioPlayPosition(
+                        posOrNegPositionDurationChange:
+                            const Duration(minutes: -1),
+                      ),
+                      child: const Text(
+                        '1 m',
+                        textAlign: TextAlign.center,
+                        style: kPositionButtonTextStyle,
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 4.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: GestureDetector(
-                          key: const Key('audioPlayerViewBackward1mButton'),
-                          onTap: () async =>
-                              await audioPlayerVM.changeAudioPlayPosition(
-                            posOrNegPositionDurationChange:
-                                const Duration(minutes: -1),
-                          ),
-                          child: const Text(
-                            '1 m',
-                            textAlign: TextAlign.center,
-                            style: kPositionButtonTextStyle,
-                          ),
-                        ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () async =>
+                          await audioPlayerVMlistenFalse.changeAudioPlayPosition(
+                        posOrNegPositionDurationChange:
+                            const Duration(seconds: -10),
                       ),
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () async =>
-                              await audioPlayerVM.changeAudioPlayPosition(
-                            posOrNegPositionDurationChange:
-                                const Duration(seconds: -10),
-                          ),
-                          child: const Text(
-                            '10 s',
-                            textAlign: TextAlign.center,
-                            style: kPositionButtonTextStyle,
-                          ),
-                        ),
+                      child: const Text(
+                        '10 s',
+                        textAlign: TextAlign.center,
+                        style: kPositionButtonTextStyle,
                       ),
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () async =>
-                              await audioPlayerVM.changeAudioPlayPosition(
-                            posOrNegPositionDurationChange:
-                                const Duration(seconds: 10),
-                          ),
-                          child: const Text(
-                            '10 s',
-                            textAlign: TextAlign.center,
-                            style: kPositionButtonTextStyle,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () async =>
-                              await audioPlayerVM.changeAudioPlayPosition(
-                            posOrNegPositionDurationChange:
-                                const Duration(minutes: 1),
-                          ),
-                          child: const Text(
-                            '1 m',
-                            textAlign: TextAlign.center,
-                            style: kPositionButtonTextStyle,
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                  _buildUndoRedoButtons(),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () async =>
+                          await audioPlayerVMlistenFalse.changeAudioPlayPosition(
+                        posOrNegPositionDurationChange:
+                            const Duration(seconds: 10),
+                      ),
+                      child: const Text(
+                        '10 s',
+                        textAlign: TextAlign.center,
+                        style: kPositionButtonTextStyle,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () async =>
+                          await audioPlayerVMlistenFalse.changeAudioPlayPosition(
+                        posOrNegPositionDurationChange:
+                            const Duration(minutes: 1),
+                      ),
+                      child: const Text(
+                        '1 m',
+                        textAlign: TextAlign.center,
+                        style: kPositionButtonTextStyle,
+                      ),
+                    ),
+                  ),
                 ],
               ),
-            ),
-          ],
-        );
-      },
+              _buildUndoRedoButtons(
+                audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -1323,19 +1326,22 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     }
   }
 
-  Widget _buildUndoRedoButtons() {
-    return Consumer<AudioPlayerVM>(
-      builder: (context, audioPlayerVM, child) {
+  Widget _buildUndoRedoButtons({
+    required AudioPlayerVM audioPlayerVMlistenFalse,
+  }) {
+    return ValueListenableBuilder<Duration>(
+      valueListenable: audioPlayerVMlistenFalse.currentAudioPositionNotifier,
+      builder: (context, currentPosition, child) {
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             IconButton(
               key: const Key('audioPlayerViewUndoButton'),
               iconSize: _audioIconSizeSmall,
-              onPressed: audioPlayerVM.isUndoListEmpty()
+              onPressed: audioPlayerVMlistenFalse.isUndoListEmpty()
                   ? null // Disable the button if the undo list is empty
                   : () {
-                      audioPlayerVM.undo();
+                      audioPlayerVMlistenFalse.undo();
                     },
               style: ButtonStyle(
                 // Highlight button when pressed
@@ -1350,10 +1356,10 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
             IconButton(
               key: const Key('audioPlayerViewRedoButton'),
               iconSize: _audioIconSizeSmall,
-              onPressed: audioPlayerVM.isRedoListEmpty()
+              onPressed: audioPlayerVMlistenFalse.isRedoListEmpty()
                   ? null // Disable the button if the redo list is empty
                   : () {
-                      audioPlayerVM.redo();
+                      audioPlayerVMlistenFalse.redo();
                     },
               style: ButtonStyle(
                 // Highlight button when pressed
