@@ -311,11 +311,6 @@ class AudioPlayerVM extends ChangeNotifier {
     _clearUndoRedoLists();
 
     await initializeAudioPlayer();
-    // final String audioFilePathName = _currentAudio?.filePathName ?? '';
-
-    // if (audioFilePathName.isNotEmpty && File(audioFilePathName).existsSync()) {
-    //   await audioPlayerSetSource(audioFilePathName);
-    // } // on main project
 
     await modifyAudioPlayerPosition(
       durationPosition: _currentAudioPosition,
@@ -511,10 +506,10 @@ class AudioPlayerVM extends ChangeNotifier {
         // is 0 !
         _currentAudioPosition = position;
 
-        // Only update the currentAudioPositionNotifier every 1 second
+        // Only update the currentAudioPositionNotifier every 0.5 second
         if (_lastPositionUpdate == null ||
             DateTime.now().difference(_lastPositionUpdate!) >=
-                const Duration(seconds: 1)) {
+                const Duration(milliseconds: 500)) {
           _lastPositionUpdate = DateTime.now();
           currentAudioPositionNotifier.value = position;
         }
@@ -817,7 +812,7 @@ class AudioPlayerVM extends ChangeNotifier {
     );
 
     if (!isUndoRedo) {
-      _addUndoCommand(
+      addUndoCommand(
         newDurationPosition: newAudioPosition,
       );
     }
@@ -840,8 +835,6 @@ class AudioPlayerVM extends ChangeNotifier {
     // now, when clicking on position buttons, the playlist.json file
     // is updated
     updateAndSaveCurrentAudio();
-
-    currentAudioPositionNotifier.value = newAudioPosition;
   }
 
   /// Method called when the user clicks on the audio slider or on the
@@ -902,7 +895,7 @@ class AudioPlayerVM extends ChangeNotifier {
     );
 
     if (!isUndoRedo) {
-      _addUndoCommand(
+      addUndoCommand(
         newDurationPosition: durationPosition,
       );
     }
@@ -931,18 +924,25 @@ class AudioPlayerVM extends ChangeNotifier {
   /// For this reason, the method is not private !
   Future<void> modifyAudioPlayerPosition({
     required Duration durationPosition,
-    bool addUndoCommand = false,
+    bool isUndoCommandAdded = false,
   }) async {
-    if (addUndoCommand) {
-      _addUndoCommand(
+    if (isUndoCommandAdded) {
+      addUndoCommand(
         newDurationPosition: durationPosition,
       );
     }
 
     await _audioPlayer!.seek(durationPosition);
+
+    // Necessary so that the audio position is updated in the
+    // position text fields and the slider in the AudioPlayerView
+    // screen.
+    currentAudioPositionNotifier.value = durationPosition;
   }
 
-  void _addUndoCommand({
+  /// This method is not private since it is called in the mock subclass
+  /// AudioPlayerVMTestVersion.
+  void addUndoCommand({
     required Duration newDurationPosition,
   }) {
     Command command = SetAudioPositionCommand(
@@ -975,7 +975,7 @@ class AudioPlayerVM extends ChangeNotifier {
     }
 
     if (!isUndoRedo) {
-      _addUndoCommand(
+      addUndoCommand(
         newDurationPosition: Duration.zero,
       );
     }
@@ -993,8 +993,6 @@ class AudioPlayerVM extends ChangeNotifier {
     await modifyAudioPlayerPosition(
       durationPosition: _currentAudioPosition,
     );
-
-    currentAudioPositionNotifier.value = _currentAudioPosition;
   }
 
   /// Method not used for the moment
@@ -1028,7 +1026,7 @@ class AudioPlayerVM extends ChangeNotifier {
     //     _currentAudioTotalDuration - const Duration(seconds: 1);
 
     if (!isUndoRedo) {
-      _addUndoCommand(
+      addUndoCommand(
         newDurationPosition: _currentAudioTotalDuration,
       );
     }
@@ -1044,8 +1042,6 @@ class AudioPlayerVM extends ChangeNotifier {
     await modifyAudioPlayerPosition(
       durationPosition: _currentAudioTotalDuration,
     );
-
-    currentAudioPositionNotifier.value = _currentAudioPosition;
   }
 
   /// Method called when the user clicks on the >| icon,
@@ -1077,7 +1073,7 @@ class AudioPlayerVM extends ChangeNotifier {
     // on the >| icon button
 
     if (!isUndoRedo) {
-      _addUndoCommand(
+      addUndoCommand(
         newDurationPosition: _currentAudioTotalDuration,
       );
     }
@@ -1090,8 +1086,6 @@ class AudioPlayerVM extends ChangeNotifier {
     await modifyAudioPlayerPosition(
       durationPosition: _currentAudioTotalDuration,
     );
-
-    currentAudioPositionNotifier.value = _currentAudioPosition;
   }
 
   /// Method called when _audioPlayer!.onPlayerComplete happens,

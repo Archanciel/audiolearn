@@ -769,7 +769,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
   }) async {
     await audioPlayerVM.modifyAudioPlayerPosition(
       durationPosition: commentVMlistenFalse.currentCommentStartPosition,
-      addUndoCommand: true,
+      isUndoCommandAdded: true,
     );
 
     await audioPlayerVM.playCurrentAudio(
@@ -789,7 +789,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
 
     await audioPlayerVM.modifyAudioPlayerPosition(
       durationPosition: commentVMlistenFalse.currentCommentStartPosition,
-      addUndoCommand: true,
+      isUndoCommandAdded: true,
     );
 
     await audioPlayerVM.playCurrentAudio(
@@ -810,7 +810,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
     await audioPlayerVM.modifyAudioPlayerPosition(
         durationPosition: commentVMlistenFalse.currentCommentEndPosition -
             const Duration(milliseconds: 4000),
-        addUndoCommand: true);
+        isUndoCommandAdded: true);
 
     await audioPlayerVM.playCurrentAudio(
       rewindAudioPositionBasedOnPauseDuration: false,
