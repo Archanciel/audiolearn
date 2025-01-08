@@ -162,8 +162,13 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
                   style: (themeProviderVM.currentTheme == AppTheme.dark)
                       ? kTextButtonStyleDarkMode
                       : kTextButtonStyleLightMode),
-              _buildSlider(audioPlayerVMlistenFalse),
-              _buildSpeedButtons(audioPlayerVMlistenFalse, themeProviderVM),
+              _buildSliderAndPlusMinusButtons(
+                audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+              ),
+              _buildSpeedButtons(
+                themeProviderVM: themeProviderVM,
+                audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+              ),
               (widget.displayApplyToExistingPlaylistCheckbox)
                   ? _buildApplyToExistingPlaylistRow(context)
                   : Container(),
@@ -286,9 +291,9 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
     );
   }
 
-  Row _buildSlider(
-    AudioPlayerVM audioGlobalPlayerVM,
-  ) {
+  Row _buildSliderAndPlusMinusButtons({
+    required AudioPlayerVM audioPlayerVMlistenFalse,
+  }) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -298,9 +303,21 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
             double newSpeed = _audioPlaySpeed - 0.1;
             if (newSpeed >= 0.5) {
               await _setPlaybackSpeed(
-                audioGlobalPlayerVM,
+                audioPlayerVMlistenFalse,
                 newSpeed,
               );
+            } else {
+              if (newSpeed >= 0.499) {
+                // required since _audioPlaySpeed can be
+                // 0.6. 0.6 is displayed and clicking on
+                // '-' button could not change the speed
+                // to 0.5, the bottom limit !
+                newSpeed = 0.5;
+                await _setPlaybackSpeed(
+                  audioPlayerVMlistenFalse,
+                  newSpeed,
+                );
+              }
             }
           },
         ),
@@ -313,7 +330,7 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
             value: _audioPlaySpeed,
             onChanged: (value) async {
               await _setPlaybackSpeed(
-                audioGlobalPlayerVM,
+                audioPlayerVMlistenFalse,
                 value,
               );
             },
@@ -325,7 +342,7 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
             double newSpeed = _audioPlaySpeed + 0.1;
             if (newSpeed <= 2.0) {
               await _setPlaybackSpeed(
-                audioGlobalPlayerVM,
+                audioPlayerVMlistenFalse,
                 newSpeed,
               );
             } else {
@@ -333,10 +350,10 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
                 // required since _audioPlaySpeed can be
                 // 1.9000000000000008. 1.9 is displayed
                 // and clicking on '+' button could not
-                // change the speed to 2.0 !
+                // change the speed to 2.0, the top limit !
                 newSpeed = 2.0;
                 await _setPlaybackSpeed(
-                  audioGlobalPlayerVM,
+                  audioPlayerVMlistenFalse,
                   newSpeed,
                 );
               }
@@ -347,10 +364,10 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
     );
   }
 
-  Widget _buildSpeedButtons(
-    AudioPlayerVM audioGlobalPlayerVM,
-    ThemeProviderVM themeProviderVM,
-  ) {
+  Widget _buildSpeedButtons({
+    required ThemeProviderVM themeProviderVM,
+    required AudioPlayerVM audioPlayerVMlistenFalse,
+  }) {
     final speeds = [0.7, 1.0, 1.25, 1.5]; // [0.7, 1.0, 1.25, 1.5, 2.0] is too
     //                                       large for the screen on S20
     return Row(
@@ -369,7 +386,7 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
           ),
           onPressed: () async {
             await _setPlaybackSpeed(
-              audioGlobalPlayerVM,
+              audioPlayerVMlistenFalse,
               speed,
             );
           },
