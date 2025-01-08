@@ -4355,6 +4355,12 @@ void main() {
         selectedPlaylistTitle: 'Empty',
       );
 
+      // Unselect the "S8 playlist"
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: youtubePlaylistTitle,
+      );
+
       // Go to the audio player view
       Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
@@ -4374,8 +4380,8 @@ void main() {
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.selectPlaylist(
-          tester: tester, playlistToSelectTitle: youtubePlaylistTitle);
+      // await IntegrationTestUtil.selectPlaylist(
+      //     tester: tester, playlistToSelectTitle: youtubePlaylistTitle);
 
       // Now tap on the Play button to play the playlist current audio
       await tester.tap(find.byIcon(Icons.play_arrow));
