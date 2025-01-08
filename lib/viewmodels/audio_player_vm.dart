@@ -111,14 +111,24 @@ class AudioPlayerVM extends ChangeNotifier {
   final ValueNotifier<Duration> currentAudioPositionNotifier =
       ValueNotifier(Duration.zero);
 
-  // Tracks the last time the currentAudioPositionNotifier was updated
+  // Tracks the last time the currentAudioPositionNotifier was
+  // updated
   DateTime? _lastPositionUpdate;
 
+  // This notifier is used to update the audio play/pause icon
+  // button displayed in the audio player view
   final ValueNotifier<bool> currentAudioPlayPauseNotifier =
       ValueNotifier(false);
 
+  // This notifier is used to update the audio title with duration
+  // displayed in the audio player view
   final ValueNotifier<String?> currentAudioTitleNotifier =
       ValueNotifier<String?>(null);
+
+  // This notifier is used to update the audio speed of the audio
+  // speed text button displayed in the audio player view
+  final ValueNotifier<double> currentAudioPlaySpeedNotifier =
+      ValueNotifier(1.0);
 
   AudioPlayerVM({
     required SettingsDataService settingsDataService,
@@ -440,10 +450,12 @@ class AudioPlayerVM extends ChangeNotifier {
 
     // Check if the file exists before attempting to play it
     if (audioFilePathName.isNotEmpty && File(audioFilePathName).existsSync()) {
-      // Load the file but don't play yet
-      await _audioPlayer!.setVolume(
-        _currentAudio?.audioPlayVolume ?? kAudioDefaultPlayVolume,
-      );
+      await _audioPlayer!
+          .setVolume(_currentAudio?.audioPlayVolume ?? kAudioDefaultPlayVolume);
+
+      // setting audio player plugin listeners
+
+      _initAudioPlayer(); // Load the file but don't play yet
     }
   }
 
@@ -695,8 +707,10 @@ class AudioPlayerVM extends ChangeNotifier {
 
       updateAndSaveCurrentAudio();
 
+      // Necessary so that the play/pause icon is updated after
+      // clicking on it
       currentAudioPlayPauseNotifier.value = true; // true means the play/pause
-      //                                             button must be pause
+      //                                             button will be set to pause
     }
   }
 
@@ -717,19 +731,10 @@ class AudioPlayerVM extends ChangeNotifier {
       playlistListVM: _playlistListVM,
     );
 
-    // "If commented out, the undo comments work well" no more right !
-    // But if not commented out, the play/pause icon is updated correctly,
-    // otherwise, clicking on Play icon starts playing and the Pause icon
-    // is diaplayed, but clicking on the Pause icon does pause the audio
-    // but the Play icon is not displayed.
+    // Necessary so that the play/pause icon is updated after
+    // clicking on it
     currentAudioPlayPauseNotifier.value = false; // false means the play/pause
-    //                                              button must be play
-
-    // Required so that the audio item play/pause button is correctly
-    // updated when clicking on it to pause the playing audio. Otherwise,
-    // the audio is paused, but the button is nor converted to play
-    // button.
-    notifyListeners();
+    //                                              button will be set to play
   }
 
   /// Method called when the user clicks on the '<<' or '>>'
@@ -1012,7 +1017,7 @@ class AudioPlayerVM extends ChangeNotifier {
     if (_currentAudio == null) {
       return;
     }
-    
+
     if (_currentAudioPosition == _currentAudioTotalDuration) {
       // Situation when the user clicks on >| when the audio
       // position is at audio end. This is also the case when

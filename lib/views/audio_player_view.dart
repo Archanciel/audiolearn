@@ -355,6 +355,9 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                           overlayColor:
                               iconButtonTapModification, // Tap feedback color
                         ),
+                        // Display the play or pause button depending on the
+                        // isPaused value which is updated by the audio player
+                        // currentAudioPlayPauseNotifier
                         icon: Icon(isPaused ? Icons.pause : Icons.play_arrow),
                       );
                     },
