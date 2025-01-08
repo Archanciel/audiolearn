@@ -74,7 +74,7 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
 
   @override
   Widget build(BuildContext context) {
-    final AudioPlayerVM audioGlobalPlayerVM = Provider.of<AudioPlayerVM>(
+    final AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
       context,
       listen: false,
     );
@@ -86,7 +86,7 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
     if (widget.updateCurrentPlayAudioSpeed) {
       // Here, using the set audio speed dialog in the audio player
       // view
-      Audio? currentAudio = audioGlobalPlayerVM.currentAudio;
+      Audio? currentAudio = audioPlayerVMlistenFalse.currentAudio;
 
       if (currentAudio != null) {
         _audioPlaySpeed = currentAudio.audioPlaySpeed;
@@ -162,8 +162,8 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
                   style: (themeProviderVM.currentTheme == AppTheme.dark)
                       ? kTextButtonStyleDarkMode
                       : kTextButtonStyleLightMode),
-              _buildSlider(audioGlobalPlayerVM),
-              _buildSpeedButtons(audioGlobalPlayerVM, themeProviderVM),
+              _buildSlider(audioPlayerVMlistenFalse),
+              _buildSpeedButtons(audioPlayerVMlistenFalse, themeProviderVM),
               (widget.displayApplyToExistingPlaylistCheckbox)
                   ? _buildApplyToExistingPlaylistRow(context)
                   : Container(),
@@ -183,6 +183,11 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
                   : kTextButtonStyleLightMode,
             ),
             onPressed: () {
+              // Updates the audio play speed value in the audio speed
+              // text button displayed in the audio player view
+              audioPlayerVMlistenFalse.currentAudioPlaySpeedNotifier.value =
+                  _audioPlaySpeed;
+
               Navigator.of(context).pop([
                 _audioPlaySpeed,
                 _applyToExistingPlaylist,
@@ -204,7 +209,7 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
               // play speed is changed even if the user presses
               // the cancel button.
               await _setPlaybackSpeed(
-                audioGlobalPlayerVM,
+                audioPlayerVMlistenFalse,
                 widget.audioPlaySpeed,
               );
 
