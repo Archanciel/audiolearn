@@ -187,6 +187,7 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
               // text button displayed in the audio player view
               audioPlayerVMlistenFalse.currentAudioPlaySpeedNotifier.value =
                   _audioPlaySpeed;
+              audioPlayerVMlistenFalse.wasPlaySpeedNotifierChanged = true;
 
               Navigator.of(context).pop([
                 _audioPlaySpeed,

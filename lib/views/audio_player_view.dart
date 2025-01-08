@@ -561,8 +561,19 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                     valueListenable:
                         audioPlayerVMlistenFalse.currentAudioPlaySpeedNotifier,
                     builder: (context, currentSpeed, child) {
+                      String currentSpeedStr;
+
+                      if (audioPlayerVMlistenFalse
+                          .wasPlaySpeedNotifierChanged) {
+                        currentSpeedStr = '${currentSpeed.toStringAsFixed(2)}x';
+                        audioPlayerVMlistenFalse.wasPlaySpeedNotifierChanged =
+                            false;
+                      } else {
+                        currentSpeedStr = '${_audioPlaySpeed.toStringAsFixed(2)}x';
+                      }
+
                       return Text(
-                        '${currentSpeed.toStringAsFixed(2)}x',
+                        currentSpeedStr,
                         textAlign: TextAlign.center,
                         style: (areAudioButtonsEnabled)
                             ? (themeProviderVM.currentTheme == AppTheme.dark)
