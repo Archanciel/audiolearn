@@ -509,17 +509,13 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
   }) {
     return Consumer<ThemeProviderVM>(
       builder: (context, themeProviderVM, child) {
-        _audioPlaySpeed =
-            audioPlayerVMlistenFalse.currentAudio?.audioPlaySpeed ??
-                _audioPlaySpeed;
-
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
               // sets the rounded TextButton size improving the distance
-              // between the button text and its boarder
+              // between the button text and its border
               width: kNormalButtonWidth - 18.0,
               height: kNormalButtonHeight,
               child: Tooltip(
@@ -545,7 +541,9 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                             context: context,
                             builder: (BuildContext context) {
                               return AudioSetSpeedDialog(
-                                audioPlaySpeed: _audioPlaySpeed,
+                                audioPlaySpeed: audioPlayerVMlistenFalse
+                                        .currentAudio?.audioPlaySpeed ??
+                                    _audioPlaySpeed,
                                 updateCurrentPlayAudioSpeed: true,
                               );
                             },
@@ -559,18 +557,24 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                           });
                         }
                       : null,
-                  child: Text(
-                    '${_audioPlaySpeed.toStringAsFixed(2)}x',
-                    textAlign: TextAlign.center,
-                    style: (areAudioButtonsEnabled)
-                        ? (themeProviderVM.currentTheme == AppTheme.dark)
-                            ? kTextButtonStyleDarkMode
-                            : kTextButtonStyleLightMode
-                        : const TextStyle(
-                            // required to display the button in grey if
-                            // the button is disabled
-                            fontSize: kTextButtonFontSize,
-                          ),
+                  child: ValueListenableBuilder<double>(
+                    valueListenable:
+                        audioPlayerVMlistenFalse.currentAudioPlaySpeedNotifier,
+                    builder: (context, currentSpeed, child) {
+                      return Text(
+                        '${currentSpeed.toStringAsFixed(2)}x',
+                        textAlign: TextAlign.center,
+                        style: (areAudioButtonsEnabled)
+                            ? (themeProviderVM.currentTheme == AppTheme.dark)
+                                ? kTextButtonStyleDarkMode
+                                : kTextButtonStyleLightMode
+                            : const TextStyle(
+                                // required to display the button in grey if
+                                // the button is disabled
+                                fontSize: kTextButtonFontSize,
+                              ),
+                      );
+                    },
                   ),
                 ),
               ),
