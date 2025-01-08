@@ -884,8 +884,6 @@ class AudioPlayerVM extends ChangeNotifier {
     await modifyAudioPlayerPosition(
       durationPosition: durationPosition,
     );
-
-    notifyListeners();
   }
 
   /// Method to be redefined in AudioPlayerVMTestVersion in order
