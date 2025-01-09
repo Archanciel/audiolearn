@@ -4382,7 +4382,7 @@ void main() {
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'audio_comment_test',
-        selectedPlaylistTitle: 'Empty',
+        selectedPlaylistTitle: youtubePlaylistTitle,
       );
 
       // Go to the audio player view
@@ -4427,15 +4427,15 @@ void main() {
       await Future.delayed(const Duration(seconds: 5));
       await tester.pumpAndSettle();
 
-      // Memorizing the current audio position before selecting the 'local'
-      // playlist
+      // Memorizing the current audio position before selecting the
+      // 'local' playlist
       Finder audioPlayerViewAudioPositionFinder =
           find.byKey(const Key('audioPlayerViewAudioPosition'));
       final String memorizedPositionTimeString =
           tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
 
-      // Memorizing the current audio remaining duration before selecting
-      // the 'local' playlist
+      // Memorizing the current audio remaining duration before
+      // selecting the 'local' playlist
       Finder audioPlayerViewAudioRemainingDurationFinder =
           find.byKey(const Key('audioPlayerViewAudioRemainingDuration'));
       String memorizedRemainingDurationTimeString = tester
@@ -4451,6 +4451,7 @@ void main() {
       await IntegrationTestUtil.selectPlaylist(
         tester: tester,
         playlistToSelectTitle: localPlaylistTitle,
+        selectPlaylistPumpAndSettleDuration: const Duration(milliseconds: 500),
       );
 
       // Verify the displayed 'local' playlist current playable audio title

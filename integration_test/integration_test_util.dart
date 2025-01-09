@@ -789,6 +789,7 @@ class IntegrationTestUtil {
   static Future<void> selectPlaylist({
     required WidgetTester tester,
     required String playlistToSelectTitle,
+    Duration? selectPlaylistPumpAndSettleDuration,
   }) async {
     // First, find the source Playlist ListTile Text widget
     final Finder playlistListTileTextWidgetFinder =
@@ -810,7 +811,12 @@ class IntegrationTestUtil {
 
     // Tap the ListTile Playlist checkbox to select or unselect it
     await tester.tap(playlistListTileCheckboxWidgetFinder);
-    await tester.pumpAndSettle();
+
+    if (selectPlaylistPumpAndSettleDuration != null) {
+      await tester.pumpAndSettle(selectPlaylistPumpAndSettleDuration);
+    } else {
+      await tester.pumpAndSettle();
+    }
   }
 
   static void checkPlaylistAndAudioTitlesOrderInListTile({
