@@ -107,10 +107,12 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                 // audio is set in the audio player view.
                 playlistListVMlistenTrue.togglePlaylistsList();
               }
+              
               playlistListVMlistenTrue.setPlaylistSelection(
                 playlistSelectedOrUnselected: playlist,
                 isPlaylistSelected: value!,
               );
+
               await audioPlayerVMlistenTrue
                   .setCurrentAudioFromSelectedPlaylist();
             },
