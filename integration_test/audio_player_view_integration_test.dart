@@ -513,9 +513,9 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets('''Click on play button to finish playing the first downloaded
-           audio and start playing the partially listened last downloaded audio,
-           ignoring the 2 precendent audio already fully played.''', (
+    testWidgets('''Click on play button to finish playing the first
+           downloaded audio and start playing the partially listened last downloaded
+           audio, ignoring the 2 precendent audio already fully played.''', (
       WidgetTester tester,
     ) async {
       const String audioPlayerSelectedPlaylistTitle = 'S8 audio';
@@ -4212,6 +4212,7 @@ void main() {
           "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
       const String localPlaylistCurrentPlayableAudioTitle =
           "morning _ cinematic video";
+      const String noAudioSelectedTitle = "No audio selected";
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
@@ -4234,7 +4235,7 @@ void main() {
       );
 
       // Verify the no selected audio title is displayed
-      expect(find.text("No audio selected"), findsOneWidget);
+      expect(find.text(noAudioSelectedTitle), findsOneWidget);
 
       // Verify the displayed playlist title
       Text selectedPlaylistTitleText =
@@ -4329,6 +4330,35 @@ void main() {
         selectedPlaylistTitle: localPlaylistTitle,
       );
 
+      // Reurn to the audio player view
+      appScreenNavigationButton =
+          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+      await tester.tap(appScreenNavigationButton);
+      await tester.pumpAndSettle();
+
+      // Verify the displayed audio title
+
+      audioPlayerViewAudioTitleFinder =
+          find.byKey(const Key('audioPlayerViewCurrentAudioTitle'));
+      audioTitleWithDurationString =
+          tester.widget<Text>(audioPlayerViewAudioTitleFinder).data!;
+
+      expect(
+        audioTitleWithDurationString,
+        "$localPlaylistCurrentPlayableAudioTitle\n0:59",
+      );
+
+      // Now, in the audio player view, select the empty playlist using
+      // the audio player view playlist selection button. Then verify that
+      // the displayed audio title is "No audio selected".
+      await _verifyAudioPlayerViewPlaylistSelectionImpact(
+        tester: tester,
+        playlistDownloadViewCurrentlySelectedPlaylistTitle:
+            localPlaylistTitle,
+        playlistToSelectTitle: emptyPlaylistTitle,
+        playlistCurrentlyPlayableAudioTitleWithDuration: noAudioSelectedTitle,
+      );
+
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -4343,8 +4373,10 @@ void main() {
         (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
       const String localPlaylistTitle = 'local'; // Youtube playlist
+      const String emptyPlaylistTitle = 'Empty'; // Youtube playlist
       const String localPlaylistCurrentPlayableAudioTitle =
           "morning _ cinematic video";
+      const String noAudioSelectedTitle = "No audio selected";
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
@@ -4360,18 +4392,28 @@ void main() {
         tester: tester,
       );
 
-      // Now, in the audio player view, select the 'S8 audio' playlist
-      // using the audio player view playlist selection button. Then
-      // start playing the current playable audio "Interview de Chat
-      // GPT  - IA, intelligence, philosophie, géopolitique, post-
-      // vérité...".
+      // Now, in the audio player view, select the empty playlist using
+      // the audio player view playlist selection button. Then verify that
+      // the displayed audio title is "No audio selected".
+      await _verifyAudioPlayerViewPlaylistSelectionImpact(
+        tester: tester,
+        playlistDownloadViewCurrentlySelectedPlaylistTitle:
+            youtubePlaylistTitle,
+        playlistToSelectTitle: emptyPlaylistTitle,
+        playlistCurrentlyPlayableAudioTitleWithDuration: noAudioSelectedTitle,
+      );
 
-      // Now tap on audio player view playlist button to display the
-      // playlists
+      // Now, in the audio player view, select the S8 audio playlist using
+      // the audio player view playlist selection button. Then start playing
+      // the current playable audio "Interview de Chat GPT  - IA, intelligence,
+      // philosophie, géopolitique, post-vérité...".
+
+      // Select the 'S8 audio' playlist
+
+      // Now tap on audio player view playlist button to display the playlists
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
-      // Select the 'S8 audio' playlist
       await IntegrationTestUtil.selectPlaylist(
         tester: tester,
         playlistToSelectTitle: youtubePlaylistTitle,
@@ -4384,29 +4426,33 @@ void main() {
       await Future.delayed(const Duration(seconds: 5));
       await tester.pumpAndSettle();
 
-      // Without pausing the playing audio, memorizing the current
-      // audio position before selecting the 'local' playlist
+      // Memorizing the current audio position before selecting the 'local'
+      // playlist
       Finder audioPlayerViewAudioPositionFinder =
           find.byKey(const Key('audioPlayerViewAudioPosition'));
       final String memorizedPositionTimeString =
           tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
 
+      // Memorizing the current audio remaining duration before selecting
+      // the 'local' playlist
+      Finder audioPlayerViewAudioRemainingDurationFinder =
+          find.byKey(const Key('audioPlayerViewAudioRemainingDuration'));
+      String memorizedRemainingDurationTimeString = tester
+          .widget<Text>(audioPlayerViewAudioRemainingDurationFinder)
+          .data!;
+
       // Now select the 'local' playlist
 
-      // Tap on audio player view playlist button to display the
-      // playlists
+      // Now tap on audio player view playlist button to display the playlists
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
-      // Now select the 'local' playlist
       await IntegrationTestUtil.selectPlaylist(
         tester: tester,
         playlistToSelectTitle: localPlaylistTitle,
-        selectPlaylistPumpAndSettleDuration: Duration(milliseconds: 500),
       );
 
-      // Verify the displayed 'local' playlist current playable audio
-      // title with duration
+      // Verify the displayed 'local' playlist current playable audio title
 
       Finder audioPlayerViewAudioTitleFinder =
           find.byKey(const Key('audioPlayerViewCurrentAudioTitle'));
@@ -4416,6 +4462,29 @@ void main() {
       expect(
         audioTitleWithDurationString,
         "$localPlaylistCurrentPlayableAudioTitle\n0:59",
+      );
+
+      // Retrieving the current audio position
+      audioPlayerViewAudioPositionFinder =
+          find.byKey(const Key('audioPlayerViewAudioPosition'));
+      String retrievedPositionTimeString =
+          tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
+
+      expect(
+        retrievedPositionTimeString,
+        '0.02',
+      );
+
+      // Retrieving the current audio remaining duration
+      audioPlayerViewAudioRemainingDurationFinder =
+          find.byKey(const Key('audioPlayerViewAudioRemainingDuration'));
+      String retrievedRemainingDurationTimeString = tester
+          .widget<Text>(audioPlayerViewAudioRemainingDurationFinder)
+          .data!;
+
+      expect(
+        retrievedRemainingDurationTimeString,
+        '0.57',
       );
 
       // Then select again the 'S8 audio' playlist
@@ -4430,7 +4499,8 @@ void main() {
       );
 
       // Now the previously playing audio is displayed. We verify that its
-      // audio position is the same as when the 'local'' playlist was selected.
+      // audio position and audio remaining duration are the same as when
+      // the 'local' playlist was selected.
       //
       // Sometime, the audio position may be different by a 1 second due to
       // the way integration tests work !
@@ -4438,7 +4508,7 @@ void main() {
       // Retrieving the current audio position
       audioPlayerViewAudioPositionFinder =
           find.byKey(const Key('audioPlayerViewAudioPosition'));
-      final String retrievedPositionTimeString =
+      retrievedPositionTimeString =
           tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
 
       int memorizedPositionTimeInTenthsOfSeconds =
@@ -4457,7 +4527,34 @@ void main() {
           ],
         ),
         reason:
-            "Expected value between $memorizedPositionTimeInTenthsOfSeconds and ${memorizedPositionTimeInTenthsOfSeconds + 10} but obtained $retrievedPositionTimeString",
+            "Expected value between ${memorizedPositionTimeInTenthsOfSeconds - 10} and $memorizedPositionTimeInTenthsOfSeconds but obtained $retrievedPositionTimeString",
+      );
+
+      // Retrieving the current audio remaining duration
+      audioPlayerViewAudioRemainingDurationFinder =
+          find.byKey(const Key('audioPlayerViewAudioRemainingDuration'));
+      retrievedRemainingDurationTimeString = tester
+          .widget<Text>(audioPlayerViewAudioRemainingDurationFinder)
+          .data!;
+
+      int memorizedRemainingDurationTimeInTenthsOfSeconds =
+          DateTimeUtil.convertToTenthsOfSeconds(
+        timeString: memorizedRemainingDurationTimeString,
+      );
+
+      expect(
+        DateTimeUtil.convertToTenthsOfSeconds(
+          timeString: retrievedRemainingDurationTimeString,
+        ),
+        allOf(
+          [
+            greaterThanOrEqualTo(
+                memorizedRemainingDurationTimeInTenthsOfSeconds - 10),
+            lessThanOrEqualTo(memorizedRemainingDurationTimeInTenthsOfSeconds),
+          ],
+        ),
+        reason:
+            "Expected value between ${memorizedRemainingDurationTimeInTenthsOfSeconds - 10} and $memorizedRemainingDurationTimeInTenthsOfSeconds but obtained $retrievedRemainingDurationTimeString",
       );
 
       // Purge the test playlist directory so that the created test
@@ -4466,10 +4563,10 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets('''Go to audioplayer view while no playlist is selected and
-                   check a playlist in order to select its currently playable
-                   audio. Then, go back to download playlist view and verify
-                   the selected playlist.''', (WidgetTester tester) async {
+    testWidgets('''Go to audioplayer view while no playlist is selected
+                   and check a playlist in order to select its currently playable
+                   audio. Then, go back to download playlist view and verify the
+                   selected playlist.''', (WidgetTester tester) async {
       const String emptyPlaylistTitle = 'Empty'; // Youtube playlist
       "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
 
@@ -4509,10 +4606,6 @@ void main() {
       // the audio player view playlist selection button.
 
       // Select the 'Empty' playlist
-
-      // Now tap on audio player view playlist button to display the playlists
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-      await tester.pumpAndSettle();
 
       await IntegrationTestUtil.selectPlaylist(
         tester: tester,
@@ -7522,133 +7615,6 @@ void audioPlayerViewIntegrationTest() {
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
         minPositionTimeStr: '9:23',
         maxPositionTimeStr: '9:28',
-      );
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
-      );
-    });
-    testWidgets(
-        '''Click on play button to finish playing the first downloaded audio
-           and start playing the partially listened last downloaded audio,
-           ignoring the 2 precendent audio already fully played.''', (
-      WidgetTester tester,
-    ) async {
-      const String audioPlayerSelectedPlaylistTitle = 'S8 audio';
-      const String secondDownloadedAudioTitle =
-          'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau';
-
-      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-        tester: tester,
-        savedTestDataDirName: 'audio_player_view_first_to_last_audio_test',
-        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
-      );
-
-      // Click on playlist toggle button to hide the playlist list
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-      await tester.pumpAndSettle();
-
-      // First, we modify the audio position of the last downloaded audio
-      // of the playlist. First, get the last downloaded audio ListTile Text
-      // widget finder and tap on it
-      final Finder
-          playlistDownloadViewLastDownloadedAudioListTileTextWidgetFinder =
-          find.text(secondDownloadedAudioTitle);
-
-      await tester
-          .tap(playlistDownloadViewLastDownloadedAudioListTileTextWidgetFinder);
-      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
-        tester: tester,
-      );
-
-      // Tapping 5 times on the forward 1 minute icon button. Now, the last
-      // downloaded audio of the playlist is partially listened.
-      for (int i = 0; i < 5; i++) {
-        await tester
-            .tap(find.byKey(const Key('audioPlayerViewForward1mButton')));
-        await tester.pumpAndSettle();
-      }
-
-      // Playing the audio during 1 second.
-
-      await tester.tap(find.byIcon(Icons.play_arrow));
-      await tester.pumpAndSettle();
-
-      await Future.delayed(const Duration(seconds: 1));
-      await tester.pumpAndSettle(const Duration(milliseconds: 1500));
-
-      // Click on the pause button to stop the last downloaded audio
-      await tester.tap(find.byIcon(Icons.pause));
-      await tester.pumpAndSettle();
-
-      // Now we want to tap on the first downloaded audio of the
-      // playlist in order to start playing it.
-
-      // First, go back to the playlist download view.
-      final Finder appScreenNavigationButton =
-          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-      await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
-
-      // Then, get the first downloaded Audio ListTile Text
-      // widget finder and tap on it
-      final Finder secondDownloadedAudioListTileTextWidgetFinder =
-          find.text(secondDownloadedAudioTitle);
-
-      await tester.tap(secondDownloadedAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle(const Duration(milliseconds: 400));
-
-      // Verify that the selected playlist title is displayed
-      Text selectedPlaylistTitleText =
-          tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
-      expect(
-        selectedPlaylistTitleText.data,
-        audioPlayerSelectedPlaylistTitle,
-      );
-
-      // Now we tap on the play button in order to finish
-      // playing the first downloaded audio and start playing
-      // the last downloaded audio of the playlist. The 2
-      // audio in between are ignored since they are already
-      // fully played.
-
-      await tester.tap(find.byIcon(Icons.play_arrow));
-      await tester.pumpAndSettle();
-
-      await Future.delayed(const Duration(seconds: 5));
-      await tester.pumpAndSettle();
-
-      // Click on the pause button
-      await tester.tap(find.byIcon(Icons.pause));
-      await tester.pumpAndSettle();
-
-      // Verify the last downloaded played audio title
-      expect(
-          find.text(
-              "L'argument anti-nuke qui m'inquiète le plus par Y.Rousselet\n9:51"),
-          findsOneWidget);
-
-      // Verify that the selected playlist title is displayed
-      selectedPlaylistTitleText =
-          tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
-      expect(
-        selectedPlaylistTitleText.data,
-        audioPlayerSelectedPlaylistTitle,
-      );
-
-      // Ensure that the bug corrected on AudioPlayerVM on 06-06-2024
-      // no longer happens. This bug impacted the application during
-      // 3 weeks before it was discovered !!!!
-      final Finder audioPlayerViewAudioPositionFinder =
-          find.byKey(const Key('audioPlayerViewAudioPosition'));
-
-      IntegrationTestUtil.verifyPositionBetweenMinMax(
-        tester: tester,
-        textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '9:23',
-        maxPositionTimeStr: '9:27',
       );
 
       // Purge the test playlist directory so that the created test
@@ -11224,438 +11190,6 @@ void audioPlayerViewIntegrationTest() {
         expectedIconColor:
             kSliderThumbColorInDarkMode, // Fully played audio play/pause icon color
         expectedIconBackgroundColor: Colors.black,
-      );
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
-      );
-    });
-  });
-  group('Selecting playlist in AudioPlayerView', () {
-    testWidgets(
-        '''Selecting different playlists in order to change the playable audio 
-           contained in the audio player to the selected playlist current or
-           past playable audio.''', (WidgetTester tester) async {
-      const String emptyPlaylistTitle = 'Empty'; // Youtube playlist
-      const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
-      const String localPlaylistTitle = 'local'; // Youtube playlist
-      const String alreadyCommentedAudioTitle =
-          "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
-      const String localPlaylistCurrentPlayableAudioTitle =
-          "morning _ cinematic video";
-      const String noAudioSelectedTitle = "No audio selected";
-
-      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-        tester: tester,
-        savedTestDataDirName: 'audio_comment_test',
-        selectedPlaylistTitle: emptyPlaylistTitle,
-      );
-
-      // Verify that the playlist list is displayed
-      expect(
-        find.byKey(const Key('expandable_playlist_list')),
-        findsOneWidget,
-      );
-
-      // Go to the audio player view
-      Finder appScreenNavigationButton =
-          find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(appScreenNavigationButton);
-      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
-        tester: tester,
-      );
-
-      // Verify the no selected audio title is displayed
-      expect(find.text(noAudioSelectedTitle), findsOneWidget);
-
-      // Verify the displayed playlist title
-      Text selectedPlaylistTitleText =
-          tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
-      expect(
-        selectedPlaylistTitleText.data,
-        emptyPlaylistTitle,
-      );
-
-      // Now, in the audio player view, select the S8 audio playlist using
-      // the audio player view playlist selection button. Then verify that
-      // the displayed audio title is the current playable audio title of
-      // the S8 audio playlist, i.e. "Interview de Chat GPT  - IA,
-      // intelligence, philosophie, géopolitique, post-vérité...".
-      await _verifyAudioPlayerViewPlaylistSelectionImpact(
-        tester: tester,
-        playlistDownloadViewCurrentlySelectedPlaylistTitle: emptyPlaylistTitle,
-        playlistToSelectTitle: youtubePlaylistTitle,
-        playlistCurrentlyPlayableAudioTitleWithDuration:
-            "$alreadyCommentedAudioTitle\n1:17:54",
-      );
-
-      // Now return to the playlist download view
-      appScreenNavigationButton =
-          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-      await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
-
-      // Verify that the S8 audio playlist is now selected in the playlist
-      // download view since it was selected in the audio player view.
-      _verifyPlaylistIsSelectedInPlaylistDownloadView(
-        tester: tester,
-        selectedPlaylistTitle: youtubePlaylistTitle,
-      );
-
-      // Now close the playlist download view playlists list. The selected
-      // playlist remains S8 audio
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-      await tester.pumpAndSettle();
-
-      // And go again to the audio player view
-      appScreenNavigationButton =
-          find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
-
-      // Verify the displayed audio title
-
-      Finder audioPlayerViewAudioTitleFinder =
-          find.byKey(const Key('audioPlayerViewCurrentAudioTitle'));
-      String audioTitleWithDurationString =
-          tester.widget<Text>(audioPlayerViewAudioTitleFinder).data!;
-
-      expect(
-        audioTitleWithDurationString,
-        "$alreadyCommentedAudioTitle\n1:17:54",
-      );
-
-      // Now, in the audio player view, select the local audio playlist using
-      // the audio player view playlist selection button. Then verify that
-      // the displayed audio title is the current playable audio title of
-      // the local audio playlist, i.e. "morning _ cinematic video".
-      await _verifyAudioPlayerViewPlaylistSelectionImpact(
-        tester: tester,
-        playlistDownloadViewCurrentlySelectedPlaylistTitle:
-            youtubePlaylistTitle,
-        playlistToSelectTitle: localPlaylistTitle,
-        playlistCurrentlyPlayableAudioTitleWithDuration:
-            "$localPlaylistCurrentPlayableAudioTitle\n0:59",
-      );
-
-      // Now return to the playlist download view
-      appScreenNavigationButton =
-          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-      await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
-
-      // Verify that the playlist download view list of playlists which
-      // was closed before going to the audio player view is still closed
-      expect(find.byKey(const Key('expandable_playlist_list')), findsNothing);
-
-      // Now open the playlist download view playlists list to verify that
-      // the selected playlist is now the 'local' playlist selected in
-      // the audio player view
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-      await tester.pumpAndSettle();
-
-      // Verify that the 'local' playlist is now selected in the playlist
-      // download view since it was selected in the audio player view.
-      _verifyPlaylistIsSelectedInPlaylistDownloadView(
-        tester: tester,
-        selectedPlaylistTitle: localPlaylistTitle,
-      );
-
-      // Reurn to the audio player view
-      appScreenNavigationButton =
-          find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
-
-      // Verify the displayed audio title
-
-      audioPlayerViewAudioTitleFinder =
-          find.byKey(const Key('audioPlayerViewCurrentAudioTitle'));
-      audioTitleWithDurationString =
-          tester.widget<Text>(audioPlayerViewAudioTitleFinder).data!;
-
-      expect(
-        audioTitleWithDurationString,
-        "$alreadyCommentedAudioTitle\n1:17:54",
-      );
-
-      // Now, in the audio player view, select the empty playlist using
-      // the audio player view playlist selection button. Then verify that
-      // the displayed audio title is "No audio selected".
-      await _verifyAudioPlayerViewPlaylistSelectionImpact(
-        tester: tester,
-        playlistDownloadViewCurrentlySelectedPlaylistTitle:
-            youtubePlaylistTitle,
-        playlistToSelectTitle: emptyPlaylistTitle,
-        playlistCurrentlyPlayableAudioTitleWithDuration: noAudioSelectedTitle,
-      );
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
-      );
-    });
-    testWidgets(
-        '''While current audio is playing, select another playlist so that
-           the current audio is changed. Then select again the previously
-           selected playlist and verify that its current audio position
-           corresponds to its position when the other playlist was selected.''',
-        (WidgetTester tester) async {
-      const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
-      const String localPlaylistTitle = 'local'; // Youtube playlist
-      const String emptyPlaylistTitle = 'Empty'; // Youtube playlist
-      const String localPlaylistCurrentPlayableAudioTitle =
-          "morning _ cinematic video";
-      const String noAudioSelectedTitle = "No audio selected";
-
-      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-        tester: tester,
-        savedTestDataDirName: 'audio_comment_test',
-        selectedPlaylistTitle: 'Empty',
-      );
-
-      // Go to the audio player view
-      Finder appScreenNavigationButton =
-          find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(appScreenNavigationButton);
-      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
-        tester: tester,
-      );
-
-      // Now, in the audio player view, select the empty playlist using
-      // the audio player view playlist selection button. Then verify that
-      // the displayed audio title is "No audio selected".
-      await _verifyAudioPlayerViewPlaylistSelectionImpact(
-        tester: tester,
-        playlistDownloadViewCurrentlySelectedPlaylistTitle:
-            youtubePlaylistTitle,
-        playlistToSelectTitle: emptyPlaylistTitle,
-        playlistCurrentlyPlayableAudioTitleWithDuration: noAudioSelectedTitle,
-      );
-
-      // Now, in the audio player view, select the S8 audio playlist using
-      // the audio player view playlist selection button. Then start playing
-      // the current playable audio "Interview de Chat GPT  - IA, intelligence,
-      // philosophie, géopolitique, post-vérité...".
-
-      // Select the 'S8 audio' playlist
-
-      // Now tap on audio player view playlist button to display the playlists
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-      await tester.pumpAndSettle();
-
-      await IntegrationTestUtil.selectPlaylist(
-        tester: tester,
-        playlistToSelectTitle: youtubePlaylistTitle,
-      );
-
-      // Now tap on the Play button to play the playlist current audio
-      await tester.tap(find.byIcon(Icons.play_arrow));
-      await tester.pumpAndSettle();
-
-      await Future.delayed(const Duration(seconds: 5));
-      await tester.pumpAndSettle();
-
-      // Memorizing the current audio position before selecting the 'local'
-      // playlist
-      Finder audioPlayerViewAudioPositionFinder =
-          find.byKey(const Key('audioPlayerViewAudioPosition'));
-      final String memorizedPositionTimeString =
-          tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
-
-      // Memorizing the current audio remaining duration before selecting
-      // the 'local' playlist
-      Finder audioPlayerViewAudioRemainingDurationFinder =
-          find.byKey(const Key('audioPlayerViewAudioRemainingDuration'));
-      String memorizedRemainingDurationTimeString = tester
-          .widget<Text>(audioPlayerViewAudioRemainingDurationFinder)
-          .data!;
-
-      // Now select the 'local' playlist
-
-      // Now tap on audio player view playlist button to display the playlists
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-      await tester.pumpAndSettle();
-
-      await IntegrationTestUtil.selectPlaylist(
-        tester: tester,
-        playlistToSelectTitle: localPlaylistTitle,
-      );
-
-      // Verify the displayed 'local' playlist current playable audio title
-
-      Finder audioPlayerViewAudioTitleFinder =
-          find.byKey(const Key('audioPlayerViewCurrentAudioTitle'));
-      String audioTitleWithDurationString =
-          tester.widget<Text>(audioPlayerViewAudioTitleFinder).data!;
-
-      expect(
-        audioTitleWithDurationString,
-        "$localPlaylistCurrentPlayableAudioTitle\n0:59",
-      );
-
-      // Retrieving the current audio position
-      audioPlayerViewAudioPositionFinder =
-          find.byKey(const Key('audioPlayerViewAudioPosition'));
-      String retrievedPositionTimeString =
-          tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
-
-      expect(
-        retrievedPositionTimeString,
-        '0.02',
-      );
-
-      // Retrieving the current audio remaining duration
-      audioPlayerViewAudioRemainingDurationFinder =
-          find.byKey(const Key('audioPlayerViewAudioRemainingDuration'));
-      String retrievedRemainingDurationTimeString = tester
-          .widget<Text>(audioPlayerViewAudioRemainingDurationFinder)
-          .data!;
-
-      expect(
-        retrievedRemainingDurationTimeString,
-        '0.57',
-      );
-
-      // Then select again the 'S8 audio' playlist
-
-      // Now tap on audio player view playlist button to display the playlists
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-      await tester.pumpAndSettle();
-
-      await IntegrationTestUtil.selectPlaylist(
-        tester: tester,
-        playlistToSelectTitle: youtubePlaylistTitle,
-      );
-
-      // Now the previously playing audio is displayed. We verify that its
-      // audio position and audio remaining duration are the same as when
-      // the 'local' playlist was selected.
-      //
-      // Sometime, the audio position may be different by a 1 second due to
-      // the way integration tests work !
-
-      // Retrieving the current audio position
-      audioPlayerViewAudioPositionFinder =
-          find.byKey(const Key('audioPlayerViewAudioPosition'));
-      retrievedPositionTimeString =
-          tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
-
-      int memorizedPositionTimeInTenthsOfSeconds =
-          DateTimeUtil.convertToTenthsOfSeconds(
-        timeString: memorizedPositionTimeString,
-      );
-
-      expect(
-        DateTimeUtil.convertToTenthsOfSeconds(
-          timeString: retrievedPositionTimeString,
-        ),
-        allOf(
-          [
-            greaterThanOrEqualTo(memorizedPositionTimeInTenthsOfSeconds - 10),
-            lessThanOrEqualTo(memorizedPositionTimeInTenthsOfSeconds),
-          ],
-        ),
-        reason:
-            "Expected value between ${memorizedPositionTimeInTenthsOfSeconds - 10} and $memorizedPositionTimeInTenthsOfSeconds but obtained $retrievedPositionTimeString",
-      );
-
-      // Retrieving the current audio remaining duration
-      audioPlayerViewAudioRemainingDurationFinder =
-          find.byKey(const Key('audioPlayerViewAudioRemainingDuration'));
-      retrievedRemainingDurationTimeString = tester
-          .widget<Text>(audioPlayerViewAudioRemainingDurationFinder)
-          .data!;
-
-      int memorizedRemainingDurationTimeInTenthsOfSeconds =
-          DateTimeUtil.convertToTenthsOfSeconds(
-        timeString: memorizedRemainingDurationTimeString,
-      );
-
-      expect(
-        DateTimeUtil.convertToTenthsOfSeconds(
-          timeString: retrievedRemainingDurationTimeString,
-        ),
-        allOf(
-          [
-            greaterThanOrEqualTo(
-                memorizedRemainingDurationTimeInTenthsOfSeconds - 10),
-            lessThanOrEqualTo(memorizedRemainingDurationTimeInTenthsOfSeconds),
-          ],
-        ),
-        reason:
-            "Expected value between ${memorizedRemainingDurationTimeInTenthsOfSeconds - 10} and $memorizedRemainingDurationTimeInTenthsOfSeconds but obtained $retrievedRemainingDurationTimeString",
-      );
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
-      );
-    });
-    testWidgets('''Go to audioplayer view while no playlist is selected and
-                   check a playlist in order to select its currently playable
-                   audio. Then, go back to download playlist view and verify
-                   the selected playlist.''', (WidgetTester tester) async {
-      const String emptyPlaylistTitle = 'Empty'; // Youtube playlist
-      "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
-
-      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-        tester: tester,
-        savedTestDataDirName: 'audio_comment_test',
-        selectedPlaylistTitle: emptyPlaylistTitle,
-      );
-
-      // Unselect the 'Empty' playlist
-
-      await IntegrationTestUtil.selectPlaylist(
-        tester: tester,
-        playlistToSelectTitle: emptyPlaylistTitle,
-      );
-
-      // Then go to the audio player view
-      Finder appScreenNavigationButton =
-          find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(appScreenNavigationButton);
-      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
-        tester: tester,
-      );
-
-      // Verify the no selected audio title is displayed
-      expect(find.text("No audio selected"), findsOneWidget);
-
-      // Verify that the displayed playlist title is empty
-      Text selectedPlaylistTitleText =
-          tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
-      expect(
-        selectedPlaylistTitleText.data,
-        '',
-      );
-
-      // Now, in the audio player view, select the 'Empty' audio playlist using
-      // the audio player view playlist selection button.
-
-      // Select the 'Empty' playlist
-
-      await IntegrationTestUtil.selectPlaylist(
-        tester: tester,
-        playlistToSelectTitle: emptyPlaylistTitle,
-      );
-
-      // Now return to the playlist download view
-      appScreenNavigationButton =
-          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-      await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
-
-      // Verify that the 'Empty playlist is now selected in the playlist
-      // download view since it was selected in the audio player view.
-      _verifyPlaylistIsSelectedInPlaylistDownloadView(
-        tester: tester,
-        selectedPlaylistTitle: emptyPlaylistTitle,
       );
 
       // Purge the test playlist directory so that the created test
