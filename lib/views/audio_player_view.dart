@@ -1084,15 +1084,14 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                       child: IconButton(
                         key: const Key('audioPlayerViewRewind1mButton'),
                         iconSize: _audioIconSizeMedium,
-                        onPressed: () async =>
-                            await audioPlayerVMlistenFalse.changeAudioPlayPosition(
+                        onPressed: () async => await audioPlayerVMlistenFalse
+                            .changeAudioPlayPosition(
                           posOrNegPositionDurationChange:
                               const Duration(minutes: -1),
                         ),
                         style: ButtonStyle(
                           // Highlight button when pressed
-                          padding:
-                              WidgetStateProperty.all<EdgeInsetsGeometry>(
+                          padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
                             const EdgeInsets.symmetric(
                                 horizontal: kSmallButtonInsidePadding,
                                 vertical: 0),
@@ -1107,15 +1106,14 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                       child: IconButton(
                         key: const Key('audioPlayerViewRewind10sButton'),
                         iconSize: _audioIconSizeMedium,
-                        onPressed: () async =>
-                            await audioPlayerVMlistenFalse.changeAudioPlayPosition(
+                        onPressed: () async => await audioPlayerVMlistenFalse
+                            .changeAudioPlayPosition(
                           posOrNegPositionDurationChange:
                               const Duration(seconds: -10),
                         ),
                         style: ButtonStyle(
                           // Highlight button when pressed
-                          padding:
-                              WidgetStateProperty.all<EdgeInsetsGeometry>(
+                          padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
                             const EdgeInsets.symmetric(
                                 horizontal: kSmallButtonInsidePadding,
                                 vertical: 0),
@@ -1130,15 +1128,14 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                       child: IconButton(
                         key: const Key('audioPlayerViewForward10sButton'),
                         iconSize: _audioIconSizeMedium,
-                        onPressed: () async =>
-                            await audioPlayerVMlistenFalse.changeAudioPlayPosition(
+                        onPressed: () async => await audioPlayerVMlistenFalse
+                            .changeAudioPlayPosition(
                           posOrNegPositionDurationChange:
                               const Duration(seconds: 10),
                         ),
                         style: ButtonStyle(
                           // Highlight button when pressed
-                          padding:
-                              WidgetStateProperty.all<EdgeInsetsGeometry>(
+                          padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
                             const EdgeInsets.symmetric(
                                 horizontal: kSmallButtonInsidePadding,
                                 vertical: 0),
@@ -1153,15 +1150,14 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                       child: IconButton(
                         key: const Key('audioPlayerViewForward1mButton'),
                         iconSize: _audioIconSizeMedium,
-                        onPressed: () async =>
-                            await audioPlayerVMlistenFalse.changeAudioPlayPosition(
+                        onPressed: () async => await audioPlayerVMlistenFalse
+                            .changeAudioPlayPosition(
                           posOrNegPositionDurationChange:
                               const Duration(minutes: 1),
                         ),
                         style: ButtonStyle(
                           // Highlight button when pressed
-                          padding:
-                              WidgetStateProperty.all<EdgeInsetsGeometry>(
+                          padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
                             const EdgeInsets.symmetric(
                                 horizontal: kSmallButtonInsidePadding,
                                 vertical: 0),
@@ -1182,8 +1178,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                   Expanded(
                     child: GestureDetector(
                       key: const Key('audioPlayerViewBackward1mButton'),
-                      onTap: () async =>
-                          await audioPlayerVMlistenFalse.changeAudioPlayPosition(
+                      onTap: () async => await audioPlayerVMlistenFalse
+                          .changeAudioPlayPosition(
                         posOrNegPositionDurationChange:
                             const Duration(minutes: -1),
                       ),
@@ -1196,8 +1192,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                   ),
                   Expanded(
                     child: GestureDetector(
-                      onTap: () async =>
-                          await audioPlayerVMlistenFalse.changeAudioPlayPosition(
+                      onTap: () async => await audioPlayerVMlistenFalse
+                          .changeAudioPlayPosition(
                         posOrNegPositionDurationChange:
                             const Duration(seconds: -10),
                       ),
@@ -1210,8 +1206,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                   ),
                   Expanded(
                     child: GestureDetector(
-                      onTap: () async =>
-                          await audioPlayerVMlistenFalse.changeAudioPlayPosition(
+                      onTap: () async => await audioPlayerVMlistenFalse
+                          .changeAudioPlayPosition(
                         posOrNegPositionDurationChange:
                             const Duration(seconds: 10),
                       ),
@@ -1224,8 +1220,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                   ),
                   Expanded(
                     child: GestureDetector(
-                      onTap: () async =>
-                          await audioPlayerVMlistenFalse.changeAudioPlayPosition(
+                      onTap: () async => await audioPlayerVMlistenFalse
+                          .changeAudioPlayPosition(
                         posOrNegPositionDurationChange:
                             const Duration(minutes: 1),
                       ),
