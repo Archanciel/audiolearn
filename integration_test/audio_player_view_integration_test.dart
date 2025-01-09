@@ -2858,7 +2858,7 @@ void main() {
       // Memorizing the current audio position
       Finder audioPlayerViewAudioPositionFinder =
           find.byKey(const Key('audioPlayerViewAudioPosition'));
-      final String actualPositionTimeString =
+      final String memorizedPositionTimeString =
           tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
 
       // Now we open the AudioPlayableListDialog by tapping on the
@@ -2899,25 +2899,23 @@ void main() {
       final String retrievedPositionTimeString =
           tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
 
-      int actualAudioPlayerViewAudioPositionInTenthsOfSeconds =
+      int memorizedPositionTimeInTenthsOfSeconds =
           DateTimeUtil.convertToTenthsOfSeconds(
-        timeString: actualPositionTimeString,
+        timeString: memorizedPositionTimeString,
       );
 
       expect(
-        roundUpTenthOfSeconds(
-          audioPositionHHMMSSWithTenthSecText: retrievedPositionTimeString,
+        DateTimeUtil.convertToTenthsOfSeconds(
+          timeString: retrievedPositionTimeString,
         ),
         allOf(
           [
-            greaterThanOrEqualTo(
-                actualAudioPlayerViewAudioPositionInTenthsOfSeconds - 10),
-            lessThanOrEqualTo(
-                actualAudioPlayerViewAudioPositionInTenthsOfSeconds),
+            greaterThanOrEqualTo(memorizedPositionTimeInTenthsOfSeconds - 10),
+            lessThanOrEqualTo(memorizedPositionTimeInTenthsOfSeconds),
           ],
         ),
         reason:
-            "Expected value between $actualAudioPlayerViewAudioPositionInTenthsOfSeconds and ${actualAudioPlayerViewAudioPositionInTenthsOfSeconds + 10} but obtained $retrievedPositionTimeString",
+            "Expected value between $memorizedPositionTimeInTenthsOfSeconds and ${memorizedPositionTimeInTenthsOfSeconds + 10} but obtained $retrievedPositionTimeString",
       );
 
       // Purge the test playlist directory so that the created test
@@ -4354,12 +4352,6 @@ void main() {
         selectedPlaylistTitle: 'Empty',
       );
 
-      // Unselect the "S8 playlist"
-      await IntegrationTestUtil.selectPlaylist(
-        tester: tester,
-        playlistToSelectTitle: youtubePlaylistTitle,
-      );
-
       // Go to the audio player view
       Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
@@ -4368,17 +4360,18 @@ void main() {
         tester: tester,
       );
 
-      // Now, in the audio player view, select the S8 audio playlist using
-      // the audio player view playlist selection button. Then start playing
-      // the current playable audio "Interview de Chat GPT  - IA, intelligence,
-      // philosophie, géopolitique, post-vérité...".
+      // Now, in the audio player view, select the 'S8 audio' playlist
+      // using the audio player view playlist selection button. Then
+      // start playing the current playable audio "Interview de Chat
+      // GPT  - IA, intelligence, philosophie, géopolitique, post-
+      // vérité...".
 
-      // Select the 'S8 audio' playlist
-
-      // Now tap on audio player view playlist button to display the playlists
+      // Now tap on audio player view playlist button to display the
+      // playlists
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
+      // Select the 'S8 audio' playlist
       await IntegrationTestUtil.selectPlaylist(
         tester: tester,
         playlistToSelectTitle: youtubePlaylistTitle,
@@ -4391,25 +4384,29 @@ void main() {
       await Future.delayed(const Duration(seconds: 5));
       await tester.pumpAndSettle();
 
-      // Memorizing the current audio position before selecting the 'local'
-      // playlist
+      // Without pausing the playing audio, memorizing the current
+      // audio position before selecting the 'local' playlist
       Finder audioPlayerViewAudioPositionFinder =
           find.byKey(const Key('audioPlayerViewAudioPosition'));
-      final String actualPositionTimeString =
+      final String memorizedPositionTimeString =
           tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
 
       // Now select the 'local' playlist
 
-      // Now tap on audio player view playlist button to display the playlists
+      // Tap on audio player view playlist button to display the
+      // playlists
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
+      // Now select the 'local' playlist
       await IntegrationTestUtil.selectPlaylist(
         tester: tester,
         playlistToSelectTitle: localPlaylistTitle,
+        selectPlaylistPumpAndSettleDuration: Duration(milliseconds: 500),
       );
 
-      // Verify the displayed 'local' playlist current playable audio title
+      // Verify the displayed 'local' playlist current playable audio
+      // title with duration
 
       Finder audioPlayerViewAudioTitleFinder =
           find.byKey(const Key('audioPlayerViewCurrentAudioTitle'));
@@ -4428,7 +4425,9 @@ void main() {
       await tester.pumpAndSettle();
 
       await IntegrationTestUtil.selectPlaylist(
-          tester: tester, playlistToSelectTitle: youtubePlaylistTitle);
+        tester: tester,
+        playlistToSelectTitle: youtubePlaylistTitle,
+      );
 
       // Now the previously playing audio is displayed. We verify that its
       // audio position is the same as when the 'local'' playlist was selected.
@@ -4442,25 +4441,23 @@ void main() {
       final String retrievedPositionTimeString =
           tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
 
-      int actualAudioPlayerViewAudioPositionInTenthsOfSeconds =
+      int memorizedPositionTimeInTenthsOfSeconds =
           DateTimeUtil.convertToTenthsOfSeconds(
-        timeString: actualPositionTimeString,
+        timeString: memorizedPositionTimeString,
       );
 
       expect(
-        roundUpTenthOfSeconds(
-          audioPositionHHMMSSWithTenthSecText: retrievedPositionTimeString,
+        DateTimeUtil.convertToTenthsOfSeconds(
+          timeString: retrievedPositionTimeString,
         ),
         allOf(
           [
-            greaterThanOrEqualTo(
-                actualAudioPlayerViewAudioPositionInTenthsOfSeconds - 10),
-            lessThanOrEqualTo(
-                actualAudioPlayerViewAudioPositionInTenthsOfSeconds),
+            greaterThanOrEqualTo(memorizedPositionTimeInTenthsOfSeconds - 10),
+            lessThanOrEqualTo(memorizedPositionTimeInTenthsOfSeconds),
           ],
         ),
         reason:
-            "Expected value between $actualAudioPlayerViewAudioPositionInTenthsOfSeconds and ${actualAudioPlayerViewAudioPositionInTenthsOfSeconds + 10} but obtained $retrievedPositionTimeString",
+            "Expected value between $memorizedPositionTimeInTenthsOfSeconds and ${memorizedPositionTimeInTenthsOfSeconds + 10} but obtained $retrievedPositionTimeString",
       );
 
       // Purge the test playlist directory so that the created test
@@ -9894,7 +9891,7 @@ void audioPlayerViewIntegrationTest() {
       // Memorizing the current audio position
       Finder audioPlayerViewAudioPositionFinder =
           find.byKey(const Key('audioPlayerViewAudioPosition'));
-      final String actualPositionTimeString =
+      final String memorizedPositionTimeString =
           tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
 
       // Now we open the AudioPlayableListDialog by tapping on the
@@ -9935,25 +9932,23 @@ void audioPlayerViewIntegrationTest() {
       final String retrievedPositionTimeString =
           tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
 
-      int actualAudioPlayerViewAudioPositionInTenthsOfSeconds =
+      int memorizedPositionTimeInTenthsOfSeconds =
           DateTimeUtil.convertToTenthsOfSeconds(
-        timeString: actualPositionTimeString,
+        timeString: memorizedPositionTimeString,
       );
 
       expect(
-        roundUpTenthOfSeconds(
-          audioPositionHHMMSSWithTenthSecText: retrievedPositionTimeString,
+        DateTimeUtil.convertToTenthsOfSeconds(
+          timeString: retrievedPositionTimeString,
         ),
         allOf(
           [
-            greaterThanOrEqualTo(
-                actualAudioPlayerViewAudioPositionInTenthsOfSeconds - 10),
-            lessThanOrEqualTo(
-                actualAudioPlayerViewAudioPositionInTenthsOfSeconds),
+            greaterThanOrEqualTo(memorizedPositionTimeInTenthsOfSeconds - 10),
+            lessThanOrEqualTo(memorizedPositionTimeInTenthsOfSeconds),
           ],
         ),
         reason:
-            "Expected value between $actualAudioPlayerViewAudioPositionInTenthsOfSeconds and ${actualAudioPlayerViewAudioPositionInTenthsOfSeconds + 10} but obtained $retrievedPositionTimeString",
+            "Expected value between $memorizedPositionTimeInTenthsOfSeconds and ${memorizedPositionTimeInTenthsOfSeconds + 10} but obtained $retrievedPositionTimeString",
       );
 
       // Purge the test playlist directory so that the created test
@@ -11250,6 +11245,7 @@ void audioPlayerViewIntegrationTest() {
           "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
       const String localPlaylistCurrentPlayableAudioTitle =
           "morning _ cinematic video";
+      const String noAudioSelectedTitle = "No audio selected";
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
@@ -11272,7 +11268,7 @@ void audioPlayerViewIntegrationTest() {
       );
 
       // Verify the no selected audio title is displayed
-      expect(find.text("No audio selected"), findsOneWidget);
+      expect(find.text(noAudioSelectedTitle), findsOneWidget);
 
       // Verify the displayed playlist title
       Text selectedPlaylistTitleText =
@@ -11367,6 +11363,35 @@ void audioPlayerViewIntegrationTest() {
         selectedPlaylistTitle: localPlaylistTitle,
       );
 
+      // Reurn to the audio player view
+      appScreenNavigationButton =
+          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+      await tester.tap(appScreenNavigationButton);
+      await tester.pumpAndSettle();
+
+      // Verify the displayed audio title
+
+      audioPlayerViewAudioTitleFinder =
+          find.byKey(const Key('audioPlayerViewCurrentAudioTitle'));
+      audioTitleWithDurationString =
+          tester.widget<Text>(audioPlayerViewAudioTitleFinder).data!;
+
+      expect(
+        audioTitleWithDurationString,
+        "$alreadyCommentedAudioTitle\n1:17:54",
+      );
+
+      // Now, in the audio player view, select the empty playlist using
+      // the audio player view playlist selection button. Then verify that
+      // the displayed audio title is "No audio selected".
+      await _verifyAudioPlayerViewPlaylistSelectionImpact(
+        tester: tester,
+        playlistDownloadViewCurrentlySelectedPlaylistTitle:
+            youtubePlaylistTitle,
+        playlistToSelectTitle: emptyPlaylistTitle,
+        playlistCurrentlyPlayableAudioTitleWithDuration: noAudioSelectedTitle,
+      );
+
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -11381,8 +11406,10 @@ void audioPlayerViewIntegrationTest() {
         (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
       const String localPlaylistTitle = 'local'; // Youtube playlist
+      const String emptyPlaylistTitle = 'Empty'; // Youtube playlist
       const String localPlaylistCurrentPlayableAudioTitle =
           "morning _ cinematic video";
+      const String noAudioSelectedTitle = "No audio selected";
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
@@ -11396,6 +11423,17 @@ void audioPlayerViewIntegrationTest() {
       await tester.tap(appScreenNavigationButton);
       await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
         tester: tester,
+      );
+
+      // Now, in the audio player view, select the empty playlist using
+      // the audio player view playlist selection button. Then verify that
+      // the displayed audio title is "No audio selected".
+      await _verifyAudioPlayerViewPlaylistSelectionImpact(
+        tester: tester,
+        playlistDownloadViewCurrentlySelectedPlaylistTitle:
+            youtubePlaylistTitle,
+        playlistToSelectTitle: emptyPlaylistTitle,
+        playlistCurrentlyPlayableAudioTitleWithDuration: noAudioSelectedTitle,
       );
 
       // Now, in the audio player view, select the S8 audio playlist using
@@ -11425,8 +11463,16 @@ void audioPlayerViewIntegrationTest() {
       // playlist
       Finder audioPlayerViewAudioPositionFinder =
           find.byKey(const Key('audioPlayerViewAudioPosition'));
-      final String actualPositionTimeString =
+      final String memorizedPositionTimeString =
           tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
+
+      // Memorizing the current audio remaining duration before selecting
+      // the 'local' playlist
+      Finder audioPlayerViewAudioRemainingDurationFinder =
+          find.byKey(const Key('audioPlayerViewAudioRemainingDuration'));
+      String memorizedRemainingDurationTimeString = tester
+          .widget<Text>(audioPlayerViewAudioRemainingDurationFinder)
+          .data!;
 
       // Now select the 'local' playlist
 
@@ -11451,6 +11497,29 @@ void audioPlayerViewIntegrationTest() {
         "$localPlaylistCurrentPlayableAudioTitle\n0:59",
       );
 
+      // Retrieving the current audio position
+      audioPlayerViewAudioPositionFinder =
+          find.byKey(const Key('audioPlayerViewAudioPosition'));
+      String retrievedPositionTimeString =
+          tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
+
+      expect(
+        retrievedPositionTimeString,
+        '0.02',
+      );
+
+      // Retrieving the current audio remaining duration
+      audioPlayerViewAudioRemainingDurationFinder =
+          find.byKey(const Key('audioPlayerViewAudioRemainingDuration'));
+      String retrievedRemainingDurationTimeString = tester
+          .widget<Text>(audioPlayerViewAudioRemainingDurationFinder)
+          .data!;
+
+      expect(
+        retrievedRemainingDurationTimeString,
+        '0.57',
+      );
+
       // Then select again the 'S8 audio' playlist
 
       // Now tap on audio player view playlist button to display the playlists
@@ -11463,7 +11532,8 @@ void audioPlayerViewIntegrationTest() {
       );
 
       // Now the previously playing audio is displayed. We verify that its
-      // audio position is the same as when the 'local'' playlist was selected.
+      // audio position and audio remaining duration are the same as when
+      // the 'local' playlist was selected.
       //
       // Sometime, the audio position may be different by a 1 second due to
       // the way integration tests work !
@@ -11471,28 +11541,53 @@ void audioPlayerViewIntegrationTest() {
       // Retrieving the current audio position
       audioPlayerViewAudioPositionFinder =
           find.byKey(const Key('audioPlayerViewAudioPosition'));
-      final String retrievedPositionTimeString =
+      retrievedPositionTimeString =
           tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
 
-      int actualAudioPlayerViewAudioPositionInTenthsOfSeconds =
+      int memorizedPositionTimeInTenthsOfSeconds =
           DateTimeUtil.convertToTenthsOfSeconds(
-        timeString: actualPositionTimeString,
+        timeString: memorizedPositionTimeString,
       );
 
       expect(
-        roundUpTenthOfSeconds(
-          audioPositionHHMMSSWithTenthSecText: retrievedPositionTimeString,
+        DateTimeUtil.convertToTenthsOfSeconds(
+          timeString: retrievedPositionTimeString,
+        ),
+        allOf(
+          [
+            greaterThanOrEqualTo(memorizedPositionTimeInTenthsOfSeconds - 10),
+            lessThanOrEqualTo(memorizedPositionTimeInTenthsOfSeconds),
+          ],
+        ),
+        reason:
+            "Expected value between ${memorizedPositionTimeInTenthsOfSeconds - 10} and $memorizedPositionTimeInTenthsOfSeconds but obtained $retrievedPositionTimeString",
+      );
+
+      // Retrieving the current audio remaining duration
+      audioPlayerViewAudioRemainingDurationFinder =
+          find.byKey(const Key('audioPlayerViewAudioRemainingDuration'));
+      retrievedRemainingDurationTimeString = tester
+          .widget<Text>(audioPlayerViewAudioRemainingDurationFinder)
+          .data!;
+
+      int memorizedRemainingDurationTimeInTenthsOfSeconds =
+          DateTimeUtil.convertToTenthsOfSeconds(
+        timeString: memorizedRemainingDurationTimeString,
+      );
+
+      expect(
+        DateTimeUtil.convertToTenthsOfSeconds(
+          timeString: retrievedRemainingDurationTimeString,
         ),
         allOf(
           [
             greaterThanOrEqualTo(
-                actualAudioPlayerViewAudioPositionInTenthsOfSeconds - 10),
-            lessThanOrEqualTo(
-                actualAudioPlayerViewAudioPositionInTenthsOfSeconds),
+                memorizedRemainingDurationTimeInTenthsOfSeconds - 10),
+            lessThanOrEqualTo(memorizedRemainingDurationTimeInTenthsOfSeconds),
           ],
         ),
         reason:
-            "Expected value between $actualAudioPlayerViewAudioPositionInTenthsOfSeconds and ${actualAudioPlayerViewAudioPositionInTenthsOfSeconds + 10} but obtained $retrievedPositionTimeString",
+            "Expected value between ${memorizedRemainingDurationTimeInTenthsOfSeconds - 10} and $memorizedRemainingDurationTimeInTenthsOfSeconds but obtained $retrievedRemainingDurationTimeString",
       );
 
       // Purge the test playlist directory so that the created test
