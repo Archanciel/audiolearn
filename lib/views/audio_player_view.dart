@@ -853,7 +853,9 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                     overlayColor:
                         iconButtonTapModification, // Tap feedback color
                   ),
-                  icon: Icon(isPaused ? Icons.pause : Icons.play_arrow),
+                  icon: Icon(
+                    isPaused ? Icons.pause : Icons.play_arrow,
+                  ),
                 ),
               ),
             ],

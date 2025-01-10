@@ -819,6 +819,30 @@ class IntegrationTestUtil {
     }
   }
 
+  static Future<void> verifyNoPlaylistCheckboxSelected({
+    required WidgetTester tester,
+  }) async {
+    // Find all ListTile widgets in the playlist list
+    final Finder listTileFinder = find.byType(ListTile);
+
+    // Iterate over each ListTile widget
+    for (final listTileElement in listTileFinder.evaluate()) {
+      // Find the Checkbox widget inside the current ListTile
+      final Finder checkboxFinder = find.descendant(
+        of: find.byWidget(listTileElement.widget),
+        matching: find.byType(Checkbox),
+      );
+
+      // Ensure the Checkbox widget exists
+      expect(checkboxFinder, findsOneWidget);
+
+      // Get the Checkbox widget's value
+      final Checkbox checkboxWidget = tester.widget<Checkbox>(checkboxFinder);
+      expect(checkboxWidget.value, isFalse,
+          reason: 'A playlist checkbox is selected.');
+    }
+  }
+
   static void checkPlaylistAndAudioTitlesOrderInListTile({
     required WidgetTester tester,
     required List<String>? playlistTitlesOrderedLst,

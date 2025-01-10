@@ -106,8 +106,15 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                 // and the new selected playlist current listenable
                 // audio is set in the audio player view.
                 playlistListVMlistenTrue.togglePlaylistsList();
+
+                // If another playlist is selected in the audio
+                // player view while the current audio is playing,
+                // then the current audio is paused.
+                if (audioPlayerVMlistenTrue.isPlaying) {
+                  await audioPlayerVMlistenTrue.pause();
+                }
               }
-              
+
               playlistListVMlistenTrue.setPlaylistSelection(
                 playlistSelectedOrUnselected: playlist,
                 isPlaylistSelected: value!,
