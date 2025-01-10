@@ -633,13 +633,6 @@ class PlaylistListVM extends ChangeNotifier {
       getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
-
-      notifyListeners();
-      // TODO fix handling the right app view !!!
-      // if (_uniqueSelectedPlaylist!.applySortFilterParmsForAudioPlayerView) {
-      //   _audioSortFilterParameters =
-      //       _uniqueSelectedPlaylist!.audioSortFilterParmsForAudioPlayerView;
-      // }
     }
 
     notifyListeners();
