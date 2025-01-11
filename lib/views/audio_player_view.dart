@@ -283,11 +283,18 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
         // which is the case when a new audio is selected in the
         // audio playable list dialog.
 
+        Audio? currentAudio = audioPlayerVMlistenFalse.currentAudio;
         File? audioPictureFile;
+        bool areAudioButtonsEnabled;
 
-        if (audioPlayerVMlistenFalse.currentAudio != null) {
+        // Improving test areAudioButtonsEnabled =
+        //     (currentAudioTitle != null && currentAudio != null);
+        if (currentAudio != null) {
           audioPictureFile = playlistListVMlistenFalse.getAudioPictureFile(
-              audio: audioPlayerVMlistenFalse.currentAudio!);
+              audio: currentAudio);
+          areAudioButtonsEnabled = currentAudioTitle != null;
+        } else {
+          areAudioButtonsEnabled = false;
         }
 
         return Row(
@@ -371,7 +378,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
               children: [
                 _buildSetAudioVolumeIconButton(
                   context: context,
-                  areAudioButtonsEnabled: currentAudioTitle != null,
+                  areAudioButtonsEnabled: areAudioButtonsEnabled,
                 ),
                 const SizedBox(
                   width: kRowButtonGroupWidthSeparator,
@@ -379,12 +386,12 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                 _buildSetAudioSpeedTextButton(
                   context: context,
                   audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
-                  areAudioButtonsEnabled: currentAudioTitle != null,
+                  areAudioButtonsEnabled: areAudioButtonsEnabled,
                 ),
                 _buildCommentsInkWellButton(
                   context: context,
                   audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
-                  areAudioButtonsEnabled: currentAudioTitle != null,
+                  areAudioButtonsEnabled: areAudioButtonsEnabled,
                 ),
                 _buildAudioPopupMenuButton(
                   context: context,
@@ -393,7 +400,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                     context,
                     listen: false,
                   ),
-                  isAudioPopumMenuEnabled: currentAudioTitle != null,
+                  isAudioPopumMenuEnabled: areAudioButtonsEnabled,
                 ),
               ],
             ),

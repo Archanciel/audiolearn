@@ -7758,6 +7758,9 @@ void main() {
       String localPlaylistPath =
           '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localPlaylistTitle';
 
+      // Obtaining the list of audio files in order to use it to
+      // verify the displayed audio list before updating the
+      // 'local_2_audios' playlist
       List<String> localPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath: localPlaylistPath,
         fileExtension: 'mp3',
@@ -32876,7 +32879,7 @@ void playlistOneDownloadViewIntegrationTest() {
         matching: find.byType(ListTile),
       );
 
-      // Now we want to tap the popup menu of the Empty  playlist ListTile
+      // Now we want to tap the popup menu of the Empty playlist ListTile
 
       // Find the leading menu icon button of the playlist ListTile
       // and tap on it

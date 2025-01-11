@@ -4380,8 +4380,8 @@ void main() {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
       const String youtubePlaylistCurrentPlayableAudioTitle =
           "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
-      const String localPlaylistTitle = 'local'; // Youtube playlist
-      const String emptyPlaylistTitle = 'Empty'; // Youtube playlist
+      const String localPlaylistTitle = 'local';
+      const String emptyPlaylistTitle = 'Empty';
       const String localPlaylistCurrentPlayableAudioTitle =
           "morning _ cinematic video";
       const String noAudioSelectedTitle = "No audio selected";
@@ -14689,4 +14689,15 @@ Future<void> _verifyAudioPlayerViewPlaylistSelectionImpact({
     selectedPlaylistTitleText.data,
     playlistToSelectTitle,
   );
+
+  // Verify the audio player view top buttons state
+
+  if (playlistCurrentlyPlayableAudioTitleWithDuration == 'No audio selected') {
+    await IntegrationTestUtil.verifyTopButtonsState(
+      tester: tester,
+      areEnabled: false,
+      audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
+      setAudioSpeedTextButtonValue: '1.00x',
+    );
+  }
 }
