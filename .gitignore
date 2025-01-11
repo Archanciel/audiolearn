@@ -47,3 +47,6 @@ output_upload_certificate.pem
 linux/flutter/generated_plugins.cmake
 macos/Flutter/GeneratedPluginRegistrant.swift
 windows/flutter/generated_plugins.cmake
+*.cc
+*.cmake
+*.swift
