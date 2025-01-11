@@ -3708,6 +3708,14 @@ void main() {
           matching: find.byKey(const Key('playlist_checkbox_key')),
         );
 
+        // Scrolling up the playlists list to display the local_2 playlist
+        await tester.drag(
+          find.byKey(const Key('expandable_playlist_list')),
+          const Offset(
+              0, 100), // Positive value for vertical drag to scroll up
+        );
+        await tester.pumpAndSettle();
+
         // Tap the ListTile Playlist checkbox to select it: This ensure
         // another bug was solved
         await tester.tap(localPlaylistToSelectListTileCheckboxWidgetFinder);

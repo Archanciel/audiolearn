@@ -10840,6 +10840,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Verify the order of the playlist audio titles
 
         List<String> audioTitlesSortedByTitleAscending = [
+          "La surpopulation mondiale par Jancovici et Barrau",
           "La résilience insulaire par Fiona Roche",
           "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
