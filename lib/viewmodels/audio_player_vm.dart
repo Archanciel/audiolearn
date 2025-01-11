@@ -310,15 +310,15 @@ class AudioPlayerVM extends ChangeNotifier {
     _currentAudioPosition = Duration(seconds: audio.audioPositionSeconds);
     _clearUndoRedoLists();
 
-    // await initializeAudioPlayer(); // on audio_player_vm_audioplayers_
+    await initializeAudioPlayer(); // on audio_player_vm_audioplayers_
     //                                   5_2_1_ALL_TESTS_PASS.dart version
 
     // start Main version
-    final String audioFilePathName = _currentAudio?.filePathName ?? '';
+    // final String audioFilePathName = _currentAudio?.filePathName ?? '';
 
-    if (audioFilePathName.isNotEmpty && File(audioFilePathName).existsSync()) {
-      await audioPlayerSetSource(audioFilePathName);
-    }
+    // if (audioFilePathName.isNotEmpty && File(audioFilePathName).existsSync()) {
+    //   await audioPlayerSetSource(audioFilePathName);
+    // }
     // end Main version
 
     await modifyAudioPlayerPosition(
