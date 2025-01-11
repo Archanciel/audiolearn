@@ -885,6 +885,33 @@ class IntegrationTestUtil {
     }
   }
 
+  static void verifyAudioPlaySpeedStoredInPlaylistJsonFile({
+    required String selectedPlaylistTitle,
+    required int playableAudioLstAudioIndex,
+    required double expectedAudioPlaySpeed,
+  }) {
+    final String selectedPlaylistPath = path.join(
+      kPlaylistDownloadRootPathWindowsTest,
+      selectedPlaylistTitle,
+    );
+
+    final selectedPlaylistFilePathName = path.join(
+      selectedPlaylistPath,
+      '$selectedPlaylistTitle.json',
+    );
+
+    // Load playlist from the json file
+    Playlist loadedSelectedPlaylist = JsonDataService.loadFromFile(
+      jsonPathFileName: selectedPlaylistFilePathName,
+      type: Playlist,
+    );
+
+    expect(
+        loadedSelectedPlaylist
+            .playableAudioLst[playableAudioLstAudioIndex].audioPlaySpeed,
+        expectedAudioPlaySpeed);
+  }
+
   static void checkAudioOrPlaylistTitlesOrderInListTile({
     required WidgetTester tester,
     required List<String> audioOrPlaylistTitlesOrderedLst,
