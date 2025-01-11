@@ -159,6 +159,7 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Text('${_audioPlaySpeed.toStringAsFixed(2)}x',
+                  key: const Key('audioPlaySpeedTextKey'),
                   style: (themeProviderVM.currentTheme == AppTheme.dark)
                       ? kTextButtonStyleDarkMode
                       : kTextButtonStyleLightMode),
@@ -298,6 +299,7 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         IconButton(
+          key: const Key('minusButtonKey'),
           icon: const Icon(Icons.remove),
           onPressed: () async {
             double newSpeed = _audioPlaySpeed - 0.1;
@@ -337,6 +339,7 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
           ),
         ),
         IconButton(
+          key: const Key('plusButtonKey'),
           icon: const Icon(Icons.add),
           onPressed: () async {
             double newSpeed = _audioPlaySpeed + 0.1;

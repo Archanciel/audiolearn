@@ -583,6 +583,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                       }
 
                       return Text(
+                        key: const Key('audioSpeedButtonText'),
                         currentSpeedStr,
                         textAlign: TextAlign.center,
                         style: (areAudioButtonsEnabled)

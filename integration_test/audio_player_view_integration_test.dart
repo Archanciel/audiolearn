@@ -1562,7 +1562,7 @@ void main() {
       int playableAudioLstAudioIndex = 1;
       double expectedAudioPlaySpeed = 0.7;
 
-      verifyAudioPlaySpeedStoredInPlaylistJsonFile(
+      IntegrationTestUtil.verifyAudioPlaySpeedStoredInPlaylistJsonFile(
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         playableAudioLstAudioIndex: playableAudioLstAudioIndex,
         expectedAudioPlaySpeed: expectedAudioPlaySpeed,
@@ -1598,7 +1598,7 @@ void main() {
       playableAudioLstAudioIndex = 0;
       expectedAudioPlaySpeed = 1.5;
 
-      verifyAudioPlaySpeedStoredInPlaylistJsonFile(
+      IntegrationTestUtil.verifyAudioPlaySpeedStoredInPlaylistJsonFile(
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         playableAudioLstAudioIndex: playableAudioLstAudioIndex,
         expectedAudioPlaySpeed: expectedAudioPlaySpeed,
@@ -1658,7 +1658,7 @@ void main() {
       int playableAudioLstAudioIndex = 1;
       double expectedAudioPlaySpeed = 0.7;
 
-      verifyAudioPlaySpeedStoredInPlaylistJsonFile(
+      IntegrationTestUtil.verifyAudioPlaySpeedStoredInPlaylistJsonFile(
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         playableAudioLstAudioIndex: playableAudioLstAudioIndex,
         expectedAudioPlaySpeed: expectedAudioPlaySpeed,
@@ -1680,7 +1680,7 @@ void main() {
       playableAudioLstAudioIndex = 0;
       expectedAudioPlaySpeed = 1.5;
 
-      verifyAudioPlaySpeedStoredInPlaylistJsonFile(
+      IntegrationTestUtil.verifyAudioPlaySpeedStoredInPlaylistJsonFile(
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         playableAudioLstAudioIndex: playableAudioLstAudioIndex,
         expectedAudioPlaySpeed: expectedAudioPlaySpeed,
@@ -1741,7 +1741,7 @@ void main() {
       int playableAudioLstAudioIndex = 1;
       double expectedAudioPlaySpeed = 0.7;
 
-      verifyAudioPlaySpeedStoredInPlaylistJsonFile(
+      IntegrationTestUtil.verifyAudioPlaySpeedStoredInPlaylistJsonFile(
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         playableAudioLstAudioIndex: playableAudioLstAudioIndex,
         expectedAudioPlaySpeed: expectedAudioPlaySpeed,
@@ -1764,7 +1764,7 @@ void main() {
       playableAudioLstAudioIndex = 0;
       expectedAudioPlaySpeed = 1.5;
 
-      verifyAudioPlaySpeedStoredInPlaylistJsonFile(
+      IntegrationTestUtil.verifyAudioPlaySpeedStoredInPlaylistJsonFile(
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         playableAudioLstAudioIndex: playableAudioLstAudioIndex,
         expectedAudioPlaySpeed: expectedAudioPlaySpeed,
@@ -1822,7 +1822,7 @@ void main() {
       int playableAudioLstAudioIndex = 1;
       double expectedAudioPlaySpeed = 1.25;
 
-      verifyAudioPlaySpeedStoredInPlaylistJsonFile(
+      IntegrationTestUtil.verifyAudioPlaySpeedStoredInPlaylistJsonFile(
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         playableAudioLstAudioIndex: playableAudioLstAudioIndex,
         expectedAudioPlaySpeed: expectedAudioPlaySpeed,
@@ -1883,7 +1883,7 @@ void main() {
       int playableAudioLstAudioIndex = 1;
       double expectedAudioPlaySpeed = 0.7;
 
-      verifyAudioPlaySpeedStoredInPlaylistJsonFile(
+      IntegrationTestUtil.verifyAudioPlaySpeedStoredInPlaylistJsonFile(
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         playableAudioLstAudioIndex: playableAudioLstAudioIndex,
         expectedAudioPlaySpeed: expectedAudioPlaySpeed,
@@ -1908,7 +1908,7 @@ void main() {
       playableAudioLstAudioIndex = 0;
       expectedAudioPlaySpeed = 1.5;
 
-      verifyAudioPlaySpeedStoredInPlaylistJsonFile(
+      IntegrationTestUtil.verifyAudioPlaySpeedStoredInPlaylistJsonFile(
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         playableAudioLstAudioIndex: playableAudioLstAudioIndex,
         expectedAudioPlaySpeed: expectedAudioPlaySpeed,
@@ -1970,7 +1970,7 @@ void main() {
       int playableAudioLstAudioIndex = 1;
       double expectedAudioPlaySpeed = 0.7;
 
-      verifyAudioPlaySpeedStoredInPlaylistJsonFile(
+      IntegrationTestUtil.verifyAudioPlaySpeedStoredInPlaylistJsonFile(
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         playableAudioLstAudioIndex: playableAudioLstAudioIndex,
         expectedAudioPlaySpeed: expectedAudioPlaySpeed,
@@ -1993,7 +1993,7 @@ void main() {
       playableAudioLstAudioIndex = 0;
       expectedAudioPlaySpeed = 1.5;
 
-      verifyAudioPlaySpeedStoredInPlaylistJsonFile(
+      IntegrationTestUtil.verifyAudioPlaySpeedStoredInPlaylistJsonFile(
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         playableAudioLstAudioIndex: playableAudioLstAudioIndex,
         expectedAudioPlaySpeed: expectedAudioPlaySpeed,
@@ -5520,7 +5520,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify that the comment was correctly stored in the json file
-      verifyCommentDataStoredInCommentJsonFile(
+      _verifyCommentDataStoredInCommentJsonFile(
         playlistTitle: emptyPlaylistTitle,
         audioFileNameNoExt: uncommentedAudioFileNameNoExt,
         commentTitle: commentTitle,
@@ -5599,7 +5599,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify that the comment was correctly stored in the json file
-      verifyCommentDataStoredInCommentJsonFile(
+      _verifyCommentDataStoredInCommentJsonFile(
         playlistTitle: emptyPlaylistTitle,
         audioFileNameNoExt: uncommentedAudioFileNameNoExt,
         commentTitle: commentTitle,
@@ -8559,7 +8559,7 @@ void audioPlayerViewIntegrationTest() {
       int playableAudioLstAudioIndex = 1;
       double expectedAudioPlaySpeed = 0.7;
 
-      verifyAudioPlaySpeedStoredInPlaylistJsonFile(
+      IntegrationTestUtil.verifyAudioPlaySpeedStoredInPlaylistJsonFile(
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         playableAudioLstAudioIndex: playableAudioLstAudioIndex,
         expectedAudioPlaySpeed: expectedAudioPlaySpeed,
@@ -8595,7 +8595,7 @@ void audioPlayerViewIntegrationTest() {
       playableAudioLstAudioIndex = 0;
       expectedAudioPlaySpeed = 1.5;
 
-      verifyAudioPlaySpeedStoredInPlaylistJsonFile(
+      IntegrationTestUtil.verifyAudioPlaySpeedStoredInPlaylistJsonFile(
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         playableAudioLstAudioIndex: playableAudioLstAudioIndex,
         expectedAudioPlaySpeed: expectedAudioPlaySpeed,
@@ -8655,7 +8655,7 @@ void audioPlayerViewIntegrationTest() {
       int playableAudioLstAudioIndex = 1;
       double expectedAudioPlaySpeed = 0.7;
 
-      verifyAudioPlaySpeedStoredInPlaylistJsonFile(
+      IntegrationTestUtil.verifyAudioPlaySpeedStoredInPlaylistJsonFile(
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         playableAudioLstAudioIndex: playableAudioLstAudioIndex,
         expectedAudioPlaySpeed: expectedAudioPlaySpeed,
@@ -8677,7 +8677,7 @@ void audioPlayerViewIntegrationTest() {
       playableAudioLstAudioIndex = 0;
       expectedAudioPlaySpeed = 1.5;
 
-      verifyAudioPlaySpeedStoredInPlaylistJsonFile(
+      IntegrationTestUtil.verifyAudioPlaySpeedStoredInPlaylistJsonFile(
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         playableAudioLstAudioIndex: playableAudioLstAudioIndex,
         expectedAudioPlaySpeed: expectedAudioPlaySpeed,
@@ -8738,7 +8738,7 @@ void audioPlayerViewIntegrationTest() {
       int playableAudioLstAudioIndex = 1;
       double expectedAudioPlaySpeed = 0.7;
 
-      verifyAudioPlaySpeedStoredInPlaylistJsonFile(
+      IntegrationTestUtil.verifyAudioPlaySpeedStoredInPlaylistJsonFile(
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         playableAudioLstAudioIndex: playableAudioLstAudioIndex,
         expectedAudioPlaySpeed: expectedAudioPlaySpeed,
@@ -8761,7 +8761,7 @@ void audioPlayerViewIntegrationTest() {
       playableAudioLstAudioIndex = 0;
       expectedAudioPlaySpeed = 1.5;
 
-      verifyAudioPlaySpeedStoredInPlaylistJsonFile(
+      IntegrationTestUtil.verifyAudioPlaySpeedStoredInPlaylistJsonFile(
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         playableAudioLstAudioIndex: playableAudioLstAudioIndex,
         expectedAudioPlaySpeed: expectedAudioPlaySpeed,
@@ -8819,7 +8819,7 @@ void audioPlayerViewIntegrationTest() {
       int playableAudioLstAudioIndex = 1;
       double expectedAudioPlaySpeed = 1.25;
 
-      verifyAudioPlaySpeedStoredInPlaylistJsonFile(
+      IntegrationTestUtil.verifyAudioPlaySpeedStoredInPlaylistJsonFile(
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         playableAudioLstAudioIndex: playableAudioLstAudioIndex,
         expectedAudioPlaySpeed: expectedAudioPlaySpeed,
@@ -8880,7 +8880,7 @@ void audioPlayerViewIntegrationTest() {
       int playableAudioLstAudioIndex = 1;
       double expectedAudioPlaySpeed = 0.7;
 
-      verifyAudioPlaySpeedStoredInPlaylistJsonFile(
+      IntegrationTestUtil.verifyAudioPlaySpeedStoredInPlaylistJsonFile(
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         playableAudioLstAudioIndex: playableAudioLstAudioIndex,
         expectedAudioPlaySpeed: expectedAudioPlaySpeed,
@@ -8905,7 +8905,7 @@ void audioPlayerViewIntegrationTest() {
       playableAudioLstAudioIndex = 0;
       expectedAudioPlaySpeed = 1.5;
 
-      verifyAudioPlaySpeedStoredInPlaylistJsonFile(
+      IntegrationTestUtil.verifyAudioPlaySpeedStoredInPlaylistJsonFile(
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         playableAudioLstAudioIndex: playableAudioLstAudioIndex,
         expectedAudioPlaySpeed: expectedAudioPlaySpeed,
@@ -8967,7 +8967,7 @@ void audioPlayerViewIntegrationTest() {
       int playableAudioLstAudioIndex = 1;
       double expectedAudioPlaySpeed = 0.7;
 
-      verifyAudioPlaySpeedStoredInPlaylistJsonFile(
+      IntegrationTestUtil.verifyAudioPlaySpeedStoredInPlaylistJsonFile(
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         playableAudioLstAudioIndex: playableAudioLstAudioIndex,
         expectedAudioPlaySpeed: expectedAudioPlaySpeed,
@@ -8990,7 +8990,7 @@ void audioPlayerViewIntegrationTest() {
       playableAudioLstAudioIndex = 0;
       expectedAudioPlaySpeed = 1.5;
 
-      verifyAudioPlaySpeedStoredInPlaylistJsonFile(
+      IntegrationTestUtil.verifyAudioPlaySpeedStoredInPlaylistJsonFile(
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         playableAudioLstAudioIndex: playableAudioLstAudioIndex,
         expectedAudioPlaySpeed: expectedAudioPlaySpeed,
@@ -12047,7 +12047,7 @@ void audioPlayerViewIntegrationTest() {
       await tester.pumpAndSettle();
 
       // Verify that the comment was correctly stored in the json file
-      verifyCommentDataStoredInCommentJsonFile(
+      _verifyCommentDataStoredInCommentJsonFile(
         playlistTitle: emptyPlaylistTitle,
         audioFileNameNoExt: uncommentedAudioFileNameNoExt,
         commentTitle: commentTitle,
@@ -12126,7 +12126,7 @@ void audioPlayerViewIntegrationTest() {
       await tester.pumpAndSettle();
 
       // Verify that the comment was correctly stored in the json file
-      verifyCommentDataStoredInCommentJsonFile(
+      _verifyCommentDataStoredInCommentJsonFile(
         playlistTitle: emptyPlaylistTitle,
         audioFileNameNoExt: uncommentedAudioFileNameNoExt,
         commentTitle: commentTitle,
@@ -14441,34 +14441,7 @@ Future<void> goBackToPlaylistDownloadViewToCheckAudioStateAndIcon({
       equals(expectedAudioRightIconSurroundedColor));
 }
 
-void verifyAudioPlaySpeedStoredInPlaylistJsonFile({
-  required String selectedPlaylistTitle,
-  required int playableAudioLstAudioIndex,
-  required double expectedAudioPlaySpeed,
-}) {
-  final String selectedPlaylistPath = path.join(
-    kPlaylistDownloadRootPathWindowsTest,
-    selectedPlaylistTitle,
-  );
-
-  final selectedPlaylistFilePathName = path.join(
-    selectedPlaylistPath,
-    '$selectedPlaylistTitle.json',
-  );
-
-  // Load playlist from the json file
-  Playlist loadedSelectedPlaylist = JsonDataService.loadFromFile(
-    jsonPathFileName: selectedPlaylistFilePathName,
-    type: Playlist,
-  );
-
-  expect(
-      loadedSelectedPlaylist
-          .playableAudioLst[playableAudioLstAudioIndex].audioPlaySpeed,
-      expectedAudioPlaySpeed);
-}
-
-void verifyCommentDataStoredInCommentJsonFile({
+void _verifyCommentDataStoredInCommentJsonFile({
   required String playlistTitle,
   required String audioFileNameNoExt,
   required String commentTitle,
