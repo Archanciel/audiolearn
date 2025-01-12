@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../constants.dart';
 import '../models/audio.dart';
 import '../viewmodels/playlist_list_vm.dart';
+import 'dir_util.dart';
 
 class UiUtil {
   static String formatLargeSizeToKbOrMb({
@@ -74,9 +75,22 @@ class UiUtil {
     );
   }
 
-  static
-  Future<String?> filePickerSelectTargetDir() async {
+  static Future<String?> filePickerSelectTargetDir() async {
     return await FilePicker.platform.getDirectoryPath();
   }
 
+  static Future<String> filePickerSelectPictureFilePathName() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['jpg'],
+      allowMultiple: false,
+      initialDirectory: await DirUtil.getApplicationPath(),
+    );
+
+    if (result != null && result.files.isNotEmpty) {
+      return result.files.first.path ?? '';
+    }
+
+    return '';
+  }
 }

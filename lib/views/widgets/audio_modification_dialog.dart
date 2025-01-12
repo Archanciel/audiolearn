@@ -112,7 +112,8 @@ class _AudioModificationDialogState extends State<AudioModificationDialog>
             // executing the same code as in the audioModification
             // TextButton onPressed callback
             _handleAudioModification(context);
-            Navigator.of(context).pop();
+            
+            Navigator.of(context).pop(_audioModificationTextEditingController.text);
           }
         }
       },
@@ -149,7 +150,7 @@ class _AudioModificationDialogState extends State<AudioModificationDialog>
             onPressed: () {
               _handleAudioModification(context);
 
-              Navigator.of(context).pop();
+              Navigator.of(context).pop(_audioModificationTextEditingController.text);
             },
             child: Text(
               modificationButtonStr,

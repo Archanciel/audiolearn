@@ -148,7 +148,7 @@
     }
   },
   "copyYoutubeVideoUrl": "Copier l'URL de la vidéo Youtube",
-  "displayAudioInfo": "Données de l'audio ...",
+  "displayAudioInfo": "Informations sur l'audio ...",
   "renameAudioFile": "Renommer le fichier audio ...",
   "moveAudioToPlaylist": "Déplacer l'audio vers la playlist ...",
   "copyAudioToPlaylist": "Copier l'audio vers la playlist ...",

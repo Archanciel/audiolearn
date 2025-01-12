@@ -162,7 +162,7 @@
     }
   },
   "copyYoutubeVideoUrl": "Copy Youtube Video URL",
-  "displayAudioInfo": "Audio Data ...",
+  "displayAudioInfo": "Audio Information ...",
   "renameAudioFile": "Rename Audio File ...",
   "moveAudioToPlaylist": "Move Audio to Playlist ...",
   "copyAudioToPlaylist": "Copy Audio to Playlist ...",

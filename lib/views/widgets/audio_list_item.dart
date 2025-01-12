@@ -57,12 +57,12 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
 
   @override
   Widget build(BuildContext context) {
-    final AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
+    final PlaylistListVM playlistListVMlistendFalse = Provider.of<PlaylistListVM>(
       context,
       listen: false,
     );
 
-    final PlaylistListVM playlistVMlistnedFalse = Provider.of<PlaylistListVM>(
+    final AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
       context,
       listen: false,
     );
@@ -91,7 +91,8 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
         onPressed: () {
           _buildAudioListItemMenu(
             context: context,
-            playlistListVMlistenFalse: playlistVMlistnedFalse,
+            playlistListVMlistenFalse: playlistListVMlistendFalse,
+            audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
             audio: audio,
           );
         },
@@ -119,7 +120,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
           key: const Key('audio_item_subtitle'),
           _buildSubTitle(
             context: context,
-            playlistVMlistnedFalse: playlistVMlistnedFalse,
+            playlistVMlistnedFalse: playlistListVMlistendFalse,
             dateFormatVMlistenTrue: dateFormatVMlistenTrue,
           ),
           style: TextStyle(
@@ -138,6 +139,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
   void _buildAudioListItemMenu({
     required BuildContext context,
     required PlaylistListVM playlistListVMlistenFalse,
+    required AudioPlayerVM audioPlayerVMlistenFalse,
     required Audio audio,
   }) {
     final RenderBox listTileBox = context.findRenderObject() as RenderBox;
@@ -173,14 +175,14 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
           child: Text(AppLocalizations.of(context)!.commentMenu),
         ),
         PopupMenuItem<AudioPopupMenuAction>(
-          key: const Key('popup_menu_rename_audio_file'),
-          value: AudioPopupMenuAction.renameAudioFile,
-          child: Text(AppLocalizations.of(context)!.renameAudioFile),
-        ),
-        PopupMenuItem<AudioPopupMenuAction>(
           key: const Key('popup_menu_modify_audio_title'),
           value: AudioPopupMenuAction.modifyAudioTitle,
           child: Text(AppLocalizations.of(context)!.modifyAudioTitle),
+        ),
+        PopupMenuItem<AudioPopupMenuAction>(
+          key: const Key('popup_menu_rename_audio_file'),
+          value: AudioPopupMenuAction.renameAudioFile,
+          child: Text(AppLocalizations.of(context)!.renameAudioFile),
         ),
         PopupMenuItem<AudioPopupMenuAction>(
           key: const Key('popup_menu_add_audio_picture'),
@@ -239,16 +241,6 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
             );
             break;
           case AudioPopupMenuAction.audioComment:
-            final AudioPlayerVM audioGlobalPlayerVM =
-                Provider.of<AudioPlayerVM>(
-              context,
-              listen: false,
-            );
-
-            await audioGlobalPlayerVM.setCurrentAudio(
-              audio: audio,
-            );
-
             showDialog<void>(
               context: context,
               builder: (context) => CommentListAddDialog(
@@ -256,38 +248,62 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
               ),
             );
             break;
+          case AudioPopupMenuAction.modifyAudioTitle:
+            await showDialog<String?>(
+              context: context,
+              barrierDismissible:
+                  false, // This line prevents the dialog from closing when
+              //            tapping outside the dialog
+              builder: (BuildContext context) {
+                return AudioModificationDialog(
+                  audio: audio,
+                  audioModificationType: AudioModificationType.modifyAudioTitle,
+                );
+              },
+            ).then((String? modifiedAudioTitle) async {
+              // Required so that the audio title displayed in the
+              // audio player view is updated with the modified title
+              if (modifiedAudioTitle != null) {
+                audioPlayerVMlistenFalse.currentAudioTitleNotifier.value =
+                    modifiedAudioTitle;
+              }
+            });
+            break;
           case AudioPopupMenuAction.renameAudioFile:
             showDialog<void>(
               context: context,
-              barrierDismissible: false,
+              barrierDismissible:
+                  false, // This line prevents the dialog from closing when
+              //            tapping outside the dialog
               builder: (BuildContext context) => AudioModificationDialog(
                 audio: audio,
                 audioModificationType: AudioModificationType.renameAudioFile,
               ),
             );
             break;
-          case AudioPopupMenuAction.modifyAudioTitle:
-            showDialog<void>(
-              context: context,
-              barrierDismissible: false,
-              builder: (BuildContext context) => AudioModificationDialog(
-                audio: audio,
-                audioModificationType: AudioModificationType.modifyAudioTitle,
-              ),
-            );
-            break;
           case AudioPopupMenuAction.addAudioPicture:
             String selectedPictureFilePathName =
-                await _filePickerSelectPictureFilePathName();
+                await UiUtil.filePickerSelectPictureFilePathName();
 
             if (selectedPictureFilePathName.isEmpty) {
               return;
             }
-            
+
             playlistListVMlistenFalse.storeAudioPictureFileInPlaylistPictureDir(
               audio: audio,
               pictureFilePathName: selectedPictureFilePathName,
             );
+
+            // The next two lines cause the the audio picture to be
+            // displayed in the audio player view. The first line is
+            // necessary so that currentAudioTitleNotifier will update
+            // the audio title displayed in the audio player view, 
+            // which will cause the audio picture to be displayed.
+
+            audioPlayerVMlistenFalse.currentAudioTitleNotifier.value = '';
+
+            audioPlayerVMlistenFalse.currentAudioTitleNotifier.value =
+                audioPlayerVMlistenFalse.currentAudioTitleNotifier.value;
             break;
           case AudioPopupMenuAction.removeAudioPicture:
             break;
@@ -832,20 +848,5 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
         child: Center(child: circleAvatar),
       ),
     );
-  }
-
-  Future<String> _filePickerSelectPictureFilePathName() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['jpg'],
-      allowMultiple: false,
-      initialDirectory: await DirUtil.getApplicationPath(),
-    );
-
-    if (result != null && result.files.isNotEmpty) {
-      return result.files.first.path ?? '';
-    }
-
-    return '';
   }
 }
