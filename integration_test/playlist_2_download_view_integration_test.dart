@@ -10725,7 +10725,7 @@ Future<void> _rewindPlaylistAfterPlayThenPauseAnAudio({
   await tester.tap(audioToPlayTitleFinder);
   await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
     tester: tester,
-    additionalMilliseconds: 2000,
+    additionalMilliseconds: 1000,
   );
 
   // Now play the audio and wait 5 seconds
