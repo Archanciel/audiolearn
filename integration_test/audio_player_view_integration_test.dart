@@ -2006,6 +2006,190 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
+    testWidgets(
+        '''Click on 0 play speed audio, ensuring that its play speed is corrected
+         to the app default playlist play speed defined in the app settings.json
+         file. If the audio play speed would remain to zero, the audio would not
+         be playable''', (
+      WidgetTester tester,
+    ) async {
+      const String audioPlayerSelectedPlaylistTitle =
+          'audio_player_view_0_speed_test';
+      const String zeroPlaySpeedAudioTitle = 'morning _ cinematic video';
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_player_view_zero_speed_test',
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+      );
+
+      // Now we want to tap on the audio downloaded before the last
+      // downloaded audio of the playlist in order to open the
+      // AudioPlayerView displaying the audio.
+
+      // First, get the previous end downloaded audio ListTile Text
+      // widget finder and tap on it
+      final Finder zeroPlaySpeedAudioTitleListTileTextWidgetFinder =
+          find.text(zeroPlaySpeedAudioTitle);
+
+      await tester.tap(zeroPlaySpeedAudioTitleListTileTextWidgetFinder);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
+
+      // Verify that audio play speed was corrected
+      expect(find.text('1.25x'), findsOneWidget);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets('''Reduce, then increase play speed to min, then max values.''',
+        (
+      WidgetTester tester,
+    ) async {
+      const String audioPlayerSelectedPlaylistTitle = 'S8 audio';
+      const String secondDownloadedAudioTitle =
+          'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau';
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_play_speed_bug_fix_test_data',
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+      );
+
+      // Now we want to tap on the first downloaded audio of the
+      // playlist in order to open the AudioPlayerView displaying
+      // the audio
+
+      // First, get the first downloaded Audio ListTile Text
+      // widget finder and tap on it to open the audio player
+      // view
+      final Finder firstDownloadedAudioListTileTextWidgetFinder =
+          find.text(secondDownloadedAudioTitle);
+
+      await tester.tap(firstDownloadedAudioListTileTextWidgetFinder);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
+
+      // Now open the audio play speed dialog
+      await tester.tap(find.byKey(const Key('setAudioSpeedTextButton')));
+      await tester.pumpAndSettle();
+
+      // Now select the 0.7x play speed
+      await tester.tap(find.text('0.7x'));
+      await tester.pumpAndSettle();
+
+      // Then click twice on the minus icon button to reach the 0.50x
+      // play speed
+
+      await tester.tap(find.byKey(const Key('minusButtonKey')));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(const Key('minusButtonKey')));
+      await tester.pumpAndSettle();
+
+      // Verify if the dialog play speed is 0.50x
+
+      Text playSpeedDialogText =
+          tester.widget(find.byKey(const Key('audioPlaySpeedTextKey')));
+      expect(
+        playSpeedDialogText.data,
+        '0.50x',
+      );
+
+      // And click on the Ok button
+      await tester.tap(find.text('Ok'));
+      await tester.pumpAndSettle();
+
+      // Verify if the audio player view play speed button text is
+      // 0.50x
+
+      Text playSpeedButtonText =
+          tester.widget(find.byKey(const Key('audioSpeedButtonText')));
+      expect(
+        playSpeedButtonText.data,
+        '0.50x',
+      );
+
+      // Check the saved playlist first downloaded audio
+      // play speed value in the json file
+
+      int playableAudioLstAudioIndex = 1;
+
+      IntegrationTestUtil.verifyAudioPlaySpeedStoredInPlaylistJsonFile(
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        playableAudioLstAudioIndex: playableAudioLstAudioIndex,
+        expectedAudioPlaySpeed: 0.5,
+      );
+
+      // Now re-open the audio play speed dialog
+      await tester.tap(find.byKey(const Key('setAudioSpeedTextButton')));
+      await tester.pumpAndSettle();
+
+      // Now select the 1.5x play speed
+      await tester.tap(find.text('1.5x'));
+      await tester.pumpAndSettle();
+
+      // Then click five times on the plus icon button to reach the 0.50x
+      // play speed
+
+      await tester.tap(find.byKey(const Key('plusButtonKey')));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(const Key('plusButtonKey')));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(const Key('plusButtonKey')));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(const Key('plusButtonKey')));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(const Key('plusButtonKey')));
+      await tester.pumpAndSettle();
+
+      // Verify if the dialog play speed is 2.00x
+
+      playSpeedDialogText =
+          tester.widget(find.byKey(const Key('audioPlaySpeedTextKey')));
+      expect(
+        playSpeedDialogText.data,
+        '2.00x',
+      );
+
+      // And click on the Ok button
+      await tester.tap(find.text('Ok'));
+      await tester.pumpAndSettle();
+
+      // Verify if the audio player view play speed button text is
+      // 2.00x
+
+      playSpeedButtonText =
+          tester.widget(find.byKey(const Key('audioSpeedButtonText')));
+      expect(
+        playSpeedButtonText.data,
+        '2.00x',
+      );
+
+      // Check the saved playlist first downloaded audio
+      // play speed value in the json file
+
+      IntegrationTestUtil.verifyAudioPlaySpeedStoredInPlaylistJsonFile(
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        playableAudioLstAudioIndex: playableAudioLstAudioIndex,
+        expectedAudioPlaySpeed: 2.0,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
   });
   group('''From first downloaded audio, skip to next not fully played audio
          ignoring 5 already fully listened audio tests. Verify also the audio
