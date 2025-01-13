@@ -250,7 +250,6 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
               context,
               listen: false,
             );
-            Audio audio = audioPlayerVMlistenFalse.currentAudio!;
 
             showDialog<dynamic>(
               context: context,
@@ -336,13 +335,8 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
             });
             break;
           case AudioPopupMenuAction.deleteAudio:
-            final Audio audioToDelete = audioPlayerVMlistenFalse.currentAudio!;
+            final Audio audioToDelete = audio;
             Audio? nextAudio;
-            final PlaylistListVM playlistListVMlistenFalse =
-                Provider.of<PlaylistListVM>(
-              context,
-              listen: false,
-            );
 
             final List<Comment> audioToDeleteCommentLst =
                 playlistListVMlistenFalse.getAudioComments(
@@ -401,14 +395,8 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
             );
             break;
           case AudioPopupMenuAction.deleteAudioFromPlaylistAswell:
-            Audio audioToDelete = audioPlayerVMlistenFalse.currentAudio!;
+            Audio audioToDelete = audio;
             Audio? nextAudio;
-            final PlaylistListVM playlistListVMlistenFalse =
-                Provider.of<PlaylistListVM>(
-              context,
-              listen: false,
-            );
-
             final List<Comment> audioToDeleteCommentLst =
                 playlistListVMlistenFalse.getAudioComments(
               audio: audioToDelete,
@@ -505,7 +493,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
     required BuildContext context,
     required Audio? nextAudio,
   }) async {
-    AudioPlayerVM audioGlobalPlayerVM = Provider.of<AudioPlayerVM>(
+    AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
       context,
       listen: false,
     );
@@ -517,7 +505,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
       // doNotifyListeners is set to false to avoid that the
       // Confirm warning is displayed twice when the audio
       // moved to another playlist.
-      await audioGlobalPlayerVM.setCurrentAudio(
+      await audioPlayerVMlistenFalse.setCurrentAudio(
         audio: nextAudio,
         doNotifyListeners: false,
       );
@@ -525,7 +513,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
       // Calling handleNoPlayableAudioAvailable() is necessary
       // to update the audio title in the audio player view to
       // "No selected audio"
-      await audioGlobalPlayerVM.handleNoPlayableAudioAvailable();
+      await audioPlayerVMlistenFalse.handleNoPlayableAudioAvailable();
     }
   }
 

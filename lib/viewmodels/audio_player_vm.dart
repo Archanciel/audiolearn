@@ -112,7 +112,8 @@ class AudioPlayerVM extends ChangeNotifier {
       ValueNotifier(Duration.zero);
 
   // Tracks the last time the currentAudioPositionNotifier was
-  // updated
+  // updated. This enable to update the currentAudioPositionNotifier
+  // every 0.5 seconds.
   DateTime? _lastPositionUpdate;
 
   // This notifier is used to update the audio play/pause icon
@@ -303,7 +304,7 @@ class AudioPlayerVM extends ChangeNotifier {
     _clearUndoRedoLists();
 
     await initializeAudioPlayer(); // on audio_player_vm_audioplayers_
-    //                                   5_2_1_ALL_TESTS_PASS.dart version
+    //                                5_2_1_ALL_TESTS_PASS.dart version
 
     // start Main version
     // final String audioFilePathName = _currentAudio?.filePathName ?? '';
@@ -397,6 +398,10 @@ class AudioPlayerVM extends ChangeNotifier {
     /// testWidgets('User modifies the position of next fully unread audio which is also the last downloaded audio of the playlist.').
 
     await _audioPlayer!.seek(_currentAudioPosition);
+
+    // Necessary so that the audio play view current audio position
+    // and remaining duration are updated
+    currentAudioPositionNotifier.value = _currentAudioPosition;
   }
 
   /// Method called by skipToEndNoPlay() if the audio is positioned
@@ -508,6 +513,7 @@ class AudioPlayerVM extends ChangeNotifier {
         // in its enclosing playlist json file every 30 seconds or when
         // the audio is paused or when the audio is at end.
         _currentAudio!.audioPositionSeconds = _currentAudioPosition.inSeconds;
+
         if (_currentAudioLastSaveDateTime
             .add(const Duration(seconds: 30))
             .isAfter(DateTime.now())) {
@@ -994,12 +1000,12 @@ class AudioPlayerVM extends ChangeNotifier {
       return;
     }
 
-    // subtracting 1 second is necessary to avoid a slider error
+    // Subtracting 1 second is necessary to avoid a slider error
     // which happens when clicking on AudioListItemWidget play icon
     //
     // I commented out next code since commenting it does not
     // causes a slider error happening when clicking on
-    // AudioListItemWidget play icon. to see if realy ok !
+    // AudioListItemWidget play icon. To see if realy ok !
     // _currentAudioPosition =
     //     _currentAudioTotalDuration - const Duration(seconds: 1);
 

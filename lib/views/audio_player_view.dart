@@ -287,15 +287,16 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
         File? audioPictureFile;
         bool areAudioButtonsEnabled;
 
-        // Improving test areAudioButtonsEnabled =
-        //     (currentAudioTitle != null && currentAudio != null);
-        if (currentAudio != null) {
-          audioPictureFile = playlistListVMlistenFalse.getAudioPictureFile(
-              audio: currentAudio);
-          areAudioButtonsEnabled = currentAudioTitle != null;
-        } else {
-          areAudioButtonsEnabled = false;
-        }
+        // Improving test
+        areAudioButtonsEnabled =
+            (currentAudioTitle != null && currentAudio != null);
+        // if (currentAudio != null) {
+        //   audioPictureFile = playlistListVMlistenFalse.getAudioPictureFile(
+        //       audio: currentAudio);
+        //   areAudioButtonsEnabled = currentAudioTitle != null;
+        // } else {
+        //   areAudioButtonsEnabled = false;
+        // }
 
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

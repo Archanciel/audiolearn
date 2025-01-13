@@ -3,7 +3,6 @@
 import 'package:audiolearn/services/sort_filter_parameters.dart';
 import 'package:audiolearn/utils/date_time_util.dart';
 import 'package:audiolearn/viewmodels/date_format_vm.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +12,6 @@ import '../../../models/audio.dart';
 import '../../../utils/ui_util.dart';
 import '../../models/comment.dart';
 import '../../models/playlist.dart';
-import '../../utils/dir_util.dart';
 import '../../viewmodels/audio_player_vm.dart';
 import '../../../viewmodels/playlist_list_vm.dart';
 import '../../utils/duration_expansion.dart';
@@ -452,15 +450,15 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
             );
 
             if (audioToDeleteCommentLst.isNotEmpty) {
-              // If the audio has comments, the ConfirmActionDialog is
-              // displayed. Otherwise, the audio is deleted from the
-              // playlist download and playable audio list.
-              //
               // Await must be applied to showDialog() so that the nextAudio
               // variable is assigned according to the result returned by the
               // dialog. Otherwise, _replaceCurrentAudioByNextAudio() will be
               // called before the dialog is closed and the nextAudio variable
               // will remains null.
+              //
+              // If the audio has comments, the ConfirmActionDialog is
+              // displayed. Otherwise, the audio is deleted from the
+              // playlist download and playable audio list.
               await showDialog<dynamic>(
                 context: context,
                 builder: (BuildContext context) {
@@ -544,7 +542,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
     required BuildContext context,
     required Audio? nextAudio,
   }) async {
-    AudioPlayerVM audioGlobalPlayerVM = Provider.of<AudioPlayerVM>(
+    AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
       context,
       listen: false,
     );
@@ -556,7 +554,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
       // doNotifyListeners is set to false to avoid that the
       // Confirm warning is displayed twice when the audio
       // moved to another playlist.
-      await audioGlobalPlayerVM.setCurrentAudio(
+      await audioPlayerVMlistenFalse.setCurrentAudio(
         audio: nextAudio,
         doNotifyListeners: false,
       );
@@ -564,7 +562,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
       // Calling handleNoPlayableAudioAvailable() is necessary
       // to update the audio title in the audio player view to
       // "No selected audio"
-      await audioGlobalPlayerVM.handleNoPlayableAudioAvailable();
+      await audioPlayerVMlistenFalse.handleNoPlayableAudioAvailable();
     }
   }
 
