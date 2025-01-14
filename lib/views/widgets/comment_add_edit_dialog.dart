@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants.dart';
+import '../../models/audio.dart';
 import '../../models/comment.dart';
 import '../../services/settings_data_service.dart';
 import '../../utils/date_time_util.dart';
@@ -27,10 +28,12 @@ class CommentAddEditDialog extends StatefulWidget {
   final CallerDialog callerDialog;
   final Comment? comment;
   final bool isAddMode;
+  final Audio commentableAudio;
 
   const CommentAddEditDialog({
     super.key,
     required this.callerDialog,
+    required this.commentableAudio,
     this.comment,
   }) : isAddMode = comment == null;
 
@@ -148,7 +151,8 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
               children: [
                 // Commented audio title
                 Text(
-                  audioPlayerVM.currentAudio?.validVideoTitle ?? '',
+                  key: const Key('commentedAudioTitleText'),
+                  widget.commentableAudio.validVideoTitle,
                   textAlign: TextAlign.center,
                 ),
                 Row(
@@ -320,7 +324,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                           100)
                       .round(),
                 ),
-                audioToComment: audioPlayerVM.currentAudio!,
+                audioToComment: widget.commentableAudio,
               );
             } else {
               Comment commentToModify = widget.comment!;
@@ -340,7 +344,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
 
               commentVMlistenFalse.modifyComment(
                 modifiedComment: commentToModify,
-                commentedAudio: audioPlayerVM.currentAudio!,
+                commentedAudio: widget.commentableAudio,
               );
             }
 
@@ -748,11 +752,11 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
         switch (widget.callerDialog) {
           case CallerDialog.commentListAddDialog:
             return CommentListAddDialog(
-              currentAudio: audioPlayerVM.currentAudio!,
+              currentAudio: widget.commentableAudio,
             );
           case CallerDialog.playlistCommentListAddDialog:
             return PlaylistCommentListDialog(
-              currentPlaylist: audioPlayerVM.currentAudio!.enclosingPlaylist!,
+              currentPlaylist: widget.commentableAudio.enclosingPlaylist!,
             );
         }
       },

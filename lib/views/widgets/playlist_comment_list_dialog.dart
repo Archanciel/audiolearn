@@ -325,7 +325,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
               await _closeDialogAndOpenCommentAddEditDialog(
                 context: context,
                 audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
-                audioFileNameNoExt: audioFileName,
+                audioFileName: audioFileName,
                 comment: comment,
               );
             },
@@ -517,15 +517,17 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
   Future<void> _closeDialogAndOpenCommentAddEditDialog({
     required BuildContext context,
     required AudioPlayerVM audioPlayerVMlistenFalse,
-    required String audioFileNameNoExt,
+    required String audioFileName,
     Comment? comment,
   }) async {
     Navigator.of(context).pop(); // closes the current dialog
 
+    Audio audio = widget.currentPlaylist.getAudioByFileNameNoExt(
+      audioFileNameNoExt: audioFileName,
+    )!;
+
     await audioPlayerVMlistenFalse.setCurrentAudio(
-        audio: widget.currentPlaylist.getAudioByFileNameNoExt(
-      audioFileNameNoExt: audioFileNameNoExt,
-    )!);
+        audio: audio);
 
     showDialog<void>(
       context: context,
@@ -536,6 +538,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
       // passing a comment opens it in 'add' mode
       builder: (context) => CommentAddEditDialog(
         callerDialog: CallerDialog.playlistCommentListAddDialog,
+        commentableAudio: audio,
         comment: comment,
       ),
     );
