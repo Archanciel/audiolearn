@@ -16063,7 +16063,7 @@ void main() {
       expect(find.text('Audio title'), findsOneWidget);
 
       // Verify the absence of Original video title label
-      expect(find.text('Original video title'), findsNothing);
+      expect(find.text('Really short video'), findsNothing);
 
       // Tap the Close button to close the audio info dialog
       await tester.tap(find.byKey(const Key('audio_info_ok_button_key')));

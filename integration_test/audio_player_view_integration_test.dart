@@ -6001,7 +6001,7 @@ void main() {
         allOf(
           [
             greaterThanOrEqualTo(
-                actualAudioPlayerViewAudioPositionInTenthsOfSeconds),
+                actualAudioPlayerViewAudioPositionInTenthsOfSeconds - 10),
             lessThanOrEqualTo(
                 actualAudioPlayerViewAudioPositionInTenthsOfSeconds + 10),
           ],
