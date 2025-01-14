@@ -440,6 +440,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
       // passing a comment opens it in 'add' mode
       builder: (context) => CommentAddEditDialog(
         callerDialog: CallerDialog.commentListAddDialog,
+        commentableAudio: widget.currentAudio,
         comment: comment,
       ),
     );
