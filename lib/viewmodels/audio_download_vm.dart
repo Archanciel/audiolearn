@@ -853,6 +853,8 @@ class AudioDownloadVM extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Method called by the AudioModificationDialog when the user clicks on the
+  /// modify button in order to modify the audio title.
   void modifyAudioTitle({
     required Audio audio,
     required String modifiedAudioTitle,
