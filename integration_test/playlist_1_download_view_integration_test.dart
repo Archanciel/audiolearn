@@ -12099,7 +12099,9 @@ void main() {
         Finder appScreenNavigationButton =
             find.byKey(const ValueKey('audioPlayerViewIconButton'));
         await tester.tap(appScreenNavigationButton);
-        await tester.pumpAndSettle();
+        await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+          tester: tester,
+        );
 
         // Now tap on the Play button to play the audio which will
         // be deleted
@@ -12271,7 +12273,9 @@ void main() {
         Finder appScreenNavigationButton =
             find.byKey(const ValueKey('audioPlayerViewIconButton'));
         await tester.tap(appScreenNavigationButton);
-        await tester.pumpAndSettle();
+        await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+          tester: tester,
+        );
 
         // Tap the appbar leading popup menu button
         await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
@@ -15789,7 +15793,7 @@ void main() {
     testWidgets('Downl audio: change audio title', (WidgetTester tester) async {
       const String youtubePlaylistTitle =
           'audio_player_view_2_shorts_test'; // Youtube playlist
-      const String audioTitle = "morning _ cinematic video";
+      const String originalAudioTitle = "morning _ cinematic video";
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
@@ -15798,7 +15802,7 @@ void main() {
       );
 
       // First, find the audio sublist ListTile Text widget
-      Finder audioListTileTextWidgetFinder = find.text(audioTitle);
+      Finder audioListTileTextWidgetFinder = find.text(originalAudioTitle);
 
       // Then obtain the audio ListTile widget enclosing the Text widget
       // by finding its ancestor
@@ -15823,10 +15827,10 @@ void main() {
 
       // Now find the modify audio title popup menu item and tap on
       // it
-      final Finder popupCopyMenuItem =
+      final Finder popupModifyAudioTitleMenuItem =
           find.byKey(const Key("popup_menu_modify_audio_title"));
 
-      await tester.tap(popupCopyMenuItem);
+      await tester.tap(popupModifyAudioTitleMenuItem);
       await tester.pumpAndSettle();
 
       // Verify that the rename audio file dialog is displayed
@@ -15924,7 +15928,7 @@ void main() {
       await checkAudioCommentUsingAudioItemMenu(
         tester: tester,
         audioListTileWidgetFinder: audioListTileWidgetFinder,
-        expectedCommentTitle: 'Accessible after renaming',
+        expectedCommentTitle: 'morning _ cinematic accessible after renaming',
         audioTitleToVerifyInCommentAddEditDialog: newTitle,
       );
 
@@ -16059,7 +16063,8 @@ void main() {
 
       expect(audioTitleTextWidget.data, newTitle);
 
-      // Verify the presence of Audio title label
+      // Verify the presence of Audio title label (only present if the
+      // audio was imported)
       expect(find.text('Audio title'), findsOneWidget);
 
       // Verify the absence of Original video title label
@@ -16073,7 +16078,7 @@ void main() {
       await checkAudioCommentUsingAudioItemMenu(
         tester: tester,
         audioListTileWidgetFinder: audioListTileWidgetFinder,
-        expectedCommentTitle: 'Accessible after renaming',
+        expectedCommentTitle: 'Really short video accessible after renaming',
         audioTitleToVerifyInCommentAddEditDialog: newTitle,
       );
 
@@ -32577,10 +32582,12 @@ void playlistOneDownloadViewIntegrationTest() {
 
       expect(audioTitleTextWidget.data, newTitle);
 
-      // Verify the presence of Original video title label
+      // Verify the presence of Original video title label (this label
+      // is only present for a downloaded audio)
       expect(find.text('Original video title'), findsOneWidget);
 
-      // Verify the absence of Audio title label
+      // Verify the absence of Audio title label (this label is only
+      // present if the audio was imported)
       expect(find.text('Audio title'), findsNothing);
 
       // Tap the Ok button to close the audio info dialog
@@ -32726,11 +32733,13 @@ void playlistOneDownloadViewIntegrationTest() {
 
       expect(audioTitleTextWidget.data, newTitle);
 
-      // Verify the presence of Audio title label
-      expect(find.text('Audio title'), findsOneWidget);
-
-      // Verify the absence of Original video title label
+      // Verify the absence of Original video title label (this label
+      // is only present for a downloaded audio)
       expect(find.text('Original video title'), findsNothing);
+
+      // Verify the presence of Audio title label (this label is only
+      // present if the audio was imported)
+      expect(find.text('Audio title'), findsOneWidget);
 
       // Tap the Close button to close the audio info dialog
       await tester.tap(find.byKey(const Key('audio_info_ok_button_key')));
