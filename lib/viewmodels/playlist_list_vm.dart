@@ -349,7 +349,7 @@ class PlaylistListVM extends ChangeNotifier {
       settingSubType: Playlists.orderedTitleLst,
     );
 
-    if (orderedPlaylistTitleLst == null) {
+    if (orderedPlaylistTitleLst == null || orderedPlaylistTitleLst[0] == '') {
       // If orderedPlaylistTitleLst is null, it means that the
       // user has not yet modified the order of the playlists.
       // So, we use the default order.
