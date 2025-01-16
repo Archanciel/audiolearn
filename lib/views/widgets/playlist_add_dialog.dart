@@ -181,13 +181,13 @@ class _PlaylistAddDialogState extends State<PlaylistAddDialog>
     required BuildContext context,
   }) async {
     String localPlaylistTitle = _localPlaylistTitleTextEditingController.text;
-    PlaylistListVM playlistListVM =
+    PlaylistListVM playlistListVMlistenFalse =
         Provider.of<PlaylistListVM>(context, listen: false);
 
     if (localPlaylistTitle.isNotEmpty) {
       // if the local playlist title is not empty, then add the local
       // playlist
-      if (await playlistListVM.addPlaylist(
+      if (await playlistListVMlistenFalse.addPlaylist(
             localPlaylistTitle: localPlaylistTitle,
             playlistQuality:
                 _isChecked ? PlaylistQuality.music : PlaylistQuality.voice,
@@ -201,7 +201,7 @@ class _PlaylistAddDialogState extends State<PlaylistAddDialog>
       // if the local playlist title is empty, then add the Youtube
       // playlist if the Youtube playlist URL is not empty
       if (widget.playlistUrl.isNotEmpty) {
-        dynamic isYoutubePlaylistAdded = await playlistListVM.addPlaylist(
+        dynamic isYoutubePlaylistAdded = await playlistListVMlistenFalse.addPlaylist(
           playlistUrl: widget.playlistUrl,
           playlistQuality:
               _isChecked ? PlaylistQuality.music : PlaylistQuality.voice,
