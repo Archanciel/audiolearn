@@ -349,7 +349,9 @@ class PlaylistListVM extends ChangeNotifier {
       settingSubType: Playlists.orderedTitleLst,
     );
 
-    if (orderedPlaylistTitleLst == null || orderedPlaylistTitleLst[0] == '') {
+    if (orderedPlaylistTitleLst == null ||
+        orderedPlaylistTitleLst.isEmpty ||
+        orderedPlaylistTitleLst[0] == '') {
       // If orderedPlaylistTitleLst is null, it means that the
       // user has not yet modified the order of the playlists.
       // So, we use the default order.
@@ -489,8 +491,13 @@ class PlaylistListVM extends ChangeNotifier {
       playlistQuality: playlistQuality,
     );
 
+    print(
+        'PlaylistListVM.addPlaylist: before adding ${_listOfSelectablePlaylists.length}');
+
     if (addedPlaylist != null) {
       _listOfSelectablePlaylists.add(addedPlaylist);
+      print(
+          'PlaylistListVM.addPlaylist: addedPlaylist = ${addedPlaylist.title} ${_listOfSelectablePlaylists.length}');
       _updateAndSavePlaylistOrder();
 
       // This method ensures that the list of playlists is
