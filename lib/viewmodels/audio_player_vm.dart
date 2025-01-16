@@ -145,19 +145,28 @@ class AudioPlayerVM extends ChangeNotifier {
   })  : _settingsDataService = settingsDataService,
         _playlistListVM = playlistListVM,
         _commentVM = commentVM {
-    instanciateAudioPlayer();
+    instanciateAudioPlayer(); // on main project
     initializeAudioPlayer();
   }
 
   // Public method to be redefined in AudioPlayerVMTestVersion in order
   // to avoid the use of the audio player plugin in unit tests.
-  void instanciateAudioPlayer() {
+  void instanciateAudioPlayer() { // on main project
     _audioPlayer = AudioPlayer();
   }
 
   @override
   Future<void> dispose() async {
-    await _audioPlayer!.dispose();
+    if (_audioPlayer != null) {
+      try {
+        // necessary to avoid the error which causes integration test to fail
+        await _audioPlayer!.dispose();
+      } catch (e) {
+        // ignore: avoid_print
+        print('***** AudioPlayerVM.dispose() error: $e');
+      }
+    }
+    await _audioPlayer!.dispose(); // on main project
 
     _durationSubscription?.cancel();
     _positionSubscription?.cancel();
@@ -303,15 +312,15 @@ class AudioPlayerVM extends ChangeNotifier {
     _currentAudioPosition = Duration(seconds: audio.audioPositionSeconds);
     _clearUndoRedoLists();
 
-    await initializeAudioPlayer(); // on audio_player_vm_audioplayers_
-    //                                5_2_1_ALL_TESTS_PASS.dart version
+    // await initializeAudioPlayer(); // on audio_player_vm_audioplayers_
+    // //                                5_2_1_ALL_TESTS_PASS.dart version
 
     // start Main version
-    // final String audioFilePathName = _currentAudio?.filePathName ?? '';
+    final String audioFilePathName = _currentAudio?.filePathName ?? '';
 
-    // if (audioFilePathName.isNotEmpty && File(audioFilePathName).existsSync()) {
-    //   await audioPlayerSetSource(audioFilePathName);
-    // }
+    if (audioFilePathName.isNotEmpty && File(audioFilePathName).existsSync()) {
+      await audioPlayerSetSource(audioFilePathName);
+    }
     // end Main version
 
     await modifyAudioPlayerPosition(
@@ -323,7 +332,7 @@ class AudioPlayerVM extends ChangeNotifier {
   /// AudioPlayerVMTestVersion which does not access to audioplayers plugin.
   Future<void> audioPlayerSetSource(String audioFilePathName) async {
     await _audioPlayer!.setSource(DeviceFileSource(audioFilePathName));
-  }
+  } // on main project
 
   /// Adjusts the playback start position of the current audio based on the elapsed
   /// time since it was last paused.
@@ -460,7 +469,24 @@ class AudioPlayerVM extends ChangeNotifier {
   ///
   /// For this reason, the method is not private !
   Future<void> initializeAudioPlayer() async {
-    _initAudioPlayer();
+    if (_audioPlayer != null) {
+      try {
+        // necessary to avoid the error which causes integration test to fail
+        await _audioPlayer!.dispose();
+      } catch (e) {
+        // ignore: avoid_print
+        print('***** AudioPlayerVM.initializeAudioPlayerPlugin() error: $e');
+      }
+    }
+
+    _audioPlayer = AudioPlayer();
+
+    // Available only on version 6 !
+    // _audioPlayerPlugin!.positionUpdater = TimerPositionUpdater(
+    //   interval: const Duration(milliseconds: 100),
+    //   getPosition: _audioPlayerPlugin!.getCurrentPosition,
+    // );
+    _initAudioPlayer(); // on main project
 
     // Assuming filePath is the full path to your audio file
     String audioFilePathName = _currentAudio?.filePathName ?? '';
@@ -473,6 +499,9 @@ class AudioPlayerVM extends ChangeNotifier {
       // setting audio player plugin listeners
 
       _initAudioPlayer(); // Load the file but don't play yet
+      await _audioPlayer!.setVolume(
+        _currentAudio?.audioPlayVolume ?? kAudioDefaultPlayVolume,
+      ); // on main project
     }
   }
 
@@ -749,6 +778,7 @@ class AudioPlayerVM extends ChangeNotifier {
             null && // necessary to avoid the error when deleting a playing audio
         _currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd) {
       _currentAudio!.isPaused = true;
+      _currentAudio!.audioPositionSeconds = _currentAudioPosition.inSeconds;
       _currentAudio!.audioPausedDateTime = DateTime.now();
     }
 
