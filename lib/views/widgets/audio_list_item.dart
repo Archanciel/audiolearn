@@ -386,6 +386,11 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
             break;
           case AudioPopupMenuAction.deleteAudio:
             final Audio audioToDelete = audio;
+
+            if (!audioToDelete.isPaused) {
+              audioPlayerVMlistenFalse.pause();
+            }
+
             Audio? nextAudio;
 
             final List<Comment> audioToDeleteCommentLst =

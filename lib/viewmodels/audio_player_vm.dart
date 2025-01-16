@@ -529,6 +529,12 @@ class AudioPlayerVM extends ChangeNotifier {
           currentAudioPositionNotifier.value = position;
         }
 
+        if (_currentAudio == null) {
+          // This happens when the user deletes the current and unique
+          // audio of the playlist.
+          return;
+        }
+
         // This instruction must be executed before the next if block,
         // otherwise, if the user opens the audio info dialog while the
         // audio is playing, the audio position displayed in the audio
@@ -768,7 +774,9 @@ class AudioPlayerVM extends ChangeNotifier {
     // setSource() in the playCurrentAudio() method ...
     await _audioPlayer!.stop();
 
-    if (_currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd) {
+    if (_currentAudio !=
+            null && // necessary to avoid the error when deleting a playing audio
+        _currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd) {
       _currentAudio!.isPaused = true;
       _currentAudio!.audioPositionSeconds = _currentAudioPosition.inSeconds;
       _currentAudio!.audioPausedDateTime = DateTime.now();

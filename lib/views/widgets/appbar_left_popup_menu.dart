@@ -235,7 +235,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
             // The next two lines cause the the audio picture to be
             // displayed in the audio player view. The first line is
             // necessary so that currentAudioTitleNotifier will update
-            // the audio title displayed in the audio player view, 
+            // the audio title displayed in the audio player view,
             // which will cause the audio picture to be displayed.
 
             audioPlayerVMlistenFalse.currentAudioTitleNotifier.value = '';
@@ -250,6 +250,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
               context,
               listen: false,
             );
+            Audio audio = audioPlayerVMlistenFalse.currentAudio!;
 
             showDialog<dynamic>(
               context: context,
@@ -335,8 +336,18 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
             });
             break;
           case AudioPopupMenuAction.deleteAudio:
-            final Audio audioToDelete = audio;
+            final Audio audioToDelete = audioPlayerVMlistenFalse.currentAudio!;
+
+            if (!audioToDelete.isPaused) {
+              audioPlayerVMlistenFalse.pause();
+            }
+
             Audio? nextAudio;
+            final PlaylistListVM playlistListVMlistenFalse =
+                Provider.of<PlaylistListVM>(
+              context,
+              listen: false,
+            );
 
             final List<Comment> audioToDeleteCommentLst =
                 playlistListVMlistenFalse.getAudioComments(
@@ -395,8 +406,14 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
             );
             break;
           case AudioPopupMenuAction.deleteAudioFromPlaylistAswell:
-            Audio audioToDelete = audio;
+            Audio audioToDelete = audioPlayerVMlistenFalse.currentAudio!;
             Audio? nextAudio;
+            final PlaylistListVM playlistListVMlistenFalse =
+                Provider.of<PlaylistListVM>(
+              context,
+              listen: false,
+            );
+
             final List<Comment> audioToDeleteCommentLst =
                 playlistListVMlistenFalse.getAudioComments(
               audio: audioToDelete,
@@ -462,7 +479,10 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
   /// Public method passed to the ConfirmActionDialog to be executd
   /// when the Confirm button is pressed. The method deletes the audio
   /// file and its comments.
-  Audio? deleteAudio(BuildContext context, Audio audio) {
+  Audio? deleteAudio(
+    BuildContext context,
+    Audio audio,
+  ) {
     return Provider.of<PlaylistListVM>(
       context,
       listen: false,
@@ -493,7 +513,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
     required BuildContext context,
     required Audio? nextAudio,
   }) async {
-    AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
+    AudioPlayerVM audioGlobalPlayerVM = Provider.of<AudioPlayerVM>(
       context,
       listen: false,
     );
@@ -505,7 +525,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
       // doNotifyListeners is set to false to avoid that the
       // Confirm warning is displayed twice when the audio
       // moved to another playlist.
-      await audioPlayerVMlistenFalse.setCurrentAudio(
+      await audioGlobalPlayerVM.setCurrentAudio(
         audio: nextAudio,
         doNotifyListeners: false,
       );
@@ -513,7 +533,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
       // Calling handleNoPlayableAudioAvailable() is necessary
       // to update the audio title in the audio player view to
       // "No selected audio"
-      await audioPlayerVMlistenFalse.handleNoPlayableAudioAvailable();
+      await audioGlobalPlayerVM.handleNoPlayableAudioAvailable();
     }
   }
 

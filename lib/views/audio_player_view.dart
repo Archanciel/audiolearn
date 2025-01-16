@@ -287,16 +287,15 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
         File? audioPictureFile;
         bool areAudioButtonsEnabled;
 
-        // Improving test
-        areAudioButtonsEnabled =
-            (currentAudioTitle != null && currentAudio != null);
-        // if (currentAudio != null) {
-        //   audioPictureFile = playlistListVMlistenFalse.getAudioPictureFile(
-        //       audio: currentAudio);
-        //   areAudioButtonsEnabled = currentAudioTitle != null;
-        // } else {
-        //   areAudioButtonsEnabled = false;
-        // }
+        // areAudioButtonsEnabled =
+        //     (currentAudioTitle != null && currentAudio != null);
+        if (currentAudio != null) {
+          audioPictureFile = playlistListVMlistenFalse.getAudioPictureFile(
+              audio: currentAudio);
+          areAudioButtonsEnabled = currentAudioTitle != null;
+        } else {
+          areAudioButtonsEnabled = false;
+        }
 
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -836,38 +835,49 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     if (!playlistListVMlistenTrue.isPlaylistListExpanded) {
       // the list of playlists is collapsed, so the play button is
       // displayed
-      return ValueListenableBuilder<bool>(
-        valueListenable: audioPlayerVMlistenFalse.currentAudioPlayPauseNotifier,
-        builder: (context, isPaused, child) {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(90.0),
-                child: IconButton(
-                  iconSize: _audioIconSizeLarge,
-                  onPressed: (() async {
-                    audioPlayerVMlistenFalse.isPlaying
-                        ? await audioPlayerVMlistenFalse.pause()
-                        : await audioPlayerVMlistenFalse.playCurrentAudio(
-                            isFromAudioPlayerView: true,
-                          );
-                  }),
-                  style: ButtonStyle(
-                    // Highlight button when pressed
-                    padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-                      const EdgeInsets.symmetric(
-                          horizontal: kSmallButtonInsidePadding, vertical: 0),
+      return ValueListenableBuilder<String?>(
+        valueListenable: audioPlayerVMlistenFalse.currentAudioTitleNotifier,
+        builder: (context, currentAudioTitle, child) {
+          return ValueListenableBuilder<bool>(
+            valueListenable:
+                audioPlayerVMlistenFalse.currentAudioPlayPauseNotifier,
+            builder: (context, isPaused, child) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(90.0),
+                    child: IconButton(
+                      iconSize: _audioIconSizeLarge,
+                      onPressed: (() async {
+                        audioPlayerVMlistenFalse.isPlaying
+                            ? await audioPlayerVMlistenFalse.pause()
+                            : await audioPlayerVMlistenFalse.playCurrentAudio(
+                                isFromAudioPlayerView: true,
+                              );
+                      }),
+                      style: ButtonStyle(
+                        // Highlight button when pressed
+                        padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                          const EdgeInsets.symmetric(
+                              horizontal: kSmallButtonInsidePadding,
+                              vertical: 0),
+                        ),
+                        overlayColor:
+                            iconButtonTapModification, // Tap feedback color
+                      ),
+                      icon: Icon(
+                        (isPaused && currentAudioTitle != null)
+                            // currentAudioTitle is null when in case a
+                            // unique playing audio was deleted !
+                            ? Icons.pause
+                            : Icons.play_arrow,
+                      ),
                     ),
-                    overlayColor:
-                        iconButtonTapModification, // Tap feedback color
                   ),
-                  icon: Icon(
-                    isPaused ? Icons.pause : Icons.play_arrow,
-                  ),
-                ),
-              ),
-            ],
+                ],
+              );
+            },
           );
         },
       );
@@ -1017,12 +1027,24 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
             // Obtaining the slider values here (when audioPlayerVM
             // calls notifyListeners()) avoids the slider generating
             // a 'Value xxx.x is not between minimum 0.0 and maximum 0.0' error
-            double sliderValue = audioPlayerVMlistenFalse
-                .currentAudioPosition.inSeconds
-                .toDouble();
-            double maxDuration = audioPlayerVMlistenFalse
-                .currentAudioTotalDuration.inSeconds
-                .toDouble();
+            double sliderValue = 0.0;
+            double maxDuration = 0.0;
+            String currentAudioPositionStr = Duration.zero.HHmmssZeroHH();
+            String remainingAudioDurationStr = currentAudioPositionStr;
+
+            if (currentAudioTitle != null) {
+              sliderValue = audioPlayerVMlistenFalse
+                  .currentAudioPosition.inSeconds
+                  .toDouble();
+              maxDuration = audioPlayerVMlistenFalse
+                  .currentAudioTotalDuration.inSeconds
+                  .toDouble();
+              currentAudioPositionStr =
+                  audioPlayerVMlistenFalse.currentAudioPosition.HHmmssZeroHH();
+              remainingAudioDurationStr = audioPlayerVMlistenFalse
+                  .currentAudioRemainingDuration
+                  .HHmmssZeroHH();
+            }
 
             // Ensure the slider value is within the range
             sliderValue = sliderValue.clamp(0.0, maxDuration);
@@ -1034,8 +1056,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                 children: [
                   Text(
                     key: const Key('audioPlayerViewAudioPosition'),
-                    audioPlayerVMlistenFalse.currentAudioPosition
-                        .HHmmssZeroHH(),
+                    currentAudioPositionStr,
                     style: kSliderValueTextStyle,
                   ),
                   Expanded(
@@ -1062,8 +1083,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                   ),
                   Text(
                     key: const Key('audioPlayerViewAudioRemainingDuration'),
-                    audioPlayerVMlistenFalse.currentAudioRemainingDuration
-                        .HHmmssZeroHH(),
+                    remainingAudioDurationStr,
                     style: kSliderValueTextStyle,
                   ),
                 ],
