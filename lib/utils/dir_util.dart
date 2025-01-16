@@ -22,6 +22,8 @@ class DirUtil {
     }
   }
 
+  /// Returns the path of the application directory. If the application directory
+  /// does not exist, it is created. The path returned depends on the platform.
   static Future<String> getApplicationPath({
     bool isTest = false,
   }) async {
