@@ -313,7 +313,7 @@ class AudioDownloadVM extends ChangeNotifier {
         // that its url was updated. The case when a new
         // playlist with the same title is created in order
         // to replace the old one which contains too many
-        // audio.
+        // videos.
         _updateYoutubePlaylisrUrl(
           playlistIndex: playlistIndex,
           playlistId: playlistId,
