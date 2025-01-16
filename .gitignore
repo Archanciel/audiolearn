@@ -52,3 +52,4 @@ windows/flutter/generated_plugins.cmake
 *.swift
 *.bak
 *.swift
+*.swift
