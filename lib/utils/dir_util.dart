@@ -24,9 +24,9 @@ class DirUtil {
 
   /// Returns the path of the application directory. If the application directory
   /// does not exist, it is created. The path returned depends on the platform.
-  static Future<String> getApplicationPath({
+  static String getApplicationPath({
     bool isTest = false,
-  }) async {
+  }) {
     if (Platform.isWindows) {
       if (isTest) {
         return kApplicationPathWindowsTest;
@@ -40,9 +40,9 @@ class DirUtil {
         // installed on the smartphone
         Directory dir = Directory(kApplicationPathTest);
 
-        if (!await dir.exists()) {
+        if (!dir.existsSync()) {
           try {
-            await dir.create();
+            dir.createSync();
           } catch (e) {
             // Handle the exception, e.g., directory not created
             print('Directory could not be created: $e');
@@ -55,9 +55,9 @@ class DirUtil {
         // installed on the smartphone
         Directory dir = Directory(kApplicationPath);
 
-        if (!await dir.exists()) {
+        if (!dir.existsSync()) {
           try {
-            await dir.create();
+            dir.createSync();
           } catch (e) {
             // Handle the exception, e.g., directory not created
             print('Directory could not be created: $e');
