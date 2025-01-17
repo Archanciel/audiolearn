@@ -291,7 +291,7 @@ class SettingsDataService {
       set(
         settingType: SettingType.dataLocation,
         settingSubType: DataLocation.appSettingsPath,
-        value: await DirUtil.getApplicationPath(isTest: _isTest),
+        value: DirUtil.getApplicationPath(isTest: _isTest),
       );
     }
 
@@ -451,10 +451,7 @@ class SettingsDataService {
   }
 
   void _saveSettings() {
-    String applicationPath = get(
-      settingType: SettingType.dataLocation,
-      settingSubType: DataLocation.appSettingsPath,
-    );
+    String applicationPath = DirUtil.getApplicationPath();
     saveSettingsToFile(
         jsonPathFileName:
             "$applicationPath${Platform.pathSeparator}$kSettingsFileName");
