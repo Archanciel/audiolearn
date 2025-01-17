@@ -872,7 +872,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
       type: FileType.custom,
       allowedExtensions: ['mp3'],
       allowMultiple: true,
-      initialDirectory: await DirUtil.getApplicationPath(),
+      initialDirectory: DirUtil.getApplicationPath(),
     );
 
     if (result != null) {
@@ -887,7 +887,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
       type: FileType.custom,
       allowedExtensions: ['txt'],
       allowMultiple: false,
-      initialDirectory: await DirUtil.getApplicationPath(),
+      initialDirectory: DirUtil.getApplicationPath(),
     );
 
     if (result != null) {

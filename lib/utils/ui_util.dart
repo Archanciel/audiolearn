@@ -84,7 +84,7 @@ class UiUtil {
       type: FileType.custom,
       allowedExtensions: ['jpg'],
       allowMultiple: false,
-      initialDirectory: await DirUtil.getApplicationPath(),
+      initialDirectory: DirUtil.getApplicationPath(),
     );
 
     if (result != null && result.files.isNotEmpty) {
