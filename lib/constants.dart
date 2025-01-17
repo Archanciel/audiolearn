@@ -136,6 +136,7 @@ DateFormat englishDateFormat = DateFormat("MM/dd/yyyy");
 DateFormat frenchDateFormat = DateFormat("dd/MM/yyyy");
 DateFormat timeFormat = DateFormat("HH:mm");
 DateFormat yearMonthDayDateTimeFormat = DateFormat("yyyy/MM/dd HH:mm");
+DateFormat yearMonthDayDateTimeFormatForFileName = DateFormat("yyyy-MM-dd_HH_mm");
 
 const TextStyle kDialogTitlesStyle = TextStyle(
   fontSize: 17,

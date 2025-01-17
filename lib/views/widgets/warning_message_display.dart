@@ -1126,6 +1126,37 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         });
 
         return const SizedBox.shrink();
+      case WarningMessageType.savedAppDataToZip:
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          String savedAppDataToZipMessage;
+
+          if (_warningMessageVM.zipFilePathName != '') {
+            savedAppDataToZipMessage =
+                AppLocalizations.of(context)!.savedAppDataToZip(
+              _warningMessageVM.zipFilePathName,
+            );
+
+            _displayWarningDialog(
+              context: _context,
+              message: savedAppDataToZipMessage,
+              warningMessageVM: _warningMessageVM,
+              themeProviderVM: themeProviderVM,
+              warningMode: WarningMode.confirm,
+            );
+          } else {
+            savedAppDataToZipMessage =
+                AppLocalizations.of(context)!.appDataCouldNotBeSavedToZip;
+
+            _displayWarningDialog(
+              context: _context,
+              message: savedAppDataToZipMessage,
+              warningMessageVM: _warningMessageVM,
+              themeProviderVM: themeProviderVM,
+            );
+          }
+        });
+
+        return const SizedBox.shrink();
       default:
         // Add the WarningMessageDisplayWidget to the listeners of the
         // WarningMessageVM. When WarningMessageVM executes notifyListeners(),

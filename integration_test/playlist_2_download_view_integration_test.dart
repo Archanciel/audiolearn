@@ -24,26 +24,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../test/services/mock_shared_preferences.dart';
 import 'integration_test_util.dart';
-
-// Custom Mock FilePicker
-class MockFilePicker extends FilePicker {
-  String _pathToSelectStr = '';
-
-  @override
-  Future<String?> getDirectoryPath({
-    String? dialogTitle,
-    bool lockParentWindow = false,
-    String? initialDirectory,
-  }) async {
-    return _pathToSelectStr;
-  }
-
-  void setPathToSelect({
-    required String pathToSelectStr,
-  }) {
-    _pathToSelectStr = pathToSelectStr;
-  }
-}
+import 'mock_file_picker.dart';
 
 void main() {
   // Necessary to avoid FatalFailureException (FatalFailureException: Failed

@@ -2298,15 +2298,26 @@ class PlaylistListVM extends ChangeNotifier {
 
   /// Method called when the user clicks on the 'Save playlist and comments to
   /// zip' menu item located in the appbar leading popup menu.
-  Future<void> savePlaylistsCommentsAndSettingsJsonFilesToZip({
+  ///
+  /// Returns the saved zip file path name, '' if the playlists source dir or the
+  /// zip save to target dir do not exist.
+  Future<String> savePlaylistsCommentsAndSettingsJsonFilesToZip({
     required String targetDirectoryPath,
   }) async {
-    await _zipDirectory(
+    String savedZipFilePathName = await _zipDirectory(
       targetDir: targetDirectoryPath,
     );
+
+    _warningMessageVM.confirmSavingToZip(
+      zipFilePathName: savedZipFilePathName,
+    );
+
+    return savedZipFilePathName;
   }
 
-  Future<void> _zipDirectory({
+  // Returns the saved zip file path name, '' if the playlists source dir or the
+  // zip save to target dir do not exist.
+  Future<String> _zipDirectory({
     required String targetDir,
   }) async {
     String playlistsRootPath = _settingsDataService.get(
@@ -2316,8 +2327,8 @@ class PlaylistListVM extends ChangeNotifier {
 
     Directory sourceDir = Directory(playlistsRootPath);
 
-    if (!sourceDir.existsSync()) {
-      return;
+    if (!sourceDir.existsSync() || !Directory(targetDir).existsSync()) {
+      return '';
     }
 
     // Create a zip encoder
@@ -2353,16 +2364,14 @@ class PlaylistListVM extends ChangeNotifier {
 
     // Save the archive to a zip file in the target directory
     String zipFileName =
-        "audioLearn_${yearMonthDayDateTimeFormat.format(DateTime.now())}.zip";
+        "audioLearn_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip";
 
-    zipFileName = zipFileName.replaceAll(':', '_');
-    zipFileName = zipFileName.replaceAll(' ', '_');
-    zipFileName = zipFileName.replaceAll('/', '-');
+    String zipFilePathName = path.join(targetDir, zipFileName);
 
-    String zipFilePath = path.join(targetDir, zipFileName);
-
-    File zipFile = File(zipFilePath);
+    File zipFile = File(zipFilePathName);
     zipFile.writeAsBytesSync(ZipEncoder().encode(archive)!, flush: true);
+
+    return zipFilePathName;
   }
 
   /// Method called when the user clicks on the 'Rewind audio to start' playlist
