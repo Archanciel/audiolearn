@@ -854,8 +854,14 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await playlistListVM.savePlaylistsCommentsAndSettingsJsonFilesToZip(
+      String savedZipFilePathName =
+          await playlistListVM.savePlaylistsCommentsAndSettingsJsonFilesToZip(
         targetDirectoryPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      expect(
+        savedZipFilePathName,
+        "$kApplicationPathWindowsTest${path.separator}audioLearn_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip",
       );
 
       List<String> zipLst = DirUtil.listFileNamesInDir(
@@ -1525,7 +1531,8 @@ void main() {
         "S8 audio",
       ];
 
-      const String initialPlaylistRootPath = kPlaylistDownloadRootPathWindowsTest;
+      const String initialPlaylistRootPath =
+          kPlaylistDownloadRootPathWindowsTest;
       const String initialRootSelectedPlaylistTitle = 'S8 audio';
 
       // Verify the initial playlist data

@@ -1773,4 +1773,14 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get removeAudioPicture => "Remove Audio Picture";
+
+  @override
+  String savedAppDataToZip(
+    Object filePathName,
+  ) =>
+      "Saved playlist json files and application settings to \"$filePathName\".";
+
+  @override
+  String get appDataCouldNotBeSavedToZip =>
+      "Playlist json files and application settings could not be saved to zip.";
 }

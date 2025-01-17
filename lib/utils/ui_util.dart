@@ -61,9 +61,9 @@ class UiUtil {
   static Future<void> savePlaylistAndCommentsToZip({
     required BuildContext context,
   }) async {
-    String? selectedFilePathNameLst = await filePickerSelectTargetDir();
+    String? targetSaveDirectoryPath = await filePickerSelectTargetDir();
 
-    if (selectedFilePathNameLst == null) {
+    if (targetSaveDirectoryPath == null) {
       return;
     }
 
@@ -71,7 +71,7 @@ class UiUtil {
       context,
       listen: false,
     ).savePlaylistsCommentsAndSettingsJsonFilesToZip(
-      targetDirectoryPath: selectedFilePathNameLst,
+      targetDirectoryPath: targetSaveDirectoryPath,
     );
   }
 
