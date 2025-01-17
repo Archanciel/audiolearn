@@ -27943,7 +27943,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
           // Check the value of the warning dialog title
           Text warningDialogTitle =
-              tester.widget(find.byKey(const Key('warningDialogTitle')).last);
+              tester.widget(find.byKey(const Key('warningDialogTitle')).at(1));
           expect(warningDialogTitle.data, 'WARNING');
 
           // Check the value of the warning dialog message
@@ -28405,7 +28405,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
           // Check the value of the warning dialog title
           Text warningDialogTitle =
-              tester.widget(find.byKey(const Key('warningDialogTitle')).last);
+              tester.widget(find.byKey(const Key('warningDialogTitle')).at(1));
           expect(warningDialogTitle.data, 'WARNING');
 
           // Check the value of the warning dialog message
@@ -28674,7 +28674,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
           // Check the value of the warning dialog title
           Text warningDialogTitle =
-              tester.widget(find.byKey(const Key('warningDialogTitle')).last);
+              tester.widget(find.byKey(const Key('warningDialogTitle')).at(1));
           expect(warningDialogTitle.data, 'WARNING');
 
           // Check the value of the warning dialog message
@@ -29431,7 +29431,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
       // Check the value of the warning dialog message
       Text warningDialogMessage =
-          tester.widget(find.byKey(const Key('warningDialogMessage')).last);
+          tester.widget(find.byKey(const Key('warningDialogMessage')));
       expect(warningDialogMessage.data,
           'If the deleted audio video "$audioToDeleteTitle" remains in the "$youtubeAudioPlaylistTitle" Youtube playlist, it will be downloaded again the next time you download the playlist !');
 
