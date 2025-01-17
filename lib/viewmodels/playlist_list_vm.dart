@@ -2327,7 +2327,7 @@ class PlaylistListVM extends ChangeNotifier {
 
     Directory sourceDir = Directory(playlistsRootPath);
 
-    if (!sourceDir.existsSync() || !Directory(targetDir).existsSync()) {
+    if (!sourceDir.existsSync() || targetDir == '/') {
       return '';
     }
 
