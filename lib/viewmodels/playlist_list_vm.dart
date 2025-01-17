@@ -2312,10 +2312,7 @@ class PlaylistListVM extends ChangeNotifier {
     String playlistsRootPath = _settingsDataService.get(
         settingType: SettingType.dataLocation,
         settingSubType: DataLocation.playlistRootPath);
-    String applicationPath = _settingsDataService.get(
-      settingType: SettingType.dataLocation,
-      settingSubType: DataLocation.appSettingsPath,
-    );
+    String applicationPath = DirUtil.getApplicationPath();
 
     Directory sourceDir = Directory(playlistsRootPath);
 
