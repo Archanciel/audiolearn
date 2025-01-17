@@ -9904,7 +9904,7 @@ void main() {
         "local_audio_playlist_2",
       ];
 
-      await changePlaylistRootPath(
+      await _changePlaylistRootPath(
         tester: tester,
         mockFilePicker: mockFilePicker,
         pathToSelectStr:
@@ -9934,7 +9934,7 @@ void main() {
 
       // Now reset the playlist root path to the initial value
 
-      await changePlaylistRootPath(
+      await _changePlaylistRootPath(
         tester: tester,
         mockFilePicker: mockFilePicker,
         pathToSelectStr: kPlaylistDownloadRootPathWindowsTest,
@@ -9956,7 +9956,7 @@ void main() {
         "local_audio_playlist_2",
       ];
 
-      await changePlaylistRootPath(
+      await _changePlaylistRootPath(
         tester: tester,
         mockFilePicker: mockFilePicker,
         pathToSelectStr:
@@ -9975,9 +9975,76 @@ void main() {
     });
     group('App settings set speed test', () {});
   });
+  group('Save app settings and playlists json files to zip menu test', () {
+    testWidgets(
+        '''Successful save. The integration test verify the confirmation displayed
+           warning''', (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}2_youtube_2_local_playlists_integr_test_data",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+      // Replace the platform instance with your mock
+      MockFilePicker mockFilePicker = MockFilePicker();
+      FilePicker.platform = mockFilePicker;
+
+      await app.main(['test']);
+      await tester.pumpAndSettle();
+
+      // Create a new directory to which the zip file will be saved
+
+      String saveZipFilePath =
+          '$kPlaylistDownloadRootPathWindowsTest${path.separator}appSave';
+
+      DirUtil.createDirIfNotExistSync(
+        pathStr: saveZipFilePath,
+      );
+
+      // Setting the path value returned by the FilePicker mock.
+      mockFilePicker.setPathToSelect(
+        pathToSelectStr: saveZipFilePath,
+      );
+
+      // Tap the appbar leading popup menu button
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+      await tester.pumpAndSettle();
+
+      // Now tap on the 'Save Playlists and Comments to zip File' menu
+      await tester.tap(
+          find.byKey(const Key('appBarMenuCopyPlaylistsAndCommentsToZip')));
+      await tester.pumpAndSettle();
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+  });
 }
 
-Future<void> changePlaylistRootPath({
+Future<void> _changePlaylistRootPath({
   required WidgetTester tester,
   required MockFilePicker mockFilePicker,
   required String pathToSelectStr,
@@ -10831,23 +10898,12 @@ Future<void> _tapOnRewindPlaylistAudioToStartPositionMenu({
   await tester.tap(popupDeletePlaylistMenuItem);
   await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-  // Check the value of the Confirm dialog title
-  Text warningDialogTitle =
-      tester.widget(find.byKey(const Key('warningDialogTitle')));
-  expect(warningDialogTitle.data, 'CONFIRMATION');
-
-  // Now verifying the confirm dialog message
-
-  Text warningDialogMessageTextWidget =
-      tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
-
-  expect(warningDialogMessageTextWidget.data,
-      '$numberOfRewindedAudio playlist audio were repositioned to start.');
-
-  // Now find the ok button of the confirm dialog
-  // and tap on it
-  await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-  await tester.pumpAndSettle();
+  await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+    tester: tester,
+    warningDialogMessage:
+        '$numberOfRewindedAudio playlist audio were repositioned to start.',
+    isWarningConfirming: true,
+  );
 }
 
 void _verifyAllNowUnplayedAudioPlayPauseIconColor({

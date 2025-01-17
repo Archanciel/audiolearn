@@ -162,7 +162,7 @@ void main() {
         ),
         youtubePlaylistUrl,
       );
-      await tester.pumpAndSettle(const Duration(milliseconds:500));
+      await tester.pumpAndSettle(const Duration(milliseconds: 500));
 
       // Ensure the url text field contains the entered url
       TextField urlTextField = tester.widget(find.byKey(
@@ -459,23 +459,12 @@ void main() {
           .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
       await tester.pumpAndSettle();
 
-      // Ensure the warning dialog is shown
-      expect(find.byType(WarningMessageDisplayDialog), findsOneWidget);
-
-      // Check the value of the warning dialog title
-      Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'WARNING');
-
-      // Check the value of the warning dialog message
-      Text warningDialogMessage =
-          tester.widget(find.byKey(const Key('warningDialogMessage')));
-      expect(warningDialogMessage.data,
-          'The Youtube playlist title "$invalidYoutubePlaylistTitle" can not contain any comma. Please correct the title and retry ...');
-
-      // Close the warning dialog by tapping on the Ok button
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            'The Youtube playlist title "$invalidYoutubePlaylistTitle" can not contain any comma. Please correct the title and retry ...',
+        isWarningConfirming: false,
+      );
 
       // Ensure the URL TextField was not emptied
       urlTextField = tester.widget(find.byKey(
@@ -732,23 +721,12 @@ void main() {
           .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
       await tester.pumpAndSettle();
 
-      // Ensure the warning dialog is shown
-      expect(find.byType(WarningMessageDisplayDialog), findsOneWidget);
-
-      // Check the value of the warning dialog title
-      Text warningDialogTitleText =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitleText.data, 'WARNING');
-
-      // Check the value of the warning dialog message
-      Text warningDialogMessage =
-          tester.widget(find.byKey(const Key('warningDialogMessage')));
-      expect(warningDialogMessage.data,
-          'Playlist "$youtubeNewPlaylistTitle" with this URL "$youtubePlaylistUrl" is already in the list of playlists and so won\'t be recreated.');
-
-      // Close the warning dialog by tapping on the Ok button
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            'Playlist "$youtubeNewPlaylistTitle" with this URL "$youtubePlaylistUrl" is already in the list of playlists and so won\'t be recreated.',
+        isWarningConfirming: false,
+      );
 
       // Ensure the URL TextField was not emptied
       urlTextField = tester.widget(find.byKey(
@@ -1459,23 +1437,12 @@ void main() {
           .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
       await tester.pumpAndSettle();
 
-      // Ensure the warning dialog is shown
-      expect(find.byType(WarningMessageDisplayDialog), findsOneWidget);
-
-      // Check the value of the warning dialog title
-      Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'WARNING');
-
-      // Check the value of the warning dialog message
-      Text warningDialogMessage =
-          tester.widget(find.byKey(const Key('warningDialogMessage')));
-      expect(warningDialogMessage.data,
-          "Local playlist \"$localPlaylistTitle\" already exists in the list of playlists. Therefore, the local playlist with this title won't be created.");
-
-      // Close the warning dialog by tapping on the Ok button
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Local playlist \"$localPlaylistTitle\" already exists in the list of playlists. Therefore, the local playlist with this title won't be created.",
+        isWarningConfirming: false,
+      );
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -1524,23 +1491,12 @@ void main() {
           .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
       await tester.pumpAndSettle();
 
-      // Ensure the warning dialog is shown
-      expect(find.byType(WarningMessageDisplayDialog), findsOneWidget);
-
-      // Check the value of the warning dialog title
-      Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'WARNING');
-
-      // Check the value of the warning dialog message
-      Text warningDialogMessage =
-          tester.widget(find.byKey(const Key('warningDialogMessage')));
-      expect(warningDialogMessage.data,
-          "The local playlist title \"$invalidLocalPlaylistTitle\" can not contain any comma. Please correct the title and retry ...");
-
-      // Close the warning dialog by tapping on the Ok button
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "The local playlist title \"$invalidLocalPlaylistTitle\" can not contain any comma. Please correct the title and retry ...",
+        isWarningConfirming: false,
+      );
 
       // Correct the invalid title removing the comma
       String correctedLocalPlaylistTitle =
@@ -1708,23 +1664,12 @@ void main() {
           .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
       await tester.pumpAndSettle();
 
-      // Ensure the warning dialog is shown
-      expect(find.byType(WarningMessageDisplayDialog), findsOneWidget);
-
-      // Check the value of the warning dialog title
-      Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'WARNING');
-
-      // Check the value of the warning dialog message
-      Text warningDialogMessage =
-          tester.widget(find.byKey(const Key('warningDialogMessage')));
-      expect(warningDialogMessage.data,
-          "Youtube playlist \"$localPlaylistTitle\" already exists in the list of playlists. Therefore, the local playlist with this title won't be created.");
-
-      // Close the warning dialog by tapping on the Ok button
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Youtube playlist \"$localPlaylistTitle\" already exists in the list of playlists. Therefore, the local playlist with this title won't be created.",
+        isWarningConfirming: false,
+      );
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -2142,23 +2087,12 @@ void main() {
           .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
       await tester.pumpAndSettle();
 
-      // Ensure the warning dialog is shown
-      expect(find.byType(WarningMessageDisplayDialog), findsOneWidget);
-
-      // Check the value of the warning dialog title
-      Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'WARNING');
-
-      // Check the value of the warning dialog message
-      Text warningDialogMessage =
-          tester.widget(find.byKey(const Key('warningDialogMessage')));
-      expect(warningDialogMessage.data,
-          'Playlist with invalid URL "$invalidYoutubePlaylistUrl" neither added nor modified.');
-
-      // Close the warning dialog by tapping on the Ok button
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            'Playlist with invalid URL "$invalidYoutubePlaylistUrl" neither added nor modified.',
+        isWarningConfirming: false,
+      );
 
       // Ensure the URL TextField was not emptied
       urlTextField = tester.widget(find.byKey(
@@ -2302,23 +2236,12 @@ void main() {
           .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
       await tester.pumpAndSettle();
 
-      // Ensure the warning dialog is shown
-      expect(find.byType(WarningMessageDisplayDialog), findsOneWidget);
-
-      // Check the value of the warning dialog title
-      Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'WARNING');
-
-      // Check the value of the warning dialog message
-      Text warningDialogMessage =
-          tester.widget(find.byKey(const Key('warningDialogMessage')));
-      expect(warningDialogMessage.data,
-          'Playlist with invalid URL "$invalidYoutubePlaylistUrl" neither added nor modified.');
-
-      // Close the warning dialog by tapping on the Ok button
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            'Playlist with invalid URL "$invalidYoutubePlaylistUrl" neither added nor modified.',
+        isWarningConfirming: false,
+      );
 
       // Ensure the URL TextField was not emptied
       urlTextField = tester.widget(find.byKey(
@@ -2463,23 +2386,12 @@ void main() {
           .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
       await tester.pumpAndSettle();
 
-      // Ensure the warning dialog is shown
-      expect(find.byType(WarningMessageDisplayDialog), findsOneWidget);
-
-      // Check the value of the warning dialog title
-      Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'WARNING');
-
-      // Check the value of the warning dialog message
-      Text warningDialogMessage =
-          tester.widget(find.byKey(const Key('warningDialogMessage')));
-      expect(warningDialogMessage.data,
-          "Trying to add a private Youtube playlist is not possible since the audio's of a private playlist can not be downloaded. To solve the problem, edit the playlist on Youtube and change its visibility from \"Private\" to \"Unlisted\" or to \"Public\" and then re-add it to the application.");
-
-      // Close the warning dialog by tapping on the Ok button
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Trying to add a private Youtube playlist is not possible since the audio's of a private playlist can not be downloaded. To solve the problem, edit the playlist on Youtube and change its visibility from \"Private\" to \"Unlisted\" or to \"Public\" and then re-add it to the application.",
+        isWarningConfirming: false,
+      );
 
       // Ensure the URL TextField was not emptied
       urlTextField = tester.widget(find.byKey(
@@ -2606,20 +2518,12 @@ void main() {
           .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
       await tester.pumpAndSettle();
 
-      // Check the value of the Warning dialog title
-      Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'WARNING');
-
-      // Now verifying the warning dialog message
-      Text warningDialogMessageTextWidget =
-          tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
-      expect(warningDialogMessageTextWidget.data,
-          'Youtube playlist "Essai" of audio quality added at end of list of playlists.');
-
-      // Close the warning dialog by tapping on the Ok button.
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            'Youtube playlist "Essai" of audio quality added at end of list of playlists.',
+        isWarningConfirming: false,
+      );
 
       // Tap the first ListTile checkbox to select it
       await tester.tap(find.descendant(
@@ -2684,20 +2588,12 @@ void main() {
           .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
       await tester.pumpAndSettle();
 
-      // Check the value of the Warning dialog title
-      warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'WARNING');
-
-      // Now verifying the warning dialog message
-      warningDialogMessageTextWidget =
-          tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
-      expect(warningDialogMessageTextWidget.data,
-          'Youtube playlist "audio_player_view_2_shorts_test" of audio quality added at end of list of playlists.');
-
-      // Close the warning dialog by tapping on the Ok button.
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            'Youtube playlist "audio_player_view_2_shorts_test" of audio quality added at end of list of playlists.',
+        isWarningConfirming: false,
+      );
 
       // Tap the second ListTile checkbox to select it
       await tester.tap(find.descendant(
@@ -3154,23 +3050,12 @@ void main() {
       await tester.tap(find.byKey(const Key('okButtonKey')));
       await tester.pumpAndSettle();
 
-      // Ensure the warning dialog is shown
-      expect(find.byType(WarningMessageDisplayDialog), findsOneWidget);
-
-      // Check the value of the warning dialog title
-      Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'WARNING');
-
-      // Check the value of the warning dialog message
-      Text warningDialogMessage =
-          tester.widget(find.byKey(const Key('warningDialogMessage')));
-      expect(warningDialogMessage.data,
-          'The URL "$invalidSingleVideoUrl" supposed to point to a unique video is invalid. Therefore, no video has been downloaded.');
-
-      // Close the warning dialog by tapping on the Ok button
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            'The URL "$invalidSingleVideoUrl" supposed to point to a unique video is invalid. Therefore, no video has been downloaded.',
+        isWarningConfirming: false,
+      );
 
       // Ensure the URL TextField containing the invalid single
       // video URL was not emptied
@@ -3392,27 +3277,12 @@ void main() {
       await tester.tap(find.byKey(const Key('okButtonKey')));
       await tester.pumpAndSettle();
 
-      // Ensure the warning dialog is shown
-      expect(find.byType(WarningMessageDisplayDialog), findsOneWidget);
-
-      // Check the value of the warning dialog title
-      Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'WARNING');
-
-      // Check the value of the warning dialog message
-      Text warningDialogMessage =
-          tester.widget(find.byKey(const Key('warningDialogMessage')));
-      String expectedWarningDialogMessageStr =
-          'Audio "$downloadedSingleVideoAudioTitle" is contained in file "230628-033811-audio learn test short video one 23-06-10.mp3" present in the target playlist "$youtubeAudioSourceAndTargetPlaylistTitle" directory and so won\'t be redownloaded.';
-      expect(
-        warningDialogMessage.data,
-        expectedWarningDialogMessageStr,
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            'Audio "$downloadedSingleVideoAudioTitle" is contained in file "230628-033811-audio learn test short video one 23-06-10.mp3" present in the target playlist "$youtubeAudioSourceAndTargetPlaylistTitle" directory and so won\'t be redownloaded.',
+        isWarningConfirming: false,
       );
-
-      // Close the warning dialog by tapping on the Ok button
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
 
       // Ensure the URL TextField containing the invalid single
       // video URL was not emptied
@@ -3722,23 +3592,13 @@ void main() {
       await tester.tap(find.byKey(const Key('confirmButton')));
       await tester.pumpAndSettle();
 
-      // Check the value of the Confirm dialog title
-      Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'CONFIRMATION');
-
       // Now verifying the confirm dialog message
-
-      Text warningDialogMessageTextWidget =
-          tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
-
-      expect(warningDialogMessageTextWidget.data,
-          'Audio "audio learn test short video one" copié de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".');
-
-      // Now find the ok button of the confirm dialog
-      // and tap on it
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            'Audio "audio learn test short video one" copié de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".',
+        isWarningConfirming: true,
+      );
 
       // Now verifying the selected playlist TextField still
       // contains the title of the source playlist
@@ -3997,13 +3857,13 @@ void main() {
       await tester.pumpAndSettle();
 
       // Check the value of the Warning dialog title
-      warningDialogTitle =
+      Text warningDialogTitle =
           tester.widget(find.byKey(const Key('warningDialogTitle')));
       expect(warningDialogTitle.data, 'AVERTISSEMENT');
 
       // Now verifying the warning dialog message
 
-      warningDialogMessageTextWidget =
+      Text warningDialogMessageTextWidget =
           tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
 
       expect(warningDialogMessageTextWidget.data,
@@ -4265,22 +4125,12 @@ void main() {
       await tester.pumpAndSettle();
 
       // Check the value of the Confirm dialog title
-      Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'CONFIRMATION');
-
-      // Now verifying the confirm dialog message
-
-      Text warningDialogMessageTextWidget =
-          tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
-
-      expect(warningDialogMessageTextWidget.data,
-          'Audio "audio learn test short video one" copié de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".');
-
-      // Now find the ok button of the confirm dialog
-      // and tap on it
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            'Audio "audio learn test short video one" copié de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".',
+        isWarningConfirming: true,
+      );
 
       // Now verifying the selected playlist TextField still
       // contains the title of the source playlist
@@ -4454,13 +4304,13 @@ void main() {
       await tester.pumpAndSettle();
 
       // Check the value of the Warning dialog title
-      warningDialogTitle =
+      Text warningDialogTitle =
           tester.widget(find.byKey(const Key('warningDialogTitle')));
       expect(warningDialogTitle.data, 'AVERTISSEMENT');
 
       // Now verifying the warning dialog message
 
-      warningDialogMessageTextWidget =
+      Text warningDialogMessageTextWidget =
           tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
 
       expect(warningDialogMessageTextWidget.data,
@@ -4666,23 +4516,12 @@ void main() {
       await tester.tap(find.byKey(const Key('confirmButton')));
       await tester.pumpAndSettle();
 
-      // Check the value of the Confirm dialog title
-      Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'CONFIRMATION');
-
-      // Now verifying the confirm dialog message
-
-      Text warningDialogMessageTextWidget =
-          tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
-
-      expect(warningDialogMessageTextWidget.data,
-          'Audio "audio learn test short video one" copié de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".');
-
-      // Now find the ok button of the confirm dialog
-      // and tap on it
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            'Audio "audio learn test short video one" copié de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".',
+        isWarningConfirming: true,
+      );
 
       // Now verifying the selected playlist TextField still
       // contains the title of the source playlist
@@ -4906,23 +4745,12 @@ void main() {
       await tester.tap(find.byKey(const Key('confirmButton')));
       await tester.pumpAndSettle();
 
-      // Check the value of the Confirm dialog title
-      warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'CONFIRMATION');
-
-      // Now verifying the confirm dialog message
-
-      warningDialogMessageTextWidget =
-          tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
-
-      expect(warningDialogMessageTextWidget.data,
-          'Audio "audio learn test short video one" déplacé de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".');
-
-      // Now find the ok button of the confirm dialog
-      // and tap on it
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            'Audio "audio learn test short video one" déplacé de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".',
+        isWarningConfirming: true,
+      );
 
       // Now verifying the selected playlist TextField still contains
       // the title of the source playlist
@@ -5038,23 +4866,12 @@ void main() {
       await tester.tap(find.byKey(const Key('confirmButton')));
       await tester.pumpAndSettle();
 
-      // Check the value of the Confirm dialog title
-      Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'CONFIRMATION');
-
-      // Now verifying the confirm dialog message
-
-      Text warningDialogMessageTextWidget =
-          tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
-
-      expect(warningDialogMessageTextWidget.data,
-          'Audio "audio learn test short video one" copié de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".');
-
-      // Now find the ok button of the confirm dialog
-      // and tap on it
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            'Audio "audio learn test short video one" copié de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".',
+        isWarningConfirming: true,
+      );
 
       // Now verifying the selected playlist TextField still
       // contains the title of the source playlist
@@ -5234,23 +5051,12 @@ void main() {
       await tester.tap(find.byKey(const Key('confirmButton')));
       await tester.pumpAndSettle();
 
-      // Check the value of the Confirm dialog title
-      warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'CONFIRMATION');
-
-      // Now verifying the confirm dialog message
-
-      warningDialogMessageTextWidget =
-          tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
-
-      expect(warningDialogMessageTextWidget.data,
-          'Audio "audio learn test short video one" copié de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".');
-
-      // Now find the ok button of the confirm dialog
-      // and tap on it
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            'Audio "audio learn test short video one" copié de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".',
+        isWarningConfirming: true,
+      );
 
       // Now verifying the selected playlist TextField still
       // contains the title of the source playlist
@@ -7636,20 +7442,12 @@ void main() {
 
       // Now verifying the warning dialog
 
-      // Check the value of the warning dialog title
-      Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'WARNING');
-
-      // Check the value of the warning dialog message
-      Text warningDialogMessage =
-          tester.widget(find.byKey(const Key('warningDialogMessage')));
-      expect(warningDialogMessage.data,
-          'Playable audio list for playlist "$youtubePlaylistTitle" was updated. 4 audio(s) were removed.');
-
-      // Close the warning dialog by tapping on the Ok button
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            'Playable audio list for playlist "$youtubePlaylistTitle" was updated. 4 audio(s) were removed.',
+        isWarningConfirming: false,
+      );
 
       // Test that the youtube playlist is no longer showing the
       // deleted audio
@@ -7841,20 +7639,12 @@ void main() {
 
       // Now verifying the warning dialog
 
-      // Check the value of the warning dialog title
-      Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'WARNING');
-
-      // Check the value of the warning dialog message
-      Text warningDialogMessage =
-          tester.widget(find.byKey(const Key('warningDialogMessage')));
-      expect(warningDialogMessage.data,
-          'Playable audio list for playlist "$localPlaylistTitle" was updated. 2 audio(s) were removed.');
-
-      // Close the warning dialog by tapping on the Ok button
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            'Playable audio list for playlist "$localPlaylistTitle" was updated. 2 audio(s) were removed.',
+        isWarningConfirming: false,
+      );
 
       // Test that the local playlist is no longer showing the
       // deleted audio
@@ -8054,21 +7844,12 @@ void main() {
       await tester.pumpAndSettle();
 
       // Now verifying the warning dialog
-
-      // Check the value of the warning dialog title
-      Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'WARNING');
-
-      // Check the value of the warning dialog message
-      Text warningDialogMessage =
-          tester.widget(find.byKey(const Key('warningDialogMessage')));
-      expect(warningDialogMessage.data,
-          'Playable audio list for playlist "$youtubePlaylistTitle" was updated. 1 audio(s) were removed.');
-
-      // Close the warning dialog by tapping on the Ok button
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            'Playable audio list for playlist "$youtubePlaylistTitle" was updated. 1 audio(s) were removed.',
+        isWarningConfirming: false,
+      );
 
       // Test that the youtube playlist is no longer showing the
       // deleted audio
@@ -8235,21 +8016,12 @@ void main() {
       await tester.pumpAndSettle();
 
       // Now verifying the warning dialog
-
-      // Check the value of the warning dialog title
-      Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'WARNING');
-
-      // Check the value of the warning dialog message
-      Text warningDialogMessage =
-          tester.widget(find.byKey(const Key('warningDialogMessage')));
-      expect(warningDialogMessage.data,
-          'Playable audio list for playlist "$localPlaylistTitle" was updated. 1 audio(s) were removed.');
-
-      // Close the warning dialog by tapping on the Ok button
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            'Playable audio list for playlist "$localPlaylistTitle" was updated. 1 audio(s) were removed.',
+        isWarningConfirming: false,
+      );
 
       // Test that the local playlist is no longer showing the
       // deleted audio
@@ -10781,20 +10553,13 @@ void main() {
           await tester.tap(find.byKey(const Key('confirmButton')));
           await tester.pumpAndSettle();
 
-          // Check the value of the warning dialog title
-          Text warningDialogTitle =
-              tester.widget(find.byKey(const Key('warningDialogTitle')).last);
-          expect(warningDialogTitle.data, 'WARNING');
-
-          // Check the value of the warning dialog message
-          Text warningDialogMessage =
-              tester.widget(find.byKey(const Key('warningDialogMessage')).last);
-          expect(warningDialogMessage.data,
-              'If the deleted audio video "$commentedAudioTitleToDelete" remains in the "$youtubePlaylistTitle" Youtube playlist, it will be downloaded again the next time you download the playlist !');
-
-          // Close the warning dialog by tapping on the Ok button
-          await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
-          await tester.pumpAndSettle();
+          // Now verifying the warning dialog
+          await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+            tester: tester,
+            warningDialogMessage:
+                'If the deleted audio video "$commentedAudioTitleToDelete" remains in the "$youtubePlaylistTitle" Youtube playlist, it will be downloaded again the next time you download the playlist !',
+            isWarningConfirming: false,
+          );
 
           // Verify that the applyed Sort/Filter parms name is displayed
           // after the selected playlist title
@@ -10950,20 +10715,13 @@ void main() {
           await tester.tap(popupCopyMenuItem);
           await tester.pumpAndSettle();
 
-          // Check the value of the warning dialog title
-          Text warningDialogTitle =
-              tester.widget(find.byKey(const Key('warningDialogTitle')).last);
-          expect(warningDialogTitle.data, 'WARNING');
-
-          // Check the value of the warning dialog message
-          Text warningDialogMessage =
-              tester.widget(find.byKey(const Key('warningDialogMessage')).last);
-          expect(warningDialogMessage.data,
-              'If the deleted audio video "$uncommentedAudioTitleToDelete" remains in the "$youtubePlaylistTitle" Youtube playlist, it will be downloaded again the next time you download the playlist !');
-
-          // Close the warning dialog by tapping on the Ok button
-          await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
-          await tester.pumpAndSettle();
+          // Now verifying the warning dialog
+          await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+            tester: tester,
+            warningDialogMessage:
+                'If the deleted audio video "$uncommentedAudioTitleToDelete" remains in the "$youtubePlaylistTitle" Youtube playlist, it will be downloaded again the next time you download the playlist !',
+            isWarningConfirming: false,
+          );
 
           // Verify that the applyed Sort/Filter parms name is displayed
           // after the selected playlist title
@@ -12537,20 +12295,13 @@ void main() {
       // Ensure the warning dialog is shown
       expect(find.byType(WarningMessageDisplayDialog), findsOneWidget);
 
-      // Check the value of the warning dialog title
-      Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')).last);
-      expect(warningDialogTitle.data, 'WARNING');
-
-      // Check the value of the warning dialog message
-      Text warningDialogMessage =
-          tester.widget(find.byKey(const Key('warningDialogMessage')).last);
-      expect(warningDialogMessage.data,
-          'If the deleted audio video "$audioToDeleteTitle" remains in the "$youtubeAudioPlaylistTitle" Youtube playlist, it will be downloaded again the next time you download the playlist !');
-
-      // Close the warning dialog by tapping on the Ok button
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
-      await tester.pumpAndSettle();
+      // Now verifying the warning dialog
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            'If the deleted audio video "$audioToDeleteTitle" remains in the "$youtubeAudioPlaylistTitle" Youtube playlist, it will be downloaded again the next time you download the playlist !',
+        isWarningConfirming: false,
+      );
 
       // Check the saved youtube audio playlist values in the json file
 
@@ -17635,23 +17386,13 @@ void playlistOneDownloadViewIntegrationTest() {
           .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
       await tester.pumpAndSettle();
 
-      // Ensure the warning dialog is shown
-      expect(find.byType(WarningMessageDisplayDialog), findsOneWidget);
-
-      // Check the value of the warning dialog title
-      Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'WARNING');
-
-      // Check the value of the warning dialog message
-      Text warningDialogMessage =
-          tester.widget(find.byKey(const Key('warningDialogMessage')));
-      expect(warningDialogMessage.data,
-          'The Youtube playlist title "$invalidYoutubePlaylistTitle" can not contain any comma. Please correct the title and retry ...');
-
-      // Close the warning dialog by tapping on the Ok button
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
+      // Now verifying the warning dialog
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            'The Youtube playlist title "$invalidYoutubePlaylistTitle" can not contain any comma. Please correct the title and retry ...',
+        isWarningConfirming: false,
+      );
 
       // Ensure the URL TextField was not emptied
       urlTextField = tester.widget(find.byKey(
@@ -17910,6 +17651,8 @@ void playlistOneDownloadViewIntegrationTest() {
 
       // Ensure the warning dialog is shown
       expect(find.byType(WarningMessageDisplayDialog), findsOneWidget);
+
+//STAYED HERE
 
       // Check the value of the warning dialog title
       Text warningDialogTitleText =
@@ -20898,23 +20641,12 @@ void playlistOneDownloadViewIntegrationTest() {
       await tester.tap(find.byKey(const Key('confirmButton')));
       await tester.pumpAndSettle();
 
-      // Check the value of the Confirm dialog title
-      Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'CONFIRMATION');
-
-      // Now verifying the confirm dialog message
-
-      Text warningDialogMessageTextWidget =
-          tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
-
-      expect(warningDialogMessageTextWidget.data,
-          'Audio "audio learn test short video one" copié de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".');
-
-      // Now find the ok button of the confirm dialog
-      // and tap on it
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            'Audio "audio learn test short video one" copié de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".',
+        isWarningConfirming: true,
+      );
 
       // Now verifying the selected playlist TextField still
       // contains the title of the source playlist
@@ -21172,13 +20904,13 @@ void playlistOneDownloadViewIntegrationTest() {
       await tester.pumpAndSettle();
 
       // Check the value of the Warning dialog title
-      warningDialogTitle =
+      Text warningDialogTitle =
           tester.widget(find.byKey(const Key('warningDialogTitle')));
       expect(warningDialogTitle.data, 'AVERTISSEMENT');
 
       // Now verifying the warning dialog message
 
-      warningDialogMessageTextWidget =
+      Text warningDialogMessageTextWidget =
           tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
 
       expect(warningDialogMessageTextWidget.data,
@@ -21439,23 +21171,12 @@ void playlistOneDownloadViewIntegrationTest() {
       await tester.tap(find.byKey(const Key('confirmButton')));
       await tester.pumpAndSettle();
 
-      // Check the value of the Confirm dialog title
-      Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'CONFIRMATION');
-
-      // Now verifying the confirm dialog message
-
-      Text warningDialogMessageTextWidget =
-          tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
-
-      expect(warningDialogMessageTextWidget.data,
-          'Audio "audio learn test short video one" copié de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".');
-
-      // Now find the ok button of the confirm dialog
-      // and tap on it
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            'Audio "audio learn test short video one" copié de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".',
+        isWarningConfirming: true,
+      );
 
       // Now verifying the selected playlist TextField still
       // contains the title of the source playlist
@@ -21628,13 +21349,13 @@ void playlistOneDownloadViewIntegrationTest() {
       await tester.pumpAndSettle();
 
       // Check the value of the Warning dialog title
-      warningDialogTitle =
+      Text warningDialogTitle =
           tester.widget(find.byKey(const Key('warningDialogTitle')));
       expect(warningDialogTitle.data, 'AVERTISSEMENT');
 
       // Now verifying the warning dialog message
 
-      warningDialogMessageTextWidget =
+      Text warningDialogMessageTextWidget =
           tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
 
       expect(warningDialogMessageTextWidget.data,
@@ -21840,23 +21561,12 @@ void playlistOneDownloadViewIntegrationTest() {
       await tester.tap(find.byKey(const Key('confirmButton')));
       await tester.pumpAndSettle();
 
-      // Check the value of the Confirm dialog title
-      Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'CONFIRMATION');
-
-      // Now verifying the confirm dialog message
-
-      Text warningDialogMessageTextWidget =
-          tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
-
-      expect(warningDialogMessageTextWidget.data,
-          'Audio "audio learn test short video one" copié de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".');
-
-      // Now find the ok button of the confirm dialog
-      // and tap on it
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            'Audio "audio learn test short video one" copié de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".',
+        isWarningConfirming: true,
+      );
 
       // Now verifying the selected playlist TextField still
       // contains the title of the source playlist
@@ -22079,23 +21789,12 @@ void playlistOneDownloadViewIntegrationTest() {
       await tester.tap(find.byKey(const Key('confirmButton')));
       await tester.pumpAndSettle();
 
-      // Check the value of the Confirm dialog title
-      warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'CONFIRMATION');
-
-      // Now verifying the confirm dialog message
-
-      warningDialogMessageTextWidget =
-          tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
-
-      expect(warningDialogMessageTextWidget.data,
-          'Audio "audio learn test short video one" déplacé de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".');
-
-      // Now find the ok button of the confirm dialog
-      // and tap on it
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            'Audio "audio learn test short video one" déplacé de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".',
+        isWarningConfirming: true,
+      );
 
       // Now verifying the selected playlist TextField still contains
       // the title of the source playlist
@@ -22211,23 +21910,12 @@ void playlistOneDownloadViewIntegrationTest() {
       await tester.tap(find.byKey(const Key('confirmButton')));
       await tester.pumpAndSettle();
 
-      // Check the value of the Confirm dialog title
-      Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'CONFIRMATION');
-
-      // Now verifying the confirm dialog message
-
-      Text warningDialogMessageTextWidget =
-          tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
-
-      expect(warningDialogMessageTextWidget.data,
-          'Audio "audio learn test short video one" copié de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".');
-
-      // Now find the ok button of the confirm dialog
-      // and tap on it
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            'Audio "audio learn test short video one" copié de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".',
+        isWarningConfirming: true,
+      );
 
       // Now verifying the selected playlist TextField still
       // contains the title of the source playlist
@@ -22406,23 +22094,12 @@ void playlistOneDownloadViewIntegrationTest() {
       await tester.tap(find.byKey(const Key('confirmButton')));
       await tester.pumpAndSettle();
 
-      // Check the value of the Confirm dialog title
-      warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'CONFIRMATION');
-
-      // Now verifying the confirm dialog message
-
-      warningDialogMessageTextWidget =
-          tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
-
-      expect(warningDialogMessageTextWidget.data,
-          'Audio "audio learn test short video one" copié de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".');
-
-      // Now find the ok button of the confirm dialog
-      // and tap on it
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            'Audio "audio learn test short video one" copié de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".',
+        isWarningConfirming: true,
+      );
 
       // Now verifying the selected playlist TextField still
       // contains the title of the source playlist
@@ -32816,7 +32493,8 @@ void playlistOneDownloadViewIntegrationTest() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets('Downl audio: chng title and comments', (WidgetTester tester) async {
+    testWidgets('Downl audio: chng title and comments',
+        (WidgetTester tester) async {
       const String youtubePlaylistTitle =
           'audio_player_view_2_shorts_test'; // Youtube playlist
       const String audioOneTitle = "morning _ cinematic video";
@@ -32896,9 +32574,6 @@ void playlistOneDownloadViewIntegrationTest() {
         expectedCommentTitle: 'Accessible after renaming',
         audioTitleToVerifyInCommentAddEditDialog: newTitle,
       );
-
-
-
 
       // Then obtain the audio ListTile widget enclosing the Text widget
       // by finding its ancestor

@@ -777,12 +777,12 @@ class IntegrationTestUtil {
 
     // Check the value of the warning dialog message
     expect(
-      tester.widget<Text>(find.byKey(const Key('warningDialogMessage'))).data,
+      tester.widget<Text>(find.byKey(const Key('warningDialogMessage')).last).data,
       warningDialogMessage,
     );
 
     // Close the warning dialog by tapping on the Ok button
-    await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+    await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
     await tester.pumpAndSettle();
   }
 
