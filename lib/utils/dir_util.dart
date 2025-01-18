@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'dart:io';
+import 'package:archive/archive.dart';
 import 'package:path/path.dart' as path;
 
 import '../constants.dart';
@@ -577,5 +578,28 @@ class DirUtil {
 
     // Read the content of the file
     return file.readAsStringSync();
+  }
+
+  static Future<List<String>> listPathFileNamesInZip({
+    required String zipFilePathName,
+  }) async {
+    // Open the zip file
+    File zipFile = File(zipFilePathName);
+    List<int> bytes = await zipFile.readAsBytes();
+
+    // Decode the zip file
+    Archive archive = ZipDecoder().decodeBytes(bytes);
+
+    // List to store the full paths of files
+    List<String> filePaths = [];
+
+    // Loop through the archive files and get their full paths (name includes directories)
+    for (ArchiveFile file in archive) {
+      if (!file.isFile) continue; // Skip directories
+      filePaths
+          .add(file.name); // File name includes the full path inside the zip
+    }
+
+    return filePaths;
   }
 }

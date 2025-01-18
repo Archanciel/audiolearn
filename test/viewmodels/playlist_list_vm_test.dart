@@ -883,7 +883,7 @@ void main() {
         "settings.json",
       ];
 
-      List<String> zipFilePathNamesLst = await listFilesInZip(
+      List<String> zipFilePathNamesLst = await DirUtil.listPathFileNamesInZip(
         zipFilePathName:
             kApplicationPathWindowsTest + path.separator + zipLst[0],
       );
@@ -964,7 +964,7 @@ void main() {
         "settings.json",
       ];
 
-      List<String> zipFilePathNamesLst = await listFilesInZip(
+      List<String> zipFilePathNamesLst = await DirUtil.listPathFileNamesInZip(
         zipFilePathName:
             kApplicationPathWindowsTest + path.separator + zipLst[0],
       );
@@ -1825,26 +1825,4 @@ bool ensureAudioAreEquals(Audio audio1, Audio audio2) {
       audio1.audioPausedDateTime == audio2.audioPausedDateTime &&
       audio1.audioPlaySpeed == audio2.audioPlaySpeed &&
       audio1.isAudioMusicQuality == audio2.isAudioMusicQuality;
-}
-
-Future<List<String>> listFilesInZip({
-  required String zipFilePathName,
-}) async {
-  // Open the zip file
-  File zipFile = File(zipFilePathName);
-  List<int> bytes = await zipFile.readAsBytes();
-
-  // Decode the zip file
-  Archive archive = ZipDecoder().decodeBytes(bytes);
-
-  // List to store the full paths of files
-  List<String> filePaths = [];
-
-  // Loop through the archive files and get their full paths (name includes directories)
-  for (ArchiveFile file in archive) {
-    if (!file.isFile) continue; // Skip directories
-    filePaths.add(file.name); // File name includes the full path inside the zip
-  }
-
-  return filePaths;
 }
