@@ -758,6 +758,8 @@ class IntegrationTestUtil {
     required WidgetTester tester,
     required String warningDialogMessage,
     bool isWarningConfirming = false,
+    bool tapTwiceOnOkButton = false,
+    String warningTitle = 'WARNING', // useful for AVERTISSEMENT title in french !
   }) async {
     // Ensure the warning dialog is shown
     final Finder warningMessageDisplayDialogFinder =
@@ -767,23 +769,34 @@ class IntegrationTestUtil {
     // Check the value of the warning dialog title
 
     Text warningDialogTitle =
-        tester.widget(find.byKey(const Key('warningDialogTitle')));
+        tester.widget(find.byKey(const Key('warningDialogTitle')).last);
 
     if (isWarningConfirming) {
       expect(warningDialogTitle.data, 'CONFIRMATION');
     } else {
-      expect(warningDialogTitle.data, 'WARNING');
+      expect(warningDialogTitle.data, warningTitle);
     }
 
     // Check the value of the warning dialog message
     expect(
-      tester.widget<Text>(find.byKey(const Key('warningDialogMessage'))).data,
+      tester
+          .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
+          .data,
       warningDialogMessage,
     );
 
     // Close the warning dialog by tapping on the Ok button
-    await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-    await tester.pumpAndSettle();
+
+    if (tapTwiceOnOkButton) {
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+    } else {
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+      await tester.pumpAndSettle();
+    }
   }
 
   static Future<void> selectPlaylist({

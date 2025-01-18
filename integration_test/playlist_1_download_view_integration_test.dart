@@ -3579,7 +3579,7 @@ void main() {
       // Find and select the ListTile to move'
       const String playlistToMoveDownTitle = 'local_audio';
 
-      await findThenSelectAndTestListTileCheckbox(
+      await _findThenSelectAndTestListTileCheckbox(
         tester: tester,
         itemTextStr: playlistToMoveDownTitle,
       );
@@ -5415,7 +5415,7 @@ void main() {
       // Now verifying the copied audio info dialog related content
       // in the source Youtube playlist
 
-      await verifyAudioInfoDialog(
+      await _verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: youtubeAudioSourcePlaylistTitle,
         movedOrCopiedAudioTitle: copiedAudioTitle,
@@ -5437,7 +5437,7 @@ void main() {
       // Now verifying the copied audio info dialog related content
       // in the target local playlist
 
-      Finder targetAudioListTileWidgetFinder = await verifyAudioInfoDialog(
+      Finder targetAudioListTileWidgetFinder = await _verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: localAudioTargetOnePlaylistTitle,
         movedOrCopiedAudioTitle: copiedAudioTitle,
@@ -5533,7 +5533,7 @@ void main() {
 
       // Now verifying the copied audio info dialog related content
       // in the source local playlist
-      targetAudioListTileWidgetFinder = await verifyAudioInfoDialog(
+      targetAudioListTileWidgetFinder = await _verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: localAudioTargetOnePlaylistTitle,
         movedOrCopiedAudioTitle: copiedAudioTitle,
@@ -5554,7 +5554,7 @@ void main() {
 
       // Now verifying the copied audio info dialog related content
       // in the target local playlist
-      targetAudioListTileWidgetFinder = await verifyAudioInfoDialog(
+      targetAudioListTileWidgetFinder = await _verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: localAudioTargetTwoPlaylistTitle,
         movedOrCopiedAudioTitle: copiedAudioTitle,
@@ -6059,7 +6059,7 @@ void main() {
       // Now verifying the moved audio info dialog related content
       // in the target local playlist
 
-      Finder targetAudioListTileWidgetFinder = await verifyAudioInfoDialog(
+      Finder targetAudioListTileWidgetFinder = await _verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: localAudioTargetPlaylistTitle,
         movedOrCopiedAudioTitle: movedAudioTitle,
@@ -6207,7 +6207,7 @@ void main() {
         playlistToSelectTitle: youtubeAudioSourcePlaylistTitle,
       );
 
-      targetAudioListTileWidgetFinder = await verifyAudioInfoDialog(
+      targetAudioListTileWidgetFinder = await _verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: youtubeAudioSourcePlaylistTitle,
         movedOrCopiedAudioTitle: movedAudioTitle,
@@ -6288,7 +6288,7 @@ void main() {
       // Now verifying the moved audio info dialog related content
       // in the target local playlist
 
-      targetAudioListTileWidgetFinder = await verifyAudioInfoDialog(
+      targetAudioListTileWidgetFinder = await _verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: localAudioTargetPlaylistTitle,
         movedOrCopiedAudioTitle: movedAudioTitle,
@@ -6928,7 +6928,7 @@ void main() {
       // Now verifying the copied audio informations in the source
       // playlist
 
-      await verifyAudioInfoDialogElements(
+      await _verifyAudioInfoDialogElements(
         tester: tester,
         audioTitle: copiedAudioTitle,
         playlistEnclosingAudioTitle: youtubeAudioSourcePlaylistTitle,
@@ -6941,7 +6941,7 @@ void main() {
       // And verifying the copied audio informations in the target
       // playlist
 
-      await verifyAudioInfoDialogElements(
+      await _verifyAudioInfoDialogElements(
         tester: tester,
         audioTitle: copiedAudioTitle,
         playlistEnclosingAudioTitle: localAudioTargetSourcePlaylistTitle,
@@ -7060,7 +7060,7 @@ void main() {
       // Now verifying the copied audio informations in the source
       // playlist
 
-      await verifyAudioInfoDialogElements(
+      await _verifyAudioInfoDialogElements(
         tester: tester,
         audioTitle: copiedAudioTitle,
         playlistEnclosingAudioTitle: localAudioTargetSourcePlaylistTitle,
@@ -7073,7 +7073,7 @@ void main() {
       // And verifying the copied audio informations in the target
       // playlist
 
-      await verifyAudioInfoDialogElements(
+      await _verifyAudioInfoDialogElements(
         tester: tester,
         audioTitle: copiedAudioTitle,
         playlistEnclosingAudioTitle: youtubeAudioTargetPlaylistTitle,
@@ -7316,7 +7316,7 @@ void main() {
       // playlist. In the source playlist, the audio is no longer
       // displayed since it was moved to the target playlist.
 
-      await verifyAudioInfoDialogElements(
+      await _verifyAudioInfoDialogElements(
         tester: tester,
         audioTitle: copiedAudioTitle,
         playlistEnclosingAudioTitle: localAudioTargetSourcePlaylistTitle,
@@ -7433,7 +7433,7 @@ void main() {
       // playlist. In the source playlist, the audio is no longer
       // displayed since it was moved to the target playlist.
 
-      await verifyAudioInfoDialogElements(
+      await _verifyAudioInfoDialogElements(
         tester: tester,
         audioTitle: copiedAudioTitle,
         playlistEnclosingAudioTitle: youtubeAudioTargetPlaylistTitle,
@@ -7582,7 +7582,7 @@ void main() {
       // Now find the Checkbox widget located in the playlist ListTile
       // and tap on it to select the playlist
 
-      await tapPlaylistCheckboxIfNotAlreadyChecked(
+      await _tapPlaylistCheckboxIfNotAlreadyChecked(
         playlistListTileWidgetFinder: youtubePlaylistListTileWidgetFinder,
         widgetTester: tester,
       );
@@ -7799,7 +7799,7 @@ void main() {
       // Now find the Checkbox widget located in the playlist ListTile
       // and tap on it to select the playlist
 
-      await tapPlaylistCheckboxIfNotAlreadyChecked(
+      await _tapPlaylistCheckboxIfNotAlreadyChecked(
         playlistListTileWidgetFinder: localPlaylistListTileWidgetFinder,
         widgetTester: tester,
       );
@@ -8002,7 +8002,7 @@ void main() {
       // Now find the Checkbox widget located in the playlist ListTile
       // and tap on it to select the playlist
 
-      await tapPlaylistCheckboxIfNotAlreadyChecked(
+      await _tapPlaylistCheckboxIfNotAlreadyChecked(
         playlistListTileWidgetFinder: youtubePlaylistListTileWidgetFinder,
         widgetTester: tester,
       );
@@ -8194,7 +8194,7 @@ void main() {
       // Now find the Checkbox widget located in the playlist ListTile
       // and tap on it to select the playlist
 
-      await tapPlaylistCheckboxIfNotAlreadyChecked(
+      await _tapPlaylistCheckboxIfNotAlreadyChecked(
         playlistListTileWidgetFinder: localPlaylistListTileWidgetFinder,
         widgetTester: tester,
       );
@@ -8491,7 +8491,7 @@ void main() {
       // Now find the Checkbox widget located in the playlist ListTile
       // and tap on it to select the playlist
 
-      await tapPlaylistCheckboxIfNotAlreadyChecked(
+      await _tapPlaylistCheckboxIfNotAlreadyChecked(
         playlistListTileWidgetFinder: addedYoutubePlaylistListTileWidgetFinder,
         widgetTester: tester,
       );
@@ -8616,7 +8616,7 @@ void main() {
 
       // Ensure the new playlist has been unselected
       Finder localPlaylistListTileCheckboxWidgetFinder =
-          await ensurePlaylistCheckboxIsNotChecked(
+          await _ensurePlaylistCheckboxIsNotChecked(
         playlistListTileWidgetFinder: testLocalPlaylistTileWidgetFinder,
         widgetTester: tester,
       );
@@ -8745,7 +8745,7 @@ void main() {
 
       // Ensure the new playlist has been unselected
       Finder youtubePlaylistListTileCheckboxWidgetFinder =
-          await ensurePlaylistCheckboxIsNotChecked(
+          await _ensurePlaylistCheckboxIsNotChecked(
         playlistListTileWidgetFinder: testYoutubePlaylistTileWidgetFinder,
         widgetTester: tester,
       );
@@ -8956,7 +8956,7 @@ void main() {
       // Now find the Checkbox widget located in the playlist ListTile
       // and tap on it to select the playlist
 
-      await tapPlaylistCheckboxIfNotAlreadyChecked(
+      await _tapPlaylistCheckboxIfNotAlreadyChecked(
         playlistListTileWidgetFinder: addedYoutubePlaylistListTileWidgetFinder,
         widgetTester: tester,
       );
@@ -9087,7 +9087,7 @@ void main() {
       // Now find the Checkbox widget located in the playlist ListTile
       // and tap on it to select the playlist
 
-      await tapPlaylistCheckboxIfNotAlreadyChecked(
+      await _tapPlaylistCheckboxIfNotAlreadyChecked(
         playlistListTileWidgetFinder: addedYoutubePlaylistListTileWidgetFinder,
         widgetTester: tester,
       );
@@ -9216,7 +9216,7 @@ void main() {
 
       // Now find the Checkbox widget located in the playlist ListTile
       // and tap on it to select the playlist
-      await tapPlaylistCheckboxIfNotAlreadyChecked(
+      await _tapPlaylistCheckboxIfNotAlreadyChecked(
         playlistListTileWidgetFinder: youtubePlaylistListTileWidgetFinder,
         widgetTester: tester,
       );
@@ -9365,7 +9365,7 @@ void main() {
 
       // Now find the Checkbox widget located in the playlist ListTile
       // and tap on it to select the playlist
-      await tapPlaylistCheckboxIfNotAlreadyChecked(
+      await _tapPlaylistCheckboxIfNotAlreadyChecked(
         playlistListTileWidgetFinder: youtubePlaylistListTileWidgetFinder,
         widgetTester: tester,
       );
@@ -9520,7 +9520,7 @@ void main() {
 
       // Now find the Checkbox widget located in the playlist ListTile
       // and tap on it to select the playlist
-      await tapPlaylistCheckboxIfNotAlreadyChecked(
+      await _tapPlaylistCheckboxIfNotAlreadyChecked(
         playlistListTileWidgetFinder: youtubePlaylistListTileWidgetFinder,
         widgetTester: tester,
       );
@@ -9663,7 +9663,7 @@ void main() {
 
       // Now find the Checkbox widget located in the playlist ListTile
       // and tap on it to select the playlist
-      await tapPlaylistCheckboxIfNotAlreadyChecked(
+      await _tapPlaylistCheckboxIfNotAlreadyChecked(
         playlistListTileWidgetFinder: youtubePlaylistListTileWidgetFinder,
         widgetTester: tester,
       );
@@ -10026,7 +10026,7 @@ void main() {
 
           // Verify the 'S8 audio' playlist json file
 
-          Playlist loadedPlaylist = loadPlaylist(youtubePlaylistTitle);
+          Playlist loadedPlaylist = _loadPlaylist(youtubePlaylistTitle);
 
           expect(loadedPlaylist.downloadedAudioLst.length, 18);
 
@@ -10166,7 +10166,7 @@ void main() {
 
           // Verify the 'S8 audio' playlist json file
 
-          Playlist loadedPlaylist = loadPlaylist(youtubePlaylistTitle);
+          Playlist loadedPlaylist = _loadPlaylist(youtubePlaylistTitle);
 
           expect(loadedPlaylist.downloadedAudioLst.length, 18);
 
@@ -10421,7 +10421,7 @@ void main() {
 
           // Verify the 'S8 audio' playlist json file
 
-          Playlist loadedPlaylist = loadPlaylist(youtubePlaylistTitle);
+          Playlist loadedPlaylist = _loadPlaylist(youtubePlaylistTitle);
 
           expect(loadedPlaylist.downloadedAudioLst.length, 18);
 
@@ -10625,7 +10625,7 @@ void main() {
 
           // Verify the 'S8 audio' playlist json file
 
-          Playlist loadedPlaylist = loadPlaylist(youtubePlaylistTitle);
+          Playlist loadedPlaylist = _loadPlaylist(youtubePlaylistTitle);
 
           expect(loadedPlaylist.downloadedAudioLst.length, 18);
 
@@ -10835,7 +10835,7 @@ void main() {
 
           // Verify the 'S8 audio' playlist json file
 
-          Playlist loadedPlaylist = loadPlaylist(youtubePlaylistTitle);
+          Playlist loadedPlaylist = _loadPlaylist(youtubePlaylistTitle);
 
           expect(loadedPlaylist.downloadedAudioLst.length, 17);
 
@@ -10991,7 +10991,7 @@ void main() {
 
           // Verify the 'S8 audio' playlist json file
 
-          Playlist loadedPlaylist = loadPlaylist(youtubePlaylistTitle);
+          Playlist loadedPlaylist = _loadPlaylist(youtubePlaylistTitle);
 
           expect(loadedPlaylist.downloadedAudioLst.length, 17);
 
@@ -11301,7 +11301,7 @@ void main() {
 
           // Verify the 'S8 audio' playlist json file
 
-          Playlist loadedPlaylist = loadPlaylist(youtubePlaylistTitle);
+          Playlist loadedPlaylist = _loadPlaylist(youtubePlaylistTitle);
 
           expect(loadedPlaylist.downloadedAudioLst.length, 17);
 
@@ -11557,7 +11557,7 @@ void main() {
 
           // Verify the 'S8 audio' playlist json file
 
-          Playlist loadedPlaylist = loadPlaylist(youtubePlaylistTitle);
+          Playlist loadedPlaylist = _loadPlaylist(youtubePlaylistTitle);
 
           expect(loadedPlaylist.downloadedAudioLst.length, 17);
 
@@ -13759,7 +13759,7 @@ void main() {
 
       // since no playlist is selected, verify that no button is
       // enabled
-      await ensureNoButtonIsEnabledSinceNoPlaylistIsSelected(tester);
+      await _ensureNoButtonIsEnabledSinceNoPlaylistIsSelected(tester);
 
       // Tap the 'Toggle List' button to show the list of no selected playlist's.
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -13767,7 +13767,7 @@ void main() {
 
       // since no playlist is selected, verify that no button is
       // enabled
-      await ensureNoButtonIsEnabledSinceNoPlaylistIsSelected(tester);
+      await _ensureNoButtonIsEnabledSinceNoPlaylistIsSelected(tester);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -14655,7 +14655,7 @@ void main() {
 
           // since a local playlist is selected, verify that
           // some buttons and checkbox are enabled and some are disabled
-          verifyLocalSelectedPlaylistButtonsAndCheckbox(
+          _verifyLocalSelectedPlaylistButtonsAndCheckbox(
             tester: tester,
             isPlaylistListDisplayed: true,
           );
@@ -14698,7 +14698,7 @@ void main() {
           const String nowSelectedPlaylistTitle =
               'audio_player_view_2_shorts_test';
 
-          modifySelectedPlaylistBeforeStartingApplication(
+          _modifySelectedPlaylistBeforeStartingApplication(
             playlistToUnselectTitle: initiallySelectedPlaylistTitle,
             playlistToSelectTitle: nowSelectedPlaylistTitle,
           );
@@ -14708,7 +14708,7 @@ void main() {
 
           // since a locYoutubeal playlist is selected, verify that
           // some buttons and checkbox are enabled and some are disabled
-          verifyYoutubeSelectedPlaylistButtonsAndCheckbox(
+          _verifyYoutubeSelectedPlaylistButtonsAndCheckbox(
             tester: tester,
             isPlaylistListDisplayed: true,
           );
@@ -14750,7 +14750,7 @@ void main() {
               'local_audio_playlist_2';
           const String nowSelectedPlaylistTitle = 'local_3';
 
-          modifySelectedPlaylistBeforeStartingApplication(
+          _modifySelectedPlaylistBeforeStartingApplication(
             playlistToUnselectTitle: initiallySelectedPlaylistTitle,
             playlistToSelectTitle: nowSelectedPlaylistTitle,
           );
@@ -14760,7 +14760,7 @@ void main() {
 
           // since a locYoutubeal playlist is selected, verify that
           // some buttons and checkbox are enabled and some are disabled
-          verifyLocalSelectedPlaylistButtonsAndCheckbox(
+          _verifyLocalSelectedPlaylistButtonsAndCheckbox(
             tester: tester,
             isPlaylistListDisplayed: true,
           );
@@ -14803,7 +14803,7 @@ void main() {
           const String nowSelectedPlaylistTitle =
               'audio_learn_new_youtube_playlist_test';
 
-          modifySelectedPlaylistBeforeStartingApplication(
+          _modifySelectedPlaylistBeforeStartingApplication(
             playlistToUnselectTitle: initiallySelectedPlaylistTitle,
             playlistToSelectTitle: nowSelectedPlaylistTitle,
           );
@@ -14813,7 +14813,7 @@ void main() {
 
           // since a locYoutubeal playlist is selected, verify that
           // some buttons and checkbox are enabled and some are disabled
-          verifyYoutubeSelectedPlaylistButtonsAndCheckbox(
+          _verifyYoutubeSelectedPlaylistButtonsAndCheckbox(
             tester: tester,
             isPlaylistListDisplayed: true,
           );
@@ -14868,7 +14868,7 @@ void main() {
 
           // since a local playlist is selected, verify that
           // some buttons and checkbox are enabled and some are disabled
-          verifyLocalSelectedPlaylistButtonsAndCheckbox(
+          _verifyLocalSelectedPlaylistButtonsAndCheckbox(
             tester: tester,
             isPlaylistListDisplayed: false,
           );
@@ -14921,7 +14921,7 @@ void main() {
           const String nowSelectedPlaylistTitle =
               'audio_player_view_2_shorts_test';
 
-          modifySelectedPlaylistBeforeStartingApplication(
+          _modifySelectedPlaylistBeforeStartingApplication(
             playlistToUnselectTitle: initiallySelectedPlaylistTitle,
             playlistToSelectTitle: nowSelectedPlaylistTitle,
           );
@@ -14931,7 +14931,7 @@ void main() {
 
           // since a locYoutubeal playlist is selected, verify that
           // some buttons and checkbox are enabled and some are disabled
-          verifyYoutubeSelectedPlaylistButtonsAndCheckbox(
+          _verifyYoutubeSelectedPlaylistButtonsAndCheckbox(
             tester: tester,
             isPlaylistListDisplayed: false,
           );
@@ -14983,7 +14983,7 @@ void main() {
               'local_audio_playlist_2';
           const String nowSelectedPlaylistTitle = 'local_3';
 
-          modifySelectedPlaylistBeforeStartingApplication(
+          _modifySelectedPlaylistBeforeStartingApplication(
             playlistToUnselectTitle: initiallySelectedPlaylistTitle,
             playlistToSelectTitle: nowSelectedPlaylistTitle,
           );
@@ -14993,7 +14993,7 @@ void main() {
 
           // since a locYoutubeal playlist is selected, verify that
           // some buttons and checkbox are enabled and some are disabled
-          verifyLocalSelectedPlaylistButtonsAndCheckbox(
+          _verifyLocalSelectedPlaylistButtonsAndCheckbox(
             tester: tester,
             isPlaylistListDisplayed: false,
           );
@@ -15046,7 +15046,7 @@ void main() {
           const String nowSelectedPlaylistTitle =
               'audio_learn_new_youtube_playlist_test';
 
-          modifySelectedPlaylistBeforeStartingApplication(
+          _modifySelectedPlaylistBeforeStartingApplication(
             playlistToUnselectTitle: initiallySelectedPlaylistTitle,
             playlistToSelectTitle: nowSelectedPlaylistTitle,
           );
@@ -15056,7 +15056,7 @@ void main() {
 
           // since a locYoutubeal playlist is selected, verify that
           // some buttons and checkbox are enabled and some are disabled
-          verifyYoutubeSelectedPlaylistButtonsAndCheckbox(
+          _verifyYoutubeSelectedPlaylistButtonsAndCheckbox(
             tester: tester,
             isPlaylistListDisplayed: false,
           );
@@ -15245,7 +15245,7 @@ void main() {
       String expectedCommentTitle =
           'morning _ cinematic accessible after renaming';
 
-      await checkAudioCommentUsingAudioItemMenu(
+      await _checkAudioCommentUsingAudioItemMenu(
         tester: tester,
         audioListTileWidgetFinder: audioListTileWidgetFinder,
         expectedCommentTitle: expectedCommentTitle,
@@ -15363,7 +15363,7 @@ void main() {
       await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // The audio file we could not rename still access to its comment ...
-      await checkAudioCommentInAudioPlayerView(
+      await _checkAudioCommentInAudioPlayerView(
         tester: tester,
         audioListTileWidgetFinder: audioListTileWidgetFinder,
         expectedCommentTitle: expectedCommentTitle,
@@ -15670,7 +15670,7 @@ void main() {
 
       String anAudioCommentTitle = 'Aurélien three';
 
-      await checkAudioCommentUsingAudioItemMenu(
+      await _checkAudioCommentUsingAudioItemMenu(
         tester: tester,
         audioListTileWidgetFinder: audioListTileWidgetFinder,
         expectedCommentTitle: anAudioCommentTitle,
@@ -15926,7 +15926,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verifying that the comment of the audio displays the modified audio title
-      await checkAudioCommentUsingAudioItemMenu(
+      await _checkAudioCommentUsingAudioItemMenu(
         tester: tester,
         audioListTileWidgetFinder: audioListTileWidgetFinder,
         expectedCommentTitle: 'morning _ cinematic accessible after renaming',
@@ -16076,7 +16076,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verifying that the comment of the audio displays the modified audio title
-      await checkAudioCommentUsingAudioItemMenu(
+      await _checkAudioCommentUsingAudioItemMenu(
         tester: tester,
         audioListTileWidgetFinder: audioListTileWidgetFinder,
         expectedCommentTitle: 'Really short video accessible after renaming',
@@ -16174,7 +16174,7 @@ void main() {
       );
 
       // First, open the playlist comment dialog
-      Finder playlistCommentListDialogFinder = await openPlaylistCommentDialog(
+      Finder playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
         tester: tester,
         playlistTitle: youtubePlaylistTitle,
       );
@@ -16260,7 +16260,7 @@ void main() {
 
         // First, open the playlist comment dialog
         Finder playlistCommentListDialogFinder =
-            await openPlaylistCommentDialog(
+            await _openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -16291,7 +16291,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await openPlaylistCommentDialog(
+        playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -16309,7 +16309,7 @@ void main() {
 
         // When closing the playlist comment dialog, the played comment audio
         // modification was undone. Verifying that ...
-        await verifyUndoneListenedAudioPosition(
+        await _verifyUndoneListenedAudioPosition(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
           playedCommentAudioTitle: playedCommentAudioTitle,
@@ -16347,7 +16347,7 @@ void main() {
 
         // First, open the playlist comment dialog
         Finder playlistCommentListDialogFinder =
-            await openPlaylistCommentDialog(
+            await _openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -16378,7 +16378,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await openPlaylistCommentDialog(
+        playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -16396,7 +16396,7 @@ void main() {
 
         // When closing the playlist comment dialog, the played comment audio
         // modification was undone. Verifying that ...
-        await verifyUndoneListenedAudioPosition(
+        await _verifyUndoneListenedAudioPosition(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
           playedCommentAudioTitle: playedCommentAudioTitle,
@@ -16434,7 +16434,7 @@ void main() {
 
         // First, open the playlist comment dialog
         Finder playlistCommentListDialogFinder =
-            await openPlaylistCommentDialog(
+            await _openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -16469,7 +16469,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await openPlaylistCommentDialog(
+        playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -16491,7 +16491,7 @@ void main() {
 
         // When closing the playlist comment dialog, the played comment audio
         // modification was undone. Verifying that ...
-        await verifyUndoneListenedAudioPosition(
+        await _verifyUndoneListenedAudioPosition(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
           playedCommentAudioTitle: playedCommentAudioTitle,
@@ -16530,7 +16530,7 @@ void main() {
 
         // First, open the playlist comment dialog
         Finder playlistCommentListDialogFinder =
-            await openPlaylistCommentDialog(
+            await _openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -16561,7 +16561,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await openPlaylistCommentDialog(
+        playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -16579,7 +16579,7 @@ void main() {
 
         // When closing the playlist comment dialog, the played comment audio
         // modification was undone. Verifying that ...
-        await verifyUndoneListenedAudioPosition(
+        await _verifyUndoneListenedAudioPosition(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
           playedCommentAudioTitle: playedCommentAudioTitle,
@@ -16617,7 +16617,7 @@ void main() {
 
         // First, open the playlist comment dialog
         Finder playlistCommentListDialogFinder =
-            await openPlaylistCommentDialog(
+            await _openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -16648,7 +16648,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await openPlaylistCommentDialog(
+        playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -16666,7 +16666,7 @@ void main() {
 
         // When closing the playlist comment dialog, the played comment audio
         // modification was undone. Verifying that ...
-        await verifyUndoneListenedAudioPosition(
+        await _verifyUndoneListenedAudioPosition(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
           playedCommentAudioTitle: playedCommentAudioTitle,
@@ -16704,7 +16704,7 @@ void main() {
 
         // First, open the playlist comment dialog
         Finder playlistCommentListDialogFinder =
-            await openPlaylistCommentDialog(
+            await _openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -16739,7 +16739,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await openPlaylistCommentDialog(
+        playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -16761,7 +16761,7 @@ void main() {
 
         // When closing the playlist comment dialog, the played comment audio
         // modification was undone. Verifying that ...
-        await verifyUndoneListenedAudioPosition(
+        await _verifyUndoneListenedAudioPosition(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
           playedCommentAudioTitle: playedCommentAudioTitle,
@@ -16800,7 +16800,7 @@ void main() {
 
         // First, open the playlist comment dialog
         Finder playlistCommentListDialogFinder =
-            await openPlaylistCommentDialog(
+            await _openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -16831,7 +16831,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await openPlaylistCommentDialog(
+        playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -16853,7 +16853,7 @@ void main() {
 
         // When closing the playlist comment dialog, the played comment audio
         // modification was undone. Verifying that ...
-        await verifyUndoneListenedAudioPosition(
+        await _verifyUndoneListenedAudioPosition(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
           playedCommentAudioTitle: playedCommentAudioTitle,
@@ -16891,7 +16891,7 @@ void main() {
 
         // First, open the playlist comment dialog
         Finder playlistCommentListDialogFinder =
-            await openPlaylistCommentDialog(
+            await _openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -16922,7 +16922,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await openPlaylistCommentDialog(
+        playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -16944,7 +16944,7 @@ void main() {
 
         // When closing the playlist comment dialog, the played comment audio
         // modification was undone. Verifying that ...
-        await verifyUndoneListenedAudioPosition(
+        await _verifyUndoneListenedAudioPosition(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
           playedCommentAudioTitle: playedCommentAudioTitle,
@@ -16982,7 +16982,7 @@ void main() {
 
         // First, open the playlist comment dialog
         Finder playlistCommentListDialogFinder =
-            await openPlaylistCommentDialog(
+            await _openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -17017,7 +17017,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await openPlaylistCommentDialog(
+        playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -17039,7 +17039,7 @@ void main() {
 
         // When closing the playlist comment dialog, the played comment audio
         // modification was undone. Verifying that ...
-        await verifyUndoneListenedAudioPosition(
+        await _verifyUndoneListenedAudioPosition(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
           playedCommentAudioTitle: playedCommentAudioTitle,
@@ -20755,7 +20755,7 @@ void playlistOneDownloadViewIntegrationTest() {
       // Find and select the ListTile to move'
       const String playlistToMoveDownTitle = 'local_audio';
 
-      await findThenSelectAndTestListTileCheckbox(
+      await _findThenSelectAndTestListTileCheckbox(
         tester: tester,
         itemTextStr: playlistToMoveDownTitle,
       );
@@ -22587,7 +22587,7 @@ void playlistOneDownloadViewIntegrationTest() {
       // Now verifying the copied audio info dialog related content
       // in the source Youtube playlist
 
-      await verifyAudioInfoDialog(
+      await _verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: youtubeAudioSourcePlaylistTitle,
         movedOrCopiedAudioTitle: copiedAudioTitle,
@@ -22608,7 +22608,7 @@ void playlistOneDownloadViewIntegrationTest() {
       // Now verifying the copied audio info dialog related content
       // in the target local playlist
 
-      Finder targetAudioListTileWidgetFinder = await verifyAudioInfoDialog(
+      Finder targetAudioListTileWidgetFinder = await _verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: localAudioTargetOnePlaylistTitle,
         movedOrCopiedAudioTitle: copiedAudioTitle,
@@ -22704,7 +22704,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
       // Now verifying the copied audio info dialog related content
       // in the source local playlist
-      targetAudioListTileWidgetFinder = await verifyAudioInfoDialog(
+      targetAudioListTileWidgetFinder = await _verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: localAudioTargetOnePlaylistTitle,
         movedOrCopiedAudioTitle: copiedAudioTitle,
@@ -22724,7 +22724,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
       // Now verifying the copied audio info dialog related content
       // in the target local playlist
-      targetAudioListTileWidgetFinder = await verifyAudioInfoDialog(
+      targetAudioListTileWidgetFinder = await _verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: localAudioTargetTwoPlaylistTitle,
         movedOrCopiedAudioTitle: copiedAudioTitle,
@@ -23229,7 +23229,7 @@ void playlistOneDownloadViewIntegrationTest() {
       // Now verifying the moved audio info dialog related content
       // in the target local playlist
 
-      Finder targetAudioListTileWidgetFinder = await verifyAudioInfoDialog(
+      Finder targetAudioListTileWidgetFinder = await _verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: localAudioTargetPlaylistTitle,
         movedOrCopiedAudioTitle: movedAudioTitle,
@@ -23377,7 +23377,7 @@ void playlistOneDownloadViewIntegrationTest() {
         playlistToSelectTitle: youtubeAudioSourcePlaylistTitle,
       );
 
-      targetAudioListTileWidgetFinder = await verifyAudioInfoDialog(
+      targetAudioListTileWidgetFinder = await _verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: youtubeAudioSourcePlaylistTitle,
         movedOrCopiedAudioTitle: movedAudioTitle,
@@ -23458,7 +23458,7 @@ void playlistOneDownloadViewIntegrationTest() {
       // Now verifying the moved audio info dialog related content
       // in the target local playlist
 
-      targetAudioListTileWidgetFinder = await verifyAudioInfoDialog(
+      targetAudioListTileWidgetFinder = await _verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: localAudioTargetPlaylistTitle,
         movedOrCopiedAudioTitle: movedAudioTitle,
@@ -24097,7 +24097,7 @@ void playlistOneDownloadViewIntegrationTest() {
       // Now verifying the copied audio informations in the source
       // playlist
 
-      await verifyAudioInfoDialogElements(
+      await _verifyAudioInfoDialogElements(
         tester: tester,
         audioTitle: copiedAudioTitle,
         playlistEnclosingAudioTitle: youtubeAudioSourcePlaylistTitle,
@@ -24110,7 +24110,7 @@ void playlistOneDownloadViewIntegrationTest() {
       // And verifying the copied audio informations in the target
       // playlist
 
-      await verifyAudioInfoDialogElements(
+      await _verifyAudioInfoDialogElements(
         tester: tester,
         audioTitle: copiedAudioTitle,
         playlistEnclosingAudioTitle: localAudioTargetSourcePlaylistTitle,
@@ -24229,7 +24229,7 @@ void playlistOneDownloadViewIntegrationTest() {
       // Now verifying the copied audio informations in the source
       // playlist
 
-      await verifyAudioInfoDialogElements(
+      await _verifyAudioInfoDialogElements(
         tester: tester,
         audioTitle: copiedAudioTitle,
         playlistEnclosingAudioTitle: localAudioTargetSourcePlaylistTitle,
@@ -24242,7 +24242,7 @@ void playlistOneDownloadViewIntegrationTest() {
       // And verifying the copied audio informations in the target
       // playlist
 
-      await verifyAudioInfoDialogElements(
+      await _verifyAudioInfoDialogElements(
         tester: tester,
         audioTitle: copiedAudioTitle,
         playlistEnclosingAudioTitle: youtubeAudioTargetPlaylistTitle,
@@ -24484,7 +24484,7 @@ void playlistOneDownloadViewIntegrationTest() {
       // playlist. In the source playlist, the audio is no longer
       // displayed since it was moved to the target playlist.
 
-      await verifyAudioInfoDialogElements(
+      await _verifyAudioInfoDialogElements(
         tester: tester,
         audioTitle: copiedAudioTitle,
         playlistEnclosingAudioTitle: localAudioTargetSourcePlaylistTitle,
@@ -24601,7 +24601,7 @@ void playlistOneDownloadViewIntegrationTest() {
       // playlist. In the source playlist, the audio is no longer
       // displayed since it was moved to the target playlist.
 
-      await verifyAudioInfoDialogElements(
+      await _verifyAudioInfoDialogElements(
         tester: tester,
         audioTitle: copiedAudioTitle,
         playlistEnclosingAudioTitle: youtubeAudioTargetPlaylistTitle,
@@ -24750,7 +24750,7 @@ void playlistOneDownloadViewIntegrationTest() {
       // Now find the Checkbox widget located in the playlist ListTile
       // and tap on it to select the playlist
 
-      await tapPlaylistCheckboxIfNotAlreadyChecked(
+      await _tapPlaylistCheckboxIfNotAlreadyChecked(
         playlistListTileWidgetFinder: youtubePlaylistListTileWidgetFinder,
         widgetTester: tester,
       );
@@ -24964,7 +24964,7 @@ void playlistOneDownloadViewIntegrationTest() {
       // Now find the Checkbox widget located in the playlist ListTile
       // and tap on it to select the playlist
 
-      await tapPlaylistCheckboxIfNotAlreadyChecked(
+      await _tapPlaylistCheckboxIfNotAlreadyChecked(
         playlistListTileWidgetFinder: localPlaylistListTileWidgetFinder,
         widgetTester: tester,
       );
@@ -25167,7 +25167,7 @@ void playlistOneDownloadViewIntegrationTest() {
       // Now find the Checkbox widget located in the playlist ListTile
       // and tap on it to select the playlist
 
-      await tapPlaylistCheckboxIfNotAlreadyChecked(
+      await _tapPlaylistCheckboxIfNotAlreadyChecked(
         playlistListTileWidgetFinder: youtubePlaylistListTileWidgetFinder,
         widgetTester: tester,
       );
@@ -25359,7 +25359,7 @@ void playlistOneDownloadViewIntegrationTest() {
       // Now find the Checkbox widget located in the playlist ListTile
       // and tap on it to select the playlist
 
-      await tapPlaylistCheckboxIfNotAlreadyChecked(
+      await _tapPlaylistCheckboxIfNotAlreadyChecked(
         playlistListTileWidgetFinder: localPlaylistListTileWidgetFinder,
         widgetTester: tester,
       );
@@ -25656,7 +25656,7 @@ void playlistOneDownloadViewIntegrationTest() {
       // Now find the Checkbox widget located in the playlist ListTile
       // and tap on it to select the playlist
 
-      await tapPlaylistCheckboxIfNotAlreadyChecked(
+      await _tapPlaylistCheckboxIfNotAlreadyChecked(
         playlistListTileWidgetFinder: addedYoutubePlaylistListTileWidgetFinder,
         widgetTester: tester,
       );
@@ -25781,7 +25781,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
       // Ensure the new playlist has been unselected
       Finder localPlaylistListTileCheckboxWidgetFinder =
-          await ensurePlaylistCheckboxIsNotChecked(
+          await _ensurePlaylistCheckboxIsNotChecked(
         playlistListTileWidgetFinder: testLocalPlaylistTileWidgetFinder,
         widgetTester: tester,
       );
@@ -25910,7 +25910,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
       // Ensure the new playlist has been unselected
       Finder youtubePlaylistListTileCheckboxWidgetFinder =
-          await ensurePlaylistCheckboxIsNotChecked(
+          await _ensurePlaylistCheckboxIsNotChecked(
         playlistListTileWidgetFinder: testYoutubePlaylistTileWidgetFinder,
         widgetTester: tester,
       );
@@ -26121,7 +26121,7 @@ void playlistOneDownloadViewIntegrationTest() {
       // Now find the Checkbox widget located in the playlist ListTile
       // and tap on it to select the playlist
 
-      await tapPlaylistCheckboxIfNotAlreadyChecked(
+      await _tapPlaylistCheckboxIfNotAlreadyChecked(
         playlistListTileWidgetFinder: addedYoutubePlaylistListTileWidgetFinder,
         widgetTester: tester,
       );
@@ -26252,7 +26252,7 @@ void playlistOneDownloadViewIntegrationTest() {
       // Now find the Checkbox widget located in the playlist ListTile
       // and tap on it to select the playlist
 
-      await tapPlaylistCheckboxIfNotAlreadyChecked(
+      await _tapPlaylistCheckboxIfNotAlreadyChecked(
         playlistListTileWidgetFinder: addedYoutubePlaylistListTileWidgetFinder,
         widgetTester: tester,
       );
@@ -26381,7 +26381,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
       // Now find the Checkbox widget located in the playlist ListTile
       // and tap on it to select the playlist
-      await tapPlaylistCheckboxIfNotAlreadyChecked(
+      await _tapPlaylistCheckboxIfNotAlreadyChecked(
         playlistListTileWidgetFinder: youtubePlaylistListTileWidgetFinder,
         widgetTester: tester,
       );
@@ -26530,7 +26530,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
       // Now find the Checkbox widget located in the playlist ListTile
       // and tap on it to select the playlist
-      await tapPlaylistCheckboxIfNotAlreadyChecked(
+      await _tapPlaylistCheckboxIfNotAlreadyChecked(
         playlistListTileWidgetFinder: youtubePlaylistListTileWidgetFinder,
         widgetTester: tester,
       );
@@ -26685,7 +26685,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
       // Now find the Checkbox widget located in the playlist ListTile
       // and tap on it to select the playlist
-      await tapPlaylistCheckboxIfNotAlreadyChecked(
+      await _tapPlaylistCheckboxIfNotAlreadyChecked(
         playlistListTileWidgetFinder: youtubePlaylistListTileWidgetFinder,
         widgetTester: tester,
       );
@@ -26828,7 +26828,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
       // Now find the Checkbox widget located in the playlist ListTile
       // and tap on it to select the playlist
-      await tapPlaylistCheckboxIfNotAlreadyChecked(
+      await _tapPlaylistCheckboxIfNotAlreadyChecked(
         playlistListTileWidgetFinder: youtubePlaylistListTileWidgetFinder,
         widgetTester: tester,
       );
@@ -27186,7 +27186,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
           // Verify the 'S8 audio' playlist json file
 
-          Playlist loadedPlaylist = loadPlaylist(youtubePlaylistTitle);
+          Playlist loadedPlaylist = _loadPlaylist(youtubePlaylistTitle);
 
           expect(loadedPlaylist.downloadedAudioLst.length, 18);
 
@@ -27326,7 +27326,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
           // Verify the 'S8 audio' playlist json file
 
-          Playlist loadedPlaylist = loadPlaylist(youtubePlaylistTitle);
+          Playlist loadedPlaylist = _loadPlaylist(youtubePlaylistTitle);
 
           expect(loadedPlaylist.downloadedAudioLst.length, 18);
 
@@ -27581,7 +27581,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
           // Verify the 'S8 audio' playlist json file
 
-          Playlist loadedPlaylist = loadPlaylist(youtubePlaylistTitle);
+          Playlist loadedPlaylist = _loadPlaylist(youtubePlaylistTitle);
 
           expect(loadedPlaylist.downloadedAudioLst.length, 18);
 
@@ -27785,7 +27785,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
           // Verify the 'S8 audio' playlist json file
 
-          Playlist loadedPlaylist = loadPlaylist(youtubePlaylistTitle);
+          Playlist loadedPlaylist = _loadPlaylist(youtubePlaylistTitle);
 
           expect(loadedPlaylist.downloadedAudioLst.length, 18);
 
@@ -27995,7 +27995,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
           // Verify the 'S8 audio' playlist json file
 
-          Playlist loadedPlaylist = loadPlaylist(youtubePlaylistTitle);
+          Playlist loadedPlaylist = _loadPlaylist(youtubePlaylistTitle);
 
           expect(loadedPlaylist.downloadedAudioLst.length, 17);
 
@@ -28151,7 +28151,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
           // Verify the 'S8 audio' playlist json file
 
-          Playlist loadedPlaylist = loadPlaylist(youtubePlaylistTitle);
+          Playlist loadedPlaylist = _loadPlaylist(youtubePlaylistTitle);
 
           expect(loadedPlaylist.downloadedAudioLst.length, 17);
 
@@ -28461,7 +28461,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
           // Verify the 'S8 audio' playlist json file
 
-          Playlist loadedPlaylist = loadPlaylist(youtubePlaylistTitle);
+          Playlist loadedPlaylist = _loadPlaylist(youtubePlaylistTitle);
 
           expect(loadedPlaylist.downloadedAudioLst.length, 17);
 
@@ -28717,7 +28717,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
           // Verify the 'S8 audio' playlist json file
 
-          Playlist loadedPlaylist = loadPlaylist(youtubePlaylistTitle);
+          Playlist loadedPlaylist = _loadPlaylist(youtubePlaylistTitle);
 
           expect(loadedPlaylist.downloadedAudioLst.length, 17);
 
@@ -30641,7 +30641,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
       // since no playlist is selected, verify that no button is
       // enabled
-      await ensureNoButtonIsEnabledSinceNoPlaylistIsSelected(tester);
+      await _ensureNoButtonIsEnabledSinceNoPlaylistIsSelected(tester);
 
       // Tap the 'Toggle List' button to show the list of no selected playlist's.
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -30649,7 +30649,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
       // since no playlist is selected, verify that no button is
       // enabled
-      await ensureNoButtonIsEnabledSinceNoPlaylistIsSelected(tester);
+      await _ensureNoButtonIsEnabledSinceNoPlaylistIsSelected(tester);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -31531,7 +31531,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
           // since a local playlist is selected, verify that
           // some buttons and checkbox are enabled and some are disabled
-          verifyLocalSelectedPlaylistButtonsAndCheckbox(
+          _verifyLocalSelectedPlaylistButtonsAndCheckbox(
             tester: tester,
             isPlaylistListDisplayed: true,
           );
@@ -31574,7 +31574,7 @@ void playlistOneDownloadViewIntegrationTest() {
           const String nowSelectedPlaylistTitle =
               'audio_player_view_2_shorts_test';
 
-          modifySelectedPlaylistBeforeStartingApplication(
+          _modifySelectedPlaylistBeforeStartingApplication(
             playlistToUnselectTitle: initiallySelectedPlaylistTitle,
             playlistToSelectTitle: nowSelectedPlaylistTitle,
           );
@@ -31584,7 +31584,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
           // since a locYoutubeal playlist is selected, verify that
           // some buttons and checkbox are enabled and some are disabled
-          verifyYoutubeSelectedPlaylistButtonsAndCheckbox(
+          _verifyYoutubeSelectedPlaylistButtonsAndCheckbox(
             tester: tester,
             isPlaylistListDisplayed: true,
           );
@@ -31626,7 +31626,7 @@ void playlistOneDownloadViewIntegrationTest() {
               'local_audio_playlist_2';
           const String nowSelectedPlaylistTitle = 'local_3';
 
-          modifySelectedPlaylistBeforeStartingApplication(
+          _modifySelectedPlaylistBeforeStartingApplication(
             playlistToUnselectTitle: initiallySelectedPlaylistTitle,
             playlistToSelectTitle: nowSelectedPlaylistTitle,
           );
@@ -31636,7 +31636,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
           // since a locYoutubeal playlist is selected, verify that
           // some buttons and checkbox are enabled and some are disabled
-          verifyLocalSelectedPlaylistButtonsAndCheckbox(
+          _verifyLocalSelectedPlaylistButtonsAndCheckbox(
             tester: tester,
             isPlaylistListDisplayed: true,
           );
@@ -31679,7 +31679,7 @@ void playlistOneDownloadViewIntegrationTest() {
           const String nowSelectedPlaylistTitle =
               'audio_learn_new_youtube_playlist_test';
 
-          modifySelectedPlaylistBeforeStartingApplication(
+          _modifySelectedPlaylistBeforeStartingApplication(
             playlistToUnselectTitle: initiallySelectedPlaylistTitle,
             playlistToSelectTitle: nowSelectedPlaylistTitle,
           );
@@ -31689,7 +31689,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
           // since a locYoutubeal playlist is selected, verify that
           // some buttons and checkbox are enabled and some are disabled
-          verifyYoutubeSelectedPlaylistButtonsAndCheckbox(
+          _verifyYoutubeSelectedPlaylistButtonsAndCheckbox(
             tester: tester,
             isPlaylistListDisplayed: true,
           );
@@ -31744,7 +31744,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
           // since a local playlist is selected, verify that
           // some buttons and checkbox are enabled and some are disabled
-          verifyLocalSelectedPlaylistButtonsAndCheckbox(
+          _verifyLocalSelectedPlaylistButtonsAndCheckbox(
             tester: tester,
             isPlaylistListDisplayed: false,
           );
@@ -31797,7 +31797,7 @@ void playlistOneDownloadViewIntegrationTest() {
           const String nowSelectedPlaylistTitle =
               'audio_player_view_2_shorts_test';
 
-          modifySelectedPlaylistBeforeStartingApplication(
+          _modifySelectedPlaylistBeforeStartingApplication(
             playlistToUnselectTitle: initiallySelectedPlaylistTitle,
             playlistToSelectTitle: nowSelectedPlaylistTitle,
           );
@@ -31807,7 +31807,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
           // since a locYoutubeal playlist is selected, verify that
           // some buttons and checkbox are enabled and some are disabled
-          verifyYoutubeSelectedPlaylistButtonsAndCheckbox(
+          _verifyYoutubeSelectedPlaylistButtonsAndCheckbox(
             tester: tester,
             isPlaylistListDisplayed: false,
           );
@@ -31859,7 +31859,7 @@ void playlistOneDownloadViewIntegrationTest() {
               'local_audio_playlist_2';
           const String nowSelectedPlaylistTitle = 'local_3';
 
-          modifySelectedPlaylistBeforeStartingApplication(
+          _modifySelectedPlaylistBeforeStartingApplication(
             playlistToUnselectTitle: initiallySelectedPlaylistTitle,
             playlistToSelectTitle: nowSelectedPlaylistTitle,
           );
@@ -31869,7 +31869,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
           // since a locYoutubeal playlist is selected, verify that
           // some buttons and checkbox are enabled and some are disabled
-          verifyLocalSelectedPlaylistButtonsAndCheckbox(
+          _verifyLocalSelectedPlaylistButtonsAndCheckbox(
             tester: tester,
             isPlaylistListDisplayed: false,
           );
@@ -31922,7 +31922,7 @@ void playlistOneDownloadViewIntegrationTest() {
           const String nowSelectedPlaylistTitle =
               'audio_learn_new_youtube_playlist_test';
 
-          modifySelectedPlaylistBeforeStartingApplication(
+          _modifySelectedPlaylistBeforeStartingApplication(
             playlistToUnselectTitle: initiallySelectedPlaylistTitle,
             playlistToSelectTitle: nowSelectedPlaylistTitle,
           );
@@ -31932,7 +31932,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
           // since a locYoutubeal playlist is selected, verify that
           // some buttons and checkbox are enabled and some are disabled
-          verifyYoutubeSelectedPlaylistButtonsAndCheckbox(
+          _verifyYoutubeSelectedPlaylistButtonsAndCheckbox(
             tester: tester,
             isPlaylistListDisplayed: false,
           );
@@ -32120,7 +32120,7 @@ void playlistOneDownloadViewIntegrationTest() {
       // file name. Before renaming the file, verify the comment exist ...
       String expectedCommentTitle = 'Accessible after renaming';
 
-      await checkAudioCommentUsingAudioItemMenu(
+      await _checkAudioCommentUsingAudioItemMenu(
         tester: tester,
         audioListTileWidgetFinder: audioListTileWidgetFinder,
         expectedCommentTitle: expectedCommentTitle,
@@ -32238,7 +32238,7 @@ void playlistOneDownloadViewIntegrationTest() {
       await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // The audio file we could not rename still access to its comment ...
-      await checkAudioCommentInAudioPlayerView(
+      await _checkAudioCommentInAudioPlayerView(
         tester: tester,
         audioListTileWidgetFinder: audioListTileWidgetFinder,
         expectedCommentTitle: expectedCommentTitle,
@@ -32545,7 +32545,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
       String anAudioCommentTitle = 'Aurélien three';
 
-      await checkAudioCommentUsingAudioItemMenu(
+      await _checkAudioCommentUsingAudioItemMenu(
         tester: tester,
         audioListTileWidgetFinder: audioListTileWidgetFinder,
         expectedCommentTitle: anAudioCommentTitle,
@@ -32803,7 +32803,7 @@ void playlistOneDownloadViewIntegrationTest() {
       await tester.pumpAndSettle();
 
       // Verifying that the comment of the audio displays the modified audio title
-      await checkAudioCommentUsingAudioItemMenu(
+      await _checkAudioCommentUsingAudioItemMenu(
         tester: tester,
         audioListTileWidgetFinder: audioListTileWidgetFinder,
         expectedCommentTitle: 'Accessible after renaming',
@@ -32890,7 +32890,7 @@ void playlistOneDownloadViewIntegrationTest() {
       // using the new title
       audioListTileTextWidgetFinder = find.text(newTitle);
 
-      await checkAudioCommentUsingAudioItemMenu(
+      await _checkAudioCommentUsingAudioItemMenu(
         tester: tester,
         audioListTileWidgetFinder: audioListTileWidgetFinder,
         expectedCommentTitle: 'Accessible after renaming',
@@ -32944,7 +32944,7 @@ void playlistOneDownloadViewIntegrationTest() {
       await tester.pumpAndSettle();
 
       // Verifying that the comment of the audio displays the modified audio title
-      await checkAudioCommentUsingAudioItemMenu(
+      await _checkAudioCommentUsingAudioItemMenu(
         tester: tester,
         audioListTileWidgetFinder: audioListTileWidgetFinder,
         expectedCommentTitle: 'Accessible after renaming',
@@ -33095,7 +33095,7 @@ void playlistOneDownloadViewIntegrationTest() {
       await tester.pumpAndSettle();
 
       // Verifying that the comment of the audio displays the modified audio title
-      await checkAudioCommentUsingAudioItemMenu(
+      await _checkAudioCommentUsingAudioItemMenu(
         tester: tester,
         audioListTileWidgetFinder: audioListTileWidgetFinder,
         expectedCommentTitle: 'Accessible after renaming',
@@ -33193,7 +33193,7 @@ void playlistOneDownloadViewIntegrationTest() {
       );
 
       // First, open the playlist comment dialog
-      Finder playlistCommentListDialogFinder = await openPlaylistCommentDialog(
+      Finder playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
         tester: tester,
         playlistTitle: youtubePlaylistTitle,
       );
@@ -33279,7 +33279,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
         // First, open the playlist comment dialog
         Finder playlistCommentListDialogFinder =
-            await openPlaylistCommentDialog(
+            await _openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -33310,7 +33310,7 @@ void playlistOneDownloadViewIntegrationTest() {
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await openPlaylistCommentDialog(
+        playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -33328,7 +33328,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
         // When closing the playlist comment dialog, the played comment audio
         // modification was undone. Verifying that ...
-        await verifyUndoneListenedAudioPosition(
+        await _verifyUndoneListenedAudioPosition(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
           playedCommentAudioTitle: playedCommentAudioTitle,
@@ -33366,7 +33366,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
         // First, open the playlist comment dialog
         Finder playlistCommentListDialogFinder =
-            await openPlaylistCommentDialog(
+            await _openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -33397,7 +33397,7 @@ void playlistOneDownloadViewIntegrationTest() {
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await openPlaylistCommentDialog(
+        playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -33415,7 +33415,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
         // When closing the playlist comment dialog, the played comment audio
         // modification was undone. Verifying that ...
-        await verifyUndoneListenedAudioPosition(
+        await _verifyUndoneListenedAudioPosition(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
           playedCommentAudioTitle: playedCommentAudioTitle,
@@ -33453,7 +33453,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
         // First, open the playlist comment dialog
         Finder playlistCommentListDialogFinder =
-            await openPlaylistCommentDialog(
+            await _openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -33488,7 +33488,7 @@ void playlistOneDownloadViewIntegrationTest() {
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await openPlaylistCommentDialog(
+        playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -33510,7 +33510,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
         // When closing the playlist comment dialog, the played comment audio
         // modification was undone. Verifying that ...
-        await verifyUndoneListenedAudioPosition(
+        await _verifyUndoneListenedAudioPosition(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
           playedCommentAudioTitle: playedCommentAudioTitle,
@@ -33549,7 +33549,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
         // First, open the playlist comment dialog
         Finder playlistCommentListDialogFinder =
-            await openPlaylistCommentDialog(
+            await _openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -33580,7 +33580,7 @@ void playlistOneDownloadViewIntegrationTest() {
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await openPlaylistCommentDialog(
+        playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -33598,7 +33598,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
         // When closing the playlist comment dialog, the played comment audio
         // modification was undone. Verifying that ...
-        await verifyUndoneListenedAudioPosition(
+        await _verifyUndoneListenedAudioPosition(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
           playedCommentAudioTitle: playedCommentAudioTitle,
@@ -33636,7 +33636,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
         // First, open the playlist comment dialog
         Finder playlistCommentListDialogFinder =
-            await openPlaylistCommentDialog(
+            await _openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -33667,7 +33667,7 @@ void playlistOneDownloadViewIntegrationTest() {
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await openPlaylistCommentDialog(
+        playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -33685,7 +33685,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
         // When closing the playlist comment dialog, the played comment audio
         // modification was undone. Verifying that ...
-        await verifyUndoneListenedAudioPosition(
+        await _verifyUndoneListenedAudioPosition(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
           playedCommentAudioTitle: playedCommentAudioTitle,
@@ -33723,7 +33723,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
         // First, open the playlist comment dialog
         Finder playlistCommentListDialogFinder =
-            await openPlaylistCommentDialog(
+            await _openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -33758,7 +33758,7 @@ void playlistOneDownloadViewIntegrationTest() {
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await openPlaylistCommentDialog(
+        playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -33780,7 +33780,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
         // When closing the playlist comment dialog, the played comment audio
         // modification was undone. Verifying that ...
-        await verifyUndoneListenedAudioPosition(
+        await _verifyUndoneListenedAudioPosition(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
           playedCommentAudioTitle: playedCommentAudioTitle,
@@ -33819,7 +33819,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
         // First, open the playlist comment dialog
         Finder playlistCommentListDialogFinder =
-            await openPlaylistCommentDialog(
+            await _openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -33850,7 +33850,7 @@ void playlistOneDownloadViewIntegrationTest() {
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await openPlaylistCommentDialog(
+        playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -33872,7 +33872,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
         // When closing the playlist comment dialog, the played comment audio
         // modification was undone. Verifying that ...
-        await verifyUndoneListenedAudioPosition(
+        await _verifyUndoneListenedAudioPosition(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
           playedCommentAudioTitle: playedCommentAudioTitle,
@@ -33910,7 +33910,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
         // First, open the playlist comment dialog
         Finder playlistCommentListDialogFinder =
-            await openPlaylistCommentDialog(
+            await _openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -33941,7 +33941,7 @@ void playlistOneDownloadViewIntegrationTest() {
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await openPlaylistCommentDialog(
+        playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -33963,7 +33963,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
         // When closing the playlist comment dialog, the played comment audio
         // modification was undone. Verifying that ...
-        await verifyUndoneListenedAudioPosition(
+        await _verifyUndoneListenedAudioPosition(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
           playedCommentAudioTitle: playedCommentAudioTitle,
@@ -34001,7 +34001,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
         // First, open the playlist comment dialog
         Finder playlistCommentListDialogFinder =
-            await openPlaylistCommentDialog(
+            await _openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -34036,7 +34036,7 @@ void playlistOneDownloadViewIntegrationTest() {
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await openPlaylistCommentDialog(
+        playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -34058,7 +34058,7 @@ void playlistOneDownloadViewIntegrationTest() {
 
         // When closing the playlist comment dialog, the played comment audio
         // modification was undone. Verifying that ...
-        await verifyUndoneListenedAudioPosition(
+        await _verifyUndoneListenedAudioPosition(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
           playedCommentAudioTitle: playedCommentAudioTitle,
@@ -34244,243 +34244,14 @@ void playlistOneDownloadViewIntegrationTest() {
   });
 }
 
-Playlist loadPlaylist(String playListOneName) {
+Playlist _loadPlaylist(String playListOneName) {
   return JsonDataService.loadFromFile(
       jsonPathFileName:
           "$kPlaylistDownloadRootPathWindowsTest${path.separator}$playListOneName${path.separator}$playListOneName.json",
       type: Playlist);
 }
 
-/// This code is used in integation tests for two purposes:
-///   1/ for executing the expect that the playlist checkbox is checked code,
-///   2/ for tapping on  the playlist checkbox.
-/// The two boolean parameters define what this method does.
-Future<void> onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox({
-  required WidgetTester tester,
-  required String playlistToSelectTitle,
-  required bool verifyIfCheckboxIsChecked,
-  required bool tapOnCheckbox,
-}) async {
-  Finder playlistToSelectListTileTextWidgetFinder =
-      find.text(playlistToSelectTitle);
-
-  // Then obtain the Playlist ListTile widget enclosing the Text widget
-  // by finding its ancestor
-  Finder playlistToSelectListTileWidgetFinder = find.ancestor(
-    of: playlistToSelectListTileTextWidgetFinder,
-    matching: find.byType(ListTile),
-  );
-
-  // Now find the Checkbox widget located in the Playlist ListTile
-  // and tap on it to select the playlist
-  Finder playlistToSelectListTileCheckboxWidgetFinder = find.descendant(
-    of: playlistToSelectListTileWidgetFinder,
-    matching: find.byKey(const Key('playlist_checkbox_key')),
-  );
-
-  // Verify that the Playlist ListTile checkbox is checked
-  if (verifyIfCheckboxIsChecked) {
-    final Checkbox checkboxWidget =
-        tester.widget<Checkbox>(playlistToSelectListTileCheckboxWidgetFinder);
-
-    expect(checkboxWidget.value!, true);
-  }
-
-  // Tap the ListTile Playlist checkbox to select it: This ensure
-  // another bug was solved
-  if (tapOnCheckbox) {
-    await tester.tap(playlistToSelectListTileCheckboxWidgetFinder);
-    await tester.pumpAndSettle();
-  }
-}
-
-Future<void> onAudioPlayerViewCheckOrTapOnPlaylistCheckbox({
-  required WidgetTester tester,
-  required String playlistDownloadViewCurrentlySelectedPlaylistTitle,
-  required String playlistToSelectTitleInAudioPlayerView,
-}) async {
-  // Go to the audio player view
-  Finder appScreenNavigationButton =
-      find.byKey(const ValueKey('audioPlayerViewIconButton'));
-  await tester.tap(appScreenNavigationButton);
-  await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
-    tester: tester,
-  );
-
-  // Verify that the playlist download view currently selected playlist is
-  // also selected in the playlist download view.
-
-  // Tap on audio player view playlist button to display the playlists
-  await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-  await tester.pumpAndSettle();
-
-  // Find the currently selected playlist ListTile Text widget
-  Finder playlistDownloadViewCurrentlySelectedPlaylistListTileTextWidgetFinder =
-      find.text(playlistDownloadViewCurrentlySelectedPlaylistTitle);
-
-  // Then obtain the playlist ListTile widget enclosing the Text widget
-  // by finding its ancestor
-  Finder playlistDownloadViewCurrentlySelectedPlaylistListTileWidgetFinder =
-      find.ancestor(
-    of: playlistDownloadViewCurrentlySelectedPlaylistListTileTextWidgetFinder,
-    matching: find.byType(ListTile),
-  );
-
-  // Now find the Checkbox widget located in the playlist ListTile
-  // and verify that it is checked
-
-  Finder
-      playlistDownloadViewCurrentlySelectedPlaylistListTileCheckboxWidgetFinder =
-      find.descendant(
-    of: playlistDownloadViewCurrentlySelectedPlaylistListTileWidgetFinder,
-    matching: find.byType(Checkbox),
-  );
-
-  final Checkbox checkboxWidget = tester.widget<Checkbox>(
-      playlistDownloadViewCurrentlySelectedPlaylistListTileCheckboxWidgetFinder);
-
-  expect(checkboxWidget.value!, true);
-
-  // Select the passed playlistToSelectTitle playlist
-
-  await IntegrationTestUtil.selectPlaylist(
-    tester: tester,
-    playlistToSelectTitle: playlistToSelectTitleInAudioPlayerView,
-  );
-
-  // Now we go back to the PlayListDownloadView in order to
-  // verify the scrolled selected playlist
-  appScreenNavigationButton =
-      find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-  await tester.tap(appScreenNavigationButton);
-  await tester.pumpAndSettle();
-}
-
-Future<List<String>> enteringFirstAndSecondLetterOfYoutubePlaylistSearchWord({
-  required WidgetTester tester,
-}) async {
-  // Now enter the first letter of the search word
-  await tester.tap(
-    find.byKey(
-      const Key('youtubeUrlOrSearchTextField'),
-    ),
-  );
-  await tester.pumpAndSettle();
-  await tester.enterText(
-    find.byKey(
-      const Key('youtubeUrlOrSearchTextField'),
-    ),
-    'S',
-  );
-  await tester.pumpAndSettle(const Duration(milliseconds: 200));
-
-  // Verify that the search icon button is now enabled
-  IntegrationTestUtil.verifyWidgetIsEnabled(
-    tester: tester,
-    widgetKeyStr: 'search_icon_button',
-  );
-
-  // Ensure that since the search icon button was not yet pressed,
-  // the displayed playlist list is the same as the one before entering
-  // the first letter of the search word.
-
-  List<String> playlistsTitles = [
-    "S8 audio",
-    "local",
-    "local_2",
-  ];
-
-  List<String> audioTitles = [
-    "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-    "La résilience insulaire par Fiona Roche",
-    "Les besoins artificiels par R.Keucheyan",
-    "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-  ];
-
-  IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
-    tester: tester,
-    playlistTitlesOrderedLst: playlistsTitles,
-    audioTitlesOrderedLst: audioTitles,
-    firstPlaylistListTileIndex: 0,
-    firstAudioListTileIndex: 3,
-  );
-
-  // Enter the second letter of the 'al' search word. The crazy integration
-  // test does not always update the test field. To fix this bug, first
-  // select the text field and then enter the text.
-
-  // Select the text field
-  await tester.tap(
-    find.byKey(
-      const Key('youtubeUrlOrSearchTextField'),
-    ),
-  );
-  await tester.pumpAndSettle();
-
-  // Enter the second letter of the 'al' search word
-  await tester.enterText(
-    find.byKey(
-      const Key('youtubeUrlOrSearchTextField'),
-    ),
-    'S8',
-  );
-  await tester.pumpAndSettle(const Duration(milliseconds: 200));
-
-  // Verify that the search icon button is still enabled
-  IntegrationTestUtil.verifyWidgetIsEnabled(
-    tester: tester,
-    widgetKeyStr: 'search_icon_button',
-  );
-
-  // Ensure that since the search icon button was not yet pressed,
-  // the displayed playlist list is the same as the one before entering
-  // the first letter of the search word.
-  IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
-    tester: tester,
-    playlistTitlesOrderedLst: playlistsTitles,
-    audioTitlesOrderedLst: audioTitles,
-    firstPlaylistListTileIndex: 0,
-    firstAudioListTileIndex: 3,
-  );
-
-  // Now tap on the search icon button
-  await tester.tap(find.byKey(const Key('search_icon_button')));
-  await tester.pumpAndSettle();
-
-  // Verify that the search icon button is still enabled
-  IntegrationTestUtil.verifyWidgetIsEnabled(
-    tester: tester,
-    widgetKeyStr: 'search_icon_button',
-  );
-
-  // Now verify the order of the reduced playlist titles
-
-  playlistsTitles = [
-    "S8 audio",
-  ];
-
-  IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
-    tester: tester,
-    playlistTitlesOrderedLst: playlistsTitles,
-    audioTitlesOrderedLst: audioTitles,
-    firstPlaylistListTileIndex: 0,
-    firstAudioListTileIndex: 1,
-  );
-
-  return playlistsTitles;
-}
-
-Map loadSettingsMap() {
-  final String settingsJsonStr = File(
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName")
-      .readAsStringSync();
-
-  Map settingsMap = jsonDecode(settingsJsonStr);
-
-  return settingsMap;
-}
-
-void modifySelectedPlaylistBeforeStartingApplication({
+void _modifySelectedPlaylistBeforeStartingApplication({
   required String playlistToUnselectTitle,
   required String playlistToSelectTitle,
 }) {
@@ -34531,7 +34302,7 @@ void modifySelectedPlaylistBeforeStartingApplication({
   );
 }
 
-void verifyYoutubeSelectedPlaylistButtonsAndCheckbox({
+void _verifyYoutubeSelectedPlaylistButtonsAndCheckbox({
   required WidgetTester tester,
   required bool isPlaylistListDisplayed,
 }) {
@@ -34577,7 +34348,7 @@ void verifyYoutubeSelectedPlaylistButtonsAndCheckbox({
   );
 }
 
-void verifyLocalSelectedPlaylistButtonsAndCheckbox({
+void _verifyLocalSelectedPlaylistButtonsAndCheckbox({
   required WidgetTester tester,
   required bool isPlaylistListDisplayed,
 }) {
@@ -34623,7 +34394,7 @@ void verifyLocalSelectedPlaylistButtonsAndCheckbox({
   );
 }
 
-Future<void> verifyUndoneListenedAudioPosition({
+Future<void> _verifyUndoneListenedAudioPosition({
   required WidgetTester tester,
   required String playlistTitle,
   required String playedCommentAudioTitle,
@@ -34668,7 +34439,7 @@ Future<void> verifyUndoneListenedAudioPosition({
   );
 }
 
-Future<Finder> openPlaylistCommentDialog({
+Future<Finder> _openPlaylistCommentDialog({
   required WidgetTester tester,
   required String playlistTitle,
 }) async {
@@ -34751,7 +34522,7 @@ Future<void> _verifyAudioTitlesColorInPlaylistCommentDialog({
   );
 }
 
-Future<Finder> verifyAudioInfoDialog({
+Future<Finder> _verifyAudioInfoDialog({
   required WidgetTester tester,
   required String audioEnclosingPlaylistTitle,
   required String movedOrCopiedAudioTitle,
@@ -34887,7 +34658,7 @@ Future<void> checkWarningDialog({
   await tester.pumpAndSettle();
 }
 
-Future<void> checkAudioCommentInAudioPlayerView({
+Future<void> _checkAudioCommentInAudioPlayerView({
   required WidgetTester tester,
   required Finder audioListTileWidgetFinder,
   required String expectedCommentTitle,
@@ -34930,7 +34701,7 @@ Future<void> checkAudioCommentInAudioPlayerView({
   await tester.pumpAndSettle();
 }
 
-Future<void> checkAudioCommentUsingAudioItemMenu({
+Future<void> _checkAudioCommentUsingAudioItemMenu({
   required WidgetTester tester,
   required Finder audioListTileWidgetFinder,
   required String expectedCommentTitle,
@@ -35003,7 +34774,7 @@ Future<void> checkAudioCommentUsingAudioItemMenu({
   await tester.pumpAndSettle();
 }
 
-Future<void> ensureNoButtonIsEnabledSinceNoPlaylistIsSelected(
+Future<void> _ensureNoButtonIsEnabledSinceNoPlaylistIsSelected(
     WidgetTester tester) async {
   IntegrationTestUtil.verifyWidgetIsDisabled(
     tester: tester,
@@ -35045,7 +34816,7 @@ Future<void> ensureNoButtonIsEnabledSinceNoPlaylistIsSelected(
   );
 }
 
-Future<void> tapPlaylistCheckboxIfNotAlreadyChecked({
+Future<void> _tapPlaylistCheckboxIfNotAlreadyChecked({
   required Finder playlistListTileWidgetFinder,
   required WidgetTester widgetTester,
 }) async {
@@ -35067,7 +34838,7 @@ Future<void> tapPlaylistCheckboxIfNotAlreadyChecked({
   }
 }
 
-Future<Finder> ensurePlaylistCheckboxIsNotChecked({
+Future<Finder> _ensurePlaylistCheckboxIsNotChecked({
   required Finder playlistListTileWidgetFinder,
   required WidgetTester widgetTester,
 }) async {
@@ -35130,7 +34901,7 @@ Future<void> _launchExpandablePlaylistListView({
   await tester.pumpAndSettle();
 }
 
-Future<void> findThenSelectAndTestListTileCheckbox({
+Future<void> _findThenSelectAndTestListTileCheckbox({
   required WidgetTester tester,
   required String itemTextStr,
 }) async {
@@ -35200,7 +34971,7 @@ void onPageChanged(int index) {
 ///
 /// {movedAudioTargetPlaylistTitle} is the title of the playlist
 /// to which the audio was moved
-Future<void> verifyAudioInfoDialogElements({
+Future<void> _verifyAudioInfoDialogElements({
   required WidgetTester tester,
   required String audioTitle,
   required String playlistEnclosingAudioTitle,
@@ -35319,73 +35090,4 @@ Future<void> verifyAudioInfoDialogElements({
   // and tap on it
   await tester.tap(find.byKey(const Key('audio_info_ok_button_key')));
   await tester.pumpAndSettle();
-}
-
-Future<void> executeSearchWordScrollTest({
-  required WidgetTester tester,
-  required String playlistTitle,
-  double scrollUpOrDownPlaylistsList = 0,
-}) async {
-  await tester.tap(
-    find.byKey(
-      const Key('youtubeUrlOrSearchTextField'),
-    ),
-  );
-  await tester.pumpAndSettle();
-  await tester.enterText(
-    find.byKey(
-      const Key('youtubeUrlOrSearchTextField'),
-    ),
-    '',
-  );
-
-  await tester.pumpAndSettle(const Duration(milliseconds: 200));
-
-  if (scrollUpOrDownPlaylistsList != 0) {
-    // Scrolling up or down the playlist list
-    // Find the audio list widget using its key
-    final listFinder = find.byKey(const Key('expandable_playlist_list'));
-    // Perform the scroll action
-    await tester.drag(
-      listFinder,
-      Offset(0, scrollUpOrDownPlaylistsList),
-    );
-    await tester.pumpAndSettle();
-  }
-
-  // Select the playlist
-  await onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
-    tester: tester,
-    playlistToSelectTitle: playlistTitle,
-    verifyIfCheckboxIsChecked: false,
-    tapOnCheckbox: true,
-  );
-
-  // Now enter the '_1' search word
-  await tester.tap(
-    find.byKey(
-      const Key('youtubeUrlOrSearchTextField'),
-    ),
-  );
-  await tester.pumpAndSettle();
-  await tester.enterText(
-    find.byKey(
-      const Key('youtubeUrlOrSearchTextField'),
-    ),
-    '_1',
-  );
-  await tester.pumpAndSettle(const Duration(milliseconds: 200));
-
-  // Now tap on the search icon button
-  await tester.tap(find.byKey(const Key('search_icon_button')));
-  await tester.pumpAndSettle();
-
-  // Verify that the playlist is correctly scrolled so that it is
-  // visible
-  await onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
-    tester: tester,
-    playlistToSelectTitle: playlistTitle,
-    verifyIfCheckboxIsChecked: true,
-    tapOnCheckbox: false,
-  );
 }
