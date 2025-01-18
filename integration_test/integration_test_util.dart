@@ -769,7 +769,7 @@ class IntegrationTestUtil {
     // Check the value of the warning dialog title
 
     Text warningDialogTitle =
-        tester.widget(find.byKey(const Key('warningDialogTitle')));
+        tester.widget(find.byKey(const Key('warningDialogTitle')).last);
 
     if (isWarningConfirming) {
       expect(warningDialogTitle.data, 'CONFIRMATION');
