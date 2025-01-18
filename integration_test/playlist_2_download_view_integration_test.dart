@@ -3,8 +3,6 @@ import 'dart:io';
 
 import 'package:audiolearn/models/audio.dart';
 import 'package:audiolearn/views/widgets/audio_sort_filter_dialog.dart';
-import 'package:audiolearn/views/widgets/comment_add_edit_dialog.dart';
-import 'package:audiolearn/views/widgets/comment_list_add_dialog.dart';
 import 'package:audiolearn/views/widgets/playlist_comment_list_dialog.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +15,6 @@ import 'package:audiolearn/main.dart' as app;
 import 'package:audiolearn/constants.dart';
 import 'package:audiolearn/models/playlist.dart';
 import 'package:audiolearn/services/json_data_service.dart';
-import 'package:audiolearn/views/widgets/warning_message_display.dart';
 import 'package:audiolearn/services/settings_data_service.dart';
 import 'package:audiolearn/utils/dir_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -7895,13 +7892,13 @@ void main() {
         await tester.tap(find.byKey(const Key('confirmButton')));
         await tester.pumpAndSettle();
 
-      // Now verifying the warning dialog
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            'Since "default" Sort/Filter parms is selected, no audio can be moved from Youtube playlist "$sourcePlaylistTitle" to local playlist "$targetPlaylistTitle". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...',
-        isWarningConfirming: false,
-      );
+        // Now verifying the warning dialog
+        await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              'Since "default" Sort/Filter parms is selected, no audio can be moved from Youtube playlist "$sourcePlaylistTitle" to local playlist "$targetPlaylistTitle". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...',
+          isWarningConfirming: false,
+        );
 
         // Verifying the 'temp' target playlist
 
@@ -9456,13 +9453,13 @@ void main() {
         await tester.tap(find.byKey(const Key('confirmButton')));
         await tester.pumpAndSettle();
 
-      // Now verifying the warning dialog
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            'Since "default" Sort/Filter parms is selected, no audio can be copied from Youtube playlist "$sourcePlaylistTitle" to local playlist "$targetPlaylistTitle". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...',
-        isWarningConfirming: false,
-      );
+        // Now verifying the warning dialog
+        await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              'Since "default" Sort/Filter parms is selected, no audio can be copied from Youtube playlist "$sourcePlaylistTitle" to local playlist "$targetPlaylistTitle". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...',
+          isWarningConfirming: false,
+        );
 
         // Verifying the 'temp' target playlist
 
@@ -9995,6 +9992,120 @@ void main() {
       await tester.tap(
           find.byKey(const Key('appBarMenuCopyPlaylistsAndCommentsToZip')));
       await tester.pumpAndSettle();
+
+      // Verify the displayed warning dialog
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Saved playlist json files and application settings to \"$saveZipFilePath${path.separator}audioLearn_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip\".",
+        isWarningConfirming: true,
+      );
+
+      List<String> zipLst = DirUtil.listFileNamesInDir(
+        directoryPath: saveZipFilePath,
+        fileExtension: 'zip',
+      );
+
+      List<String> expectedZipContentLst = [
+        "audio_learn_test_download_2_small_videos/audio_learn_test_download_2_small_videos.json",
+        "audio_player_view_2_shorts_test/audio_player_view_2_shorts_test.json",
+        "audio_player_view_2_shorts_test/comments/231117-002826-Really short video 23-07-01.json",
+        "audio_player_view_2_shorts_test/comments/231117-002828-morning _ cinematic video 23-07-01.json",
+        "local_3/local_3.json",
+        "local_audio_playlist_2/local_audio_playlist_2.json",
+        "settings.json",
+      ];
+
+      List<String> zipContentLst = await DirUtil.listPathFileNamesInZip(
+        zipFilePathName: "$saveZipFilePath${path.separator}${zipLst[0]}",
+      );
+
+      expect(
+        zipContentLst,
+        expectedZipContentLst,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Unsuccessful save which happens on the S8 Galaxy smartphone. The
+           integration test verify the displayed warning''',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}2_youtube_2_local_playlists_integr_test_data",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+      // Replace the platform instance with your mock
+      MockFilePicker mockFilePicker = MockFilePicker();
+      FilePicker.platform = mockFilePicker;
+
+      await app.main(['test']);
+      await tester.pumpAndSettle();
+
+      // Create a new directory to which the zip file will be saved
+
+      String saveZipFilePath =
+          '$kPlaylistDownloadRootPathWindowsTest${path.separator}appSave';
+
+      DirUtil.createDirIfNotExistSync(
+        pathStr: saveZipFilePath,
+      );
+
+      // Setting the path value returned by the FilePicker mock. This
+      // path value is the one returned on the S8 Galaxy smartphone !
+      mockFilePicker.setPathToSelect(
+        pathToSelectStr: '/',
+      );
+
+      // Tap the appbar leading popup menu button
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+      await tester.pumpAndSettle();
+
+      // Now tap on the 'Save Playlists and Comments to zip File' menu
+      await tester.tap(
+          find.byKey(const Key('appBarMenuCopyPlaylistsAndCommentsToZip')));
+      await tester.pumpAndSettle();
+
+      // Verify the displayed warning dialog
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Playlist json files and application settings could not be saved to zip.",
+        isWarningConfirming: false,
+      );
+
+      List<String> zipLst = DirUtil.listFileNamesInDir(
+        directoryPath: saveZipFilePath,
+        fileExtension: 'zip',
+      );
+
+      expect(zipLst.isEmpty, true);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub

@@ -52,7 +52,7 @@ Future<void> main(List<String> args) async {
   await PermissionRequesterService.requestMultiplePermissions();
 
   // Obtain or create the application directory
-  applicationPath = await DirUtil.getApplicationPath(isTest: isTest);
+  applicationPath = DirUtil.getApplicationPath(isTest: isTest);
 
   // Now proceed with setting up the app window size and position if needed
   if (!kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
