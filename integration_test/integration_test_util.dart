@@ -759,7 +759,7 @@ class IntegrationTestUtil {
     required String warningDialogMessage,
     bool isWarningConfirming = false,
     bool tapTwiceOnOkButton = false,
-    String warningTitle = 'WARNING', // useful for AVERTISSEMENT title !
+    String warningTitle = 'WARNING', // useful for AVERTISSEMENT title in french !
   }) async {
     // Ensure the warning dialog is shown
     final Finder warningMessageDisplayDialogFinder =

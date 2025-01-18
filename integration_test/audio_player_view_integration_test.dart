@@ -85,8 +85,8 @@ void main() {
       );
     });
     testWidgets(
-        '''Play audio during 5 seconds and then pause it. Then click on |<,
-           and then on |> button''', (
+        '''Play audio during 5 seconds and then pause it. Then click on |<, and
+           then on |> button''', (
       WidgetTester tester,
     ) async {
       const String audioPlayerSelectedPlaylistTitle =

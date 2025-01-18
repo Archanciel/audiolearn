@@ -4190,7 +4190,7 @@ void main() {
         String playlistToSelectTitle = 'Jeunes pianistes extraordinaires';
 
         // First, find the Playlist ListTile Text widget
-        await onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
+        await _onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
           tester: tester,
           playlistToSelectTitle: playlistToSelectTitle,
           verifyIfCheckboxIsChecked: false,
@@ -4212,7 +4212,7 @@ void main() {
         );
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-        await onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
+        await _onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
           tester: tester,
           playlistToSelectTitle: playlistToSelectTitle,
           verifyIfCheckboxIsChecked: true,
@@ -4236,14 +4236,14 @@ void main() {
         ];
 
         for (String playlistToSelectTitle in playlistTitleList) {
-          await onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
+          await _onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
             tester: tester,
             playlistToSelectTitle: playlistToSelectTitle,
             verifyIfCheckboxIsChecked: false,
             tapOnCheckbox: true,
           );
 
-          await onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
+          await _onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
             tester: tester,
             playlistToSelectTitle: playlistToSelectTitle,
             verifyIfCheckboxIsChecked: true,
@@ -4287,26 +4287,26 @@ void main() {
 
         // Verify the 'local_10' is correctly scrolled so that it is
         // visible
-        await onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
+        await _onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
           tester: tester,
           playlistToSelectTitle: 'local_10',
           verifyIfCheckboxIsChecked: true,
           tapOnCheckbox: false,
         );
 
-        await executeSearchWordScrollTest(
+        await _executeSearchWordScrollTest(
           tester: tester,
           playlistTitle: 'local_1',
           scrollUpOrDownPlaylistsList: 1000,
         );
 
-        await executeSearchWordScrollTest(
+        await _executeSearchWordScrollTest(
           tester: tester,
           playlistTitle: 'local_13',
           scrollUpOrDownPlaylistsList: -1000,
         );
 
-        await executeSearchWordScrollTest(
+        await _executeSearchWordScrollTest(
           tester: tester,
           playlistTitle: 'local_15',
           scrollUpOrDownPlaylistsList: -1000,
@@ -4353,7 +4353,7 @@ void main() {
             'Jeunes pianistes extraordinaires';
 
         // First, find the Playlist ListTile Text widget
-        await onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
+        await _onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
           tester: tester,
           playlistToSelectTitle: playlistToSelectTitleInPlaylistDownloadView,
           verifyIfCheckboxIsChecked: false,
@@ -4367,7 +4367,7 @@ void main() {
           playlistToSelectTitleInAudioPlayerView: 'local_1',
         );
 
-        await onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
+        await _onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
           tester: tester,
           playlistToSelectTitle: 'local_1',
           verifyIfCheckboxIsChecked: true,
@@ -4393,7 +4393,7 @@ void main() {
         for (int i = 0; i < playlistTitleList.length - 2; i++) {
           String playlistToSelectTitle = playlistTitleList[i];
           String playlistToSelectTitleNext = playlistTitleList[i + 1];
-          await onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
+          await _onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
             tester: tester,
             playlistToSelectTitle: playlistToSelectTitle,
             verifyIfCheckboxIsChecked: true,
@@ -4414,7 +4414,7 @@ void main() {
           playlistToSelectTitleInAudioPlayerView: 'local_10',
         );
 
-        await onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
+        await _onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
           tester: tester,
           playlistToSelectTitle: 'local_10',
           verifyIfCheckboxIsChecked: true,
@@ -4455,7 +4455,7 @@ void main() {
         String playlistToSelectTitle = 'local_10';
 
         // First, find the Playlist ListTile Text widget
-        await onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
+        await _onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
           tester: tester,
           playlistToSelectTitle: playlistToSelectTitle,
           verifyIfCheckboxIsChecked: false,
@@ -4516,7 +4516,7 @@ void main() {
         String playlistToSelectTitle = 'Jeunes pianistes extraordinaires';
 
         // First, find the Playlist ListTile Text widget
-        await onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
+        await _onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
           tester: tester,
           playlistToSelectTitle: playlistToSelectTitle,
           verifyIfCheckboxIsChecked: false,
@@ -10226,7 +10226,7 @@ Playlist loadPlaylist(String playListOneName) {
 ///   1/ for executing the expect that the playlist checkbox is checked code,
 ///   2/ for tapping on  the playlist checkbox.
 /// The two boolean parameters define what this method does.
-Future<void> onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox({
+Future<void> _onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox({
   required WidgetTester tester,
   required String playlistToSelectTitle,
   required bool verifyIfCheckboxIsChecked,
@@ -11498,427 +11498,7 @@ Future<Finder> verifyAudioInfoDialog({
   return targetAudioListTileWidgetFinder;
 }
 
-Future<void> checkWarningDialog({
-  required WidgetTester tester,
-  required String playlistTitle,
-  required bool isMusicQuality,
-  required PlaylistType playlistType,
-}) async {
-  // Ensure the warning dialog is shown
-  expect(find.byType(WarningMessageDisplayDialog), findsOneWidget);
-
-  // Check the value of the warning dialog title
-  Text warningDialogTitle =
-      tester.widget(find.byKey(const Key('warningDialogTitle')));
-  expect(warningDialogTitle.data, 'WARNING');
-
-  // Check the value of the warning dialog message
-  Text warningDialogMessage =
-      tester.widget(find.byKey(const Key('warningDialogMessage')));
-
-  if (playlistType == PlaylistType.youtube) {
-    expect(warningDialogMessage.data,
-        'Youtube playlist "$playlistTitle" of ${isMusicQuality ? 'music' : 'audio'} quality added at end of list of playlists.');
-  } else {
-    expect(warningDialogMessage.data,
-        'Local playlist "$playlistTitle" of ${isMusicQuality ? 'music' : 'audio'} quality added at end of list of playlists.');
-  }
-  
-  // Close the warning dialog by tapping on the Ok button
-  await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-  await tester.pumpAndSettle();
-}
-
-Future<void> checkAudioCommentInAudioPlayerView({
-  required WidgetTester tester,
-  required Finder audioListTileWidgetFinder,
-  required String expectedCommentTitle,
-}) async {
-  // Tap on the ListTile to open the audio player view on the
-  // passed audio finder
-  await tester.tap(audioListTileWidgetFinder);
-  await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
-    tester: tester,
-  );
-
-  // Tap on the comment icon button to open the comment add list
-  // dialog
-  final Finder commentInkWellButtonFinder = find.byKey(
-    const Key('commentsInkWellButton'),
-  );
-
-  await tester.tap(commentInkWellButtonFinder);
-  await tester.pumpAndSettle();
-
-  // Verify that the expectedCommentTitle is listed
-
-  Finder commentListDialogFinder = find.byType(CommentListAddDialog);
-
-  expect(
-      find.descendant(
-          of: commentListDialogFinder,
-          matching: find.text(expectedCommentTitle)),
-      findsOneWidget);
-
-  // Close the comment list dialog
-  await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-  await tester.pumpAndSettle();
-
-  // Tap on the playlist download view button to return to the
-  // playlist download view
-  final playlistDownloadViewNavButton =
-      find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-  await tester.tap(playlistDownloadViewNavButton);
-  await tester.pumpAndSettle();
-}
-
-Future<void> checkAudioCommentUsingAudioItemMenu({
-  required WidgetTester tester,
-  required Finder audioListTileWidgetFinder,
-  required String expectedCommentTitle,
-  String? notAccessibleCommentTitle,
-  String? audioTitleToVerifyInCommentAddEditDialog,
-}) async {
-  // Find the leading menu icon button of the audio ListTile
-  // and tap on it
-  final Finder audioListTileLeadingMenuIconButton = find.descendant(
-    of: audioListTileWidgetFinder,
-    matching: find.byIcon(Icons.menu),
-  );
-
-  // Tap the leading menu icon button to open the popup menu
-  await tester.tap(audioListTileLeadingMenuIconButton);
-  await tester.pumpAndSettle();
-
-  // Now find the audio comments popup menu item and tap on it
-  final Finder popupCommentMenuItem =
-      find.byKey(const Key("popup_menu_audio_comment"));
-
-  await tester.tap(popupCommentMenuItem);
-  await tester.pumpAndSettle();
-
-  // Verify that the comment list is displayed
-  expect(find.byType(CommentListAddDialog), findsOneWidget);
-
-  // Verify that the expectedCommentTitle is listed
-
-  Finder commentListDialogFinder = find.byType(CommentListAddDialog);
-
-  expect(
-      find.descendant(
-          of: commentListDialogFinder,
-          matching: find.text(expectedCommentTitle)),
-      findsOneWidget);
-
-  // If the notAccessibleCommentTitle is not null, verify that it is
-  // not listed
-  if (notAccessibleCommentTitle != null) {
-    expect(
-        find.descendant(
-            of: commentListDialogFinder,
-            matching: find.text(notAccessibleCommentTitle)),
-        findsNothing);
-  }
-
-  if (audioTitleToVerifyInCommentAddEditDialog != null) {
-    // Tap on the comment title to open the comment add/edit dialog
-    await tester.tap(find.text(expectedCommentTitle));
-    await tester.pumpAndSettle();
-
-    final Finder commentAddEditDialogFinder = find.byType(CommentAddEditDialog);
-
-    // Verify audio title displayed in the comment add/edit dialog
-    expect(
-      find.descendant(
-          of: commentAddEditDialogFinder,
-          matching: find.text(audioTitleToVerifyInCommentAddEditDialog)),
-      findsOneWidget,
-    );
-
-    // Tap on the cancel button to close the comment add/edit dialog
-    await tester.tap(find.byKey(const Key('cancelTextButton')));
-    await tester.pumpAndSettle();
-  }
-
-  // Close the comment list dialog
-  await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-  await tester.pumpAndSettle();
-}
-
-Future<void> ensureNoButtonIsEnabledSinceNoPlaylistIsSelected(
-    WidgetTester tester) async {
-  IntegrationTestUtil.verifyWidgetIsDisabled(
-    tester: tester,
-    widgetKeyStr: 'move_up_playlist_button',
-  );
-
-  IntegrationTestUtil.verifyWidgetIsDisabled(
-    tester: tester,
-    widgetKeyStr: 'move_down_playlist_button',
-  );
-
-  IntegrationTestUtil.verifyWidgetIsDisabled(
-    tester: tester,
-    widgetKeyStr: 'download_sel_playlists_button',
-  );
-
-  IntegrationTestUtil.verifyWidgetIsDisabled(
-    tester: tester,
-    widgetKeyStr: 'audio_quality_checkbox',
-  );
-
-  // This menu button is always enabled since the Update playlist json file
-  // menu item must be always accessible
-  IntegrationTestUtil.verifyWidgetIsEnabled(
-    tester: tester,
-    widgetKeyStr: 'audio_popup_menu_button',
-  );
-
-  // Now open the audio popup menu
-  await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-  await tester.pumpAndSettle();
-
-  // since the selected local playlist has no audio, the
-  // audio menu items are disabled
-  await IntegrationTestUtil.verifyAudioMenuItemsState(
-    tester: tester,
-    areAudioMenuItemsDisabled: true,
-    audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
-  );
-}
-
-Future<void> tapPlaylistCheckboxIfNotAlreadyChecked({
-  required Finder playlistListTileWidgetFinder,
-  required WidgetTester widgetTester,
-}) async {
-  final Finder youtubePlaylistListTileCheckboxWidgetFinder = find.descendant(
-    of: playlistListTileWidgetFinder,
-    matching: find.byType(Checkbox),
-  );
-
-  // Retrieve the Checkbox widget
-  final Checkbox checkbox = widgetTester
-      .widget<Checkbox>(youtubePlaylistListTileCheckboxWidgetFinder);
-
-  // Check if the checkbox is checked
-  if (checkbox.value == null || !checkbox.value!) {
-    // Tap the ListTile Playlist checkbox to select it
-    // so that the playlist audio are listed
-    await widgetTester.tap(youtubePlaylistListTileCheckboxWidgetFinder);
-    await widgetTester.pumpAndSettle();
-  }
-}
-
-Future<Finder> ensurePlaylistCheckboxIsNotChecked({
-  required Finder playlistListTileWidgetFinder,
-  required WidgetTester widgetTester,
-}) async {
-  final Finder youtubePlaylistListTileCheckboxWidgetFinder = find.descendant(
-    of: playlistListTileWidgetFinder,
-    matching: find.byType(Checkbox),
-  );
-
-  // Retrieve the Checkbox widget
-  final Checkbox checkbox = widgetTester
-      .widget<Checkbox>(youtubePlaylistListTileCheckboxWidgetFinder);
-
-  // Check that the checkbox is not checked
-  expect((checkbox.value == null || !checkbox.value!), true);
-
-  return youtubePlaylistListTileCheckboxWidgetFinder;
-}
-
-Future<void> findThenSelectAndTestListTileCheckbox({
-  required WidgetTester tester,
-  required String itemTextStr,
-}) async {
-  Finder listItemTileFinder = find.widgetWithText(ListTile, itemTextStr);
-
-  // Find the Checkbox widget inside the ListTile
-  Finder checkboxFinder = find.descendant(
-    of: listItemTileFinder,
-    matching: find.byType(Checkbox),
-  );
-
-  // Assert that the checkbox is not selected
-  expect(tester.widget<Checkbox>(checkboxFinder).value, false);
-
-  // now tap the item checkbox
-  await tester.tap(find.descendant(
-    of: listItemTileFinder,
-    matching: find.byWidgetPredicate((widget) => widget is Checkbox),
-  ));
-  await tester.pump();
-
-  // Find the Checkbox widget inside the ListTile
-
-  listItemTileFinder = find.widgetWithText(ListTile, itemTextStr);
-
-  checkboxFinder = find.descendant(
-    of: listItemTileFinder,
-    matching: find.byType(Checkbox),
-  );
-
-  expect(tester.widget<Checkbox>(checkboxFinder).value, true);
-}
-
-void changePage(int index) {
-  onPageChanged(index);
-  // _pageController.animateToPage(
-  //   index,
-  //   duration: pageTransitionDuration, // Use constant
-  //   curve: pageTransitionCurve, // Use constant
-  // );
-}
-
-void onPageChanged(int index) {
-  // setState(() {
-  //   _currentIndex = index;
-  // });
-}
-
-/// Verifies the elements of the audio info dialog.
-///
-/// {tester} is the WidgetTester
-///
-/// {audioTitle} is the title of the audio the method verifies
-/// the elements of the audio info dialog
-///
-/// {playlistEnclosingAudioTitle} is the title of the playlist
-/// enclosing the audio
-///
-/// {copiedAudioSourcePlaylistTitle} is the title of the playlist
-/// from which the audio was copied
-///
-/// {copiedAudioTargetPlaylistTitle} is the title of the playlist
-/// to which the audio was copied
-///
-/// {movedAudioSourcePlaylistTitle} is the title of the playlist
-/// from which the audio was moved
-///
-/// {movedAudioTargetPlaylistTitle} is the title of the playlist
-/// to which the audio was moved
-Future<void> verifyAudioInfoDialogElements({
-  required WidgetTester tester,
-  required String audioTitle,
-  required String playlistEnclosingAudioTitle,
-  required String copiedAudioSourcePlaylistTitle,
-  required String copiedAudioTargetPlaylistTitle,
-  required String movedAudioSourcePlaylistTitle,
-  required String movedAudioTargetPlaylistTitle,
-}) async {
-  // Find the target ListTile Playlist containing the audio copied
-  // from the source playlist
-
-  // First, find the Playlist ListTile Text widget
-  final Finder targetPlaylistListTileTextWidgetFinder =
-      find.text(playlistEnclosingAudioTitle);
-
-  // Then obtain the Playlist ListTile widget enclosing the Text widget
-  // by finding its ancestor
-  final Finder targetPlaylistListTileWidgetFinder = find.ancestor(
-    of: targetPlaylistListTileTextWidgetFinder,
-    matching: find.byType(ListTile),
-  );
-
-  // Now find the Checkbox widget located in the Playlist ListTile
-  // and tap on it to select the playlist
-  final Finder targetPlaylistListTileCheckboxWidgetFinder = find.descendant(
-    of: targetPlaylistListTileWidgetFinder,
-    matching: find.byType(Checkbox),
-  );
-
-  final checkboxWidget =
-      tester.widget<Checkbox>(targetPlaylistListTileCheckboxWidgetFinder);
-
-  if (!checkboxWidget.value!) {
-    await tester.tap(targetPlaylistListTileCheckboxWidgetFinder);
-    await tester.pumpAndSettle();
-  }
-
-  // Now we want to tap the popup menu of audioTitle
-
-  // First, find the Audio sublist ListTile Text widget
-  final Finder targetAudioListTileTextWidgetFinder = find.text(audioTitle);
-
-  // Then obtain the Audio ListTile widget enclosing the Text widget by
-  // finding its ancestor
-  final Finder targetAudioListTileWidgetFinder = find.ancestor(
-    of: targetAudioListTileTextWidgetFinder,
-    matching: find.byType(ListTile),
-  );
-
-  // Now find the leading menu icon button of the Audio ListTile and tap
-  // on it
-  final Finder targetAudioListTileLeadingMenuIconButton = find.descendant(
-    of: targetAudioListTileWidgetFinder,
-    matching: find.byIcon(Icons.menu),
-  );
-
-  // Tap the leading menu icon button to open the popup menu
-  await tester.tap(targetAudioListTileLeadingMenuIconButton);
-  await tester.pumpAndSettle();
-
-  // Now find the popup menu item and tap on it
-  Finder popupDisplayAudioInfoMenuItemFinder =
-      find.byKey(const Key("popup_menu_display_audio_info"));
-
-  await tester.tap(popupDisplayAudioInfoMenuItemFinder);
-  await tester.pumpAndSettle();
-
-  // Now verifying the display audio info audio copied dialog
-  // elements
-
-  // Verify the audio channel name
-
-  Text youtubeChannelTextWidget =
-      tester.widget<Text>(find.byKey(const Key('youtubeChannelKey')));
-
-  expect(youtubeChannelTextWidget.data, "Jean-Pierre Schnyder");
-
-  // Verify the enclosing playlist title of the copied audio
-
-  Text enclosingPlaylistTitleTextWidget =
-      tester.widget<Text>(find.byKey(const Key('enclosingPlaylistTitleKey')));
-
-  expect(enclosingPlaylistTitleTextWidget.data, playlistEnclosingAudioTitle);
-
-  // Verify the copied from playlist title of the copied audio
-
-  Text copiedFromPlaylistTitleTextWidget =
-      tester.widget<Text>(find.byKey(const Key('copiedFromPlaylistTitleKey')));
-
-  expect(
-      copiedFromPlaylistTitleTextWidget.data, copiedAudioSourcePlaylistTitle);
-
-  // Verify the copied to playlist title of the copied audio
-
-  Text copiedToPlaylistTitleTextWidget =
-      tester.widget<Text>(find.byKey(const Key('copiedToPlaylistTitleKey')));
-
-  expect(copiedToPlaylistTitleTextWidget.data, copiedAudioTargetPlaylistTitle);
-
-  // Verify the moved from playlist title of the copied audio
-
-  Text movedFromPlaylistTitleTextWidget =
-      tester.widget<Text>(find.byKey(const Key('movedFromPlaylistTitleKey')));
-
-  expect(movedFromPlaylistTitleTextWidget.data, movedAudioSourcePlaylistTitle);
-
-  // Verify the moved to playlist title of the copied audio
-
-  Text movedToPlaylistTitleTextWidget =
-      tester.widget<Text>(find.byKey(const Key('movedToPlaylistTitleKey')));
-
-  expect(movedToPlaylistTitleTextWidget.data, movedAudioTargetPlaylistTitle);
-
-  // Now find the ok button of the audio info dialog
-  // and tap on it
-  await tester.tap(find.byKey(const Key('audio_info_ok_button_key')));
-  await tester.pumpAndSettle();
-}
-
-Future<void> executeSearchWordScrollTest({
+Future<void> _executeSearchWordScrollTest({
   required WidgetTester tester,
   required String playlistTitle,
   double scrollUpOrDownPlaylistsList = 0,
@@ -11951,7 +11531,7 @@ Future<void> executeSearchWordScrollTest({
   }
 
   // Select the playlist
-  await onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
+  await _onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
     tester: tester,
     playlistToSelectTitle: playlistTitle,
     verifyIfCheckboxIsChecked: false,
@@ -11979,7 +11559,7 @@ Future<void> executeSearchWordScrollTest({
 
   // Verify that the playlist is correctly scrolled so that it is
   // visible
-  await onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
+  await _onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox(
     tester: tester,
     playlistToSelectTitle: playlistTitle,
     verifyIfCheckboxIsChecked: true,
