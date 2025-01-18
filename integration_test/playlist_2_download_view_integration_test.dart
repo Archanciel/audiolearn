@@ -6207,23 +6207,6 @@ void main() {
           playlistSubMenuKeyStr: 'popup_menu_delete_filtered_audio',
         );
 
-        // Verifying and closing the confirm dialog title
-
-        Text deleteFilteredAudioConfirmDialogTitleWidget = tester
-            .widget<Text>(find.byKey(const Key('confirmDialogTitleOneKey')));
-
-        expect(deleteFilteredAudioConfirmDialogTitleWidget.data,
-            'WARNING: you are going to');
-
-        deleteFilteredAudioConfirmDialogTitleWidget = tester
-            .widget<Text>(find.byKey(const Key('confirmDialogTitleTwoKey')));
-
-        expect(deleteFilteredAudioConfirmDialogTitleWidget.data,
-            'delete COMMENTED and uncommented audio filtered by "$defaultSortFilterParmName" parms from playlist "$youtubePlaylistTitle". Watch the help to solve the problem ...');
-
-        // Verify the presence of the help icon button
-        expect(find.byIcon(Icons.help_outline), findsOneWidget);
-
         // Verifying and closing the confirm dialog message
 
         await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
@@ -7912,24 +7895,13 @@ void main() {
         await tester.tap(find.byKey(const Key('confirmButton')));
         await tester.pumpAndSettle();
 
-        // Verifying the warning title
-
-        Text moveFilteredAudioConfirmWarningTitleWidget =
-            tester.widget<Text>(find.byKey(const Key('warningDialogTitle')));
-
-        expect(moveFilteredAudioConfirmWarningTitleWidget.data, 'WARNING');
-
-        // Verifying the confirm warning message
-
-        Text moveFilteredAudioConfirmWarningMessageWidget =
-            tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
-
-        expect(moveFilteredAudioConfirmWarningMessageWidget.data,
-            'Since "default" Sort/Filter parms is selected, no audio can be moved from Youtube playlist "$sourcePlaylistTitle" to local playlist "$targetPlaylistTitle". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...');
-
-        // Now find the ok button of the confirm dialog and tap on it
-        await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-        await tester.pumpAndSettle();
+      // Now verifying the warning dialog
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            'Since "default" Sort/Filter parms is selected, no audio can be moved from Youtube playlist "$sourcePlaylistTitle" to local playlist "$targetPlaylistTitle". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...',
+        isWarningConfirming: false,
+      );
 
         // Verifying the 'temp' target playlist
 
@@ -9484,24 +9456,13 @@ void main() {
         await tester.tap(find.byKey(const Key('confirmButton')));
         await tester.pumpAndSettle();
 
-        // Verifying the warning title
-
-        Text moveFilteredAudioConfirmWarningTitleWidget =
-            tester.widget<Text>(find.byKey(const Key('warningDialogTitle')));
-
-        expect(moveFilteredAudioConfirmWarningTitleWidget.data, 'WARNING');
-
-        // Verifying the confirm warning message
-
-        Text moveFilteredAudioConfirmWarningMessageWidget =
-            tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
-
-        expect(moveFilteredAudioConfirmWarningMessageWidget.data,
-            'Since "default" Sort/Filter parms is selected, no audio can be copied from Youtube playlist "$sourcePlaylistTitle" to local playlist "$targetPlaylistTitle". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...');
-
-        // Now find the ok button of the confirm dialog and tap on it
-        await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-        await tester.pumpAndSettle();
+      // Now verifying the warning dialog
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            'Since "default" Sort/Filter parms is selected, no audio can be copied from Youtube playlist "$sourcePlaylistTitle" to local playlist "$targetPlaylistTitle". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...',
+        isWarningConfirming: false,
+      );
 
         // Verifying the 'temp' target playlist
 
@@ -11562,6 +11523,7 @@ Future<void> checkWarningDialog({
     expect(warningDialogMessage.data,
         'Local playlist "$playlistTitle" of ${isMusicQuality ? 'music' : 'audio'} quality added at end of list of playlists.');
   }
+  
   // Close the warning dialog by tapping on the Ok button
   await tester.tap(find.byKey(const Key('warningDialogOkButton')));
   await tester.pumpAndSettle();
