@@ -430,6 +430,11 @@ class AudioPlayerVM extends ChangeNotifier {
     if (nextAudio == null) {
       // the case if the current audio is the last playable audio of the
       // sort/filter or not playlist playableAudioLst.
+
+      // necessary so that the play/pause icon is updated to play.
+      // Otherwise, the icon remains at pause value.
+      currentAudioPlayPauseNotifier.value = false;
+
       return false;
     }
 
@@ -565,6 +570,11 @@ class AudioPlayerVM extends ChangeNotifier {
       if (_isCommentPlaying) {
         // In this situation, if a comment is playing and arrives to the
         // audio end, the next audio is not played.
+
+        // necessary so that the play/pause icon is updated to play.
+        // Otherwise, the icon remains at pause value.
+        currentAudioPlayPauseNotifier.value = false;
+
         return;
       }
 
