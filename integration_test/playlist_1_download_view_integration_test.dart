@@ -15995,7 +15995,7 @@ void main() {
       await tester.tap(audioModificationButtonFinder);
       await tester.pumpAndSettle();
 
-      // Now verify the order of the playlist audio titles
+      // Now verify the playlist audio titles
 
       List<String>
           audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
@@ -16003,12 +16003,11 @@ void main() {
         "Really short video",
       ];
 
-      // Ensure that since the search icon button is now disabled,
-      // the displayed audio list is modified.
       IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
         tester: tester,
         audioOrPlaylistTitlesOrderedLst:
             audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+        firstAudioListTileIndex: 4,
       );
 
       // Check the modified audio title its audio comment
