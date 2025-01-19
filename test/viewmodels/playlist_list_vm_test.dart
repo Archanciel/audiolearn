@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:archive/archive.dart';
 import 'package:audiolearn/services/sort_filter_parameters.dart';
 import 'package:audiolearn/viewmodels/comment_vm.dart';
 import 'package:path/path.dart' as path;
