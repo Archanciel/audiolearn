@@ -1981,10 +1981,11 @@ void main() {
       });
     });
     group(
-        'Audio search word to audio player view and back to playlist download view',
+        '''Audio search word set in playlist download view, then go to audio player
+           view and back to playlist download view''',
         () {
-      testWidgets('''Clicking on audio player view button. First, enter the
-           search word 'al' in the 'Youtube Link or Search' text field.''',
+      testWidgets('''First, enter the search word 'al' in the 'Youtube Link or Search'
+                     text field.''',
           (WidgetTester tester) async {
         // After entering 'al', verify that the search icon button is now enabled.
         // Then, click on the enabled search icon button and verify the reduced
@@ -2065,7 +2066,7 @@ void main() {
           widgetKeyStr: 'search_icon_button',
         );
 
-        // Now verify the order of the reduced playlist audio titles
+        // Now verify the order of the playlist audio titles
 
         audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
           "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
@@ -2077,7 +2078,7 @@ void main() {
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
-        // Ensure that since the search icon button was now pressed,
+        // Ensure that since the search icon button is now disabled,
         // the displayed audio list is modified.
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
@@ -2091,7 +2092,7 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
-      testWidgets('''Clicking on audio play button. First, enter the
+      testWidgets('''At end, clicking on audio play button. First, enter the
            search word 'al' in the 'Youtube Link or Search' text field.''',
           (WidgetTester tester) async {
         // After entering 'al', verify that the search icon button is now enabled.

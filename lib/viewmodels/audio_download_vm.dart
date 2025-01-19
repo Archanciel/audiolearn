@@ -1401,6 +1401,8 @@ class AudioDownloadVM extends ChangeNotifier {
     return existingAudioFilesNotRedownloadedCount;
   }
 
+  /// This method is called when the user selects the "Import audio files ..."
+  /// playlist menu item.
   Future<void> importAudioFilesInPlaylist({
     required Playlist targetPlaylist,
     required List<String> filePathNameToImportLst,
