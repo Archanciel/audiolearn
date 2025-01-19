@@ -746,6 +746,135 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
+    testWidgets('''Play to end the partially listened last downloaded audio and
+                verify that the play/pause button is transformed from pause to
+                play button. This verify a bug fix.''', (
+      WidgetTester tester,
+    ) async {
+      const String audioPlayerSelectedPlaylistTitle = 'S8 audio';
+      const String firstDownloadedAudioTitle =
+          'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau';
+      const String secondDownloadedAudioTitle =
+          '3 fois où Aurélien Barrau tire à balles réelles sur les riches';
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName:
+            'audio_player_view_first_to_last_audio_test_modified',
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        tapOnPlaylistToggleButton: false,
+      );
+
+      // First, we modify the audio position of the second downloaded
+      // audio of the playlist. First, get the second downloaded audio
+      // ListTile Text widget finder and tap on it
+      final Finder
+          playlistDownloadViewSecondDownloadedAudioListTileTextWidgetFinder =
+          find.text(secondDownloadedAudioTitle);
+
+      await tester.tap(
+          playlistDownloadViewSecondDownloadedAudioListTileTextWidgetFinder);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
+
+      // Tapping 5 times on the forward 1 minute icon button. Now, the
+      // second downloaded audio of the playlist is fully listened.
+      for (int i = 0; i < 5; i++) {
+        await tester
+            .tap(find.byKey(const Key('audioPlayerViewForward1mButton')));
+        await tester.pumpAndSettle();
+      }
+
+      // Playing the audio during 2 seconds.
+
+      await tester.tap(find.byIcon(Icons.play_arrow));
+      await tester.pumpAndSettle();
+
+      await Future.delayed(const Duration(seconds: 2));
+      await tester.pumpAndSettle(const Duration(milliseconds: 1500));
+
+      // Click on the pause button to stop the last downloaded audio
+      await tester.tap(find.byIcon(Icons.pause));
+      await tester.pumpAndSettle();
+
+      // Now we want to tap on the first downloaded audio of the
+      // playlist in order to start playing it.
+
+      // First, go back to the playlist download view.
+      final Finder appScreenNavigationButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(appScreenNavigationButton);
+      await tester.pumpAndSettle();
+
+      // Tap the 'Toggle List' button to avoid displaying the list
+      // of playlists which may hide the audio title we want to
+      // tap on
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Then, get the first downloaded Audio ListTile Text
+      // widget finder and tap on it
+      final Finder firstDownloadedAudioListTileTextWidgetFinder =
+          find.text(firstDownloadedAudioTitle);
+
+      await tester.tap(firstDownloadedAudioListTileTextWidgetFinder);
+      await tester.pumpAndSettle(const Duration(milliseconds: 400));
+
+      // Verify that the selected playlist title is displayed
+      Text selectedPlaylistTitleText =
+          tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
+      expect(
+        selectedPlaylistTitleText.data,
+        audioPlayerSelectedPlaylistTitle,
+      );
+
+      // Now we tap on the play button in order to finish
+      // playing the first downloaded audio and start playing
+      // the last downloaded audio of the playlist. The 2
+      // audio in between are ignored since they are already
+      // fully played.
+
+      await tester.tap(find.byIcon(Icons.play_arrow));
+      await tester.pumpAndSettle();
+
+      await Future.delayed(const Duration(seconds: 5));
+      await tester.pumpAndSettle();
+
+      // Click on the pause button
+      await tester.tap(find.byIcon(Icons.pause));
+      await tester.pumpAndSettle();
+
+      // Verify the last downloaded played audio title
+      expect(
+          find.text(
+              "L'argument anti-nuke qui m'inquiète le plus par Y.Rousselet\n9:51"),
+          findsOneWidget);
+
+      // Verify that the selected playlist title is displayed
+      selectedPlaylistTitleText =
+          tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
+      expect(
+        selectedPlaylistTitleText.data,
+        audioPlayerSelectedPlaylistTitle,
+      );
+
+      final Finder audioPlayerViewAudioPositionFinder =
+          find.byKey(const Key('audioPlayerViewAudioPosition'));
+
+      IntegrationTestUtil.verifyPositionBetweenMinMax(
+        tester: tester,
+        textWidgetFinder: audioPlayerViewAudioPositionFinder,
+        minPositionTimeStr: '8:51',
+        maxPositionTimeStr: '8:54',
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
   });
   group('Test play with or without rewind audio position', () {
     testWidgets(
