@@ -751,123 +751,93 @@ void main() {
                 play button. This verify a bug fix.''', (
       WidgetTester tester,
     ) async {
-      const String audioPlayerSelectedPlaylistTitle = 'S8 audio';
-      const String firstDownloadedAudioTitle =
-          'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau';
-      const String secondDownloadedAudioTitle =
-          '3 fois où Aurélien Barrau tire à balles réelles sur les riches';
+      const String audioPlayerSelectedPlaylistTitle =
+          'audio_player_view_2_shorts_test';
+      const String otherPlaylistTitle = 'local_3';
+      const String lastDownloadedAudioTitle =
+          '231226-094526-Ce qui va vraiment sauver notre espèce par Jancovici et Barrau 23-09-23';
+      const String previousDownloadedAudioTitle = 'morning _ cinematic video';
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
-        savedTestDataDirName:
-            'audio_player_view_first_to_last_audio_test_modified',
+        savedTestDataDirName: 'audio_play_to_end_test',
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         tapOnPlaylistToggleButton: false,
       );
 
-      // First, we modify the audio position of the second downloaded
-      // audio of the playlist. First, get the second downloaded audio
+      // First, we play till the end the first downloaded
+      // audio of the playlist. First, get the first downloaded audio
       // ListTile Text widget finder and tap on it
-      final Finder
-          playlistDownloadViewSecondDownloadedAudioListTileTextWidgetFinder =
-          find.text(secondDownloadedAudioTitle);
+      final Finder lastDownloadedAudioListTileTextWidgetFinder =
+          find.text(lastDownloadedAudioTitle);
 
-      await tester.tap(
-          playlistDownloadViewSecondDownloadedAudioListTileTextWidgetFinder);
+      await tester.tap(lastDownloadedAudioListTileTextWidgetFinder);
       await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
         tester: tester,
       );
 
-      // Tapping 5 times on the forward 1 minute icon button. Now, the
-      // second downloaded audio of the playlist is fully listened.
-      for (int i = 0; i < 5; i++) {
-        await tester
-            .tap(find.byKey(const Key('audioPlayerViewForward1mButton')));
-        await tester.pumpAndSettle();
-      }
-
-      // Playing the audio during 2 seconds.
+      // Click on play button.
 
       await tester.tap(find.byIcon(Icons.play_arrow));
       await tester.pumpAndSettle();
 
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 1));
       await tester.pumpAndSettle(const Duration(milliseconds: 1500));
 
-      // Click on the pause button to stop the last downloaded audio
-      await tester.tap(find.byIcon(Icons.pause));
+      // Tapping 3 times on the forward 10 seconds icon button.
+      for (int i = 0; i < 3; i++) {
+        await tester
+            .tap(find.byKey(const Key('audioPlayerViewForward10sButton')));
+        await tester.pumpAndSettle();
+      }
+
+      await Future.delayed(const Duration(milliseconds: 2300));
+      await tester.pumpAndSettle(const Duration(milliseconds: 1500));
+
+      // Verify that the play button is present (due to the bug, the
+      // pause button was displayed).
+      expect(find.byIcon(Icons.play_arrow), findsOneWidget);
+
+      // Now we open the DisplaySelectableAudioListDialog
+      // and select the previous downloaded audio of the playlist
+
+      await tester.tap(find.text('$lastDownloadedAudioTitle\n6:28'));
       await tester.pumpAndSettle();
 
-      // Now we want to tap on the first downloaded audio of the
-      // playlist in order to start playing it.
+      await tester.tap(find.text(previousDownloadedAudioTitle));
+      await tester.pumpAndSettle(const Duration(milliseconds: 500));
 
-      // First, go back to the playlist download view.
+      // Verify that the play button is present (due to the bug, the
+      // pause button is displayed).
+      expect(find.byIcon(Icons.play_arrow), findsOneWidget);
+
+      // Now we go back to the playlist download view in order to select
+      // another playlist.
       final Finder appScreenNavigationButton =
           find.byKey(const ValueKey('playlistDownloadViewIconButton'));
       await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
-      // Tap the 'Toggle List' button to avoid displaying the list
-      // of playlists which may hide the audio title we want to
-      // tap on
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-      await tester.pumpAndSettle();
-
-      // Then, get the first downloaded Audio ListTile Text
-      // widget finder and tap on it
-      final Finder firstDownloadedAudioListTileTextWidgetFinder =
-          find.text(firstDownloadedAudioTitle);
-
-      await tester.tap(firstDownloadedAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle(const Duration(milliseconds: 400));
-
-      // Verify that the selected playlist title is displayed
-      Text selectedPlaylistTitleText =
-          tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
-      expect(
-        selectedPlaylistTitleText.data,
-        audioPlayerSelectedPlaylistTitle,
-      );
-
-      // Now we tap on the play button in order to finish
-      // playing the first downloaded audio and start playing
-      // the last downloaded audio of the playlist. The 2
-      // audio in between are ignored since they are already
-      // fully played.
-
-      await tester.tap(find.byIcon(Icons.play_arrow));
-      await tester.pumpAndSettle();
-
-      await Future.delayed(const Duration(seconds: 5));
-      await tester.pumpAndSettle();
-
-      // Click on the pause button
-      await tester.tap(find.byIcon(Icons.pause));
-      await tester.pumpAndSettle();
-
-      // Verify the last downloaded played audio title
-      expect(
-          find.text(
-              "L'argument anti-nuke qui m'inquiète le plus par Y.Rousselet\n9:51"),
-          findsOneWidget);
-
-      // Verify that the selected playlist title is displayed
-      selectedPlaylistTitleText =
-          tester.widget(find.byKey(const Key('selectedPlaylistTitleText')));
-      expect(
-        selectedPlaylistTitleText.data,
-        audioPlayerSelectedPlaylistTitle,
-      );
-
-      final Finder audioPlayerViewAudioPositionFinder =
-          find.byKey(const Key('audioPlayerViewAudioPosition'));
-
-      IntegrationTestUtil.verifyPositionBetweenMinMax(
+      // Now we select the other 'local_3' playlist
+      await IntegrationTestUtil.selectPlaylist(
         tester: tester,
-        textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '8:51',
-        maxPositionTimeStr: '8:54',
+        playlistToSelectTitle: otherPlaylistTitle,
       );
+
+      // And we click on its unique audio item to open the audio
+      // player view
+
+      final Finder previousDownloadedAudioListTileTextWidgetFinder =
+          find.text(previousDownloadedAudioTitle);
+
+      await tester.tap(previousDownloadedAudioListTileTextWidgetFinder);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
+
+      // Verify that the play button is present (due to the bug, the
+      // pause button is displayed).
+      expect(find.byIcon(Icons.play_arrow), findsOneWidget);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
