@@ -885,6 +885,9 @@ void main() {
         commentPosition: 1,
       );
 
+      // Since the comment duration is 2 seconds, we wait 2 seconds
+      await Future.delayed(const Duration(seconds: 2));
+
       // Tap on the Close button to close the comment list add dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));
       await tester.pumpAndSettle();
@@ -904,6 +907,90 @@ void main() {
 
       final Finder lastDownloadedAudioListTileTextWidgetFinder =
           find.text(lastDownloadedAudioTitle);
+
+      await tester.tap(lastDownloadedAudioListTileTextWidgetFinder);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
+
+      // Verify that the play button is present (due to the bug, the
+      // pause button is displayed).
+      expect(find.byIcon(Icons.play_arrow), findsOneWidget);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Audio no picture plays comment to end. This audio is a partially
+           listened last audio. A comment whose end position is at end is played.
+           Then verify that the play/pause button is transformed from pause to
+           play button. This verifies a bug fix.''', (
+      WidgetTester tester,
+    ) async {
+      const String audioPlayerSelectedPlaylistTitle = 'local';
+      const String audioPlayerNextPlaylistTitle = 'Jésus-Christ';
+      const String previousDownloadedAudioTitle =
+          'NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE';
+      const String uniqueDownloadedAudioTitle = 'CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien';
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_player_picture_test',
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        tapOnPlaylistToggleButton: false,
+      );
+
+      // First, through a comment, we play till the end the secondly
+      // downloaded audio of the playlist. When a comment is played,
+      // if the audio end is reached, the next audio does not start
+      // to play.
+
+      // First, get the unique downloaded audio ListTile Text widget
+      // finder and tap on it
+      final Finder uniqueDownloadedAudioListTileTextWidgetFinder =
+          find.text(uniqueDownloadedAudioTitle);
+
+      await tester.tap(uniqueDownloadedAudioListTileTextWidgetFinder);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
+
+      // Play unique comment till end audio is reached
+      await IntegrationTestUtil.playCommentFromListAddDialog(
+        tester: tester,
+        commentPosition: 1,
+      );
+
+      // Since the comment duration is 2 seconds, we wait 2 seconds
+      await Future.delayed(const Duration(seconds: 2));
+
+      // Tap on the Close button to close the comment list add dialog
+      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+      await tester.pumpAndSettle();
+
+      // Verify that the play button is present (due to the bug, the
+      // pause button was displayed).
+      expect(find.byIcon(Icons.play_arrow), findsOneWidget);
+
+      // Now we go back to the playlist download view in order to select
+      // another playlist.
+      final Finder appScreenNavigationButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(appScreenNavigationButton);
+      await tester.pumpAndSettle();
+
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: audioPlayerNextPlaylistTitle,
+      );
+
+      // We click on the audio item to open the audio player view
+
+      final Finder lastDownloadedAudioListTileTextWidgetFinder =
+          find.text(previousDownloadedAudioTitle);
 
       await tester.tap(lastDownloadedAudioListTileTextWidgetFinder);
       await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
