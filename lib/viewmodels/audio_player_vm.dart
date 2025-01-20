@@ -189,7 +189,9 @@ class AudioPlayerVM extends ChangeNotifier {
       return false;
     }
 
-    return _currentAudio!.audioPlayVolume == 0.0;
+    // It is important to compare with 0.1 and not 0.0 since at
+    // 0.0, the audio is no more listenable.
+    return _currentAudio!.audioPlayVolume == 0.1;
   }
 
   /// {volumeChangedValue} must be between -1.0 and 1.0. The
