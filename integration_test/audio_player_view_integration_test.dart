@@ -749,7 +749,7 @@ void main() {
     });
     testWidgets('''Play to end the partially listened last downloaded audio and
                 verify that the play/pause button is transformed from pause to
-                play button. This verify a bug fix.''', (
+                play button. This verifies a bug fix.''', (
       WidgetTester tester,
     ) async {
       const String audioPlayerSelectedPlaylistTitle =
@@ -832,6 +832,81 @@ void main() {
           find.text(previousDownloadedAudioTitle);
 
       await tester.tap(previousDownloadedAudioListTileTextWidgetFinder);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
+
+      // Verify that the play button is present (due to the bug, the
+      // pause button is displayed).
+      expect(find.byIcon(Icons.play_arrow), findsOneWidget);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Audio with picture plays comment to end. This audio is a partially
+           listened last audio. A comment whose end position is at end is played.
+           Then verify that the play/pause button is transformed from pause to
+           play button. This verifies a bug fix.''', (
+      WidgetTester tester,
+    ) async {
+      const String audioPlayerSelectedPlaylistTitle = 'Jésus-Christ';
+      const String previousDownloadedAudioTitle =
+          'NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE';
+      const String lastDownloadedAudioTitle = 'CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien';
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_player_picture_test',
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        tapOnPlaylistToggleButton: false,
+      );
+
+      // First, through a comment, we play till the end the secondly
+      // downloaded audio of the playlist. When a comment is played,
+      // if the audio end is reached, the next audio does not start
+      // to play.
+
+      // First, get the second downloaded audio ListTile Text widget
+      // finder and tap on it
+      final Finder previousDownloadedAudioListTileTextWidgetFinder =
+          find.text(previousDownloadedAudioTitle);
+
+      await tester.tap(previousDownloadedAudioListTileTextWidgetFinder);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
+
+      // Play unique comment till end audio is reached
+      await IntegrationTestUtil.playCommentFromListAddDialog(
+        tester: tester,
+        commentPosition: 1,
+      );
+
+      // Tap on the Close button to close the comment list add dialog
+      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+      await tester.pumpAndSettle();
+
+      // Verify that the play button is present (due to the bug, the
+      // pause button was displayed).
+      expect(find.byIcon(Icons.play_arrow), findsOneWidget);
+
+      // Now we go back to the playlist download view in order to select
+      // the last downloaded audio.
+      final Finder appScreenNavigationButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(appScreenNavigationButton);
+      await tester.pumpAndSettle();
+
+      // We click on the audio item to open the audio player view
+
+      final Finder lastDownloadedAudioListTileTextWidgetFinder =
+          find.text(lastDownloadedAudioTitle);
+
+      await tester.tap(lastDownloadedAudioListTileTextWidgetFinder);
       await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
         tester: tester,
       );
@@ -5158,51 +5233,12 @@ void main() {
           tester: tester,
         );
 
-        // Tap on the comment icon button to open the comment add list
-        // dialog
-        final Finder commentInkWellButtonFinder = find.byKey(
-          const Key('commentsInkWellButton'),
+        // Play then pause second comment
+        await IntegrationTestUtil.playCommentFromListAddDialog(
+          tester: tester,
+          commentPosition: 3,
+          mustAudioBePaused: true,
         );
-
-        await tester.tap(commentInkWellButtonFinder);
-        await tester.pumpAndSettle();
-
-        // Find the comment list add dialog widget
-        final Finder commentListDialogFinder =
-            find.byType(CommentListAddDialog);
-
-        // Find the list body containing the comments
-        final Finder listFinder = find.descendant(
-            of: commentListDialogFinder, matching: find.byType(ListBody));
-
-        // Find all the list items
-        final Finder itemsFinder = find.descendant(
-            // 3 GestureDetector per comment item
-            of: listFinder,
-            matching: find.byType(GestureDetector));
-
-        int gestureDectectorNumberByCommentLine = 3;
-
-        // Since there are 3 GestureDetector per comment item, we need to
-        // multiply the comment line index by 3 to get the right index
-        int itemFinderIndex = 2 * gestureDectectorNumberByCommentLine;
-
-        final Finder playIconButtonFinder = find.descendant(
-          of: itemsFinder.at(itemFinderIndex),
-          matching: find.byKey(const Key('playPauseIconButton')),
-        );
-
-        // Tap on the play/pause icon button to play the audio from the
-        // comment
-        await tester.tap(playIconButtonFinder);
-        await tester.pumpAndSettle();
-
-        await Future.delayed(const Duration(milliseconds: 500));
-        await tester.pumpAndSettle();
-
-        // Tap on the play/pause icon button to pause the audio
-        await tester.tap(playIconButtonFinder);
-        await tester.pumpAndSettle();
 
         // Verify that the Text widget contains the expected content
 

@@ -5,6 +5,7 @@ import 'package:audiolearn/models/playlist.dart';
 import 'package:audiolearn/services/json_data_service.dart';
 import 'package:audiolearn/utils/date_time_util.dart';
 import 'package:audiolearn/views/widgets/audio_playable_list_dialog.dart';
+import 'package:audiolearn/views/widgets/comment_list_add_dialog.dart';
 import 'package:audiolearn/views/widgets/warning_message_display.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -759,7 +760,8 @@ class IntegrationTestUtil {
     required String warningDialogMessage,
     bool isWarningConfirming = false,
     bool tapTwiceOnOkButton = false,
-    String warningTitle = 'WARNING', // useful for AVERTISSEMENT title in french !
+    String warningTitle =
+        'WARNING', // useful for AVERTISSEMENT title in french !
   }) async {
     // Ensure the warning dialog is shown
     final Finder warningMessageDisplayDialogFinder =
@@ -1265,6 +1267,60 @@ class IntegrationTestUtil {
     if (typeOnPauseAfterPlay) {
       await tester.tap(playIconButtonFinder);
       await tester.pumpAndSettle(const Duration(milliseconds: 200));
+    }
+  }
+
+  static Future<void> playCommentFromListAddDialog({
+    required WidgetTester tester,
+    required int commentPosition, // first = 1, second = 2, ...
+    bool mustAudioBePaused = false,
+  }) async {
+    // Tap on the comment icon button to open the comment add list
+    // dialog
+    final Finder commentInkWellButtonFinder = find.byKey(
+      const Key('commentsInkWellButton'),
+    );
+
+    await tester.tap(commentInkWellButtonFinder);
+    await tester.pumpAndSettle();
+
+    // Find the comment list add dialog widget
+    final Finder commentListDialogFinder = find.byType(CommentListAddDialog);
+
+    // Find the list body containing the comments
+    final Finder listFinder = find.descendant(
+        of: commentListDialogFinder, matching: find.byType(ListBody));
+
+    // Find all the list items
+    final Finder itemsFinder = find.descendant(
+        // 3 GestureDetector per comment item
+        of: listFinder,
+        matching: find.byType(GestureDetector));
+
+    int gestureDectectorNumberByCommentLine = 3;
+
+    // Since there are 3 GestureDetector per comment item, we need to
+    // multiply the comment line position by 3 to get the right index
+    int itemFinderIndex =
+        (commentPosition - 1) * gestureDectectorNumberByCommentLine;
+
+    final Finder playIconButtonFinder = find.descendant(
+      of: itemsFinder.at(itemFinderIndex),
+      matching: find.byKey(const Key('playPauseIconButton')),
+    );
+
+    // Tap on the play/pause icon button to play the audio from the
+    // comment
+    await tester.tap(playIconButtonFinder);
+    await tester.pumpAndSettle();
+
+    await Future.delayed(const Duration(milliseconds: 500));
+    await tester.pumpAndSettle();
+
+    if (mustAudioBePaused) {
+      // Tap on the play/pause icon button to pause the audio
+      await tester.tap(playIconButtonFinder);
+      await tester.pumpAndSettle();
     }
   }
 }
