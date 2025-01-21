@@ -151,7 +151,8 @@ class AudioPlayerVM extends ChangeNotifier {
 
   // Public method to be redefined in AudioPlayerVMTestVersion in order
   // to avoid the use of the audio player plugin in unit tests.
-  void instanciateAudioPlayer() { // on main project
+  void instanciateAudioPlayer() {
+    // on main project
     _audioPlayer = AudioPlayer();
   }
 
@@ -198,14 +199,10 @@ class AudioPlayerVM extends ChangeNotifier {
   Future<void> changeAudioVolume({
     required double volumeChangedValue,
   }) async {
-    double newAudioPlayVolume =
-        (_currentAudio!.audioPlayVolume + volumeChangedValue).clamp(0.0, 1.0);
-
     // It is important to limit the volume to 0.1 and not to 0.0
     // since at 0.0, the audio is no more listenable.
-    if (newAudioPlayVolume < 0.1) {
-      newAudioPlayVolume = 0.1;
-    }
+    double newAudioPlayVolume =
+        (_currentAudio!.audioPlayVolume + volumeChangedValue).clamp(0.1, 1.0);
 
     _currentAudio!.audioPlayVolume =
         newAudioPlayVolume; // Increase and clamp to max 1.0
@@ -329,6 +326,10 @@ class AudioPlayerVM extends ChangeNotifier {
       await audioPlayerSetSource(audioFilePathName);
     }
     // end Main version
+
+    await _audioPlayer!.setVolume(
+      audio.audioPlayVolume,
+    );
 
     await modifyAudioPlayerPosition(
       durationPosition: _currentAudioPosition,
@@ -505,12 +506,9 @@ class AudioPlayerVM extends ChangeNotifier {
 
     // Check if the file exists before attempting to play it
     if (audioFilePathName.isNotEmpty && File(audioFilePathName).existsSync()) {
-      await _audioPlayer!
-          .setVolume(_currentAudio?.audioPlayVolume ?? kAudioDefaultPlayVolume);
-
       // setting audio player plugin listeners
-
       _initAudioPlayer(); // Load the file but don't play yet
+
       await _audioPlayer!.setVolume(
         _currentAudio?.audioPlayVolume ?? kAudioDefaultPlayVolume,
       ); // on main project
