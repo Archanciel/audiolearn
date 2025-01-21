@@ -198,14 +198,10 @@ class AudioPlayerVM extends ChangeNotifier {
   Future<void> changeAudioVolume({
     required double volumeChangedValue,
   }) async {
-    double newAudioPlayVolume =
-        (_currentAudio!.audioPlayVolume + volumeChangedValue).clamp(0.0, 1.0);
-
     // It is important to limit the volume to 0.1 and not to 0.0
     // since at 0.0, the audio is no more listenable.
-    if (newAudioPlayVolume < 0.1) {
-      newAudioPlayVolume = 0.1;
-    }
+    double newAudioPlayVolume =
+        (_currentAudio!.audioPlayVolume + volumeChangedValue).clamp(0.1, 1.0);
 
     _currentAudio!.audioPlayVolume =
         newAudioPlayVolume; // Increase and clamp to max 1.0
@@ -329,6 +325,10 @@ class AudioPlayerVM extends ChangeNotifier {
     //   await audioPlayerSetSource(audioFilePathName);
     // }
     // end Main version
+
+    await _audioPlayer!.setVolume(
+      audio.audioPlayVolume,
+    );
 
     await modifyAudioPlayerPosition(
       durationPosition: _currentAudioPosition,
