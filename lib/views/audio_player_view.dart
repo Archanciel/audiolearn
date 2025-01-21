@@ -1021,7 +1021,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
             double sliderValue = 0.0;
             double maxDuration = 0.0;
             String currentAudioPositionStr = Duration.zero.HHmmssZeroHH();
-            String remainingAudioDurationStr = currentAudioPositionStr;
+            String remainingAudioDurationStr = currentAudioPositionStr; // 0.0
 
             if (currentAudioTitle != null) {
               sliderValue = audioPlayerVMlistenFalse
