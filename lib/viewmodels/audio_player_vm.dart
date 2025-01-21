@@ -324,11 +324,18 @@ class AudioPlayerVM extends ChangeNotifier {
     // if (audioFilePathName.isNotEmpty && File(audioFilePathName).existsSync()) {
     //   await audioPlayerSetSource(audioFilePathName);
     // }
+
+    // await _audioPlayer!.setVolume(
+    //   audio.audioPlayVolume,
+    // );
     // end Main version
 
-    await _audioPlayer!.setVolume(
-      audio.audioPlayVolume,
-    );
+    // audioplayers_5_2_1_ALL_TESTS_PASS version
+    if (_audioPlayer != null) { // necessary to avoid unit test failure
+      await _audioPlayer!.setVolume(
+        audio.audioPlayVolume,
+      );
+    }
 
     await modifyAudioPlayerPosition(
       durationPosition: _currentAudioPosition,
