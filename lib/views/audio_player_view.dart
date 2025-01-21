@@ -835,49 +835,40 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     if (!playlistListVMlistenTrue.isPlaylistListExpanded) {
       // the list of playlists is collapsed, so the play button is
       // displayed
-      return ValueListenableBuilder<String?>(
-        valueListenable: audioPlayerVMlistenFalse.currentAudioTitleNotifier,
-        builder: (context, currentAudioTitle, child) {
-          return ValueListenableBuilder<bool>(
-            valueListenable:
-                audioPlayerVMlistenFalse.currentAudioPlayPauseNotifier,
-            builder: (context, mustPlayPauseButtonBeSetToPaused, child) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(90.0),
-                    child: IconButton(
-                      iconSize: _audioIconSizeLarge,
-                      onPressed: (() async {
-                        audioPlayerVMlistenFalse.isPlaying
-                            ? await audioPlayerVMlistenFalse.pause()
-                            : await audioPlayerVMlistenFalse.playCurrentAudio(
-                                isFromAudioPlayerView: true,
-                              );
-                      }),
-                      style: ButtonStyle(
-                        // Highlight button when pressed
-                        padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-                          const EdgeInsets.symmetric(
-                              horizontal: kSmallButtonInsidePadding,
-                              vertical: 0),
-                        ),
-                        overlayColor:
-                            iconButtonTapModification, // Tap feedback color
-                      ),
-                      icon: Icon(
-                        (mustPlayPauseButtonBeSetToPaused && currentAudioTitle != null)
-                            // currentAudioTitle is null in case a unique
-                            // playing audio was deleted !
-                            ? Icons.pause
-                            : Icons.play_arrow,
-                      ),
+      return ValueListenableBuilder<bool>(
+        valueListenable: audioPlayerVMlistenFalse.currentAudioPlayPauseNotifier,
+        builder: (context, mustPlayPauseButtonBeSetToPaused, child) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(90.0),
+                child: IconButton(
+                  iconSize: _audioIconSizeLarge,
+                  onPressed: (() async {
+                    audioPlayerVMlistenFalse.isPlaying
+                        ? await audioPlayerVMlistenFalse.pause()
+                        : await audioPlayerVMlistenFalse.playCurrentAudio(
+                            isFromAudioPlayerView: true,
+                          );
+                  }),
+                  style: ButtonStyle(
+                    // Highlight button when pressed
+                    padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                      const EdgeInsets.symmetric(
+                          horizontal: kSmallButtonInsidePadding, vertical: 0),
                     ),
+                    overlayColor:
+                        iconButtonTapModification, // Tap feedback color
                   ),
-                ],
-              );
-            },
+                  icon: Icon(
+                    mustPlayPauseButtonBeSetToPaused
+                        ? Icons.pause
+                        : Icons.play_arrow,
+                  ),
+                ),
+              ),
+            ],
           );
         },
       );
