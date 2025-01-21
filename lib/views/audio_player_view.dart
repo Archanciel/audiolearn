@@ -841,7 +841,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
           return ValueListenableBuilder<bool>(
             valueListenable:
                 audioPlayerVMlistenFalse.currentAudioPlayPauseNotifier,
-            builder: (context, isPaused, child) {
+            builder: (context, mustPlayPauseButtonBeSetToPaused, child) {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -867,9 +867,9 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                             iconButtonTapModification, // Tap feedback color
                       ),
                       icon: Icon(
-                        (isPaused && currentAudioTitle != null)
-                            // currentAudioTitle is null when in case a
-                            // unique playing audio was deleted !
+                        (mustPlayPauseButtonBeSetToPaused && currentAudioTitle != null)
+                            // currentAudioTitle is null in case a unique
+                            // playing audio was deleted !
                             ? Icons.pause
                             : Icons.play_arrow,
                       ),
