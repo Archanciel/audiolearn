@@ -189,8 +189,6 @@ class AudioPlayerVM extends ChangeNotifier {
       return false;
     }
 
-    // It is important to compare with 0.1 and not 0.0 since at
-    // 0.0, the audio is no more listenable.
     return _currentAudio!.audioPlayVolume == 0.1;
   }
 
@@ -202,6 +200,13 @@ class AudioPlayerVM extends ChangeNotifier {
   }) async {
     double newAudioPlayVolume =
         (_currentAudio!.audioPlayVolume + volumeChangedValue).clamp(0.0, 1.0);
+
+    // It is important to limit the volume to 0.1 and not to 0.0
+    // since at 0.0, the audio is no more listenable.
+    if (newAudioPlayVolume < 0.1) {
+      newAudioPlayVolume = 0.1;
+    }
+
     _currentAudio!.audioPlayVolume =
         newAudioPlayVolume; // Increase and clamp to max 1.0
     await _audioPlayer!.setVolume(newAudioPlayVolume);
