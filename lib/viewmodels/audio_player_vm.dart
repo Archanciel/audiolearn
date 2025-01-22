@@ -138,6 +138,9 @@ class AudioPlayerVM extends ChangeNotifier {
   // speed stored in the playlist json file.
   bool wasPlaySpeedNotifierChanged = false;
 
+  bool _wasPausedOrStopped = false;
+  bool _wasPlayButtonPressed = false;
+
   AudioPlayerVM({
     required SettingsDataService settingsDataService,
     required PlaylistListVM playlistListVM,
@@ -145,7 +148,7 @@ class AudioPlayerVM extends ChangeNotifier {
   })  : _settingsDataService = settingsDataService,
         _playlistListVM = playlistListVM,
         _commentVM = commentVM {
-    instanciateAudioPlayer(); // on main project
+    // instanciateAudioPlayer(); // on main project
     initializeAudioPlayer();
   }
 
@@ -524,6 +527,13 @@ class AudioPlayerVM extends ChangeNotifier {
     });
 
     _positionSubscription = _audioPlayer!.onPositionChanged.listen((position) {
+      if (_wasPausedOrStopped) {
+        _audioPlayer!.pause();
+        _wasPausedOrStopped = false;
+
+        return;
+      }
+
       if (_audioPlayer!.state == PlayerState.playing) {
         // this test avoids that when selecting another audio
         // the selected audio position is set to 0 since the
@@ -598,10 +608,19 @@ class AudioPlayerVM extends ChangeNotifier {
 
     // Code below does not improve anything in the integration
     // test problems related to aidioplayers 6.1.0.
-    // _playerStateChangeSubscription =
-    //     _audioPlayer!.onPlayerStateChanged.listen((state) {
-    //   notifyListeners();
-    // });
+    _playerStateChangeSubscription =
+        _audioPlayer!.onPlayerStateChanged.listen((state) {
+      if (_wasPlayButtonPressed) {
+        return;
+      }
+
+      if (state == PlayerState.completed ||
+          state == PlayerState.paused ||
+          state == PlayerState.stopped) {
+        _wasPausedOrStopped = true;
+        // Ensure the player does not auto-resume
+      }
+    });
   }
 
   /// Method passed to the audio player onPositionChanged listener on
@@ -728,6 +747,7 @@ class AudioPlayerVM extends ChangeNotifier {
     bool isCommentPlaying = false,
     bool isFromAudioPlayerView = false,
   }) async {
+    _wasPlayButtonPressed = true;
     _isCommentPlaying = isCommentPlaying;
 
     List<Playlist> selectedPlaylistsLst =
@@ -788,7 +808,9 @@ class AudioPlayerVM extends ChangeNotifier {
     // happens on the smartphone. This requires to call _audioPlayer!.
     // setSource() in the playCurrentAudio() method ...
 //    await _audioPlayer!.stop();
+    _wasPlayButtonPressed = false;
     await _audioPlayer!.pause();
+    await _audioPlayer!.setReleaseMode(ReleaseMode.stop);
 
     if (_currentAudio !=
             null && // necessary to avoid the error when deleting a playing audio
