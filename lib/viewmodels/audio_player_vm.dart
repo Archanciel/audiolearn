@@ -780,13 +780,6 @@ class AudioPlayerVM extends ChangeNotifier {
 
     // Check if the file exists before attempting to play it
     if (File(audioFilePathName).existsSync()) {
-      // if (isFromAudioPlayerView) {
-      //   // Set the source again since clicking on the pause icon
-      //   // stopped the audio player.
-      //   await _audioPlayer!
-      //       .setSource(DeviceFileSource(_currentAudio!.filePathName));
-      // }
-
       if (rewindAudioPositionBasedOnPauseDuration) {
         await _rewindAudioPositionBasedOnPauseDuration();
       }
