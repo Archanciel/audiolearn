@@ -755,12 +755,12 @@ class AudioPlayerVM extends ChangeNotifier {
 
     // Check if the file exists before attempting to play it
     if (File(audioFilePathName).existsSync()) {
-      if (isFromAudioPlayerView) {
-        // Set the source again since clicking on the pause icon
-        // stopped the audio player.
-        await _audioPlayer!
-            .setSource(DeviceFileSource(_currentAudio!.filePathName));
-      }
+      // if (isFromAudioPlayerView) {
+      //   // Set the source again since clicking on the pause icon
+      //   // stopped the audio player.
+      //   await _audioPlayer!
+      //       .setSource(DeviceFileSource(_currentAudio!.filePathName));
+      // }
 
       if (rewindAudioPositionBasedOnPauseDuration) {
         await _rewindAudioPositionBasedOnPauseDuration();
@@ -787,7 +787,8 @@ class AudioPlayerVM extends ChangeNotifier {
     // avoids that the paused audio starts when an alarm or a call
     // happens on the smartphone. This requires to call _audioPlayer!.
     // setSource() in the playCurrentAudio() method ...
-    await _audioPlayer!.stop();
+//    await _audioPlayer!.stop();
+    await _audioPlayer!.pause();
 
     if (_currentAudio !=
             null && // necessary to avoid the error when deleting a playing audio
