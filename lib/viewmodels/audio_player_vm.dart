@@ -151,15 +151,7 @@ class AudioPlayerVM extends ChangeNotifier {
   })  : _settingsDataService = settingsDataService,
         _playlistListVM = playlistListVM,
         _commentVM = commentVM {
-    // instanciateAudioPlayer(); // on main project
     initializeAudioPlayer();
-  }
-
-  // Public method to be redefined in AudioPlayerVMTestVersion in order
-  // to avoid the use of the audio player plugin in unit tests.
-  void instanciateAudioPlayer() {
-    // on main project
-    _audioPlayer = AudioPlayer();
   }
 
   @override
