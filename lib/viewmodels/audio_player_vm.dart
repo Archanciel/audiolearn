@@ -138,6 +138,9 @@ class AudioPlayerVM extends ChangeNotifier {
   // speed stored in the playlist json file.
   bool wasPlaySpeedNotifierChanged = false;
 
+  // Those two variables are used to avoid that the audio player
+  // auto-resumes when a sounding alarm is stopped or when a call
+  // is received.
   bool _wasPausedOrStopped = false;
   bool _wasPlayButtonPressed = false;
 
@@ -528,6 +531,8 @@ class AudioPlayerVM extends ChangeNotifier {
 
     _positionSubscription = _audioPlayer!.onPositionChanged.listen((position) {
       if (_wasPausedOrStopped) {
+        // Ensures that the audio player does not auto-resume when
+        // a sounding alarm is stopped or when a call is received.
         _audioPlayer!.pause();
         _wasPausedOrStopped = false;
 
@@ -606,19 +611,27 @@ class AudioPlayerVM extends ChangeNotifier {
       await _playNextAudio();
     });
 
-    // Code below does not improve anything in the integration
-    // test problems related to aidioplayers 6.1.0.
+    // Using the onPlayerStateChanged listener enables to avoid that
+    // the audio which is paused or stopped auto-resumes after an
+    // sounding alarm was stoped.
     _playerStateChangeSubscription =
         _audioPlayer!.onPlayerStateChanged.listen((state) {
       if (_wasPlayButtonPressed) {
+        // If the user clicked on the play button, the audio player
+        // must not set _wasPausedOrStopped to true. Otherwise, clicking
+        // on the pause or play button will not be successful if an
+        // alarm or a call was received.
         return;
       }
 
       if (state == PlayerState.completed ||
           state == PlayerState.paused ||
           state == PlayerState.stopped) {
-        _wasPausedOrStopped = true;
-        // Ensure the player does not auto-resume
+        _wasPausedOrStopped = true; // Ensures the player does not
+        //                             auto-resume since the
+        //                             _wasPausedOrStopped is tested
+        //                             in the audio player onPositionChanged
+        //                             listener. 
       }
     });
   }
@@ -803,14 +816,8 @@ class AudioPlayerVM extends ChangeNotifier {
   }
 
   Future<void> pause() async {
-    // Calling _audioPlayer!.stop() instead of _audioPlayer!.pause()
-    // avoids that the paused audio starts when an alarm or a call
-    // happens on the smartphone. This requires to call _audioPlayer!.
-    // setSource() in the playCurrentAudio() method ...
-//    await _audioPlayer!.stop();
     _wasPlayButtonPressed = false;
     await _audioPlayer!.pause();
-    await _audioPlayer!.setReleaseMode(ReleaseMode.stop);
 
     if (_currentAudio !=
             null && // necessary to avoid the error when deleting a playing audio
