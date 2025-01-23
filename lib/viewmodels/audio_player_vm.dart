@@ -209,8 +209,6 @@ class AudioPlayerVM extends ChangeNotifier {
     await _audioPlayer!.setVolume(newAudioPlayVolume);
 
     updateAndSaveCurrentAudio();
-
-    notifyListeners();
   }
 
   /// Method called when the user clicks on the audio title or sub
@@ -520,7 +518,6 @@ class AudioPlayerVM extends ChangeNotifier {
   void _initAudioPlayer() {
     _durationSubscription = _audioPlayer!.onDurationChanged.listen((duration) {
       _currentAudioTotalDuration = duration;
-      notifyListeners();
     });
 
     _positionSubscription = _audioPlayer!.onPositionChanged.listen((position) {
@@ -577,13 +574,11 @@ class AudioPlayerVM extends ChangeNotifier {
       // if the audio plays while the smartphone screen is turned off,
       // the slider won't be set to end position.
       _currentAudioPosition = _currentAudioTotalDuration;
-      notifyListeners();
 
       // Play next audio when current audio is finished. If a next
-      // audio is played, notifyListeners() is called in
-      // _playNextAudio(). The _playNextAudio() method checks
-      // if a comment is playing and if so, it pauses the comment
-      // audio.
+      // audio is played, is called in _playNextAudio(). The
+      // _playNextAudio() method checks if a comment is playing
+      // and if so, it pauses the comment audio.
       await _playNextAudio();
     });
 
@@ -591,7 +586,7 @@ class AudioPlayerVM extends ChangeNotifier {
     // test problems related to aidioplayers 6.1.0.
     // _playerStateChangeSubscription =
     //     _audioPlayer!.onPlayerStateChanged.listen((state) {
-    //   notifyListeners();
+    //
     // });
   }
 
@@ -606,8 +601,6 @@ class AudioPlayerVM extends ChangeNotifier {
       // passed position value of an AudioPlayer not playing
       // is 0 !
       _currentAudioPosition = position;
-
-      notifyListeners();
 
       // This instruction must be executed before the next if block,
       // otherwise, if the user opens the audio info dialog while the
@@ -804,7 +797,6 @@ class AudioPlayerVM extends ChangeNotifier {
     // play/pause button is correctly updated when clicking on it in
     // order to pause the playing audio. Otherwise, the audio is paused,
     // but the button is not converted to play button.
-    notifyListeners();
   }
 
   /// Method called when the user clicks on the '<<' or '>>'
@@ -1099,8 +1091,6 @@ class AudioPlayerVM extends ChangeNotifier {
         // paused.
         rewindAudioPositionBasedOnPauseDuration: true,
       );
-
-      notifyListeners();
     }
   }
 
@@ -1226,7 +1216,6 @@ class AudioPlayerVM extends ChangeNotifier {
       Command command = _undoList.removeLast();
       command.undo();
       _redoList.add(command);
-      notifyListeners();
     }
   }
 
@@ -1235,7 +1224,6 @@ class AudioPlayerVM extends ChangeNotifier {
       Command command = _redoList.removeLast();
       command.redo();
       _undoList.add(command);
-      notifyListeners();
     }
   }
 
