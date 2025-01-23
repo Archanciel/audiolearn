@@ -572,17 +572,6 @@ class AudioPlayerVM extends ChangeNotifier {
 
     _playerCompleteSubscription =
         _audioPlayer!.onPlayerComplete.listen((event) async {
-      if (_isCommentPlaying) {
-        // In this situation, if a comment is playing and arrives to the
-        // audio end, the next audio is not played.
-
-        // necessary so that the play/pause icon is updated to play.
-        // Otherwise, the icon remains at pause value.
-        currentAudioPlayPauseNotifier.value = false;
-
-        return;
-      }
-
       // Ensures that the audio player view audio position slider is
       // updated to end when the audio play was complete. Otherwise,
       // if the audio plays while the smartphone screen is turned off,
@@ -592,7 +581,9 @@ class AudioPlayerVM extends ChangeNotifier {
 
       // Play next audio when current audio is finished. If a next
       // audio is played, notifyListeners() is called in
-      // playNextAudio().
+      // _playNextAudio(). The _playNextAudio() method checks
+      // if a comment is playing and if so, it pauses the comment
+      // audio.
       await _playNextAudio();
     });
 
@@ -779,6 +770,7 @@ class AudioPlayerVM extends ChangeNotifier {
       // clicking on it
       currentAudioPlayPauseNotifier.value = true; // true means the play/pause
       //                                             button will be set to pause
+      currentAudioPositionNotifier.value = _currentAudioPosition;
     }
   }
 
@@ -1033,55 +1025,6 @@ class AudioPlayerVM extends ChangeNotifier {
     );
   }
 
-  /// Method not used for the moment
-  ///
-  /// {isUndoRedo} is true when the method is called by the AudioPlayerVM
-  /// undo or redo methods. In this case, the method does not add a
-  /// command to the undo list.
-  Future<void> skipToEndNoPlay({
-    bool isUndoRedo = false,
-  }) async {
-    if (_currentAudioPosition == _currentAudioTotalDuration) {
-      updateAndSaveCurrentAudio();
-
-      // situation when the user clicks on >| when the audio
-      // position is at audio end. This is the case if the user
-      // clicks twice on the >| icon.
-      await _setNextNotFullyPlayedAudioAsCurrentAudio();
-
-      currentAudioPositionNotifier.value = _currentAudioPosition;
-
-      return;
-    }
-
-    // Subtracting 1 second is necessary to avoid a slider error
-    // which happens when clicking on AudioListItemWidget play icon
-    //
-    // I commented out next code since commenting it does not
-    // causes a slider error happening when clicking on
-    // AudioListItemWidget play icon. To see if realy ok !
-    // _currentAudioPosition =
-    //     _currentAudioTotalDuration - const Duration(seconds: 1);
-
-    if (!isUndoRedo) {
-      addUndoCommand(
-        newDurationPosition: _currentAudioTotalDuration,
-      );
-    }
-
-    _currentAudioPosition = _currentAudioTotalDuration;
-
-    // necessary so that the audio position is stored on the
-    // audio
-    _currentAudio!.audioPositionSeconds = _currentAudioPosition.inSeconds;
-    _currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd = false;
-    updateAndSaveCurrentAudio();
-
-    await modifyAudioPlayerPosition(
-      durationPosition: _currentAudioTotalDuration,
-    );
-  }
-
   /// Method called when the user clicks on the >| icon,
   /// either the first time or the second time.
   ///
@@ -1133,6 +1076,21 @@ class AudioPlayerVM extends ChangeNotifier {
   Future<void> _playNextAudio() async {
     _setCurrentAudioToEndPosition();
     updateAndSaveCurrentAudio();
+
+    if (_isCommentPlaying) {
+      // In this situation, if a comment is playing and arrives to the
+      // audio end, the next audio is not played.
+
+      // necessary so that the play/pause icon is updated to play.
+      // Otherwise, the icon remains at pause value.
+      currentAudioPlayPauseNotifier.value = false;
+
+      await modifyAudioPlayerPosition(
+        durationPosition: _currentAudioTotalDuration,
+      );
+
+      return;
+    }
 
     if (await _setNextNotFullyPlayedAudioAsCurrentAudio()) {
       await playCurrentAudio(
