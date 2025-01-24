@@ -103,7 +103,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
     FocusScope.of(context).requestFocus(
       _focusNodeCommentTitle,
     );
-    AudioPlayerVM audioPlayerVM = Provider.of<AudioPlayerVM>(
+    AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
       context,
       listen: false,
     );
@@ -162,12 +162,12 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                       children: [
                         _buildCommentStartPositionRow(
                           context: context,
-                          audioPlayerVM: audioPlayerVM,
+                          audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                           commentVMlistenFalse: commentVMlistenFalse,
                         ),
                         _buildCommentEndPositionRow(
                           context: context,
-                          audioPlayerVM: audioPlayerVM,
+                          audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                           commentVMlistenFalse: commentVMlistenFalse,
                         ),
                       ],
@@ -178,8 +178,8 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                           // Play/Pause button
                           key: const Key('playPauseIconButton'),
                           onPressed: () async {
-                            if (audioPlayerVM.isPlaying) {
-                              await audioPlayerVM.pause();
+                            if (audioPlayerVMlistenFalse.isPlaying) {
+                              await audioPlayerVMlistenFalse.pause();
 
                               // Modify the end audio position if the end
                               // audio position is before or equal to the
@@ -196,15 +196,15 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                                   commentVMlistenFalse
                                       .currentCommentStartPosition) {
                                 commentVMlistenFalse.currentCommentEndPosition =
-                                    audioPlayerVM.currentAudioPosition;
+                                    audioPlayerVMlistenFalse.currentAudioPosition;
                               }
                             } else {
                               // comment is not playing
                               _playButtonWasClicked = true;
                               _commentEndPositionIsModified = false;
 
-                              await _playFromCommentPosition(
-                                  audioPlayerVM: audioPlayerVM,
+                              await _playFromCommentStartPosition(
+                                  audioPlayerVM: audioPlayerVMlistenFalse,
                                   commentVMlistenFalse: commentVMlistenFalse);
                             }
                           },
@@ -350,7 +350,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
 
             await _closeDialogAndReOpenCommentListAddDialog(
               context: context,
-              audioPlayerVM: audioPlayerVM,
+              audioPlayerVM: audioPlayerVMlistenFalse,
             );
           },
         ),
@@ -360,7 +360,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
           onPressed: () async =>
               await _closeDialogAndReOpenCommentListAddDialog(
             context: context,
-            audioPlayerVM: audioPlayerVM,
+            audioPlayerVM: audioPlayerVMlistenFalse,
           ),
         ),
       ],
@@ -369,7 +369,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
 
   Row _buildCommentStartPositionRow({
     required BuildContext context,
-    required AudioPlayerVM audioPlayerVM,
+    required AudioPlayerVM audioPlayerVMlistenFalse,
     required CommentVM commentVMlistenFalse,
   }) {
     return Row(
@@ -409,7 +409,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
             icon: const Icon(Icons.fast_rewind),
             onPressed: () async {
               await _modifyCommentStartPosition(
-                audioPlayerVM: audioPlayerVM,
+                audioPlayerVM: audioPlayerVMlistenFalse,
                 commentVMlistenFalse: commentVMlistenFalse,
                 millisecondsChange:
                     _commentStartPositionChangedInTenthOfSeconds ? -100 : -1000,
@@ -452,7 +452,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
             icon: const Icon(Icons.fast_forward),
             onPressed: () async {
               await _modifyCommentStartPosition(
-                audioPlayerVM: audioPlayerVM,
+                audioPlayerVM: audioPlayerVMlistenFalse,
                 commentVMlistenFalse: commentVMlistenFalse,
                 millisecondsChange:
                     _commentStartPositionChangedInTenthOfSeconds ? 100 : 1000,
@@ -469,7 +469,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
 
   Row _buildCommentEndPositionRow({
     required BuildContext context,
-    required AudioPlayerVM audioPlayerVM,
+    required AudioPlayerVM audioPlayerVMlistenFalse,
     required CommentVM commentVMlistenFalse,
   }) {
     return Row(
@@ -510,7 +510,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
             onPressed: () async {
               _commentEndPositionIsModified = true;
               await _modifyCommentEndPosition(
-                audioPlayerVM: audioPlayerVM,
+                audioPlayerVM: audioPlayerVMlistenFalse,
                 commentVMlistenFalse: commentVMlistenFalse,
                 millisecondsChange:
                     _commentEndPositionChangedInTenthOfSeconds ? -100 : -1000,
@@ -554,7 +554,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
             onPressed: () async {
               _commentEndPositionIsModified = true;
               await _modifyCommentEndPosition(
-                audioPlayerVM: audioPlayerVM,
+                audioPlayerVM: audioPlayerVMlistenFalse,
                 commentVMlistenFalse: commentVMlistenFalse,
                 millisecondsChange:
                     _commentEndPositionChangedInTenthOfSeconds ? 100 : 1000,
@@ -767,7 +767,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
     }
   }
 
-  Future<void> _playFromCommentPosition({
+  Future<void> _playFromCommentStartPosition({
     required AudioPlayerVM audioPlayerVM,
     required CommentVM commentVMlistenFalse,
   }) async {
