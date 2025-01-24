@@ -536,6 +536,12 @@ class AudioPlayerVM extends ChangeNotifier {
         // is 0 !
         _currentAudioPosition = position;
 
+        // Required so that playing a comment stops when the
+        // comment end position is reached. This happens since
+        // the comment related dialogs use Consumer<AudioPlayerVM>
+        // in order to stop the audio comment at end.
+        notifyListeners();
+
         // Only update the currentAudioPositionNotifier every 0.5 second
         if (_lastPositionUpdate == null ||
             DateTime.now().difference(_lastPositionUpdate!) >=
@@ -969,7 +975,7 @@ class AudioPlayerVM extends ChangeNotifier {
   /// PlaylistCommentListDialog. In those cases, [addUndoCommand] is set to true
   /// so that the audio position modified by playing a comment can be undone by
   /// clicking on the audio player view undo button.
-  /// 
+  ///
   /// The method is redefined in AudioPlayerVMTestVersion in order to avoid using
   /// the audio player plugin in unit tests.
   Future<void> modifyAudioPlayerPosition({
