@@ -965,10 +965,13 @@ class AudioPlayerVM extends ChangeNotifier {
     );
   }
 
-  /// Method to be redefined in AudioPlayerVMTestVersion in order
-  /// to avoid the use of the audio player plugin in unit tests.
-  ///
-  /// For this reason, the method is not private !
+  /// This method is called also by CommentAddEditDialog, CommentListAddDialog and
+  /// PlaylistCommentListDialog. In those cases, [addUndoCommand] is set to true
+  /// so that the audio position modified by playing a comment can be undone by
+  /// clicking on the audio player view undo button.
+  /// 
+  /// The method is redefined in AudioPlayerVMTestVersion in order to avoid using
+  /// the audio player plugin in unit tests.
   Future<void> modifyAudioPlayerPosition({
     required Duration durationPosition,
     bool isUndoCommandAdded = false,
