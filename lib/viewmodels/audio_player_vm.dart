@@ -216,11 +216,20 @@ class AudioPlayerVM extends ChangeNotifier {
   /// playlist or deleted and the AppBarLeadingPopupMenuWidget
   /// _replaceCurrentAudioByNextAudio() method is called to update
   /// the Audio Player View screen.
+  ///
+  /// {doClearUndoRedoLists} is set to false when the user clicks on
+  /// the close button of the comment list add dialog. In this case,
+  /// maintening the undo/redo lists is useful to enable the user to
+  /// undo the audio position change.
   Future<void> setCurrentAudio({
     required Audio audio,
     bool doNotifyListeners = true,
+    bool doClearUndoRedoLists = true,
   }) async {
-    await _setCurrentAudio(audio);
+    await _setCurrentAudio(
+      audio: audio,
+      doClearUndoRedoLists: doClearUndoRedoLists,
+    );
 
     audio.enclosingPlaylist!.setCurrentOrPastPlayableAudio(
       audio: audio,
@@ -238,7 +247,6 @@ class AudioPlayerVM extends ChangeNotifier {
     }
 
     updateAndSaveCurrentAudio();
-    _clearUndoRedoLists();
 
     if (doNotifyListeners) {
       currentAudioTitleNotifier.value = _getCurrentAudioTitleWithDuration();
@@ -270,9 +278,10 @@ class AudioPlayerVM extends ChangeNotifier {
   /// the AudioPlayerView screen without playing the selected playlist
   /// current or last played audio which is displayed correctly in the
   /// AudioPlayerView screen.
-  Future<void> _setCurrentAudio(
-    Audio audio,
-  ) async {
+  Future<void> _setCurrentAudio({
+    required Audio audio,
+    bool doClearUndoRedoLists = true,
+  }) async {
     // necessary to avoid position error when the chosen audio is displayed
     // in the AudioPlayerView screen.
     // if (_audioPlayer != null) {
@@ -304,7 +313,10 @@ class AudioPlayerVM extends ChangeNotifier {
     // is reduced according to the time elapsed since the audio was
     // paused, which is done in _setCurrentAudioPosition().
     _currentAudioPosition = Duration(seconds: audio.audioPositionSeconds);
-    _clearUndoRedoLists();
+
+    if (doClearUndoRedoLists) {
+      _clearUndoRedoLists();
+    }
 
     // await initializeAudioPlayer(); // on audio_player_vm_audioplayers_
     // //                                5_2_1_ALL_TESTS_PASS.dart version
@@ -664,7 +676,9 @@ class AudioPlayerVM extends ChangeNotifier {
       return;
     }
 
-    await _setCurrentAudio(currentOrPastPlaylistAudio);
+    await _setCurrentAudio(
+      audio: currentOrPastPlaylistAudio,
+    );
 
     currentAudioTitleNotifier.value = _getCurrentAudioTitleWithDuration();
   }
