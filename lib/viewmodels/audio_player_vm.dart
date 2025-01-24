@@ -223,11 +223,20 @@ class AudioPlayerVM extends ChangeNotifier {
   /// playlist or deleted and the AppBarLeadingPopupMenuWidget
   /// _replaceCurrentAudioByNextAudio() method is called to update
   /// the Audio Player View screen.
+  /// 
+  /// {doClearUndoRedoLists} is set to false when the user clicks on
+  /// the close button of the comment list add dialog. In this case,
+  /// maintening the undo/redo lists is useful to enable the user to
+  /// undo the audio position change.
   Future<void> setCurrentAudio({
     required Audio audio,
     bool doNotifyListeners = true,
+    bool doClearUndoRedoLists = true,
   }) async {
-    await _setCurrentAudio(audio);
+    await _setCurrentAudio(
+      audio: audio,
+      doClearUndoRedoLists: doClearUndoRedoLists,
+    );
 
     audio.enclosingPlaylist!.setCurrentOrPastPlayableAudio(
       audio: audio,
@@ -245,7 +254,6 @@ class AudioPlayerVM extends ChangeNotifier {
     }
 
     updateAndSaveCurrentAudio();
-    _clearUndoRedoLists();
 
     if (doNotifyListeners) {
       currentAudioTitleNotifier.value = _getCurrentAudioTitleWithDuration();
@@ -277,9 +285,10 @@ class AudioPlayerVM extends ChangeNotifier {
   /// the AudioPlayerView screen without playing the selected playlist
   /// current or last played audio which is displayed correctly in the
   /// AudioPlayerView screen.
-  Future<void> _setCurrentAudio(
-    Audio audio,
-  ) async {
+  Future<void> _setCurrentAudio({
+    required Audio audio,
+    bool doClearUndoRedoLists = true,
+  }) async {
     // necessary to avoid position error when the chosen audio is displayed
     // in the AudioPlayerView screen.
     // if (_audioPlayer != null) {
@@ -311,7 +320,10 @@ class AudioPlayerVM extends ChangeNotifier {
     // is reduced according to the time elapsed since the audio was
     // paused, which is done in _setCurrentAudioPosition().
     _currentAudioPosition = Duration(seconds: audio.audioPositionSeconds);
-    _clearUndoRedoLists();
+
+    if (doClearUndoRedoLists) {
+      _clearUndoRedoLists();
+    }
 
     await initializeAudioPlayer(); // on audio_player_vm_audioplayers_
     //                                5_2_1_ALL_TESTS_PASS.dart version
@@ -525,6 +537,10 @@ class AudioPlayerVM extends ChangeNotifier {
   void _initAudioPlayer() {
     _durationSubscription = _audioPlayer!.onDurationChanged.listen((duration) {
       _currentAudioTotalDuration = duration;
+
+      // Would be usefull for PlaylistDownloadView only. Currently,
+      // the audio duration is never changed in the application.
+      notifyListeners();
     });
 
     _positionSubscription = _audioPlayer!.onPositionChanged.listen((position) {
@@ -592,6 +608,12 @@ class AudioPlayerVM extends ChangeNotifier {
       // if the audio plays while the smartphone screen is turned off,
       // the slider won't be set to end position.
       _currentAudioPosition = _currentAudioTotalDuration;
+
+      // Usefull for PlaylistDownloadView only. Without this instruction,
+      // the play/pause button of the audio item in the playlist download
+      // view is not updated when clicking on pause button in the audio
+      // player view.
+      notifyListeners();
 
       // Set the current audio to its end position
       _setCurrentAudioToEndPosition();
@@ -697,7 +719,9 @@ class AudioPlayerVM extends ChangeNotifier {
       return;
     }
 
-    await _setCurrentAudio(currentOrPastPlaylistAudio);
+    await _setCurrentAudio(
+      audio: currentOrPastPlaylistAudio,
+    );
 
     currentAudioTitleNotifier.value = _getCurrentAudioTitleWithDuration();
   }
@@ -812,6 +836,12 @@ class AudioPlayerVM extends ChangeNotifier {
     // play/pause button is correctly updated when clicking on it in
     // order to pause the playing audio. Otherwise, the audio is paused,
     // but the button is not converted to play button.
+
+    // Usefull for PlaylistDownloadView only. Without this instruction,
+    // the play/pause button of the audio item in the playlist download
+    // view is not updated when clicking on pause button in the audio
+    // player view.
+    notifyListeners();
   }
 
   /// Method called when the user clicks on the '<<' or '>>'
