@@ -138,12 +138,6 @@ class AudioPlayerVM extends ChangeNotifier {
   // speed stored in the playlist json file.
   bool wasPlaySpeedNotifierChanged = false;
 
-  // Those two variables are used to avoid that the audio player
-  // auto-resumes when a sounding alarm is stopped or when a call
-  // is received.
-  bool _wasPausedOrStopped = false;
-  bool _wasPlayButtonPressed = false;
-
   AudioPlayerVM({
     required SettingsDataService settingsDataService,
     required PlaylistListVM playlistListVM,
@@ -207,8 +201,6 @@ class AudioPlayerVM extends ChangeNotifier {
     await _audioPlayer!.setVolume(newAudioPlayVolume);
 
     updateAndSaveCurrentAudio();
-
-    notifyListeners();
   }
 
   /// Method called when the user clicks on the audio title or sub
@@ -518,19 +510,9 @@ class AudioPlayerVM extends ChangeNotifier {
   void _initAudioPlayer() {
     _durationSubscription = _audioPlayer!.onDurationChanged.listen((duration) {
       _currentAudioTotalDuration = duration;
-      notifyListeners();
     });
 
     _positionSubscription = _audioPlayer!.onPositionChanged.listen((position) {
-      if (_wasPausedOrStopped) {
-        // Ensures that the audio player does not auto-resume when
-        // a sounding alarm is stopped or when a call is received.
-        _audioPlayer!.pause();
-        _wasPausedOrStopped = false;
-
-        return;
-      }
-
       if (_audioPlayer!.state == PlayerState.playing) {
         // this test avoids that when selecting another audio
         // the selected audio position is set to 0 since the
@@ -579,51 +561,26 @@ class AudioPlayerVM extends ChangeNotifier {
 
     _playerCompleteSubscription =
         _audioPlayer!.onPlayerComplete.listen((event) async {
-      if (_isCommentPlaying) {
-        // In this situation, if a comment is playing and arrives to the
-        // audio end, the next audio is not played.
-
-        // necessary so that the play/pause icon is updated to play.
-        // Otherwise, the icon remains at pause value.
-        currentAudioPlayPauseNotifier.value = false;
-
-        return;
-      }
-
       // Ensures that the audio player view audio position slider is
       // updated to end when the audio play was complete. Otherwise,
       // if the audio plays while the smartphone screen is turned off,
       // the slider won't be set to end position.
       _currentAudioPosition = _currentAudioTotalDuration;
-      notifyListeners();
 
-      // Play next audio when current audio is finished. If a next
-      // audio is played, notifyListeners() is called in
-      // playNextAudio().
-      await _playNextAudio();
-    });
+      // Set the current audio to its end position
+      _setCurrentAudioToEndPosition();
+      updateAndSaveCurrentAudio();
 
-    // Using the onPlayerStateChanged listener enables to avoid that
-    // the audio which is paused or stopped auto-resumes after an
-    // sounding alarm was stoped.
-    _playerStateChangeSubscription =
-        _audioPlayer!.onPlayerStateChanged.listen((state) {
-      if (_wasPlayButtonPressed) {
-        // If the user clicked on the play button, the audio player
-        // must not set _wasPausedOrStopped to true. Otherwise, clicking
-        // on the pause or play button will not be successful if an
-        // alarm or a call was received.
+      // If a comment was playing, reset the state and stop processing
+      if (_isCommentPlaying) {
+        _isCommentPlaying = false;
+        currentAudioPlayPauseNotifier.value = false; // Update UI state
         return;
       }
 
-      if (state == PlayerState.completed ||
-          state == PlayerState.paused ||
-          state == PlayerState.stopped) {
-        _wasPausedOrStopped = true; // Ensures the player does not
-        //                             auto-resume since the
-        //                             _wasPausedOrStopped is tested
-        //                             in the audio player onPositionChanged
-        //                             listener. 
+      // Play the next audio if applicable
+      if (await _setNextNotFullyPlayedAudioAsCurrentAudio()) {
+        await playCurrentAudio(rewindAudioPositionBasedOnPauseDuration: true);
       }
     });
   }
@@ -639,8 +596,6 @@ class AudioPlayerVM extends ChangeNotifier {
       // passed position value of an AudioPlayer not playing
       // is 0 !
       _currentAudioPosition = position;
-
-      notifyListeners();
 
       // This instruction must be executed before the next if block,
       // otherwise, if the user opens the audio info dialog while the
@@ -752,7 +707,6 @@ class AudioPlayerVM extends ChangeNotifier {
     bool isCommentPlaying = false,
     bool isFromAudioPlayerView = false,
   }) async {
-    _wasPlayButtonPressed = true;
     _isCommentPlaying = isCommentPlaying;
 
     List<Playlist> selectedPlaylistsLst =
@@ -780,6 +734,13 @@ class AudioPlayerVM extends ChangeNotifier {
 
     // Check if the file exists before attempting to play it
     if (File(audioFilePathName).existsSync()) {
+      // if (isFromAudioPlayerView) {
+      //   // Set the source again since clicking on the pause icon
+      //   // stopped the audio player.
+      //   await _audioPlayer!
+      //       .setSource(DeviceFileSource(_currentAudio!.filePathName));
+      // }
+
       if (rewindAudioPositionBasedOnPauseDuration) {
         await _rewindAudioPositionBasedOnPauseDuration();
       }
@@ -797,11 +758,16 @@ class AudioPlayerVM extends ChangeNotifier {
       // clicking on it
       currentAudioPlayPauseNotifier.value = true; // true means the play/pause
       //                                             button will be set to pause
+      currentAudioPositionNotifier.value = _currentAudioPosition;
     }
   }
 
   Future<void> pause() async {
-    _wasPlayButtonPressed = false;
+    // Calling _audioPlayer!.stop() instead of _audioPlayer!.pause()
+    // avoids that the paused audio starts when an alarm or a call
+    // happens on the smartphone. This requires to call _audioPlayer!.
+    // setSource() in the playCurrentAudio() method ...
+//    await _audioPlayer!.stop();
     await _audioPlayer!.pause();
 
     if (_currentAudio !=
@@ -826,7 +792,6 @@ class AudioPlayerVM extends ChangeNotifier {
     // play/pause button is correctly updated when clicking on it in
     // order to pause the playing audio. Otherwise, the audio is paused,
     // but the button is not converted to play button.
-    notifyListeners();
   }
 
   /// Method called when the user clicks on the '<<' or '>>'
@@ -1047,55 +1012,6 @@ class AudioPlayerVM extends ChangeNotifier {
     );
   }
 
-  /// Method not used for the moment
-  ///
-  /// {isUndoRedo} is true when the method is called by the AudioPlayerVM
-  /// undo or redo methods. In this case, the method does not add a
-  /// command to the undo list.
-  Future<void> skipToEndNoPlay({
-    bool isUndoRedo = false,
-  }) async {
-    if (_currentAudioPosition == _currentAudioTotalDuration) {
-      updateAndSaveCurrentAudio();
-
-      // situation when the user clicks on >| when the audio
-      // position is at audio end. This is the case if the user
-      // clicks twice on the >| icon.
-      await _setNextNotFullyPlayedAudioAsCurrentAudio();
-
-      currentAudioPositionNotifier.value = _currentAudioPosition;
-
-      return;
-    }
-
-    // Subtracting 1 second is necessary to avoid a slider error
-    // which happens when clicking on AudioListItemWidget play icon
-    //
-    // I commented out next code since commenting it does not
-    // causes a slider error happening when clicking on
-    // AudioListItemWidget play icon. To see if realy ok !
-    // _currentAudioPosition =
-    //     _currentAudioTotalDuration - const Duration(seconds: 1);
-
-    if (!isUndoRedo) {
-      addUndoCommand(
-        newDurationPosition: _currentAudioTotalDuration,
-      );
-    }
-
-    _currentAudioPosition = _currentAudioTotalDuration;
-
-    // necessary so that the audio position is stored on the
-    // audio
-    _currentAudio!.audioPositionSeconds = _currentAudioPosition.inSeconds;
-    _currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd = false;
-    updateAndSaveCurrentAudio();
-
-    await modifyAudioPlayerPosition(
-      durationPosition: _currentAudioTotalDuration,
-    );
-  }
-
   /// Method called when the user clicks on the >| icon,
   /// either the first time or the second time.
   ///
@@ -1148,6 +1064,21 @@ class AudioPlayerVM extends ChangeNotifier {
     _setCurrentAudioToEndPosition();
     updateAndSaveCurrentAudio();
 
+    if (_isCommentPlaying) {
+      // In this situation, if a comment is playing and arrives to the
+      // audio end, the next audio is not played.
+
+      // necessary so that the play/pause icon is updated to play.
+      // Otherwise, the icon remains at pause value.
+      currentAudioPlayPauseNotifier.value = false;
+
+      await modifyAudioPlayerPosition(
+        durationPosition: _currentAudioTotalDuration,
+      );
+
+      return;
+    }
+
     if (await _setNextNotFullyPlayedAudioAsCurrentAudio()) {
       await playCurrentAudio(
         // it makes sense that if the next played is partially played,
@@ -1155,8 +1086,6 @@ class AudioPlayerVM extends ChangeNotifier {
         // paused.
         rewindAudioPositionBasedOnPauseDuration: true,
       );
-
-      notifyListeners();
     }
   }
 
@@ -1282,7 +1211,6 @@ class AudioPlayerVM extends ChangeNotifier {
       Command command = _undoList.removeLast();
       command.undo();
       _redoList.add(command);
-      notifyListeners();
     }
   }
 
@@ -1291,7 +1219,6 @@ class AudioPlayerVM extends ChangeNotifier {
       Command command = _redoList.removeLast();
       command.redo();
       _undoList.add(command);
-      notifyListeners();
     }
   }
 
