@@ -100,7 +100,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
     FocusScope.of(context).requestFocus(
       _focusNodeCommentTitle,
     );
-    AudioPlayerVM audioPlayerVM = Provider.of<AudioPlayerVM>(
+    AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
       context,
       listen: false,
     );
@@ -148,7 +148,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
               children: [
                 // Commented audio title
                 Text(
-                  audioPlayerVM.currentAudio?.validVideoTitle ?? '',
+                  audioPlayerVMlistenFalse.currentAudio?.validVideoTitle ?? '',
                   textAlign: TextAlign.center,
                 ),
                 Row(
@@ -158,12 +158,12 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                       children: [
                         _buildCommentStartPositionRow(
                           context: context,
-                          audioPlayerVM: audioPlayerVM,
+                          audioPlayerVM: audioPlayerVMlistenFalse,
                           commentVMlistenFalse: commentVMlistenFalse,
                         ),
                         _buildCommentEndPositionRow(
                           context: context,
-                          audioPlayerVM: audioPlayerVM,
+                          audioPlayerVM: audioPlayerVMlistenFalse,
                           commentVMlistenFalse: commentVMlistenFalse,
                         ),
                       ],
@@ -174,8 +174,8 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                           // Play/Pause button
                           key: const Key('playPauseIconButton'),
                           onPressed: () async {
-                            if (audioPlayerVM.isPlaying) {
-                              await audioPlayerVM.pause();
+                            if (audioPlayerVMlistenFalse.isPlaying) {
+                              await audioPlayerVMlistenFalse.pause();
 
                               // Modify the end audio position if the end
                               // audio position is before or equal to the
@@ -192,15 +192,15 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                                   commentVMlistenFalse
                                       .currentCommentStartPosition) {
                                 commentVMlistenFalse.currentCommentEndPosition =
-                                    audioPlayerVM.currentAudioPosition;
+                                    audioPlayerVMlistenFalse.currentAudioPosition;
                               }
                             } else {
                               // comment is not playing
                               _playButtonWasClicked = true;
                               _commentEndPositionIsModified = false;
 
-                              await _playFromCommentPosition(
-                                  audioPlayerVM: audioPlayerVM,
+                              await _playFromCommentStartPosition(
+                                  audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                                   commentVMlistenFalse: commentVMlistenFalse);
                             }
                           },
@@ -320,7 +320,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                           100)
                       .round(),
                 ),
-                audioToComment: audioPlayerVM.currentAudio!,
+                audioToComment: audioPlayerVMlistenFalse.currentAudio!,
               );
             } else {
               Comment commentToModify = widget.comment!;
@@ -340,13 +340,13 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
 
               commentVMlistenFalse.modifyComment(
                 modifiedComment: commentToModify,
-                commentedAudio: audioPlayerVM.currentAudio!,
+                commentedAudio: audioPlayerVMlistenFalse.currentAudio!,
               );
             }
 
             await _closeDialogAndReOpenCommentListAddDialog(
               context: context,
-              audioPlayerVM: audioPlayerVM,
+              audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
             );
           },
         ),
@@ -356,7 +356,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
           onPressed: () async =>
               await _closeDialogAndReOpenCommentListAddDialog(
             context: context,
-            audioPlayerVM: audioPlayerVM,
+            audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
           ),
         ),
       ],
@@ -727,7 +727,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
   /// the updated list of comments.
   Future<void> _closeDialogAndReOpenCommentListAddDialog({
     required BuildContext context,
-    required AudioPlayerVM audioPlayerVM,
+    required AudioPlayerVM audioPlayerVMlistenFalse,
   }) async {
     // Closing first the current CommentAddEditDialog dialog (... pop())
     // and then opening the CommentListAddDialog dialog before pausing
@@ -748,31 +748,31 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
         switch (widget.callerDialog) {
           case CallerDialog.commentListAddDialog:
             return CommentListAddDialog(
-              currentAudio: audioPlayerVM.currentAudio!,
+              currentAudio: audioPlayerVMlistenFalse.currentAudio!,
             );
           case CallerDialog.playlistCommentListAddDialog:
             return PlaylistCommentListDialog(
-              currentPlaylist: audioPlayerVM.currentAudio!.enclosingPlaylist!,
+              currentPlaylist: audioPlayerVMlistenFalse.currentAudio!.enclosingPlaylist!,
             );
         }
       },
     );
 
-    if (audioPlayerVM.isPlaying) {
-      await audioPlayerVM.pause();
+    if (audioPlayerVMlistenFalse.isPlaying) {
+      await audioPlayerVMlistenFalse.pause();
     }
   }
 
-  Future<void> _playFromCommentPosition({
-    required AudioPlayerVM audioPlayerVM,
+  Future<void> _playFromCommentStartPosition({
+    required AudioPlayerVM audioPlayerVMlistenFalse,
     required CommentVM commentVMlistenFalse,
   }) async {
-    await audioPlayerVM.modifyAudioPlayerPosition(
+    await audioPlayerVMlistenFalse.modifyAudioPlayerPosition(
       durationPosition: commentVMlistenFalse.currentCommentStartPosition,
       addUndoCommand: true,
     );
 
-    await audioPlayerVM.playCurrentAudio(
+    await audioPlayerVMlistenFalse.playCurrentAudio(
       rewindAudioPositionBasedOnPauseDuration: false,
       isCommentPlaying: true,
     );
