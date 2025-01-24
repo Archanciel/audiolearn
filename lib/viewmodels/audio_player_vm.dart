@@ -522,6 +522,10 @@ class AudioPlayerVM extends ChangeNotifier {
   void _initAudioPlayer() {
     _durationSubscription = _audioPlayer!.onDurationChanged.listen((duration) {
       _currentAudioTotalDuration = duration;
+
+      // Would be usefull for PlaylistDownloadView only. Currently,
+      // the audio duration is never changed in the application.
+      notifyListeners();
     });
 
     _positionSubscription = _audioPlayer!.onPositionChanged.listen((position) {
@@ -578,6 +582,12 @@ class AudioPlayerVM extends ChangeNotifier {
       // if the audio plays while the smartphone screen is turned off,
       // the slider won't be set to end position.
       _currentAudioPosition = _currentAudioTotalDuration;
+
+      // Usefull for PlaylistDownloadView only. Without this instruction,
+      // the play/pause button of the audio item in the playlist download
+      // view is not updated when clicking on pause button in the audio
+      // player view.
+      notifyListeners();
 
       // Set the current audio to its end position
       _setCurrentAudioToEndPosition();
@@ -806,6 +816,12 @@ class AudioPlayerVM extends ChangeNotifier {
     // play/pause button is correctly updated when clicking on it in
     // order to pause the playing audio. Otherwise, the audio is paused,
     // but the button is not converted to play button.
+
+    // Usefull for PlaylistDownloadView only. Without this instruction,
+    // the play/pause button of the audio item in the playlist download
+    // view is not updated when clicking on pause button in the audio
+    // player view.
+    notifyListeners();
   }
 
   /// Method called when the user clicks on the '<<' or '>>'
