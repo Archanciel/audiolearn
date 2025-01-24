@@ -56,6 +56,10 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
   Widget build(BuildContext context) {
     final ThemeProviderVM themeProviderVM =
         Provider.of<ThemeProviderVM>(context); // by default, listen is true
+    final AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
+      context,
+      listen: false,
+    );
 
     // Required so that clicking on Enter closes the dialog
     FocusScope.of(context).requestFocus(
@@ -121,6 +125,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
               controller: _scrollController,
               child: ListBody(
                 children: _buildAudioCommentsLst(
+                  audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                   commentVM: commentVM,
                 ),
               ),
@@ -136,7 +141,14 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                   ? kTextButtonStyleDarkMode
                   : kTextButtonStyleLightMode,
             ),
-            onPressed: () {
+            onPressed: () async {
+              // Calling setCurrentAudio() when closing the comment
+              // list dialog is necessary, otherwise, on Android,
+              // clicking on position buttons or audio slider will
+              // not work after a comment was played.
+              await audioPlayerVMlistenFalse.setCurrentAudio(
+                audio: widget.currentAudio,
+              );
               Navigator.of(context).pop();
             },
           ),
@@ -146,13 +158,9 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
   }
 
   List<Widget> _buildAudioCommentsLst({
+    required AudioPlayerVM audioPlayerVMlistenFalse,
     required CommentVM commentVM,
   }) {
-    AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
-      context,
-      listen: false,
-    );
-
     List<Comment> commentsLst = commentVM.loadAudioComments(
       audio: widget.currentAudio,
     );
