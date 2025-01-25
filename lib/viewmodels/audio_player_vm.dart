@@ -223,7 +223,7 @@ class AudioPlayerVM extends ChangeNotifier {
   /// playlist or deleted and the AppBarLeadingPopupMenuWidget
   /// _replaceCurrentAudioByNextAudio() method is called to update
   /// the Audio Player View screen.
-  /// 
+  ///
   /// {doClearUndoRedoLists} is set to false when the user clicks on
   /// the close button of the comment list add dialog. In this case,
   /// maintening the undo/redo lists is useful to enable the user to
@@ -797,6 +797,17 @@ class AudioPlayerVM extends ChangeNotifier {
 
     // Check if the file exists before attempting to play it
     if (File(audioFilePathName).existsSync()) {
+      // The protection again the alarm or phone call is deactivated
+      // in order to enable position button and slider usage after
+      // the audio was paused.
+      //
+      // if (isFromAudioPlayerView) {
+      //   // Set the source again since clicking on the pause icon
+      //   // stopped the audio player.
+      //   await _audioPlayer!
+      //       .setSource(DeviceFileSource(_currentAudio!.filePathName));
+      // }
+
       if (rewindAudioPositionBasedOnPauseDuration) {
         await _rewindAudioPositionBasedOnPauseDuration();
       }
@@ -818,6 +829,12 @@ class AudioPlayerVM extends ChangeNotifier {
   }
 
   Future<void> pause() async {
+    // Calling _audioPlayer!.stop() instead of _audioPlayer!.pause()
+    // avoids that the paused audio starts when an alarm or a call
+    // happens on the smartphone. This requires to call _audioPlayer!.
+    // setSource() in the playCurrentAudio() method ...
+    //
+    // await _audioPlayer!.stop();
     await _audioPlayer!.pause();
 
     if (_currentAudio !=
