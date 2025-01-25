@@ -1188,7 +1188,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               saveAsTitle);
           await tester.pumpAndSettle();
 
-          // Now select the 'Audio title'item in the 'Sort by' dropdown button
+          // Now select the 'Audio title' item in the 'Sort by' dropdown button
 
           await tester
               .tap(find.byKey(const Key('sortingOptionDropdownButton')));
@@ -4320,7 +4320,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             saveAsTitle);
         await tester.pumpAndSettle();
 
-        // Now select the 'Audio title'item in the 'Sort by' dropdown button
+        // Now select the 'Audio title' item in the 'Sort by' dropdown button
 
         await tester.tap(find.byKey(const Key('sortingOptionDropdownButton')));
         await tester.pumpAndSettle();
@@ -4628,7 +4628,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             saveAsTitle);
         await tester.pumpAndSettle();
 
-        // Now select the 'Audio title'item in the 'Sort by' dropdown button
+        // Now select the 'Audio title' item in the 'Sort by' dropdown button
 
         await tester.tap(find.byKey(const Key('sortingOptionDropdownButton')));
         await tester.pumpAndSettle();
@@ -4899,7 +4899,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             saveAsTitle);
         await tester.pumpAndSettle();
 
-        // Now select the 'Audio title'item in the 'Sort by' dropdown button
+        // Now select the 'Audio title' item in the 'Sort by' dropdown button
 
         await tester.tap(find.byKey(const Key('sortingOptionDropdownButton')));
         await tester.pumpAndSettle();
@@ -5148,7 +5148,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             saveAsTitle);
         await tester.pumpAndSettle();
 
-        // Now select the 'Audio title'item in the 'Sort by' dropdown button
+        // Now select the 'Audio title' item in the 'Sort by' dropdown button
 
         await tester.tap(find.byKey(const Key('sortingOptionDropdownButton')));
         await tester.pumpAndSettle();
@@ -5852,7 +5852,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
           await tester.pumpAndSettle();
 
-          // Now select the 'Audio title'item in the 'Sort by' dropdown button
+          // Now select the 'Audio title' item in the 'Sort by' dropdown button
 
           await tester
               .tap(find.byKey(const Key('sortingOptionDropdownButton')));
@@ -6158,7 +6158,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
           await tester.pumpAndSettle();
 
-          // Now select the 'Audio title'item in the 'Sort by' dropdown button
+          // Now select the 'Audio title' item in the 'Sort by' dropdown button
 
           await tester
               .tap(find.byKey(const Key('sortingOptionDropdownButton')));
@@ -6243,7 +6243,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
           await tester.pumpAndSettle();
 
-          // Now select the 'Audio title'item in the 'Sort by' dropdown button
+          // Now select the 'Audio title' item in the 'Sort by' dropdown button
 
           await tester
               .tap(find.byKey(const Key('sortingOptionDropdownButton')));
@@ -6561,7 +6561,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(dropdownItemEditIconButtonFinder);
           await tester.pumpAndSettle();
 
-          // Now select the 'Audio title'item in the 'Sort by' dropdown button
+          // Now select the 'Audio title' item in the 'Sort by' dropdown button
 
           await tester
               .tap(find.byKey(const Key('sortingOptionDropdownButton')));
@@ -6825,7 +6825,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
           await tester.pumpAndSettle();
 
-          // Now select the 'Audio title'item in the 'Sort by' dropdown button
+          // Now select the 'Audio title' item in the 'Sort by' dropdown button
 
           await tester
               .tap(find.byKey(const Key('sortingOptionDropdownButton')));
@@ -7149,7 +7149,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                 .byKey(const Key('define_sort_and_filter_audio_menu_item')));
             await tester.pumpAndSettle();
 
-            // Now select the 'Audio title'item in the 'Sort by' dropdown button
+            // Now select the 'Audio title' item in the 'Sort by' dropdown button
 
             await tester
                 .tap(find.byKey(const Key('sortingOptionDropdownButton')));
@@ -7333,7 +7333,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
           await tester.pumpAndSettle();
 
-          // Now select the 'Audio title'item in the 'Sort by' dropdown button
+          // Now select the 'Audio title' item in the 'Sort by' dropdown button
 
           await tester
               .tap(find.byKey(const Key('sortingOptionDropdownButton')));
@@ -8978,7 +8978,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               saveAsTitle);
           await tester.pumpAndSettle();
 
-          // Now select the 'Audio title'item in the 'Sort by' dropdown button
+          // Now select the 'Audio title' item in the 'Sort by' dropdown button
 
           await tester
               .tap(find.byKey(const Key('sortingOptionDropdownButton')));

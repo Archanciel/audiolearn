@@ -11946,10 +11946,10 @@ void main() {
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
         // Now find the delete audio popup menu item and tap on it
-        Finder popupMoveMenuItem =
+        Finder popupDeleteMenuItem =
             find.byKey(const Key("popup_menu_delete_audio"));
 
-        await tester.tap(popupMoveMenuItem);
+        await tester.tap(popupDeleteMenuItem);
         await tester.pumpAndSettle();
 
         // Now verifying that 'No audio selected' is displayed in the
@@ -12030,6 +12030,7 @@ void main() {
 
         List<String> playlistsTitles = [
           'local_audio_playlist_2',
+          'local_no_selected_audio',
         ];
 
         List<String> audioTitles = [];
@@ -12038,8 +12039,194 @@ void main() {
           tester: tester,
           playlistTitlesOrderedLst: playlistsTitles,
           audioTitlesOrderedLst: audioTitles,
-          firstPlaylistListTileIndex: 0,
-          firstAudioListTileIndex: 3,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+      testWidgets('''On no selected playlist, delete unique audio mp3 only.''',
+          (tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}one_local_playlist_with_one_audio",
+          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+
+        const String localAudioPlaylistTitle = 'local_no_selected_audio';
+        const String uniqueAudioToDeleteTitle =
+            'audio learn test short video one';
+
+        final SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
+        );
+
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the download app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+        await app.main(['test']);
+        await tester.pumpAndSettle();
+
+        // Tap the 'Toggle List' button to display the playlist list
+        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+        await tester.pumpAndSettle();
+
+        // Select the no selected playlist containing the unique audio
+        // to delete
+
+        await IntegrationTestUtil.selectPlaylist(
+          tester: tester,
+          playlistToSelectTitle: localAudioPlaylistTitle,
+        );
+
+        // Now we tap on the AudioPlayerView icon button to open
+        // AudioPlayerView screen
+
+        Finder appScreenNavigationButton =
+            find.byKey(const ValueKey('audioPlayerViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        // Since no audio is selected, verify that the left appbar
+        // menu is not displayed
+
+        Finder popupDeleteMenuItem =
+            find.byKey(const Key("popup_menu_delete_audio"));
+        
+        expect(popupDeleteMenuItem, findsNothing);
+
+        // Tap on the 'No audio selected' title to open the list
+        // of playable audio
+
+        await tester.tap(find.text('No audio selected'));
+        await tester.pumpAndSettle();
+
+        // Select an audio in the AudioPlayableListDialog
+        await IntegrationTestUtil.selectAudioInAudioPlayableDialog(
+          tester: tester,
+          audioToSelectTitle: uniqueAudioToDeleteTitle,
+        );
+
+        // Tap the appbar leading popup menu button
+        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        // Now find the delete audio popup menu item and tap on it
+        popupDeleteMenuItem =
+            find.byKey(const Key("popup_menu_delete_audio"));
+
+        await tester.tap(popupDeleteMenuItem);
+        await tester.pumpAndSettle();
+
+        // Now verifying that 'No audio selected' is displayed in the
+        // AudioPlayerView screen
+
+        final Finder noAudioSelectedTextWidgetFinder =
+            find.text('No audio selected');
+        expect(noAudioSelectedTextWidgetFinder, findsOneWidget);
+
+        // Since no audio is selected, verify that the left appbar
+        // menu is not displayed
+        popupDeleteMenuItem =
+            find.byKey(const Key("popup_menu_delete_audio"));
+        
+        expect(popupDeleteMenuItem, findsNothing);
+
+        // Now verifying that the audio player view audio position
+        // is 0:00
+
+        final Finder audioPlayerViewAudioPositionFinder =
+            find.byKey(const Key('audioPlayerViewAudioPosition'));
+        final Text audioPlayerViewAudioPositionTextWidget =
+            tester.widget<Text>(audioPlayerViewAudioPositionFinder);
+        expect(audioPlayerViewAudioPositionTextWidget.data, '0:00');
+
+        // Now verifying that the audio player view audio remaining
+        // duration 0:00
+
+        final Finder audioPlayerViewAudioRemainingDurationFinder =
+            find.byKey(const Key('audioPlayerViewAudioRemainingDuration'));
+        final Text audioPlayerViewAudioRemainingDurationTextWidget =
+            tester.widget<Text>(audioPlayerViewAudioRemainingDurationFinder);
+        expect(audioPlayerViewAudioRemainingDurationTextWidget.data, '0:00');
+
+        // Now verifying the selected playlist TextField still
+        // contains the title of the source playlist
+
+        Text selectedPlaylistTitleText = tester
+            .widget<Text>(find.byKey(const Key('selectedPlaylistTitleText')));
+
+        expect(
+          selectedPlaylistTitleText.data,
+          localAudioPlaylistTitle,
+        );
+
+        // Verify the audio player view top buttons state
+
+        await IntegrationTestUtil.verifyTopButtonsState(
+          tester: tester,
+          areEnabled: false,
+          audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
+          setAudioSpeedTextButtonValue: '1.00x',
+        );
+
+        // Now verifying that the audio was physically deleted from the
+        // local playlist directory.
+
+        List<String> localPlaylistMp3Lst = DirUtil.listFileNamesInDir(
+          directoryPath:
+              '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioPlaylistTitle',
+          fileExtension: 'mp3',
+        );
+
+        // Verify the local target playlist directory content
+        expect(localPlaylistMp3Lst, []);
+
+        // Now, go back to the playlist download view.
+        appScreenNavigationButton =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        // Now verifying the selected playlist TextField still
+        // contains the title of the source playlist
+
+        selectedPlaylistTitleText = tester
+            .widget<Text>(find.byKey(const Key('selectedPlaylistTitleText')));
+
+        expect(
+          selectedPlaylistTitleText.data,
+          localAudioPlaylistTitle,
+        );
+
+        // Verify the playlist audio list is empty
+
+        List<String> playlistsTitles = [
+          'local_audio_playlist_2',
+          localAudioPlaylistTitle,
+        ];
+
+        List<String> audioTitles = [];
+
+        IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
+          tester: tester,
+          playlistTitlesOrderedLst: playlistsTitles,
+          audioTitlesOrderedLst: audioTitles,
         );
 
         // Purge the test playlist directory so that the created test
@@ -12115,10 +12302,10 @@ void main() {
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
         // Now find the delete audio popup menu item and tap on it
-        Finder popupMoveMenuItem =
+        Finder popupDeleteMenuItem =
             find.byKey(const Key("popup_menu_delete_audio"));
 
-        await tester.tap(popupMoveMenuItem);
+        await tester.tap(popupDeleteMenuItem);
         await tester.pumpAndSettle();
 
         // Now verifying that 'No audio selected' is displayed in the
@@ -12203,6 +12390,7 @@ void main() {
 
         List<String> playlistsTitles = [
           'local_audio_playlist_2',
+          'local_no_selected_audio',
         ];
 
         List<String> audioTitles = [];
@@ -12211,8 +12399,6 @@ void main() {
           tester: tester,
           playlistTitlesOrderedLst: playlistsTitles,
           audioTitlesOrderedLst: audioTitles,
-          firstPlaylistListTileIndex: 0,
-          firstAudioListTileIndex: 3,
         );
 
         // Purge the test playlist directory so that the created test
@@ -12282,13 +12468,13 @@ void main() {
 
         // Now find the delete audio from playlist as well popup menu
         // item and tap on it. Since the audio is deleted from a local
-        // plalist, no warning is displayed indicating that the audio
+        // playlist, no warning is displayed indicating that the audio
         // will be redownloaded unless it is suppressed from the Youtube
         // playlist as well !
-        Finder popupMoveMenuItem = find
+        Finder popupDeleteMenuItem = find
             .byKey(const Key("popup_menu_delete_audio_from_playlist_aswell"));
 
-        await tester.tap(popupMoveMenuItem);
+        await tester.tap(popupDeleteMenuItem);
         await tester.pumpAndSettle();
 
         // Now verifying that 'No audio selected' is displayed in the
@@ -12369,6 +12555,7 @@ void main() {
 
         List<String> playlistsTitles = [
           'local_audio_playlist_2',
+          'local_no_selected_audio',
         ];
 
         List<String> audioTitles = [];
@@ -12377,8 +12564,6 @@ void main() {
           tester: tester,
           playlistTitlesOrderedLst: playlistsTitles,
           audioTitlesOrderedLst: audioTitles,
-          firstPlaylistListTileIndex: 0,
-          firstAudioListTileIndex: 3,
         );
 
         // Purge the test playlist directory so that the created test
@@ -29414,8 +29599,6 @@ void playlistOneDownloadViewIntegrationTest() {
             tester: tester,
             playlistTitlesOrderedLst: playlistsTitles,
             audioTitlesOrderedLst: audioTitles,
-            firstPlaylistListTileIndex: 0,
-            firstAudioListTileIndex: 3,
           );
 
           // Purge the test playlist directory so that the created test
