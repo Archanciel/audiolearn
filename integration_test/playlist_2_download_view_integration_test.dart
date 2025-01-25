@@ -1285,8 +1285,6 @@ void main() {
           tester: tester,
           playlistTitlesOrderedLst: playlistsTitles,
           audioTitlesOrderedLst: audioTitles,
-          firstPlaylistListTileIndex: 0,
-          firstAudioListTileIndex: 2,
         );
 
         // Purge the test playlist directory so that the created test
@@ -1373,8 +1371,6 @@ void main() {
           tester: tester,
           playlistTitlesOrderedLst: playlistsTitles,
           audioTitlesOrderedLst: audioTitles,
-          firstPlaylistListTileIndex: 0,
-          firstAudioListTileIndex: 3,
         );
 
         playlistsTitles =
@@ -1453,8 +1449,6 @@ void main() {
           tester: tester,
           playlistTitlesOrderedLst: playlistsTitles,
           audioTitlesOrderedLst: audioTitles,
-          firstPlaylistListTileIndex: 0,
-          firstAudioListTileIndex: 1,
         );
 
         // Purge the test playlist directory so that the created test
@@ -1540,12 +1534,16 @@ void main() {
           "local",
         ];
 
+        List<String> audioTitles = [
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          "La résilience insulaire par Fiona Roche",
+          "Les besoins artificiels par R.Keucheyan",
+        ];
+
         IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
           tester: tester,
           playlistTitlesOrderedLst: playlistsTitles,
-          audioTitlesOrderedLst: null,
-          firstPlaylistListTileIndex: 0,
-          firstAudioListTileIndex: 2,
+          audioTitlesOrderedLst: audioTitles,
         );
 
         // Now re-tap on the move up icon button to reposition the selected
@@ -1574,9 +1572,7 @@ void main() {
         IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
           tester: tester,
           playlistTitlesOrderedLst: playlistsTitles,
-          audioTitlesOrderedLst: null,
-          firstPlaylistListTileIndex: 0,
-          firstAudioListTileIndex: 2,
+          audioTitlesOrderedLst: audioTitles,
         );
 
         // Finally, clear the search text word
@@ -1606,9 +1602,7 @@ void main() {
         IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
           tester: tester,
           playlistTitlesOrderedLst: playlistsTitles,
-          audioTitlesOrderedLst: null,
-          firstPlaylistListTileIndex: 0,
-          firstAudioListTileIndex: 2,
+          audioTitlesOrderedLst: audioTitles,
         );
 
         // Purge the test playlist directory so that the created test
@@ -4358,7 +4352,7 @@ void main() {
           tapOnCheckbox: true,
         );
 
-        await onAudioPlayerViewCheckOrTapOnPlaylistCheckbox(
+        await _onAudioPlayerViewCheckOrTapOnPlaylistCheckbox(
           tester: tester,
           playlistDownloadViewCurrentlySelectedPlaylistTitle:
               playlistToSelectTitleInPlaylistDownloadView,
@@ -4398,7 +4392,7 @@ void main() {
             tapOnCheckbox: false,
           );
 
-          await onAudioPlayerViewCheckOrTapOnPlaylistCheckbox(
+          await _onAudioPlayerViewCheckOrTapOnPlaylistCheckbox(
             tester: tester,
             playlistDownloadViewCurrentlySelectedPlaylistTitle:
                 playlistToSelectTitle,
@@ -4406,7 +4400,7 @@ void main() {
           );
         }
 
-        await onAudioPlayerViewCheckOrTapOnPlaylistCheckbox(
+        await _onAudioPlayerViewCheckOrTapOnPlaylistCheckbox(
           tester: tester,
           playlistDownloadViewCurrentlySelectedPlaylistTitle: 'local_9',
           playlistToSelectTitleInAudioPlayerView: 'local_10',
@@ -10377,7 +10371,7 @@ Future<void> _onPlaylistDownloadViewCheckOrTapOnPlaylistCheckbox({
   }
 }
 
-Future<void> onAudioPlayerViewCheckOrTapOnPlaylistCheckbox({
+Future<void> _onAudioPlayerViewCheckOrTapOnPlaylistCheckbox({
   required WidgetTester tester,
   required String playlistDownloadViewCurrentlySelectedPlaylistTitle,
   required String playlistToSelectTitleInAudioPlayerView,
@@ -11039,8 +11033,6 @@ Future<List<String>> _enteringFirstAndSecondLetterOfLocalPlaylistSearchWord({
     tester: tester,
     playlistTitlesOrderedLst: playlistsTitles,
     audioTitlesOrderedLst: audioTitles,
-    firstPlaylistListTileIndex: 0,
-    firstAudioListTileIndex: 3,
   );
 
   // Enter the second letter of the 'al' search word. The crazy integration
@@ -11077,8 +11069,6 @@ Future<List<String>> _enteringFirstAndSecondLetterOfLocalPlaylistSearchWord({
     tester: tester,
     playlistTitlesOrderedLst: playlistsTitles,
     audioTitlesOrderedLst: audioTitles,
-    firstPlaylistListTileIndex: 0,
-    firstAudioListTileIndex: 3,
   );
 
   // Now tap on the search icon button
@@ -11102,8 +11092,6 @@ Future<List<String>> _enteringFirstAndSecondLetterOfLocalPlaylistSearchWord({
     tester: tester,
     playlistTitlesOrderedLst: playlistsTitles,
     audioTitlesOrderedLst: audioTitles,
-    firstPlaylistListTileIndex: 0,
-    firstAudioListTileIndex: 2,
   );
 
   return playlistsTitles;
@@ -11154,8 +11142,6 @@ Future<List<String>> enteringFirstAndSecondLetterOfYoutubePlaylistSearchWord({
     tester: tester,
     playlistTitlesOrderedLst: playlistsTitles,
     audioTitlesOrderedLst: audioTitles,
-    firstPlaylistListTileIndex: 0,
-    firstAudioListTileIndex: 3,
   );
 
   // Enter the second letter of the 'al' search word. The crazy integration
@@ -11192,8 +11178,6 @@ Future<List<String>> enteringFirstAndSecondLetterOfYoutubePlaylistSearchWord({
     tester: tester,
     playlistTitlesOrderedLst: playlistsTitles,
     audioTitlesOrderedLst: audioTitles,
-    firstPlaylistListTileIndex: 0,
-    firstAudioListTileIndex: 3,
   );
 
   // Now tap on the search icon button
@@ -11216,8 +11200,6 @@ Future<List<String>> enteringFirstAndSecondLetterOfYoutubePlaylistSearchWord({
     tester: tester,
     playlistTitlesOrderedLst: playlistsTitles,
     audioTitlesOrderedLst: audioTitles,
-    firstPlaylistListTileIndex: 0,
-    firstAudioListTileIndex: 1,
   );
 
   return playlistsTitles;

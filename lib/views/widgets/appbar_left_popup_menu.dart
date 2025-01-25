@@ -60,7 +60,446 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
     }
   }
 
-  PopupMenuButton<AudioPopupMenuAction> _audioPlayerViewPopupMenuButton(
+  Widget _audioPlayerViewPopupMenuButton(BuildContext context) {
+    final AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
+      context,
+      listen: false,
+    );
+
+    return ValueListenableBuilder<String?>(
+      // Using the currentAudioTitleNotifier is very useful in the
+      // case the audio player view is opened by clicking on the
+      // audio player view button when the current selected playlist
+      // has audio's, but without any selected audio's. If the user
+      // click on the 'No selected audio' title to open the audio
+      // playable list dialog and select an available audio, without
+      // using currentAudioTitleNotifier, the left appbar menu will
+      // not be updated and remain empty. This problem is now solved.
+      valueListenable: audioPlayerVMlistenFalse.currentAudioTitleNotifier,
+      builder: (context, currentAudioTitle, child) {
+        if (currentAudioTitle == null ||
+            audioPlayerVMlistenFalse.currentAudio == null) {
+          // No current audio set, return an empty menu
+          return PopupMenuButton<AudioPopupMenuAction>(
+            itemBuilder: (BuildContext context) {
+              return [];
+            },
+            icon: const Icon(Icons.menu),
+          );
+        }
+
+        final PlaylistListVM playlistListVMlistenFalse =
+            Provider.of<PlaylistListVM>(
+          context,
+          listen: false,
+        );
+
+        Audio audio = audioPlayerVMlistenFalse.currentAudio!;
+
+        // Current audio is set, return a full menu
+        return PopupMenuButton<AudioPopupMenuAction>(
+          itemBuilder: (BuildContext context) {
+            return [
+              PopupMenuItem<AudioPopupMenuAction>(
+                key: const Key('popup_menu_open_youtube_video'),
+                value: AudioPopupMenuAction.openYoutubeVideo,
+                child: Text(AppLocalizations.of(context)!.openYoutubeVideo),
+              ),
+              PopupMenuItem<AudioPopupMenuAction>(
+                key: const Key('popup_copy_youtube_video_url'),
+                value: AudioPopupMenuAction.copyYoutubeVideoUrl,
+                child: Text(AppLocalizations.of(context)!.copyYoutubeVideoUrl),
+              ),
+              PopupMenuItem<AudioPopupMenuAction>(
+                key: const Key('popup_menu_display_audio_info'),
+                value: AudioPopupMenuAction.displayAudioInfo,
+                child: Text(AppLocalizations.of(context)!.displayAudioInfo),
+              ),
+              PopupMenuItem<AudioPopupMenuAction>(
+                key: const Key('popup_menu_audio_comment'),
+                value: AudioPopupMenuAction.audioComment,
+                child: Text(AppLocalizations.of(context)!.commentMenu),
+              ),
+              PopupMenuItem<AudioPopupMenuAction>(
+                key: const Key('popup_menu_modify_audio_title'),
+                value: AudioPopupMenuAction.modifyAudioTitle,
+                child: Text(AppLocalizations.of(context)!.modifyAudioTitle),
+              ),
+              PopupMenuItem<AudioPopupMenuAction>(
+                key: const Key('popup_menu_rename_audio_file'),
+                value: AudioPopupMenuAction.renameAudioFile,
+                child: Text(AppLocalizations.of(context)!.renameAudioFile),
+              ),
+              PopupMenuItem<AudioPopupMenuAction>(
+                key: const Key('popup_menu_add_audio_picture'),
+                value: AudioPopupMenuAction.addAudioPicture,
+                child: Text(AppLocalizations.of(context)!.addAudioPicture),
+              ),
+              PopupMenuItem<AudioPopupMenuAction>(
+                key: const Key('popup_menu_remove_audio_picture'),
+                value: AudioPopupMenuAction.removeAudioPicture,
+                child: Text(AppLocalizations.of(context)!.removeAudioPicture),
+              ),
+              PopupMenuItem<AudioPopupMenuAction>(
+                key: const Key('popup_menu_move_audio_to_playlist'),
+                value: AudioPopupMenuAction.moveAudioToPlaylist,
+                child: Text(AppLocalizations.of(context)!.moveAudioToPlaylist),
+              ),
+              PopupMenuItem<AudioPopupMenuAction>(
+                key: const Key('popup_menu_copy_audio_to_playlist'),
+                value: AudioPopupMenuAction.copyAudioToPlaylist,
+                child: Text(AppLocalizations.of(context)!.copyAudioToPlaylist),
+              ),
+              PopupMenuItem<AudioPopupMenuAction>(
+                key: const Key('popup_menu_delete_audio'),
+                value: AudioPopupMenuAction.deleteAudio,
+                child: Text(AppLocalizations.of(context)!.deleteAudio),
+              ),
+              PopupMenuItem<AudioPopupMenuAction>(
+                key: const Key('popup_menu_delete_audio_from_playlist_aswell'),
+                value: AudioPopupMenuAction.deleteAudioFromPlaylistAswell,
+                child: Text(AppLocalizations.of(context)!
+                    .deleteAudioFromPlaylistAswell),
+              ),
+            ];
+          },
+          icon: const Icon(Icons.menu),
+          onSelected: (AudioPopupMenuAction value) async {
+            switch (value) {
+              case AudioPopupMenuAction.openYoutubeVideo:
+                openUrlInExternalApp(
+                  url: audio.videoUrl,
+                  warningMessageVM: Provider.of<WarningMessageVM>(
+                    context,
+                    listen: false,
+                  ),
+                );
+                break;
+              case AudioPopupMenuAction.copyYoutubeVideoUrl:
+                Clipboard.setData(ClipboardData(
+                    text: audioPlayerVMlistenFalse.currentAudio!.videoUrl));
+                break;
+              case AudioPopupMenuAction.displayAudioInfo:
+                showDialog<void>(
+                  context: context,
+                  builder: (BuildContext context) => AudioInfoDialog(
+                    audio: audio,
+                  ),
+                );
+                break;
+              case AudioPopupMenuAction.audioComment:
+                showDialog<void>(
+                  context: context,
+                  // passing the current audio to the dialog instead
+                  // of initializing a private _currentAudio variable
+                  // in the dialog avoid integr test problems
+                  builder: (context) => CommentListAddDialog(
+                    currentAudio: audio,
+                  ),
+                );
+                break;
+              case AudioPopupMenuAction.modifyAudioTitle:
+                await showDialog<String?>(
+                  context: context,
+                  barrierDismissible:
+                      false, // This line prevents the dialog from closing when
+                  //            tapping outside the dialog
+                  builder: (BuildContext context) {
+                    return AudioModificationDialog(
+                      audio: audio,
+                      audioModificationType:
+                          AudioModificationType.modifyAudioTitle,
+                    );
+                  },
+                ).then((String? modifiedAudioTitle) async {
+                  // Required so that the audio title displayed in the
+                  // audio player view is updated with the modified title
+                  if (modifiedAudioTitle != null) {
+                    audioPlayerVMlistenFalse.currentAudioTitleNotifier.value =
+                        modifiedAudioTitle;
+                  }
+                });
+                break;
+              case AudioPopupMenuAction.renameAudioFile:
+                showDialog<void>(
+                  context: context,
+                  barrierDismissible:
+                      false, // This line prevents the dialog from closing when
+                  //            tapping outside the dialog
+                  builder: (BuildContext context) => AudioModificationDialog(
+                    audio: audio,
+                    audioModificationType:
+                        AudioModificationType.renameAudioFile,
+                  ),
+                );
+                break;
+              case AudioPopupMenuAction.addAudioPicture:
+                String selectedPictureFilePathName =
+                    await UiUtil.filePickerSelectPictureFilePathName();
+
+                if (selectedPictureFilePathName.isEmpty) {
+                  return;
+                }
+
+                playlistListVMlistenFalse
+                    .storeAudioPictureFileInPlaylistPictureDir(
+                  audio: audio,
+                  pictureFilePathName: selectedPictureFilePathName,
+                );
+
+                // The next two lines cause the the audio picture to be
+                // displayed in the audio player view. The first line is
+                // necessary so that currentAudioTitleNotifier will update
+                // the audio title displayed in the audio player view,
+                // which will cause the audio picture to be displayed.
+
+                audioPlayerVMlistenFalse.currentAudioTitleNotifier.value = '';
+
+                audioPlayerVMlistenFalse.currentAudioTitleNotifier.value =
+                    audioPlayerVMlistenFalse.currentAudioTitleNotifier.value;
+                break;
+              case AudioPopupMenuAction.removeAudioPicture:
+                break;
+              case AudioPopupMenuAction.moveAudioToPlaylist:
+                PlaylistListVM playlistVMlistnedFalse =
+                    Provider.of<PlaylistListVM>(
+                  context,
+                  listen: false,
+                );
+                Audio audio = audioPlayerVMlistenFalse.currentAudio!;
+
+                showDialog<dynamic>(
+                  context: context,
+                  builder: (context) => PlaylistOneSelectableDialog(
+                    usedFor: PlaylistOneSelectableDialogUsedFor
+                        .moveSingleAudioToPlaylist,
+                    warningMessageVM: Provider.of<WarningMessageVM>(
+                      context,
+                      listen: false,
+                    ),
+                    excludedPlaylist: audio.enclosingPlaylist!,
+                  ),
+                ).then((resultMap) async {
+                  if (resultMap is String && resultMap == 'cancel') {
+                    // the case if the Cancel button was pressed
+                    return;
+                  }
+
+                  Playlist? targetPlaylist = resultMap['selectedPlaylist'];
+
+                  if (targetPlaylist == null) {
+                    // the case if no playlist was selected and Confirm button was
+                    // pressed. In this case, the PlaylistOneSelectableDialog
+                    // uses the WarningMessageVM to display the right warning
+                    return;
+                  }
+
+                  bool keepAudioDataInSourcePlaylist =
+                      resultMap['keepAudioDataInSourcePlaylist'];
+                  Audio? nextAudio =
+                      playlistVMlistnedFalse.moveAudioAndCommentToPlaylist(
+                    audioLearnAppViewType:
+                        AudioLearnAppViewType.audioPlayerView,
+                    audio: audio,
+                    targetPlaylist: targetPlaylist,
+                    keepAudioInSourcePlaylistDownloadedAudioLst:
+                        keepAudioDataInSourcePlaylist,
+                  );
+
+                  // if the passed nextAudio is null, the displayed audio
+                  // title will be "No selected audio"
+                  await _replaceCurrentAudioByNextAudio(
+                    context: context,
+                    nextAudio: nextAudio,
+                  );
+                });
+                break;
+              case AudioPopupMenuAction.copyAudioToPlaylist:
+                PlaylistListVM expandablePlaylistVM =
+                    Provider.of<PlaylistListVM>(
+                  context,
+                  listen: false,
+                );
+                Audio audio = audioPlayerVMlistenFalse.currentAudio!;
+
+                showDialog<dynamic>(
+                  context: context,
+                  builder: (context) => PlaylistOneSelectableDialog(
+                    usedFor: PlaylistOneSelectableDialogUsedFor
+                        .copySingleAudioToPlaylist,
+                    warningMessageVM: Provider.of<WarningMessageVM>(
+                      context,
+                      listen: false,
+                    ),
+                    excludedPlaylist: audio.enclosingPlaylist!,
+                  ),
+                ).then((resultMap) {
+                  if (resultMap is String && resultMap == 'cancel') {
+                    // the case if the Cancel button was pressed
+                    return;
+                  }
+
+                  Playlist? targetPlaylist = resultMap['selectedPlaylist'];
+
+                  if (targetPlaylist == null) {
+                    // the case if no playlist was selected and
+                    // Confirm button was pressed
+                    return;
+                  }
+
+                  expandablePlaylistVM.copyAudioAndCommentToPlaylist(
+                    audio: audio,
+                    targetPlaylist: targetPlaylist,
+                  );
+                });
+                break;
+              case AudioPopupMenuAction.deleteAudio:
+                final Audio audioToDelete =
+                    audioPlayerVMlistenFalse.currentAudio!;
+
+                if (!audioToDelete.isPaused) {
+                  audioPlayerVMlistenFalse.pause();
+                }
+
+                Audio? nextAudio;
+                final PlaylistListVM playlistListVMlistenFalse =
+                    Provider.of<PlaylistListVM>(
+                  context,
+                  listen: false,
+                );
+
+                final List<Comment> audioToDeleteCommentLst =
+                    playlistListVMlistenFalse.getAudioComments(
+                  audio: audioToDelete,
+                );
+
+                if (audioToDeleteCommentLst.isNotEmpty) {
+                  // If the audio has comments, the ConfirmActionDialog is
+                  // displayed. Otherwise, the audio is deleted from the
+                  // playlist playable audio list.
+                  //
+                  // Await must be applied to showDialog() so that the nextAudio
+                  // variable is assigned according to the result returned by the
+                  // dialog. Otherwise, _replaceCurrentAudioByNextAudio() will be
+                  // called before the dialog is closed and the nextAudio variable
+                  // will be null, which will result in the audio title displayed
+                  // in the audio player view to be "No selected audio" !
+                  await showDialog<dynamic>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return ConfirmActionDialog(
+                        actionFunction: deleteAudio,
+                        actionFunctionArgs: [
+                          context,
+                          audioToDelete,
+                        ],
+                        dialogTitleOne: _createDeleteAudioDialogTitle(
+                          context,
+                          audioToDelete,
+                        ),
+                        dialogContent: AppLocalizations.of(context)!
+                            .confirmCommentedAudioDeletionComment(
+                          audioToDeleteCommentLst.length,
+                        ),
+                      );
+                    },
+                  ).then((result) {
+                    if (result == ConfirmAction.cancel) {
+                      nextAudio = audioToDelete;
+                    } else {
+                      nextAudio = result as Audio?;
+                    }
+                  });
+                } else {
+                  nextAudio = playlistListVMlistenFalse.deleteAudioFile(
+                    audioLearnAppViewType:
+                        AudioLearnAppViewType.audioPlayerView,
+                    audio: audioToDelete,
+                  );
+                }
+
+                // if the passed nextAudio is null, the displayed audio
+                // title will be "No selected audio"
+                await _replaceCurrentAudioByNextAudio(
+                  context: context,
+                  nextAudio: nextAudio,
+                );
+                break;
+              case AudioPopupMenuAction.deleteAudioFromPlaylistAswell:
+                Audio audioToDelete = audioPlayerVMlistenFalse.currentAudio!;
+                Audio? nextAudio;
+                final PlaylistListVM playlistListVMlistenFalse =
+                    Provider.of<PlaylistListVM>(
+                  context,
+                  listen: false,
+                );
+
+                final List<Comment> audioToDeleteCommentLst =
+                    playlistListVMlistenFalse.getAudioComments(
+                  audio: audioToDelete,
+                );
+
+                if (audioToDeleteCommentLst.isNotEmpty) {
+                  // await must be applied to showDialog() so that the nextAudio
+                  // variable is assigned according to the result returned by the
+                  // dialog. Otherwise, _replaceCurrentAudioByNextAudio() will be
+                  // called before the dialog is closed and the nextAudio variable
+                  // will be null, which will result in the audio title displayed
+                  // in the audio player view to be "No selected audio" !
+                  //
+                  // If the audio has comments, the ConfirmActionDialog is
+                  // displayed. Otherwise, the audio is deleted from the
+                  // playlist download and playable audio list.
+                  await showDialog<dynamic>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return ConfirmActionDialog(
+                        actionFunction: deleteAudioFromPlaylistAsWell,
+                        actionFunctionArgs: [
+                          playlistListVMlistenFalse,
+                          audioToDelete,
+                        ],
+                        dialogTitleOne: _createDeleteAudioDialogTitle(
+                          context,
+                          audioToDelete,
+                        ),
+                        dialogContent: AppLocalizations.of(context)!
+                            .confirmCommentedAudioDeletionComment(
+                          audioToDeleteCommentLst.length,
+                        ),
+                      );
+                    },
+                  ).then((result) {
+                    if (result == ConfirmAction.cancel) {
+                      nextAudio = audioToDelete;
+                    } else {
+                      nextAudio = result as Audio?;
+                    }
+                  });
+                } else {
+                  nextAudio =
+                      playlistListVMlistenFalse.deleteAudioFromPlaylistAsWell(
+                    audioLearnAppViewType:
+                        AudioLearnAppViewType.audioPlayerView,
+                    audio: audioToDelete,
+                  );
+                }
+
+                // if the passed nextAudio is null, the displayed audio
+                // title will be "No selected audio"
+                await _replaceCurrentAudioByNextAudio(
+                  context: context,
+                  nextAudio: nextAudio,
+                );
+                break;
+            }
+          },
+        );
+      },
+    );
+  }
+
+  PopupMenuButton<AudioPopupMenuAction> _audioPlayerViewPopupMenuButtonOriginal(
       BuildContext context) {
     final PlaylistListVM playlistListVMlistenFalse =
         Provider.of<PlaylistListVM>(

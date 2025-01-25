@@ -860,43 +860,54 @@ class IntegrationTestUtil {
 
   static void checkPlaylistAndAudioTitlesOrderInListTile({
     required WidgetTester tester,
-    required List<String>? playlistTitlesOrderedLst,
-    required List<String>? audioTitlesOrderedLst,
-    int firstPlaylistListTileIndex = 0,
-    int firstAudioListTileIndex = 3,
+    required List<String> playlistTitlesOrderedLst,
+    required List<String> audioTitlesOrderedLst,
   }) {
     // Obtains all the ListTile widgets present in the playlist
     // download view
     final Finder listTilesFinder = find.byType(ListTile);
+    int playlistListTileIndex = 0;
 
-    if (playlistTitlesOrderedLst != null) {
+    if (playlistTitlesOrderedLst.isNotEmpty) {
       for (String title in playlistTitlesOrderedLst) {
         Finder playlistTitleTextFinder = find.descendant(
-          of: listTilesFinder.at(firstPlaylistListTileIndex++),
+          of: listTilesFinder.at(playlistListTileIndex++),
           matching: find.byType(Text),
         );
 
         expect(
-          // 2 Text widgets exist in playlist ListTile: the title and sub title
           tester.widget<Text>(playlistTitleTextFinder.at(0)).data,
           title,
         );
       }
     }
 
-    if (audioTitlesOrderedLst != null) {
+    if (audioTitlesOrderedLst.isNotEmpty) {
       for (String title in audioTitlesOrderedLst) {
         Finder playlistTitleTextFinder = find.descendant(
-          of: listTilesFinder.at(firstAudioListTileIndex++),
+          of: listTilesFinder.at(playlistListTileIndex++),
           matching: find.byType(Text),
         );
 
         expect(
-          // 2 Text widgets exist in audio ListTile: the title and sub title
           tester.widget<Text>(playlistTitleTextFinder.at(0)).data,
           title,
         );
       }
+    } else {
+      // Verify that the second list is empty
+      int totalListTiles = tester.widgetList(listTilesFinder).length;
+
+      // The total number of ListTile widgets should equal the
+      // playlist titles count plus the starting index of the first
+      // audio list tile
+      expect(
+        totalListTiles,
+        playlistTitlesOrderedLst.length,
+        reason:
+            '''The playlist download view audio list should be empty
+            when the passed audioTitlesOrderedLst is [].''',
+      );
     }
   }
 
