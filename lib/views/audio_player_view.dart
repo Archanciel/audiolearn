@@ -1008,79 +1008,69 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
   Widget _buildAudioSliderWithPositionTexts({
     required AudioPlayerVM audioPlayerVMlistenFalse,
   }) {
-    return ValueListenableBuilder<String?>(
-      valueListenable: audioPlayerVMlistenFalse.currentAudioTitleNotifier,
-      builder: (context, currentAudioTitle, child) {
-        return ValueListenableBuilder<Duration>(
-          valueListenable:
-              audioPlayerVMlistenFalse.currentAudioPositionNotifier,
-          builder: (context, currentPosition, child) {
-            // Obtaining the slider values here (when audioPlayerVM
-            // calls notifyListeners()) avoids the slider generating
-            // a 'Value xxx.x is not between minimum 0.0 and maximum 0.0' error
-            double sliderValue = 0.0;
-            double maxDuration = 0.0;
-            String currentAudioPositionStr = Duration.zero.HHmmssZeroHH();
-            String remainingAudioDurationStr = currentAudioPositionStr; // 0.0
+    return ValueListenableBuilder<Duration>(
+      valueListenable: audioPlayerVMlistenFalse.currentAudioPositionNotifier,
+      builder: (context, currentPosition, child) {
+        // Obtaining the slider values here (when audioPlayerVM
+        // calls notifyListeners()) avoids the slider generating
+        // a 'Value xxx.x is not between minimum 0.0 and maximum 0.0' error
+        double sliderValue = 0.0;
+        double maxDuration = 0.0;
+        String currentAudioPositionStr = Duration.zero.HHmmssZeroHH();
+        String remainingAudioDurationStr = currentAudioPositionStr; // 0.0
 
-            if (currentAudioTitle != null) {
-              sliderValue = audioPlayerVMlistenFalse
-                  .currentAudioPosition.inSeconds
-                  .toDouble();
-              maxDuration = audioPlayerVMlistenFalse
-                  .currentAudioTotalDuration.inSeconds
-                  .toDouble();
-              currentAudioPositionStr =
-                  audioPlayerVMlistenFalse.currentAudioPosition.HHmmssZeroHH();
-              remainingAudioDurationStr = audioPlayerVMlistenFalse
-                  .currentAudioRemainingDuration
-                  .HHmmssZeroHH();
-            }
+        sliderValue =
+            audioPlayerVMlistenFalse.currentAudioPosition.inSeconds.toDouble();
+        maxDuration = audioPlayerVMlistenFalse
+            .currentAudioTotalDuration.inSeconds
+            .toDouble();
+        currentAudioPositionStr =
+            audioPlayerVMlistenFalse.currentAudioPosition.HHmmssZeroHH();
+        remainingAudioDurationStr = audioPlayerVMlistenFalse
+            .currentAudioRemainingDuration
+            .HHmmssZeroHH();
 
-            // Ensure the slider value is within the range
-            sliderValue = sliderValue.clamp(0.0, maxDuration);
+        // Ensure the slider value is within the range
+        sliderValue = sliderValue.clamp(0.0, maxDuration);
 
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: kDefaultMargin),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    key: const Key('audioPlayerViewAudioPosition'),
-                    currentAudioPositionStr,
-                    style: kSliderValueTextStyle,
-                  ),
-                  Expanded(
-                    child: SliderTheme(
-                      data: const SliderThemeData(
-                        trackHeight: kSliderThickness,
-                        thumbShape: RoundSliderThumbShape(
-                            enabledThumbRadius:
-                                6.0), // Adjust the radius as you need
-                      ),
-                      child: Slider(
-                        key: const Key('audioPlayerViewAudioSlider'),
-                        min: 0.0,
-                        max: maxDuration,
-                        value: sliderValue,
-                        onChanged: (double value) async {
-                          await audioPlayerVMlistenFalse
-                              .slideToAudioPlayPosition(
-                            durationPosition: Duration(seconds: value.toInt()),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                  Text(
-                    key: const Key('audioPlayerViewAudioRemainingDuration'),
-                    remainingAudioDurationStr,
-                    style: kSliderValueTextStyle,
-                  ),
-                ],
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: kDefaultMargin),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Text(
+                key: const Key('audioPlayerViewAudioPosition'),
+                currentAudioPositionStr,
+                style: kSliderValueTextStyle,
               ),
-            );
-          },
+              Expanded(
+                child: SliderTheme(
+                  data: const SliderThemeData(
+                    trackHeight: kSliderThickness,
+                    thumbShape: RoundSliderThumbShape(
+                        enabledThumbRadius:
+                            6.0), // Adjust the radius as you need
+                  ),
+                  child: Slider(
+                    key: const Key('audioPlayerViewAudioSlider'),
+                    min: 0.0,
+                    max: maxDuration,
+                    value: sliderValue,
+                    onChanged: (double value) async {
+                      await audioPlayerVMlistenFalse.slideToAudioPlayPosition(
+                        durationPosition: Duration(seconds: value.toInt()),
+                      );
+                    },
+                  ),
+                ),
+              ),
+              Text(
+                key: const Key('audioPlayerViewAudioRemainingDuration'),
+                remainingAudioDurationStr,
+                style: kSliderValueTextStyle,
+              ),
+            ],
+          ),
         );
       },
     );
