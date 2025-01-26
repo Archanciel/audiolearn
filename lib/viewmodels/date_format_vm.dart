@@ -10,6 +10,12 @@ class DateFormatVM extends ChangeNotifier {
     'yyyy/MM/dd',
   ];
 
+  static const List<String> dateYyFormatLst = [
+    'dd/MM/yy',
+    'MM/dd/yy',
+    'yy/MM/dd',
+  ];
+
   // Values used in the audio sort/filter dialog
   static const List<String> dateFormatLowCaseLst = [
     'dd/mm/yyyy',
@@ -21,6 +27,9 @@ class DateFormatVM extends ChangeNotifier {
 
   late String _selectedDateFormat;
   String get selectedDateFormat => _selectedDateFormat;
+
+  late String _selectedDateYyFormat;
+  String get selectedDateYyFormat => _selectedDateYyFormat;
 
   // Value used in the audio sort/filter dialog
   late String _selectedDateFormatLowCase;
@@ -36,6 +45,7 @@ class DateFormatVM extends ChangeNotifier {
 
     int dateFormatIndex = dateFormatLst.indexOf(_selectedDateFormat);
 
+    _selectedDateYyFormat = dateYyFormatLst[dateFormatIndex];
     _selectedDateFormatLowCase = dateFormatLowCaseLst[dateFormatIndex];
   }
 
@@ -49,6 +59,7 @@ class DateFormatVM extends ChangeNotifier {
     required int dateFormatIndex,
   }) {
     _selectedDateFormat = dateFormatLst[dateFormatIndex];
+    _selectedDateYyFormat = dateYyFormatLst[dateFormatIndex];
     _selectedDateFormatLowCase = dateFormatLowCaseLst[dateFormatIndex];
 
     _settingsDataService.set(
@@ -65,6 +76,11 @@ class DateFormatVM extends ChangeNotifier {
   /// Format the date according to the selected date format.
   String formatDate(DateTime date) {
     return DateFormat(_selectedDateFormat).format(date);
+  }
+
+  /// Format the date with 2 characters year according to the selected date format.
+  String formatDateYy(DateTime date) {
+    return DateFormat(_selectedDateYyFormat).format(date);
   }
 
   /// Format the date according to the selected date format.
