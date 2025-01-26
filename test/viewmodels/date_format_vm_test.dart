@@ -48,6 +48,11 @@ void main() {
       );
 
       expect(
+        dateFormatVM.formatDateYy(dateTime),
+        "30/11/21",
+      );
+
+      expect(
         dateFormatVM.formatDateTime(dateTime),
         "30/11/2021 23:59", // Initial format is 'dd/MM/yyyy'
       );
@@ -70,6 +75,11 @@ void main() {
       );
 
       expect(
+        dateFormatVM.formatDateYy(dateTime),
+        "11/30/21",
+      );
+
+      expect(
         dateFormatVM.formatDateTime(dateTime),
         "11/30/2021 23:59", // Initial format is 'dd/MM/yyyy'
       );
@@ -87,6 +97,11 @@ void main() {
       expect(
         dateFormatVM.formatDate(dateTime),
         "2021/11/30",
+      );
+
+      expect(
+        dateFormatVM.formatDateYy(dateTime),
+        "21/11/30",
       );
 
       expect(
@@ -147,6 +162,11 @@ void main() {
       );
 
       expect(
+        dateFormatVM.formatDateYy(dateTime),
+        "30/11/21",
+      );
+
+      expect(
         dateFormatVM.formatDateTime(dateTime),
         "30/11/2021 23:59", // Initial format is 'dd/MM/yyyy'
       );
@@ -169,6 +189,11 @@ void main() {
       expect(
         dateFormatVM.formatDate(dateTime),
         "11/30/2021",
+      );
+
+      expect(
+        dateFormatVM.formatDateYy(dateTime),
+        "11/30/21",
       );
 
       expect(
@@ -203,10 +228,14 @@ void main() {
       );
 
       expect(
+        dateFormatVM.formatDateYy(dateTime),
+        "11/30/21",
+      );
+
+      expect(
         dateFormatVM.formatDateTime(dateTime),
         "11/30/2021 23:59", // Initial format is 'dd/MM/yyyy'
       );
-
 
       expect(
         dateFormatVM.selectedDateFormat,
@@ -224,6 +253,11 @@ void main() {
       expect(
         dateFormatVM.formatDate(dateTime),
         "2021/11/30",
+      );
+
+      expect(
+        dateFormatVM.formatDateYy(dateTime),
+        "21/11/30",
       );
 
       expect(
@@ -256,6 +290,11 @@ void main() {
       expect(
         secondReloadedDateFormatVM.formatDate(dateTime),
         "2021/11/30",
+      );
+
+      expect(
+        dateFormatVM.formatDateYy(dateTime),
+        "21/11/30",
       );
 
       expect(
