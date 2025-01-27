@@ -472,7 +472,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                   ),
                 ),
                 const SizedBox(
-                  width: 10,
+                  width: 5,
                 ),
                 (comment.lastUpdateDateTime.day != comment.creationDateTime.day)
                     ? Tooltip(
@@ -492,6 +492,9 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                     : Container(),
               ],
             ),
+            const SizedBox(
+              width: 10,
+            ),
             Row(
               children: [
                 Tooltip(
@@ -508,7 +511,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                         .HHmmssZeroHH(),
                   ),
                 ),
-                const SizedBox(width: 11),
+                const SizedBox(width: 5),
                 Tooltip(
                   message:
                       AppLocalizations.of(context)!.commentEndPositionTooltip,
@@ -523,7 +526,6 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                         .HHmmssZeroHH(),
                   ),
                 ),
-                const SizedBox(width: 11),
               ],
             ),
           ],
