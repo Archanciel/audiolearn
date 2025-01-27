@@ -241,7 +241,7 @@ void audioPlayerViewSortFilterIntegrationTest() {
       );
 
       await tester.tap(dropDownButtonTextFinder);
-      await tester.pumpAndSettle(const Duration(milliseconds:200));
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // And find the 'Title asc' sort/filter item
       String titleAscendingSFparmsName = 'Title asc';
@@ -11725,7 +11725,7 @@ Future<void> verifyOrderOfPlaylistAudioComments({
 
     final Finder commentTimeFinder = find.descendant(
       of: itemsFinder.at(i * gestureDectectorNumberByCommentLine),
-      matching: find.byKey(const Key('commentPositionKey')),
+      matching: find.byKey(const Key('commentStartPositionKey')),
     );
 
     // Verify the comment title text

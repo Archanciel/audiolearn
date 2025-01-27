@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 /// https://chat.openai.com/share/1ca44f12-88f4-4d9d-9620-73447d16012d
+/// Usage in the terminal: dart run ./lib/tools/main_update_mock_app_localisation.dart
+/// after having copied one or several entries in an ARB file in the clipboard.
 void main() async {
   // Simulated content of an ARB file as a JSON string, including a parameterized string
   // String arbContent = '''

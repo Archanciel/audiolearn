@@ -298,7 +298,7 @@
       "audioCommentsNumber": {}
     }
   },
-"appBarTitleAudioExtractor": "Extract Audio",
+  "appBarTitleAudioExtractor": "Extract Audio",
   "setAudioPlaySpeedDialogTitle": "Playback speed",
   "setAudioPlaySpeedTooltip": "Set Audio Play Speed.",
   "exclude": "Exclude ",
@@ -407,7 +407,8 @@
   "invalidValueTooSmall": "is below the minimal value",
   "confirmCommentedAudioDeletionTitle": "Confirm deletion of the commented audio \"{audioTitle}\"",
   "confirmCommentedAudioDeletionComment": "The audio contains {commentNumber} comment(s) which will be deleted as well. Confirm deletion ?",
-  "commentStartPositionTooltip": "Comment position in audio",
+  "commentStartPositionTooltip": "Comment start position in audio",
+  "commentEndPositionTooltip": "Comment end position in audio",
   "playlistToggleButtonInAudioPlayerViewTooltip": "Show/hide playlists. Then check a playlist to select its current listened audio.",
   "playlistSelectedSnackBarMessage": "Playlist \"{title}\" selected",
   "playlistImportAudioMenu": "Import Audio File(s) ...",
