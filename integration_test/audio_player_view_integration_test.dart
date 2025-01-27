@@ -5642,7 +5642,8 @@ void main() {
 
       // Verify the comment start position displayed in the comment
       // dialog
-      String commentStartPosition = '0:46';
+      const String commentStartPosition = '0:46';
+      const String commentEndPosition = '0:52';
       expect(
         tester.widget<Text>(commentStartTextWidgetFinder).data!,
         commentStartPosition, // 0:46
@@ -5949,7 +5950,13 @@ void main() {
       expect(
           find.descendant(
             of: commentListDialogFinder,
-            matching: find.text(frenchDateFormat.format(DateTime.now())),
+            matching: find.text(commentEndPosition), // 0:52
+          ),
+          findsOneWidget);
+      expect(
+          find.descendant(
+            of: commentListDialogFinder,
+            matching: find.text(frenchDateFormatYy.format(DateTime.now())),
           ),
           findsOneWidget);
 
@@ -6030,7 +6037,7 @@ void main() {
       expect(
           find.descendant(
             of: commentListDialogFinder,
-            matching: find.text(frenchDateFormat.format(DateTime.now())),
+            matching: find.text(frenchDateFormatYy.format(DateTime.now())),
           ),
           findsOneWidget);
 
@@ -6508,7 +6515,7 @@ void main() {
         'He explains why ...',
       ];
 
-      List<String> expectedPositions = [
+      List<String> expectedStartPositions = [
         '10:47',
         '23:47',
         '1:12:46', // created comment
@@ -6516,17 +6523,25 @@ void main() {
         '1:17:12',
       ];
 
+      List<String> expectedEndPositions = [
+        '10:55',
+        '24:01',
+        '1:12:52', // created comment
+        '1:16:48',
+        '1:17:19',
+      ];
+
       List<String> expectedCreationDates = [
-        '27/05/2024',
-        '28/05/2024',
-        frenchDateFormat.format(DateTime.now()), // created comment
-        '28/05/2024',
-        '28/05/2024',
+        '27/05/24',
+        '28/05/24',
+        frenchDateFormatYy.format(DateTime.now()), // created comment
+        '28/05/24',
+        '28/05/24',
       ];
 
       List<String> expectedUpdateDates = [
-        '29/05/2024',
-        '30/05/2024',
+        '29/05/24',
+        '30/05/24',
         '', // Text widget not displayed since update date == creation date
         '', // Text widget not displayed since update date == creation date
         '', // Text widget not displayed since update date == creation date
@@ -6539,7 +6554,8 @@ void main() {
           commentsNumber: 5,
           expectedTitlesLst: expectedTitles,
           expectedContentsLst: expectedContents,
-          expectedPositionsLst: expectedPositions,
+          expectedStartPositionsLst: expectedStartPositions,
+          expectedEndPositionsLst: expectedEndPositions,
           expectedCreationDatesLst: expectedCreationDates,
           expectedUpdateDatesLst: expectedUpdateDates);
 
@@ -6837,23 +6853,30 @@ void main() {
         modifiedCcommentText, // updated comment
       ];
 
-      List<String> expectedPositions = [
+      List<String> expectedStartPositions = [
         '10:47',
         '23:47',
         '1:16:40',
         '1:17:12', // updated comment
       ];
 
+      List<String> expectedEndPositions = [
+        '10:55',
+        '24:01',
+        '1:16:48',
+        '1:17:19', // updated comment
+      ];
+
       List<String> expectedCreationDates = [
-        '27/05/2024',
-        '28/05/2024',
-        '28/05/2024',
-        '28/05/2024', // updated comment
+        '27/05/24',
+        '28/05/24',
+        '28/05/24',
+        '28/05/24', // updated comment
       ];
 
       List<String> expectedUpdateDates = [
-        '29/05/2024',
-        '30/05/2024',
+        '29/05/24',
+        '30/05/24',
         '', // Text widget not displayed since update date == creation date
         frenchDateFormat.format(DateTime.now()), // updated comment
       ];
@@ -6865,7 +6888,8 @@ void main() {
           commentsNumber: 4,
           expectedTitlesLst: expectedTitles,
           expectedContentsLst: expectedContents,
-          expectedPositionsLst: expectedPositions,
+          expectedStartPositionsLst: expectedStartPositions,
+          expectedEndPositionsLst: expectedEndPositions,
           expectedCreationDatesLst: expectedCreationDates,
           expectedUpdateDatesLst: expectedUpdateDates);
 
@@ -7982,7 +8006,8 @@ Finder _verifyCommentsInCommentListDialog({
   required int commentsNumber,
   required List<String> expectedTitlesLst,
   required List<String> expectedContentsLst,
-  required List<String> expectedPositionsLst,
+  required List<String> expectedStartPositionsLst,
+  required List<String> expectedEndPositionsLst,
   required List<String> expectedCreationDatesLst,
   required List<String> expectedUpdateDatesLst,
 }) {
@@ -8004,7 +8029,8 @@ Finder _verifyCommentsInCommentListDialog({
 
   Finder commentTitleFinder;
   Finder commentContentFinder;
-  Finder commentPositionFinder;
+  Finder commentStartPositionFinder;
+  Finder commentEndPositionFinder;
   Finder commentCreationDateFinder;
   Finder commentUpdateDateFinder;
 
@@ -8019,9 +8045,13 @@ Finder _verifyCommentsInCommentListDialog({
       of: gestureDetectorsFinder.at(i),
       matching: find.byKey(const Key('commentTextKey')),
     );
-    commentPositionFinder = find.descendant(
+    commentStartPositionFinder = find.descendant(
       of: gestureDetectorsFinder.at(i),
       matching: find.byKey(const Key('commentStartPositionKey')),
+    );
+    commentEndPositionFinder = find.descendant(
+      of: gestureDetectorsFinder.at(i),
+      matching: find.byKey(const Key('commentEndPositionKey')),
     );
     commentCreationDateFinder = find.descendant(
       of: gestureDetectorsFinder.at(i),
@@ -8042,8 +8072,12 @@ Finder _verifyCommentsInCommentListDialog({
       expectedContentsLst[expectListIndex],
     );
     expect(
-      tester.widget<Text>(commentPositionFinder).data,
-      expectedPositionsLst[expectListIndex],
+      tester.widget<Text>(commentStartPositionFinder).data,
+      expectedStartPositionsLst[expectListIndex],
+    );
+    expect(
+      tester.widget<Text>(commentEndPositionFinder).data,
+      expectedEndPositionsLst[expectListIndex],
     );
     expect(tester.widget<Text>(commentCreationDateFinder).data,
         expectedCreationDatesLst[expectListIndex],

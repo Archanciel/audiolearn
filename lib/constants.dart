@@ -134,6 +134,7 @@ DateFormat englishDateTimeFormat = DateFormat("MM/dd/yyyy HH:mm");
 DateFormat frenchDateTimeFormat = DateFormat("dd/MM/yyyy HH:mm");
 DateFormat englishDateFormat = DateFormat("MM/dd/yyyy");
 DateFormat frenchDateFormat = DateFormat("dd/MM/yyyy");
+DateFormat frenchDateFormatYy = DateFormat("dd/MM/yy");
 DateFormat timeFormat = DateFormat("HH:mm");
 DateFormat yearMonthDayDateTimeFormat = DateFormat("yyyy/MM/dd HH:mm");
 DateFormat yearMonthDayDateTimeFormatForFileName = DateFormat("yyyy-MM-dd_HH_mm");

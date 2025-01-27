@@ -3096,8 +3096,8 @@ void main() {
         videoUploadDate: "12/06/2022",
         audioDownloadDateTime: "08/01/2024 16:35",
         playlistLastDownloadDateTime: "07/01/2024 16:36",
-        commentCreationDate: '12/10/2024',
-        commentUpdateDate: '01/11/2024',
+        commentCreationDate: '12/10/24',
+        commentUpdateDate: '01/11/24',
         datePickerDateStr: DateFormat('dd/MM/yyyy').format(now),
       );
 
@@ -3160,8 +3160,8 @@ void main() {
         videoUploadDate: "06/12/2022",
         audioDownloadDateTime: "01/08/2024 16:35",
         playlistLastDownloadDateTime: "01/07/2024 16:36",
-        commentCreationDate: '10/12/2024',
-        commentUpdateDate: '11/01/2024',
+        commentCreationDate: '10/12/24',
+        commentUpdateDate: '11/01/24',
         datePickerDateStr: DateFormat('MM/dd/yyyy').format(now),
       );
 
@@ -3224,8 +3224,8 @@ void main() {
         videoUploadDate: "2022/06/12",
         audioDownloadDateTime: "2024/01/08 16:35",
         playlistLastDownloadDateTime: "2024/01/07 16:36",
-        commentCreationDate: '2024/10/12',
-        commentUpdateDate: '2024/11/01',
+        commentCreationDate: '24/10/12',
+        commentUpdateDate: '24/11/01',
         datePickerDateStr: DateFormat('yyyy/MM/dd').format(now),
       );
 
@@ -3288,8 +3288,8 @@ void main() {
         videoUploadDate: "12/06/2022",
         audioDownloadDateTime: "08/01/2024 16:35",
         playlistLastDownloadDateTime: "07/01/2024 16:36",
-        commentCreationDate: '12/10/2024',
-        commentUpdateDate: '01/11/2024',
+        commentCreationDate: '12/10/24',
+        commentUpdateDate: '01/11/24',
         datePickerDateStr: DateFormat('dd/MM/yyyy').format(now),
       );
 
@@ -3381,8 +3381,8 @@ void main() {
         videoUploadDate: "06/12/2022",
         audioDownloadDateTime: "01/08/2024 16:35",
         playlistLastDownloadDateTime: "01/07/2024 16:36",
-        commentCreationDate: '10/12/2024',
-        commentUpdateDate: '11/01/2024',
+        commentCreationDate: '10/12/24',
+        commentUpdateDate: '11/01/24',
         datePickerDateStr: DateFormat('MM/dd/yyyy').format(now),
       );
 
@@ -3473,8 +3473,8 @@ void main() {
         videoUploadDate: "2022/06/12",
         audioDownloadDateTime: "2024/01/08 16:35",
         playlistLastDownloadDateTime: "2024/01/07 16:36",
-        commentCreationDate: '2024/10/12',
-        commentUpdateDate: '2024/11/01',
+        commentCreationDate: '24/10/12',
+        commentUpdateDate: '24/11/01',
         datePickerDateStr: DateFormat('yyyy/MM/dd').format(now),
       );
 
@@ -3565,8 +3565,8 @@ void main() {
         videoUploadDate: "12/06/2022",
         audioDownloadDateTime: "08/01/2024 16:35",
         playlistLastDownloadDateTime: "07/01/2024 16:36",
-        commentCreationDate: '12/10/2024',
-        commentUpdateDate: '01/11/2024',
+        commentCreationDate: '12/10/24',
+        commentUpdateDate: '01/11/24',
         datePickerDateStr: DateFormat('dd/MM/yyyy').format(now),
       );
 
@@ -10002,12 +10002,12 @@ void main() {
       );
 
       List<String> expectedZipContentLst = [
-        "audio_learn_test_download_2_small_videos/audio_learn_test_download_2_small_videos.json",
-        "audio_player_view_2_shorts_test/audio_player_view_2_shorts_test.json",
-        "audio_player_view_2_shorts_test/comments/231117-002826-Really short video 23-07-01.json",
-        "audio_player_view_2_shorts_test/comments/231117-002828-morning _ cinematic video 23-07-01.json",
-        "local_3/local_3.json",
-        "local_audio_playlist_2/local_audio_playlist_2.json",
+        "audio_learn_test_download_2_small_videos\\audio_learn_test_download_2_small_videos.json",
+        "audio_player_view_2_shorts_test\\audio_player_view_2_shorts_test.json",
+        "audio_player_view_2_shorts_test\\comments\\231117-002826-Really short video 23-07-01.json",
+        "audio_player_view_2_shorts_test\\comments\\231117-002828-morning _ cinematic video 23-07-01.json",
+        "local_3\\local_3.json",
+        "local_audio_playlist_2\\local_audio_playlist_2.json",
         "settings.json",
       ];
 
