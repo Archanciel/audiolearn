@@ -855,7 +855,8 @@ void main() {
       const String audioPlayerSelectedPlaylistTitle = 'Jésus-Christ';
       const String previousDownloadedAudioTitle =
           'NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE';
-      const String lastDownloadedAudioTitle = 'CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien';
+      const String lastDownloadedAudioTitle =
+          'CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien';
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
@@ -934,7 +935,8 @@ void main() {
       const String audioPlayerNextPlaylistTitle = 'Jésus-Christ';
       const String previousDownloadedAudioTitle =
           'NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE';
-      const String uniqueDownloadedAudioTitle = 'CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien';
+      const String uniqueDownloadedAudioTitle =
+          'CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien';
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
@@ -8019,7 +8021,7 @@ Finder _verifyCommentsInCommentListDialog({
     );
     commentPositionFinder = find.descendant(
       of: gestureDetectorsFinder.at(i),
-      matching: find.byKey(const Key('commentPositionKey')),
+      matching: find.byKey(const Key('commentStartPositionKey')),
     );
     commentCreationDateFinder = find.descendant(
       of: gestureDetectorsFinder.at(i),

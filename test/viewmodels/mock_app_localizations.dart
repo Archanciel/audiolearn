@@ -1088,9 +1088,6 @@ class MockAppLocalizations extends AppLocalizations {
       "The audio contains \"$commentNumber\" comments which will be deleted as well. Confirm deletion ?";
 
   @override
-  String get commentStartPositionTooltip => "Comment start position";
-
-  @override
   String get playlistToggleButtonInAudioPlayerViewTooltip =>
       "Show/hide playlists. Then select a playlist to display its current listened audio.";
 
@@ -1783,4 +1780,10 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get appDataCouldNotBeSavedToZip =>
       "Playlist json files and application settings could not be saved to zip.";
+
+  @override
+  String get commentStartPositionTooltip => "Comment start position in audio";
+
+  @override
+  String get commentEndPositionTooltip => "Comment end position in audio";
 }

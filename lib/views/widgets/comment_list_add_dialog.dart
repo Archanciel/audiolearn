@@ -152,7 +152,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
               // enables the user to undo the audio position change.
               await audioPlayerVMlistenFalse.setCurrentAudio(
                 audio: widget.currentAudio,
-                doClearUndoRedoLists: false, 
+                doClearUndoRedoLists: false,
               );
               Navigator.of(context).pop();
             },
@@ -386,11 +386,14 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                   message:
                       AppLocalizations.of(context)!.commentCreationDateTooltip,
                   child: Text(
-                    // comment creation date Text
+                    // comment creation date Text. This date is
+                    // displayed with 2 chars for the year in order
+                    // reduce the used space. This is useful on a
+                    // smartphone screen where space is limited.
                     key: const Key('creation_date_key'),
                     style: const TextStyle(fontSize: 13),
                     dateFormatVMlistenFalse
-                        .formatDate(comment.creationDateTime),
+                        .formatDateYy(comment.creationDateTime),
                   ),
                 ),
                 const SizedBox(
@@ -401,11 +404,14 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                         message: AppLocalizations.of(context)!
                             .commentUpdateDateTooltip,
                         child: Text(
-                          // comment update date Text
+                          // comment update date Text. This date is
+                          // displayed with 2 chars for the year in order
+                          // reduce the used space. This is useful on a
+                          // smartphone screen where space is limited.
                           key: const Key('last_update_date_key'),
                           style: const TextStyle(fontSize: 13),
                           dateFormatVMlistenFalse
-                              .formatDate(comment.lastUpdateDateTime),
+                              .formatDateYy(comment.lastUpdateDateTime),
                         ),
                       )
                     : Container(),
@@ -417,12 +423,27 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                   message:
                       AppLocalizations.of(context)!.commentStartPositionTooltip,
                   child: Text(
-                    // comment position Text
-                    key: const Key('commentPositionKey'),
+                    // comment start position Text
+                    key: const Key('commentStartPositionKey'),
                     style: const TextStyle(fontSize: 13),
                     Duration(
                             milliseconds:
                                 comment.commentStartPositionInTenthOfSeconds *
+                                    100)
+                        .HHmmssZeroHH(),
+                  ),
+                ),
+                const SizedBox(width: 11),
+                Tooltip(
+                  message:
+                      AppLocalizations.of(context)!.commentEndPositionTooltip,
+                  child: Text(
+                    // comment position Text
+                    key: const Key('commentEndPositionKey'),
+                    style: const TextStyle(fontSize: 13),
+                    Duration(
+                            milliseconds:
+                                comment.commentEndPositionInTenthOfSeconds *
                                     100)
                         .HHmmssZeroHH(),
                   ),
