@@ -397,7 +397,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                   ),
                 ),
                 const SizedBox(
-                  width: 10,
+                  width: 5,
                 ),
                 (comment.lastUpdateDateTime.day != comment.creationDateTime.day)
                     ? Tooltip(
@@ -417,6 +417,9 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                     : Container(),
               ],
             ),
+            SizedBox(
+              width: 10,
+            ),
             Row(
               children: [
                 Tooltip(
@@ -433,7 +436,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                         .HHmmssZeroHH(),
                   ),
                 ),
-                const SizedBox(width: 11),
+                const SizedBox(width: 5),
                 Tooltip(
                   message:
                       AppLocalizations.of(context)!.commentEndPositionTooltip,
@@ -448,7 +451,6 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                         .HHmmssZeroHH(),
                   ),
                 ),
-                const SizedBox(width: 11),
               ],
             ),
           ],
