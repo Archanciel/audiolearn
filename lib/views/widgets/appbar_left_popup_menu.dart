@@ -135,11 +135,18 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                 value: AudioPopupMenuAction.addAudioPicture,
                 child: Text(AppLocalizations.of(context)!.addAudioPicture),
               ),
-              PopupMenuItem<AudioPopupMenuAction>(
-                key: const Key('popup_menu_remove_audio_picture'),
-                value: AudioPopupMenuAction.removeAudioPicture,
-                child: Text(AppLocalizations.of(context)!.removeAudioPicture),
-              ),
+              if (playlistListVMlistenFalse.getAudioPictureFile(
+                // The remove picture menu item is only displayed if a
+                // picture file exist for the audio
+                    audio: audio,
+                  ) !=
+                  null) ...[
+                PopupMenuItem<AudioPopupMenuAction>(
+                  key: const Key('popup_menu_remove_audio_picture'),
+                  value: AudioPopupMenuAction.removeAudioPicture,
+                  child: Text(AppLocalizations.of(context)!.removeAudioPicture),
+                )
+              ],
               PopupMenuItem<AudioPopupMenuAction>(
                 key: const Key('popup_menu_move_audio_to_playlist'),
                 value: AudioPopupMenuAction.moveAudioToPlaylist,
