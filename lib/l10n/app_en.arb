@@ -380,6 +380,7 @@
   "tenthOfSecondsCheckboxTooltip": "Enable this checkbox to specify the comment position with precision up to a tenth of second.",
   "setCommentPosition": "Set comment position",
   "commentPosition": "Position (hh:)mm:ss(.t)",
+  "commentPositionTooltip": "Clearing the position field and selecting the \"Start\" checkbox will set the comment's start position to 0:00.0. Selecting the \"End\" checkbox will set the comment's end position to the total duration of the audio.",
   "commentPositionExplanation": "The proposed comment position corresponds to the current audio position. Modify it if needed and select to which position it must be applied.",
   "commentStartPosition": "Start",
   "commentEndPosition": "End",

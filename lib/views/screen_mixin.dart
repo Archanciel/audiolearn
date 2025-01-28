@@ -460,28 +460,40 @@ mixin ScreenMixin {
         selection: const TextSelection.collapsed(offset: 0),
       );
     }
+
+    // Conditionally wrap the Row with a Tooltip if a tooltip message is provided
+    Widget rowContent = Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+          child: Text(
+            label,
+            style: kDialogLabelStyle,
+          ),
+        ),
+        Expanded(
+          child: TextField(
+            key: valueTextFieldWidgetKey,
+            style: kDialogTextFieldStyle,
+            controller: controller,
+            decoration: getDialogTextFieldInputDecoration(),
+            focusNode: textFieldFocusNode,
+          ),
+        ),
+      ],
+    );
+
+    // If the tooltip is not empty, wrap the rowContent in a Tooltip
+    if (labelAndTextFieldTooltip.isNotEmpty) {
+      rowContent = Tooltip(
+        message: labelAndTextFieldTooltip,
+        child: rowContent,
+      );
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Expanded(
-            child: Text(
-              label,
-              style: kDialogLabelStyle,
-            ),
-          ),
-          Expanded(
-            child: TextField(
-              key: valueTextFieldWidgetKey,
-              style: kDialogTextFieldStyle,
-              controller: controller,
-              decoration: getDialogTextFieldInputDecoration(),
-              focusNode: textFieldFocusNode,
-            ),
-          ),
-        ],
-      ),
+      child: rowContent,
     );
   }
 
