@@ -638,13 +638,12 @@ class PlaylistListVM extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Method called when the user clicks on the Add audio picture menu.
   void storeAudioPictureFileInPlaylistPictureDir({
     required Audio audio,
     required String pictureFilePathName,
   }) {
-    String playlistDownloadPath = audio.enclosingPlaylist!.downloadPath;
-    String audioFileName = audio.audioFileName;
-
+    final String playlistDownloadPath = audio.enclosingPlaylist!.downloadPath;
     final String playlistPicturePath =
         "$playlistDownloadPath${path.separator}$kPictureDirName";
 
@@ -656,12 +655,30 @@ class PlaylistListVM extends ChangeNotifier {
     }
 
     final String createdAudioPictureFileName =
-        audioFileName.replaceAll('.mp3', '.jpg');
+        audio.audioFileName.replaceAll('.mp3', '.jpg');
 
     DirUtil.copyFileToDirectory(
         sourceFilePathName: pictureFilePathName,
         targetDirectoryPath: playlistPicturePath,
         targetFileName: createdAudioPictureFileName);
+  }
+
+  /// Method called when the user clicks on the Remove audio picture menu. Deleting
+  /// the picture file whose name is the audio file name with the extension .jpg
+  /// will cause the audio player to display no picture for the audio.
+  void deleteAudioPictureFileInPlaylistPictureDir({
+    required Audio audio,
+  }) {
+    final String playlistDownloadPath = audio.enclosingPlaylist!.downloadPath;
+    final String createdAudioPictureFileName =
+        audio.audioFileName.replaceAll('.mp3', '.jpg');
+
+    final String audioPicturePathFileName =
+        "$playlistDownloadPath${path.separator}$kPictureDirName${path.separator}$createdAudioPictureFileName";
+
+    DirUtil.deleteFileIfExist(
+      pathFileName: audioPicturePathFileName,
+    );
   }
 
   /// Returns the audio picture file if it exists, null otherwise.
