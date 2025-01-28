@@ -55,7 +55,8 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
 
   @override
   Widget build(BuildContext context) {
-    final PlaylistListVM playlistListVMlistendFalse = Provider.of<PlaylistListVM>(
+    final PlaylistListVM playlistListVMlistendFalse =
+        Provider.of<PlaylistListVM>(
       context,
       listen: false,
     );
@@ -187,11 +188,18 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
           value: AudioPopupMenuAction.addAudioPicture,
           child: Text(AppLocalizations.of(context)!.addAudioPicture),
         ),
-        PopupMenuItem<AudioPopupMenuAction>(
-          key: const Key('popup_menu_remove_audio_picture'),
-          value: AudioPopupMenuAction.removeAudioPicture,
-          child: Text(AppLocalizations.of(context)!.removeAudioPicture),
-        ),
+        if (playlistListVMlistenFalse.getAudioPictureFile(
+              // The remove picture menu item is only displayed if a
+              // picture file exist for the audio
+              audio: audio,
+            ) !=
+            null) ...[
+          PopupMenuItem<AudioPopupMenuAction>(
+            key: const Key('popup_menu_remove_audio_picture'),
+            value: AudioPopupMenuAction.removeAudioPicture,
+            child: Text(AppLocalizations.of(context)!.removeAudioPicture),
+          )
+        ],
         PopupMenuItem<AudioPopupMenuAction>(
           key: const Key('popup_menu_move_audio_to_playlist'),
           value: AudioPopupMenuAction.moveAudioToPlaylist,
@@ -295,7 +303,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
             // The next two lines cause the the audio picture to be
             // displayed in the audio player view. The first line is
             // necessary so that currentAudioTitleNotifier will update
-            // the audio title displayed in the audio player view, 
+            // the audio title displayed in the audio player view,
             // which will cause the audio picture to be displayed.
 
             audioPlayerVMlistenFalse.currentAudioTitleNotifier.value = '';
