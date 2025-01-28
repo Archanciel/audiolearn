@@ -136,8 +136,8 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                 child: Text(AppLocalizations.of(context)!.addAudioPicture),
               ),
               if (playlistListVMlistenFalse.getAudioPictureFile(
-                // The remove picture menu item is only displayed if a
-                // picture file exist for the audio
+                    // The remove picture menu item is only displayed if a
+                    // picture file exist for the audio
                     audio: audio,
                   ) !=
                   null) ...[
@@ -261,11 +261,24 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                 // which will cause the audio picture to be displayed.
 
                 audioPlayerVMlistenFalse.currentAudioTitleNotifier.value = '';
-
                 audioPlayerVMlistenFalse.currentAudioTitleNotifier.value =
-                    audioPlayerVMlistenFalse.currentAudioTitleNotifier.value;
+                    audioPlayerVMlistenFalse.getCurrentAudioTitleWithDuration();
                 break;
               case AudioPopupMenuAction.removeAudioPicture:
+                playlistListVMlistenFalse
+                    .deleteAudioPictureFileInPlaylistPictureDir(
+                  audio: audio,
+                );
+
+                // The next two lines cause the the audio picture to be
+                // displayed in the audio player view. The first line is
+                // necessary so that currentAudioTitleNotifier will update
+                // the audio title displayed in the audio player view,
+                // which will cause the audio picture to be displayed.
+
+                audioPlayerVMlistenFalse.currentAudioTitleNotifier.value = '';
+                audioPlayerVMlistenFalse.currentAudioTitleNotifier.value =
+                    audioPlayerVMlistenFalse.getCurrentAudioTitleWithDuration();
                 break;
               case AudioPopupMenuAction.moveAudioToPlaylist:
                 PlaylistListVM playlistVMlistnedFalse =

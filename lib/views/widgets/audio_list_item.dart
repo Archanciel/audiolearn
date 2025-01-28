@@ -299,19 +299,12 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
               audio: audio,
               pictureFilePathName: selectedPictureFilePathName,
             );
-
-            // The next two lines cause the the audio picture to be
-            // displayed in the audio player view. The first line is
-            // necessary so that currentAudioTitleNotifier will update
-            // the audio title displayed in the audio player view,
-            // which will cause the audio picture to be displayed.
-
-            audioPlayerVMlistenFalse.currentAudioTitleNotifier.value = '';
-
-            audioPlayerVMlistenFalse.currentAudioTitleNotifier.value =
-                audioPlayerVMlistenFalse.currentAudioTitleNotifier.value;
             break;
           case AudioPopupMenuAction.removeAudioPicture:
+            playlistListVMlistenFalse
+                .deleteAudioPictureFileInPlaylistPictureDir(
+              audio: audio,
+            );
             break;
           case AudioPopupMenuAction.moveAudioToPlaylist:
             final PlaylistListVM playlistVMlistnedFalse =

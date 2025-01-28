@@ -249,7 +249,7 @@ class AudioPlayerVM extends ChangeNotifier {
     updateAndSaveCurrentAudio();
 
     if (doNotifyListeners) {
-      currentAudioTitleNotifier.value = _getCurrentAudioTitleWithDuration();
+      currentAudioTitleNotifier.value = getCurrentAudioTitleWithDuration();
       currentAudioPositionNotifier.value = _currentAudioPosition;
     }
   }
@@ -722,7 +722,7 @@ class AudioPlayerVM extends ChangeNotifier {
       audio: currentOrPastPlaylistAudio,
     );
 
-    currentAudioTitleNotifier.value = _getCurrentAudioTitleWithDuration();
+    currentAudioTitleNotifier.value = getCurrentAudioTitleWithDuration();
   }
 
   /// Used as well when the user moves or deletes in the audio
@@ -1242,7 +1242,7 @@ class AudioPlayerVM extends ChangeNotifier {
     return _playlistListVM.getSortingItemLstForViewType(audioLearnAppViewType);
   }
 
-  String? _getCurrentAudioTitleWithDuration() {
+  String? getCurrentAudioTitleWithDuration() {
     if (_currentAudio == null) {
       return null;
     }
