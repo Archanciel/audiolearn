@@ -444,10 +444,11 @@ mixin ScreenMixin {
   /// Create a row with a Text label and an editabe TextField. The width
   /// proportion of the label and the TextField is identical.
   Widget createEditableRowFunction({
+    required BuildContext context,
     Key? valueTextFieldWidgetKey, // key set to the TextField widget
     // containing the value
-    required BuildContext context,
     required String label,
+    String labelAndTextFieldTooltip = '',
     required TextEditingController controller,
     FocusNode? textFieldFocusNode,
     bool isCursorAtStart = true,
