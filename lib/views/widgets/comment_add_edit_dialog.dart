@@ -196,7 +196,8 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                                   commentVMlistenFalse
                                       .currentCommentStartPosition) {
                                 commentVMlistenFalse.currentCommentEndPosition =
-                                    audioPlayerVMlistenFalse.currentAudioPosition;
+                                    audioPlayerVMlistenFalse
+                                        .currentAudioPosition;
                               }
                             } else {
                               // comment is not playing
@@ -619,6 +620,8 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                             .commentPositionExplanation,
                         passedValueFieldLabel:
                             AppLocalizations.of(context)!.commentPosition,
+                        passedValueFieldTooltip: AppLocalizations.of(context)!
+                            .commentPositionTooltip,
                         passedValueStr: currentAudioPositionStr,
                         targetNamesLst: [
                           AppLocalizations.of(context)!.commentStartPosition,

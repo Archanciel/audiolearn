@@ -20,6 +20,7 @@ class SetValueToTargetDialog extends StatefulWidget {
   final String dialogCommentStr;
   final String passedValueStr;
   final String passedValueFieldLabel;
+  final String passedValueFieldTooltip;
   final List<String> targetNamesLst;
 
   // If isTargetExclusive is true, only one checkbox can be selected.
@@ -38,6 +39,7 @@ class SetValueToTargetDialog extends StatefulWidget {
     required this.dialogTitle,
     required this.dialogCommentStr,
     required this.passedValueFieldLabel,
+    this.passedValueFieldTooltip = '',
     required this.passedValueStr,
     required this.targetNamesLst,
     required this.validationFunction,
@@ -123,10 +125,11 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
               const SizedBox(height: 10),
               (widget.isPassedValueEditable)
                   ? createEditableRowFunction(
+                      context: context,
                       valueTextFieldWidgetKey:
                           const Key('passedValueFieldTextField'),
-                      context: context,
                       label: widget.passedValueFieldLabel,
+                      labelAndTextFieldTooltip: widget.passedValueFieldTooltip,
                       controller: _passedValueTextEditingController,
                       textFieldFocusNode: _focusNodePassedValueTextField,
                     )
@@ -180,6 +183,21 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
   /// the list of the entered value and the selected checkbox(es).
   List<String> _createResultList() {
     String enteredStr = _passedValueTextEditingController.text;
+    String minValueLimitStr = widget.validationFunctionArgs[0].toString();
+    String maxValueLimitStr = widget.validationFunctionArgs[1].toString();
+
+    // The code below simplifies setting start comment position
+    // to 0 or end comment position to audio duration.
+    if (enteredStr.isEmpty) {
+      if (_isCheckboxChecked[0] == true) {
+        enteredStr = minValueLimitStr;
+      } else if (_isCheckboxChecked[1] == true) {
+        enteredStr = maxValueLimitStr;
+      } else {
+        // Avoiding the empty string to avoid an exception
+        enteredStr = '0';
+      }
+    }
 
     widget.validationFunctionArgs.add(enteredStr);
 
@@ -208,10 +226,6 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
         context,
         listen: false,
       );
-
-      String minValueLimitStr = widget.validationFunctionArgs[0].toString();
-
-      String maxValueLimitStr = widget.validationFunctionArgs[1].toString();
 
       switch (invalidValueState) {
         case InvalidValueState.tooBig:

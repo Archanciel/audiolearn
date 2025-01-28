@@ -366,6 +366,7 @@
   "tenthOfSecondsCheckboxTooltip": "Activer cette case à cocher pour spécifier la position du commentaire avec une précision au dixième de seconde.",
   "setCommentPosition": "Définir la position",
   "commentPosition": "Position (hh:)mm:ss(.d)",
+  "commentPositionTooltip": "Effacer le champ de position et sélectionner la case à cocher \"Début\" définira la position de début du commentaire à 0:00.0. Sélectionner la case à cocher \"Fin\" définira la position de fin du commentaire à la durée totale de l'audio.",
   "commentPositionExplanation": "La position suggérée pour le commentaire correspond au point de lecture actuel de l'audio. Vous pouvez ajuster cette valeur si nécessaire et choisir à quelle position de commentaire elle doit être appliquée.",
   "commentStartPosition": "Début",
   "commentEndPosition": "Fin",
