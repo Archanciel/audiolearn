@@ -2369,7 +2369,7 @@ class PlaylistListVM extends ChangeNotifier {
     String zipFilePathName = path.join(targetDir, zipFileName);
 
     File zipFile = File(zipFilePathName);
-    zipFile.writeAsBytesSync(ZipEncoder().encode(archive)!, flush: true);
+    zipFile.writeAsBytesSync(ZipEncoder().encode(archive), flush: true);
 
     return zipFilePathName;
   }
