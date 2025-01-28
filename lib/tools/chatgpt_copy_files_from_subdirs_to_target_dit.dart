@@ -117,7 +117,7 @@ class _DirectoryCopierPageState extends State<DirectoryCopierPage> {
     String zipFilePath = path.join(targetDir, zipFileName);
 
     File zipFile = File(zipFilePath);
-    zipFile.writeAsBytesSync(ZipEncoder().encode(archive)!, flush: true);
+    zipFile.writeAsBytesSync(ZipEncoder().encode(archive), flush: true);
     print('ZIP file created at: $zipFilePath');
   }
 
