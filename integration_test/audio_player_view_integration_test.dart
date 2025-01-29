@@ -915,7 +915,7 @@ void main() {
       );
 
       // Verify that the play button is present (due to the bug, the
-      // pause button is displayed).
+      // pause button was displayed).
       expect(find.byIcon(Icons.play_arrow), findsOneWidget);
 
       // Purge the test playlist directory so that the created test
