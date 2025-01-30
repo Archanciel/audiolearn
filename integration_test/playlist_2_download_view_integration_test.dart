@@ -10112,7 +10112,8 @@ void main() {
     group('From audio list item in playlist download view', () {
       testWidgets(
           '''Add picture to audio, then add another picture to the same audio. This
-           will replace the existing picture. Then delete the audio picture. Finally,
+           will replace the existing picture. The replaced picture file will have
+           the same name as the first added picture. Then delete the audio picture. Finally,
            re-add a picture to the audio.''', (WidgetTester tester) async {
         // Replace the platform instance with your mock
         MockFilePicker mockFilePicker = MockFilePicker();
@@ -10131,113 +10132,58 @@ void main() {
         const String audioForPictureTitle =
             'CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien';
         const String pictureFileName = "Jésus je T'adore.jpg";
+        const int pictureFileSize = 154529;
+        const String secondPictureFileName = "Jésus je T'aime.jpg";
+        const int secondPictureFileSize = 125867;
 
-        // Added picture file path name to be choosed
-        String pictureFilePathName =
-            "$kPlaylistDownloadRootPathWindowsTest${path.separator}pictures${path.separator}$pictureFileName";
+        // Available pictures file path
+        String pictureSourcePath =
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}pictures";
 
-        // Mock selecting a file
-        mockFilePicker.setSelectedFiles([
-          PlatformFile(
-              name: pictureFileName, path: pictureFilePathName, size: 154529),
-        ]);
-
-        // Now we want to tap the popup menu of the Audio ListTile
-        // 'CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !
-        //  Émission Carrément Bien'
-
-        // First, find the Audio sublist ListTile Text widget
-        Finder audioForPictureTitleTextWidgetFinder =
-            find.text(audioForPictureTitle);
-
-        // Then obtain the Audio ListTile widget enclosing the Text widget by
-        // finding its ancestor
-        Finder audioForPictureListTileWidgetFinder = find.ancestor(
-          of: audioForPictureTitleTextWidgetFinder,
-          matching: find.byType(ListTile),
-        );
-
-        // Now find the leading menu icon button of the Audio ListTile and tap
-        // on it
-        Finder audioForPictureListTileLeadingMenuIconButton = find.descendant(
-          of: audioForPictureListTileWidgetFinder,
-          matching: find.byIcon(Icons.menu),
-        );
-
-        // Tap the leading menu icon button to open the popup menu
-        await tester.tap(audioForPictureListTileLeadingMenuIconButton);
-        await tester.pumpAndSettle();
-
-        // Now find the Add Picture popup menu item and tap on it
-        Finder popupMoveMenuItem =
-            find.byKey(const Key("popup_menu_add_audio_picture"));
-
-        await tester.tap(popupMoveMenuItem);
-        await tester.pumpAndSettle(const Duration(microseconds: 200));
-
-        await Future.delayed(const Duration(milliseconds: 1500));
-
-        // Now verifying that the playlist picture directory contains
-        // the added picture file
-        List<String> playlistPicturesLst = DirUtil.listFileNamesInDir(
-          directoryPath: playlistPictureDir,
-          fileExtension: 'jpg',
-        );
-
-        expect(playlistPicturesLst, [
-          "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.jpg",
-        ]);
-
-        // Now go to the audio player view
-        Finder appScreenNavigationButton =
-            find.byKey(const ValueKey('audioPlayerViewIconButton'));
-        await tester.tap(appScreenNavigationButton);
-        await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        // First picture addition
+        String pictureFilePathName = await _addPictureToAudio(
           tester: tester,
+          mockFilePicker: mockFilePicker,
+          pictureFileName: pictureFileName,
+          pictureSourcePath: pictureSourcePath,
+          pictureFileSize: pictureFileSize,
+          audioForPictureTitle: audioForPictureTitle,
         );
 
-        // Due to the not working integration test which prevents the
-        // audio picture to be displayed, we open and close the playable
-        // audio list dialog. This will cause the added picture to be
-        // displayed,
+        // Now verifying the playlist picture addition result
+        await _verifyPictureAddition(
+            tester: tester,
+            playlistPictureDir: playlistPictureDir,
+            pictureFilePathName: pictureFilePathName,
+            pictureFileSize: pictureFileSize,
+            audioForPictureTitle: audioForPictureTitle);
 
-        await tester.tap(find.text('$audioForPictureTitle\n40:53'));
-        await tester.pumpAndSettle();
+        // Now go back to the playlist download view and add another
+        // picture to the same audio. This will replace the first added
+        // picture by the second one.
 
-        // Tap on Cancel button to close the
-        // DisplaySelectableAudioListDialog
-        await tester.tap(find.text('Close'));
-        await tester.pumpAndSettle();
-
-        // Now go back to the playlist download view
-        appScreenNavigationButton =
+        Finder appScreenNavigationButton =
             find.byKey(const ValueKey('playlistDownloadViewIconButton'));
         await tester.tap(appScreenNavigationButton);
         await tester.pumpAndSettle();
 
-        // Now select another playlist
-        await IntegrationTestUtil.selectPlaylist(
+        // Second picture addition
+        pictureFilePathName = await _addPictureToAudio(
           tester: tester,
-          playlistToSelectTitle: otherPlaylistTitle,
+          mockFilePicker: mockFilePicker,
+          pictureFileName: secondPictureFileName,
+          pictureSourcePath: pictureSourcePath,
+          pictureFileSize: secondPictureFileSize,
+          audioForPictureTitle: audioForPictureTitle,
         );
 
-        // And re-select the local playlist
-        await IntegrationTestUtil.selectPlaylist(
-          tester: tester,
-          playlistToSelectTitle: localPlaylistTitle,
-        );
-
-        // Now we tap on the pictured audio title to open the AudioPlayerView
-        // screen
-
-        // widget finder and tap on it
-        Finder audioForPictureListTileTextWidgetFinder =
-            find.text(audioForPictureTitle);
-
-        await tester.tap(audioForPictureListTileTextWidgetFinder);
-        await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
-          tester: tester,
-        );
+        // Now verifying the playlist picture addition result
+        await _verifyPictureAddition(
+            tester: tester,
+            playlistPictureDir: playlistPictureDir,
+            pictureFilePathName: pictureFilePathName,
+            pictureFileSize: secondPictureFileSize,
+            audioForPictureTitle: audioForPictureTitle);
 
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
@@ -10248,6 +10194,124 @@ void main() {
     });
     group('From appbar left popup menu in audio player view', () {});
   });
+}
+
+Future<void> _verifyPictureAddition({
+  required WidgetTester tester,
+  required String playlistPictureDir,
+  required String pictureFilePathName,
+  required int pictureFileSize,
+  required String audioForPictureTitle,
+}) async {
+  // Now verifying that the playlist picture directory contains
+  // the added picture file
+  List<String> playlistPicturesLst = DirUtil.listFileNamesInDir(
+    directoryPath: playlistPictureDir,
+    fileExtension: 'jpg',
+  );
+
+  expect(playlistPicturesLst, [
+    "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.jpg",
+  ]);
+
+  // Verifying the added picture file size
+  IntegrationTestUtil.verifyFileSize(
+    filePathName: pictureFilePathName,
+    fileSizeInBytes: pictureFileSize,
+  );
+
+  // Now go to the audio player view
+  Finder appScreenNavigationButton =
+      find.byKey(const ValueKey('audioPlayerViewIconButton'));
+  await tester.tap(appScreenNavigationButton);
+  await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+    tester: tester,
+  );
+
+  // Due to the not working integration test which prevents the
+  // audio picture to be displayed, we open and close the playable
+  // audio list dialog. This will cause the added picture to be
+  // displayed. When a picture is added manually in the Audio Learn
+  // application, the picture IS displayed after the 'Add Audio
+  // Picture' menu was executed !
+
+  String audioTitleWithDuration = '$audioForPictureTitle\n40:53';
+
+  await tester.tap(find.text(audioTitleWithDuration));
+  await tester.pumpAndSettle();
+
+  // Tap on Cancel button to close the
+  // DisplaySelectableAudioListDialog
+  await tester.tap(find.text('Close'));
+  await tester.pumpAndSettle();
+
+  // Now that the audio picture is present, verify that the
+  // screen top play/pause button is displayed
+  expect(
+    find.byKey(const Key('picture_displayed_play_pause_button_key')),
+    findsOneWidget,
+  );
+
+  // Now that the audio picture is present, verify that the
+  // audio title with duration is displayed
+  expect(
+    find.text(audioTitleWithDuration),
+    findsOneWidget,
+  );
+}
+
+/// Returnes the added [pictureFilePathName]
+Future<String> _addPictureToAudio({
+  required WidgetTester tester,
+  required MockFilePicker mockFilePicker,
+  required String pictureFileName,
+  required String pictureSourcePath,
+  required int pictureFileSize,
+  required String audioForPictureTitle,
+}) async {
+  String pictureFilePathName =
+      "$pictureSourcePath${path.separator}$pictureFileName";
+
+  mockFilePicker.setSelectedFiles([
+    PlatformFile(
+        name: pictureFileName,
+        path: pictureFilePathName,
+        size: pictureFileSize),
+  ]);
+
+  // Now we want to tap the popup menu of the Audio ListTile
+  // 'CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !
+  //  Émission Carrément Bien'
+
+  // First, find the Audio sublist ListTile Text widget
+  Finder audioForPictureTitleTextWidgetFinder = find.text(audioForPictureTitle);
+
+  // Then obtain the Audio ListTile widget enclosing the Text widget by
+  // finding its ancestor
+  Finder audioForPictureListTileWidgetFinder = find.ancestor(
+    of: audioForPictureTitleTextWidgetFinder,
+    matching: find.byType(ListTile),
+  );
+
+  // Now find the leading menu icon button of the Audio ListTile and tap
+  // on it
+  Finder audioForPictureListTileLeadingMenuIconButton = find.descendant(
+    of: audioForPictureListTileWidgetFinder,
+    matching: find.byIcon(Icons.menu),
+  );
+
+  // Tap the leading menu icon button to open the popup menu
+  await tester.tap(audioForPictureListTileLeadingMenuIconButton);
+  await tester.pumpAndSettle();
+
+  // Now find the Add Picture popup menu item and tap on it
+  Finder addPictureMenuItem =
+      find.byKey(const Key("popup_menu_add_audio_picture"));
+
+  await tester.tap(addPictureMenuItem);
+  await tester.pumpAndSettle(const Duration(microseconds: 200));
+
+  return pictureFilePathName;
 }
 
 Future<void> _changePlaylistRootPath({
