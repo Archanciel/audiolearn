@@ -267,6 +267,9 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
   /// Builds the second line of the audio player view. This line contains
   /// the playlist toggle button, the audio volume buttons, the audio
   /// speed button, the comments button and the audio popup menu button.
+  /// 
+  /// If a picture is displayed instead of the play button, then a play
+  /// or pause button is included in the second line.
   Widget _buildSecondLine({
     required BuildContext context,
     required ThemeProviderVM themeProviderVM,
@@ -287,8 +290,6 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
         File? audioPictureFile;
         bool areAudioButtonsEnabled;
 
-        // areAudioButtonsEnabled =
-        //     (currentAudioTitle != null && currentAudio != null);
         if (currentAudio != null) {
           audioPictureFile = playlistListVMlistenFalse.getAudioPictureFile(
               audio: currentAudio);
@@ -346,6 +347,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                         audioPlayerVMlistenFalse.currentAudioPlayPauseNotifier,
                     builder: (context, isPaused, child) {
                       return IconButton(
+                        key: const Key('picture_displayed_play_pause_button_key'),
                         iconSize: _audioIconSizeMedium,
                         onPressed: () async {
                           audioPlayerVMlistenFalse.isPlaying

@@ -904,8 +904,7 @@ class IntegrationTestUtil {
       expect(
         totalListTiles,
         playlistTitlesOrderedLst.length,
-        reason:
-            '''The playlist download view audio list should be empty
+        reason: '''The playlist download view audio list should be empty
             when the passed audioTitlesOrderedLst is [].''',
       );
     }
@@ -1333,5 +1332,17 @@ class IntegrationTestUtil {
       await tester.tap(playIconButtonFinder);
       await tester.pumpAndSettle();
     }
+  }
+
+  static void verifyFileSize({
+    required String filePathName,
+    required int fileSizeInBytes,
+  }) async {
+    final file = File(filePathName);
+
+    expect(
+      file.lengthSync(),
+      fileSizeInBytes,
+    ); // Size in bytes
   }
 }
