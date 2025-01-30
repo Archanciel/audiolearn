@@ -38,6 +38,7 @@ class MockFilePicker extends FilePicker {
     if (_selectedFiles.isEmpty) {
       return null;
     }
+    
     return FilePickerResult(_selectedFiles);
   }
 
