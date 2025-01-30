@@ -10113,8 +10113,9 @@ void main() {
       testWidgets(
           '''Add picture to audio, then add another picture to the same audio. This
            will replace the existing picture. The replaced picture file will have
-           the same name as the first added picture. Then delete the audio picture. Finally,
-           re-add a picture to the audio.''', (WidgetTester tester) async {
+           the same name as the first added picture, but a different size. Then
+           delete the audio picture. Finally, re-add a picture to the same audio.''',
+          (WidgetTester tester) async {
         // Replace the platform instance with your mock
         MockFilePicker mockFilePicker = MockFilePicker();
         FilePicker.platform = mockFilePicker;
@@ -10126,7 +10127,6 @@ void main() {
         );
 
         const String localPlaylistTitle = 'local';
-        const String otherPlaylistTitle = 'Jésus-Christ';
         final String playlistPictureDir =
             "$kPlaylistDownloadRootPathWindowsTest${path.separator}$localPlaylistTitle${path.separator}$kPictureDirName";
         const String audioForPictureTitle =
@@ -10135,6 +10135,8 @@ void main() {
         const int pictureFileSize = 154529;
         const String secondPictureFileName = "Jésus je T'aime.jpg";
         const int secondPictureFileSize = 125867;
+        const String thirdPictureFileName = "Jésus l'Amour de ma vie.jpg";
+        const int thirdPictureFileSize = 187362;
 
         // Available pictures file path
         String pictureSourcePath =
@@ -10150,7 +10152,7 @@ void main() {
           audioForPictureTitle: audioForPictureTitle,
         );
 
-        // Now verifying the playlist picture addition result
+        // Now verifying the audio picture addition result
         await _verifyPictureAddition(
             tester: tester,
             playlistPictureDir: playlistPictureDir,
@@ -10177,7 +10179,7 @@ void main() {
           audioForPictureTitle: audioForPictureTitle,
         );
 
-        // Now verifying the playlist picture addition result
+        // Now verifying the second audio picture addition result
         await _verifyPictureAddition(
             tester: tester,
             playlistPictureDir: playlistPictureDir,
@@ -10185,9 +10187,8 @@ void main() {
             pictureFileSize: secondPictureFileSize,
             audioForPictureTitle: audioForPictureTitle);
 
-        // Now go back to the playlist download view and add another
-        // picture to the same audio. This will replace the first added
-        // picture by the second one.
+        // Now go back to the playlist download view and remove the
+        // audio picture
 
         appScreenNavigationButton =
             find.byKey(const ValueKey('playlistDownloadViewIconButton'));
@@ -10206,6 +10207,32 @@ void main() {
           audioForPictureTitle: audioForPictureTitle,
         );
 
+        // Now go back to the playlist download view and add again a
+        // picture to the same audio whose picture was removed
+
+        appScreenNavigationButton =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        // Second picture addition
+        pictureFilePathName = await _addPictureToAudio(
+          tester: tester,
+          mockFilePicker: mockFilePicker,
+          pictureFileName: thirdPictureFileName,
+          pictureSourcePath: pictureSourcePath,
+          pictureFileSize: thirdPictureFileSize,
+          audioForPictureTitle: audioForPictureTitle,
+        );
+
+        // Now verifying the second audio picture addition result
+        await _verifyPictureAddition(
+            tester: tester,
+            playlistPictureDir: playlistPictureDir,
+            pictureFilePathName: pictureFilePathName,
+            pictureFileSize: thirdPictureFileSize,
+            audioForPictureTitle: audioForPictureTitle);
+
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -10213,7 +10240,146 @@ void main() {
         );
       });
     });
-    group('From appbar left popup menu in audio player view', () {});
+    group('From appbar left popup menu in audio player view', () {
+      testWidgets(
+          '''Add picture to audio, then add another picture to the same audio. This
+           will replace the existing picture. The replaced picture file will have
+           the same name as the first added picture, but a different size. Then
+           delete the audio picture. Finally, re-add a picture to the same audio.
+           The effects are identical to the previous test, but the actions are
+           performed from the audio player view.''',
+          (WidgetTester tester) async {
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
+
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'audio_player_picture_test',
+          tapOnPlaylistToggleButton: false,
+        );
+
+        const String localPlaylistTitle = 'local';
+        final String playlistPictureDir =
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}$localPlaylistTitle${path.separator}$kPictureDirName";
+        const String audioForPictureTitle =
+            'CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien';
+        const String pictureFileName = "Jésus je T'adore.jpg";
+        const int pictureFileSize = 154529;
+        const String secondPictureFileName = "Jésus je T'aime.jpg";
+        const int secondPictureFileSize = 125867;
+        const String thirdPictureFileName = "Jésus l'Amour de ma vie.jpg";
+        const int thirdPictureFileSize = 187362;
+
+        // Available pictures file path
+        String pictureSourcePath =
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}pictures";
+
+        // Go to the audio player view
+        Finder appScreenNavigationButton =
+            find.byKey(const ValueKey('audioPlayerViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+          tester: tester,
+        );
+
+        // First picture addition
+        String pictureFilePathName = await _addPictureToAudioInAudioPlayerView(
+          tester: tester,
+          mockFilePicker: mockFilePicker,
+          pictureFileName: pictureFileName,
+          pictureSourcePath: pictureSourcePath,
+          pictureFileSize: pictureFileSize,
+        );
+
+        // Now verifying the audio picture addition result
+        await _verifyPictureAddition(
+            tester: tester,
+            playlistPictureDir: playlistPictureDir,
+            pictureFilePathName: pictureFilePathName,
+            pictureFileSize: pictureFileSize,
+            audioForPictureTitle: audioForPictureTitle);
+
+        // Now go back to the playlist download view and add another
+        // picture to the same audio. This will replace the first added
+        // picture by the second one.
+
+        appScreenNavigationButton =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        // Second picture addition
+        pictureFilePathName = await _addPictureToAudio(
+          tester: tester,
+          mockFilePicker: mockFilePicker,
+          pictureFileName: secondPictureFileName,
+          pictureSourcePath: pictureSourcePath,
+          pictureFileSize: secondPictureFileSize,
+          audioForPictureTitle: audioForPictureTitle,
+        );
+
+        // Now verifying the second audio picture addition result
+        await _verifyPictureAddition(
+            tester: tester,
+            playlistPictureDir: playlistPictureDir,
+            pictureFilePathName: pictureFilePathName,
+            pictureFileSize: secondPictureFileSize,
+            audioForPictureTitle: audioForPictureTitle);
+
+        // Now go back to the playlist download view and remove the
+        // audio picture
+
+        appScreenNavigationButton =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        // Deleting the added audio picture
+        await _removeAudioPicture(
+          tester: tester,
+          picturedAudioTitle: audioForPictureTitle,
+        );
+
+        await _verifyPictureSuppression(
+          tester: tester,
+          playlistPictureDir: playlistPictureDir,
+          audioForPictureTitle: audioForPictureTitle,
+        );
+
+        // Now go back to the playlist download view and add again a
+        // picture to the same audio whose picture was removed
+
+        appScreenNavigationButton =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        // Second picture addition
+        pictureFilePathName = await _addPictureToAudio(
+          tester: tester,
+          mockFilePicker: mockFilePicker,
+          pictureFileName: thirdPictureFileName,
+          pictureSourcePath: pictureSourcePath,
+          pictureFileSize: thirdPictureFileSize,
+          audioForPictureTitle: audioForPictureTitle,
+        );
+
+        // Now verifying the second audio picture addition result
+        await _verifyPictureAddition(
+            tester: tester,
+            playlistPictureDir: playlistPictureDir,
+            pictureFilePathName: pictureFilePathName,
+            pictureFileSize: thirdPictureFileSize,
+            audioForPictureTitle: audioForPictureTitle);
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+    });
   });
 }
 
@@ -10247,6 +10413,37 @@ Future<void> _verifyPictureAddition({
   await tester.tap(appScreenNavigationButton);
   await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
     tester: tester,
+  );
+
+  // Due to the not working integration test which prevents the
+  // audio picture to be displayed, we open and close the playable
+  // audio list dialog. This will cause the added picture to be
+  // displayed. When a picture is added manually in the Audio Learn
+  // application, the picture IS displayed after the 'Add Audio
+  // Picture' menu was executed !
+
+  String audioTitleWithDuration = '$audioForPictureTitle\n40:53';
+
+  await tester.tap(find.text(audioTitleWithDuration));
+  await tester.pumpAndSettle();
+
+  // Tap on Cancel button to close the
+  // DisplaySelectableAudioListDialog
+  await tester.tap(find.text('Close'));
+  await tester.pumpAndSettle();
+
+  // Now that the audio picture was added, verify that the
+  // regular play/pause button is displayed at top of screen
+  expect(
+    find.byKey(const Key('picture_displayed_play_pause_button_key')),
+    findsOneWidget,
+  );
+
+  // Now that the audio picture was added, verify that the
+  // audio title with duration is displayed
+  expect(
+    find.text(audioTitleWithDuration),
+    findsOneWidget,
   );
 }
 
@@ -10353,6 +10550,38 @@ Future<String> _addPictureToAudio({
   await tester.tap(addPictureMenuItem);
   await tester.pumpAndSettle(const Duration(microseconds: 200));
 
+  return pictureFilePathName;
+}
+
+Future<String> _addPictureToAudioInAudioPlayerView({
+  required WidgetTester tester,
+  required MockFilePicker mockFilePicker,
+  required String pictureFileName,
+  required String pictureSourcePath,
+  required int pictureFileSize,
+}) async {
+  String pictureFilePathName =
+      "$pictureSourcePath${path.separator}$pictureFileName";
+
+  mockFilePicker.setSelectedFiles([
+    PlatformFile(
+        name: pictureFileName,
+        path: pictureFilePathName,
+        size: pictureFileSize),
+  ]);
+
+  // Now we want to tap on the audio player view left appbar menu
+
+  await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+  await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+  // Now find the Add Audio Picture popup menu item and tap on it
+  Finder addPictureMenuItem =
+      find.byKey(const Key("popup_menu_add_audio_picture"));
+
+  await tester.tap(addPictureMenuItem);
+  await tester.pumpAndSettle();
+  
   return pictureFilePathName;
 }
 
