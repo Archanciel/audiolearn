@@ -846,6 +846,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
               Padding(
                 padding: const EdgeInsets.all(90.0),
                 child: IconButton(
+                  key: const Key('middleScreenPlayPauseButton'),
                   iconSize: _audioIconSizeLarge,
                   onPressed: (() async {
                     audioPlayerVMlistenFalse.isPlaying

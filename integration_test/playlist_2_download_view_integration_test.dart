@@ -10185,6 +10185,27 @@ void main() {
             pictureFileSize: secondPictureFileSize,
             audioForPictureTitle: audioForPictureTitle);
 
+        // Now go back to the playlist download view and add another
+        // picture to the same audio. This will replace the first added
+        // picture by the second one.
+
+        appScreenNavigationButton =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        // Deleting the added audio picture
+        await _removeAudioPicture(
+          tester: tester,
+          picturedAudioTitle: audioForPictureTitle,
+        );
+
+        await _verifyPictureSuppression(
+          tester: tester,
+          playlistPictureDir: playlistPictureDir,
+          audioForPictureTitle: audioForPictureTitle,
+        );
+
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -10227,6 +10248,29 @@ Future<void> _verifyPictureAddition({
   await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
     tester: tester,
   );
+}
+
+Future<void> _verifyPictureSuppression({
+  required WidgetTester tester,
+  required String playlistPictureDir,
+  required String audioForPictureTitle,
+}) async {
+  // Now verifying that the playlist picture directory does not contains
+  // the added picture file
+  List<String> playlistPicturesLst = DirUtil.listFileNamesInDir(
+    directoryPath: playlistPictureDir,
+    fileExtension: 'jpg',
+  );
+
+  expect(playlistPicturesLst, []);
+
+  // Now go to the audio player view
+  Finder appScreenNavigationButton =
+      find.byKey(const ValueKey('audioPlayerViewIconButton'));
+  await tester.tap(appScreenNavigationButton);
+  await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+    tester: tester,
+  );
 
   // Due to the not working integration test which prevents the
   // audio picture to be displayed, we open and close the playable
@@ -10245,14 +10289,14 @@ Future<void> _verifyPictureAddition({
   await tester.tap(find.text('Close'));
   await tester.pumpAndSettle();
 
-  // Now that the audio picture is present, verify that the
-  // screen top play/pause button is displayed
+  // Now that the audio picture was deleted, verify that the
+  // regular play/pause button is displayed
   expect(
-    find.byKey(const Key('picture_displayed_play_pause_button_key')),
+    find.byKey(const Key('middleScreenPlayPauseButton')),
     findsOneWidget,
   );
 
-  // Now that the audio picture is present, verify that the
+  // Now that the audio picture was deleted, verify that the
   // audio title with duration is displayed
   expect(
     find.text(audioTitleWithDuration),
@@ -10260,7 +10304,7 @@ Future<void> _verifyPictureAddition({
   );
 }
 
-/// Returnes the added [pictureFilePathName]
+/// Returns the added [pictureFilePathName]
 Future<String> _addPictureToAudio({
   required WidgetTester tester,
   required MockFilePicker mockFilePicker,
@@ -10280,8 +10324,6 @@ Future<String> _addPictureToAudio({
   ]);
 
   // Now we want to tap the popup menu of the Audio ListTile
-  // 'CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !
-  //  Émission Carrément Bien'
 
   // First, find the Audio sublist ListTile Text widget
   Finder audioForPictureTitleTextWidgetFinder = find.text(audioForPictureTitle);
@@ -10312,6 +10354,41 @@ Future<String> _addPictureToAudio({
   await tester.pumpAndSettle(const Duration(microseconds: 200));
 
   return pictureFilePathName;
+}
+
+Future<void> _removeAudioPicture({
+  required WidgetTester tester,
+  required String picturedAudioTitle,
+}) async {
+  // Tapping the popup menu of the Audio ListTile
+
+  // First, find the Audio sublist ListTile Text widget
+  Finder audioForPictureTitleTextWidgetFinder = find.text(picturedAudioTitle);
+
+  // Then obtain the Audio ListTile widget enclosing the Text widget by
+  // finding its ancestor
+  Finder audioForPictureListTileWidgetFinder = find.ancestor(
+    of: audioForPictureTitleTextWidgetFinder,
+    matching: find.byType(ListTile),
+  );
+
+  // Now find the leading menu icon button of the Audio ListTile and tap
+  // on it
+  Finder audioForPictureListTileLeadingMenuIconButton = find.descendant(
+    of: audioForPictureListTileWidgetFinder,
+    matching: find.byIcon(Icons.menu),
+  );
+
+  // Tap the leading menu icon button to open the popup menu
+  await tester.tap(audioForPictureListTileLeadingMenuIconButton);
+  await tester.pumpAndSettle();
+
+  // Now find the Add Picture popup menu item and tap on it
+  Finder addPictureMenuItem =
+      find.byKey(const Key("popup_menu_remove_audio_picture"));
+
+  await tester.tap(addPictureMenuItem);
+  await tester.pumpAndSettle(const Duration(microseconds: 200));
 }
 
 Future<void> _changePlaylistRootPath({
