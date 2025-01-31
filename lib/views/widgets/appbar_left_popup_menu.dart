@@ -316,8 +316,8 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
 
                   bool keepAudioDataInSourcePlaylist =
                       resultMap['keepAudioDataInSourcePlaylist'];
-                  Audio? nextAudio =
-                      playlistVMlistnedFalse.moveAudioAndCommentToPlaylist(
+                  Audio? nextAudio = playlistVMlistnedFalse
+                      .moveAudioAndCommentAndPictureToPlaylist(
                     audioLearnAppViewType:
                         AudioLearnAppViewType.audioPlayerView,
                     audio: audio,
@@ -367,7 +367,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                     return;
                   }
 
-                  playlistVMlistenFalse.copyAudioAndCommentToPlaylist(
+                  playlistVMlistenFalse.copyAudioAndCommentAndPictureToPlaylist(
                     audio: audio,
                     targetPlaylist: targetPlaylist,
                   );

@@ -1661,7 +1661,7 @@ void testCopyAudioToPlaylist({
 }) {
   Audio sourceAudio = sourcePlaylist.playableAudioLst[sourceAudioIndex];
 
-  playlistListVM.copyAudioAndCommentToPlaylist(
+  playlistListVM.copyAudioAndCommentAndPictureToPlaylist(
     audio: sourceAudio,
     targetPlaylist: targetPlaylist,
   );
@@ -1741,7 +1741,7 @@ void testMoveAudioAndCommentToPlaylist({
     );
   }
 
-  playlistListVM.moveAudioAndCommentToPlaylist(
+  playlistListVM.moveAudioAndCommentAndPictureToPlaylist(
     audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
     audio: sourceAudio,
     targetPlaylist: targetPlaylist,

@@ -1510,12 +1510,14 @@ class PlaylistListVM extends ChangeNotifier {
   /// playable audio. In case the audio was not moved - the
   /// case if the audio already exist in the target playlist -
   /// null is returned
-  Audio? moveAudioAndCommentToPlaylist({
+  Audio? moveAudioAndCommentAndPictureToPlaylist({
     required AudioLearnAppViewType audioLearnAppViewType,
     required Audio audio,
     required Playlist targetPlaylist,
     required bool keepAudioInSourcePlaylistDownloadedAudioLst,
   }) {
+    // Obtaining the audio which will replace the moved audio
+    // in the audio player view.
     Audio? nextAudio = _getNextSortFilteredNotFullyPlayedAudio(
       audioLearnAppViewType: audioLearnAppViewType,
       currentAudio: audio,
@@ -1536,6 +1538,30 @@ class PlaylistListVM extends ChangeNotifier {
       targetPlaylistPath: targetPlaylist.downloadPath,
     );
 
+    // Obtaining the potentially existing audio picture file path
+    // name
+
+    final String playlistDownloadPath = audio.enclosingPlaylist!.downloadPath;
+    final String audioPictureFileName =
+        audio.audioFileName.replaceAll('.mp3', '.jpg');
+    final String audioPicturePathFileName =
+        "$playlistDownloadPath${path.separator}$kPictureDirName${path.separator}$audioPictureFileName";
+
+    if (File(audioPicturePathFileName).existsSync()) {
+      // The case if a picture is associated to the audio
+      final String targetPlaylistPicturePath =
+          "${targetPlaylist.downloadPath}${path.separator}$kPictureDirName";
+
+      // Ensures the target playlist picture directory exists.
+      DirUtil.createDirIfNotExistSync(
+        pathStr: targetPlaylistPicturePath,
+      );
+      DirUtil.moveFileToDirectoryIfNotExistSync(
+        sourceFilePathName: audioPicturePathFileName,
+        targetDirectoryPath: targetPlaylistPicturePath,
+      );
+    }
+
     notifyListeners();
 
     return nextAudio;
@@ -1549,7 +1575,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// playlist directory, false otherwise. If the audio file already
   /// exist in the target playlist directory, the copy operation does
   /// not happen and false is returned.
-  bool copyAudioAndCommentToPlaylist({
+  bool copyAudioAndCommentAndPictureToPlaylist({
     required Audio audio,
     required Playlist targetPlaylist,
   }) {
@@ -1566,6 +1592,31 @@ class PlaylistListVM extends ChangeNotifier {
       audio: audio,
       targetPlaylistPath: targetPlaylist.downloadPath,
     );
+
+    // Obtaining the potentially existing audio picture file path
+    // name
+
+    final String playlistDownloadPath = audio.enclosingPlaylist!.downloadPath;
+    final String audioPictureFileName =
+        audio.audioFileName.replaceAll('.mp3', '.jpg');
+    final String audioPicturePathFileName =
+        "$playlistDownloadPath${path.separator}$kPictureDirName${path.separator}$audioPictureFileName";
+
+    if (File(audioPicturePathFileName).existsSync()) {
+      // The case if a picture is associated to the audio
+      final String targetPlaylistPicturePath =
+          "${targetPlaylist.downloadPath}${path.separator}$kPictureDirName";
+      final String targetAudioPicturePathFileName =
+          "$targetPlaylistPicturePath${path.separator}$audioPictureFileName";
+
+      // Ensures the target playlist picture directory exists.
+      DirUtil.createDirIfNotExistSync(
+        pathStr: targetPlaylistPicturePath,
+      );
+      File(audioPicturePathFileName).copySync(
+        targetAudioPicturePathFileName,
+      );
+    }
 
     notifyListeners();
 

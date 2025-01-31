@@ -340,7 +340,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
               }
               bool keepAudioDataInSourcePlaylist =
                   resultMap['keepAudioDataInSourcePlaylist'];
-              playlistVMlistnedFalse.moveAudioAndCommentToPlaylist(
+              playlistVMlistnedFalse.moveAudioAndCommentAndPictureToPlaylist(
                 audioLearnAppViewType:
                     AudioLearnAppViewType.playlistDownloadView,
                 audio: audio,
@@ -379,7 +379,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
                 return;
               }
 
-              playlistVMlistenFalse.copyAudioAndCommentToPlaylist(
+              playlistVMlistenFalse.copyAudioAndCommentAndPictureToPlaylist(
                 audio: audio,
                 targetPlaylist: targetPlaylist,
               );
