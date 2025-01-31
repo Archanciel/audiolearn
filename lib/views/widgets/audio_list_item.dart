@@ -351,7 +351,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
             });
             break;
           case AudioPopupMenuAction.copyAudioToPlaylist:
-            final PlaylistListVM expandablePlaylistVM =
+            final PlaylistListVM playlistVMlistenFalse =
                 Provider.of<PlaylistListVM>(
               context,
               listen: false,
@@ -379,7 +379,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
                 return;
               }
 
-              expandablePlaylistVM.copyAudioAndCommentToPlaylist(
+              playlistVMlistenFalse.copyAudioAndCommentToPlaylist(
                 audio: audio,
                 targetPlaylist: targetPlaylist,
               );
