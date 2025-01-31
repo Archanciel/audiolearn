@@ -10131,6 +10131,7 @@ void main() {
             "$kPlaylistDownloadRootPathWindowsTest${path.separator}$localPlaylistTitle${path.separator}$kPictureDirName";
         const String audioForPictureTitle =
             'CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien';
+        const String audioForPictureTitleDurationStr = '40:53';
         const String pictureFileName = "Jésus je T'adore.jpg";
         const int pictureFileSize = 154529;
         const String secondPictureFileName = "Jésus je T'aime.jpg";
@@ -10163,7 +10164,7 @@ void main() {
           pictureFilePathName: pictureFilePathName,
           pictureFileSize: pictureFileSize,
           audioForPictureTitle: audioForPictureTitle,
-          audioForPictureTitleDurationStr: '40:53',
+          audioForPictureTitleDurationStr: audioForPictureTitleDurationStr,
           pictureFileNamesLst: pictureFileNamesLst,
         );
 
@@ -10193,7 +10194,7 @@ void main() {
           pictureFilePathName: pictureFilePathName,
           pictureFileSize: secondPictureFileSize,
           audioForPictureTitle: audioForPictureTitle,
-          audioForPictureTitleDurationStr: '40:53',
+          audioForPictureTitleDurationStr: audioForPictureTitleDurationStr,
           pictureFileNamesLst: pictureFileNamesLst,
         );
 
@@ -10243,7 +10244,7 @@ void main() {
           pictureFilePathName: pictureFilePathName,
           pictureFileSize: thirdPictureFileSize,
           audioForPictureTitle: audioForPictureTitle,
-          audioForPictureTitleDurationStr: '40:53',
+          audioForPictureTitleDurationStr: audioForPictureTitleDurationStr,
           pictureFileNamesLst: pictureFileNamesLst,
         );
 
@@ -10264,8 +10265,10 @@ void main() {
             "$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubePlaylistTitle${path.separator}$kPictureDirName";
         const String audioForPictureTitle =
             'CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien';
+        const String audioForPictureTitleDurationStr = '40:53';
         const String audioAlreadyUsingPictureTitle =
             'NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE';
+        const String audioAlreadyUsingPictureDurationStr = '24:07';
         const String pictureFileName =
             "241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12.jpg";
         const int pictureFileSize = 94507;
@@ -10303,7 +10306,7 @@ void main() {
           pictureFilePathName: pictureFilePathName,
           pictureFileSize: pictureFileSize,
           audioForPictureTitle: audioForPictureTitle,
-          audioForPictureTitleDurationStr: '40:53',
+          audioForPictureTitleDurationStr: audioForPictureTitleDurationStr,
           pictureFileNamesLst: pictureFileNamesLst,
         );
 
@@ -10333,19 +10336,23 @@ void main() {
           pictureFileNamesLst: pictureFileNamesAfterDeletionLst,
         );
 
-        // Go back to playlist download view
+        // Go back to playlist download view in order to ensure that
+        // the audio already using a picture was not impacted by
+        // the previous picture suppression
         appScreenNavigationButton =
             find.byKey(const ValueKey('playlistDownloadViewIconButton'));
         await tester.tap(appScreenNavigationButton);
         await tester.pumpAndSettle();
 
+        // Verifying that the audio already using a picture was not
+        // impacted by the previous picture suppression
         await _verifyPictureAddition(
           tester: tester,
           playlistPictureDir: playlistPictureDir,
           pictureFilePathName: pictureFilePathName,
           pictureFileSize: pictureFileSize,
           audioForPictureTitle: audioAlreadyUsingPictureTitle,
-          audioForPictureTitleDurationStr: '24:07',
+          audioForPictureTitleDurationStr: audioAlreadyUsingPictureDurationStr,
           pictureFileNamesLst: pictureFileNamesAfterDeletionLst,
         );
 
@@ -10380,6 +10387,7 @@ void main() {
             "$kPlaylistDownloadRootPathWindowsTest${path.separator}$localPlaylistTitle${path.separator}$kPictureDirName";
         const String audioForPictureTitle =
             'CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien';
+        const String audioForPictureTitleDurationStr = '40:53';
         const String pictureFileName = "Jésus je T'adore.jpg";
         const int pictureFileSize = 154529;
         const String secondPictureFileName = "Jésus je T'aime.jpg";
@@ -10419,7 +10427,7 @@ void main() {
           pictureFilePathName: pictureFilePathName,
           pictureFileSize: pictureFileSize,
           audioForPictureTitle: audioForPictureTitle,
-          audioForPictureTitleDurationStr: '40:53',
+          audioForPictureTitleDurationStr: audioForPictureTitleDurationStr,
           pictureFileNamesLst: pictureFileNamesLst,
           goToAudioPlayerView: false,
         );
@@ -10443,7 +10451,7 @@ void main() {
           pictureFilePathName: pictureFilePathName,
           pictureFileSize: secondPictureFileSize,
           audioForPictureTitle: audioForPictureTitle,
-          audioForPictureTitleDurationStr: '40:53',
+          audioForPictureTitleDurationStr: audioForPictureTitleDurationStr,
           pictureFileNamesLst: pictureFileNamesLst,
           goToAudioPlayerView: false,
         );
@@ -10478,9 +10486,120 @@ void main() {
           pictureFilePathName: pictureFilePathName,
           pictureFileSize: thirdPictureFileSize,
           audioForPictureTitle: audioForPictureTitle,
-          audioForPictureTitleDurationStr: '40:53',
+          audioForPictureTitleDurationStr: audioForPictureTitleDurationStr,
           pictureFileNamesLst: pictureFileNamesLst,
           goToAudioPlayerView: false,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Add audio picture to other audio in same playlist. The effects are
+             identical to the previous test, but the actions are performed from
+             the audio player view.''', (WidgetTester tester) async {
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
+
+        const String youtubePlaylistTitle = 'Jésus-Christ';
+        final String playlistPictureDir =
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubePlaylistTitle${path.separator}$kPictureDirName";
+        const String audioForPictureTitle =
+            'CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien';
+        const String audioForPictureTitleDurationStr = '40:53';
+        const String audioAlreadyUsingPictureTitle =
+            'NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE';
+        const String audioAlreadyUsingPictureDurationStr = '24:07';
+        const String pictureFileName =
+            "241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12.jpg";
+        const int pictureFileSize = 94507;
+
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'audio_player_picture_test',
+          selectedPlaylistTitle: youtubePlaylistTitle,
+          tapOnPlaylistToggleButton: false,
+        );
+
+        // Available pictures file path
+        String pictureSourcePath =
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubePlaylistTitle${path.separator}$kPictureDirName";
+
+        // Go to the audio player view
+        final Finder audioForPictureTitleListTileTextWidgetFinder =
+            find.text(audioForPictureTitle);
+
+        await tester.tap(audioForPictureTitleListTileTextWidgetFinder);
+        await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+          tester: tester,
+        );
+
+        // First picture addition
+        String pictureFilePathName = await _addPictureToAudioInAudioPlayerView(
+          tester: tester,
+          mockFilePicker: mockFilePicker,
+          pictureFileName: pictureFileName,
+          pictureSourcePath: pictureSourcePath,
+          pictureFileSize: pictureFileSize,
+        );
+
+        List<String> pictureFileNamesLst = [
+          '241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12.jpg',
+          "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.jpg",
+        ];
+
+        // Now verifying the audio picture addition result
+        await _verifyPictureAddition(
+          tester: tester,
+          playlistPictureDir: playlistPictureDir,
+          pictureFilePathName: pictureFilePathName,
+          pictureFileSize: pictureFileSize,
+          audioForPictureTitle: audioForPictureTitle,
+          audioForPictureTitleDurationStr: audioForPictureTitleDurationStr,
+          pictureFileNamesLst: pictureFileNamesLst,
+          goToAudioPlayerView: false,
+        );
+
+        // Deleting the added audio picture
+        await _removeAudioPictureInAudioPlayerView(
+          tester: tester,
+          picturedAudioTitle: audioForPictureTitle,
+        );
+
+        List<String> pictureFileNamesAfterDeletionLst = [
+          '241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12.jpg',
+        ];
+
+        await _verifyPictureSuppression(
+          tester: tester,
+          playlistPictureDir: playlistPictureDir,
+          audioForPictureTitle: audioForPictureTitle,
+          pictureFileNamesLst: pictureFileNamesAfterDeletionLst,
+          goToAudioPlayerView: false,
+        );
+
+        // Go back to playlist download view in order to ensure that
+        // the audio already using a picture was not impacted by
+        // the previous picture suppression
+        Finder appScreenNavigationButton =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        // Verifying that the audio already using a picture was not
+        // impacted by the previous picture suppression
+        await _verifyPictureAddition(
+          tester: tester,
+          playlistPictureDir: playlistPictureDir,
+          pictureFilePathName: pictureFilePathName,
+          pictureFileSize: pictureFileSize,
+          audioForPictureTitle: audioAlreadyUsingPictureTitle,
+          audioForPictureTitleDurationStr: audioAlreadyUsingPictureDurationStr,
+          pictureFileNamesLst: pictureFileNamesAfterDeletionLst,
         );
 
         // Purge the test playlist directory so that the created test
@@ -10536,7 +10655,8 @@ Future<void> _verifyPictureAddition({
   // application, the picture IS displayed after the 'Add Audio
   // Picture' menu was executed !
 
-  String audioTitleWithDuration = '$audioForPictureTitle\n$audioForPictureTitleDurationStr';
+  String audioTitleWithDuration =
+      '$audioForPictureTitle\n$audioForPictureTitleDurationStr';
 
   await tester.tap(find.text(audioTitleWithDuration));
   await tester.pumpAndSettle();
