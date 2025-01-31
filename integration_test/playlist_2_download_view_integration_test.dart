@@ -10152,13 +10152,20 @@ void main() {
           audioForPictureTitle: audioForPictureTitle,
         );
 
+        List<String> pictureFileNamesLst = [
+          "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.jpg",
+        ];
+
         // Now verifying the audio picture addition result
         await _verifyPictureAddition(
-            tester: tester,
-            playlistPictureDir: playlistPictureDir,
-            pictureFilePathName: pictureFilePathName,
-            pictureFileSize: pictureFileSize,
-            audioForPictureTitle: audioForPictureTitle);
+          tester: tester,
+          playlistPictureDir: playlistPictureDir,
+          pictureFilePathName: pictureFilePathName,
+          pictureFileSize: pictureFileSize,
+          audioForPictureTitle: audioForPictureTitle,
+          audioForPictureTitleDurationStr: '40:53',
+          pictureFileNamesLst: pictureFileNamesLst,
+        );
 
         // Now go back to the playlist download view and add another
         // picture to the same audio. This will replace the first added
@@ -10181,11 +10188,14 @@ void main() {
 
         // Now verifying the second audio picture addition result
         await _verifyPictureAddition(
-            tester: tester,
-            playlistPictureDir: playlistPictureDir,
-            pictureFilePathName: pictureFilePathName,
-            pictureFileSize: secondPictureFileSize,
-            audioForPictureTitle: audioForPictureTitle);
+          tester: tester,
+          playlistPictureDir: playlistPictureDir,
+          pictureFilePathName: pictureFilePathName,
+          pictureFileSize: secondPictureFileSize,
+          audioForPictureTitle: audioForPictureTitle,
+          audioForPictureTitleDurationStr: '40:53',
+          pictureFileNamesLst: pictureFileNamesLst,
+        );
 
         // Now go back to the playlist download view and remove the
         // audio picture
@@ -10205,6 +10215,7 @@ void main() {
           tester: tester,
           playlistPictureDir: playlistPictureDir,
           audioForPictureTitle: audioForPictureTitle,
+          pictureFileNamesLst: [],
         );
 
         // Now go back to the playlist download view and add again a
@@ -10227,11 +10238,116 @@ void main() {
 
         // Now verifying the third audio picture addition result
         await _verifyPictureAddition(
-            tester: tester,
-            playlistPictureDir: playlistPictureDir,
-            pictureFilePathName: pictureFilePathName,
-            pictureFileSize: thirdPictureFileSize,
-            audioForPictureTitle: audioForPictureTitle);
+          tester: tester,
+          playlistPictureDir: playlistPictureDir,
+          pictureFilePathName: pictureFilePathName,
+          pictureFileSize: thirdPictureFileSize,
+          audioForPictureTitle: audioForPictureTitle,
+          audioForPictureTitleDurationStr: '40:53',
+          pictureFileNamesLst: pictureFileNamesLst,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+      testWidgets('''Add audio picture to other audio in same playlist.''',
+          (WidgetTester tester) async {
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
+
+        const String youtubePlaylistTitle = 'Jésus-Christ';
+        final String playlistPictureDir =
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubePlaylistTitle${path.separator}$kPictureDirName";
+        const String audioForPictureTitle =
+            'CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien';
+        const String audioAlreadyUsingPictureTitle =
+            'NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE';
+        const String pictureFileName =
+            "241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12.jpg";
+        const int pictureFileSize = 94507;
+
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'audio_player_picture_test',
+          selectedPlaylistTitle: youtubePlaylistTitle,
+          tapOnPlaylistToggleButton: false,
+        );
+
+        // Available pictures file path
+        String pictureSourcePath =
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubePlaylistTitle${path.separator}$kPictureDirName";
+
+        // First picture addition
+        String pictureFilePathName = await _addPictureToAudio(
+          tester: tester,
+          mockFilePicker: mockFilePicker,
+          pictureFileName: pictureFileName,
+          pictureSourcePath: pictureSourcePath,
+          pictureFileSize: pictureFileSize,
+          audioForPictureTitle: audioForPictureTitle,
+        );
+
+        List<String> pictureFileNamesLst = [
+          '241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12.jpg',
+          "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.jpg",
+        ];
+
+        // Now verifying the audio picture addition result
+        await _verifyPictureAddition(
+          tester: tester,
+          playlistPictureDir: playlistPictureDir,
+          pictureFilePathName: pictureFilePathName,
+          pictureFileSize: pictureFileSize,
+          audioForPictureTitle: audioForPictureTitle,
+          audioForPictureTitleDurationStr: '40:53',
+          pictureFileNamesLst: pictureFileNamesLst,
+        );
+
+        // Now go back to the playlist download view and add another
+        // picture to the same audio. This will replace the first added
+        // picture by the second one.
+
+        Finder appScreenNavigationButton =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        // Deleting the added audio picture
+        await _removeAudioPicture(
+          tester: tester,
+          picturedAudioTitle: audioForPictureTitle,
+        );
+
+        List<String> pictureFileNamesAfterDeletionLst = [
+          '241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12.jpg',
+        ];
+
+        await _verifyPictureSuppression(
+          tester: tester,
+          playlistPictureDir: playlistPictureDir,
+          audioForPictureTitle: audioForPictureTitle,
+          pictureFileNamesLst: pictureFileNamesAfterDeletionLst,
+        );
+
+        // Go back to playlist download view
+        appScreenNavigationButton =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        await _verifyPictureAddition(
+          tester: tester,
+          playlistPictureDir: playlistPictureDir,
+          pictureFilePathName: pictureFilePathName,
+          pictureFileSize: pictureFileSize,
+          audioForPictureTitle: audioAlreadyUsingPictureTitle,
+          audioForPictureTitleDurationStr: '24:07',
+          pictureFileNamesLst: pictureFileNamesAfterDeletionLst,
+        );
 
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
@@ -10292,14 +10408,21 @@ void main() {
           pictureFileSize: pictureFileSize,
         );
 
+        List<String> pictureFileNamesLst = [
+          "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.jpg",
+        ];
+
         // Now verifying the audio picture addition result
         await _verifyPictureAddition(
-            tester: tester,
-            playlistPictureDir: playlistPictureDir,
-            pictureFilePathName: pictureFilePathName,
-            pictureFileSize: pictureFileSize,
-            audioForPictureTitle: audioForPictureTitle,
-            goToAudioPlayerView: false);
+          tester: tester,
+          playlistPictureDir: playlistPictureDir,
+          pictureFilePathName: pictureFilePathName,
+          pictureFileSize: pictureFileSize,
+          audioForPictureTitle: audioForPictureTitle,
+          audioForPictureTitleDurationStr: '40:53',
+          pictureFileNamesLst: pictureFileNamesLst,
+          goToAudioPlayerView: false,
+        );
 
         // Now add another picture to the same audio. This will replace
         // the first added picture by the second one.
@@ -10315,12 +10438,15 @@ void main() {
 
         // Now verifying the second audio picture addition result
         await _verifyPictureAddition(
-            tester: tester,
-            playlistPictureDir: playlistPictureDir,
-            pictureFilePathName: pictureFilePathName,
-            pictureFileSize: secondPictureFileSize,
-            audioForPictureTitle: audioForPictureTitle,
-            goToAudioPlayerView: false);
+          tester: tester,
+          playlistPictureDir: playlistPictureDir,
+          pictureFilePathName: pictureFilePathName,
+          pictureFileSize: secondPictureFileSize,
+          audioForPictureTitle: audioForPictureTitle,
+          audioForPictureTitleDurationStr: '40:53',
+          pictureFileNamesLst: pictureFileNamesLst,
+          goToAudioPlayerView: false,
+        );
 
         // Deleting the added audio picture
         await _removeAudioPictureInAudioPlayerView(
@@ -10332,6 +10458,7 @@ void main() {
           tester: tester,
           playlistPictureDir: playlistPictureDir,
           audioForPictureTitle: audioForPictureTitle,
+          pictureFileNamesLst: [],
           goToAudioPlayerView: false,
         );
 
@@ -10346,12 +10473,15 @@ void main() {
 
         // Now verifying the third audio picture addition result
         await _verifyPictureAddition(
-            tester: tester,
-            playlistPictureDir: playlistPictureDir,
-            pictureFilePathName: pictureFilePathName,
-            pictureFileSize: thirdPictureFileSize,
-            audioForPictureTitle: audioForPictureTitle,
-            goToAudioPlayerView: false);
+          tester: tester,
+          playlistPictureDir: playlistPictureDir,
+          pictureFilePathName: pictureFilePathName,
+          pictureFileSize: thirdPictureFileSize,
+          audioForPictureTitle: audioForPictureTitle,
+          audioForPictureTitleDurationStr: '40:53',
+          pictureFileNamesLst: pictureFileNamesLst,
+          goToAudioPlayerView: false,
+        );
 
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
@@ -10369,6 +10499,8 @@ Future<void> _verifyPictureAddition({
   required String pictureFilePathName,
   required int pictureFileSize,
   required String audioForPictureTitle,
+  required String audioForPictureTitleDurationStr,
+  required List<String> pictureFileNamesLst,
   bool goToAudioPlayerView = true,
 }) async {
   // Now verifying that the playlist picture directory contains
@@ -10378,9 +10510,7 @@ Future<void> _verifyPictureAddition({
     fileExtension: 'jpg',
   );
 
-  expect(playlistPicturesLst, [
-    "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.jpg",
-  ]);
+  expect(playlistPicturesLst, pictureFileNamesLst);
 
   // Verifying the added picture file size
   IntegrationTestUtil.verifyFileSize(
@@ -10390,9 +10520,10 @@ Future<void> _verifyPictureAddition({
 
   if (goToAudioPlayerView) {
     // Now go to the audio player view
-    Finder appScreenNavigationButton =
-        find.byKey(const ValueKey('audioPlayerViewIconButton'));
-    await tester.tap(appScreenNavigationButton);
+    final Finder audioForPictureTitleListTileTextWidgetFinder =
+        find.text(audioForPictureTitle);
+
+    await tester.tap(audioForPictureTitleListTileTextWidgetFinder);
     await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
       tester: tester,
     );
@@ -10405,7 +10536,7 @@ Future<void> _verifyPictureAddition({
   // application, the picture IS displayed after the 'Add Audio
   // Picture' menu was executed !
 
-  String audioTitleWithDuration = '$audioForPictureTitle\n40:53';
+  String audioTitleWithDuration = '$audioForPictureTitle\n$audioForPictureTitleDurationStr';
 
   await tester.tap(find.text(audioTitleWithDuration));
   await tester.pumpAndSettle();
@@ -10441,6 +10572,7 @@ Future<void> _verifyPictureSuppression({
   required WidgetTester tester,
   required String playlistPictureDir,
   required String audioForPictureTitle,
+  required List<String> pictureFileNamesLst,
   bool goToAudioPlayerView = true,
 }) async {
   // Now verifying that the playlist picture directory does not contains
@@ -10450,7 +10582,7 @@ Future<void> _verifyPictureSuppression({
     fileExtension: 'jpg',
   );
 
-  expect(playlistPicturesLst, []);
+  expect(playlistPicturesLst, pictureFileNamesLst);
 
   if (goToAudioPlayerView) {
     // Now go to the audio player view
