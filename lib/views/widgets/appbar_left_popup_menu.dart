@@ -335,7 +335,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                 });
                 break;
               case AudioPopupMenuAction.copyAudioToPlaylist:
-                PlaylistListVM expandablePlaylistVM =
+                PlaylistListVM playlistVMlistenFalse =
                     Provider.of<PlaylistListVM>(
                   context,
                   listen: false,
@@ -367,7 +367,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                     return;
                   }
 
-                  expandablePlaylistVM.copyAudioAndCommentToPlaylist(
+                  playlistVMlistenFalse.copyAudioAndCommentToPlaylist(
                     audio: audio,
                     targetPlaylist: targetPlaylist,
                   );
