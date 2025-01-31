@@ -1792,18 +1792,13 @@ class PlaylistListVM extends ChangeNotifier {
     // and removes the audio from the its playlist playable audio list
     _audioDownloadVM.deleteAudioPhysicallyAndFromPlayableAudioListOnly(
         audio: audio);
-
-    _removeAudioFromSortedFilteredPlayableAudioList(
-      audioLearnAppViewType: audioLearnAppViewType,
+    _remainingAudioDeletionExecution(
       audio: audio,
+      audioLearnAppViewType: audioLearnAppViewType,
     );
 
     _setStateOfButtonsApplicableToAudio(
       selectedPlaylist: audio.enclosingPlaylist!,
-    );
-
-    _commentVM.deleteAllAudioComments(
-      commentedAudio: audio,
     );
 
     notifyListeners();
@@ -1835,7 +1830,20 @@ class PlaylistListVM extends ChangeNotifier {
     );
 
     _audioDownloadVM.deleteAudioPhysicallyAndFromAllAudioLists(audio: audio);
+    _remainingAudioDeletionExecution(
+      audio: audio,
+      audioLearnAppViewType: audioLearnAppViewType,
+    );
 
+    notifyListeners();
+
+    return nextAudio;
+  }
+
+  void _remainingAudioDeletionExecution({
+    required Audio audio,
+    required AudioLearnAppViewType audioLearnAppViewType,
+  }) {
     _removeAudioFromSortedFilteredPlayableAudioList(
       audioLearnAppViewType: audioLearnAppViewType,
       audio: audio,
@@ -1845,9 +1853,15 @@ class PlaylistListVM extends ChangeNotifier {
       commentedAudio: audio,
     );
 
-    notifyListeners();
+    final String playlistDownloadPath = audio.enclosingPlaylist!.downloadPath;
+    final String audioPictureFileName =
+        audio.audioFileName.replaceAll('.mp3', '.jpg');
+    final String audioPicturePathFileName =
+        "$playlistDownloadPath${path.separator}$kPictureDirName${path.separator}$audioPictureFileName";
 
-    return nextAudio;
+    DirUtil.deleteFileIfExist(
+      pathFileName: audioPicturePathFileName,
+    );
   }
 
   /// playableAudioLst order: [available audio last downloaded, ...,
