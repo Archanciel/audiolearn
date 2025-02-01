@@ -21095,7 +21095,7 @@ void playlistOneDownloadViewIntegrationTest() {
         expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
       );
 
-      // Now verify that the moved audio can be played
+      // Now verify that the copied audio can be played
 
       // Verify the current audio position
       Text audioPositionText = tester
@@ -23286,6 +23286,52 @@ void playlistOneDownloadViewIntegrationTest() {
       // Contains only the moved audio
       expect(targetPlaylistMp3Lst,
           ["230628-033811-audio learn test short video one 23-06-10.mp3"]);
+
+      // Testing that the audio comment was moved from the source to
+      // the target playlist directory
+
+      List<String> sourcePlaylistCommentLst = DirUtil.listFileNamesInDir(
+        directoryPath:
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$kCommentDirName',
+        fileExtension: 'json',
+      );
+
+      List<String> targetPlaylistCommentLst = DirUtil.listFileNamesInDir(
+        directoryPath:
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitle${path.separator}$kCommentDirName',
+        fileExtension: 'json',
+      );
+
+      // Contains only the not moved audio comment
+      expect(sourcePlaylistCommentLst,
+          ["230628-033813-audio learn test short video two 23-06-10.json"]);
+
+      // Contains only the moved audio comment
+      expect(targetPlaylistCommentLst,
+          ["230628-033811-audio learn test short video one 23-06-10.json"]);
+
+      // Testing that the audio picture was moved from the source to
+      // the target playlist directory
+
+      List<String> sourcePlaylistPictureLst = DirUtil.listFileNamesInDir(
+        directoryPath:
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$kPictureDirName',
+        fileExtension: 'jpg',
+      );
+
+      List<String> targetPlaylistPictureLst = DirUtil.listFileNamesInDir(
+        directoryPath:
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitle${path.separator}$kPictureDirName',
+        fileExtension: 'jpg',
+      );
+
+      // Contains only the not moved audio picture
+      expect(sourcePlaylistPictureLst,
+          []);
+
+      // Contains only the moved audio picture
+      expect(targetPlaylistPictureLst,
+          ["230628-033811-audio learn test short video one 23-06-10.jpg"]);
 
       // Find the target ListTile Playlist containing the audio moved
       // from the source playlist
