@@ -948,7 +948,7 @@ class PlaylistListVM extends ChangeNotifier {
   ///    movedCommentedAudioNumber,
   ///    unmovedAudioNumber,
   /// ].
-  List<int> moveSortFilteredAudioAndCommentLstToPlaylist({
+  List<int> moveSortFilteredAudioAndCommentAndPictureLstToPlaylist({
     required Playlist targetPlaylist,
   }) {
     List<Audio> filteredAudioToMove =
@@ -976,6 +976,12 @@ class PlaylistListVM extends ChangeNotifier {
         )) {
           movedCommentedAudioNumber++;
         }
+
+        // Moving the audio picture file if it exists
+        _moveAudioPictureToTargetPlaylist(
+          audio: audio,
+          targetPlaylist: targetPlaylist,
+        );
       } else {
         unmovedAudioNumber++;
       }
@@ -1544,6 +1550,21 @@ class PlaylistListVM extends ChangeNotifier {
       targetPlaylistPath: targetPlaylist.downloadPath,
     );
 
+    // Moving the audio picture file if it exists
+    _moveAudioPictureToTargetPlaylist(
+      audio: audio,
+      targetPlaylist: targetPlaylist,
+    );
+
+    notifyListeners();
+
+    return nextAudio;
+  }
+
+  void _moveAudioPictureToTargetPlaylist({
+    required Audio audio,
+    required Playlist targetPlaylist,
+  }) {
     // Obtaining the potentially existing audio picture file path
     // name
 
@@ -1567,10 +1588,6 @@ class PlaylistListVM extends ChangeNotifier {
         targetDirectoryPath: targetPlaylistPicturePath,
       );
     }
-
-    notifyListeners();
-
-    return nextAudio;
   }
 
   /// Method called when the user clicks on the 'Copy audio to

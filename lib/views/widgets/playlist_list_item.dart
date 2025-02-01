@@ -535,7 +535,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
               //    unmovedAudioNumber,
               //  ]
               List<int> movedUnmovedAudioNumberLst = playlistListVMlistenTrue
-                  .moveSortFilteredAudioAndCommentLstToPlaylist(
+                  .moveSortFilteredAudioAndCommentAndPictureLstToPlaylist(
                 targetPlaylist: targetPlaylist,
               );
 
