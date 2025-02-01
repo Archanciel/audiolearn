@@ -49,8 +49,6 @@ const String kDownloadAppTestSavedDataDir =
     "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\saved";
 
 const String kApplicationPathWindows =
-    // 'C:\\Users\\Jean-Pierre\\Downloads\\Audio';
-    // 'C:\\Users\\Jean-Pierre\\Downloads\\copy_move_audio_integr_test_data';
     "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio";
 
 // files in this local test dir are stored in project test_data dir updated
@@ -59,8 +57,6 @@ const String kApplicationPathWindowsTest =
     "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio";
 
 const String kPlaylistDownloadRootPathWindows =
-    // 'C:\\Users\\Jean-Pierre\\Downloads\\Audio';
-    // 'C:\\Users\\Jean-Pierre\\Downloads\\copy_move_audio_integr_test_data';
     "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio";
 
 // files in this local test dir are stored in project test_data dir updated
