@@ -1002,7 +1002,7 @@ class PlaylistListVM extends ChangeNotifier {
   ///    copiedCommentedAudioNumber,
   ///    notCopiedAudioNumber,
   /// ].
-  List<int> copySortFilteredAudioAndCommentLstToPlaylist({
+  List<int> copySortFilteredAudioAndCommentAndPictureLstToPlaylist({
     required Playlist targetPlaylist,
   }) {
     List<Audio> filteredAudioToCopy =
@@ -1029,6 +1029,12 @@ class PlaylistListVM extends ChangeNotifier {
         )) {
           copiedCommentedAudioNumber++;
         }
+
+        // Copying the audio picture file if it exists
+        _copyAudioPictureToTargetPlaylist(
+          audio: audio,
+          targetPlaylist: targetPlaylist,
+        );
       } else {
         notCopiedAudioNumber++;
       }
@@ -1593,6 +1599,21 @@ class PlaylistListVM extends ChangeNotifier {
       targetPlaylistPath: targetPlaylist.downloadPath,
     );
 
+    // Copying the audio picture file if it exists
+    _copyAudioPictureToTargetPlaylist(
+      audio: audio,
+      targetPlaylist: targetPlaylist,
+    );
+
+    notifyListeners();
+
+    return true;
+  }
+
+  void _copyAudioPictureToTargetPlaylist({
+    required Audio audio,
+    required Playlist targetPlaylist,
+  }) {
     // Obtaining the potentially existing audio picture file path
     // name
 
@@ -1617,10 +1638,6 @@ class PlaylistListVM extends ChangeNotifier {
         targetAudioPicturePathFileName,
       );
     }
-
-    notifyListeners();
-
-    return true;
   }
 
   /// Method called when the user selected the Update playable

@@ -611,7 +611,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
               //    notCopiedAudioNumber,
               //  ]
               List<int> copiedNotCopiedAudioNumberLst = playlistListVMlistenTrue
-                  .copySortFilteredAudioAndCommentLstToPlaylist(
+                  .copySortFilteredAudioAndCommentAndPictureLstToPlaylist(
                 targetPlaylist: targetPlaylist,
               );
 
