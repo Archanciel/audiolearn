@@ -3767,7 +3767,7 @@ void main() {
         expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
       );
 
-      // Now verify that the moved audio can be played
+      // Now verify that the copied audio can be played
 
       // Verify the current audio position
       Text audioPositionText = tester
@@ -3809,6 +3809,7 @@ void main() {
 
       // Now verifying that the source playlist directory still
       // contains the audio file copied to the target playlist
+
       List<String> sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
             '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle',
@@ -3818,6 +3819,33 @@ void main() {
       expect(sourcePlaylistMp3Lst, [
         "230628-033811-audio learn test short video one 23-06-10.mp3",
         "230628-033813-audio learn test short video two 23-06-10.mp3",
+      ]);
+
+      // Verifying that the source playlist directory still
+      // contains the audio comment file copied to the target playlist
+
+      List<String> sourcePlaylistCommentLst = DirUtil.listFileNamesInDir(
+        directoryPath:
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$kCommentDirName',
+        fileExtension: 'json',
+      );
+
+      expect(sourcePlaylistCommentLst, [
+        "230628-033811-audio learn test short video one 23-06-10.json",
+        "230628-033813-audio learn test short video two 23-06-10.json",
+      ]);
+
+      // Verifying that the source playlist directory still
+      // contains the audio picture file copied to the target playlist
+
+      List<String> sourcePlaylistPictureLst = DirUtil.listFileNamesInDir(
+        directoryPath:
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$kPictureDirName',
+        fileExtension: 'jpg',
+      );
+
+      expect(sourcePlaylistPictureLst, [
+        "230628-033811-audio learn test short video one 23-06-10.jpg",
       ]);
 
       // And verify that the target playlist directory now
@@ -3830,6 +3858,28 @@ void main() {
 
       expect(targetPlaylistMp3Lst,
           ["230628-033811-audio learn test short video one 23-06-10.mp3"]);
+
+      // Verify that the target playlist directory now contains
+      // the audio comment file copied from the source playlist
+      List<String> targetPlaylistCommentLst = DirUtil.listFileNamesInDir(
+        directoryPath:
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitleTwo${path.separator}$kCommentDirName',
+        fileExtension: 'json',
+      );
+
+      expect(targetPlaylistCommentLst,
+          ["230628-033811-audio learn test short video one 23-06-10.json"]);
+
+      // Verify that the target playlist directory now contains
+      // the audio picture file copied from the source playlist
+      List<String> targetPlaylistPictureLst = DirUtil.listFileNamesInDir(
+        directoryPath:
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitleTwo${path.separator}$kPictureDirName',
+        fileExtension: 'jpg',
+      );
+
+      expect(targetPlaylistPictureLst,
+          ["230628-033811-audio learn test short video one 23-06-10.jpg"]);
 
       // Find the target ListTile Playlist containing the audio copied
       // from the source playlist
@@ -4148,6 +4198,33 @@ void main() {
         "230628-033813-audio learn test short video two 23-06-10.mp3",
       ]);
 
+      // Verifying that the source playlist directory still
+      // contains the audio comment file copied to the target playlist
+
+      sourcePlaylistCommentLst = DirUtil.listFileNamesInDir(
+        directoryPath:
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$kCommentDirName',
+        fileExtension: 'json',
+      );
+
+      expect(sourcePlaylistCommentLst, [
+        "230628-033811-audio learn test short video one 23-06-10.json",
+        "230628-033813-audio learn test short video two 23-06-10.json",
+      ]);
+
+      // Verifying that the source playlist directory still
+      // contains the audio picture file copied to the target playlist
+
+      sourcePlaylistPictureLst = DirUtil.listFileNamesInDir(
+        directoryPath:
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$kPictureDirName',
+        fileExtension: 'jpg',
+      );
+
+      expect(sourcePlaylistPictureLst, [
+        "230628-033811-audio learn test short video one 23-06-10.jpg",
+      ]);
+
       // And verify that the target playlist directory does not
       // contains the audio file copied from the source playlist
       targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
@@ -4157,6 +4234,28 @@ void main() {
       );
 
       expect(targetPlaylistMp3Lst, []);
+
+      // Verify that the target playlist directory does not contains
+      // the audio comment file copied from the source playlist
+      targetPlaylistCommentLst = DirUtil.listFileNamesInDir(
+        directoryPath:
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitleThree${path.separator}$kCommentDirName',
+        fileExtension: 'json',
+      );
+
+      expect(targetPlaylistCommentLst,
+          []);
+
+      // Verify that the target playlist directory now contains
+      // the audio picture file copied from the source playlist
+      targetPlaylistPictureLst = DirUtil.listFileNamesInDir(
+        directoryPath:
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitleThree${path.separator}$kPictureDirName',
+        fileExtension: 'jpg',
+      );
+
+      expect(targetPlaylistPictureLst,
+          []);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
