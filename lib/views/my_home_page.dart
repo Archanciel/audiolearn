@@ -162,7 +162,9 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
         children: [
           _buildPageView(_screenWidgetLst[_currentIndex]),
           _buildBottomScreenIconButtonRow(
-              audioPlayerVMlistenFalse, themeProviderVMlistenTrue),
+            themeProvider: themeProviderVMlistenTrue,
+            audioPlayerVMlistenedFalse: audioPlayerVMlistenFalse,
+          ),
         ],
       ),
     );
@@ -190,10 +192,10 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
   /// This method builds the row of icon buttons located at the bottom
   /// of the application. Each icon enables to drag to a specific screen:
   /// PlaylistDownloadView, AudioPlayerView and AudioExtractorView.
-  Row _buildBottomScreenIconButtonRow(
-    AudioPlayerVM audioGlobalPlayerVM,
-    ThemeProviderVM themeProvider,
-  ) {
+  Row _buildBottomScreenIconButtonRow({
+    required ThemeProviderVM themeProvider,
+    required AudioPlayerVM audioPlayerVMlistenedFalse,
+  }) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: _screenNavigationIconLst.asMap().entries.map((entry) {

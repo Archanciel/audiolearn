@@ -587,18 +587,19 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
   /// Method called when the user clicks on the audio list item
   /// audio title or subtitle or the play icon button. This switches
   /// to the AudioPlayerView screen and plays the clicked audio.
-  Future<void> _dragToAudioPlayerViewAndPlayAudio(
-      AudioPlayerVM audioGlobalPlayerVM) async {
-    await audioGlobalPlayerVM.setCurrentAudio(
+  Future<void> _dragToAudioPlayerViewAndPlayAudio({
+    required AudioPlayerVM audioPlayerVMlistenTrue,
+  }) async {
+    await audioPlayerVMlistenTrue.setCurrentAudio(
       audio: audio,
     );
-    await audioGlobalPlayerVM.goToAudioPlayPosition(
+    await audioPlayerVMlistenTrue.goToAudioPlayPosition(
       durationPosition: Duration(seconds: audio.audioPositionSeconds),
       isUndoRedo: true, // necessary to avoid creating an undo
       //                   command which would activate the undo
       //                   icon button
     );
-    await audioGlobalPlayerVM.playCurrentAudio();
+    await audioPlayerVMlistenTrue.playCurrentAudio();
 
     // dragging to the AudioPlayerView screen
     onPageChangedFunction(ScreenMixin.AUDIO_PLAYER_VIEW_DRAGGABLE_INDEX);
@@ -838,7 +839,9 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
           // the play icon. Clicking on it will play the audio
           // from the current position and will switch to the
           // AudioPlayerView screen.
-          await _dragToAudioPlayerViewAndPlayAudio(audioPlayerVMlistenTrue);
+          await _dragToAudioPlayerViewAndPlayAudio(
+            audioPlayerVMlistenTrue: audioPlayerVMlistenTrue,
+          );
         } else {
           // if the audio is playing, the displayed icon is
           // the pause icon. Clicking on it will pause the
