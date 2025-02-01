@@ -142,6 +142,7 @@ class MainApp extends StatelessWidget with ScreenMixin {
       commentVM: commentVM,
     );
 
+    // globalAudioPlayerVM is defined in ScreenMixin
     globalAudioPlayerVM = audioPlayerVM;
 
     // calling getUpToDateSelectablePlaylists() loads all the

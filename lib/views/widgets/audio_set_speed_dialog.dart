@@ -216,8 +216,8 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
               // play speed is changed even if the user presses
               // the cancel button.
               await _setPlaybackSpeed(
-                audioPlayerVMlistenFalse,
-                widget.audioPlaySpeed,
+                audioPlayerVMlistenedFalse: audioPlayerVMlistenFalse,
+                newValue: widget.audioPlaySpeed,
               );
 
               Navigator.of(context).pop();
@@ -305,8 +305,8 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
             double newSpeed = _audioPlaySpeed - 0.1;
             if (newSpeed >= 0.5) {
               await _setPlaybackSpeed(
-                audioPlayerVMlistenFalse,
-                newSpeed,
+                audioPlayerVMlistenedFalse: audioPlayerVMlistenFalse,
+                newValue: newSpeed,
               );
             } else {
               if (newSpeed >= 0.499) {
@@ -316,8 +316,8 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
                 // to 0.5, the bottom limit !
                 newSpeed = 0.5;
                 await _setPlaybackSpeed(
-                  audioPlayerVMlistenFalse,
-                  newSpeed,
+                  audioPlayerVMlistenedFalse: audioPlayerVMlistenFalse,
+                  newValue: newSpeed,
                 );
               }
             }
@@ -332,8 +332,8 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
             value: _audioPlaySpeed,
             onChanged: (value) async {
               await _setPlaybackSpeed(
-                audioPlayerVMlistenFalse,
-                value,
+                audioPlayerVMlistenedFalse: audioPlayerVMlistenFalse,
+                newValue: value,
               );
             },
           ),
@@ -345,8 +345,8 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
             double newSpeed = _audioPlaySpeed + 0.1;
             if (newSpeed <= 2.0) {
               await _setPlaybackSpeed(
-                audioPlayerVMlistenFalse,
-                newSpeed,
+                audioPlayerVMlistenedFalse: audioPlayerVMlistenFalse,
+                newValue: newSpeed,
               );
             } else {
               if (newSpeed <= 2.001) {
@@ -356,8 +356,8 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
                 // change the speed to 2.0, the top limit !
                 newSpeed = 2.0;
                 await _setPlaybackSpeed(
-                  audioPlayerVMlistenFalse,
-                  newSpeed,
+                  audioPlayerVMlistenedFalse: audioPlayerVMlistenFalse,
+                  newValue: newSpeed,
                 );
               }
             }
@@ -389,8 +389,8 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
           ),
           onPressed: () async {
             await _setPlaybackSpeed(
-              audioPlayerVMlistenFalse,
-              speed,
+              audioPlayerVMlistenedFalse: audioPlayerVMlistenFalse,
+              newValue: speed,
             );
           },
         );
@@ -398,10 +398,10 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
     );
   }
 
-  Future<void> _setPlaybackSpeed(
-    AudioPlayerVM audioGlobalPlayerVM,
-    double newValue,
-  ) async {
+  Future<void> _setPlaybackSpeed({
+    required AudioPlayerVM audioPlayerVMlistenedFalse,
+    required double newValue,
+  }) async {
     setState(() {
       _audioPlaySpeed = newValue;
     });
@@ -412,7 +412,7 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
       // changed in the dialog, the audio play speed value
       // of the audio play speed button at top of the audio
       // player view is also updated.
-      await audioGlobalPlayerVM.changeAudioPlaySpeed(_audioPlaySpeed);
+      await audioPlayerVMlistenedFalse.changeAudioPlaySpeed(_audioPlaySpeed);
     }
   }
 }

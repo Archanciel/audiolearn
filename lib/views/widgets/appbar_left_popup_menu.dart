@@ -556,7 +556,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
     required BuildContext context,
     required Audio? nextAudio,
   }) async {
-    AudioPlayerVM audioGlobalPlayerVM = Provider.of<AudioPlayerVM>(
+    AudioPlayerVM audioPlayerVMlistenedFalse = Provider.of<AudioPlayerVM>(
       context,
       listen: false,
     );
@@ -568,7 +568,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
       // doNotifyListeners is set to false to avoid that the
       // Confirm warning is displayed twice when the audio
       // moved to another playlist.
-      await audioGlobalPlayerVM.setCurrentAudio(
+      await audioPlayerVMlistenedFalse.setCurrentAudio(
         audio: nextAudio,
         doNotifyListeners: false,
       );
@@ -576,7 +576,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
       // Calling handleNoPlayableAudioAvailable() is necessary
       // to update the audio title in the audio player view to
       // "No selected audio"
-      await audioGlobalPlayerVM.handleNoPlayableAudioAvailable();
+      await audioPlayerVMlistenedFalse.handleNoPlayableAudioAvailable();
     }
   }
 
