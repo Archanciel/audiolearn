@@ -1055,7 +1055,7 @@ void main() {
       );
 
       // Deleting the filtered audio physically and from the selected playlist
-      playlistListVM.deleteSortFilteredAudioLst();
+      playlistListVM.deleteSortFilteredAudioAndCommentAndPictureLst();
 
       // Verify that the physical audio to delete files have been deleted
 

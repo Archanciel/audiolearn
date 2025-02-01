@@ -917,7 +917,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// Audio ...' deletes the audio files and removes the deleted audio from the
   /// playlist playable audio list. The deleted audio remain in the playlist
   /// downloaded audio list and so will not be redownloaded !
-  void deleteSortFilteredAudioLst() {
+  void deleteSortFilteredAudioAndCommentAndPictureLst() {
     List<Audio> filteredAudioToDelete =
         _sortedFilteredSelectedPlaylistPlayableAudioLst!;
 
@@ -930,6 +930,11 @@ class PlaylistListVM extends ChangeNotifier {
     // as well
     for (Audio audio in filteredAudioToDelete) {
       _commentVM.deleteAllAudioComments(commentedAudio: audio);
+
+      // deleting the audio picture file if it exists
+      _deleteAudioPictureIfExist(
+        audio: audio,
+      );
     }
 
     notifyListeners();
@@ -1887,6 +1892,15 @@ class PlaylistListVM extends ChangeNotifier {
       commentedAudio: audio,
     );
 
+    // deleting the audio picture file if it exists
+    _deleteAudioPictureIfExist(
+      audio: audio,
+    );
+  }
+
+  void _deleteAudioPictureIfExist({
+    required Audio audio,
+  }) {
     final String playlistDownloadPath = audio.enclosingPlaylist!.downloadPath;
     final String audioPictureFileName =
         audio.audioFileName.replaceAll('.mp3', '.jpg');
