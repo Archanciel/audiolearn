@@ -211,19 +211,12 @@ class AudioPlayerVM extends ChangeNotifier {
   ///
   /// Method called also by setNextAudio() or setPreviousAudio().
   ///
-  /// {doNotifyListeners} is set to false to avoid that the Confirm
-  /// warning is displayed twice. This happens an audio moved to another
-  /// playlist or deleted and the AppBarLeadingPopupMenuWidget
-  /// _replaceCurrentAudioByNextAudio() method is called to update
-  /// the Audio Player View screen.
-  ///
   /// {doClearUndoRedoLists} is set to false when the user clicks on
   /// the close button of the comment list add dialog. In this case,
   /// maintening the undo/redo lists is useful to enable the user to
   /// undo the audio position change.
   Future<void> setCurrentAudio({
     required Audio audio,
-    bool doNotifyListeners = true,
     bool doClearUndoRedoLists = true,
   }) async {
     await _setCurrentAudio(
@@ -248,10 +241,8 @@ class AudioPlayerVM extends ChangeNotifier {
 
     updateAndSaveCurrentAudio();
 
-    if (doNotifyListeners) {
-      currentAudioTitleNotifier.value = getCurrentAudioTitleWithDuration();
-      currentAudioPositionNotifier.value = _currentAudioPosition;
-    }
+    currentAudioTitleNotifier.value = getCurrentAudioTitleWithDuration();
+    currentAudioPositionNotifier.value = _currentAudioPosition;
   }
 
   /// Method called when the user in the PlaylistDownloadView clicks
