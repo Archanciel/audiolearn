@@ -549,7 +549,9 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
       audioFileNameNoExt: audioFileName,
     )!;
 
-    await audioPlayerVMlistenFalse.setCurrentAudio(audio: audio);
+    await audioPlayerVMlistenFalse.setCurrentAudio(
+      audio: audio,
+    );
 
     showDialog<void>(
       context: context,
