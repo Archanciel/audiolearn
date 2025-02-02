@@ -9003,8 +9003,8 @@ void main() {
       testWidgets('''Select the 'toMoveOrCopy' SF parms and apply it. Then,
            click on the 'copy Filtered Audio' playlist menu and verify the displayed
            warning as well as the copy of all playlist fully listened audio as well
-           as their comments. Verification done on source as well as target playlists.''',
-          (tester) async {
+           as their comments and their picture. Verification done on source as well
+           as target playlists.''', (tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'delete_filtered_audio_test',
@@ -9106,8 +9106,10 @@ void main() {
         // Verify the presence of the audio comment files which will be later
         // copied or not
 
-        List<String> audioCommentFileNameToCopyLst = [
+        List<String> availableAudioCommentFileNameLst = [
+          "231226-094526-Ce qui va vraiment sauver notre espèce par Jancovici et Barrau 23-09-23.json",
           "231226-094534-3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher) 23-12-01.json",
+          "240107-094520-Les besoins artificiels par R.Keucheyan 24-01-05.json",
         ];
 
         List<String> listCommentJsonFileNames = DirUtil.listFileNamesInDir(
@@ -9116,13 +9118,30 @@ void main() {
           fileExtension: 'json',
         );
 
-        for (String audioCommentFileNameToMove
-            in audioCommentFileNameToCopyLst) {
-          expect(
-            listCommentJsonFileNames.contains(audioCommentFileNameToMove),
-            true,
-          );
-        }
+        expect(
+          listCommentJsonFileNames,
+          availableAudioCommentFileNameLst,
+        );
+
+        // Verify the presence of the audio picture files which will be later
+        // copied or not
+
+        List<String> availableAudioPictureFileNameLst = [
+          "231226-094526-Ce qui va vraiment sauver notre espèce par Jancovici et Barrau 23-09-23.jpg",
+          "240107-094528-Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik 23-09-10.jpg",
+          "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.jpg",
+        ];
+
+        List<String> listPictureJpgFileNames = DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kPictureDirName",
+          fileExtension: 'jpg',
+        );
+
+        expect(
+          listPictureJpgFileNames,
+          availableAudioPictureFileNameLst,
+        );
 
         // Tap the 'Toggle List' button to show the list of playlist's.
         await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -9155,8 +9174,8 @@ void main() {
           unmovedOrUncopiedAudioNumber: 0,
         );
 
-        // Verify in source playlist directory that the audio files were
-        // copied from
+        // Verify in source playlist directory that the copied audio
+        // files are still present
 
         listMp3FileNames = DirUtil.listFileNamesInDir(
           directoryPath:
@@ -9171,8 +9190,12 @@ void main() {
           );
         }
 
-        // Verify in source playlist directory that the audio comment files
-        // were copied from
+        // Verify in source playlist directory that the copied audio
+        // comment files are still present
+
+        List<String> audioCommentFileNameToCopyLst = [
+          "231226-094534-3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher) 23-12-01.json",
+        ];
 
         listCommentJsonFileNames = DirUtil.listFileNamesInDir(
           directoryPath:
@@ -9184,6 +9207,28 @@ void main() {
             in audioCommentFileNameToCopyLst) {
           expect(
             listCommentJsonFileNames.contains(audioCommentFileNameToCopy),
+            true,
+          );
+        }
+
+        // Verify in source playlist directory that the copied audio
+        // picture files are still present
+
+        List<String> audioPictureFileNameToCopyLst = [
+          "240107-094528-Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik 23-09-10.jpg",
+          "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.jpg",
+        ];
+
+        listCommentJsonFileNames = DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kPictureDirName",
+          fileExtension: 'jpg',
+        );
+
+        for (String audioPictureFileNameToCopy
+            in audioPictureFileNameToCopyLst) {
+          expect(
+            listCommentJsonFileNames.contains(audioPictureFileNameToCopy),
             true,
           );
         }
@@ -9234,7 +9279,7 @@ void main() {
           );
         }
 
-        // Verify in target playlist directory in which the audio comment
+        // Verify the target playlist directory in which the audio comment
         // files were copied
 
         listCommentJsonFileNames = DirUtil.listFileNamesInDir(
@@ -9247,6 +9292,23 @@ void main() {
             in audioCommentFileNameToCopyLst) {
           expect(
             listCommentJsonFileNames.contains(audioCommentFileNameCopied),
+            true,
+          );
+        }
+
+        // Verify the target playlist directory in which the audio picture
+        // files were copied
+
+        listPictureJpgFileNames = DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$targetPlaylistTitle${path.separator}$kPictureDirName",
+          fileExtension: 'jpg',
+        );
+
+        for (String audioPictureFileNameCopied
+            in audioPictureFileNameToCopyLst) {
+          expect(
+            listPictureJpgFileNames.contains(audioPictureFileNameCopied),
             true,
           );
         }
