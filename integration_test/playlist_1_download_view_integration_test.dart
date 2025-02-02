@@ -11326,17 +11326,6 @@ void main() {
         fileExtension: 'mp3',
       );
 
-      // Verify that the target playlist directory now contains
-      // the audio picture file copied from the source playlist
-      List<String> targetPlaylistPictureLst = DirUtil.listFileNamesInDir(
-        directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioTargetPlaylistTitle${path.separator}$kPictureDirName',
-        fileExtension: 'jpg',
-      );
-
-      expect(targetPlaylistPictureLst,
-          ["230628-033811-audio learn test short video one 23-06-10.jpg"]);
-
       // Verify the local source playlist directory content
       expect(sourcePlaylistMp3Lst,
           ["230628-033811-audio learn test short video one 23-06-10.mp3"]);
@@ -11347,6 +11336,18 @@ void main() {
         "231117-002826-Really short video 23-07-01.mp3",
         "231117-002828-morning _ cinematic video 23-07-01.mp3",
       ]);
+
+      // Verify that the target playlist directory now contains
+      // the audio picture file copied from the source playlist
+
+      List<String> targetPlaylistPictureLst = DirUtil.listFileNamesInDir(
+        directoryPath:
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioTargetPlaylistTitle${path.separator}$kPictureDirName',
+        fileExtension: 'jpg',
+      );
+
+      expect(targetPlaylistPictureLst,
+          ["230628-033811-audio learn test short video one 23-06-10.jpg"]);
 
       // Now verifying the copied audio informations in the source
       // playlist
@@ -11428,6 +11429,19 @@ void main() {
         "231117-002826-Really short video 23-07-01.mp3",
         "231117-002828-morning _ cinematic video 23-07-01.mp3",
       ]);
+
+      // Verify that the target playlist directory no longer
+      // contains the audio picture file copied from the source
+      // playlist
+      
+      targetPlaylistPictureLst = DirUtil.listFileNamesInDir(
+        directoryPath:
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioTargetPlaylistTitle${path.separator}$kPictureDirName',
+        fileExtension: 'jpg',
+      );
+
+      expect(targetPlaylistPictureLst,
+          []);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -17565,18 +17579,18 @@ void main() {
   });
 }
 
-void playlistOneDownloadViewIntegrationTest() {
-  const String youtubePlaylistId = 'PLzwWSJNcZTMTSAE8iabVB6BCAfFGHHfah';
-  const String youtubePlaylistUrl =
-      'https://youtube.com/playlist?list=$youtubePlaylistId';
-// url used in integration_test/audio_download_vm_integration_test.dart
-// which works:
-// 'https://youtube.com/playlist?list=PLzwWSJNcZTMRB9ILve6fEIS_OHGrV5R2o';
-  const String youtubeNewPlaylistTitle =
-      'audio_learn_new_youtube_playlist_test';
+// void playlistOneDownloadViewIntegrationTest() {
+//   const String youtubePlaylistId = 'PLzwWSJNcZTMTSAE8iabVB6BCAfFGHHfah';
+//   const String youtubePlaylistUrl =
+//       'https://youtube.com/playlist?list=$youtubePlaylistId';
+// // url used in integration_test/audio_download_vm_integration_test.dart
+// // which works:
+// // 'https://youtube.com/playlist?list=PLzwWSJNcZTMRB9ILve6fEIS_OHGrV5R2o';
+//   const String youtubeNewPlaylistTitle =
+//       'audio_learn_new_youtube_playlist_test';
 
-  const String testPlaylistDir =
-      '$kPlaylistDownloadRootPathWindowsTest\\audio_learn_new_youtube_playlist_test';
+//   const String testPlaylistDir =
+//       '$kPlaylistDownloadRootPathWindowsTest\\audio_learn_new_youtube_playlist_test';
 
   // group('Bug fix tests', () {
   //   testWidgets('Verifying with partial download of single video audio',
@@ -20960,973 +20974,973 @@ void playlistOneDownloadViewIntegrationTest() {
   //   });
   // });
   // group('Playlist audio comments dialog test', () {
-    testWidgets(
-        '''On empty playlist, opening the playlist audio comments dialog.''',
-        (WidgetTester tester) async {
-      const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
-      const String emptyPlaylistTitle = 'Empty'; // Youtube playlist
-
-      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-        tester: tester,
-        savedTestDataDirName: 'import_audio_file_test',
-        selectedPlaylistTitle: youtubePlaylistTitle,
-      );
-
-      // First, find the Empty playlist sublist ListTile Text widget
-      Finder emptyPlaylistListTileTextWidgetFinder =
-          find.text(emptyPlaylistTitle);
-
-      // Then obtain the playlist ListTile widget enclosing the Text widget
-      // by finding its ancestor
-      Finder emptyPlaylistListTileWidgetFinder = find.ancestor(
-        of: emptyPlaylistListTileTextWidgetFinder,
-        matching: find.byType(ListTile),
-      );
-
-      // Now we want to tap the popup menu of the Empty playlist ListTile
-
-      // Find the leading menu icon button of the playlist ListTile
-      // and tap on it
-      Finder emptyPlaylistListTileLeadingMenuIconButton = find.descendant(
-        of: emptyPlaylistListTileWidgetFinder,
-        matching: find.byIcon(Icons.menu),
-      );
-
-      // Tap the leading menu icon button to open the popup menu
-      await tester.tap(emptyPlaylistListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle();
-
-      // Now find the List comments of playlist audio popup menu
-      // item and tap on it
-      final Finder popupPlaylistAudioCommentsMenuItem =
-          find.byKey(const Key("popup_menu_display_playlist_audio_comments"));
-
-      await tester.tap(popupPlaylistAudioCommentsMenuItem);
-      await tester.pumpAndSettle();
-
-      // Verify that the playlist audio comment dialog is displayed
-      expect(find.byType(PlaylistCommentListDialog), findsOneWidget);
-
-      // Verify the dialog title
-      expect(find.text('Playlist audio comments'), findsOneWidget);
-
-      // Verify that the audio comments list of the dialog is empty
-
-      final Finder playlistCommentsLstFinder = find.byKey(const Key(
-        'playlistCommentsListKey',
-      ));
-
-      // Ensure the list has no child widgets
-      expect(
-        tester.widget<ListBody>(playlistCommentsLstFinder).children.length,
-        0,
-      );
-
-      // Tap on Close text button
-      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-      await tester.pumpAndSettle();
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
-      );
-    });
-    testWidgets('''Playlist comments color verification.''',
-        (WidgetTester tester) async {
-      const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
-
-      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-        tester: tester,
-        savedTestDataDirName: 'audio_comment_color_test',
-        selectedPlaylistTitle: youtubePlaylistTitle,
-      );
-
-      // First, open the playlist comment dialog
-      Finder playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
-        tester: tester,
-        playlistTitle: youtubePlaylistTitle,
-      );
-
-      final Finder playlistCommentListFinder =
-          find.byKey(const Key('playlistCommentsListKey'));
-
-      // Ensure the list has 8 child widgets
-      expect(
-        tester.widget<ListBody>(playlistCommentListFinder).children.length,
-        8,
-      );
-
-      // Verify the color of the audio titles in the playlist comment dialog
-
-      await _verifyAudioTitlesColorInPlaylistCommentDialog(
-        tester: tester,
-        playlistCommentListDialogFinder: playlistCommentListDialogFinder,
-      );
-
-      // Verifying the color of the comments titles in the playlist comment
-      // dialog
-
-      await IntegrationTestUtil.checkAudioTextColor(
-        tester: tester,
-        enclosingWidgetFinder: playlistCommentListDialogFinder,
-        audioTitleOrSubTitle: "Barrau one",
-        expectedTitleTextColor: null,
-        expectedTitleTextBackgroundColor: null,
-      );
-
-      await IntegrationTestUtil.checkAudioTextColor(
-        tester: tester,
-        enclosingWidgetFinder: playlistCommentListDialogFinder,
-        audioTitleOrSubTitle: "One",
-        expectedTitleTextColor: null,
-        expectedTitleTextBackgroundColor: null,
-      );
-
-      await IntegrationTestUtil.checkAudioTextColor(
-        tester: tester,
-        enclosingWidgetFinder: playlistCommentListDialogFinder,
-        audioTitleOrSubTitle: "Comment Jancovici",
-        expectedTitleTextColor: null,
-        expectedTitleTextBackgroundColor: null,
-      );
-
-      await IntegrationTestUtil.checkAudioTextColor(
-        tester: tester,
-        enclosingWidgetFinder: playlistCommentListDialogFinder,
-        audioTitleOrSubTitle: "Start",
-        expectedTitleTextColor: null,
-        expectedTitleTextBackgroundColor: null,
-      );
-
-      // Tap on Close text button
-      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-      await tester.pumpAndSettle();
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
-      );
-    });
-    group('Playing one comment, fully played audio', () {
-      testWidgets('''One comment full play color verification. Play one comment
-           completely. Then close the playlist comment dialog and reopen it.
-           Verify that the played comment color was not changed, which means
-           that the commented audio position change due to the comment play was
-           undone. Verify as well that the current audio change caused by the
-           played comment audio was undone as well.''',
-          (WidgetTester tester) async {
-        const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
-        const String playedCommentAudioTitle =
-            "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
-
-        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-          tester: tester,
-          savedTestDataDirName: 'audio_comment_color_test',
-          selectedPlaylistTitle: youtubePlaylistTitle,
-        );
-
-        // First, open the playlist comment dialog
-        Finder playlistCommentListDialogFinder =
-            await _openPlaylistCommentDialog(
-          tester: tester,
-          playlistTitle: youtubePlaylistTitle,
-        );
-
-        // Find the list of comments in the playlist comment dialog
-        final Finder listFinder = find.descendant(
-            of: playlistCommentListDialogFinder,
-            matching: find.byType(ListBody));
-
-        // Find all the list items GestureDetector's
-        final Finder gestureDetectorsFinder = find.descendant(
-            // 3 GestureDetector per comment item
-            of: listFinder,
-            matching: find.byType(GestureDetector));
-
-        // Now tap on the play icon button of the unique comment of the second
-        // audio in order to play it completely
-        await IntegrationTestUtil.playComment(
-          tester: tester,
-          gestureDetectorsFinder: gestureDetectorsFinder,
-          itemIndex: 3,
-          typeOnPauseAfterPlay: false,
-          maxPlayDurationSeconds: 3,
-        );
-
-        // Tap on Close text button
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-        await tester.pumpAndSettle();
-
-        // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
-          tester: tester,
-          playlistTitle: youtubePlaylistTitle,
-        );
-
-        // Verify the color of the audio titles in the playlist comment dialog
-
-        await _verifyAudioTitlesColorInPlaylistCommentDialog(
-          tester: tester,
-          playlistCommentListDialogFinder: playlistCommentListDialogFinder,
-        );
-
-        // Tap on Close text button
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-        await tester.pumpAndSettle();
-
-        // When closing the playlist comment dialog, the played comment audio
-        // modification was undone. Verifying that ...
-        await _verifyUndoneListenedAudioPosition(
-          tester: tester,
-          playlistTitle: youtubePlaylistTitle,
-          playedCommentAudioTitle: playedCommentAudioTitle,
-          playableAudioLstAudioIndex: 1,
-          audioPositionStr: '1:17:54',
-          audioPositionSeconds: 4674,
-          audioRemainingDurationStr: '0:00',
-          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
-          audioPausedDateTime: DateTime(2024, 9, 8, 14, 38, 43),
-        );
-
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
-      });
-      testWidgets(
-          '''One comment pause on partial play color verification. Play one comment
-           partially, clicking on pause button after 1.5 seconds. Then close the
-           playlist comment dialog and reopen it. Verify that the played comment
-           color was not changed, which means that the commented audio position
-           change due to the comment play was undone. Verify as well that the
-           current audio change caused by the played comment audio was undone as
-           well.''', (WidgetTester tester) async {
-        const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
-        const String playedCommentAudioTitle =
-            "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
-
-        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-          tester: tester,
-          savedTestDataDirName: 'audio_comment_color_test',
-          selectedPlaylistTitle: youtubePlaylistTitle,
-        );
-
-        // First, open the playlist comment dialog
-        Finder playlistCommentListDialogFinder =
-            await _openPlaylistCommentDialog(
-          tester: tester,
-          playlistTitle: youtubePlaylistTitle,
-        );
-
-        // Find the list of comments in the playlist comment dialog
-        final Finder listFinder = find.descendant(
-            of: playlistCommentListDialogFinder,
-            matching: find.byType(ListBody));
-
-        // Find all the list items GestureDetector's
-        final Finder gestureDetectorsFinder = find.descendant(
-            // 3 GestureDetector per comment item
-            of: listFinder,
-            matching: find.byType(GestureDetector));
-
-        // Now tap on the play icon button of the unique comment of the fourth
-        // audio in order to play it partially (during 1.5 seconds)
-        await IntegrationTestUtil.playComment(
-          tester: tester,
-          gestureDetectorsFinder: gestureDetectorsFinder,
-          itemIndex: 3,
-          typeOnPauseAfterPlay: true,
-          maxPlayDurationSeconds: 1.5,
-        );
-
-        // Tap on Close text button
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-        await tester.pumpAndSettle();
-
-        // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
-          tester: tester,
-          playlistTitle: youtubePlaylistTitle,
-        );
-
-        // Verify the color of the audio titles in the playlist comment dialog
-
-        await _verifyAudioTitlesColorInPlaylistCommentDialog(
-          tester: tester,
-          playlistCommentListDialogFinder: playlistCommentListDialogFinder,
-        );
-
-        // Tap on Close text button
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-        await tester.pumpAndSettle();
-
-        // When closing the playlist comment dialog, the played comment audio
-        // modification was undone. Verifying that ...
-        await _verifyUndoneListenedAudioPosition(
-          tester: tester,
-          playlistTitle: youtubePlaylistTitle,
-          playedCommentAudioTitle: playedCommentAudioTitle,
-          playableAudioLstAudioIndex: 1,
-          audioPositionStr: '1:17:54',
-          audioPositionSeconds: 4674,
-          audioRemainingDurationStr: '0:00',
-          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
-          audioPausedDateTime: DateTime(2024, 9, 8, 14, 38, 43),
-        );
-
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
-      });
-      testWidgets(
-          '''One comment close on partial play color verification. Play one
-           comment partially, clicking on close playlist comment dialog button
-           after 1.5 seconds. Then reopen the dialog. Verify that the played comment
-           color was not changed, which means that the commented audio position
-           change due to the comment play was undone. Verify as well that the
-           current audio change caused by the played comment audio was undone as
-           well.''', (WidgetTester tester) async {
-        const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
-        const String playedCommentAudioTitle =
-            "La surpopulation mondiale par Jancovici et Barrau";
-
-        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-          tester: tester,
-          savedTestDataDirName: 'audio_comment_color_test',
-          selectedPlaylistTitle: youtubePlaylistTitle,
-        );
-
-        // First, open the playlist comment dialog
-        Finder playlistCommentListDialogFinder =
-            await _openPlaylistCommentDialog(
-          tester: tester,
-          playlistTitle: youtubePlaylistTitle,
-        );
-
-        // Find the list of comments in the playlist comment dialog
-        final Finder listFinder = find.descendant(
-            of: playlistCommentListDialogFinder,
-            matching: find.byType(ListBody));
-
-        // Find all the list items GestureDetector's
-        final Finder gestureDetectorsFinder = find.descendant(
-            // 3 GestureDetector per comment item
-            of: listFinder,
-            matching: find.byType(GestureDetector));
-
-        // Now tap on the play icon button of the unique comment of the second
-        // audio in order to play it partially (during 1.5 seconds)
-        await IntegrationTestUtil.playComment(
-          tester: tester,
-          gestureDetectorsFinder: gestureDetectorsFinder,
-          itemIndex: 9,
-          typeOnPauseAfterPlay: false,
-        );
-
-        // Let the comment be played during 1.5 seconds and then clixk on the
-        // playlist comment dialog close button
-        await Future.delayed(const Duration(milliseconds: 1500));
-        await tester.pumpAndSettle();
-
-        // Tap on Close text button
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-        await tester.pumpAndSettle();
-
-        // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
-          tester: tester,
-          playlistTitle: youtubePlaylistTitle,
-        );
-
-        // Verify the color of the audio titles in the playlist comment dialog
-
-        await _verifyAudioTitlesColorInPlaylistCommentDialog(
-          tester: tester,
-          playlistCommentListDialogFinder: playlistCommentListDialogFinder,
-        );
-
-        // Tap on Close text button
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-        await tester.pumpAndSettle();
-
-        // Tap on the 'Toggle List' button to hide the playlist list
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester.pumpAndSettle();
-
-        // When closing the playlist comment dialog, the played comment audio
-        // modification was undone. Verifying that ...
-        await _verifyUndoneListenedAudioPosition(
-          tester: tester,
-          playlistTitle: youtubePlaylistTitle,
-          playedCommentAudioTitle: playedCommentAudioTitle,
-          playableAudioLstAudioIndex: 2,
-          audioPositionStr: '0:00',
-          audioPositionSeconds: 0,
-          audioRemainingDurationStr: '7:38',
-          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
-          audioPausedDateTime: null,
-        );
-
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
-      });
-    });
-    group('Playing one comment, partially played audio', () {
-      testWidgets('''One comment partially play color verification. Play comment
-           completely. Then close the playlist comment dialog and reopen it.
-           Verify that the played comment color was not changed, which means
-           that the commented audio position change due to the comment play was
-           undone. Verify as well that the current audio change caused by the
-           played comment audio was undone as well.''',
-          (WidgetTester tester) async {
-        const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
-        const String playedCommentAudioTitle =
-            "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
-
-        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-          tester: tester,
-          savedTestDataDirName: 'audio_comment_color_test',
-          selectedPlaylistTitle: youtubePlaylistTitle,
-        );
-
-        // First, open the playlist comment dialog
-        Finder playlistCommentListDialogFinder =
-            await _openPlaylistCommentDialog(
-          tester: tester,
-          playlistTitle: youtubePlaylistTitle,
-        );
-
-        // Find the list of comments in the playlist comment dialog
-        final Finder listFinder = find.descendant(
-            of: playlistCommentListDialogFinder,
-            matching: find.byType(ListBody));
-
-        // Find all the list items GestureDetector's
-        final Finder gestureDetectorsFinder = find.descendant(
-            // 3 GestureDetector per comment item
-            of: listFinder,
-            matching: find.byType(GestureDetector));
-
-        // Now tap on the play icon button of the unique comment of the third
-        // audio in order to play it completely
-        await IntegrationTestUtil.playComment(
-          tester: tester,
-          gestureDetectorsFinder: gestureDetectorsFinder,
-          itemIndex: 6,
-          typeOnPauseAfterPlay: false,
-          maxPlayDurationSeconds: 3,
-        );
-
-        // Tap on Close text button
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-        await tester.pumpAndSettle();
-
-        // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
-          tester: tester,
-          playlistTitle: youtubePlaylistTitle,
-        );
-
-        // Verify the color of the audio titles in the playlist comment dialog
-
-        await _verifyAudioTitlesColorInPlaylistCommentDialog(
-          tester: tester,
-          playlistCommentListDialogFinder: playlistCommentListDialogFinder,
-        );
-
-        // Tap on Close text button
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-        await tester.pumpAndSettle();
-
-        // When closing the playlist comment dialog, the played comment audio
-        // modification was undone. Verifying that ...
-        await _verifyUndoneListenedAudioPosition(
-          tester: tester,
-          playlistTitle: youtubePlaylistTitle,
-          playedCommentAudioTitle: playedCommentAudioTitle,
-          playableAudioLstAudioIndex: 3,
-          audioPositionStr: '5:11',
-          audioPositionSeconds: 311,
-          audioRemainingDurationStr: '1:18',
-          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: true,
-          audioPausedDateTime: DateTime(2024, 9, 9, 19, 47, 23),
-        );
-
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
-      });
-      testWidgets(
-          '''One comment pause on partial play color verification. Play one comment
-           partially, clicking on pause button after 1.5 seconds. Then close the
-           playlist comment dialog and reopen it. Verify that the played comment
-           color was not changed, which means that the commented audio position
-           change due to the comment play was undone. Verify as well that the
-           current audio change caused by the played comment audio was undone as
-           well.''', (WidgetTester tester) async {
-        const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
-        const String playedCommentAudioTitle =
-            "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
-
-        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-          tester: tester,
-          savedTestDataDirName: 'audio_comment_color_test',
-          selectedPlaylistTitle: youtubePlaylistTitle,
-        );
-
-        // First, open the playlist comment dialog
-        Finder playlistCommentListDialogFinder =
-            await _openPlaylistCommentDialog(
-          tester: tester,
-          playlistTitle: youtubePlaylistTitle,
-        );
-
-        // Find the list of comments in the playlist comment dialog
-        final Finder listFinder = find.descendant(
-            of: playlistCommentListDialogFinder,
-            matching: find.byType(ListBody));
-
-        // Find all the list items GestureDetector's
-        final Finder gestureDetectorsFinder = find.descendant(
-            // 3 GestureDetector per comment item
-            of: listFinder,
-            matching: find.byType(GestureDetector));
-
-        // Now tap on the play icon button of the unique comment of the fourth
-        // audio in order to play it partially (during 1.5 seconds)
-        await IntegrationTestUtil.playComment(
-          tester: tester,
-          gestureDetectorsFinder: gestureDetectorsFinder,
-          itemIndex: 6,
-          typeOnPauseAfterPlay: true,
-          maxPlayDurationSeconds: 1.5,
-        );
-
-        // Tap on Close text button
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-        await tester.pumpAndSettle();
-
-        // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
-          tester: tester,
-          playlistTitle: youtubePlaylistTitle,
-        );
-
-        // Verify the color of the audio titles in the playlist comment dialog
-
-        await _verifyAudioTitlesColorInPlaylistCommentDialog(
-          tester: tester,
-          playlistCommentListDialogFinder: playlistCommentListDialogFinder,
-        );
-
-        // Tap on Close text button
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-        await tester.pumpAndSettle();
-
-        // When closing the playlist comment dialog, the played comment audio
-        // modification was undone. Verifying that ...
-        await _verifyUndoneListenedAudioPosition(
-          tester: tester,
-          playlistTitle: youtubePlaylistTitle,
-          playedCommentAudioTitle: playedCommentAudioTitle,
-          playableAudioLstAudioIndex: 3,
-          audioPositionStr: '5:11',
-          audioPositionSeconds: 311,
-          audioRemainingDurationStr: '1:18',
-          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: true,
-          audioPausedDateTime: DateTime(2024, 9, 9, 19, 47, 23),
-        );
-
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
-      });
-      testWidgets(
-          '''One comment close on partial play color verification. Play one
-           comment partially, clicking on close playlist comment dialog button
-           after 1.5 seconds. Then reopen the dialog. Verify that the played comment
-           color was not changed, which means that the commented audio position
-           change due to the comment play was undone. Verify as well that the
-           current audio change caused by the played comment audio was undone as
-           well.''', (WidgetTester tester) async {
-        const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
-        const String playedCommentAudioTitle =
-            "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
-
-        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-          tester: tester,
-          savedTestDataDirName: 'audio_comment_color_test',
-          selectedPlaylistTitle: youtubePlaylistTitle,
-        );
-
-        // First, open the playlist comment dialog
-        Finder playlistCommentListDialogFinder =
-            await _openPlaylistCommentDialog(
-          tester: tester,
-          playlistTitle: youtubePlaylistTitle,
-        );
-
-        // Find the list of comments in the playlist comment dialog
-        final Finder listFinder = find.descendant(
-            of: playlistCommentListDialogFinder,
-            matching: find.byType(ListBody));
-
-        // Find all the list items GestureDetector's
-        final Finder gestureDetectorsFinder = find.descendant(
-            // 3 GestureDetector per comment item
-            of: listFinder,
-            matching: find.byType(GestureDetector));
-
-        // Now tap on the play icon button of the unique comment of the second
-        // audio in order to play it partially (during 1.5 seconds)
-        await IntegrationTestUtil.playComment(
-          tester: tester,
-          gestureDetectorsFinder: gestureDetectorsFinder,
-          itemIndex: 6,
-          typeOnPauseAfterPlay: false,
-        );
-
-        // Let the comment be played during 1.5 seconds and then clixk on the
-        // playlist comment dialog close button
-        await Future.delayed(const Duration(milliseconds: 1500));
-        await tester.pumpAndSettle();
-
-        // Tap on Close text button
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-        await tester.pumpAndSettle();
-
-        // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
-          tester: tester,
-          playlistTitle: youtubePlaylistTitle,
-        );
-
-        // Verify the color of the audio titles in the playlist comment dialog
-
-        await _verifyAudioTitlesColorInPlaylistCommentDialog(
-          tester: tester,
-          playlistCommentListDialogFinder: playlistCommentListDialogFinder,
-        );
-
-        // Tap on Close text button
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-        await tester.pumpAndSettle();
-
-        // Tap on the 'Toggle List' button to hide the playlist list
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester.pumpAndSettle();
-
-        // When closing the playlist comment dialog, the played comment audio
-        // modification was undone. Verifying that ...
-        await _verifyUndoneListenedAudioPosition(
-          tester: tester,
-          playlistTitle: youtubePlaylistTitle,
-          playedCommentAudioTitle: playedCommentAudioTitle,
-          playableAudioLstAudioIndex: 3,
-          audioPositionStr: '5:11',
-          audioPositionSeconds: 311,
-          audioRemainingDurationStr: '1:18',
-          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: true,
-          audioPausedDateTime: DateTime(2024, 9, 9, 19, 47, 23),
-        );
-
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
-      });
-    });
-    group('Playing one comment, unplayed audio', () {
-      testWidgets('''One comment full play color verification. Play one comment
-           completely. Then close the playlist comment dialog and reopen it.
-           Verify that the played comment color was not changed, which means
-           that the commented audio position change due to the comment play was
-           undone. Verify as well that the current audio change caused by the
-           played comment audio was undone as well.''',
-          (WidgetTester tester) async {
-        const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
-        const String playedCommentAudioTitle =
-            "La surpopulation mondiale par Jancovici et Barrau";
-
-        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-          tester: tester,
-          savedTestDataDirName: 'audio_comment_color_test',
-          selectedPlaylistTitle: youtubePlaylistTitle,
-        );
-
-        // First, open the playlist comment dialog
-        Finder playlistCommentListDialogFinder =
-            await _openPlaylistCommentDialog(
-          tester: tester,
-          playlistTitle: youtubePlaylistTitle,
-        );
-
-        // Find the list of comments in the playlist comment dialog
-        final Finder listFinder = find.descendant(
-            of: playlistCommentListDialogFinder,
-            matching: find.byType(ListBody));
-
-        // Find all the list items GestureDetector's
-        final Finder gestureDetectorsFinder = find.descendant(
-            // 3 GestureDetector per comment item
-            of: listFinder,
-            matching: find.byType(GestureDetector));
-
-        // Now tap on the play icon button of the unique comment of the second
-        // audio in order to play it completely
-        await IntegrationTestUtil.playComment(
-          tester: tester,
-          gestureDetectorsFinder: gestureDetectorsFinder,
-          itemIndex: 9,
-          typeOnPauseAfterPlay: false,
-          maxPlayDurationSeconds: 3,
-        );
-
-        // Tap on Close text button
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-        await tester.pumpAndSettle();
-
-        // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
-          tester: tester,
-          playlistTitle: youtubePlaylistTitle,
-        );
-
-        // Verify the color of the audio titles in the playlist comment dialog
-
-        await _verifyAudioTitlesColorInPlaylistCommentDialog(
-          tester: tester,
-          playlistCommentListDialogFinder: playlistCommentListDialogFinder,
-        );
-
-        // Tap on Close text button
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-        await tester.pumpAndSettle();
-
-        // Tap on the 'Toggle List' button to hide the playlist list
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester.pumpAndSettle();
-
-        // When closing the playlist comment dialog, the played comment audio
-        // modification was undone. Verifying that ...
-        await _verifyUndoneListenedAudioPosition(
-          tester: tester,
-          playlistTitle: youtubePlaylistTitle,
-          playedCommentAudioTitle: playedCommentAudioTitle,
-          playableAudioLstAudioIndex: 2,
-          audioPositionStr: '0:00',
-          audioPositionSeconds: 0,
-          audioRemainingDurationStr: '7:38',
-          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
-          audioPausedDateTime: null,
-        );
-
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
-      });
-      testWidgets(
-          '''One comment pause on partial play color verification. Play one comment
-           partially, clicking on pause button after 1.5 seconds. Then close the
-           playlist comment dialog and reopen it. Verify that the played comment
-           color was not changed, which means that the commented audio position
-           change due to the comment play was undone. Verify as well that the
-           current audio change caused by the played comment audio was undone as
-           well.''', (WidgetTester tester) async {
-        const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
-        const String playedCommentAudioTitle =
-            "La surpopulation mondiale par Jancovici et Barrau";
-
-        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-          tester: tester,
-          savedTestDataDirName: 'audio_comment_color_test',
-          selectedPlaylistTitle: youtubePlaylistTitle,
-        );
-
-        // First, open the playlist comment dialog
-        Finder playlistCommentListDialogFinder =
-            await _openPlaylistCommentDialog(
-          tester: tester,
-          playlistTitle: youtubePlaylistTitle,
-        );
-
-        // Find the list of comments in the playlist comment dialog
-        final Finder listFinder = find.descendant(
-            of: playlistCommentListDialogFinder,
-            matching: find.byType(ListBody));
-
-        // Find all the list items GestureDetector's
-        final Finder gestureDetectorsFinder = find.descendant(
-            // 3 GestureDetector per comment item
-            of: listFinder,
-            matching: find.byType(GestureDetector));
-
-        // Now tap on the play icon button of the unique comment of the fourth
-        // audio in order to play it partially (during 1.5 seconds)
-        await IntegrationTestUtil.playComment(
-          tester: tester,
-          gestureDetectorsFinder: gestureDetectorsFinder,
-          itemIndex: 9,
-          typeOnPauseAfterPlay: true,
-          maxPlayDurationSeconds: 1.5,
-        );
-
-        // Tap on Close text button
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-        await tester.pumpAndSettle();
-
-        // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
-          tester: tester,
-          playlistTitle: youtubePlaylistTitle,
-        );
-
-        // Verify the color of the audio titles in the playlist comment dialog
-
-        await _verifyAudioTitlesColorInPlaylistCommentDialog(
-          tester: tester,
-          playlistCommentListDialogFinder: playlistCommentListDialogFinder,
-        );
-
-        // Tap on Close text button
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-        await tester.pumpAndSettle();
-
-        // Tap on the 'Toggle List' button to hide the playlist list
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester.pumpAndSettle();
-
-        // When closing the playlist comment dialog, the played comment audio
-        // modification was undone. Verifying that ...
-        await _verifyUndoneListenedAudioPosition(
-          tester: tester,
-          playlistTitle: youtubePlaylistTitle,
-          playedCommentAudioTitle: playedCommentAudioTitle,
-          playableAudioLstAudioIndex: 2,
-          audioPositionStr: '0:00',
-          audioPositionSeconds: 0,
-          audioRemainingDurationStr: '7:38',
-          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
-          audioPausedDateTime: null,
-        );
-
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
-      });
-      testWidgets(
-          '''One comment close on partial play color verification. Play one
-           comment partially, clicking on close playlist comment dialog button
-           after 1.5 seconds. Then reopen the dialog. Verify that the played comment
-           color was not changed, which means that the commented audio position
-           change due to the comment play was undone. Verify as well that the
-           current audio change caused by the played comment audio was undone as
-           well.''', (WidgetTester tester) async {
-        const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
-        const String playedCommentAudioTitle =
-            "La surpopulation mondiale par Jancovici et Barrau";
-
-        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-          tester: tester,
-          savedTestDataDirName: 'audio_comment_color_test',
-          selectedPlaylistTitle: youtubePlaylistTitle,
-        );
-
-        // First, open the playlist comment dialog
-        Finder playlistCommentListDialogFinder =
-            await _openPlaylistCommentDialog(
-          tester: tester,
-          playlistTitle: youtubePlaylistTitle,
-        );
-
-        // Find the list of comments in the playlist comment dialog
-        final Finder listFinder = find.descendant(
-            of: playlistCommentListDialogFinder,
-            matching: find.byType(ListBody));
-
-        // Find all the list items GestureDetector's
-        final Finder gestureDetectorsFinder = find.descendant(
-            // 3 GestureDetector per comment item
-            of: listFinder,
-            matching: find.byType(GestureDetector));
-
-        // Now tap on the play icon button of the unique comment of the second
-        // audio in order to play it partially (during 1.5 seconds)
-        await IntegrationTestUtil.playComment(
-          tester: tester,
-          gestureDetectorsFinder: gestureDetectorsFinder,
-          itemIndex: 9,
-          typeOnPauseAfterPlay: false,
-        );
-
-        // Let the comment be played during 1.5 seconds and then clixk on the
-        // playlist comment dialog close button
-        await Future.delayed(const Duration(milliseconds: 1500));
-        await tester.pumpAndSettle();
-
-        // Tap on Close text button
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-        await tester.pumpAndSettle();
-
-        // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
-          tester: tester,
-          playlistTitle: youtubePlaylistTitle,
-        );
-
-        // Verify the color of the audio titles in the playlist comment dialog
-
-        await _verifyAudioTitlesColorInPlaylistCommentDialog(
-          tester: tester,
-          playlistCommentListDialogFinder: playlistCommentListDialogFinder,
-        );
-
-        // Tap on Close text button
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-        await tester.pumpAndSettle();
-
-        // Tap on the 'Toggle List' button to hide the playlist list
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester.pumpAndSettle();
-
-        // When closing the playlist comment dialog, the played comment audio
-        // modification was undone. Verifying that ...
-        await _verifyUndoneListenedAudioPosition(
-          tester: tester,
-          playlistTitle: youtubePlaylistTitle,
-          playedCommentAudioTitle: playedCommentAudioTitle,
-          playableAudioLstAudioIndex: 2,
-          audioPositionStr: '0:00',
-          audioPositionSeconds: 0,
-          audioRemainingDurationStr: '7:38',
-          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
-          audioPausedDateTime: null,
-        );
-
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
-      });
-    });
+    // testWidgets(
+    //     '''On empty playlist, opening the playlist audio comments dialog.''',
+    //     (WidgetTester tester) async {
+    //   const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+    //   const String emptyPlaylistTitle = 'Empty'; // Youtube playlist
+
+    //   await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+    //     tester: tester,
+    //     savedTestDataDirName: 'import_audio_file_test',
+    //     selectedPlaylistTitle: youtubePlaylistTitle,
+    //   );
+
+    //   // First, find the Empty playlist sublist ListTile Text widget
+    //   Finder emptyPlaylistListTileTextWidgetFinder =
+    //       find.text(emptyPlaylistTitle);
+
+    //   // Then obtain the playlist ListTile widget enclosing the Text widget
+    //   // by finding its ancestor
+    //   Finder emptyPlaylistListTileWidgetFinder = find.ancestor(
+    //     of: emptyPlaylistListTileTextWidgetFinder,
+    //     matching: find.byType(ListTile),
+    //   );
+
+    //   // Now we want to tap the popup menu of the Empty playlist ListTile
+
+    //   // Find the leading menu icon button of the playlist ListTile
+    //   // and tap on it
+    //   Finder emptyPlaylistListTileLeadingMenuIconButton = find.descendant(
+    //     of: emptyPlaylistListTileWidgetFinder,
+    //     matching: find.byIcon(Icons.menu),
+    //   );
+
+    //   // Tap the leading menu icon button to open the popup menu
+    //   await tester.tap(emptyPlaylistListTileLeadingMenuIconButton);
+    //   await tester.pumpAndSettle();
+
+    //   // Now find the List comments of playlist audio popup menu
+    //   // item and tap on it
+    //   final Finder popupPlaylistAudioCommentsMenuItem =
+    //       find.byKey(const Key("popup_menu_display_playlist_audio_comments"));
+
+    //   await tester.tap(popupPlaylistAudioCommentsMenuItem);
+    //   await tester.pumpAndSettle();
+
+    //   // Verify that the playlist audio comment dialog is displayed
+    //   expect(find.byType(PlaylistCommentListDialog), findsOneWidget);
+
+    //   // Verify the dialog title
+    //   expect(find.text('Playlist audio comments'), findsOneWidget);
+
+    //   // Verify that the audio comments list of the dialog is empty
+
+    //   final Finder playlistCommentsLstFinder = find.byKey(const Key(
+    //     'playlistCommentsListKey',
+    //   ));
+
+    //   // Ensure the list has no child widgets
+    //   expect(
+    //     tester.widget<ListBody>(playlistCommentsLstFinder).children.length,
+    //     0,
+    //   );
+
+    //   // Tap on Close text button
+    //   await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+    //   await tester.pumpAndSettle();
+
+    //   // Purge the test playlist directory so that the created test
+    //   // files are not uploaded to GitHub
+    //   DirUtil.deleteFilesInDirAndSubDirs(
+    //     rootPath: kPlaylistDownloadRootPathWindowsTest,
+    //   );
+    // });
+    // testWidgets('''Playlist comments color verification.''',
+    //     (WidgetTester tester) async {
+    //   const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+
+    //   await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+    //     tester: tester,
+    //     savedTestDataDirName: 'audio_comment_color_test',
+    //     selectedPlaylistTitle: youtubePlaylistTitle,
+    //   );
+
+    //   // First, open the playlist comment dialog
+    //   Finder playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
+    //     tester: tester,
+    //     playlistTitle: youtubePlaylistTitle,
+    //   );
+
+    //   final Finder playlistCommentListFinder =
+    //       find.byKey(const Key('playlistCommentsListKey'));
+
+    //   // Ensure the list has 8 child widgets
+    //   expect(
+    //     tester.widget<ListBody>(playlistCommentListFinder).children.length,
+    //     8,
+    //   );
+
+    //   // Verify the color of the audio titles in the playlist comment dialog
+
+    //   await _verifyAudioTitlesColorInPlaylistCommentDialog(
+    //     tester: tester,
+    //     playlistCommentListDialogFinder: playlistCommentListDialogFinder,
+    //   );
+
+    //   // Verifying the color of the comments titles in the playlist comment
+    //   // dialog
+
+    //   await IntegrationTestUtil.checkAudioTextColor(
+    //     tester: tester,
+    //     enclosingWidgetFinder: playlistCommentListDialogFinder,
+    //     audioTitleOrSubTitle: "Barrau one",
+    //     expectedTitleTextColor: null,
+    //     expectedTitleTextBackgroundColor: null,
+    //   );
+
+    //   await IntegrationTestUtil.checkAudioTextColor(
+    //     tester: tester,
+    //     enclosingWidgetFinder: playlistCommentListDialogFinder,
+    //     audioTitleOrSubTitle: "One",
+    //     expectedTitleTextColor: null,
+    //     expectedTitleTextBackgroundColor: null,
+    //   );
+
+    //   await IntegrationTestUtil.checkAudioTextColor(
+    //     tester: tester,
+    //     enclosingWidgetFinder: playlistCommentListDialogFinder,
+    //     audioTitleOrSubTitle: "Comment Jancovici",
+    //     expectedTitleTextColor: null,
+    //     expectedTitleTextBackgroundColor: null,
+    //   );
+
+    //   await IntegrationTestUtil.checkAudioTextColor(
+    //     tester: tester,
+    //     enclosingWidgetFinder: playlistCommentListDialogFinder,
+    //     audioTitleOrSubTitle: "Start",
+    //     expectedTitleTextColor: null,
+    //     expectedTitleTextBackgroundColor: null,
+    //   );
+
+    //   // Tap on Close text button
+    //   await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+    //   await tester.pumpAndSettle();
+
+    //   // Purge the test playlist directory so that the created test
+    //   // files are not uploaded to GitHub
+    //   DirUtil.deleteFilesInDirAndSubDirs(
+    //     rootPath: kPlaylistDownloadRootPathWindowsTest,
+    //   );
+    // });
+    // group('Playing one comment, fully played audio', () {
+    //   testWidgets('''One comment full play color verification. Play one comment
+    //        completely. Then close the playlist comment dialog and reopen it.
+    //        Verify that the played comment color was not changed, which means
+    //        that the commented audio position change due to the comment play was
+    //        undone. Verify as well that the current audio change caused by the
+    //        played comment audio was undone as well.''',
+    //       (WidgetTester tester) async {
+    //     const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+    //     const String playedCommentAudioTitle =
+    //         "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
+
+    //     await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+    //       tester: tester,
+    //       savedTestDataDirName: 'audio_comment_color_test',
+    //       selectedPlaylistTitle: youtubePlaylistTitle,
+    //     );
+
+    //     // First, open the playlist comment dialog
+    //     Finder playlistCommentListDialogFinder =
+    //         await _openPlaylistCommentDialog(
+    //       tester: tester,
+    //       playlistTitle: youtubePlaylistTitle,
+    //     );
+
+    //     // Find the list of comments in the playlist comment dialog
+    //     final Finder listFinder = find.descendant(
+    //         of: playlistCommentListDialogFinder,
+    //         matching: find.byType(ListBody));
+
+    //     // Find all the list items GestureDetector's
+    //     final Finder gestureDetectorsFinder = find.descendant(
+    //         // 3 GestureDetector per comment item
+    //         of: listFinder,
+    //         matching: find.byType(GestureDetector));
+
+    //     // Now tap on the play icon button of the unique comment of the second
+    //     // audio in order to play it completely
+    //     await IntegrationTestUtil.playComment(
+    //       tester: tester,
+    //       gestureDetectorsFinder: gestureDetectorsFinder,
+    //       itemIndex: 3,
+    //       typeOnPauseAfterPlay: false,
+    //       maxPlayDurationSeconds: 3,
+    //     );
+
+    //     // Tap on Close text button
+    //     await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Now, re-open the playlist comment dialog
+    //     playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
+    //       tester: tester,
+    //       playlistTitle: youtubePlaylistTitle,
+    //     );
+
+    //     // Verify the color of the audio titles in the playlist comment dialog
+
+    //     await _verifyAudioTitlesColorInPlaylistCommentDialog(
+    //       tester: tester,
+    //       playlistCommentListDialogFinder: playlistCommentListDialogFinder,
+    //     );
+
+    //     // Tap on Close text button
+    //     await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // When closing the playlist comment dialog, the played comment audio
+    //     // modification was undone. Verifying that ...
+    //     await _verifyUndoneListenedAudioPosition(
+    //       tester: tester,
+    //       playlistTitle: youtubePlaylistTitle,
+    //       playedCommentAudioTitle: playedCommentAudioTitle,
+    //       playableAudioLstAudioIndex: 1,
+    //       audioPositionStr: '1:17:54',
+    //       audioPositionSeconds: 4674,
+    //       audioRemainingDurationStr: '0:00',
+    //       isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+    //       audioPausedDateTime: DateTime(2024, 9, 8, 14, 38, 43),
+    //     );
+
+    //     // Purge the test playlist directory so that the created test
+    //     // files are not uploaded to GitHub
+    //     DirUtil.deleteFilesInDirAndSubDirs(
+    //       rootPath: kPlaylistDownloadRootPathWindowsTest,
+    //     );
+    //   });
+    //   testWidgets(
+    //       '''One comment pause on partial play color verification. Play one comment
+    //        partially, clicking on pause button after 1.5 seconds. Then close the
+    //        playlist comment dialog and reopen it. Verify that the played comment
+    //        color was not changed, which means that the commented audio position
+    //        change due to the comment play was undone. Verify as well that the
+    //        current audio change caused by the played comment audio was undone as
+    //        well.''', (WidgetTester tester) async {
+    //     const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+    //     const String playedCommentAudioTitle =
+    //         "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
+
+    //     await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+    //       tester: tester,
+    //       savedTestDataDirName: 'audio_comment_color_test',
+    //       selectedPlaylistTitle: youtubePlaylistTitle,
+    //     );
+
+    //     // First, open the playlist comment dialog
+    //     Finder playlistCommentListDialogFinder =
+    //         await _openPlaylistCommentDialog(
+    //       tester: tester,
+    //       playlistTitle: youtubePlaylistTitle,
+    //     );
+
+    //     // Find the list of comments in the playlist comment dialog
+    //     final Finder listFinder = find.descendant(
+    //         of: playlistCommentListDialogFinder,
+    //         matching: find.byType(ListBody));
+
+    //     // Find all the list items GestureDetector's
+    //     final Finder gestureDetectorsFinder = find.descendant(
+    //         // 3 GestureDetector per comment item
+    //         of: listFinder,
+    //         matching: find.byType(GestureDetector));
+
+    //     // Now tap on the play icon button of the unique comment of the fourth
+    //     // audio in order to play it partially (during 1.5 seconds)
+    //     await IntegrationTestUtil.playComment(
+    //       tester: tester,
+    //       gestureDetectorsFinder: gestureDetectorsFinder,
+    //       itemIndex: 3,
+    //       typeOnPauseAfterPlay: true,
+    //       maxPlayDurationSeconds: 1.5,
+    //     );
+
+    //     // Tap on Close text button
+    //     await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Now, re-open the playlist comment dialog
+    //     playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
+    //       tester: tester,
+    //       playlistTitle: youtubePlaylistTitle,
+    //     );
+
+    //     // Verify the color of the audio titles in the playlist comment dialog
+
+    //     await _verifyAudioTitlesColorInPlaylistCommentDialog(
+    //       tester: tester,
+    //       playlistCommentListDialogFinder: playlistCommentListDialogFinder,
+    //     );
+
+    //     // Tap on Close text button
+    //     await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // When closing the playlist comment dialog, the played comment audio
+    //     // modification was undone. Verifying that ...
+    //     await _verifyUndoneListenedAudioPosition(
+    //       tester: tester,
+    //       playlistTitle: youtubePlaylistTitle,
+    //       playedCommentAudioTitle: playedCommentAudioTitle,
+    //       playableAudioLstAudioIndex: 1,
+    //       audioPositionStr: '1:17:54',
+    //       audioPositionSeconds: 4674,
+    //       audioRemainingDurationStr: '0:00',
+    //       isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+    //       audioPausedDateTime: DateTime(2024, 9, 8, 14, 38, 43),
+    //     );
+
+    //     // Purge the test playlist directory so that the created test
+    //     // files are not uploaded to GitHub
+    //     DirUtil.deleteFilesInDirAndSubDirs(
+    //       rootPath: kPlaylistDownloadRootPathWindowsTest,
+    //     );
+    //   });
+    //   testWidgets(
+    //       '''One comment close on partial play color verification. Play one
+    //        comment partially, clicking on close playlist comment dialog button
+    //        after 1.5 seconds. Then reopen the dialog. Verify that the played comment
+    //        color was not changed, which means that the commented audio position
+    //        change due to the comment play was undone. Verify as well that the
+    //        current audio change caused by the played comment audio was undone as
+    //        well.''', (WidgetTester tester) async {
+    //     const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+    //     const String playedCommentAudioTitle =
+    //         "La surpopulation mondiale par Jancovici et Barrau";
+
+    //     await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+    //       tester: tester,
+    //       savedTestDataDirName: 'audio_comment_color_test',
+    //       selectedPlaylistTitle: youtubePlaylistTitle,
+    //     );
+
+    //     // First, open the playlist comment dialog
+    //     Finder playlistCommentListDialogFinder =
+    //         await _openPlaylistCommentDialog(
+    //       tester: tester,
+    //       playlistTitle: youtubePlaylistTitle,
+    //     );
+
+    //     // Find the list of comments in the playlist comment dialog
+    //     final Finder listFinder = find.descendant(
+    //         of: playlistCommentListDialogFinder,
+    //         matching: find.byType(ListBody));
+
+    //     // Find all the list items GestureDetector's
+    //     final Finder gestureDetectorsFinder = find.descendant(
+    //         // 3 GestureDetector per comment item
+    //         of: listFinder,
+    //         matching: find.byType(GestureDetector));
+
+    //     // Now tap on the play icon button of the unique comment of the second
+    //     // audio in order to play it partially (during 1.5 seconds)
+    //     await IntegrationTestUtil.playComment(
+    //       tester: tester,
+    //       gestureDetectorsFinder: gestureDetectorsFinder,
+    //       itemIndex: 9,
+    //       typeOnPauseAfterPlay: false,
+    //     );
+
+    //     // Let the comment be played during 1.5 seconds and then clixk on the
+    //     // playlist comment dialog close button
+    //     await Future.delayed(const Duration(milliseconds: 1500));
+    //     await tester.pumpAndSettle();
+
+    //     // Tap on Close text button
+    //     await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Now, re-open the playlist comment dialog
+    //     playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
+    //       tester: tester,
+    //       playlistTitle: youtubePlaylistTitle,
+    //     );
+
+    //     // Verify the color of the audio titles in the playlist comment dialog
+
+    //     await _verifyAudioTitlesColorInPlaylistCommentDialog(
+    //       tester: tester,
+    //       playlistCommentListDialogFinder: playlistCommentListDialogFinder,
+    //     );
+
+    //     // Tap on Close text button
+    //     await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Tap on the 'Toggle List' button to hide the playlist list
+    //     await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+    //     await tester.pumpAndSettle();
+
+    //     // When closing the playlist comment dialog, the played comment audio
+    //     // modification was undone. Verifying that ...
+    //     await _verifyUndoneListenedAudioPosition(
+    //       tester: tester,
+    //       playlistTitle: youtubePlaylistTitle,
+    //       playedCommentAudioTitle: playedCommentAudioTitle,
+    //       playableAudioLstAudioIndex: 2,
+    //       audioPositionStr: '0:00',
+    //       audioPositionSeconds: 0,
+    //       audioRemainingDurationStr: '7:38',
+    //       isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+    //       audioPausedDateTime: null,
+    //     );
+
+    //     // Purge the test playlist directory so that the created test
+    //     // files are not uploaded to GitHub
+    //     DirUtil.deleteFilesInDirAndSubDirs(
+    //       rootPath: kPlaylistDownloadRootPathWindowsTest,
+    //     );
+    //   });
+    // });
+    // group('Playing one comment, partially played audio', () {
+    //   testWidgets('''One comment partially play color verification. Play comment
+    //        completely. Then close the playlist comment dialog and reopen it.
+    //        Verify that the played comment color was not changed, which means
+    //        that the commented audio position change due to the comment play was
+    //        undone. Verify as well that the current audio change caused by the
+    //        played comment audio was undone as well.''',
+    //       (WidgetTester tester) async {
+    //     const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+    //     const String playedCommentAudioTitle =
+    //         "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
+
+    //     await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+    //       tester: tester,
+    //       savedTestDataDirName: 'audio_comment_color_test',
+    //       selectedPlaylistTitle: youtubePlaylistTitle,
+    //     );
+
+    //     // First, open the playlist comment dialog
+    //     Finder playlistCommentListDialogFinder =
+    //         await _openPlaylistCommentDialog(
+    //       tester: tester,
+    //       playlistTitle: youtubePlaylistTitle,
+    //     );
+
+    //     // Find the list of comments in the playlist comment dialog
+    //     final Finder listFinder = find.descendant(
+    //         of: playlistCommentListDialogFinder,
+    //         matching: find.byType(ListBody));
+
+    //     // Find all the list items GestureDetector's
+    //     final Finder gestureDetectorsFinder = find.descendant(
+    //         // 3 GestureDetector per comment item
+    //         of: listFinder,
+    //         matching: find.byType(GestureDetector));
+
+    //     // Now tap on the play icon button of the unique comment of the third
+    //     // audio in order to play it completely
+    //     await IntegrationTestUtil.playComment(
+    //       tester: tester,
+    //       gestureDetectorsFinder: gestureDetectorsFinder,
+    //       itemIndex: 6,
+    //       typeOnPauseAfterPlay: false,
+    //       maxPlayDurationSeconds: 3,
+    //     );
+
+    //     // Tap on Close text button
+    //     await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Now, re-open the playlist comment dialog
+    //     playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
+    //       tester: tester,
+    //       playlistTitle: youtubePlaylistTitle,
+    //     );
+
+    //     // Verify the color of the audio titles in the playlist comment dialog
+
+    //     await _verifyAudioTitlesColorInPlaylistCommentDialog(
+    //       tester: tester,
+    //       playlistCommentListDialogFinder: playlistCommentListDialogFinder,
+    //     );
+
+    //     // Tap on Close text button
+    //     await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // When closing the playlist comment dialog, the played comment audio
+    //     // modification was undone. Verifying that ...
+    //     await _verifyUndoneListenedAudioPosition(
+    //       tester: tester,
+    //       playlistTitle: youtubePlaylistTitle,
+    //       playedCommentAudioTitle: playedCommentAudioTitle,
+    //       playableAudioLstAudioIndex: 3,
+    //       audioPositionStr: '5:11',
+    //       audioPositionSeconds: 311,
+    //       audioRemainingDurationStr: '1:18',
+    //       isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: true,
+    //       audioPausedDateTime: DateTime(2024, 9, 9, 19, 47, 23),
+    //     );
+
+    //     // Purge the test playlist directory so that the created test
+    //     // files are not uploaded to GitHub
+    //     DirUtil.deleteFilesInDirAndSubDirs(
+    //       rootPath: kPlaylistDownloadRootPathWindowsTest,
+    //     );
+    //   });
+    //   testWidgets(
+    //       '''One comment pause on partial play color verification. Play one comment
+    //        partially, clicking on pause button after 1.5 seconds. Then close the
+    //        playlist comment dialog and reopen it. Verify that the played comment
+    //        color was not changed, which means that the commented audio position
+    //        change due to the comment play was undone. Verify as well that the
+    //        current audio change caused by the played comment audio was undone as
+    //        well.''', (WidgetTester tester) async {
+    //     const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+    //     const String playedCommentAudioTitle =
+    //         "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
+
+    //     await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+    //       tester: tester,
+    //       savedTestDataDirName: 'audio_comment_color_test',
+    //       selectedPlaylistTitle: youtubePlaylistTitle,
+    //     );
+
+    //     // First, open the playlist comment dialog
+    //     Finder playlistCommentListDialogFinder =
+    //         await _openPlaylistCommentDialog(
+    //       tester: tester,
+    //       playlistTitle: youtubePlaylistTitle,
+    //     );
+
+    //     // Find the list of comments in the playlist comment dialog
+    //     final Finder listFinder = find.descendant(
+    //         of: playlistCommentListDialogFinder,
+    //         matching: find.byType(ListBody));
+
+    //     // Find all the list items GestureDetector's
+    //     final Finder gestureDetectorsFinder = find.descendant(
+    //         // 3 GestureDetector per comment item
+    //         of: listFinder,
+    //         matching: find.byType(GestureDetector));
+
+    //     // Now tap on the play icon button of the unique comment of the fourth
+    //     // audio in order to play it partially (during 1.5 seconds)
+    //     await IntegrationTestUtil.playComment(
+    //       tester: tester,
+    //       gestureDetectorsFinder: gestureDetectorsFinder,
+    //       itemIndex: 6,
+    //       typeOnPauseAfterPlay: true,
+    //       maxPlayDurationSeconds: 1.5,
+    //     );
+
+    //     // Tap on Close text button
+    //     await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Now, re-open the playlist comment dialog
+    //     playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
+    //       tester: tester,
+    //       playlistTitle: youtubePlaylistTitle,
+    //     );
+
+    //     // Verify the color of the audio titles in the playlist comment dialog
+
+    //     await _verifyAudioTitlesColorInPlaylistCommentDialog(
+    //       tester: tester,
+    //       playlistCommentListDialogFinder: playlistCommentListDialogFinder,
+    //     );
+
+    //     // Tap on Close text button
+    //     await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // When closing the playlist comment dialog, the played comment audio
+    //     // modification was undone. Verifying that ...
+    //     await _verifyUndoneListenedAudioPosition(
+    //       tester: tester,
+    //       playlistTitle: youtubePlaylistTitle,
+    //       playedCommentAudioTitle: playedCommentAudioTitle,
+    //       playableAudioLstAudioIndex: 3,
+    //       audioPositionStr: '5:11',
+    //       audioPositionSeconds: 311,
+    //       audioRemainingDurationStr: '1:18',
+    //       isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: true,
+    //       audioPausedDateTime: DateTime(2024, 9, 9, 19, 47, 23),
+    //     );
+
+    //     // Purge the test playlist directory so that the created test
+    //     // files are not uploaded to GitHub
+    //     DirUtil.deleteFilesInDirAndSubDirs(
+    //       rootPath: kPlaylistDownloadRootPathWindowsTest,
+    //     );
+    //   });
+    //   testWidgets(
+    //       '''One comment close on partial play color verification. Play one
+    //        comment partially, clicking on close playlist comment dialog button
+    //        after 1.5 seconds. Then reopen the dialog. Verify that the played comment
+    //        color was not changed, which means that the commented audio position
+    //        change due to the comment play was undone. Verify as well that the
+    //        current audio change caused by the played comment audio was undone as
+    //        well.''', (WidgetTester tester) async {
+    //     const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+    //     const String playedCommentAudioTitle =
+    //         "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
+
+    //     await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+    //       tester: tester,
+    //       savedTestDataDirName: 'audio_comment_color_test',
+    //       selectedPlaylistTitle: youtubePlaylistTitle,
+    //     );
+
+    //     // First, open the playlist comment dialog
+    //     Finder playlistCommentListDialogFinder =
+    //         await _openPlaylistCommentDialog(
+    //       tester: tester,
+    //       playlistTitle: youtubePlaylistTitle,
+    //     );
+
+    //     // Find the list of comments in the playlist comment dialog
+    //     final Finder listFinder = find.descendant(
+    //         of: playlistCommentListDialogFinder,
+    //         matching: find.byType(ListBody));
+
+    //     // Find all the list items GestureDetector's
+    //     final Finder gestureDetectorsFinder = find.descendant(
+    //         // 3 GestureDetector per comment item
+    //         of: listFinder,
+    //         matching: find.byType(GestureDetector));
+
+    //     // Now tap on the play icon button of the unique comment of the second
+    //     // audio in order to play it partially (during 1.5 seconds)
+    //     await IntegrationTestUtil.playComment(
+    //       tester: tester,
+    //       gestureDetectorsFinder: gestureDetectorsFinder,
+    //       itemIndex: 6,
+    //       typeOnPauseAfterPlay: false,
+    //     );
+
+    //     // Let the comment be played during 1.5 seconds and then clixk on the
+    //     // playlist comment dialog close button
+    //     await Future.delayed(const Duration(milliseconds: 1500));
+    //     await tester.pumpAndSettle();
+
+    //     // Tap on Close text button
+    //     await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Now, re-open the playlist comment dialog
+    //     playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
+    //       tester: tester,
+    //       playlistTitle: youtubePlaylistTitle,
+    //     );
+
+    //     // Verify the color of the audio titles in the playlist comment dialog
+
+    //     await _verifyAudioTitlesColorInPlaylistCommentDialog(
+    //       tester: tester,
+    //       playlistCommentListDialogFinder: playlistCommentListDialogFinder,
+    //     );
+
+    //     // Tap on Close text button
+    //     await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Tap on the 'Toggle List' button to hide the playlist list
+    //     await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+    //     await tester.pumpAndSettle();
+
+    //     // When closing the playlist comment dialog, the played comment audio
+    //     // modification was undone. Verifying that ...
+    //     await _verifyUndoneListenedAudioPosition(
+    //       tester: tester,
+    //       playlistTitle: youtubePlaylistTitle,
+    //       playedCommentAudioTitle: playedCommentAudioTitle,
+    //       playableAudioLstAudioIndex: 3,
+    //       audioPositionStr: '5:11',
+    //       audioPositionSeconds: 311,
+    //       audioRemainingDurationStr: '1:18',
+    //       isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: true,
+    //       audioPausedDateTime: DateTime(2024, 9, 9, 19, 47, 23),
+    //     );
+
+    //     // Purge the test playlist directory so that the created test
+    //     // files are not uploaded to GitHub
+    //     DirUtil.deleteFilesInDirAndSubDirs(
+    //       rootPath: kPlaylistDownloadRootPathWindowsTest,
+    //     );
+    //   });
+    // });
+    // group('Playing one comment, unplayed audio', () {
+    //   testWidgets('''One comment full play color verification. Play one comment
+    //        completely. Then close the playlist comment dialog and reopen it.
+    //        Verify that the played comment color was not changed, which means
+    //        that the commented audio position change due to the comment play was
+    //        undone. Verify as well that the current audio change caused by the
+    //        played comment audio was undone as well.''',
+    //       (WidgetTester tester) async {
+    //     const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+    //     const String playedCommentAudioTitle =
+    //         "La surpopulation mondiale par Jancovici et Barrau";
+
+    //     await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+    //       tester: tester,
+    //       savedTestDataDirName: 'audio_comment_color_test',
+    //       selectedPlaylistTitle: youtubePlaylistTitle,
+    //     );
+
+    //     // First, open the playlist comment dialog
+    //     Finder playlistCommentListDialogFinder =
+    //         await _openPlaylistCommentDialog(
+    //       tester: tester,
+    //       playlistTitle: youtubePlaylistTitle,
+    //     );
+
+    //     // Find the list of comments in the playlist comment dialog
+    //     final Finder listFinder = find.descendant(
+    //         of: playlistCommentListDialogFinder,
+    //         matching: find.byType(ListBody));
+
+    //     // Find all the list items GestureDetector's
+    //     final Finder gestureDetectorsFinder = find.descendant(
+    //         // 3 GestureDetector per comment item
+    //         of: listFinder,
+    //         matching: find.byType(GestureDetector));
+
+    //     // Now tap on the play icon button of the unique comment of the second
+    //     // audio in order to play it completely
+    //     await IntegrationTestUtil.playComment(
+    //       tester: tester,
+    //       gestureDetectorsFinder: gestureDetectorsFinder,
+    //       itemIndex: 9,
+    //       typeOnPauseAfterPlay: false,
+    //       maxPlayDurationSeconds: 3,
+    //     );
+
+    //     // Tap on Close text button
+    //     await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Now, re-open the playlist comment dialog
+    //     playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
+    //       tester: tester,
+    //       playlistTitle: youtubePlaylistTitle,
+    //     );
+
+    //     // Verify the color of the audio titles in the playlist comment dialog
+
+    //     await _verifyAudioTitlesColorInPlaylistCommentDialog(
+    //       tester: tester,
+    //       playlistCommentListDialogFinder: playlistCommentListDialogFinder,
+    //     );
+
+    //     // Tap on Close text button
+    //     await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Tap on the 'Toggle List' button to hide the playlist list
+    //     await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+    //     await tester.pumpAndSettle();
+
+    //     // When closing the playlist comment dialog, the played comment audio
+    //     // modification was undone. Verifying that ...
+    //     await _verifyUndoneListenedAudioPosition(
+    //       tester: tester,
+    //       playlistTitle: youtubePlaylistTitle,
+    //       playedCommentAudioTitle: playedCommentAudioTitle,
+    //       playableAudioLstAudioIndex: 2,
+    //       audioPositionStr: '0:00',
+    //       audioPositionSeconds: 0,
+    //       audioRemainingDurationStr: '7:38',
+    //       isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+    //       audioPausedDateTime: null,
+    //     );
+
+    //     // Purge the test playlist directory so that the created test
+    //     // files are not uploaded to GitHub
+    //     DirUtil.deleteFilesInDirAndSubDirs(
+    //       rootPath: kPlaylistDownloadRootPathWindowsTest,
+    //     );
+    //   });
+    //   testWidgets(
+    //       '''One comment pause on partial play color verification. Play one comment
+    //        partially, clicking on pause button after 1.5 seconds. Then close the
+    //        playlist comment dialog and reopen it. Verify that the played comment
+    //        color was not changed, which means that the commented audio position
+    //        change due to the comment play was undone. Verify as well that the
+    //        current audio change caused by the played comment audio was undone as
+    //        well.''', (WidgetTester tester) async {
+    //     const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+    //     const String playedCommentAudioTitle =
+    //         "La surpopulation mondiale par Jancovici et Barrau";
+
+    //     await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+    //       tester: tester,
+    //       savedTestDataDirName: 'audio_comment_color_test',
+    //       selectedPlaylistTitle: youtubePlaylistTitle,
+    //     );
+
+    //     // First, open the playlist comment dialog
+    //     Finder playlistCommentListDialogFinder =
+    //         await _openPlaylistCommentDialog(
+    //       tester: tester,
+    //       playlistTitle: youtubePlaylistTitle,
+    //     );
+
+    //     // Find the list of comments in the playlist comment dialog
+    //     final Finder listFinder = find.descendant(
+    //         of: playlistCommentListDialogFinder,
+    //         matching: find.byType(ListBody));
+
+    //     // Find all the list items GestureDetector's
+    //     final Finder gestureDetectorsFinder = find.descendant(
+    //         // 3 GestureDetector per comment item
+    //         of: listFinder,
+    //         matching: find.byType(GestureDetector));
+
+    //     // Now tap on the play icon button of the unique comment of the fourth
+    //     // audio in order to play it partially (during 1.5 seconds)
+    //     await IntegrationTestUtil.playComment(
+    //       tester: tester,
+    //       gestureDetectorsFinder: gestureDetectorsFinder,
+    //       itemIndex: 9,
+    //       typeOnPauseAfterPlay: true,
+    //       maxPlayDurationSeconds: 1.5,
+    //     );
+
+    //     // Tap on Close text button
+    //     await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Now, re-open the playlist comment dialog
+    //     playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
+    //       tester: tester,
+    //       playlistTitle: youtubePlaylistTitle,
+    //     );
+
+    //     // Verify the color of the audio titles in the playlist comment dialog
+
+    //     await _verifyAudioTitlesColorInPlaylistCommentDialog(
+    //       tester: tester,
+    //       playlistCommentListDialogFinder: playlistCommentListDialogFinder,
+    //     );
+
+    //     // Tap on Close text button
+    //     await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Tap on the 'Toggle List' button to hide the playlist list
+    //     await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+    //     await tester.pumpAndSettle();
+
+    //     // When closing the playlist comment dialog, the played comment audio
+    //     // modification was undone. Verifying that ...
+    //     await _verifyUndoneListenedAudioPosition(
+    //       tester: tester,
+    //       playlistTitle: youtubePlaylistTitle,
+    //       playedCommentAudioTitle: playedCommentAudioTitle,
+    //       playableAudioLstAudioIndex: 2,
+    //       audioPositionStr: '0:00',
+    //       audioPositionSeconds: 0,
+    //       audioRemainingDurationStr: '7:38',
+    //       isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+    //       audioPausedDateTime: null,
+    //     );
+
+    //     // Purge the test playlist directory so that the created test
+    //     // files are not uploaded to GitHub
+    //     DirUtil.deleteFilesInDirAndSubDirs(
+    //       rootPath: kPlaylistDownloadRootPathWindowsTest,
+    //     );
+    //   });
+    //   testWidgets(
+    //       '''One comment close on partial play color verification. Play one
+    //        comment partially, clicking on close playlist comment dialog button
+    //        after 1.5 seconds. Then reopen the dialog. Verify that the played comment
+    //        color was not changed, which means that the commented audio position
+    //        change due to the comment play was undone. Verify as well that the
+    //        current audio change caused by the played comment audio was undone as
+    //        well.''', (WidgetTester tester) async {
+    //     const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+    //     const String playedCommentAudioTitle =
+    //         "La surpopulation mondiale par Jancovici et Barrau";
+
+    //     await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+    //       tester: tester,
+    //       savedTestDataDirName: 'audio_comment_color_test',
+    //       selectedPlaylistTitle: youtubePlaylistTitle,
+    //     );
+
+    //     // First, open the playlist comment dialog
+    //     Finder playlistCommentListDialogFinder =
+    //         await _openPlaylistCommentDialog(
+    //       tester: tester,
+    //       playlistTitle: youtubePlaylistTitle,
+    //     );
+
+    //     // Find the list of comments in the playlist comment dialog
+    //     final Finder listFinder = find.descendant(
+    //         of: playlistCommentListDialogFinder,
+    //         matching: find.byType(ListBody));
+
+    //     // Find all the list items GestureDetector's
+    //     final Finder gestureDetectorsFinder = find.descendant(
+    //         // 3 GestureDetector per comment item
+    //         of: listFinder,
+    //         matching: find.byType(GestureDetector));
+
+    //     // Now tap on the play icon button of the unique comment of the second
+    //     // audio in order to play it partially (during 1.5 seconds)
+    //     await IntegrationTestUtil.playComment(
+    //       tester: tester,
+    //       gestureDetectorsFinder: gestureDetectorsFinder,
+    //       itemIndex: 9,
+    //       typeOnPauseAfterPlay: false,
+    //     );
+
+    //     // Let the comment be played during 1.5 seconds and then clixk on the
+    //     // playlist comment dialog close button
+    //     await Future.delayed(const Duration(milliseconds: 1500));
+    //     await tester.pumpAndSettle();
+
+    //     // Tap on Close text button
+    //     await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Now, re-open the playlist comment dialog
+    //     playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
+    //       tester: tester,
+    //       playlistTitle: youtubePlaylistTitle,
+    //     );
+
+    //     // Verify the color of the audio titles in the playlist comment dialog
+
+    //     await _verifyAudioTitlesColorInPlaylistCommentDialog(
+    //       tester: tester,
+    //       playlistCommentListDialogFinder: playlistCommentListDialogFinder,
+    //     );
+
+    //     // Tap on Close text button
+    //     await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Tap on the 'Toggle List' button to hide the playlist list
+    //     await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+    //     await tester.pumpAndSettle();
+
+    //     // When closing the playlist comment dialog, the played comment audio
+    //     // modification was undone. Verifying that ...
+    //     await _verifyUndoneListenedAudioPosition(
+    //       tester: tester,
+    //       playlistTitle: youtubePlaylistTitle,
+    //       playedCommentAudioTitle: playedCommentAudioTitle,
+    //       playableAudioLstAudioIndex: 2,
+    //       audioPositionStr: '0:00',
+    //       audioPositionSeconds: 0,
+    //       audioRemainingDurationStr: '7:38',
+    //       isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+    //       audioPausedDateTime: null,
+    //     );
+
+    //     // Purge the test playlist directory so that the created test
+    //     // files are not uploaded to GitHub
+    //     DirUtil.deleteFilesInDirAndSubDirs(
+    //       rootPath: kPlaylistDownloadRootPathWindowsTest,
+    //     );
+    //   });
+    // });
     // group('Playing several comments', () {
     // testWidgets(
     //     '''Three comments partially played color verification. Play second
@@ -22092,7 +22106,7 @@ void playlistOneDownloadViewIntegrationTest() {
     // });
     // });
   // });
-}
+// }// playlistOneDownloadViewIntegrationTest
 
 Playlist _loadPlaylist(String playListOneName) {
   return JsonDataService.loadFromFile(
