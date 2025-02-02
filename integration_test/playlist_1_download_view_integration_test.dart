@@ -4093,8 +4093,7 @@ void main() {
         fileExtension: 'json',
       );
 
-      expect(targetPlaylistCommentLst,
-          []);
+      expect(targetPlaylistCommentLst, []);
 
       // Verify that the target playlist directory now contains
       // the audio picture file copied from the source playlist
@@ -4104,8 +4103,7 @@ void main() {
         fileExtension: 'jpg',
       );
 
-      expect(targetPlaylistPictureLst,
-          []);
+      expect(targetPlaylistPictureLst, []);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -5963,8 +5961,7 @@ void main() {
       );
 
       // Contains only the not moved audio picture
-      expect(sourcePlaylistPictureLst,
-          []);
+      expect(sourcePlaylistPictureLst, []);
 
       // Contains only the moved audio picture
       expect(targetPlaylistPictureLst,
@@ -7066,15 +7063,14 @@ void main() {
       // Verify that the target playlist directory no longer
       // contains the audio picture file copied from the source
       // playlist
-      
+
       targetPlaylistPictureLst = DirUtil.listFileNamesInDir(
         directoryPath:
             '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioTargetPlaylistTitle${path.separator}$kPictureDirName',
         fileExtension: 'jpg',
       );
 
-      expect(targetPlaylistPictureLst,
-          []);
+      expect(targetPlaylistPictureLst, []);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -11514,6 +11510,19 @@ void main() {
             playlistToSelectTitle: localAudioPlaylistTitle,
           );
 
+          // Before deleting the unique audio to which a picture is
+          // associated, verify that the playlist picture directory
+          // contains the audio picture file.
+
+          List<String> localPlaylistPictureLst = DirUtil.listFileNamesInDir(
+            directoryPath:
+                '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioPlaylistTitle${path.separator}$kPictureDirName',
+            fileExtension: 'jpg',
+          );
+
+          expect(localPlaylistPictureLst,
+              ["230628-033811-audio learn test short video one 23-06-10.jpg"]);
+
           // Now we want to tap the popup menu of the unique Audio ListTile
           // "audio learn test short video one"
 
@@ -11569,6 +11578,17 @@ void main() {
 
           // Verify the local target playlist directory content
           expect(localPlaylistMp3Lst, []);
+
+          // Verify that the playlist picture directory no longer contains
+          // the deleted audio picture file.
+
+          localPlaylistPictureLst = DirUtil.listFileNamesInDir(
+            directoryPath:
+                '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioPlaylistTitle${path.separator}$kPictureDirName',
+            fileExtension: 'jpg',
+          );
+
+          expect(localPlaylistPictureLst, []);
 
           // Now we tap on the AudioPlayerView icon button to open
           // AudioPlayerView screen
@@ -11801,6 +11821,19 @@ void main() {
           playlistToSelectTitle: localAudioPlaylistTitle,
         );
 
+        // Before deleting the unique audio to which a picture is
+        // associated, verify that the playlist picture directory
+        // contains the audio picture file.
+
+        List<String> localPlaylistPictureLst = DirUtil.listFileNamesInDir(
+          directoryPath:
+              '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioPlaylistTitle${path.separator}$kPictureDirName',
+          fileExtension: 'jpg',
+        );
+
+        expect(localPlaylistPictureLst,
+            ["230628-033811-audio learn test short video one 23-06-10.jpg"]);
+
         // Now we tap on the AudioPlayerView icon button to open
         // AudioPlayerView screen
 
@@ -11876,6 +11909,17 @@ void main() {
 
         // Verify the local target playlist directory content
         expect(localPlaylistMp3Lst, []);
+
+        // Verify that the playlist picture directory no longer contains
+        // the deleted audio picture file.
+
+        localPlaylistPictureLst = DirUtil.listFileNamesInDir(
+          directoryPath:
+              '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioPlaylistTitle${path.separator}$kPictureDirName',
+          fileExtension: 'jpg',
+        );
+
+        expect(localPlaylistPictureLst, []);
 
         // Now, go back to the playlist download view.
         appScreenNavigationButton =
@@ -11975,7 +12019,7 @@ void main() {
 
         Finder popupDeleteMenuItem =
             find.byKey(const Key("popup_menu_delete_audio"));
-        
+
         expect(popupDeleteMenuItem, findsNothing);
 
         // Tap on the 'No audio selected' title to open the list
@@ -11995,8 +12039,7 @@ void main() {
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
         // Now find the delete audio popup menu item and tap on it
-        popupDeleteMenuItem =
-            find.byKey(const Key("popup_menu_delete_audio"));
+        popupDeleteMenuItem = find.byKey(const Key("popup_menu_delete_audio"));
 
         await tester.tap(popupDeleteMenuItem);
         await tester.pumpAndSettle();
@@ -12010,9 +12053,8 @@ void main() {
 
         // Since no audio is selected, verify that the left appbar
         // menu is not displayed
-        popupDeleteMenuItem =
-            find.byKey(const Key("popup_menu_delete_audio"));
-        
+        popupDeleteMenuItem = find.byKey(const Key("popup_menu_delete_audio"));
+
         expect(popupDeleteMenuItem, findsNothing);
 
         // Now verifying that the audio player view audio position
