@@ -650,484 +650,486 @@ void audioPlayerViewSortFilterIntegrationTest() {
 void playlistDownloadViewSortFilterIntegrationTest() {
   group('Sort/filter playlist download view tests', () {
     group('Audio sort filter dialog tests ', () {
-      testWidgets(
-          '''Menu Clear SF Parameters History execution verifying that the confirm
+      group('Clear tests ', () {
+        testWidgets(
+            '''Menu Clear SF Parameters History execution verifying that the confirm
              dialog is displayed in the playlist download view.''',
-          (WidgetTester tester) async {
-        // Purge the test playlist directory if it exists so that the
-        // playlist list is empty
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
+            (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
 
-        // Copy the test initial audio data to the app dir
-        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-          sourceRootPath:
-              "$kDownloadAppTestSavedDataDir${path.separator}sort_filter_test",
-          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
+          // Copy the test initial audio data to the app dir
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath:
+                "$kDownloadAppTestSavedDataDir${path.separator}sort_filter_test",
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
 
-        final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
-          isTest: true,
-        );
+          final SettingsDataService settingsDataService = SettingsDataService(
+            sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
+          );
 
-        // Load the settings from the json file. This is necessary
-        // otherwise the ordered playlist titles will remain empty
-        // and the playlist list will not be filled with the
-        // playlists available in the download app test dir
-        await settingsDataService.loadSettingsFromFile(
-            settingsJsonPathFileName:
-                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the download app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-        await app.main(['test']);
-        await tester.pumpAndSettle();
+          await app.main(['test']);
+          await tester.pumpAndSettle();
 
-        // Tap the 'Toggle List' button to avoid displaying the list
-        // of playlists which may hide the audio titles
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester.pumpAndSettle();
+          // Tap the 'Toggle List' button to avoid displaying the list
+          // of playlists which may hide the audio titles
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
 
-        // Now open the popup menu
-        await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-        await tester.pumpAndSettle();
+          // Now open the popup menu
+          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+          await tester.pumpAndSettle();
 
-        // find the clear sort/filter audio history menu item and tap on it
-        await tester.tap(find.byKey(
-            const Key('clear_sort_and_filter_audio_parms_history_menu_item')));
-        await tester.pumpAndSettle();
+          // find the clear sort/filter audio history menu item and tap on it
+          await tester.tap(find.byKey(const Key(
+              'clear_sort_and_filter_audio_parms_history_menu_item')));
+          await tester.pumpAndSettle();
 
-        // Verify that the confirm action dialog is displayed
-        // with the expected text
-        expect(
-            find.text('Clear Sort/Filter Parameters History'), findsOneWidget);
-        expect(find.text('Deleting all historical sort/filter parameters.'),
-            findsOneWidget);
+          // Verify that the confirm action dialog is displayed
+          // with the expected text
+          expect(find.text('Clear Sort/Filter Parameters History'),
+              findsOneWidget);
+          expect(find.text('Deleting all historical sort/filter parameters.'),
+              findsOneWidget);
 
-        // Click on the cancel button to cancel deletion
-        await tester.tap(find.byKey(const Key('cancelButtonKey')));
-        await tester.pumpAndSettle();
+          // Click on the cancel button to cancel deletion
+          await tester.tap(find.byKey(const Key('cancelButtonKey')));
+          await tester.pumpAndSettle();
 
-        // Open again the popup menu
-        await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-        await tester.pumpAndSettle();
+          // Open again the popup menu
+          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+          await tester.pumpAndSettle();
 
-        // find the clear sort/filter audio history menu item and tap on it
-        await tester.tap(find.byKey(
-            const Key('clear_sort_and_filter_audio_parms_history_menu_item')));
-        await tester.pumpAndSettle();
+          // find the clear sort/filter audio history menu item and tap on it
+          await tester.tap(find.byKey(const Key(
+              'clear_sort_and_filter_audio_parms_history_menu_item')));
+          await tester.pumpAndSettle();
 
-        // Click on the confirm button to apply deletion
-        await tester.tap(find.byKey(const Key('confirmButton')));
-        await tester.pumpAndSettle();
+          // Click on the confirm button to apply deletion
+          await tester.tap(find.byKey(const Key('confirmButton')));
+          await tester.pumpAndSettle();
 
-        // Open again the popup menu
-        await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-        await tester.pumpAndSettle();
+          // Open again the popup menu
+          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+          await tester.pumpAndSettle();
 
-        // Verify that the clear sort/filter audio history menu item is
-        // now disabled
-        IntegrationTestUtil.verifyWidgetIsDisabled(
-          tester: tester,
-          widgetKeyStr: "clear_sort_and_filter_audio_parms_history_menu_item",
-        );
+          // Verify that the clear sort/filter audio history menu item is
+          // now disabled
+          IntegrationTestUtil.verifyWidgetIsDisabled(
+            tester: tester,
+            widgetKeyStr: "clear_sort_and_filter_audio_parms_history_menu_item",
+          );
 
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
-      });
-      testWidgets(
-          '''Tapping on clear sort/filter parameters history icon button and verifying
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''Tapping on clear sort/filter parameters history icon button and verifying
              that the confirm warning is displayed in the audio player view.''',
-          (WidgetTester tester) async {
-        // Purge the test playlist directory if it exists so that the
-        // playlist list is empty
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
+            (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
 
-        // Copy the test initial audio data to the app dir
-        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-          sourceRootPath:
-              "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
+          // Copy the test initial audio data to the app dir
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath:
+                "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
 
-        final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
-          isTest: true,
-        );
+          final SettingsDataService settingsDataService = SettingsDataService(
+            sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
+          );
 
-        // Load the settings from the json file. This is necessary
-        // otherwise the ordered playlist titles will remain empty
-        // and the playlist list will not be filled with the
-        // playlists available in the download app test dir
-        await settingsDataService.loadSettingsFromFile(
-            settingsJsonPathFileName:
-                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the download app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-        await app.main(['test']);
-        await tester.pumpAndSettle();
+          await app.main(['test']);
+          await tester.pumpAndSettle();
 
-        // Tap the 'Toggle List' button to avoid displaying the list
-        // of playlists which may hide the audio titles
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester.pumpAndSettle();
+          // Tap the 'Toggle List' button to avoid displaying the list
+          // of playlists which may hide the audio titles
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
 
-        // Now open the popup menu
-        await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-        await tester.pumpAndSettle();
+          // Now open the popup menu
+          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+          await tester.pumpAndSettle();
 
-        // find the sort/filter audio menu item and tap on it
-        await tester.tap(
-            find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
-        await tester.pumpAndSettle();
+          // find the sort/filter audio menu item and tap on it
+          await tester.tap(
+              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+          await tester.pumpAndSettle();
 
-        // Verify that the left sort history icon button is disabled
-        IntegrationTestUtil.verifyWidgetIsDisabled(
-          tester: tester,
-          widgetKeyStr: "search_history_arrow_left_button",
-        );
+          // Verify that the left sort history icon button is disabled
+          IntegrationTestUtil.verifyWidgetIsDisabled(
+            tester: tester,
+            widgetKeyStr: "search_history_arrow_left_button",
+          );
 
-        // Verify that the right sort history icon button is disabled
-        IntegrationTestUtil.verifyWidgetIsDisabled(
-          tester: tester,
-          widgetKeyStr: "search_history_arrow_right_button",
-        );
+          // Verify that the right sort history icon button is disabled
+          IntegrationTestUtil.verifyWidgetIsDisabled(
+            tester: tester,
+            widgetKeyStr: "search_history_arrow_right_button",
+          );
 
-        // Verify that the clear sort history icon button is disabled
-        IntegrationTestUtil.verifyWidgetIsDisabled(
-          tester: tester,
-          widgetKeyStr: "search_history_delete_all_button",
-        );
+          // Verify that the clear sort history icon button is disabled
+          IntegrationTestUtil.verifyWidgetIsDisabled(
+            tester: tester,
+            widgetKeyStr: "search_history_delete_all_button",
+          );
 
-        // Type "janco" in the audio title search sentence TextField
-        await tester.enterText(
-            find.byKey(const Key('audioTitleSearchSentenceTextField')),
-            'janco');
-        await tester.pumpAndSettle();
+          // Type "janco" in the audio title search sentence TextField
+          await tester.enterText(
+              find.byKey(const Key('audioTitleSearchSentenceTextField')),
+              'janco');
+          await tester.pumpAndSettle();
 
-        // Click on the "+" icon button
-        await tester.tap(find.byKey(const Key('addSentenceIconButton')));
-        await tester.pumpAndSettle();
+          // Click on the "+" icon button
+          await tester.tap(find.byKey(const Key('addSentenceIconButton')));
+          await tester.pumpAndSettle();
 
-        // Verify that the left sort history icon button is still disabled
-        IntegrationTestUtil.verifyWidgetIsDisabled(
-          tester: tester,
-          widgetKeyStr: "search_history_arrow_left_button",
-        );
+          // Verify that the left sort history icon button is still disabled
+          IntegrationTestUtil.verifyWidgetIsDisabled(
+            tester: tester,
+            widgetKeyStr: "search_history_arrow_left_button",
+          );
 
-        // Verify that the right sort history icon button is still disabled
-        IntegrationTestUtil.verifyWidgetIsDisabled(
-          tester: tester,
-          widgetKeyStr: "search_history_arrow_right_button",
-        );
+          // Verify that the right sort history icon button is still disabled
+          IntegrationTestUtil.verifyWidgetIsDisabled(
+            tester: tester,
+            widgetKeyStr: "search_history_arrow_right_button",
+          );
 
-        // Verify that the clear sort history icon button is still disabled
-        IntegrationTestUtil.verifyWidgetIsDisabled(
-          tester: tester,
-          widgetKeyStr: "search_history_delete_all_button",
-        );
+          // Verify that the clear sort history icon button is still disabled
+          IntegrationTestUtil.verifyWidgetIsDisabled(
+            tester: tester,
+            widgetKeyStr: "search_history_delete_all_button",
+          );
 
-        // Click on the "apply" button. This closes the sort/filter dialog.
-        await tester
-            .tap(find.byKey(const Key('applySortFilterOptionsTextButton')));
-        await tester.pumpAndSettle();
+          // Click on the "apply" button. This closes the sort/filter dialog.
+          await tester
+              .tap(find.byKey(const Key('applySortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
 
-        // Now re-open the popup menu
-        await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-        await tester.pumpAndSettle();
+          // Now re-open the popup menu
+          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+          await tester.pumpAndSettle();
 
-        // find the sort/filter audio menu item and tap on it
-        await tester.tap(
-            find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
-        await tester.pumpAndSettle();
+          // find the sort/filter audio menu item and tap on it
+          await tester.tap(
+              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+          await tester.pumpAndSettle();
 
-        // Verify that the left sort history icon button is now enabled
-        IntegrationTestUtil.verifyWidgetIsEnabled(
-          tester: tester,
-          widgetKeyStr: "search_history_arrow_left_button",
-        );
+          // Verify that the left sort history icon button is now enabled
+          IntegrationTestUtil.verifyWidgetIsEnabled(
+            tester: tester,
+            widgetKeyStr: "search_history_arrow_left_button",
+          );
 
-        // Verify that the right sort history icon button is still disabled
-        IntegrationTestUtil.verifyWidgetIsDisabled(
-          tester: tester,
-          widgetKeyStr: "search_history_arrow_right_button",
-        );
+          // Verify that the right sort history icon button is still disabled
+          IntegrationTestUtil.verifyWidgetIsDisabled(
+            tester: tester,
+            widgetKeyStr: "search_history_arrow_right_button",
+          );
 
-        // Verify that the clear sort history icon button is now enabled
-        IntegrationTestUtil.verifyWidgetIsEnabled(
-          tester: tester,
-          widgetKeyStr: "search_history_delete_all_button",
-        );
+          // Verify that the clear sort history icon button is now enabled
+          IntegrationTestUtil.verifyWidgetIsEnabled(
+            tester: tester,
+            widgetKeyStr: "search_history_delete_all_button",
+          );
 
-        // Now click on the clear sort history icon button
-        await tester
-            .tap(find.byKey(const Key('search_history_delete_all_button')));
-        await tester.pumpAndSettle();
+          // Now click on the clear sort history icon button
+          await tester
+              .tap(find.byKey(const Key('search_history_delete_all_button')));
+          await tester.pumpAndSettle();
 
-        // Verify that the confirm action dialog is displayed
-        // with the expected text
-        expect(
-            find.text('Clear Sort/Filter Parameters History'), findsOneWidget);
-        expect(find.text('Deleting all historical sort/filter parameters.'),
-            findsOneWidget);
+          // Verify that the confirm action dialog is displayed
+          // with the expected text
+          expect(find.text('Clear Sort/Filter Parameters History'),
+              findsOneWidget);
+          expect(find.text('Deleting all historical sort/filter parameters.'),
+              findsOneWidget);
 
-        // Click on the cancel button to cancel deletion
-        await tester.tap(find.byKey(const Key('cancelButtonKey')));
-        await tester.pumpAndSettle();
+          // Click on the cancel button to cancel deletion
+          await tester.tap(find.byKey(const Key('cancelButtonKey')));
+          await tester.pumpAndSettle();
 
-        // Verify that the left sort history icon button is still enabled
-        IntegrationTestUtil.verifyWidgetIsEnabled(
-          tester: tester,
-          widgetKeyStr: "search_history_arrow_left_button",
-        );
+          // Verify that the left sort history icon button is still enabled
+          IntegrationTestUtil.verifyWidgetIsEnabled(
+            tester: tester,
+            widgetKeyStr: "search_history_arrow_left_button",
+          );
 
-        // Verify that the right sort history icon button is still disabled
-        IntegrationTestUtil.verifyWidgetIsDisabled(
-          tester: tester,
-          widgetKeyStr: "search_history_arrow_right_button",
-        );
+          // Verify that the right sort history icon button is still disabled
+          IntegrationTestUtil.verifyWidgetIsDisabled(
+            tester: tester,
+            widgetKeyStr: "search_history_arrow_right_button",
+          );
 
-        // Verify that the clear sort history icon button is still enabled
-        IntegrationTestUtil.verifyWidgetIsEnabled(
-          tester: tester,
-          widgetKeyStr: "search_history_delete_all_button",
-        );
+          // Verify that the clear sort history icon button is still enabled
+          IntegrationTestUtil.verifyWidgetIsEnabled(
+            tester: tester,
+            widgetKeyStr: "search_history_delete_all_button",
+          );
 
-        // Click again on the clear sort history icon button
-        await tester
-            .tap(find.byKey(const Key('search_history_delete_all_button')));
-        await tester.pumpAndSettle();
+          // Click again on the clear sort history icon button
+          await tester
+              .tap(find.byKey(const Key('search_history_delete_all_button')));
+          await tester.pumpAndSettle();
 
-        // Verify that the confirm action dialog is displayed
-        // with the expected text
-        expect(
-            find.text('Clear Sort/Filter Parameters History'), findsOneWidget);
-        expect(find.text('Deleting all historical sort/filter parameters.'),
-            findsOneWidget);
+          // Verify that the confirm action dialog is displayed
+          // with the expected text
+          expect(find.text('Clear Sort/Filter Parameters History'),
+              findsOneWidget);
+          expect(find.text('Deleting all historical sort/filter parameters.'),
+              findsOneWidget);
 
-        // Click on the confirm button to execute deletion
-        await tester.tap(find.byKey(const Key('confirmButton')));
-        await tester.pumpAndSettle();
+          // Click on the confirm button to execute deletion
+          await tester.tap(find.byKey(const Key('confirmButton')));
+          await tester.pumpAndSettle();
 
-        // Verify that the left sort history icon button is now disabled
-        IntegrationTestUtil.verifyWidgetIsDisabled(
-          tester: tester,
-          widgetKeyStr: "search_history_arrow_left_button",
-        );
+          // Verify that the left sort history icon button is now disabled
+          IntegrationTestUtil.verifyWidgetIsDisabled(
+            tester: tester,
+            widgetKeyStr: "search_history_arrow_left_button",
+          );
 
-        // Verify that the right sort history icon button is still disabled
-        IntegrationTestUtil.verifyWidgetIsDisabled(
-          tester: tester,
-          widgetKeyStr: "search_history_arrow_right_button",
-        );
+          // Verify that the right sort history icon button is still disabled
+          IntegrationTestUtil.verifyWidgetIsDisabled(
+            tester: tester,
+            widgetKeyStr: "search_history_arrow_right_button",
+          );
 
-        // Verify that the clear sort history icon button is now disabled
-        IntegrationTestUtil.verifyWidgetIsDisabled(
-          tester: tester,
-          widgetKeyStr: "search_history_delete_all_button",
-        );
+          // Verify that the clear sort history icon button is now disabled
+          IntegrationTestUtil.verifyWidgetIsDisabled(
+            tester: tester,
+            widgetKeyStr: "search_history_delete_all_button",
+          );
 
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
-      });
-      testWidgets(
-          '''Tapping on clear sort/filter parameters icon button and verifying the
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''Tapping on clear sort/filter parameters icon button and verifying the
              state of SF name as well as the Apply button.''',
-          (WidgetTester tester) async {
-        // Purge the test playlist directory if it exists so that the
-        // playlist list is empty
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
+            (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
 
-        // Copy the test initial audio data to the app dir
-        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-          sourceRootPath:
-              "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
+          // Copy the test initial audio data to the app dir
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath:
+                "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
 
-        final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
-          isTest: true,
-        );
+          final SettingsDataService settingsDataService = SettingsDataService(
+            sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
+          );
 
-        // Load the settings from the json file. This is necessary
-        // otherwise the ordered playlist titles will remain empty
-        // and the playlist list will not be filled with the
-        // playlists available in the download app test dir
-        await settingsDataService.loadSettingsFromFile(
-            settingsJsonPathFileName:
-                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the download app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-        await app.main(['test']);
-        await tester.pumpAndSettle();
+          await app.main(['test']);
+          await tester.pumpAndSettle();
 
-        // Now tap on the current dropdown button item to open the dropdown
-        // button items list
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
 
-        final Finder dropDownButtonFinder =
-            find.byKey(const Key('sort_filter_parms_dropdown_button'));
+          final Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
 
-        final Finder dropDownButtonTextFinder = find.descendant(
-          of: dropDownButtonFinder,
-          matching: find.byType(Text),
-        );
+          final Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
 
-        await tester.tap(dropDownButtonTextFinder);
-        await tester.pumpAndSettle();
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
 
-        // And find the 'janco' sort/filter item
-        final Finder titleAscDropDownTextFinder = find.text('janco').last;
-        await tester.tap(titleAscDropDownTextFinder);
-        await tester.pumpAndSettle();
+          // And find the 'janco' sort/filter item
+          final Finder titleAscDropDownTextFinder = find.text('janco').last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
 
-        // Now open the audio popup menu in order to modify the 'janco'
-        // sort/filter parms
-        final Finder dropdownItemEditIconButtonFinder = find.byKey(
-            const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
-        await tester.tap(dropdownItemEditIconButtonFinder);
-        await tester.pumpAndSettle();
+          // Now open the audio popup menu in order to modify the 'janco'
+          // sort/filter parms
+          final Finder dropdownItemEditIconButtonFinder = find.byKey(
+              const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+          await tester.tap(dropdownItemEditIconButtonFinder);
+          await tester.pumpAndSettle();
 
-        // Now type on the clear sort/filter button in order to
-        // reinitialize all the 'janco' sort/filter parms
-        final Finder clearSFparmsIconButtonFinder =
-            find.byKey(const Key('resetSortFilterOptionsIconButton'));
-        await tester.tap(clearSFparmsIconButtonFinder);
-        await tester.pumpAndSettle();
+          // Now type on the clear sort/filter button in order to
+          // reinitialize all the 'janco' sort/filter parms
+          final Finder clearSFparmsIconButtonFinder =
+              find.byKey(const Key('resetSortFilterOptionsIconButton'));
+          await tester.tap(clearSFparmsIconButtonFinder);
+          await tester.pumpAndSettle();
 
-        // Verify that the sort/filter name is empty
-        TextField sortFilterSaveAsNameTextField = tester.widget(
-            find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')));
-        expect(
-          sortFilterSaveAsNameTextField.controller!.text,
-          '',
-        );
+          // Verify that the sort/filter name is empty
+          TextField sortFilterSaveAsNameTextField = tester.widget(
+              find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')));
+          expect(
+            sortFilterSaveAsNameTextField.controller!.text,
+            '',
+          );
 
-        // Verify that the delete 'Save as' name icon button is disabled
-        IntegrationTestUtil.verifyIconButtonColor(
-          tester: tester,
-          widgetKeyStr: 'deleteSaveAsNameIconButton',
-          isIconButtonEnabled: false,
-        );
+          // Verify that the delete 'Save as' name icon button is disabled
+          IntegrationTestUtil.verifyIconButtonColor(
+            tester: tester,
+            widgetKeyStr: 'deleteSaveAsNameIconButton',
+            isIconButtonEnabled: false,
+          );
 
-        // Verify that the 'Apply' button has replaced the 'Save' button
-        Finder applyButtonFinder =
-            find.byKey(const Key('applySortFilterOptionsTextButton'));
+          // Verify that the 'Apply' button has replaced the 'Save' button
+          Finder applyButtonFinder =
+              find.byKey(const Key('applySortFilterOptionsTextButton'));
 
-        expect(
-          applyButtonFinder,
-          findsOneWidget,
-        );
+          expect(
+            applyButtonFinder,
+            findsOneWidget,
+          );
 
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
-      });
-      testWidgets(
-          '''Tapping on clear sort/filter name icon button and verifying the state
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''Tapping on clear sort/filter name icon button and verifying the state
              of SF name as well as the Apply button.''',
-          (WidgetTester tester) async {
-        // Purge the test playlist directory if it exists so that the
-        // playlist list is empty
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
+            (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
 
-        // Copy the test initial audio data to the app dir
-        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-          sourceRootPath:
-              "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
+          // Copy the test initial audio data to the app dir
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath:
+                "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
 
-        final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
-          isTest: true,
-        );
+          final SettingsDataService settingsDataService = SettingsDataService(
+            sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
+          );
 
-        // Load the settings from the json file. This is necessary
-        // otherwise the ordered playlist titles will remain empty
-        // and the playlist list will not be filled with the
-        // playlists available in the download app test dir
-        await settingsDataService.loadSettingsFromFile(
-            settingsJsonPathFileName:
-                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the download app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-        await app.main(['test']);
-        await tester.pumpAndSettle();
+          await app.main(['test']);
+          await tester.pumpAndSettle();
 
-        // Now tap on the current dropdown button item to open the dropdown
-        // button items list
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
 
-        final Finder dropDownButtonFinder =
-            find.byKey(const Key('sort_filter_parms_dropdown_button'));
+          final Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
 
-        final Finder dropDownButtonTextFinder = find.descendant(
-          of: dropDownButtonFinder,
-          matching: find.byType(Text),
-        );
+          final Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
 
-        await tester.tap(dropDownButtonTextFinder);
-        await tester.pumpAndSettle();
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
 
-        // And find the 'janco' sort/filter item
-        final Finder titleAscDropDownTextFinder = find.text('janco').last;
-        await tester.tap(titleAscDropDownTextFinder);
-        await tester.pumpAndSettle();
+          // And find the 'janco' sort/filter item
+          final Finder titleAscDropDownTextFinder = find.text('janco').last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
 
-        // Now open the audio popup menu in order to modify the 'janco'
-        // sort/filter parms
-        final Finder dropdownItemEditIconButtonFinder = find.byKey(
-            const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
-        await tester.tap(dropdownItemEditIconButtonFinder);
-        await tester.pumpAndSettle();
+          // Now open the audio popup menu in order to modify the 'janco'
+          // sort/filter parms
+          final Finder dropdownItemEditIconButtonFinder = find.byKey(
+              const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+          await tester.tap(dropdownItemEditIconButtonFinder);
+          await tester.pumpAndSettle();
 
-        // Now type on the clear sort/filter 'Save as' button in order
-        // to clear the 'janco' sort/filter name
-        final Finder clearSFparmsIconButtonFinder =
-            find.byKey(const Key('deleteSaveAsNameIconButton'));
-        await tester.tap(clearSFparmsIconButtonFinder);
-        await tester.pumpAndSettle();
+          // Now type on the clear sort/filter 'Save as' button in order
+          // to clear the 'janco' sort/filter name
+          final Finder clearSFparmsIconButtonFinder =
+              find.byKey(const Key('deleteSaveAsNameIconButton'));
+          await tester.tap(clearSFparmsIconButtonFinder);
+          await tester.pumpAndSettle();
 
-        // Verify that the sort/filter name is empty
-        TextField sortFilterSaveAsNameTextField = tester.widget(
-            find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')));
-        expect(
-          sortFilterSaveAsNameTextField.controller!.text,
-          '',
-        );
+          // Verify that the sort/filter name is empty
+          TextField sortFilterSaveAsNameTextField = tester.widget(
+              find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')));
+          expect(
+            sortFilterSaveAsNameTextField.controller!.text,
+            '',
+          );
 
-        // Verify that the delete 'Save as' name icon button is disabled
-        IntegrationTestUtil.verifyIconButtonColor(
-          tester: tester,
-          widgetKeyStr: 'deleteSaveAsNameIconButton',
-          isIconButtonEnabled: false,
-        );
+          // Verify that the delete 'Save as' name icon button is disabled
+          IntegrationTestUtil.verifyIconButtonColor(
+            tester: tester,
+            widgetKeyStr: 'deleteSaveAsNameIconButton',
+            isIconButtonEnabled: false,
+          );
 
-        // Verify that the 'Apply' button has replaced the 'Save' button
-        Finder applyButtonFinder =
-            find.byKey(const Key('applySortFilterOptionsTextButton'));
+          // Verify that the 'Apply' button has replaced the 'Save' button
+          Finder applyButtonFinder =
+              find.byKey(const Key('applySortFilterOptionsTextButton'));
 
-        expect(
-          applyButtonFinder,
-          findsOneWidget,
-        );
+          expect(
+            applyButtonFinder,
+            findsOneWidget,
+          );
 
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
       });
       group(
           '''Audio download, video upload, audio file size, duration based sort/filter
