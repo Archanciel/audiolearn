@@ -9054,10 +9054,17 @@ void main() {
 
         // Verify the audioTitles selected by applying the 'toMoveOrCopy'
         // sort/filter parms
+        const String audioTitleOne =
+            "La surpopulation mondiale par Jancovici et Barrau";
+        const String audioTitleTwo =
+            "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik";
+        const String audioTitleThree =
+            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
+
         List<String> audioTitleToCopyLst = [
-          "La surpopulation mondiale par Jancovici et Barrau",
-          "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
-          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          audioTitleOne,
+          audioTitleTwo,
+          audioTitleThree,
         ];
 
         // Verify the displayed audio list after selecting the 'toMoveOrCopy'
@@ -9299,9 +9306,11 @@ void main() {
         // Verify the target playlist directory in which the audio picture
         // files were copied
 
+        final String tempPlaylistPictureDir =
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}$targetPlaylistTitle${path.separator}$kPictureDirName";
+
         listPictureJpgFileNames = DirUtil.listFileNamesInDir(
-          directoryPath:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$targetPlaylistTitle${path.separator}$kPictureDirName",
+          directoryPath: tempPlaylistPictureDir,
           fileExtension: 'jpg',
         );
 
@@ -9434,6 +9443,54 @@ void main() {
           tester: tester,
           currentAudioTitle: currentAudioTitle,
           currentAudioSubTitle: currentAudioSubTitle,
+        );
+
+        // Verifying the copied audio's to which a picture is associated
+
+        const String pictureFileNameOne =
+            "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.jpg";
+        const String pictureFileNameTwo =
+            "240107-094528-Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik 23-09-10.jpg";
+
+        final String pictureFilePathNameOne =
+            "$tempPlaylistPictureDir${path.separator}$pictureFileNameOne";
+        final String pictureFilePathNameTwo =
+            "$tempPlaylistPictureDir${path.separator}$pictureFileNameTwo";
+        const int pictureFileSizeOne = 46295;
+        const int pictureFileSizeTwo = 454899;
+        const String audioTitleOneDurationStr = '7:38';
+        const String audioTitleTwoDurationStr = '13:39';
+
+        List<String> copiedAudioPictureFileNameLst = [
+          pictureFileNameTwo,
+          pictureFileNameOne,
+        ];
+
+        await IntegrationTestUtil.verifyPictureAddition(
+          tester: tester,
+          playlistPictureDir: tempPlaylistPictureDir,
+          pictureFilePathName: pictureFilePathNameOne,
+          pictureFileSize: pictureFileSizeOne,
+          audioForPictureTitle: audioTitleOne, // La surpopulation mondiale ...
+          audioForPictureTitleDurationStr: audioTitleOneDurationStr,
+          pictureFileNamesLst: copiedAudioPictureFileNameLst,
+        );
+
+        // Now, go back to the playlist download view
+        final Finder appScreenNavigationButton =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        await IntegrationTestUtil.verifyPictureAddition(
+          tester: tester,
+          playlistPictureDir: tempPlaylistPictureDir,
+          pictureFilePathName: pictureFilePathNameTwo,
+          pictureFileSize: pictureFileSizeTwo,
+          audioForPictureTitle:
+              audioTitleTwo, // Le Secret de la RÉSILIENCE  ...
+          audioForPictureTitleDurationStr: audioTitleTwoDurationStr,
+          pictureFileNamesLst: copiedAudioPictureFileNameLst,
         );
 
         // Purge the test playlist directory so that the created test
@@ -10203,7 +10260,7 @@ void main() {
 
         // Available pictures file path
         String pictureSourcePath =
-            "$kPlaylistDownloadRootPathWindowsTest${path.separator}pictures";
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kPictureDirName";
 
         // First picture addition
         String pictureFilePathName = await _addPictureToAudio(
@@ -10220,7 +10277,7 @@ void main() {
         ];
 
         // Now verifying the audio picture addition result
-        await _verifyPictureAddition(
+        await IntegrationTestUtil.verifyPictureAddition(
           tester: tester,
           playlistPictureDir: playlistPictureDir,
           pictureFilePathName: pictureFilePathName,
@@ -10250,7 +10307,7 @@ void main() {
         );
 
         // Now verifying the second audio picture addition result
-        await _verifyPictureAddition(
+        await IntegrationTestUtil.verifyPictureAddition(
           tester: tester,
           playlistPictureDir: playlistPictureDir,
           pictureFilePathName: pictureFilePathName,
@@ -10274,7 +10331,7 @@ void main() {
           picturedAudioTitle: audioForPictureTitle,
         );
 
-        await _verifyPictureSuppression(
+        await IntegrationTestUtil.verifyPictureSuppression(
           tester: tester,
           playlistPictureDir: playlistPictureDir,
           audioForPictureTitle: audioForPictureTitle,
@@ -10300,7 +10357,7 @@ void main() {
         );
 
         // Now verifying the third audio picture addition result
-        await _verifyPictureAddition(
+        await IntegrationTestUtil.verifyPictureAddition(
           tester: tester,
           playlistPictureDir: playlistPictureDir,
           pictureFilePathName: pictureFilePathName,
@@ -10362,7 +10419,7 @@ void main() {
         ];
 
         // Now verifying the audio picture addition result
-        await _verifyPictureAddition(
+        await IntegrationTestUtil.verifyPictureAddition(
           tester: tester,
           playlistPictureDir: playlistPictureDir,
           pictureFilePathName: pictureFilePathName,
@@ -10391,7 +10448,7 @@ void main() {
           '241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12.jpg',
         ];
 
-        await _verifyPictureSuppression(
+        await IntegrationTestUtil.verifyPictureSuppression(
           tester: tester,
           playlistPictureDir: playlistPictureDir,
           audioForPictureTitle: audioForPictureTitle,
@@ -10408,7 +10465,7 @@ void main() {
 
         // Verifying that the audio already using a picture was not
         // impacted by the previous picture suppression
-        await _verifyPictureAddition(
+        await IntegrationTestUtil.verifyPictureAddition(
           tester: tester,
           playlistPictureDir: playlistPictureDir,
           pictureFilePathName: pictureFilePathName,
@@ -10459,7 +10516,7 @@ void main() {
 
         // Available pictures file path
         String pictureSourcePath =
-            "$kPlaylistDownloadRootPathWindowsTest${path.separator}pictures";
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kPictureDirName";
 
         // Go to the audio player view
         Finder appScreenNavigationButton =
@@ -10483,7 +10540,7 @@ void main() {
         ];
 
         // Now verifying the audio picture addition result
-        await _verifyPictureAddition(
+        await IntegrationTestUtil.verifyPictureAddition(
           tester: tester,
           playlistPictureDir: playlistPictureDir,
           pictureFilePathName: pictureFilePathName,
@@ -10507,7 +10564,7 @@ void main() {
         );
 
         // Now verifying the second audio picture addition result
-        await _verifyPictureAddition(
+        await IntegrationTestUtil.verifyPictureAddition(
           tester: tester,
           playlistPictureDir: playlistPictureDir,
           pictureFilePathName: pictureFilePathName,
@@ -10524,7 +10581,7 @@ void main() {
           picturedAudioTitle: audioForPictureTitle,
         );
 
-        await _verifyPictureSuppression(
+        await IntegrationTestUtil.verifyPictureSuppression(
           tester: tester,
           playlistPictureDir: playlistPictureDir,
           audioForPictureTitle: audioForPictureTitle,
@@ -10542,7 +10599,7 @@ void main() {
         );
 
         // Now verifying the third audio picture addition result
-        await _verifyPictureAddition(
+        await IntegrationTestUtil.verifyPictureAddition(
           tester: tester,
           playlistPictureDir: playlistPictureDir,
           pictureFilePathName: pictureFilePathName,
@@ -10615,7 +10672,7 @@ void main() {
         ];
 
         // Now verifying the audio picture addition result
-        await _verifyPictureAddition(
+        await IntegrationTestUtil.verifyPictureAddition(
           tester: tester,
           playlistPictureDir: playlistPictureDir,
           pictureFilePathName: pictureFilePathName,
@@ -10636,7 +10693,7 @@ void main() {
           '241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12.jpg',
         ];
 
-        await _verifyPictureSuppression(
+        await IntegrationTestUtil.verifyPictureSuppression(
           tester: tester,
           playlistPictureDir: playlistPictureDir,
           audioForPictureTitle: audioForPictureTitle,
@@ -10654,7 +10711,7 @@ void main() {
 
         // Verifying that the audio already using a picture was not
         // impacted by the previous picture suppression
-        await _verifyPictureAddition(
+        await IntegrationTestUtil.verifyPictureAddition(
           tester: tester,
           playlistPictureDir: playlistPictureDir,
           pictureFilePathName: pictureFilePathName,
@@ -10672,147 +10729,6 @@ void main() {
       });
     });
   });
-}
-
-Future<void> _verifyPictureAddition({
-  required WidgetTester tester,
-  required String playlistPictureDir,
-  required String pictureFilePathName,
-  required int pictureFileSize,
-  required String audioForPictureTitle,
-  required String audioForPictureTitleDurationStr,
-  required List<String> pictureFileNamesLst,
-  bool goToAudioPlayerView = true,
-}) async {
-  // Now verifying that the playlist picture directory contains
-  // the added picture file
-  List<String> playlistPicturesLst = DirUtil.listFileNamesInDir(
-    directoryPath: playlistPictureDir,
-    fileExtension: 'jpg',
-  );
-
-  expect(playlistPicturesLst, pictureFileNamesLst);
-
-  // Verifying the added picture file size
-  IntegrationTestUtil.verifyFileSize(
-    filePathName: pictureFilePathName,
-    fileSizeInBytes: pictureFileSize,
-  );
-
-  if (goToAudioPlayerView) {
-    // Now go to the audio player view
-    final Finder audioForPictureTitleListTileTextWidgetFinder =
-        find.text(audioForPictureTitle);
-
-    await tester.tap(audioForPictureTitleListTileTextWidgetFinder);
-    await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
-      tester: tester,
-    );
-  }
-
-  // Due to the not working integration test which prevents the
-  // audio picture to be displayed, we open and close the playable
-  // audio list dialog. This will cause the added picture to be
-  // displayed. When a picture is added manually in the Audio Learn
-  // application, the picture IS displayed after the 'Add Audio
-  // Picture' menu was executed !
-
-  String audioTitleWithDuration =
-      '$audioForPictureTitle\n$audioForPictureTitleDurationStr';
-
-  await tester.tap(find.text(audioTitleWithDuration));
-  await tester.pumpAndSettle();
-
-  // Tap on Cancel button to close the
-  // DisplaySelectableAudioListDialog
-  await tester.tap(find.text('Close'));
-  await tester.pumpAndSettle();
-
-  // Now that the audio picture was added, verify that the
-  // play/pause button is displayed at top of the screen
-  expect(
-    find.byKey(const Key('picture_displayed_play_pause_button_key')),
-    findsOneWidget,
-  );
-
-  // Now that the audio picture was added, verify that the
-  // regular play/pause button is notdisplayed
-  expect(
-    find.byKey(const Key('middleScreenPlayPauseButton')),
-    findsNothing,
-  );
-
-  // Now that the audio picture was added, verify that the
-  // audio title with duration is displayed
-  expect(
-    find.text(audioTitleWithDuration),
-    findsOneWidget,
-  );
-}
-
-Future<void> _verifyPictureSuppression({
-  required WidgetTester tester,
-  required String playlistPictureDir,
-  required String audioForPictureTitle,
-  required List<String> pictureFileNamesLst,
-  bool goToAudioPlayerView = true,
-}) async {
-  // Now verifying that the playlist picture directory does not contains
-  // the added picture file
-  List<String> playlistPicturesLst = DirUtil.listFileNamesInDir(
-    directoryPath: playlistPictureDir,
-    fileExtension: 'jpg',
-  );
-
-  expect(playlistPicturesLst, pictureFileNamesLst);
-
-  if (goToAudioPlayerView) {
-    // Now go to the audio player view
-    Finder appScreenNavigationButton =
-        find.byKey(const ValueKey('audioPlayerViewIconButton'));
-    await tester.tap(appScreenNavigationButton);
-    await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
-      tester: tester,
-    );
-  }
-
-  // Due to the not working integration test which prevents the
-  // audio picture to be displayed, we open and close the playable
-  // audio list dialog. This will cause the added picture to be
-  // displayed. When a picture is added manually in the Audio Learn
-  // application, the picture IS displayed after the 'Add Audio
-  // Picture' menu was executed !
-
-  String audioTitleWithDuration = '$audioForPictureTitle\n40:53';
-
-  await tester.tap(find.text(audioTitleWithDuration));
-  await tester.pumpAndSettle();
-
-  // Tap on Cancel button to close the
-  // DisplaySelectableAudioListDialog
-  await tester.tap(find.text('Close'));
-  await tester.pumpAndSettle();
-
-  // Now that the audio picture was deleted, verify that the
-  // regular play/pause button is displayed
-  expect(
-    find.byKey(const Key('middleScreenPlayPauseButton')),
-    findsOneWidget,
-  );
-
-  // Now that the audio picture was deleted, verify that the
-  // play/pause button is no more displayed at top of the screen
-  expect(
-    find.byKey(const Key('picture_displayed_play_pause_button_key')),
-    findsNothing,
-  );
-
-  // Now that the audio picture was deleted, verify that the
-  // audio title with duration is displayed
-  expect(
-    find.text(audioTitleWithDuration),
-    findsOneWidget,
-  );
 }
 
 /// Returns the added [pictureFilePathName]
