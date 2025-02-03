@@ -464,6 +464,37 @@ class AudioSortFilterService {
               wasFilterOptionsTitleAddedToDifferencesLst:
                   wasFilterOptionsTitleAddedToDifferencesLst);
     }
+
+    if (existingAudioSortFilterParms.filterPictured !=
+        newOrModifiedaudioSortFilterParms.filterPictured) {
+      wasFilterOptionsTitleAddedToDifferencesLst =
+          _addToDifferencesLstOtherOptionCheckboxValueStr(
+              initialCheckBoxState: existingAudioSortFilterParms.filterPictured,
+              modifiedCheckBoxState:
+                  newOrModifiedaudioSortFilterParms.filterPictured,
+              sortFilterParmsNameTranslationMap:
+                  sortFilterParmsNameTranslationMap,
+              optionNameTranslationKey: 'filterPictured',
+              differencesLst: differencesLst,
+              wasFilterOptionsTitleAddedToDifferencesLst:
+                  wasFilterOptionsTitleAddedToDifferencesLst);
+    }
+    if (existingAudioSortFilterParms.filterNotPictured !=
+        newOrModifiedaudioSortFilterParms.filterNotPictured) {
+      wasFilterOptionsTitleAddedToDifferencesLst =
+          _addToDifferencesLstOtherOptionCheckboxValueStr(
+              initialCheckBoxState:
+                  existingAudioSortFilterParms.filterNotPictured,
+              modifiedCheckBoxState:
+                  newOrModifiedaudioSortFilterParms.filterNotPictured,
+              sortFilterParmsNameTranslationMap:
+                  sortFilterParmsNameTranslationMap,
+              optionNameTranslationKey: 'filterNotPictured',
+              differencesLst: differencesLst,
+              wasFilterOptionsTitleAddedToDifferencesLst:
+                  wasFilterOptionsTitleAddedToDifferencesLst);
+    }
+
     if (existingAudioSortFilterParms.downloadDateStartRange !=
         newOrModifiedaudioSortFilterParms.downloadDateStartRange) {
       wasFilterOptionsTitleAddedToDifferencesLst =
@@ -1197,6 +1228,9 @@ class AudioSortFilterService {
     required List<String> playlistPictureFileNamedLst,
   }) {
     return audioLst.where((audio) {
+      // Returns only audio for which no picture was added, i.e. the
+      // playlistPictureFileNamedLst does not contain the audio
+      // file name with the '.jpg' extension.
       return !playlistPictureFileNamedLst
           .contains(audio.audioFileName.replaceFirst('.mp3', '.jpg'));
     }).toList();
@@ -1206,6 +1240,9 @@ class AudioSortFilterService {
     required List<Audio> audioLst,
     required List<String> playlistPictureFileNamedLst,
   }) {
+    // Returns only audio for which a picture was added, i.e. the
+    // playlistPictureFileNamedLst does contain the audio
+    // file name with the '.jpg' extension.
     return audioLst.where((audio) {
       return playlistPictureFileNamedLst
           .contains(audio.audioFileName.replaceFirst('.mp3', '.jpg'));

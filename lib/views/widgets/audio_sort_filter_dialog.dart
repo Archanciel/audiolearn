@@ -2209,6 +2209,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       'filterNotListened': AppLocalizations.of(context)!.notListened,
       'filterCommented': AppLocalizations.of(context)!.commented,
       'filterNotCommented': AppLocalizations.of(context)!.notCommented,
+      'filterPictured': AppLocalizations.of(context)!.pictured,
+      'filterNotPictured': AppLocalizations.of(context)!.notPictured,
       'downloadDateStartRange': AppLocalizations.of(context)!.startDownloadDate,
       'downloadDateEndRange': AppLocalizations.of(context)!.endDownloadDate,
       'uploadDateStartRange': AppLocalizations.of(context)!.startUploadDate,
