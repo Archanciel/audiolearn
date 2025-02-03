@@ -487,7 +487,7 @@
   "dateFormat": "Select Date Format ...",
   "dateFormatSelectionDialogTitle": "Select the application date format",
   "commented": "Commented",
-  "notCommented": "Not com.",
+  "notCommented": "Uncom.",
   "deleteFilteredAudioConfirmationTitle": "Delete audio filtered by \"{sortFilterParmsName}\" parms from playlist \"{playlistTitle}\"",
   "@deleteFilteredAudioConfirmationTitle": {
     "description": "Confirmation title for deleting filtered audio",
@@ -752,5 +752,7 @@
   "addAudioPicture": "Add Audio Picture ...",
   "removeAudioPicture": "Remove Audio Picture",
   "savedAppDataToZip": "Saved playlist json files and application settings to \"{filePathName}\".",
-  "appDataCouldNotBeSavedToZip": "Playlist json files and application settings could not be saved to zip."
+  "appDataCouldNotBeSavedToZip": "Playlist json files and application settings could not be saved to zip.",
+  "pictured": "Pictured",
+  "notPictured": "Unpic."
 }

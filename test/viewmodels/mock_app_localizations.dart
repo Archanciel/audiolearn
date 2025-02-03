@@ -1788,5 +1788,12 @@ class MockAppLocalizations extends AppLocalizations {
   String get commentEndPositionTooltip => "Comment end position in audio";
 
   @override
-  String get commentPositionTooltip => "Emptying the position and clicking on Start checkbox will set the start comment position to 0:00.0. Clicking on End checkbox will set the end comment position to the audio total duration.";
+  String get commentPositionTooltip =>
+      "Emptying the position and clicking on Start checkbox will set the start comment position to 0:00.0. Clicking on End checkbox will set the end comment position to the audio total duration.";
+
+  @override
+  String get pictured => "Pictured";
+
+  @override
+  String get notPictured => "Unpic.";
 }

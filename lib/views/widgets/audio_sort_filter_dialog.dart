@@ -80,6 +80,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
   late bool _filterNotListened;
   late bool _filterCommented;
   late bool _filterNotCommented;
+  late bool _filterPictured;
+  late bool _filterNotPictured;
 
   final TextEditingController _startFileSizeController =
       TextEditingController();
@@ -237,6 +239,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     _filterNotListened = audioSortDefaultFilterParameters.filterNotListened;
     _filterCommented = audioSortDefaultFilterParameters.filterCommented;
     _filterNotCommented = audioSortDefaultFilterParameters.filterNotCommented;
+    _filterPictured = audioSortDefaultFilterParameters.filterPictured;
+    _filterNotPictured = audioSortDefaultFilterParameters.filterNotPictured;
     _startDownloadDateTime =
         audioSortDefaultFilterParameters.downloadDateStartRange;
     _endDownloadDateTime =
@@ -304,6 +308,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     _filterNotListened = true;
     _filterCommented = true;
     _filterNotCommented = true;
+    _filterPictured = true;
+    _filterNotPictured = true;
     _startDownloadDateTimeController.clear();
     _endDownloadDateTimeController.clear();
     _startUploadDateTimeController.clear();
@@ -345,6 +351,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     _filterNotListened = audioSortFilterParameters.filterNotListened;
     _filterCommented = audioSortFilterParameters.filterCommented;
     _filterNotCommented = audioSortFilterParameters.filterNotCommented;
+    _filterPictured = audioSortFilterParameters.filterPictured;
+    _filterNotPictured = audioSortFilterParameters.filterNotPictured;
     _startDownloadDateTimeController.clear();
     _endDownloadDateTimeController.clear();
     _startUploadDateTimeController.clear();
@@ -598,6 +606,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                     ),
                     _buildAudioStateCheckboxes(context),
                     _buildCommentSelectionCheckboxes(context),
+                    _buildPictureSelectionCheckboxes(context),
                     _buildAudioDateFields(
                       context: context,
                       dateFormatVMlistenFalse: dateFormatVMlistenFalse,
@@ -1397,6 +1406,43 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           onChanged: (bool? newValue) {
             setState(() {
               _filterNotCommented = newValue!;
+            });
+
+            // now clicking on Enter works since the
+            // Checkbox is not focused anymore
+            _audioTitleSearchSentenceFocusNode.requestFocus();
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPictureSelectionCheckboxes(
+    BuildContext context,
+  ) {
+    return Row(
+      children: [
+        Text(AppLocalizations.of(context)!.pictured),
+        Checkbox(
+          key: const Key('filterPicturedCheckbox'),
+          value: _filterPictured,
+          onChanged: (bool? newValue) {
+            setState(() {
+              _filterPictured = newValue!;
+            });
+
+            // now clicking on Enter works since the
+            // Checkbox is not focused anymore
+            _audioTitleSearchSentenceFocusNode.requestFocus();
+          },
+        ),
+        Text(AppLocalizations.of(context)!.notPictured),
+        Checkbox(
+          key: const Key('filterNotPicturedCheckbox'),
+          value: _filterNotPictured,
+          onChanged: (bool? newValue) {
+            setState(() {
+              _filterNotPictured = newValue!;
             });
 
             // now clicking on Enter works since the
@@ -2336,6 +2382,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       filterNotListened: _filterNotListened,
       filterCommented: _filterCommented,
       filterNotCommented: _filterNotCommented,
+      filterPictured: _filterPictured,
+      filterNotPictured: _filterNotPictured,
       downloadDateStartRange: _startDownloadDateTime,
       downloadDateEndRange: _endDownloadDateTime,
       uploadDateStartRange: _startUploadDateTime,

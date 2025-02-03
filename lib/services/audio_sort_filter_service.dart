@@ -4,8 +4,12 @@ import 'package:audiolearn/models/comment.dart';
 import 'package:audiolearn/utils/date_time_util.dart';
 import 'package:audiolearn/viewmodels/comment_vm.dart';
 import 'package:flutter/foundation.dart';
+import 'package:path/path.dart' as path;
 
+import '../constants.dart';
 import '../models/audio.dart';
+import '../models/playlist.dart';
+import '../utils/dir_util.dart';
 import '../viewmodels/date_format_vm.dart';
 import 'sort_filter_parameters.dart';
 
@@ -1103,6 +1107,34 @@ class AudioSortFilterService {
       );
     }
 
+    Playlist playlist = filteredAudios.first.enclosingPlaylist!;
+    List<String> playlistPictureFileNamesLst = DirUtil.listFileNamesInDir(
+      directoryPath:
+          "${playlist.downloadPath}${path.separator}$kPictureDirName",
+      fileExtension: 'jpg',
+    );
+
+    // If the 'Pictured' checkbox was set to false (by
+    // default it is set to true), the returned audio list
+    // does not contain audio to which a picture was added.
+    if (!audioSortFilterParameters.filterPictured) {
+      filteredAudios = _filterAudioLstByRemovingPicturedAudio(
+        audioLst: filteredAudios,
+        playlistPictureFileNamedLst: playlistPictureFileNamesLst,
+      );
+    }
+
+    // If the 'Not pictured' checkbox was set to false (by
+    // default it is set to true), the returned audio list
+    // does not contain audio that to which no picture was
+    // added.
+    if (!audioSortFilterParameters.filterNotPictured) {
+      filteredAudios = _filterAudioLstByRemovingUnPicturedAudio(
+        audioLst: filteredAudios,
+        playlistPictureFileNamedLst: playlistPictureFileNamesLst,
+      );
+    }
+
     if (audioSortFilterParameters.downloadDateStartRange != null ||
         audioSortFilterParameters.downloadDateEndRange != null) {
       filteredAudios = _filterAudioLstByAudioDownloadDateTime(
@@ -1157,6 +1189,26 @@ class AudioSortFilterService {
   }) {
     return audioLst.where((audio) {
       return commentsMap[audio.audioFileName.replaceFirst('.mp3', '')] != null;
+    }).toList();
+  }
+
+  List<Audio> _filterAudioLstByRemovingPicturedAudio({
+    required List<Audio> audioLst,
+    required List<String> playlistPictureFileNamedLst,
+  }) {
+    return audioLst.where((audio) {
+      return !playlistPictureFileNamedLst
+          .contains(audio.audioFileName.replaceFirst('.mp3', '.jpg'));
+    }).toList();
+  }
+
+  List<Audio> _filterAudioLstByRemovingUnPicturedAudio({
+    required List<Audio> audioLst,
+    required List<String> playlistPictureFileNamedLst,
+  }) {
+    return audioLst.where((audio) {
+      return playlistPictureFileNamedLst
+          .contains(audio.audioFileName.replaceFirst('.mp3', '.jpg'));
     }).toList();
   }
 
