@@ -7501,7 +7501,7 @@ void main() {
         }
 
         // Verify the presence of the audio comment files which will be later
-        // moved or not
+        // moved
 
         List<String> audioCommentFileNameToMoveLst = [
           "231226-094534-3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher) 23-12-01.json",
@@ -7520,6 +7520,26 @@ void main() {
             true,
           );
         }
+
+        // Verify the presence of the audio picture files which will be later
+        // moved or not
+
+        List<String> availableAudioPictureFileNameLst = [
+          "231226-094526-Ce qui va vraiment sauver notre espèce par Jancovici et Barrau 23-09-23.jpg",
+          "240107-094528-Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik 23-09-10.jpg",
+          "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.jpg",
+        ];
+
+        List<String> listPictureJpgFileNames = DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kPictureDirName",
+          fileExtension: 'jpg',
+        );
+
+        expect(
+          listPictureJpgFileNames,
+          availableAudioPictureFileNameLst,
+        );
 
         // Tap the 'Toggle List' button to show the list of playlist's.
         await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -7585,6 +7605,28 @@ void main() {
           );
         }
 
+        // Verify in source playlist directory that the audio picture
+        // files were moved from
+
+        List<String> audioPictureFileNameToMoveLst = [
+          "240107-094528-Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik 23-09-10.jpg",
+          "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.jpg",
+        ];
+
+        listCommentJsonFileNames = DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kPictureDirName",
+          fileExtension: 'jpg',
+        );
+
+        for (String audioPictureFileNameToMove
+            in audioPictureFileNameToMoveLst) {
+          expect(
+            listCommentJsonFileNames.contains(audioPictureFileNameToMove),
+            false,
+          );
+        }
+
         // Verify that the other files were not moved
 
         List<String> remainingAudioFileNameLst = [
@@ -7617,6 +7659,26 @@ void main() {
             in audioCommentFileNameNotMovedLst) {
           expect(
             listCommentJsonFileNames.contains(audioCommentFileNameNotMoved),
+            true,
+          );
+        }
+
+        // Verify that the other audio picture files were not moved
+
+        List<String> audioPictureFileNameNotMovedLst = [
+          "231226-094526-Ce qui va vraiment sauver notre espèce par Jancovici et Barrau 23-09-23.jpg",
+        ];
+
+        listCommentJsonFileNames = DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kPictureDirName",
+          fileExtension: 'jpg',
+        );
+
+        for (String audioPictureFileNameNotMoved
+            in audioPictureFileNameNotMovedLst) {
+          expect(
+            listCommentJsonFileNames.contains(audioPictureFileNameNotMoved),
             true,
           );
         }
@@ -7687,6 +7749,25 @@ void main() {
             in audioCommentFileNameToMoveLst) {
           expect(
             listCommentJsonFileNames.contains(audioCommentFileNameMoved),
+            true,
+          );
+        }
+
+        // Verify the target playlist directory in which the audio picture
+        // files were moved
+
+        final String tempPlaylistPictureDir =
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}$targetPlaylistTitle${path.separator}$kPictureDirName";
+
+        listPictureJpgFileNames = DirUtil.listFileNamesInDir(
+          directoryPath: tempPlaylistPictureDir,
+          fileExtension: 'jpg',
+        );
+
+        for (String audioPictureFileNameMoved
+            in audioPictureFileNameToMoveLst) {
+          expect(
+            listPictureJpgFileNames.contains(audioPictureFileNameMoved),
             true,
           );
         }
@@ -7818,6 +7899,60 @@ void main() {
           tester: tester,
           currentAudioTitle: currentAudioTitle,
           currentAudioSubTitle: currentAudioSubTitle,
+        );
+
+
+
+
+
+
+
+        // Verifying the moved audio's to which a picture is associated
+
+        const String pictureFileNameOne =
+            "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.jpg";
+        const String pictureFileNameTwo =
+            "240107-094528-Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik 23-09-10.jpg";
+
+        final String pictureFilePathNameOne =
+            "$tempPlaylistPictureDir${path.separator}$pictureFileNameOne";
+        final String pictureFilePathNameTwo =
+            "$tempPlaylistPictureDir${path.separator}$pictureFileNameTwo";
+        const int pictureFileSizeOne = 46295;
+        const int pictureFileSizeTwo = 454899;
+        const String audioTitleOneDurationStr = '7:38';
+        const String audioTitleTwoDurationStr = '13:39';
+
+        List<String> movedAudioPictureFileNameLst = [
+          pictureFileNameTwo,
+          pictureFileNameOne,
+        ];
+
+        await IntegrationTestUtil.verifyPictureAddition(
+          tester: tester,
+          playlistPictureDir: tempPlaylistPictureDir,
+          pictureFilePathName: pictureFilePathNameOne,
+          pictureFileSize: pictureFileSizeOne,
+          audioForPictureTitle: audioTitleOne, // La surpopulation mondiale ...
+          audioForPictureTitleDurationStr: audioTitleOneDurationStr,
+          pictureFileNamesLst: movedAudioPictureFileNameLst,
+        );
+
+        // Now, go back to the playlist download view
+        final Finder appScreenNavigationButton =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        await IntegrationTestUtil.verifyPictureAddition(
+          tester: tester,
+          playlistPictureDir: tempPlaylistPictureDir,
+          pictureFilePathName: pictureFilePathNameTwo,
+          pictureFileSize: pictureFileSizeTwo,
+          audioForPictureTitle:
+              audioTitleTwo, // Le Secret de la RÉSILIENCE  ...
+          audioForPictureTitleDurationStr: audioTitleTwoDurationStr,
+          pictureFileNamesLst: movedAudioPictureFileNameLst,
         );
 
         // Purge the test playlist directory so that the created test
