@@ -7444,10 +7444,17 @@ void main() {
 
         // Verify the audioTitles selected by applying the 'toMoveOrCopy'
         // sort/filter parms
+        const String audioTitleOne =
+            "La surpopulation mondiale par Jancovici et Barrau";
+        const String audioTitleTwo =
+            "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik";
+        const String audioTitleThree =
+            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
+
         List<String> audioTitleToMoveBeforeMovingLst = [
-          "La surpopulation mondiale par Jancovici et Barrau",
-          "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
-          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          audioTitleOne,
+          audioTitleTwo,
+          audioTitleThree,
         ];
 
         // Verify the displayed audio list after selecting the 'toMoveOrCopy'
