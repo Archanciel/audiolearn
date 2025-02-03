@@ -1345,4 +1345,145 @@ class IntegrationTestUtil {
       fileSizeInBytes,
     ); // Size in bytes
   }
+
+  static Future<void> verifyPictureAddition({
+    required WidgetTester tester,
+    required String playlistPictureDir,
+    required String pictureFilePathName,
+    required int pictureFileSize,
+    required String audioForPictureTitle,
+    required String audioForPictureTitleDurationStr,
+    required List<String> pictureFileNamesLst,
+    bool goToAudioPlayerView = true,
+  }) async {
+    // Now verifying that the playlist picture directory contains
+    // the added picture file
+    List<String> playlistPicturesLst = DirUtil.listFileNamesInDir(
+      directoryPath: playlistPictureDir,
+      fileExtension: 'jpg',
+    );
+
+    expect(playlistPicturesLst, pictureFileNamesLst);
+
+    // Verifying the added picture file size
+    IntegrationTestUtil.verifyFileSize(
+      filePathName: pictureFilePathName,
+      fileSizeInBytes: pictureFileSize,
+    );
+
+    if (goToAudioPlayerView) {
+      // Now go to the audio player view
+      final Finder audioForPictureTitleListTileTextWidgetFinder =
+          find.text(audioForPictureTitle);
+
+      await tester.tap(audioForPictureTitleListTileTextWidgetFinder);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
+    }
+
+    // Due to the not working integration test which prevents the
+    // audio picture to be displayed, we open and close the playable
+    // audio list dialog. This will cause the added picture to be
+    // displayed. When a picture is added manually in the Audio Learn
+    // application, the picture IS displayed after the 'Add Audio
+    // Picture' menu was executed !
+
+    String audioTitleWithDuration =
+        '$audioForPictureTitle\n$audioForPictureTitleDurationStr';
+
+    await tester.tap(find.text(audioTitleWithDuration));
+    await tester.pumpAndSettle();
+
+    // Tap on Cancel button to close the
+    // DisplaySelectableAudioListDialog
+    await tester.tap(find.text('Close'));
+    await tester.pumpAndSettle();
+
+    // Now that the audio picture was added, verify that the
+    // play/pause button is displayed at top of the screen
+    expect(
+      find.byKey(const Key('picture_displayed_play_pause_button_key')),
+      findsOneWidget,
+    );
+
+    // Now that the audio picture was added, verify that the
+    // regular play/pause button is notdisplayed
+    expect(
+      find.byKey(const Key('middleScreenPlayPauseButton')),
+      findsNothing,
+    );
+
+    // Now that the audio picture was added, verify that the
+    // audio title with duration is displayed
+    expect(
+      find.text(audioTitleWithDuration),
+      findsOneWidget,
+    );
+  }
+
+  static Future<void> verifyPictureSuppression({
+    required WidgetTester tester,
+    required String playlistPictureDir,
+    required String audioForPictureTitle,
+    required List<String> pictureFileNamesLst,
+    bool goToAudioPlayerView = true,
+  }) async {
+    // Now verifying that the playlist picture directory does not contains
+    // the added picture file
+    List<String> playlistPicturesLst = DirUtil.listFileNamesInDir(
+      directoryPath: playlistPictureDir,
+      fileExtension: 'jpg',
+    );
+
+    expect(playlistPicturesLst, pictureFileNamesLst);
+
+    if (goToAudioPlayerView) {
+      // Now go to the audio player view
+      Finder appScreenNavigationButton =
+          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+      await tester.tap(appScreenNavigationButton);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
+    }
+
+    // Due to the not working integration test which prevents the
+    // audio picture to be displayed, we open and close the playable
+    // audio list dialog. This will cause the added picture to be
+    // displayed. When a picture is added manually in the Audio Learn
+    // application, the picture IS displayed after the 'Add Audio
+    // Picture' menu was executed !
+
+    String audioTitleWithDuration = '$audioForPictureTitle\n40:53';
+
+    await tester.tap(find.text(audioTitleWithDuration));
+    await tester.pumpAndSettle();
+
+    // Tap on Cancel button to close the
+    // DisplaySelectableAudioListDialog
+    await tester.tap(find.text('Close'));
+    await tester.pumpAndSettle();
+
+    // Now that the audio picture was deleted, verify that the
+    // regular play/pause button is displayed
+    expect(
+      find.byKey(const Key('middleScreenPlayPauseButton')),
+      findsOneWidget,
+    );
+
+    // Now that the audio picture was deleted, verify that the
+    // play/pause button is no more displayed at top of the screen
+    expect(
+      find.byKey(const Key('picture_displayed_play_pause_button_key')),
+      findsNothing,
+    );
+
+    // Now that the audio picture was deleted, verify that the
+    // audio title with duration is displayed
+    expect(
+      find.text(audioTitleWithDuration),
+      findsOneWidget,
+    );
+  }
 }
