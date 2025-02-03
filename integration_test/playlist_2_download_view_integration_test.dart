@@ -5872,6 +5872,26 @@ void main() {
           );
         }
 
+        // Verify the presence of the audio picture files which will be later
+        // deleted or not
+
+        List<String> availableAudioPictureFileNameLst = [
+          "231226-094526-Ce qui va vraiment sauver notre espèce par Jancovici et Barrau 23-09-23.jpg",
+          "240107-094528-Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik 23-09-10.jpg",
+          "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.jpg",
+        ];
+
+        List<String> listPictureJpgFileNames = DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kPictureDirName",
+          fileExtension: 'jpg',
+        );
+
+        expect(
+          listPictureJpgFileNames,
+          availableAudioPictureFileNameLst,
+        );
+
         // Tap the 'Toggle List' button to show the list of playlist's.
         await tester.tap(find.byKey(const Key('playlist_toggle_button')));
         await tester.pumpAndSettle();
@@ -5942,6 +5962,27 @@ void main() {
           );
         }
 
+        // Verify in source playlist directory that the audio picture
+        // files were deleted
+
+        List<String> audioPictureFileNameToDeleteLst = [
+          "240107-094528-Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik 23-09-10.jpg",
+        ];
+
+        listCommentJsonFileNames = DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kPictureDirName",
+          fileExtension: 'jpg',
+        );
+
+        for (String audioPictureFileNameToDelete
+            in audioPictureFileNameToDeleteLst) {
+          expect(
+            listCommentJsonFileNames.contains(audioPictureFileNameToDelete),
+            false,
+          );
+        }
+
         // Verify that the other files were not deleted
 
         List<String> remainingAudioFileNameLst = [
@@ -5973,6 +6014,27 @@ void main() {
             in audioCommentFileNameNotDeletedLst) {
           expect(
             listCommentJsonFileNames.contains(audioCommentFileNameNotDeleted),
+            true,
+          );
+        }
+
+        // Verify that the other audio picture files were not deleted
+
+        List<String> audioPictureFileNameNotDeletedLst = [
+          "231226-094526-Ce qui va vraiment sauver notre espèce par Jancovici et Barrau 23-09-23.jpg",
+          "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.jpg",
+        ];
+
+        listCommentJsonFileNames = DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kPictureDirName",
+          fileExtension: 'jpg',
+        );
+
+        for (String audioPictureFileNameNotDeleted
+            in audioPictureFileNameNotDeletedLst) {
+          expect(
+            listCommentJsonFileNames.contains(audioPictureFileNameNotDeleted),
             true,
           );
         }
