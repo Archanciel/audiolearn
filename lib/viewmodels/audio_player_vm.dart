@@ -772,7 +772,8 @@ class AudioPlayerVM extends ChangeNotifier {
       // in order to enable position button and slider usage after
       // the audio was paused.
       //
-      if (isFromAudioPlayerView && _wasAudioPlayersStopped) {
+      if ((isFromAudioPlayerView || isCommentPlaying) &&
+          _wasAudioPlayersStopped) {
         // Set the source again since clicking on the pause icon
         // stopped the audio player.
         await _audioPlayer!
