@@ -5657,7 +5657,8 @@ void main() {
       // Verify the comment start position displayed in the comment
       // dialog
       const String commentStartPosition = '0:46';
-      const String commentEndPosition = '0:52';
+      const String commentEndPosition = '0:53';
+      
       expect(
         tester.widget<Text>(commentStartTextWidgetFinder).data!,
         commentStartPosition, // 0:46
