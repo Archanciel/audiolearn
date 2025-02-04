@@ -759,12 +759,12 @@ class AudioPlayerVM extends ChangeNotifier {
       // in order to enable position button and slider usage after
       // the audio was paused.
       //
-      // if (isFromAudioPlayerView) {
-      //   // Set the source again since clicking on the pause icon
-      //   // stopped the audio player.
-      //   await _audioPlayer!
-      //       .setSource(DeviceFileSource(_currentAudio!.filePathName));
-      // }
+      if (isFromAudioPlayerView) {
+        // Set the source again since clicking on the pause icon
+        // stopped the audio player.
+        await _audioPlayer!
+            .setSource(DeviceFileSource(_currentAudio!.filePathName));
+      }
 
       if (rewindAudioPositionBasedOnPauseDuration) {
         await _rewindAudioPositionBasedOnPauseDuration();
@@ -792,8 +792,8 @@ class AudioPlayerVM extends ChangeNotifier {
     // avoids that the paused audio starts when an alarm or a call
     // happens on the smartphone. This requires to call _audioPlayer!.
     // setSource() in the playCurrentAudio() method ...
-    //    await _audioPlayer!.stop();
-    await _audioPlayer!.pause();
+    await _audioPlayer!.stop();
+    // await _audioPlayer!.pause();
 
     if (_currentAudio !=
             null && // necessary to avoid the error when deleting a playing audio
@@ -838,6 +838,11 @@ class AudioPlayerVM extends ChangeNotifier {
     required Duration posOrNegPositionDurationChange,
     bool isUndoRedo = false,
   }) async {
+    // Set the source again since clicking on the pause icon
+    // stopped the audio player.
+    await _audioPlayer!
+        .setSource(DeviceFileSource(_currentAudio!.filePathName));
+
     Duration newAudioPosition =
         _currentAudioPosition + posOrNegPositionDurationChange;
 
@@ -915,6 +920,11 @@ class AudioPlayerVM extends ChangeNotifier {
     required Duration durationPosition,
     bool isUndoRedo = false,
   }) async {
+    // Set the source again since clicking on the pause icon
+    // stopped the audio player.
+    await _audioPlayer!
+        .setSource(DeviceFileSource(_currentAudio!.filePathName));
+
     // setting the audio paused date time to now avoid that if you play the
     // audio after having changed the position clicking on the slider, the
     // audio is rewinded maybe half a minute ...
@@ -1012,7 +1022,15 @@ class AudioPlayerVM extends ChangeNotifier {
   /// command to the undo list.
   Future<void> skipToStart({
     bool isUndoRedo = false,
+    bool isFromAudioPlayerView = false,
   }) async {
+    if (isFromAudioPlayerView) {
+      // Set the source again since clicking on the pause icon
+      // stopped the audio player.
+      await _audioPlayer!
+          .setSource(DeviceFileSource(_currentAudio!.filePathName));
+    }
+
     if (_currentAudioPosition.inSeconds == 0) {
       // situation when the user clicks on |< when the audio
       // position is at audio start. The case if the user clicked
@@ -1058,6 +1076,11 @@ class AudioPlayerVM extends ChangeNotifier {
     if (_currentAudio == null) {
       return;
     }
+
+    // Set the source again since clicking on the pause icon
+    // stopped the audio player.
+    await _audioPlayer!
+        .setSource(DeviceFileSource(_currentAudio!.filePathName));
 
     if (_currentAudioPosition == _currentAudioTotalDuration) {
       // Situation when the user clicks on >| when the audio
