@@ -940,8 +940,14 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
             IconButton(
               key: const Key('audioPlayerViewSkipToStartButton'),
               iconSize: _audioIconSizeMedium,
-              onPressed: () async =>
-                  await audioPlayerVMlistenFalse.skipToStart(),
+              onPressed: () async => await audioPlayerVMlistenFalse.skipToStart(
+                // Setting isFromAudioPlayerView to true enables to
+                // set the audioplayers source to the current audio
+                // file if the audioplayers was stopped. This avoids
+                // that the position buttons don't work after the audio
+                // player was stopped.
+                isFromAudioPlayerView: true,
+              ),
               style: ButtonStyle(
                 padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
                   const EdgeInsets.symmetric(
