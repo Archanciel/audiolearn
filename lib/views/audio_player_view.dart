@@ -256,7 +256,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
             ? _buildAudioPicture(
                 audioPictureFile: audioPictureFile,
               )
-            : _buildPlayButton(
+            : _buildPlayButtonOnSecondLineIfPicturePresent(
                 playlistListVMlistenTrue: playlistListVMlistenTrue,
                 audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
               );
@@ -831,7 +831,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     );
   }
 
-  Widget _buildPlayButton({
+  Widget _buildPlayButtonOnSecondLineIfPicturePresent({
     required PlaylistListVM playlistListVMlistenTrue,
     required AudioPlayerVM audioPlayerVMlistenFalse,
   }) {
