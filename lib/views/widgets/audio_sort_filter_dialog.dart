@@ -1396,6 +1396,13 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           onChanged: (bool? newValue) {
             setState(() {
               _filterCommented = newValue!;
+
+              if (!_filterCommented) {
+                // If the commented checkbox is unchecked, the not
+                // commented checkbox must be checked since it makes
+                // no sense to have both unchecked
+                _filterNotCommented = true;
+              }
             });
 
             // now clicking on Enter works since the
@@ -1410,6 +1417,13 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           onChanged: (bool? newValue) {
             setState(() {
               _filterNotCommented = newValue!;
+
+              if (!_filterNotCommented) {
+                // If the not commented checkbox is unchecked, the
+                // commented checkbox must be checked since it makes
+                // no sense to have both unchecked
+                _filterCommented = true;
+              }
             });
 
             // now clicking on Enter works since the
@@ -1433,6 +1447,13 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           onChanged: (bool? newValue) {
             setState(() {
               _filterPictured = newValue!;
+
+              if (!_filterPictured) {
+                // If the pictured checkbox is unchecked, the not
+                // pictured checkbox must be checked since it makes
+                // no sense to have both unchecked
+                _filterNotPictured = true;
+              }
             });
 
             // now clicking on Enter works since the
@@ -1447,6 +1468,13 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           onChanged: (bool? newValue) {
             setState(() {
               _filterNotPictured = newValue!;
+
+              if (!_filterNotPictured) {
+                // If the not pictured checkbox is unchecked, the
+                // pictured checkbox must be checked since it makes
+                // no sense to have both unchecked
+                _filterPictured = true;
+              }
             });
 
             // now clicking on Enter works since the
