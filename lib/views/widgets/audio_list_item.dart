@@ -101,6 +101,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
           await _dragToAudioPlayerView(
               audioPlayerVMlistenFalse:
                   audioPlayerVMlistenFalse); // dragging to the AudioPlayerView screen
+                  //                            after typing on title
         },
         child: Text(audio.validVideoTitle,
             style: TextStyle(
@@ -114,6 +115,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
           await _dragToAudioPlayerView(
               audioPlayerVMlistenFalse:
                   audioPlayerVMlistenFalse); // dragging to the AudioPlayerView screen
+                  //                            after typing on sub-title
         },
         child: Text(
           key: const Key('audio_item_subtitle'),
@@ -608,6 +610,10 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
   }) async {
     await audioPlayerVMlistenFalse.setCurrentAudio(
       audio: audio,
+      doClearUndoRedoLists: false, // If dragging to the AudioPlayerView
+      //                              after clicking on the CURRENT audio
+      //                              list item, the undo/redo lists will
+      //                              not be cleared.
     );
     await audioPlayerVMlistenFalse.goToAudioPlayPosition(
       durationPosition: Duration(
