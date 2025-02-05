@@ -156,7 +156,6 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
 
               await audioPlayerVMlistenFalse.setCurrentAudio(
                 audio: widget.currentAudio,
-                doClearUndoRedoLists: false,
               );
               Navigator.of(context).pop();
             },

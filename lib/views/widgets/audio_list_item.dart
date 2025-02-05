@@ -610,10 +610,6 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
   }) async {
     await audioPlayerVMlistenFalse.setCurrentAudio(
       audio: audio,
-      doClearUndoRedoLists: false, // If dragging to the AudioPlayerView
-      //                              after clicking on the CURRENT audio
-      //                              list item, the undo/redo lists will
-      //                              not be cleared.
     );
     await audioPlayerVMlistenFalse.goToAudioPlayPosition(
       durationPosition: Duration(
