@@ -1204,6 +1204,7 @@ class PlaylistListVM extends ChangeNotifier {
 
     _sortedFilteredSelectedPlaylistPlayableAudioLst =
         _audioSortFilterService.filterAndSortAudioLst(
+      selectedPlaylist: selectedPlaylist,
       audioLst: selectedPlaylistsAudios,
       audioSortFilterParameters: _audioSortFilterParameters ??
           AudioSortFilterParameters.createDefaultAudioSortFilterParameters(),
@@ -1754,6 +1755,7 @@ class PlaylistListVM extends ChangeNotifier {
       // button selects the default sort filter parameters.
       _sortedFilteredSelectedPlaylistPlayableAudioLst =
           _audioSortFilterService.filterAndSortAudioLst(
+        selectedPlaylist: playlist,
         audioLst: playlist.playableAudioLst,
         audioSortFilterParameters:
             AudioSortFilterParameters.createDefaultAudioSortFilterParameters(),
