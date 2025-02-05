@@ -146,10 +146,14 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
               // list dialog is necessary, otherwise, on Android,
               // clicking on position buttons or audio slider will
               // not work after a comment was played.
-              //
+
               // Since playing a comment changes the audio player
               // position, avoiding to clear the undo/redo lists
               // enables the user to undo the audio position change.
+              if (audioPlayerVMlistenFalse.isPlaying) {
+                await audioPlayerVMlistenFalse.pause();
+              }
+
               await audioPlayerVMlistenFalse.setCurrentAudio(
                 audio: widget.currentAudio,
                 doClearUndoRedoLists: false,
