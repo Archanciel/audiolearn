@@ -351,7 +351,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
 
             await _closeDialogAndReOpenCommentListAddDialog(
               context: context,
-              audioPlayerVM: audioPlayerVMlistenFalse,
+              audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
             );
           },
         ),
@@ -361,7 +361,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
           onPressed: () async =>
               await _closeDialogAndReOpenCommentListAddDialog(
             context: context,
-            audioPlayerVM: audioPlayerVMlistenFalse,
+            audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
           ),
         ),
       ],
@@ -734,7 +734,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
   /// the updated list of comments.
   Future<void> _closeDialogAndReOpenCommentListAddDialog({
     required BuildContext context,
-    required AudioPlayerVM audioPlayerVM,
+    required AudioPlayerVM audioPlayerVMlistenFalse,
   }) async {
     // Closing first the current CommentAddEditDialog dialog (... pop())
     // and then opening the CommentListAddDialog dialog before pausing
@@ -765,8 +765,8 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
       },
     );
 
-    if (audioPlayerVM.isPlaying) {
-      await audioPlayerVM.pause();
+    if (audioPlayerVMlistenFalse.isPlaying) {
+      await audioPlayerVMlistenFalse.pause();
     }
   }
 
