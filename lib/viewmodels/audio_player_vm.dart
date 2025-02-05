@@ -225,12 +225,17 @@ class AudioPlayerVM extends ChangeNotifier {
   /// undo the audio position change.
   Future<void> setCurrentAudio({
     required Audio audio,
-    bool doClearUndoRedoLists = true,
   }) async {
+    bool doClearUndoRedoLists;
+    
     if (_currentAudio != audio) {
       // The case if the user clicked on an audio title or sub title
       // different from the current audio.
       doClearUndoRedoLists = true;
+    } else {
+      // The case if the user clicked on the current audio title or
+      // sub title of the current audio.
+      doClearUndoRedoLists = false;
     }
 
     await _setCurrentAudio(
