@@ -737,6 +737,7 @@ void main() {
 
       List<Audio> filteredAudioLst =
           audioSortFilterService.filterOnOtherOptions(
+              selectedPlaylist: audioPlaylist,
               audioLst: audioLst,
               audioSortFilterParameters: AudioSortFilterParameters(
                 selectedSortItemLst: [],
@@ -759,6 +760,7 @@ void main() {
 
       List<Audio> filteredAudioLst =
           audioSortFilterService.filterOnOtherOptions(
+              selectedPlaylist: audioPlaylist,
               audioLst: audioLst,
               audioSortFilterParameters: AudioSortFilterParameters(
                 selectedSortItemLst: [],
@@ -782,6 +784,7 @@ void main() {
 
       List<Audio> filteredAudioLst =
           audioSortFilterService.filterOnOtherOptions(
+              selectedPlaylist: audioPlaylist,
               audioLst: audioLst,
               audioSortFilterParameters: AudioSortFilterParameters(
                 selectedSortItemLst: [],
@@ -810,6 +813,7 @@ void main() {
 
       List<Audio> filteredAudioLst =
           audioSortFilterService.filterOnOtherOptions(
+              selectedPlaylist: audioPlaylist,
               audioLst: audioLst,
               audioSortFilterParameters: AudioSortFilterParameters(
                 selectedSortItemLst: [],
@@ -830,6 +834,7 @@ void main() {
 
       List<Audio> filteredAudioLst =
           audioSortFilterService.filterOnOtherOptions(
+              selectedPlaylist: audioPlaylist,
               audioLst: audioLst,
               audioSortFilterParameters: AudioSortFilterParameters(
                 selectedSortItemLst: [],
@@ -849,6 +854,7 @@ void main() {
 
       List<Audio> filteredAudioLst =
           audioSortFilterService.filterOnOtherOptions(
+              selectedPlaylist: audioPlaylist,
               audioLst: audioLst,
               audioSortFilterParameters: AudioSortFilterParameters(
                 selectedSortItemLst: [],
@@ -872,6 +878,7 @@ void main() {
 
       List<Audio> filteredAudioLst =
           audioSortFilterService.filterOnOtherOptions(
+              selectedPlaylist: audioPlaylist,
               audioLst: audioLst,
               audioSortFilterParameters: AudioSortFilterParameters(
                 selectedSortItemLst: [],
@@ -896,6 +903,7 @@ void main() {
 
       List<Audio> filteredAudioLst =
           audioSortFilterService.filterOnOtherOptions(
+              selectedPlaylist: audioPlaylist,
               audioLst: audioLst,
               audioSortFilterParameters: AudioSortFilterParameters(
                 selectedSortItemLst: [],
@@ -9017,6 +9025,7 @@ void main() {
 
       List<Audio> filteredAndSortedByTitleAsc =
           audioSortFilterService.filterAndSortAudioLst(
+        selectedPlaylist: audioPlaylist,
         audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -9040,6 +9049,7 @@ void main() {
 
       List<Audio> filteredAndSortedByTitleDesc =
           audioSortFilterService.filterAndSortAudioLst(
+        selectedPlaylist: audioPlaylist,
         audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -9228,6 +9238,7 @@ void main() {
 
       List<Audio> filteredAndSortedByTitleAsc =
           audioSortFilterService.filterAndSortAudioLst(
+        selectedPlaylist: audioPlaylist,
         audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -9258,6 +9269,7 @@ void main() {
 
       List<Audio> filteredAndSortedByTitleDesc =
           audioSortFilterService.filterAndSortAudioLst(
+        selectedPlaylist: audioPlaylist,
         audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -9449,6 +9461,7 @@ void main() {
 
       List<Audio> filteredAndSortedByTitleAsc =
           audioSortFilterService.filterAndSortAudioLst(
+        selectedPlaylist: audioPlaylist,
         audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -9479,6 +9492,7 @@ void main() {
 
       List<Audio> filteredAndSortedByTitleDesc =
           audioSortFilterService.filterAndSortAudioLst(
+        selectedPlaylist: audioPlaylist,
         audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -9673,6 +9687,7 @@ void main() {
 
       List<Audio> filteredAndSortedByTitleAsc =
           audioSortFilterService.filterAndSortAudioLst(
+        selectedPlaylist: audioPlaylist,
         audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -9703,6 +9718,7 @@ void main() {
 
       List<Audio> filteredAndSortedByTitleDesc =
           audioSortFilterService.filterAndSortAudioLst(
+        selectedPlaylist: audioPlaylist,
         audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -9839,6 +9855,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateDescAndDurationAsc =
           audioSortFilterService.filterAndSortAudioLst(
+        selectedPlaylist: audioPlaylist,
         audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -9874,6 +9891,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateAscAndDurationDesc =
           audioSortFilterService.filterAndSortAudioLst(
+        selectedPlaylist: audioPlaylist,
         audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -9940,6 +9958,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateDescAndDurationAsc =
           audioSortFilterService.filterAndSortAudioLst(
+              selectedPlaylist: audioPlaylist,
               audioLst: audioList,
               audioSortFilterParameters: audioSortFilterParameters);
 
@@ -9975,6 +9994,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateAscAndDurationDesc =
           audioSortFilterService.filterAndSortAudioLst(
+              selectedPlaylist: audioPlaylist,
               audioLst: audioList,
               audioSortFilterParameters: audioSortFilterParameters);
 
@@ -10030,6 +10050,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateDescAndDurationAsc =
           audioSortFilterService.filterAndSortAudioLst(
+        selectedPlaylist: audioPlaylist,
         audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -10062,6 +10083,7 @@ void main() {
       );
       List<Audio> filteredByWordAndSortedByDownloadDateAscAndDurationDesc =
           audioSortFilterService.filterAndSortAudioLst(
+        selectedPlaylist: audioPlaylist,
         audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -10114,6 +10136,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateDescAndDurationAsc =
           audioSortFilterService.filterAndSortAudioLst(
+        selectedPlaylist: audioPlaylist,
         audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -10149,6 +10172,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateAscAndDurationDesc =
           audioSortFilterService.filterAndSortAudioLst(
+        selectedPlaylist: audioPlaylist,
         audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -10201,6 +10225,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateDescAndDurationAsc =
           audioSortFilterService.filterAndSortAudioLst(
+        selectedPlaylist: audioPlaylist,
         audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -10240,6 +10265,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateAscAndDurationDesc =
           audioSortFilterService.filterAndSortAudioLst(
+        selectedPlaylist: audioPlaylist,
         audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -10295,6 +10321,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateDescAndDurationAsc =
           audioSortFilterService.filterAndSortAudioLst(
+        selectedPlaylist: audioPlaylist,
         audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -10336,6 +10363,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateAscAndDurationDesc =
           audioSortFilterService.filterAndSortAudioLst(
+        selectedPlaylist: audioPlaylist,
         audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -10392,6 +10420,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateDescAndDurationAsc =
           audioSortFilterService.filterAndSortAudioLst(
+        selectedPlaylist: audioPlaylist,
         audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -10435,6 +10464,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateAscAndDurationDesc =
           audioSortFilterService.filterAndSortAudioLst(
+        selectedPlaylist: audioPlaylist,
         audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -10503,6 +10533,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateDescAndDurationAsc =
           audioSortFilterService.filterAndSortAudioLst(
+        selectedPlaylist: audioPlaylist,
         audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -10542,6 +10573,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateAscAndDurationDesc =
           audioSortFilterService.filterAndSortAudioLst(
+        selectedPlaylist: audioPlaylist,
         audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -10608,6 +10640,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateDescAndDurationAsc =
           audioSortFilterService.filterAndSortAudioLst(
+        selectedPlaylist: audioPlaylist,
         audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -10647,6 +10680,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateAscAndDurationDesc =
           audioSortFilterService.filterAndSortAudioLst(
+        selectedPlaylist: audioPlaylist,
         audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -10761,6 +10795,7 @@ void main() {
 
       List<Audio> actualFilteredAudioLst =
           audioSortFilterService.filterOnOtherOptions(
+        selectedPlaylist: audioPlaylist,
         audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -10791,6 +10826,7 @@ void main() {
       );
 
       actualFilteredAudioLst = audioSortFilterService.filterAndSortAudioLst(
+        selectedPlaylist: audioPlaylist,
         audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -10831,6 +10867,7 @@ void main() {
 
       List<Audio> actualFilteredAudioLst =
           audioSortFilterService.filterOnOtherOptions(
+        selectedPlaylist: audioPlaylist,
         audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -10866,6 +10903,7 @@ void main() {
 
       List<Audio> actualFilteredAudioLst =
           audioSortFilterService.filterOnOtherOptions(
+        selectedPlaylist: audioPlaylist,
         audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -10974,6 +11012,7 @@ void main() {
 
       List<Audio> actualFilteredAudioLst =
           audioSortFilterService.filterOnOtherOptions(
+        selectedPlaylist: audioPlaylist,
         audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -11011,6 +11050,7 @@ void main() {
 
       List<Audio> actualFilteredAudioLst =
           audioSortFilterService.filterOnOtherOptions(
+        selectedPlaylist: audioPlaylist,
         audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -11041,6 +11081,7 @@ void main() {
 
       List<Audio> actualFilteredAudioLst =
           audioSortFilterService.filterOnOtherOptions(
+        selectedPlaylist: audioPlaylist,
         audioLst: [],
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -11078,6 +11119,7 @@ void main() {
 
       List<Audio> actualFilteredAudioLst =
           audioSortFilterService.filterOnOtherOptions(
+        selectedPlaylist: audioPlaylist,
         audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -11107,6 +11149,7 @@ void main() {
 
       List<Audio> actualFilteredAudioLst =
           audioSortFilterService.filterOnOtherOptions(
+        selectedPlaylist: audioPlaylist,
         audioLst: [],
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -11228,6 +11271,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateDescAndDurationAsc =
           audioSortFilterService.filterAndSortAudioLst(
+        selectedPlaylist: audioPlaylist,
         audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -11261,6 +11305,7 @@ void main() {
 
       List<Audio> filteredByWordAndSortedByDownloadDateAscAndDurationDesc =
           audioSortFilterService.filterAndSortAudioLst(
+        selectedPlaylist: audioPlaylist,
         audioLst: audioList,
         audioSortFilterParameters: audioSortFilterParameters,
       );
@@ -11748,6 +11793,7 @@ void main() {
 
         List<Audio> filteredByStartEndDownloadDate =
             audioSortFilterService.filterAndSortAudioLst(
+          selectedPlaylist: audioPlaylist,
           audioLst: audioNotFilteredLst,
           audioSortFilterParameters: audioSortFilterParameters,
         );
@@ -11811,6 +11857,7 @@ void main() {
 
         List<Audio> filteredByStartEndDownloadDate =
             audioSortFilterService.filterAndSortAudioLst(
+          selectedPlaylist: audioPlaylist,
           audioLst: audioNotFilteredLst,
           audioSortFilterParameters: audioSortFilterParameters,
         );
@@ -11871,6 +11918,7 @@ void main() {
 
         List<Audio> filteredByStartEndDownloadDate =
             audioSortFilterService.filterAndSortAudioLst(
+          selectedPlaylist: audioPlaylist,
           audioLst: audioNotFilteredLst,
           audioSortFilterParameters: audioSortFilterParameters,
         );
@@ -11931,6 +11979,7 @@ void main() {
 
         List<Audio> filteredByStartEndDownloadDate =
             audioSortFilterService.filterAndSortAudioLst(
+          selectedPlaylist: audioPlaylist,
           audioLst: audioNotFilteredLst,
           audioSortFilterParameters: audioSortFilterParameters,
         );
@@ -11994,6 +12043,7 @@ void main() {
 
         List<Audio> filteredByStartEndDownloadDate =
             audioSortFilterService.filterAndSortAudioLst(
+          selectedPlaylist: audioPlaylist,
           audioLst: audioNotFilteredLst,
           audioSortFilterParameters: audioSortFilterParameters,
         );
@@ -12056,6 +12106,7 @@ void main() {
 
         List<Audio> filteredByStartEndDownloadDate =
             audioSortFilterService.filterAndSortAudioLst(
+          selectedPlaylist: audioPlaylist,
           audioLst: audioNotFilteredLst,
           audioSortFilterParameters: audioSortFilterParameters,
         );
@@ -12118,6 +12169,7 @@ void main() {
 
         List<Audio> filteredByStartEndDownloadDate =
             audioSortFilterService.filterAndSortAudioLst(
+          selectedPlaylist: audioPlaylist,
           audioLst: audioNotFilteredLst,
           audioSortFilterParameters: audioSortFilterParameters,
         );
@@ -12178,6 +12230,7 @@ void main() {
 
         List<Audio> filteredByStartEndDownloadDate =
             audioSortFilterService.filterAndSortAudioLst(
+          selectedPlaylist: audioPlaylist,
           audioLst: audioNotFilteredLst,
           audioSortFilterParameters: audioSortFilterParameters,
         );
@@ -12307,6 +12360,7 @@ void main() {
 
         List<Audio> filteredByStartEndDownloadDate =
             audioSortFilterService.filterAndSortAudioLst(
+          selectedPlaylist: audioPlaylist,
           audioLst: audioNotFilteredLst,
           audioSortFilterParameters: audioSortFilterParameters,
         );
@@ -12368,6 +12422,7 @@ void main() {
 
         List<Audio> filteredByStartEndDownloadDate =
             audioSortFilterService.filterAndSortAudioLst(
+          selectedPlaylist: audioPlaylist,
           audioLst: audioNotFilteredLst,
           audioSortFilterParameters: audioSortFilterParameters,
         );
@@ -12429,6 +12484,7 @@ void main() {
 
         List<Audio> filteredByStartEndDownloadDate =
             audioSortFilterService.filterAndSortAudioLst(
+          selectedPlaylist: audioPlaylist,
           audioLst: audioNotFilteredLst,
           audioSortFilterParameters: audioSortFilterParameters,
         );
@@ -12491,6 +12547,7 @@ void main() {
 
         List<Audio> filteredByStartEndDownloadDate =
             audioSortFilterService.filterAndSortAudioLst(
+          selectedPlaylist: audioPlaylist,
           audioLst: audioNotFilteredLst,
           audioSortFilterParameters: audioSortFilterParameters,
         );
@@ -12552,6 +12609,7 @@ void main() {
 
         List<Audio> filteredByStartEndDownloadDate =
             audioSortFilterService.filterAndSortAudioLst(
+          selectedPlaylist: audioPlaylist,
           audioLst: audioNotFilteredLst,
           audioSortFilterParameters: audioSortFilterParameters,
         );
@@ -12615,6 +12673,7 @@ void main() {
 
         List<Audio> filteredByStartEndDownloadDate =
             audioSortFilterService.filterAndSortAudioLst(
+          selectedPlaylist: audioPlaylist,
           audioLst: audioNotFilteredLst,
           audioSortFilterParameters: audioSortFilterParameters,
         );
@@ -12677,6 +12736,7 @@ void main() {
 
         List<Audio> filteredByStartEndDownloadDate =
             audioSortFilterService.filterAndSortAudioLst(
+          selectedPlaylist: audioPlaylist,
           audioLst: audioNotFilteredLst,
           audioSortFilterParameters: audioSortFilterParameters,
         );
@@ -12738,6 +12798,7 @@ void main() {
 
         List<Audio> filteredByStartEndDownloadDate =
             audioSortFilterService.filterAndSortAudioLst(
+          selectedPlaylist: audioPlaylist,
           audioLst: audioNotFilteredLst,
           audioSortFilterParameters: audioSortFilterParameters,
         );
@@ -12799,6 +12860,7 @@ void main() {
 
         List<Audio> filteredByStartEndDownloadDate =
             audioSortFilterService.filterAndSortAudioLst(
+          selectedPlaylist: audioPlaylist,
           audioLst: audioNotFilteredLst,
           audioSortFilterParameters: audioSortFilterParameters,
         );

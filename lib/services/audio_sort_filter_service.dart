@@ -180,6 +180,7 @@ class AudioSortFilterService {
   /// AudioSortFilterParameters. It is more efficient to filter the audio
   /// list first and then sort it than the contrary !
   List<Audio> filterAndSortAudioLst({
+    required Playlist? selectedPlaylist,
     required List<Audio> audioLst,
     required AudioSortFilterParameters audioSortFilterParameters,
   }) {
@@ -201,6 +202,7 @@ class AudioSortFilterService {
     }
 
     audioLstCopy = filterOnOtherOptions(
+      selectedPlaylist: selectedPlaylist,
       audioLst: audioLstCopy,
       audioSortFilterParameters: audioSortFilterParameters,
     );
@@ -1066,6 +1068,7 @@ class AudioSortFilterService {
   ///
   /// Not private in order to be unit tested.
   List<Audio> filterOnOtherOptions({
+    required Playlist? selectedPlaylist,
     required List<Audio> audioLst,
     required AudioSortFilterParameters audioSortFilterParameters,
   }) {
@@ -1138,10 +1141,13 @@ class AudioSortFilterService {
       );
     }
 
-    Playlist playlist = filteredAudios.first.enclosingPlaylist!;
+    if (selectedPlaylist == null) {
+      return filteredAudios;
+    }
+
     List<String> playlistPictureFileNamesLst = DirUtil.listFileNamesInDir(
       directoryPath:
-          "${playlist.downloadPath}${path.separator}$kPictureDirName",
+          "${selectedPlaylist.downloadPath}${path.separator}$kPictureDirName",
       fileExtension: 'jpg',
     );
 
