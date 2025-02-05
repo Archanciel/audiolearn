@@ -227,6 +227,12 @@ class AudioPlayerVM extends ChangeNotifier {
     required Audio audio,
     bool doClearUndoRedoLists = true,
   }) async {
+    if (_currentAudio != audio) {
+      // The case if the user clicked on an audio title or sub title
+      // different from the current audio.
+      doClearUndoRedoLists = true;
+    }
+
     await _setCurrentAudio(
       audio: audio,
       doClearUndoRedoLists: doClearUndoRedoLists,
