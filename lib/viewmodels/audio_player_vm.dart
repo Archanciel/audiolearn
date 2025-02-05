@@ -227,6 +227,13 @@ class AudioPlayerVM extends ChangeNotifier {
     required Audio audio,
     bool doClearUndoRedoLists = true,
   }) async {
+    if (_currentAudio != audio) {
+      // The case if the user clicked on an audio title or sub title
+      // different from the current audio.
+      doClearUndoRedoLists = true;
+    }
+    ;
+
     await _setCurrentAudio(
       audio: audio,
       doClearUndoRedoLists: doClearUndoRedoLists,
@@ -794,7 +801,8 @@ class AudioPlayerVM extends ChangeNotifier {
 
     // Check if the file exists before attempting to play it
     if (File(audioFilePathName).existsSync()) {
-      if ((isFromAudioPlayerView || isCommentPlaying) && _wasAudioPlayersStopped) {
+      if ((isFromAudioPlayerView || isCommentPlaying) &&
+          _wasAudioPlayersStopped) {
         // Set the source again since clicking on the pause icon
         // stopped the audio player.
         await _audioPlayer!
