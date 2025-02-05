@@ -34,6 +34,7 @@ enum DateTimeType {
 }
 
 class AudioSortFilterDialog extends StatefulWidget {
+  final Playlist? selectedPlaylist;
   final List<Audio> selectedPlaylistAudioLst;
   final String audioSortFilterParametersName;
   final AudioSortFilterParameters audioSortFilterParameters;
@@ -43,7 +44,7 @@ class AudioSortFilterDialog extends StatefulWidget {
   final WarningMessageVM warningMessageVM;
   final CalledFrom calledFrom;
 
-  const AudioSortFilterDialog({
+  AudioSortFilterDialog({
     super.key,
     required this.selectedPlaylistAudioLst,
     this.audioSortFilterParametersName = '',
@@ -53,7 +54,9 @@ class AudioSortFilterDialog extends StatefulWidget {
     required this.focusNode,
     required this.warningMessageVM,
     required this.calledFrom,
-  });
+  }) : selectedPlaylist = selectedPlaylistAudioLst.isNotEmpty
+            ? selectedPlaylistAudioLst[0].enclosingPlaylist
+            : null;
 
   @override
   // ignore: library_private_types_in_public_api
@@ -1117,7 +1120,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     required DateFormatVM dateFormatVMlistenFalse,
     required DateTime dateNow,
   }) {
-    LanguageProviderVM languageProviderVMlistenFalse = Provider.of<LanguageProviderVM>(
+    LanguageProviderVM languageProviderVMlistenFalse =
+        Provider.of<LanguageProviderVM>(
       context,
       listen: false,
     );
@@ -2128,6 +2132,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     } else {
       List<Audio> filteredAndSortedAudioLst =
           _audioSortFilterService.filterAndSortAudioLst(
+        selectedPlaylist: widget.selectedPlaylist,
         audioLst: widget.selectedPlaylistAudioLst,
         audioSortFilterParameters: _audioSortFilterParameters,
       );
