@@ -5698,7 +5698,7 @@ void main() {
       // audio player view.
       expect(
         tester.widget<Text>(commentEndTextWidgetFinder).data!,
-        audioPlayerViewCurrentAudioPosition, // 0:48
+        audioPlayerViewCurrentAudioPosition, // 0:49
       );
 
       // Now, modifying the comment start position in tenth of
