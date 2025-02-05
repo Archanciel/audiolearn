@@ -232,7 +232,6 @@ class AudioPlayerVM extends ChangeNotifier {
       // different from the current audio.
       doClearUndoRedoLists = true;
     }
-    ;
 
     await _setCurrentAudio(
       audio: audio,
