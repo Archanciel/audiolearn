@@ -227,7 +227,7 @@ class AudioPlayerVM extends ChangeNotifier {
     required Audio audio,
   }) async {
     bool doClearUndoRedoLists;
-    
+
     if (_currentAudio != audio) {
       // The case if the user clicked on an audio title or sub title
       // different from the current audio.
@@ -1030,14 +1030,26 @@ class AudioPlayerVM extends ChangeNotifier {
   /// the audio player plugin in unit tests.
   Future<void> modifyAudioPlayerPosition({
     required Duration durationPosition,
-    bool isUndoCommandAdded = false,
+    bool isUndoCommandToAdd = false,
   }) async {
-    if (isUndoCommandAdded) {
+    if (isUndoCommandToAdd) {
       addUndoCommand(
         newDurationPosition: durationPosition,
       );
     }
 
+    if (_wasAudioPlayersStopped) {
+      // Set the source again since clicking on the pause icon
+      // stopped the audio player.
+      await _audioPlayer!
+          .setSource(DeviceFileSource(_currentAudio!.filePathName));
+
+      // Setting the value to false avoid that the audioplayers source
+      // is set again after it was re-set.
+      _wasAudioPlayersStopped = false;
+    }
+
+    _currentAudioPosition = durationPosition;
     await _audioPlayer!.seek(durationPosition);
 
     // Necessary so that the audio position is updated in the
