@@ -26,12 +26,12 @@ class AudioPlayerVMTestVersion extends AudioPlayerVM {
   @override
   Future<void> modifyAudioPlayerPosition({
     required Duration durationPosition,
-    bool isUndoCommandAdded = false,
+    bool isUndoCommandToAdd = false,
   }) async {
     // does not access to the audio player plugin so that unit
     // tests can be run without throwing an exception
 
-    if (isUndoCommandAdded) {
+    if (isUndoCommandToAdd) {
       addUndoCommand(
         newDurationPosition: durationPosition,
       );

@@ -125,6 +125,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
               controller: _scrollController,
               child: ListBody(
                 children: _buildAudioCommentsLst(
+                  themeProviderVM: themeProviderVM,
                   audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                   commentVM: commentVM,
                 ),
@@ -166,6 +167,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
   }
 
   List<Widget> _buildAudioCommentsLst({
+    required ThemeProviderVM themeProviderVM,
     required AudioPlayerVM audioPlayerVMlistenFalse,
     required CommentVM commentVM,
   }) {
@@ -211,6 +213,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
               Padding(
                 padding: const EdgeInsets.only(bottom: 2),
                 child: _buildCommentTitlePlusIconsAndCommentDatesAndPosition(
+                  themeProviderVM: themeProviderVM,
                   audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                   dateFormatVMlistenFalse: Provider.of<DateFormatVM>(
                     context,
@@ -255,6 +258,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
   }
 
   Widget _buildCommentTitlePlusIconsAndCommentDatesAndPosition({
+    required ThemeProviderVM themeProviderVM,
     required AudioPlayerVM audioPlayerVMlistenFalse,
     required DateFormatVM dateFormatVMlistenFalse,
     required CommentVM commentVM,
@@ -332,11 +336,25 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                         // user clicks on the play button of a
                         // comment, the play button of the
                         // other comment are updated to 'pause'
-                        return Icon((_playingComment != null &&
-                                _playingComment == comment &&
-                                audioPlayerVMlistenTrue.isPlaying)
-                            ? Icons.pause
-                            : Icons.play_arrow);
+                        return IconTheme(
+                          // IconTheme usage is required otherwise when
+                          // the CommentListAddDialog is opened from the
+                          // AudioPlayerScreen left appbar menu, the icon
+                          // color is not the one defined in the theme and
+                          // so is different from the icon color set when
+                          // opening the CommentListAddDialog from the
+                          // AudioPlayerScreen inkwell button or the playlist
+                          // Audio Comments menu item.
+                          data: (themeProviderVM.currentTheme == AppTheme.dark
+                                  ? ScreenMixin.themeDataDark
+                                  : ScreenMixin.themeDataLight)
+                              .iconTheme,
+                          child: Icon((_playingComment != null &&
+                                  _playingComment == comment &&
+                                  audioPlayerVMlistenTrue.isPlaying)
+                              ? Icons.pause
+                              : Icons.play_arrow),
+                        );
                       },
                     ),
                     iconSize: kSmallestButtonWidth,
@@ -366,8 +384,22 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                       overlayColor:
                           iconButtonTapModification, // Tap feedback color
                     ),
-                    icon: const Icon(
-                      Icons.clear,
+                    icon: IconTheme(
+                      // IconTheme usage is required otherwise when
+                      // the CommentListAddDialog is opened from the
+                      // AudioPlayerScreen left appbar menu, the icon
+                      // color is not the one defined in the theme and
+                      // so is different from the icon color set when
+                      // opening the CommentListAddDialog from the
+                      // AudioPlayerScreen inkwell button or the playlist
+                      // Audio Comments menu item.
+                      data: (themeProviderVM.currentTheme == AppTheme.dark
+                              ? ScreenMixin.themeDataDark
+                              : ScreenMixin.themeDataLight)
+                          .iconTheme,
+                      child: const Icon(
+                        Icons.clear,
+                      ),
                     ),
                     iconSize: kSmallestButtonWidth - 5,
                     padding: EdgeInsets.zero,
@@ -518,25 +550,29 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
   }) async {
     _playingComment = comment;
 
-    if (!audioPlayerVMlistenFalse.isPlaying) {
-      // This fixes a problem when a playing comment was paused and
-      // then the user clicked on the play button of an other comment.
-      // In such a situation, the user had to click twice or three
-      // times on the other comment play button to play it if the other
-      // comment was positioned before the previously played comment.
-      // If the other comment was positioned after the previously played
-      // comment, then the user had to click only once on the play button
-      // of the other comment to play it.
-      await audioPlayerVMlistenFalse.playCurrentAudio(
-        rewindAudioPositionBasedOnPauseDuration: false,
-        isCommentPlaying: true,
-      );
-    }
+    // if (!audioPlayerVMlistenFalse.isPlaying) {
+    // This fixes a problem when a playing comment was paused and
+    // then the user clicked on the play button of an other comment.
+    // In such a situation, the user had to click twice or three
+    // times on the other comment play button to play it if the other
+    // comment was positioned before the previously played comment.
+    // If the other comment was positioned after the previously played
+    // comment, then the user had to click only once on the play button
+    // of the other comment to play it.
+    //   await audioPlayerVMlistenFalse.playCurrentAudio(
+    //     rewindAudioPositionBasedOnPauseDuration: false,
+    //     isCommentPlaying: true,
+    //   );
+    // }
+    //
+    // What fixed the problem is adding
+    // _currentAudioPosition = durationPosition; in
+    // AudioPlayerVM.modifyAudioPlayerPosition() method.
 
     await audioPlayerVMlistenFalse.modifyAudioPlayerPosition(
       durationPosition: Duration(
           milliseconds: comment.commentStartPositionInTenthOfSeconds * 100),
-      isUndoCommandAdded: true,
+      isUndoCommandToAdd: true,
     );
 
     await audioPlayerVMlistenFalse.playCurrentAudio(
