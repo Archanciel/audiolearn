@@ -1749,8 +1749,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                  Then save it and verify ConfirmActionDialog content. Then reedit
                  and modify all sort/filter parms and save it with on the same name
                  to verify that the ConfirmActionDialog content contains every
-                 sort/filter parm.''',
-              (WidgetTester tester) async {
+                 sort/filter parm.''', (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -1841,7 +1840,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             await tester.pumpAndSettle();
 
             // Tap on the Uncom. checkbox to unselect it
-            await tester.tap(find.byKey(const Key('filterNotCommentedCheckbox')));
+            await tester
+                .tap(find.byKey(const Key('filterNotCommentedCheckbox')));
             await tester.pumpAndSettle();
 
             // Tap on the Pictured checkbox to unselect it
@@ -1849,7 +1849,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             await tester.pumpAndSettle();
 
             // Tap on the Unpic. checkbox to unselect it
-            await tester.tap(find.byKey(const Key('filterNotPicturedCheckbox')));
+            await tester
+                .tap(find.byKey(const Key('filterNotPicturedCheckbox')));
             await tester.pumpAndSettle();
 
             // Tap on the Exclude ignore case checkbox to unselect it
@@ -3040,8 +3041,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                  Then save it and verify ConfirmActionDialog content. Then reedit
                  and modify all sort/filter parms and save it with on the same name
                  to verify that the ConfirmActionDialog content contains every
-                 sort/filter parm.''',
-              (WidgetTester tester) async {
+                 sort/filter parm.''', (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -3139,7 +3139,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             await tester.pumpAndSettle();
 
             // Tap on the Uncom. checkbox to unselect it
-            await tester.tap(find.byKey(const Key('filterNotCommentedCheckbox')));
+            await tester
+                .tap(find.byKey(const Key('filterNotCommentedCheckbox')));
             await tester.pumpAndSettle();
 
             // Tap on the Pictured checkbox to unselect it
@@ -3147,7 +3148,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             await tester.pumpAndSettle();
 
             // Tap on the Unpic. checkbox to unselect it
-            await tester.tap(find.byKey(const Key('filterNotPicturedCheckbox')));
+            await tester
+                .tap(find.byKey(const Key('filterNotPicturedCheckbox')));
             await tester.pumpAndSettle();
 
             // Tap on the Exclude ignore case checkbox to unselect it
@@ -11051,647 +11053,1646 @@ void playlistDownloadViewSortFilterIntegrationTest() {
       });
     });
     group('''Testing not yet tested filter options''', () {
-      testWidgets(
-          '''Commented checkbox true and Not com. checkbox false in order to filter
+      group('''Comment related checkboxes''', () {
+        testWidgets(
+            '''Commented checkbox true and Not com. checkbox false in order to filter
              only the commented audio. Create and then edit a named and saved
              'Commented' filter parms. Then verifying that the corresponding sort/filter
              dropdown button item is applied to the playlist download view list of
              audio.''', (WidgetTester tester) async {
-        // Purge the test playlist directory if it exists so that the
-        // playlist list is empty
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
 
-        const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+          const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
 
-        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-          tester: tester,
-          savedTestDataDirName: 'audio_comment_test',
-          selectedPlaylistTitle: youtubePlaylistTitle,
-        );
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'audio_comment_test',
+            selectedPlaylistTitle: youtubePlaylistTitle,
+          );
 
-        // Now open the audio popup menu
-        await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-        await tester.pumpAndSettle();
+          // Now open the audio popup menu
+          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+          await tester.pumpAndSettle();
 
-        // Find the sort/filter audio menu item and tap on it to
-        // open the audio sort filter dialog
-        await tester.tap(
-            find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
-        await tester.pumpAndSettle();
+          // Find the sort/filter audio menu item and tap on it to
+          // open the audio sort filter dialog
+          await tester.tap(
+              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+          await tester.pumpAndSettle();
 
-        // Type "Commented" in the 'Save as' TextField
+          // Type "Commented" in the 'Save as' TextField
 
-        String saveAsTitle = 'Commented';
+          String saveAsTitle = 'Commented';
 
-        await tester.enterText(
-            find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
-            saveAsTitle);
-        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+          await tester.enterText(
+              find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+              saveAsTitle);
+          await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-        // Scrolling down the sort filter dialog so that the 'Comment' /
-        // 'No com.' checkbox are visible and so accessible by the integration test
-        await tester.drag(
-          find.byType(AudioSortFilterDialog),
-          const Offset(
-              0, -300), // Negative value for vertical drag to scroll down
-        );
-        await tester.pumpAndSettle();
+          // Scrolling down the sort filter dialog so that the 'Comment' /
+          // 'No com.' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
 
-        // Unselect the 'Not com.' checkbox
+          // Unselect the 'Not com.' checkbox
 
-        // Find the 'Not com.' checkbox widget
-        Finder notCommentedCheckboxWidgetFinder =
-            find.byKey(const Key('filterNotCommentedCheckbox'));
+          // Find the 'Not com.' checkbox widget
+          Finder notCommentedCheckboxWidgetFinder =
+              find.byKey(const Key('filterNotCommentedCheckbox'));
 
-        // Tap the checkbox to unselect it
-        await tester.tap(notCommentedCheckboxWidgetFinder);
-        await tester.pumpAndSettle();
+          // Tap the checkbox to unselect it
+          await tester.tap(notCommentedCheckboxWidgetFinder);
+          await tester.pumpAndSettle();
 
-        // Click on the "Save" button. This closes the sort/filter dialog
-        // and updates the sort/filter playlist download view dropdown
-        // button with the newly created sort/filter parms
-        await tester
-            .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
-        await tester.pumpAndSettle();
+          // Click on the "Save" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the newly created sort/filter parms
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
 
-        // Tap the 'Toggle List' button to avoid displaying the list
-        // of playlists which may hide the audio title we want to
-        // tap on
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester.pumpAndSettle();
+          // Tap the 'Toggle List' button to avoid displaying the list
+          // of playlists which may hide the audio title we want to
+          // tap on
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
 
-        // Now verify the playlist download view state with the 'Commented'
-        // sort/filter parms applied
+          // Now verify the playlist download view state with the 'Commented'
+          // sort/filter parms applied
 
-        // Verify that the dropdown button has been updated with the
-        // 'Commented' sort/filter parms selected
-        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
-          tester: tester,
-          dropdownButtonSelectedTitle: saveAsTitle,
-        );
+          // Verify that the dropdown button has been updated with the
+          // 'Commented' sort/filter parms selected
+          IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+            tester: tester,
+            dropdownButtonSelectedTitle: saveAsTitle,
+          );
 
-        // And verify the order of the playlist audio titles
+          // And verify the order of the playlist audio titles
 
-        List<String> audioTitlesFilteredByCommented = [
-          "Quand Aurélien Barrau va dans une école de management",
-          "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...",
-          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-        ];
+          List<String> audioTitlesFilteredByCommented = [
+            "Quand Aurélien Barrau va dans une école de management",
+            "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...",
+            "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          ];
 
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioTitlesFilteredByCommented,
-        );
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesFilteredByCommented,
+          );
 
-        // Now tap on the current dropdown button item to open the dropdown
-        // button items list
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
 
-        final Finder dropDownButtonFinder =
-            find.byKey(const Key('sort_filter_parms_dropdown_button'));
+          final Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
 
-        final Finder dropDownButtonTextFinder = find.descendant(
-          of: dropDownButtonFinder,
-          matching: find.byType(Text),
-        );
+          final Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
 
-        await tester.tap(dropDownButtonTextFinder);
-        await tester.pumpAndSettle();
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
 
-        // And find the 'Commented' sort/filter item
-        final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
-        await tester.tap(titleAscDropDownTextFinder);
-        await tester.pumpAndSettle();
+          // And find the 'Commented' sort/filter item
+          final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
 
-        // Now open the audio popup menu in order to edit the 'Commented'
-        // sort/filter parms
-        final Finder dropdownItemEditIconButtonFinder = find.byKey(
-            const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
-        await tester.tap(dropdownItemEditIconButtonFinder);
-        await tester.pumpAndSettle();
+          // Now open the audio popup menu in order to edit the 'Commented'
+          // sort/filter parms
+          final Finder dropdownItemEditIconButtonFinder = find.byKey(
+              const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+          await tester.tap(dropdownItemEditIconButtonFinder);
+          await tester.pumpAndSettle();
 
-        // Scrolling down the sort filter dialog so that the 'Comment' /
-        // 'No com.' checkbox are visible and so accessible by the integration test
-        await tester.drag(
-          find.byType(AudioSortFilterDialog),
-          const Offset(
-              0, -300), // Negative value for vertical drag to scroll down
-        );
-        await tester.pumpAndSettle();
+          // Scrolling down the sort filter dialog so that the 'Comment' /
+          // 'No com.' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
 
-        // Find the 'Commented' checkbox widget and verify it is
-        // selected
-        final Finder commentedCheckboxWidgetFinder =
-            find.byKey(const Key('filterCommentedCheckbox'));
+          // Find the 'Commented' checkbox widget and verify it is
+          // selected
+          final Finder commentedCheckboxWidgetFinder =
+              find.byKey(const Key('filterCommentedCheckbox'));
 
-        expect(
-          tester.widget<Checkbox>(commentedCheckboxWidgetFinder).value,
-          true,
-        );
+          expect(
+            tester.widget<Checkbox>(commentedCheckboxWidgetFinder).value,
+            true,
+          );
 
-        // Find the 'Not com.' checkbox widget and verify it is not
-        // selected
-        notCommentedCheckboxWidgetFinder =
-            find.byKey(const Key('filterNotCommentedCheckbox'));
+          // Find the 'Not com.' checkbox widget and verify it is not
+          // selected
+          notCommentedCheckboxWidgetFinder =
+              find.byKey(const Key('filterNotCommentedCheckbox'));
 
-        expect(
-          tester.widget<Checkbox>(notCommentedCheckboxWidgetFinder).value,
-          false,
-        );
+          expect(
+            tester.widget<Checkbox>(notCommentedCheckboxWidgetFinder).value,
+            false,
+          );
 
-        // Click on the "Cancel" button. This closes the sort/filter dialog
-        // and updates the sort/filter playlist download view dropdown
-        // button with the modified sort/filter parms
-        await tester.tap(find.byKey(const Key('cancelSortFilterButton')));
-        await tester.pumpAndSettle();
+          // Click on the "Cancel" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the modified sort/filter parms
+          await tester.tap(find.byKey(const Key('cancelSortFilterButton')));
+          await tester.pumpAndSettle();
 
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
-      });
-      testWidgets(
-          '''Commented checkbox false and Not com. checkbox true in order to filter
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''Commented checkbox false and Not com. checkbox true in order to filter
              only the not commented audio. Create and then edit a named and saved
              'Uncomm' filter parms. Then verifying that the corresponding sort/filter
              dropdown button item is applied to the playlist download view list of
              audio.''', (WidgetTester tester) async {
-        // Purge the test playlist directory if it exists so that the
-        // playlist list is empty
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
 
-        const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+          const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
 
-        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-          tester: tester,
-          savedTestDataDirName: 'audio_comment_test',
-          selectedPlaylistTitle: youtubePlaylistTitle,
-        );
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'audio_comment_test',
+            selectedPlaylistTitle: youtubePlaylistTitle,
+          );
 
-        // Now open the audio popup menu
-        await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-        await tester.pumpAndSettle();
+          // Now open the audio popup menu
+          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+          await tester.pumpAndSettle();
 
-        // Find the sort/filter audio menu item and tap on it to
-        // open the audio sort filter dialog
-        await tester.tap(
-            find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
-        await tester.pumpAndSettle();
+          // Find the sort/filter audio menu item and tap on it to
+          // open the audio sort filter dialog
+          await tester.tap(
+              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+          await tester.pumpAndSettle();
 
-        // Type "Commented" in the 'Save as' TextField
+          // Type "Commented" in the 'Save as' TextField
 
-        String saveAsTitle = 'Uncomm';
+          String saveAsTitle = 'Uncomm';
 
-        await tester.enterText(
-            find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
-            saveAsTitle);
-        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+          await tester.enterText(
+              find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+              saveAsTitle);
+          await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-        // Scrolling down the sort filter dialog so that the 'Comment' /
-        // 'No com.' checkbox are visible and so accessible by the integration test
-        await tester.drag(
-          find.byType(AudioSortFilterDialog),
-          const Offset(
-              0, -300), // Negative value for vertical drag to scroll down
-        );
-        await tester.pumpAndSettle();
+          // Scrolling down the sort filter dialog so that the 'Comment' /
+          // 'No com.' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
 
-        // Unselect the 'Comment' checkbox
+          // Unselect the 'Comment' checkbox
 
-        // Find the 'Comment' checkbox widget
-        Finder commentedCheckboxWidgetFinder =
-            find.byKey(const Key('filterCommentedCheckbox'));
+          // Find the 'Comment' checkbox widget
+          Finder commentedCheckboxWidgetFinder =
+              find.byKey(const Key('filterCommentedCheckbox'));
 
-        // Tap the checkbox to unselect it
-        await tester.tap(commentedCheckboxWidgetFinder);
-        await tester.pumpAndSettle();
+          // Tap the checkbox to unselect it
+          await tester.tap(commentedCheckboxWidgetFinder);
+          await tester.pumpAndSettle();
 
-        // Click on the "Save" button. This closes the sort/filter dialog
-        // and updates the sort/filter playlist download view dropdown
-        // button with the newly created sort/filter parms
-        await tester
-            .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
-        await tester.pumpAndSettle();
+          // Click on the "Save" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the newly created sort/filter parms
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
 
-        // Tap the 'Toggle List' button to avoid displaying the list
-        // of playlists which may hide the audio title we want to
-        // tap on
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester.pumpAndSettle();
+          // Tap the 'Toggle List' button to avoid displaying the list
+          // of playlists which may hide the audio title we want to
+          // tap on
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
 
-        // Now verify the playlist download view state with the 'Uncomm'
-        // sort/filter parms applied
+          // Now verify the playlist download view state with the 'Uncomm'
+          // sort/filter parms applied
 
-        // Verify that the dropdown button has been updated with the
-        // 'Uncomm' sort/filter parms selected
-        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
-          tester: tester,
-          dropdownButtonSelectedTitle: saveAsTitle,
-        );
+          // Verify that the dropdown button has been updated with the
+          // 'Uncomm' sort/filter parms selected
+          IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+            tester: tester,
+            dropdownButtonSelectedTitle: saveAsTitle,
+          );
 
-        // And verify the order of the playlist audio titles
+          // And verify the order of the playlist audio titles
 
-        List<String> audioTitlesFilteredByCommented = [
-          "La surpopulation mondiale par Jancovici et Barrau",
-        ];
+          List<String> audioTitlesFilteredByCommented = [
+            "La surpopulation mondiale par Jancovici et Barrau",
+          ];
 
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioTitlesFilteredByCommented,
-        );
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesFilteredByCommented,
+          );
 
-        // Now tap on the current dropdown button item to open the dropdown
-        // button items list
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
 
-        final Finder dropDownButtonFinder =
-            find.byKey(const Key('sort_filter_parms_dropdown_button'));
+          final Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
 
-        final Finder dropDownButtonTextFinder = find.descendant(
-          of: dropDownButtonFinder,
-          matching: find.byType(Text),
-        );
+          final Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
 
-        await tester.tap(dropDownButtonTextFinder);
-        await tester.pumpAndSettle();
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
 
-        // And find the 'Uncomm' sort/filter item
-        final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
-        await tester.tap(titleAscDropDownTextFinder);
-        await tester.pumpAndSettle();
+          // And find the 'Uncomm' sort/filter item
+          final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
 
-        // Now open the audio popup menu in order to edit the 'Uncomm'
-        // sort/filter parms
-        final Finder dropdownItemEditIconButtonFinder = find.byKey(
-            const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
-        await tester.tap(dropdownItemEditIconButtonFinder);
-        await tester.pumpAndSettle();
+          // Now open the audio popup menu in order to edit the 'Uncomm'
+          // sort/filter parms
+          final Finder dropdownItemEditIconButtonFinder = find.byKey(
+              const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+          await tester.tap(dropdownItemEditIconButtonFinder);
+          await tester.pumpAndSettle();
 
-        // Scrolling down the sort filter dialog so that the 'Comment' /
-        // 'No com.' checkbox are visible and so accessible by the integration test
-        await tester.drag(
-          find.byType(AudioSortFilterDialog),
-          const Offset(
-              0, -300), // Negative value for vertical drag to scroll down
-        );
-        await tester.pumpAndSettle();
+          // Scrolling down the sort filter dialog so that the 'Comment' /
+          // 'No com.' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
 
-        // Find the 'Commented' checkbox widget and verify it is
-        // selected
-        commentedCheckboxWidgetFinder =
-            find.byKey(const Key('filterCommentedCheckbox'));
+          // Find the 'Commented' checkbox widget and verify it is
+          // selected
+          commentedCheckboxWidgetFinder =
+              find.byKey(const Key('filterCommentedCheckbox'));
 
-        expect(
-          tester.widget<Checkbox>(commentedCheckboxWidgetFinder).value,
-          false,
-        );
+          expect(
+            tester.widget<Checkbox>(commentedCheckboxWidgetFinder).value,
+            false,
+          );
 
-        // Find the 'Not com.' checkbox widget and verify it is not
-        // selected
-        final Finder notCommentedCheckboxWidgetFinder =
-            find.byKey(const Key('filterNotCommentedCheckbox'));
+          // Find the 'Not com.' checkbox widget and verify it is not
+          // selected
+          final Finder notCommentedCheckboxWidgetFinder =
+              find.byKey(const Key('filterNotCommentedCheckbox'));
 
-        expect(
-          tester.widget<Checkbox>(notCommentedCheckboxWidgetFinder).value,
-          true,
-        );
+          expect(
+            tester.widget<Checkbox>(notCommentedCheckboxWidgetFinder).value,
+            true,
+          );
 
-        // Click on the "Cancel" button. This closes the sort/filter dialog
-        // and updates the sort/filter playlist download view dropdown
-        // button with the modified sort/filter parms
-        await tester.tap(find.byKey(const Key('cancelSortFilterButton')));
-        await tester.pumpAndSettle();
+          // Click on the "Cancel" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the modified sort/filter parms
+          await tester.tap(find.byKey(const Key('cancelSortFilterButton')));
+          await tester.pumpAndSettle();
 
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
-      });
-      testWidgets(
-          '''Both Commented and Not com. checkboxes true in order to filter both
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''Both Commented and Not com. checkboxes true in order to filter both
              the commented and not commented audio. Create and then edit a named
              and saved 'ComUncom' filter parms. Then verifying that the corresponding
              sort/filter dropdown button item is applied to the playlist download
              view list of audio.''', (WidgetTester tester) async {
-        // Purge the test playlist directory if it exists so that the
-        // playlist list is empty
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
 
-        const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+          const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
 
-        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-          tester: tester,
-          savedTestDataDirName: 'audio_comment_test',
-          selectedPlaylistTitle: youtubePlaylistTitle,
-        );
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'audio_comment_test',
+            selectedPlaylistTitle: youtubePlaylistTitle,
+          );
 
-        // Now open the audio popup menu
-        await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-        await tester.pumpAndSettle();
+          // Now open the audio popup menu
+          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+          await tester.pumpAndSettle();
 
-        // Find the sort/filter audio menu item and tap on it to
-        // open the audio sort filter dialog
-        await tester.tap(
-            find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
-        await tester.pumpAndSettle();
+          // Find the sort/filter audio menu item and tap on it to
+          // open the audio sort filter dialog
+          await tester.tap(
+              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+          await tester.pumpAndSettle();
 
-        // Type "ComUncom" in the 'Save as' TextField
+          // Type "ComUncom" in the 'Save as' TextField
 
-        String saveAsTitle = 'ComUncom';
+          String saveAsTitle = 'ComUncom';
 
-        await tester.enterText(
-            find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
-            saveAsTitle);
-        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+          await tester.enterText(
+              find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+              saveAsTitle);
+          await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-        // Do not modify the default true values of the 'Commented' /
-        // 'Uncom.' checkboxes
+          // Do not modify the default true values of the 'Commented' /
+          // 'Uncom.' checkboxes
 
-        // Scrolling down the sort filter dialog so that the 'Save' button is
-        // visible and so accessible by the integration test
-        await tester.drag(
-          find.byType(AudioSortFilterDialog),
-          const Offset(
-              0, -300), // Negative value for vertical drag to scroll down
-        );
-        await tester.pumpAndSettle();
+          // Scrolling down the sort filter dialog so that the 'Save' button is
+          // visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
 
-        // Click on the "Save" button. This closes the sort/filter dialog
-        // and updates the sort/filter playlist download view dropdown
-        // button with the newly created sort/filter parms
-        await tester
-            .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
-        await tester.pumpAndSettle();
+          // Click on the "Save" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the newly created sort/filter parms
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
 
-        // Tap the 'Toggle List' button to avoid displaying the list
-        // of playlists which may hide the audio title we want to
-        // tap on
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester.pumpAndSettle();
+          // Tap the 'Toggle List' button to avoid displaying the list
+          // of playlists which may hide the audio title we want to
+          // tap on
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
 
-        // Now verify the playlist download view state with the 'Commented'
-        // sort/filter parms applied
+          // Now verify the playlist download view state with the 'Commented'
+          // sort/filter parms applied
 
-        // Verify that the dropdown button has been updated with the
-        // 'Commented' sort/filter parms selected
-        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
-          tester: tester,
-          dropdownButtonSelectedTitle: saveAsTitle,
-        );
+          // Verify that the dropdown button has been updated with the
+          // 'Commented' sort/filter parms selected
+          IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+            tester: tester,
+            dropdownButtonSelectedTitle: saveAsTitle,
+          );
 
-        // And verify the order of the playlist audio titles
+          // And verify the order of the playlist audio titles
 
-        List<String> audioTitlesFilteredByCommented = [
-          "Quand Aurélien Barrau va dans une école de management",
-          "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...",
-          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-          "La surpopulation mondiale par Jancovici et Barrau",
-        ];
+          List<String> audioTitlesFilteredByCommented = [
+            "Quand Aurélien Barrau va dans une école de management",
+            "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...",
+            "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+            "La surpopulation mondiale par Jancovici et Barrau",
+          ];
 
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioTitlesFilteredByCommented,
-        );
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesFilteredByCommented,
+          );
 
-        // Now tap on the current dropdown button item to open the dropdown
-        // button items list
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
 
-        final Finder dropDownButtonFinder =
-            find.byKey(const Key('sort_filter_parms_dropdown_button'));
+          final Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
 
-        final Finder dropDownButtonTextFinder = find.descendant(
-          of: dropDownButtonFinder,
-          matching: find.byType(Text),
-        );
+          final Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
 
-        await tester.tap(dropDownButtonTextFinder);
-        await tester.pumpAndSettle();
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
 
-        // And find the 'Commented' sort/filter item
-        final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
-        await tester.tap(titleAscDropDownTextFinder);
-        await tester.pumpAndSettle();
+          // And find the 'Commented' sort/filter item
+          final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
 
-        // Now open the audio popup menu in order to edit the 'Commented'
-        // sort/filter parms
-        final Finder dropdownItemEditIconButtonFinder = find.byKey(
-            const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
-        await tester.tap(dropdownItemEditIconButtonFinder);
-        await tester.pumpAndSettle();
+          // Now open the audio popup menu in order to edit the 'Commented'
+          // sort/filter parms
+          final Finder dropdownItemEditIconButtonFinder = find.byKey(
+              const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+          await tester.tap(dropdownItemEditIconButtonFinder);
+          await tester.pumpAndSettle();
 
-        // Scrolling down the sort filter dialog so that the 'Comment' /
-        // 'No com.' checkbox are visible and so accessible by the integration test
-        await tester.drag(
-          find.byType(AudioSortFilterDialog),
-          const Offset(
-              0, -300), // Negative value for vertical drag to scroll down
-        );
-        await tester.pumpAndSettle();
+          // Scrolling down the sort filter dialog so that the 'Comment' /
+          // 'No com.' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
 
-        // Find the 'Commented' checkbox widget and verify it is
-        // selected
-        final Finder commentedCheckboxWidgetFinder =
-            find.byKey(const Key('filterCommentedCheckbox'));
+          // Find the 'Commented' checkbox widget and verify it is
+          // selected
+          final Finder commentedCheckboxWidgetFinder =
+              find.byKey(const Key('filterCommentedCheckbox'));
 
-        expect(
-          tester.widget<Checkbox>(commentedCheckboxWidgetFinder).value,
-          true,
-        );
+          expect(
+            tester.widget<Checkbox>(commentedCheckboxWidgetFinder).value,
+            true,
+          );
 
-        // Find the 'Not com.' checkbox widget and verify it is not
-        // selected
-        final Finder notCommentedCheckboxWidgetFinder =
-            find.byKey(const Key('filterNotCommentedCheckbox'));
+          // Find the 'Not com.' checkbox widget and verify it is not
+          // selected
+          final Finder notCommentedCheckboxWidgetFinder =
+              find.byKey(const Key('filterNotCommentedCheckbox'));
 
-        expect(
-          tester.widget<Checkbox>(notCommentedCheckboxWidgetFinder).value,
-          true,
-        );
+          expect(
+            tester.widget<Checkbox>(notCommentedCheckboxWidgetFinder).value,
+            true,
+          );
 
-        // Click on the "Cancel" button. This closes the sort/filter dialog
-        // and updates the sort/filter playlist download view dropdown
-        // button with the modified sort/filter parms
-        await tester.tap(find.byKey(const Key('cancelSortFilterButton')));
-        await tester.pumpAndSettle();
+          // Click on the "Cancel" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the modified sort/filter parms
+          await tester.tap(find.byKey(const Key('cancelSortFilterButton')));
+          await tester.pumpAndSettle();
 
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''Unselect Commented then Not com. checkbox in order to filter commented
+             audio. Create and then edit a named and saved 'UnselectComThenUncom'
+             sort filter parms. Then verifying that the corresponding sort/filter
+             dropdown button item is applied to the playlist download view list
+             of audio.''', (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'audio_comment_test',
+            selectedPlaylistTitle: youtubePlaylistTitle,
+          );
+
+          // Now open the audio popup menu
+          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+          await tester.pumpAndSettle();
+
+          // Find the sort/filter audio menu item and tap on it to
+          // open the audio sort filter dialog
+          await tester.tap(
+              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+          await tester.pumpAndSettle();
+
+          // Type "UnselectComThenUncom" in the 'Save as' TextField
+
+          String saveAsTitle = 'UnselectComThenUncom';
+
+          await tester.enterText(
+              find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+              saveAsTitle);
+          await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+          // Scrolling down the sort filter dialog so that the 'Comment' /
+          // 'No com.' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Unselect the 'Comment' checkbox
+
+          // Find the 'Comment' checkbox widget
+          Finder commentedCheckboxWidgetFinder =
+              find.byKey(const Key('filterCommentedCheckbox'));
+
+          // Tap the checkbox to unselect it
+          await tester.tap(commentedCheckboxWidgetFinder);
+          await tester.pumpAndSettle();
+
+          // Unselect the 'Not com.' checkbox
+
+          // Find the 'Not com.' checkbox widget
+          Finder notCommentedCheckboxWidgetFinder =
+              find.byKey(const Key('filterNotCommentedCheckbox'));
+
+          // Tap the checkbox to unselect it. Since the two comment
+          // related checkboxex can not be both unselected, the
+          // 'Commented' checkbox is reselected.
+          await tester.tap(notCommentedCheckboxWidgetFinder);
+          await tester.pumpAndSettle();
+
+          // Click on the "Save" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the newly created sort/filter parms
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
+
+          // Tap the 'Toggle List' button to avoid displaying the list
+          // of playlists which may hide the audio title we want to
+          // tap on
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Now verify the playlist download view state with the 'Commented'
+          // sort/filter parms applied
+
+          // Verify that the dropdown button has been updated with the
+          // 'Commented' sort/filter parms selected
+          IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+            tester: tester,
+            dropdownButtonSelectedTitle: saveAsTitle,
+          );
+
+          // And verify the order of the playlist audio titles
+
+          List<String> audioTitlesFilteredByCommented = [
+            "Quand Aurélien Barrau va dans une école de management",
+            "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...",
+            "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          ];
+
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesFilteredByCommented,
+          );
+
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
+
+          final Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+          final Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
+
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
+
+          // And find the 'UnselectComThenUncom' sort/filter item
+          final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
+
+          // Now open the audio popup menu in order to edit the
+          // 'UnselectComThenUncom' sort/filter parms
+          final Finder dropdownItemEditIconButtonFinder = find.byKey(
+              const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+          await tester.tap(dropdownItemEditIconButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Scrolling down the sort filter dialog so that the 'Comment' /
+          // 'No com.' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Find the 'Commented' checkbox widget and verify it is
+          // selected
+          commentedCheckboxWidgetFinder =
+              find.byKey(const Key('filterCommentedCheckbox'));
+
+          expect(
+            tester.widget<Checkbox>(commentedCheckboxWidgetFinder).value,
+            true,
+          );
+
+          // Find the 'Not com.' checkbox widget and verify it is not
+          // selected
+          notCommentedCheckboxWidgetFinder =
+              find.byKey(const Key('filterNotCommentedCheckbox'));
+
+          expect(
+            tester.widget<Checkbox>(notCommentedCheckboxWidgetFinder).value,
+            false,
+          );
+
+          // Click on the "Cancel" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the modified sort/filter parms
+          await tester.tap(find.byKey(const Key('cancelSortFilterButton')));
+          await tester.pumpAndSettle();
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''Unselect Not com. then Commented checkbox in order to filter not commented
+             audio. Create and then edit a named and saved 'UnselectUncomThenCom'
+             sort filter parms. Then verifying that the corresponding sort/filter
+             dropdown button item is applied to the playlist download view list
+             of audio.''', (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'audio_comment_test',
+            selectedPlaylistTitle: youtubePlaylistTitle,
+          );
+
+          // Now open the audio popup menu
+          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+          await tester.pumpAndSettle();
+
+          // Find the sort/filter audio menu item and tap on it to
+          // open the audio sort filter dialog
+          await tester.tap(
+              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+          await tester.pumpAndSettle();
+
+          // Type "UnselectUncomThenCom" in the 'Save as' TextField
+
+          String saveAsTitle = 'UnselectUncomThenCom';
+
+          await tester.enterText(
+              find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+              saveAsTitle);
+          await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+          // Scrolling down the sort filter dialog so that the 'Comment' /
+          // 'No com.' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Unselect the 'Not com.' checkbox
+
+          // Find the 'Not com.' checkbox widget
+          Finder notCommentedCheckboxWidgetFinder =
+              find.byKey(const Key('filterNotCommentedCheckbox'));
+
+          // Tap the checkbox to unselect it.
+          await tester.tap(notCommentedCheckboxWidgetFinder);
+          await tester.pumpAndSettle();
+
+          // Unselect the 'Comment' checkbox
+
+          // Find the 'Comment' checkbox widget
+          Finder commentedCheckboxWidgetFinder =
+              find.byKey(const Key('filterCommentedCheckbox'));
+
+          // Tap the checkbox to unselect it.  Since the two comment
+          // related checkboxex can not be both unselected, the
+          // 'Not com.' checkbox is reselected.
+          await tester.tap(commentedCheckboxWidgetFinder);
+          await tester.pumpAndSettle();
+
+          // Click on the "Save" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the newly created sort/filter parms
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
+
+          // Tap the 'Toggle List' button to avoid displaying the list
+          // of playlists which may hide the audio title we want to
+          // tap on
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Now verify the playlist download view state with the 'Commented'
+          // sort/filter parms applied
+
+          // Verify that the dropdown button has been updated with the
+          // 'Commented' sort/filter parms selected
+          IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+            tester: tester,
+            dropdownButtonSelectedTitle: saveAsTitle,
+          );
+
+          // And verify the order of the playlist audio titles
+
+          List<String> audioTitlesFilteredByCommented = [
+            "La surpopulation mondiale par Jancovici et Barrau",
+          ];
+
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesFilteredByCommented,
+          );
+
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
+
+          final Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+          final Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
+
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
+
+          // And find the 'UnselectUncomThenCom' sort/filter item
+          final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
+
+          // Now open the audio popup menu in order to edit the
+          // 'UnselectUncomThenCom' sort/filter parms
+          final Finder dropdownItemEditIconButtonFinder = find.byKey(
+              const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+          await tester.tap(dropdownItemEditIconButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Scrolling down the sort filter dialog so that the 'Comment' /
+          // 'No com.' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Find the 'Commented' checkbox widget and verify it is
+          // not selected
+          commentedCheckboxWidgetFinder =
+              find.byKey(const Key('filterCommentedCheckbox'));
+
+          expect(
+            tester.widget<Checkbox>(commentedCheckboxWidgetFinder).value,
+            false,
+          );
+
+          // Find the 'Not com.' checkbox widget and verify it is
+          // selected
+          notCommentedCheckboxWidgetFinder =
+              find.byKey(const Key('filterNotCommentedCheckbox'));
+
+          expect(
+            tester.widget<Checkbox>(notCommentedCheckboxWidgetFinder).value,
+            true,
+          );
+
+          // Click on the "Cancel" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the modified sort/filter parms
+          await tester.tap(find.byKey(const Key('cancelSortFilterButton')));
+          await tester.pumpAndSettle();
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
       });
-      testWidgets(
-          '''Commented and Not com. checkbox false in order to filter no audio.
-             Create and then edit a named and saved 'NeitherComNorUnCom' filter
-             parms. Then verifying that the corresponding sort/filter dropdown
-             button item is applied to the playlist download view list of audio.''',
-          (WidgetTester tester) async {
-        // Purge the test playlist directory if it exists so that the
-        // playlist list is empty
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
+      group('''Picture related checkboxes''', () {
+        testWidgets(
+            '''Pictured checkbox true and Unpic. checkbox false in order to filter
+             only the pictured audio. Create and then edit a named and saved
+             'Pictured' filter parms. Then verifying that the corresponding sort/filter
+             dropdown button item is applied to the playlist download view list of
+             audio.''', (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
 
-        const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+          const String youtubePlaylistTitle =
+              'Jésus-Christ'; // Youtube playlist
 
-        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-          tester: tester,
-          savedTestDataDirName: 'audio_comment_test',
-          selectedPlaylistTitle: youtubePlaylistTitle,
-        );
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'audio_player_picture_test',
+            selectedPlaylistTitle: youtubePlaylistTitle,
+          );
 
-        // Now open the audio popup menu
-        await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-        await tester.pumpAndSettle();
+          // Now open the audio popup menu
+          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+          await tester.pumpAndSettle();
 
-        // Find the sort/filter audio menu item and tap on it to
-        // open the audio sort filter dialog
-        await tester.tap(
-            find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
-        await tester.pumpAndSettle();
+          // Find the sort/filter audio menu item and tap on it to
+          // open the audio sort filter dialog
+          await tester.tap(
+              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+          await tester.pumpAndSettle();
 
-        // Type "NeitherComNorUnCom" in the 'Save as' TextField
+          // Type "Pictured" in the 'Save as' TextField
 
-        String saveAsTitle = 'NeitherComNorUnCom';
+          String saveAsTitle = 'Pictured';
 
-        await tester.enterText(
-            find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
-            saveAsTitle);
-        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+          await tester.enterText(
+              find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+              saveAsTitle);
+          await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-        // Scrolling down the sort filter dialog so that the 'Comment' /
-        // 'No com.' checkbox are visible and so accessible by the integration test
-        await tester.drag(
-          find.byType(AudioSortFilterDialog),
-          const Offset(
-              0, -300), // Negative value for vertical drag to scroll down
-        );
-        await tester.pumpAndSettle();
+          // Scrolling down the sort filter dialog so that the 'Pictured' /
+          // 'Unpic.' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
 
-        // Unselect the 'Comment' checkbox
+          // Unselect the 'Unpic.' checkbox
 
-        // Find the 'Comment' checkbox widget
-        Finder commentedCheckboxWidgetFinder =
-            find.byKey(const Key('filterCommentedCheckbox'));
+          // Find the 'Unpic.' checkbox widget
+          Finder notPictuedCheckboxWidgetFinder =
+              find.byKey(const Key('filterNotPicturedCheckbox'));
 
-        // Tap the checkbox to unselect it
-        await tester.tap(commentedCheckboxWidgetFinder);
-        await tester.pumpAndSettle();
+          // Tap the checkbox to unselect it
+          await tester.tap(notPictuedCheckboxWidgetFinder);
+          await tester.pumpAndSettle();
 
-        // Unselect the 'Not com.' checkbox
+          // Click on the "Save" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the newly created sort/filter parms
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
 
-        // Find the 'Not com.' checkbox widget
-        Finder notCommentedCheckboxWidgetFinder =
-            find.byKey(const Key('filterNotCommentedCheckbox'));
+          // Tap the 'Toggle List' button to avoid displaying the list
+          // of playlists which may hide the audio title we want to
+          // tap on
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
 
-        // Tap the checkbox to unselect it
-        await tester.tap(notCommentedCheckboxWidgetFinder);
-        await tester.pumpAndSettle();
+          // Now verify the playlist download view state with the 'Pictured'
+          // sort/filter parms applied
 
-        // Click on the "Save" button. This closes the sort/filter dialog
-        // and updates the sort/filter playlist download view dropdown
-        // button with the newly created sort/filter parms
-        await tester
-            .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
-        await tester.pumpAndSettle();
+          // Verify that the dropdown button has been updated with the
+          // 'Pictured' sort/filter parms selected
+          IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+            tester: tester,
+            dropdownButtonSelectedTitle: saveAsTitle,
+          );
 
-        // Tap the 'Toggle List' button to avoid displaying the list
-        // of playlists which may hide the audio title we want to
-        // tap on
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester.pumpAndSettle();
+          // And verify the order of the playlist audio titles
 
-        // Now verify the playlist download view state with the 'Commented'
-        // sort/filter parms applied
+          List<String> audioTitlesFilteredByPictured = [
+            "NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE",
+          ];
 
-        // Verify that the dropdown button has been updated with the
-        // 'Commented' sort/filter parms selected
-        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
-          tester: tester,
-          dropdownButtonSelectedTitle: saveAsTitle,
-        );
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesFilteredByPictured,
+          );
 
-        // And verify the order of the playlist audio titles
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
 
-        List<String> audioTitlesFilteredByCommented = [];
+          final Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
 
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioTitlesFilteredByCommented,
-        );
+          final Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
 
-        // Now tap on the current dropdown button item to open the dropdown
-        // button items list
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
 
-        final Finder dropDownButtonFinder =
-            find.byKey(const Key('sort_filter_parms_dropdown_button'));
+          // And find the 'Pictured' sort/filter item
+          final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
 
-        final Finder dropDownButtonTextFinder = find.descendant(
-          of: dropDownButtonFinder,
-          matching: find.byType(Text),
-        );
+          // Now open the audio popup menu in order to edit the 'Pictured'
+          // sort/filter parms
+          final Finder dropdownItemEditIconButtonFinder = find.byKey(
+              const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+          await tester.tap(dropdownItemEditIconButtonFinder);
+          await tester.pumpAndSettle();
 
-        await tester.tap(dropDownButtonTextFinder);
-        await tester.pumpAndSettle();
+          // Scrolling down the sort filter dialog so that the 'Pictured' /
+          // 'Unpic.' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
 
-        // And find the 'NeitherComNorUnCom' sort/filter item
-        final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
-        await tester.tap(titleAscDropDownTextFinder);
-        await tester.pumpAndSettle();
+          // Find the 'Pictured' checkbox widget and verify it is
+          // selected
+          final Finder picturedCheckboxWidgetFinder =
+              find.byKey(const Key('filterPicturedCheckbox'));
 
-        // Now open the audio popup menu in order to edit the
-        // 'NeitherComNorUnCom' sort/filter parms
-        final Finder dropdownItemEditIconButtonFinder = find.byKey(
-            const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
-        await tester.tap(dropdownItemEditIconButtonFinder);
-        await tester.pumpAndSettle();
+          expect(
+            tester.widget<Checkbox>(picturedCheckboxWidgetFinder).value,
+            true,
+          );
 
-        // Scrolling down the sort filter dialog so that the 'Comment' /
-        // 'No com.' checkbox are visible and so accessible by the integration test
-        await tester.drag(
-          find.byType(AudioSortFilterDialog),
-          const Offset(
-              0, -300), // Negative value for vertical drag to scroll down
-        );
-        await tester.pumpAndSettle();
+          // Find the 'Unpic.' checkbox widget and verify it is not
+          // selected
+          notPictuedCheckboxWidgetFinder =
+              find.byKey(const Key('filterNotPicturedCheckbox'));
 
-        // Find the 'Commented' checkbox widget and verify it is not
-        // uelected
-        commentedCheckboxWidgetFinder =
-            find.byKey(const Key('filterCommentedCheckbox'));
+          expect(
+            tester.widget<Checkbox>(notPictuedCheckboxWidgetFinder).value,
+            false,
+          );
 
-        expect(
-          tester.widget<Checkbox>(commentedCheckboxWidgetFinder).value,
-          false,
-        );
+          // Click on the "Cancel" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the modified sort/filter parms
+          await tester.tap(find.byKey(const Key('cancelSortFilterButton')));
+          await tester.pumpAndSettle();
 
-        // Find the 'Not com.' checkbox widget and verify it is not
-        // selected
-        notCommentedCheckboxWidgetFinder =
-            find.byKey(const Key('filterNotCommentedCheckbox'));
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''Pictured checkbox false and Unpic. checkbox true in order to filter
+             only the not pictured audio. Create and then edit a named and saved
+             'Unpic.' filter parms. Then verifying that the corresponding sort/filter
+             dropdown button item is applied to the playlist download view list of
+             audio.''', (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
 
-        expect(
-          tester.widget<Checkbox>(notCommentedCheckboxWidgetFinder).value,
-          false,
-        );
+          const String youtubePlaylistTitle =
+              'Jésus-Christ'; // Youtube playlist
 
-        // Click on the "Cancel" button. This closes the sort/filter dialog
-        // and updates the sort/filter playlist download view dropdown
-        // button with the modified sort/filter parms
-        await tester.tap(find.byKey(const Key('cancelSortFilterButton')));
-        await tester.pumpAndSettle();
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'audio_player_picture_test',
+            selectedPlaylistTitle: youtubePlaylistTitle,
+          );
 
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
+          // Now open the audio popup menu
+          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+          await tester.pumpAndSettle();
+
+          // Find the sort/filter audio menu item and tap on it to
+          // open the audio sort filter dialog
+          await tester.tap(
+              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+          await tester.pumpAndSettle();
+
+          // Type "Unpic." in the 'Save as' TextField
+
+          String saveAsTitle = 'Unpic.';
+
+          await tester.enterText(
+              find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+              saveAsTitle);
+          await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+          // Scrolling down the sort filter dialog so that the 'Pictured' /
+          // 'Unpic.' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Unselect the 'Pictured' checkbox
+
+          // Find the 'Pictured' checkbox widget
+          Finder picturedCheckboxWidgetFinder =
+              find.byKey(const Key('filterPicturedCheckbox'));
+
+          // Tap the checkbox to unselect it
+          await tester.tap(picturedCheckboxWidgetFinder);
+          await tester.pumpAndSettle();
+
+          // Click on the "Save" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the newly created sort/filter parms
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
+
+          // Tap the 'Toggle List' button to avoid displaying the list
+          // of playlists which may hide the audio title we want to
+          // tap on
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Now verify the playlist download view state with the 'Unpic.'
+          // sort/filter parms applied
+
+          // Verify that the dropdown button has been updated with the
+          // 'Unpic.' sort/filter parms selected
+          IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+            tester: tester,
+            dropdownButtonSelectedTitle: saveAsTitle,
+          );
+
+          // And verify the order of the playlist audio titles
+
+          List<String> audioTitlesFilteredByNotPictured = [
+            "CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien",
+          ];
+
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesFilteredByNotPictured,
+          );
+
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
+
+          final Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+          final Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
+
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
+
+          // And find the 'Unpic.' sort/filter item
+          final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
+
+          // Now open the audio popup menu in order to edit the 'Unpic.'
+          // sort/filter parms
+          final Finder dropdownItemEditIconButtonFinder = find.byKey(
+              const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+          await tester.tap(dropdownItemEditIconButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Scrolling down the sort filter dialog so that the 'Pictured' /
+          // 'Unpic.' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Find the 'Pictured' checkbox widget and verify it is not
+          // selected
+          picturedCheckboxWidgetFinder =
+              find.byKey(const Key('filterPicturedCheckbox'));
+
+          expect(
+            tester.widget<Checkbox>(picturedCheckboxWidgetFinder).value,
+            false,
+          );
+
+          // Find the 'Unpic.' checkbox widget and verify it is
+          // selected
+          final Finder notPictuedCheckboxWidgetFinder =
+              find.byKey(const Key('filterNotPicturedCheckbox'));
+
+          expect(
+            tester.widget<Checkbox>(notPictuedCheckboxWidgetFinder).value,
+            true,
+          );
+
+          // Click on the "Cancel" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the modified sort/filter parms
+          await tester.tap(find.byKey(const Key('cancelSortFilterButton')));
+          await tester.pumpAndSettle();
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''Both Pictured and Unpic. checkboxes true in order to filter both
+             the pictured and not pictured audio. Create and then edit a named
+             and saved 'ComUncom' filter parms. Then verifying that the corresponding
+             sort/filter dropdown button item is applied to the playlist download
+             view list of audio.''', (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          const String youtubePlaylistTitle =
+              'Jésus-Christ'; // Youtube playlist
+
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'audio_player_picture_test',
+            selectedPlaylistTitle: youtubePlaylistTitle,
+          );
+
+          // Now open the audio popup menu
+          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+          await tester.pumpAndSettle();
+
+          // Find the sort/filter audio menu item and tap on it to
+          // open the audio sort filter dialog
+          await tester.tap(
+              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+          await tester.pumpAndSettle();
+
+          // Type "ComUncom" in the 'Save as' TextField
+
+          String saveAsTitle = 'ComUncom';
+
+          await tester.enterText(
+              find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+              saveAsTitle);
+          await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+          // Do not modify the default true values of the 'Pictured' /
+          // 'Uncom.' checkboxes
+
+          // Scrolling down the sort filter dialog so that the 'Save' button is
+          // visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Click on the "Save" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the newly created sort/filter parms
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
+
+          // Tap the 'Toggle List' button to avoid displaying the list
+          // of playlists which may hide the audio title we want to
+          // tap on
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Now verify the playlist download view state with the 'Pictured'
+          // sort/filter parms applied
+
+          // Verify that the dropdown button has been updated with the
+          // 'Pictured' sort/filter parms selected
+          IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+            tester: tester,
+            dropdownButtonSelectedTitle: saveAsTitle,
+          );
+
+          // And verify the order of the playlist audio titles
+
+          List<String> audioTitlesFilteredByPictured = [
+            "CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien",
+            "NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE",
+          ];
+
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesFilteredByPictured,
+          );
+
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
+
+          final Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+          final Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
+
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
+
+          // And find the 'Pictured' sort/filter item
+          final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
+
+          // Now open the audio popup menu in order to edit the 'Pictured'
+          // sort/filter parms
+          final Finder dropdownItemEditIconButtonFinder = find.byKey(
+              const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+          await tester.tap(dropdownItemEditIconButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Scrolling down the sort filter dialog so that the 'Pictured' /
+          // 'Unpic.' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Find the 'Pictured' checkbox widget and verify it is
+          // selected
+          final Finder picturedCheckboxWidgetFinder =
+              find.byKey(const Key('filterPicturedCheckbox'));
+
+          expect(
+            tester.widget<Checkbox>(picturedCheckboxWidgetFinder).value,
+            true,
+          );
+
+          // Find the 'Unpic.' checkbox widget and verify it is
+          // selected
+          final Finder notPictuedCheckboxWidgetFinder =
+              find.byKey(const Key('filterNotPicturedCheckbox'));
+
+          expect(
+            tester.widget<Checkbox>(notPictuedCheckboxWidgetFinder).value,
+            true,
+          );
+
+          // Click on the "Cancel" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the modified sort/filter parms
+          await tester.tap(find.byKey(const Key('cancelSortFilterButton')));
+          await tester.pumpAndSettle();
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''Unselect Pictured then Unpic. checkbox in order to filter pictured
+             audio. Create and then edit a named and saved 'UnselectPicThenUnpic'
+             sort filter parms. Then verifying that the corresponding sort/filter
+             dropdown button item is applied to the playlist download view list
+             of audio.''', (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          const String youtubePlaylistTitle =
+              'Jésus-Christ'; // Youtube playlist
+
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'audio_player_picture_test',
+            selectedPlaylistTitle: youtubePlaylistTitle,
+          );
+
+          // Now open the audio popup menu
+          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+          await tester.pumpAndSettle();
+
+          // Find the sort/filter audio menu item and tap on it to
+          // open the audio sort filter dialog
+          await tester.tap(
+              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+          await tester.pumpAndSettle();
+
+          // Type "UnselectPicThenUnpic" in the 'Save as' TextField
+
+          String saveAsTitle = 'UnselectPicThenUnpic';
+
+          await tester.enterText(
+              find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+              saveAsTitle);
+          await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+          // Scrolling down the sort filter dialog so that the 'Pictured' /
+          // 'Unpic.' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Unselect the 'Pictured' checkbox
+
+          // Find the 'Pictured' checkbox widget
+          Finder picturedCheckboxWidgetFinder =
+              find.byKey(const Key('filterPicturedCheckbox'));
+
+          // Tap the checkbox to unselect it
+          await tester.tap(picturedCheckboxWidgetFinder);
+          await tester.pumpAndSettle();
+
+          // Unselect the 'Unpic.' checkbox
+
+          // Find the 'Unpic.' checkbox widget
+          Finder notPictuedCheckboxWidgetFinder =
+              find.byKey(const Key('filterNotPicturedCheckbox'));
+
+          // Tap the checkbox to unselect it. Since the two picture
+          // related checkboxex can not be both unselected, the
+          // 'Pictured' checkbox is reselected.
+          await tester.tap(notPictuedCheckboxWidgetFinder);
+          await tester.pumpAndSettle();
+
+          // Click on the "Save" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the newly created sort/filter parms
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
+
+          // Tap the 'Toggle List' button to avoid displaying the list
+          // of playlists which may hide the audio title we want to
+          // tap on
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Now verify the playlist download view state with the 'Pictured'
+          // sort/filter parms applied
+
+          // Verify that the dropdown button has been updated with the
+          // 'Pictured' sort/filter parms selected
+          IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+            tester: tester,
+            dropdownButtonSelectedTitle: saveAsTitle,
+          );
+
+          // And verify the order of the playlist audio titles
+
+          List<String> audioTitlesFilteredByPictured = [
+            "NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE",
+          ];
+
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesFilteredByPictured,
+          );
+
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
+
+          final Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+          final Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
+
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
+
+          // And find the 'UnselectPicThenUnpic' sort/filter item
+          final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
+
+          // Now open the audio popup menu in order to edit the
+          // 'UnselectPicThenUnpic' sort/filter parms
+          final Finder dropdownItemEditIconButtonFinder = find.byKey(
+              const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+          await tester.tap(dropdownItemEditIconButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Scrolling down the sort filter dialog so that the 'Pictured' /
+          // 'Unpic.' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Find the 'Pictured' checkbox widget and verify it is
+          // selected
+          picturedCheckboxWidgetFinder =
+              find.byKey(const Key('filterPicturedCheckbox'));
+
+          expect(
+            tester.widget<Checkbox>(picturedCheckboxWidgetFinder).value,
+            true,
+          );
+
+          // Find the 'Unpic.' checkbox widget and verify it is not
+          // selected
+          notPictuedCheckboxWidgetFinder =
+              find.byKey(const Key('filterNotPicturedCheckbox'));
+
+          expect(
+            tester.widget<Checkbox>(notPictuedCheckboxWidgetFinder).value,
+            false,
+          );
+
+          // Click on the "Cancel" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the modified sort/filter parms
+          await tester.tap(find.byKey(const Key('cancelSortFilterButton')));
+          await tester.pumpAndSettle();
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''Unselect Unpic. then Pictured checkbox in order to filter not pictured
+             audio. Create and then edit a named and saved 'UnselectUnpicThenPic'
+             sort filter parms. Then verifying that the corresponding sort/filter
+             dropdown button item is applied to the playlist download view list
+             of audio.''', (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          const String youtubePlaylistTitle =
+              'Jésus-Christ'; // Youtube playlist
+
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'audio_player_picture_test',
+            selectedPlaylistTitle: youtubePlaylistTitle,
+          );
+
+          // Now open the audio popup menu
+          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+          await tester.pumpAndSettle();
+
+          // Find the sort/filter audio menu item and tap on it to
+          // open the audio sort filter dialog
+          await tester.tap(
+              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+          await tester.pumpAndSettle();
+
+          // Type "UnselectUnpicThenPic" in the 'Save as' TextField
+
+          String saveAsTitle = 'UnselectUnpicThenPic';
+
+          await tester.enterText(
+              find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+              saveAsTitle);
+          await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+          // Scrolling down the sort filter dialog so that the 'Pictured' /
+          // 'Unpic.' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Unselect the 'Unpic.' checkbox
+
+          // Find the 'Unpic.' checkbox widget
+          Finder notPictuedCheckboxWidgetFinder =
+              find.byKey(const Key('filterNotPicturedCheckbox'));
+
+          // Tap the checkbox to unselect it.
+          await tester.tap(notPictuedCheckboxWidgetFinder);
+          await tester.pumpAndSettle();
+
+          // Unselect the 'Pictured' checkbox
+
+          // Find the 'Pictured' checkbox widget
+          Finder picturedCheckboxWidgetFinder =
+              find.byKey(const Key('filterPicturedCheckbox'));
+
+          // Tap the checkbox to unselect it. Since the two picture
+          // related checkboxex can not be both unselected, the
+          // 'Unpic.' checkbox is reselected.
+          await tester.tap(picturedCheckboxWidgetFinder);
+          await tester.pumpAndSettle();
+
+          // Click on the "Save" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the newly created sort/filter parms
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
+
+          // Tap the 'Toggle List' button to avoid displaying the list
+          // of playlists which may hide the audio title we want to
+          // tap on
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Now verify the playlist download view state with the 'Pictured'
+          // sort/filter parms applied
+
+          // Verify that the dropdown button has been updated with the
+          // 'Pictured' sort/filter parms selected
+          IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+            tester: tester,
+            dropdownButtonSelectedTitle: saveAsTitle,
+          );
+
+          // And verify the order of the playlist audio titles
+
+          List<String> audioTitlesFilteredByPictured = [
+            "CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien",
+          ];
+
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesFilteredByPictured,
+          );
+
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
+
+          final Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+          final Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
+
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
+
+          // And find the 'UnselectUnpicThenPic' sort/filter item
+          final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
+
+          // Now open the audio popup menu in order to edit the
+          // 'UnselectUnpicThenPic' sort/filter parms
+          final Finder dropdownItemEditIconButtonFinder = find.byKey(
+              const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+          await tester.tap(dropdownItemEditIconButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Scrolling down the sort filter dialog so that the 'Pictured' /
+          // 'Unpic.' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Find the 'Pictured' checkbox widget and verify it is
+          // not selected
+          picturedCheckboxWidgetFinder =
+              find.byKey(const Key('filterPicturedCheckbox'));
+
+          expect(
+            tester.widget<Checkbox>(picturedCheckboxWidgetFinder).value,
+            false,
+          );
+
+          // Find the 'Unpic.' checkbox widget and verify it is
+          // selected
+          notPictuedCheckboxWidgetFinder =
+              find.byKey(const Key('filterNotPicturedCheckbox'));
+
+          expect(
+            tester.widget<Checkbox>(notPictuedCheckboxWidgetFinder).value,
+            true,
+          );
+
+          // Click on the "Cancel" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the modified sort/filter parms
+          await tester.tap(find.byKey(const Key('cancelSortFilterButton')));
+          await tester.pumpAndSettle();
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
       });
     });
   });
