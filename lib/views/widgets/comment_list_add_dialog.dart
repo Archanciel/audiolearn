@@ -317,45 +317,45 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                       overlayColor:
                           iconButtonTapModification, // Tap feedback color
                     ),
-                    icon: Consumer<AudioPlayerVM>(
-                      builder: (context, audioPlayerVMlistenTrue, child) {
-                        // The code below ensures that the audio player is
-                        // paused when the current comment end audio position
-                        // is reached.
+                    icon: ValueListenableBuilder<Duration>(
+                      valueListenable:
+                          audioPlayerVMlistenFalse.currentAudioPositionNotifier,
+                      builder: (context, currentAudioPosition, child) {
+                        // When the current comment end position is reached, schedule a pause.
                         if (_playingComment != null &&
                             _playingComment == comment &&
-                            audioPlayerVMlistenTrue.currentAudioPosition >=
+                            currentAudioPosition >=
                                 Duration(
-                                    milliseconds: comment
-                                            .commentEndPositionInTenthOfSeconds *
-                                        100)) {
+                                  milliseconds: comment
+                                          .commentEndPositionInTenthOfSeconds *
+                                      100,
+                                )) {
                           WidgetsBinding.instance.addPostFrameCallback((_) {
-                            audioPlayerVMlistenTrue.pause();
+                            audioPlayerVMlistenFalse.pause();
                           });
                         }
 
-                        // this logic avoids that when the
-                        // user clicks on the play button of a
-                        // comment, the play button of the
-                        // other comment are updated to 'pause'
-                        return IconTheme(
-                          // IconTheme usage is required otherwise when
-                          // the CommentListAddDialog is opened from the
-                          // AudioPlayerScreen left appbar menu, the icon
-                          // color is not the one defined in the theme and
-                          // so is different from the icon color set when
-                          // opening the CommentListAddDialog from the
-                          // AudioPlayerScreen inkwell button or the playlist
-                          // Audio Comments menu item.
-                          data: (themeProviderVM.currentTheme == AppTheme.dark
-                                  ? ScreenMixin.themeDataDark
-                                  : ScreenMixin.themeDataLight)
-                              .iconTheme,
-                          child: Icon((_playingComment != null &&
-                                  _playingComment == comment &&
-                                  audioPlayerVMlistenTrue.isPlaying)
-                              ? Icons.pause
-                              : Icons.play_arrow),
+                        return ValueListenableBuilder<bool>(
+                          valueListenable: audioPlayerVMlistenFalse
+                              .currentAudioPlayPauseNotifier,
+                          builder: (context, isPlaying, child) {
+                            return IconTheme(
+                              data:
+                                  (themeProviderVM.currentTheme == AppTheme.dark
+                                          ? ScreenMixin.themeDataDark
+                                          : ScreenMixin.themeDataLight)
+                                      .iconTheme,
+                              child: Icon(
+                                // Display pause if this comment is playing and the audio is playing;
+                                // otherwise, display the play_arrow icon.
+                                (_playingComment != null &&
+                                        _playingComment == comment &&
+                                        isPlaying)
+                                    ? Icons.pause
+                                    : Icons.play_arrow,
+                              ),
+                            );
+                          },
                         );
                       },
                     ),
