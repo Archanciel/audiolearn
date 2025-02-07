@@ -129,6 +129,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                 key: const Key('playlistCommentsListKey'),
                 children: (sortedAudioFileNamesLst.isNotEmpty)
                     ? _buildPlaylistAudiosCommentsList(
+                        themeProviderVM: themeProviderVM,
                         audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                         commentVM: commentVM,
                         playlistAudiosCommentsMap: playlistAudioCommentsMap,
@@ -164,6 +165,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
   }
 
   List<Widget> _buildPlaylistAudiosCommentsList({
+    required ThemeProviderVM themeProviderVM,
     required AudioPlayerVM audioPlayerVMlistenFalse,
     required CommentVM commentVM,
     required Map<String, List<Comment>> playlistAudiosCommentsMap,
@@ -290,6 +292,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                 Padding(
                   padding: const EdgeInsets.only(bottom: 2),
                   child: _buildCommentTitlePlusIconsAndCommentDatesAndPosition(
+                    themeProviderVM: themeProviderVM,
                     audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                     dateFormatVMlistenFalse: Provider.of<DateFormatVM>(
                       context,
@@ -340,6 +343,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
   }
 
   Widget _buildCommentTitlePlusIconsAndCommentDatesAndPosition({
+    required ThemeProviderVM themeProviderVM,
     required AudioPlayerVM audioPlayerVMlistenFalse,
     required DateFormatVM dateFormatVMlistenFalse,
     required TextStyle commentTitleTextStyle,
@@ -390,14 +394,25 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                               comment: comment,
                             );
                     },
-                    icon: Consumer<AudioPlayerVM>(
-                      builder: (context, audioPlayerVMlistenTrue, child) {
+                    style: ButtonStyle(
+                      // Highlight button when pressed
+                      padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                        const EdgeInsets.symmetric(
+                            horizontal: kSmallButtonInsidePadding, vertical: 0),
+                      ),
+                      overlayColor:
+                          iconButtonTapModification, // Tap feedback color
+                    ),
+                    icon: ValueListenableBuilder<Duration>(
+                      valueListenable:
+                          audioPlayerVMlistenFalse.currentAudioPositionNotifier,
+                      builder: (context, currentAudioPosition, child) {
                         // Check if the comment is playing and the position has been reached
                         if (_playingComment != null &&
                             _playingComment == comment &&
-                            audioPlayerVMlistenTrue.currentAudio!
+                            audioPlayerVMlistenFalse.currentAudio!
                                 .isPlayingOrPausedWithPositionBetweenAudioStartAndEnd &&
-                            audioPlayerVMlistenTrue.currentAudioPosition >=
+                            currentAudioPosition >=
                                 Duration(
                                     milliseconds: comment
                                             .commentEndPositionInTenthOfSeconds *
@@ -406,17 +421,34 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                           // (this will not block the widget tree rendering)
                           WidgetsBinding.instance
                               .addPostFrameCallback((_) async {
-                            await audioPlayerVMlistenTrue.pause();
+                            await audioPlayerVMlistenFalse.pause();
                           });
                         }
 
                         // This logic avoids that when the user clicks on the play button of a
                         // comment, the play button of the other comment is updated to 'pause'
-                        return Icon((_playingComment != null &&
-                                _playingComment == comment &&
-                                audioPlayerVMlistenTrue.isPlaying)
-                            ? Icons.pause
-                            : Icons.play_arrow);
+                        return ValueListenableBuilder<bool>(
+                          valueListenable: audioPlayerVMlistenFalse
+                              .currentAudioPlayPauseNotifier,
+                          builder: (context, isPlaying, child) {
+                            return IconTheme(
+                              data:
+                                  (themeProviderVM.currentTheme == AppTheme.dark
+                                          ? ScreenMixin.themeDataDark
+                                          : ScreenMixin.themeDataLight)
+                                      .iconTheme,
+                              child: Icon(
+                                // Display pause if this comment is playing and the audio is playing;
+                                // otherwise, display the play_arrow icon.
+                                (_playingComment != null &&
+                                        _playingComment == comment &&
+                                        isPlaying)
+                                    ? Icons.pause
+                                    : Icons.play_arrow,
+                              ),
+                            );
+                          },
+                        );
                       },
                     ),
                     iconSize: kSmallestButtonWidth,
@@ -624,14 +656,14 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
     );
 
     // if (!audioPlayerVM.isPlaying) {
-      // This fixes a problem when a playing comment was paused and
-      // then the user clicked on the play button of an other comment.
-      // In such a situation, the user had to click twice or three
-      // times on the other comment play button to play it if the other
-      // comment was positioned before the previously played comment.
-      // If the other comment was positioned after the previously played
-      // comment, then the user had to click only once on the play button
-      // of the other comment to play it.
+    // This fixes a problem when a playing comment was paused and
+    // then the user clicked on the play button of an other comment.
+    // In such a situation, the user had to click twice or three
+    // times on the other comment play button to play it if the other
+    // comment was positioned before the previously played comment.
+    // If the other comment was positioned after the previously played
+    // comment, then the user had to click only once on the play button
+    // of the other comment to play it.
     //   await audioPlayerVM.playCurrentAudio(
     //     rewindAudioPositionBasedOnPauseDuration: false,
     //     isCommentPlaying: true,
