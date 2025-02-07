@@ -535,14 +535,6 @@ class AudioPlayerVM extends ChangeNotifier {
   /// This method sets the audio player listeners. Those listeners will be
   /// cancelled in the AudioPlayerVM dispose() method.
   void _initAudioPlayer() {
-    _durationSubscription = _audioPlayer!.onDurationChanged.listen((duration) {
-      _currentAudioTotalDuration = duration;
-
-      // Would be usefull for PlaylistDownloadView only. Currently,
-      // the audio duration is never changed in the application.
-      notifyListeners();
-    });
-
     _positionSubscription = _audioPlayer!.onPositionChanged.listen((position) {
       if (_audioPlayer!.state == PlayerState.playing) {
         // this test avoids that when selecting another audio
@@ -550,12 +542,6 @@ class AudioPlayerVM extends ChangeNotifier {
         // passed position value of an AudioPlayer not playing
         // is 0 !
         _currentAudioPosition = position;
-
-        // Required so that playing a comment stops when the
-        // comment end position is reached. This happens since
-        // the comment related dialogs use Consumer<AudioPlayerVM>
-        // in order to stop the audio comment at end.
-        notifyListeners();
 
         // Only update the currentAudioPositionNotifier every 0.5 second
         if (_lastPositionUpdate == null ||
