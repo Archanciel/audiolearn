@@ -186,8 +186,8 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
     String minValueLimitStr = widget.validationFunctionArgs[0].toString();
     String maxValueLimitStr = widget.validationFunctionArgs[1].toString();
 
-    // The code below simplifies setting start comment position
-    // to 0 or end comment position to audio duration.
+    // The code below simplifies setting the comment start position
+    // to 0 or the comment end position to audio duration.
     if (enteredStr.isEmpty) {
       if (_isCheckboxChecked[0] == true) {
         enteredStr = minValueLimitStr;

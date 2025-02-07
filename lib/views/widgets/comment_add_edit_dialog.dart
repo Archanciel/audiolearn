@@ -629,7 +629,17 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                         ],
                         validationFunction: validateEnteredValueFunction,
                         validationFunctionArgs: [
+                          // This duration String is returned if the user
+                          // emptied the position field, checked the start
+                          // checkbox and clicked on the OK button. This
+                          // test is done in the function
+                          // SetValueToTargetDialog._createResultList().
                           '0:00.0',
+                          // This duration String is returned if the user
+                          // emptied the position field, checked the end
+                          // checkbox and clicked on the OK button. This
+                          // test is done in the function
+                          // SetValueToTargetDialog._createResultList().
                           audioPlayerVM.currentAudioTotalDuration.HHmmssZeroHH(
                               addRemainingOneDigitTenthOfSecond: true),
                         ],
