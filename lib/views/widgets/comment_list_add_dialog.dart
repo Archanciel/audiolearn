@@ -329,7 +329,9 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                                     milliseconds: comment
                                             .commentEndPositionInTenthOfSeconds *
                                         100)) {
-                          audioPlayerVMlistenTrue.pause().then((_) {});
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            audioPlayerVMlistenTrue.pause();
+                          });
                         }
 
                         // this logic avoids that when the
