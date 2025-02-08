@@ -1,4 +1,3 @@
-import 'package:audiolearn/utils/duration_expansion.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -7,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../constants.dart';
 import '../../models/audio.dart';
 import '../../models/comment.dart';
+import '../../utils/duration_expansion.dart';
 import '../../services/settings_data_service.dart';
 import '../../viewmodels/audio_player_vm.dart';
 import '../../viewmodels/comment_vm.dart';
@@ -48,6 +48,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
   @override
   void dispose() {
     _focusNodeDialog.dispose();
+    _scrollController.dispose();
 
     super.dispose();
   }
@@ -60,6 +61,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
       context,
       listen: false,
     );
+    final bool isDarkTheme = themeProviderVM.currentTheme == AppTheme.dark;
 
     // Required so that clicking on Enter closes the dialog
     FocusScope.of(context).requestFocus(
@@ -74,7 +76,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
         if (event is KeyDownEvent) {
           if (event.logicalKey == LogicalKeyboardKey.enter ||
               event.logicalKey == LogicalKeyboardKey.numpadEnter) {
-            // executing the same code as in the 'Ok'
+            // executing the same code as in the 'Close'
             // TextButton onPressed callback
             Navigator.of(context).pop();
           }
@@ -102,7 +104,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                   overlayColor: iconButtonTapModification, // Tap feedback color
                 ),
                 icon: IconTheme(
-                  data: (themeProviderVM.currentTheme == AppTheme.dark
+                  data: (isDarkTheme
                           ? ScreenMixin.themeDataDark
                           : ScreenMixin.themeDataLight)
                       .iconTheme,
@@ -120,14 +122,15 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
         ),
         actionsPadding: kDialogActionsPadding,
         content: Consumer<CommentVM>(
-          builder: (context, commentVM, child) {
+          builder: (context, commentVMlistenTrue, child) {
             return SingleChildScrollView(
               controller: _scrollController,
               child: ListBody(
                 children: _buildAudioCommentsLst(
                   themeProviderVM: themeProviderVM,
                   audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
-                  commentVM: commentVM,
+                  commentVMlistenTrue: commentVMlistenTrue,
+                  isDarkTheme: isDarkTheme,
                 ),
               ),
             );
@@ -138,7 +141,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
             key: const Key('closeDialogTextButton'),
             child: Text(
               AppLocalizations.of(context)!.closeTextButton,
-              style: (themeProviderVM.currentTheme == AppTheme.dark)
+              style: (isDarkTheme)
                   ? kTextButtonStyleDarkMode
                   : kTextButtonStyleLightMode,
             ),
@@ -169,9 +172,10 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
   List<Widget> _buildAudioCommentsLst({
     required ThemeProviderVM themeProviderVM,
     required AudioPlayerVM audioPlayerVMlistenFalse,
-    required CommentVM commentVM,
+    required CommentVM commentVMlistenTrue,
+    required bool isDarkTheme,
   }) {
-    List<Comment> commentsLst = commentVM.loadAudioComments(
+    List<Comment> commentsLst = commentVMlistenTrue.loadAudioComments(
       audio: widget.currentAudio,
     );
 
@@ -188,7 +192,8 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
     List<Widget> widgetsLst = [];
 
     for (Comment comment in commentsLst) {
-      // Calculating the number of lines occupied by the comment title
+      // Adding the calculated lines number occupied by the comment
+      // title
       _audioCommentsLinesNumber +=
           (1 + // 2 dates + position line after the comment title
               computeTextLineNumber(
@@ -197,7 +202,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                 text: comment.title,
               ));
 
-      // Calculating the number of lines occupied by the comment
+      // Adding the calculated lines number occupied by the comment
       // content
       _audioCommentsLinesNumber += computeTextLineNumber(
         context: context,
@@ -219,8 +224,10 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                     context,
                     listen: false,
                   ),
-                  commentVM: commentVM,
+                  commentVMlistenTrue: commentVMlistenTrue,
                   comment: comment,
+                  commentTitleTextStyle: commentTitleTextStyle,
+                  isDarkTheme: isDarkTheme,
                 ),
               ),
               if (comment.content.isNotEmpty)
@@ -261,8 +268,10 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
     required ThemeProviderVM themeProviderVM,
     required AudioPlayerVM audioPlayerVMlistenFalse,
     required DateFormatVM dateFormatVMlistenFalse,
-    required CommentVM commentVM,
+    required CommentVM commentVMlistenTrue,
     required Comment comment,
+    required TextStyle commentTitleTextStyle,
+    required bool isDarkTheme,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -277,9 +286,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                 child: Text(
                   key: const Key('commentTitleKey'),
                   comment.title,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: commentTitleTextStyle,
                 ),
               ),
             ),
@@ -350,11 +357,10 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                               .currentAudioPlayPauseNotifier,
                           builder: (context, isPlaying, child) {
                             return IconTheme(
-                              data:
-                                  (themeProviderVM.currentTheme == AppTheme.dark
-                                          ? ScreenMixin.themeDataDark
-                                          : ScreenMixin.themeDataLight)
-                                      .iconTheme,
+                              data: (isDarkTheme
+                                      ? ScreenMixin.themeDataDark
+                                      : ScreenMixin.themeDataLight)
+                                  .iconTheme,
                               child: Icon(
                                 // Display pause if this comment is playing and the audio is playing;
                                 // otherwise, display the play_arrow icon.
@@ -383,7 +389,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                     onPressed: () async {
                       await _confirmDeleteComment(
                         audioPlayerVM: audioPlayerVMlistenFalse,
-                        commentVM: commentVM,
+                        commentVM: commentVMlistenTrue,
                         comment: comment,
                       );
                     },
@@ -405,7 +411,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                       // opening the CommentListAddDialog from the
                       // AudioPlayerScreen inkwell button or the playlist
                       // Audio Comments menu item.
-                      data: (themeProviderVM.currentTheme == AppTheme.dark
+                      data: (isDarkTheme
                               ? ScreenMixin.themeDataDark
                               : ScreenMixin.themeDataLight)
                           .iconTheme,

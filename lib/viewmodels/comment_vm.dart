@@ -287,7 +287,7 @@ class CommentVM extends ChangeNotifier {
 
   /// Returns all comments of all audio in the passed playlist. The
   /// comments are returned as a map with the audio file name without
-  /// extension as the key.
+  /// extension as key.
   Map<String, List<Comment>> getPlaylistAudioComments({
     required Playlist playlist,
   }) {
@@ -340,9 +340,9 @@ class CommentVM extends ChangeNotifier {
   /// played. Thanks to this method, it is possible to undo the changes made to
   /// the playlist current audio index as well as the commented audio position.
   /// This undo action is done by calling the undoAllRecordedCommentPlayCommands
-  /// method coded below. This method is called when the user closes the playlist
-  /// comment list dialog.
-  void addUndoableCommentPlayCommand({
+  /// method coded below. This is done when the user closes the playlist comment
+  /// list dialog.
+  void addCommentPlayCommandToUndoPlayCommandLst({
     required Audio commentAudioCopy,
     required int previousAudioIndex,
   }) {
