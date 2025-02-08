@@ -433,16 +433,18 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                                     milliseconds: comment
                                             .commentEndPositionInTenthOfSeconds *
                                         100)) {
-                          // You cannot await here, but you can trigger an action like so
-                          // (this will not block the widget tree rendering)
+                          // You cannot await here, but you can trigger an
+                          // action which will not block the widget tree
+                          // rendering.
                           WidgetsBinding.instance
                               .addPostFrameCallback((_) async {
                             await audioPlayerVMlistenFalse.pause();
                           });
                         }
 
-                        // This logic avoids that when the user clicks on the play button of a
-                        // comment, the play button of the other comment is updated to 'pause'
+                        // This logic avoids that when the user clicks on
+                        // the play button of a comment, the play button
+                        // of the other comment is updated to 'pause'.
                         return ValueListenableBuilder<bool>(
                           valueListenable: audioPlayerVMlistenFalse
                               .currentAudioPlayPauseNotifier,
@@ -481,12 +483,35 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                       await _confirmDeleteComment(
                         audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                         audioFileNameNoExt: audioFileNameNoExt,
-                        commentVM: commentVMlistenTrue,
+                        commentVMlistenTrue: commentVMlistenTrue,
                         comment: comment,
                       );
                     },
-                    icon: const Icon(
-                      Icons.clear,
+                    style: ButtonStyle(
+                      // Highlight button when pressed
+                      padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                        const EdgeInsets.symmetric(
+                            horizontal: kSmallButtonInsidePadding, vertical: 0),
+                      ),
+                      overlayColor:
+                          iconButtonTapModification, // Tap feedback color
+                    ),
+                    icon: IconTheme(
+                      // IconTheme usage is required otherwise when
+                      // the CommentListAddDialog is opened from the
+                      // AudioPlayerScreen left appbar menu, the icon
+                      // color is not the one defined in the theme and
+                      // so is different from the icon color set when
+                      // opening the CommentListAddDialog from the
+                      // AudioPlayerScreen inkwell button or the playlist
+                      // Audio Comments menu item.
+                      data: (isDarkTheme
+                              ? ScreenMixin.themeDataDark
+                              : ScreenMixin.themeDataLight)
+                          .iconTheme,
+                      child: const Icon(
+                        Icons.clear,
+                      ),
                     ),
                     iconSize: kSmallestButtonWidth - 5,
                     padding: EdgeInsets.zero,
@@ -618,7 +643,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
   Future<void> _confirmDeleteComment({
     required AudioPlayerVM audioPlayerVMlistenFalse,
     required String audioFileNameNoExt,
-    required CommentVM commentVM,
+    required CommentVM commentVMlistenTrue,
     required Comment comment,
   }) async {
     Audio currentAudio = widget.currentPlaylist.getAudioByFileNameNoExt(
@@ -629,7 +654,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
       context: context,
       builder: (BuildContext context) {
         return ConfirmActionDialog(
-          actionFunction: commentVM.deleteCommentFunction,
+          actionFunction: commentVMlistenTrue.deleteCommentFunction,
           actionFunctionArgs: [
             comment.id,
             currentAudio,
