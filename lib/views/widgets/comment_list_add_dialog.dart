@@ -347,6 +347,9 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                                 currentAudioPosition >=
                                     widget.currentAudio.audioDuration -
                                         const Duration(milliseconds: 1400))) {
+                          // You cannot await here, but you can trigger an
+                          // action which will not block the widget tree
+                          // rendering.
                           WidgetsBinding.instance.addPostFrameCallback((_) {
                             audioPlayerVMlistenFalse.pause();
                           });
@@ -389,7 +392,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                     onPressed: () async {
                       await _confirmDeleteComment(
                         audioPlayerVM: audioPlayerVMlistenFalse,
-                        commentVM: commentVMlistenTrue,
+                        commentVMlistenTrue: commentVMlistenTrue,
                         comment: comment,
                       );
                     },
@@ -537,14 +540,14 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
 
   Future<void> _confirmDeleteComment({
     required AudioPlayerVM audioPlayerVM,
-    required CommentVM commentVM,
+    required CommentVM commentVMlistenTrue,
     required Comment comment,
   }) async {
     showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return ConfirmActionDialog(
-          actionFunction: commentVM.deleteCommentFunction,
+          actionFunction: commentVMlistenTrue.deleteCommentFunction,
           actionFunctionArgs: [
             comment.id,
             widget.currentAudio,
