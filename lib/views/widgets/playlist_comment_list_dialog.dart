@@ -111,9 +111,9 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
 
             // Obtaining the list of audio comment file names
             // corresponding to playlistAudioCommentsMap keys and
-            // sorting them according to the playble audio order.
+            // sorting them according to the playable audio order.
 
-            final List<String> audioFileNamesLst =
+            final List<String> commentFileNameNoExtLst =
                 playlistAudioCommentsMap.keys.toList();
 
             final PlaylistListVM playlistListVMlistenFalse =
@@ -122,25 +122,27 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
               listen: false,
             );
 
-            final List<String> sortedAudioFileNamesLst = playlistListVMlistenFalse
-                .getSortedPlaylistAudioCommentFileNamesApplyingSortFilterParameters(
+            final List<String> sortedAudioFileNameNoExtLst =
+                playlistListVMlistenFalse
+                    .getSortedPlaylistAudioCommentFileNamesApplyingSortFilterParameters(
               selectedPlaylist: currentPlaylist,
               audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
-              commentFileNamesLst: audioFileNamesLst,
+              commentFileNameNoExtLst: commentFileNameNoExtLst,
             );
 
             return SingleChildScrollView(
               controller: _scrollController,
               child: ListBody(
                 key: const Key('playlistCommentsListKey'),
-                children: (sortedAudioFileNamesLst.isNotEmpty)
+                children: (sortedAudioFileNameNoExtLst.isNotEmpty)
                     ? _buildPlaylistAudiosCommentsList(
                         themeProviderVM: themeProviderVM,
                         audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                         currentPlaylist: currentPlaylist,
                         commentVMlistenTrue: commentVMlistenTrue,
                         playlistAudiosCommentsMap: playlistAudioCommentsMap,
-                        sortedAudioFileNamesLst: sortedAudioFileNamesLst,
+                        sortedAudioFileNameNoExtLst:
+                            sortedAudioFileNameNoExtLst,
                         isDarkTheme: isDarkTheme,
                       )
                     : [],
@@ -176,7 +178,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
     required CommentVM commentVMlistenTrue,
     required Playlist currentPlaylist,
     required Map<String, List<Comment>> playlistAudiosCommentsMap,
-    required List<String> sortedAudioFileNamesLst,
+    required List<String> sortedAudioFileNameNoExtLst,
     required bool isDarkTheme,
   }) {
     // Obtaining the current audio file name without the extension.
@@ -207,18 +209,18 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
     // List of widgets corresponding to the playlist audio comments
     List<Widget> widgetsLst = [];
 
-    for (String audioFileName in sortedAudioFileNamesLst) {
-      Audio audio = currentPlaylist.getAudioByFileNameNoExt(
-        audioFileNameNoExt: audioFileName,
+    for (String audioFileNameNoExt in sortedAudioFileNameNoExtLst) {
+      Audio audioRelatedToFileNameNoExt = currentPlaylist.getAudioByFileNameNoExt(
+        audioFileNameNoExt: audioFileNameNoExt,
       )!;
 
       // List containing the audio title text color and the audio title
       // background color.
       List<Color?> audioStateColorsLst = UiUtil.generateAudioStateColors(
-        audio: audio,
-        audioIndex: sortedAudioFileNamesLst.indexOf(audioFileName),
+        audio: audioRelatedToFileNameNoExt,
+        audioIndex: sortedAudioFileNameNoExtLst.indexOf(audioFileNameNoExt),
         currentAudioIndex:
-            sortedAudioFileNamesLst.indexOf(currentAudioFileName),
+            sortedAudioFileNameNoExtLst.indexOf(currentAudioFileName),
         isDarkTheme: isDarkTheme,
       );
 
@@ -229,7 +231,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
       // without the extension and without the date time elements.
       final String commentedAudioTitle =
           DateTimeUtil.removeDateTimeElementsFromFileName(
-        audioFileName,
+        audioFileNameNoExt,
       );
 
       final TextStyle commentedAudioTitleTextStyle = TextStyle(
@@ -253,7 +255,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
       // Calculating the number of lines related to the comments
       // contained in the audioFileName
       List<Comment> audioCommentsLst =
-          playlistAudiosCommentsMap[audioFileName]!;
+          playlistAudiosCommentsMap[audioFileNameNoExt]!;
       int previousCurrentCommentLineNumber = 0;
 
       // Adding the number of lines related to the commented audio title
@@ -265,7 +267,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                 text: commentedAudioTitle,
               ));
 
-      if (audioFileName == currentAudioFileName) {
+      if (audioFileNameNoExt == currentAudioFileName) {
         _previousCurrentCommentLinesNumber = previousCurrentCommentLineNumber;
       }
 
@@ -309,7 +311,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                       context,
                       listen: false,
                     ),
-                    audioFileNameNoExt: audioFileName,
+                    audioFileNameNoExt: audioFileNameNoExt,
                     commentVMlistenTrue: commentVMlistenTrue,
                     currentPlaylist: currentPlaylist,
                     comment: comment,
@@ -341,7 +343,9 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
               await _closeDialogAndOpenCommentAddEditDialog(
                 context: context,
                 audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
-                audioFileName: audioFileName,
+                currentAudio: currentPlaylist.getAudioByFileNameNoExt(
+                  audioFileNameNoExt: audioFileNameNoExt,
+                )!,
                 comment: comment,
               );
             },
@@ -482,8 +486,10 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                     onPressed: () async {
                       await _confirmDeleteComment(
                         audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
-                        audioFileNameNoExt: audioFileNameNoExt,
                         commentVMlistenTrue: commentVMlistenTrue,
+                        currentAudio: currentPlaylist.getAudioByFileNameNoExt(
+                          audioFileNameNoExt: audioFileNameNoExt,
+                        )!,
                         comment: comment,
                       );
                     },
@@ -612,17 +618,13 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
   Future<void> _closeDialogAndOpenCommentAddEditDialog({
     required BuildContext context,
     required AudioPlayerVM audioPlayerVMlistenFalse,
-    required String audioFileName,
+    required Audio currentAudio,
     Comment? comment,
   }) async {
     Navigator.of(context).pop(); // closes the current dialog
 
-    Audio audio = widget.currentPlaylist.getAudioByFileNameNoExt(
-      audioFileNameNoExt: audioFileName,
-    )!;
-
     await audioPlayerVMlistenFalse.setCurrentAudio(
-      audio: audio,
+      audio: currentAudio,
     );
 
     showDialog<void>(
@@ -634,7 +636,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
       // passing a comment opens it in 'add' mode
       builder: (context) => CommentAddEditDialog(
         callerDialog: CallerDialog.playlistCommentListAddDialog,
-        commentableAudio: audio,
+        commentableAudio: currentAudio,
         comment: comment,
       ),
     );
@@ -642,14 +644,10 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
 
   Future<void> _confirmDeleteComment({
     required AudioPlayerVM audioPlayerVMlistenFalse,
-    required String audioFileNameNoExt,
     required CommentVM commentVMlistenTrue,
+    required Audio currentAudio,
     required Comment comment,
   }) async {
-    Audio currentAudio = widget.currentPlaylist.getAudioByFileNameNoExt(
-      audioFileNameNoExt: audioFileNameNoExt,
-    )!;
-
     showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -679,6 +677,8 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
     required Comment comment,
     required String audioFileNameNoExt,
   }) async {
+    // Fixes the bug of playing comments in playlist comment list
+    // dialog on Windows and Android.
     if (audioPlayerVM.isPlaying) {
       await audioPlayerVM.pause();
     }

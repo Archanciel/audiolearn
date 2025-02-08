@@ -62,6 +62,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
       listen: false,
     );
     final bool isDarkTheme = themeProviderVM.currentTheme == AppTheme.dark;
+    final Audio currentAudio = widget.currentAudio;
 
     // Required so that clicking on Enter closes the dialog
     FocusScope.of(context).requestFocus(
@@ -114,7 +115,10 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                   ),
                 ),
                 onPressed: () {
-                  _closeDialogAndOpenCommentAddEditDialog(context: context);
+                  _closeDialogAndOpenCommentAddEditDialog(
+                    context: context,
+                    currentAudio: currentAudio,
+                  );
                 },
               ),
             ),
@@ -130,6 +134,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                   themeProviderVM: themeProviderVM,
                   audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                   commentVMlistenTrue: commentVMlistenTrue,
+                  currentAudio: currentAudio,
                   isDarkTheme: isDarkTheme,
                 ),
               ),
@@ -159,7 +164,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
               }
 
               await audioPlayerVMlistenFalse.setCurrentAudio(
-                audio: widget.currentAudio,
+                audio: currentAudio,
               );
               Navigator.of(context).pop();
             },
@@ -173,10 +178,11 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
     required ThemeProviderVM themeProviderVM,
     required AudioPlayerVM audioPlayerVMlistenFalse,
     required CommentVM commentVMlistenTrue,
+    required Audio currentAudio,
     required bool isDarkTheme,
   }) {
     List<Comment> commentsLst = commentVMlistenTrue.loadAudioComments(
-      audio: widget.currentAudio,
+      audio: currentAudio,
     );
 
     const TextStyle commentTitleTextStyle = TextStyle(
@@ -225,6 +231,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                     listen: false,
                   ),
                   commentVMlistenTrue: commentVMlistenTrue,
+                  currentAudio: currentAudio,
                   comment: comment,
                   commentTitleTextStyle: commentTitleTextStyle,
                   isDarkTheme: isDarkTheme,
@@ -252,6 +259,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
 
             _closeDialogAndOpenCommentAddEditDialog(
               context: context,
+              currentAudio: currentAudio,
               comment: comment,
             );
           },
@@ -269,6 +277,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
     required AudioPlayerVM audioPlayerVMlistenFalse,
     required DateFormatVM dateFormatVMlistenFalse,
     required CommentVM commentVMlistenTrue,
+    required Audio currentAudio,
     required Comment comment,
     required TextStyle commentTitleTextStyle,
     required bool isDarkTheme,
@@ -345,7 +354,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                                 // Android smartphone does not call the
                                 // audioPlayerVMlistenFalse.pause() method !
                                 currentAudioPosition >=
-                                    widget.currentAudio.audioDuration -
+                                    currentAudio.audioDuration -
                                         const Duration(milliseconds: 1400))) {
                           // You cannot await here, but you can trigger an
                           // action which will not block the widget tree
@@ -393,6 +402,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                       await _confirmDeleteComment(
                         audioPlayerVM: audioPlayerVMlistenFalse,
                         commentVMlistenTrue: commentVMlistenTrue,
+                        currentAudio: currentAudio,
                         comment: comment,
                       );
                     },
@@ -520,9 +530,11 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
   /// closed before opening the CommentAddEditDialog.
   void _closeDialogAndOpenCommentAddEditDialog({
     required BuildContext context,
+    required Audio currentAudio,
     Comment? comment,
   }) {
     Navigator.of(context).pop(); // closes the current dialog
+
     showDialog<void>(
       context: context,
       barrierDismissible:
@@ -532,7 +544,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
       // passing a comment opens it in 'add' mode
       builder: (context) => CommentAddEditDialog(
         callerDialog: CallerDialog.commentListAddDialog,
-        commentableAudio: widget.currentAudio,
+        commentableAudio: currentAudio,
         comment: comment,
       ),
     );
@@ -541,6 +553,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
   Future<void> _confirmDeleteComment({
     required AudioPlayerVM audioPlayerVM,
     required CommentVM commentVMlistenTrue,
+    required Audio currentAudio,
     required Comment comment,
   }) async {
     showDialog<void>(
@@ -550,7 +563,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
           actionFunction: commentVMlistenTrue.deleteCommentFunction,
           actionFunctionArgs: [
             comment.id,
-            widget.currentAudio,
+            currentAudio,
           ],
           dialogTitleOne:
               AppLocalizations.of(context)!.deleteCommentConfirnTitle,

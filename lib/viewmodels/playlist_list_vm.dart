@@ -1222,11 +1222,13 @@ class PlaylistListVM extends ChangeNotifier {
     return _sortedFilteredSelectedPlaylistPlayableAudioLst!;
   }
 
+  /// Returns an audio file name no ext list of the selected playlist, sorted and
+  /// filtered according to the passed sort and filter parameters.
   List<String>
       getSortedPlaylistAudioCommentFileNamesApplyingSortFilterParameters({
     required Playlist selectedPlaylist,
     required AudioLearnAppViewType audioLearnAppViewType,
-    required List<String> commentFileNamesLst,
+    required List<String> commentFileNameNoExtLst,
     AudioSortFilterParameters? audioSortFilterParameters,
   }) {
     List<Audio> selectedPlaylistSortedAudioLst =
@@ -1238,35 +1240,35 @@ class PlaylistListVM extends ChangeNotifier {
     // First step: create a map associating each comment file name to
     // its position in the audio list of the selected playlist.
 
-    Map<String, int> audioFileNameToIndexMap = {};
+    Map<String, int> audioFileNameNoExtToIndexMap = {};
     int position = 0;
 
     for (Audio audio in selectedPlaylistSortedAudioLst) {
-      audioFileNameToIndexMap[DirUtil.getFileNameWithoutMp3Extension(
+      audioFileNameNoExtToIndexMap[DirUtil.getFileNameWithoutMp3Extension(
         mp3FileName: audio.audioFileName,
       )] = position++;
     }
 
-    // Second step: filter out the comment file names not present in
-    // the audioFileNameToIndexMap
-    List<String> filteredAudioFileNamesLst = commentFileNamesLst
+    // Second step: filter out the audio = comment file name no ext
+    // not present in the audioFileNameNoExtToIndexMap
+    List<String> filteredAudioFileNameNoExtLst = commentFileNameNoExtLst
         .where(
-          (audioFileName) => audioFileNameToIndexMap.containsKey(
-            audioFileName,
+          (commentFileNameNoExt) => audioFileNameNoExtToIndexMap.containsKey(
+            commentFileNameNoExt,
           ),
         )
         .toList();
 
-    // Third step: sort the filtered audio file names list according to
-    // the position of the corresponding audio in the audio list of the
-    // selected playlist
-    filteredAudioFileNamesLst.sort(
-      (a, b) => audioFileNameToIndexMap[a]!.compareTo(
-        audioFileNameToIndexMap[b]!,
+    // Third step: sort the filtered audio file name no ext list
+    // according to the position of the corresponding audio in
+    // the audio list of the selected playlist
+    filteredAudioFileNameNoExtLst.sort(
+      (a, b) => audioFileNameNoExtToIndexMap[a]!.compareTo(
+        audioFileNameNoExtToIndexMap[b]!,
       ),
     );
 
-    return filteredAudioFileNamesLst;
+    return filteredAudioFileNameNoExtLst;
   }
 
   List<SortingItem> getSortingItemLstForViewType(
