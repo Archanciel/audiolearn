@@ -26,6 +26,8 @@ class UiUtil {
     return formattedValueStr;
   }
 
+  /// Returns a list containing the audio title text color and the audio title
+  /// background color.
   static List<Color?> generateAudioStateColors({
     required Audio audio,
     required int audioIndex,
@@ -54,6 +56,8 @@ class UiUtil {
     return [audioTitleTextColor, audioTitleBackgroundColor];
   }
 
+  /// Returns a list containing the audio title text color and the audio title
+  /// background color.
   static List<Color?> generateCurrentAudioStateColors() {
     return [Colors.white, Colors.blue];
   }
