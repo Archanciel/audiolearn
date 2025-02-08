@@ -199,9 +199,9 @@
   "playlistIsSelectedLabel": "Playlist is selected",
   "playlistTotalAudioNumberLabel": "Playlist total audio's",
   "playlistPlayableAudioNumberLabel": "Playable audio's",
-  "playlistPlayableAudioTotalDurationLabel": "Playable audio total duration",
-  "playlistPlayableAudioTotalRemainingDurationLabel": "Playable audio total remaining duration",
-  "playlistPlayableAudioTotalSizeLabel": "Playable audio total file size",
+  "playlistPlayableAudioTotalDurationLabel": "Playable audio's total duration",
+  "playlistPlayableAudioTotalRemainingDurationLabel": "Playable audio's total remaining duration",
+  "playlistPlayableAudioTotalSizeLabel": "Playable audio's total file size",
   "updatePlaylistPlayableAudioList": "Update Playable Audio List",
   "updatedPlayableAudioLst": "Playable audio list for playlist \"{title}\" was updated. {number} audio(s) were removed.",
   "addYoutubePlaylistDialogTitle": "Add Youtube Playlist",
@@ -268,7 +268,7 @@
   "addPlaylistButtonTooltip": "Add a Youtube or local playlist.\n\nTo add a Youtube playlist, enter its URL in the \"Youtube Link\" field and click the Add button. IMPORTANT: for a Youtube playlist to be downloaded by the app, its privacy setting must not be \"Private\" but \"Unlisted\" or \"Public\".\n\nTo set up a local playlist, click the Add button while the \"Youtube Link\" field is empty.",
   "stopDownloadingButtonTooltip": "Stop downloading ...",
   "playlistToggleButtonInPlaylistDownloadViewTooltip": "Show/hide playlists.",
-  "downloadSelPlaylistsButtonTooltip": "Download audio of the selected playlist.",
+  "downloadSelPlaylistsButtonTooltip": "Download audio's of the selected playlist.",
   "audioOneSelectedDialogTitle": "Select an audio",
   "audioPositionLabel": "Audio position",
   "audioStateLabel": "Audio state",
@@ -321,9 +321,9 @@
   "saveSortFilterOptionsToPlaylist": "To playlist \"{title}\"",
   "saveButton": "Save",
   "errorInPlaylistJsonFile": "File \"{filePathName}\" contains an invalid data definition. Try finding the problem in order to correct it before executing again the operation.",
-  "updatePlaylistJsonFilesMenuTooltip": "If one or several playlist directories containing or not audio were manually added or deleted in the application data root directory or if audio were manually deleted from one or several playlist directories, this functionality updates the playlist JSON files as well as the application settings JSON file in order to reflect the changes in the application screens. Playlist directories located on PC can be copied in the application data root directory ...",
-  "updatePlaylistPlayableAudioListTooltip": "If audio were manually deleted from one or several playlist directories, this functionality updates the playlist JSON files to reflect the changes in the application screens.",
-  "audioPlayedInThisOrderTooltip": "Audio are played in this order. By default, the last downloaded audio are at bottom of the list.",
+  "updatePlaylistJsonFilesMenuTooltip": "If one or several playlist directories containing or not audio's were manually added or deleted in the application data root directory or if audio's were manually deleted from one or several playlist directories, this functionality updates the playlist JSON files as well as the application settings JSON file in order to reflect the changes in the application screens. Playlist directories located on PC can be copied in the application data root directory ...",
+  "updatePlaylistPlayableAudioListTooltip": "If audio's were manually deleted from one or several playlist directories, this functionality updates the playlist JSON files to reflect the changes in the application screens.",
+  "audioPlayedInThisOrderTooltip": "Audio are played in this order. By default, the last downloaded audio's are at bottom of the list.",
   "playableAudioDialogSortDescriptionTooltipBottomDownloadBefore": "Audio at bottom were downloaded before those at top.",
   "playableAudioDialogSortDescriptionTooltipBottomDownloadAfter": "Audio at the bottom were downloaded after those at the top.",
   "playableAudioDialogSortDescriptionTooltipBottomUploadBefore": "Videos at the bottom were uploaded before those at the top.",
@@ -349,8 +349,8 @@
   "appSettingsDialogTitle": "Application Settings",
   "setAudioPlaySpeed": "Set Audio Play Speed ...",
   "applyToAlreadyDownloadedAudio": "Apply to already\ndownloaded audio",
-  "applyToAlreadyDownloadedAudioTooltip": "Apply the playback speed to audio in all existing playlists. If not set, apply it only to newly added playlists.",
-  "applyToAlreadyDownloadedAudioOfCurrentPlaylistTooltip": "Apply the playback speed to audio in the current playlist. If not set, apply it only to newly downloaded audio.",
+  "applyToAlreadyDownloadedAudioTooltip": "Apply the playback speed to audio's in all existing playlists. If not set, apply it only to newly added playlists.",
+  "applyToAlreadyDownloadedAudioOfCurrentPlaylistTooltip": "Apply the playback speed to audio's in the current playlist. If not set, apply it only to newly downloaded audio.",
   "applyToExistingPlaylist": "Apply to existing\nplaylists",
   "applyToExistingPlaylistTooltip": "Apply the playback speed to all existing playlists. If not set, apply it only to newly added playlists.",
   "playlistRootpathLabel": "Playlists root path",
@@ -363,7 +363,7 @@
   "alreadyDownloadedAudiosHelpTitle": "Already Downloaded Audio",
   "alreadyDownloadedAudiosHelpContent": "Selecting the second checkbox allows you to change the playback speed for audio files already present on the device.",
   "excludingFutureDownloadsHelpTitle": "Excluding Future Downloads",
-  "excludingFutureDownloadsHelpContent": "If only the second checkbox is checked, the playback speed will not be modified for audio that will be downloaded later in existing playlists. However, as mentioned previously, new playlists will use the newly defined playback speed for all downloaded audio.",
+  "excludingFutureDownloadsHelpContent": "If only the second checkbox is checked, the playback speed will not be modified for audio's that will be downloaded later in existing playlists. However, as mentioned previously, new playlists will use the newly defined playback speed for all downloaded audio.",
   "alreadyDownloadedAudiosPlaylistHelpTitle": "Apply to already downloaded audio",
   "alreadyDownloadedAudiosPlaylistHelpContent": "Selecting this checkbox allows you to change the playback speed for the playlist audio files already present on the device.",
   "commentsIconButtonTooltip": "Show or insert comments at specific points in the audio.",
@@ -436,10 +436,10 @@
   "renameAudioAndCommentFileConfirmation": "Audio file \"{oldFileIame}.mp3\" renamed to \"{newFileName}.mp3\" as well as comment file \"{oldFileIame}.json\" renamed to \"{newFileName}.json\".",
   "forScreen": "For \"{screenName}\" screen",
   "downloadVideoUrlsFromTextFileInPlaylist": "Download URLs from Text File ...",
-  "downloadVideoUrlsFromTextFileInPlaylistTooltip": "Download audio to the playlist from video URLs listed in a text file to select. The text file must contain one video URL per line.",
+  "downloadVideoUrlsFromTextFileInPlaylistTooltip": "Download audio's to the playlist from video URLs listed in a text file to select. The text file must contain one video URL per line.",
   "downloadAudioFromVideoUrlsInPlaylistTitle": "Download video audio to playlist \"{title}\"",
   "downloadAudioFromVideoUrlsInPlaylist": "Downloading {number} audio.",
-  "notRedownloadAudioFilesInPlaylistDirectory": "{number} audio are already contained in the target playlist \"{playlistTitle}\" directory and so were not redownloaded.",
+  "notRedownloadAudioFilesInPlaylistDirectory": "{number} audio's are already contained in the target playlist \"{playlistTitle}\" directory and so were not redownloaded.",
   "clickToSetAscendingOrDescendingPlayingOrderTooltip": "Click to set ascending or descending playing order.",
   "removeSortFilterAudiosOptionsFromPlaylistMenu": "Remove Sort/Filter Parameters from Playlist ...",
   "removeSortFilterOptionsFromPlaylist": "From playlist \"{title}\"",
@@ -473,22 +473,22 @@
   "savePlaylistAndCommentsToZipMenu": "Save Playlists and Comments to Zip File",
   "savePlaylistAndCommentsToZipTooltip": "Saving the playlists and their audio comments to a zip file. The zip file will contain the playlists JSON files as well as the comments JSON files. The audio files will not be included.",
   "setYoutubeChannelMenu": "Youtube channel setting",
-  "confirmYoutubeChannelModifications": "The Youtube channel was set in {numberOfModifiedDownloadedAudio} downloaded audio and in {numberOfModifiedPlayableAudio} playable audio.",
+  "confirmYoutubeChannelModifications": "The Youtube channel was set in {numberOfModifiedDownloadedAudio} downloaded audio's and in {numberOfModifiedPlayableAudio} playable audio.",
   "@confirmYoutubeChannelModifications": {
-    "description": "Confirmation message indicating how many downloaded audio and playable audio were modified",
+    "description": "Confirmation message indicating how many downloaded audio's and playable audio's were modified",
     "placeholders": {
       "numberOfModifiedDownloadedAudio": {},
       "numberOfModifiedPlayableAudio": {}
     }
   },
   "rewindAudioToStart": "Rewind all Audio to Start",
-  "rewindAudioToStartTooltip": "Rewind all playlist audio to start position. This is useful if you wish to replay all the audio's.",
-  "rewindedPlayableAudioNumber": "{number} playlist audio were repositioned to start.",
+  "rewindAudioToStartTooltip": "Rewind all playlist audio's to start position. This is useful if you wish to replay all the audio's.",
+  "rewindedPlayableAudioNumber": "{number} playlist audio's were repositioned to start.",
   "dateFormat": "Select Date Format ...",
   "dateFormatSelectionDialogTitle": "Select the application date format",
   "commented": "Commented",
   "notCommented": "Uncom.",
-  "deleteFilteredAudioConfirmationTitle": "Delete audio filtered by \"{sortFilterParmsName}\" parms from playlist \"{playlistTitle}\"",
+  "deleteFilteredAudioConfirmationTitle": "Delete audio's filtered by \"{sortFilterParmsName}\" parms from playlist \"{playlistTitle}\"",
   "@deleteFilteredAudioConfirmationTitle": {
     "description": "Confirmation title for deleting filtered audio",
     "placeholders": {
@@ -506,7 +506,7 @@
     }
   },
   "deleteFilteredCommentedAudioWarningTitleOne": "WARNING: you are going to",
-  "deleteFilteredCommentedAudioWarningTitleTwo": "delete COMMENTED and uncommented audio filtered by \"{sortFilterParmsName}\" parms from playlist \"{playlistTitle}\". Watch the help to solve the problem ...",
+  "deleteFilteredCommentedAudioWarningTitleTwo": "delete COMMENTED and uncommented audio's filtered by \"{sortFilterParmsName}\" parms from playlist \"{playlistTitle}\". Watch the help to solve the problem ...",
   "@deleteFilteredCommentedAudioWarningTitleTwo": {
     "description": "Warning title for deleting commented and uncommented filtered audio",
     "placeholders": {
@@ -514,7 +514,7 @@
       "playlistTitle": {}
     }
   },
-  "deleteFilteredCommentedAudioWarning": "Total audio to delete number: {deleteAudioNumber},\nCOMMENTED audio to delete number: {deleteCommentedAudioNumber},\nCorresponding total file size: {deleteAudioTotalFileSize},\nCorresponding total duration: {deleteAudioTotalDuration}.",
+  "deleteFilteredCommentedAudioWarning": "Total audio's to delete number: {deleteAudioNumber},\nCOMMENTED audio's to delete number: {deleteCommentedAudioNumber},\nCorresponding total file size: {deleteAudioTotalFileSize},\nCorresponding total duration: {deleteAudioTotalDuration}.",
   "@deleteFilteredCommentedAudioWarning": {
     "description": "Warning message for deleting commented and uncommented filtered audio",
     "placeholders": {
@@ -524,15 +524,15 @@
       "deleteAudioTotalDuration": {}
     }
   },
-  "commentedAudioDeletionHelpTitle": "How to create and use a Sort/Filter parameter to prevent deleting commented audio ?",
-  "commentedAudioDeletionHelpContent": "This guide explains how to delete fully listened audio that are not commented.",
+  "commentedAudioDeletionHelpTitle": "How to create and use a Sort/Filter parameter to prevent deleting commented audio's ?",
+  "commentedAudioDeletionHelpContent": "This guide explains how to delete fully listened audio's that are not commented.",
   "commentedAudioDeletionSolutionHelpTitle": "The solution is to create a Sort/Filter parameter to select only fully played uncommented audio",
   "commentedAudioDeletionSolutionHelpContent": "In the Sort/Filter definition dialog, the selection parameters are represented by checkboxes ...",
   "commentedAudioDeletionOpenSFDialogHelpTitle": "Open the Sort/Filter definition dialog",
   "commentedAudioDeletionOpenSFDialogHelpContent": "Click the right menu icon in the download audio view, then select \"Sort/Filter Audio ...\"",
   "commentedAudioDeletionCreateSFParmHelpTitle": "Create a valid Sort/Filter parameter",
   "commentedAudioDeletionCreateSFParmHelpContent": "In the \"Save as\" field, enter a name for the Sort/Filter parameter (e.g., FullyListenedUncom). Uncheck the checkboxes for \"Partially listened\", \"Not listened\" and \"Commented\". Then click on \"Save\".",
-  "commentedAudioDeletionSelectSFParmHelpTitle": "Once saved, the Sort/Filter parameter is applied to the playlist, reducing the displayed audio list.",
+  "commentedAudioDeletionSelectSFParmHelpTitle": "Once saved, the Sort/Filter parameter is applied to the playlist, reducing the displayed audio's list.",
   "commentedAudioDeletionSelectSFParmHelpContent": "Click on the \"Playlists\" button to hide the list of playlists. You’ll see your newly created SF parameter selected in the dropdown menu. You can apply this parameter or another one to any playlist ...",
   "commentedAudioDeletionApplyingNewSFParmHelpTitle": "Finally, reclick on the \"Playlists\" button to display the list of playlists, open the source playlist menu and click on \"Filtered Audio Actions ...\" and then on \"Delete Filtered Audio ...\"",
   "commentedAudioDeletionApplyingNewSFParmHelpContent": "This time, since a correct SF parameter is applied, no warning will be displayed when deleting the selected uncommented audio.",
@@ -542,7 +542,7 @@
   "deleteFilteredAudio": "Delete Filtered Audio ...",
   "confirmMovedUnmovedAudioNumberFromYoutubeToYoutubePlaylist": "Applying Sort/Filter parms \"{sortedFilterParmsName}\", from Youtube playlist \"{sourcePlaylistTitle}\" to Youtube playlist \"{targetPlaylistTitle}\", {movedAudioNumber} audio(s) were moved from which {movedCommentedAudioNumber} were commented, and {unmovedAudioNumber} audio(s) were unmoved.",
   "@confirmMovedUnmovedAudioNumberFromYoutubeToYoutubePlaylist": {
-    "description": "Confirmation message indicating how many audio were moved and unmoved",
+    "description": "Confirmation message indicating how many audio's were moved and unmoved",
     "placeholders": {
       "sourcePlaylistTitle": {},
       "targetPlaylistTitle": {},
@@ -554,7 +554,7 @@
   },
   "confirmMovedUnmovedAudioNumberFromYoutubeToLocalPlaylist": "Applying Sort/Filter parms \"{sortedFilterParmsName}\", from Youtube playlist \"{sourcePlaylistTitle}\" to local playlist \"{targetPlaylistTitle}\", {movedAudioNumber} audio(s) were moved from which {movedCommentedAudioNumber} were commented, and {unmovedAudioNumber} audio(s) were unmoved.",
   "@confirmMovedUnmovedAudioNumberFromYoutubeToLocalPlaylist": {
-    "description": "Confirmation message indicating how many audio were moved and unmoved",
+    "description": "Confirmation message indicating how many audio's were moved and unmoved",
     "placeholders": {
       "sourcePlaylistTitle": {},
       "targetPlaylistTitle": {},
@@ -566,7 +566,7 @@
   },
   "confirmMovedUnmovedAudioNumberFromLocalToYoutubePlaylist": "Applying Sort/Filter parms \"{sortedFilterParmsName}\", from local playlist \"{sourcePlaylistTitle}\" to Youtube playlist \"{targetPlaylistTitle}\", {movedAudioNumber} audio(s) were moved from which {movedCommentedAudioNumber} were commented, and {unmovedAudioNumber} audio(s) were unmoved.",
   "@confirmMovedUnmovedAudioNumberFromLocalToYoutubePlaylist": {
-    "description": "Confirmation message indicating how many audio were moved and unmoved",
+    "description": "Confirmation message indicating how many audio's were moved and unmoved",
     "placeholders": {
       "sourcePlaylistTitle": {},
       "targetPlaylistTitle": {},
@@ -578,7 +578,7 @@
   },
   "confirmMovedUnmovedAudioNumberFromLocalToLocalPlaylist": "Applying Sort/Filter parms \"{sortedFilterParmsName}\", from local playlist \"{sourcePlaylistTitle}\" to local playlist \"{targetPlaylistTitle}\", {movedAudioNumber} audio(s) were moved from which {movedCommentedAudioNumber} were commented, and {unmovedAudioNumber} audio(s) were unmoved.",
   "@confirmMovedUnmovedAudioNumberFromLocalToLocalPlaylist": {
-    "description": "Confirmation message indicating how many audio were moved and unmoved",
+    "description": "Confirmation message indicating how many audio's were moved and unmoved",
     "placeholders": {
       "sourcePlaylistTitle": {},
       "targetPlaylistTitle": {},
@@ -590,7 +590,7 @@
   },
   "confirmCopiedNotCopiedAudioNumberFromYoutubeToYoutubePlaylist": "Applying Sort/Filter parms \"{sortedFilterParmsName}\", from Youtube playlist \"{sourcePlaylistTitle}\" to Youtube playlist \"{targetPlaylistTitle}\", {copiedAudioNumber} audio(s) were copied from which {copiedCommentedAudioNumber} were commented, and {notCopiedAudioNumber} audio(s) were not copied.",
   "@confirmCopiedNotCopiedAudioNumberFromYoutubeToYoutubePlaylist": {
-    "description": "Confirmation message indicating how many audio were copied and not copied",
+    "description": "Confirmation message indicating how many audio's were copied and not copied",
     "placeholders": {
       "sourcePlaylistTitle": {},
       "targetPlaylistTitle": {},
@@ -602,7 +602,7 @@
   },
   "confirmCopiedNotCopiedAudioNumberFromYoutubeToLocalPlaylist": "Applying Sort/Filter parms \"{sortedFilterParmsName}\", from Youtube playlist \"{sourcePlaylistTitle}\" to local playlist \"{targetPlaylistTitle}\", {copiedAudioNumber} audio(s) were copied from which {copiedCommentedAudioNumber} were commented, and {notCopiedAudioNumber} audio(s) were not copied.",
   "@confirmCopiedNotCopiedAudioNumberFromYoutubeToLocalPlaylist": {
-    "description": "Confirmation message indicating how many audio were copied and not copied",
+    "description": "Confirmation message indicating how many audio's were copied and not copied",
     "placeholders": {
       "sourcePlaylistTitle": {},
       "targetPlaylistTitle": {},
@@ -614,7 +614,7 @@
   },
   "confirmCopiedNotCopiedAudioNumberFromLocalToYoutubePlaylist": "Applying Sort/Filter parms \"{sortedFilterParmsName}\", from local playlist \"{sourcePlaylistTitle}\" to Youtube playlist \"{targetPlaylistTitle}\", {copiedAudioNumber} audio(s) were copied from which {copiedCommentedAudioNumber} were commented, and {notCopiedAudioNumber} audio(s) were not copied.",
   "@confirmCopiedNotCopiedAudioNumberFromLocalToYoutubePlaylist": {
-    "description": "Confirmation message indicating how many audio were copied and not copied",
+    "description": "Confirmation message indicating how many audio's were copied and not copied",
     "placeholders": {
       "sourcePlaylistTitle": {},
       "targetPlaylistTitle": {},
@@ -626,7 +626,7 @@
   },
   "confirmCopiedNotCopiedAudioNumberFromLocalToLocalPlaylist": "Applying Sort/Filter parms \"{sortedFilterParmsName}\", from local playlist \"{sourcePlaylistTitle}\" to local playlist \"{targetPlaylistTitle}\", {copiedAudioNumber} audio(s) were copied from which {copiedCommentedAudioNumber} were commented, and {notCopiedAudioNumber} audio(s) were not copied.",
   "@confirmCopiedNotCopiedAudioNumberFromLocalToLocalPlaylist": {
-    "description": "Confirmation message indicating how many audio were copied and not copied",
+    "description": "Confirmation message indicating how many audio's were copied and not copied",
     "placeholders": {
       "sourcePlaylistTitle": {},
       "targetPlaylistTitle": {},
@@ -725,14 +725,14 @@
   "presentOnlyInSecondTitle": "Present only in modified version",
   "ascendingShort": "asc",
   "descendingShort": "desc",
-  "startAudioDownloadDateSortFilterTooltip": "Lists all audio downloaded on or after the specified start date if set.",
-  "endAudioDownloadDateSortFilterTooltip": "Lists all audio downloaded on or before the specified end date if set.",
+  "startAudioDownloadDateSortFilterTooltip": "Lists all audio's downloaded on or after the specified start date if set.",
+  "endAudioDownloadDateSortFilterTooltip": "Lists all audio's downloaded on or before the specified end date if set.",
   "startVideoUploadDateSortFilterTooltip": "Lists all videos uploaded on or after the specified start date if set.",
   "endVideoUploadDateSortFilterTooltip": "Lists all videos uploaded on or before the specified end date if set.",
-  "startAudioDurationSortFilterTooltip": "Lists all audio with a duration equal to or greater than the specified minimum duration if set.",
-  "endAudioDurationSortFilterTooltip": "Lists all audio with a duration equal to or less than the specified maximum duration if set.",
-  "startAudioFileSizeSortFilterTooltip": "Lists all audio with a file size equal to or greater than the specified minimum size if set.",
-  "endAudioFileSizeSortFilterTooltip": "Lists all audio with a file size equal to or less than the specified maximum size if set.",
+  "startAudioDurationSortFilterTooltip": "Lists all audio's with a duration equal to or greater than the specified minimum duration if set.",
+  "endAudioDurationSortFilterTooltip": "Lists all audio's with a duration equal to or less than the specified maximum duration if set.",
+  "startAudioFileSizeSortFilterTooltip": "Lists all audio's with a file size equal to or greater than the specified minimum size if set.",
+  "endAudioFileSizeSortFilterTooltip": "Lists all audio's with a file size equal to or less than the specified maximum size if set.",
   "valueInInitialVersionTitle": "In initial version",
   "valueInModifiedVersionTitle": "In modified version",
   "checked": "checked",
