@@ -130,7 +130,7 @@
       "exceptionMessage": {}
     }
   },
-  "downloadAudioYoutubeErrorDueToLiveVideoInPlaylist": "Erreur de téléchargement audio Youtube. La playlist \"{playlistTitle}\" contient une video live qui provoque l'échec du téléchargement des audio de la playlist. Pour résoudre le problème, après avoir téléchargé l'audio de la vidéo live comme expliqué ci-dessous, supprimez la vidéo live de la playlist puis redémarrez l'application et rééssayez.\n\nL'URL de la vidéo live contient cet élément: \"{liveVideoString}\". Afin d'ajouter l'audio de cette vidéo live à la playlist \"{playlistTitle}\", téléchargez-la séparément en tant que vidéo unique en l'ajoutant à playlist \"{playlistTitle}\".",
+  "downloadAudioYoutubeErrorDueToLiveVideoInPlaylist": "Erreur de téléchargement audio Youtube. La playlist \"{playlistTitle}\" contient une video live qui provoque l'échec du téléchargement des audio's de la playlist. Pour résoudre le problème, après avoir téléchargé l'audio de la vidéo live comme expliqué ci-dessous, supprimez la vidéo live de la playlist puis redémarrez l'application et rééssayez.\n\nL'URL de la vidéo live contient cet élément: \"{liveVideoString}\". Afin d'ajouter l'audio de cette vidéo live à la playlist \"{playlistTitle}\", téléchargez-la séparément en tant que vidéo unique en l'ajoutant à playlist \"{playlistTitle}\".",
   "@downloadAudioYoutubeErrorDueToLiveVideoInPlaylist": {
     "description": "Message d'erreur affiché lorsqu'une erreur se produit lors du téléchargement audio Youtube à cause d'une vidéo live dans la playlist.",
     "placeholders": {
@@ -188,8 +188,8 @@
   "playlistPlayableAudioTotalDurationLabel": "Durée totale audio jouables",
   "playlistPlayableAudioTotalRemainingDurationLabel": "Durée totale audio non écoutée",
   "playlistPlayableAudioTotalSizeLabel": "Taille totale fichiers audio jouables",
-  "updatePlaylistPlayableAudioList": "Mettre à jour la liste des audio jouables",
-  "updatedPlayableAudioLst": "La liste des audio jouables de la playlist \"{title}\" a été mise à jour. {number} audio ont été supprimés.",
+  "updatePlaylistPlayableAudioList": "Mettre à jour la liste des audio's jouables",
+  "updatedPlayableAudioLst": "La liste des audio's jouables de la playlist \"{title}\" a été mise à jour. {number} audio ont été supprimés.",
   "addYoutubePlaylistDialogTitle": "Ajouter une playlist Youtube",
   "addLocalPlaylistDialogTitle": "Ajouter une playlist locale",
   "renameAudioFileDialogTitle": "Renommer le fichier audio",
@@ -307,8 +307,8 @@
   "saveSortFilterOptionsToPlaylist": "Dans la playlist \"{title}\"",
   "saveButton": "Sauver",
   "errorInPlaylistJsonFile": "Le fichier \"{filePathName}\" une donnée de définition invalide. Essayez de trouver le probléme afin de le corriger avant de réexéuter l'opération.",
-  "updatePlaylistJsonFilesMenuTooltip": "Si un ou plusieurs répertoires de playlists contenant ou non des audio ont été ajoutés ou supprimés manuellement dans le répertoire racine des données de l'application ou si des audio ont été supprimés manuellement d'un ou de plusieurs répertoires de playlist, cette fonctionnalité met à jour les fichiers JSON des playlists ainsi que celui des paramètres de l'application afin de refléter les changements dans les écrans de l'application. Des répertoires de playlist localisés sur un PC peuvent être copiés dans le répertoire racine des données de l'application ...",
-  "updatePlaylistPlayableAudioListTooltip": "Si des audio ont été supprimés manuellement d'un ou de plusieurs répertoires de playlist, cette fonctionnalité met à jour les fichiers JSON des playlists afin de refléter les changements dans les écrans de l'application.",
+  "updatePlaylistJsonFilesMenuTooltip": "Si un ou plusieurs répertoires de playlists contenant ou non des audio's ont été ajoutés ou supprimés manuellement dans le répertoire racine des données de l'application ou si des audio's ont été supprimés manuellement d'un ou de plusieurs répertoires de playlist, cette fonctionnalité met à jour les fichiers JSON des playlists ainsi que celui des paramètres de l'application afin de refléter les changements dans les écrans de l'application. Des répertoires de playlist localisés sur un PC peuvent être copiés dans le répertoire racine des données de l'application ...",
+  "updatePlaylistPlayableAudioListTooltip": "Si des audio's ont été supprimés manuellement d'un ou de plusieurs répertoires de playlist, cette fonctionnalité met à jour les fichiers JSON des playlists afin de refléter les changements dans les écrans de l'application.",
   "audioPlayedInThisOrderTooltip": "Les audio sont joués dans cet ordre. Par défaut, les derniers audio téléchargés sont en bas de la liste.",
   "playableAudioDialogSortDescriptionTooltipBottomDownloadBefore": "Les audio en bas ont été téléchargés avant ceux d'en haut.",
   "playableAudioDialogSortDescriptionTooltipBottomDownloadAfter": "Les audio en bas ont été téléchargés après ceux d'en haut.",
@@ -349,12 +349,12 @@
   "alreadyDownloadedAudiosHelpTitle": "Audio déjà téléchargés",
   "alreadyDownloadedAudiosHelpContent": "La sélection de la deuxième case à cocher permet de modifier la vitesse de lecture pour les fichiers audio déjà présents sur l'appareil.",
   "excludingFutureDownloadsHelpTitle": "Exclusion des futurs téléchargements",
-  "excludingFutureDownloadsHelpContent": "Si seule la deuxième case est cochée, la vitesse de lecture des audio qui seront téléchargés ultérieurement ne sera pas modifiée dans les playlists existantes. Toutefois, comme mentionné précédemment, les nouvelles playlists utiliseront la vitesse de lecture nouvellement définie pour tous les audio's téléchargés.",
+  "excludingFutureDownloadsHelpContent": "Si seule la deuxième case est cochée, la vitesse de lecture des audio's qui seront téléchargés ultérieurement ne sera pas modifiée dans les playlists existantes. Toutefois, comme mentionné précédemment, les nouvelles playlists utiliseront la vitesse de lecture nouvellement définie pour tous les audio's téléchargés.",
   "alreadyDownloadedAudiosPlaylistHelpTitle": "Appliquer aux audio déjà téléchargés",
   "alreadyDownloadedAudiosPlaylistHelpContent": "La sélection de cette case à cocher permet de modifier la vitesse de lecture pour les fichiers audio de la playlist déjà présents sur l'appareil.",
   "commentsIconButtonTooltip": "Afficher ou insérer des commentaires à des points spécifiques de l'audio.",
   "commentsDialogTitle": "Commentaires",
-  "playlistCommentsDialogTitle": "Commentaires des audio de la playlist",
+  "playlistCommentsDialogTitle": "Commentaires des audio's de la playlist",
   "addPositionedCommentTooltip": "Ajouter un commentaire à la position actuelle de l'audio.",
   "commentTitle": "Titre",
   "commentText": "Commentaire",
@@ -375,7 +375,7 @@
   "atLeast": "au moins ",
   "commentCreationDateTooltip": "Date de création du commentaire",
   "commentUpdateDateTooltip": "Date de mise à jour du commentaire",
-  "playlistCommentMenu": "Commentaires des audio ...",
+  "playlistCommentMenu": "Commentaires des audio's ...",
   "modifyAudioTitle": "Modifier le titre de l'audio ...",
   "invalidLocalPlaylistTitle": "Le titre de la playlist locale \"{playlistTitle}\" ne peut contenir aucune virgule. Corrigez le titre et rééssayez ...",
   "@invalidLocalPlaylistTitle": {
@@ -398,8 +398,8 @@
   "commentEndPositionTooltip": "Fin du commentaire dans l'audio",
   "playlistToggleButtonInAudioPlayerViewTooltip": "Afficher/masquer les playlists. Ensuite, cochez une playlist pour sélectionner son audio en cours d'écoute.",
   "playlistSelectedSnackBarMessage": "Playlist \"{title}\" sélectionnée",
-  "playlistImportAudioMenu": "Importer des audio ...",
-  "playlistImportAudioMenuTooltip": "Importer des audio dans la playlist afin de pouvoir les écouter ainsi qu'y ajouter des commentaires positionnés.",
+  "playlistImportAudioMenu": "Importer des audio's ...",
+  "playlistImportAudioMenuTooltip": "Importer des audio's dans la playlist afin de pouvoir les écouter ainsi qu'y ajouter des commentaires positionnés.",
   "setPlaylistAudioPlaySpeedTooltip": "Définir la vitesse de lecture audio pour les prochains audio téléchargés dans la playlist ainsi que pour les audio's existants.",
   "audioNotImportedToLocalPlaylist": "Le(s) audio(s)\n\n{rejectedImportedAudioFileNames}\n\nn'ont pas été importés vers la playlist locale \"{toPlaylistTitle}\" car ils sont déjà présents dans son répertoire.",
   "audioNotImportedToYoutubePlaylist": "Le(s) audio(s)\n\n{rejectedImportedAudioFileNames}\n\nn'ont pas été importés vers la playlist Youtube \"{toPlaylistTitle}\" car ils sont déjà présents dans son répertoire.",
@@ -492,7 +492,7 @@
     }
   },
   "deleteFilteredCommentedAudioWarningTitleOne": "ATTENTION: vous supprimez",
-  "deleteFilteredCommentedAudioWarningTitleTwo": "des audio COMMENTÉS et non commentés filtrés par le paramètre \"{sortFilterParmsName}\" dans la playlist \"{playlistTitle}\". Consultez l'aide pour résoudre le problème.",
+  "deleteFilteredCommentedAudioWarningTitleTwo": "des audio's COMMENTÉS et non commentés filtrés par le paramètre \"{sortFilterParmsName}\" dans la playlist \"{playlistTitle}\". Consultez l'aide pour résoudre le problème.",
   "@deleteFilteredCommentedAudioWarningTitleTwo": {
     "description": "Warning title for deleting commented and uncommented filtered audio",
     "placeholders": {
