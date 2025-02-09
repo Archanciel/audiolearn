@@ -256,7 +256,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
             ? _buildAudioPictureOnScreenCenter(
                 audioPictureFile: audioPictureFile,
               )
-            : _buildPlayButtonOnScreenCenter(
+            : _buildPlayOrPauseButtonOnScreenCenter(
                 playlistListVMlistenTrue: playlistListVMlistenTrue,
                 audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
               );
@@ -830,7 +830,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     );
   }
 
-  Widget _buildPlayButtonOnScreenCenter({
+  Widget _buildPlayOrPauseButtonOnScreenCenter({
     required PlaylistListVM playlistListVMlistenTrue,
     required AudioPlayerVM audioPlayerVMlistenFalse,
   }) {
