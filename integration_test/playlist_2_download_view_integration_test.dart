@@ -4685,7 +4685,7 @@ void main() {
         await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
           tester: tester,
           confirmDialogTitleOne:
-              'Delete audio filtered by "$sortFilterParmName" parms from playlist "$youtubePlaylistTitle"',
+              "Delete audio's filtered by \"$sortFilterParmName\" parms from playlist \"$youtubePlaylistTitle\"",
           confirmDialogMessage:
               'Audio to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.',
           confirmOrCancelAction: true, // Confirm button is tapped
@@ -4974,7 +4974,7 @@ void main() {
         await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
           tester: tester,
           confirmDialogTitleOne:
-              'Delete audio filtered by "$sortFilterParmName" parms from playlist "$youtubePlaylistTitle"',
+              "Delete audio's filtered by \"$sortFilterParmName\" parms from playlist \"$youtubePlaylistTitle\"",
           confirmDialogMessage:
               'Audio to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.',
           confirmOrCancelAction: true, // Confirm button is tapped
@@ -5261,7 +5261,7 @@ void main() {
         await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
           tester: tester,
           confirmDialogTitleOne:
-              'Delete audio filtered by "$sortFilterParmName" parms from playlist "$youtubePlaylistTitle"',
+              "Delete audio's filtered by \"$sortFilterParmName\" parms from playlist \"$youtubePlaylistTitle\"",
           confirmDialogMessage:
               'Audio to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.',
           confirmOrCancelAction: true, // Confirm button is tapped
@@ -5605,7 +5605,7 @@ void main() {
         await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
           tester: tester,
           confirmDialogTitleOne:
-              'Delete audio filtered by "$sortFilterParmName" parms from playlist "$youtubePlaylistTitle"',
+              "Delete audio's filtered by \"$sortFilterParmName\" parms from playlist \"$youtubePlaylistTitle\"",
           confirmDialogMessage:
               'Audio to delete number: 2,\nCorresponding total file size: 9.96 MB,\nCorresponding total duration: 00:27:14.',
           confirmOrCancelAction: true, // Confirm button is tapped
@@ -5924,9 +5924,9 @@ void main() {
           tester: tester,
           confirmDialogTitleOne: 'WARNING: you are going to',
           confirmDialogTitleTwo:
-              'delete COMMENTED and uncommented audio filtered by "$sortFilterParmName" parms from playlist "$youtubePlaylistTitle". Watch the help to solve the problem ...',
+              "delete COMMENTED and uncommented audio's filtered by \"$sortFilterParmName\" parms from playlist \"$youtubePlaylistTitle\". Watch the help to solve the problem ...",
           confirmDialogMessage:
-              'Total audio to delete number: 4,\nCOMMENTED audio to delete number: 2,\nCorresponding total file size: 21.86 MB,\nCorresponding total duration: 00:59:45.',
+              "Total audio's to delete number: 4,\nCOMMENTED audio's to delete number: 2,\nCorresponding total file size: 21.86 MB,\nCorresponding total duration: 00:59:45.",
           isHelpIconPresent: true,
           confirmOrCancelAction: true, // Confirm button is tapped
         );
@@ -6266,9 +6266,9 @@ void main() {
           tester: tester,
           confirmDialogTitleOne: 'WARNING: you are going to',
           confirmDialogTitleTwo:
-              'delete COMMENTED and uncommented audio filtered by "$defaultSortFilterParmName" parms from playlist "$youtubePlaylistTitle". Watch the help to solve the problem ...',
+              "delete COMMENTED and uncommented audio's filtered by \"$defaultSortFilterParmName\" parms from playlist \"$youtubePlaylistTitle\". Watch the help to solve the problem ...",
           confirmDialogMessage:
-              'Total audio to delete number: 7,\nCOMMENTED audio to delete number: 3,\nCorresponding total file size: 31.99 MB,\nCorresponding total duration: 01:27:27.',
+              "Total audio's to delete number: 7,\nCOMMENTED audio's to delete number: 3,\nCorresponding total file size: 31.99 MB,\nCorresponding total duration: 01:27:27.",
           isHelpIconPresent: true,
           confirmOrCancelAction: true, // Confirm button is tapped
         );
@@ -11929,7 +11929,7 @@ Future<void> _tapOnRewindPlaylistAudioToStartPositionMenu({
   await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
     tester: tester,
     warningDialogMessage:
-        '$numberOfRewindedAudio playlist audio were repositioned to start.',
+        "$numberOfRewindedAudio playlist audio's were repositioned to start.",
     isWarningConfirming: true,
   );
 }
