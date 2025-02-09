@@ -593,8 +593,10 @@ class AudioPlayerVM extends ChangeNotifier {
       // Usefull for PlaylistDownloadView only. Without this instruction,
       // the play/pause button of the audio item in the playlist download
       // view is not updated when clicking on pause button in the audio
-      // player view.
-      notifyListeners();
+      // player view. Since audio list item no longer uses audio player VM
+      // listen true, the notifyListeners() instruction is no longer
+      // necessary.
+      // notifyListeners();
 
       // Set the current audio to its end position
       _setCurrentAudioToEndPosition();
@@ -838,8 +840,10 @@ class AudioPlayerVM extends ChangeNotifier {
     // Usefull for PlaylistDownloadView only. Without this instruction,
     // the play/pause button of the audio item in the playlist download
     // view is not updated when clicking on pause button in the audio
-    // player view.
-    notifyListeners();
+    // player view. Since audio list item no longer uses audio player VM
+    // listen true, the notifyListeners() instruction is no longer
+    // necessary.
+    // notifyListeners();
   }
 
   /// Method called when the user clicks on the '<<' or '>>'
