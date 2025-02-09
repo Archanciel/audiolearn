@@ -586,7 +586,10 @@ void main() {
           find.text(firstDownloadedAudioTitle);
 
       await tester.tap(firstDownloadedAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle(const Duration(milliseconds: 400));
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+        additionalMilliseconds: 500,
+      );
 
       // Verify that the selected playlist title is displayed
       Text selectedPlaylistTitleText =
@@ -891,9 +894,9 @@ void main() {
 
       // Tap on the Close button to close the comment list add dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 1000));
 
-      // Verify that the play button is present (due to the bug, the
+      // Verify that the play button is present (due to a bug, the
       // pause button was displayed).
       expect(find.byIcon(Icons.play_arrow), findsOneWidget);
 
@@ -912,6 +915,7 @@ void main() {
       await tester.tap(lastDownloadedAudioListTileTextWidgetFinder);
       await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
         tester: tester,
+        additionalMilliseconds: 500,
       );
 
       // Verify that the play button is present (due to the bug, the
@@ -971,7 +975,7 @@ void main() {
 
       // Tap on the Close button to close the comment list add dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 500));
 
       // Verify that the play button is present (due to the bug, the
       // pause button was displayed).
