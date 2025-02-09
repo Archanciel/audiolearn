@@ -62,7 +62,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
     );
     final AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
       context,
-      listen: true,
+      listen: false,
     );
     final DateFormatVM dateFormatVMlistenTrue = Provider.of<DateFormatVM>(
       context,
@@ -587,18 +587,18 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
   /// audio title or subtitle or the play icon button. This switches
   /// to the AudioPlayerView screen and plays the clicked audio.
   Future<void> _dragToAudioPlayerViewAndPlayAudio({
-    required AudioPlayerVM audioPlayerVMlistenTrue,
+    required AudioPlayerVM audioPlayerVMlistenFalse,
   }) async {
-    await audioPlayerVMlistenTrue.setCurrentAudio(
+    await audioPlayerVMlistenFalse.setCurrentAudio(
       audio: audio,
     );
-    await audioPlayerVMlistenTrue.goToAudioPlayPosition(
+    await audioPlayerVMlistenFalse.goToAudioPlayPosition(
       durationPosition: Duration(seconds: audio.audioPositionSeconds),
       isUndoRedo: true, // necessary to avoid creating an undo
       //                   command which would activate the undo
       //                   icon button
     );
-    await audioPlayerVMlistenTrue.playCurrentAudio();
+    await audioPlayerVMlistenFalse.playCurrentAudio();
 
     // dragging to the AudioPlayerView screen
     onPageChangedFunction(ScreenMixin.AUDIO_PLAYER_VIEW_DRAGGABLE_INDEX);
@@ -764,7 +764,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
       children: [
         _buildPlayOrPauseInkwellButton(
           context: context,
-          audioPlayerVMlistenTrue: audioPlayerVMlistenFalse,
+          audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
           audio: audio,
         )
       ],
@@ -786,7 +786,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
   /// a colored circle.
   InkWell _buildPlayOrPauseInkwellButton({
     required BuildContext context,
-    required AudioPlayerVM audioPlayerVMlistenTrue,
+    required AudioPlayerVM audioPlayerVMlistenFalse,
     required Audio audio,
   }) {
     CircleAvatar circleAvatar;
@@ -839,14 +839,14 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
           // from the current position and will switch to the
           // AudioPlayerView screen.
           await _dragToAudioPlayerViewAndPlayAudio(
-            audioPlayerVMlistenTrue: audioPlayerVMlistenTrue,
+            audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
           );
         } else {
           // if the audio is playing, the displayed icon is
           // the pause icon. Clicking on it will pause the
           // audio without switching to the AudioPlayerView
           // screen.
-          await audioPlayerVMlistenTrue.pause();
+          await audioPlayerVMlistenFalse.pause();
         }
       },
       child: SizedBox(
