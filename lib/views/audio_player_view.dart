@@ -253,10 +253,10 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
         }
 
         return (audioPictureFile != null)
-            ? _buildAudioPicture(
+            ? _buildAudioPictureOnScreenCenter(
                 audioPictureFile: audioPictureFile,
               )
-            : _buildPlayButtonOnSecondLineIfPicturePresent(
+            : _buildPlayButtonOnScreenCenter(
                 playlistListVMlistenTrue: playlistListVMlistenTrue,
                 audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
               );
@@ -831,7 +831,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     );
   }
 
-  Widget _buildPlayButtonOnSecondLineIfPicturePresent({
+  Widget _buildPlayButtonOnScreenCenter({
     required PlaylistListVM playlistListVMlistenTrue,
     required AudioPlayerVM audioPlayerVMlistenFalse,
   }) {
@@ -881,7 +881,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     }
   }
 
-  Widget _buildAudioPicture({
+  Widget _buildAudioPictureOnScreenCenter({
     required File? audioPictureFile,
   }) {
     // Check if the audio picture file exists and read its bytes
