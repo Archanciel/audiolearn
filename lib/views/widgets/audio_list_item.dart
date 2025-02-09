@@ -129,10 +129,15 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
           ),
         ),
       ),
-      trailing: _buildPlayOrPauseButton(
-        context: context,
-        audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
-        audio: audio,
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _buildPlayOrPauseInkwellButton(
+            context: context,
+            audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+            audio: audio,
+          )
+        ],
       ),
     );
   }
@@ -754,23 +759,6 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
     return lastSubtitlePart;
   }
 
-  Widget _buildPlayOrPauseButton({
-    required BuildContext context,
-    required AudioPlayerVM audioPlayerVMlistenFalse,
-    required Audio audio,
-  }) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        _buildPlayOrPauseInkwellButton(
-          context: context,
-          audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
-          audio: audio,
-        )
-      ],
-    );
-  }
-
   /// This method build the audio play or pause button displayed
   /// at right position of the playlist audio ListTile.
   ///
@@ -784,75 +772,97 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
   /// button. CircleAvatar is used to display the bookmark icon which
   /// can be highlighted or not and disabled or not and be enclosed in
   /// a colored circle.
-  InkWell _buildPlayOrPauseInkwellButton({
+  Widget _buildPlayOrPauseInkwellButton({
     required BuildContext context,
     required AudioPlayerVM audioPlayerVMlistenFalse,
     required Audio audio,
   }) {
     CircleAvatar circleAvatar;
 
-    if (audio.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd) {
-      Icon playOrPauseIcon;
+    return ValueListenableBuilder<String?>(
+      // currentAudioTitleNotifier is necessary to correctly handle
+      // the case when the current audio reach its end position and
+      // the next playable audio starts playing. Without it, the ended
+      // audio play/pause button remains as a pause button and the
+      // next audio play/pause button remains as a play button.
+      //
+      // If the current ending audio is the last playable audio, the
+      // play/pause button is correctly set as play button. In both
+      // cases, when the audio is at end, the play button is set with
+      // the right color.
+      valueListenable: audioPlayerVMlistenFalse.currentAudioTitleNotifier,
+      builder: (context, currentAudioTitle, child) {
+        return ValueListenableBuilder<bool>(
+          valueListenable:
+              audioPlayerVMlistenFalse.currentAudioPlayPauseNotifier,
+          builder: (context, mustPlayPauseButtonBeSetToPaused, child) {
+            if (audio.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd) {
+              Icon playOrPauseIcon;
 
-      if (audio.isPaused) {
-        // if the audio is paused, the displayed icon is
-        // the play icon. Clicking on it will play the audio
-        // from the current position and will switch to the
-        // AudioPlayerView screen.
-        playOrPauseIcon = const Icon(Icons.play_arrow);
-      } else {
-        // if the audio is playing, the displayed icon is
-        // the pause icon. Clicking on it will pause the
-        // audio without switching to the AudioPlayerView
-        // screen.
-        playOrPauseIcon = const Icon(Icons.pause);
-      }
+              if (audio.isPaused) {
+                // if the audio is paused, the displayed icon is
+                // the play icon. Clicking on it will play the audio
+                // from the current position and will switch to the
+                // AudioPlayerView screen.
+                playOrPauseIcon = const Icon(Icons.play_arrow);
+              } else {
+                // if the audio is playing, the displayed icon is
+                // the pause icon. Clicking on it will pause the
+                // audio without switching to the AudioPlayerView
+                // screen.
+                playOrPauseIcon = const Icon(Icons.pause);
+              }
 
-      circleAvatar = formatIconBackAndForGroundColor(
-        context: context,
-        iconToFormat: playOrPauseIcon,
-        isIconHighlighted: true, // since audio is playing or paused
-        //                          at a certain position the icon
-        //                          is highlighted
-      );
-    } else {
-      // the audio is not playing or paused at a certain position
-      // (i.e. its position is zero or its position is at the end
-      // of the audio file)
-      circleAvatar = formatIconBackAndForGroundColor(
-          context: context,
-          iconToFormat: const Icon(Icons.play_arrow),
-          isIconHighlighted: false, // since audio is at start or end
-          //                           position, the icon is not
-          //                           highlighted
-          isIconColorStronger: audio.audioPositionSeconds != 0);
-    }
+              circleAvatar = formatIconBackAndForGroundColor(
+                context: context,
+                iconToFormat: playOrPauseIcon,
+                isIconHighlighted: true, // since audio is playing or paused
+                //                          at a certain position the icon
+                //                          is highlighted
+              );
+            } else {
+              // the audio is not playing or paused at a certain position
+              // (i.e. its position is zero or its position is at the end
+              // of the audio file)
+              circleAvatar = formatIconBackAndForGroundColor(
+                  context: context,
+                  iconToFormat: const Icon(Icons.play_arrow),
+                  isIconHighlighted: false, // since audio is at start or end
+                  //                           position, the icon is not
+                  //                           highlighted
+                  isIconColorStronger: audio.audioPositionSeconds != 0);
+            }
 
-    // Return the icon wrapped inside a SizedBox to ensure
-    // horizontal alignment
-    return InkWell(
-      key: const Key('play_pause_audio_item_inkwell'),
-      onTap: () async {
-        if (audio.isPaused) {
-          // if the audio is paused, the displayed icon is
-          // the play icon. Clicking on it will play the audio
-          // from the current position and will switch to the
-          // AudioPlayerView screen.
-          await _dragToAudioPlayerViewAndPlayAudio(
-            audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
-          );
-        } else {
-          // if the audio is playing, the displayed icon is
-          // the pause icon. Clicking on it will pause the
-          // audio without switching to the AudioPlayerView
-          // screen.
-          await audioPlayerVMlistenFalse.pause();
-        }
+            // Return the icon wrapped inside a SizedBox to ensure
+            // horizontal alignment
+            return InkWell(
+              key: const Key('play_pause_audio_item_inkwell'),
+              onTap: () async {
+                if (audio.isPaused) {
+                  // if the audio is paused, the displayed icon is
+                  // the play icon. Clicking on it will play the audio
+                  // from the current position and will switch to the
+                  // AudioPlayerView screen.
+                  await _dragToAudioPlayerViewAndPlayAudio(
+                    audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+                  );
+                } else {
+                  // if the audio is playing, the displayed icon is
+                  // the pause icon. Clicking on it will pause the
+                  // audio without switching to the AudioPlayerView
+                  // screen.
+                  await audioPlayerVMlistenFalse.pause();
+                }
+              },
+              child: SizedBox(
+                width:
+                    45, // Adjust this width based on the size of your largest icon
+                child: Center(child: circleAvatar),
+              ),
+            );
+          },
+        );
       },
-      child: SizedBox(
-        width: 45, // Adjust this width based on the size of your largest icon
-        child: Center(child: circleAvatar),
-      ),
     );
   }
 }
