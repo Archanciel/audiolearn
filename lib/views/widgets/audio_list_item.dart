@@ -60,12 +60,10 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
       context,
       listen: false,
     );
-
     final AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
       context,
-      listen: false,
+      listen: true,
     );
-
     final DateFormatVM dateFormatVMlistenTrue = Provider.of<DateFormatVM>(
       context,
       listen: true,
@@ -101,7 +99,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
           await _dragToAudioPlayerView(
               audioPlayerVMlistenFalse:
                   audioPlayerVMlistenFalse); // dragging to the AudioPlayerView screen
-                  //                            after typing on title
+          //                            after typing on title
         },
         child: Text(audio.validVideoTitle,
             style: TextStyle(
@@ -115,7 +113,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
           await _dragToAudioPlayerView(
               audioPlayerVMlistenFalse:
                   audioPlayerVMlistenFalse); // dragging to the AudioPlayerView screen
-                  //                            after typing on sub-title
+          //                            after typing on sub-title
         },
         child: Text(
           key: const Key('audio_item_subtitle'),
@@ -131,7 +129,11 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
           ),
         ),
       ),
-      trailing: _buildPlayButton(),
+      trailing: _buildPlayOrPauseButton(
+        context: context,
+        audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+        audio: audio,
+      ),
     );
   }
 
@@ -752,20 +754,20 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
     return lastSubtitlePart;
   }
 
-  Widget _buildPlayButton() {
-    return Consumer<AudioPlayerVM>(
-      builder: (context, audioPlayerVM, child) {
-        return Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _buildPlayOrPauseInkwellButton(
-              context: context,
-              audioPlayerVMlistenTrue: audioPlayerVM,
-              audio: audio,
-            )
-          ],
-        );
-      },
+  Widget _buildPlayOrPauseButton({
+    required BuildContext context,
+    required AudioPlayerVM audioPlayerVMlistenFalse,
+    required Audio audio,
+  }) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        _buildPlayOrPauseInkwellButton(
+          context: context,
+          audioPlayerVMlistenTrue: audioPlayerVMlistenFalse,
+          audio: audio,
+        )
+      ],
     );
   }
 
