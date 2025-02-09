@@ -210,7 +210,8 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
     List<Widget> widgetsLst = [];
 
     for (String audioFileNameNoExt in sortedAudioFileNameNoExtLst) {
-      Audio audioRelatedToFileNameNoExt = currentPlaylist.getAudioByFileNameNoExt(
+      Audio audioRelatedToFileNameNoExt =
+          currentPlaylist.getAudioByFileNameNoExt(
         audioFileNameNoExt: audioFileNameNoExt,
       )!;
 
@@ -311,9 +312,9 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                       context,
                       listen: false,
                     ),
-                    audioFileNameNoExt: audioFileNameNoExt,
                     commentVMlistenTrue: commentVMlistenTrue,
                     currentPlaylist: currentPlaylist,
+                    currentAudio: audioRelatedToFileNameNoExt,
                     comment: comment,
                     commentTitleTextStyle: commentTitleTextStyle,
                     isDarkTheme: isDarkTheme,
@@ -343,9 +344,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
               await _closeDialogAndOpenCommentAddEditDialog(
                 context: context,
                 audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
-                currentAudio: currentPlaylist.getAudioByFileNameNoExt(
-                  audioFileNameNoExt: audioFileNameNoExt,
-                )!,
+                currentAudio: audioRelatedToFileNameNoExt,
                 comment: comment,
               );
             },
@@ -363,9 +362,9 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
     required ThemeProviderVM themeProviderVM,
     required AudioPlayerVM audioPlayerVMlistenFalse,
     required DateFormatVM dateFormatVMlistenFalse,
-    required String audioFileNameNoExt,
     required CommentVM commentVMlistenTrue,
     required Playlist currentPlaylist,
+    required Audio currentAudio,
     required Comment comment,
     required TextStyle commentTitleTextStyle,
     required bool isDarkTheme,
@@ -409,8 +408,8 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                               // clicked on other comment play button
                               audioPlayerVM: audioPlayerVMlistenFalse,
                               commentVMlistenTrue: commentVMlistenTrue,
-                              audioFileNameNoExt: audioFileNameNoExt,
                               currentPlaylist: currentPlaylist,
+                              currentAudio: currentAudio,
                               comment: comment,
                             );
                     },
@@ -432,11 +431,20 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                             _playingComment == comment &&
                             audioPlayerVMlistenFalse.currentAudio!
                                 .isPlayingOrPausedWithPositionBetweenAudioStartAndEnd &&
-                            currentAudioPosition >=
-                                Duration(
-                                    milliseconds: comment
-                                            .commentEndPositionInTenthOfSeconds *
-                                        100)) {
+                            (currentAudioPosition >=
+                                    Duration(
+                                        milliseconds: comment
+                                                .commentEndPositionInTenthOfSeconds *
+                                            100) ||
+                                // This 'or' addition is necessary to enable
+                                // replaying a comment whose end position
+                                // is the same as the audio end position. For
+                                // a reason I don't know, without this
+                                // condition, re-playing such a comment on the
+                                // Android smartphone does not work !
+                                currentAudioPosition >=
+                                    currentAudio.audioDuration -
+                                        const Duration(milliseconds: 1400))) {
                           // You cannot await here, but you can trigger an
                           // action which will not block the widget tree
                           // rendering.
@@ -487,9 +495,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                       await _confirmDeleteComment(
                         audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                         commentVMlistenTrue: commentVMlistenTrue,
-                        currentAudio: currentPlaylist.getAudioByFileNameNoExt(
-                          audioFileNameNoExt: audioFileNameNoExt,
-                        )!,
+                        currentAudio: currentAudio,
                         comment: comment,
                       );
                     },
@@ -674,8 +680,8 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
     required AudioPlayerVM audioPlayerVM,
     required CommentVM commentVMlistenTrue,
     required Playlist currentPlaylist,
+    required Audio currentAudio,
     required Comment comment,
-    required String audioFileNameNoExt,
   }) async {
     // Fixes the bug of playing comments in playlist comment list
     // dialog on Windows and Android.
@@ -685,20 +691,16 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
 
     _playingComment = comment;
 
-    Audio audioRelatedToFileNameNoExt = currentPlaylist.getAudioByFileNameNoExt(
-      audioFileNameNoExt: audioFileNameNoExt,
-    )!;
-
     commentVMlistenTrue.addCommentPlayCommandToUndoPlayCommandLst(
-      commentAudioCopy: audioRelatedToFileNameNoExt.copy(),
+      commentAudioCopy: currentAudio.copy(),
       previousAudioIndex: currentPlaylist.currentOrPastPlayableAudioIndex,
     );
 
-    if (audioPlayerVM.currentAudio != audioRelatedToFileNameNoExt) {
+    if (audioPlayerVM.currentAudio != currentAudio) {
       // Adding the test fixes the problem of playing audio comments
       // from the playlist comment list dialog.
       await audioPlayerVM.setCurrentAudio(
-        audio: audioRelatedToFileNameNoExt,
+        audio: currentAudio,
       );
     }
 
