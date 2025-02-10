@@ -898,6 +898,10 @@ void main() {
 
       // Verify that the play button is present (due to a bug, the
       // pause button was displayed).
+      expect(
+        find.byKey(const Key('picture_displayed_play_pause_button_key')),
+        findsOneWidget,
+      );
       expect(find.byIcon(Icons.play_arrow), findsOneWidget);
 
       // Now we go back to the playlist download view in order to select
@@ -915,11 +919,15 @@ void main() {
       await tester.tap(lastDownloadedAudioListTileTextWidgetFinder);
       await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
         tester: tester,
-        additionalMilliseconds: 500,
+        additionalMilliseconds: 1000,
       );
 
       // Verify that the play button is present (due to the bug, the
       // pause button was displayed).
+      expect(
+        find.byKey(const Key('middleScreenPlayPauseButton')),
+        findsOneWidget,
+      );
       expect(find.byIcon(Icons.play_arrow), findsOneWidget);
 
       // Purge the test playlist directory so that the created test
@@ -975,10 +983,14 @@ void main() {
 
       // Tap on the Close button to close the comment list add dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-      await tester.pumpAndSettle(const Duration(milliseconds: 500));
+      await tester.pumpAndSettle(const Duration(milliseconds: 1000));
 
       // Verify that the play button is present (due to the bug, the
       // pause button was displayed).
+      expect(
+        find.byKey(const Key('middleScreenPlayPauseButton')),
+        findsOneWidget,
+      );
       expect(find.byIcon(Icons.play_arrow), findsOneWidget);
 
       // Now we go back to the playlist download view in order to select
@@ -1001,10 +1013,15 @@ void main() {
       await tester.tap(lastDownloadedAudioListTileTextWidgetFinder);
       await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
         tester: tester,
+        additionalMilliseconds: 1000,
       );
 
       // Verify that the play button is present (due to the bug, the
       // pause button is displayed).
+      expect(
+        find.byKey(const Key('picture_displayed_play_pause_button_key')),
+        findsOneWidget,
+      );
       expect(find.byIcon(Icons.play_arrow), findsOneWidget);
 
       // Purge the test playlist directory so that the created test
@@ -5648,7 +5665,7 @@ void main() {
       // dialog
       const String commentStartPosition = '0:46';
       const String commentEndPosition = '0:53';
-      
+
       expect(
         tester.widget<Text>(commentStartTextWidgetFinder).data!,
         commentStartPosition, // 0:46
