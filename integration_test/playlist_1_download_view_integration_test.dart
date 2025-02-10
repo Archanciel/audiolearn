@@ -17788,7 +17788,7 @@ Future<void> _verifyUndoneListenedAudioPosition({
       find.text(playedCommentAudioTitle);
 
   await tester.tap(playedCommentAudioListTileTextWidgetFinder);
-  await tester.pumpAndSettle(const Duration(milliseconds: 500));
+  await tester.pumpAndSettle(const Duration(milliseconds: 1000));
 
   // Now verify if the displayed audio position and remaining
   // duration are correct
