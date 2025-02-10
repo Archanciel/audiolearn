@@ -3843,7 +3843,7 @@ void main() {
 
       // Now close the comment list dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 1000));
 
       // check the current audio's changed position
       final Finder audioPlayerViewAudioPositionFinder =
@@ -4372,7 +4372,7 @@ void main() {
 
       // Now close the comment list dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 1000));
 
       // check the current audio's changed position
       final Finder audioPlayerViewAudioPositionFinder =
@@ -4933,7 +4933,7 @@ void main() {
             localPlaylistCurrentlyPlayableAudioTitleWithDuration,
         expectedAudioPositionTimeString: '0:02',
         expectedAudioRemainingDurationTimeString: '0:57',
-        selectPlaylistPumpAndSettleDuration: const Duration(milliseconds: 500),
+        selectPlaylistPumpAndSettleDuration: const Duration(milliseconds: 1000),
       );
 
       // Ensure the play button is in play mode since the new
@@ -4951,7 +4951,7 @@ void main() {
         expectedAudioPositionTimeString: memorizedPositionTimeString,
         expectedAudioRemainingDurationTimeString:
             memorizedRemainingDurationTimeString,
-        // selectPlaylistPumpAndSettleDuration: const Duration(milliseconds: 500),
+        selectPlaylistPumpAndSettleDuration: const Duration(milliseconds: 1000),
       );
 
       // Purge the test playlist directory so that the created test
@@ -5001,10 +5001,8 @@ void main() {
             "$jesusPlaylistCurrentPlayableAudioTitle\n24:07",
         expectedAudioPositionTimeString: '14:16',
         expectedAudioRemainingDurationTimeString: '9:51',
-        // If this duration parm is not set, the audio picture will not be
-        // displayed and the playlistCurrentlyPlayableAudioTitleWithDuration
-        // will not be correct
-        selectPlaylistPumpAndSettleDuration: const Duration(milliseconds: 500),
+        // If this duration parm is not set, the integration test fails
+        selectPlaylistPumpAndSettleDuration: const Duration(milliseconds: 1000),
       );
 
       // Ensure the play button is in play mode since the new
@@ -5051,9 +5049,8 @@ void main() {
             "$jesusPlaylistCurrentPlayableAudioTitle\n24:07",
         expectedAudioPositionTimeString: '14:16',
         expectedAudioRemainingDurationTimeString: '9:51',
-        // If this duration parm is not set, the audio picture will not be
-        // displayed
-        selectPlaylistPumpAndSettleDuration: const Duration(milliseconds: 500),
+        // If this duration parm is not set, the integration test fails
+        selectPlaylistPumpAndSettleDuration: const Duration(milliseconds: 1000),
       );
 
       // Ensure the play button is in play mode since the new
