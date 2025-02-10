@@ -806,13 +806,26 @@ class AudioPlayerVM extends ChangeNotifier {
   }
 
   Future<void> pause() async {
+    if (_wasAudioPlayersStopped) {
+      // Avoid executing _audioPlayer!.stop() several times, which
+      // causes an error due to an audioplayers is disposed exception
+      // in the integration tests. 
+      return;
+    }
+
     // Calling _audioPlayer!.stop() instead of _audioPlayer!.pause()
     // avoids that the paused audio starts when an alarm or a call
     // happens on the smartphone. This requires to call _audioPlayer!.
     // setSource() in the playCurrentAudio() method ...
-    await _audioPlayer!.stop();
     _wasAudioPlayersStopped = true;
-    // await _audioPlayer!.pause();
+
+    try { // avoid ridiculous error in integration tests
+      await _audioPlayer!.stop();
+    } catch (e) {
+      // ignore: avoid_print
+      print('***** AudioPlayerVM.pause() error: $e');
+      return;
+    }
 
     if (_currentAudio !=
             null && // necessary to avoid the error when deleting a playing audio
