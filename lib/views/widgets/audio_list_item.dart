@@ -596,11 +596,12 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
     Audio? audioPlayerVMcurrentAudio = audioPlayerVMlistenFalse.currentAudio;
 
     if (audioPlayerVMcurrentAudio != null &&
+        !audioPlayerVMcurrentAudio.isPaused && // is playing
         audioPlayerVMcurrentAudio != audio) {
       // If clicking on another audio item play button, the audio player
-      // VM current audio is paused. If it is not paused, the position
-      // of the clicked audio will be set to zero by the audioPlayer
-      // onPositionChanged listener.
+      // VM current audio is paused if it is playing. If it is not paused,
+      // the position of the clicked audio will be set to zero by the
+      // audioPlayer onPositionChanged listener.
       await audioPlayerVMlistenFalse.pause();
     }
 
@@ -628,11 +629,12 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
     Audio? audioPlayerVMcurrentAudio = audioPlayerVMlistenFalse.currentAudio;
 
     if (audioPlayerVMcurrentAudio != null &&
+        !audioPlayerVMcurrentAudio.isPaused && // is playing
         audioPlayerVMcurrentAudio != audio) {
       // If clicking on another audio item, the audio player VM current
-      // audio is paused. If it is not paused, the position of the clicked
-      // audio will be set to zero by the audioPlayer onPositionChanged
-      // listener.
+      // audio is paused if it is playing. If it is not paused, the
+      // position of the clicked audio will be set to zero by the
+      // audioPlayer onPositionChanged listener.
       await audioPlayerVMlistenFalse.pause();
     }
 
