@@ -617,10 +617,12 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
   }) async {
     Audio? audioPlayerVMcurrentAudio = audioPlayerVMlistenFalse.currentAudio;
 
-    if (audioPlayerVMcurrentAudio != null && audioPlayerVMcurrentAudio != audio) {
+    if (audioPlayerVMcurrentAudio != null &&
+        audioPlayerVMcurrentAudio != audio) {
       // If clicking on another audio item, the audio player VM current
-      // audio is paused. Otherwise, the position of the clicked audio
-      // will be set to zero by the audioPlayer onPositionChanged listener.
+      // audio is paused. If it is not paused, the position of the clicked
+      // audio will be set to zero by the audioPlayer onPositionChanged
+      // listener.
       await audioPlayerVMlistenFalse.pause();
     }
 
