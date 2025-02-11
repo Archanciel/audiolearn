@@ -47,7 +47,8 @@ class IntegrationTestUtil {
     } else {
       await tester.pumpAndSettle(
         Duration(
-          milliseconds: 200 + additionalMilliseconds,
+          // milliseconds: 200 + additionalMilliseconds,
+          milliseconds: 1700, // 1500 as well as only 200 no longer work 10/2/2025
         ),
       );
     }
@@ -1395,7 +1396,7 @@ class IntegrationTestUtil {
     await tester.tap(find.text(audioTitleWithDuration));
     await tester.pumpAndSettle();
 
-    // Tap on Cancel button to close the
+    // Tap on Close button to close the
     // DisplaySelectableAudioListDialog
     await tester.tap(find.text('Close'));
     await tester.pumpAndSettle();

@@ -2159,7 +2159,6 @@ void main() {
         await tester.tap(lastDownloadedAudioListTileInkWellFinder);
         await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
           tester: tester,
-          additionalMilliseconds: 1500,
         );
 
         // And return to the playlist download view
@@ -2492,7 +2491,6 @@ void main() {
         await tester.tap(lastDownloadedAudioListTileInkWellFinder);
         await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
           tester: tester,
-          additionalMilliseconds: 1500,
         );
 
         // And return to the playlist download view
@@ -5493,7 +5491,6 @@ void main() {
         await tester.tap(thirdDownloadedAudioListTileTextWidgetFinder);
         await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
           tester: tester,
-          additionalMilliseconds: 1500,
         );
 
         // Now skip to the end of the audio to set it as fully played
@@ -7253,7 +7250,6 @@ void main() {
         await tester.tap(lastDownloadedAudioListTileTextWidgetFinder);
         await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
           tester: tester,
-          additionalMilliseconds: 1500,
         );
 
         // Tap on back 1 minute button to set it partially played
@@ -7964,12 +7960,6 @@ void main() {
           currentAudioTitle: currentAudioTitle,
           currentAudioSubTitle: currentAudioSubTitle,
         );
-
-
-
-
-
-
 
         // Verifying the moved audio's to which a picture is associated
 
@@ -9011,7 +9001,6 @@ void main() {
         await tester.tap(lastDownloadedAudioListTileTextWidgetFinder);
         await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
           tester: tester,
-          additionalMilliseconds: 1500,
         );
 
         // Tap on back 1 minute button to set it partially played
@@ -10862,7 +10851,6 @@ void main() {
         await tester.tap(audioForPictureTitleListTileTextWidgetFinder);
         await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
           tester: tester,
-          additionalMilliseconds: 1500,
         );
 
         // First picture addition
@@ -11805,7 +11793,6 @@ Future<void> _rewindPlaylistAfterPlayThenPauseAnAudio({
   await tester.tap(audioToPlayTitleFinder);
   await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
     tester: tester,
-    additionalMilliseconds: 1500,
   );
 
   // Now play the audio and wait 5 seconds
@@ -11842,7 +11829,6 @@ Future<void> _rewindPlaylistAfterPlayThenPauseAnAudio({
     await tester.tap(audioToPlayTitleFinder);
     await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
       tester: tester,
-      additionalMilliseconds: 1500,
     );
 
     // Go back to playlist download view

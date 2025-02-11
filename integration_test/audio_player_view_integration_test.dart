@@ -1492,7 +1492,9 @@ void main() {
       final Finder appScreenNavigationButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
       await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // Pause the audio
       await tester.tap(find.byIcon(Icons.pause));
@@ -1871,7 +1873,9 @@ void main() {
           find.text(lastDownloadedAudioTitle);
 
       await tester.tap(lastDownloadedAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // Verify if the play speed of the last downloaded audio
       // which was not modified is 1.50x
@@ -2717,7 +2721,9 @@ void main() {
           find.text(firstDownloadedAudioTitle);
 
       await tester.tap(firstDownloadedAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // The audio position is 2 seconds before end. Now play
       // the audio and wait 5 seconds so that the next audio
@@ -2838,7 +2844,9 @@ void main() {
           find.text(firstDownloadedAudioTitle);
 
       await tester.tap(firstDownloadedAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // The audio position is 2 seconds before end. Now play
       // the audio and wait 5 seconds so that the next audio
@@ -2964,7 +2972,9 @@ void main() {
           find.text(firstDownloadedAudioTitle);
 
       await tester.tap(firstDownloadedAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // Trying to avoid unregular integration test failure
       await Future.delayed(const Duration(milliseconds: 200));
@@ -4453,7 +4463,6 @@ void main() {
       await tester.tap(secondDownloadedAudioListTileInkWellFinder);
       await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
         tester: tester,
-        additionalMilliseconds: 1500,
       );
 
       // Tap on << 10 seconds button to go back to 10 sec before the
@@ -5166,7 +5175,9 @@ void main() {
       // First, get the ListTile Text widget finder of the audio to be
       // selected and tap on it. This switches to the AudioPlayerView
       await tester.tap(find.text(firstDownloadedAudioTitle));
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // Now move this audio to the 'Empty' playlist
 
