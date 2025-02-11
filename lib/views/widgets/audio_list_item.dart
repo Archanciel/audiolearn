@@ -98,8 +98,8 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
         onTap: () async {
           await _dragToAudioPlayerView(
               audioPlayerVMlistenFalse:
-                  audioPlayerVMlistenFalse); // dragging to the AudioPlayerView screen
-          //                            after typing on title
+                  audioPlayerVMlistenFalse); // dragging to the AudioPlayerView
+          //                                    screen after typing on audio title
         },
         child: Text(audio.validVideoTitle,
             style: TextStyle(
@@ -112,8 +112,8 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
         onTap: () async {
           await _dragToAudioPlayerView(
               audioPlayerVMlistenFalse:
-                  audioPlayerVMlistenFalse); // dragging to the AudioPlayerView screen
-          //                            after typing on sub-title
+                  audioPlayerVMlistenFalse); // dragging to the AudioPlayerView
+          //                                    screen after typing on sub-title
         },
         child: Text(
           key: const Key('audio_item_subtitle'),
