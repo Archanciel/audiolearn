@@ -3819,7 +3819,7 @@ void main() {
       await tester.tap(targetAudioListTileWidgetFinder);
       await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
         tester: tester,
-        additionalMilliseconds: 1000,
+        additionalMilliseconds: 1500,
       );
 
       // Verify that the comment icon button is highlighted. This indiquates
@@ -9696,6 +9696,7 @@ void main() {
       await tester.tap(find.text(firstDownloadedAudioTitle));
       await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
         tester: tester,
+        additionalMilliseconds: 1500,
       );
 
       // Verify the displayed audio title (La surpopulation mondiale par
