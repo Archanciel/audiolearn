@@ -300,7 +300,9 @@ class AudioPlayerVM extends ChangeNotifier {
     //   await _audioPlayer!.pause();
     // }
 
-    if (_currentAudio != null && !_currentAudio!.isPaused) {
+    if (_currentAudio != null &&
+        _currentAudio != audio &&
+        !_currentAudio!.isPaused) {
       _currentAudio!.isPaused = true;
       // saving the previous current audio state before changing
       // the current audio
@@ -809,7 +811,7 @@ class AudioPlayerVM extends ChangeNotifier {
     if (_wasAudioPlayersStopped) {
       // Avoid executing _audioPlayer!.stop() several times, which
       // causes an error due to an audioplayers is disposed exception
-      // in the integration tests. 
+      // in the integration tests.
       return;
     }
 
@@ -819,7 +821,8 @@ class AudioPlayerVM extends ChangeNotifier {
     // setSource() in the playCurrentAudio() method ...
     _wasAudioPlayersStopped = true;
 
-    try { // avoid ridiculous error in integration tests
+    try {
+      // avoid ridiculous error in integration tests
       await _audioPlayer!.stop();
     } catch (e) {
       // ignore: avoid_print
@@ -830,6 +833,7 @@ class AudioPlayerVM extends ChangeNotifier {
     if (_currentAudio !=
             null && // necessary to avoid the error when deleting a playing audio
         _currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd) {
+      print('****** pausing ${_currentAudio!.validVideoTitle} on line 834');
       _currentAudio!.isPaused = true;
       _currentAudio!.audioPositionSeconds = _currentAudioPosition.inSeconds;
       _currentAudio!.audioPausedDateTime = DateTime.now();
@@ -1221,6 +1225,8 @@ class AudioPlayerVM extends ChangeNotifier {
   void _setCurrentAudioToEndPosition() {
     // since the current audio is no longer playing, the isPaused
     // attribute is set to true
+    print('****** pausing ${_currentAudio!.validVideoTitle} on line 1226');
+
     _currentAudio!.isPaused = true;
 
     _currentAudio!.audioPausedDateTime = DateTime.now();
