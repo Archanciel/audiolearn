@@ -588,12 +588,22 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
     return deleteAudioDialogTitle;
   }
 
-  /// Method called when the user clicks on the audio list item
-  /// audio title or subtitle or the play icon button. This switches
-  /// to the AudioPlayerView screen and plays the clicked audio.
+  /// Method called when the user clicks on the audio list item play icon button.
+  /// This switches to the AudioPlayerView screen and plays the clicked audio.
   Future<void> _dragToAudioPlayerViewAndPlayAudio({
     required AudioPlayerVM audioPlayerVMlistenFalse,
   }) async {
+    Audio? audioPlayerVMcurrentAudio = audioPlayerVMlistenFalse.currentAudio;
+
+    if (audioPlayerVMcurrentAudio != null &&
+        audioPlayerVMcurrentAudio != audio) {
+      // If clicking on another audio item play button, the audio player
+      // VM current audio is paused. If it is not paused, the position
+      // of the clicked audio will be set to zero by the audioPlayer
+      // onPositionChanged listener.
+      await audioPlayerVMlistenFalse.pause();
+    }
+
     await audioPlayerVMlistenFalse.setCurrentAudio(
       audio: audio,
     );
@@ -609,9 +619,9 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
     onPageChangedFunction(ScreenMixin.AUDIO_PLAYER_VIEW_DRAGGABLE_INDEX);
   }
 
-  /// Method called when the user clicks on the audio list item.
-  /// This switches to the AudioPlayerView screen without playing
-  /// the clicked audio.
+  /// Method called when the user clicks on the audio list item audio title or
+  /// subtitle. This switches to the AudioPlayerView screen without playing the
+  /// clicked audio.
   Future<void> _dragToAudioPlayerView({
     required AudioPlayerVM audioPlayerVMlistenFalse,
   }) async {
