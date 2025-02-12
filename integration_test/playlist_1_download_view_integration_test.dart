@@ -3806,9 +3806,9 @@ void main() {
 
       expect(copiedToPlaylistTitleTextWidget.data, '');
 
-      // Now find the ok button of the audio info dialog
+      // Now find the close button of the audio info dialog
       // and tap on it
-      await tester.tap(find.byKey(const Key('audio_info_ok_button_key')));
+      await tester.tap(find.byKey(const Key('audio_info_close_button_key')));
       await tester.pumpAndSettle();
 
       // Now verifying that the target audio can access to its copied
@@ -4315,9 +4315,9 @@ void main() {
 
       expect(copiedToPlaylistTitleTextWidget.data, '');
 
-      // Now find the ok button of the audio info dialog
+      // Now find the close button of the audio info dialog
       // and tap on it
-      await tester.tap(find.byKey(const Key('audio_info_ok_button_key')));
+      await tester.tap(find.byKey(const Key('audio_info_close_button_key')));
       await tester.pumpAndSettle();
 
       // Then, we try to move the audio already copied to the same
@@ -15290,7 +15290,7 @@ void main() {
       expect(audioFileNameTitleTextWidget.data, newFileName);
 
       // Tap the Ok button to close the audio info dialog
-      await tester.tap(find.byKey(const Key('audio_info_ok_button_key')));
+      await tester.tap(find.byKey(const Key('audio_info_close_button_key')));
       await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
@@ -15445,7 +15445,7 @@ void main() {
       expect(audioFileNameTitleTextWidget.data, newMp3FileName);
 
       // Tap the Ok button to close the audio info dialog
-      await tester.tap(find.byKey(const Key('audio_info_ok_button_key')));
+      await tester.tap(find.byKey(const Key('audio_info_close_button_key')));
       await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // The audio file we could not rename still access to its comment ...
@@ -15584,7 +15584,7 @@ void main() {
       expect(audioFileNameTitleTextWidget.data, initialFileName);
 
       // Tap the Ok button to close the audio info dialog
-      await tester.tap(find.byKey(const Key('audio_info_ok_button_key')));
+      await tester.tap(find.byKey(const Key('audio_info_close_button_key')));
       await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
@@ -15712,7 +15712,7 @@ void main() {
       expect(audioFileNameTitleTextWidget.data, initialFileName);
 
       // Tap the Ok button to close the audio info dialog
-      await tester.tap(find.byKey(const Key('audio_info_ok_button_key')));
+      await tester.tap(find.byKey(const Key('audio_info_close_button_key')));
       await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
@@ -15866,7 +15866,7 @@ void main() {
       expect(audioFileNameTitleTextWidget.data, initialFileName);
 
       // Tap the Ok button to close the audio info dialog
-      await tester.tap(find.byKey(const Key('audio_info_ok_button_key')));
+      await tester.tap(find.byKey(const Key('audio_info_close_button_key')));
       await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
@@ -16008,7 +16008,7 @@ void main() {
       expect(find.text('Audio title'), findsNothing);
 
       // Tap the Ok button to close the audio info dialog
-      await tester.tap(find.byKey(const Key('audio_info_ok_button_key')));
+      await tester.tap(find.byKey(const Key('audio_info_close_button_key')));
       await tester.pumpAndSettle();
 
       // Verifying that the comment of the audio displays the modified audio title
@@ -16158,7 +16158,7 @@ void main() {
       expect(find.text('Really short video'), findsNothing);
 
       // Tap the Close button to close the audio info dialog
-      await tester.tap(find.byKey(const Key('audio_info_ok_button_key')));
+      await tester.tap(find.byKey(const Key('audio_info_close_button_key')));
       await tester.pumpAndSettle();
 
       // Verifying that the comment of the audio displays the modified audio title
@@ -16308,7 +16308,7 @@ void main() {
       expect(find.text('Audio title'), findsNothing);
 
       // Tap the Ok button to close the audio info dialog
-      await tester.tap(find.byKey(const Key('audio_info_ok_button_key')));
+      await tester.tap(find.byKey(const Key('audio_info_close_button_key')));
       await tester.pumpAndSettle();
 
       // Verifying that the comment of the audio displays the modified audio title
@@ -16464,7 +16464,7 @@ void main() {
       expect(find.text('Audio title'), findsNothing);
 
       // Tap the Ok button to close the audio info dialog
-      await tester.tap(find.byKey(const Key('audio_info_ok_button_key')));
+      await tester.tap(find.byKey(const Key('audio_info_close_button_key')));
       await tester.pumpAndSettle();
 
       // Verifying that the comment of the audio displays the modified audio title
@@ -17993,9 +17993,9 @@ Future<Finder> _verifyAudioInfoDialog({
 
   expect(audioDurationTextWidget.data, audioDuration);
 
-  // Now find the ok button of the audio info dialog
+  // Now find the close button of the audio info dialog
   // and tap on it to close the dialog
-  await tester.tap(find.byKey(const Key('audio_info_ok_button_key')));
+  await tester.tap(find.byKey(const Key('audio_info_close_button_key')));
   await tester.pumpAndSettle();
 
   return targetAudioListTileWidgetFinder;
@@ -18460,8 +18460,8 @@ Future<void> _verifyAudioInfoDialogElements({
 
   expect(movedToPlaylistTitleTextWidget.data, movedAudioTargetPlaylistTitle);
 
-  // Now find the ok button of the audio info dialog
+  // Now find the close button of the audio info dialog
   // and tap on it
-  await tester.tap(find.byKey(const Key('audio_info_ok_button_key')));
+  await tester.tap(find.byKey(const Key('audio_info_close_button_key')));
   await tester.pumpAndSettle();
 }
