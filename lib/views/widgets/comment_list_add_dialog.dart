@@ -337,7 +337,8 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                       valueListenable:
                           audioPlayerVMlistenFalse.currentAudioPositionNotifier,
                       builder: (context, currentAudioPosition, child) {
-                        // When the current comment end position is reached, schedule a pause.
+                        // When the current comment end position is
+                        // reached, schedule a pause.
                         if (_playingComment != null &&
                             _playingComment == comment &&
                             (currentAudioPosition >=
