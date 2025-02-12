@@ -300,6 +300,10 @@ class AudioPlayerVM extends ChangeNotifier {
     //   await _audioPlayer!.pause();
     // }
 
+    if (_currentAudio == audio) {
+      return;
+    }
+
     if (_currentAudio != null && !_currentAudio!.isPaused) {
       _currentAudio!.isPaused = true;
       // saving the previous current audio state before changing
