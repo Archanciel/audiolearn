@@ -835,7 +835,6 @@ class AudioPlayerVM extends ChangeNotifier {
     if (_currentAudio !=
             null && // necessary to avoid the error when deleting a playing audio
         _currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd) {
-      print('****** pausing ${_currentAudio!.validVideoTitle} on line 834');
       _currentAudio!.isPaused = true;
       _currentAudio!.audioPositionSeconds = _currentAudioPosition.inSeconds;
       _currentAudio!.audioPausedDateTime = DateTime.now();
@@ -1227,10 +1226,8 @@ class AudioPlayerVM extends ChangeNotifier {
   void _setCurrentAudioToEndPosition() {
     // since the current audio is no longer playing, the isPaused
     // attribute is set to true
-    print('****** pausing ${_currentAudio!.validVideoTitle} on line 1226');
 
     _currentAudio!.isPaused = true;
-
     _currentAudio!.audioPausedDateTime = DateTime.now();
 
     // This should fix the problem when the application plays an audio
