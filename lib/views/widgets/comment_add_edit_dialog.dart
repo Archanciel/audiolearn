@@ -576,21 +576,16 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
           valueListenable:
               audioPlayerVMlistenFalse.currentAudioPositionNotifier,
           builder: (context, currentAudioPosition, child) {
-            // When the current comment end position is
-            // reached, schedule a pause.
-            if (currentAudioPosition >=
-                    Duration(
-                      milliseconds:
-                          widget.comment!.commentEndPositionInTenthOfSeconds *
-                              100,
-                    ) ||
-                // The 'or' test below is necessary to enable
-                // the pause of a comment whose end position
-                // is the same as the audio end position. For
-                // a reason I don't know, without this
-                // condition, playing such a comment on the
-                // Android smartphone does not call the
-                // audioPlayerVMlistenFalse.pause() method !
+
+            // When the current comment end position is reached,
+            // schedule a pause.
+            if (currentAudioPosition >= commentVMlistenFalse.currentCommentEndPosition ||
+                // The 'or' test below is necessary to enable the
+                // pause of a comment whose end position is the same
+                // as the audio end position. For a reason I don't
+                // know, without this condition, playing such a
+                // comment on the Android smartphone does not call
+                // the audioPlayerVMlistenFalse.pause() method !
                 currentAudioPosition >=
                     widget.commentableAudio.audioDuration -
                         const Duration(milliseconds: 1400)) {
