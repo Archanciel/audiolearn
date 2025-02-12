@@ -540,9 +540,10 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
       context: context,
       barrierDismissible:
           false, // This line prevents the dialog from closing when
-      //        tapping outside the dialog
-      // instanciating CommentAddEditDialog without
-      // passing a comment opens it in 'add' mode
+      //            tapping outside the dialog.
+
+      // Instanciating CommentAddEditDialog without passing a comment
+      // opens it in 'add' mode
       builder: (context) => CommentAddEditDialog(
         callerDialog: CallerDialog.commentListAddDialog,
         commentableAudio: currentAudio,
