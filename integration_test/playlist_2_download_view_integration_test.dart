@@ -11561,9 +11561,9 @@ Future<void> _verifyDateFormatApplication({
     audioDownloadDateTime,
   );
 
-  // Now find the ok button of the audio info dialog
+  // Now find the close button of the audio info dialog
   // and tap on it
-  await tester.tap(find.byKey(const Key('audio_info_ok_button_key')));
+  await tester.tap(find.byKey(const Key('audio_info_close_button_key')));
   await tester.pumpAndSettle();
 
   // Tap the 'Toggle List' button to display the list of playlist's.
@@ -12535,9 +12535,9 @@ Future<Finder> verifyAudioInfoDialog({
 
   expect(audioDurationTextWidget.data, audioDuration);
 
-  // Now find the ok button of the audio info dialog
+  // Now find the close button of the audio info dialog
   // and tap on it to close the dialog
-  await tester.tap(find.byKey(const Key('audio_info_ok_button_key')));
+  await tester.tap(find.byKey(const Key('audio_info_close_button_key')));
   await tester.pumpAndSettle();
 
   return targetAudioListTileWidgetFinder;
