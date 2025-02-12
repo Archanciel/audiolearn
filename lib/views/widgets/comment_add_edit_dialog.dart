@@ -581,14 +581,21 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
       context,
       listen: false,
     );
+    // Retrieve AudioPlayerVM without listening so that we can use its other values.
+    final AudioPlayerVM audioPlayerVM = Provider.of<AudioPlayerVM>(
+      context,
+      listen: false,
+    );
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Consumer<AudioPlayerVM>(
-          builder: (context, audioPlayerVM, child) {
-            String currentAudioPositionStr = audioPlayerVM.currentAudioPosition
-                .HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true);
+        ValueListenableBuilder<Duration>(
+          valueListenable: audioPlayerVM.currentAudioPositionNotifier,
+          builder: (context, currentAudioPosition, child) {
+            // Format the current audio position using your custom extension function.
+            String currentAudioPositionStr = currentAudioPosition.HHmmssZeroHH(
+                addRemainingOneDigitTenthOfSecond: true);
             return Tooltip(
               message: AppLocalizations.of(context)!
                   .updateCommentStartEndPositionTooltip,
@@ -602,15 +609,16 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                   ),
                   padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
                     const EdgeInsets.symmetric(
-                        horizontal: kSmallButtonInsidePadding, vertical: 0),
+                      horizontal: kSmallButtonInsidePadding,
+                      vertical: 0,
+                    ),
                   ),
                   overlayColor: textButtonTapModification, // Tap feedback color
                 ),
                 onPressed: () {
                   showDialog<List<String>>(
                     barrierDismissible:
-                        false, // This line prevents the dialog from closing when
-                    //            tapping outside the dialog
+                        false, // Prevents the dialog from closing when tapping outside.
                     context: context,
                     builder: (BuildContext context) {
                       return SetValueToTargetDialog(
@@ -629,59 +637,45 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                         ],
                         validationFunction: validateEnteredValueFunction,
                         validationFunctionArgs: [
-                          // This duration String is returned if the user
-                          // emptied the position field, checked the start
-                          // checkbox and clicked on the OK button. This
-                          // test is done in the function
-                          // SetValueToTargetDialog._createResultList().
+                          // This duration string is used if the user empties the position field.
                           '0:00.0',
-                          // This duration String is returned if the user
-                          // emptied the position field, checked the end
-                          // checkbox and clicked on the OK button. This
-                          // test is done in the function
-                          // SetValueToTargetDialog._createResultList().
+                          // Uses the total duration from audioPlayerVM.
                           audioPlayerVM.currentAudioTotalDuration.HHmmssZeroHH(
-                              addRemainingOneDigitTenthOfSecond: true),
+                            addRemainingOneDigitTenthOfSecond: true,
+                          ),
                         ],
                       );
                     },
                   ).then((resultStringLst) {
                     if (resultStringLst == null) {
-                      // the case if the Cancel button was pressed
+                      // The case if the Cancel button was pressed.
                       return;
                     }
 
                     String positionStr = resultStringLst[0];
                     String checkboxIndexStr = resultStringLst[1];
                     Duration positionDuration = Duration(
-                        milliseconds: DateTimeUtil.convertToTenthsOfSeconds(
-                                timeString: positionStr) *
-                            100);
+                      milliseconds: DateTimeUtil.convertToTenthsOfSeconds(
+                            timeString: positionStr,
+                          ) *
+                          100,
+                    );
 
                     if (checkboxIndexStr == '0') {
-                      // the case if the Comment Start Position checkbox was
-                      // checked
+                      // The case when the Comment Start Position checkbox is checked.
                       commentVMlistenFalse.currentCommentStartPosition =
                           positionDuration;
                     } else {
-                      // the case if the Comment End Position checkbox was
-                      // checked
+                      // The case when the Comment End Position checkbox is checked.
                       commentVMlistenFalse.currentCommentEndPosition =
                           positionDuration;
                     }
 
-                    // Updating the changed position display format to
-                    // the format of the provided position
+                    // Updating the display format according to the provided position.
                     int pointPosition = positionStr.indexOf('.');
-
                     if (pointPosition != -1) {
-                      // the case if the position is formatted with a tenth
-                      // of a second value (e.g. 00:00:00.0)
-                      if (positionStr.substring(
-                              pointPosition + 1, positionStr.length) !=
-                          '0') {
-                        // in this situation, the changed position is
-                        // displayed withwitha tenth of a second format
+                      // If the position contains a tenth of a second (e.g., 00:00:00.0).
+                      if (positionStr.substring(pointPosition + 1) != '0') {
                         if (checkboxIndexStr == '0') {
                           _commentStartPositionChangedInTenthOfSeconds = true;
                         } else if (checkboxIndexStr == '1') {
@@ -827,7 +821,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
     await audioPlayerVM.modifyAudioPlayerPosition(
         durationPosition: commentVMlistenFalse.currentCommentEndPosition -
             const Duration(milliseconds: 4000), // will play comment starting
-            //                                     4 sec before new end position
+        //                                     4 sec before new end position
         isUndoCommandToAdd: true);
 
     await audioPlayerVM.playCurrentAudio(
