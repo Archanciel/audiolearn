@@ -582,7 +582,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
       listen: false,
     );
     // Retrieve AudioPlayerVM without listening so that we can use its other values.
-    final AudioPlayerVM audioPlayerVM = Provider.of<AudioPlayerVM>(
+    final AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
       context,
       listen: false,
     );
@@ -591,8 +591,35 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ValueListenableBuilder<Duration>(
-          valueListenable: audioPlayerVM.currentAudioPositionNotifier,
+          valueListenable:
+              audioPlayerVMlistenFalse.currentAudioPositionNotifier,
           builder: (context, currentAudioPosition, child) {
+            // When the current comment end position is
+            // reached, schedule a pause.
+            if (currentAudioPosition >=
+                    Duration(
+                      milliseconds:
+                          widget.comment!.commentEndPositionInTenthOfSeconds *
+                              100,
+                    ) ||
+                // The 'or' test below is necessary to enable
+                // the pause of a comment whose end position
+                // is the same as the audio end position. For
+                // a reason I don't know, without this
+                // condition, playing such a comment on the
+                // Android smartphone does not call the
+                // audioPlayerVMlistenFalse.pause() method !
+                currentAudioPosition >=
+                    widget.commentableAudio.audioDuration -
+                        const Duration(milliseconds: 1400)) {
+              // You cannot await here, but you can trigger an
+              // action which will not block the widget tree
+              // rendering.
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                audioPlayerVMlistenFalse.pause();
+              });
+            }
+
             // Format the current audio position using your custom extension function.
             String currentAudioPositionStr = currentAudioPosition.HHmmssZeroHH(
                 addRemainingOneDigitTenthOfSecond: true);
@@ -640,7 +667,8 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                           // This duration string is used if the user empties the position field.
                           '0:00.0',
                           // Uses the total duration from audioPlayerVM.
-                          audioPlayerVM.currentAudioTotalDuration.HHmmssZeroHH(
+                          audioPlayerVMlistenFalse.currentAudioTotalDuration
+                              .HHmmssZeroHH(
                             addRemainingOneDigitTenthOfSecond: true,
                           ),
                         ],
