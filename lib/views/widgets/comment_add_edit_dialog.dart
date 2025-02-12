@@ -181,16 +181,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                             if (audioPlayerVMlistenFalse.isPlaying) {
                               await audioPlayerVMlistenFalse.pause();
 
-                              // Modify the end audio position if the end
-                              // audio position is before or equal to the
-                              // current audio position.
-                              //
-                              // In the situation when a new comment is
-                              // created, it is useful to set the end audio
-                              // position as the current audio play position
-                              // when the user clicks on the pause button after
-                              // having left the application play the audio
-                              // till the comment end position.
+                              // Modify the end audio position if the end audio position is before or equal to the current audio position.
                               if (commentVMlistenFalse
                                       .currentCommentEndPosition <=
                                   commentVMlistenFalse
@@ -200,60 +191,50 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                                         .currentAudioPosition;
                               }
                             } else {
-                              // comment is not playing
+                              // The audio is not playing.
                               _playButtonWasClicked = true;
                               _commentEndPositionIsModified = false;
 
                               await _playFromCommentStartPosition(
-                                  audioPlayerVM: audioPlayerVMlistenFalse,
-                                  commentVMlistenFalse: commentVMlistenFalse);
+                                audioPlayerVM: audioPlayerVMlistenFalse,
+                                commentVMlistenFalse: commentVMlistenFalse,
+                              );
                             }
                           },
                           style: ButtonStyle(
-                            // Highlight button when pressed
+                            // Highlight button when pressed.
                             padding:
                                 WidgetStateProperty.all<EdgeInsetsGeometry>(
                               const EdgeInsets.symmetric(
-                                  horizontal: kSmallButtonInsidePadding,
-                                  vertical: 0),
+                                horizontal: kSmallButtonInsidePadding,
+                                vertical: 0,
+                              ),
                             ),
                             overlayColor:
-                                iconButtonTapModification, // Tap feedback color
+                                iconButtonTapModification, // Tap feedback color.
                           ),
-                          icon: Consumer<AudioPlayerVM>(
-                            // Setting the icon as Consumer of AudioPlayerVM
-                            // enables the icon to change according to the
-                            // audio player VM state.
-                            //
-                            // Additionally, the code below ensures that the
-                            // audio player is paused when the current comment
-                            // end audio position is reached.
-                            builder: (context, audioPlayerVMlistenTrue, child) {
+                          icon: ValueListenableBuilder<bool>(
+                            valueListenable: audioPlayerVMlistenFalse
+                                .currentAudioPlayPauseNotifier,
+                            builder: (context, isPlaying, child) {
+                              // Evaluate and adjust play/pause state based on the current audio position.
                               if (!_commentEndPositionIsModified) {
                                 if (commentVMlistenFalse
                                         .currentCommentEndPosition >
                                     commentVMlistenFalse
                                         .currentCommentStartPosition) {
-                                  // situation in which the current comment end
-                                  // audio position was set
-                                  if (audioPlayerVMlistenTrue
+                                  if (audioPlayerVMlistenFalse
                                           .currentAudioPosition >=
                                       commentVMlistenFalse
                                           .currentCommentEndPosition) {
-                                    // here, the audio player reached the
-                                    // current comment end audio position
                                     if (_playButtonWasClicked) {
-                                      // if the audio player was stopped after
-                                      // reaching the current comment end audio,
-                                      // the user must be able to play the audio
-                                      // again from the current comment audio
-                                      // start position
+                                      // Allow playback to be restarted from the comment's start position.
                                       _playButtonWasClicked = false;
                                     } else {
-                                      audioPlayerVMlistenTrue.pause().then((_) {
-                                        // enables the user to play the audio again
-                                        // from the current comment audio start
-                                        // position
+                                      // Pause the audio and update the flag.
+                                      audioPlayerVMlistenFalse
+                                          .pause()
+                                          .then((_) {
                                         _playButtonWasClicked = true;
                                       });
                                     }
@@ -264,30 +245,31 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                                         .currentCommentEndPosition >
                                     commentVMlistenFalse
                                         .currentCommentStartPosition) {
-                                  // situation in which the current comment end
-                                  // audio position was set
-                                  if (audioPlayerVMlistenTrue
+                                  if (audioPlayerVMlistenFalse
                                           .currentAudioPosition >=
                                       commentVMlistenFalse
                                           .currentCommentEndPosition) {
-                                    // here, the audio player reached the
-                                    // current comment end audio position
-                                    audioPlayerVMlistenTrue
-                                        .pause()
-                                        .then((value) => null);
+                                    // You cannot await here, but you can
+                                    // trigger an action which will not
+                                    // block the widget tree rendering.
+                                    //
+                                    // Pause the audio when the current
+                                    // comment end position is reached.
+                                    WidgetsBinding.instance
+                                        .addPostFrameCallback((_) {
+                                      audioPlayerVMlistenFalse.pause();
+                                    });
                                   }
                                 }
                               }
 
-                              return Icon(audioPlayerVMlistenTrue.isPlaying
-                                  ? Icons.pause
-                                  : Icons.play_arrow);
+                              return Icon(
+                                  isPlaying ? Icons.pause : Icons.play_arrow);
                             },
                           ),
                           iconSize: kUpDownButtonSize - 10,
                           constraints:
-                              const BoxConstraints(), // Ensure the button
-                          //                         takes minimal space
+                              const BoxConstraints(), // Ensures the button takes minimal space.
                         ),
                       ],
                     ),
