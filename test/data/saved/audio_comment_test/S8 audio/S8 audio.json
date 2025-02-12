@@ -507,7 +507,7 @@
             "copiedToPlaylistTitle": null,
             "isAudioMusicQuality": false,
             "isPaused": true,
-            "isPlayingOrPausedWithPositionBetweenAudioStartAndEnd": false,
+            "isPlayingOrPausedWithPositionBetweenAudioStartAndEnd": true,
             "movedFromPlaylistTitle": null,
             "movedToPlaylistTitle": null,
             "originalVideoTitle": "La surpopulation mondiale par Jancovici et Barrau",
