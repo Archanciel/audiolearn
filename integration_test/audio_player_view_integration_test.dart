@@ -5540,7 +5540,8 @@ void main() {
         tester: tester,
         sourcePlaylistTitle: youtubePlaylistTitle,
         targetPlaylistTitle: emptyPlaylistTitle,
-        audioToCopyTitle: uncommentedAudioTitle,
+        audioToCopyTitle: uncommentedAudioTitle, // "La surpopulation mondiale
+        //                                           par Jancovici et Barrau"
       );
 
       // Now we want to tap on the copied uncommented audio in the
@@ -5559,7 +5560,9 @@ void main() {
       final Finder audioTitleNotYetCommentedFinder =
           find.text(uncommentedAudioTitle);
       await tester.tap(audioTitleNotYetCommentedFinder);
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // Ensure that the comment playlist directory does not exist
       final Directory directory = Directory(
@@ -5633,7 +5636,11 @@ void main() {
       );
 
       // Verify audio title displayed in the comment dialog
-      expect(find.text(uncommentedAudioTitle), findsOneWidget);
+      expect(
+        find.text(uncommentedAudioTitle),
+        findsOneWidget, // "La surpopulation mondiale par Jancovici
+        //                  et Barrau"
+      );
 
       // Verify the initial comment position displayed in the
       // comment start and end positions in the comment dialog.
