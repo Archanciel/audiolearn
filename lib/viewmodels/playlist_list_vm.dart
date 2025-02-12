@@ -2430,11 +2430,12 @@ class PlaylistListVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Method called when the user clicks on the 'Save playlist and comments to
-  /// zip' menu item located in the appbar leading popup menu.
+  /// Method called when the user clicks on the 'Save Playlist and Comments to
+  /// Zip File' menu item located in the appbar leading popup menu.
   ///
   /// Returns the saved zip file path name, '' if the playlists source dir or the
-  /// zip save to target dir do not exist.
+  /// zip save to target dir do not exist. The returned value is only used in
+  /// the playlistListVM unit test.
   Future<String> savePlaylistsCommentsAndSettingsJsonFilesToZip({
     required String targetDirectoryPath,
   }) async {
@@ -2506,6 +2507,20 @@ class PlaylistListVM extends ChangeNotifier {
     zipFile.writeAsBytesSync(ZipEncoder().encode(archive), flush: true);
 
     return zipFilePathName;
+  }
+
+  /// Method called when the user clicks on the 'Restore Playlist and Comments from
+  /// Zip File' menu item located in the appbar leading popup menu.
+  ///
+  /// Returns the zip file path name from which the playlist, comments and the
+  /// application settings will be restored, '' if the playlists source dir or the
+  /// zip save to target dir do not exist.  The returned value is only used in
+  /// the playlistListVM unit test.
+  Future<String> restorePlaylistsCommentsAndSettingsJsonFilesFromZip({
+    required String zipFilePathName,
+  }) async {
+
+    return '';
   }
 
   /// Method called when the user clicks on the 'Rewind audio to start' playlist

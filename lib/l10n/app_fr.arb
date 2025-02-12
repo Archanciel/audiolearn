@@ -457,7 +457,7 @@
   "searchInYoutubeChannelName": "Inclure la chaîne Youtube",
   "searchInYoutubeChannelNameTooltip": "Inclure le nom de la chaîne Youtube dans la recherche.",
   "savePlaylistAndCommentsToZipMenu": "Sauver les playlists et les commentaires dans un fichier zip",
-  "savePlaylistAndCommentsToZipTooltip": "Sauvegarde des playlists et les commentaires dans un fichier zip. Seuls les fichiers json sont copiés. Les fichiers audio ne sont pas inclus.",
+  "savePlaylistAndCommentsToZipTooltip": "Sauvegarde les playlists, les commentaires ainsi que le fichier settings.json contenant les paramètres de l'application dans un fichier zip. Seuls les fichiers json sont copiés. Les fichiers audio ne sont pas inclus.",
   "setYoutubeChannelMenu": "Youtube channel définition",
   "confirmYoutubeChannelModifications": "La chaîne Youtube a été définie dans {numberOfModifiedDownloadedAudio} audio téléchargés ainsi que dans {numberOfModifiedPlayableAudio} audio écoutables.",
   "@confirmYoutubeChannelModifications": {
@@ -740,5 +740,7 @@
   "savedAppDataToZip": "Fichiers json des playlists et paramètres de l'application sauvagardés dans \"{filePathName}\".",
   "appDataCouldNotBeSavedToZip": "Les fichiers json des playlists et les paramètres de l'application n'ont pu être sauvagardés dans un zip !",
   "pictured": "Avec photo",
-  "notPictured": "Sans ph."
+  "notPictured": "Sans ph.",
+  "restorePlaylistAndCommentsFromZipMenu": "Restaurer les playlists et les commentaires depuis un fichier zip",
+  "restorePlaylistAndCommentsFromZipTooltip": "Restaure les playlists et les commentaires à partir d'un fichier zip préalablement sauvé. Seuls les fichiers json sont restaurés. Les fichiers audio n'étant pas inclus dans le fichier zip, ils ne sont pas restaurés."
 }

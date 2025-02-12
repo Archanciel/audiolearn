@@ -62,7 +62,7 @@ class UiUtil {
     return [Colors.white, Colors.blue];
   }
 
-  static Future<void> savePlaylistAndCommentsToZip({
+  static Future<void> savePlaylistsCommentsAndAppSettingsToZip({
     required BuildContext context,
   }) async {
     String? targetSaveDirectoryPath = await filePickerSelectTargetDir();
@@ -79,6 +79,23 @@ class UiUtil {
     );
   }
 
+  static Future<void> restorePlaylistsCommentsAndAppSettingsFromZip({
+    required BuildContext context,
+  }) async {
+    String selectedZipFilePathName = await filePickerSelectZipFilePathName();
+
+    if (selectedZipFilePathName.isEmpty) {
+      return;
+    }
+
+    await Provider.of<PlaylistListVM>(
+      context,
+      listen: false,
+    ).restorePlaylistsCommentsAndSettingsJsonFilesFromZip(
+      zipFilePathName: selectedZipFilePathName,
+    );
+  }
+
   static Future<String?> filePickerSelectTargetDir() async {
     return await FilePicker.platform.getDirectoryPath();
   }
@@ -87,6 +104,21 @@ class UiUtil {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['jpg'],
+      allowMultiple: false,
+      initialDirectory: DirUtil.getApplicationPath(),
+    );
+
+    if (result != null && result.files.isNotEmpty) {
+      return result.files.first.path ?? '';
+    }
+
+    return '';
+  }
+
+  static Future<String> filePickerSelectZipFilePathName() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['zip'],
       allowMultiple: false,
       initialDirectory: DirUtil.getApplicationPath(),
     );

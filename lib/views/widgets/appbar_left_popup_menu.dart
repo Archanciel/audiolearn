@@ -27,7 +27,7 @@ enum AppBarPopupMenu {
   enableNextAudioAutoPlay,
   updatePlaylistJson,
   savePlaylistAndCommentsToZip,
-  setYoutubeChannel,
+  restorePlaylistAndCommentsFromZip,
 }
 
 /// The AppBarLeadingPopupMenuWidget is used to display the leading
@@ -624,6 +624,16 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                   .savePlaylistAndCommentsToZipMenu),
             ),
           ),
+          PopupMenuItem<AppBarPopupMenu>(
+            key: const Key('appBarMenuRestorePlaylistsAndCommentsFromZip'),
+            value: AppBarPopupMenu.restorePlaylistAndCommentsFromZip,
+            child: Tooltip(
+              message: AppLocalizations.of(context)!
+                  .restorePlaylistAndCommentsFromZipTooltip,
+              child: Text(AppLocalizations.of(context)!
+                  .restorePlaylistAndCommentsFromZipMenu),
+            ),
+          ),
         ];
       },
       icon: const Icon(Icons.menu),
@@ -658,7 +668,12 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
             ).updateSettingsAndPlaylistJsonFiles();
             break;
           case AppBarPopupMenu.savePlaylistAndCommentsToZip:
-            await UiUtil.savePlaylistAndCommentsToZip(
+            await UiUtil.savePlaylistsCommentsAndAppSettingsToZip(
+              context: context,
+            );
+            break;
+          case AppBarPopupMenu.restorePlaylistAndCommentsFromZip:
+            await UiUtil.restorePlaylistsCommentsAndAppSettingsFromZip(
               context: context,
             );
             break;
