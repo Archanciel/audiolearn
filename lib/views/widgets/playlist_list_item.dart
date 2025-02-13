@@ -40,9 +40,10 @@ enum PlaylistPopupMenuAction {
 }
 
 enum FilteredAudioAction {
-  deleteFilteredAudio,
   moveFilteredAudio,
   copyFilteredAudio,
+  deleteFilteredAudio,
+  deleteFilteredAudioFromPlaylistAsWell,
 }
 
 /// This widget is used to display a playlist in the
@@ -472,6 +473,11 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
           value: FilteredAudioAction.deleteFilteredAudio,
           child: Text(AppLocalizations.of(context)!.deleteFilteredAudio),
         ),
+        PopupMenuItem<FilteredAudioAction>(
+          key: const Key('popup_menu_delete_filtered_audio'),
+          value: FilteredAudioAction.deleteFilteredAudioFromPlaylistAsWell,
+          child: Text(AppLocalizations.of(context)!.deleteFilteredAudioFromPlaylistAsWell),
+        ),
       ],
     ).then((action) {
       if (action != null) {
@@ -662,7 +668,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                 //            tapping outside the dialog
                 builder: (BuildContext context) {
                   return ConfirmActionDialog(
-                    actionFunction: deleteFilteredAudio,
+                    actionFunction: deleteFilteredAudioAndCommentAndPictureLst,
                     actionFunctionArgs: [
                       playlistListVMlistenTrue,
                     ],
@@ -740,7 +746,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                 //            tapping outside the dialog
                 builder: (BuildContext context) {
                   return ConfirmActionDialog(
-                    actionFunction: deleteFilteredAudio,
+                    actionFunction: deleteFilteredAudioAndCommentAndPictureLst,
                     actionFunctionArgs: [
                       playlistListVMlistenTrue,
                     ],
@@ -768,6 +774,61 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                 },
               );
             }
+            break;
+          case FilteredAudioAction.deleteFilteredAudioFromPlaylistAsWell:
+            // Content of the list:
+            //  [
+            //    numberOfDeletedAudio,
+            //    numberOfDeletedCommentedAudio,
+            //    deletedAudioFileSizeBytes,
+            //    deletedAudioDurationTenthSec,
+            //  ]
+            List<int> deletedAudioNumberLst =
+                playlistListVMlistenTrue.getFilteredAudioQuantities();
+            String selectedPlaylistAudioSortFilterParmsName =
+                playlistListVMlistenTrue
+                    .getSelectedPlaylistAudioSortFilterParmsNameForView(
+                        audioLearnAppViewType:
+                            AudioLearnAppViewType.playlistDownloadView,
+                        translatedAppliedSortFilterParmsName:
+                            AppLocalizations.of(context)!
+                                .sortFilterParametersAppliedName);
+
+            if (selectedPlaylistAudioSortFilterParmsName.isEmpty) {
+              selectedPlaylistAudioSortFilterParmsName =
+                  AppLocalizations.of(context)!.sortFilterParametersDefaultName;
+            }
+
+              showDialog<void>(
+                context: context,
+                barrierDismissible:
+                    false, // This line prevents the dialog from closing when
+                //            tapping outside the dialog
+                builder: (BuildContext context) {
+                  return ConfirmActionDialog(
+                    actionFunction: deleteFilteredAudioLstFromPlaylistAsWell,
+                    actionFunctionArgs: [
+                      playlistListVMlistenTrue,
+                    ],
+                    dialogTitleOne: AppLocalizations.of(context)!
+                        .deleteFilteredAudioFromPlaylistAsWellConfirmationTitle(
+                      selectedPlaylistAudioSortFilterParmsName,
+                      playlistListVMlistenTrue.getSelectedPlaylists()[0].title,
+                    ),
+                    dialogContent: AppLocalizations.of(context)!
+                        .deleteFilteredAudioConfirmation(
+                      deletedAudioNumberLst[0], // total audio number
+                      UiUtil.formatLargeSizeToKbOrMb(
+                        context: context,
+                        sizeInBytes: deletedAudioNumberLst[2],
+                      ), // total audio file size
+                      DateTimeUtil.formatSecondsToHHMMSS(
+                        seconds: deletedAudioNumberLst[3] ~/ 10,
+                      ), // total audio duration
+                    ),
+                  );
+                },
+              );
             break;
         }
       }
@@ -832,10 +893,20 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
   /// which, in this case, asks the user to confirm the deletion of
   /// filtered audio from the playlist. This method is called when the
   /// user clicks on the 'Confirm' button.
-  void deleteFilteredAudio(
+  void deleteFilteredAudioAndCommentAndPictureLst(
     PlaylistListVM playlistListVM,
   ) {
     playlistListVM.deleteSortFilteredAudioAndCommentAndPictureLst();
+  }
+
+  /// Public method passed as parameter to the ActionConfirmDialog
+  /// which, in this case, asks the user to confirm the deletion of
+  /// filtered audio from the playlist as well. This method is called
+  /// when the user clicks on the 'Confirm' button.
+  void deleteFilteredAudioLstFromPlaylistAsWell(
+    PlaylistListVM playlistListVM,
+  ) {
+    playlistListVM.deleteSortFilteredAudioLstFromPlaylistAsWell();
   }
 
   /// Public method passed as parameter to the ActionConfirmDialog

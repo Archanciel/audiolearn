@@ -915,8 +915,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// which select fully listened audio which are not commented. With this filter
   /// parameters applied to the playlist, using the playlist menu 'Delete Filtered
   /// Audio ...' deletes the audio files and removes the deleted audio from the
-  /// playlist playable audio list. The deleted audio remain in the playlist
-  /// downloaded audio list and so will not be redownloaded !
+  /// playlist playable audio list.
   void deleteSortFilteredAudioAndCommentAndPictureLst() {
     List<Audio> filteredAudioToDelete =
         _sortedFilteredSelectedPlaylistPlayableAudioLst!;
@@ -936,6 +935,24 @@ class PlaylistListVM extends ChangeNotifier {
         audio: audio,
       );
     }
+
+    notifyListeners();
+  }
+
+  /// This method is called when the user executes the playlist submenu 'Delete
+  /// Filtered Audio ...' after having selected (and defined) a named Sort/Filter
+  /// parameters. For example, it makes sense to define a filter only parameters
+  /// which select fully listened audio which are not commented. With this filter
+  /// parameters applied to the playlist, using the playlist menu 'Delete Filtered
+  /// Audio from Playlist as well ...' deletes the audio files and removes the deleted audio from the
+  /// playlist playable audio list.
+  void deleteSortFilteredAudioLstFromPlaylistAsWell() {
+    List<Audio> filteredAudioToDelete =
+        _sortedFilteredSelectedPlaylistPlayableAudioLst!;
+
+    _audioDownloadVM.deleteAudioLstPhysicallyAndFromDownloadedAndPlayableLst(
+      audioToDeleteLst: filteredAudioToDelete,
+    );
 
     notifyListeners();
   }
