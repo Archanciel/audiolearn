@@ -474,7 +474,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
           child: Text(AppLocalizations.of(context)!.deleteFilteredAudio),
         ),
         PopupMenuItem<FilteredAudioAction>(
-          key: const Key('popup_menu_delete_filtered_audio'),
+          key: const Key('popup_menu_delete_filtered_audio_from_playlist_as_well'),
           value: FilteredAudioAction.deleteFilteredAudioFromPlaylistAsWell,
           child: Text(AppLocalizations.of(context)!
               .deleteFilteredAudioFromPlaylistAsWell),
