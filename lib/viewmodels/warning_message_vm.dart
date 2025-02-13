@@ -168,9 +168,13 @@ enum WarningMessageType {
   // the copy audio to playlist menu item and the audio was copied
   // from the source playlist to the target playlist.
 
-  savedAppDataToZip, // The case if the user clicks on the 'Save playlist
-  // and comments to zip' menu item located in the appbar leading
-  // popup menu.
+  savedAppDataToZip, // The case if the user clicks on the 'Save
+  // Playlist and Comments to Zip File' menu item located in the
+  // appbar leading popup menu.
+
+  restoreAppDataFromZip, // The case if the user clicks on the
+  // 'Restore Playlist and Comments from Zip File' menu item located
+  // in the appbar leading popup menu.
 
   audioNotImportedToPlaylist, // The case if the user clicks on
   // the import audio to playlist menu item and the audio was not
@@ -813,6 +817,17 @@ class WarningMessageVM extends ChangeNotifier {
     _zipFilePathName = zipFilePathName;
 
     warningMessageType = WarningMessageType.savedAppDataToZip;
+
+    // Causes the display warning message widget to be displayed.
+    notifyListeners();
+  }
+
+  void confirmRestorationFromZip({
+    required String zipFilePathName,
+  }) {
+    _zipFilePathName = zipFilePathName;
+
+    warningMessageType = WarningMessageType.restoreAppDataFromZip;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();

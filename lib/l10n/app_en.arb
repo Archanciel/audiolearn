@@ -751,10 +751,12 @@
   "addPrivateYoutubePlaylist": "Trying to add a private Youtube playlist is not possible since the audio's of a private playlist can not be downloaded. To solve the problem, edit the playlist on Youtube and change its visibility from \"Private\" to \"Unlisted\" or to \"Public\" and then re-add it to the application.",
   "addAudioPicture": "Add Audio Picture ...",
   "removeAudioPicture": "Remove Audio Picture",
-  "savedAppDataToZip": "Saved playlist json files and application settings to \"{filePathName}\".",
-  "appDataCouldNotBeSavedToZip": "Playlist json files and application settings could not be saved to zip.",
+  "savedAppDataToZip": "Saved playlist and comment json files as well as application settings to \"{filePathName}\".",
+  "appDataCouldNotBeSavedToZip": "Playlist and comment json files as well as application settings could not be saved to zip.",
   "pictured": "Pictured",
   "notPictured": "Unpic.",
   "restorePlaylistAndCommentsFromZipMenu": "Restore Playlists and Comments from Zip File",
-  "restorePlaylistAndCommentsFromZipTooltip": "Restoring the playlists and their audio comments from a saved zip file. The zip file contains the playlists JSON files as well as the comments JSON files. The audio files are not included in it."
+  "restorePlaylistAndCommentsFromZipTooltip": "Restoring the playlists and their audio comments from a saved zip file. The zip file contains the playlists JSON files as well as the comments JSON files. The audio files are not included in it.",
+  "restoredAppDataFromZip": "Restored playlist and comment json files as well as application settings from \"{filePathName}\".",
+  "appDataCouldNotBeRestoredFromZip": "Playlist and comment json files as well as application settings could not be restored from zip."
 }
