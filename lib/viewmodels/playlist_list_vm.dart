@@ -2439,7 +2439,7 @@ class PlaylistListVM extends ChangeNotifier {
   Future<String> savePlaylistsCommentsAndSettingsJsonFilesToZip({
     required String targetDirectoryPath,
   }) async {
-    String savedZipFilePathName = await _zipDirectory(
+    String savedZipFilePathName = await _saveToZip(
       targetDir: targetDirectoryPath,
     );
 
@@ -2452,7 +2452,7 @@ class PlaylistListVM extends ChangeNotifier {
 
   // Returns the saved zip file path name, '' if the playlists source dir or the
   // zip save to target dir do not exist.
-  Future<String> _zipDirectory({
+  Future<String> _saveToZip({
     required String targetDir,
   }) async {
     String playlistsRootPath = _settingsDataService.get(
@@ -2470,7 +2470,7 @@ class PlaylistListVM extends ChangeNotifier {
     final archive = Archive();
 
     // Traverse the source directory and find matching files
-    await for (var entity
+    await for (FileSystemEntity entity
         in sourceDir.list(recursive: true, followLinks: false)) {
       if (entity is File && path.extension(entity.path) == '.json') {
         String relativePath = path.relative(entity.path, from: applicationPath);
@@ -2513,14 +2513,70 @@ class PlaylistListVM extends ChangeNotifier {
   /// Zip File' menu item located in the appbar leading popup menu.
   ///
   /// Returns the zip file path name from which the playlist, comments and the
-  /// application settings will be restored, '' if the playlists source dir or the
-  /// zip save to target dir do not exist.  The returned value is only used in
-  /// the playlistListVM unit test.
+  /// application settings will be restored, '' if the zip file does not exist.
+  /// The returned value is only used in the playlistListVM unit test.
   Future<String> restorePlaylistsCommentsAndSettingsJsonFilesFromZip({
     required String zipFilePathName,
   }) async {
+    String savedZipFilePathName = await _restoreFromZip(
+      zipFilePathName: zipFilePathName,
+    );
 
-    return '';
+    // Optionally, display a confirmation message to the user.
+    _warningMessageVM.confirmRestorationFromZip(
+        zipFilePathName: zipFilePathName);
+
+    // Return the zip file path name used for restoration.
+    return zipFilePathName;
+  }
+
+  Future<String> _restoreFromZip({
+    required String zipFilePathName,
+  }) async {
+    // Check if the provided zip file exists.
+    final File zipFile = File(zipFilePathName);
+
+    if (!zipFile.existsSync()) {
+      return '';
+    }
+
+    // Retrieve the application path.
+    final String applicationPath = DirUtil.getApplicationPath();
+
+    // Read the entire zip file as bytes.
+    final List<int> zipBytes = await zipFile.readAsBytes();
+
+    // Decode the zip archive.
+    final Archive archive = ZipDecoder().decodeBytes(zipBytes);
+
+    // Iterate over each file in the archive.
+    for (final ArchiveFile archiveFile in archive) {
+      // Skip directories.
+      if (!archiveFile.isFile) continue;
+
+      // Compute the destination path by joining the application path
+      // with the relative path stored in the archive.
+      // Note: The relative path may include '..' segments which will be normalized.
+      final String destinationPath =
+          path.normalize(path.join(applicationPath, archiveFile.name));
+
+      // Ensure the destination directory exists.
+      final Directory destinationDir = Directory(path.dirname(destinationPath));
+
+      if (!destinationDir.existsSync()) {
+        await destinationDir.create(recursive: true);
+      }
+
+      // Write the file's bytes to the computed destination.
+      final File outputFile = File(destinationPath);
+
+      await outputFile.writeAsBytes(
+        archiveFile.content as List<int>,
+        flush: true,
+      );
+    }
+
+    return zipFilePathName;
   }
 
   /// Method called when the user clicks on the 'Rewind audio to start' playlist
