@@ -1796,4 +1796,33 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get notPictured => "Unpic.";
+
+  @override
+  String get restorePlaylistAndCommentsFromZipMenu =>
+      "Restore Playlists and Comments from Zip File";
+
+  @override
+  String get restorePlaylistAndCommentsFromZipTooltip =>
+      "Restoring the playlists and their audio comments from a saved zip file. The zip file contains the playlists JSON files as well as the comments JSON files. The audio files are not included in it.";
+
+  @override
+  String restoredAppDataFromZip(
+    Object filePathName,
+  ) =>
+      "Restored playlist and comment json files as well as application settings from \"$filePathName\".";
+
+  @override
+  String get appDataCouldNotBeRestoredFromZip =>
+      "Playlist and comment json files as well as application settings could not be restored from zip.";
+
+  @override
+  String deleteFilteredAudioFromPlaylistAsWellConfirmationTitle(
+    Object sortFilterParmsName,
+    Object playlistTitle,
+  ) =>
+      "Delete audio's filtered by \"$sortFilterParmsName\" parms from playlist \"$playlistTitle\" as well";
+
+  @override
+  String get deleteFilteredAudioFromPlaylistAsWell =>
+      "Delete Filtered Audio from Playlist as well ...";
 }

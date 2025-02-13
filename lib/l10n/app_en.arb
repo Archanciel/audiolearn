@@ -202,7 +202,7 @@
   "playlistPlayableAudioTotalDurationLabel": "Playable audio's total duration",
   "playlistPlayableAudioTotalRemainingDurationLabel": "Playable audio's total remaining duration",
   "playlistPlayableAudioTotalSizeLabel": "Playable audio's total file size",
-  "updatePlaylistPlayableAudioList": "Update Playable Audio List",
+  "updatePlaylistPlayableAudioList": "Update playable Audio's List",
   "updatedPlayableAudioLst": "Playable audio list for playlist \"{title}\" was updated. {number} audio(s) were removed.",
   "addYoutubePlaylistDialogTitle": "Add Youtube Playlist",
   "addLocalPlaylistDialogTitle": "Add Local Playlist",
@@ -300,7 +300,7 @@
   },
   "appBarTitleAudioExtractor": "Extract Audio",
   "setAudioPlaySpeedDialogTitle": "Playback speed",
-  "setAudioPlaySpeedTooltip": "Set Audio Play Speed.",
+  "setAudioPlaySpeedTooltip": "Set Audio's Play Speed.",
   "exclude": "Exclude ",
   "fullyPlayed": "fully played ",
   "audio": "audio",
@@ -347,7 +347,7 @@
   "sortFilterParametersDownloadButtonHint": "Sel sort/filter",
   "appBarMenuOpenSettingsDialog": "Application Settings ...",
   "appSettingsDialogTitle": "Application Settings",
-  "setAudioPlaySpeed": "Set Audio Play Speed ...",
+  "setAudioPlaySpeed": "Set Audio's Play Speed ...",
   "applyToAlreadyDownloadedAudio": "Apply to already\ndownloaded audio",
   "applyToAlreadyDownloadedAudioTooltip": "Apply the playback speed to audio's in all existing playlists. If not set, apply it only to newly added playlists.",
   "applyToAlreadyDownloadedAudioOfCurrentPlaylistTooltip": "Apply the playback speed to audio's in the current playlist. If not set, apply it only to newly downloaded audio.",
@@ -470,7 +470,7 @@
   "remaining": "Remaining",
   "searchInYoutubeChannelName": "Include Youtube channel",
   "searchInYoutubeChannelNameTooltip": "If set, search words or sentences are searched on Youtube channel name as well.",
-  "savePlaylistAndCommentsToZipMenu": "Save Playlists and Comments to Zip File",
+  "savePlaylistAndCommentsToZipMenu": "Save Playlists, Comments and Settings to Zip File",
   "savePlaylistAndCommentsToZipTooltip": "Saving the playlists and their audio comments to a zip file. The zip file will contain the playlists JSON files as well as the comments JSON files. Additionally, the application settings.json will be saved. The audio files will not be included.",
   "setYoutubeChannelMenu": "Youtube channel setting",
   "confirmYoutubeChannelModifications": "The Youtube channel was set in {numberOfModifiedDownloadedAudio} downloaded audio's and in {numberOfModifiedPlayableAudio} playable audio.",
@@ -481,7 +481,7 @@
       "numberOfModifiedPlayableAudio": {}
     }
   },
-  "rewindAudioToStart": "Rewind all Audio to Start",
+  "rewindAudioToStart": "Rewind all Audio's to Start",
   "rewindAudioToStartTooltip": "Rewind all playlist audio's to start position. This is useful if you wish to replay all the audio's.",
   "rewindedPlayableAudioNumber": "{number} playlist audio's were repositioned to start.",
   "dateFormat": "Select Date Format ...",
@@ -496,7 +496,7 @@
       "playlistTitle": {}
     }
   },
-  "deleteFilteredAudioConfirmation": "Audio to delete number: {deleteAudioNumber},\nCorresponding total file size: {deleteAudioTotalFileSize},\nCorresponding total duration: {deleteAudioTotalDuration}.",
+  "deleteFilteredAudioConfirmation": "Audio's to delete number: {deleteAudioNumber},\nCorresponding total file size: {deleteAudioTotalFileSize},\nCorresponding total duration: {deleteAudioTotalDuration}.",
   "@deleteFilteredAudioConfirmation": {
     "description": "Confirmation message for deleting filtered audio",
     "placeholders": {
@@ -534,12 +534,12 @@
   "commentedAudioDeletionCreateSFParmHelpContent": "In the \"Save as\" field, enter a name for the Sort/Filter parameter (e.g., FullyListenedUncom). Uncheck the checkboxes for \"Partially listened\", \"Not listened\" and \"Commented\". Then click on \"Save\".",
   "commentedAudioDeletionSelectSFParmHelpTitle": "Once saved, the Sort/Filter parameter is applied to the playlist, reducing the displayed audio's list.",
   "commentedAudioDeletionSelectSFParmHelpContent": "Click on the \"Playlists\" button to hide the list of playlists. You’ll see your newly created SF parameter selected in the dropdown menu. You can apply this parameter or another one to any playlist ...",
-  "commentedAudioDeletionApplyingNewSFParmHelpTitle": "Finally, reclick on the \"Playlists\" button to display the list of playlists, open the source playlist menu and click on \"Filtered Audio Actions ...\" and then on \"Delete Filtered Audio ...\"",
+  "commentedAudioDeletionApplyingNewSFParmHelpTitle": "Finally, reclick on the \"Playlists\" button to display the list of playlists, open the source playlist menu and click on \"Filtered Audio's Actions ...\" and then on \"Delete filtered Audio's ...\"",
   "commentedAudioDeletionApplyingNewSFParmHelpContent": "This time, since a correct SF parameter is applied, no warning will be displayed when deleting the selected uncommented audio.",
-  "filteredAudioActions": "Filtered Audio Actions ...",
-  "moveFilteredAudio": "Move Filtered Audio to Playlist ...",
-  "copyFilteredAudio": "Copy Filtered Audio to Playlist ...",
-  "deleteFilteredAudio": "Delete Filtered Audio ...",
+  "filteredAudioActions": "Filtered Audio's Actions ...",
+  "moveFilteredAudio": "Move filtered Audio's to Playlist ...",
+  "copyFilteredAudio": "Copy filtered Audio's to Playlist ...",
+  "deleteFilteredAudio": "Delete filtered Audio's ...",
   "confirmMovedUnmovedAudioNumberFromYoutubeToYoutubePlaylist": "Applying Sort/Filter parms \"{sortedFilterParmsName}\", from Youtube playlist \"{sourcePlaylistTitle}\" to Youtube playlist \"{targetPlaylistTitle}\", {movedAudioNumber} audio(s) were moved from which {movedCommentedAudioNumber} were commented, and {unmovedAudioNumber} audio(s) were unmoved.",
   "@confirmMovedUnmovedAudioNumberFromYoutubeToYoutubePlaylist": {
     "description": "Confirmation message indicating how many audio's were moved and unmoved",
@@ -755,8 +755,17 @@
   "appDataCouldNotBeSavedToZip": "Playlist and comment json files as well as application settings could not be saved to zip.",
   "pictured": "Pictured",
   "notPictured": "Unpic.",
-  "restorePlaylistAndCommentsFromZipMenu": "Restore Playlists and Comments from Zip File",
-  "restorePlaylistAndCommentsFromZipTooltip": "Restoring the playlists and their audio comments from a saved zip file. The zip file contains the playlists JSON files as well as the comments JSON files. The audio files are not included in it.",
+  "restorePlaylistAndCommentsFromZipMenu": "Restore Playlists, Comments and Settings from Zip File",
+  "restorePlaylistAndCommentsFromZipTooltip": "Restoring the playlists, their audio comments and the application settings from a saved zip file. The zip file contains the playlists, the comments as well as the settings JSON files. The audio files are not included in it.",
   "restoredAppDataFromZip": "Restored playlist and comment json files as well as application settings from \"{filePathName}\".",
-  "appDataCouldNotBeRestoredFromZip": "Playlist and comment json files as well as application settings could not be restored from zip."
+  "appDataCouldNotBeRestoredFromZip": "Playlist and comment json files as well as application settings could not be restored from zip.",
+  "deleteFilteredAudioFromPlaylistAsWell": "Delete filtered Audio's from Playlist as well ...",
+  "deleteFilteredAudioFromPlaylistAsWellConfirmationTitle": "Delete audio's filtered by \"{sortFilterParmsName}\" parms from playlist \"{playlistTitle}\" as well (will be re-downloadable)",
+  "@deleteFilteredAudioFromPlaylistAsWellConfirmationTitle": {
+    "description": "Confirmation title for deleting filtered audio",
+    "placeholders": {
+      "sortFilterParmsName": {},
+      "playlistTitle": {}
+    }
+  }
 }

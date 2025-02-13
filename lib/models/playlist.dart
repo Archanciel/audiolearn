@@ -415,12 +415,23 @@ class Playlist {
 
   /// Method called when physically deleting the audio file
   /// from the device.
-  void removePlayableAudioLst
-      ({
+  void removePlayableAudioLst({
     required List<Audio> playableAudioToRemoveLst,
   }) {
     for (Audio playableAudio in playableAudioToRemoveLst) {
       _removeAudioFromPlayableAudioList(playableAudio);
+    }
+  }
+
+  /// Method called when physically deleting the audio file
+  /// from the device.
+  void removeDownloadedAndPlayableAudioLst({
+    required List<Audio> audioToRemoveLst,
+  }) {
+    for (Audio audioToRemove in audioToRemoveLst) {
+      // removes from the list all audio with the same audioFileName
+      downloadedAudioLst.removeWhere((Audio audio) => audio == audioToRemove);
+      _removeAudioFromPlayableAudioList(audioToRemove);
     }
   }
 
@@ -456,8 +467,8 @@ class Playlist {
     Duration totalRemainingDuration = Duration.zero;
 
     for (Audio audio in playableAudioLst) {
-      totalRemainingDuration += (audio.audioDuration -
-          Duration(seconds: audio.audioPositionSeconds));
+      totalRemainingDuration +=
+          (audio.audioDuration - Duration(seconds: audio.audioPositionSeconds));
     }
 
     return totalRemainingDuration;

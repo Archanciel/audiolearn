@@ -1607,6 +1607,32 @@ class AudioDownloadVM extends ChangeNotifier {
     );
   }
 
+  /// Physically deletes the audio files of the audio contained in the passed
+  /// Audio list from the audio playlist directory and removes the Audio from
+  /// the playlist playable audio list.
+  ///
+  /// The playlist json file is of course updated.
+  void deleteAudioLstPhysicallyAndFromDownloadedAndPlayableLst({
+    required List<Audio> audioToDeleteLst,
+  }) {
+    for (Audio audio in audioToDeleteLst) {
+      DirUtil.deleteFileIfExist(pathFileName: audio.filePathName);
+    }
+
+    // since the audio mp3 files has been deleted, the audio are no
+    // longer in the playlist playable audio list
+    Playlist enclosingPlaylist = audioToDeleteLst[0].enclosingPlaylist!;
+
+    enclosingPlaylist.removeDownloadedAndPlayableAudioLst(
+      audioToRemoveLst: audioToDeleteLst,
+    );
+
+    JsonDataService.saveToFile(
+      model: enclosingPlaylist,
+      path: enclosingPlaylist.getPlaylistDownloadFilePathName(),
+    );
+  }
+
   /// User selected the audio menu item "Delete audio from
   /// playlist aswell". This method physically deletes the audio
   /// file from the audio playlist directory as well as deleting
