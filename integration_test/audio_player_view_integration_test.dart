@@ -2617,7 +2617,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Trying to avoid unregular integration test failure
-      await Future.delayed(const Duration(milliseconds: 200));
+      await Future.delayed(const Duration(milliseconds: 400));
 
       // The audio position is 2 seconds before end. Now play
       // the audio and wait 5 seconds so that the next audio
@@ -6984,7 +6984,9 @@ void main() {
       final Finder alreadyCommentedAudioFinder =
           find.text(alreadyCommentedAudioTitle);
       await tester.tap(alreadyCommentedAudioFinder);
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // Tap on the comment icon button to open the comment add list
       // dialog

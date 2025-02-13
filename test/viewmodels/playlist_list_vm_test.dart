@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:audiolearn/services/sort_filter_parameters.dart';
 import 'package:audiolearn/viewmodels/comment_vm.dart';
+import 'package:collection/collection.dart';
 import 'package:path/path.dart' as path;
 import 'package:flutter_test/flutter_test.dart';
 
@@ -980,9 +981,11 @@ void main() {
       );
     });
   });
-  group('''Delete Sort/Filtered audio physically and from selected playlist.''',
-      () {
-    test('''Filtered by 'listenedNoCom' Sort/filtered parms audio deletion.''',
+  group('''Delete Sort/Filtered audio physically as well as their comments and
+        their picture from selected playlist. Audio's are deleted from the playable
+        list only.''', () {
+    test(
+        '''Filtered by 'listenedNoCom' Sort/filtered parms audio's deletion.''',
         () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -1055,7 +1058,7 @@ void main() {
       );
 
       // Deleting the filtered audio physically and from the selected playlist
-      playlistListVM.deleteSortFilteredAudioAndCommentAndPictureLst();
+      playlistListVM.deleteSortFilteredAudioLstAndTheirCommentsAndPicture();
 
       // Verify that the physical audio to delete files have been deleted
 
@@ -1159,7 +1162,13 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    test('moveAudioToPlaylist moves audio and its comments to playlist',
+  });
+  group('''Delete Sort/Filtered audio physically without deleting their comments
+        and their picture from selected playlist. Audio's are deleted from the
+        downloaded and the playable lists so that they can be redownloaded.''',
+      () {
+    test(
+        '''Filtered by 'listenedComNoCom' Sort/filtered parms audio's deletion.''',
         () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -1170,7 +1179,7 @@ void main() {
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}playlist_list_vm_copy_move_audio_test_data",
+            "$kDownloadAppTestSavedDataDir${path.separator}delete_filtered_audio_test",
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
@@ -1208,78 +1217,167 @@ void main() {
       // selected and which are not
       playlistListVM.getUpToDateSelectablePlaylists();
 
-      const String sourcePlaylistTitle = 'S8 audio';
+      const String audioSortFilterParametersName = 'listenedComNoCom';
 
-      final sourcePlaylistPath = path.join(
-        kPlaylistDownloadRootPathWindowsTest,
-        sourcePlaylistTitle,
+      // Set the 'listenedNoCom' audio Sort/Filter parameters in the
+      // playlistListVM
+
+      AudioSortFilterParameters audioSortFilterParameters =
+          playlistListVM.getAudioSortFilterParameters(
+        audioSortFilterParametersName: audioSortFilterParametersName,
       );
 
-      final sourcePlaylistFilePathName = path.join(
-        sourcePlaylistPath,
-        '$sourcePlaylistTitle.json',
+      playlistListVM.setSortFilterForSelectedPlaylistPlayableAudiosAndParms(
+        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+        sortFilteredSelectedPlaylistPlayableAudio: playlistListVM
+            .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
+          audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+          passedAudioSortFilterParameters: audioSortFilterParameters,
+        ),
+        audioSortFilterParms: audioSortFilterParameters,
+        audioSortFilterParmsName: audioSortFilterParametersName,
+        searchSentence: '',
+        doNotifyListeners: false,
       );
 
-      // Load playlist from the json file
-      Playlist sourcePlaylist = JsonDataService.loadFromFile(
-        jsonPathFileName: sourcePlaylistFilePathName,
-        type: Playlist,
+      Playlist selectedPlaylist = playlistListVM
+          .getUpToDateSelectablePlaylists()
+          .firstWhere((Playlist playlist) => playlist.isSelected);
+
+      List<String> audioTitleBeforeDeletionLst = [
+        "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+        "La surpopulation mondiale par Jancovici et Barrau",
+        "La résilience insulaire par Fiona Roche",
+        "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+        "Les besoins artificiels par R.Keucheyan",
+        "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+      ];
+
+      List<String> downloadedAudioTitleLst = selectedPlaylist.downloadedAudioLst
+          .map((Audio audio) => audio.validVideoTitle)
+          .toList();
+
+      for (String audioTitleToDelete in audioTitleBeforeDeletionLst) {
+        expect(
+          downloadedAudioTitleLst.contains(audioTitleToDelete),
+          true,
+          reason:
+              'Audio $audioTitleToDelete not found in downloadedAudioTitleLst',
+        );
+      }
+
+      // Deleting the filtered audio only, physically and from the
+      // downloaded and playable lists in the selected playlist
+      playlistListVM.deleteSortFilteredAudioLstFromPlaylistAsWell();
+
+      // Verify that the physical audio to delete files have been deleted
+
+      List<String> audioFileNameToDeleteLst = [
+        "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
+        "240107-094528-Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik 23-09-10.mp3",
+        "240107-094520-Les besoins artificiels par R.Keucheyan 24-01-05.mp3",
+        "231226-094534-3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher) 23-12-01.mp3",
+      ];
+
+      List<String> listMp3FileNames = DirUtil.listFileNamesInDir(
+        directoryPath:
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
+        fileExtension: 'mp3',
       );
 
-      const String targetPlaylistTitle = 'local_target';
+      for (String audioFileNameToDelete in audioFileNameToDeleteLst) {
+        expect(
+          listMp3FileNames.contains(audioFileNameToDelete),
+          false,
+        );
+      }
 
-      final targetPlaylistPath = path.join(
-        kPlaylistDownloadRootPathWindowsTest,
-        targetPlaylistTitle,
+      // Verify that the other files were not deleted
+
+      List<String> remainingAudioFileNameLst = [
+        "231226-094526-Ce qui va vraiment sauver notre espèce par Jancovici et Barrau 23-09-23.mp3",
+        "240107-094546-La résilience insulaire par Fiona Roche 24-01-03.mp3",
+        "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.mp3",
+      ];
+
+      for (String remainingAudioFileName in remainingAudioFileNameLst) {
+        expect(
+          listMp3FileNames.contains(remainingAudioFileName),
+          true,
+        );
+      }
+      // Verify the 'S8 audio' playlist json file
+
+      Playlist loadedPlaylist = loadPlaylist('S8 audio');
+
+      expect(loadedPlaylist.downloadedAudioLst.length, 14);
+
+      List<String> downloadedAudioLst = loadedPlaylist.downloadedAudioLst
+          .map((Audio audio) => audio.validVideoTitle)
+          .toList();
+
+      expect(loadedPlaylist.playableAudioLst.length, 3);
+
+      List<String> audioTitleAfterDeletionLst = [
+        "La surpopulation mondiale par Jancovici et Barrau",
+        "La résilience insulaire par Fiona Roche",
+        "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+      ];
+
+      List<String> playableAudioTitleLst = loadedPlaylist.playableAudioLst
+          .map((Audio audio) => audio.validVideoTitle)
+          .toList();
+
+      for (String audioTitleAfterDeletion in audioTitleAfterDeletionLst) {
+        expect(
+          playableAudioTitleLst.contains(audioTitleAfterDeletion),
+          true,
+        );
+      }
+
+      List<String> deletedAudioTitleLst = [
+        "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+        "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+        "Les besoins artificiels par R.Keucheyan",
+        "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+      ];
+
+      downloadedAudioTitleLst = loadedPlaylist.downloadedAudioLst
+          .map((Audio audio) => audio.validVideoTitle)
+          .toList();
+
+      for (String deletedAudioTitle in deletedAudioTitleLst) {
+        expect(
+          playableAudioTitleLst.contains(deletedAudioTitle),
+          false,
+        );
+
+        expect(
+          downloadedAudioTitleLst.contains(deletedAudioTitle),
+          false,
+        );
+      }
+
+      // Verifying that comments were not deleted
+
+      List<String> commentFileNameLst = DirUtil.listFileNamesInDir(
+        directoryPath:
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kCommentDirName",
+        fileExtension: 'json',
       );
 
-      final targetPlaylistFilePathName = path.join(
-        targetPlaylistPath,
-        '$targetPlaylistTitle.json',
+      expect(commentFileNameLst.length, 3);
+
+      // Verifying that pictures were not deleted
+
+      List<String> pictureFileNameLst = DirUtil.listFileNamesInDir(
+        directoryPath:
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kPictureDirName",
+        fileExtension: 'jpg',
       );
 
-      // Load playlist from the json file
-      Playlist targetPlaylist = JsonDataService.loadFromFile(
-        jsonPathFileName: targetPlaylistFilePathName,
-        type: Playlist,
-      );
-
-      // Needed so that testing equality of source and target audio
-      // returns true. This is due to the fact that when copying or
-      // moving an audio to a target playlist, the copied or moved
-      // audio play speed is set to the target olaylist audio play
-      // speed.
-      targetPlaylist.audioPlaySpeed = 1.25;
-
-      // Testing move La résilience insulaire par Fiona Roche with
-      // play position at start of audio, no comments
-      testMoveAudioAndCommentToPlaylist(
-        playlistListVM: playlistListVM,
-        sourcePlaylist: sourcePlaylist,
-        sourceAudioIndex: 0,
-        targetPlaylist: targetPlaylist,
-        hasCommentFile: false,
-      );
-
-      // Testing move Le Secret de la RESILIENCE révélé par Boris Cyrulnik
-      // with play position at end of audio and comment file
-      testMoveAudioAndCommentToPlaylist(
-        playlistListVM: playlistListVM,
-        sourcePlaylist: sourcePlaylist,
-        sourceAudioIndex: 0,
-        targetPlaylist: targetPlaylist,
-        hasCommentFile: true,
-      );
-
-      // Testing move Jancovici répond aux voeux de Macron pour 2024
-      // play position 2 seconds before end of audio
-      testMoveAudioAndCommentToPlaylist(
-        playlistListVM: playlistListVM,
-        sourcePlaylist: sourcePlaylist,
-        sourceAudioIndex: 2,
-        targetPlaylist: targetPlaylist,
-        hasCommentFile: true,
-      );
+      expect(pictureFileNameLst.length, 4);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -1287,6 +1385,134 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
+  });
+  test('moveAudioToPlaylist moves audio and its comments to playlist',
+      () async {
+    // Purge the test playlist directory if it exists so that the
+    // playlist list is empty
+    DirUtil.deleteFilesInDirAndSubDirs(
+      rootPath: kPlaylistDownloadRootPathWindowsTest,
+    );
+
+    // Copy the test initial audio data to the app dir
+    DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+      sourceRootPath:
+          "$kDownloadAppTestSavedDataDir${path.separator}playlist_list_vm_copy_move_audio_test_data",
+      destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+    );
+
+    SettingsDataService settingsDataService = SettingsDataService(
+      sharedPreferences: MockSharedPreferences(),
+      isTest: true,
+    );
+
+    // Load the settings from the json file. This is necessary
+    // otherwise the ordered playlist titles will remain empty
+    // and the playlist list will not be filled with the
+    // playlists available in the download app test dir
+    await settingsDataService.loadSettingsFromFile(
+        settingsJsonPathFileName:
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+    WarningMessageVM warningMessageVM = WarningMessageVM();
+
+    AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+      warningMessageVM: warningMessageVM,
+      settingsDataService: settingsDataService,
+      isTest: true,
+    );
+
+    PlaylistListVM playlistListVM = PlaylistListVM(
+      warningMessageVM: warningMessageVM,
+      audioDownloadVM: audioDownloadVM,
+      commentVM: CommentVM(),
+      settingsDataService: settingsDataService,
+    );
+
+    // calling getUpToDateSelectablePlaylists() loads all the
+    // playlist json files from the app dir and so enables
+    // playlistListVM to know which playlists are
+    // selected and which are not
+    playlistListVM.getUpToDateSelectablePlaylists();
+
+    const String sourcePlaylistTitle = 'S8 audio';
+
+    final sourcePlaylistPath = path.join(
+      kPlaylistDownloadRootPathWindowsTest,
+      sourcePlaylistTitle,
+    );
+
+    final sourcePlaylistFilePathName = path.join(
+      sourcePlaylistPath,
+      '$sourcePlaylistTitle.json',
+    );
+
+    // Load playlist from the json file
+    Playlist sourcePlaylist = JsonDataService.loadFromFile(
+      jsonPathFileName: sourcePlaylistFilePathName,
+      type: Playlist,
+    );
+
+    const String targetPlaylistTitle = 'local_target';
+
+    final targetPlaylistPath = path.join(
+      kPlaylistDownloadRootPathWindowsTest,
+      targetPlaylistTitle,
+    );
+
+    final targetPlaylistFilePathName = path.join(
+      targetPlaylistPath,
+      '$targetPlaylistTitle.json',
+    );
+
+    // Load playlist from the json file
+    Playlist targetPlaylist = JsonDataService.loadFromFile(
+      jsonPathFileName: targetPlaylistFilePathName,
+      type: Playlist,
+    );
+
+    // Needed so that testing equality of source and target audio
+    // returns true. This is due to the fact that when copying or
+    // moving an audio to a target playlist, the copied or moved
+    // audio play speed is set to the target olaylist audio play
+    // speed.
+    targetPlaylist.audioPlaySpeed = 1.25;
+
+    // Testing move La résilience insulaire par Fiona Roche with
+    // play position at start of audio, no comments
+    testMoveAudioAndCommentToPlaylist(
+      playlistListVM: playlistListVM,
+      sourcePlaylist: sourcePlaylist,
+      sourceAudioIndex: 0,
+      targetPlaylist: targetPlaylist,
+      hasCommentFile: false,
+    );
+
+    // Testing move Le Secret de la RESILIENCE révélé par Boris Cyrulnik
+    // with play position at end of audio and comment file
+    testMoveAudioAndCommentToPlaylist(
+      playlistListVM: playlistListVM,
+      sourcePlaylist: sourcePlaylist,
+      sourceAudioIndex: 0,
+      targetPlaylist: targetPlaylist,
+      hasCommentFile: true,
+    );
+
+    // Testing move Jancovici répond aux voeux de Macron pour 2024
+    // play position 2 seconds before end of audio
+    testMoveAudioAndCommentToPlaylist(
+      playlistListVM: playlistListVM,
+      sourcePlaylist: sourcePlaylist,
+      sourceAudioIndex: 2,
+      targetPlaylist: targetPlaylist,
+      hasCommentFile: true,
+    );
+
+    // Purge the test playlist directory so that the created test
+    // files are not uploaded to GitHub
+    DirUtil.deleteFilesInDirAndSubDirs(
+      rootPath: kPlaylistDownloadRootPathWindowsTest,
+    );
   });
   group('''Obtain list of playlists using sort/filter parms name.''', () {
     test('''Test obtaining playlists.''', () async {

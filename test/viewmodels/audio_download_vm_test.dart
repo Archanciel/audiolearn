@@ -1738,7 +1738,7 @@ void main() {
     });
   });
   group('Delete audio list physically and from playlist', () {
-    test('''Delete them from playable audio list''', () async {
+    test('''Delete them from playable audio list only''', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -1888,6 +1888,182 @@ void main() {
       expect(
         list.contains(audioToDeleteThreeTitle),
         true,
+      );
+      expect(loadedPlaylist.playableAudioLst.length, 4);
+
+      list = loadedPlaylist.playableAudioLst
+          .map((Audio audio) => audio.validVideoTitle)
+          .toList();
+
+      expect(
+        list.contains(audioToDeleteOneTitle),
+        false,
+      );
+      expect(
+        list.contains(audioToDeleteTwoTitle),
+        false,
+      );
+      expect(
+        list.contains(audioToDeleteThreeTitle),
+        false,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    test('''Delete them from downloaded and from playable audio list''', () async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}delete_filtered_audio_test",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+      WarningMessageVM warningMessageVM = WarningMessageVM();
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+        isTest: true,
+      );
+
+      // necessary, otherwise audioDownloadVM won't be able to load
+      // the existing playlists and the test will fail
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+        isTest: true,
+      );
+
+      audioDownloadVM.loadExistingPlaylists();
+
+      Playlist playlist =
+          audioDownloadVM.listOfPlaylist[1]; // S8 audio playlist
+      Audio audioToDeleteOne = playlist.downloadedAudioLst[1];
+      String audioToDeleteOneTitle = audioToDeleteOne.validVideoTitle;
+      Audio audioToDeleteTwo = playlist.downloadedAudioLst[3];
+      String audioToDeleteTwoTitle = audioToDeleteTwo.validVideoTitle;
+      Audio audioToDeleteThree = playlist.downloadedAudioLst[14];
+      String audioToDeleteThreeTitle = audioToDeleteThree.validVideoTitle;
+
+      List<String> listMp3FileNames = DirUtil.listFileNamesInDir(
+        directoryPath:
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
+        fileExtension: 'mp3',
+      );
+
+      expect(
+        listMp3FileNames.contains(audioToDeleteOne.audioFileName),
+        true,
+      );
+      expect(
+        listMp3FileNames.contains(audioToDeleteTwo.audioFileName),
+        true,
+      );
+      expect(
+        listMp3FileNames.contains(audioToDeleteThree.audioFileName),
+        true,
+      );
+      expect(playlist.downloadedAudioLst.length, 18);
+
+      List<String> list = playlist.downloadedAudioLst
+          .map((Audio audio) => audio.validVideoTitle)
+          .toList();
+
+      expect(
+        list.contains(audioToDeleteOneTitle),
+        true,
+      );
+      expect(
+        list.contains(audioToDeleteTwoTitle),
+        true,
+      );
+      expect(
+        list.contains(audioToDeleteThreeTitle),
+        true,
+      );
+
+      expect(playlist.playableAudioLst.length, 7);
+
+      list = playlist.playableAudioLst
+          .map((Audio audio) => audio.validVideoTitle)
+          .toList();
+
+      expect(
+        list.contains(audioToDeleteOneTitle),
+        true,
+      );
+      expect(
+        list.contains(audioToDeleteTwoTitle),
+        true,
+      );
+      expect(
+        list.contains(audioToDeleteThreeTitle),
+        true,
+      );
+
+      List<Audio> audioToDeleteLst = [
+        audioToDeleteOne,
+        audioToDeleteTwo,
+        audioToDeleteThree,
+      ];
+
+      // Delete the audio physically and from the playlist playable audio list
+      audioDownloadVM.deleteAudioLstPhysicallyAndFromDownloadedAndPlayableLst(
+        audioToDeleteLst: audioToDeleteLst,
+      );
+
+      listMp3FileNames = DirUtil.listFileNamesInDir(
+        directoryPath:
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
+        fileExtension: 'mp3',
+      );
+
+      // Verify that the audio file has been deleted
+      expect(
+        listMp3FileNames.contains(audioToDeleteOne.audioFileName),
+        false,
+      );
+      expect(
+        listMp3FileNames.contains(audioToDeleteTwo.audioFileName),
+        false,
+      );
+      expect(
+        listMp3FileNames.contains(audioToDeleteThree.audioFileName),
+        false,
+      );
+
+      // Now verifying playlist data
+
+      // Loading playlists from the json file
+      Playlist loadedPlaylist = loadPlaylist(playlist.title);
+
+      expect(loadedPlaylist.downloadedAudioLst.length, 15);
+
+      list = loadedPlaylist.downloadedAudioLst
+          .map((Audio audio) => audio.validVideoTitle)
+          .toList();
+      expect(
+        list.contains(audioToDeleteOneTitle),
+        false,
+      );
+      expect(
+        list.contains(audioToDeleteTwoTitle),
+        false,
+      );
+      expect(
+        list.contains(audioToDeleteThreeTitle),
+        false,
       );
       expect(loadedPlaylist.playableAudioLst.length, 4);
 

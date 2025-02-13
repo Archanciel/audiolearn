@@ -476,7 +476,8 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
         PopupMenuItem<FilteredAudioAction>(
           key: const Key('popup_menu_delete_filtered_audio'),
           value: FilteredAudioAction.deleteFilteredAudioFromPlaylistAsWell,
-          child: Text(AppLocalizations.of(context)!.deleteFilteredAudioFromPlaylistAsWell),
+          child: Text(AppLocalizations.of(context)!
+              .deleteFilteredAudioFromPlaylistAsWell),
         ),
       ],
     ).then((action) {
@@ -799,36 +800,36 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                   AppLocalizations.of(context)!.sortFilterParametersDefaultName;
             }
 
-              showDialog<void>(
-                context: context,
-                barrierDismissible:
-                    false, // This line prevents the dialog from closing when
-                //            tapping outside the dialog
-                builder: (BuildContext context) {
-                  return ConfirmActionDialog(
-                    actionFunction: deleteFilteredAudioLstFromPlaylistAsWell,
-                    actionFunctionArgs: [
-                      playlistListVMlistenTrue,
-                    ],
-                    dialogTitleOne: AppLocalizations.of(context)!
-                        .deleteFilteredAudioFromPlaylistAsWellConfirmationTitle(
-                      selectedPlaylistAudioSortFilterParmsName,
-                      playlistListVMlistenTrue.getSelectedPlaylists()[0].title,
-                    ),
-                    dialogContent: AppLocalizations.of(context)!
-                        .deleteFilteredAudioConfirmation(
-                      deletedAudioNumberLst[0], // total audio number
-                      UiUtil.formatLargeSizeToKbOrMb(
-                        context: context,
-                        sizeInBytes: deletedAudioNumberLst[2],
-                      ), // total audio file size
-                      DateTimeUtil.formatSecondsToHHMMSS(
-                        seconds: deletedAudioNumberLst[3] ~/ 10,
-                      ), // total audio duration
-                    ),
-                  );
-                },
-              );
+            showDialog<void>(
+              context: context,
+              barrierDismissible:
+                  false, // This line prevents the dialog from closing when
+              //            tapping outside the dialog
+              builder: (BuildContext context) {
+                return ConfirmActionDialog(
+                  actionFunction: deleteFilteredAudioLstFromPlaylistAsWell,
+                  actionFunctionArgs: [
+                    playlistListVMlistenTrue,
+                  ],
+                  dialogTitleOne: AppLocalizations.of(context)!
+                      .deleteFilteredAudioFromPlaylistAsWellConfirmationTitle(
+                    selectedPlaylistAudioSortFilterParmsName,
+                    playlistListVMlistenTrue.getSelectedPlaylists()[0].title,
+                  ),
+                  dialogContent: AppLocalizations.of(context)!
+                      .deleteFilteredAudioConfirmation(
+                    deletedAudioNumberLst[0], // total audio number
+                    UiUtil.formatLargeSizeToKbOrMb(
+                      context: context,
+                      sizeInBytes: deletedAudioNumberLst[2],
+                    ), // total audio file size
+                    DateTimeUtil.formatSecondsToHHMMSS(
+                      seconds: deletedAudioNumberLst[3] ~/ 10,
+                    ), // total audio duration
+                  ),
+                );
+              },
+            );
             break;
         }
       }
@@ -896,7 +897,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
   void deleteFilteredAudioAndCommentAndPictureLst(
     PlaylistListVM playlistListVM,
   ) {
-    playlistListVM.deleteSortFilteredAudioAndCommentAndPictureLst();
+    playlistListVM.deleteSortFilteredAudioLstAndTheirCommentsAndPicture();
   }
 
   /// Public method passed as parameter to the ActionConfirmDialog
