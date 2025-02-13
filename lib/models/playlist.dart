@@ -304,12 +304,12 @@ class Playlist {
   /// playlist and is not kept in downloadedAudioLst of the source
   /// playlist. In this case, the user is advised to remove the
   /// corresponding video from the playlist on Youtube.
-  void removeDownloadedAudioFromDownloadAndPlayableAudioLst({
+  void removeAudioFromDownloadAndPlayableAudioLst({
     required Audio downloadedAudio,
   }) {
-    // removes from the list all audio with the same audioFileName
     downloadedAudioLst.removeWhere((Audio audio) => audio == downloadedAudio);
 
+    // Modifies as well the playlist currentOrPastPlayableAudioIndex
     _removeAudioFromPlayableAudioList(downloadedAudio);
   }
 
@@ -415,7 +415,7 @@ class Playlist {
 
   /// Method called when physically deleting the audio file
   /// from the device.
-  void removePlayableAudioLst({
+  void removeAudioLstFromPlayableAudioLstOnly({
     required List<Audio> playableAudioToRemoveLst,
   }) {
     for (Audio playableAudio in playableAudioToRemoveLst) {
@@ -425,7 +425,7 @@ class Playlist {
 
   /// Method called when physically deleting the audio file
   /// from the device.
-  void removeDownloadedAndPlayableAudioLst({
+  void removeAudioLstFromDownloadedAndPlayableAudioLsts({
     required List<Audio> audioToRemoveLst,
   }) {
     for (Audio audioToRemove in audioToRemoveLst) {

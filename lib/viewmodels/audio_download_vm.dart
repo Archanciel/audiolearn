@@ -1250,7 +1250,7 @@ class AudioDownloadVM extends ChangeNotifier {
         movedToPlaylistTitle: targetPlaylistTitle,
       );
     } else {
-      fromPlaylist.removeDownloadedAudioFromDownloadAndPlayableAudioLst(
+      fromPlaylist.removeAudioFromDownloadAndPlayableAudioLst(
         downloadedAudio: audioToMove,
       );
     }
@@ -1559,6 +1559,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
   /// Physically deletes the audio file from the audio playlist
   /// directory and removes the Audio from the playlist playable
+  /// audio list. The deleted audio's remain in the downloaded
   /// audio list.
   ///
   /// The playlist json file is of course updated.
@@ -1597,7 +1598,7 @@ class AudioDownloadVM extends ChangeNotifier {
     // longer in the playlist playable audio list
     Playlist enclosingPlaylist = audioToDeleteLst[0].enclosingPlaylist!;
 
-    enclosingPlaylist.removePlayableAudioLst(
+    enclosingPlaylist.removeAudioLstFromPlayableAudioLstOnly(
       playableAudioToRemoveLst: audioToDeleteLst,
     );
 
@@ -1623,7 +1624,7 @@ class AudioDownloadVM extends ChangeNotifier {
     // longer in the playlist playable audio list
     Playlist enclosingPlaylist = audioToDeleteLst[0].enclosingPlaylist!;
 
-    enclosingPlaylist.removeDownloadedAndPlayableAudioLst(
+    enclosingPlaylist.removeAudioLstFromDownloadedAndPlayableAudioLsts(
       audioToRemoveLst: audioToDeleteLst,
     );
 
@@ -1647,7 +1648,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
     Playlist? enclosingPlaylist = audio.enclosingPlaylist;
 
-    enclosingPlaylist!.removeDownloadedAudioFromDownloadAndPlayableAudioLst(
+    enclosingPlaylist!.removeAudioFromDownloadAndPlayableAudioLst(
       downloadedAudio: audio,
     );
 
