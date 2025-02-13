@@ -4599,8 +4599,8 @@ void main() {
         await tester.pumpAndSettle();
 
         // Find and tap on the 'listenedNoCom' sort/filter item
-        Finder titleAscDropDownTextFinder = find.text(sortFilterParmName).last;
-        await tester.tap(titleAscDropDownTextFinder);
+        Finder listenedNoComDropDownTextFinder = find.text(sortFilterParmName).last;
+        await tester.tap(listenedNoComDropDownTextFinder);
         await tester.pumpAndSettle();
 
         // Verify the audioTitles selected by applying the 'listenedNoCom'
@@ -4685,7 +4685,7 @@ void main() {
           confirmDialogTitleOne:
               "Delete audio's filtered by \"$sortFilterParmName\" parms from playlist \"$youtubePlaylistTitle\"",
           confirmDialogMessage:
-              'Audio to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.',
+              "Audio's to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.",
           confirmOrCancelAction: true, // Confirm button is tapped
         );
 
@@ -4788,8 +4788,8 @@ void main() {
         await tester.pumpAndSettle();
 
         // Find and tap on the 'default' sort/filter item
-        titleAscDropDownTextFinder = find.text('default').last;
-        await tester.tap(titleAscDropDownTextFinder);
+        listenedNoComDropDownTextFinder = find.text('default').last;
+        await tester.tap(listenedNoComDropDownTextFinder);
         await tester.pumpAndSettle();
 
         // Verify the audioTitles selected by applying the 'default'
@@ -4974,7 +4974,7 @@ void main() {
           confirmDialogTitleOne:
               "Delete audio's filtered by \"$sortFilterParmName\" parms from playlist \"$youtubePlaylistTitle\"",
           confirmDialogMessage:
-              'Audio to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.',
+              "Audio's to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.",
           confirmOrCancelAction: true, // Confirm button is tapped
         );
 
@@ -5261,7 +5261,7 @@ void main() {
           confirmDialogTitleOne:
               "Delete audio's filtered by \"$sortFilterParmName\" parms from playlist \"$youtubePlaylistTitle\"",
           confirmDialogMessage:
-              'Audio to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.',
+              "Audio's to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.",
           confirmOrCancelAction: true, // Confirm button is tapped
         );
 
@@ -5605,7 +5605,7 @@ void main() {
           confirmDialogTitleOne:
               "Delete audio's filtered by \"$sortFilterParmName\" parms from playlist \"$youtubePlaylistTitle\"",
           confirmDialogMessage:
-              'Audio to delete number: 2,\nCorresponding total file size: 9.96 MB,\nCorresponding total duration: 00:27:14.',
+              "Audio's to delete number: 2,\nCorresponding total file size: 9.96 MB,\nCorresponding total duration: 00:27:14.",
           confirmOrCancelAction: true, // Confirm button is tapped
         );
 
@@ -5876,6 +5876,7 @@ void main() {
         List<String> availableAudioPictureFileNameLst = [
           "231226-094526-Ce qui va vraiment sauver notre espèce par Jancovici et Barrau 23-09-23.jpg",
           "240107-094528-Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik 23-09-10.jpg",
+          "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.jpg",
           "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.jpg",
         ];
 
@@ -7498,8 +7499,8 @@ void main() {
         await tester.pumpAndSettle();
 
         // Find and tap on the 'toMoveOrCopy' sort/filter item
-        Finder titleAscDropDownTextFinder = find.text(sortFilterParmName).last;
-        await tester.tap(titleAscDropDownTextFinder);
+        Finder toMoveOrCopyDropDownTextFinder = find.text(sortFilterParmName).last;
+        await tester.tap(toMoveOrCopyDropDownTextFinder);
         await tester.pumpAndSettle();
 
         // Verify the audioTitles selected by applying the 'toMoveOrCopy'
@@ -7587,6 +7588,7 @@ void main() {
         List<String> availableAudioPictureFileNameLst = [
           "231226-094526-Ce qui va vraiment sauver notre espèce par Jancovici et Barrau 23-09-23.jpg",
           "240107-094528-Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik 23-09-10.jpg",
+          "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.jpg",
           "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.jpg",
         ];
 
@@ -7892,8 +7894,8 @@ void main() {
         await tester.pumpAndSettle();
 
         // Find and tap on the 'default' sort/filter item
-        titleAscDropDownTextFinder = find.text('default').last;
-        await tester.tap(titleAscDropDownTextFinder);
+        toMoveOrCopyDropDownTextFinder = find.text('default').last;
+        await tester.tap(toMoveOrCopyDropDownTextFinder);
         await tester.pumpAndSettle();
 
         // Verify the audioTitles selected by applying the 'default'
@@ -9332,6 +9334,7 @@ void main() {
         List<String> availableAudioPictureFileNameLst = [
           "231226-094526-Ce qui va vraiment sauver notre espèce par Jancovici et Barrau 23-09-23.jpg",
           "240107-094528-Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik 23-09-10.jpg",
+          "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.jpg",
           "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.jpg",
         ];
 
@@ -10306,7 +10309,7 @@ void main() {
       await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Saved playlist json files and application settings to \"$saveZipFilePath${path.separator}audioLearn_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip\".",
+            "Saved playlist and comment json files as well as application settings to \"$saveZipFilePath${path.separator}audioLearn_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip\".",
         isWarningConfirming: true,
       );
 
@@ -10405,7 +10408,7 @@ void main() {
       await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Playlist json files and application settings could not be saved to zip.",
+            "Playlist and comment json files as well as application settings could not be saved to zip.",
         isWarningConfirming: false,
       );
 
