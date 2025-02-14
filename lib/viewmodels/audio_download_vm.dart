@@ -995,9 +995,12 @@ class AudioDownloadVM extends ChangeNotifier {
   ///
   /// Returning true will cause the single video url text field to be
   /// cleared.
+  ///
+  /// [predifinedAudioFileName] is defined when an audio is redownloaded after
+  /// it was deleted.
   Future<ErrorType> downloadSingleVideoAudio({
-    required String videoUrl,
     required Playlist singleVideoTargetPlaylist,
+    required String videoUrl,
     bool downloadAtMusicQuality = false,
     bool displayWarningIfAudioAlreadyExists = true,
   }) async {
@@ -1150,6 +1153,98 @@ class AudioDownloadVM extends ChangeNotifier {
       model: singleVideoTargetPlaylist,
       path: singleVideoTargetPlaylist.getPlaylistDownloadFilePathName(),
     );
+
+    notifyListeners();
+
+    return ErrorType.noError;
+  }
+
+  /// {singleVideoTargetPlaylist} is the playlist to which the single
+  /// video will be added.
+  ///
+  /// If the audio of the single video is correctly downloaded and
+  /// is added to a playlist, then true is returned, false otherwise.
+  ///
+  /// Returning true will cause the single video url text field to be
+  /// cleared.
+  Future<ErrorType> redownloadSingleVideoAudio({
+    required Playlist singleVideoTargetPlaylist,
+    bool displayWarningIfAudioAlreadyExists = false,
+  }) async {
+    isHighQuality = _currentDownloadingAudio.isAudioMusicQuality;
+    _audioDownloadError = false;
+    _stopDownloadPressed = false;
+    _youtubeExplode ??= yt.YoutubeExplode();
+
+    final yt.VideoId videoId;
+
+    try {
+      videoId = yt.VideoId(_currentDownloadingAudio.videoUrl);
+    } on SocketException catch (e) {
+      notifyDownloadError(
+        errorType: ErrorType.noInternet,
+        errorArgOne: e.toString(),
+      );
+
+      return ErrorType.noInternet;
+    } catch (e) {
+      warningMessageVM.isSingleVideoUrlInvalid = true;
+
+      return ErrorType.downloadAudioYoutubeError;
+    }
+
+    yt.Video youtubeVideo;
+
+    try {
+      youtubeVideo = await _youtubeExplode!.videos.get(videoId);
+    } on SocketException catch (e) {
+      notifyDownloadError(
+        errorType: ErrorType.noInternet,
+        errorArgOne: e.toString(),
+      );
+
+      return ErrorType.noInternet;
+    } catch (e) {
+      notifyDownloadError(
+        errorType: ErrorType.downloadAudioYoutubeError,
+        errorArgOne: e.toString(),
+      );
+
+      return ErrorType.downloadAudioYoutubeError;
+    }
+
+    // The Stopwatch class in Dart is used to measure elapsed time.
+    Stopwatch stopwatch = Stopwatch()..start();
+
+    if (!_isDownloading) {
+      _isDownloading = true;
+
+      notifyListeners();
+    }
+
+    try {
+      if (!await _redownloadAudioFile(
+        youtubeVideoId: youtubeVideo.id,
+      )) {
+        // Before this improvement, the failed downloaded audio was
+        // added to the target playlist.
+        //
+        // notifyDownloadError() was called in _downloadAudioFile()
+        return ErrorType.downloadAudioYoutubeError;
+      }
+    } catch (e) {
+      _youtubeExplode!.close();
+      _youtubeExplode = null;
+
+      notifyDownloadError(
+        errorType: ErrorType.downloadAudioYoutubeError,
+        errorArgOne: e.toString(),
+      );
+
+      return ErrorType.downloadAudioYoutubeError;
+    }
+
+    stopwatch.stop();
 
     notifyListeners();
 
@@ -1382,15 +1477,53 @@ class AudioDownloadVM extends ChangeNotifier {
   /// ChatGPT app: chatgpt_list_video_uploaded.dart.
   Future<int> downloadAudioFromVideoUrlsToPlaylist({
     required Playlist targetPlaylist,
-    required List<String> videoUrls,
+    required List<String> videoUrlsLst,
   }) async {
     int existingAudioFilesNotRedownloadedCount = 0;
 
-    for (String videoUrl in videoUrls) {
+    for (String videoUrl in videoUrlsLst) {
       ErrorType errorType = await downloadSingleVideoAudio(
-        videoUrl: videoUrl,
         singleVideoTargetPlaylist: targetPlaylist,
+        videoUrl: videoUrl,
         displayWarningIfAudioAlreadyExists: false,
+      );
+
+      if (errorType == ErrorType.downloadAudioFileAlreadyOnAudioDirectory) {
+        existingAudioFilesNotRedownloadedCount++;
+      }
+    }
+
+    return existingAudioFilesNotRedownloadedCount;
+  }
+
+  /// This method is called by the PlaylistListVM when the user executes the playlist
+  /// submenu 'Re-download filtered Audio's' after having selected (and defined)
+  /// a named Sort/Filter parameters.
+  ///
+  /// The returned {existingAudioFilesNotRedownloadedCount} variable is the number
+  /// of audio files which were not redownloaded since they already exist in the
+  /// target playlist directory.
+  Future<int> redownloadPlaylistFilteredAudio({
+    required Playlist targetPlaylist,
+    required List<Audio> filteredAudioToRedownload,
+  }) async {
+    int existingAudioFilesNotRedownloadedCount = 0;
+    final List<String> downloadedAudioFileNameLst = DirUtil.listFileNamesInDir(
+      directoryPath: targetPlaylist.downloadPath,
+      fileExtension: 'mp3',
+    );
+
+    for (Audio audio in filteredAudioToRedownload) {
+      if (downloadedAudioFileNameLst
+          .any((fileName) => fileName == audio.audioFileName)) {
+        existingAudioFilesNotRedownloadedCount++;
+        continue;
+      }
+
+      _currentDownloadingAudio = audio;
+
+      ErrorType errorType = await redownloadSingleVideoAudio(
+        singleVideoTargetPlaylist: targetPlaylist,
       );
 
       if (errorType == ErrorType.downloadAudioFileAlreadyOnAudioDirectory) {
@@ -1674,7 +1807,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
   /// Method called by PlaylistListVM when the user selects the update playlist
   /// JSON files menu item.
-  /// 
+  ///
   /// The method is also called when the user selects the 'Restore Playlist and
   /// Comments from Zip File' menu item of the appbar leading popup menu. This
   /// execute PlaylistListVM.restorePlaylistsCommentsAndSettingsJsonFilesFromZip().
@@ -1932,9 +2065,48 @@ class AudioDownloadVM extends ChangeNotifier {
     audio.audioFileSize = audioFileSize;
 
     await _youtubeDownloadAudioFile(
-      audio,
-      audioStreamInfo,
-      audioFileSize,
+      audioStreamInfo: audioStreamInfo,
+      audioFilePathName: audio.filePathName,
+      audioFileSize: audioFileSize,
+    );
+
+    return true;
+  }
+
+  /// Downloads the audio file from the Youtube video and saves it
+  /// to the enclosing playlist directory. Returns true if the audio
+  /// file was successfully downloaded, false otherwise.
+  Future<bool> _redownloadAudioFile({
+    required yt.VideoId youtubeVideoId,
+  }) async {
+    final yt.StreamManifest streamManifest;
+
+    try {
+      streamManifest = await _youtubeExplode!.videos.streamsClient.getManifest(
+        youtubeVideoId,
+      );
+    } catch (e) {
+      notifyDownloadError(
+        errorType: ErrorType.downloadAudioYoutubeError,
+        errorArgOne: e.toString(),
+      );
+
+      return false;
+    }
+
+    final yt.AudioOnlyStreamInfo audioStreamInfo;
+
+    if (isHighQuality) {
+      audioStreamInfo = streamManifest.audioOnly.withHighestBitrate();
+    } else {
+      audioStreamInfo = streamManifest.audioOnly.reduce(
+          (a, b) => a.bitrate.bitsPerSecond < b.bitrate.bitsPerSecond ? a : b);
+    }
+
+    await _youtubeDownloadAudioFile(
+      audioStreamInfo: audioStreamInfo,
+      audioFilePathName: _currentDownloadingAudio.filePathName,
+      audioFileSize: audioStreamInfo.size.totalBytes,
     );
 
     return true;
@@ -1942,12 +2114,12 @@ class AudioDownloadVM extends ChangeNotifier {
 
   /// Downloads the audio file from the Youtube video and saves it
   /// to the enclosing playlist directory.
-  Future<void> _youtubeDownloadAudioFile(
-    Audio audio,
-    yt.AudioOnlyStreamInfo audioStreamInfo,
-    int audioFileSize,
-  ) async {
-    final File file = File(audio.filePathName);
+  Future<void> _youtubeDownloadAudioFile({
+    required yt.AudioOnlyStreamInfo audioStreamInfo,
+    required String audioFilePathName,
+    required int audioFileSize,
+  }) async {
+    final File file = File(audioFilePathName);
     final IOSink audioFileSink = file.openWrite();
     final Stream<List<int>> audioStream =
         _youtubeExplode!.videos.streamsClient.get(audioStreamInfo);

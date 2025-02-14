@@ -767,5 +767,7 @@
       "sortFilterParmsName": {},
       "playlistTitle": {}
     }
-  }
+  },
+  "redownloadFilteredAudio": "Re-download filtered Audio's",
+  "redownloadFilteredAudioTooltip": "Filtered audio files are re-downloaded using their original file names."
 }

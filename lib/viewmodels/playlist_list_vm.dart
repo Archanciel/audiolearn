@@ -168,11 +168,11 @@ class PlaylistListVM extends ChangeNotifier {
   ///
   /// When the user modifies the application settings, unselecting added playlist
   /// is not adequate.
-  /// 
+  ///
   /// The method is also called when the user clicks on the 'Restore Playlist and
   /// Comments from Zip File' menu item located in the appbar leading popup menu.
   /// It is called by restorePlaylistsCommentsAndSettingsJsonFilesFromZip().
-  /// 
+  ///
   /// In this case, [addExistingSettingsAudioSortFilterData] is set to true.
   void updateSettingsAndPlaylistJsonFiles({
     bool unselectAddedPlaylist = true,
@@ -879,7 +879,7 @@ class PlaylistListVM extends ChangeNotifier {
 
   /// Method called when the user select the left appbar menu 'Restore Playlists,
   /// Comments and Settings from Zip File' in the playlist download view.
-  /// 
+  ///
   /// [addExistingSettingsAudioSortFilterData] is set to true when the
   /// playlist order is updated and the existing audio sort/filter
   /// parameters data (_namedAudioSortFilterParametersMap and
@@ -892,8 +892,9 @@ class PlaylistListVM extends ChangeNotifier {
         _listOfSelectablePlaylists.map((playlist) => playlist.title).toList();
 
     if (addExistingSettingsAudioSortFilterData) {
-      _settingsDataService.updatePlaylistOrderAddExistingAudioSortFilterSettingsAndSave(
-          playlistOrder: playlistOrder);
+      _settingsDataService
+          .updatePlaylistOrderAddExistingAudioSortFilterSettingsAndSave(
+              playlistOrder: playlistOrder);
     } else {
       _settingsDataService.updatePlaylistOrderAndSaveSettings(
           playlistOrder: playlistOrder);
@@ -934,11 +935,11 @@ class PlaylistListVM extends ChangeNotifier {
   }
 
   /// This method is called when the user executes the playlist submenu 'Delete
-  /// Filtered Audio ...' after having selected (and defined) a named Sort/Filter
+  /// filtered Audio's ...' after having selected (and defined) a named Sort/Filter
   /// parameters. For example, it makes sense to define a filter only parameters
-  /// which select fully listened audio which are not commented. With this filter
-  /// parameters applied to the playlist, using the playlist menu 'Delete Filtered
-  /// Audio ...' deletes the audio files and removes the deleted audio from the
+  /// which select fully listened audio's which are not commented. With this filter
+  /// parameters applied to the playlist, using the playlist menu 'Delete filtered
+  /// Audio ...' deletes the audio files and removes the deleted audio's from the
   /// playlist playable audio list.
   void deleteSortFilteredAudioLstAndTheirCommentsAndPicture() {
     List<Audio> filteredAudioToDelete =
@@ -963,15 +964,39 @@ class PlaylistListVM extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// This method is called when the user executes the playlist submenu 'Re-download
+  /// filtered Audio's' after having selected (and defined) a named Sort/Filter
+  /// parameters. For example, it makes sense to define a filter only parameters
+  /// which select audio's which are commented. With this filter parameters applied
+  /// to the playlist, using the playlist menu 'Re-download filtered Audio's'
+  /// redownload the audio files which were deleted, setting the file names to
+  /// the initial downloaded file name.
+  Future<void> redownloadSortFilteredAudioLst() async {
+    List<Audio> filteredAudioToRedownload =
+        _sortedFilteredSelectedPlaylistPlayableAudioLst!;
+
+    int existingAudioFilesNotRedownloadedCount = await _audioDownloadVM.redownloadPlaylistFilteredAudio(
+      targetPlaylist: _uniqueSelectedPlaylist!,
+      filteredAudioToRedownload: filteredAudioToRedownload,
+    );
+
+    notifyListeners();
+    
+    _warningMessageVM.confirmSavingToZip(
+      zipFilePathName: existingAudioFilesNotRedownloadedCount,
+    );
+
+  }
+
   /// This method is called when the user executes the playlist submenu 'Delete
   /// Filtered Audio ...' after having selected (and defined) a named Sort/Filter
   /// parameters. For example, it makes sense to define a filter only parameters
   /// which select fully listened audio which are not commented. With this filter
-  /// parameters applied to the playlist, using the playlist menu 'Delete Filtered
-  /// Audio from Playlist as well ...' deletes the audio files and removes the
-  /// deleted audio from both the playlist downloaded and playable audio lists.
+  /// parameters applied to the playlist, using the playlist menu 'Delete filtered
+  /// Audio's from Playlist as well ...' deletes the audio files and removes the
+  /// deleted audio's from both the playlist downloaded and playable audio lists.
   ///
-  /// The consequence is that the deleted audio's will be re-downloaded.
+  /// The consequence is that the deleted audio's will later be re-downloaded.
   void deleteSortFilteredAudioLstFromPlaylistAsWell() {
     List<Audio> filteredAudioToDelete =
         _sortedFilteredSelectedPlaylistPlayableAudioLst!;
@@ -984,11 +1009,11 @@ class PlaylistListVM extends ChangeNotifier {
   }
 
   /// This method is called when the user executes the playlist submenu 'Move
-  /// Filtered Audio ...' after having selected (and defined) a named Sort/Filter
-  /// parameters. Using the playlist menu 'Move Filtered Audio ...' moves the
-  /// audio files to the target playlist directory, removes the moved audio from
+  /// filtered Audio's ...' after having selected (and defined) a named Sort/Filter
+  /// parameters. Using the playlist menu 'Move filtered Audio's ...' moves the
+  /// audio files to the target playlist directory, removes the moved audio's from
   /// the source playlist playable audio list and add them to the target playlist
-  /// playable audio list. The moved audio remain in the source playlist downloaded
+  /// playable audio list. The moved audio's remain in the source playlist downloaded
   /// audio list and so will not be redownloaded !
   ///
   /// Returned list: [
@@ -1045,10 +1070,10 @@ class PlaylistListVM extends ChangeNotifier {
   }
 
   /// This method is called when the user executes the playlist submenu 'Copy
-  /// Filtered Audio ...' after having selected (and defined) a named Sort/Filter
-  /// parameters. Using the playlist menu 'Copy Filtered Audio ...' copies the
+  /// filtered Audio's ...' after having selected (and defined) a named Sort/Filter
+  /// parameters. Using the playlist menu 'Copy filtered Audio's ...' copies the
   /// audio files to the target playlist directory and add them to the target
-  /// playlist playable audio list. The copied audio remain in the source playlist
+  /// playlist playable audio list. The copied audio's remain in the source playlist
   /// downloaded audio list and in its playable audio list !
   ///
   /// Returned list: [
@@ -2636,13 +2661,13 @@ class PlaylistListVM extends ChangeNotifier {
   /// button, the current audio will be positioned to the last played position
   /// instead of the start position.
   int rewindPlayableAudioToStart({
-    required AudioPlayerVM audioPlayerVM,
+    required AudioPlayerVM audioPlayerVMlistenFalse,
     required Playlist playlist,
   }) {
     int rewindedAudioNumber = playlist.rewindPlayableAudioToStart();
 
     if (playlist.currentOrPastPlayableAudioIndex != -1) {
-      audioPlayerVM.skipToStart();
+      audioPlayerVMlistenFalse.skipToStart();
     }
 
     if (rewindedAudioNumber > 0) {
@@ -2658,7 +2683,7 @@ class PlaylistListVM extends ChangeNotifier {
   }
 
   /// Method called when the user clicks on the Save button in the application
-  /// settings dialog. 
+  /// settings dialog.
   void updatePlaylistRootPathAndSavePlaylistTitleOrder({
     required String actualPlaylistRootPath,
     required String modifiedPlaylistRootPath,
