@@ -158,7 +158,7 @@ class PlaylistListVM extends ChangeNotifier {
     return listOfSelectablePlaylistsCopy;
   }
 
-  /// Method called when the user choose the "Update playlist JSON files" menu
+  /// Method called when the user chooses the "Update playlist JSON files" menu
   /// item. The method is also executed when the user modifies the application
   /// settings through the ApplicationSettingsWidget opened by clicking on the
   /// Application settings menu item.
@@ -166,13 +166,15 @@ class PlaylistListVM extends ChangeNotifier {
   /// When the user changes the "Update playlist JSON files", the added playlists
   /// are unselected by default.
   ///
-  /// Whenthe user modifies the application settings, unselecting added playlist
+  /// When the user modifies the application settings, unselecting added playlist
   /// is not adequate.
   void updateSettingsAndPlaylistJsonFiles({
     bool unselectAddedPlaylist = true,
+    bool updatePlaylistPlayableAudioList = true,
   }) {
     _audioDownloadVM.updatePlaylistJsonFiles(
-        unselectAddedPlaylist: unselectAddedPlaylist);
+        unselectAddedPlaylist: unselectAddedPlaylist,
+        updatePlaylistPlayableAudioList: updatePlaylistPlayableAudioList);
 
     List<Playlist> updatedListOfPlaylist = _audioDownloadVM.listOfPlaylist;
 
@@ -205,8 +207,8 @@ class PlaylistListVM extends ChangeNotifier {
     // displayed audio of the selected playlist to be updated in case
     // audio were manually deleted in the directory of the selected
     // playlist. Without this code, the displayed audio list in the playlist
-    // download view is updated only after having tapped on the Playlists
-    // button !
+    // download view is updated only after having tapped on the playlist
+    // menu 'Update playable Audio's list' !
 
     Playlist? playlistListVMselectedPlaylist =
         _listOfSelectablePlaylists.firstWhereOrNull(
@@ -2541,7 +2543,11 @@ class PlaylistListVM extends ChangeNotifier {
       zipFilePathName: zipFilePathName,
     );
 
-    // Optionally, display a confirmation message to the user.
+    updateSettingsAndPlaylistJsonFiles(
+      updatePlaylistPlayableAudioList: false,
+    );
+
+    // Display a confirmation message to the user.
     _warningMessageVM.confirmRestorationFromZip(
         zipFilePathName: zipFilePathName);
 

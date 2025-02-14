@@ -1672,10 +1672,15 @@ class AudioDownloadVM extends ChangeNotifier {
     }
   }
 
-  /// Method called by PlaylistListVM when the user selects the update
-  /// playlist JSON files menu item.
+  /// Method called by PlaylistListVM when the user selects the update playlist
+  /// JSON files menu item.
+  /// 
+  /// The method is also called when the user selects the 'Restore Playlist and
+  /// Comments from Zip File' menu item of the appbar leading popup menu. This
+  /// execute PlaylistListVM.restorePlaylistsCommentsAndSettingsJsonFilesFromZip().
   void updatePlaylistJsonFiles({
     bool unselectAddedPlaylist = true,
+    bool updatePlaylistPlayableAudioList = true,
   }) {
     // Loading again the list of playlists since the list of playlists
     // existing in the application playlist directory may have been
@@ -1744,8 +1749,12 @@ class AudioDownloadVM extends ChangeNotifier {
 
       // Remove the audio from the playable audio list which are no
       // longer in the playlist directory
-      int removedPlayableAudioNumber =
-          correspondingOriginalPlaylist.updatePlayableAudioLst();
+      int removedPlayableAudioNumber = 0;
+
+      if (updatePlaylistPlayableAudioList) {
+        removedPlayableAudioNumber =
+            correspondingOriginalPlaylist.updatePlayableAudioLst();
+      }
 
       if (isPlaylistDownloadPathUpdated || removedPlayableAudioNumber > 0) {
         JsonDataService.saveToFile(
