@@ -2537,7 +2537,7 @@ class PlaylistListVM extends ChangeNotifier {
   Future<String> restorePlaylistsCommentsAndSettingsJsonFilesFromZip({
     required String zipFilePathName,
   }) async {
-    String savedZipFilePathName = await _restoreFromZip(
+    await _restoreFromZip(
       zipFilePathName: zipFilePathName,
     );
 
