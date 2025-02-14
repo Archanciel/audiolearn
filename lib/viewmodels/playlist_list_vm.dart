@@ -160,7 +160,7 @@ class PlaylistListVM extends ChangeNotifier {
 
   /// Method called when the user chooses the "Update playlist JSON files" menu
   /// item. The method is also executed when the user modifies the application
-  /// settings through the ApplicationSettingsWidget opened by clicking on the
+  /// settings through the ApplicationSettingsDialog opened by clicking on the
   /// Application settings menu item.
   ///
   /// When the user changes the "Update playlist JSON files", the added playlists
@@ -168,6 +168,12 @@ class PlaylistListVM extends ChangeNotifier {
   ///
   /// When the user modifies the application settings, unselecting added playlist
   /// is not adequate.
+  /// 
+  /// The method is also called when the user clicks on the 'Restore Playlist and
+  /// Comments from Zip File' menu item located in the appbar leading popup menu.
+  /// It is called by restorePlaylistsCommentsAndSettingsJsonFilesFromZip().
+  /// 
+  /// In this case, [addExistingSettingsAudioSortFilterData] is set to true.
   void updateSettingsAndPlaylistJsonFiles({
     bool unselectAddedPlaylist = true,
     bool updatePlaylistPlayableAudioList = true,
@@ -871,9 +877,14 @@ class PlaylistListVM extends ChangeNotifier {
     );
   }
 
-  /// Thanks to this method, when restarting the app, the playlists
-  /// are displayed in the same order as when the app was closed. This
-  /// is done by saving the playlist order in the settings file.
+  /// Method called when the user select the left appbar menu 'Restore Playlists,
+  /// Comments and Settings from Zip File' in the playlist download view.
+  /// 
+  /// [addExistingSettingsAudioSortFilterData] is set to true when the
+  /// playlist order is updated and the existing audio sort/filter
+  /// parameters data (_namedAudioSortFilterParametersMap and
+  /// _searchHistoryAudioSortFilterParametersLst) is extracted from the existing
+  /// settings file and added to the corresponding settings map.
   void _updateAndSavePlaylistOrder({
     bool addExistingSettingsAudioSortFilterData = false,
   }) {
@@ -881,7 +892,7 @@ class PlaylistListVM extends ChangeNotifier {
         _listOfSelectablePlaylists.map((playlist) => playlist.title).toList();
 
     if (addExistingSettingsAudioSortFilterData) {
-      _settingsDataService.updatePlaylistOrderAndAddExistingSettingsAndSaveSettings(
+      _settingsDataService.updatePlaylistOrderAddExistingAudioSortFilterSettingsAndSave(
           playlistOrder: playlistOrder);
     } else {
       _settingsDataService.updatePlaylistOrderAndSaveSettings(
@@ -2646,6 +2657,8 @@ class PlaylistListVM extends ChangeNotifier {
     return rewindedAudioNumber;
   }
 
+  /// Method called when the user clicks on the Save button in the application
+  /// settings dialog. 
   void updatePlaylistRootPathAndSavePlaylistTitleOrder({
     required String actualPlaylistRootPath,
     required String modifiedPlaylistRootPath,
