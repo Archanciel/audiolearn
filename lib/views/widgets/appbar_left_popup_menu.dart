@@ -677,8 +677,6 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
               context: context,
             );
             break;
-          default:
-            break;
         }
       },
     );

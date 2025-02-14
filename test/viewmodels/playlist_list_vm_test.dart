@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:audiolearn/services/sort_filter_parameters.dart';
 import 'package:audiolearn/viewmodels/comment_vm.dart';
-import 'package:collection/collection.dart';
 import 'package:path/path.dart' as path;
 import 'package:flutter_test/flutter_test.dart';
 
@@ -1312,11 +1311,6 @@ void main() {
       Playlist loadedPlaylist = loadPlaylist('S8 audio');
 
       expect(loadedPlaylist.downloadedAudioLst.length, 14);
-
-      List<String> downloadedAudioLst = loadedPlaylist.downloadedAudioLst
-          .map((Audio audio) => audio.validVideoTitle)
-          .toList();
-
       expect(loadedPlaylist.playableAudioLst.length, 3);
 
       List<String> audioTitleAfterDeletionLst = [
