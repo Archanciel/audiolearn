@@ -44,6 +44,7 @@ enum FilteredAudioAction {
   copyFilteredAudio,
   deleteFilteredAudio,
   deleteFilteredAudioFromPlaylistAsWell,
+  redownloadFilteredAudio,
 }
 
 /// This widget is used to display a playlist in the
@@ -77,11 +78,15 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
       listen: false,
     );
 
-    return Consumer2<PlaylistListVM, AudioPlayerVM>(
+    final AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
+      context,
+      listen: false,
+    );
+
+    return Consumer<PlaylistListVM>(
       builder: (
         context,
         playlistListVMlistenTrue,
-        audioPlayerVMlistenTrue,
         child,
       ) {
         return ListTile(
@@ -91,7 +96,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
               _buildPlaylistItemMenu(
                 context: context,
                 playlistListVMlistenTrue: playlistListVMlistenTrue,
-                audioPlayerVMlistenTrue: audioPlayerVMlistenTrue,
+                audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                 warningMessageVMlistenFalse: warningMessageVMlistenFalse,
               );
             },
@@ -111,8 +116,8 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                 // If another playlist is selected in the audio
                 // player view while the current audio is playing,
                 // then the current audio is paused.
-                if (audioPlayerVMlistenTrue.isPlaying) {
-                  await audioPlayerVMlistenTrue.pause();
+                if (audioPlayerVMlistenFalse.isPlaying) {
+                  await audioPlayerVMlistenFalse.pause();
                 }
               }
 
@@ -121,7 +126,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                 isPlaylistSelected: value!,
               );
 
-              await audioPlayerVMlistenTrue
+              await audioPlayerVMlistenFalse
                   .setCurrentAudioFromSelectedPlaylist();
             },
           ),
@@ -133,7 +138,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
   void _buildPlaylistItemMenu({
     required BuildContext context,
     required PlaylistListVM playlistListVMlistenTrue,
-    required AudioPlayerVM audioPlayerVMlistenTrue,
+    required AudioPlayerVM audioPlayerVMlistenFalse,
     required WarningMessageVM warningMessageVMlistenFalse,
   }) {
     final RenderBox listTileBox = context.findRenderObject() as RenderBox;
@@ -289,12 +294,13 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             List<String> selectedFilePathNameLst =
                 await _filePickerSelectAudioFiles();
 
-            AudioDownloadVM audioDownloadVM = Provider.of<AudioDownloadVM>(
+            AudioDownloadVM audioDownloadVMlistenFalse =
+                Provider.of<AudioDownloadVM>(
               context,
               listen: false,
             );
 
-            audioDownloadVM.importAudioFilesInPlaylist(
+            audioDownloadVMlistenFalse.importAudioFilesInPlaylist(
               targetPlaylist: playlist,
               filePathNameToImportLst: selectedFilePathNameLst,
             );
@@ -306,7 +312,8 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             List<String> videoUrls =
                 DirUtil.readUrlsFromFile(selectedFilePathName);
 
-            AudioDownloadVM audioDownloadVM = Provider.of<AudioDownloadVM>(
+            AudioDownloadVM audioDownloadVMlistenFalse =
+                Provider.of<AudioDownloadVM>(
               context,
               listen: false,
             );
@@ -318,7 +325,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                   actionFunction:
                       downloadAudioFromVideoUrlsContainedInTextFileToPlaylist,
                   actionFunctionArgs: [
-                    audioDownloadVM,
+                    audioDownloadVMlistenFalse,
                     warningMessageVMlistenFalse,
                     playlist,
                     videoUrls,
@@ -349,7 +356,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
           case PlaylistPopupMenuAction.rewindAudioToStart:
             int rewindedPlayableAudioNumber =
                 playlistListVMlistenTrue.rewindPlayableAudioToStart(
-              audioPlayerVM: audioPlayerVMlistenTrue,
+              audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
               playlist: playlist,
             );
 
@@ -474,10 +481,20 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
           child: Text(AppLocalizations.of(context)!.deleteFilteredAudio),
         ),
         PopupMenuItem<FilteredAudioAction>(
-          key: const Key('popup_menu_delete_filtered_audio_from_playlist_as_well'),
+          key: const Key(
+              'popup_menu_delete_filtered_audio_from_playlist_as_well'),
           value: FilteredAudioAction.deleteFilteredAudioFromPlaylistAsWell,
           child: Text(AppLocalizations.of(context)!
               .deleteFilteredAudioFromPlaylistAsWell),
+        ),
+        PopupMenuItem<FilteredAudioAction>(
+          key: const Key('popup_menu_redownload_filtered_audio'),
+          value: FilteredAudioAction.redownloadFilteredAudio,
+          child: Tooltip(
+            message:
+                AppLocalizations.of(context)!.redownloadFilteredAudioTooltip,
+            child: Text(AppLocalizations.of(context)!.redownloadFilteredAudio),
+          ),
         ),
       ],
     ).then((action) {
@@ -831,6 +848,14 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
               },
             );
             break;
+          case FilteredAudioAction.redownloadFilteredAudio:
+            // You cannot await here, but you can trigger an
+            // action which will not block the widget tree
+            // rendering.
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              playlistListVMlistenTrue.redownloadSortFilteredAudioLst();
+            });
+            break;
         }
       }
     });
@@ -872,15 +897,15 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
   /// selected a text file containing video URLs whose audio are to be downloaded
   /// to the playlist.
   Future<void> downloadAudioFromVideoUrlsContainedInTextFileToPlaylist(
-    AudioDownloadVM audioDownloadVM,
+    AudioDownloadVM audioDownloadVMlistenFalse,
     WarningMessageVM warningMessageVM,
     Playlist targetPlaylist,
     List<String> videoUrls,
   ) async {
     int existingAudioFilesNotRedownloadedCount =
-        await audioDownloadVM.downloadAudioFromVideoUrlsToPlaylist(
+        await audioDownloadVMlistenFalse.downloadAudioFromVideoUrlsToPlaylist(
       targetPlaylist: targetPlaylist,
-      videoUrls: videoUrls,
+      videoUrlsLst: videoUrls,
     );
 
     if (existingAudioFilesNotRedownloadedCount > 0) {
