@@ -171,6 +171,7 @@ class PlaylistListVM extends ChangeNotifier {
   void updateSettingsAndPlaylistJsonFiles({
     bool unselectAddedPlaylist = true,
     bool updatePlaylistPlayableAudioList = true,
+    bool addExistingSettingsAudioSortFilterData = false,
   }) {
     _audioDownloadVM.updatePlaylistJsonFiles(
         unselectAddedPlaylist: unselectAddedPlaylist,
@@ -250,7 +251,10 @@ class PlaylistListVM extends ChangeNotifier {
       );
     }
 
-    _updateAndSavePlaylistOrder();
+    _updateAndSavePlaylistOrder(
+      addExistingSettingsAudioSortFilterData:
+          addExistingSettingsAudioSortFilterData,
+    );
 
     notifyListeners();
   }
@@ -870,12 +874,19 @@ class PlaylistListVM extends ChangeNotifier {
   /// Thanks to this method, when restarting the app, the playlists
   /// are displayed in the same order as when the app was closed. This
   /// is done by saving the playlist order in the settings file.
-  void _updateAndSavePlaylistOrder() {
+  void _updateAndSavePlaylistOrder({
+    bool addExistingSettingsAudioSortFilterData = false,
+  }) {
     List<String> playlistOrder =
         _listOfSelectablePlaylists.map((playlist) => playlist.title).toList();
 
-    _settingsDataService.updatePlaylistOrderAndSaveSettings(
-        playlistOrder: playlistOrder);
+    if (addExistingSettingsAudioSortFilterData) {
+      _settingsDataService.updatePlaylistOrderAndAddExistingSettingsAndSaveSettings(
+          playlistOrder: playlistOrder);
+    } else {
+      _settingsDataService.updatePlaylistOrderAndSaveSettings(
+          playlistOrder: playlistOrder);
+    }
   }
 
   void moveSelectedItemDown() {
@@ -2545,6 +2556,7 @@ class PlaylistListVM extends ChangeNotifier {
 
     updateSettingsAndPlaylistJsonFiles(
       updatePlaylistPlayableAudioList: false,
+      addExistingSettingsAudioSortFilterData: true,
     );
 
     // Display a confirmation message to the user.
