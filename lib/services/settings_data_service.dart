@@ -190,6 +190,59 @@ class SettingsDataService {
     _saveSettings();
   }
 
+  /// Method called by PlaylistListVM when the user select the left appbar menu
+  /// 'Restore Playlists, Comments and Settings from Zip File' in the playlist
+  /// download view. The method updates the playlist order list, extract the
+  /// _namedAudioSortFilterParametersMap and the
+  /// _searchHistoryAudioSortFilterParametersLst from the existing settings file
+  /// and add their content to the current settings before and saving them in the
+  /// settings file.
+  void updatePlaylistOrderAddExistingAudioSortFilterSettingsAndSave({
+    required List<String> playlistOrder,
+  }) {
+    _settings[SettingType.playlists]![Playlists.orderedTitleLst] =
+        playlistOrder;
+
+    // Retrieve the current settings file path
+    final String applicationPath = DirUtil.getApplicationPath(isTest: _isTest);
+    final String settingsFilePath =
+        "$applicationPath${Platform.pathSeparator}$kSettingsFileName";
+    final File settingsFile = File(settingsFilePath);
+
+    // If the settings file exists, extract the audio sort/filter settings.
+    if (settingsFile.existsSync()) {
+      try {
+        final String jsonString = settingsFile.readAsStringSync();
+        final Map<String, dynamic> existingSettings = jsonDecode(jsonString);
+
+        // Extract the named audio sort/filter parameters if they exist.
+        if (existingSettings.containsKey('namedAudioSortFilterSettings')) {
+          final Map<String, dynamic> namedSettingsJson =
+              existingSettings['namedAudioSortFilterSettings'];
+          namedSettingsJson.forEach((audioKey, audioValue) {
+            _namedAudioSortFilterParametersMap[audioKey] =
+                AudioSortFilterParameters.fromJson(audioValue);
+          });
+        }
+
+        // Extract the search history of audio sort/filter parameters if it exists.
+        if (existingSettings
+            .containsKey('searchHistoryOfAudioSortFilterSettings')) {
+          final String searchHistoryJsonString =
+              existingSettings['searchHistoryOfAudioSortFilterSettings'];
+          final List<dynamic> historyList = jsonDecode(searchHistoryJsonString);
+          _searchHistoryAudioSortFilterParametersLst.addAll(historyList
+              .map((element) => AudioSortFilterParameters.fromJson(element)));
+        }
+      } catch (e) {
+        print('Error while extracting audio sort/filter settings: $e');
+      }
+    }
+
+    // Save the updated settings (including the merged audio sort/filter settings)
+    _saveSettings();
+  }
+
   // Save settings to a JSON file. This method is not private because
   // it is used in unit tests.
   void saveSettingsToFile({
@@ -334,7 +387,8 @@ class SettingsDataService {
   void restorePlaylistTitleOrderIfExistAndSaveSettings({
     required String directoryContainingPreviouslySavedPlaylistTitleOrder,
   }) {
-    String pathFileName = "$directoryContainingPreviouslySavedPlaylistTitleOrder${path.separator}$kOrderedPlaylistTitlesFileName";
+    String pathFileName =
+        "$directoryContainingPreviouslySavedPlaylistTitleOrder${path.separator}$kOrderedPlaylistTitlesFileName";
     final File file = File(pathFileName);
 
     if (!file.existsSync()) {
@@ -342,8 +396,7 @@ class SettingsDataService {
     }
 
     final String orderedPlaylistTitlesStr = DirUtil.readStringFromFile(
-      pathFileName:
-          pathFileName,
+      pathFileName: pathFileName,
     );
 
     final List<String> orderedPlaylistTitleLst = orderedPlaylistTitlesStr
