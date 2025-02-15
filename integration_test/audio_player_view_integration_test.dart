@@ -6296,9 +6296,9 @@ void main() {
         allOf(
           [
             greaterThanOrEqualTo(
-                actualAudioPlayerViewAudioPositionInTenthsOfSeconds - 20),
+                actualAudioPlayerViewAudioPositionInTenthsOfSeconds - 10),
             lessThanOrEqualTo(
-                actualAudioPlayerViewAudioPositionInTenthsOfSeconds),
+                actualAudioPlayerViewAudioPositionInTenthsOfSeconds + 10),
           ],
         ),
         reason:
