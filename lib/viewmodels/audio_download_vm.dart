@@ -1229,7 +1229,7 @@ class AudioDownloadVM extends ChangeNotifier {
         // Before this improvement, the failed downloaded audio was
         // added to the target playlist.
         //
-        // notifyDownloadError() was called in _downloadAudioFile()
+        // notifyDownloadError() was called in _redownloadAudioFile()
         return ErrorType.downloadAudioYoutubeError;
       }
     } catch (e) {
@@ -1245,6 +1245,10 @@ class AudioDownloadVM extends ChangeNotifier {
     }
 
     stopwatch.stop();
+
+    _isDownloading = false;
+    _youtubeExplode!.close();
+    _youtubeExplode = null;
 
     notifyListeners();
 
@@ -2073,7 +2077,7 @@ class AudioDownloadVM extends ChangeNotifier {
     return true;
   }
 
-  /// Downloads the audio file from the Youtube video and saves it
+  /// Re-downloads the audio file from the Youtube video and saves it
   /// to the enclosing playlist directory. Returns true if the audio
   /// file was successfully downloaded, false otherwise.
   Future<bool> _redownloadAudioFile({
