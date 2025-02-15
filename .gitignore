@@ -51,3 +51,4 @@ windows/flutter/generated_plugins.cmake
 *.bak
 *.swift
 macos/Flutter/GeneratedPluginRegistrant.swift
+/android/app/.cxx
