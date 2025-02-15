@@ -234,6 +234,7 @@ class MockAudioDownloadVM extends AudioDownloadVM {
     required Playlist singleVideoTargetPlaylist,
     bool downloadAtMusicQuality = false,
     bool displayWarningIfAudioAlreadyExists = true,
+    String predefinedAudioFileName = '',
   }) async {
     if (videoUrl.contains('invalid')) {
       warningMessageVM.isSingleVideoUrlInvalid = true;

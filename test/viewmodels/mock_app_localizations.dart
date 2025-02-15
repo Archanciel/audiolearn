@@ -1825,4 +1825,19 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get deleteFilteredAudioFromPlaylistAsWell =>
       "Delete Filtered Audio from Playlist as well ...";
+
+  @override
+  String get redownloadFilteredAudio => "Re-download filtered Audio's";
+
+  @override
+  String get redownloadFilteredAudioTooltip =>
+      "Filtered audio files are re-downloaded using their original file names.";
+
+  @override
+  String redownloadedAudioNumbersConfirmation(
+    Object redownloadedAudioNumber,
+    Object playlistTitle,
+    Object notRedownloadedAudioNumber,
+  ) =>
+      "\"$redownloadedAudioNumber\" audio's were redownloaded to the playlist \"$playlistTitle\". \"$notRedownloadedAudioNumber\" audio's were not redownloaded since they are already present in the playlist directory.";
 }
