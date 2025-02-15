@@ -770,7 +770,7 @@
       "playlistTitle": {}
     }
   },
-  "redownloadFilteredAudio": "Re-download filtered Audio's",
+  "redownloadFilteredAudio": "Redownload filtered Audio's",
   "redownloadFilteredAudioTooltip": "Filtered audio files are re-downloaded using their original file names.",
   "redownloadedAudioNumbersConfirmation": "\"{redownloadedAudioNumber}\" audio's were redownloaded to the playlist \"{playlistTitle}\". \"{notRedownloadedAudioNumber}\" audio's were not redownloaded since they are already present in the playlist directory.",
   "@redownloadedAudioNumbersConfirmation": {
@@ -779,6 +779,15 @@
       "playlistTitle": {},
       "redownloadedAudioNumber": {},
       "notRedownloadedAudioNumber": {}
+    }
+  },
+  "redownloadDeletedAudio": "Redownload deleted Audio",
+  "redownloadedAudioConfirmation": "The audio \"{redownloadedAudioTitle}\" was redownloaded to the playlist \"{playlistTitle}\".",
+  "@redownloadedAudioConfirmation": {
+    "description": "Confirmation title for redownloading audio",
+    "placeholders": {
+      "playlistTitle": {},
+      "redownloadedAudioTitle": {}
     }
   }
 }

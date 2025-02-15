@@ -971,8 +971,8 @@ class PlaylistListVM extends ChangeNotifier {
   /// to the playlist, using the playlist menu 'Re-download filtered Audio's'
   /// redownload the audio files which were deleted, setting the file names to
   /// the initial downloaded file name.
-  /// 
-  /// The method returns a list of two integers: 
+  ///
+  /// The method returns a list of two integers:
   ///   [
   ///    number of audio files which were redownloaded,
   ///    number of audio files which were not redownloaded because the audio
@@ -994,6 +994,33 @@ class PlaylistListVM extends ChangeNotifier {
       filteredAudioToRedownload.length - existingAudioFilesNotRedownloadedCount,
       existingAudioFilesNotRedownloadedCount,
     ];
+  }
+
+  /// This method is called when the user executes the playlist submenu 'Re-download
+  /// filtered Audio's' after having selected (and defined) a named Sort/Filter
+  /// parameters. For example, it makes sense to define a filter only parameters
+  /// which select audio's which are commented. With this filter parameters applied
+  /// to the playlist, using the playlist menu 'Re-download filtered Audio's'
+  /// redownload the audio files which were deleted, setting the file names to
+  /// the initial downloaded file name.
+  ///
+  /// The method returns a list of two integers:
+  ///   [
+  ///    number of audio files which were redownloaded,
+  ///    number of audio files which were not redownloaded because the audio
+  ///    file(s) already exist in the playlist directory
+  ///   ].
+  Future<void> redownloadDeletedAudio({
+    required Audio audio,
+  }) async {
+    List<Audio> filteredAudioToRedownload = [audio];
+
+    await _audioDownloadVM.redownloadPlaylistFilteredAudio(
+      targetPlaylist: _uniqueSelectedPlaylist!,
+      filteredAudioToRedownload: filteredAudioToRedownload,
+    );
+
+    notifyListeners();
   }
 
   /// This method is called when the user executes the playlist submenu 'Delete
