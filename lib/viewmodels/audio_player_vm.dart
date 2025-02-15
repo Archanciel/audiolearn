@@ -707,10 +707,9 @@ class AudioPlayerVM extends ChangeNotifier {
     if (currentOrPastPlaylistAudio == null) {
       // causes "No audio selected" audio title to be displayed
       // in the AudioPlayerView screen. Reinitializing the
-      // the _currentAudioPosition as well as the
-      // _currentAudioTotalDuration ensure that the audio slider
-      // is correctly displayed at position 0:00 and that the
-      // displayed audio duration is 0:00.
+      // _currentAudioPosition and the _currentAudioTotalDuration
+      // ensure that the audio slider is correctly displayed at
+      // position 0:00 and that the displayed audio duration is 0:00.
       _currentAudio = null;
       _currentAudioPosition = Duration.zero;
       _currentAudioTotalDuration = Duration.zero;
@@ -1078,7 +1077,13 @@ class AudioPlayerVM extends ChangeNotifier {
     }
 
     _currentAudioPosition = durationPosition;
-    await _audioPlayer!.seek(durationPosition);
+
+    try {
+      await _audioPlayer!.seek(durationPosition);
+    } catch (e) {
+      // ignore: avoid_print
+      print('***** AudioPlayerVM.modifyAudioPlayerPosition() error: $e');
+    }
 
     // Necessary so that the audio position is updated in the
     // position text fields and the slider in the AudioPlayerView
