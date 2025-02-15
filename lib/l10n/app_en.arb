@@ -19,7 +19,9 @@
   "@translate": {
     "description": "Appbar language selection menu item.",
     "placeholders": {
-      "language": {}
+      "language": {
+        "type": "String"
+      }
     }
   },
   "musicalQualityTooltip": "If set, downloads at musical quality.",
@@ -769,5 +771,14 @@
     }
   },
   "redownloadFilteredAudio": "Re-download filtered Audio's",
-  "redownloadFilteredAudioTooltip": "Filtered audio files are re-downloaded using their original file names."
+  "redownloadFilteredAudioTooltip": "Filtered audio files are re-downloaded using their original file names.",
+  "redownloadedAudioNumbersConfirmation": "\"{redownloadedAudioNumber}\" audio's were redownloaded to the playlist \"{playlistTitle}\". \"{notRedownloadedAudioNumber}\" audio's were not redownloaded since they are already present in the playlist directory.",
+  "@redownloadedAudioNumbersConfirmation": {
+    "description": "Confirmation title for redownloading filtered audio",
+    "placeholders": {
+      "playlistTitle": {},
+      "redownloadedAudioNumber": {},
+      "notRedownloadedAudioNumber": {}
+    }
+  }
 }

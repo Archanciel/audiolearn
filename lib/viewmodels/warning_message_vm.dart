@@ -96,9 +96,14 @@ enum WarningMessageType {
   confirmCopiedNotCopiedAudioNumber, // The case if the user clicked on
   // Copy Filtered Audio to Playlist ... menu item
 
-  rewindedPlayableAudioToStart, // The case if the playable audio
+  rewindedPlayableAudioToStart, // The case if the playable audio's
   // were rewinded to start position. This happens when the user clicks
   // on the Rewind Audio to Start playlist menu item.
+
+  redownloadedAudioNumbersConfirmation, // The case if the sort
+  // filtered deleted audio's were redownloaded. This happens when
+  // the user clicks on the playlist submenu 'Re-download filtered
+  // Audio's'.
 
   notRedownloadAudioFilesInPlaylistDirectory, // The case if the
   // audio files in the playlist directory were not redownloaded
@@ -1027,6 +1032,26 @@ class WarningMessageVM extends ChangeNotifier {
     _rewindedPlayableAudioNumber = rewindedPlayableAudioNumber;
 
     warningMessageType = WarningMessageType.rewindedPlayableAudioToStart;
+
+    // Causes the display warning message widget to be displayed.
+    notifyListeners();
+  }
+
+  int _redownloadAudioNumber = 0;
+  int get redownloadAudioNumber => _redownloadAudioNumber;
+  int _notRedownloadAudioNumber = 0;
+  int get notRedownloadAudioNumber => _notRedownloadAudioNumber;
+  void redownloadAudioNumberConfirmation({
+    required String targetPlaylistTitle,
+    required int redownloadAudioNumberAudioNumber,
+    required int notRedownloadAudioNumberAudioNumber,
+  }) {
+    _playlistTitle = targetPlaylistTitle;
+    _redownloadAudioNumber = redownloadAudioNumberAudioNumber;
+    _notRedownloadAudioNumber = notRedownloadAudioNumberAudioNumber;
+
+    warningMessageType =
+        WarningMessageType.redownloadedAudioNumbersConfirmation;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();

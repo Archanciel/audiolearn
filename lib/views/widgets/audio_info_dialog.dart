@@ -1,8 +1,8 @@
 import 'package:audiolearn/viewmodels/comment_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../services/settings_data_service.dart';
 import '../../utils/duration_expansion.dart';
@@ -131,7 +131,7 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
       createInfoRowFunction(
           valueTextWidgetKey: const Key('enclosingPlaylistTitleKey'),
           context: context,
-          label: AppLocalizations.of(context)!.enclosingPlaylistLabel,
+            label: AppLocalizations.of(context)!.enclosingPlaylistLabel,
           value: (audio.enclosingPlaylist == null)
               ? ''
               : audio.enclosingPlaylist!.title),

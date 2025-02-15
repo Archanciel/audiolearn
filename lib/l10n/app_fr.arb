@@ -19,7 +19,9 @@
   "@translate": {
     "description": "Menu AppBar de sélection de la langue.",
     "placeholders": {
-      "language": {}
+      "language": {
+        "type": "String"
+      }
     }
   },
   "musicalQualityTooltip": "Si activé, télécharge en qualité musicale.",
@@ -74,52 +76,72 @@
   "@updatedPlaylistUrlTitle": {
     "description": "Message d'information affiché lorsqu'une URL de playlist existante a été mise à jour.",
     "placeholders": {
-      "title": {}
+      "title": {
+        "type": "Object"
+      }
     }
   },
   "addYoutubePlaylistTitle": "Nouvelle playlist Youtube \"{title}\" de qualité {quality} ajoutée à la fin de la liste des playlists.",
   "@addYoutubePlaylistTitle": {
     "description": "Message informant qu'une nouvelle playlist a été ajoutée à la liste des playlists.",
     "placeholders": {
-      "title": {},
-      "quality": {}
+      "title": {
+        "type": "Object"
+      },
+      "quality": {
+        "type": "Object"
+      }
     }
   },
   "addLocalPlaylistTitle": "Nouvelle playlist locale \"{title}\" de qualité {quality} ajoutée à la fin de la liste des playlists.",
   "@addLocalPlaylistTitle": {
     "description": "Message informant qu'une nouvelle playlist a été ajoutée à la liste des playlists.",
     "placeholders": {
-      "title": {},
-      "quality": {}
+      "title": {
+        "type": "Object"
+      },
+      "quality": {
+        "type": "Object"
+      }
     }
   },
   "invalidPlaylistUrl": "L'URL \"{url}\" ne pointe pas sur une playlist. Aucune playlist n'a donc été ajoutée ou modifiée.",
   "@invalidPlaylistUrl": {
     "description": "Message d'erreur affiché lorsqu'une URL de playlist est invalide.",
     "placeholders": {
-      "url": {}
+      "url": {
+        "type": "Object"
+      }
     }
   },
   "renameFileNameAlreadyUsed": "Le nom de fichier \"{fileName}\" est déjà utilisé par un autre fichier dans le même répertoire et ne peut donc pas être réutilisé.",
   "@renameFileNameAlreadyUsed": {
     "description": "Warning announcing that the playlist with invalid URL was not added.",
     "placeholders": {
-      "fileName": {}
+      "fileName": {
+        "type": "Object"
+      }
     }
   },
   "playlistWithUrlAlreadyInListOfPlaylists": "La playlist \"{title}\" avec l'URL \"{url}\" est déjà dans la liste des playlists et ne sera donc pas recrée.",
   "@playlistWithUrlAlreadyInListOfPlaylists": {
     "description": "Avertissement annonçant que la playlist avec l'URL {url} est déjà dans la liste des playlists.",
     "placeholders": {
-      "url": {},
-      "title": {}
+      "url": {
+        "type": "Object"
+      },
+      "title": {
+        "type": "Object"
+      }
     }
   },
   "localPlaylistWithTitleAlreadyInListOfPlaylists": "La playlist locale \"{title}\" est déjà dans la liste des playlists. Par conséquent, la playlist locale avec ce titre ne sera pas créée.",
   "@localPlaylistWithTitleAlreadyInListOfPlaylists": {
     "description": "Avertissement annonçant que la playlist locale avec le titre {title} est déjà dans la liste des playlists.",
     "placeholders": {
-      "title": {}
+      "title": {
+        "type": "Object"
+      }
     }
   },
   "youtubePlaylistWithTitleAlreadyInListOfPlaylists": "La playlist Youtube \"{title}\" est déjà dans la liste des playlists. Par conséquent, la playlist locale avec ce titre ne sera pas créée.",
@@ -127,15 +149,21 @@
   "@downloadAudioYoutubeError": {
     "description": "Message d'erreur affiché lorsqu'une erreur se produit lors du téléchargement audio Youtube",
     "placeholders": {
-      "exceptionMessage": {}
+      "exceptionMessage": {
+        "type": "Object"
+      }
     }
   },
   "downloadAudioYoutubeErrorDueToLiveVideoInPlaylist": "Erreur de téléchargement audio Youtube. La playlist \"{playlistTitle}\" contient une video live qui provoque l'échec du téléchargement des audio's de la playlist. Pour résoudre le problème, après avoir téléchargé l'audio de la vidéo live comme expliqué ci-dessous, supprimez la vidéo live de la playlist puis redémarrez l'application et rééssayez.\n\nL'URL de la vidéo live contient cet élément: \"{liveVideoString}\". Afin d'ajouter l'audio de cette vidéo live à la playlist \"{playlistTitle}\", téléchargez-la séparément en tant que vidéo unique en l'ajoutant à playlist \"{playlistTitle}\".",
   "@downloadAudioYoutubeErrorDueToLiveVideoInPlaylist": {
     "description": "Message d'erreur affiché lorsqu'une erreur se produit lors du téléchargement audio Youtube à cause d'une vidéo live dans la playlist.",
     "placeholders": {
-      "playlistTitle": {},
-      "liveVideoString": {}
+      "playlistTitle": {
+        "type": "Object"
+      },
+      "liveVideoString": {
+        "type": "Object"
+      }
     }
   },
   "downloadAudioFileAlreadyOnAudioDirectory": "L'audio \"{audioValidVideoTitle}\" est contenu dans le fichier \"{fileName}\" se trouvant dans le répertoire de la playlist cible \"{playlistTitle}\" et ne sera donc pas retéléchargé.",
@@ -144,7 +172,9 @@
   "@invalidSingleVideoUUrl": {
     "description": "Message d'erreur affiché lorsqu'une URL de vidéo unique est invalide.",
     "placeholders": {
-      "url": {}
+      "url": {
+        "type": "Object"
+      }
     }
   },
   "copyYoutubeVideoUrl": "Copier l'URL de la vidéo Youtube",
@@ -280,8 +310,12 @@
   "@deletePlaylistDialogComment": {
     "description": "Confirm message for deleting the playlist",
     "placeholders": {
-      "audioNumber": {},
-      "audioCommentsNumber": {}
+      "audioNumber": {
+        "type": "Object"
+      },
+      "audioCommentsNumber": {
+        "type": "Object"
+      }
     }
   },
   "appBarTitleAudioExtractor": "Extraire Audio",
@@ -309,7 +343,7 @@
   "errorInPlaylistJsonFile": "Le fichier \"{filePathName}\" une donnée de définition invalide. Essayez de trouver le probléme afin de le corriger avant de réexéuter l'opération.",
   "updatePlaylistJsonFilesMenuTooltip": "Si un ou plusieurs répertoires de playlists contenant ou non des audio's ont été ajoutés ou supprimés manuellement dans le répertoire racine des données de l'application ou si des audio's ont été supprimés manuellement d'un ou de plusieurs répertoires de playlist, cette fonctionnalité met à jour les fichiers JSON des playlists ainsi que celui des paramètres de l'application afin de refléter les changements dans les écrans de l'application. Des répertoires de playlist localisés sur un PC peuvent être copiés dans le répertoire racine des données de l'application ...",
   "updatePlaylistPlayableAudioListTooltip": "Si des audio's ont été supprimés manuellement d'un ou de plusieurs répertoires de playlist, cette fonctionnalité met à jour les fichiers JSON des playlists afin de refléter les changements dans les écrans de l'application.",
-  "audioPlayedInThisOrderTooltip": "Les audio sont joués dans cet ordre. Par défaut, les derniers audio téléchargés sont en bas de la liste.",
+  "audioPlayedInThisOrderTooltip": "Les audio's sont joués dans cet ordre. Par défaut, les derniers audio's téléchargés sont en bas de la liste.",
   "playableAudioDialogSortDescriptionTooltipBottomDownloadBefore": "Les audio en bas ont été téléchargés avant ceux d'en haut.",
   "playableAudioDialogSortDescriptionTooltipBottomDownloadAfter": "Les audio en bas ont été téléchargés après ceux d'en haut.",
   "playableAudioDialogSortDescriptionTooltipBottomUploadBefore": "Les vidéos en bas ont été téléchargées avant celles d'en haut.",
@@ -380,13 +414,17 @@
   "invalidLocalPlaylistTitle": "Le titre de la playlist locale \"{playlistTitle}\" ne peut contenir aucune virgule. Corrigez le titre et rééssayez ...",
   "@invalidLocalPlaylistTitle": {
     "placeholders": {
-      "playlistTitle": {}
+      "playlistTitle": {
+        "type": "Object"
+      }
     }
   },
   "invalidYoutubePlaylistTitle": "Le titre de la playlist Youtube \"{playlistTitle}\" ne peut contenir aucune virgule. Corrigez le titre et rééssayez ...",
   "@invalidYoutubePlaylistTitle": {
     "placeholders": {
-      "playlistTitle": {}
+      "playlistTitle": {
+        "type": "Object"
+      }
     }
   },
   "setValueToTargetWarning": "La valeur entrée {invalidValueWarningParam} ({maxMinPossibleValue}). Corrigez la valeur et rééssayez ...",
@@ -425,7 +463,7 @@
   "downloadVideoUrlsFromTextFileInPlaylistTooltip": "Téléchargez les audio's dans la playlist à partir des URL vidéo répertoriées dans un fichier texte à sélectionner. Le fichier texte doit contenir une URL par ligne.",
   "downloadAudioFromVideoUrlsInPlaylistTitle": "Télécharger les audio's des videos dans la playlist \"{title}\"",
   "downloadAudioFromVideoUrlsInPlaylist": "Téléchargement de {number} audio.",
-  "notRedownloadAudioFilesInPlaylistDirectory": "{number} audio sont déjà contenus dans le répertoire de la playlist cible \"{playlistTitle}\" et n'ont donc pas été retéléchargés.",
+  "notRedownloadAudioFilesInPlaylistDirectory": "{number} audio's sont déjà contenus dans le répertoire de la playlist cible \"{playlistTitle}\" et n'ont donc pas été retéléchargés.",
   "clickToSetAscendingOrDescendingPlayingOrderTooltip": "Cliquez pour définir l'ordre de lecture croissant ou décroissant.",
   "removeSortFilterAudiosOptionsFromPlaylistMenu": "Eliminer les paramètres tri/filtre de la playlist ...",
   "removeSortFilterOptionsFromPlaylist": "De la playlist \"{title}\"",
@@ -436,18 +474,30 @@
   "@saveSortFilterParmsConfirmation": {
     "description": "Confirmation message for saving sort/filter parameters",
     "placeholders": {
-      "sortFilterParmsName": {},
-      "playlistTitle": {},
-      "forViewMessage": {}
+      "sortFilterParmsName": {
+        "type": "Object"
+      },
+      "playlistTitle": {
+        "type": "Object"
+      },
+      "forViewMessage": {
+        "type": "Object"
+      }
     }
   },
   "removeSortFilterParmsConfirmation": "Les paramètres de tri/filtre \"{sortFilterParmsName}\" ont été supprimés de la playlist \"{playlistTitle}\" sur l'écran(s) \"{forViewMessage}\".",
   "@removeSortFilterParmsConfirmation": {
     "description": "Confirmation message for removing sort/filter parameters",
     "placeholders": {
-      "sortFilterParmsName": {},
-      "playlistTitle": {},
-      "forViewMessage": {}
+      "sortFilterParmsName": {
+        "type": "Object"
+      },
+      "playlistTitle": {
+        "type": "Object"
+      },
+      "forViewMessage": {
+        "type": "Object"
+      }
     }
   },
   "playlistSortFilterLabel": "{screenName} tri/filtre",
@@ -463,8 +513,12 @@
   "@confirmYoutubeChannelModifications": {
     "description": "Confirmation message indicating how many downloaded audio and playable audio were modified",
     "placeholders": {
-      "numberOfModifiedDownloadedAudio": {},
-      "numberOfModifiedPlayableAudio": {}
+      "numberOfModifiedDownloadedAudio": {
+        "type": "Object"
+      },
+      "numberOfModifiedPlayableAudio": {
+        "type": "Object"
+      }
     }
   },
   "rewindAudioToStart": "Repositionner les audio's au début",
@@ -478,17 +532,27 @@
   "@deleteFilteredAudioConfirmationTitle": {
     "description": "Confirmation title for deleting filtered audio",
     "placeholders": {
-      "sortFilterParmsName": {},
-      "playlistTitle": {}
+      "sortFilterParmsName": {
+        "type": "Object"
+      },
+      "playlistTitle": {
+        "type": "Object"
+      }
     }
   },
   "deleteFilteredAudioConfirmation": "Nombre d'audio's à supprimer: {deleteAudioNumber},\nTaille totale correspondante: {deleteAudioTotalFileSize},\nDurée totale correspondante: {deleteAudioTotalDuration}.",
   "@deleteFilteredAudioConfirmation": {
     "description": "Confirmation message for deleting filtered audio",
     "placeholders": {
-      "deleteAudioNumber": {},
-      "deleteAudioTotalFileSize": {},
-      "deleteAudioTotalDuration": {}
+      "deleteAudioNumber": {
+        "type": "Object"
+      },
+      "deleteAudioTotalFileSize": {
+        "type": "Object"
+      },
+      "deleteAudioTotalDuration": {
+        "type": "Object"
+      }
     }
   },
   "deleteFilteredCommentedAudioWarningTitleOne": "ATTENTION: vous supprimez",
@@ -496,18 +560,30 @@
   "@deleteFilteredCommentedAudioWarningTitleTwo": {
     "description": "Warning title for deleting commented and uncommented filtered audio",
     "placeholders": {
-      "sortFilterParmsName": {},
-      "playlistTitle": {}
+      "sortFilterParmsName": {
+        "type": "Object"
+      },
+      "playlistTitle": {
+        "type": "Object"
+      }
     }
   },
   "deleteFilteredCommentedAudioWarning": "Nombre total d'audio à supprimer: {deleteAudioNumber},\nNombre d'audio COMMENTÉS à supprimer: {deleteCommentedAudioNumber},\nTaille totale correspondante: {deleteAudioTotalFileSize},\nDurée totale correspondante: {deleteAudioTotalDuration}.",
   "@deleteFilteredCommentedAudioWarning": {
     "description": "Warning message for deleting commented and uncommented filtered audio",
     "placeholders": {
-      "deleteAudioNumber": {},
-      "deleteCommentedAudioNumber": {},
-      "deleteAudioTotalFileSize": {},
-      "deleteAudioTotalDuration": {}
+      "deleteAudioNumber": {
+        "type": "Object"
+      },
+      "deleteCommentedAudioNumber": {
+        "type": "Object"
+      },
+      "deleteAudioTotalFileSize": {
+        "type": "Object"
+      },
+      "deleteAudioTotalDuration": {
+        "type": "Object"
+      }
     }
   },
   "commentedAudioDeletionHelpTitle": "Comment créer et utiliser un paramètre de tri/filtrage pour éviter de supprimer les audio'ss commentés ?",
@@ -530,168 +606,312 @@
   "@confirmMovedUnmovedAudioNumberFromYoutubeToYoutubePlaylist": {
     "description": "Confirmation message indicating how many audio were moved and unmoved",
     "placeholders": {
-      "sourcePlaylistTitle": {},
-      "targetPlaylistTitle": {},
-      "sortedFilterParmsName": {},
-      "movedAudioNumber": {},
-      "movedCommentedAudioNumber": {},
-      "unmovedAudioNumber": {}
+      "sourcePlaylistTitle": {
+        "type": "Object"
+      },
+      "targetPlaylistTitle": {
+        "type": "Object"
+      },
+      "sortedFilterParmsName": {
+        "type": "Object"
+      },
+      "movedAudioNumber": {
+        "type": "Object"
+      },
+      "movedCommentedAudioNumber": {
+        "type": "Object"
+      },
+      "unmovedAudioNumber": {
+        "type": "Object"
+      }
     }
   },
   "confirmMovedUnmovedAudioNumberFromYoutubeToLocalPlaylist": "En appliquant le filtre \"{sortedFilterParmsName}\", de la playlist Youtube \"{sourcePlaylistTitle}\" à la playlist locale \"{targetPlaylistTitle}\", {movedAudioNumber} audio(s) ont été déplacé(s) dont {movedCommentedAudioNumber} commenté(s), et {unmovedAudioNumber} audio(s) n'ont pu être déplacé(s).",
   "@confirmMovedUnmovedAudioNumberFromYoutubeToLocalPlaylist": {
     "description": "Confirmation message indicating how many audio were moved and unmoved",
     "placeholders": {
-      "sourcePlaylistTitle": {},
-      "targetPlaylistTitle": {},
-      "sortedFilterParmsName": {},
-      "movedAudioNumber": {},
-      "movedCommentedAudioNumber": {},
-      "unmovedAudioNumber": {}
+      "sourcePlaylistTitle": {
+        "type": "Object"
+      },
+      "targetPlaylistTitle": {
+        "type": "Object"
+      },
+      "sortedFilterParmsName": {
+        "type": "Object"
+      },
+      "movedAudioNumber": {
+        "type": "Object"
+      },
+      "movedCommentedAudioNumber": {
+        "type": "Object"
+      },
+      "unmovedAudioNumber": {
+        "type": "Object"
+      }
     }
   },
   "confirmMovedUnmovedAudioNumberFromLocalToYoutubePlaylist": "En appliquant le filtre \"{sortedFilterParmsName}\", de la playlist locale \"{sourcePlaylistTitle}\" à la playlist Youtube \"{targetPlaylistTitle}\", {movedAudioNumber} audio(s) ont été déplacé(s) dont {movedCommentedAudioNumber} commenté(s), et {unmovedAudioNumber} audio(s) n'ont pu être déplacé(s).",
   "@confirmMovedUnmovedAudioNumberFromLocalToYoutubePlaylist": {
     "description": "Confirmation message indicating how many audio were moved and unmoved",
     "placeholders": {
-      "sourcePlaylistTitle": {},
-      "targetPlaylistTitle": {},
-      "sortedFilterParmsName": {},
-      "movedAudioNumber": {},
-      "movedCommentedAudioNumber": {},
-      "unmovedAudioNumber": {}
+      "sourcePlaylistTitle": {
+        "type": "Object"
+      },
+      "targetPlaylistTitle": {
+        "type": "Object"
+      },
+      "sortedFilterParmsName": {
+        "type": "Object"
+      },
+      "movedAudioNumber": {
+        "type": "Object"
+      },
+      "movedCommentedAudioNumber": {
+        "type": "Object"
+      },
+      "unmovedAudioNumber": {
+        "type": "Object"
+      }
     }
   },
   "confirmMovedUnmovedAudioNumberFromLocalToLocalPlaylist": "En appliquant le filtre \"{sortedFilterParmsName}\", de la playlist locale \"{sourcePlaylistTitle}\" à la playlist locale \"{targetPlaylistTitle}\", {movedAudioNumber} audio(s) ont été déplacé(s) dont {movedCommentedAudioNumber} commenté(s), et {unmovedAudioNumber} audio(s) n'ont pu être déplacé(s).",
   "@confirmMovedUnmovedAudioNumberFromLocalToLocalPlaylist": {
     "description": "Confirmation message indicating how many audio were moved and unmoved",
     "placeholders": {
-      "sourcePlaylistTitle": {},
-      "targetPlaylistTitle": {},
-      "sortedFilterParmsName": {},
-      "movedAudioNumber": {},
-      "movedCommentedAudioNumber": {},
-      "unmovedAudioNumber": {}
+      "sourcePlaylistTitle": {
+        "type": "Object"
+      },
+      "targetPlaylistTitle": {
+        "type": "Object"
+      },
+      "sortedFilterParmsName": {
+        "type": "Object"
+      },
+      "movedAudioNumber": {
+        "type": "Object"
+      },
+      "movedCommentedAudioNumber": {
+        "type": "Object"
+      },
+      "unmovedAudioNumber": {
+        "type": "Object"
+      }
     }
   },
   "confirmCopiedNotCopiedAudioNumberFromYoutubeToYoutubePlaylist": "En appliquant le filtre \"{sortedFilterParmsName}\", de la playlist Youtube \"{sourcePlaylistTitle}\" à la playlist Youtube \"{targetPlaylistTitle}\", {copiedAudioNumber} audio(s) ont été copié(s) dont {copiedCommentedAudioNumber} commenté(s), et {notCopiedAudioNumber} audio(s) n'ont pu être copié(s).",
   "@confirmCopiedNotCopiedAudioNumberFromYoutubeToYoutubePlaylist": {
     "description": "Confirmation message indicating how many audio were copied and notCopied",
     "placeholders": {
-      "sourcePlaylistTitle": {},
-      "targetPlaylistTitle": {},
-      "sortedFilterParmsName": {},
-      "copiedAudioNumber": {},
-      "copiedCommentedAudioNumber": {},
-      "notCopiedAudioNumber": {}
+      "sourcePlaylistTitle": {
+        "type": "Object"
+      },
+      "targetPlaylistTitle": {
+        "type": "Object"
+      },
+      "sortedFilterParmsName": {
+        "type": "Object"
+      },
+      "copiedAudioNumber": {
+        "type": "Object"
+      },
+      "copiedCommentedAudioNumber": {
+        "type": "Object"
+      },
+      "notCopiedAudioNumber": {
+        "type": "Object"
+      }
     }
   },
   "confirmCopiedNotCopiedAudioNumberFromYoutubeToLocalPlaylist": "En appliquant le filtre \"{sortedFilterParmsName}\", de la playlist Youtube \"{sourcePlaylistTitle}\" à la playlist locale \"{targetPlaylistTitle}\", {copiedAudioNumber} audio(s) ont été copié(s) dont {copiedCommentedAudioNumber} commenté(s), et {notCopiedAudioNumber} audio(s) n'ont pu être copié(s).",
   "@confirmCopiedNotCopiedAudioNumberFromYoutubeToLocalPlaylist": {
     "description": "Confirmation message indicating how many audio were copied and notCopied",
     "placeholders": {
-      "sourcePlaylistTitle": {},
-      "targetPlaylistTitle": {},
-      "sortedFilterParmsName": {},
-      "copiedAudioNumber": {},
-      "copiedCommentedAudioNumber": {},
-      "notCopiedAudioNumber": {}
+      "sourcePlaylistTitle": {
+        "type": "Object"
+      },
+      "targetPlaylistTitle": {
+        "type": "Object"
+      },
+      "sortedFilterParmsName": {
+        "type": "Object"
+      },
+      "copiedAudioNumber": {
+        "type": "Object"
+      },
+      "copiedCommentedAudioNumber": {
+        "type": "Object"
+      },
+      "notCopiedAudioNumber": {
+        "type": "Object"
+      }
     }
   },
   "confirmCopiedNotCopiedAudioNumberFromLocalToYoutubePlaylist": "En appliquant le filtre \"{sortedFilterParmsName}\", de la playlist locale \"{sourcePlaylistTitle}\" à la playlist Youtube \"{targetPlaylistTitle}\", {copiedAudioNumber} audio(s) ont été copié(s) dont {copiedCommentedAudioNumber} commenté(s), et {notCopiedAudioNumber} audio(s) n'ont pu être copié(s).",
   "@confirmCopiedNotCopiedAudioNumberFromLocalToYoutubePlaylist": {
     "description": "Confirmation message indicating how many audio were copied and notCopied",
     "placeholders": {
-      "sourcePlaylistTitle": {},
-      "targetPlaylistTitle": {},
-      "sortedFilterParmsName": {},
-      "copiedAudioNumber": {},
-      "copiedCommentedAudioNumber": {},
-      "notCopiedAudioNumber": {}
+      "sourcePlaylistTitle": {
+        "type": "Object"
+      },
+      "targetPlaylistTitle": {
+        "type": "Object"
+      },
+      "sortedFilterParmsName": {
+        "type": "Object"
+      },
+      "copiedAudioNumber": {
+        "type": "Object"
+      },
+      "copiedCommentedAudioNumber": {
+        "type": "Object"
+      },
+      "notCopiedAudioNumber": {
+        "type": "Object"
+      }
     }
   },
   "confirmCopiedNotCopiedAudioNumberFromLocalToLocalPlaylist": "En appliquant le filtre \"{sortedFilterParmsName}\", de la playlist locale \"{sourcePlaylistTitle}\" à la playlist locale \"{targetPlaylistTitle}\", {copiedAudioNumber} audio(s) ont été copié(s) dont {copiedCommentedAudioNumber} commenté(s), et {notCopiedAudioNumber} audio(s) n'ont pu être copié(s).",
   "@confirmCopiedNotCopiedAudioNumberFromLocalToLocalPlaylist": {
     "description": "Confirmation message indicating how many audio were copied and notCopied",
     "placeholders": {
-      "sourcePlaylistTitle": {},
-      "targetPlaylistTitle": {},
-      "sortedFilterParmsName": {},
-      "copiedAudioNumber": {},
-      "copiedCommentedAudioNumber": {},
-      "notCopiedAudioNumber": {}
+      "sourcePlaylistTitle": {
+        "type": "Object"
+      },
+      "targetPlaylistTitle": {
+        "type": "Object"
+      },
+      "sortedFilterParmsName": {
+        "type": "Object"
+      },
+      "copiedAudioNumber": {
+        "type": "Object"
+      },
+      "copiedCommentedAudioNumber": {
+        "type": "Object"
+      },
+      "notCopiedAudioNumber": {
+        "type": "Object"
+      }
     }
   },
   "defaultSFPNotApplyedToMoveAudioFromYoutubeToYoutubePlaylistWarning": "Puisque les paramètres de tri/filtrage \"{sortedFilterParmsName}\" sont sélectionnés, aucun audio ne peut être déplacé de la playlist YouTube \"{sourcePlaylistTitle}\" vers la playlist YouTube \"{targetPlaylistTitle}\". SOLUTION : définissez des paramètres de tri/filtrage et appliquez-les avant d'exécuter cette opération ...",
   "@defaultSFPNotApplyedToMoveAudioFromYoutubeToYoutubePlaylistWarning": {
     "description": "Message d'avertissement indiquant que les paramètres de tri/filtrage par défaut n'ont pas été appliqués pour déplacer un audio",
     "placeholders": {
-      "sourcePlaylistTitle": {},
-      "targetPlaylistTitle": {},
-      "sortedFilterParmsName": {}
+      "sourcePlaylistTitle": {
+        "type": "Object"
+      },
+      "targetPlaylistTitle": {
+        "type": "Object"
+      },
+      "sortedFilterParmsName": {
+        "type": "Object"
+      }
     }
   },
   "defaultSFPNotApplyedToMoveAudioFromYoutubeToLocalPlaylistWarning": "Puisque les paramètres de tri/filtrage \"{sortedFilterParmsName}\" sont sélectionnés, aucun audio ne peut être déplacé de la playlist YouTube \"{sourcePlaylistTitle}\" vers la playlist locale \"{targetPlaylistTitle}\". SOLUTION : définissez des paramètres de tri/filtrage et appliquez-les avant d'exécuter cette opération ...",
   "@defaultSFPNotApplyedToMoveAudioFromYoutubeToLocalPlaylistWarning": {
     "description": "Message d'avertissement indiquant que les paramètres de tri/filtrage par défaut n'ont pas été appliqués pour déplacer un audio",
     "placeholders": {
-      "sourcePlaylistTitle": {},
-      "targetPlaylistTitle": {},
-      "sortedFilterParmsName": {}
+      "sourcePlaylistTitle": {
+        "type": "Object"
+      },
+      "targetPlaylistTitle": {
+        "type": "Object"
+      },
+      "sortedFilterParmsName": {
+        "type": "Object"
+      }
     }
   },
   "defaultSFPNotApplyedToMoveAudioFromLocalToYoutubePlaylistWarning": "Puisque les paramètres de tri/filtrage \"{sortedFilterParmsName}\" sont sélectionnés, aucun audio ne peut être déplacé de la playlist locale \"{sourcePlaylistTitle}\" vers la playlist YouTube \"{targetPlaylistTitle}\". SOLUTION : définissez des paramètres de tri/filtrage et appliquez-les avant d'exécuter cette opération ...",
   "@defaultSFPNotApplyedToMoveAudioFromLocalToYoutubePlaylistWarning": {
     "description": "Message d'avertissement indiquant que les paramètres de tri/filtrage par défaut n'ont pas été appliqués pour déplacer un audio",
     "placeholders": {
-      "sourcePlaylistTitle": {},
-      "targetPlaylistTitle": {},
-      "sortedFilterParmsName": {}
+      "sourcePlaylistTitle": {
+        "type": "Object"
+      },
+      "targetPlaylistTitle": {
+        "type": "Object"
+      },
+      "sortedFilterParmsName": {
+        "type": "Object"
+      }
     }
   },
   "defaultSFPNotApplyedToMoveAudioFromLocalToLocalPlaylistWarning": "Puisque les paramètres de tri/filtrage \"{sortedFilterParmsName}\" sont sélectionnés, aucun audio ne peut être déplacé de la playlist locale \"{sourcePlaylistTitle}\" vers la playlist locale \"{targetPlaylistTitle}\". SOLUTION : définissez des paramètres de tri/filtrage et appliquez-les avant d'exécuter cette opération ...",
   "@defaultSFPNotApplyedToMoveAudioFromLocalToLocalPlaylistWarning": {
     "description": "Message d'avertissement indiquant que les paramètres de tri/filtrage par défaut n'ont pas été appliqués pour déplacer un audio",
     "placeholders": {
-      "sourcePlaylistTitle": {},
-      "targetPlaylistTitle": {},
-      "sortedFilterParmsName": {}
+      "sourcePlaylistTitle": {
+        "type": "Object"
+      },
+      "targetPlaylistTitle": {
+        "type": "Object"
+      },
+      "sortedFilterParmsName": {
+        "type": "Object"
+      }
     }
   },
   "defaultSFPNotApplyedToCopyAudioFromYoutubeToYoutubePlaylistWarning": "Puisque les paramètres de tri/filtrage \"{sortedFilterParmsName}\" sont sélectionnés, aucun audio ne peut être copié de la playlist YouTube \"{sourcePlaylistTitle}\" vers la playlist YouTube \"{targetPlaylistTitle}\". SOLUTION : définissez des paramètres de tri/filtrage et appliquez-les avant d'exécuter cette opération ...",
   "@defaultSFPNotApplyedToCopyAudioFromYoutubeToYoutubePlaylistWarning": {
     "description": "Message d'avertissement indiquant que les paramètres de tri/filtrage par défaut n'ont pas été appliqués pour copier un audio",
     "placeholders": {
-      "sourcePlaylistTitle": {},
-      "targetPlaylistTitle": {},
-      "sortedFilterParmsName": {}
+      "sourcePlaylistTitle": {
+        "type": "Object"
+      },
+      "targetPlaylistTitle": {
+        "type": "Object"
+      },
+      "sortedFilterParmsName": {
+        "type": "Object"
+      }
     }
   },
   "defaultSFPNotApplyedToCopyAudioFromYoutubeToLocalPlaylistWarning": "Puisque les paramètres de tri/filtrage \"{sortedFilterParmsName}\" sont sélectionnés, aucun audio ne peut être copié de la playlist YouTube \"{sourcePlaylistTitle}\" vers la playlist locale \"{targetPlaylistTitle}\". SOLUTION : définissez des paramètres de tri/filtrage et appliquez-les avant d'exécuter cette opération ...",
   "@defaultSFPNotApplyedToCopyAudioFromYoutubeToLocalPlaylistWarning": {
     "description": "Message d'avertissement indiquant que les paramètres de tri/filtrage par défaut n'ont pas été appliqués pour copier un audio",
     "placeholders": {
-      "sourcePlaylistTitle": {},
-      "targetPlaylistTitle": {},
-      "sortedFilterParmsName": {}
+      "sourcePlaylistTitle": {
+        "type": "Object"
+      },
+      "targetPlaylistTitle": {
+        "type": "Object"
+      },
+      "sortedFilterParmsName": {
+        "type": "Object"
+      }
     }
   },
   "defaultSFPNotApplyedToCopyAudioFromLocalToYoutubePlaylistWarning": "Puisque les paramètres de tri/filtrage \"{sortedFilterParmsName}\" sont sélectionnés, aucun audio ne peut être copié de la playlist locale \"{sourcePlaylistTitle}\" vers la playlist YouTube \"{targetPlaylistTitle}\". SOLUTION : définissez des paramètres de tri/filtrage et appliquez-les avant d'exécuter cette opération ...",
   "@defaultSFPNotApplyedToCopyAudioFromLocalToYoutubePlaylistWarning": {
     "description": "Message d'avertissement indiquant que les paramètres de tri/filtrage par défaut n'ont pas été appliqués pour copier un audio",
     "placeholders": {
-      "sourcePlaylistTitle": {},
-      "targetPlaylistTitle": {},
-      "sortedFilterParmsName": {}
+      "sourcePlaylistTitle": {
+        "type": "Object"
+      },
+      "targetPlaylistTitle": {
+        "type": "Object"
+      },
+      "sortedFilterParmsName": {
+        "type": "Object"
+      }
     }
   },
   "defaultSFPNotApplyedToCopyAudioFromLocalToLocalPlaylistWarning": "Puisque les paramètres de tri/filtrage \"{sortedFilterParmsName}\" sont sélectionnés, aucun audio ne peut être copié de la playlist locale \"{sourcePlaylistTitle}\" vers la playlist locale \"{targetPlaylistTitle}\". SOLUTION : définissez des paramètres de tri/filtrage et appliquez-les avant d'exécuter cette opération ...",
   "@defaultSFPNotApplyedToCopyAudioFromLocalToLocalPlaylistWarning": {
     "description": "Message d'avertissement indiquant que les paramètres de tri/filtrage par défaut n'ont pas été appliqués pour copier un audio",
     "placeholders": {
-      "sourcePlaylistTitle": {},
-      "targetPlaylistTitle": {},
-      "sortedFilterParmsName": {}
+      "sourcePlaylistTitle": {
+        "type": "Object"
+      },
+      "targetPlaylistTitle": {
+        "type": "Object"
+      },
+      "sortedFilterParmsName": {
+        "type": "Object"
+      }
     }
   },
   "appBarMenuEnableNextAudioAutoPlay": "Activer la lecture automatique du prochain audio ...",
@@ -702,8 +922,12 @@
   "@deleteSortFilterParmsWarningTitle": {
     "description": "Warning message for deleting a used SF parms",
     "placeholders": {
-      "sortFilterParmsName": {},
-      "playlistNumber": {}
+      "sortFilterParmsName": {
+        "type": "Object"
+      },
+      "playlistNumber": {
+        "type": "Object"
+      }
     }
   },
   "updatingSortFilterParmsWarningTitle": "ATTENTION: le paramètre de tri/filtre \"{sortFilterParmsName}\" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur \"Confirmer\", ou le sauver sous un nom différent ou annuler l'operation d'édition, cela en cliquant sur \"Annuler\" ?",
@@ -750,10 +974,29 @@
   "@deleteFilteredAudioFromPlaylistAsWellConfirmationTitle": {
     "description": "Confirmation title for deleting filtered audio",
     "placeholders": {
-      "sortFilterParmsName": {},
-      "playlistTitle": {}
+      "sortFilterParmsName": {
+        "type": "Object"
+      },
+      "playlistTitle": {
+        "type": "Object"
+      }
     }
   },
   "redownloadFilteredAudio": "Re-télécharger les audio's filtrés",
-  "redownloadFilteredAudioTooltip": "Les audio's filtrés sont re-téléchargés sous leurs noms de fichiers d'origine."
+  "redownloadFilteredAudioTooltip": "Les audio's filtrés sont re-téléchargés sous leurs noms de fichiers d'origine.",
+  "redownloadedAudioNumbersConfirmation": "\"{redownloadedAudioNumber}\" audio's ont été re-téléchargés dans la playlist \"{playlistTitle}\". \"{notRedownloadedAudioNumber}\" audio's n'ont pas été re-téléchargés du fait qu'ils sont déjà presents dans le répertoire de la playlist.",
+  "@redownloadedAudioNumbersConfirmation": {
+    "description": "Confirmation title for redownloading filtered audio",
+    "placeholders": {
+      "playlistTitle": {
+        "type": "Object"
+      },
+      "redownloadedAudioNumber": {
+        "type": "Object"
+      },
+      "notRedownloadedAudioNumber": {
+        "type": "Object"
+      }
+    }
+  }
 }

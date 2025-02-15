@@ -852,8 +852,15 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             // You cannot await here, but you can trigger an
             // action which will not block the widget tree
             // rendering.
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              playlistListVMlistenTrue.redownloadSortFilteredAudioLst();
+            WidgetsBinding.instance.addPostFrameCallback((_) async {
+              List<int> redownloadAudioNumberLst =
+                  await playlistListVMlistenTrue.redownloadSortFilteredAudioLst();
+              warningMessageVMlistenFalse.redownloadAudioNumberConfirmation(
+                targetPlaylistTitle: playlist.title,
+                redownloadAudioNumberAudioNumber: redownloadAudioNumberLst[0],
+                notRedownloadAudioNumberAudioNumber:
+                    redownloadAudioNumberLst[1],
+              );
             });
             break;
         }

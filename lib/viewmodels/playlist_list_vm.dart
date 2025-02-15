@@ -971,21 +971,29 @@ class PlaylistListVM extends ChangeNotifier {
   /// to the playlist, using the playlist menu 'Re-download filtered Audio's'
   /// redownload the audio files which were deleted, setting the file names to
   /// the initial downloaded file name.
-  Future<void> redownloadSortFilteredAudioLst() async {
+  /// 
+  /// The method returns a list of two integers: 
+  ///   [
+  ///    number of audio files which were redownloaded,
+  ///    number of audio files which were not redownloaded because the audio
+  ///    file(s) already exist in the playlist directory
+  ///   ].
+  Future<List<int>> redownloadSortFilteredAudioLst() async {
     List<Audio> filteredAudioToRedownload =
         _sortedFilteredSelectedPlaylistPlayableAudioLst!;
 
-    int existingAudioFilesNotRedownloadedCount = await _audioDownloadVM.redownloadPlaylistFilteredAudio(
+    int existingAudioFilesNotRedownloadedCount =
+        await _audioDownloadVM.redownloadPlaylistFilteredAudio(
       targetPlaylist: _uniqueSelectedPlaylist!,
       filteredAudioToRedownload: filteredAudioToRedownload,
     );
 
     notifyListeners();
-    
-    _warningMessageVM.confirmSavingToZip(
-      zipFilePathName: existingAudioFilesNotRedownloadedCount,
-    );
 
+    return [
+      filteredAudioToRedownload.length - existingAudioFilesNotRedownloadedCount,
+      existingAudioFilesNotRedownloadedCount,
+    ];
   }
 
   /// This method is called when the user executes the playlist submenu 'Delete
