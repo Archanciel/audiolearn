@@ -746,14 +746,14 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         });
 
         return const SizedBox.shrink();
-      case WarningMessageType.redownloadedAudioNumbersConfirmation:
+      case WarningMessageType.redownloadedAudioConfirmation:
         WidgetsBinding.instance.addPostFrameCallback((_) {
           _displayWarningDialog(
             context: _context,
-            message: AppLocalizations.of(context)!.redownloadedAudioNumbersConfirmation(
+            message:
+                AppLocalizations.of(context)!.redownloadedAudioConfirmation(
               _warningMessageVM.playlistTitle,
-              _warningMessageVM.redownloadAudioNumber,
-              _warningMessageVM.notRedownloadAudioNumber,
+              _warningMessageVM.redownloadAudioTitle,
             ),
             warningMessageVM: _warningMessageVM,
             warningMode: WarningMode.confirm,

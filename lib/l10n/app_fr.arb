@@ -277,7 +277,7 @@
   "authorName": "Jean-Pierre Schnyder / Suisse",
   "aboutAppDescription": "AudioLearn vous permet de télécharger l'audio de vidéos présentes dans des playlists Youtube ajoutées à l'application, ou l'audio d'une vidéo Youtube individuelle à partir de son lien.\n\nVous pouvez également importer des fichiers audio, comme des livres audio, directement dans l'application.\n\nEn plus de l'écoute des fichiers audio, AudioLearn offre la possibilité d'ajouter des commentaires positionnés à chaque fichier, facilitant ainsi la réécoute des passages les plus intéressants.\n\nEnfin, l'application permet de trier et filtrer les fichiers audio selon de nombreux critères.\n\nDans la prochaine version, vous pourrez extraire les segments audio commentés pour les partager par email ou via WhatsApp, ou encore les combiner pour créer un nouvel audio récapitulatif.",
   "keepAudioEntryInSourcePlaylist": "Conserver les données de l'audio dans la playlist source",
-  "keepAudioEntryInSourcePlaylistTooltip": "Conserve les données audio dans le fichier JSON de la playlist d'origine, même après avoir transféré le fichier audio vers une autre playlist. Cela empêche de re-télécharger le fichier audio s'il n'existe plus dans son répertoire d'origine.",
+  "keepAudioEntryInSourcePlaylistTooltip": "Conserve les données audio dans le fichier JSON de la playlist d'origine, même après avoir transféré le fichier audio vers une autre playlist. Cela empêche de retélécharger le fichier audio s'il n'existe plus dans son répertoire d'origine.",
   "movedFromPlaylistLabel": "Déplacé de la playlist",
   "movedToPlaylistLabel": "Déplacé vers la playlist",
   "downloadSingleVideoButtonTooltip": "Télécharger l'audio de la vidéo.\n\nPour télécharger l'audio d'une vidéo Youtube, entrez son URL dans le champ \"Lien Youtube\" et cliquez sur le bouton Un. Vous devez ensuite choisir à quelle playlist l'audio sera ajouté.",
@@ -970,7 +970,7 @@
   "restoredAppDataFromZip": "Fichiers json des playlists et des commentaires ainsi que les paramètres de l'application restaurés depuis \"{filePathName}\".",
   "appDataCouldNotBeRestoredFromZip": "Les fichiers json des playlists et des commentaires ainsi que les paramètres de l'application n'ont pu être restaurés à partir d'un zip !",
   "deleteFilteredAudioFromPlaylistAsWell": "Supprimer les audio's filtrés de la playlist également ...",
-  "deleteFilteredAudioFromPlaylistAsWellConfirmationTitle": "Supprimer les audio's filtrés par le paramètre \"{sortFilterParmsName}\" de la playlist \"{playlistTitle}\" également (pourront être re-téléchargés)",
+  "deleteFilteredAudioFromPlaylistAsWellConfirmationTitle": "Supprimer les audio's filtrés par le paramètre \"{sortFilterParmsName}\" de la playlist \"{playlistTitle}\" également (pourront être retéléchargés)",
   "@deleteFilteredAudioFromPlaylistAsWellConfirmationTitle": {
     "description": "Confirmation title for deleting filtered audio",
     "placeholders": {
@@ -982,9 +982,9 @@
       }
     }
   },
-  "redownloadFilteredAudio": "Re-télécharger les audio's filtrés",
-  "redownloadFilteredAudioTooltip": "Les audio's filtrés sont re-téléchargés sous leurs noms de fichiers d'origine.",
-  "redownloadedAudioNumbersConfirmation": "\"{redownloadedAudioNumber}\" audio's ont été re-téléchargés dans la playlist \"{playlistTitle}\". \"{notRedownloadedAudioNumber}\" audio's n'ont pas été re-téléchargés du fait qu'ils sont déjà presents dans le répertoire de la playlist.",
+  "redownloadFilteredAudio": "Retélécharger les audio's filtrés",
+  "redownloadFilteredAudioTooltip": "Les audio's filtrés sont retéléchargés sous leurs noms de fichiers d'origine.",
+  "redownloadedAudioNumbersConfirmation": "\"{redownloadedAudioNumber}\" audio's ont été retéléchargés dans la playlist \"{playlistTitle}\". \"{notRedownloadedAudioNumber}\" audio's n'ont pas été retéléchargés du fait qu'ils sont déjà presents dans le répertoire de la playlist.",
   "@redownloadedAudioNumbersConfirmation": {
     "description": "Confirmation title for redownloading filtered audio",
     "placeholders": {
@@ -995,6 +995,19 @@
         "type": "Object"
       },
       "notRedownloadedAudioNumber": {
+        "type": "Object"
+      }
+    }
+  },
+  "redownloadDeletedAudio": "Retélécharger l'audio supprimé",
+  "redownloadedAudioConfirmation": "L'audio \"{redownloadedAudioTitle}\" a été retéléchargé dans la playlist \"{playlistTitle}\".",
+  "@redownloadedAudioConfirmation": {
+    "description": "Confirmation title for redownloading audio",
+    "placeholders": {
+      "playlistTitle": {
+        "type": "Object"
+      },
+      "redownloadedAudioTitle": {
         "type": "Object"
       }
     }

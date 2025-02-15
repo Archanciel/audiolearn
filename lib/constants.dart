@@ -27,10 +27,11 @@ enum AudioPopupMenuAction {
   modifyAudioTitle,
   addAudioPicture,
   removeAudioPicture,
+  redownloadDeletedAudio,
 }
 
 const String kApplicationName = "Audio Learn";
-const String kApplicationVersion = '1.3.47';
+const String kApplicationVersion = '1.3.48';
 const String kApplicationPath = "/storage/emulated/0/Documents/audiolearn";
 const String kApplicationPathTest = "/storage/emulated/0/Documents/audiolearn";
 const String kPlaylistDownloadRootPath =
@@ -133,7 +134,8 @@ DateFormat frenchDateFormat = DateFormat("dd/MM/yyyy");
 DateFormat frenchDateFormatYy = DateFormat("dd/MM/yy");
 DateFormat timeFormat = DateFormat("HH:mm");
 DateFormat yearMonthDayDateTimeFormat = DateFormat("yyyy/MM/dd HH:mm");
-DateFormat yearMonthDayDateTimeFormatForFileName = DateFormat("yyyy-MM-dd_HH_mm");
+DateFormat yearMonthDayDateTimeFormatForFileName =
+    DateFormat("yyyy-MM-dd_HH_mm");
 
 const TextStyle kDialogTitlesStyle = TextStyle(
   fontSize: 17,

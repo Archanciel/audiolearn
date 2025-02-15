@@ -102,8 +102,12 @@ enum WarningMessageType {
 
   redownloadedAudioNumbersConfirmation, // The case if the sort
   // filtered deleted audio's were redownloaded. This happens when
-  // the user clicks on the playlist submenu 'Re-download filtered
+  // the user clicks on the playlist submenu 'Redownload filtered
   // Audio's'.
+
+  redownloadedAudioConfirmation, // The case if the deleted audio was
+  // redownloaded. This happens when the user clicks on the audio
+  // list item 'Redownload Audio'.
 
   notRedownloadAudioFilesInPlaylistDirectory, // The case if the
   // audio files in the playlist directory were not redownloaded
@@ -1052,6 +1056,21 @@ class WarningMessageVM extends ChangeNotifier {
 
     warningMessageType =
         WarningMessageType.redownloadedAudioNumbersConfirmation;
+
+    // Causes the display warning message widget to be displayed.
+    notifyListeners();
+  }
+
+  String _redownloadAudioTitle = '';
+  String get redownloadAudioTitle => _redownloadAudioTitle;
+  void redownloadAudioConfirmation({
+    required String targetPlaylistTitle,
+    required String redownloadAudioTitle,
+  }) {
+    _playlistTitle = targetPlaylistTitle;
+    _redownloadAudioTitle = redownloadAudioTitle;
+
+    warningMessageType = WarningMessageType.redownloadedAudioConfirmation;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();

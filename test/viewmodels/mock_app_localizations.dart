@@ -1840,4 +1840,14 @@ class MockAppLocalizations extends AppLocalizations {
     Object notRedownloadedAudioNumber,
   ) =>
       "\"$redownloadedAudioNumber\" audio's were redownloaded to the playlist \"$playlistTitle\". \"$notRedownloadedAudioNumber\" audio's were not redownloaded since they are already present in the playlist directory.";
+
+  @override
+  String get redownloadDeletedAudio => "Redownload deleted Audio";
+
+  @override
+  String redownloadedAudioConfirmation(
+    Object redownloadedAudioTitle,
+    Object playlistTitle,
+  ) =>
+      "The audio\"$redownloadedAudioTitle\" was redownloaded to the playlist \"$playlistTitle\".";
 }

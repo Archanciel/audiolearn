@@ -168,6 +168,12 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                 child: Text(AppLocalizations.of(context)!
                     .deleteAudioFromPlaylistAswell),
               ),
+              PopupMenuItem<AudioPopupMenuAction>(
+                key: const Key('popup_menu_redownload_delete_audio'),
+                value: AudioPopupMenuAction.redownloadDeletedAudio,
+                child:
+                    Text(AppLocalizations.of(context)!.redownloadDeletedAudio),
+              ),
             ];
           },
           icon: const Icon(Icons.menu),
@@ -511,6 +517,24 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                   context: context,
                   nextAudio: nextAudio,
                 );
+                break;
+              case AudioPopupMenuAction.redownloadDeletedAudio:
+                // You cannot await here, but you can trigger an
+                // action which will not block the widget tree
+                // rendering.
+                WidgetsBinding.instance.addPostFrameCallback((_) async {
+                  await playlistListVMlistenFalse.redownloadDeletedAudio(
+                    audio: audio,
+                  );
+
+                  Provider.of<WarningMessageVM>(
+                    context,
+                    listen: false,
+                  ).redownloadAudioConfirmation(
+                    targetPlaylistTitle: audio.enclosingPlaylist!.title,
+                    redownloadAudioTitle: audio.validVideoTitle,
+                  );
+                });
                 break;
             }
           },

@@ -230,6 +230,11 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
           child:
               Text(AppLocalizations.of(context)!.deleteAudioFromPlaylistAswell),
         ),
+        PopupMenuItem<AudioPopupMenuAction>(
+          key: const Key('popup_menu_redownload_delete_audio'),
+          value: AudioPopupMenuAction.redownloadDeletedAudio,
+          child: Text(AppLocalizations.of(context)!.redownloadDeletedAudio),
+        ),
       ],
       elevation: 8,
     ).then((value) async {
@@ -515,6 +520,20 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
             // method so that the playlist download view current audio is
             // updated to the next audio in the playlist playable audio list.
             playlistListVMlistenFalse.updateCurrentAudio();
+            break;
+          case AudioPopupMenuAction.redownloadDeletedAudio:
+            // You cannot await here, but you can trigger an
+            // action which will not block the widget tree
+            // rendering.
+            WidgetsBinding.instance.addPostFrameCallback((_) async {
+              await playlistListVMlistenFalse.redownloadDeletedAudio(
+                audio: audio,
+              );
+              warningMessageVM.redownloadAudioConfirmation(
+                targetPlaylistTitle: audio.enclosingPlaylist!.title,
+                redownloadAudioTitle: audio.validVideoTitle,
+              );
+            });
             break;
         }
       }
