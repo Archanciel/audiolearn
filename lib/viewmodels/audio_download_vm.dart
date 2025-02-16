@@ -117,13 +117,20 @@ class AudioDownloadVM extends ChangeNotifier {
       (filePath) => filePath.contains(kSettingsFileName),
     );
 
-    bool arePlaylistsRestoredOnWindows = false;
+    bool arePlaylistsRestoredFromAndroidToWindows = false;
     String playlistWindowsDownloadRootPath = '';
 
     if (restoringPlaylistsCommentsAndSettingsJsonFilesFromZip) {
-      arePlaylistsRestoredOnWindows = _playlistsRootPath.contains('C:\\');
-      
-      if (arePlaylistsRestoredOnWindows) {
+      Playlist firstRestoredPlaylist = JsonDataService.loadFromFile(
+        jsonPathFileName: playlistPathFileNameLst[0],
+        type: Playlist,
+      );
+
+      arePlaylistsRestoredFromAndroidToWindows = _playlistsRootPath
+              .contains('C:\\') &&
+          firstRestoredPlaylist.downloadPath.contains('/storage/emulated/0');
+
+      if (arePlaylistsRestoredFromAndroidToWindows) {
         _playlistsRootPath =
             "$_playlistsRootPath${path.separator}${kPlaylistDownloadRootPath.split('/').last}";
         _settingsDataService.set(
@@ -148,7 +155,7 @@ class AudioDownloadVM extends ChangeNotifier {
         if (restoringPlaylistsCommentsAndSettingsJsonFilesFromZip) {
           _updatePlaylistRootPathIfNecessary(
             playlist: currentPlaylist,
-            isPlaylistWindowsRootPath: arePlaylistsRestoredOnWindows,
+            isPlaylistWindowsRootPath: arePlaylistsRestoredFromAndroidToWindows,
             playlistWindowsDownloadRootPath: playlistWindowsDownloadRootPath,
           );
         }
@@ -1559,6 +1566,7 @@ class AudioDownloadVM extends ChangeNotifier {
     required Playlist targetPlaylist,
     required List<Audio> filteredAudioToRedownload,
   }) async {
+    _stopDownloadPressed = false;
     int existingAudioFilesNotRedownloadedCount = 0;
     final List<String> downloadedAudioFileNameLst = DirUtil.listFileNamesInDir(
       directoryPath: targetPlaylist.downloadPath,
