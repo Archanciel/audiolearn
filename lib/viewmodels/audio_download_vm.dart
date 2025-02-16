@@ -991,13 +991,7 @@ class AudioDownloadVM extends ChangeNotifier {
   /// video will be added.
   ///
   /// If the audio of the single video is correctly downloaded and
-  /// is added to a playlist, then true is returned, false otherwise.
-  ///
-  /// Returning true will cause the single video url text field to be
-  /// cleared.
-  ///
-  /// [predifinedAudioFileName] is defined when an audio is redownloaded after
-  /// it was deleted.
+  /// is added to a playlist, then ErrorType.noError.
   Future<ErrorType> downloadSingleVideoAudio({
     required Playlist singleVideoTargetPlaylist,
     required String videoUrl,
@@ -1163,10 +1157,7 @@ class AudioDownloadVM extends ChangeNotifier {
   /// video will be added.
   ///
   /// If the audio of the single video is correctly downloaded and
-  /// is added to a playlist, then true is returned, false otherwise.
-  ///
-  /// Returning true will cause the single video url text field to be
-  /// cleared.
+  /// is added to a playlist, then ErrorType.npError is returned.
   Future<ErrorType> redownloadSingleVideoAudio({
     required Playlist singleVideoTargetPlaylist,
     bool displayWarningIfAudioAlreadyExists = false,
@@ -1524,8 +1515,12 @@ class AudioDownloadVM extends ChangeNotifier {
         continue;
       }
 
-      _currentDownloadingAudio = audio;
+      if (_stopDownloadPressed) {
+        break;
+      }
 
+      _currentDownloadingAudio = audio;
+      
       ErrorType errorType = await redownloadSingleVideoAudio(
         singleVideoTargetPlaylist: targetPlaylist,
       );
