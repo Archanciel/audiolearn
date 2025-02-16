@@ -93,7 +93,13 @@ class AudioDownloadVM extends ChangeNotifier {
     loadExistingPlaylists();
   }
 
-  void loadExistingPlaylists() {
+  /// [restoringPlaylistsCommentsAndSettingsJsonFilesFromZip] is true if the
+  /// method is called in order to restore the playlists, comments and settings
+  /// json files from a zip file. In this case, the playlists root path is
+  /// updated if necessary.
+  void loadExistingPlaylists({
+    bool restoringPlaylistsCommentsAndSettingsJsonFilesFromZip = false,
+  }) {
     // reinitializing the list of playlist is necessary since
     // loadExistingPlaylists() is also called by PlaylistListVM.
     // updateSettingsAndPlaylistJsonFiles() method.
@@ -105,9 +111,32 @@ class AudioDownloadVM extends ChangeNotifier {
       excludeDirName: kCommentDirName,
     );
 
+    // Removing settings.json fromm the list of playlist json files if
+    // it is present in the list.
     playlistPathFileNameLst.removeWhere(
       (filePath) => filePath.contains(kSettingsFileName),
     );
+
+    bool arePlaylistsRestoredOnWindows = false;
+    String playlistWindowsDownloadRootPath = '';
+
+    if (restoringPlaylistsCommentsAndSettingsJsonFilesFromZip) {
+      arePlaylistsRestoredOnWindows = _playlistsRootPath.contains('C:\\');
+      
+      if (arePlaylistsRestoredOnWindows) {
+        _playlistsRootPath =
+            "$_playlistsRootPath${path.separator}${kPlaylistDownloadRootPath.split('/').last}";
+        _settingsDataService.set(
+            settingType: SettingType.dataLocation,
+            settingSubType: DataLocation.playlistRootPath,
+            value: _playlistsRootPath);
+
+        _settingsDataService.saveSettings();
+
+        playlistWindowsDownloadRootPath =
+            "$_playlistsRootPath${path.separator}";
+      }
+    }
 
     try {
       for (String playlistPathFileName in playlistPathFileNameLst) {
@@ -115,6 +144,15 @@ class AudioDownloadVM extends ChangeNotifier {
           jsonPathFileName: playlistPathFileName,
           type: Playlist,
         );
+
+        if (restoringPlaylistsCommentsAndSettingsJsonFilesFromZip) {
+          _updatePlaylistRootPathIfNecessary(
+            playlist: currentPlaylist,
+            isPlaylistWindowsRootPath: arePlaylistsRestoredOnWindows,
+            playlistWindowsDownloadRootPath: playlistWindowsDownloadRootPath,
+          );
+        }
+
         _listOfPlaylist.add(currentPlaylist);
 
         // if the playlist is selected, the audio quality checkbox will be
@@ -136,6 +174,25 @@ class AudioDownloadVM extends ChangeNotifier {
     //  notifyListeners(); not necessary since the unique
     //                     Consumer<AudioDownloadVM> is not concerned
     //                     by the _listOfPlaylist changes
+  }
+
+  void _updatePlaylistRootPathIfNecessary({
+    required Playlist playlist,
+    required bool isPlaylistWindowsRootPath,
+    required String playlistWindowsDownloadRootPath,
+  }) {
+    if (isPlaylistWindowsRootPath &&
+        playlist.downloadPath.contains(kPlaylistDownloadRootPath)) {
+      playlist.downloadPath = playlist.downloadPath.replaceFirst(
+        "$kPlaylistDownloadRootPath/",
+        playlistWindowsDownloadRootPath,
+      );
+    }
+
+    JsonDataService.saveToFile(
+      model: playlist,
+      path: playlist.getPlaylistDownloadFilePathName(),
+    );
   }
 
   Future<Playlist?> addPlaylist({
@@ -1520,7 +1577,7 @@ class AudioDownloadVM extends ChangeNotifier {
       }
 
       _currentDownloadingAudio = audio;
-      
+
       ErrorType errorType = await redownloadSingleVideoAudio(
         singleVideoTargetPlaylist: targetPlaylist,
       );
@@ -1807,17 +1864,22 @@ class AudioDownloadVM extends ChangeNotifier {
   /// Method called by PlaylistListVM when the user selects the update playlist
   /// JSON files menu item.
   ///
-  /// The method is also called when the user selects the 'Restore Playlist and
-  /// Comments from Zip File' menu item of the appbar leading popup menu. This
-  /// execute PlaylistListVM.restorePlaylistsCommentsAndSettingsJsonFilesFromZip().
+  /// The method is also called when the user selects the 'Restore Playlist, Comments
+  /// and Settings from Zip File' menu item of the playlist download view left
+  /// appbar leading popup menu. This execute the PlaylistListVM method
+  /// restorePlaylistsCommentsAndSettingsJsonFilesFromZip().
   void updatePlaylistJsonFiles({
     bool unselectAddedPlaylist = true,
     bool updatePlaylistPlayableAudioList = true,
+    bool restoringPlaylistsCommentsAndSettingsJsonFilesFromZip = false,
   }) {
     // Loading again the list of playlists since the list of playlists
     // existing in the application playlist directory may have been
     // manually modified: playlist(s) suppression or playlist(s) addition.
-    loadExistingPlaylists();
+    loadExistingPlaylists(
+      restoringPlaylistsCommentsAndSettingsJsonFilesFromZip:
+          restoringPlaylistsCommentsAndSettingsJsonFilesFromZip,
+    );
 
     // Obtaining the ordered list of playlist titles from the application
     // settings. The ordered list of playlist titles contains the playlists

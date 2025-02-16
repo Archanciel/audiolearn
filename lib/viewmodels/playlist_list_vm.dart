@@ -173,15 +173,18 @@ class PlaylistListVM extends ChangeNotifier {
   /// Comments from Zip File' menu item located in the appbar leading popup menu.
   /// It is called by restorePlaylistsCommentsAndSettingsJsonFilesFromZip().
   ///
-  /// In this case, [addExistingSettingsAudioSortFilterData] is set to true.
+  /// In this case, [restoringPlaylistsCommentsAndSettingsJsonFilesFromZip] is set
+  /// to true.
   void updateSettingsAndPlaylistJsonFiles({
     bool unselectAddedPlaylist = true,
     bool updatePlaylistPlayableAudioList = true,
-    bool addExistingSettingsAudioSortFilterData = false,
+    bool restoringPlaylistsCommentsAndSettingsJsonFilesFromZip = false,
   }) {
     _audioDownloadVM.updatePlaylistJsonFiles(
         unselectAddedPlaylist: unselectAddedPlaylist,
-        updatePlaylistPlayableAudioList: updatePlaylistPlayableAudioList);
+        updatePlaylistPlayableAudioList: updatePlaylistPlayableAudioList,
+        restoringPlaylistsCommentsAndSettingsJsonFilesFromZip:
+            restoringPlaylistsCommentsAndSettingsJsonFilesFromZip);
 
     List<Playlist> updatedListOfPlaylist = _audioDownloadVM.listOfPlaylist;
 
@@ -259,7 +262,7 @@ class PlaylistListVM extends ChangeNotifier {
 
     _updateAndSavePlaylistOrder(
       addExistingSettingsAudioSortFilterData:
-          addExistingSettingsAudioSortFilterData,
+          restoringPlaylistsCommentsAndSettingsJsonFilesFromZip,
     );
 
     notifyListeners();
@@ -2627,7 +2630,7 @@ class PlaylistListVM extends ChangeNotifier {
 
     updateSettingsAndPlaylistJsonFiles(
       updatePlaylistPlayableAudioList: false,
-      addExistingSettingsAudioSortFilterData: true,
+      restoringPlaylistsCommentsAndSettingsJsonFilesFromZip: true,
     );
 
     // Display a confirmation message to the user.
@@ -2638,14 +2641,14 @@ class PlaylistListVM extends ChangeNotifier {
     return zipFilePathName;
   }
 
-  Future<String> _restoreFromZip({
+  Future<void> _restoreFromZip({
     required String zipFilePathName,
   }) async {
     // Check if the provided zip file exists.
     final File zipFile = File(zipFilePathName);
 
     if (!zipFile.existsSync()) {
-      return '';
+      return;
     }
 
     // Retrieve the application path.
@@ -2664,27 +2667,33 @@ class PlaylistListVM extends ChangeNotifier {
 
       // Compute the destination path by joining the application path
       // with the relative path stored in the archive.
-      // Note: The relative path may include '..' segments which will be normalized.
-      final String destinationPath =
-          path.normalize(path.join(applicationPath, archiveFile.name));
+      // Note: The relative path may include '..' segments which will be
+      // normalized.
 
-      // Ensure the destination directory exists.
-      final Directory destinationDir = Directory(path.dirname(destinationPath));
+      final String sanitizedArchiveFileName = archiveFile.name
+          .split('/')
+          .map((segment) => segment.trim())
+          .join('/');
+
+      final String destinationPathFileName = path.normalize(
+        path.join(applicationPath, sanitizedArchiveFileName),
+      );
+
+      final Directory destinationDir = Directory(
+        path.dirname(destinationPathFileName),
+      );
 
       if (!destinationDir.existsSync()) {
         await destinationDir.create(recursive: true);
       }
-
       // Write the file's bytes to the computed destination.
-      final File outputFile = File(destinationPath);
+      final File outputFile = File(destinationPathFileName);
 
       await outputFile.writeAsBytes(
         archiveFile.content as List<int>,
         flush: true,
       );
     }
-
-    return zipFilePathName;
   }
 
   /// Method called when the user clicks on the 'Rewind audio to start' playlist
