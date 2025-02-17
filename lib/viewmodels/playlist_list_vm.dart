@@ -161,17 +161,17 @@ class PlaylistListVM extends ChangeNotifier {
   /// Method called when the user chooses the "Update playlist JSON files" menu
   /// item. The method is also executed when the user modifies the application
   /// settings through the ApplicationSettingsDialog opened by clicking on the
-  /// Application settings menu item.
-  ///
+  /// Application settings menu item. Finally, the method is also called when the
+  /// user clicks on the 'Restore Playlist and Comments from Zip File' menu item
+  /// located in the appbar leading popup menu.
+  /// 
   /// When the user changes the "Update playlist JSON files", the added playlists
   /// are unselected by default.
   ///
   /// When the user modifies the application settings, unselecting added playlist
   /// is not adequate.
   ///
-  /// The method is also called when the user clicks on the 'Restore Playlist and
-  /// Comments from Zip File' menu item located in the appbar leading popup menu.
-  /// It is called by restorePlaylistsCommentsAndSettingsJsonFilesFromZip().
+  /// For restoring, called by restorePlaylistsCommentsAndSettingsJsonFilesFromZip().
   ///
   /// In this case, [restoringPlaylistsCommentsAndSettingsJsonFilesFromZip] is set
   /// to true.
@@ -979,7 +979,7 @@ class PlaylistListVM extends ChangeNotifier {
   ///   [
   ///    number of audio files which were redownloaded,
   ///    number of audio files which were not redownloaded because the audio
-  ///    file(s) already exist in the playlist directory
+  ///                        file(s) already exist in the playlist directory
   ///   ].
   Future<List<int>> redownloadSortFilteredAudioLst() async {
     List<Audio> filteredAudioToRedownload =
