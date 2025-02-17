@@ -524,29 +524,29 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   ///
   Consumer<AudioDownloadVM> _buildDisplayDownloadProgressionInfo() {
     return Consumer<AudioDownloadVM>(
-      builder: (context, audioDownloadVM, child) {
-        if (audioDownloadVM.isDownloading) {
+      builder: (context, audioDownloadVMlistenTrue, child) {
+        if (audioDownloadVMlistenTrue.isDownloading) {
           String downloadProgressPercent =
-              '${(audioDownloadVM.downloadProgress * 100).toStringAsFixed(1)}%';
+              '${(audioDownloadVMlistenTrue.downloadProgress * 100).toStringAsFixed(1)}%';
           String downloadFileSize = UiUtil.formatLargeSizeToKbOrMb(
             context: context,
-            sizeInBytes: audioDownloadVM.currentDownloadingAudio.audioFileSize,
+            sizeInBytes: audioDownloadVMlistenTrue.currentDownloadingAudio.audioFileSize,
           );
           String downloadSpeed = '${UiUtil.formatLargeSizeToKbOrMb(
             context: context,
-            sizeInBytes: audioDownloadVM.lastSecondDownloadSpeed,
+            sizeInBytes: audioDownloadVMlistenTrue.lastSecondDownloadSpeed,
           )}/sec';
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
                 Text(
-                  audioDownloadVM.currentDownloadingAudio.validVideoTitle,
+                  audioDownloadVMlistenTrue.currentDownloadingAudio.validVideoTitle,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 10.0),
                 LinearProgressIndicator(
-                    value: audioDownloadVM.downloadProgress),
+                    value: audioDownloadVMlistenTrue.downloadProgress),
                 const SizedBox(height: 10.0),
                 Text(
                   '$downloadProgressPercent ${AppLocalizations.of(context)!.ofPreposition} $downloadFileSize ${AppLocalizations.of(context)!.atPreposition} $downloadSpeed',
