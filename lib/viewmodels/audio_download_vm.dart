@@ -155,10 +155,10 @@ class AudioDownloadVM extends ChangeNotifier {
           type: Playlist,
         );
 
-        if (restoringPlaylistsCommentsAndSettingsJsonFilesFromZip) {
-          _updatePlaylistRootPathIfNecessary(
+        if (restoringPlaylistsCommentsAndSettingsJsonFilesFromZip &&
+            arePlaylistsRestoredFromAndroidToWindows) {
+          _updatePlaylistWindowsRootPathIfNecessary(
             playlist: currentPlaylist,
-            isPlaylistWindowsRootPath: arePlaylistsRestoredFromAndroidToWindows,
             playlistWindowsDownloadRootPath: playlistWindowsDownloadRootPath,
           );
 
@@ -242,13 +242,11 @@ class AudioDownloadVM extends ChangeNotifier {
     }
   }
 
-  void _updatePlaylistRootPathIfNecessary({
+  void _updatePlaylistWindowsRootPathIfNecessary({
     required Playlist playlist,
-    required bool isPlaylistWindowsRootPath,
     required String playlistWindowsDownloadRootPath,
   }) {
-    if (isPlaylistWindowsRootPath &&
-        playlist.downloadPath.contains(kPlaylistDownloadRootPath)) {
+    if (playlist.downloadPath.contains(kPlaylistDownloadRootPath)) {
       playlist.downloadPath = playlist.downloadPath
           .replaceFirst(
             "$kPlaylistDownloadRootPath/",
