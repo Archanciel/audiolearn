@@ -171,7 +171,8 @@ class PlaylistListVM extends ChangeNotifier {
   /// When the user modifies the application settings, unselecting added playlist
   /// is not adequate.
   ///
-  /// For restoring, called by restorePlaylistsCommentsAndSettingsJsonFilesFromZip().
+  /// For restoring, the method is called by
+  /// restorePlaylistsCommentsAndSettingsJsonFilesFromZip().
   ///
   /// In this case, [restoringPlaylistsCommentsAndSettingsJsonFilesFromZip] is set
   /// to true.
@@ -2641,6 +2642,9 @@ class PlaylistListVM extends ChangeNotifier {
     return zipFilePathName;
   }
 
+  /// Method called when the user clicks on the 'Restore Playlist and Comments from
+  /// Zip File' menu. It extracts the playlist json files as well as the comment
+  /// json files of the playlists and writes them to the playlists root path.
   Future<void> _restoreFromZip({
     required String zipFilePathName,
   }) async {
