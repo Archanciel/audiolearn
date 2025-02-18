@@ -535,7 +535,8 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
                 audioSortFilterParametersName: audioPlaylistSortFilterParmsName,
               );
 
-              await playlistListVMlistenFalse.redownloadDeletedAudio(
+              List<dynamic> resultLst =
+                  await playlistListVMlistenFalse.redownloadDeletedAudio(
                 audio: audio,
               );
 
@@ -558,12 +559,15 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
                 audioSortFilterParmsName: audioPlaylistSortFilterParmsName,
               );
 
-              warningMessageVM.redownloadAudioConfirmation(
-                targetPlaylistTitle: audio.enclosingPlaylist!.title,
-                redownloadAudioTitle: audio.validVideoTitle,
-              );
+              if (resultLst.length == 1) {
+                warningMessageVM.redownloadAudioConfirmation(
+                  targetPlaylistTitle: audio.enclosingPlaylist!.title,
+                  redownloadAudioTitle: audio.validVideoTitle,
+                );
+              } // else, since no confirmation warning is displayed,
+              //   the no internet warning thrown by AudioDownloadVM.
+              //   notifyDownloadError() can be displayed..
             });
-            break;
         }
       }
     });
