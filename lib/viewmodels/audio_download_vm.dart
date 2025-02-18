@@ -155,10 +155,10 @@ class AudioDownloadVM extends ChangeNotifier {
           type: Playlist,
         );
 
-        if (restoringPlaylistsCommentsAndSettingsJsonFilesFromZip &&
-            arePlaylistsRestoredFromAndroidToWindows) {
-          _updatePlaylistWindowsRootPathIfNecessary(
+        if (restoringPlaylistsCommentsAndSettingsJsonFilesFromZip) {
+          _updatePlaylistRootPathIfNecessary(
             playlist: currentPlaylist,
+            isPlaylistWindowsRootPath: arePlaylistsRestoredFromAndroidToWindows,
             playlistWindowsDownloadRootPath: playlistWindowsDownloadRootPath,
           );
 
@@ -195,7 +195,7 @@ class AudioDownloadVM extends ChangeNotifier {
   ///
   /// This method checks if the playlist directory contains audio files whose name
   /// contains the audio title. If yes, the file is renamed to the original file
-  /// name. So, the file will be playable and will correspond to arestored existing
+  /// name. So, the file will be playable and will correspond to a restored existing
   /// comment.
   void _renameExistingPlaylistAudioFilesIfNecessary({
     required Playlist playlist,
@@ -210,7 +210,7 @@ class AudioDownloadVM extends ChangeNotifier {
       r'^\d{6}-\d{6}-(.+?)\s+\d{2}-\d{2}-\d{2}\.mp3$',
       caseSensitive: false,
     );
-    
+
     for (String audioFilePathName in audioFilePathNameLst) {
       String audioFileName =
           audioFilePathName.split(Platform.pathSeparator).last;
@@ -242,20 +242,29 @@ class AudioDownloadVM extends ChangeNotifier {
     }
   }
 
-  void _updatePlaylistWindowsRootPathIfNecessary({
+  void _updatePlaylistRootPathIfNecessary({
     required Playlist playlist,
+    required bool isPlaylistWindowsRootPath,
     required String playlistWindowsDownloadRootPath,
   }) {
-    if (playlist.downloadPath.contains(kPlaylistDownloadRootPath)) {
+    if (isPlaylistWindowsRootPath) {
+      if (playlist.downloadPath.contains(kPlaylistDownloadRootPath)) {
+        playlist.downloadPath = playlist.downloadPath
+            .replaceFirst(
+              "$kPlaylistDownloadRootPath/",
+              playlistWindowsDownloadRootPath,
+            )
+            .trim(); // trim() is necessary since the path is used in
+        //              the JsonDataService.saveToFile constructor and
+        //              the path must not contain any trailing spaces
+        //              on Windows.
+      }
+    } else {
       playlist.downloadPath = playlist.downloadPath
-          .replaceFirst(
-            "$kPlaylistDownloadRootPath/",
-            playlistWindowsDownloadRootPath,
-          )
           .trim(); // trim() is necessary since the path is used in
       //              the JsonDataService.saveToFile constructor and
       //              the path must not contain any trailing spaces
-      //              on Windows.
+      //              on Android.
     }
 
     JsonDataService.saveToFile(
