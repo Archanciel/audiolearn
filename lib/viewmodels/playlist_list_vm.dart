@@ -81,7 +81,7 @@ class PlaylistListVM extends ChangeNotifier {
   AudioSortFilterParameters? _audioSortFilterParameters;
   AudioSortFilterParameters? get audioSortFilterParameters =>
       _audioSortFilterParameters;
-      
+
   final Map<String, String>
       _playlistAudioSFparmsNamesForPlaylistDownloadViewMap = {};
   get playlistAudioSFparmsNamesForPlaylistDownloadViewMap =>
@@ -985,23 +985,37 @@ class PlaylistListVM extends ChangeNotifier {
   ///    number of audio files which were redownloaded,
   ///    number of audio files which were not redownloaded because the audio
   ///                        file(s) already exist in the playlist directory
-  ///   ].
+  ///   ]. In case ErrorType.noInternet was returned as second element by
+  /// _audioDownloadVM.redownloadPlaylistFilteredAudio(), then an empty list is
+  /// returned.
   Future<List<int>> redownloadSortFilteredAudioLst() async {
     List<Audio> filteredAudioToRedownload =
         _sortedFilteredSelectedPlaylistPlayableAudioLst!;
 
-    int existingAudioFilesNotRedownloadedCount =
+    List<dynamic> resultLst =
         await _audioDownloadVM.redownloadPlaylistFilteredAudio(
       targetPlaylist: _uniqueSelectedPlaylist!,
       filteredAudioToRedownload: filteredAudioToRedownload,
     );
 
+    int existingAudioFilesNotRedownloadedCount = resultLst[0];
+
     notifyListeners();
 
-    return [
-      filteredAudioToRedownload.length - existingAudioFilesNotRedownloadedCount,
-      existingAudioFilesNotRedownloadedCount,
-    ];
+    if (resultLst.length == 2) {
+      // ErrorType.noInternet was returned as second element by
+      // _audioDownloadVM.redownloadPlaylistFilteredAudio().
+      // Returning an empty list will avoid that a confirmation
+      // warning will be displayed, which will prevent the error
+      // message of the AudioDownloadVM to be displayed.
+      return [];
+    } else {
+      return [
+        filteredAudioToRedownload.length -
+            existingAudioFilesNotRedownloadedCount,
+        existingAudioFilesNotRedownloadedCount,
+      ];
+    }
   }
 
   /// This method is called when the user executes the playlist submenu 'Re-download
@@ -1018,17 +1032,20 @@ class PlaylistListVM extends ChangeNotifier {
   ///    number of audio files which were not redownloaded because the audio
   ///    file(s) already exist in the playlist directory
   ///   ].
-  Future<void> redownloadDeletedAudio({
+  Future<List<dynamic>> redownloadDeletedAudio({
     required Audio audio,
   }) async {
     List<Audio> filteredAudioToRedownload = [audio];
 
-    await _audioDownloadVM.redownloadPlaylistFilteredAudio(
+    List<dynamic> resultLst =
+        await _audioDownloadVM.redownloadPlaylistFilteredAudio(
       targetPlaylist: _uniqueSelectedPlaylist!,
       filteredAudioToRedownload: filteredAudioToRedownload,
     );
 
     notifyListeners();
+
+    return resultLst;
   }
 
   /// This method is called when the user executes the playlist submenu 'Delete

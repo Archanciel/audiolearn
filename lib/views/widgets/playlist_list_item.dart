@@ -854,13 +854,19 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             // rendering.
             WidgetsBinding.instance.addPostFrameCallback((_) async {
               List<int> redownloadAudioNumberLst =
-                  await playlistListVMlistenTrue.redownloadSortFilteredAudioLst();
-              warningMessageVMlistenFalse.redownloadAudioNumberConfirmation(
-                targetPlaylistTitle: playlist.title,
-                redownloadAudioNumberAudioNumber: redownloadAudioNumberLst[0],
-                notRedownloadAudioNumberAudioNumber:
-                    redownloadAudioNumberLst[1],
-              );
+                  await playlistListVMlistenTrue
+                      .redownloadSortFilteredAudioLst();
+
+              if (redownloadAudioNumberLst.isNotEmpty) {
+                warningMessageVMlistenFalse.redownloadAudioNumberConfirmation(
+                  targetPlaylistTitle: playlist.title,
+                  redownloadAudioNumberAudioNumber: redownloadAudioNumberLst[0],
+                  notRedownloadAudioNumberAudioNumber:
+                      redownloadAudioNumberLst[1],
+                );
+              } // else, since no confirmation warning is displayed,
+              //   the no internet warning thrown by AudioDownloadVM.
+              //   notifyDownloadError() can be displayed..
             });
             break;
         }

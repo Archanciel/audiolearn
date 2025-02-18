@@ -1630,10 +1630,11 @@ class AudioDownloadVM extends ChangeNotifier {
   /// submenu 'Re-download filtered Audio's' after having selected (and defined)
   /// a named Sort/Filter parameters.
   ///
-  /// The returned {existingAudioFilesNotRedownloadedCount} variable is the number
-  /// of audio files which were not redownloaded since they already exist in the
-  /// target playlist directory.
-  Future<int> redownloadPlaylistFilteredAudio({
+  /// The returned List<dynamic> contains the number of audio files which were not
+  /// redownloaded since they already exist in the target playlist directory. If
+  /// internet is not accessible, the second element of the list is ErrorType.
+  /// noInternet.
+  Future<List<dynamic>> redownloadPlaylistFilteredAudio({
     required Playlist targetPlaylist,
     required List<Audio> filteredAudioToRedownload,
   }) async {
@@ -1663,10 +1664,17 @@ class AudioDownloadVM extends ChangeNotifier {
 
       if (errorType == ErrorType.downloadAudioFileAlreadyOnAudioDirectory) {
         existingAudioFilesNotRedownloadedCount++;
+      } else if (errorType == ErrorType.noInternet) {
+        return [
+          existingAudioFilesNotRedownloadedCount,
+          ErrorType.noInternet,
+        ];
       }
     }
 
-    return existingAudioFilesNotRedownloadedCount;
+    return [
+      existingAudioFilesNotRedownloadedCount,
+    ];
   }
 
   /// This method is called when the user selects the "Import audio files ..."
