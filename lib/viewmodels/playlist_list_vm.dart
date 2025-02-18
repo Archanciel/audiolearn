@@ -164,7 +164,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// Application settings menu item. Finally, the method is also called when the
   /// user clicks on the 'Restore Playlist and Comments from Zip File' menu item
   /// located in the appbar leading popup menu.
-  /// 
+  ///
   /// When the user changes the "Update playlist JSON files", the added playlists
   /// are unselected by default.
   ///
@@ -2625,7 +2625,7 @@ class PlaylistListVM extends ChangeNotifier {
   Future<String> restorePlaylistsCommentsAndSettingsJsonFilesFromZip({
     required String zipFilePathName,
   }) async {
-    await _restoreFromZip(
+    List<int> restoredFilesNumberLst = await _restoreFromZip(
       zipFilePathName: zipFilePathName,
     );
 
@@ -2636,7 +2636,10 @@ class PlaylistListVM extends ChangeNotifier {
 
     // Display a confirmation message to the user.
     _warningMessageVM.confirmRestorationFromZip(
-        zipFilePathName: zipFilePathName);
+      zipFilePathName: zipFilePathName,
+      playlistsNumber: restoredFilesNumberLst[0],
+      commentsNumber: restoredFilesNumberLst[1],
+    );
 
     // Return the zip file path name used for restoration.
     return zipFilePathName;
@@ -2645,14 +2648,20 @@ class PlaylistListVM extends ChangeNotifier {
   /// Method called when the user clicks on the 'Restore Playlist and Comments from
   /// Zip File' menu. It extracts the playlist json files as well as the comment
   /// json files of the playlists and writes them to the playlists root path.
-  Future<void> _restoreFromZip({
+  Future<List<int>> _restoreFromZip({
     required String zipFilePathName,
   }) async {
+    List<int> restoredFilesNumberLst = [];
+    int restoredPlaylistsNumber = 0;
+    int restoredCommentsNumber = 0;
+
     // Check if the provided zip file exists.
     final File zipFile = File(zipFilePathName);
 
     if (!zipFile.existsSync()) {
-      return;
+      restoredFilesNumberLst.add(restoredPlaylistsNumber);
+      restoredFilesNumberLst.add(restoredCommentsNumber);
+      return restoredFilesNumberLst;
     }
 
     // Retrieve the application path.
@@ -2690,6 +2699,7 @@ class PlaylistListVM extends ChangeNotifier {
       if (!destinationDir.existsSync()) {
         await destinationDir.create(recursive: true);
       }
+
       // Write the file's bytes to the computed destination.
       final File outputFile = File(destinationPathFileName);
 
@@ -2697,7 +2707,20 @@ class PlaylistListVM extends ChangeNotifier {
         archiveFile.content as List<int>,
         flush: true,
       );
+
+      if (!destinationPathFileName.contains(kSettingsFileName)) {
+        if (destinationPathFileName.contains(kCommentDirName)) {
+          restoredCommentsNumber++;
+        } else {
+          restoredPlaylistsNumber++;
+        }
+      }
     }
+
+    restoredFilesNumberLst.add(restoredPlaylistsNumber);
+    restoredFilesNumberLst.add(restoredCommentsNumber);
+
+    return restoredFilesNumberLst;
   }
 
   /// Method called when the user clicks on the 'Rewind audio to start' playlist

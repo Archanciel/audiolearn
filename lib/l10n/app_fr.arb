@@ -967,7 +967,21 @@
   "notPictured": "Sans ph.",
   "restorePlaylistAndCommentsFromZipMenu": "Restaurer les playlists, commentaires et settings depuis un fichier zip",
   "restorePlaylistAndCommentsFromZipTooltip": "Restaure les playlists, les commentaires ainsi que les paramètres de l'application à partir d'un fichier zip préalablement sauvé. Seuls les fichiers json sont restaurés. Les fichiers audio n'étant pas inclus dans le fichier zip, ils ne sont pas restaurés.",
-  "restoredAppDataFromZip": "Fichiers json des playlists et des commentaires ainsi que les paramètres de l'application restaurés depuis \"{filePathName}\".",
+  "restoredAppDataFromZip": "Fichiers json de {playlistsNumber} playlists et de {commentsNumber} commentaires ainsi que les paramètres de l'application restaurés depuis \"{filePathName}\".",
+  "@restoredAppDataFromZip": {
+    "description": "Warning message indicating that the default SF parms were not applied to move audio",
+    "placeholders": {
+      "playlistsNumber": {
+        "type": "Object"
+      },
+      "commentsNumber": {
+        "type": "Object"
+      },
+      "filePathName": {
+        "type": "Object"
+      }
+    }
+  },
   "appDataCouldNotBeRestoredFromZip": "Les fichiers json des playlists et des commentaires ainsi que les paramètres de l'application n'ont pu être restaurés à partir d'un zip !",
   "deleteFilteredAudioFromPlaylistAsWell": "Supprimer les audio's filtrés de la playlist également ...",
   "deleteFilteredAudioFromPlaylistAsWellConfirmationTitle": "Supprimer les audio's filtrés par le paramètre \"{sortFilterParmsName}\" de la playlist \"{playlistTitle}\" également (pourront être retéléchargés)",

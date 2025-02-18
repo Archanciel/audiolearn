@@ -1806,12 +1806,6 @@ class MockAppLocalizations extends AppLocalizations {
       "Restoring the playlists and their audio comments from a saved zip file. The zip file contains the playlists JSON files as well as the comments JSON files. The audio files are not included in it.";
 
   @override
-  String restoredAppDataFromZip(
-    Object filePathName,
-  ) =>
-      "Restored playlist and comment json files as well as application settings from \"$filePathName\".";
-
-  @override
   String get appDataCouldNotBeRestoredFromZip =>
       "Playlist and comment json files as well as application settings could not be restored from zip.";
 
@@ -1850,4 +1844,12 @@ class MockAppLocalizations extends AppLocalizations {
     Object playlistTitle,
   ) =>
       "The audio\"$redownloadedAudioTitle\" was redownloaded to the playlist \"$playlistTitle\".";
+
+  @override
+  String restoredAppDataFromZip(
+    Object playlistsNumber,
+    Object commentsNumber,
+    Object filePathName,
+  ) =>
+      "Restored $playlistsNumber playlist and $commentsNumber comment json files as well as application settings from \"$filePathName\".";
 }
