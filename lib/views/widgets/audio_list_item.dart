@@ -526,9 +526,38 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
             // action which will not block the widget tree
             // rendering.
             WidgetsBinding.instance.addPostFrameCallback((_) async {
+              String audioPlaylistSortFilterParmsName =
+                  playlistListVMlistenFalse
+                          .playlistAudioSFparmsNamesForPlaylistDownloadViewMap[
+                      audio.enclosingPlaylist!.title]!;
+              AudioSortFilterParameters audioSortFilterParms =
+                  playlistListVMlistenFalse.getAudioSortFilterParameters(
+                audioSortFilterParametersName: audioPlaylistSortFilterParmsName,
+              );
+
               await playlistListVMlistenFalse.redownloadDeletedAudio(
                 audio: audio,
               );
+
+              // For a reason I was enable to avoid, while redownloading
+              // a deleted audio, the 'default' SF parms is displayed in
+              // the SF drop down button. Calling the playlistListVM method
+              // below which execute notifyListeners() restore the previously
+              // applied SF parms.
+              playlistListVMlistenFalse
+                  .setSortFilterForSelectedPlaylistPlayableAudiosAndParms(
+                audioLearnAppViewType:
+                    AudioLearnAppViewType.playlistDownloadView,
+                sortFilteredSelectedPlaylistPlayableAudio: playlistListVMlistenFalse
+                    .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
+                  audioLearnAppViewType:
+                      AudioLearnAppViewType.playlistDownloadView,
+                  passedAudioSortFilterParameters: audioSortFilterParms,
+                ),
+                audioSortFilterParms: audioSortFilterParms,
+                audioSortFilterParmsName: audioPlaylistSortFilterParmsName,
+              );
+
               warningMessageVM.redownloadAudioConfirmation(
                 targetPlaylistTitle: audio.enclosingPlaylist!.title,
                 redownloadAudioTitle: audio.validVideoTitle,

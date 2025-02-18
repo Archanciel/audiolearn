@@ -2304,7 +2304,7 @@ class AudioDownloadVM extends ChangeNotifier {
       lastSecondDownloadSpeed: 0,
     );
 
-    // Annulez le Timer pour éviter les appels inutiles
+    // Cancel Timer to avoid unuseful updates
     timer.cancel();
 
     await audioFileSink.flush();

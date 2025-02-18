@@ -81,8 +81,12 @@ class PlaylistListVM extends ChangeNotifier {
   AudioSortFilterParameters? _audioSortFilterParameters;
   AudioSortFilterParameters? get audioSortFilterParameters =>
       _audioSortFilterParameters;
+      
   final Map<String, String>
       _playlistAudioSFparmsNamesForPlaylistDownloadViewMap = {};
+  get playlistAudioSFparmsNamesForPlaylistDownloadViewMap =>
+      _playlistAudioSFparmsNamesForPlaylistDownloadViewMap;
+
   final Map<String, String> _playlistAudioSFparmsNamesForAudioPlayerViewMap =
       {};
 
