@@ -688,6 +688,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                   key: const Key('deleteSaveAsNameIconButton'),
                   onPressed: () async {
                     _clearSortFilterSaveAsNameField();
+                    _sortFilterSaveAsUniqueNameFocusNode.requestFocus();
                     setState(() {}); // necessary to update Delete button color
                   },
                   padding: const EdgeInsets.all(0),
