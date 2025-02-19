@@ -1667,7 +1667,7 @@ class AudioDownloadVM extends ChangeNotifier {
   /// submenu 'Re-download filtered Audio's' after having selected (and defined)
   /// a named Sort/Filter parameters.
   ///
-  /// The returned List<dynamic> contains the number of audio files which were not
+  /// The returned List dynamic contains the number of audio files which were not
   /// redownloaded since they already exist in the target playlist directory. If
   /// internet is not accessible, the second element of the list is ErrorType.
   /// noInternet.
