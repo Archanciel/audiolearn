@@ -1,1 +1,18 @@
-{"id":"PLzwWSJNcZTMRqUXAPahA04HJHvU5lNQo5","title":"audio_learn_actus","url":"https://youtube.com/playlist?list=PLzwWSJNcZTMRqUXAPahA04HJHvU5lNQo5&si=vj8oZSb9x1sDi0bB","playlistType":"youtube","playlistQuality":"voice","audioPlaySpeed":1.0,"downloadPath":"C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio\\playlists\\audio_learn_actus","downloadedAudioLst":[],"playableAudioLst":[],"isSelected":false,"currentOrPastPlayableAudioIndex":-1,"audioSortFilterParmsNamePlaylistDownloadView":"","audioSortFilterParmsNameAudioPlayerView":"","audioPlayingOrder":"ascending"}
+{
+    "audioPlayingOrder": "ascending",
+    "audioPlaySpeed": 1.0,
+    "audioSortFilterParmsNameAudioPlayerView": "",
+    "audioSortFilterParmsNamePlaylistDownloadView": "",
+    "currentOrPastPlayableAudioIndex": -1,
+    "downloadedAudioLst": [
+    ],
+    "downloadPath": "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio\\playlists\\audio_learn_actus",
+    "id": "PLzwWSJNcZTMRqUXAPahA04HJHvU5lNQo5",
+    "isSelected": false,
+    "playableAudioLst": [
+    ],
+    "playlistQuality": "voice",
+    "playlistType": "youtube",
+    "title": "audio_learn_actus",
+    "url": "https://youtube.com/playlist?list=PLzwWSJNcZTMRqUXAPahA04HJHvU5lNQo5&si=vj8oZSb9x1sDi0bB"
+}
