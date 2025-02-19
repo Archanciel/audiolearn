@@ -496,13 +496,18 @@ class DirUtil {
     return true;
   }
 
-  /// Return false in case a file named as newFileName already
-  /// exist. In this case, the file is not renamed.
+  /// Return false in case the file to rename does not exist or if a file named
+  /// as newFileName already exists. In those cases, no file is renamed.
   static bool renameFile({
     required String fileToRenameFilePathName,
     required String newFileName,
   }) {
     File sourceFile = File(fileToRenameFilePathName);
+
+    if (!sourceFile.existsSync()) {
+      print('The file to rename does not exist.');
+      return false;
+    }
 
     // Get the directory of the source file
     String dirPath = path.dirname(fileToRenameFilePathName);

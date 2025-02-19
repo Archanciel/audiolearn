@@ -4,6 +4,7 @@ import 'package:archive/archive.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants.dart';
 import '../models/audio.dart';
@@ -2646,9 +2647,13 @@ class PlaylistListVM extends ChangeNotifier {
   Future<String> restorePlaylistsCommentsAndSettingsJsonFilesFromZip({
     required String zipFilePathName,
   }) async {
+    // Restoring the playlists, comments and settings json files
+    // from the zip file.
     List<int> restoredFilesNumberLst = await _restoreFromZip(
       zipFilePathName: zipFilePathName,
     );
+
+    await mergeRestoredFromZipSettingsWithCurrentAppSettings();
 
     updateSettingsAndPlaylistJsonFiles(
       updatePlaylistPlayableAudioList: false,
@@ -2666,6 +2671,67 @@ class PlaylistListVM extends ChangeNotifier {
     return zipFilePathName;
   }
 
+  /// The method loads the restored zip version of the application settings. This
+  /// will enable to add the playlist order list, the sort/filter named parameters
+  /// map and the unnamed sort/filter history list of the restored app settings
+  /// zip version to the corresponding list or map of the current app settings
+  /// version.
+  Future<void> mergeRestoredFromZipSettingsWithCurrentAppSettings() async {
+    final SettingsDataService settingsDataServiceZipVersion =
+        SettingsDataService(
+      sharedPreferences: await SharedPreferences.getInstance(),
+    );
+
+    await settingsDataServiceZipVersion.loadSettingsFromFile(
+      settingsJsonPathFileName:
+          '${DirUtil.getApplicationPath()}${Platform.pathSeparator}$kSettingsFileName',
+    );
+
+    // Merge the playlist order list
+    List<dynamic>? restoredPlaylistOrder = settingsDataServiceZipVersion.get(
+      settingType: SettingType.playlists,
+      settingSubType: Playlists.orderedTitleLst,
+    );
+
+    List<dynamic>? currentPlaylistOrder = _settingsDataService.get(
+      settingType: SettingType.playlists,
+      settingSubType: Playlists.orderedTitleLst,
+    );
+
+    if (currentPlaylistOrder != null && restoredPlaylistOrder != null) {
+      // Combine both lists while preserving uniqueness and order
+      Set<dynamic> mergedPlaylistOrder = {
+        ...currentPlaylistOrder,
+        ...restoredPlaylistOrder
+      };
+
+      _settingsDataService.set(
+        settingType: SettingType.playlists,
+        settingSubType: Playlists.orderedTitleLst,
+        value: mergedPlaylistOrder.toList(),
+      );
+    }
+
+    // Merge the named audio sort/filter parameters map
+    settingsDataServiceZipVersion.namedAudioSortFilterParametersMap
+        .forEach((key, value) {
+      _settingsDataService.namedAudioSortFilterParametersMap
+          .putIfAbsent(key, () => value);
+    });
+
+    // Merge the unnamed sort/filter history list
+    List<AudioSortFilterParameters> restoredHistory =
+        settingsDataServiceZipVersion.searchHistoryAudioSortFilterParametersLst;
+
+    for (var filterParam in restoredHistory) {
+      _settingsDataService.addAudioSortFilterParametersToSearchHistory(
+          audioSortFilterParameters: filterParam);
+    }
+
+    // Save the updated settings
+    _settingsDataService.saveSettings();
+  }
+
   /// Method called when the user clicks on the 'Restore Playlist and Comments from
   /// Zip File' menu. It extracts the playlist json files as well as the comment
   /// json files of the playlists and writes them to the playlists root path.
@@ -2680,8 +2746,11 @@ class PlaylistListVM extends ChangeNotifier {
     final File zipFile = File(zipFilePathName);
 
     if (!zipFile.existsSync()) {
+      // Can not happen since the zip file is selected by the user
+      // with the file picker and so the file must exist.
       restoredFilesNumberLst.add(restoredPlaylistsNumber);
       restoredFilesNumberLst.add(restoredCommentsNumber);
+
       return restoredFilesNumberLst;
     }
 
