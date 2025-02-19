@@ -162,7 +162,7 @@ class AudioDownloadVM extends ChangeNotifier {
             playlistWindowsDownloadRootPath: playlistWindowsDownloadRootPath,
           );
 
-          _renameExistingPlaylistAudioFilesIfNecessary(
+          _renameExistingPlaylistAudioAndCommentAndPictureFilesIfNecessary(
             playlist: currentPlaylist,
           );
         }
@@ -197,7 +197,7 @@ class AudioDownloadVM extends ChangeNotifier {
   /// contains the audio title. If yes, the file is renamed to the original file
   /// name. So, the file will be playable and will correspond to a restored existing
   /// comment.
-  void _renameExistingPlaylistAudioFilesIfNecessary({
+  void _renameExistingPlaylistAudioAndCommentAndPictureFilesIfNecessary({
     required Playlist playlist,
   }) {
     String playlistDownloadPath = playlist.downloadPath;
@@ -206,16 +206,20 @@ class AudioDownloadVM extends ChangeNotifier {
       fileExtension: 'mp3',
     );
 
+    if (audioFilePathNameLst.isEmpty) {
+      return;
+    }
+
     final RegExp regex = RegExp(
       r'^\d{6}-\d{6}-(.+?)\s+\d{2}-\d{2}-\d{2}\.mp3$',
       caseSensitive: false,
     );
 
-    for (String audioFilePathName in audioFilePathNameLst) {
-      String audioFileName =
-          audioFilePathName.split(Platform.pathSeparator).last;
+    for (String audioToRenameFilePathName in audioFilePathNameLst) {
+      String audioToRenameFileName =
+          audioToRenameFilePathName.split(Platform.pathSeparator).last;
 
-      final match = regex.firstMatch(audioFileName);
+      final match = regex.firstMatch(audioToRenameFileName);
       String audioTitle = '';
 
       if (match != null && match.groupCount >= 1) {
@@ -232,11 +236,44 @@ class AudioDownloadVM extends ChangeNotifier {
       }
 
       if (audio != null) {
-        String androidAudioFileName = audio.audioFileName;
+        String originalAudioFileName = audio.audioFileName;
+
+        // Renaming the existing audio file to the original audio
+        // file name
+        DirUtil.renameFile(
+          fileToRenameFilePathName: audioToRenameFilePathName,
+          newFileName: originalAudioFileName,
+        );
+
+        // Renaming the existing comment file to the original comment
+        // file name
+
+        final String commentToRenameFilePathName = CommentVM.buildCommentFilePathName(
+          playlistDownloadPath: playlistDownloadPath,
+          audioFileName: audioToRenameFileName,
+        );
+        final String originalCommentFileName = originalAudioFileName.replaceAll('mp3', 'json');
 
         DirUtil.renameFile(
-          fileToRenameFilePathName: audioFilePathName,
-          newFileName: androidAudioFileName,
+          fileToRenameFilePathName: commentToRenameFilePathName,
+          newFileName: originalCommentFileName,
+        );
+
+        // Renaming the existing picture file to the original picturer
+        // file name
+
+        final String playlistPicturePath =
+            "$playlistDownloadPath${path.separator}$kPictureDirName";
+        final String pictureToRenameFileName =
+            audioToRenameFileName.replaceAll('.mp3', '.jpg');
+        final String originalPictureFileName =
+            audio.audioFileName.replaceAll('.mp3', '.jpg');
+        final String pictureToRenameFilePathName =
+            "$playlistPicturePath${path.separator}$pictureToRenameFileName";
+
+        DirUtil.renameFile(
+          fileToRenameFilePathName: pictureToRenameFilePathName,
+          newFileName: originalPictureFileName,
         );
       }
     }
@@ -1953,8 +1990,9 @@ class AudioDownloadVM extends ChangeNotifier {
   ///
   /// The method is also called when the user selects the 'Restore Playlist, Comments
   /// and Settings from Zip File' menu item of the playlist download view left
-  /// appbar leading popup menu. This execute the PlaylistListVM method
-  /// restorePlaylistsCommentsAndSettingsJsonFilesFromZip().
+  /// appbar leading popup menu. This executes the PlaylistListVM method
+  /// restorePlaylistsCommentsAndSettingsJsonFilesFromZip(). In this case,
+  /// [restoringPlaylistsCommentsAndSettingsJsonFilesFromZip] is set to true.
   void updatePlaylistJsonFiles({
     bool unselectAddedPlaylist = true,
     bool updatePlaylistPlayableAudioList = true,
