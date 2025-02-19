@@ -1848,7 +1848,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             await tester.tap(find.byKey(const Key('filterPicturedCheckbox')));
             await tester.pumpAndSettle();
 
-            // Tap on the Unpic. checkbox to unselect it
+            // Tap on the Unpictured checkbox to unselect it
             await tester
                 .tap(find.byKey(const Key('filterNotPicturedCheckbox')));
             await tester.pumpAndSettle();
@@ -2001,7 +2001,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               confirmDialogTitleOne:
                   'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
               confirmDialogMessage:
-                  'Sort by:\n Present only in initial version:\n   Audio title desc\n Present only in modified version:\n   Audio title asc,\n   Audio chapter asc,\n   Video upload date desc,\n   Audio duration asc,\n   Audio listenable remaining\n   duration asc,\n   Audio downl speed desc,\n   Audio downl duration desc\nFilter words:\n Present only in modified version:\n   Marine Le Pen,\n   Emmanuel Macron\nFilter options:\n In initial version:\n   Ignore case: checked\n In modified version:\n   Ignore case: unchecked\n In initial version:\n   Include Youtube channel: checked\n In modified version:\n   Include Youtube\n   channel: unchecked\n In initial version:\n   Audio music quality: unchecked\n In modified version:\n   Audio music quality: checked\n In initial version:\n   Uncom.: checked\n In modified version:\n   Uncom.: unchecked\n In initial version:\n   Unpic.: checked\n In modified version:\n   Unpic.: unchecked\n In modified version:\n   Start downl date: 26/12/2023\n In modified version:\n   End downl date: 06/01/2024\n In modified version:\n   Start upl date: 12/06/2022\n In modified version:\n   End upl date: 19/09/2023\n In modified version:\n   File size range (MB) Start: 2.37\n In modified version:\n   File size range (MB) End: 2.8\n In modified version:\n   Audio duration range (hh:mm)\n   Start: 00:06\n In modified version:\n   Audio duration range (hh:mm)\n   End: 00:08',
+                  'Sort by:\n Present only in initial version:\n   Audio title desc\n Present only in modified version:\n   Audio title asc,\n   Audio chapter asc,\n   Video upload date desc,\n   Audio duration asc,\n   Audio listenable remaining\n   duration asc,\n   Audio downl speed desc,\n   Audio downl duration desc\nFilter words:\n Present only in modified version:\n   Marine Le Pen,\n   Emmanuel Macron\nFilter options:\n In initial version:\n   Ignore case: checked\n In modified version:\n   Ignore case: unchecked\n In initial version:\n   Include Youtube channel: checked\n In modified version:\n   Include Youtube\n   channel: unchecked\n In initial version:\n   Audio music quality: unchecked\n In modified version:\n   Audio music quality: checked\n In initial version:\n   Uncom.: checked\n In modified version:\n   Uncom.: unchecked\n In initial version:\n   Unpictured: checked\n In modified version:\n   Unpictured: unchecked\n In modified version:\n   Start downl date: 26/12/2023\n In modified version:\n   End downl date: 06/01/2024\n In modified version:\n   Start upl date: 12/06/2022\n In modified version:\n   End upl date: 19/09/2023\n In modified version:\n   File size range (MB) Start: 2.37\n In modified version:\n   File size range (MB) End: 2.8\n In modified version:\n   Audio duration range (hh:mm)\n   Start: 00:06\n In modified version:\n   Audio duration range (hh:mm)\n   End: 00:08',
               confirmOrCancelAction: true, // Confirm button is tapped
             );
 
@@ -3147,7 +3147,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             await tester.tap(find.byKey(const Key('filterPicturedCheckbox')));
             await tester.pumpAndSettle();
 
-            // Tap on the Unpic. checkbox to unselect it
+            // Tap on the Unpictured checkbox to unselect it
             await tester
                 .tap(find.byKey(const Key('filterNotPicturedCheckbox')));
             await tester.pumpAndSettle();
@@ -11876,7 +11876,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
       });
       group('''Picture related checkboxes''', () {
         testWidgets(
-            '''Pictured checkbox true and Unpic. checkbox false in order to filter
+            '''Pictured checkbox true and Unpictured checkbox false in order to filter
              only the pictured audio. Create and then edit a named and saved
              'Pictured' filter parms. Then verifying that the corresponding sort/filter
              dropdown button item is applied to the playlist download view list of
@@ -11916,7 +11916,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
           // Scrolling down the sort filter dialog so that the 'Pictured' /
-          // 'Unpic.' checkbox are visible and so accessible by the integration test
+          // 'Unpictured' checkbox are visible and so accessible by the integration test
           await tester.drag(
             find.byType(AudioSortFilterDialog),
             const Offset(
@@ -11924,9 +11924,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
           await tester.pumpAndSettle();
 
-          // Unselect the 'Unpic.' checkbox
+          // Unselect the 'Unpictured' checkbox
 
-          // Find the 'Unpic.' checkbox widget
+          // Find the 'Unpictured' checkbox widget
           Finder notPictuedCheckboxWidgetFinder =
               find.byKey(const Key('filterNotPicturedCheckbox'));
 
@@ -11995,7 +11995,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.pumpAndSettle();
 
           // Scrolling down the sort filter dialog so that the 'Pictured' /
-          // 'Unpic.' checkbox are visible and so accessible by the integration test
+          // 'Unpictured' checkbox are visible and so accessible by the integration test
           await tester.drag(
             find.byType(AudioSortFilterDialog),
             const Offset(
@@ -12013,7 +12013,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             true,
           );
 
-          // Find the 'Unpic.' checkbox widget and verify it is not
+          // Find the 'Unpictured' checkbox widget and verify it is not
           // selected
           notPictuedCheckboxWidgetFinder =
               find.byKey(const Key('filterNotPicturedCheckbox'));
@@ -12036,9 +12036,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
         });
         testWidgets(
-            '''Pictured checkbox false and Unpic. checkbox true in order to filter
+            '''Pictured checkbox false and Unpictured checkbox true in order to filter
              only the not pictured audio. Create and then edit a named and saved
-             'Unpic.' filter parms. Then verifying that the corresponding sort/filter
+             'Unpictured' filter parms. Then verifying that the corresponding sort/filter
              dropdown button item is applied to the playlist download view list of
              audio.''', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
@@ -12066,9 +12066,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
           await tester.pumpAndSettle();
 
-          // Type "Unpic." in the 'Save as' TextField
+          // Type "Unpictured" in the 'Save as' TextField
 
-          String saveAsTitle = 'Unpic.';
+          String saveAsTitle = 'Unpictured';
 
           await tester.enterText(
               find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
@@ -12076,7 +12076,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
           // Scrolling down the sort filter dialog so that the 'Pictured' /
-          // 'Unpic.' checkbox are visible and so accessible by the integration test
+          // 'Unpictured' checkbox are visible and so accessible by the integration test
           await tester.drag(
             find.byType(AudioSortFilterDialog),
             const Offset(
@@ -12107,11 +12107,11 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(find.byKey(const Key('playlist_toggle_button')));
           await tester.pumpAndSettle();
 
-          // Now verify the playlist download view state with the 'Unpic.'
+          // Now verify the playlist download view state with the 'Unpictured'
           // sort/filter parms applied
 
           // Verify that the dropdown button has been updated with the
-          // 'Unpic.' sort/filter parms selected
+          // 'Unpictured' sort/filter parms selected
           IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
             tester: tester,
             dropdownButtonSelectedTitle: saveAsTitle,
@@ -12142,12 +12142,12 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(dropDownButtonTextFinder);
           await tester.pumpAndSettle();
 
-          // And find the 'Unpic.' sort/filter item
+          // And find the 'Unpictured' sort/filter item
           final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
           await tester.tap(titleAscDropDownTextFinder);
           await tester.pumpAndSettle();
 
-          // Now open the audio popup menu in order to edit the 'Unpic.'
+          // Now open the audio popup menu in order to edit the 'Unpictured'
           // sort/filter parms
           final Finder dropdownItemEditIconButtonFinder = find.byKey(
               const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
@@ -12155,7 +12155,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.pumpAndSettle();
 
           // Scrolling down the sort filter dialog so that the 'Pictured' /
-          // 'Unpic.' checkbox are visible and so accessible by the integration test
+          // 'Unpictured' checkbox are visible and so accessible by the integration test
           await tester.drag(
             find.byType(AudioSortFilterDialog),
             const Offset(
@@ -12173,7 +12173,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             false,
           );
 
-          // Find the 'Unpic.' checkbox widget and verify it is
+          // Find the 'Unpictured' checkbox widget and verify it is
           // selected
           final Finder notPictuedCheckboxWidgetFinder =
               find.byKey(const Key('filterNotPicturedCheckbox'));
@@ -12196,7 +12196,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
         });
         testWidgets(
-            '''Both Pictured and Unpic. checkboxes true in order to filter both
+            '''Both Pictured and Unpictured checkboxes true in order to filter both
              the pictured and not pictured audio. Create and then edit a named
              and saved 'ComUncom' filter parms. Then verifying that the corresponding
              sort/filter dropdown button item is applied to the playlist download
@@ -12309,7 +12309,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.pumpAndSettle();
 
           // Scrolling down the sort filter dialog so that the 'Pictured' /
-          // 'Unpic.' checkbox are visible and so accessible by the integration test
+          // 'Unpictured' checkbox are visible and so accessible by the integration test
           await tester.drag(
             find.byType(AudioSortFilterDialog),
             const Offset(
@@ -12327,7 +12327,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             true,
           );
 
-          // Find the 'Unpic.' checkbox widget and verify it is
+          // Find the 'Unpictured' checkbox widget and verify it is
           // selected
           final Finder notPictuedCheckboxWidgetFinder =
               find.byKey(const Key('filterNotPicturedCheckbox'));
@@ -12350,7 +12350,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
         });
         testWidgets(
-            '''Unselect Pictured then Unpic. checkbox in order to filter pictured
+            '''Unselect Pictured then Unpictured checkbox in order to filter pictured
              audio. Create and then edit a named and saved 'UnselectPicThenUnpic'
              sort filter parms. Then verifying that the corresponding sort/filter
              dropdown button item is applied to the playlist download view list
@@ -12390,7 +12390,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
           // Scrolling down the sort filter dialog so that the 'Pictured' /
-          // 'Unpic.' checkbox are visible and so accessible by the integration test
+          // 'Unpictured' checkbox are visible and so accessible by the integration test
           await tester.drag(
             find.byType(AudioSortFilterDialog),
             const Offset(
@@ -12408,9 +12408,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(picturedCheckboxWidgetFinder);
           await tester.pumpAndSettle();
 
-          // Unselect the 'Unpic.' checkbox
+          // Unselect the 'Unpictured' checkbox
 
-          // Find the 'Unpic.' checkbox widget
+          // Find the 'Unpictured' checkbox widget
           Finder notPictuedCheckboxWidgetFinder =
               find.byKey(const Key('filterNotPicturedCheckbox'));
 
@@ -12481,7 +12481,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.pumpAndSettle();
 
           // Scrolling down the sort filter dialog so that the 'Pictured' /
-          // 'Unpic.' checkbox are visible and so accessible by the integration test
+          // 'Unpictured' checkbox are visible and so accessible by the integration test
           await tester.drag(
             find.byType(AudioSortFilterDialog),
             const Offset(
@@ -12499,7 +12499,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             true,
           );
 
-          // Find the 'Unpic.' checkbox widget and verify it is not
+          // Find the 'Unpictured' checkbox widget and verify it is not
           // selected
           notPictuedCheckboxWidgetFinder =
               find.byKey(const Key('filterNotPicturedCheckbox'));
@@ -12522,7 +12522,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
         });
         testWidgets(
-            '''Unselect Unpic. then Pictured checkbox in order to filter not pictured
+            '''Unselect Unpictured then Pictured checkbox in order to filter not pictured
              audio. Create and then edit a named and saved 'UnselectUnpicThenPic'
              sort filter parms. Then verifying that the corresponding sort/filter
              dropdown button item is applied to the playlist download view list
@@ -12562,7 +12562,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
           // Scrolling down the sort filter dialog so that the 'Pictured' /
-          // 'Unpic.' checkbox are visible and so accessible by the integration test
+          // 'Unpictured' checkbox are visible and so accessible by the integration test
           await tester.drag(
             find.byType(AudioSortFilterDialog),
             const Offset(
@@ -12570,9 +12570,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
           await tester.pumpAndSettle();
 
-          // Unselect the 'Unpic.' checkbox
+          // Unselect the 'Unpictured' checkbox
 
-          // Find the 'Unpic.' checkbox widget
+          // Find the 'Unpictured' checkbox widget
           Finder notPictuedCheckboxWidgetFinder =
               find.byKey(const Key('filterNotPicturedCheckbox'));
 
@@ -12588,7 +12588,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           // Tap the checkbox to unselect it. Since the two picture
           // related checkboxex can not be both unselected, the
-          // 'Unpic.' checkbox is reselected.
+          // 'Unpictured' checkbox is reselected.
           await tester.tap(picturedCheckboxWidgetFinder);
           await tester.pumpAndSettle();
 
@@ -12653,7 +12653,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.pumpAndSettle();
 
           // Scrolling down the sort filter dialog so that the 'Pictured' /
-          // 'Unpic.' checkbox are visible and so accessible by the integration test
+          // 'Unpictured' checkbox are visible and so accessible by the integration test
           await tester.drag(
             find.byType(AudioSortFilterDialog),
             const Offset(
@@ -12671,7 +12671,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             false,
           );
 
-          // Find the 'Unpic.' checkbox widget and verify it is
+          // Find the 'Unpictured' checkbox widget and verify it is
           // selected
           notPictuedCheckboxWidgetFinder =
               find.byKey(const Key('filterNotPicturedCheckbox'));
