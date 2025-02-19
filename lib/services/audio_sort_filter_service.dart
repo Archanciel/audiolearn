@@ -1211,7 +1211,7 @@ class AudioSortFilterService {
     }
 
     List<String> playlistPlayableAudioNamesLst = DirUtil.listFileNamesInDir(
-      directoryPath: "${selectedPlaylist.downloadPath}",
+      directoryPath: selectedPlaylist.downloadPath,
       fileExtension: 'mp3',
     );
 
