@@ -530,7 +530,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
               '${(audioDownloadVMlistenTrue.downloadProgress * 100).toStringAsFixed(1)}%';
           String downloadFileSize = UiUtil.formatLargeSizeToKbOrMb(
             context: context,
-            sizeInBytes: audioDownloadVMlistenTrue.currentDownloadingAudio.audioFileSize,
+            sizeInBytes:
+                audioDownloadVMlistenTrue.currentDownloadingAudio.audioFileSize,
           );
           String downloadSpeed = '${UiUtil.formatLargeSizeToKbOrMb(
             context: context,
@@ -541,7 +542,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             child: Column(
               children: [
                 Text(
-                  audioDownloadVMlistenTrue.currentDownloadingAudio.validVideoTitle,
+                  audioDownloadVMlistenTrue
+                      .currentDownloadingAudio.validVideoTitle,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 10.0),
@@ -1135,6 +1137,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             //                            closing when tapping outside it
             builder: (BuildContext context) {
               return AudioSortFilterDialog(
+                selectedPlaylist:
+                    playlistListVMlistenFalse.uniqueSelectedPlaylist!,
                 selectedPlaylistAudioLst: playlistListVMlistenFalse
                     .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
                   audioLearnAppViewType:
@@ -1416,6 +1420,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                     AudioLearnAppViewType.playlistDownloadView,
                   );
                   return AudioSortFilterDialog(
+                    selectedPlaylist:
+                        playlistListVMlistenFalse.uniqueSelectedPlaylist!,
+
                     selectedPlaylistAudioLst: playlistListVMlistenFalse
                         .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
                       audioLearnAppViewType:

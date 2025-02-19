@@ -266,6 +266,12 @@ class AudioSortFilterParameters {
   // If true, not pictured audio are also selected.
   final bool filterNotPictured;
 
+  // If true, playable audio are also selected.
+  final bool filterPlayable;
+
+  // If true, not playable audio are also selected.
+  final bool filterNotPlayable;
+
   // The start and end range for the download date filter.
   final DateTime? downloadDateStartRange;
   final DateTime? downloadDateEndRange;
@@ -297,6 +303,8 @@ class AudioSortFilterParameters {
     this.filterNotCommented = true,
     this.filterPictured = true,
     this.filterNotPictured = true,
+    this.filterPlayable = true,
+    this.filterNotPlayable = true,
     this.downloadDateStartRange,
     this.downloadDateEndRange,
     this.uploadDateStartRange,
@@ -328,6 +336,8 @@ class AudioSortFilterParameters {
       filterNotCommented: json['filterNotCommented'] ?? true,
       filterPictured: json['filterPictured'] ?? true,
       filterNotPictured: json['filterNotPictured'] ?? true,
+      filterPlayable: json['filterPlayable'] ?? true,
+      filterNotPlayable: json['filterNotPlayable'] ?? true,
       downloadDateStartRange: json['downloadDateStartRange'] == null
           ? null
           : DateTime.parse(json['downloadDateStartRange']),
@@ -364,6 +374,8 @@ class AudioSortFilterParameters {
       'filterNotCommented': filterNotCommented,
       'filterPictured': filterPictured,
       'filterNotPictured': filterNotPictured,
+      'filterPlayable': filterPlayable,
+      'filterNotPlayable': filterNotPlayable,
       'downloadDateStartRange': downloadDateStartRange?.toIso8601String(),
       'downloadDateEndRange': downloadDateEndRange?.toIso8601String(),
       'uploadDateStartRange': uploadDateStartRange?.toIso8601String(),
@@ -396,6 +408,8 @@ class AudioSortFilterParameters {
         other.filterNotCommented == filterNotCommented &&
         other.filterPictured == filterPictured &&
         other.filterNotPictured == filterNotPictured &&
+        other.filterPlayable == filterPlayable &&
+        other.filterNotPlayable == filterNotPlayable &&
         other.downloadDateStartRange == downloadDateStartRange &&
         other.downloadDateEndRange == downloadDateEndRange &&
         other.uploadDateStartRange == uploadDateStartRange &&
@@ -450,6 +464,8 @@ class AudioSortFilterParameters {
       filterNotCommented: filterNotCommented,
       filterPictured: filterPictured,
       filterNotPictured: filterNotPictured,
+      filterPlayable: filterPlayable,
+      filterNotPlayable: filterNotPlayable,
       downloadDateStartRange: downloadDateStartRange,
       downloadDateEndRange: downloadDateEndRange,
       uploadDateStartRange: uploadDateStartRange,

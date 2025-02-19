@@ -761,6 +761,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                     AudioLearnAppViewType.audioPlayerView,
                   );
                   return AudioSortFilterDialog(
+                    selectedPlaylist: playlistListVMlistenFalse
+                        .uniqueSelectedPlaylist!, // selected playlist
                     selectedPlaylistAudioLst: playlistListVMlistenFalse
                         .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
                       audioLearnAppViewType:

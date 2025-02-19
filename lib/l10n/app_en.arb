@@ -756,7 +756,7 @@
   "savedAppDataToZip": "Saved playlist and comment json files as well as application settings to \"{filePathName}\".",
   "appDataCouldNotBeSavedToZip": "Playlist and comment json files as well as application settings could not be saved to zip.",
   "pictured": "Pictured",
-  "notPictured": "Unpic.",
+  "notPictured": "Unpictured",
   "restorePlaylistAndCommentsFromZipMenu": "Restore Playlists, Comments and Settings from Zip File",
   "restorePlaylistAndCommentsFromZipTooltip": "Restoring the playlists, their audio comments and the application settings from a saved zip file. The zip file contains the playlists, the comments as well as the settings JSON files. The audio files are not included in it.",
   "restoredAppDataFromZip": "Restored {playlistsNumber} playlist and {commentsNumber} comment json files as well as the application settings from \"{filePathName}\".",
@@ -797,5 +797,7 @@
       "playlistTitle": {},
       "redownloadedAudioTitle": {}
     }
-  }
+  },
+  "playable": "Playable",
+  "notPlayable": "Not playable"
 }
