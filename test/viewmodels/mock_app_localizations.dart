@@ -1852,4 +1852,10 @@ class MockAppLocalizations extends AppLocalizations {
     Object filePathName,
   ) =>
       "Restored $playlistsNumber playlist and $commentsNumber comment json files as well as application settings from \"$filePathName\".";
+
+  @override
+  String get playable => "Playable";
+
+  @override
+  String get notPlayable => "Not pl.";
 }

@@ -34,7 +34,7 @@ enum DateTimeType {
 }
 
 class AudioSortFilterDialog extends StatefulWidget {
-  final Playlist? selectedPlaylist;
+  final Playlist selectedPlaylist;
   final List<Audio> selectedPlaylistAudioLst;
   final String audioSortFilterParametersName;
   final AudioSortFilterParameters audioSortFilterParameters;
@@ -44,8 +44,9 @@ class AudioSortFilterDialog extends StatefulWidget {
   final WarningMessageVM warningMessageVM;
   final CalledFrom calledFrom;
 
-  AudioSortFilterDialog({
+  const AudioSortFilterDialog({
     super.key,
+    required this.selectedPlaylist,
     required this.selectedPlaylistAudioLst,
     this.audioSortFilterParametersName = '',
     required this.audioSortFilterParameters,
@@ -54,9 +55,7 @@ class AudioSortFilterDialog extends StatefulWidget {
     required this.focusNode,
     required this.warningMessageVM,
     required this.calledFrom,
-  }) : selectedPlaylist = selectedPlaylistAudioLst.isNotEmpty
-            ? selectedPlaylistAudioLst[0].enclosingPlaylist
-            : null;
+  });
 
   @override
   // ignore: library_private_types_in_public_api
@@ -85,6 +84,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
   late bool _filterNotCommented;
   late bool _filterPictured;
   late bool _filterNotPictured;
+  late bool _filterPlayable;
+  late bool _filterNotPlayable;
 
   final TextEditingController _startFileSizeController =
       TextEditingController();
@@ -244,6 +245,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     _filterNotCommented = audioSortDefaultFilterParameters.filterNotCommented;
     _filterPictured = audioSortDefaultFilterParameters.filterPictured;
     _filterNotPictured = audioSortDefaultFilterParameters.filterNotPictured;
+    _filterPlayable = audioSortDefaultFilterParameters.filterPlayable;
+    _filterNotPlayable = audioSortDefaultFilterParameters.filterNotPlayable;
     _startDownloadDateTime =
         audioSortDefaultFilterParameters.downloadDateStartRange;
     _endDownloadDateTime =
@@ -313,6 +316,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     _filterNotCommented = true;
     _filterPictured = true;
     _filterNotPictured = true;
+    _filterPlayable = true;
+    _filterNotPlayable = true;
     _startDownloadDateTimeController.clear();
     _endDownloadDateTimeController.clear();
     _startUploadDateTimeController.clear();
@@ -356,6 +361,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     _filterNotCommented = audioSortFilterParameters.filterNotCommented;
     _filterPictured = audioSortFilterParameters.filterPictured;
     _filterNotPictured = audioSortFilterParameters.filterNotPictured;
+    _filterPlayable = audioSortFilterParameters.filterPlayable;
+    _filterNotPlayable = audioSortFilterParameters.filterNotPlayable;
     _startDownloadDateTimeController.clear();
     _endDownloadDateTimeController.clear();
     _startUploadDateTimeController.clear();
@@ -607,9 +614,18 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                         ],
                       ),
                     ),
-                    _buildAudioStateCheckboxes(context),
-                    _buildCommentSelectionCheckboxes(context),
-                    _buildPictureSelectionCheckboxes(context),
+                    _buildAudioStateCheckboxes(
+                      context: context,
+                    ),
+                    _buildCommentSelectionCheckboxes(
+                      context: context,
+                    ),
+                    _buildPictureSelectionCheckboxes(
+                      context: context,
+                    ),
+                    _buildPlayableSelectionCheckboxes(
+                      context: context,
+                    ),
                     _buildAudioDateFields(
                       context: context,
                       dateFormatVMlistenFalse: dateFormatVMlistenFalse,
@@ -1304,9 +1320,9 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     }
   }
 
-  Widget _buildAudioStateCheckboxes(
-    BuildContext context,
-  ) {
+  Widget _buildAudioStateCheckboxes({
+    required BuildContext context,
+  }) {
     return Column(
       children: [
         Row(
@@ -1385,9 +1401,9 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     );
   }
 
-  Widget _buildCommentSelectionCheckboxes(
-    BuildContext context,
-  ) {
+  Widget _buildCommentSelectionCheckboxes({
+    required BuildContext context,
+  }) {
     return Row(
       children: [
         Text(AppLocalizations.of(context)!.commented),
@@ -1436,9 +1452,9 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     );
   }
 
-  Widget _buildPictureSelectionCheckboxes(
-    BuildContext context,
-  ) {
+  Widget _buildPictureSelectionCheckboxes({
+    required BuildContext context,
+  }) {
     return Row(
       children: [
         Text(AppLocalizations.of(context)!.pictured),
@@ -1475,6 +1491,57 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                 // pictured checkbox must be checked since it makes
                 // no sense to have both unchecked
                 _filterPictured = true;
+              }
+            });
+
+            // now clicking on Enter works since the
+            // Checkbox is not focused anymore
+            _audioTitleSearchSentenceFocusNode.requestFocus();
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPlayableSelectionCheckboxes({
+    required BuildContext context,
+  }) {
+    return Row(
+      children: [
+        Text(AppLocalizations.of(context)!.playable),
+        Checkbox(
+          key: const Key('filterPlayableCheckbox'),
+          value: _filterPlayable,
+          onChanged: (bool? newValue) {
+            setState(() {
+              _filterPlayable = newValue!;
+
+              if (!_filterPlayable) {
+                // If the playable checkbox is unchecked, the not
+                // playable checkbox must be checked since it makes
+                // no sense to have both unchecked
+                _filterNotPlayable = true;
+              }
+            });
+
+            // now clicking on Enter works since the
+            // Checkbox is not focused anymore
+            _audioTitleSearchSentenceFocusNode.requestFocus();
+          },
+        ),
+        Text(AppLocalizations.of(context)!.notPlayable),
+        Checkbox(
+          key: const Key('filterNotPlayableCheckbox'),
+          value: _filterNotPlayable,
+          onChanged: (bool? newValue) {
+            setState(() {
+              _filterNotPlayable = newValue!;
+
+              if (!_filterNotPlayable) {
+                // If the not playable checkbox is unchecked, the
+                // playable checkbox must be checked since it makes
+                // no sense to have both unchecked
+                _filterPlayable = true;
               }
             });
 
@@ -2245,6 +2312,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       'filterNotCommented': AppLocalizations.of(context)!.notCommented,
       'filterPictured': AppLocalizations.of(context)!.pictured,
       'filterNotPictured': AppLocalizations.of(context)!.notPictured,
+      'filterPlayable': AppLocalizations.of(context)!.playable,
+      'filterNotPlayable': AppLocalizations.of(context)!.notPlayable,
       'downloadDateStartRange': AppLocalizations.of(context)!.startDownloadDate,
       'downloadDateEndRange': AppLocalizations.of(context)!.endDownloadDate,
       'uploadDateStartRange': AppLocalizations.of(context)!.startUploadDate,
@@ -2420,6 +2489,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       filterNotCommented: _filterNotCommented,
       filterPictured: _filterPictured,
       filterNotPictured: _filterNotPictured,
+      filterPlayable: _filterPlayable,
+      filterNotPlayable: _filterNotPlayable,
       downloadDateStartRange: _startDownloadDateTime,
       downloadDateEndRange: _endDownloadDateTime,
       uploadDateStartRange: _startUploadDateTime,

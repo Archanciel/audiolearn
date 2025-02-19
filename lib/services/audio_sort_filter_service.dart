@@ -180,7 +180,7 @@ class AudioSortFilterService {
   /// AudioSortFilterParameters. It is more efficient to filter the audio
   /// list first and then sort it than the contrary !
   List<Audio> filterAndSortAudioLst({
-    required Playlist? selectedPlaylist,
+    required Playlist selectedPlaylist,
     required List<Audio> audioLst,
     required AudioSortFilterParameters audioSortFilterParameters,
   }) {
@@ -492,6 +492,36 @@ class AudioSortFilterService {
               sortFilterParmsNameTranslationMap:
                   sortFilterParmsNameTranslationMap,
               optionNameTranslationKey: 'filterNotPictured',
+              differencesLst: differencesLst,
+              wasFilterOptionsTitleAddedToDifferencesLst:
+                  wasFilterOptionsTitleAddedToDifferencesLst);
+    }
+
+    if (existingAudioSortFilterParms.filterPlayable !=
+        newOrModifiedaudioSortFilterParms.filterPlayable) {
+      wasFilterOptionsTitleAddedToDifferencesLst =
+          _addToDifferencesLstOtherOptionCheckboxValueStr(
+              initialCheckBoxState: existingAudioSortFilterParms.filterPlayable,
+              modifiedCheckBoxState:
+                  newOrModifiedaudioSortFilterParms.filterPlayable,
+              sortFilterParmsNameTranslationMap:
+                  sortFilterParmsNameTranslationMap,
+              optionNameTranslationKey: 'filterPlayable',
+              differencesLst: differencesLst,
+              wasFilterOptionsTitleAddedToDifferencesLst:
+                  wasFilterOptionsTitleAddedToDifferencesLst);
+    }
+    if (existingAudioSortFilterParms.filterNotPlayable !=
+        newOrModifiedaudioSortFilterParms.filterNotPlayable) {
+      wasFilterOptionsTitleAddedToDifferencesLst =
+          _addToDifferencesLstOtherOptionCheckboxValueStr(
+              initialCheckBoxState:
+                  existingAudioSortFilterParms.filterNotPlayable,
+              modifiedCheckBoxState:
+                  newOrModifiedaudioSortFilterParms.filterNotPlayable,
+              sortFilterParmsNameTranslationMap:
+                  sortFilterParmsNameTranslationMap,
+              optionNameTranslationKey: 'filterNotPlayable',
               differencesLst: differencesLst,
               wasFilterOptionsTitleAddedToDifferencesLst:
                   wasFilterOptionsTitleAddedToDifferencesLst);
@@ -1059,6 +1089,10 @@ class AudioSortFilterService {
   /// Not listened,
   /// Commented,
   /// Not commented,
+  /// Pictured,
+  /// Not pictured,
+  /// Playable
+  /// Not playable
   /// Start download date,
   /// End download date,
   /// Start upload date,
@@ -1068,7 +1102,7 @@ class AudioSortFilterService {
   ///
   /// Not private in order to be unit tested.
   List<Audio> filterOnOtherOptions({
-    required Playlist? selectedPlaylist,
+    required Playlist selectedPlaylist,
     required List<Audio> audioLst,
     required AudioSortFilterParameters audioSortFilterParameters,
   }) {
@@ -1095,7 +1129,7 @@ class AudioSortFilterService {
 
     // If the 'Partially listened' checkbox was set to false (by
     // default it is set to true), the returned audio list
-    // does not contain audio that are partially listened.
+    // does not contain audio's that are partially listened.
     if (!audioSortFilterParameters.filterPartiallyListened) {
       filteredAudios = filteredAudios.where((audio) {
         return !audio.isPartiallyListened();
@@ -1104,8 +1138,8 @@ class AudioSortFilterService {
 
     // If the 'Not listened' checkbox was set to false (by
     // default it is set to true), the returned audio list
-    // does not contain audio that are not fully or partially
-    // listened.
+    // only contains already filtered audio's that are fully
+    // or partially listened.
     if (!audioSortFilterParameters.filterNotListened) {
       filteredAudios = filteredAudios.where((audio) {
         return audio.wasFullyListened() || audio.isPartiallyListened();
@@ -1141,7 +1175,7 @@ class AudioSortFilterService {
       );
     }
 
-    if (selectedPlaylist == null) {
+    if (filteredAudios.isEmpty) {
       return filteredAudios;
     }
 
@@ -1170,6 +1204,47 @@ class AudioSortFilterService {
         audioLst: filteredAudios,
         playlistPictureFileNamedLst: playlistPictureFileNamesLst,
       );
+    }
+
+    if (filteredAudios.isEmpty) {
+      return filteredAudios;
+    }
+
+    List<String> playlistPlayableAudioNamesLst = DirUtil.listFileNamesInDir(
+      directoryPath: "${selectedPlaylist.downloadPath}",
+      fileExtension: 'mp3',
+    );
+
+    // If the 'Playable' checkbox was set to false (by
+    // default it is set to true), the returned audio list
+    // does not contains audio which have a mp3 file.
+    // This makes sence only in the situation where the
+    // audio files were manually deleted or when a saved
+    // zip file was restored (menu 'Restore Playlists,
+    // Comments and Settings from Zip File').
+    if (!audioSortFilterParameters.filterPlayable) {
+      filteredAudios = _filterAudioLstByRemovingPlayableAudio(
+        audioLst: filteredAudios,
+        playlistPlayableAudioNamesLst: playlistPlayableAudioNamesLst,
+      );
+    }
+
+    // If the 'Not playable' checkbox was set to false (by
+    // default it is set to true), the returned audio list
+    // only contain audio which have a mp3 file.
+    // This makes sence only in the situation where the
+    // audio files have been manually deleted or were
+    // a saved zip file was restored (menu option 'Restore
+    // Playlists, Comments and Settings from Zip File').
+    if (!audioSortFilterParameters.filterNotPlayable) {
+      filteredAudios = _filterAudioLstByRemovingNotPlayableAudio(
+        audioLst: filteredAudios,
+        playlistPlayableAudioNamesLst: playlistPlayableAudioNamesLst,
+      );
+    }
+
+    if (filteredAudios.isEmpty) {
+      return filteredAudios;
     }
 
     if (audioSortFilterParameters.downloadDateStartRange != null ||
@@ -1252,6 +1327,28 @@ class AudioSortFilterService {
     return audioLst.where((audio) {
       return playlistPictureFileNamedLst
           .contains(audio.audioFileName.replaceFirst('.mp3', '.jpg'));
+    }).toList();
+  }
+
+  List<Audio> _filterAudioLstByRemovingPlayableAudio({
+    required List<Audio> audioLst,
+    required List<String> playlistPlayableAudioNamesLst,
+  }) {
+    return audioLst.where((audio) {
+    // Returns only audio for which a mp3 does not exist.
+      return !playlistPlayableAudioNamesLst
+          .contains(audio.audioFileName);
+    }).toList();
+  }
+
+  List<Audio> _filterAudioLstByRemovingNotPlayableAudio({
+    required List<Audio> audioLst,
+    required List<String> playlistPlayableAudioNamesLst,
+  }) {
+    // Returns only audio for which a mp3 exist.
+    return audioLst.where((audio) {
+      return playlistPlayableAudioNamesLst
+          .contains(audio.audioFileName);
     }).toList();
   }
 

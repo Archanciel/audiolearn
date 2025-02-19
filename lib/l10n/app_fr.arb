@@ -1025,5 +1025,7 @@
         "type": "Object"
       }
     }
-  }
+  },
+  "playable": "Jouable",
+  "notPlayable": "Non jouable"
 }
