@@ -13,7 +13,7 @@ enum UnsupportedSettingsEnum { unsupported }
 
 void main() {
   const String testSettingsDir =
-      '$kPlaylistDownloadRootPathWindowsTest\\audiolearn_test_settings';
+      '$kPlaylistDownloadRootPathWindows\\audiolearn_test_settings';
 
   group('Settings', () {
     test('Test initial, modified, saved and loaded values', () async {
@@ -550,13 +550,13 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
 
       final String initialPlaylistRootPath =
-          '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlistInitialPath';
+          '$kPlaylistDownloadRootPathWindows${path.separator}playlistInitialPath';
       final String modifiedPlaylistRootPath =
-          '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlistModifiedPath';
+          '$kPlaylistDownloadRootPathWindows${path.separator}playlistModifiedPath';
 
       await DirUtil.createDirIfNotExist(pathStr: testSettingsDir);
       await DirUtil.createDirIfNotExist(pathStr: initialPlaylistRootPath);
@@ -572,7 +572,7 @@ void main() {
           settingsJsonPathFileName: 'not_exist/settings.json');
 
       final String testSettingsPathFileName =
-          path.join(kPlaylistDownloadRootPathWindowsTest, 'settings.json');
+          path.join(kPlaylistDownloadRootPathWindows, 'settings.json');
 
       // Setting the playlist root path to the initial playlist root path
       settingsDataService.set(
@@ -678,7 +678,7 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     test(
@@ -687,13 +687,13 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
 
       final String initialPlaylistRootPath =
-          '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlistInitialPath';
+          '$kPlaylistDownloadRootPathWindows${path.separator}playlistInitialPath';
       final String modifiedPlaylistRootPath =
-          '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlistModifiedPath';
+          '$kPlaylistDownloadRootPathWindows${path.separator}playlistModifiedPath';
 
       await DirUtil.createDirIfNotExist(pathStr: testSettingsDir);
       await DirUtil.createDirIfNotExist(pathStr: initialPlaylistRootPath);
@@ -709,7 +709,7 @@ void main() {
           settingsJsonPathFileName: 'not_exist/settings.json');
 
       final String testSettingsPathFileName =
-          path.join(kPlaylistDownloadRootPathWindowsTest, 'settings.json');
+          path.join(kPlaylistDownloadRootPathWindows, 'settings.json');
 
       // Setting the playlist root path to the initial playlist root path
       settingsDataService.set(
@@ -822,7 +822,7 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
   });

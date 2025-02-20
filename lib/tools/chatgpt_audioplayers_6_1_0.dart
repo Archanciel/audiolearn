@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:audiolearn/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:window_size/window_size.dart';
@@ -7,7 +8,7 @@ import 'dart:async';
 import 'package:path/path.dart' as path;
 
 import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter/foundation.dart';
+import '../viewmodels/audio_extractor_vm.dart';
 
 class AudioPlayerViewModel extends ChangeNotifier {
   final AudioPlayer _audioPlayer;
@@ -126,6 +127,8 @@ class AudioPlayerViewModel extends ChangeNotifier {
 }
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized(); // Ensure plugins are initialized
+
   setWindowsAppSizeAndPosition(isTest: true);
   runApp(const MaterialApp(home: SimpleExampleApp()));
 }
@@ -137,7 +140,7 @@ Future<void> setWindowsAppSizeAndPosition({
 }) async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  if (!kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
+  if ((Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
     await getScreenList().then((List<Screen> screens) {
       // Assumez que vous voulez utiliser le premier écran (principal)
       final Screen screen = screens.first;
@@ -164,8 +167,12 @@ class SimpleExampleApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => AudioPlayerViewModel(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AudioPlayerViewModel()),
+        ChangeNotifierProvider(
+            create: (context) => AudioExtractorVM()), // ✅ Add this
+      ],
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Simple Player MVVM'),
@@ -225,8 +232,8 @@ class PlayerControls extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = Theme.of(context).primaryColor;
 
-    return Consumer<AudioPlayerViewModel>(
-      builder: (context, viewModel, child) {
+    return Consumer2<AudioPlayerViewModel, AudioExtractorVM>(
+      builder: (context, viewModel, audioExtractorVM, child) {
         return Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -248,6 +255,21 @@ class PlayerControls extends StatelessWidget {
                   : null,
               iconSize: 48.0,
               icon: const Icon(Icons.stop),
+              color: color,
+            ),
+            IconButton(
+              onPressed: () async {
+                String playlistChristDownloadRootPath = '$kPlaylistDownloadRootPath${path.separator}Jésus-Christ';
+                await audioExtractorVM.extractMp3FilePartToMp3File(
+                  sourceMp3FilePathName: "${playlistChristDownloadRootPath}${path.separator}250124-193109-Cela Changera Ta Foi  - Comment AIMER DIEU par-dessus TOUT, Selon JÉSUS ! 25-01-15.mp3",
+                  extractMp3FilePathName:
+                      '$playlistChristDownloadRootPath${path.separator}output.mp3',
+                  startTime: 30.0,
+                  duration: 60.0,
+                );
+              },
+              iconSize: 48.0,
+              icon: const Icon(Icons.cut),
               color: color,
             ),
           ],

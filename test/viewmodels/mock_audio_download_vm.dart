@@ -336,7 +336,7 @@ class MockAudioDownloadVM extends AudioDownloadVM {
         '$mockPlaylistDirectory${path.separator}audioFiles${path.separator}${playlist.title}';
 
     if (mockPlaylistDirectory.isEmpty) {
-      filesPath = kApplicationPathWindowsTest;
+      filesPath = kApplicationPathWindows;
     }
 
     final mockFiles = Directory(filesPath)

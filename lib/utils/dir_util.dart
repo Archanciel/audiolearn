@@ -76,7 +76,7 @@ class DirUtil {
   }
 
   static void deleteAppDirOnEmulatorIfExist() {
-    final Directory directory = Directory(kApplicationPathTest);
+    final Directory directory = Directory(kApplicationPath);
 
     // using await directory.exists did delete dir only on second
     // app restart. Uncomprehensible !
@@ -84,7 +84,7 @@ class DirUtil {
 
     if (directoryExists) {
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathTest,
+        rootPath: kApplicationPath,
       );
     }
   }
