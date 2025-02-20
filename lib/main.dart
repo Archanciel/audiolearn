@@ -52,7 +52,7 @@ Future<void> main(List<String> args) async {
   await PermissionRequesterService.requestMultiplePermissions();
 
   // Obtain or create the application directory
-  applicationPath = DirUtil.getApplicationPath(isTest: isTest);
+  applicationPath = DirUtil.getApplicationPath();
 
   // Now proceed with setting up the app window size and position if needed
   if (!kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
@@ -62,7 +62,6 @@ Future<void> main(List<String> args) async {
   // Setup SettingsDataService
   final SettingsDataService settingsDataService = SettingsDataService(
     sharedPreferences: await SharedPreferences.getInstance(),
-    isTest: isTest,
   );
 
   await settingsDataService.loadSettingsFromFile(
@@ -73,7 +72,6 @@ Future<void> main(List<String> args) async {
   // Run the app
   runApp(MainApp(
     settingsDataService: settingsDataService,
-    isTest: isTest,
   ));
 }
 
@@ -108,13 +106,11 @@ Future<void> setWindowsAppSizeAndPosition({
 
 class MainApp extends StatelessWidget with ScreenMixin {
   final SettingsDataService _settingsDataService;
-  final bool _isTest;
 
   MainApp({
     required SettingsDataService settingsDataService,
-    bool isTest = false,
     super.key,
-  })  : _isTest = isTest,
+  })  : 
         _settingsDataService = settingsDataService;
 
   @override
@@ -124,7 +120,6 @@ class MainApp extends StatelessWidget with ScreenMixin {
     final AudioDownloadVM audioDownloadVM = AudioDownloadVM(
       warningMessageVM: warningMessageVM,
       settingsDataService: _settingsDataService,
-      isTest: _isTest,
     );
 
     final CommentVM commentVM = CommentVM();

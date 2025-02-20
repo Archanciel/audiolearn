@@ -215,7 +215,6 @@ void audioPlayerViewSortFilterIntegrationTest() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -507,7 +506,6 @@ void audioPlayerViewSortFilterIntegrationTest() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -670,7 +668,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -758,7 +755,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -957,7 +953,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -1053,7 +1048,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -1157,7 +1151,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -1311,7 +1304,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -1535,7 +1527,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -1646,7 +1637,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -1765,7 +1755,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
             final SettingsDataService settingsDataService = SettingsDataService(
               sharedPreferences: await SharedPreferences.getInstance(),
-              isTest: true,
             );
 
             // Load the settings from the json file. This is necessary
@@ -1839,7 +1828,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             await tester.tap(find.byKey(const Key('filterCommentedCheckbox')));
             await tester.pumpAndSettle();
 
-            // Tap on the Uncom. checkbox to unselect it
+            // Tap on the Uncom. checkbox to unselect it. This deselect
+            // Uncom. and reselct Comment.
             await tester
                 .tap(find.byKey(const Key('filterNotCommentedCheckbox')));
             await tester.pumpAndSettle();
@@ -1848,9 +1838,20 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             await tester.tap(find.byKey(const Key('filterPicturedCheckbox')));
             await tester.pumpAndSettle();
 
-            // Tap on the Unpictured checkbox to unselect it
+            // Tap on the Unpictured checkbox to unselect it. This deselect
+            // Unpictured and reselct Pictured.
             await tester
                 .tap(find.byKey(const Key('filterNotPicturedCheckbox')));
+            await tester.pumpAndSettle();
+
+            // Tap on the Playable checkbox to unselect it
+            await tester.tap(find.byKey(const Key('filterPlayableCheckbox')));
+            await tester.pumpAndSettle();
+
+            // Tap on the Not playable checkbox to unselect it. This deselect
+            // Not playable and reselect Playable.
+            await tester
+                .tap(find.byKey(const Key('filterNotPlayableCheckbox')));
             await tester.pumpAndSettle();
 
             // Tap on the Exclude ignore case checkbox to unselect it
@@ -2001,7 +2002,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               confirmDialogTitleOne:
                   'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
               confirmDialogMessage:
-                  'Sort by:\n Present only in initial version:\n   Audio title desc\n Present only in modified version:\n   Audio title asc,\n   Audio chapter asc,\n   Video upload date desc,\n   Audio duration asc,\n   Audio listenable remaining\n   duration asc,\n   Audio downl speed desc,\n   Audio downl duration desc\nFilter words:\n Present only in modified version:\n   Marine Le Pen,\n   Emmanuel Macron\nFilter options:\n In initial version:\n   Ignore case: checked\n In modified version:\n   Ignore case: unchecked\n In initial version:\n   Include Youtube channel: checked\n In modified version:\n   Include Youtube\n   channel: unchecked\n In initial version:\n   Audio music quality: unchecked\n In modified version:\n   Audio music quality: checked\n In initial version:\n   Uncom.: checked\n In modified version:\n   Uncom.: unchecked\n In initial version:\n   Unpictured: checked\n In modified version:\n   Unpictured: unchecked\n In modified version:\n   Start downl date: 26/12/2023\n In modified version:\n   End downl date: 06/01/2024\n In modified version:\n   Start upl date: 12/06/2022\n In modified version:\n   End upl date: 19/09/2023\n In modified version:\n   File size range (MB) Start: 2.37\n In modified version:\n   File size range (MB) End: 2.8\n In modified version:\n   Audio duration range (hh:mm)\n   Start: 00:06\n In modified version:\n   Audio duration range (hh:mm)\n   End: 00:08',
+                  'Sort by:\n Present only in initial version:\n   Audio title desc\n Present only in modified version:\n   Audio title asc,\n   Audio chapter asc,\n   Video upload date desc,\n   Audio duration asc,\n   Audio listenable remaining\n   duration asc,\n   Audio downl speed desc,\n   Audio downl duration desc\nFilter words:\n Present only in modified version:\n   Marine Le Pen,\n   Emmanuel Macron\nFilter options:\n In initial version:\n   Ignore case: checked\n In modified version:\n   Ignore case: unchecked\n In initial version:\n   Include Youtube channel: checked\n In modified version:\n   Include Youtube\n   channel: unchecked\n In initial version:\n   Audio music quality: unchecked\n In modified version:\n   Audio music quality: checked\n In initial version:\n   Uncom.: checked\n In modified version:\n   Uncom.: unchecked\n In initial version:\n   Unpictured: checked\n In modified version:\n   Unpictured: unchecked\n In initial version:\n   Not playable: checked\n In modified version:\n   Not playable: unchecked\n In modified version:\n   Start downl date: 26/12/2023\n In modified version:\n   End downl date: 06/01/2024\n In modified version:\n   Start upl date: 12/06/2022\n In modified version:\n   End upl date: 19/09/2023\n In modified version:\n   File size range (MB) Start: 2.37\n In modified version:\n   File size range (MB) End: 2.8\n In modified version:\n   Audio duration range (hh:mm)\n   Start: 00:06\n In modified version:\n   Audio duration range (hh:mm)\n   End: 00:08',
               confirmOrCancelAction: true, // Confirm button is tapped
             );
 
@@ -2030,7 +2031,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
             final SettingsDataService settingsDataService = SettingsDataService(
               sharedPreferences: await SharedPreferences.getInstance(),
-              isTest: true,
             );
 
             // Load the settings from the json file. This is necessary
@@ -2117,7 +2117,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
             final SettingsDataService settingsDataService = SettingsDataService(
               sharedPreferences: await SharedPreferences.getInstance(),
-              isTest: true,
             );
 
             // Load the settings from the json file. This is necessary
@@ -2209,7 +2208,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
             final SettingsDataService settingsDataService = SettingsDataService(
               sharedPreferences: await SharedPreferences.getInstance(),
-              isTest: true,
             );
 
             // Load the settings from the json file. This is necessary
@@ -2302,7 +2300,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
             final SettingsDataService settingsDataService = SettingsDataService(
               sharedPreferences: await SharedPreferences.getInstance(),
-              isTest: true,
             );
 
             // Load the settings from the json file. This is necessary
@@ -2435,7 +2432,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
             final SettingsDataService settingsDataService = SettingsDataService(
               sharedPreferences: await SharedPreferences.getInstance(),
-              isTest: true,
             );
 
             // Load the settings from the json file. This is necessary
@@ -2570,7 +2566,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
             final SettingsDataService settingsDataService = SettingsDataService(
               sharedPreferences: await SharedPreferences.getInstance(),
-              isTest: true,
             );
 
             // Load the settings from the json file. This is necessary
@@ -2700,7 +2695,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
             final SettingsDataService settingsDataService = SettingsDataService(
               sharedPreferences: await SharedPreferences.getInstance(),
-              isTest: true,
             );
 
             // Load the settings from the json file. This is necessary
@@ -2828,7 +2822,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
             final SettingsDataService settingsDataService = SettingsDataService(
               sharedPreferences: await SharedPreferences.getInstance(),
-              isTest: true,
             );
 
             // Load the settings from the json file. This is necessary
@@ -2959,7 +2952,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
             final SettingsDataService settingsDataService = SettingsDataService(
               sharedPreferences: await SharedPreferences.getInstance(),
-              isTest: true,
             );
 
             // Load the settings from the json file. This is necessary
@@ -3057,7 +3049,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
             final SettingsDataService settingsDataService = SettingsDataService(
               sharedPreferences: await SharedPreferences.getInstance(),
-              isTest: true,
             );
 
             // Load the settings from the json file. This is necessary
@@ -3150,6 +3141,17 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Tap on the Unpictured checkbox to unselect it
             await tester
                 .tap(find.byKey(const Key('filterNotPicturedCheckbox')));
+            await tester.pumpAndSettle();
+
+            // Tap on the Not playable checkbox to unselect it. This deselect
+            // Not playable.
+            await tester
+                .tap(find.byKey(const Key('filterNotPlayableCheckbox')));
+            await tester.pumpAndSettle();
+
+            // Tap on the Playable checkbox to unselect it. This deselect
+            // Playable and reselect Not playable
+            await tester.tap(find.byKey(const Key('filterPlayableCheckbox')));
             await tester.pumpAndSettle();
 
             // Tap on the Exclude ignore case checkbox to unselect it
@@ -3336,7 +3338,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
             final SettingsDataService settingsDataService = SettingsDataService(
               sharedPreferences: await SharedPreferences.getInstance(),
-              isTest: true,
             );
 
             // Load the settings from the json file. This is necessary
@@ -3434,7 +3435,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
             final SettingsDataService settingsDataService = SettingsDataService(
               sharedPreferences: await SharedPreferences.getInstance(),
-              isTest: true,
             );
 
             // Load the settings from the json file. This is necessary
@@ -3531,7 +3531,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
             final SettingsDataService settingsDataService = SettingsDataService(
               sharedPreferences: await SharedPreferences.getInstance(),
-              isTest: true,
             );
 
             // Load the settings from the json file. This is necessary
@@ -3669,7 +3668,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
             final SettingsDataService settingsDataService = SettingsDataService(
               sharedPreferences: await SharedPreferences.getInstance(),
-              isTest: true,
             );
 
             // Load the settings from the json file. This is necessary
@@ -3809,7 +3807,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
             final SettingsDataService settingsDataService = SettingsDataService(
               sharedPreferences: await SharedPreferences.getInstance(),
-              isTest: true,
             );
 
             // Load the settings from the json file. This is necessary
@@ -3944,7 +3941,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
             final SettingsDataService settingsDataService = SettingsDataService(
               sharedPreferences: await SharedPreferences.getInstance(),
-              isTest: true,
             );
 
             // Load the settings from the json file. This is necessary
@@ -4077,7 +4073,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
             final SettingsDataService settingsDataService = SettingsDataService(
               sharedPreferences: await SharedPreferences.getInstance(),
-              isTest: true,
             );
 
             // Load the settings from the json file. This is necessary
@@ -4214,7 +4209,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
             final SettingsDataService settingsDataService = SettingsDataService(
               sharedPreferences: await SharedPreferences.getInstance(),
-              isTest: true,
             );
 
             // Load the settings from the json file. This is necessary
@@ -4325,7 +4319,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         final SettingsDataService settingsDataService = SettingsDataService(
           sharedPreferences: await SharedPreferences.getInstance(),
-          isTest: true,
         );
 
         // Load the settings from the json file. This is necessary
@@ -4620,7 +4613,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         final SettingsDataService settingsDataService = SettingsDataService(
           sharedPreferences: await SharedPreferences.getInstance(),
-          isTest: true,
         );
 
         // Load the settings from the json file. This is necessary
@@ -4787,7 +4779,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         final SettingsDataService settingsDataService = SettingsDataService(
           sharedPreferences: await SharedPreferences.getInstance(),
-          isTest: true,
         );
 
         // Load the settings from the json file. This is necessary
@@ -4904,7 +4895,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         final SettingsDataService settingsDataService = SettingsDataService(
           sharedPreferences: await SharedPreferences.getInstance(),
-          isTest: true,
         );
 
         // Load the settings from the json file. This is necessary
@@ -5153,7 +5143,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         final SettingsDataService settingsDataService = SettingsDataService(
           sharedPreferences: await SharedPreferences.getInstance(),
-          isTest: true,
         );
 
         // Load the settings from the json file. This is necessary
@@ -5284,7 +5273,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         final SettingsDataService settingsDataService = SettingsDataService(
           sharedPreferences: await SharedPreferences.getInstance(),
-          isTest: true,
         );
 
         // Load the settings from the json file. This is necessary
@@ -5557,7 +5545,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         final SettingsDataService settingsDataService = SettingsDataService(
           sharedPreferences: await SharedPreferences.getInstance(),
-          isTest: true,
         );
 
         // Load the settings from the json file. This is necessary
@@ -5866,7 +5853,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -6172,7 +6158,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -6562,7 +6547,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -6723,7 +6707,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -6839,7 +6822,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -7161,7 +7143,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
             final SettingsDataService settingsDataService = SettingsDataService(
               sharedPreferences: await SharedPreferences.getInstance(),
-              isTest: true,
             );
 
             // Load the settings from the json file. This is necessary
@@ -7238,7 +7219,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               (WidgetTester tester) async {
             final SettingsDataService settingsDataService = SettingsDataService(
               sharedPreferences: await SharedPreferences.getInstance(),
-              isTest: true,
             );
 
             // Load the settings from the json file. This is necessary
@@ -7341,7 +7321,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -7640,7 +7619,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -8036,7 +8014,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -8215,7 +8192,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         final SettingsDataService settingsDataService = SettingsDataService(
           sharedPreferences: await SharedPreferences.getInstance(),
-          isTest: true,
         );
 
         // Load the settings from the json file. This is necessary
@@ -8364,7 +8340,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -8501,7 +8476,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             (WidgetTester tester) async {
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -8631,7 +8605,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -8798,7 +8771,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -9141,7 +9113,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -9316,7 +9287,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -9468,7 +9438,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -9575,7 +9544,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -9766,7 +9734,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -9908,7 +9875,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -10058,7 +10024,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         final SettingsDataService settingsDataService = SettingsDataService(
           sharedPreferences: await SharedPreferences.getInstance(),
-          isTest: true,
         );
 
         // Load the settings from the json file. This is necessary
@@ -10208,7 +10173,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         final SettingsDataService settingsDataService = SettingsDataService(
           sharedPreferences: await SharedPreferences.getInstance(),
-          isTest: true,
         );
 
         // Load the settings from the json file. This is necessary
@@ -10346,7 +10310,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         final SettingsDataService settingsDataService = SettingsDataService(
           sharedPreferences: await SharedPreferences.getInstance(),
-          isTest: true,
         );
 
         // Load the settings from the json file. This is necessary
@@ -10501,7 +10464,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         final SettingsDataService settingsDataService = SettingsDataService(
           sharedPreferences: await SharedPreferences.getInstance(),
-          isTest: true,
         );
 
         // Load the settings from the json file. This is necessary
@@ -10652,7 +10614,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         final SettingsDataService settingsDataService = SettingsDataService(
           sharedPreferences: await SharedPreferences.getInstance(),
-          isTest: true,
         );
 
         // Load the settings from the json file. This is necessary
@@ -10787,7 +10748,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         final SettingsDataService settingsDataService = SettingsDataService(
           sharedPreferences: await SharedPreferences.getInstance(),
-          isTest: true,
         );
 
         // Load the settings from the json file. This is necessary
@@ -10924,7 +10884,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         final SettingsDataService settingsDataService = SettingsDataService(
           sharedPreferences: await SharedPreferences.getInstance(),
-          isTest: true,
         );
 
         // Load the settings from the json file. This is necessary

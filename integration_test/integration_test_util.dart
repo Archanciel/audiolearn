@@ -48,7 +48,8 @@ class IntegrationTestUtil {
       await tester.pumpAndSettle(
         Duration(
           // milliseconds: 200 + additionalMilliseconds,
-          milliseconds: 1700, // 1500 as well as only 200 no longer work 10/2/2025
+          milliseconds:
+              1700, // 1500 as well as only 200 no longer work 10/2/2025
         ),
       );
     }
@@ -289,7 +290,6 @@ class IntegrationTestUtil {
     }
     final SettingsDataService settingsDataService = SettingsDataService(
       sharedPreferences: await SharedPreferences.getInstance(),
-      isTest: true,
     );
 
     // load settings from file which does not exist. This

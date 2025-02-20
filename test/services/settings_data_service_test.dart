@@ -25,7 +25,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // load settings from file which does not exist. This
@@ -242,7 +241,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // load settings from file which does not exist. This
@@ -361,7 +359,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // load settings from file which does not exist. This
@@ -511,7 +508,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // Save settings to file
@@ -550,8 +546,7 @@ void main() {
     });
     test(
         '''savePlaylistTitleOrder + restorePlaylistTitleOrderIfExistAndSaveSettings
-           test''',
-        () async {
+           test''', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -569,7 +564,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // load settings from file which does not exist. This
@@ -707,7 +701,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // load settings from file which does not exist. This

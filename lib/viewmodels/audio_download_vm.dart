@@ -76,16 +76,9 @@ class AudioDownloadVM extends ChangeNotifier {
 
   final SettingsDataService _settingsDataService;
 
-  /// Passing true for {isTest} has the effect that the windows
-  /// test directory is used as playlist root directory. This
-  /// directory is located in the test directory of the project.
-  ///
-  /// Otherwise, the windows or smartphone audio root directory
-  /// is used.
   AudioDownloadVM({
     required this.warningMessageVM,
     required SettingsDataService settingsDataService,
-    bool isTest = false,
   }) : _settingsDataService = settingsDataService {
     _playlistsRootPath = _settingsDataService.get(
         settingType: SettingType.dataLocation,
