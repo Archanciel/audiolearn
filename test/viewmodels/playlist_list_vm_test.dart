@@ -37,7 +37,6 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -53,7 +52,6 @@ void main() {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       playlistListVM = PlaylistListVM(
@@ -250,7 +248,6 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -266,7 +263,6 @@ void main() {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       playlistListVM = PlaylistListVM(
@@ -321,7 +317,6 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -337,7 +332,6 @@ void main() {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       playlistListVM = PlaylistListVM(
@@ -395,7 +389,6 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -411,7 +404,6 @@ void main() {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       playlistListVM = PlaylistListVM(
@@ -466,7 +458,6 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -482,7 +473,6 @@ void main() {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       playlistListVM = PlaylistListVM(
@@ -544,7 +534,6 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -560,7 +549,6 @@ void main() {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       playlistListVM = PlaylistListVM(
@@ -613,7 +601,6 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -629,7 +616,6 @@ void main() {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       playlistListVM = PlaylistListVM(
@@ -687,7 +673,6 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -703,7 +688,6 @@ void main() {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       playlistListVM = PlaylistListVM(
@@ -758,7 +742,6 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -774,7 +757,6 @@ void main() {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       playlistListVM = PlaylistListVM(
@@ -827,7 +809,6 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -843,7 +824,6 @@ void main() {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       PlaylistListVM playlistListVM = PlaylistListVM(
@@ -914,7 +894,6 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -930,7 +909,6 @@ void main() {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       PlaylistListVM playlistListVM = PlaylistListVM(
@@ -1001,7 +979,6 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -1017,7 +994,6 @@ void main() {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       PlaylistListVM playlistListVM = PlaylistListVM(
@@ -1184,7 +1160,6 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -1200,7 +1175,6 @@ void main() {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       PlaylistListVM playlistListVM = PlaylistListVM(
@@ -1397,7 +1371,6 @@ void main() {
 
     SettingsDataService settingsDataService = SettingsDataService(
       sharedPreferences: MockSharedPreferences(),
-      isTest: true,
     );
 
     // Load the settings from the json file. This is necessary
@@ -1413,7 +1386,6 @@ void main() {
     AudioDownloadVM audioDownloadVM = AudioDownloadVM(
       warningMessageVM: warningMessageVM,
       settingsDataService: settingsDataService,
-      isTest: true,
     );
 
     PlaylistListVM playlistListVM = PlaylistListVM(
@@ -1525,7 +1497,6 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -1541,7 +1512,6 @@ void main() {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       PlaylistListVM playlistListVM = PlaylistListVM(
@@ -1619,7 +1589,6 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -1635,7 +1604,6 @@ void main() {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       PlaylistListVM playlistListVM = PlaylistListVM(
@@ -1716,7 +1684,6 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -1732,7 +1699,6 @@ void main() {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       PlaylistListVM playlistListVM = PlaylistListVM(

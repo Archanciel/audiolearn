@@ -1530,7 +1530,6 @@ Future<AudioPlayerVM> createAudioPlayerVM({
   final AudioDownloadVM audioDownloadVM = AudioDownloadVM(
     warningMessageVM: warningMessageVM,
     settingsDataService: settingsDataService,
-    isTest: true,
   );
   final PlaylistListVM playlistListVM = PlaylistListVM(
     warningMessageVM: warningMessageVM,
@@ -1577,7 +1576,6 @@ Future<SettingsDataService> initializeTestDataAndLoadSettingsDataService({
 
   SettingsDataService settingsDataService = SettingsDataService(
     sharedPreferences: MockSharedPreferences(),
-    isTest: true,
   );
 
   // Load the settings from the json file. This is necessary

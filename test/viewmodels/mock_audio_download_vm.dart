@@ -168,7 +168,6 @@ class MockAudioDownloadVM extends AudioDownloadVM {
     required super.warningMessageVM,
     required super.settingsDataService,
     this.mockPlaylistDirectory = '',
-    super.isTest,
   });
 
   String getPlaylistTitleByUrl(String url) {

@@ -22,8 +22,8 @@ void main() {
       WarningMessageVM warningMessageVM = WarningMessageVM();
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
-        settingsDataService: SettingsDataService(
-            sharedPreferences: MockSharedPreferences(), isTest: true),
+        settingsDataService:
+            SettingsDataService(sharedPreferences: MockSharedPreferences()),
       );
 
       String videoDescription = '''Ma chaîne YouTube principale
@@ -154,7 +154,6 @@ void main() {
       WarningMessageVM warningMessageVM = WarningMessageVM();
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // necessary, otherwise audioDownloadVM won't be able to load
@@ -166,7 +165,6 @@ void main() {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       // Update the playlist json files
@@ -217,7 +215,6 @@ void main() {
       WarningMessageVM warningMessageVM = WarningMessageVM();
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // necessary, otherwise audioDownloadVM won't be able to load
@@ -229,7 +226,6 @@ void main() {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       audioDownloadVM.loadExistingPlaylists();
@@ -355,7 +351,6 @@ void main() {
       WarningMessageVM warningMessageVM = WarningMessageVM();
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // necessary, otherwise audioDownloadVM won't be able to load
@@ -367,7 +362,6 @@ void main() {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       audioDownloadVM.loadExistingPlaylists();
@@ -418,7 +412,6 @@ void main() {
       WarningMessageVM warningMessageVM = WarningMessageVM();
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // necessary, otherwise audioDownloadVM won't be able to load
@@ -430,7 +423,6 @@ void main() {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       audioDownloadVM.loadExistingPlaylists();
@@ -533,7 +525,6 @@ void main() {
       WarningMessageVM warningMessageVM = WarningMessageVM();
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // necessary, otherwise audioDownloadVM won't be able to load
@@ -545,7 +536,6 @@ void main() {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       audioDownloadVM.loadExistingPlaylists();
@@ -628,7 +618,6 @@ void main() {
       WarningMessageVM warningMessageVM = WarningMessageVM();
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // necessary, otherwise audioDownloadVM won't be able to load
@@ -640,7 +629,6 @@ void main() {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       audioDownloadVM.loadExistingPlaylists();
@@ -732,7 +720,6 @@ void main() {
       WarningMessageVM warningMessageVM = WarningMessageVM();
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // necessary, otherwise audioDownloadVM won't be able to load
@@ -744,7 +731,6 @@ void main() {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       audioDownloadVM.loadExistingPlaylists();
@@ -836,7 +822,6 @@ void main() {
       WarningMessageVM warningMessageVM = WarningMessageVM();
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // necessary, otherwise audioDownloadVM won't be able to load
@@ -848,7 +833,6 @@ void main() {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       audioDownloadVM.loadExistingPlaylists();
@@ -899,7 +883,6 @@ void main() {
       WarningMessageVM warningMessageVM = WarningMessageVM();
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // necessary, otherwise audioDownloadVM won't be able to load
@@ -911,7 +894,6 @@ void main() {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       audioDownloadVM.loadExistingPlaylists();
@@ -967,7 +949,6 @@ void main() {
       WarningMessageVM warningMessageVM = WarningMessageVM();
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // necessary, otherwise audioDownloadVM won't be able to load
@@ -979,7 +960,6 @@ void main() {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       audioDownloadVM.loadExistingPlaylists();
@@ -1032,7 +1012,6 @@ void main() {
       WarningMessageVM warningMessageVM = WarningMessageVM();
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // necessary, otherwise audioDownloadVM won't be able to load
@@ -1047,7 +1026,6 @@ void main() {
       AudioDownloadVM audioDownloadVM = MockAudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       // Initializing the audioDownloadVM
@@ -1170,7 +1148,6 @@ void main() {
       WarningMessageVM warningMessageVM = WarningMessageVM();
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // necessary, otherwise audioDownloadVM won't be able to load
@@ -1185,7 +1162,6 @@ void main() {
       AudioDownloadVM audioDownloadVM = MockAudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       // Initializing the audioDownloadVM
@@ -1305,7 +1281,6 @@ void main() {
       WarningMessageVM warningMessageVM = WarningMessageVM();
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // necessary, otherwise audioDownloadVM won't be able to load
@@ -1320,7 +1295,6 @@ void main() {
       AudioDownloadVM audioDownloadVM = MockAudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       // Initializing the audioDownloadVM
@@ -1412,7 +1386,6 @@ void main() {
       WarningMessageVM warningMessageVM = WarningMessageVM();
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // necessary, otherwise audioDownloadVM won't be able to load
@@ -1427,7 +1400,6 @@ void main() {
       AudioDownloadVM audioDownloadVM = MockAudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       // Initializing the audioDownloadVM
@@ -1532,7 +1504,6 @@ void main() {
       WarningMessageVM warningMessageVM = WarningMessageVM();
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // necessary, otherwise audioDownloadVM won't be able to load
@@ -1544,7 +1515,6 @@ void main() {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       audioDownloadVM.loadExistingPlaylists();
@@ -1642,7 +1612,6 @@ void main() {
       WarningMessageVM warningMessageVM = WarningMessageVM();
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // necessary, otherwise audioDownloadVM won't be able to load
@@ -1654,7 +1623,6 @@ void main() {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       audioDownloadVM.loadExistingPlaylists();
@@ -1754,7 +1722,6 @@ void main() {
       WarningMessageVM warningMessageVM = WarningMessageVM();
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // necessary, otherwise audioDownloadVM won't be able to load
@@ -1766,7 +1733,6 @@ void main() {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       audioDownloadVM.loadExistingPlaylists();
@@ -1914,7 +1880,8 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    test('''Delete them from downloaded and from playable audio list''', () async {
+    test('''Delete them from downloaded and from playable audio list''',
+        () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -1930,7 +1897,6 @@ void main() {
       WarningMessageVM warningMessageVM = WarningMessageVM();
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // necessary, otherwise audioDownloadVM won't be able to load
@@ -1942,7 +1908,6 @@ void main() {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       audioDownloadVM.loadExistingPlaylists();

@@ -29,7 +29,6 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       await settingsDataService.loadSettingsFromFile(
@@ -66,7 +65,7 @@ void main() {
         dateFormatVM.selectedDateFormatLowCase,
         'dd/mm/yyyy',
       );
-      
+
       dateFormatVM.selectDateFormat(dateFormatIndex: 1);
 
       expect(
@@ -86,11 +85,13 @@ void main() {
 
       expect(
         dateFormatVM.selectedDateFormat,
-        'MM/dd/yyyy',);
+        'MM/dd/yyyy',
+      );
 
       expect(
         dateFormatVM.selectedDateFormatLowCase,
-        'mm/dd/yyyy',);
+        'mm/dd/yyyy',
+      );
 
       dateFormatVM.selectDateFormat(dateFormatIndex: 2);
 
@@ -143,7 +144,6 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       await settingsDataService.loadSettingsFromFile(
@@ -200,18 +200,19 @@ void main() {
         dateFormatVM.formatDateTime(dateTime),
         "11/30/2021 23:59", // Initial format is 'dd/MM/yyyy'
       );
-  
+
       expect(
         dateFormatVM.selectedDateFormat,
-        'MM/dd/yyyy',);
+        'MM/dd/yyyy',
+      );
 
       expect(
         dateFormatVM.selectedDateFormatLowCase,
-        'mm/dd/yyyy',);
+        'mm/dd/yyyy',
+      );
 
       SettingsDataService reloadedSettingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       await reloadedSettingsDataService.loadSettingsFromFile(
@@ -239,11 +240,13 @@ void main() {
 
       expect(
         dateFormatVM.selectedDateFormat,
-        'MM/dd/yyyy',);
+        'MM/dd/yyyy',
+      );
 
       expect(
         dateFormatVM.selectedDateFormatLowCase,
-        'mm/dd/yyyy',);
+        'mm/dd/yyyy',
+      );
 
       // Change the date format to the third format which is 'yyyy/MM/dd'
       // and reload the settings data service
@@ -267,16 +270,17 @@ void main() {
 
       expect(
         dateFormatVM.selectedDateFormat,
-        'yyyy/MM/dd',);
+        'yyyy/MM/dd',
+      );
 
       expect(
         dateFormatVM.selectedDateFormatLowCase,
-        'yyyy/mm/dd',);
+        'yyyy/mm/dd',
+      );
 
       SettingsDataService secondReloadedSettingsDataService =
           SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       await secondReloadedSettingsDataService.loadSettingsFromFile(
@@ -304,11 +308,13 @@ void main() {
 
       expect(
         dateFormatVM.selectedDateFormat,
-        'yyyy/MM/dd',);
+        'yyyy/MM/dd',
+      );
 
       expect(
         dateFormatVM.selectedDateFormatLowCase,
-        'yyyy/mm/dd',);
+        'yyyy/mm/dd',
+      );
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub

@@ -78,7 +78,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // load settings from file which does not exist. This
@@ -96,14 +95,12 @@ void main() {
       MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
       mockAudioDownloadVM.youtubePlaylistTitle = youtubeNewPlaylistTitle;
 
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       // using the mockAudioDownloadVM to add the playlist
@@ -343,7 +340,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // load settings from file which does not exist. This
@@ -361,7 +357,6 @@ void main() {
       MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       const String invalidYoutubePlaylistTitle = 'Johnny Hallyday, songs';
@@ -371,7 +366,6 @@ void main() {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       // using the mockAudioDownloadVM to add the playlist
@@ -494,7 +488,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // setting default playlist audio play speed to 1.25
@@ -518,14 +511,12 @@ void main() {
       MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
       mockAudioDownloadVM.youtubePlaylistTitle = youtubeNewPlaylistTitle;
 
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       // using the mockAudioDownloadVM to add the playlist
@@ -760,7 +751,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // load settings from file which does not exist. This
@@ -778,14 +768,12 @@ void main() {
       MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
       mockAudioDownloadVM.youtubePlaylistTitle = youtubeNewPlaylistTitle;
 
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       // using the mockAudioDownloadVM to add the playlist
@@ -1038,7 +1026,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       final settingsPathFileName = path.join(
@@ -1135,7 +1122,6 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // load settings from file which does not exist. This
@@ -1278,7 +1264,6 @@ void main() {
 
       settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       final settingsPathFileName = path.join(
@@ -1542,7 +1527,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // load settings from file which does not exist. This
@@ -1560,14 +1544,12 @@ void main() {
       MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
       mockAudioDownloadVM.youtubePlaylistTitle = youtubeNewPlaylistTitle;
 
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       // using the mockAudioDownloadVM to add the playlist
@@ -1777,7 +1759,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // load settings from file which does not exist. This
@@ -1795,14 +1776,12 @@ void main() {
       MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
       mockAudioDownloadVM.youtubePlaylistTitle = youtubeNewPlaylistTitle;
 
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         settingsDataService: settingsDataService,
         warningMessageVM: warningMessageVM,
-        isTest: true,
       );
 
       // using the mockAudioDownloadVM to add the playlist
@@ -1970,7 +1949,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // load settings from file which does not exist. This
@@ -1988,14 +1966,12 @@ void main() {
       MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
       mockAudioDownloadVM.youtubePlaylistTitle = youtubeNewPlaylistTitle;
 
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         settingsDataService: settingsDataService,
         warningMessageVM: warningMessageVM,
-        isTest: true,
       );
 
       // using the mockAudioDownloadVM to add the playlist
@@ -2123,7 +2099,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // load settings from file which does not exist. This
@@ -2141,14 +2116,12 @@ void main() {
       MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
       mockAudioDownloadVM.youtubePlaylistTitle = youtubeNewPlaylistTitle;
 
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       // using the mockAudioDownloadVM to add the playlist
@@ -2272,7 +2245,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // load settings from file which does not exist. This
@@ -2290,14 +2262,12 @@ void main() {
       MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
       mockAudioDownloadVM.youtubePlaylistTitle = '';
 
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       // using the mockAudioDownloadVM to add the playlist
@@ -2432,7 +2402,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // load settings from file which does not exist. This
@@ -2451,7 +2420,6 @@ void main() {
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
         mockPlaylistDirectory: kApplicationPathWindowsTest,
-        isTest: true,
       );
 
       // using the mockAudioDownloadVM to add the playlist
@@ -2901,7 +2869,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -2928,14 +2895,12 @@ void main() {
       MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
       mockAudioDownloadVM.youtubePlaylistTitle = youtubeNewPlaylistTitle;
 
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       // using the mockAudioDownloadVM to add the playlist
@@ -3094,7 +3059,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -3114,14 +3078,13 @@ void main() {
       WarningMessageVM warningMessageVM = WarningMessageVM();
       // MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
       //   warningMessageVM: warningMessageVM,
-      //   isTest: true,
+      //
       // );
       // mockAudioDownloadVM.youtubePlaylistTitle = youtubeNewPlaylistTitle;
 
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       audioDownloadVM.youtubeExplode = mockYoutubeExplode;
@@ -3313,7 +3276,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -3517,7 +3479,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -4136,7 +4097,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -4519,7 +4479,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -4869,7 +4828,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -5175,7 +5133,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -5485,7 +5442,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -5616,7 +5572,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -5801,7 +5756,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -6247,7 +6201,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -6377,7 +6330,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -6508,7 +6460,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -6694,7 +6645,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -7106,7 +7056,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -7460,7 +7409,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -7666,7 +7614,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -7863,7 +7810,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -8046,7 +7992,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -8225,7 +8170,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -8455,7 +8399,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -8583,7 +8526,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -8713,7 +8655,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -8795,7 +8736,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -8926,7 +8866,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -9081,7 +9020,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -9230,7 +9168,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -9385,7 +9322,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -9528,7 +9464,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -11484,7 +11419,6 @@ void main() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -11649,7 +11583,6 @@ void main() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -11794,7 +11727,6 @@ void main() {
 
         final SettingsDataService settingsDataService = SettingsDataService(
           sharedPreferences: await SharedPreferences.getInstance(),
-          isTest: true,
         );
 
         // Load the settings from the json file. This is necessary
@@ -11979,7 +11911,6 @@ void main() {
 
         final SettingsDataService settingsDataService = SettingsDataService(
           sharedPreferences: await SharedPreferences.getInstance(),
-          isTest: true,
         );
 
         // Load the settings from the json file. This is necessary
@@ -12162,7 +12093,6 @@ void main() {
 
         final SettingsDataService settingsDataService = SettingsDataService(
           sharedPreferences: await SharedPreferences.getInstance(),
-          isTest: true,
         );
 
         // Load the settings from the json file. This is necessary
@@ -12335,7 +12265,6 @@ void main() {
 
         final SettingsDataService settingsDataService = SettingsDataService(
           sharedPreferences: await SharedPreferences.getInstance(),
-          isTest: true,
         );
 
         // Load the settings from the json file. This is necessary
@@ -12503,7 +12432,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -12569,7 +12497,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -12709,7 +12636,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -12794,7 +12720,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -12970,7 +12895,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -13135,7 +13059,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -13304,7 +13227,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -13476,7 +13398,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -13647,7 +13568,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -13829,7 +13749,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -13877,7 +13796,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -13963,7 +13881,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -14049,7 +13966,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -14125,7 +14041,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -14201,7 +14116,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -14347,7 +14261,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -14487,7 +14400,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -14605,7 +14517,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -14725,7 +14636,6 @@ void main() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -14768,7 +14678,6 @@ void main() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -14821,7 +14730,6 @@ void main() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -14873,7 +14781,6 @@ void main() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -14928,7 +14835,6 @@ void main() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -14981,7 +14887,6 @@ void main() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -15044,7 +14949,6 @@ void main() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -15106,7 +15010,6 @@ void main() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -18266,7 +18169,7 @@ Future<void> _launchExpandablePlaylistListView({
           body: PlaylistDownloadView(
             settingsDataService: settingsDataService,
             onPageChangedFunction: changePage,
-            isTest: true, // true increase the test app width on Windows
+            // true increase the test app width on Windows
           ),
         ),
       ),

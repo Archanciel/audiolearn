@@ -44,13 +44,11 @@ void main() async {
         (WidgetTester tester) async {
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
       WarningMessageVM warningMessageVM = WarningMessageVM();
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       await _createPlaylistDownloadView(
@@ -85,7 +83,6 @@ void main() async {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -100,7 +97,6 @@ void main() async {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       await _createPlaylistDownloadView(
@@ -153,7 +149,6 @@ void main() async {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -168,7 +163,6 @@ void main() async {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       await _createPlaylistDownloadView(
@@ -270,7 +264,6 @@ void main() async {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -285,7 +278,6 @@ void main() async {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       await _createPlaylistDownloadView(
@@ -406,7 +398,6 @@ void main() async {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -421,7 +412,6 @@ void main() async {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       await _createPlaylistDownloadView(
@@ -554,7 +544,6 @@ void main() async {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -569,7 +558,6 @@ void main() async {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       await _createPlaylistDownloadView(
@@ -640,7 +628,7 @@ void main() async {
     // ExpandableListView.
     // testWidgets('select and delete item', (WidgetTester tester) async {
     // SettingsDataService settingsDataService = SettingsDataService(
-    //   isTest: true,
+    //
     // );
 
     //   // Load the settings from the json file. This is necessary
@@ -654,7 +642,7 @@ void main() async {
     //   WarningMessageVM warningMessageVM = WarningMessageVM();
     //   AudioDownloadVM audioDownloadVM = AudioDownloadVM(
     // warningMessageVM:  warningMessageVM,
-    // isTest: true,
+    //
     //   );
 
     //   await createWidget(
@@ -740,7 +728,6 @@ void main() async {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -755,7 +742,6 @@ void main() async {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       await _createPlaylistDownloadView(
@@ -838,7 +824,6 @@ void main() async {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -853,7 +838,6 @@ void main() async {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       await _createPlaylistDownloadView(
@@ -937,7 +921,6 @@ void main() async {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -952,7 +935,6 @@ void main() async {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       await _createPlaylistDownloadView(
@@ -1036,7 +1018,6 @@ void main() async {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -1051,7 +1032,6 @@ void main() async {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       await _createPlaylistDownloadView(
@@ -1134,7 +1114,6 @@ void main() async {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -1149,7 +1128,6 @@ void main() async {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        isTest: true,
       );
 
       await _createPlaylistDownloadView(

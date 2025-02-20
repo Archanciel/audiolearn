@@ -3305,7 +3305,6 @@ void main() {
         (tester) async {
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -3397,7 +3396,6 @@ void main() {
         (tester) async {
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -3489,7 +3487,6 @@ void main() {
         (tester) async {
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -4599,7 +4596,8 @@ void main() {
         await tester.pumpAndSettle();
 
         // Find and tap on the 'listenedNoCom' sort/filter item
-        Finder listenedNoComDropDownTextFinder = find.text(sortFilterParmName).last;
+        Finder listenedNoComDropDownTextFinder =
+            find.text(sortFilterParmName).last;
         await tester.tap(listenedNoComDropDownTextFinder);
         await tester.pumpAndSettle();
 
@@ -7499,7 +7497,8 @@ void main() {
         await tester.pumpAndSettle();
 
         // Find and tap on the 'toMoveOrCopy' sort/filter item
-        Finder toMoveOrCopyDropDownTextFinder = find.text(sortFilterParmName).last;
+        Finder toMoveOrCopyDropDownTextFinder =
+            find.text(sortFilterParmName).last;
         await tester.tap(toMoveOrCopyDropDownTextFinder);
         await tester.pumpAndSettle();
 
@@ -10051,7 +10050,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -10110,7 +10108,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -10264,7 +10261,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -10362,7 +10358,6 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -11471,7 +11466,6 @@ Future<void> _verifyApplicationSettingsDateFormatValue({
 }) async {
   SettingsDataService settingsDataService = SettingsDataService(
     sharedPreferences: MockSharedPreferences(),
-    isTest: true,
   );
 
   await settingsDataService.loadSettingsFromFile(
