@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:path/path.dart' as path;
 
 import 'package:audiolearn/constants.dart';
 import 'package:audiolearn/models/audio.dart';
@@ -7,9 +9,6 @@ import 'package:audiolearn/services/json_data_service.dart';
 import 'package:audiolearn/services/settings_data_service.dart';
 import 'package:audiolearn/utils/date_time_util.dart';
 import 'package:audiolearn/utils/dir_util.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:path/path.dart' as path;
-
 import 'package:audiolearn/viewmodels/audio_download_vm.dart';
 import 'package:audiolearn/viewmodels/warning_message_vm.dart';
 
@@ -1058,7 +1057,7 @@ void main() {
 
       // Verify that the imported file physically exists in the target
       // playlist directory and in the downloaded and playable audio lists
-      verifyImportedFilesPresence(
+      _verifyImportedFilesPresence(
         targetPlaylist: targetPlaylistEmpty,
         importedFileNamesLst: importedFileNamesLst,
         targetPlaylistDownloadedAudioListInitialLengh: 0,
@@ -1102,7 +1101,7 @@ void main() {
       Audio importedAudio = targetPlaylistEmpty.playableAudioLst[0];
 
       // Verify that the audio fields are correct
-      verifyAudioFields(importedAudio, expectedImportedAudio);
+      _verifyAudioFields(importedAudio, expectedImportedAudio);
 
       // Now import again the same file which now exists in the Empty
       // playlist
@@ -1113,7 +1112,7 @@ void main() {
 
       // Verify that the re-imported file has not been imported a second
       // time
-      verifyImportedFilesPresence(
+      _verifyImportedFilesPresence(
         targetPlaylist: targetPlaylistEmpty,
         importedFileNamesLst: [],
         targetPlaylistDownloadedAudioListInitialLengh:
@@ -1194,7 +1193,7 @@ void main() {
 
       // Verify that the imported file physically exists in the target
       // playlist directory and in the downloaded and playable audio lists
-      verifyImportedFilesPresence(
+      _verifyImportedFilesPresence(
         targetPlaylist: targetPlaylistEmpty,
         importedFileNamesLst: importedFileNamesLst,
         targetPlaylistDownloadedAudioListInitialLengh: 10,
@@ -1238,7 +1237,7 @@ void main() {
       Audio importedAudio = targetPlaylistEmpty.playableAudioLst[0];
 
       // Verify that the audio fields are correct
-      verifyAudioFields(importedAudio, expectedImportedAudio);
+      _verifyAudioFields(importedAudio, expectedImportedAudio);
 
       // Now import again the same file which now exists in the Empty
       // playlist
@@ -1249,7 +1248,7 @@ void main() {
 
       // Verify that the re-imported file has not been imported a second
       // time
-      verifyImportedFilesPresence(
+      _verifyImportedFilesPresence(
         targetPlaylist: targetPlaylistEmpty,
         importedFileNamesLst: [],
         targetPlaylistDownloadedAudioListInitialLengh:
@@ -1336,7 +1335,7 @@ void main() {
 
       // Verify that the imported files physically exists in the target
       // playlist directory and in the downloaded and playable audio lists
-      verifyImportedFilesPresence(
+      _verifyImportedFilesPresence(
         targetPlaylist: targetPlaylistEmpty,
         importedFileNamesLst: importedFileNamesLst,
         targetPlaylistDownloadedAudioListInitialLengh: 0,
@@ -1353,7 +1352,7 @@ void main() {
 
       // Verify that the re-imported file has not been imported a second
       // time
-      verifyImportedFilesPresence(
+      _verifyImportedFilesPresence(
         targetPlaylist: targetPlaylistEmpty,
         importedFileNamesLst: [],
         targetPlaylistDownloadedAudioListInitialLengh:
@@ -1454,7 +1453,7 @@ void main() {
 
       // Verify that the imported files physically exists in the target
       // playlist directory and in the downloaded and playable audio lists
-      verifyImportedFilesPresence(
+      _verifyImportedFilesPresence(
         targetPlaylist: targetPlaylistEmpty,
         importedFileNamesLst: importedFileNamesLst,
         targetPlaylistDownloadedAudioListInitialLengh: 0,
@@ -1471,7 +1470,7 @@ void main() {
 
       // Verify that the re-imported file has not been imported a second
       // time
-      verifyImportedFilesPresence(
+      _verifyImportedFilesPresence(
         targetPlaylist: targetPlaylistEmpty,
         importedFileNamesLst: [],
         targetPlaylistDownloadedAudioListInitialLengh:
@@ -2058,7 +2057,7 @@ void main() {
   });
 }
 
-void verifyAudioFields(Audio importedAudio, Audio expectedImportedAudio) {
+void _verifyAudioFields(Audio importedAudio, Audio expectedImportedAudio) {
   expect(
       importedAudio.enclosingPlaylist, expectedImportedAudio.enclosingPlaylist);
   expect(importedAudio.movedFromPlaylistTitle,
@@ -2114,7 +2113,7 @@ void verifyAudioFields(Audio importedAudio, Audio expectedImportedAudio) {
   expect(importedAudio.isAudioImported, expectedImportedAudio.isAudioImported);
 }
 
-void verifyImportedFilesPresence({
+void _verifyImportedFilesPresence({
   required Playlist targetPlaylist,
   required List<String> importedFileNamesLst,
   required int targetPlaylistDownloadedAudioListInitialLengh,
