@@ -57,9 +57,15 @@ class AudioDownloadVM extends ChangeNotifier {
 
   double _downloadProgress = 0.0;
   double get downloadProgress => _downloadProgress;
+  // setter used by MockAudioDownloadVM in integration test only !
+  set downloadProgress(double downloadProgress) =>
+      _downloadProgress = downloadProgress;
 
   int _lastSecondDownloadSpeed = 0;
   int get lastSecondDownloadSpeed => _lastSecondDownloadSpeed;
+  // setter used by MockAudioDownloadVM in integration test only !
+  set lastSecondDownloadSpeed(int lastSecondDownloadSpeed) =>
+      _lastSecondDownloadSpeed = lastSecondDownloadSpeed;
 
   late Audio _currentDownloadingAudio;
   Audio get currentDownloadingAudio => _currentDownloadingAudio;
@@ -68,6 +74,10 @@ class AudioDownloadVM extends ChangeNotifier {
 
   bool _stopDownloadPressed = false;
   bool get isDownloadStopping => _stopDownloadPressed;
+
+  // setter used by MockAudioDownloadVM in integration test only !
+  set isDownloadStopping(bool isDownloadStopping) =>
+      _stopDownloadPressed = isDownloadStopping;
 
   bool _audioDownloadError = false;
   bool get audioDownloadError => _audioDownloadError;
@@ -127,8 +137,14 @@ class AudioDownloadVM extends ChangeNotifier {
           firstRestoredPlaylist.downloadPath.contains('/storage/emulated/0');
 
       if (arePlaylistsRestoredFromAndroidToWindows) {
+        List<String> playlistRootPathElementsLst = firstRestoredPlaylist.downloadPath.split('/');
+
+        // This name may have been changed by the user on Android
+        // using the 'Application Settings ...' menu.
+        String androidAppPlaylistDirName = playlistRootPathElementsLst[playlistRootPathElementsLst.length - 2];
+ 
         _playlistsRootPath =
-            "$kApplicationPathWindows${path.separator}${kPlaylistDownloadRootPath.split('/').last}";
+            "$kApplicationPathWindows${path.separator}${androidAppPlaylistDirName}";
         _settingsDataService.set(
             settingType: SettingType.dataLocation,
             settingSubType: DataLocation.playlistRootPath,
@@ -241,11 +257,13 @@ class AudioDownloadVM extends ChangeNotifier {
         // Renaming the existing comment file to the original comment
         // file name
 
-        final String commentToRenameFilePathName = CommentVM.buildCommentFilePathName(
+        final String commentToRenameFilePathName =
+            CommentVM.buildCommentFilePathName(
           playlistDownloadPath: playlistDownloadPath,
           audioFileName: audioToRenameFileName,
         );
-        final String originalCommentFileName = originalAudioFileName.replaceAll('mp3', 'json');
+        final String originalCommentFileName =
+            originalAudioFileName.replaceAll('mp3', 'json');
 
         DirUtil.renameFile(
           fileToRenameFilePathName: commentToRenameFilePathName,
@@ -1322,9 +1340,8 @@ class AudioDownloadVM extends ChangeNotifier {
   /// video will be added.
   ///
   /// If the audio of the single video is correctly downloaded and
-  /// is added to a playlist, then ErrorType.npError is returned.
+  /// is added to a playlist, then ErrorType.noError is returned.
   Future<ErrorType> redownloadSingleVideoAudio({
-    required Playlist singleVideoTargetPlaylist,
     bool displayWarningIfAudioAlreadyExists = false,
   }) async {
     isHighQuality = _currentDownloadingAudio.isAudioMusicQuality;
@@ -1688,9 +1705,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
       _currentDownloadingAudio = audio;
 
-      ErrorType errorType = await redownloadSingleVideoAudio(
-        singleVideoTargetPlaylist: targetPlaylist,
-      );
+      ErrorType errorType = await redownloadSingleVideoAudio();
 
       if (errorType == ErrorType.downloadAudioFileAlreadyOnAudioDirectory) {
         existingAudioFilesNotRedownloadedCount++;
