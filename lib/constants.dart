@@ -33,43 +33,20 @@ enum AudioPopupMenuAction {
 const String kApplicationName = "Audio Learn";
 const String kApplicationVersion = '1.3.50';
 const String kApplicationPath = "/storage/emulated/0/Documents/audiolearn";
-const String kApplicationPathTest = "/storage/emulated/0/Documents/audiolearn";
 const String kPlaylistDownloadRootPath =
-    "/storage/emulated/0/Documents/audiolearn/playlists";
-const String kPlaylistDownloadRootPathTest =
     "/storage/emulated/0/Documents/audiolearn/playlists";
 const String kSettingsFileName = 'settings.json';
 const String kOrderedPlaylistTitlesFileName = 'savedOrderedPlaylistTitles.txt';
 
-// not working: getDownloadedAudioNameLst() returns empty list !
-//const String kDownloadAppDir = "/storage/9016-4EF8/Audio';
-
-// Tests are run on Windows only. Files in this local test dir are stored in project test_data dir updated
-// on GitHub
-const String kDownloadAppTestSavedDataDir =
-    "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\saved";
-
 const String kApplicationPathWindows =
     "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio";
-
-// files in this local test dir are stored in project test_data dir updated
-// on GitHub
-const String kApplicationPathWindowsTest =
-    "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio";
-
 const String kPlaylistDownloadRootPathWindows =
     "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio";
 
-// files in this local test dir are stored in project test_data dir updated
-// on GitHub
-const String kPlaylistDownloadRootPathWindowsTest =
-    "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio";
-
-const String kTranslationFileDirWindows =
-    "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\lib\\l10n";
-
+const String kDownloadAppTestSavedDataDir =
+    "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\saved";
+    
 const String kCommentDirName = 'comments';
-
 const String kPictureDirName = 'pictures';
 
 // this constant enables to download a playlist in the emulator in which

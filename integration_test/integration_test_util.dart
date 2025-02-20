@@ -263,7 +263,7 @@ class IntegrationTestUtil {
     // Purge the test playlist directory if it exists so that the
     // playlist list is empty
     DirUtil.deleteFilesInDirAndSubDirs(
-      rootPath: kPlaylistDownloadRootPathWindowsTest,
+      rootPath: kPlaylistDownloadRootPathWindows,
     );
 
     if (savedTestDataDirName != null) {
@@ -271,14 +271,14 @@ class IntegrationTestUtil {
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}$savedTestDataDirName",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kPlaylistDownloadRootPathWindows,
       );
     }
 
     if (replacePlaylistJsonFileName != null) {
       // Copy the test initial audio data to the app dir
       final String playlistPath =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}";
+          "$kPlaylistDownloadRootPathWindows${path.separator}$selectedPlaylistTitle${path.separator}";
       final String playlistJsonFileName = '$selectedPlaylistTitle.json';
       DirUtil.deleteFileIfExist(
         pathFileName: '$playlistPath$playlistJsonFileName',
@@ -303,7 +303,7 @@ class IntegrationTestUtil {
     // playlists available in the download app test dir
     await settingsDataService.loadSettingsFromFile(
         settingsJsonPathFileName:
-            "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+            "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
 
     await app.main(['test']);
     await tester.pumpAndSettle();
@@ -381,7 +381,7 @@ class IntegrationTestUtil {
     int modifiedAudioPositionSeconds = 0,
   }) async {
     final String selectedPlaylistPath = path.join(
-      kPlaylistDownloadRootPathWindowsTest,
+      kPlaylistDownloadRootPathWindows,
       playlistTitle,
     );
 
@@ -917,7 +917,7 @@ class IntegrationTestUtil {
     required double expectedAudioPlaySpeed,
   }) {
     final String selectedPlaylistPath = path.join(
-      kPlaylistDownloadRootPathWindowsTest,
+      kPlaylistDownloadRootPathWindows,
       selectedPlaylistTitle,
     );
 
@@ -1134,7 +1134,7 @@ class IntegrationTestUtil {
     required DateTime? audioPausedDateTime,
   }) {
     final String selectedPlaylistPath = path.join(
-      kPlaylistDownloadRootPathWindowsTest,
+      kPlaylistDownloadRootPathWindows,
       audioPlayerSelectedPlaylistTitle,
     );
 
@@ -1198,7 +1198,7 @@ class IntegrationTestUtil {
     AudioPlayingOrder audioPlayingOrder = AudioPlayingOrder.ascending,
   }) {
     final String selectedPlaylistPath = path.join(
-      kPlaylistDownloadRootPathWindowsTest,
+      kPlaylistDownloadRootPathWindows,
       selectedPlaylistTitle,
     );
 

@@ -117,7 +117,7 @@ class SettingsDataService {
 
   SettingsDataService({
     required SharedPreferences sharedPreferences,
-  })  : _sharedPreferences = sharedPreferences;
+  }) : _sharedPreferences = sharedPreferences;
 
   dynamic get({
     required SettingType settingType,
@@ -284,10 +284,10 @@ class SettingsDataService {
     // tests fail due to the fact that flutter_test.exe remains active
     // and blocks the possibility for DirUtil to delete the test data
     // once a unit test is completed.
-      await _checkFirstRun(
-        settingsJsonFile: file,
-        settingsJsonFileExist: settingsJsonFileExist,
-      );
+    await _checkFirstRun(
+      settingsJsonFile: file,
+      settingsJsonFileExist: settingsJsonFileExist,
+    );
 
     try {
       if (settingsJsonFileExist) {
@@ -732,7 +732,7 @@ Future<void> usageExample() async {
   initialSettings.set(
       settingType: SettingType.dataLocation,
       settingSubType: DataLocation.playlistRootPath,
-      value: kPlaylistDownloadRootPathWindowsTest);
+      value: kPlaylistDownloadRootPathWindows);
 
   initialSettings.set(
       settingType: SettingType.playlists,

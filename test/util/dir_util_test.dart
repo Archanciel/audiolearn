@@ -13,14 +13,14 @@ void main() {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kPlaylistDownloadRootPathWindows,
         );
 
         // Copy the test initial audio data to the app dir
         DirUtil.copyFilesFromDirAndSubDirsToDirectory(
           sourceRootPath:
               "$kDownloadAppTestSavedDataDir${path.separator}dir_util_test",
-          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          destinationRootPath: kPlaylistDownloadRootPathWindows,
         );
 
         DirUtil.replacePlaylistRootPathInSettingsJsonFiles(
@@ -31,15 +31,15 @@ void main() {
                 "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio");
 
         File expectedFile = File(
-            "$kPlaylistDownloadRootPathWindowsTest${path.separator}test_result.json");
+            "$kPlaylistDownloadRootPathWindows${path.separator}test_result.json");
         File actualFile = File(
-            "$kPlaylistDownloadRootPathWindowsTest${path.separator}settings.json");
+            "$kPlaylistDownloadRootPathWindows${path.separator}settings.json");
         String actual = actualFile.readAsStringSync();
         expect(actual, expectedFile.readAsStringSync());
 
         // Cleanup the test data directory
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kPlaylistDownloadRootPathWindows,
         );
       },
     );
@@ -49,21 +49,21 @@ void main() {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kPlaylistDownloadRootPathWindows,
         );
 
         // Copy the test initial audio data to the app dir
         DirUtil.copyFilesFromDirAndSubDirsToDirectory(
           sourceRootPath:
               "$kDownloadAppTestSavedDataDir${path.separator}dir_util_test",
-          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          destinationRootPath: kPlaylistDownloadRootPathWindows,
         );
 
         DirUtil.deleteFilesAndSubDirsOfDir(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kPlaylistDownloadRootPathWindows,
         );
 
-        Directory dir = Directory(kPlaylistDownloadRootPathWindowsTest);
+        Directory dir = Directory(kPlaylistDownloadRootPathWindows);
 
         expect(dir.existsSync(), true);
         expect(dir.listSync().isEmpty, true);
@@ -75,25 +75,25 @@ void main() {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kPlaylistDownloadRootPathWindows,
         );
 
         // Copy the test initial audio data to the app dir
         DirUtil.copyFilesFromDirAndSubDirsToDirectory(
           sourceRootPath:
               "$kDownloadAppTestSavedDataDir${path.separator}dir_util_test",
-          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          destinationRootPath: kPlaylistDownloadRootPathWindows,
         );
 
         List<String> listJsonPathFileNames = DirUtil.listPathFileNamesInSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kPlaylistDownloadRootPathWindows,
           fileExtension: 'json',
         );
 
         expect(listJsonPathFileNames.length, 4);
 
         listJsonPathFileNames = DirUtil.listPathFileNamesInSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kPlaylistDownloadRootPathWindows,
           fileExtension: 'json',
           excludeDirName: 'comments',
         );
@@ -102,7 +102,7 @@ void main() {
 
         // Cleanup the test data directory
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kPlaylistDownloadRootPathWindows,
         );
       },
     );
@@ -112,19 +112,19 @@ void main() {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kPlaylistDownloadRootPathWindows,
         );
 
         // Copy the test initial audio data to the app dir
         DirUtil.copyFilesFromDirAndSubDirsToDirectory(
           sourceRootPath:
               "$kDownloadAppTestSavedDataDir${path.separator}dir_util_test",
-          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          destinationRootPath: kPlaylistDownloadRootPathWindows,
         );
 
         List<String> listJsonPathFileNames = DirUtil.listPathFileNamesInDir(
           directoryPath:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kCommentDirName",
+              "$kPlaylistDownloadRootPathWindows${path.separator}S8 audio${path.separator}$kCommentDirName",
           fileExtension: 'json',
         );
 
@@ -132,7 +132,7 @@ void main() {
 
         // Cleanup the test data directory
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kPlaylistDownloadRootPathWindows,
         );
       },
     );
@@ -142,7 +142,7 @@ void main() {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kPlaylistDownloadRootPathWindows,
         );
 
         // Copy the test initial audio data to the app dir
@@ -151,7 +151,7 @@ void main() {
 
         DirUtil.copyFilesFromDirAndSubDirsToDirectory(
           sourceRootPath: sourceRootPath,
-          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          destinationRootPath: kPlaylistDownloadRootPathWindows,
         );
 
         String testString = 'test string';
@@ -171,7 +171,7 @@ void main() {
 
         // Cleanup the test data directory
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kPlaylistDownloadRootPathWindows,
         );
       },
     );

@@ -82,7 +82,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets(
@@ -245,7 +245,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets(
@@ -331,7 +331,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets(
@@ -436,7 +436,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets(
@@ -511,7 +511,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets('''Click on play button to finish playing the first
@@ -643,7 +643,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets(
@@ -747,7 +747,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets('''Play to end the partially listened last downloaded audio and
@@ -846,7 +846,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets(
@@ -934,7 +934,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets(
@@ -1028,7 +1028,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
   });
@@ -1062,7 +1062,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets(
@@ -1096,7 +1096,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets(
@@ -1130,7 +1130,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets(
@@ -1164,7 +1164,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets(
@@ -1198,7 +1198,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets(
@@ -1231,7 +1231,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets('''Partially listened audio < 2 sec ago, rewind position after
@@ -1263,7 +1263,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets(
@@ -1295,7 +1295,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets(
@@ -1328,7 +1328,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets(
@@ -1361,7 +1361,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets('''Fully listened audio with audioPausedDateTime == null, rewind
@@ -1392,7 +1392,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets('''Not listened audio with audioPausedDateTime == null, rewind
@@ -1423,7 +1423,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
   });
@@ -1514,7 +1514,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets(
@@ -1593,7 +1593,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
   });
@@ -1743,7 +1743,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets(
@@ -1786,7 +1786,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
   });
@@ -1896,7 +1896,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets(
@@ -1978,7 +1978,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets(
@@ -2062,7 +2062,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets('Reduce play speed. Then click on Cancel.', (
@@ -2120,7 +2120,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets(
@@ -2206,7 +2206,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets(
@@ -2291,7 +2291,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets(
@@ -2331,7 +2331,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets('''Reduce, then increase play speed to min, then max values.''',
@@ -2475,7 +2475,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
   });
@@ -2579,7 +2579,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets(
@@ -2654,7 +2654,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets(
@@ -2759,7 +2759,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets('''User sets to 0 the position of third downloaded audio of the
@@ -2902,7 +2902,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets(
@@ -3013,7 +3013,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
   });
@@ -3204,7 +3204,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets(
@@ -3294,7 +3294,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets(
@@ -3400,7 +3400,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
   });
@@ -3466,7 +3466,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets('forward 10 seconds position change',
@@ -3531,7 +3531,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets('backward 1 minute position change',
@@ -3595,7 +3595,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets('backward 10 seconds position change',
@@ -3661,7 +3661,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets('skip to start position change', (WidgetTester tester) async {
@@ -3727,7 +3727,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets('skip to end position change', (WidgetTester tester) async {
@@ -3792,7 +3792,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets('play comment and undo the resulting position change',
@@ -3885,7 +3885,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
   });
@@ -3961,7 +3961,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets('forward 10 seconds position change',
@@ -4034,7 +4034,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets('backward 1 minute position change',
@@ -4107,7 +4107,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets('backward 10 seconds position change',
@@ -4178,7 +4178,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets('skip to start position change', (WidgetTester tester) async {
@@ -4250,7 +4250,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets('skip to end position change', (WidgetTester tester) async {
@@ -4321,7 +4321,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets('play comment and undo the resulting position change',
@@ -4422,7 +4422,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
   });
@@ -4674,7 +4674,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
   });
@@ -4845,7 +4845,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets(
@@ -4966,7 +4966,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets(
@@ -5021,7 +5021,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets(
@@ -5069,7 +5069,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets('''Go to audioplayer view while no playlist is selected
@@ -5141,7 +5141,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
   });
@@ -5240,7 +5240,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
   });
@@ -5327,7 +5327,7 @@ void main() {
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kPlaylistDownloadRootPathWindows,
         );
       });
       testWidgets('''Playing from CommentListAddDialog a comment on audio
@@ -5380,7 +5380,7 @@ void main() {
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kPlaylistDownloadRootPathWindows,
         );
       });
       testWidgets('''Playing from PlaylistCommentDialog a comment on audio
@@ -5487,7 +5487,7 @@ void main() {
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kPlaylistDownloadRootPathWindows,
         );
       });
     });
@@ -5566,7 +5566,7 @@ void main() {
 
       // Ensure that the comment playlist directory does not exist
       final Directory directory = Directory(
-          "kPlaylistDownloadRootPathWindowsTest${path.separator}$emptyPlaylistTitle${path.separator}$kCommentDirName");
+          "kPlaylistDownloadRootPathWindows${path.separator}$emptyPlaylistTitle${path.separator}$kCommentDirName");
 
       expect(directory.existsSync(), false);
 
@@ -6347,7 +6347,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets(
@@ -6707,7 +6707,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets(
@@ -6842,7 +6842,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets('Update comment created more than 1 day ago',
@@ -6978,7 +6978,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets('3 dialogs opened, tapping outside the comment related dialogs',
@@ -7065,7 +7065,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets(
@@ -7112,7 +7112,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets(
@@ -7177,7 +7177,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets('''Delete all comments and check that the comment icon button is
@@ -7196,7 +7196,7 @@ void main() {
       // Verify that the comment file exists
 
       String playlistCommentFilePathName =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$localPlaylistTitle${path.separator}$kCommentDirName${path.separator}240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json";
+          "$kPlaylistDownloadRootPathWindows${path.separator}$localPlaylistTitle${path.separator}$kCommentDirName${path.separator}240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json";
 
       expect(
         File(playlistCommentFilePathName).existsSync(),
@@ -7293,7 +7293,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets(
@@ -7451,7 +7451,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
     testWidgets(
@@ -7830,7 +7830,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
   });
@@ -8586,7 +8586,7 @@ void _verifyCommentDataStoredInCommentJsonFile({
   required String commentEndPositionTenthOfSecondsStr,
 }) {
   final String commentPath =
-      "$kPlaylistDownloadRootPathWindowsTest${path.separator}$playlistTitle${path.separator}$kCommentDirName";
+      "$kPlaylistDownloadRootPathWindows${path.separator}$playlistTitle${path.separator}$kCommentDirName";
 
   final commentPathFileName = path.join(
     commentPath,

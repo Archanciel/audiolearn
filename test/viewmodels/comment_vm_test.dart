@@ -17,14 +17,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesAndSubDirsOfDir(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kPlaylistDownloadRootPathWindows,
       );
 
       Audio audio = createAudio(
@@ -51,7 +51,7 @@ void main() {
           0);
 
       String createdCommentFilePathName =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}local${path.separator}$kCommentDirName${path.separator}240110-181805-Really short video 23-07-01.json";
+          "$kPlaylistDownloadRootPathWindows${path.separator}local${path.separator}$kCommentDirName${path.separator}240110-181805-Really short video 23-07-01.json";
 
       // the comment file should not have been created
       expect(File(createdCommentFilePathName).existsSync(), false);
@@ -59,20 +59,20 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesAndSubDirsOfDir(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindows);
     });
     test('load comments, comment file exist', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesAndSubDirsOfDir(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kPlaylistDownloadRootPathWindows,
       );
 
       Audio audio = createAudio(
@@ -135,20 +135,20 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesAndSubDirsOfDir(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindows);
     });
     test('get playlist comments, 3 comment files for 4 audio exist', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesAndSubDirsOfDir(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kPlaylistDownloadRootPathWindows,
       );
 
       CommentVM commentVM = CommentVM();
@@ -166,7 +166,7 @@ void main() {
       );
 
       playlistS8.downloadPath =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio";
+          "$kPlaylistDownloadRootPathWindows${path.separator}S8 audio";
 
       // Deleting comment file used in another test
       DirUtil.deleteFileIfExist(
@@ -204,7 +204,7 @@ void main() {
             playlist: playlistS8,
           ),
           8);
-          
+
       Comment expectedCommentOne = Comment.fullConstructor(
         id: 'One_6473',
         title: 'One',
@@ -232,7 +232,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesAndSubDirsOfDir(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindows);
     });
     test(
         'addComment on not exist comment file, then add new comment on same file',
@@ -240,14 +240,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesAndSubDirsOfDir(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kPlaylistDownloadRootPathWindows,
       );
 
       CommentVM commentVM = CommentVM();
@@ -316,20 +316,20 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesAndSubDirsOfDir(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindows);
     });
     test('addComment on empty comment file', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesAndSubDirsOfDir(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kPlaylistDownloadRootPathWindows,
       );
 
       CommentVM commentVM = CommentVM();
@@ -371,20 +371,20 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesAndSubDirsOfDir(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindows);
     });
     test('deleteComment', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesAndSubDirsOfDir(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kPlaylistDownloadRootPathWindows,
       );
 
       const String localPlaylistTitle = 'local_delete_comment';
@@ -392,7 +392,7 @@ void main() {
       // Verify that the comment file exists
 
       String playlistCommentFilePathName =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$localPlaylistTitle${path.separator}$kCommentDirName${path.separator}240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json";
+          "$kPlaylistDownloadRootPathWindows${path.separator}$localPlaylistTitle${path.separator}$kCommentDirName${path.separator}240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json";
 
       expect(
         File(playlistCommentFilePathName).existsSync(),
@@ -455,21 +455,21 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesAndSubDirsOfDir(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindows);
     });
     test('''Of commented audio, deleteAllAudioComments. The audio is located in
             local_delete_comment playlist''', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesAndSubDirsOfDir(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kPlaylistDownloadRootPathWindows,
       );
 
       CommentVM commentVM = CommentVM();
@@ -508,21 +508,22 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesAndSubDirsOfDir(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindows);
     });
-    test('''Of uncommented audio, deleteAllAudioComments. The audio is located in
+    test(
+        '''Of uncommented audio, deleteAllAudioComments. The audio is located in
             S8 audio playlist''', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesAndSubDirsOfDir(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kPlaylistDownloadRootPathWindows,
       );
 
       CommentVM commentVM = CommentVM();
@@ -562,20 +563,20 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesAndSubDirsOfDir(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindows);
     });
     test('modifyComment', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesAndSubDirsOfDir(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kPlaylistDownloadRootPathWindows,
       );
 
       CommentVM commentVM = CommentVM();
@@ -616,7 +617,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesAndSubDirsOfDir(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindows);
     });
   });
   group('CommentVM move and copy comment file test', () {
@@ -624,14 +625,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesAndSubDirsOfDir(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kPlaylistDownloadRootPathWindows,
       );
 
       CommentVM commentVM = CommentVM();
@@ -644,7 +645,7 @@ void main() {
 
       String targetPlaylistTitle = 'local';
       String targetPlaylistPath =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$targetPlaylistTitle";
+          "$kPlaylistDownloadRootPathWindows${path.separator}$targetPlaylistTitle";
 
       List<String> sourceCommentFileNameLst = DirUtil.listFileNamesInDir(
           directoryPath:
@@ -676,20 +677,20 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesAndSubDirsOfDir(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindows);
     });
     test('move not existing src comment file', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesAndSubDirsOfDir(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kPlaylistDownloadRootPathWindows,
       );
 
       CommentVM commentVM = CommentVM();
@@ -702,7 +703,7 @@ void main() {
 
       String targetPlaylistTitle = 'local_comment';
       String targetPlaylistPath =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$targetPlaylistTitle";
+          "$kPlaylistDownloadRootPathWindows${path.separator}$targetPlaylistTitle";
 
       List<String> sourceCommentFileNameLst = DirUtil.listFileNamesInDir(
           directoryPath:
@@ -734,20 +735,20 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesAndSubDirsOfDir(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindows);
     });
     test('copy existing src comment file', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesAndSubDirsOfDir(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kPlaylistDownloadRootPathWindows,
       );
 
       CommentVM commentVM = CommentVM();
@@ -760,7 +761,7 @@ void main() {
 
       String targetPlaylistTitle = 'local';
       String targetPlaylistPath =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$targetPlaylistTitle";
+          "$kPlaylistDownloadRootPathWindows${path.separator}$targetPlaylistTitle";
 
       List<String> sourceCommentFileNameLst = DirUtil.listFileNamesInDir(
           directoryPath:
@@ -792,20 +793,20 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesAndSubDirsOfDir(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindows);
     });
     test('copy not existing src comment file', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesAndSubDirsOfDir(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kPlaylistDownloadRootPathWindows,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kPlaylistDownloadRootPathWindows,
       );
 
       CommentVM commentVM = CommentVM();
@@ -818,7 +819,7 @@ void main() {
 
       String targetPlaylistTitle = 'local_comment'; // contains no comment file
       String targetPlaylistPath =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$targetPlaylistTitle";
+          "$kPlaylistDownloadRootPathWindows${path.separator}$targetPlaylistTitle";
 
       List<String> sourceCommentFileNameLst = DirUtil.listFileNamesInDir(
           directoryPath:
@@ -850,7 +851,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesAndSubDirsOfDir(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
+          rootPath: kPlaylistDownloadRootPathWindows);
     });
   });
 }
@@ -880,7 +881,7 @@ Audio createAudio({
   );
 
   playlist.downloadPath =
-      "$kPlaylistDownloadRootPathWindowsTest${path.separator}$playlistTitle";
+      "$kPlaylistDownloadRootPathWindows${path.separator}$playlistTitle";
 
   Audio audio = Audio(
       enclosingPlaylist: playlist,
