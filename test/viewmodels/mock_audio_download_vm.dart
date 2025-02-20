@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:audiolearn/constants.dart';
+import 'package:audiolearn/utils/dir_util.dart';
 import 'package:path/path.dart' as path;
 
 import 'package:audiolearn/models/audio.dart';
@@ -331,14 +332,14 @@ class MockAudioDownloadVM extends AudioDownloadVM {
       playlistDir.createSync(recursive: true);
     }
 
-    String filesPath = '$mockPlaylistDirectory${path.separator}audioFiles${path.separator}${playlist.title}';
+    String filesPath =
+        '$mockPlaylistDirectory${path.separator}audioFiles${path.separator}${playlist.title}';
 
     if (mockPlaylistDirectory.isEmpty) {
       filesPath = kApplicationPathWindowsTest;
     }
 
-    final mockFiles = Directory(
-            filesPath)
+    final mockFiles = Directory(filesPath)
         .listSync()
         .whereType<File>()
         .where((file) => file.path.endsWith('.mp3'));
@@ -378,5 +379,53 @@ class MockAudioDownloadVM extends AudioDownloadVM {
     }
 
     notifyListeners();
+  }
+
+  @override
+  Future<ErrorType> redownloadSingleVideoAudio({
+    bool displayWarningIfAudioAlreadyExists = false,
+  }) async {
+    if (isDownloadStopping) {
+      return ErrorType.downloadAudioYoutubeError;
+    }
+
+    Audio audio = currentDownloadingAudio;
+    int audioFileSize = audio.audioFileSize;
+
+    int downloadSpeedPerSecond = audioFileSize ~/ 5;
+
+    for (int i = 0; i < audioFileSize; i += downloadSpeedPerSecond) {
+      downloadProgress = i * downloadSpeedPerSecond as double;
+      lastSecondDownloadSpeed = downloadSpeedPerSecond;
+
+      // Simulating re-download process
+      await Future.delayed(Duration(milliseconds: 1000));
+
+      notifyListeners();
+    }
+
+    List<String> playlistRootPathElementsLst =
+        audio.enclosingPlaylist!.downloadPath.split('/');
+
+    // This name may have been changed by the user on Android
+    // using the 'Application Settings ...' menu.
+    String androidAppPlaylistDirName =
+        playlistRootPathElementsLst[playlistRootPathElementsLst.length - 2];
+
+    String playlistRootPath =
+        "$kApplicationPathWindows${path.separator}${androidAppPlaylistDirName}";
+
+    DirUtil.copyFileToDirectorySync(
+      sourceFilePathName:
+          "$kApplicationPath${path.separator}downloadedMockFileDir${path.separator}${audio.audioFileName}",
+      targetDirectoryPath: playlistRootPath,
+    );
+
+    if (isDownloadStopping) {
+      return ErrorType.downloadAudioYoutubeError;
+    }
+
+    // Mocking success case
+    return ErrorType.noError;
   }
 }
