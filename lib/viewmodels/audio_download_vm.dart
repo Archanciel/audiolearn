@@ -144,7 +144,7 @@ class AudioDownloadVM extends ChangeNotifier {
         String androidAppPlaylistDirName = playlistRootPathElementsLst[playlistRootPathElementsLst.length - 2];
  
         _playlistsRootPath =
-            "$kApplicationPathWindows${path.separator}${androidAppPlaylistDirName}";
+            "$kApplicationPathWindows${path.separator}$androidAppPlaylistDirName";
         _settingsDataService.set(
             settingType: SettingType.dataLocation,
             settingSubType: DataLocation.playlistRootPath,
