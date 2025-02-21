@@ -56,7 +56,7 @@ Future<void> main(List<String> args) async {
 
   // Now proceed with setting up the app window size and position if needed
   if (!kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
-    await setWindowsAppSizeAndPosition(isTest: isTest);
+    await _setWindowsAppSizeAndPosition(isTest: isTest);
   }
 
   // Setup SettingsDataService
@@ -77,7 +77,7 @@ Future<void> main(List<String> args) async {
 
 /// If app runs on Windows, Linux or MacOS, set the app size
 /// and position.
-Future<void> setWindowsAppSizeAndPosition({
+Future<void> _setWindowsAppSizeAndPosition({
   required bool isTest,
 }) async {
   WidgetsFlutterBinding.ensureInitialized();
