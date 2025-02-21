@@ -413,7 +413,7 @@ class MockAudioDownloadVM extends AudioDownloadVM {
         playlistRootPathElementsLst[playlistRootPathElementsLst.length - 2];
 
     String playlistRootPath =
-        "$kApplicationPathWindows${path.separator}${androidAppPlaylistDirName}";
+        "$kApplicationPathWindows${path.separator}$androidAppPlaylistDirName";
 
     DirUtil.copyFileToDirectorySync(
       sourceFilePathName:
