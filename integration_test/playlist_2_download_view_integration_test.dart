@@ -2,6 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:audiolearn/models/audio.dart';
+import 'package:audiolearn/viewmodels/audio_download_vm.dart';
+import 'package:audiolearn/viewmodels/audio_player_vm.dart';
+import 'package:audiolearn/viewmodels/comment_vm.dart';
+import 'package:audiolearn/viewmodels/date_format_vm.dart';
+import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
+import 'package:audiolearn/viewmodels/warning_message_vm.dart';
 import 'package:audiolearn/views/widgets/audio_sort_filter_dialog.dart';
 import 'package:audiolearn/views/widgets/playlist_comment_list_dialog.dart';
 import 'package:file_picker/file_picker.dart';
@@ -20,6 +26,7 @@ import 'package:audiolearn/utils/dir_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../test/services/mock_shared_preferences.dart';
+import '../test/viewmodels/mock_audio_download_vm.dart';
 import 'integration_test_util.dart';
 import 'mock_file_picker.dart';
 
@@ -10242,7 +10249,7 @@ void main() {
     });
     group('App settings set speed test', () {});
   });
-  group('Save app settings and playlists json files to zip menu test', () {
+  group('Save playlist, comments and settings to zip file menu test', () {
     testWidgets(
         '''Successful save. The integration test verify the confirmation displayed
            warning''', (WidgetTester tester) async {
@@ -10413,6 +10420,107 @@ void main() {
       );
 
       expect(zipLst.isEmpty, true);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindows,
+      );
+    });
+  });
+  group('Restore playlist, comments and settings from zip file menu test', () {
+    testWidgets('Restore Windows zip to Windows', (tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindows,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath: "$kDownloadAppTestSavedDataDir${path.separator}restore_zip_test",
+        destinationRootPath: kPlaylistDownloadRootPathWindows,
+      );
+
+      // Since we have to use a mock AudioDownloadVM to add the
+      // youtube playlist, we can not use app.main() to start the
+      // app because app.main() uses the real AudioDownloadVM
+      // and we don't want to make the main.dart file dependent
+      // of a mock class. So we have to start the app by hand.
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+
+      WarningMessageVM warningMessageVM = WarningMessageVM();
+      MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+      );
+
+      const String invalidYoutubePlaylistTitle = 'Johnny Hallyday, songs';
+
+      mockAudioDownloadVM.youtubePlaylistTitle = invalidYoutubePlaylistTitle;
+
+      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+      );
+
+      // using the mockAudioDownloadVM to later redownload not
+      // playable files after having restored the playlists, comments
+      // and settings from the zip file.
+      PlaylistListVM playlistListVM = PlaylistListVM(
+        warningMessageVM: warningMessageVM,
+        audioDownloadVM: mockAudioDownloadVM,
+        commentVM: CommentVM(),
+        settingsDataService: settingsDataService,
+      );
+
+      // calling getUpToDateSelectablePlaylists() loads all the
+      // playlist json files from the app dir and so enables
+      // playlistListVM to know which playlists are
+      // selected and which are not
+      playlistListVM.getUpToDateSelectablePlaylists();
+
+      AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+        settingsDataService: settingsDataService,
+        playlistListVM: playlistListVM,
+        commentVM: CommentVM(),
+      );
+
+      DateFormatVM dateFormatVM = DateFormatVM(
+        settingsDataService: settingsDataService,
+      );
+
+      await IntegrationTestUtil.launchExpandablePlaylistListView(
+        tester: tester,
+        audioDownloadVM: audioDownloadVM,
+        settingsDataService: settingsDataService,
+        playlistListVM: playlistListVM,
+        warningMessageVM: warningMessageVM,
+        audioPlayerVM: audioPlayerVM,
+        dateFormatVM: dateFormatVM,
+      );
+
+      // Tap the 'Toggle List' button to display the playlist list. If the list
+      // is not opened, checking that a ListTile with the title of
+      // the playlist was added to the list will fail
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // The playlist list and audio list should exist now but be
+      // empty (no ListTile widgets)
+      expect(find.byType(ListView), findsNWidgets(2));
+      expect(find.byType(ListTile), findsNothing);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub

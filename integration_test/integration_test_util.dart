@@ -1,22 +1,33 @@
 import 'dart:io';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:path/path.dart' as path;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:yaml/yaml.dart';
 
 import 'package:audiolearn/models/audio.dart';
 import 'package:audiolearn/models/playlist.dart';
 import 'package:audiolearn/services/json_data_service.dart';
 import 'package:audiolearn/utils/date_time_util.dart';
+import 'package:audiolearn/viewmodels/audio_download_vm.dart';
+import 'package:audiolearn/viewmodels/audio_player_vm.dart';
+import 'package:audiolearn/viewmodels/comment_vm.dart';
+import 'package:audiolearn/viewmodels/date_format_vm.dart';
+import 'package:audiolearn/viewmodels/language_provider_vm.dart';
+import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
+import 'package:audiolearn/viewmodels/theme_provider_vm.dart';
+import 'package:audiolearn/viewmodels/warning_message_vm.dart';
+import 'package:audiolearn/views/playlist_download_view.dart';
+import 'package:audiolearn/views/screen_mixin.dart';
 import 'package:audiolearn/views/widgets/audio_playable_list_dialog.dart';
 import 'package:audiolearn/views/widgets/comment_list_add_dialog.dart';
 import 'package:audiolearn/views/widgets/warning_message_display.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:path/path.dart' as path;
-
 import 'package:audiolearn/constants.dart';
 import 'package:audiolearn/services/settings_data_service.dart';
 import 'package:audiolearn/utils/dir_util.dart';
 import 'package:audiolearn/main.dart' as app;
-import 'package:yaml/yaml.dart';
 
 class IntegrationTestUtil {
   static const Color fullyPlayedAudioTitleColor = kSliderThumbColorInDarkMode;
@@ -1486,5 +1497,64 @@ class IntegrationTestUtil {
       find.text(audioTitleWithDuration),
       findsOneWidget,
     );
+  }
+
+  static Future<void> launchExpandablePlaylistListView({
+    required tester,
+    required AudioDownloadVM audioDownloadVM,
+    required SettingsDataService settingsDataService,
+    required PlaylistListVM playlistListVM,
+    required WarningMessageVM warningMessageVM,
+    required AudioPlayerVM audioPlayerVM,
+    required DateFormatVM dateFormatVM,
+  }) async {
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => audioDownloadVM),
+          ChangeNotifierProvider(
+              create: (_) => ThemeProviderVM(
+                    appSettings: settingsDataService,
+                  )),
+          ChangeNotifierProvider(
+              create: (_) => LanguageProviderVM(
+                    settingsDataService: settingsDataService,
+                  )),
+          ChangeNotifierProvider(create: (_) => playlistListVM),
+          ChangeNotifierProvider(create: (_) => warningMessageVM),
+          ChangeNotifierProvider(create: (_) => audioPlayerVM),
+          ChangeNotifierProvider(create: (_) => dateFormatVM),
+          ChangeNotifierProvider(create: (_) => CommentVM()),
+        ],
+        child: MaterialApp(
+          // forcing dark theme
+          theme: ScreenMixin.themeDataDark,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          home: Scaffold(
+            body: PlaylistDownloadView(
+              settingsDataService: settingsDataService,
+              onPageChangedFunction: _changePage,
+              // true increase the test app width on Windows
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+  }
+
+  static void _changePage(int index) {
+    _onPageChanged(index);
+    // _pageController.animateToPage(
+    //   index,
+    //   duration: pageTransitionDuration, // Use constant
+    //   curve: pageTransitionCurve, // Use constant
+    // );
+  }
+
+  static void _onPageChanged(int index) {
+    // setState(() {
+    //   _currentIndex = index;
+    // });
   }
 }
