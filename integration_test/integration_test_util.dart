@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:audiolearn/views/my_home_page.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -1527,15 +1528,13 @@ class IntegrationTestUtil {
           ChangeNotifierProvider(create: (_) => CommentVM()),
         ],
         child: MaterialApp(
-          // forcing dark theme
-          theme: ScreenMixin.themeDataDark,
+          title: 'AudioLearn',
+          // title: AppLocalizations.of(context)!.title,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
-          home: Scaffold(
-            body: PlaylistDownloadView(
-              settingsDataService: settingsDataService,
-              onPageChangedFunction: _changePage,
-              // true increase the test app width on Windows
-            ),
+          supportedLocales: AppLocalizations.supportedLocales,
+          theme: ScreenMixin.themeDataDark,
+          home: MyHomePage(
+            settingsDataService: settingsDataService,
           ),
         ),
       ),
