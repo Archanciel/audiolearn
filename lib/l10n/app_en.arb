@@ -472,7 +472,7 @@
   "remaining": "Remaining",
   "searchInYoutubeChannelName": "Include Youtube channel",
   "searchInYoutubeChannelNameTooltip": "If set, search words or sentences are searched on Youtube channel name as well.",
-  "savePlaylistAndCommentsToZipMenu": "Save Playlists, Comments and Settings to Zip File",
+  "savePlaylistAndCommentsToZipMenu": "Save Playlists, Comments and Settings to Zip File ...",
   "savePlaylistAndCommentsToZipTooltip": "Saving the playlists and their audio comments to a zip file. The zip file will contain the playlists JSON files as well as the comments JSON files. Additionally, the application settings.json will be saved. The audio files will not be included.",
   "setYoutubeChannelMenu": "Youtube channel setting",
   "confirmYoutubeChannelModifications": "The Youtube channel was set in {numberOfModifiedDownloadedAudio} downloaded audio's and in {numberOfModifiedPlayableAudio} playable audio.",
@@ -757,7 +757,7 @@
   "appDataCouldNotBeSavedToZip": "Playlist and comment json files as well as application settings could not be saved to zip.",
   "pictured": "Pictured",
   "notPictured": "Unpictured",
-  "restorePlaylistAndCommentsFromZipMenu": "Restore Playlists, Comments and Settings from Zip File",
+  "restorePlaylistAndCommentsFromZipMenu": "Restore Playlists, Comments and Settings from Zip File ...",
   "restorePlaylistAndCommentsFromZipTooltip": "Restoring the playlists, their audio comments and the application settings from a saved zip file. The zip file contains the playlists, the comments as well as the settings JSON files. The audio files are not included in it.",
   "restoredAppDataFromZip": "Restored {playlistsNumber} playlist and {commentsNumber} comment json files as well as the application settings from \"{filePathName}\".",
   "@restoredAppDataFromZip": {
