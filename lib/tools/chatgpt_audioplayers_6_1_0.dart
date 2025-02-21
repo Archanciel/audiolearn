@@ -261,7 +261,7 @@ class PlayerControls extends StatelessWidget {
               onPressed: () async {
                 String playlistChristDownloadRootPath = '$kPlaylistDownloadRootPath${path.separator}Jésus-Christ';
                 await audioExtractorVM.extractMp3FilePartToMp3File(
-                  sourceMp3FilePathName: "${playlistChristDownloadRootPath}${path.separator}250124-193109-Cela Changera Ta Foi  - Comment AIMER DIEU par-dessus TOUT, Selon JÉSUS ! 25-01-15.mp3",
+                  sourceMp3FilePathName: "$playlistChristDownloadRootPath${path.separator}250124-193109-Cela Changera Ta Foi  - Comment AIMER DIEU par-dessus TOUT, Selon JÉSUS ! 25-01-15.mp3",
                   extractMp3FilePathName:
                       '$playlistChristDownloadRootPath${path.separator}output.mp3',
                   startTime: 30.0,
