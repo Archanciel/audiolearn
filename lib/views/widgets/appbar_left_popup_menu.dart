@@ -649,7 +649,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
             ),
           ),
           PopupMenuItem<AppBarPopupMenu>(
-            key: const Key('appBarMenuRestorePlaylistsAndCommentsFromZip'),
+            key: const Key('appBarMenuRestorePlaylistsCommentsAndSettingsFromZip'),
             value: AppBarPopupMenu.restorePlaylistAndCommentsFromZip,
             child: Tooltip(
               message: AppLocalizations.of(context)!

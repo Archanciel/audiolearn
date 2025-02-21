@@ -10436,10 +10436,14 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindows,
       );
 
-      // Copy the test initial audio data to the app dir
-      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-        sourceRootPath: "$kDownloadAppTestSavedDataDir${path.separator}restore_zip_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+      const String restorableZipFileName =
+          'audioLearn_audio_comment_zip_test_2025-02-15_14_40.zip';
+
+      // Copy the int3gration test data to the app dir
+      DirUtil.copyFileToDirectorySync(
+        sourceFilePathName:
+            "$kDownloadAppTestSavedDataDir${path.separator}restore_zip_test${path.separator}restorableZipFileName",
+        targetDirectoryPath: kPlaylistDownloadRootPathWindows,
       );
 
       // Since we have to use a mock AudioDownloadVM to add the
@@ -10461,23 +10465,20 @@ void main() {
               "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
 
       WarningMessageVM warningMessageVM = WarningMessageVM();
+
+      // The mockAudioDownloadVM will be later used to simulate
+      // redownloading not playable files after having restored
+      // the playlists, comments and settings from the zip file.
       MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
       );
-
-      const String invalidYoutubePlaylistTitle = 'Johnny Hallyday, songs';
-
-      mockAudioDownloadVM.youtubePlaylistTitle = invalidYoutubePlaylistTitle;
 
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
       );
 
-      // using the mockAudioDownloadVM to later redownload not
-      // playable files after having restored the playlists, comments
-      // and settings from the zip file.
       PlaylistListVM playlistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
@@ -10510,6 +10511,27 @@ void main() {
         audioPlayerVM: audioPlayerVM,
         dateFormatVM: dateFormatVM,
       );
+
+      // Replace the platform instance with your mock
+      MockFilePicker mockFilePicker = MockFilePicker();
+      FilePicker.platform = mockFilePicker;
+
+      mockFilePicker.setSelectedFiles([
+        PlatformFile(
+            name: restorableZipFileName,
+            path: '$kApplicationPathWindows',
+            size: 12828),
+      ]);
+
+      // Tap the appbar leading popup menu button
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+      await tester.pumpAndSettle();
+
+      // Now type on the 'Restore Playlists, Comments and Settings
+      // from Zip File ... menu
+      await tester.tap(find.byKey(
+          const Key('appBarMenuRestorePlaylistsCommentsAndSettingsFromZip')));
+      await tester.pumpAndSettle();
 
       // Tap the 'Toggle List' button to display the playlist list. If the list
       // is not opened, checking that a ListTile with the title of
