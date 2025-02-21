@@ -130,7 +130,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await _launchExpandablePlaylistListView(
+      await IntegrationTestUtil.launchExpandablePlaylistListView(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -395,7 +395,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await _launchExpandablePlaylistListView(
+      await IntegrationTestUtil.launchExpandablePlaylistListView(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -546,7 +546,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await _launchExpandablePlaylistListView(
+      await IntegrationTestUtil.launchExpandablePlaylistListView(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -803,7 +803,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await _launchExpandablePlaylistListView(
+      await IntegrationTestUtil.launchExpandablePlaylistListView(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -1579,7 +1579,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await _launchExpandablePlaylistListView(
+      await IntegrationTestUtil.launchExpandablePlaylistListView(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -1811,7 +1811,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await _launchExpandablePlaylistListView(
+      await IntegrationTestUtil.launchExpandablePlaylistListView(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -1917,7 +1917,7 @@ void main() {
       // now close the app and then restart it in order to load the
       // copied youtube playlist
 
-      await _launchExpandablePlaylistListView(
+      await IntegrationTestUtil.launchExpandablePlaylistListView(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -2001,7 +2001,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await _launchExpandablePlaylistListView(
+      await IntegrationTestUtil.launchExpandablePlaylistListView(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -2151,7 +2151,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await _launchExpandablePlaylistListView(
+      await IntegrationTestUtil.launchExpandablePlaylistListView(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -2297,7 +2297,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await _launchExpandablePlaylistListView(
+      await IntegrationTestUtil.launchExpandablePlaylistListView(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -2443,7 +2443,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await _launchExpandablePlaylistListView(
+      await IntegrationTestUtil.launchExpandablePlaylistListView(
         tester: tester,
         audioDownloadVM: mockAudioDownloadVM,
         settingsDataService: settingsDataService,
@@ -2930,7 +2930,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await _launchExpandablePlaylistListView(
+      await IntegrationTestUtil.launchExpandablePlaylistListView(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -3112,7 +3112,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await _launchExpandablePlaylistListView(
+      await IntegrationTestUtil.launchExpandablePlaylistListView(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -18134,50 +18134,6 @@ Future<Finder> _ensurePlaylistCheckboxIsNotChecked({
   return youtubePlaylistListTileCheckboxWidgetFinder;
 }
 
-Future<void> _launchExpandablePlaylistListView({
-  required tester,
-  required AudioDownloadVM audioDownloadVM,
-  required SettingsDataService settingsDataService,
-  required PlaylistListVM playlistListVM,
-  required WarningMessageVM warningMessageVM,
-  required AudioPlayerVM audioPlayerVM,
-  required DateFormatVM dateFormatVM,
-}) async {
-  await tester.pumpWidget(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => audioDownloadVM),
-        ChangeNotifierProvider(
-            create: (_) => ThemeProviderVM(
-                  appSettings: settingsDataService,
-                )),
-        ChangeNotifierProvider(
-            create: (_) => LanguageProviderVM(
-                  settingsDataService: settingsDataService,
-                )),
-        ChangeNotifierProvider(create: (_) => playlistListVM),
-        ChangeNotifierProvider(create: (_) => warningMessageVM),
-        ChangeNotifierProvider(create: (_) => audioPlayerVM),
-        ChangeNotifierProvider(create: (_) => dateFormatVM),
-        ChangeNotifierProvider(create: (_) => CommentVM()),
-      ],
-      child: MaterialApp(
-        // forcing dark theme
-        theme: ScreenMixin.themeDataDark,
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        home: Scaffold(
-          body: PlaylistDownloadView(
-            settingsDataService: settingsDataService,
-            onPageChangedFunction: changePage,
-            // true increase the test app width on Windows
-          ),
-        ),
-      ),
-    ),
-  );
-  await tester.pumpAndSettle();
-}
-
 Future<void> _findThenSelectAndTestListTileCheckbox({
   required WidgetTester tester,
   required String itemTextStr,
@@ -18210,21 +18166,6 @@ Future<void> _findThenSelectAndTestListTileCheckbox({
   );
 
   expect(tester.widget<Checkbox>(checkboxFinder).value, true);
-}
-
-void changePage(int index) {
-  onPageChanged(index);
-  // _pageController.animateToPage(
-  //   index,
-  //   duration: pageTransitionDuration, // Use constant
-  //   curve: pageTransitionCurve, // Use constant
-  // );
-}
-
-void onPageChanged(int index) {
-  // setState(() {
-  //   _currentIndex = index;
-  // });
 }
 
 /// Verifies the elements of the audio info dialog.
