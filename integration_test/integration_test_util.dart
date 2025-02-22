@@ -137,18 +137,18 @@ class IntegrationTestUtil {
     // and tap on it
 
     // First, find the Youtube playlist ListTile Text widget
-    final Finder youtubePlaylistListTileTextWidgetFinder =
+    final Finder playlistListTileTextWidgetFinder =
         find.text(playlistTitle);
 
     // Then obtain the Youtube source playlist ListTile widget
     // enclosing the Text widget by finding its ancestor
-    final Finder youtubePlaylistListTileWidgetFinder = find.ancestor(
-      of: youtubePlaylistListTileTextWidgetFinder,
+    final Finder playlistListTileWidgetFinder = find.ancestor(
+      of: playlistListTileTextWidgetFinder,
       matching: find.byType(ListTile),
     );
 
     final Finder firstPlaylistListTileLeadingMenuIconButton = find.descendant(
-      of: youtubePlaylistListTileWidgetFinder,
+      of: playlistListTileWidgetFinder,
       matching: find.byIcon(Icons.menu),
     );
 
@@ -156,14 +156,16 @@ class IntegrationTestUtil {
     await tester.tap(firstPlaylistListTileLeadingMenuIconButton);
     await tester.pumpAndSettle();
 
-    // Now find the delete playlist popup menu item and tap on it
+    // Now find the filtered Audio's Action playlist popup menu
+    // item and tap on it
     final Finder popupFilteredAudioActionPlaylistMenuItem =
         find.byKey(const Key("popup_menu_filtered_audio_actions"));
 
     await tester.tap(popupFilteredAudioActionPlaylistMenuItem);
     await tester.pumpAndSettle();
 
-    // Now find the playlist submenu item and tap on it
+    // Now find the filtered Audio's Action playlist submenu
+    // item and tap on it
     final Finder popupPlaylistSubMenuItem =
         find.byKey(Key(playlistSubMenuKeyStr));
 
