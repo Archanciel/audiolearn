@@ -2647,9 +2647,13 @@ class PlaylistListVM extends ChangeNotifier {
   Future<String> restorePlaylistsCommentsAndSettingsJsonFilesFromZip({
     required String zipFilePathName,
   }) async {
+    bool isAnExistingPlaylistSelected = getSelectedPlaylists().isNotEmpty;
+
     // Restoring the playlists, comments and settings json files
-    // from the zip file.
-    List<int> restoredFilesNumberLst = await _restoreFromZip(
+    // from the zip file. The dynamic list restoredInfoLst list
+    // contains the list of restored playlist titles and the number
+    // of restored comments.
+    List<dynamic> restoredInfoLst = await _restoreFromZip(
       zipFilePathName: zipFilePathName,
     );
 
@@ -2660,11 +2664,22 @@ class PlaylistListVM extends ChangeNotifier {
       restoringPlaylistsCommentsAndSettingsJsonFilesFromZip: true,
     );
 
+    if (isAnExistingPlaylistSelected) {
+      List<String> restoredPlaylistTitlesLst = restoredInfoLst[0];
+      List<Playlist> selectedPlaylists = getSelectedPlaylists();
+
+      for (Playlist playlist in selectedPlaylists) {
+        if (restoredPlaylistTitlesLst.contains(playlist.title)) {
+          playlist.isSelected = false;
+        }
+      }
+    }
+
     // Display a confirmation message to the user.
     _warningMessageVM.confirmRestorationFromZip(
       zipFilePathName: zipFilePathName,
-      playlistsNumber: restoredFilesNumberLst[0],
-      commentsNumber: restoredFilesNumberLst[1],
+      playlistsNumber: restoredInfoLst[0].length,
+      commentsNumber: restoredInfoLst[1],
     );
 
     // Return the zip file path name used for restoration.
@@ -2735,11 +2750,14 @@ class PlaylistListVM extends ChangeNotifier {
   /// Method called when the user clicks on the 'Restore Playlist and Comments from
   /// Zip File' menu. It extracts the playlist json files as well as the comment
   /// json files of the playlists and writes them to the playlists root path.
-  Future<List<int>> _restoreFromZip({
+  ///
+  /// The returned list contains the list of restored playlist titles and the number
+  /// of restored comments.
+  Future<List<dynamic>> _restoreFromZip({
     required String zipFilePathName,
   }) async {
-    List<int> restoredFilesNumberLst = [];
-    int restoredPlaylistsNumber = 0;
+    List<dynamic> restoredInfoLst = [];
+    List<String> restoredPlaylistTitlesLst = [];
     int restoredCommentsNumber = 0;
 
     // Check if the provided zip file exists.
@@ -2748,10 +2766,10 @@ class PlaylistListVM extends ChangeNotifier {
     if (!zipFile.existsSync()) {
       // Can not happen since the zip file is selected by the user
       // with the file picker and so the file must exist.
-      restoredFilesNumberLst.add(restoredPlaylistsNumber);
-      restoredFilesNumberLst.add(restoredCommentsNumber);
+      restoredInfoLst.add(restoredPlaylistTitlesLst);
+      restoredInfoLst.add(restoredCommentsNumber);
 
-      return restoredFilesNumberLst;
+      return restoredInfoLst;
     }
 
     // Retrieve the application path.
@@ -2802,15 +2820,17 @@ class PlaylistListVM extends ChangeNotifier {
         if (destinationPathFileName.contains(kCommentDirName)) {
           restoredCommentsNumber++;
         } else {
-          restoredPlaylistsNumber++;
+          restoredPlaylistTitlesLst.add(
+            path.basenameWithoutExtension(destinationPathFileName),
+          );
         }
       }
     }
 
-    restoredFilesNumberLst.add(restoredPlaylistsNumber);
-    restoredFilesNumberLst.add(restoredCommentsNumber);
+    restoredInfoLst.add(restoredPlaylistTitlesLst);
+    restoredInfoLst.add(restoredCommentsNumber);
 
-    return restoredFilesNumberLst;
+    return restoredInfoLst;
   }
 
   /// Method called when the user clicks on the 'Rewind audio to start' playlist

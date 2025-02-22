@@ -1509,6 +1509,7 @@ class IntegrationTestUtil {
     required WarningMessageVM warningMessageVM,
     required AudioPlayerVM audioPlayerVM,
     required DateFormatVM dateFormatVM,
+    bool isLanguageEnglish = true,
   }) async {
     await _setWindowsAppSizeAndPosition(isTest: true);
 
@@ -1534,7 +1535,9 @@ class IntegrationTestUtil {
           title: 'AudioLearn',
           // title: AppLocalizations.of(context)!.title,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
+          supportedLocales: (isLanguageEnglish)
+              ? AppLocalizations.supportedLocales.sublist(0, 1) // English only
+              : AppLocalizations.supportedLocales.sublist(1), // French only
           theme: ScreenMixin.themeDataDark,
           home: MyHomePage(
             settingsDataService: settingsDataService,
