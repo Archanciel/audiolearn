@@ -10442,7 +10442,7 @@ void main() {
       // Copy the integration test data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}restore_zip_test",
+            "$kDownloadAppTestSavedDataDir${path.separator}restore_zip_existing_playlist_selected_test",
         destinationRootPath: kPlaylistDownloadRootPathWindows,
       );
 
@@ -10538,7 +10538,7 @@ void main() {
       await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Les fichiers json de 4 playlists et de 3 commentaires ainsi que les paramètres de l'application ont été restaurés depuis \"C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio\\audioLearn_audio_comment_zip_test_2025-02-15_14_40.zip\".",
+            'Restored 4 playlist and 3 comment json files as well as the application settings from "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio\\audioLearn_audio_comment_zip_test_2025-02-15_14_40.zip".',
         isWarningConfirming: true,
         warningTitle: 'CONFIRMATION',
       );
@@ -10568,9 +10568,9 @@ void main() {
       );
 
       List<String> audioSubTitles = [
-        "0:00:58.7. 359 Ko à 89 Ko/sec le 13/02/2025 à 10:43.",
-        "0:22:57.8. 8.72 Mo à 2.14 Mo/sec le 13/02/2025 à 08:30.",
-        "0:24:21.8. 8.92 Mo à 1.62 Mo/sec le 13/02/2025 à 08:30.",
+        "0:00:58.7. 359 KB at 89 KB/sec on 13/02/2025 at 10:43.",
+        "0:22:57.8. 8.72 MB at 2.14 MB/sec on 13/02/2025 at 08:30.",
+        "0:24:21.8. 8.92 MB at 1.62 MB/sec on 13/02/2025 at 08:30.",
       ];
 
       IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
