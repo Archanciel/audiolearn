@@ -2938,6 +2938,7 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioPlayerVM: audioPlayerVM,
         dateFormatVM: dateFormatVM,
+        forcedLocale: const Locale('en'),
       );
 
       const String invalidSingleVideoUrl = 'invalid';
@@ -3120,6 +3121,7 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioPlayerVM: audioPlayerVM,
         dateFormatVM: dateFormatVM,
+        forcedLocale: const Locale('en'),
       );
 
       const String youtubeAudioSourceAndTargetPlaylistTitle =

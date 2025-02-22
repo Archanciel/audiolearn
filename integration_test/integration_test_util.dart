@@ -1501,6 +1501,9 @@ class IntegrationTestUtil {
     );
   }
 
+  /// Passing a [forcedLocale] will force the locale to be used in the test. If
+  /// [forcedLocale] is null, the language defined in settings.json will be used.
+  /// [forcedLocale] can be const Locale('n') or const Locale('fr').
   static Future<void> launchExpandablePlaylistListView({
     required tester,
     required AudioDownloadVM audioDownloadVM,
@@ -1509,7 +1512,7 @@ class IntegrationTestUtil {
     required WarningMessageVM warningMessageVM,
     required AudioPlayerVM audioPlayerVM,
     required DateFormatVM dateFormatVM,
-    bool isLanguageEnglish = true,
+    Locale? forcedLocale,
   }) async {
     await _setWindowsAppSizeAndPosition(isTest: true);
 
@@ -1531,17 +1534,19 @@ class IntegrationTestUtil {
           ChangeNotifierProvider(create: (_) => dateFormatVM),
           ChangeNotifierProvider(create: (_) => CommentVM()),
         ],
-        child: MaterialApp(
-          title: 'AudioLearn',
-          // title: AppLocalizations.of(context)!.title,
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: (isLanguageEnglish)
-              ? AppLocalizations.supportedLocales.sublist(0, 1) // English only
-              : AppLocalizations.supportedLocales.sublist(1), // French only
-          theme: ScreenMixin.themeDataDark,
-          home: MyHomePage(
-            settingsDataService: settingsDataService,
-          ),
+        child: Consumer2<ThemeProviderVM, LanguageProviderVM>(
+          builder: (context, themeProvider, languageProvider, child) {
+            return MaterialApp(
+              title: 'AudioLearn',
+              locale: (forcedLocale == null) ? languageProvider.currentLocale : forcedLocale,
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales, // French only
+              theme: ScreenMixin.themeDataDark,
+              home: MyHomePage(
+                settingsDataService: settingsDataService,
+              ),
+            );
+          },
         ),
       ),
     );
