@@ -459,7 +459,6 @@ class DirUtil {
     File sourceFile = File(fileToRenameFilePathName);
 
     if (!sourceFile.existsSync()) {
-      print('The file to rename does not exist.');
       return false;
     }
 
@@ -471,7 +470,6 @@ class DirUtil {
 
     // Check if a file with the new name already exists
     if (File(newFilePathName).existsSync()) {
-      print('A file with the new name already exists.');
       return false;
     }
 

@@ -967,7 +967,7 @@
   "notPictured": "Sans ph.",
   "restorePlaylistAndCommentsFromZipMenu": "Restaurer les playlists, commentaires et settings depuis un fichier zip ...",
   "restorePlaylistAndCommentsFromZipTooltip": "Restaure les playlists, les commentaires ainsi que les paramètres de l'application à partir d'un fichier zip préalablement sauvé. Seuls les fichiers json sont restaurés. Les fichiers audio n'étant pas inclus dans le fichier zip, ils ne sont pas restaurés.",
-  "restoredAppDataFromZip": "Fichiers json de {playlistsNumber} playlists et de {commentsNumber} commentaires ainsi que les paramètres de l'application restaurés depuis \"{filePathName}\".",
+  "restoredAppDataFromZip": "Les fichiers json de {playlistsNumber} playlists et de {commentsNumber} commentaires ainsi que les paramètres de l'application ont été restaurés depuis \"{filePathName}\".",
   "@restoredAppDataFromZip": {
     "description": "Warning message indicating that the default SF parms were not applied to move audio",
     "placeholders": {

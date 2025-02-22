@@ -10439,11 +10439,11 @@ void main() {
       const String restorableZipFileName =
           'audioLearn_audio_comment_zip_test_2025-02-15_14_40.zip';
 
-      // Copy the int3gration test data to the app dir
-      DirUtil.copyFileToDirectorySync(
-        sourceFilePathName:
-            "$kDownloadAppTestSavedDataDir${path.separator}restore_zip_test${path.separator}restorableZipFileName",
-        targetDirectoryPath: kPlaylistDownloadRootPathWindows,
+      // Copy the integration test data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}restore_zip_test",
+        destinationRootPath: kPlaylistDownloadRootPathWindows,
       );
 
       // Since we have to use a mock AudioDownloadVM to add the
@@ -10519,7 +10519,8 @@ void main() {
       mockFilePicker.setSelectedFiles([
         PlatformFile(
             name: restorableZipFileName,
-            path: '$kApplicationPathWindows',
+            path:
+                '$kApplicationPathWindows${path.separator}$restorableZipFileName',
             size: 12828),
       ]);
 
@@ -10533,16 +10534,62 @@ void main() {
           const Key('appBarMenuRestorePlaylistsCommentsAndSettingsFromZip')));
       await tester.pumpAndSettle();
 
+      // Verify the displayed warning confirmation dialog
+      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Les fichiers json de 4 playlists et de 3 commentaires ainsi que les paramètres de l'application ont été restaurés depuis \"C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio\\audioLearn_audio_comment_zip_test_2025-02-15_14_40.zip\".",
+        isWarningConfirming: true,
+        warningTitle: 'CONFIRMATION',
+      );
+
+      // Verifying the existing and the restored playlists
+      // list as well as the selected playlist displayed audio
+      // titles and subtitles.
+
+      List<String> playlistsTitles = [
+        "A restaurer",
+        "local",
+        "Empty",
+        "local_comment",
+        "S8 audio",
+      ];
+
+      List<String> audioTitles = [
+        "Le 21 juillet 1913 _ Prières et méditations, La Mère",
+        "Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...)",
+        "Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage!",
+      ];
+
+      IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
+        tester: tester,
+        playlistTitlesOrderedLst: playlistsTitles,
+        audioTitlesOrderedLst: audioTitles,
+      );
+
+      List<String> audioSubTitles = [
+        "0:00:58.7. 359 Ko à 89 Ko/sec le 13/02/2025 à 10:43.",
+        "0:22:57.8. 8.72 Mo à 2.14 Mo/sec le 13/02/2025 à 08:30.",
+        "0:24:21.8. 8.92 Mo à 1.62 Mo/sec le 13/02/2025 à 08:30.",
+      ];
+
+      IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
+        tester: tester,
+        audioSubTitlesOrderLst: audioSubTitles,
+        firstAudioListTileIndex: 5,
+      );
+
+      // Verify the selected playlist
+      IntegrationTestUtil.verifyPlaylistIsSelected(
+        tester: tester,
+        playlistTitle: 'A restaurer',
+      );
+
       // Tap the 'Toggle List' button to display the playlist list. If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
-
-      // The playlist list and audio list should exist now but be
-      // empty (no ListTile widgets)
-      expect(find.byType(ListView), findsNWidgets(2));
-      expect(find.byType(ListTile), findsNothing);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
