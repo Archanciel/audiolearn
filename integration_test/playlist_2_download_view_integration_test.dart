@@ -10429,7 +10429,9 @@ void main() {
     });
   });
   group('Restore playlist, comments and settings from zip file menu test', () {
-    testWidgets('Restore Windows zip to Windows', (tester) async {
+    testWidgets(
+        '''Sel playlist. Restore Windows zip to Windows application in which
+           an existing playlist is selected.''', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(

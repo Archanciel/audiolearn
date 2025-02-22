@@ -20,7 +20,6 @@ import 'package:audiolearn/viewmodels/language_provider_vm.dart';
 import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
 import 'package:audiolearn/viewmodels/theme_provider_vm.dart';
 import 'package:audiolearn/viewmodels/warning_message_vm.dart';
-import 'package:audiolearn/views/playlist_download_view.dart';
 import 'package:audiolearn/views/screen_mixin.dart';
 import 'package:audiolearn/views/widgets/audio_playable_list_dialog.dart';
 import 'package:audiolearn/views/widgets/comment_list_add_dialog.dart';
@@ -1580,20 +1579,5 @@ class IntegrationTestUtil {
         setWindowFrame(windowRect);
       });
     }
-  }
-
-  static void _changePage(int index) {
-    _onPageChanged(index);
-    // _pageController.animateToPage(
-    //   index,
-    //   duration: pageTransitionDuration, // Use constant
-    //   curve: pageTransitionCurve, // Use constant
-    // );
-  }
-
-  static void _onPageChanged(int index) {
-    // setState(() {
-    //   _currentIndex = index;
-    // });
   }
 }
