@@ -57,15 +57,9 @@ class AudioDownloadVM extends ChangeNotifier {
 
   double _downloadProgress = 0.0;
   double get downloadProgress => _downloadProgress;
-  // setter used by MockAudioDownloadVM in integration test only !
-  set downloadProgress(double downloadProgress) =>
-      _downloadProgress = downloadProgress;
 
   int _lastSecondDownloadSpeed = 0;
   int get lastSecondDownloadSpeed => _lastSecondDownloadSpeed;
-  // setter used by MockAudioDownloadVM in integration test only !
-  set lastSecondDownloadSpeed(int lastSecondDownloadSpeed) =>
-      _lastSecondDownloadSpeed = lastSecondDownloadSpeed;
 
   late Audio _currentDownloadingAudio;
   Audio get currentDownloadingAudio => _currentDownloadingAudio;

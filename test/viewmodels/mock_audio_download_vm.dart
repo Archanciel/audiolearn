@@ -390,34 +390,37 @@ class MockAudioDownloadVM extends AudioDownloadVM {
     }
 
     Audio audio = currentDownloadingAudio;
-    int audioFileSize = audio.audioFileSize;
+    String audioPlaylistDownloadPath = audio.enclosingPlaylist!.downloadPath;
+    List<String> playlistRootPathElementsLst;
+    String appPlaylistDirName;
 
-    int downloadSpeedPerSecond = audioFileSize ~/ 5;
-
-    for (int i = 0; i < audioFileSize; i += downloadSpeedPerSecond) {
-      downloadProgress = i * downloadSpeedPerSecond as double;
-      lastSecondDownloadSpeed = downloadSpeedPerSecond;
-
-      // Simulating re-download process
-      await Future.delayed(Duration(milliseconds: 1000));
-
-      notifyListeners();
+    if (audioPlaylistDownloadPath.contains('/')) {
+      playlistRootPathElementsLst = audioPlaylistDownloadPath.split('/');
+      // This name may have been changed by the user on Android.
+      appPlaylistDirName =
+          playlistRootPathElementsLst[playlistRootPathElementsLst.length - 2];
+    } else {
+      playlistRootPathElementsLst = audioPlaylistDownloadPath.split('\\');
+      appPlaylistDirName =
+          playlistRootPathElementsLst[playlistRootPathElementsLst.length - 1];
     }
 
-    List<String> playlistRootPathElementsLst =
-        audio.enclosingPlaylist!.downloadPath.split('/');
-
-    // This name may have been changed by the user on Android
-    // using the 'Application Settings ...' menu.
-    String androidAppPlaylistDirName =
-        playlistRootPathElementsLst[playlistRootPathElementsLst.length - 2];
-
     String playlistRootPath =
-        "$kApplicationPathWindows${path.separator}$androidAppPlaylistDirName";
+        "$kApplicationPathWindows${path.separator}$appPlaylistDirName";
 
+    final String mockSourceFileDir = "$kApplicationPathWindows${path.separator}downloadedMockFileDir";
+    List<String> audioFileNamesContainedInMockSourceFileDirLst = DirUtil.listFileNamesInDir(
+      directoryPath: mockSourceFileDir,
+      fileExtension: 'mp3',
+    );
+    String correspondingAudioFileName = audioFileNamesContainedInMockSourceFileDirLst.firstWhere(
+      (audioFileName) => audioFileName.contains(audio.validVideoTitle),
+      orElse: () => '',
+    );
+    String audioFilePathName =
+        "$mockSourceFileDir${path.separator}$correspondingAudioFileName";
     DirUtil.copyFileToDirectorySync(
-      sourceFilePathName:
-          "$kApplicationPath${path.separator}downloadedMockFileDir${path.separator}${audio.audioFileName}",
+      sourceFilePathName: audioFilePathName,
       targetDirectoryPath: playlistRootPath,
     );
 
