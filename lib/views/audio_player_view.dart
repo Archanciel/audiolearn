@@ -748,18 +748,6 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                 barrierDismissible:
                     false, // This line prevents the dialog from closing when tapping outside
                 builder: (BuildContext context) {
-                  // List content:
-                  //   [
-                  //     sort and filter parameters name applied to the
-                  //     playlist download view or to the audio player view,
-                  //     sort and filter parameters applied to the playlist
-                  //      download view or to the audio player view,
-                  // ]
-                  List<dynamic> selectedPlaylistAudioSortFilterParmsLstForView =
-                      playlistListVMlistenFalse
-                          .getSelectedPlaylistAudioSortFilterParmsForView(
-                    AudioLearnAppViewType.audioPlayerView,
-                  );
                   return AudioSortFilterDialog(
                     selectedPlaylist: playlistListVMlistenFalse
                         .uniqueSelectedPlaylist!, // selected playlist
@@ -768,15 +756,9 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                       audioLearnAppViewType:
                           AudioLearnAppViewType.audioPlayerView,
                     ),
-                    audioSortFilterParametersName:
-                        selectedPlaylistAudioSortFilterParmsLstForView[0],
+                    audioSortFilterParametersName: '',
                     audioSortFilterParameters: AudioSortFilterParameters
                         .createDefaultAudioSortFilterParameters(),
-                    audioSortPlaylistFilterParameters:
-                        selectedPlaylistAudioSortFilterParmsLstForView[1]
-                            .copy(), // copy() is necessary to avoid modifying the
-                    // original if saving the AudioSortFilterParameters to
-                    // a new name
                     audioLearnAppViewType:
                         AudioLearnAppViewType.audioPlayerView,
                     focusNode: focusNode,
