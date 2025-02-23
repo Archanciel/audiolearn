@@ -10587,6 +10587,62 @@ void main() {
         playlistTitle: 'A restaurer',
       );
 
+      const String playlistToRedownloadTitle = 'S8 audio';
+
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: playlistToRedownloadTitle,
+      );
+
+      // Now, select a filter parms using the drop down button.
+
+      // First, tap the 'Toggle List' button to hide the playlist list.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Now tap on the current dropdown button item to open the dropdown
+      // button items list
+
+      final Finder dropDownButtonFinder =
+          find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+      final Finder dropDownButtonTextFinder = find.descendant(
+        of: dropDownButtonFinder,
+        matching: find.byType(Text),
+      );
+
+      await tester.tap(dropDownButtonTextFinder);
+      await tester.pumpAndSettle();
+
+      // And find the 'commented_7MB' sort/filter item
+      final Finder titleAscDropDownTextFinder = find.text('commented_7MB').last;
+      await tester.tap(titleAscDropDownTextFinder);
+      await tester.pumpAndSettle();
+
+      // Re-tap the 'Toggle List' button to display the playlist list.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Execute the redownload filtered audio menu by clicking first on
+      // the 'Filtered Audio Actions ...' playlist menu item and then
+      // on the 'Redownload Filtered Audio ...' sub-menu item.
+      await IntegrationTestUtil.typeOnPlaylistSubMenuItem(
+        tester: tester,
+        playlistTitle: playlistToRedownloadTitle,
+        playlistSubMenuKeyStr: 'popup_menu_redownload_filtered_audio',
+      );
+
+      // Verifying and closing the confirm dialog
+
+      await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
+        tester: tester,
+        confirmDialogTitleOne:
+            "Delete audio's filtered by \"\" parms from playlist \"\"",
+        confirmDialogMessage:
+            "Audio's to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.",
+        confirmOrCancelAction: true, // Confirm button is tapped
+      );
+
       // Tap the 'Toggle List' button to display the playlist list. If the list
       // is not opened, checking that a ListTile with the title of
       // the playlist was added to the list will fail
