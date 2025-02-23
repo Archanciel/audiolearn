@@ -267,7 +267,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
   /// Builds the second line of the audio player view. This line contains
   /// the playlist toggle button, the audio volume buttons, the audio
   /// speed button, the comments button and the audio popup menu button.
-  /// 
+  ///
   /// If a picture is displayed instead of the play button, then a play
   /// or pause button is included in the second line.
   Widget _buildSecondLine({
@@ -347,7 +347,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                         audioPlayerVMlistenFalse.currentAudioPlayPauseNotifier,
                     builder: (context, isPaused, child) {
                       return IconButton(
-                        key: const Key('picture_displayed_play_pause_button_key'),
+                        key: const Key(
+                            'picture_displayed_play_pause_button_key'),
                         iconSize: _audioIconSizeMedium,
                         onPressed: () async {
                           audioPlayerVMlistenFalse.isPlaying
@@ -747,18 +748,6 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                 barrierDismissible:
                     false, // This line prevents the dialog from closing when tapping outside
                 builder: (BuildContext context) {
-                  // List content:
-                  //   [
-                  //     sort and filter parameters name applied to the
-                  //     playlist download view or to the audio player view,
-                  //     sort and filter parameters applied to the playlist
-                  //      download view or to the audio player view,
-                  // ]
-                  List<dynamic> selectedPlaylistAudioSortFilterParmsLstForView =
-                      playlistListVMlistenFalse
-                          .getSelectedPlaylistAudioSortFilterParmsForView(
-                    AudioLearnAppViewType.audioPlayerView,
-                  );
                   return AudioSortFilterDialog(
                     selectedPlaylist: playlistListVMlistenFalse
                         .uniqueSelectedPlaylist!, // selected playlist
@@ -767,15 +756,9 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                       audioLearnAppViewType:
                           AudioLearnAppViewType.audioPlayerView,
                     ),
-                    audioSortFilterParametersName:
-                        selectedPlaylistAudioSortFilterParmsLstForView[0],
+                    audioSortFilterParametersName: '',
                     audioSortFilterParameters: AudioSortFilterParameters
                         .createDefaultAudioSortFilterParameters(),
-                    audioSortPlaylistFilterParameters:
-                        selectedPlaylistAudioSortFilterParmsLstForView[1]
-                            .copy(), // copy() is necessary to avoid modifying the
-                    // original if saving the AudioSortFilterParameters to
-                    // a new name
                     audioLearnAppViewType:
                         AudioLearnAppViewType.audioPlayerView,
                     focusNode: focusNode,

@@ -38,7 +38,6 @@ class AudioSortFilterDialog extends StatefulWidget {
   final List<Audio> selectedPlaylistAudioLst;
   final String audioSortFilterParametersName;
   final AudioSortFilterParameters audioSortFilterParameters;
-  final AudioSortFilterParameters audioSortPlaylistFilterParameters;
   final AudioLearnAppViewType audioLearnAppViewType;
   final FocusNode focusNode;
   final WarningMessageVM warningMessageVM;
@@ -50,7 +49,6 @@ class AudioSortFilterDialog extends StatefulWidget {
     required this.selectedPlaylistAudioLst,
     this.audioSortFilterParametersName = '',
     required this.audioSortFilterParameters,
-    required this.audioSortPlaylistFilterParameters,
     required this.audioLearnAppViewType,
     required this.focusNode,
     required this.warningMessageVM,
@@ -219,9 +217,17 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     // initialized
     _sortFilterSaveAsUniqueName = widget.audioSortFilterParametersName;
 
-    // Set the initial sort and filter fields
-    AudioSortFilterParameters audioSortDefaultFilterParameters =
-        widget.audioSortPlaylistFilterParameters;
+    _sortFilterSaveAsUniqueNameController.text =
+        widget.audioSortFilterParametersName;
+
+    AudioSortFilterParameters audioSortDefaultFilterParameters;
+
+    if (widget.audioSortFilterParametersName.isNotEmpty) {
+      audioSortDefaultFilterParameters = widget.audioSortFilterParameters;
+    } else {
+      audioSortDefaultFilterParameters =
+          AudioSortFilterParameters.createDefaultAudioSortFilterParameters();
+    }
 
     _selectedSortingItemLst = [];
     _selectedSortingItemLst
