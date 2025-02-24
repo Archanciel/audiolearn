@@ -174,25 +174,25 @@ class Playlist {
 
   Playlist copy() {
     return Playlist.fullConstructor(
-      id: this.id,
-      title: this.title,
-      url: this.url,
-      playlistType: this.playlistType,
-      playlistQuality: this.playlistQuality,
-      audioPlaySpeed: this.audioPlaySpeed,
-      downloadPath: this.downloadPath,
-      isSelected: this.isSelected,
-      currentOrPastPlayableAudioIndex: this.currentOrPastPlayableAudioIndex,
+      id: id,
+      title: title,
+      url: url,
+      playlistType: playlistType,
+      playlistQuality: playlistQuality,
+      audioPlaySpeed: audioPlaySpeed,
+      downloadPath: downloadPath,
+      isSelected: isSelected,
+      currentOrPastPlayableAudioIndex: currentOrPastPlayableAudioIndex,
       audioSortFilterParmsNameForPlaylistDownloadView:
-          this.audioSortFilterParmsNameForPlaylistDownloadView,
+          audioSortFilterParmsNameForPlaylistDownloadView,
       audioSortFilterParmsNameForAudioPlayerView:
-          this.audioSortFilterParmsNameForAudioPlayerView,
-      audioPlayingOrder: this.audioPlayingOrder,
+          audioSortFilterParmsNameForAudioPlayerView,
+      audioPlayingOrder: audioPlayingOrder,
     )
       ..downloadedAudioLst =
-          this.downloadedAudioLst.map((audio) => audio.copy()).toList()
+          downloadedAudioLst.map((audio) => audio.copy()).toList()
       ..playableAudioLst =
-          this.playableAudioLst.map((audio) => audio.copy()).toList();
+          playableAudioLst.map((audio) => audio.copy()).toList();
   }
 
   /// Adds the downloaded audio to the downloadedAudioLst and to
