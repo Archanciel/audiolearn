@@ -12,7 +12,7 @@ void main() {
         playlistQuality: PlaylistQuality.voice,
       );
 
-      addThreeDownloadedAudio(playlist);
+      _addThreeDownloadedAudio(playlist);
 
       expect(playlist.downloadedAudioLst.length, 3);
       expect(playlist.downloadedAudioLst[0].originalVideoTitle, 'C');
@@ -24,6 +24,44 @@ void main() {
       expect(playlist.playableAudioLst[1].originalVideoTitle, 'A');
       expect(playlist.playableAudioLst[2].originalVideoTitle, 'C');
     });
+    test('copy playlist test', () {
+      Playlist sourcePlaylist = Playlist(
+        url: 'https://example.com/playlist2',
+        playlistType: PlaylistType.youtube,
+        playlistQuality: PlaylistQuality.voice,
+      );
+
+      _addThreeDownloadedAudio(sourcePlaylist);
+
+      expect(sourcePlaylist.downloadedAudioLst.length, 3);
+      expect(sourcePlaylist.downloadedAudioLst[0].originalVideoTitle, 'C');
+      expect(sourcePlaylist.downloadedAudioLst[1].originalVideoTitle, 'A');
+      expect(sourcePlaylist.downloadedAudioLst[2].originalVideoTitle, 'B');
+
+      expect(sourcePlaylist.playableAudioLst.length, 3);
+      expect(sourcePlaylist.playableAudioLst[0].originalVideoTitle, 'B');
+      expect(sourcePlaylist.playableAudioLst[1].originalVideoTitle, 'A');
+      expect(sourcePlaylist.playableAudioLst[2].originalVideoTitle, 'C');
+
+      Playlist copiedPlaylist = sourcePlaylist.copy();
+
+      expect(copiedPlaylist.downloadedAudioLst.length, 3);
+      expect(copiedPlaylist.downloadedAudioLst[0].originalVideoTitle, 'C');
+      expect(copiedPlaylist.downloadedAudioLst[1].originalVideoTitle, 'A');
+      expect(copiedPlaylist.downloadedAudioLst[2].originalVideoTitle, 'B');
+
+      expect(copiedPlaylist.playableAudioLst.length, 3);
+      expect(copiedPlaylist.playableAudioLst[0].originalVideoTitle, 'B');
+      expect(copiedPlaylist.playableAudioLst[1].originalVideoTitle, 'A');
+      expect(copiedPlaylist.playableAudioLst[2].originalVideoTitle, 'C');
+
+      for (int i = 0; i < 3; i++) {
+        Audio audio = sourcePlaylist.downloadedAudioLst[i];
+        Audio copiedAudio = copiedPlaylist.downloadedAudioLst[i];
+
+        expect(audio == copiedAudio, true);
+      }
+    });
     test('getAudioByFileNameNoExt() test', () {
       Playlist playlist = Playlist(
         url: 'https://example.com/playlist2',
@@ -31,7 +69,7 @@ void main() {
         playlistQuality: PlaylistQuality.voice,
       );
 
-      addThreeDownloadedAudio(playlist);
+      _addThreeDownloadedAudio(playlist);
 
       expect(
           playlist
@@ -63,7 +101,7 @@ void main() {
         playlistQuality: PlaylistQuality.voice,
       );
 
-      addThreeDownloadedAudio(playlist);
+      _addThreeDownloadedAudio(playlist);
 
       expect(playlist.playableAudioLst.length, 3);
 
@@ -87,7 +125,7 @@ void main() {
         playlistQuality: PlaylistQuality.voice,
       );
 
-      addThreeDownloadedAudio(playlist);
+      _addThreeDownloadedAudio(playlist);
 
       expect(playlist.playableAudioLst.length, 3);
 
@@ -112,7 +150,7 @@ void main() {
         playlistQuality: PlaylistQuality.voice,
       );
 
-      addThreeDownloadedAudio(playlist);
+      _addThreeDownloadedAudio(playlist);
 
       expect(playlist.playableAudioLst.length, 3);
       expect(playlist.downloadedAudioLst[0].originalVideoTitle, 'C');
@@ -135,7 +173,7 @@ void main() {
         playlistQuality: PlaylistQuality.voice,
       );
 
-      addThreeDownloadedAudio(playlist);
+      _addThreeDownloadedAudio(playlist);
 
       expect(playlist.playableAudioLst.length, 3);
       expect(playlist.downloadedAudioLst[0].originalVideoTitle, 'C');
@@ -160,7 +198,7 @@ void main() {
         playlistQuality: PlaylistQuality.voice,
       );
 
-      addThreeDownloadedAudio(playlist);
+      _addThreeDownloadedAudio(playlist);
 
       expect(playlist.playableAudioLst.length, 3);
       expect(playlist.downloadedAudioLst[0].originalVideoTitle, 'C');
@@ -315,7 +353,7 @@ void main() {
         playlistQuality: PlaylistQuality.voice,
       );
 
-      addThreeDownloadedAudio(playlist);
+      _addThreeDownloadedAudio(playlist);
 
       playlist.currentOrPastPlayableAudioIndex = 1;
       expect(
@@ -346,7 +384,7 @@ void main() {
         playlistQuality: PlaylistQuality.voice,
       );
 
-      addThreeDownloadedAudio(playlist);
+      _addThreeDownloadedAudio(playlist);
 
       playlist.currentOrPastPlayableAudioIndex = 1;
       expect(
@@ -385,7 +423,7 @@ void main() {
         playlistQuality: PlaylistQuality.voice,
       );
 
-      addThreeDownloadedAudio(playlist);
+      _addThreeDownloadedAudio(playlist);
 
       playlist.currentOrPastPlayableAudioIndex = 1;
       expect(
@@ -417,7 +455,7 @@ void main() {
         playlistQuality: PlaylistQuality.voice,
       );
 
-      addThreeDownloadedAudio(playlist);
+      _addThreeDownloadedAudio(playlist);
 
       playlist.currentOrPastPlayableAudioIndex = 1;
       expect(
@@ -594,7 +632,7 @@ void addThreePlayableAudio(Playlist playlist) {
   playlist.addPlayableAudio(audio3);
 }
 
-void addThreeDownloadedAudio(Playlist playlist) {
+void _addThreeDownloadedAudio(Playlist playlist) {
   playlist.addDownloadedAudio(Audio(
       enclosingPlaylist: playlist,
       originalVideoTitle: 'C',
@@ -622,6 +660,14 @@ void addThreeDownloadedAudio(Playlist playlist) {
       videoUploadDate: DateTime(2022, 3, 18),
       audioDuration: Duration.zero,
       audioPlaySpeed: 1.5));
+
+  playlist.downloadedAudioLst[0].audioDownloadSpeed = 1000;
+  playlist.downloadedAudioLst[1].audioDownloadSpeed = 2000;
+  playlist.downloadedAudioLst[2].audioDownloadSpeed = 3000;
+
+  playlist.playableAudioLst[0].audioDownloadSpeed = 1000;
+  playlist.playableAudioLst[1].audioDownloadSpeed = 2000;
+  playlist.playableAudioLst[2].audioDownloadSpeed = 3000;
 }
 
 void addOneDownloadedAudio(Playlist playlist) {

@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:audiolearn/constants.dart';
 import 'package:audiolearn/utils/dir_util.dart';
 import 'package:path/path.dart' as path;
-import 'package:youtube_explode_dart/youtube_explode_dart.dart' as yt;
 
 import 'package:audiolearn/models/audio.dart';
 import 'package:audiolearn/models/playlist.dart';
