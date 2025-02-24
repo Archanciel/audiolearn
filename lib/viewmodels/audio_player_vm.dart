@@ -138,6 +138,11 @@ class AudioPlayerVM extends ChangeNotifier {
   // speed stored in the playlist json file.
   bool wasPlaySpeedNotifierChanged = false;
 
+  // This notifier is used to update the audio volume icon buttons
+  // displayed in the audio player view
+  final ValueNotifier<double> currentAudioPlayVolumeNotifier =
+      ValueNotifier(0.5);
+
   // This private variable is set to true when await _audioPlayer!.stop()
   // is called in the pause() method. This is necessary to avoid that
   // the audio starts when an alarm or a phone call happens on the
@@ -177,22 +182,6 @@ class AudioPlayerVM extends ChangeNotifier {
     super.dispose();
   }
 
-  bool isCurrentAudioVolumeMax() {
-    if (_currentAudio == null) {
-      return false;
-    }
-
-    return _currentAudio!.audioPlayVolume == 1.0;
-  }
-
-  bool isCurrentAudioVolumeMin() {
-    if (_currentAudio == null) {
-      return false;
-    }
-
-    return _currentAudio!.audioPlayVolume == 0.1;
-  }
-
   /// {volumeChangedValue} must be between -1.0 and 1.0. The
   /// initial audio volume is 0.5 and will be decreased or
   /// increased by this value.
@@ -207,6 +196,10 @@ class AudioPlayerVM extends ChangeNotifier {
     _currentAudio!.audioPlayVolume =
         newAudioPlayVolume; // Increase and clamp to max 1.0
     await _audioPlayer!.setVolume(newAudioPlayVolume);
+
+    // Enables the modified audio volume icob button appearance
+    // to be updated in the audio player view.
+    currentAudioPlayVolumeNotifier.value = newAudioPlayVolume;
 
     updateAndSaveCurrentAudio();
   }
