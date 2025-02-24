@@ -10587,6 +10587,7 @@ void main() {
         playlistTitle: 'A restaurer',
       );
 
+// TODO verify local playlist as well !
       const String playlistToRedownloadTitle = 'S8 audio';
 
       await IntegrationTestUtil.selectPlaylist(
