@@ -172,6 +172,29 @@ class Playlist {
     };
   }
 
+  Playlist copy() {
+    return Playlist.fullConstructor(
+      id: this.id,
+      title: this.title,
+      url: this.url,
+      playlistType: this.playlistType,
+      playlistQuality: this.playlistQuality,
+      audioPlaySpeed: this.audioPlaySpeed,
+      downloadPath: this.downloadPath,
+      isSelected: this.isSelected,
+      currentOrPastPlayableAudioIndex: this.currentOrPastPlayableAudioIndex,
+      audioSortFilterParmsNameForPlaylistDownloadView:
+          this.audioSortFilterParmsNameForPlaylistDownloadView,
+      audioSortFilterParmsNameForAudioPlayerView:
+          this.audioSortFilterParmsNameForAudioPlayerView,
+      audioPlayingOrder: this.audioPlayingOrder,
+    )
+      ..downloadedAudioLst =
+          this.downloadedAudioLst.map((audio) => audio.copy()).toList()
+      ..playableAudioLst =
+          this.playableAudioLst.map((audio) => audio.copy()).toList();
+  }
+
   /// Adds the downloaded audio to the downloadedAudioLst and to
   /// the playableAudioLst.
   ///

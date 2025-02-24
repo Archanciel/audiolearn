@@ -96,6 +96,7 @@ class AudioDownloadVM extends ChangeNotifier {
   /// json files from a zip file. In this case, the playlists root path is
   /// updated if necessary.
   void loadExistingPlaylists({
+    List<Playlist> initialListOfPlaylist = const [],
     bool restoringPlaylistsCommentsAndSettingsJsonFilesFromZip = false,
   }) {
     // reinitializing the list of playlist is necessary since
@@ -168,7 +169,8 @@ class AudioDownloadVM extends ChangeNotifier {
           );
 
           _renameExistingPlaylistAudioAndCommentAndPictureFilesIfNecessary(
-            playlist: currentPlaylist,
+            initialListOfPlaylist: initialListOfPlaylist,
+            restoredPlaylist: currentPlaylist,
           );
         }
 
@@ -203,9 +205,13 @@ class AudioDownloadVM extends ChangeNotifier {
   /// name. So, the file will be playable and will correspond to a restored existing
   /// comment.
   void _renameExistingPlaylistAudioAndCommentAndPictureFilesIfNecessary({
-    required Playlist playlist,
+    required List<Playlist> initialListOfPlaylist,
+    required Playlist restoredPlaylist,
   }) {
-    String playlistDownloadPath = playlist.downloadPath;
+    Playlist? initialPlaylist = initialListOfPlaylist.firstWhereOrNull(
+      (playlist) => playlist.id == restoredPlaylist.id,
+    );
+    String playlistDownloadPath = restoredPlaylist.downloadPath;
     List<String> audioFilePathNameLst = DirUtil.listPathFileNamesInDir(
       directoryPath: playlistDownloadPath,
       fileExtension: 'mp3',
@@ -225,18 +231,18 @@ class AudioDownloadVM extends ChangeNotifier {
           audioToRenameFilePathName.split(Platform.pathSeparator).last;
 
       final match = regex.firstMatch(audioToRenameFileName);
-      String audioTitle = '';
+      String audioFileToRenameAudioTitle = '';
 
       if (match != null && match.groupCount >= 1) {
         // Extract the title part
-        audioTitle = match.group(1)!;
+        audioFileToRenameAudioTitle = match.group(1)!;
       }
 
       Audio? audio;
 
-      if (audioTitle != '') {
-        audio = playlist.playableAudioLst.firstWhereOrNull(
-          (audio) => audio.validVideoTitle == audioTitle,
+      if (audioFileToRenameAudioTitle != '') {
+        audio = restoredPlaylist.playableAudioLst.firstWhereOrNull(
+          (audio) => audio.validVideoTitle == audioFileToRenameAudioTitle,
         );
       }
 
@@ -289,12 +295,20 @@ class AudioDownloadVM extends ChangeNotifier {
           fileToRenameFilePathName: pictureToRenameFilePathName,
           newFileName: originalPictureFileName,
         );
-      } else {
+      } else if (initialPlaylist != null) {
         // The case if the audio file does not correspond to an audio
         // file of the restored playlist. This is the case if the user
         // has downloaded an audio before restoring the playlist from
-        // the zip file.
-        continue;
+        // the zip file. In this case, the Audio contained in the initial
+        // playlist which corresponds to the audio file is added to the
+        // restored playlist.
+        Audio? audio = initialPlaylist.playableAudioLst.firstWhereOrNull(
+          (audio) => audio.validVideoTitle == audioFileToRenameAudioTitle,
+        );
+
+        if (audio != null) {
+          restoredPlaylist.addDownloadedAudio(audio);
+        }
       }
     }
   }
@@ -2012,16 +2026,32 @@ class AudioDownloadVM extends ChangeNotifier {
   /// appbar leading popup menu. This executes the PlaylistListVM method
   /// restorePlaylistsCommentsAndSettingsJsonFilesFromZip() which calls this method.
   /// In this case, [restoringPlaylistsCommentsAndSettingsJsonFilesFromZip] is set
-  ///  to true.
+  /// to true.
   void updatePlaylistJsonFiles({
     bool unselectAddedPlaylist = true,
     bool updatePlaylistPlayableAudioList = true,
     bool restoringPlaylistsCommentsAndSettingsJsonFilesFromZip = false,
   }) {
+    List<Playlist> initialListOfPlaylistCopy = [];
+
+    if (restoringPlaylistsCommentsAndSettingsJsonFilesFromZip) {
+      // The case if the user selects the 'Restore Playlist, Comments
+      // and Settings from Zip File' menu item of the playlist download
+      // view left appbar leading popup menu. In this case, the list
+      // of playlists is restored from the zip file. It can happen that
+      // a playlist existing before restoring it from the zip file
+      // contained Audio's which were downloaded before the restoration.
+      // In this case, those Audio's will have to be added to the
+      // restored playlist
+      initialListOfPlaylistCopy =
+          _listOfPlaylist.map((Playlist playlist) => playlist.copy()).toList();
+    }
+
     // Loading again the list of playlists since the list of playlists
     // existing in the application playlist directory may have been
     // manually modified: playlist(s) suppression or playlist(s) addition.
     loadExistingPlaylists(
+      initialListOfPlaylist: initialListOfPlaylistCopy,
       restoringPlaylistsCommentsAndSettingsJsonFilesFromZip:
           restoringPlaylistsCommentsAndSettingsJsonFilesFromZip,
     );
@@ -2336,7 +2366,7 @@ class AudioDownloadVM extends ChangeNotifier {
     DateTime lastUpdate = DateTime.now();
     Timer timer = Timer.periodic(updateInterval, (timer) {
       if (DateTime.now().difference(lastUpdate) >= updateInterval) {
-        updateDownloadProgress(
+        _updateDownloadProgress(
           progress: totalBytesDownloaded / audioFileSize,
           lastSecondDownloadSpeed:
               totalBytesDownloaded - previousSecondBytesDownloaded,
@@ -2352,7 +2382,7 @@ class AudioDownloadVM extends ChangeNotifier {
       // Check if the deadline has been exceeded before updating the
       // progress
       if (DateTime.now().difference(lastUpdate) >= updateInterval) {
-        updateDownloadProgress(
+        _updateDownloadProgress(
             progress: totalBytesDownloaded / audioFileSize,
             lastSecondDownloadSpeed:
                 totalBytesDownloaded - previousSecondBytesDownloaded);
@@ -2365,7 +2395,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
     // Make sure to update the progress one last time to 100% before
     // finishing
-    updateDownloadProgress(
+    _updateDownloadProgress(
       progress: 1.0,
       lastSecondDownloadSpeed: 0,
     );
@@ -2377,8 +2407,7 @@ class AudioDownloadVM extends ChangeNotifier {
     await audioFileSink.close();
   }
 
-  /// Is not private since it is alsocalled by the MockAudioDownloadVM.
-  void updateDownloadProgress({
+  void _updateDownloadProgress({
     required double progress,
     required int lastSecondDownloadSpeed,
   }) {
