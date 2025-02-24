@@ -383,60 +383,62 @@ class MockAudioDownloadVM extends AudioDownloadVM {
   }
 
   @override
-  Future<void> youtubeDownloadAudioFile({
-    required yt.AudioOnlyStreamInfo audioStreamInfo,
-    required String audioFilePathName,
-    required int audioFileSize,
-  }) async {}
+  Future<ErrorType> redownloadSingleVideoAudio({
+    bool displayWarningIfAudioAlreadyExists = false,
+  }) async {
+    Audio audio = currentDownloadingAudio;
+    // int audioFileSize = audio.audioFileSize;
 
-  // @override
-  // Future<ErrorType> redownloadSingleVideoAudio({
-  //   bool displayWarningIfAudioAlreadyExists = false,
-  // }) async {
-  //   if (isDownloadStopping) {
-  //     return ErrorType.downloadAudioYoutubeError;
-  //   }
+    // int downloadSpeedPerSecond = audioFileSize ~/ 5;
+    // double downloadSpeedPerSecondDouble = audioFileSize / 5;
 
-  //   Audio audio = currentDownloadingAudio;
-  //   String audioPlaylistDownloadPath = audio.enclosingPlaylist!.downloadPath;
-  //   List<String> playlistRootPathElementsLst;
-  //   String appPlaylistDirName;
+    // for (int i = 0; i < audioFileSize; i += downloadSpeedPerSecond) {
+    //   updateDownloadProgress(
+    //       progress: i * downloadSpeedPerSecondDouble,
+    //       lastSecondDownloadSpeed: downloadSpeedPerSecond);
 
-  //   if (audioPlaylistDownloadPath.contains('/')) {
-  //     playlistRootPathElementsLst = audioPlaylistDownloadPath.split('/');
-  //     // This name may have been changed by the user on Android.
-  //     appPlaylistDirName =
-  //         playlistRootPathElementsLst[playlistRootPathElementsLst.length - 2];
-  //   } else {
-  //     playlistRootPathElementsLst = audioPlaylistDownloadPath.split('\\');
-  //     appPlaylistDirName =
-  //         playlistRootPathElementsLst[playlistRootPathElementsLst.length - 1];
-  //   }
+    //   // Simulating re-download process
+    //   await Future.delayed(Duration(milliseconds: 1000));
+    // }
 
-  //   String playlistRootPath =
-  //       "$kApplicationPathWindows${path.separator}$appPlaylistDirName";
+    Playlist audioEnclosingPlaylist = audio.enclosingPlaylist!;
+    String audioPlaylistDownloadPath = audioEnclosingPlaylist.downloadPath;
+    List<String> playlistRootPathElementsLst;
+    String appPlaylistDirName;
 
-  //   final String mockSourceFileDir = "$kApplicationPathWindows${path.separator}downloadedMockFileDir";
-  //   List<String> audioFileNamesContainedInMockSourceFileDirLst = DirUtil.listFileNamesInDir(
-  //     directoryPath: mockSourceFileDir,
-  //     fileExtension: 'mp3',
-  //   );
-  //   String correspondingAudioFileName = audioFileNamesContainedInMockSourceFileDirLst.firstWhere(
-  //     (audioFileName) => audioFileName.contains(audio.validVideoTitle),
-  //     orElse: () => '',
-  //   );
-  //   String audioFilePathName =
-  //       "$mockSourceFileDir${path.separator}$correspondingAudioFileName";
-  //   DirUtil.copyFileToDirectorySync(
-  //     sourceFilePathName: audioFilePathName,
-  //     targetDirectoryPath: playlistRootPath,
-  //   );
+    if (audioPlaylistDownloadPath.contains('/')) {
+      playlistRootPathElementsLst = audioPlaylistDownloadPath.split('/');
+      // This name may have been changed by the user on Android.
+      appPlaylistDirName =
+          playlistRootPathElementsLst[playlistRootPathElementsLst.length - 2];
+    } else {
+      playlistRootPathElementsLst = audioPlaylistDownloadPath.split('\\');
+      appPlaylistDirName =
+          playlistRootPathElementsLst[playlistRootPathElementsLst.length - 1];
+    }
 
-  //   if (isDownloadStopping) {
-  //     return ErrorType.downloadAudioYoutubeError;
-  //   }
+    String playlistRootPath =
+        "$kApplicationPathWindows${path.separator}$appPlaylistDirName";
+    final String mockSourceFileDir =
+        "$kApplicationPathWindows${path.separator}downloadedMockFileDir${path.separator}${audioEnclosingPlaylist.title}";
+    List<String> audioFileNamesContainedInMockSourceFileDirLst =
+        DirUtil.listFileNamesInDir(
+      directoryPath: mockSourceFileDir,
+      fileExtension: 'mp3',
+    );
+    String correspondingAudioFileName =
+        audioFileNamesContainedInMockSourceFileDirLst.firstWhere(
+      (audioFileName) => audioFileName.contains(audio.validVideoTitle),
+      orElse: () => '',
+    );
+    String audioFilePathName =
+        "$mockSourceFileDir${path.separator}$correspondingAudioFileName";
 
-  //   // Mocking success case
-  //   return ErrorType.noError;
-  // }
+    DirUtil.copyFileToDirectorySync(
+      sourceFilePathName: audioFilePathName,
+      targetDirectoryPath: playlistRootPath,
+    );
+
+    return ErrorType.noError;
+  }
 }
