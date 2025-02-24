@@ -5189,7 +5189,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // selected sort parameters ListView
         final Finder textFinder = find.descendant(
           of: find.byKey(const Key('selectedSortingOptionsListView')),
-          matching: find.text('Last listened date/time'),
+          matching: find.text('Audio downl date'),
         );
 
         // Then find the ListTile ancestor of the 'Audio downl date' Text
