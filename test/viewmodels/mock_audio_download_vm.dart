@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:audiolearn/constants.dart';
 import 'package:audiolearn/utils/dir_util.dart';
 import 'package:path/path.dart' as path;
+import 'package:youtube_explode_dart/youtube_explode_dart.dart' as yt;
 
 import 'package:audiolearn/models/audio.dart';
 import 'package:audiolearn/models/playlist.dart';
@@ -382,53 +383,60 @@ class MockAudioDownloadVM extends AudioDownloadVM {
   }
 
   @override
-  Future<ErrorType> redownloadSingleVideoAudio({
-    bool displayWarningIfAudioAlreadyExists = false,
-  }) async {
-    if (isDownloadStopping) {
-      return ErrorType.downloadAudioYoutubeError;
-    }
+  Future<void> youtubeDownloadAudioFile({
+    required yt.AudioOnlyStreamInfo audioStreamInfo,
+    required String audioFilePathName,
+    required int audioFileSize,
+  }) async {}
 
-    Audio audio = currentDownloadingAudio;
-    String audioPlaylistDownloadPath = audio.enclosingPlaylist!.downloadPath;
-    List<String> playlistRootPathElementsLst;
-    String appPlaylistDirName;
+  // @override
+  // Future<ErrorType> redownloadSingleVideoAudio({
+  //   bool displayWarningIfAudioAlreadyExists = false,
+  // }) async {
+  //   if (isDownloadStopping) {
+  //     return ErrorType.downloadAudioYoutubeError;
+  //   }
 
-    if (audioPlaylistDownloadPath.contains('/')) {
-      playlistRootPathElementsLst = audioPlaylistDownloadPath.split('/');
-      // This name may have been changed by the user on Android.
-      appPlaylistDirName =
-          playlistRootPathElementsLst[playlistRootPathElementsLst.length - 2];
-    } else {
-      playlistRootPathElementsLst = audioPlaylistDownloadPath.split('\\');
-      appPlaylistDirName =
-          playlistRootPathElementsLst[playlistRootPathElementsLst.length - 1];
-    }
+  //   Audio audio = currentDownloadingAudio;
+  //   String audioPlaylistDownloadPath = audio.enclosingPlaylist!.downloadPath;
+  //   List<String> playlistRootPathElementsLst;
+  //   String appPlaylistDirName;
 
-    String playlistRootPath =
-        "$kApplicationPathWindows${path.separator}$appPlaylistDirName";
+  //   if (audioPlaylistDownloadPath.contains('/')) {
+  //     playlistRootPathElementsLst = audioPlaylistDownloadPath.split('/');
+  //     // This name may have been changed by the user on Android.
+  //     appPlaylistDirName =
+  //         playlistRootPathElementsLst[playlistRootPathElementsLst.length - 2];
+  //   } else {
+  //     playlistRootPathElementsLst = audioPlaylistDownloadPath.split('\\');
+  //     appPlaylistDirName =
+  //         playlistRootPathElementsLst[playlistRootPathElementsLst.length - 1];
+  //   }
 
-    final String mockSourceFileDir = "$kApplicationPathWindows${path.separator}downloadedMockFileDir";
-    List<String> audioFileNamesContainedInMockSourceFileDirLst = DirUtil.listFileNamesInDir(
-      directoryPath: mockSourceFileDir,
-      fileExtension: 'mp3',
-    );
-    String correspondingAudioFileName = audioFileNamesContainedInMockSourceFileDirLst.firstWhere(
-      (audioFileName) => audioFileName.contains(audio.validVideoTitle),
-      orElse: () => '',
-    );
-    String audioFilePathName =
-        "$mockSourceFileDir${path.separator}$correspondingAudioFileName";
-    DirUtil.copyFileToDirectorySync(
-      sourceFilePathName: audioFilePathName,
-      targetDirectoryPath: playlistRootPath,
-    );
+  //   String playlistRootPath =
+  //       "$kApplicationPathWindows${path.separator}$appPlaylistDirName";
 
-    if (isDownloadStopping) {
-      return ErrorType.downloadAudioYoutubeError;
-    }
+  //   final String mockSourceFileDir = "$kApplicationPathWindows${path.separator}downloadedMockFileDir";
+  //   List<String> audioFileNamesContainedInMockSourceFileDirLst = DirUtil.listFileNamesInDir(
+  //     directoryPath: mockSourceFileDir,
+  //     fileExtension: 'mp3',
+  //   );
+  //   String correspondingAudioFileName = audioFileNamesContainedInMockSourceFileDirLst.firstWhere(
+  //     (audioFileName) => audioFileName.contains(audio.validVideoTitle),
+  //     orElse: () => '',
+  //   );
+  //   String audioFilePathName =
+  //       "$mockSourceFileDir${path.separator}$correspondingAudioFileName";
+  //   DirUtil.copyFileToDirectorySync(
+  //     sourceFilePathName: audioFilePathName,
+  //     targetDirectoryPath: playlistRootPath,
+  //   );
 
-    // Mocking success case
-    return ErrorType.noError;
-  }
+  //   if (isDownloadStopping) {
+  //     return ErrorType.downloadAudioYoutubeError;
+  //   }
+
+  //   // Mocking success case
+  //   return ErrorType.noError;
+  // }
 }

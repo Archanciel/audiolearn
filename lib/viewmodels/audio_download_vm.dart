@@ -1993,8 +1993,9 @@ class AudioDownloadVM extends ChangeNotifier {
   /// The method is also called when the user selects the 'Restore Playlist, Comments
   /// and Settings from Zip File' menu item of the playlist download view left
   /// appbar leading popup menu. This executes the PlaylistListVM method
-  /// restorePlaylistsCommentsAndSettingsJsonFilesFromZip(). In this case,
-  /// [restoringPlaylistsCommentsAndSettingsJsonFilesFromZip] is set to true.
+  /// restorePlaylistsCommentsAndSettingsJsonFilesFromZip() which calls this method.
+  /// In this case, [restoringPlaylistsCommentsAndSettingsJsonFilesFromZip] is set
+  ///  to true.
   void updatePlaylistJsonFiles({
     bool unselectAddedPlaylist = true,
     bool updatePlaylistPlayableAudioList = true,
@@ -2252,7 +2253,7 @@ class AudioDownloadVM extends ChangeNotifier {
     final int audioFileSize = audioStreamInfo.size.totalBytes;
     audio.audioFileSize = audioFileSize;
 
-    await _youtubeDownloadAudioFile(
+    await youtubeDownloadAudioFile(
       audioStreamInfo: audioStreamInfo,
       audioFilePathName: audio.filePathName,
       audioFileSize: audioFileSize,
@@ -2291,7 +2292,7 @@ class AudioDownloadVM extends ChangeNotifier {
           (a, b) => a.bitrate.bitsPerSecond < b.bitrate.bitsPerSecond ? a : b);
     }
 
-    await _youtubeDownloadAudioFile(
+    await youtubeDownloadAudioFile(
       audioStreamInfo: audioStreamInfo,
       audioFilePathName: _currentDownloadingAudio.filePathName,
       audioFileSize: audioStreamInfo.size.totalBytes,
@@ -2302,7 +2303,9 @@ class AudioDownloadVM extends ChangeNotifier {
 
   /// Downloads the audio file from the Youtube video and saves it
   /// to the enclosing playlist directory.
-  Future<void> _youtubeDownloadAudioFile({
+  /// 
+  /// Is not private since it is redefined by the MockAudioDownloadVM.
+  Future<void> youtubeDownloadAudioFile({
     required yt.AudioOnlyStreamInfo audioStreamInfo,
     required String audioFilePathName,
     required int audioFileSize,
