@@ -131,12 +131,14 @@ class AudioDownloadVM extends ChangeNotifier {
           firstRestoredPlaylist.downloadPath.contains('/storage/emulated/0');
 
       if (arePlaylistsRestoredFromAndroidToWindows) {
-        List<String> playlistRootPathElementsLst = firstRestoredPlaylist.downloadPath.split('/');
+        List<String> playlistRootPathElementsLst =
+            firstRestoredPlaylist.downloadPath.split('/');
 
         // This name may have been changed by the user on Android
         // using the 'Application Settings ...' menu.
-        String androidAppPlaylistDirName = playlistRootPathElementsLst[playlistRootPathElementsLst.length - 2];
- 
+        String androidAppPlaylistDirName =
+            playlistRootPathElementsLst[playlistRootPathElementsLst.length - 2];
+
         _playlistsRootPath =
             "$kApplicationPathWindows${path.separator}$androidAppPlaylistDirName";
         _settingsDataService.set(
@@ -241,8 +243,15 @@ class AudioDownloadVM extends ChangeNotifier {
       if (audio != null) {
         String originalAudioFileName = audio.audioFileName;
 
+        if (audioToRenameFileName == originalAudioFileName) {
+          // This is the case if the audio file has not been
+          // redownloaded before the playlist was restored from
+          // the zip file.
+          continue;
+        }
+
         // Renaming the existing audio file to the original audio
-        // file name
+        // file name.
         DirUtil.renameFile(
           fileToRenameFilePathName: audioToRenameFilePathName,
           newFileName: originalAudioFileName,
@@ -280,6 +289,12 @@ class AudioDownloadVM extends ChangeNotifier {
           fileToRenameFilePathName: pictureToRenameFilePathName,
           newFileName: originalPictureFileName,
         );
+      } else {
+        // The case if the audio file does not correspond to an audio
+        // file of the restored playlist. This is the case if the user
+        // has downloaded an audio before restoring the playlist from
+        // the zip file.
+        continue;
       }
     }
   }
@@ -1335,6 +1350,8 @@ class AudioDownloadVM extends ChangeNotifier {
   ///
   /// If the audio of the single video is correctly downloaded and
   /// is added to a playlist, then ErrorType.noError is returned.
+  ///
+  /// Is not private since it is redefined by the MockAudioDownloadVM.
   Future<ErrorType> redownloadSingleVideoAudio({
     bool displayWarningIfAudioAlreadyExists = false,
   }) async {
@@ -2253,7 +2270,7 @@ class AudioDownloadVM extends ChangeNotifier {
     final int audioFileSize = audioStreamInfo.size.totalBytes;
     audio.audioFileSize = audioFileSize;
 
-    await youtubeDownloadAudioFile(
+    await _youtubeDownloadAudioFile(
       audioStreamInfo: audioStreamInfo,
       audioFilePathName: audio.filePathName,
       audioFileSize: audioFileSize,
@@ -2292,7 +2309,7 @@ class AudioDownloadVM extends ChangeNotifier {
           (a, b) => a.bitrate.bitsPerSecond < b.bitrate.bitsPerSecond ? a : b);
     }
 
-    await youtubeDownloadAudioFile(
+    await _youtubeDownloadAudioFile(
       audioStreamInfo: audioStreamInfo,
       audioFilePathName: _currentDownloadingAudio.filePathName,
       audioFileSize: audioStreamInfo.size.totalBytes,
@@ -2303,9 +2320,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
   /// Downloads the audio file from the Youtube video and saves it
   /// to the enclosing playlist directory.
-  /// 
-  /// Is not private since it is redefined by the MockAudioDownloadVM.
-  Future<void> youtubeDownloadAudioFile({
+  Future<void> _youtubeDownloadAudioFile({
     required yt.AudioOnlyStreamInfo audioStreamInfo,
     required String audioFilePathName,
     required int audioFileSize,
@@ -2321,7 +2336,7 @@ class AudioDownloadVM extends ChangeNotifier {
     DateTime lastUpdate = DateTime.now();
     Timer timer = Timer.periodic(updateInterval, (timer) {
       if (DateTime.now().difference(lastUpdate) >= updateInterval) {
-        _updateDownloadProgress(
+        updateDownloadProgress(
           progress: totalBytesDownloaded / audioFileSize,
           lastSecondDownloadSpeed:
               totalBytesDownloaded - previousSecondBytesDownloaded,
@@ -2337,7 +2352,7 @@ class AudioDownloadVM extends ChangeNotifier {
       // Check if the deadline has been exceeded before updating the
       // progress
       if (DateTime.now().difference(lastUpdate) >= updateInterval) {
-        _updateDownloadProgress(
+        updateDownloadProgress(
             progress: totalBytesDownloaded / audioFileSize,
             lastSecondDownloadSpeed:
                 totalBytesDownloaded - previousSecondBytesDownloaded);
@@ -2350,7 +2365,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
     // Make sure to update the progress one last time to 100% before
     // finishing
-    _updateDownloadProgress(
+    updateDownloadProgress(
       progress: 1.0,
       lastSecondDownloadSpeed: 0,
     );
@@ -2362,7 +2377,8 @@ class AudioDownloadVM extends ChangeNotifier {
     await audioFileSink.close();
   }
 
-  void _updateDownloadProgress({
+  /// Is not private since it is alsocalled by the MockAudioDownloadVM.
+  void updateDownloadProgress({
     required double progress,
     required int lastSecondDownloadSpeed,
   }) {
