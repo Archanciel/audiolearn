@@ -381,6 +381,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
               children: [
                 _buildSetAudioVolumeIconButton(
                   context: context,
+                  audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                   areAudioButtonsEnabled: areAudioButtonsEnabled,
                 ),
                 const SizedBox(
@@ -438,12 +439,14 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
 
   Widget _buildSetAudioVolumeIconButton({
     required BuildContext context,
+    required AudioPlayerVM audioPlayerVMlistenFalse,
     required bool areAudioButtonsEnabled,
   }) {
-    return Consumer2<ThemeProviderVM, AudioPlayerVM>(
-      builder: (context, themeProviderVM, audioPlayerVM, child) {
+    return Consumer<ThemeProviderVM>(
+      builder: (context, themeProviderVM, child) {
         _audioPlaySpeed =
-            audioPlayerVM.currentAudio?.audioPlaySpeed ?? _audioPlaySpeed;
+            audioPlayerVMlistenFalse.currentAudio?.audioPlaySpeed ??
+                _audioPlaySpeed;
 
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -454,8 +457,49 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                   .decreaseAudioVolumeIconButtonTooltip,
               child: SizedBox(
                 width: kSmallButtonWidth,
-                child: IconButton(
-                  key: const Key('decreaseAudioVolumeIconButton'),
+                child: ValueListenableBuilder<double>(
+                  valueListenable:
+                      audioPlayerVMlistenFalse.currentAudioPlayVolumeNotifier,
+                  builder: (context, currentVolume, child) {
+                    return IconButton(
+                      key: const Key('decreaseAudioVolumeIconButton'),
+                      style: ButtonStyle(
+                        // Highlight button when pressed
+                        padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                          const EdgeInsets.symmetric(
+                              horizontal: kSmallButtonInsidePadding,
+                              vertical: 0),
+                        ),
+                        overlayColor:
+                            iconButtonTapModification, // Tap feedback color
+                      ),
+                      icon: const Icon(Icons.arrow_drop_down),
+                      iconSize: kUpDownButtonSize,
+                      onPressed: (!areAudioButtonsEnabled ||
+                              currentVolume == 0.1)
+                          ? null // Disable the button if no audio selected or
+                          //        if the volume is min
+                          : () async {
+                              await audioPlayerVMlistenFalse.changeAudioVolume(
+                                volumeChangedValue: -0.1,
+                              );
+                            },
+                    );
+                  },
+                ),
+              ),
+            ),
+            Tooltip(
+              message: AppLocalizations.of(context)!
+                  .increaseAudioVolumeIconButtonTooltip,
+              child: SizedBox(
+                width: kSmallButtonWidth,
+                child: ValueListenableBuilder<double>(
+                  valueListenable:
+                      audioPlayerVMlistenFalse.currentAudioPlayVolumeNotifier,
+                  builder: (context, currentVolume, child) {
+                    return IconButton(
+                  key: const Key('increaseAudioVolumeIconButton'),
                   style: ButtonStyle(
                     // Highlight button when pressed
                     padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -465,47 +509,20 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                     overlayColor:
                         iconButtonTapModification, // Tap feedback color
                   ),
-                  icon: const Icon(Icons.arrow_drop_down),
+                  icon: const Icon(Icons.arrow_drop_up),
                   iconSize: kUpDownButtonSize,
                   onPressed: (!areAudioButtonsEnabled ||
-                          audioPlayerVM.isCurrentAudioVolumeMin())
+                          currentVolume == 1.0)
                       ? null // Disable the button if no audio selected or
-                      //        if the volume is min
+                      //        if the volume is max
                       : () async {
-                          await audioPlayerVM.changeAudioVolume(
-                            volumeChangedValue: -0.1,
+                          await audioPlayerVMlistenFalse.changeAudioVolume(
+                            volumeChangedValue: 0.1,
                           );
                         },
+                    );
+                  },
                 ),
-              ),
-            ),
-            Tooltip(
-              message: AppLocalizations.of(context)!
-                  .increaseAudioVolumeIconButtonTooltip,
-              child: SizedBox(
-                width: kSmallButtonWidth,
-                child: IconButton(
-                    key: const Key('increaseAudioVolumeIconButton'),
-                    style: ButtonStyle(
-                      // Highlight button when pressed
-                      padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-                        const EdgeInsets.symmetric(
-                            horizontal: kSmallButtonInsidePadding, vertical: 0),
-                      ),
-                      overlayColor:
-                          iconButtonTapModification, // Tap feedback color
-                    ),
-                    icon: const Icon(Icons.arrow_drop_up),
-                    iconSize: kUpDownButtonSize,
-                    onPressed: (!areAudioButtonsEnabled ||
-                            audioPlayerVM.isCurrentAudioVolumeMax())
-                        ? null // Disable the button if no audio selected or
-                        //        if the volume is max
-                        : () async {
-                            await audioPlayerVM.changeAudioVolume(
-                              volumeChangedValue: 0.1,
-                            );
-                          }),
               ),
             ),
           ],
@@ -1018,7 +1035,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
           valueListenable:
               audioPlayerVMlistenFalse.currentAudioPositionNotifier,
           builder: (context, currentPosition, child) {
-            // Obtaining the slider values here (when audioPlayerVM
+            // Obtaining the slider values here (when audioPlayerVMlistenFalse
             // calls notifyListeners()) avoids the slider generating
             // a 'Value xxx.x is not between minimum 0.0 and maximum 0.0' error
             double sliderValue = 0.0;
