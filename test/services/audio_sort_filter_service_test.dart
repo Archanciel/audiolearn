@@ -1064,6 +1064,12 @@ void main() {
             equals(expectedResultForTitleDesc
                 .map((audio) => audio.validVideoTitle)
                 .toList()));
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindows,
+        );
       });
       test('sort by title containing _ number reference', () {
         final Audio thirdAudioOneOfTwo = Audio.fullConstructor(
@@ -1384,6 +1390,12 @@ void main() {
             equals(expectedResultForTitleDesc
                 .map((audio) => audio.validVideoTitle)
                 .toList()));
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindows,
+        );
       });
       test('sort by title containing - number reference', () {
         final Audio thirdAudioOneOfTwo = Audio.fullConstructor(
@@ -1704,6 +1716,12 @@ void main() {
             equals(expectedResultForTitleDesc
                 .map((audio) => audio.validVideoTitle)
                 .toList()));
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindows,
+        );
       });
       test('sort by title containing / number reference', () {
         final Audio thirdAudioOneOfTwo = Audio.fullConstructor(
@@ -2024,6 +2042,12 @@ void main() {
             equals(expectedResultForTitleDesc
                 .map((audio) => audio.validVideoTitle)
                 .toList()));
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindows,
+        );
       });
       test('sort by title containing : number reference', () {
         final Audio thirdAudioOneOfTwo = Audio.fullConstructor(
@@ -2344,6 +2368,12 @@ void main() {
             equals(expectedResultForTitleDesc
                 .map((audio) => audio.validVideoTitle)
                 .toList()));
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindows,
+        );
       });
       test(
           '''sort by edited title with chapter number. The valid video titles of
@@ -2951,6 +2981,12 @@ void main() {
             equals(expectedResultForTitleDesc
                 .map((audio) => audio!.validVideoTitle)
                 .toList()));
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindows,
+        );
       });
     });
 
@@ -3649,7 +3685,13 @@ void main() {
             equals(expectedResultForTitleDesc
                 .map((audio) => audio.validVideoTitle)
                 .toList()));
-      });
+  
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindows,
+        );
+    });
       test('''sort by - chapter title number. Example: ... 1-1 ..., ... 1-2 ...,
             ... 2-1 ...''', () {
         final Audio avantPropos = Audio.fullConstructor(
@@ -4344,7 +4386,13 @@ void main() {
             equals(expectedResultForTitleDesc
                 .map((audio) => audio.validVideoTitle)
                 .toList()));
-      });
+ 
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindows,
+        );
+     });
       test('''sort by / chapter title number. Example: ... 1/1 ..., ... 1/2 ...,
             ... 2/1 ...''', () {
         final Audio avantPropos = Audio.fullConstructor(
@@ -5039,7 +5087,13 @@ void main() {
             equals(expectedResultForTitleDesc
                 .map((audio) => audio.validVideoTitle)
                 .toList()));
-      });
+ 
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindows,
+        );
+     });
       test('''sort by : chapter title number. Example: ... 1:1 ..., ... 1:2 ...,
             ... 2:1 ...''', () {
         final Audio avantPropos = Audio.fullConstructor(
@@ -5734,7 +5788,13 @@ void main() {
             equals(expectedResultForTitleDesc
                 .map((audio) => audio.validVideoTitle)
                 .toList()));
-      });
+ 
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindows,
+        );
+     });
       test('''sort by _ chapter title number. The order of the list of audio to
             sort (included in the variable audioList below) was modified.''',
           () {
@@ -6430,6 +6490,12 @@ void main() {
             equals(expectedResultForTitleDesc
                 .map((audio) => audio.validVideoTitle)
                 .toList()));
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindows,
+        );
       });
       test('''sort by - chapter title number. The order of the list of audio to
             sort (included in the variable audioList below) was modified.''',
@@ -7126,6 +7192,12 @@ void main() {
             equals(expectedResultForTitleDesc
                 .map((audio) => audio.validVideoTitle)
                 .toList()));
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindows,
+        );
       });
       test('''sort by / chapter title number. Example: ... 1/1 ..., ... 1/2 ...,
             ... 2/1 ... . The order of the list of audio to sort (included in the
@@ -7822,7 +7894,13 @@ void main() {
             equals(expectedResultForTitleDesc
                 .map((audio) => audio.validVideoTitle)
                 .toList()));
-      });
+ 
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindows,
+        );
+     });
       test('''sort by : chapter title number. Example: ... 1:1 ..., ... 1:2 ...,
             ... 2:1 ... . The order of the list of audio to sort (included in the
             variable audioList below) was modified.''', () {
@@ -8518,7 +8596,13 @@ void main() {
             equals(expectedResultForTitleDesc
                 .map((audio) => audio.validVideoTitle)
                 .toList()));
-      });
+ 
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindows,
+        );
+     });
       test('''sort by chapter title number. The valid video title of the audio
             contained in the 'Gary Renard - Et l'univers disparaîtra imported'
             json file are original and so not modified.''', () {
@@ -8609,7 +8693,13 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindows,
         );
       });
-    });
+ 
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindows,
+        );
+   });
   });
   group("sort audio lst by multiple SortingOption's", () {
     late AudioSortFilterService audioSortFilterService;
@@ -8793,7 +8883,13 @@ void main() {
           equals(expectedResultForDurationDescAndTitleDesc
               .map((audio) => audio.validVideoTitle)
               .toList()));
-    });
+  
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindows,
+        );
+  });
   });
   group('filterAndSortAudioLst by title and description', () {
     late AudioSortFilterService audioSortFilterService;
@@ -9061,7 +9157,13 @@ void main() {
           equals(expectedResultForFilterSortTitleDesc
               .map((audio) => audio.validVideoTitle)
               .toList()));
-    });
+ 
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindows,
+        );
+   });
     test('with search word present in compact description only', () {
       final Audio zebra1 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
@@ -9281,6 +9383,12 @@ void main() {
           equals(expectedResultForFilterSortTitleDesc
               .map((audio) => audio.validVideoTitle)
               .toList()));
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindows,
+        );
     });
     test('with search word in title and in compact description', () {
       final Audio zebra1 = Audio.fullConstructor(
@@ -9504,6 +9612,12 @@ void main() {
           equals(expectedResultForFilterSortTitleDesc
               .map((audio) => audio.validVideoTitle)
               .toList()));
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindows,
+        );
     });
   });
   group('filterAndSortAudioLst by title only', () {
@@ -10767,7 +10881,13 @@ void main() {
       playlistListVM.getUpToDateSelectablePlaylists();
 
       audioSortFilterService = AudioSortFilterService();
-    });
+ 
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindows,
+        );
+   });
     test('filter not listened audio only', () {
       List<Audio> audioList = playlistListVM
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
@@ -10979,7 +11099,7 @@ void main() {
       playlistListVM.getUpToDateSelectablePlaylists();
 
       audioSortFilterService = AudioSortFilterService();
-    });
+   });
     test('filter commented or not commented audio', () {
       List<Audio> audioList = playlistListVM
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
@@ -11223,7 +11343,13 @@ void main() {
       playlistListVM.getUpToDateSelectablePlaylists();
 
       audioSortFilterService = AudioSortFilterService();
-    });
+ 
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindows,
+        );
+   });
     test(
         'filter by no word in audio title or video compact description and sort by download date descending',
         () {
@@ -11727,6 +11853,12 @@ void main() {
         playlistListVM.getUpToDateSelectablePlaylists();
 
         audioSortFilterService = AudioSortFilterService();
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindows,
+        );
       });
       test(
           '''Set start + end audio download date and verify filtered audio list''',
@@ -12295,7 +12427,13 @@ void main() {
         playlistListVM.getUpToDateSelectablePlaylists();
 
         audioSortFilterService = AudioSortFilterService();
-      });
+ 
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindows,
+        );
+     });
       test('''Set start + end audio filesize and verify filtered audio list''',
           () {
         List<Audio> audioNotFilteredLst = playlistListVM
