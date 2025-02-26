@@ -569,19 +569,16 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
                     audioPlaylistSortFilterParmsName ?? '',
               );
 
-              if (redownloadAudioNumber == 1) {
+              if (redownloadAudioNumber != -1) {
+                // The audio was redownloaded or not
                 warningMessageVM.redownloadAudioConfirmation(
                   targetPlaylistTitle: audio.enclosingPlaylist!.title,
                   redownloadAudioTitle: audio.validVideoTitle,
-                );
-              }
-              if (redownloadAudioNumber == 0) {
-                warningMessageVM.audioNotRedownloadedWarning(
-                  targetPlaylistTitle: audio.enclosingPlaylist!.title,
-                  redownloadAudioTitle: audio.validVideoTitle,
+                  redownloadAudioNumber: redownloadAudioNumber,
                 );
               } // else -1 is returned, since no confirmation warning
-              //   is displayed, the no internet warning thrown by
+              //   is displayed, the no internet or
+              //   downloadAudioYoutubeError warning thrown by
               //   AudioDownloadVM.notifyDownloadError() can be displayed.
             });
         }

@@ -1734,10 +1734,10 @@ class AudioDownloadVM extends ChangeNotifier {
 
       if (errorType == ErrorType.downloadAudioFileAlreadyOnAudioDirectory) {
         existingAudioFilesNotRedownloadedCount++;
-      } else if (errorType == ErrorType.noInternet) {
+      } else {
         return [
           existingAudioFilesNotRedownloadedCount,
-          ErrorType.noInternet,
+          errorType,
         ];
       }
     }
