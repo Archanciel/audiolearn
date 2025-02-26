@@ -137,8 +137,7 @@ class IntegrationTestUtil {
     // and tap on it
 
     // First, find the Youtube playlist ListTile Text widget
-    final Finder playlistListTileTextWidgetFinder =
-        find.text(playlistTitle);
+    final Finder playlistListTileTextWidgetFinder = find.text(playlistTitle);
 
     // Then obtain the Youtube source playlist ListTile widget
     // enclosing the Text widget by finding its ancestor
@@ -1370,6 +1369,7 @@ class IntegrationTestUtil {
     required String audioForPictureTitleDurationStr,
     required List<String> pictureFileNamesLst,
     bool goToAudioPlayerView = true,
+    required bool mustPlayableAudioListBeUsed,
   }) async {
     // Now verifying that the playlist picture directory contains
     // the added picture file
@@ -1397,23 +1397,27 @@ class IntegrationTestUtil {
       );
     }
 
-    // Due to the not working integration test which prevents the
-    // audio picture to be displayed, we open and close the playable
-    // audio list dialog. This will cause the added picture to be
-    // displayed. When a picture is added manually in the Audio Learn
-    // application, the picture IS displayed after the 'Add Audio
-    // Picture' menu was executed !
+    String audioTitleWithDuration;
 
-    String audioTitleWithDuration =
-        '$audioForPictureTitle\n$audioForPictureTitleDurationStr';
+    if (mustPlayableAudioListBeUsed) {
+      // Due to the not working integration test which prevents the
+      // audio picture to be displayed, we open and close the playable
+      // audio list dialog. This will cause the added picture to be
+      // displayed. When a picture is added manually in the Audio Learn
+      // application, the picture IS displayed after the 'Add Audio
+      // Picture' menu was executed !
 
-    await tester.tap(find.text(audioTitleWithDuration));
-    await tester.pumpAndSettle();
+      audioTitleWithDuration =
+          '$audioForPictureTitle\n$audioForPictureTitleDurationStr';
 
-    // Tap on Close button to close the
-    // DisplaySelectableAudioListDialog
-    await tester.tap(find.text('Close'));
-    await tester.pumpAndSettle();
+      await tester.tap(find.text(audioTitleWithDuration));
+      await tester.pumpAndSettle();
+
+      // Tap on Close button to close the
+      // DisplaySelectableAudioListDialog
+      await tester.tap(find.text('Close'));
+      await tester.pumpAndSettle();
+    }
 
     // Now that the audio picture was added, verify that the
     // play/pause button is displayed at top of the screen
@@ -1431,6 +1435,10 @@ class IntegrationTestUtil {
 
     // Now that the audio picture was added, verify that the
     // audio title with duration is displayed
+
+    audioTitleWithDuration =
+        '$audioForPictureTitle\n$audioForPictureTitleDurationStr';
+
     expect(
       find.text(audioTitleWithDuration),
       findsOneWidget,
@@ -1539,9 +1547,12 @@ class IntegrationTestUtil {
           builder: (context, themeProvider, languageProvider, child) {
             return MaterialApp(
               title: 'AudioLearn',
-              locale: (forcedLocale == null) ? languageProvider.currentLocale : forcedLocale,
+              locale: (forcedLocale == null)
+                  ? languageProvider.currentLocale
+                  : forcedLocale,
               localizationsDelegates: AppLocalizations.localizationsDelegates,
-              supportedLocales: AppLocalizations.supportedLocales, // French only
+              supportedLocales:
+                  AppLocalizations.supportedLocales, // French only
               theme: ScreenMixin.themeDataDark,
               home: MyHomePage(
                 settingsDataService: settingsDataService,
