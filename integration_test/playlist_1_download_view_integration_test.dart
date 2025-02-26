@@ -124,7 +124,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchExpandablePlaylistListView(
+      await IntegrationTestUtil.launchMockableApplication(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -389,7 +389,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchExpandablePlaylistListView(
+      await IntegrationTestUtil.launchMockableApplication(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -540,7 +540,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchExpandablePlaylistListView(
+      await IntegrationTestUtil.launchMockableApplication(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -797,7 +797,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchExpandablePlaylistListView(
+      await IntegrationTestUtil.launchMockableApplication(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -1573,7 +1573,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchExpandablePlaylistListView(
+      await IntegrationTestUtil.launchMockableApplication(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -1805,7 +1805,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchExpandablePlaylistListView(
+      await IntegrationTestUtil.launchMockableApplication(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -1911,7 +1911,7 @@ void main() {
       // now close the app and then restart it in order to load the
       // copied youtube playlist
 
-      await IntegrationTestUtil.launchExpandablePlaylistListView(
+      await IntegrationTestUtil.launchMockableApplication(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -1995,7 +1995,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchExpandablePlaylistListView(
+      await IntegrationTestUtil.launchMockableApplication(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -2145,7 +2145,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchExpandablePlaylistListView(
+      await IntegrationTestUtil.launchMockableApplication(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -2291,7 +2291,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchExpandablePlaylistListView(
+      await IntegrationTestUtil.launchMockableApplication(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -2437,7 +2437,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchExpandablePlaylistListView(
+      await IntegrationTestUtil.launchMockableApplication(
         tester: tester,
         audioDownloadVM: mockAudioDownloadVM,
         settingsDataService: settingsDataService,
@@ -2924,7 +2924,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchExpandablePlaylistListView(
+      await IntegrationTestUtil.launchMockableApplication(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -3107,7 +3107,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchExpandablePlaylistListView(
+      await IntegrationTestUtil.launchMockableApplication(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
