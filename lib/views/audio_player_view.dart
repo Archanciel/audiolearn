@@ -499,27 +499,28 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                       audioPlayerVMlistenFalse.currentAudioPlayVolumeNotifier,
                   builder: (context, currentVolume, child) {
                     return IconButton(
-                  key: const Key('increaseAudioVolumeIconButton'),
-                  style: ButtonStyle(
-                    // Highlight button when pressed
-                    padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-                      const EdgeInsets.symmetric(
-                          horizontal: kSmallButtonInsidePadding, vertical: 0),
-                    ),
-                    overlayColor:
-                        iconButtonTapModification, // Tap feedback color
-                  ),
-                  icon: const Icon(Icons.arrow_drop_up),
-                  iconSize: kUpDownButtonSize,
-                  onPressed: (!areAudioButtonsEnabled ||
-                          currentVolume == 1.0)
-                      ? null // Disable the button if no audio selected or
-                      //        if the volume is max
-                      : () async {
-                          await audioPlayerVMlistenFalse.changeAudioVolume(
-                            volumeChangedValue: 0.1,
-                          );
-                        },
+                      key: const Key('increaseAudioVolumeIconButton'),
+                      style: ButtonStyle(
+                        // Highlight button when pressed
+                        padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                          const EdgeInsets.symmetric(
+                              horizontal: kSmallButtonInsidePadding,
+                              vertical: 0),
+                        ),
+                        overlayColor:
+                            iconButtonTapModification, // Tap feedback color
+                      ),
+                      icon: const Icon(Icons.arrow_drop_up),
+                      iconSize: kUpDownButtonSize,
+                      onPressed: (!areAudioButtonsEnabled ||
+                              currentVolume == 1.0)
+                          ? null // Disable the button if no audio selected or
+                          //        if the volume is max
+                          : () async {
+                              await audioPlayerVMlistenFalse.changeAudioVolume(
+                                volumeChangedValue: 0.1,
+                              );
+                            },
                     );
                   },
                 ),
@@ -1035,26 +1036,25 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
           valueListenable:
               audioPlayerVMlistenFalse.currentAudioPositionNotifier,
           builder: (context, currentPosition, child) {
-            // Obtaining the slider values here (when audioPlayerVMlistenFalse
-            // calls notifyListeners()) avoids the slider generating
-            // a 'Value xxx.x is not between minimum 0.0 and maximum 0.0' error
-            double sliderValue = 0.0;
-            double maxDuration = 0.0;
-            String currentAudioPositionStr = Duration.zero.HHmmssZeroHH();
-            String remainingAudioDurationStr = currentAudioPositionStr; // 0.0
+            double sliderValue;
+            double maxDuration;
+            String currentAudioPositionStr;
+            String remainingAudioDurationStr;
 
             if (currentAudioTitle != null) {
-              sliderValue = audioPlayerVMlistenFalse
-                  .currentAudioPosition.inSeconds
-                  .toDouble();
+              sliderValue = currentPosition.inSeconds.toDouble();
               maxDuration = audioPlayerVMlistenFalse
                   .currentAudioTotalDuration.inSeconds
                   .toDouble();
-              currentAudioPositionStr =
-                  audioPlayerVMlistenFalse.currentAudioPosition.HHmmssZeroHH();
+              currentAudioPositionStr = currentPosition.HHmmssZeroHH();
               remainingAudioDurationStr = audioPlayerVMlistenFalse
                   .currentAudioRemainingDuration
                   .HHmmssZeroHH();
+            } else {
+              sliderValue = 0.0;
+              maxDuration = 0.0;
+              currentAudioPositionStr = Duration.zero.HHmmssZeroHH();
+              remainingAudioDurationStr = currentAudioPositionStr; // 0.0
             }
 
             // Ensure the slider value is within the range
