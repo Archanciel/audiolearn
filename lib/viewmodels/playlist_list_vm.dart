@@ -981,7 +981,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// redownload the audio files which were deleted, setting the file names to
   /// the initial downloaded file name.
   ///
-  /// The method returns a list of two integers:
+  /// The method returns a list of two integers or an empty list:
   ///   [
   ///    number of audio files which were redownloaded,
   ///    number of audio files which were not redownloaded because the audio
@@ -1027,13 +1027,12 @@ class PlaylistListVM extends ChangeNotifier {
   /// redownload the audio files which were deleted, setting the file names to
   /// the initial downloaded file name.
   ///
-  /// The method returns a list of two integers:
-  ///   [
-  ///    number of audio files which were redownloaded,
-  ///    number of audio files which were not redownloaded because the audio
-  ///    file(s) already exist in the playlist directory
-  ///   ].
-  Future<List<dynamic>> redownloadDeletedAudio({
+  /// The method returns:
+  ///   0 if the audio file was not redownloaded because the audio
+  ///     file already exist in the playlist directory.
+  ///   1 if the audio file was redownloaded,
+  ///  -1 if a download error happened.
+  Future<int> redownloadDeletedAudio({
     required Audio audio,
   }) async {
     List<Audio> filteredAudioToRedownload = [audio];
@@ -1046,7 +1045,16 @@ class PlaylistListVM extends ChangeNotifier {
 
     notifyListeners();
 
-    return resultLst;
+    if (resultLst.length == 2) {
+      // ErrorType.noInternet was returned as second element by
+      // _audioDownloadVM.redownloadPlaylistFilteredAudio().
+      // Returning an empty list will avoid that a confirmation
+      // warning will be displayed, which will prevent the error
+      // message of the AudioDownloadVM to be displayed.
+      return -1;
+    } else {
+      return 1 - resultLst[0] as int;
+    }
   }
 
   /// This method is called when the user executes the playlist submenu 'Delete

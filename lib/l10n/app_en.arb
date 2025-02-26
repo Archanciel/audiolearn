@@ -799,5 +799,14 @@
     }
   },
   "playable": "Playable",
-  "notPlayable": "Not playable"
+  "notPlayable": "Not playable",
+  "redownloadDeletedAudio": "Redownload deleted Audio",
+  "audioNotRedownloadedWarning": "The audio \"{redownloadedAudioTitle}\" was not redownloaded to the playlist \"{playlistTitle}\".",
+  "@audioNotRedownloadedWarning": {
+    "description": "Warning title for not redownloading audio",
+    "placeholders": {
+      "playlistTitle": {},
+      "redownloadedAudioTitle": {}
+    }
+  }
 }

@@ -523,17 +523,32 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                 // action which will not block the widget tree
                 // rendering.
                 WidgetsBinding.instance.addPostFrameCallback((_) async {
-                  await playlistListVMlistenFalse.redownloadDeletedAudio(
+                  int redownloadAudioNumber =
+                      await playlistListVMlistenFalse.redownloadDeletedAudio(
                     audio: audio,
                   );
 
-                  Provider.of<WarningMessageVM>(
-                    context,
-                    listen: false,
-                  ).redownloadAudioConfirmation(
-                    targetPlaylistTitle: audio.enclosingPlaylist!.title,
-                    redownloadAudioTitle: audio.validVideoTitle,
-                  );
+                  if (redownloadAudioNumber == 1) {
+                    // The audio was redownloaded
+                    Provider.of<WarningMessageVM>(
+                      context,
+                      listen: false,
+                    ).redownloadAudioConfirmation(
+                      targetPlaylistTitle: audio.enclosingPlaylist!.title,
+                      redownloadAudioTitle: audio.validVideoTitle,
+                    );
+                  } else if (redownloadAudioNumber == 0) {
+                    // The audio was not redownloaded
+                    Provider.of<WarningMessageVM>(
+                      context,
+                      listen: false,
+                    ).audioNotRedownloadedWarning(
+                      targetPlaylistTitle: audio.enclosingPlaylist!.title,
+                      redownloadAudioTitle: audio.validVideoTitle,
+                    );
+                  } // else -1 is returned, since no confirmation warning
+                  //   is displayed, the no internet warning thrown by
+                  //   AudioDownloadVM.notifyDownloadError() can be displayed.
                 });
                 break;
             }
@@ -649,7 +664,8 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
             ),
           ),
           PopupMenuItem<AppBarPopupMenu>(
-            key: const Key('appBarMenuRestorePlaylistsCommentsAndSettingsFromZip'),
+            key: const Key(
+                'appBarMenuRestorePlaylistsCommentsAndSettingsFromZip'),
             value: AppBarPopupMenu.restorePlaylistAndCommentsFromZip,
             child: Tooltip(
               message: AppLocalizations.of(context)!
