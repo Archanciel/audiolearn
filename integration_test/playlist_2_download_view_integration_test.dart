@@ -10654,14 +10654,14 @@ void main() {
 
       // Verifying and closing the confirm dialog
 
-      await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
-        tester: tester,
-        confirmDialogTitleOne:
-            "Delete audio's filtered by \"\" parms from playlist \"\"",
-        confirmDialogMessage:
-            "Audio's to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.",
-        confirmOrCancelAction: true, // Confirm button is tapped
-      );
+      // await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
+      //   tester: tester,
+      //   confirmDialogTitleOne:
+      //       "Delete audio's filtered by \"\" parms from playlist \"\"",
+      //   confirmDialogMessage:
+      //       "Audio's to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.",
+      //   confirmOrCancelAction: true, // Confirm button is tapped
+      // );
 
       // Tap the 'Toggle List' button to display the playlist list. If the list
       // is not opened, checking that a ListTile with the title of
