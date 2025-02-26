@@ -1704,8 +1704,8 @@ class AudioDownloadVM extends ChangeNotifier {
   ///
   /// The returned List dynamic contains the number of audio files which were not
   /// redownloaded since they already exist in the target playlist directory. If
-  /// internet is not accessible, the second element of the list is ErrorType.
-  /// noInternet.
+  /// internet is not accessible or another youtube download error happened, the
+  /// second element of the list is the ErrorType.
   Future<List<dynamic>> redownloadPlaylistFilteredAudio({
     required Playlist targetPlaylist,
     required List<Audio> filteredAudioToRedownload,
@@ -1734,7 +1734,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
       if (errorType == ErrorType.downloadAudioFileAlreadyOnAudioDirectory) {
         existingAudioFilesNotRedownloadedCount++;
-      } else {
+      } else if (errorType != ErrorType.noError) {
         return [
           existingAudioFilesNotRedownloadedCount,
           errorType,
