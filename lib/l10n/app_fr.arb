@@ -1028,7 +1028,7 @@
   },
   "playable": "Jouable",
   "notPlayable": "Non jouable",
-  "audioNotRedownloadedWarning": "L'audio \"{redownloadedAudioTitle}\" n'a pas été retéléchargé dans la playlist \"{playlistTitle}\".",
+  "audioNotRedownloadedWarning": "L'audio \"{redownloadedAudioTitle}\" n'a pas été retéléchargé dans la playlist \"{playlistTitle}\" du fait que le fichier audio est déjà présent dans le répertoire de la playlist.",
   "@audioNotRedownloadedWarning": {
     "description": "Warning title for not redownloading audio",
     "placeholders": {

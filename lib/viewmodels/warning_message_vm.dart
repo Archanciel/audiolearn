@@ -105,16 +105,11 @@ enum WarningMessageType {
   // the user clicks on the playlist submenu 'Redownload filtered
   // Audio's'.
 
-  redownloadedAudioConfirmation, // The case if the deleted audio was
-  // redownloaded. This happens when the user clicks on the audio
-  // list item or audio player viewn left appbar 'Redownload deleted
-  // Audio' menu.
-
-  audioNotRedownloadedWarning, // The case if the deleted audio was
-  // not redownloaded since it is already present in the target
-  // playlist directory. This happens when the user clicks on the audio
-  // list item or audio player viewn left appbar 'Redownload deleted
-  // Audio' menu.
+  redownloadingAudioConfirmationOrWarning, // The case if the deleted
+  // audio was redownloaded or if the deleted audio was not redownloaded
+  // since it is already present in the target playlist directory. This
+  // happens when the user clicks on the audio list item or audio player
+  // viewn left appbar 'Redownload deleted Audio' menu.
 
   notRedownloadAudioFilesInPlaylistDirectory, // The case if the
   // audio files in the playlist directory were not redownloaded
@@ -1081,24 +1076,14 @@ class WarningMessageVM extends ChangeNotifier {
   void redownloadAudioConfirmation({
     required String targetPlaylistTitle,
     required String redownloadAudioTitle,
+    required int redownloadAudioNumber,
   }) {
     _playlistTitle = targetPlaylistTitle;
     _redownloadAudioTitle = redownloadAudioTitle;
+    _redownloadAudioNumber = redownloadAudioNumber;
 
-    warningMessageType = WarningMessageType.redownloadedAudioConfirmation;
-
-    // Causes the display warning message widget to be displayed.
-    notifyListeners();
-  }
-
-  void audioNotRedownloadedWarning({
-    required String targetPlaylistTitle,
-    required String redownloadAudioTitle,
-  }) {
-    _playlistTitle = targetPlaylistTitle;
-    _redownloadAudioTitle = redownloadAudioTitle;
-
-    warningMessageType = WarningMessageType.audioNotRedownloadedWarning;
+    warningMessageType =
+        WarningMessageType.redownloadingAudioConfirmationOrWarning;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();
