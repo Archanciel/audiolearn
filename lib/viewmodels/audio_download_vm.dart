@@ -1699,8 +1699,10 @@ class AudioDownloadVM extends ChangeNotifier {
   }
 
   /// This method is called by the PlaylistListVM when the user executes the playlist
-  /// submenu 'Re-download filtered Audio's' after having selected (and defined)
-  /// a named Sort/Filter parameters.
+  /// submenu 'Redownload filtered Audio's' after having selected (and defined)
+  /// a named Sort/Filter parameters. The mrthod is also called when the user
+  /// executes the audio list item menu 'Redownload deleted Audio' or the audio
+  /// player view left appbar menu of the same name.
   ///
   /// The returned List dynamic contains the number of audio files which were not
   /// redownloaded since they already exist in the target playlist directory. If
@@ -2309,7 +2311,7 @@ class AudioDownloadVM extends ChangeNotifier {
     return true;
   }
 
-  /// Re-downloads the audio file from the Youtube video and saves it
+  /// Redownloads the audio file from the Youtube video and saves it
   /// to the enclosing playlist directory. Returns true if the audio
   /// file was successfully downloaded, false otherwise.
   Future<bool> _redownloadAudioFile({

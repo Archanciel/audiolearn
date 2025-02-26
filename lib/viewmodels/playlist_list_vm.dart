@@ -977,7 +977,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// filtered Audio's' after having selected (and defined) a named Sort/Filter
   /// parameters. For example, it makes sense to define a filter only parameters
   /// which select audio's which are commented. With this filter parameters applied
-  /// to the playlist, using the playlist menu 'Re-download filtered Audio's'
+  /// to the playlist, using the playlist menu 'Redownload filtered Audio's'
   /// redownload the audio files which were deleted, setting the file names to
   /// the initial downloaded file name.
   ///
@@ -1019,13 +1019,10 @@ class PlaylistListVM extends ChangeNotifier {
     }
   }
 
-  /// This method is called when the user executes the playlist submenu 'Re-download
-  /// filtered Audio's' after having selected (and defined) a named Sort/Filter
-  /// parameters. For example, it makes sense to define a filter only parameters
-  /// which select audio's which are commented. With this filter parameters applied
-  /// to the playlist, using the playlist menu 'Re-download filtered Audio's'
-  /// redownload the audio files which were deleted, setting the file names to
-  /// the initial downloaded file name.
+  /// This method is called when the user executes the audio list item menu
+  /// 'Redownload deleted Audio' or the audio player view left appbar menu of the
+  /// same name. Once the file is redownloaded, its name is set to the initial
+  /// downloaded file name.
   ///
   /// The method returns:
   ///   0 if the audio file was not redownloaded because the audio
