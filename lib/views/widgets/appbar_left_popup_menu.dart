@@ -528,26 +528,19 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                     audio: audio,
                   );
 
-                  if (redownloadAudioNumber == 1) {
-                    // The audio was redownloaded
+                  if (redownloadAudioNumber != -1) {
+                    // The audio was redownloaded or not
                     Provider.of<WarningMessageVM>(
                       context,
                       listen: false,
                     ).redownloadAudioConfirmation(
                       targetPlaylistTitle: audio.enclosingPlaylist!.title,
                       redownloadAudioTitle: audio.validVideoTitle,
-                    );
-                  } else if (redownloadAudioNumber == 0) {
-                    // The audio was not redownloaded
-                    Provider.of<WarningMessageVM>(
-                      context,
-                      listen: false,
-                    ).audioNotRedownloadedWarning(
-                      targetPlaylistTitle: audio.enclosingPlaylist!.title,
-                      redownloadAudioTitle: audio.validVideoTitle,
+                      redownloadAudioNumber: redownloadAudioNumber,
                     );
                   } // else -1 is returned, since no confirmation warning
-                  //   is displayed, the no internet warning thrown by
+                  //   is displayed, the no internet or
+                  //   downloadAudioYoutubeError warning thrown by
                   //   AudioDownloadVM.notifyDownloadError() can be displayed.
                 });
                 break;

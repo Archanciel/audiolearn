@@ -1046,10 +1046,10 @@ class PlaylistListVM extends ChangeNotifier {
     notifyListeners();
 
     if (resultLst.length == 2) {
-      // ErrorType.noInternet was returned as second element by
-      // _audioDownloadVM.redownloadPlaylistFilteredAudio().
-      // Returning an empty list will avoid that a confirmation
-      // warning will be displayed, which will prevent the error
+      // ErrorType.noInternet or ErrorType.downloadAudioYoutubeError
+      // was returned as second element by _audioDownloadVM.
+      // redownloadPlaylistFilteredAudio(). Returning -1 will avoid
+      // that a warning will be displayed, which will prevent the error
       // message of the AudioDownloadVM to be displayed.
       return -1;
     } else {
