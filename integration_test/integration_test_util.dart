@@ -1598,4 +1598,46 @@ class IntegrationTestUtil {
       });
     }
   }
+
+  static void verifyPlaylistDirectoryContents({
+    required String playlistTitle,
+    required List<String> expectedAudioFiles,
+    required List<String> expectedCommentFiles,
+    required List<String> expectedPictureFiles,
+  }) {
+    String playlistDir =
+        "$kApplicationPathWindows${path.separator}$playlistTitle";
+    String commentsDir = "$playlistDir${path.separator}comments";
+    String picturesDir = "$playlistDir${path.separator}pictures";
+
+    // Verify audio files in playlist directory
+    List<String> actualAudioFiles = DirUtil.listFileNamesInDir(
+      directoryPath: playlistDir,
+      fileExtension: 'mp3',
+    );
+    assert(
+      actualAudioFiles.toSet().containsAll(expectedAudioFiles.toSet()),
+      "Mismatch in expected and actual audio files in '$playlistDir'.\nExpected: $expectedAudioFiles\nActual: $actualAudioFiles",
+    );
+
+    // Verify JSON comment files in comments directory
+    List<String> actualCommentFiles = DirUtil.listFileNamesInDir(
+      directoryPath: commentsDir,
+      fileExtension: 'json',
+    );
+    assert(
+      actualCommentFiles.toSet().containsAll(expectedCommentFiles.toSet()),
+      "Mismatch in expected and actual comment files in '$commentsDir'.\nExpected: $expectedCommentFiles\nActual: $actualCommentFiles",
+    );
+
+    // Verify image files in pictures directory
+    List<String> actualPictureFiles = DirUtil.listFileNamesInDir(
+      directoryPath: picturesDir,
+      fileExtension: 'jpg',
+    );
+    assert(
+      actualPictureFiles.toSet().containsAll(expectedPictureFiles.toSet()),
+      "Mismatch in expected and actual picture files in '$picturesDir'.\nExpected: $expectedPictureFiles\nActual: $actualPictureFiles",
+    );
+  }
 }

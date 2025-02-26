@@ -10520,6 +10520,44 @@ void main() {
         dateFormatVM: dateFormatVM,
       );
 
+      // Verify the content of the 'A restaurer' playlist dir
+      // and comments and pictures dir before restoring.
+      IntegrationTestUtil.verifyPlaylistDirectoryContents(
+        playlistTitle: 'A restaurer',
+        expectedAudioFiles: [
+          "250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12.mp3",
+          "250213-104308-Le 21 juillet 1913 _ Prières et méditations, La Mère 25-02-13.mp3",
+          "250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12.mp3",
+          "250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.mp3",
+        ],
+        expectedCommentFiles: [
+          "250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12.json",
+          "250213-104308-Le 21 juillet 1913 _ Prières et méditations, La Mère 25-02-13.json",
+          "250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12.json",
+          "250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json",
+        ],
+        expectedPictureFiles: [
+          "250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12.jpg",
+          "250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12.jpg",
+          "250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.jpg",
+        ],
+      );
+
+      // Verify the content of the 'local' playlist dir
+      // and comments and pictures dir before restoring.
+      IntegrationTestUtil.verifyPlaylistDirectoryContents(
+        playlistTitle: 'local',
+        expectedAudioFiles: [
+          "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.mp3"
+        ],
+        expectedCommentFiles: [
+          "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json"
+        ],
+        expectedPictureFiles: [
+          "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.jpg"
+        ],
+      );
+
       // Replace the platform instance with your mock
       MockFilePicker mockFilePicker = MockFilePicker();
       FilePicker.platform = mockFilePicker;
@@ -10537,7 +10575,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Now type on the 'Restore Playlists, Comments and Settings
-      // from Zip File ... menu
+      // from Zip File ...' menu
       await tester.tap(find.byKey(
           const Key('appBarMenuRestorePlaylistsCommentsAndSettingsFromZip')));
       await tester.pumpAndSettle();
@@ -10577,7 +10615,7 @@ void main() {
         "0:22:57.8. 8.72 MB at 2.14 MB/sec on 13/02/2025 at 08:30.",
       ];
 
-      verifyRestoredPlaylistAndAudio(
+      _verifyRestoredPlaylistAndAudio(
         tester: tester,
         selectedPlaylistTitle: 'A restaurer',
         playlistsTitles: playlistsTitles,
@@ -10586,6 +10624,7 @@ void main() {
       );
 
       // Now verify local playlist as well !
+
       audioTitles = [
         "Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage!",
         "morning _ cinematic video",
@@ -10605,7 +10644,7 @@ void main() {
         playlistToSelectTitle: 'local',
       );
 
-      verifyRestoredPlaylistAndAudio(
+      _verifyRestoredPlaylistAndAudio(
         tester: tester,
         selectedPlaylistTitle: 'local',
         playlistsTitles: playlistsTitles,
@@ -10613,12 +10652,87 @@ void main() {
         audioSubTitles: audioSubTitles,
       );
 
-      const String playlistToRedownloadTitle = 'S8 audio';
+      // Now verify 'S8 audio' playlist as well !
+
+      audioTitles = [
+        "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+        "Quand Aurélien Barrau va dans une école de management",
+        "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...",
+        "La surpopulation mondiale par Jancovici et Barrau",
+      ];
+
+      audioSubTitles = [
+        "0:06:29.0. 5.80 MB at 495 KB/sec on 15/02/2025 at 14:29.",
+        "0:17:59.0. 6.58 MB at 1.80 MB/sec on 22/07/2024 at 08:11.",
+        "1:17:54.0. 28.50 MB at 1.63 MB/sec on 28/05/2024 at 13:06.",
+        "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
+      ];
 
       await IntegrationTestUtil.selectPlaylist(
         tester: tester,
-        playlistToSelectTitle: playlistToRedownloadTitle,
+        playlistToSelectTitle: 'S8 audio',
       );
+
+      _verifyRestoredPlaylistAndAudio(
+        tester: tester,
+        selectedPlaylistTitle: 'S8 audio',
+        playlistsTitles: playlistsTitles,
+        audioTitles: audioTitles,
+        audioSubTitles: audioSubTitles,
+      );
+
+      // Verify the content of the 'A restaurer' playlist dir
+      // and comments and pictures dir after restoration.
+      IntegrationTestUtil.verifyPlaylistDirectoryContents(
+        playlistTitle: 'A restaurer',
+        expectedAudioFiles: [
+          "250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12.mp3",
+          "250213-104308-Le 21 juillet 1913 _ Prières et méditations, La Mère 25-02-13.mp3",
+          "250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12.mp3",
+          "250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.mp3",
+        ],
+        expectedCommentFiles: [
+          "250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12.json",
+          "250213-104308-Le 21 juillet 1913 _ Prières et méditations, La Mère 25-02-13.json",
+          "250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12.json",
+          "250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json",
+        ],
+        expectedPictureFiles: [
+          "250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12.jpg",
+          "250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12.jpg",
+          "250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.jpg",
+        ],
+      );
+
+      // Verify the content of the 'local' playlist dir
+      // and comments and pictures dir after restoration.
+      IntegrationTestUtil.verifyPlaylistDirectoryContents(
+        playlistTitle: 'local',
+        expectedAudioFiles: [
+          "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.mp3"
+        ],
+        expectedCommentFiles: [
+          "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json"
+        ],
+        expectedPictureFiles: [
+          "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.jpg"
+        ],
+      );
+
+      // Verify the content of the 'S8 audio' playlist dir
+      // and comments and pictures dir after restoration.
+      IntegrationTestUtil.verifyPlaylistDirectoryContents(
+        playlistTitle: 'S8 audio',
+        expectedAudioFiles: [],
+        expectedCommentFiles: [
+          "New file name.json",
+          "240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.json",
+          "240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.json",
+        ],
+        expectedPictureFiles: [],
+      );
+
+      const String playlistToRedownloadTitle = 'S8 audio';
 
       // Now, select a filter parms using the drop down button.
 
@@ -10656,6 +10770,24 @@ void main() {
         tester: tester,
         playlistTitle: playlistToRedownloadTitle,
         playlistSubMenuKeyStr: 'popup_menu_redownload_filtered_audio',
+      );
+
+      // Verify the content of the 'S8 audio' playlist dir
+      // and comments and pictures dir after redownloading
+      // filtered audio's by 'commented_7MB' SF parms.
+      IntegrationTestUtil.verifyPlaylistDirectoryContents(
+        playlistTitle: 'S8 audio',
+        expectedAudioFiles: [
+          "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.mp3",
+          "250215-142936-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
+          "240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.mp3",
+        ],
+        expectedCommentFiles: [
+          "New file name.json",
+          "240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.json",
+          "240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.json",
+        ],
+        expectedPictureFiles: [],
       );
 
       // Verifying and closing the confirm dialog
@@ -11204,7 +11336,7 @@ void main() {
   });
 }
 
-void verifyRestoredPlaylistAndAudio({
+void _verifyRestoredPlaylistAndAudio({
   required WidgetTester tester,
   required String selectedPlaylistTitle,
   required List<String> playlistsTitles,
