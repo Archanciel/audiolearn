@@ -1821,7 +1821,7 @@ class MockAppLocalizations extends AppLocalizations {
       "Delete Filtered Audio from Playlist as well ...";
 
   @override
-  String get redownloadFilteredAudio => "Re-download filtered Audio's";
+  String get redownloadFilteredAudio => "Redownload filtered Audio's";
 
   @override
   String get redownloadFilteredAudioTooltip =>
