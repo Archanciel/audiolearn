@@ -7998,6 +7998,7 @@ void main() {
           audioForPictureTitle: audioTitleOne, // La surpopulation mondiale ...
           audioForPictureTitleDurationStr: audioTitleOneDurationStr,
           pictureFileNamesLst: movedAudioPictureFileNameLst,
+          mustPlayableAudioListBeUsed: false,
         );
 
         // Now, go back to the playlist download view
@@ -8015,6 +8016,7 @@ void main() {
               audioTitleTwo, // Le Secret de la RÉSILIENCE  ...
           audioForPictureTitleDurationStr: audioTitleTwoDurationStr,
           pictureFileNamesLst: movedAudioPictureFileNameLst,
+          mustPlayableAudioListBeUsed: false,
         );
 
         // Purge the test playlist directory so that the created test
@@ -9679,6 +9681,7 @@ void main() {
           audioForPictureTitle: audioTitleOne, // La surpopulation mondiale ...
           audioForPictureTitleDurationStr: audioTitleOneDurationStr,
           pictureFileNamesLst: copiedAudioPictureFileNameLst,
+          mustPlayableAudioListBeUsed: false,
         );
 
         // Now, go back to the playlist download view
@@ -9696,6 +9699,7 @@ void main() {
               audioTitleTwo, // Le Secret de la RÉSILIENCE  ...
           audioForPictureTitleDurationStr: audioTitleTwoDurationStr,
           pictureFileNamesLst: copiedAudioPictureFileNameLst,
+          mustPlayableAudioListBeUsed: false,
         );
 
         // Purge the test playlist directory so that the created test
@@ -10582,9 +10586,9 @@ void main() {
       // Now verify local playlist as well !
       audioTitles = [
         "Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage!",
-         "morning _ cinematic video",
-         "Really short video",
-         "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+        "morning _ cinematic video",
+        "Really short video",
+        "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
       ];
 
       audioSubTitles = [
@@ -10712,7 +10716,8 @@ void main() {
             "$kPlaylistDownloadRootPathWindows${path.separator}$kPictureDirName";
 
         // First picture addition
-        String pictureFilePathName = await _addPictureToAudio(
+        String pictureFilePathName =
+            await _addPictureToAudioExecutingAudioListItemMenu(
           tester: tester,
           mockFilePicker: mockFilePicker,
           pictureFileName: pictureFileName,
@@ -10734,6 +10739,7 @@ void main() {
           audioForPictureTitle: audioForPictureTitle,
           audioForPictureTitleDurationStr: audioForPictureTitleDurationStr,
           pictureFileNamesLst: pictureFileNamesLst,
+          mustPlayableAudioListBeUsed: true,
         );
 
         // Now go back to the playlist download view and add another
@@ -10746,7 +10752,8 @@ void main() {
         await tester.pumpAndSettle();
 
         // Second picture addition
-        pictureFilePathName = await _addPictureToAudio(
+        pictureFilePathName =
+            await _addPictureToAudioExecutingAudioListItemMenu(
           tester: tester,
           mockFilePicker: mockFilePicker,
           pictureFileName: secondPictureFileName,
@@ -10764,6 +10771,7 @@ void main() {
           audioForPictureTitle: audioForPictureTitle,
           audioForPictureTitleDurationStr: audioForPictureTitleDurationStr,
           pictureFileNamesLst: pictureFileNamesLst,
+          mustPlayableAudioListBeUsed: false,
         );
 
         // Now go back to the playlist download view and remove the
@@ -10775,7 +10783,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Deleting the added audio picture
-        await _removeAudioPicture(
+        await _removeAudioPictureExecutingAudioListItemMenu(
           tester: tester,
           picturedAudioTitle: audioForPictureTitle,
         );
@@ -10796,7 +10804,8 @@ void main() {
         await tester.pumpAndSettle();
 
         // Third picture addition
-        pictureFilePathName = await _addPictureToAudio(
+        pictureFilePathName =
+            await _addPictureToAudioExecutingAudioListItemMenu(
           tester: tester,
           mockFilePicker: mockFilePicker,
           pictureFileName: thirdPictureFileName,
@@ -10814,6 +10823,7 @@ void main() {
           audioForPictureTitle: audioForPictureTitle,
           audioForPictureTitleDurationStr: audioForPictureTitleDurationStr,
           pictureFileNamesLst: pictureFileNamesLst,
+          mustPlayableAudioListBeUsed: false,
         );
 
         // Purge the test playlist directory so that the created test
@@ -10853,7 +10863,8 @@ void main() {
             "$kPlaylistDownloadRootPathWindows${path.separator}$youtubePlaylistTitle${path.separator}$kPictureDirName";
 
         // First picture addition
-        String pictureFilePathName = await _addPictureToAudio(
+        String pictureFilePathName =
+            await _addPictureToAudioExecutingAudioListItemMenu(
           tester: tester,
           mockFilePicker: mockFilePicker,
           pictureFileName: pictureFileName,
@@ -10876,6 +10887,7 @@ void main() {
           audioForPictureTitle: audioForPictureTitle,
           audioForPictureTitleDurationStr: audioForPictureTitleDurationStr,
           pictureFileNamesLst: pictureFileNamesLst,
+          mustPlayableAudioListBeUsed: true,
         );
 
         // Now go back to the playlist download view and add another
@@ -10888,7 +10900,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Deleting the added audio picture
-        await _removeAudioPicture(
+        await _removeAudioPictureExecutingAudioListItemMenu(
           tester: tester,
           picturedAudioTitle: audioForPictureTitle,
         );
@@ -10922,6 +10934,7 @@ void main() {
           audioForPictureTitle: audioAlreadyUsingPictureTitle,
           audioForPictureTitleDurationStr: audioAlreadyUsingPictureDurationStr,
           pictureFileNamesLst: pictureFileNamesAfterDeletionLst,
+          mustPlayableAudioListBeUsed: true,
         );
 
         // Purge the test playlist directory so that the created test
@@ -10976,7 +10989,8 @@ void main() {
         );
 
         // First picture addition
-        String pictureFilePathName = await _addPictureToAudioInAudioPlayerView(
+        String pictureFilePathName =
+            await _addPictureToAudioExecutingAudioPlayerViewLeftAppbarMenu(
           tester: tester,
           mockFilePicker: mockFilePicker,
           pictureFileName: pictureFileName,
@@ -10998,13 +11012,15 @@ void main() {
           audioForPictureTitleDurationStr: audioForPictureTitleDurationStr,
           pictureFileNamesLst: pictureFileNamesLst,
           goToAudioPlayerView: false,
+          mustPlayableAudioListBeUsed: false,
         );
 
         // Now add another picture to the same audio. This will replace
         // the first added picture by the second one.
 
         // Second picture addition
-        pictureFilePathName = await _addPictureToAudioInAudioPlayerView(
+        pictureFilePathName =
+            await _addPictureToAudioExecutingAudioPlayerViewLeftAppbarMenu(
           tester: tester,
           mockFilePicker: mockFilePicker,
           pictureFileName: secondPictureFileName,
@@ -11022,6 +11038,7 @@ void main() {
           audioForPictureTitleDurationStr: audioForPictureTitleDurationStr,
           pictureFileNamesLst: pictureFileNamesLst,
           goToAudioPlayerView: false,
+          mustPlayableAudioListBeUsed: false,
         );
 
         // Deleting the added audio picture
@@ -11039,7 +11056,8 @@ void main() {
         );
 
         // Third picture addition
-        pictureFilePathName = await _addPictureToAudioInAudioPlayerView(
+        pictureFilePathName =
+            await _addPictureToAudioExecutingAudioPlayerViewLeftAppbarMenu(
           tester: tester,
           mockFilePicker: mockFilePicker,
           pictureFileName: thirdPictureFileName,
@@ -11057,6 +11075,7 @@ void main() {
           audioForPictureTitleDurationStr: audioForPictureTitleDurationStr,
           pictureFileNamesLst: pictureFileNamesLst,
           goToAudioPlayerView: false,
+          mustPlayableAudioListBeUsed: false,
         );
 
         // Purge the test playlist directory so that the created test
@@ -11107,7 +11126,8 @@ void main() {
         );
 
         // First picture addition
-        String pictureFilePathName = await _addPictureToAudioInAudioPlayerView(
+        String pictureFilePathName =
+            await _addPictureToAudioExecutingAudioPlayerViewLeftAppbarMenu(
           tester: tester,
           mockFilePicker: mockFilePicker,
           pictureFileName: pictureFileName,
@@ -11130,6 +11150,7 @@ void main() {
           audioForPictureTitleDurationStr: audioForPictureTitleDurationStr,
           pictureFileNamesLst: pictureFileNamesLst,
           goToAudioPlayerView: false,
+          mustPlayableAudioListBeUsed: false,
         );
 
         // Deleting the added audio picture
@@ -11168,6 +11189,7 @@ void main() {
           audioForPictureTitle: audioAlreadyUsingPictureTitle,
           audioForPictureTitleDurationStr: audioAlreadyUsingPictureDurationStr,
           pictureFileNamesLst: pictureFileNamesAfterDeletionLst,
+          mustPlayableAudioListBeUsed: true,
         );
 
         // Purge the test playlist directory so that the created test
@@ -11207,7 +11229,7 @@ void verifyRestoredPlaylistAndAudio({
 }
 
 /// Returns the added [pictureFilePathName]
-Future<String> _addPictureToAudio({
+Future<String> _addPictureToAudioExecutingAudioListItemMenu({
   required WidgetTester tester,
   required MockFilePicker mockFilePicker,
   required String pictureFileName,
@@ -11259,7 +11281,7 @@ Future<String> _addPictureToAudio({
 }
 
 /// Returns the added [pictureFilePathName]
-Future<String> _addPictureToAudioInAudioPlayerView({
+Future<String> _addPictureToAudioExecutingAudioPlayerViewLeftAppbarMenu({
   required WidgetTester tester,
   required MockFilePicker mockFilePicker,
   required String pictureFileName,
@@ -11291,7 +11313,7 @@ Future<String> _addPictureToAudioInAudioPlayerView({
   return pictureFilePathName;
 }
 
-Future<void> _removeAudioPicture({
+Future<void> _removeAudioPictureExecutingAudioListItemMenu({
   required WidgetTester tester,
   required String picturedAudioTitle,
 }) async {
