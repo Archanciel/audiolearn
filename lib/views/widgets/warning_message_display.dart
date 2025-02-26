@@ -746,32 +746,24 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         });
 
         return const SizedBox.shrink();
-      case WarningMessageType.redownloadedAudioConfirmation:
+      case WarningMessageType.redownloadingAudioConfirmationOrWarning:
         WidgetsBinding.instance.addPostFrameCallback((_) {
+          int redownloadAudioNumber = _warningMessageVM.redownloadAudioNumber;
           _displayWarningDialog(
             context: _context,
-            message:
-                AppLocalizations.of(context)!.redownloadedAudioConfirmation(
-              _warningMessageVM.playlistTitle,
-              _warningMessageVM.redownloadAudioTitle,
-            ),
+            message: (redownloadAudioNumber == 1)
+                ? AppLocalizations.of(context)!.redownloadedAudioConfirmation(
+                    _warningMessageVM.playlistTitle,
+                    _warningMessageVM.redownloadAudioTitle,
+                  )
+                : AppLocalizations.of(context)!.audioNotRedownloadedWarning(
+                    _warningMessageVM.playlistTitle,
+                    _warningMessageVM.redownloadAudioTitle,
+                  ),
             warningMessageVM: _warningMessageVM,
-            warningMode: WarningMode.confirm,
-            themeProviderVM: themeProviderVM,
-          );
-        });
-
-        return const SizedBox.shrink();
-      case WarningMessageType.audioNotRedownloadedWarning:
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          _displayWarningDialog(
-            context: _context,
-            message:
-                AppLocalizations.of(context)!.audioNotRedownloadedWarning(
-              _warningMessageVM.playlistTitle,
-              _warningMessageVM.redownloadAudioTitle,
-            ),
-            warningMessageVM: _warningMessageVM,
+            warningMode: (redownloadAudioNumber == 1)
+                ? WarningMode.confirm
+                : WarningMode.warning,
             themeProviderVM: themeProviderVM,
           );
         });

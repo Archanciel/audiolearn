@@ -790,7 +790,7 @@
     }
   },
   "redownloadDeletedAudio": "Redownload deleted Audio",
-  "redownloadedAudioConfirmation": "The audio \"{redownloadedAudioTitle}\" was redownloaded to the playlist \"{playlistTitle}\".",
+  "redownloadedAudioConfirmation": "The audio \"{redownloadedAudioTitle}\" was redownloaded in the playlist \"{playlistTitle}\".",
   "@redownloadedAudioConfirmation": {
     "description": "Confirmation title for redownloading audio",
     "placeholders": {
@@ -801,7 +801,7 @@
   "playable": "Playable",
   "notPlayable": "Not playable",
   "redownloadDeletedAudio": "Redownload deleted Audio",
-  "audioNotRedownloadedWarning": "The audio \"{redownloadedAudioTitle}\" was not redownloaded to the playlist \"{playlistTitle}\".",
+  "audioNotRedownloadedWarning": "The audio \"{redownloadedAudioTitle}\" was not redownloaded in the playlist \"{playlistTitle}\" because it already exists in the playlist directory.",
   "@audioNotRedownloadedWarning": {
     "description": "Warning title for not redownloading audio",
     "placeholders": {
