@@ -526,16 +526,25 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
             // action which will not block the widget tree
             // rendering.
             WidgetsBinding.instance.addPostFrameCallback((_) async {
-              String audioPlaylistSortFilterParmsName =
+              String? audioPlaylistSortFilterParmsName =
                   playlistListVMlistenFalse
                           .playlistAudioSFparmsNamesForPlaylistDownloadViewMap[
-                      audio.enclosingPlaylist!.title]!;
-              AudioSortFilterParameters audioSortFilterParms =
-                  playlistListVMlistenFalse.getAudioSortFilterParameters(
-                audioSortFilterParametersName: audioPlaylistSortFilterParmsName,
-              );
+                      audio.enclosingPlaylist!.title];
 
-              List<dynamic> resultLst =
+              AudioSortFilterParameters audioSortFilterParms;
+
+              if (audioPlaylistSortFilterParmsName != null) {
+                audioSortFilterParms =
+                    playlistListVMlistenFalse.getAudioSortFilterParameters(
+                  audioSortFilterParametersName:
+                      audioPlaylistSortFilterParmsName,
+                );
+              } else {
+                audioSortFilterParms = AudioSortFilterParameters
+                    .createDefaultAudioSortFilterParameters();
+              }
+
+              int redownloadAudioNumber =
                   await playlistListVMlistenFalse.redownloadDeletedAudio(
                 audio: audio,
               );
@@ -556,17 +565,24 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
                   passedAudioSortFilterParameters: audioSortFilterParms,
                 ),
                 audioSortFilterParms: audioSortFilterParms,
-                audioSortFilterParmsName: audioPlaylistSortFilterParmsName,
+                audioSortFilterParmsName:
+                    audioPlaylistSortFilterParmsName ?? '',
               );
 
-              if (resultLst.length == 1) {
+              if (redownloadAudioNumber == 1) {
                 warningMessageVM.redownloadAudioConfirmation(
                   targetPlaylistTitle: audio.enclosingPlaylist!.title,
                   redownloadAudioTitle: audio.validVideoTitle,
                 );
-              } // else, since no confirmation warning is displayed,
-              //   the no internet warning thrown by AudioDownloadVM.
-              //   notifyDownloadError() can be displayed..
+              }
+              if (redownloadAudioNumber == 0) {
+                warningMessageVM.audioNotRedownloadedWarning(
+                  targetPlaylistTitle: audio.enclosingPlaylist!.title,
+                  redownloadAudioTitle: audio.validVideoTitle,
+                );
+              } // else -1 is returned, since no confirmation warning
+              //   is displayed, the no internet warning thrown by
+              //   AudioDownloadVM.notifyDownloadError() can be displayed.
             });
         }
       }

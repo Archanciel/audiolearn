@@ -1027,5 +1027,17 @@
     }
   },
   "playable": "Jouable",
-  "notPlayable": "Non jouable"
+  "notPlayable": "Non jouable",
+  "audioNotRedownloadedWarning": "L'audio \"{redownloadedAudioTitle}\" n'a pas été retéléchargé dans la playlist \"{playlistTitle}\".",
+  "@audioNotRedownloadedWarning": {
+    "description": "Warning title for not redownloading audio",
+    "placeholders": {
+      "playlistTitle": {
+        "type": "Object"
+      },
+      "redownloadedAudioTitle": {
+        "type": "Object"
+      }
+    }
+  }
 }
