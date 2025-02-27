@@ -989,7 +989,9 @@ class PlaylistListVM extends ChangeNotifier {
   ///   ]. In case ErrorType.noInternet was returned as second element by
   /// _audioDownloadVM.redownloadPlaylistFilteredAudio(), then an empty list is
   /// returned.
-  Future<List<int>> redownloadSortFilteredAudioLst() async {
+  Future<List<int>> redownloadSortFilteredAudioLst({
+    required AudioPlayerVM audioPlayerVMlistenFalse,
+  }) async {
     List<Audio> filteredAudioToRedownload =
         _sortedFilteredSelectedPlaylistPlayableAudioLst!;
 
@@ -1004,13 +1006,23 @@ class PlaylistListVM extends ChangeNotifier {
     notifyListeners();
 
     if (resultLst.length == 2) {
-      // ErrorType.noInternet was returned as second element by
+      // An ErrorType was returned as second element by
       // _audioDownloadVM.redownloadPlaylistFilteredAudio().
       // Returning an empty list will avoid that a confirmation
       // warning will be displayed, which will prevent the error
       // message of the AudioDownloadVM to be displayed.
       return [];
     } else {
+      // If the audio was redownloaded, setting audioWasRedownloaded
+      // to true prevents that the audio slider and the audio position
+      // fields in the audio player view are not updated when playing
+      // an audio the first time after having redownloaded it or having
+      // redownloaded several filtered audio's.
+      audioPlayerVMlistenFalse.setCurrentAudio(
+        audio: filteredAudioToRedownload[0],
+        audioWasRedownloaded: true,
+      );
+
       return [
         filteredAudioToRedownload.length -
             existingAudioFilesNotRedownloadedCount,
@@ -1030,6 +1042,7 @@ class PlaylistListVM extends ChangeNotifier {
   ///   1 if the audio file was redownloaded,
   ///  -1 if a download error happened.
   Future<int> redownloadDeletedAudio({
+    required AudioPlayerVM audioPlayerVMlistenFalse,
     required Audio audio,
   }) async {
     List<Audio> filteredAudioToRedownload = [audio];
@@ -1050,6 +1063,15 @@ class PlaylistListVM extends ChangeNotifier {
       // message of the AudioDownloadVM to be displayed.
       return -1;
     } else {
+      // If the audio was redownloaded, setting audioWasRedownloaded
+      // to true prevents that the audio slider and the audio position
+      // fields in the audio player view are not updated when playing
+      // an audio the first time after having redownloaded it or having
+      // redownloaded several filtered audio's.
+      audioPlayerVMlistenFalse.setCurrentAudio(
+        audio: audio,
+        audioWasRedownloaded: true,
+      );
       return 1 - resultLst[0] as int;
     }
   }

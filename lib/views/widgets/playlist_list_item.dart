@@ -853,9 +853,16 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             // action which will not block the widget tree
             // rendering.
             WidgetsBinding.instance.addPostFrameCallback((_) async {
+              AudioPlayerVM audioPlayerVMlistenFalse =
+                  Provider.of<AudioPlayerVM>(
+                context,
+                listen: false,
+              );
               List<int> redownloadAudioNumberLst =
                   await playlistListVMlistenTrue
-                      .redownloadSortFilteredAudioLst();
+                      .redownloadSortFilteredAudioLst(
+                        audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+                      );
 
               if (redownloadAudioNumberLst.isNotEmpty) {
                 warningMessageVMlistenFalse.redownloadAudioNumberConfirmation(

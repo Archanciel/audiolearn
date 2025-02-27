@@ -546,6 +546,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
 
               int redownloadAudioNumber =
                   await playlistListVMlistenFalse.redownloadDeletedAudio(
+                audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                 audio: audio,
               );
 
