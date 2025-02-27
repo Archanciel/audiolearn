@@ -1197,7 +1197,7 @@ class AudioDownloadVM extends ChangeNotifier {
   /// video will be added.
   ///
   /// If the audio of the single video is correctly downloaded and
-  /// is added to a playlist, then ErrorType.noError.
+  /// is added to a playlist, then ErrorType.noError is returned.
   Future<ErrorType> downloadSingleVideoAudio({
     required Playlist singleVideoTargetPlaylist,
     required String videoUrl,
@@ -1359,11 +1359,10 @@ class AudioDownloadVM extends ChangeNotifier {
     return ErrorType.noError;
   }
 
-  /// {singleVideoTargetPlaylist} is the playlist to which the single
-  /// video will be added.
+  /// This method is based on the downloadSingleVideoAudio() method.
   ///
-  /// If the audio of the single video is correctly downloaded and
-  /// is added to a playlist, then ErrorType.noError is returned.
+  /// If the audio which is already in its enclosing playlist is correctly
+  /// redownloaded, then ErrorType.noError is returned.
   ///
   /// Is not private since it is redefined by the MockAudioDownloadVM.
   Future<ErrorType> redownloadSingleVideoAudio({
@@ -1421,13 +1420,18 @@ class AudioDownloadVM extends ChangeNotifier {
     }
 
     try {
-      if (!await _redownloadAudioFile(
-        youtubeVideoId: youtubeVideo.id,
-      )) {
+      // the _currentDownloadingAudio which is passed below to the
+      // _downloadAudioFile() method was set in the AudioDownloadVM.
+      // redownloadPlaylistFilteredAudio() method which calls this
+      // method.
+      if (!await _downloadAudioFile(
+          youtubeVideoId: youtubeVideo.id,
+          audio: _currentDownloadingAudio,
+          notRedownloading: false)) {
         // Before this improvement, the failed downloaded audio was
         // added to the target playlist.
         //
-        // notifyDownloadError() was called in _redownloadAudioFile()
+        // notifyDownloadError() was called in _downloadAudioFile()
         return ErrorType.downloadAudioYoutubeError;
       }
     } catch (e) {
@@ -2266,14 +2270,24 @@ class AudioDownloadVM extends ChangeNotifier {
         .toList();
   }
 
-  /// Downloads the audio file from the Youtube video and saves it
-  /// to the enclosing playlist directory. Returns true if the audio
-  /// file was successfully downloaded, false otherwise.
+  /// Downloads the audio file from the Youtube video and saves it to the enclosing
+  /// playlist directory. Returns true if the audio file was successfully downloaded,
+  /// false otherwise.
+  /// 
+  /// The method is also called when the user selects the 'Redownload deleted Audio'
+  /// menu item of audio list item or the audio player view left appbar. In this
+  /// case, [notRedownloading] is set to false and [audio] is _currentDownloadingAudio
+  /// which was set set in the AudioDownloadVM.redownloadPlaylistFilteredAudio()
+  /// method.
   Future<bool> _downloadAudioFile({
     required yt.VideoId youtubeVideoId,
     required Audio audio,
+    bool notRedownloading = true,
   }) async {
-    _currentDownloadingAudio = audio;
+    if (notRedownloading) {
+      _currentDownloadingAudio = audio;
+    }
+
     final yt.StreamManifest streamManifest;
 
     try {
@@ -2293,58 +2307,24 @@ class AudioDownloadVM extends ChangeNotifier {
 
     if (isHighQuality) {
       audioStreamInfo = streamManifest.audioOnly.withHighestBitrate();
-      audio.setAudioToMusicQuality();
+      if (notRedownloading) {
+        audio.setAudioToMusicQuality();
+      }
     } else {
       audioStreamInfo = streamManifest.audioOnly.reduce(
           (a, b) => a.bitrate.bitsPerSecond < b.bitrate.bitsPerSecond ? a : b);
     }
 
     final int audioFileSize = audioStreamInfo.size.totalBytes;
-    audio.audioFileSize = audioFileSize;
+
+    if (notRedownloading) {
+      audio.audioFileSize = audioFileSize;
+    }
 
     await _youtubeDownloadAudioFile(
       audioStreamInfo: audioStreamInfo,
       audioFilePathName: audio.filePathName,
       audioFileSize: audioFileSize,
-    );
-
-    return true;
-  }
-
-  /// Redownloads the audio file from the Youtube video and saves it
-  /// to the enclosing playlist directory. Returns true if the audio
-  /// file was successfully downloaded, false otherwise.
-  Future<bool> _redownloadAudioFile({
-    required yt.VideoId youtubeVideoId,
-  }) async {
-    final yt.StreamManifest streamManifest;
-
-    try {
-      streamManifest = await _youtubeExplode!.videos.streamsClient.getManifest(
-        youtubeVideoId,
-      );
-    } catch (e) {
-      notifyDownloadError(
-        errorType: ErrorType.downloadAudioYoutubeError,
-        errorArgOne: e.toString(),
-      );
-
-      return false;
-    }
-
-    final yt.AudioOnlyStreamInfo audioStreamInfo;
-
-    if (isHighQuality) {
-      audioStreamInfo = streamManifest.audioOnly.withHighestBitrate();
-    } else {
-      audioStreamInfo = streamManifest.audioOnly.reduce(
-          (a, b) => a.bitrate.bitsPerSecond < b.bitrate.bitsPerSecond ? a : b);
-    }
-
-    await _youtubeDownloadAudioFile(
-      audioStreamInfo: audioStreamInfo,
-      audioFilePathName: _currentDownloadingAudio.filePathName,
-      audioFileSize: audioStreamInfo.size.totalBytes,
     );
 
     return true;
@@ -2378,7 +2358,7 @@ class AudioDownloadVM extends ChangeNotifier {
       }
     });
 
-    await for (var byteChunk in audioStream) {
+    await for (List<int> byteChunk in audioStream) {
       totalBytesDownloaded += byteChunk.length;
 
       // Check if the deadline has been exceeded before updating the
