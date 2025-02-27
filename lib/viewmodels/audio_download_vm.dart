@@ -2398,16 +2398,6 @@ class AudioDownloadVM extends ChangeNotifier {
     _lastSecondDownloadSpeed = 0;
   }
 
-  void _updateDownloadProgress({
-    required double progress,
-    required int lastSecondDownloadSpeed,
-  }) {
-    _downloadProgress = progress;
-    _lastSecondDownloadSpeed = lastSecondDownloadSpeed;
-
-    notifyListeners();
-  }
-
   /// Returns a map containing the chapters names and their HH:mm:ss
   /// time position in the audio.
   Map<String, String> getVideoDescriptionChapters({
