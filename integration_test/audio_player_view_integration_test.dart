@@ -8664,7 +8664,7 @@ Future<void> _verifyAudioPlayerViewPlaylistSelectionImpact({
     findsOneWidget,
   );
 
-  // Verify that the 'local' playlist download view currently selected
+  // Verify that the playlist download view currently selected
   // playlist is also selected in the playlist download view.
 
   if (playlistDownloadViewCurrentlySelectedPlaylistTitle == '') {
