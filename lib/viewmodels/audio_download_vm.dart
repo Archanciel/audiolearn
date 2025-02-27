@@ -2393,7 +2393,7 @@ class AudioDownloadVM extends ChangeNotifier {
     await audioFileSink.close();
 
     // This avoid that when downloading a next audio file, the displayed
-    // download progress start at 100 % !
+    // download progress starts at 100 % !
     _downloadProgress = 0.0;
     _lastSecondDownloadSpeed = 0;
   }
