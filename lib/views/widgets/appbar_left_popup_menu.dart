@@ -525,6 +525,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                 WidgetsBinding.instance.addPostFrameCallback((_) async {
                   int redownloadAudioNumber =
                       await playlistListVMlistenFalse.redownloadDeletedAudio(
+                    audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                     audio: audio,
                   );
 

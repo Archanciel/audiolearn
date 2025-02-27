@@ -933,10 +933,6 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     return ValueListenableBuilder<String?>(
       valueListenable: audioPlayerVMlistenFalse.currentAudioTitleNotifier,
       builder: (context, currentAudioTitle, child) {
-        // If the current audio title is null, set it to the default value
-        currentAudioTitle ??=
-            AppLocalizations.of(context)!.audioPlayerViewNoCurrentAudio;
-
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -1041,7 +1037,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
             String currentAudioPositionStr;
             String remainingAudioDurationStr;
 
-            if (currentAudioTitle != null) {
+            if (audioPlayerVMlistenFalse.currentAudio != null) {
               sliderValue = currentPosition.inSeconds.toDouble();
               maxDuration = audioPlayerVMlistenFalse
                   .currentAudioTotalDuration.inSeconds
