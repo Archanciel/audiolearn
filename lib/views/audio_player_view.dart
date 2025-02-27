@@ -980,7 +980,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                               currentAudioTitle == null)
                           ? AppLocalizations.of(context)!
                               .audioPlayerViewNoCurrentAudio
-                          : currentAudioTitle!, // Display the title from ValueNotifier
+                          : currentAudioTitle, // Display the title from ValueNotifier
                       style: TextStyle(
                         fontSize: kAudioTitleFontSize,
                         color: (themeProviderVM.currentTheme == AppTheme.dark)
