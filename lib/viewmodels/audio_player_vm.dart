@@ -216,8 +216,15 @@ class AudioPlayerVM extends ChangeNotifier {
   /// the close button of the comment list add dialog. In this case,
   /// maintening the undo/redo lists is useful to enable the user to
   /// undo the audio position change.
+  /// 
+  /// If the audio was redownloaded, setting the current audio even
+  /// if _currentAudio == audio prevents that the audio slider and the
+  /// audio position fields in the audio player view are not updated
+  /// when playing an audio the first time after having redownloaded
+  /// it or having redownloaded several filtered audio's.
   Future<void> setCurrentAudio({
     required Audio audio,
+    bool audioWasRedownloaded = false,
   }) async {
     bool doClearUndoRedoLists;
 
@@ -234,6 +241,7 @@ class AudioPlayerVM extends ChangeNotifier {
     await _setCurrentAudio(
       audio: audio,
       doClearUndoRedoLists: doClearUndoRedoLists,
+      audioWasRedownloaded: audioWasRedownloaded,
     );
 
     audio.enclosingPlaylist!.setCurrentOrPastPlayableAudio(
@@ -281,9 +289,12 @@ class AudioPlayerVM extends ChangeNotifier {
   /// the AudioPlayerView screen without playing the selected playlist
   /// current or last played audio which is displayed correctly in the
   /// AudioPlayerView screen.
+  /// 
+  /// Read below the usefullness of the [audioWasRedownloaded] parameter.
   Future<void> _setCurrentAudio({
     required Audio audio,
     bool doClearUndoRedoLists = true,
+    bool audioWasRedownloaded = false,
   }) async {
     // necessary to avoid position error when the chosen audio is displayed
     // in the AudioPlayerView screen.
@@ -293,7 +304,12 @@ class AudioPlayerVM extends ChangeNotifier {
     //   await _audioPlayer!.pause();
     // }
 
-    if (_currentAudio == audio) {
+    // If the audio was redownloaded, setting the current audio even
+    // if _currentAudio == audio prevents that the audio slider and the
+    // audio position fields in the audio player view are not updated
+    // when playing an audio the first time after having redownloaded
+    // it or having redownloaded several filtered audio's.
+    if (!audioWasRedownloaded && _currentAudio == audio) {
       return;
     }
 
@@ -568,7 +584,7 @@ class AudioPlayerVM extends ChangeNotifier {
         // info dialog opened on the current audio which does display
         // the audio position obtained from the audio player view model
         // will display the correct audio position only every 30 seconds.
-        // This is demonstrated by the audio indo audio state integration
+        // This is demonstrated by the audio info audio state integration
         // tests.
         //
         // The audioPositionSeconds of the current audio will be saved
@@ -826,7 +842,7 @@ class AudioPlayerVM extends ChangeNotifier {
     if (_wasAudioPlayersStopped) {
       // Avoid executing _audioPlayer!.stop() several times, which
       // causes an error due to an audioplayers is disposed exception
-      // in the integration tests. 
+      // in the integration tests.
       return;
     }
 
@@ -836,7 +852,8 @@ class AudioPlayerVM extends ChangeNotifier {
     // setSource() in the playCurrentAudio() method ...
     _wasAudioPlayersStopped = true;
 
-    try { // avoid ridiculous error in integration tests
+    try {
+      // avoid ridiculous error in integration tests
       await _audioPlayer!.stop();
     } catch (e) {
       // ignore: avoid_print
