@@ -2273,7 +2273,7 @@ class AudioDownloadVM extends ChangeNotifier {
   /// Downloads the audio file from the Youtube video and saves it to the enclosing
   /// playlist directory. Returns true if the audio file was successfully downloaded,
   /// false otherwise.
-  /// 
+  ///
   /// The method is also called when the user selects the 'Redownload deleted Audio'
   /// menu item of audio list item or the audio player view left appbar. In this
   /// case, [notRedownloading] is set to false and [audio] is _currentDownloadingAudio
@@ -2348,11 +2348,12 @@ class AudioDownloadVM extends ChangeNotifier {
     DateTime lastUpdate = DateTime.now();
     Timer timer = Timer.periodic(updateInterval, (timer) {
       if (DateTime.now().difference(lastUpdate) >= updateInterval) {
-        _updateDownloadProgress(
-          progress: totalBytesDownloaded / audioFileSize,
-          lastSecondDownloadSpeed:
-              totalBytesDownloaded - previousSecondBytesDownloaded,
-        );
+        _downloadProgress = totalBytesDownloaded / audioFileSize;
+        _lastSecondDownloadSpeed =
+            totalBytesDownloaded - previousSecondBytesDownloaded;
+
+        notifyListeners();
+
         previousSecondBytesDownloaded = totalBytesDownloaded;
         lastUpdate = DateTime.now();
       }
@@ -2364,10 +2365,12 @@ class AudioDownloadVM extends ChangeNotifier {
       // Check if the deadline has been exceeded before updating the
       // progress
       if (DateTime.now().difference(lastUpdate) >= updateInterval) {
-        _updateDownloadProgress(
-            progress: totalBytesDownloaded / audioFileSize,
-            lastSecondDownloadSpeed:
-                totalBytesDownloaded - previousSecondBytesDownloaded);
+        _downloadProgress = totalBytesDownloaded / audioFileSize;
+        _lastSecondDownloadSpeed =
+            totalBytesDownloaded - previousSecondBytesDownloaded;
+
+        notifyListeners();
+
         previousSecondBytesDownloaded = totalBytesDownloaded;
         lastUpdate = DateTime.now();
       }
@@ -2377,16 +2380,22 @@ class AudioDownloadVM extends ChangeNotifier {
 
     // Make sure to update the progress one last time to 100% before
     // finishing
-    _updateDownloadProgress(
-      progress: 1.0,
-      lastSecondDownloadSpeed: 0,
-    );
+
+    _downloadProgress = 1.0;
+    _lastSecondDownloadSpeed = 0;
+
+    notifyListeners();
 
     // Cancel Timer to avoid unuseful updates
     timer.cancel();
 
     await audioFileSink.flush();
     await audioFileSink.close();
+
+    // This avoid that when downloading a next audio file, the displayed
+    // download progress start at 100 % !
+    _downloadProgress = 0.0;
+    _lastSecondDownloadSpeed = 0;
   }
 
   void _updateDownloadProgress({
