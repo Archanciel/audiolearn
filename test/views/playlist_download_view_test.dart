@@ -82,6 +82,7 @@ void main() async {
       );
     });
 
+    // I don't know why next tests are no longer executable
     testWidgets('should toggle list on press', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
