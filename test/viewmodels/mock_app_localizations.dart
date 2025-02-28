@@ -1865,4 +1865,7 @@ class MockAppLocalizations extends AppLocalizations {
     Object playlistTitle,
   ) =>
       "The audio \"$redownloadedAudioTitle\" was not redownloaded to the playlist \"$playlistTitle\".";
+
+  @override
+  String get isPlayableLabel => "Playable";
 }

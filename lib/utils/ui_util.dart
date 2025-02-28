@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -128,5 +130,11 @@ class UiUtil {
     }
 
     return '';
+  }
+
+  static bool isAudioPlayable({
+    required Audio audio,
+  }) {
+    return File(audio.filePathName).existsSync();
   }
 }
