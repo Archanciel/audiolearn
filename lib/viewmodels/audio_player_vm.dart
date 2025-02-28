@@ -216,7 +216,7 @@ class AudioPlayerVM extends ChangeNotifier {
   /// the close button of the comment list add dialog. In this case,
   /// maintening the undo/redo lists is useful to enable the user to
   /// undo the audio position change.
-  /// 
+  ///
   /// If the audio was redownloaded, setting the current audio even
   /// if _currentAudio == audio prevents that the audio slider and the
   /// audio position fields in the audio player view are not updated
@@ -289,7 +289,7 @@ class AudioPlayerVM extends ChangeNotifier {
   /// the AudioPlayerView screen without playing the selected playlist
   /// current or last played audio which is displayed correctly in the
   /// AudioPlayerView screen.
-  /// 
+  ///
   /// Read below the usefullness of the [audioWasRedownloaded] parameter.
   Future<void> _setCurrentAudio({
     required Audio audio,
@@ -625,6 +625,13 @@ class AudioPlayerVM extends ChangeNotifier {
       // Play the next audio if applicable
       if (await _setNextNotFullyPlayedAudioAsCurrentAudio()) {
         await playCurrentAudio(rewindAudioPositionBasedOnPauseDuration: true);
+      } else {
+        // Necessary so that the slider and the position fields are
+        // updated when the unique audio of the playlist plays till
+        // end. Without this instruction, the audio slider and the
+        // audio position fields remain with a value before the audio
+        // end state.
+        currentAudioPositionNotifier.value = _currentAudioTotalDuration;
       }
     });
   }
