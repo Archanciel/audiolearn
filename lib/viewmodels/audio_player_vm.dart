@@ -644,6 +644,13 @@ class AudioPlayerVM extends ChangeNotifier {
       // Play the next audio if applicable
       if (await _setNextNotFullyPlayedAudioAsCurrentAudio()) {
         await playCurrentAudio(rewindAudioPositionBasedOnPauseDuration: true);
+      } else {
+        // Necessary so that the slider and the position fields are
+        // updated when the unique audio of the playlist plays till
+        // end. Without this instruction, the audio slider and the
+        // audio position fields remain with a value before the audio
+        // end state.
+        currentAudioPositionNotifier.value = _currentAudioTotalDuration;
       }
     });
 
