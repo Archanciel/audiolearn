@@ -17,6 +17,8 @@ import 'package:audiolearn/models/playlist.dart';
 import 'package:audiolearn/viewmodels/audio_download_vm.dart';
 import 'package:audiolearn/viewmodels/warning_message_vm.dart';
 
+import 'integration_test_util.dart';
+
 const int secondsDelay = 15; // 7 works, but 10 is safer and 15 solves
 //                              the problems of running the integr tests
 const String existingAudioDateOnlyFileNamePrefix = '230610';
@@ -30,8 +32,10 @@ const String globalTestPlaylistTitle =
 final String globalTestPlaylistDir =
     '$kPlaylistDownloadRootPathWindows${path.separator}$globalTestPlaylistTitle';
 
-void main() {
+Future<void> main() async {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+
+  await IntegrationTestUtil.setWindowsAppSizeAndPosition(isTest: true);
 
   group('Download 1 playlist with short audio', () {
     test('Check initial values', () async {

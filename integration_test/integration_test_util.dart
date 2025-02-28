@@ -1528,7 +1528,7 @@ class IntegrationTestUtil {
     required DateFormatVM dateFormatVM,
     Locale? forcedLocale,
   }) async {
-    await _setWindowsAppSizeAndPosition(isTest: true);
+    await setWindowsAppSizeAndPosition(isTest: true);
 
     await tester.pumpWidget(
       MultiProvider(
@@ -1572,7 +1572,7 @@ class IntegrationTestUtil {
 
   /// If app runs on Windows, Linux or MacOS, set the app size
   /// and position.
-  static Future<void> _setWindowsAppSizeAndPosition({
+  static Future<void> setWindowsAppSizeAndPosition({
     required bool isTest,
   }) async {
     WidgetsFlutterBinding.ensureInitialized();
