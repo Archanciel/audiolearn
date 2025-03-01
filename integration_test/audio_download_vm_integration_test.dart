@@ -1356,8 +1356,8 @@ class _DownloadPlaylistPageState extends State<DownloadPlaylistPage> {
             ),
             ElevatedButton(
               key: const Key('downloadPlaylistAudiosButton'),
-              onPressed: () {
-                Provider.of<AudioDownloadVM>(context, listen: false)
+              onPressed: () async {
+                await Provider.of<AudioDownloadVM>(context, listen: false)
                     .downloadPlaylistAudio(
                   playlistUrl: _urlController.text,
                 );
@@ -1367,13 +1367,13 @@ class _DownloadPlaylistPageState extends State<DownloadPlaylistPage> {
             const SizedBox(height: 20),
             ElevatedButton(
               key: const Key('downloadSingleVideoAudioButton'),
-              onPressed: () {
+              onPressed: () async {
                 AudioDownloadVM audioDownloadVM =
                     Provider.of<AudioDownloadVM>(context, listen: false);
 
                 // the downloaded audio will be added to the unique playlist
                 // located in the test audio directory
-                audioDownloadVM.downloadSingleVideoAudio(
+                await audioDownloadVM.downloadSingleVideoAudio(
                   videoUrl: _urlController.text,
                   singleVideoTargetPlaylist: audioDownloadVM.listOfPlaylist[0],
                 );
@@ -1383,13 +1383,13 @@ class _DownloadPlaylistPageState extends State<DownloadPlaylistPage> {
             const SizedBox(height: 20),
             ElevatedButton(
               key: const Key('downloadSingleVideoAudioInAudioQualityButton'),
-              onPressed: () {
+              onPressed: () async {
                 AudioDownloadVM audioDownloadVM =
                     Provider.of<AudioDownloadVM>(context, listen: false);
 
                 // the downloaded audio will be added to the unique playlist
                 // located in the test audio directory
-                audioDownloadVM.downloadSingleVideoAudio(
+                await audioDownloadVM.downloadSingleVideoAudio(
                   videoUrl: _urlController.text,
                   singleVideoTargetPlaylist: audioDownloadVM.listOfPlaylist[0],
                 );
@@ -1400,13 +1400,13 @@ class _DownloadPlaylistPageState extends State<DownloadPlaylistPage> {
             const SizedBox(height: 20),
             ElevatedButton(
               key: const Key('downloadSingleVideoAudioInMusicQualityButton'),
-              onPressed: () {
+              onPressed: () async {
                 AudioDownloadVM audioDownloadVM =
                     Provider.of<AudioDownloadVM>(context, listen: false);
 
                 // the downloaded audio will be added to the unique playlist
                 // located in the test audio directory
-                audioDownloadVM.downloadSingleVideoAudio(
+                await audioDownloadVM.downloadSingleVideoAudio(
                   videoUrl: _urlController.text,
                   singleVideoTargetPlaylist: audioDownloadVM.listOfPlaylist[0],
                   downloadAtMusicQuality: true,
