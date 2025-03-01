@@ -37,18 +37,6 @@ class MockAppLocalizationsDelegate
 }
 
 void main() async {
-  tearDownAll(() async {
-    if (Platform.isWindows) {
-      var result =
-          Process.runSync('taskkill', ['/F', '/IM', 'flutter_tester.exe']);
-      if (result.exitCode != 0) {
-        print('Error terminating flutter_tester.exe: ${result.stderr}');
-      } else {
-        print('flutter_tester.exe terminated successfully.');
-      }
-    }
-  });
-
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group(
