@@ -48,7 +48,9 @@ class AudioDownloadVM extends ChangeNotifier {
 
   late String _playlistsRootPath;
 
-  // used when updating the playlists root path
+  // used when updating the playlists root path using the
+  // playlist download view left appbar 'Application Settings ...'
+  // menu item.
   set playlistsRootPath(String playlistsRootPath) =>
       _playlistsRootPath = playlistsRootPath;
 
@@ -751,9 +753,9 @@ class AudioDownloadVM extends ChangeNotifier {
     ];
   }
 
-  /// Downloads the audio of the videos referenced in the passed
-  /// playlist url. If the audio of a video has already been
-  /// downloaded, it will not be downloaded again.
+  /// Downloads the audio of the videos referenced in the passed playlist url. If
+  /// the audio of a video has already been downloaded, it will not be downloaded
+  /// again.
   Future<void> downloadPlaylistAudio({
     required String playlistUrl,
   }) async {
@@ -761,7 +763,7 @@ class AudioDownloadVM extends ChangeNotifier {
     // the method is not executed. This avoids that the
     // audio of the playlist are downloaded multiple times
     // if the user clicks multiple times on the download
-    // button.
+    // playlist text button.
     if (downloadingPlaylistUrls.contains(playlistUrl)) {
       return;
     } else {
