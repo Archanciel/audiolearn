@@ -53,3 +53,6 @@ windows/flutter/generated_plugins.cmake
 macos/Flutter/GeneratedPluginRegistrant.swift
 /android/app/.cxx
 /test/data/audio
+*.cc
+*.cmake
+*.swift
