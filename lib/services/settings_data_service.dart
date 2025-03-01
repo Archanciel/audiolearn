@@ -411,13 +411,6 @@ class SettingsDataService {
     bool isFirstRun = (_sharedPreferences.getBool('isFirstRun') ?? true);
 
     if (isFirstRun) {
-      if (settingsJsonFileExist) {
-        // if not, the application is installed for the first time
-        // on a device
-        await SettingsDataService.removePlaylistSettingsFromJsonFile(
-            settingsJsonFile: settingsJsonFile);
-      }
-
       await _sharedPreferences.setBool('isFirstRun', false);
     }
   }
@@ -573,40 +566,25 @@ class SettingsDataService {
     // You can adjust the condition as needed.
     return value.contains('\\') || value.contains('/storage');
   }
-
-  static Future<void> removePlaylistSettingsFromJsonFile({
-    required File settingsJsonFile,
-  }) async {
-    String content = await settingsJsonFile.readAsString();
-    Map<String, dynamic> jsonData = jsonDecode(content);
-
-    (jsonData['SettingType.playlists'] as Map<String, dynamic>)
-        .remove('Playlists.defaultAudioSort');
-    (jsonData['SettingType.playlists'] as Map<String, dynamic>)
-        .remove('Playlists.pathLst');
-
-    String modifiedContent = jsonEncode(jsonData);
-    await settingsJsonFile.writeAsString(modifiedContent);
-  }
 }
 
 Future<void> main() async {
-  String rootPath =
-      "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\saved";
+  // String rootPath =
+  // "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\saved";
   // String testPath =
   //     "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\temp";
-  List<String> oldFilePathLst = DirUtil.listPathFileNamesInSubDirs(
-    rootPath: rootPath,
-    fileExtension: 'json',
-    excludeDirName: kCommentDirName,
-  );
+  // List<String> oldFilePathLst = DirUtil.listPathFileNamesInSubDirs(
+  //   rootPath: rootPath,
+  //   fileExtension: 'json',
+  //   excludeDirName: kCommentDirName,
+  // );
 
-  for (String oldFilePath in oldFilePathLst
-      .where((oldFilePath) => oldFilePath.contains('settings.json'))) {
-    await removePlaylistSettingsFromTestJsonFile(
-      filePath: oldFilePath,
-    );
-  }
+  // for (String oldFilePath in oldFilePathLst
+  //     .where((oldFilePath) => oldFilePath.contains('settings.json'))) {
+  //   await removePlaylistSettingsFromTestJsonFile(
+  //     filePath: oldFilePath,
+  //   );
+  // }
 }
 
 /// Method used after introducing the data location settings
@@ -651,33 +629,6 @@ void convertOldJsonFileToNewJsonFile({
   };
 
   File(newFilePath ?? oldFilePath).writeAsStringSync(jsonEncode(newSettings));
-}
-
-Future<void> removePlaylistSettingsFromTestJsonFile({
-  required String filePath,
-}) async {
-  // Read the file
-  File file = File(filePath);
-  String content = await file.readAsString();
-
-  if (content.contains('/storage/emulated/0/Download/audiolear')) {
-    print("*********** $filePath ***********");
-    return;
-  }
-
-  Map<String, dynamic> jsonData = jsonDecode(content);
-
-  // Remove the specified keys
-  (jsonData['SettingType.playlists'] as Map<String, dynamic>)
-      .remove('Playlists.defaultAudioSort');
-  (jsonData['SettingType.playlists'] as Map<String, dynamic>)
-      .remove('Playlists.pathLst');
-
-  // Convert the modified map back to a JSON string
-  String modifiedContent = jsonEncode(jsonData);
-
-  // Write the modified JSON back to the file
-  await file.writeAsString(modifiedContent);
 }
 
 Future<void> usageExample() async {
