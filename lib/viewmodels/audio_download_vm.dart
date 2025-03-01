@@ -67,6 +67,7 @@ class AudioDownloadVM extends ChangeNotifier {
   bool isHighQuality = false;
 
   bool _stopDownloadPressed = false;
+  // ignore: unnecessary_getters_setters
   bool get isDownloadStopping => _stopDownloadPressed;
 
   // setter used by MockAudioDownloadVM in integration test only !
