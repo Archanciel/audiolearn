@@ -145,7 +145,7 @@
     }
   },
   "youtubePlaylistWithTitleAlreadyInListOfPlaylists": "La playlist Youtube \"{title}\" est déjà dans la liste des playlists. Par conséquent, la playlist locale avec ce titre ne sera pas créée.",
-  "downloadAudioYoutubeError": "Erreur du téléchargement audio de la vidéo \"{videoTitle}\" Youtube: \"{exceptionMessage}\"",
+  "downloadAudioYoutubeError": "Échec du téléchargement de l'audio de la vidéo \"{videoTitle}\" Youtube: \"{exceptionMessage}\"",
   "@downloadAudioYoutubeError": {
     "description": "Message d'erreur affiché lorsqu'une erreur se produit lors du téléchargement audio Youtube",
     "placeholders": {
