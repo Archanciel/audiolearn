@@ -57,13 +57,29 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         switch (errorType) {
           case ErrorType.downloadAudioYoutubeError:
             String exceptionMessage = _warningMessageVM.errorArgOne;
+            String videoTitle = _warningMessageVM.errorArgTwo;
 
-            if (exceptionMessage.isNotEmpty) {
+            if (exceptionMessage.isNotEmpty && videoTitle.isNotEmpty) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 _displayWarningDialog(
                   context: _context,
-                  message: AppLocalizations.of(context)!
-                      .downloadAudioYoutubeError(exceptionMessage),
+                  message:
+                      AppLocalizations.of(context)!.downloadAudioYoutubeError(
+                    videoTitle,
+                    exceptionMessage,
+                  ),
+                  warningMessageVM: _warningMessageVM,
+                  themeProviderVM: themeProviderVM,
+                );
+              });
+            } else if (exceptionMessage.isNotEmpty) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                _displayWarningDialog(
+                  context: _context,
+                  message:
+                      AppLocalizations.of(context)!.downloadAudioYoutubeErrorExceptionMessageOnly(
+                    exceptionMessage,
+                  ),
                   warningMessageVM: _warningMessageVM,
                   themeProviderVM: themeProviderVM,
                 );

@@ -131,8 +131,16 @@
       "title": {}
     }
   },
-  "downloadAudioYoutubeError": "Error downloading audio from Youtube: \"{exceptionMessage}\"",
+  "downloadAudioYoutubeError": "Error downloading audio of \"{videoTitle}\" video from Youtube: \"{exceptionMessage}\"",
   "@downloadAudioYoutubeError": {
+    "description": "Warning announcing that downloading the audio's from Youtube failed.",
+    "placeholders": {
+      "videoTitle": {},
+      "exceptionMessage": {}
+    }
+  },
+  "downloadAudioYoutubeErrorExceptionMessageOnly": "Error downloading audio from Youtube: \"{exceptionMessage}\"",
+  "@downloadAudioYoutubeErrorExceptionMessageOnly": {
     "description": "Warning announcing that downloading the audio's from Youtube failed.",
     "placeholders": {
       "exceptionMessage": {}
