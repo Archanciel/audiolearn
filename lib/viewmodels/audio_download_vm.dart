@@ -122,41 +122,6 @@ class AudioDownloadVM extends ChangeNotifier {
     bool arePlaylistsRestoredFromAndroidToWindows = false;
     String playlistWindowsDownloadRootPath = '';
 
-    if (restoringPlaylistsCommentsAndSettingsJsonFilesFromZip) {
-      // Loading the first playlist in order to determine if it has
-      // been restored from Android.
-      Playlist firstRestoredPlaylist = JsonDataService.loadFromFile(
-        jsonPathFileName: playlistPathFileNameLst[0],
-        type: Playlist,
-      );
-
-      arePlaylistsRestoredFromAndroidToWindows = _playlistsRootPath
-              .contains('C:\\') &&
-          firstRestoredPlaylist.downloadPath.contains('/storage/emulated/0');
-
-      if (arePlaylistsRestoredFromAndroidToWindows) {
-        List<String> playlistRootPathElementsLst =
-            firstRestoredPlaylist.downloadPath.split('/');
-
-        // This name may have been changed by the user on Android
-        // using the 'Application Settings ...' menu.
-        String androidAppPlaylistDirName =
-            playlistRootPathElementsLst[playlistRootPathElementsLst.length - 2];
-
-        _playlistsRootPath =
-            "$kApplicationPathWindows${path.separator}$androidAppPlaylistDirName";
-        _settingsDataService.set(
-            settingType: SettingType.dataLocation,
-            settingSubType: DataLocation.playlistRootPath,
-            value: _playlistsRootPath);
-
-        _settingsDataService.saveSettings();
-
-        playlistWindowsDownloadRootPath =
-            "$_playlistsRootPath${path.separator}";
-      }
-    }
-
     try {
       for (String playlistPathFileName in playlistPathFileNameLst) {
         Playlist currentPlaylist = JsonDataService.loadFromFile(
@@ -165,6 +130,33 @@ class AudioDownloadVM extends ChangeNotifier {
         );
 
         if (restoringPlaylistsCommentsAndSettingsJsonFilesFromZip) {
+          arePlaylistsRestoredFromAndroidToWindows =
+              _playlistsRootPath.contains('C:\\') &&
+                  currentPlaylist.downloadPath
+                      .contains('/storage/emulated/0');
+
+          if (arePlaylistsRestoredFromAndroidToWindows) {
+            List<String> playlistRootPathElementsLst =
+                currentPlaylist.downloadPath.split('/');
+
+            // This name may have been changed by the user on Android
+            // using the 'Application Settings ...' menu.
+            String androidAppPlaylistDirName = playlistRootPathElementsLst[
+                playlistRootPathElementsLst.length - 2];
+
+            _playlistsRootPath =
+                "$kApplicationPathWindows${path.separator}$androidAppPlaylistDirName";
+            _settingsDataService.set(
+                settingType: SettingType.dataLocation,
+                settingSubType: DataLocation.playlistRootPath,
+                value: _playlistsRootPath);
+
+            _settingsDataService.saveSettings();
+
+            playlistWindowsDownloadRootPath =
+                "$_playlistsRootPath${path.separator}";
+          }
+
           _updatePlaylistRootPathIfNecessary(
             playlist: currentPlaylist,
             isPlaylistWindowsRootPath: arePlaylistsRestoredFromAndroidToWindows,
