@@ -130,31 +130,37 @@ class AudioDownloadVM extends ChangeNotifier {
         );
 
         if (restoringPlaylistsCommentsAndSettingsJsonFilesFromZip) {
-          arePlaylistsRestoredFromAndroidToWindows =
-              _playlistsRootPath.contains('C:\\') &&
-                  currentPlaylist.downloadPath
-                      .contains('/storage/emulated/0');
+          if (!arePlaylistsRestoredFromAndroidToWindows) {
+            // If arePlaylistsRestoredFromAndroidToWindows is false,
+            // then the playlists root path is the same as the one
+            // used on Android. The playlists root path is must be
+            // updated if the playlists are restored from Android to
+            // Windows.
+            arePlaylistsRestoredFromAndroidToWindows = _playlistsRootPath
+                    .contains('C:\\') &&
+                currentPlaylist.downloadPath.contains('/storage/emulated/0');
 
-          if (arePlaylistsRestoredFromAndroidToWindows) {
-            List<String> playlistRootPathElementsLst =
-                currentPlaylist.downloadPath.split('/');
+            if (arePlaylistsRestoredFromAndroidToWindows) {
+              List<String> playlistRootPathElementsLst =
+                  currentPlaylist.downloadPath.split('/');
 
-            // This name may have been changed by the user on Android
-            // using the 'Application Settings ...' menu.
-            String androidAppPlaylistDirName = playlistRootPathElementsLst[
-                playlistRootPathElementsLst.length - 2];
+              // This name may have been changed by the user on Android
+              // using the 'Application Settings ...' menu.
+              String androidAppPlaylistDirName = playlistRootPathElementsLst[
+                  playlistRootPathElementsLst.length - 2];
 
-            _playlistsRootPath =
-                "$kApplicationPathWindows${path.separator}$androidAppPlaylistDirName";
-            _settingsDataService.set(
-                settingType: SettingType.dataLocation,
-                settingSubType: DataLocation.playlistRootPath,
-                value: _playlistsRootPath);
+              _playlistsRootPath =
+                  "$kApplicationPathWindows${path.separator}$androidAppPlaylistDirName";
+              _settingsDataService.set(
+                  settingType: SettingType.dataLocation,
+                  settingSubType: DataLocation.playlistRootPath,
+                  value: _playlistsRootPath);
 
-            _settingsDataService.saveSettings();
+              _settingsDataService.saveSettings();
 
-            playlistWindowsDownloadRootPath =
-                "$_playlistsRootPath${path.separator}";
+              playlistWindowsDownloadRootPath =
+                  "$_playlistsRootPath${path.separator}";
+            }
           }
 
           _updatePlaylistRootPathIfNecessary(
