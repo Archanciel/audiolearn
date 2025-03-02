@@ -592,167 +592,6 @@ class AudioDownloadVM extends ChangeNotifier {
     );
   }
 
-  /// Method called once in order to set the channel value of all already
-  /// downloaded audio files of all playlists. This is necessary since
-  /// the channel value of the audio files was not set when those audio files
-  /// were downloaded.
-  ///
-  /// This functionality is no longer used since now the Youtube channel
-  /// is set when the audio is downloaded from the Youtube playlist.
-  Future<void> ensureAllAudioYoutubeChannelOfAllPlaylistsAreSet() async {
-    int numberOfModifiedDownloadedAudio = 0;
-    int numberOfModifiedPlayableAudio = 0;
-
-    for (Playlist playlist in _listOfPlaylist) {
-      if (playlist.playlistType == PlaylistType.local) {
-        continue;
-      }
-
-      List<int> modifiedAudioNumberLst =
-          await obtainPlaylistAudioYoutubeChannelAlt(
-        playlist: playlist,
-      );
-
-      numberOfModifiedDownloadedAudio += modifiedAudioNumberLst[0];
-      numberOfModifiedPlayableAudio += modifiedAudioNumberLst[1];
-
-      JsonDataService.saveToFile(
-        model: playlist,
-        path: playlist.getPlaylistDownloadFilePathName(),
-      );
-    }
-
-    warningMessageVM.confirmYoutubeChannelModifications(
-      numberOfModifiedDownloadedAudio: numberOfModifiedDownloadedAudio,
-      numberOfModifiedPlayableAudio: numberOfModifiedPlayableAudio,
-    );
-
-    notifyListeners();
-  }
-
-  /// Downloads the audio of the videos referenced in the passed
-  /// playlist url. If the audio of a video has already been
-  /// downloaded, it will not be downloaded again.
-  Future<List<int>> obtainPlaylistAudioYoutubeChannel({
-    required Playlist playlist,
-  }) async {
-    String playlistUrl = playlist.url;
-    _youtubeExplode ??= yt.YoutubeExplode();
-
-    // get the Youtube playlist
-    String? playlistId = yt.PlaylistId.parsePlaylistId(playlistUrl);
-
-    int numberOfModifiedDownloadedAudio = 0;
-    int numberOfModifiedPlayableAudio = 0;
-
-    Stream<yt.Video> videoStream =
-        _youtubeExplode!.playlists.getVideos(playlistId).asBroadcastStream();
-
-    try {
-      // try / catch necessary due to possible youtube explode errors
-      await for (yt.Video youtubeVideo in videoStream) {
-        final String youtubeVideoTitle = youtubeVideo.title;
-        final String youtubeVideoChannel = youtubeVideo.author;
-
-        try {
-          Audio downloadedAudio = playlist.downloadedAudioLst.firstWhere(
-            (audio) => audio.originalVideoTitle == youtubeVideoTitle,
-          );
-
-          if (downloadedAudio.youtubeVideoChannel == youtubeVideoChannel) {
-            continue;
-          } else {
-            downloadedAudio.youtubeVideoChannel = youtubeVideoChannel;
-            numberOfModifiedDownloadedAudio++;
-          }
-
-          try {
-            Audio correspondingPlayableAudio = playlist.playableAudioLst
-                .firstWhere((audio) => audio == downloadedAudio);
-            correspondingPlayableAudio.youtubeVideoChannel =
-                youtubeVideoChannel;
-            numberOfModifiedPlayableAudio++;
-          } catch (_) {
-            // If the downloaded audio is not in the playable audio list of the enclosing playlist
-            continue;
-          }
-        } catch (_) {
-          // The audio of the video has not been downloaded
-          continue;
-        }
-      }
-    } catch (e) {
-      notifyDownloadError(
-        errorType: ErrorType.downloadAudioYoutubeError,
-        errorArgOne: e.toString(),
-      );
-    }
-
-    _youtubeExplode!.close();
-    _youtubeExplode = null;
-
-    return [
-      numberOfModifiedDownloadedAudio,
-      numberOfModifiedPlayableAudio,
-    ];
-  }
-
-  /// Downloads the audio of the videos referenced in the passed
-  /// playlist url. If the audio of a video has already been
-  /// downloaded, it will not be downloaded again.
-  Future<List<int>> obtainPlaylistAudioYoutubeChannelAlt({
-    required Playlist playlist,
-  }) async {
-    _youtubeExplode ??= yt.YoutubeExplode();
-    List<Audio> downloadedAudioLst = playlist.downloadedAudioLst;
-
-    int numberOfModifiedDownloadedAudio = 0;
-    int numberOfModifiedPlayableAudio = 0;
-    yt.VideoId videoId;
-    yt.Video youtubeVideo;
-    String youtubeVideoChannel;
-
-    try {
-      // try / catch necessary due to possible youtube explode errors
-      for (Audio audio in downloadedAudioLst) {
-        String videoUrl = audio.videoUrl;
-        videoId = yt.VideoId(videoUrl);
-        youtubeVideo = await _youtubeExplode!.videos.get(videoId);
-        youtubeVideoChannel = youtubeVideo.author;
-
-        if (audio.youtubeVideoChannel == youtubeVideoChannel) {
-          continue;
-        } else {
-          audio.youtubeVideoChannel = youtubeVideoChannel;
-          numberOfModifiedDownloadedAudio++;
-        }
-
-        try {
-          Audio correspondingPlayableAudio = playlist.playableAudioLst
-              .firstWhere((playableAudio) => playableAudio == audio);
-          correspondingPlayableAudio.youtubeVideoChannel = youtubeVideoChannel;
-          numberOfModifiedPlayableAudio++;
-        } catch (_) {
-          // If the downloaded audio is not in the playable audio list of the enclosing playlist
-          continue;
-        }
-      }
-    } catch (e) {
-      notifyDownloadError(
-        errorType: ErrorType.downloadAudioYoutubeError,
-        errorArgOne: e.toString(),
-      );
-    }
-
-    _youtubeExplode!.close();
-    _youtubeExplode = null;
-
-    return [
-      numberOfModifiedDownloadedAudio,
-      numberOfModifiedPlayableAudio,
-    ];
-  }
-
   /// Downloads the audio of the videos referenced in the passed playlist url. If
   /// the audio of a video has already been downloaded, it will not be downloaded
   /// again.
@@ -910,6 +749,7 @@ class AudioDownloadVM extends ChangeNotifier {
         notifyDownloadError(
           errorType: ErrorType.downloadAudioYoutubeError,
           errorArgOne: e.toString(),
+          errorArgTwo: youtubeVideoTitle,
         );
         continue;
       }
@@ -1326,6 +1166,7 @@ class AudioDownloadVM extends ChangeNotifier {
       notifyDownloadError(
         errorType: ErrorType.downloadAudioYoutubeError,
         errorArgOne: e.toString(),
+        errorArgTwo: youtubeVideo.title,
       );
 
       return ErrorType.downloadAudioYoutubeError;
@@ -1384,6 +1225,7 @@ class AudioDownloadVM extends ChangeNotifier {
       notifyDownloadError(
         errorType: ErrorType.noInternet,
         errorArgOne: e.toString(),
+        errorArgTwo: _currentDownloadingAudio.originalVideoTitle,
       );
 
       return ErrorType.noInternet;
@@ -1408,6 +1250,7 @@ class AudioDownloadVM extends ChangeNotifier {
       notifyDownloadError(
         errorType: ErrorType.downloadAudioYoutubeError,
         errorArgOne: e.toString(),
+        errorArgTwo: _currentDownloadingAudio.originalVideoTitle,
       );
 
       return ErrorType.downloadAudioYoutubeError;
@@ -1444,6 +1287,7 @@ class AudioDownloadVM extends ChangeNotifier {
       notifyDownloadError(
         errorType: ErrorType.downloadAudioYoutubeError,
         errorArgOne: e.toString(),
+        errorArgTwo: _currentDownloadingAudio.originalVideoTitle,
       );
 
       return ErrorType.downloadAudioYoutubeError;
@@ -2301,6 +2145,7 @@ class AudioDownloadVM extends ChangeNotifier {
       notifyDownloadError(
         errorType: ErrorType.downloadAudioYoutubeError,
         errorArgOne: e.toString(),
+        errorArgTwo: audio.originalVideoTitle,
       );
 
       return false;

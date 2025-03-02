@@ -2719,12 +2719,19 @@ class PlaylistListVM extends ChangeNotifier {
   /// map and the unnamed sort/filter history list of the restored app settings
   /// zip version to the corresponding list or map of the current app settings
   /// version.
+  /// 
+  /// When this method is called, the application settings version before executing
+  /// the restoration from the zip file was already loaded and is in the private
+  /// variable _settingsDataService. Now, the app settings file is the settings
+  /// file restored from the zip file.
   Future<void> mergeRestoredFromZipSettingsWithCurrentAppSettings() async {
     final SettingsDataService settingsDataServiceZipVersion =
         SettingsDataService(
       sharedPreferences: await SharedPreferences.getInstance(),
     );
 
+    // Load the restored settings whose corresponding list or map will
+    // be merged with the current app settings.
     await settingsDataServiceZipVersion.loadSettingsFromFile(
       settingsJsonPathFileName:
           '${DirUtil.getApplicationPath()}${Platform.pathSeparator}$kSettingsFileName',
