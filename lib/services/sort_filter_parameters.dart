@@ -45,7 +45,7 @@ const int sortDescending = -1;
 /// The instances of this class contain the sort function and the sort order
 /// for a specific sorting option. The sort function is used to extract the
 /// value to sort on from T instance, currently only Audio instance.
-/// 
+///
 /// main() contains an example of how to use this class to sort a list of strings.
 /// The list is sorted by chapter number or by title. The chapter number is
 /// extracted from the string using a regular expression. The sort is done in
@@ -155,19 +155,24 @@ class AudioSortFilterParameters {
     ),
     SortingOption.chapterAudioTitle: SortCriteria<Audio>(
       selectorFunction: (Audio audio) {
-        final regex = RegExp(r'(\d+)[_\-/:]\d+');
+        final regex =
+            RegExp(r'(\d+)[_\-/:]\d+|\b(\d+)\s*à\s*\d+', caseSensitive: false);
 
         String validVideoTitleLow = audio.validVideoTitle.toLowerCase();
 
-        RegExpMatch? firstMatch = regex.firstMatch(validVideoTitleLow);
+        RegExpMatch? match = regex.firstMatch(validVideoTitleLow);
 
-        if (firstMatch != null) {
-          int firstMatchInt = int.parse(firstMatch.group(1)!);
+        if (match != null) {
+          // Extract the first captured number, either from the first group or second
+          int chapterNumber = match.group(1) != null
+              ? int.parse(match.group(1)!) // First regex match (1_2, 3-5)
+              : int.parse(
+                  match.group(2)!); // Second regex match (6 à 10, 11 à 15)
 
-          return firstMatchInt;
+          return chapterNumber;
         }
 
-        return validVideoTitleLow;
+        return validVideoTitleLow; // Default to title string if no match is found
       },
       sortOrder: sortAscending,
     ),
