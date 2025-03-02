@@ -3685,13 +3685,13 @@ void main() {
             equals(expectedResultForTitleDesc
                 .map((audio) => audio.validVideoTitle)
                 .toList()));
-  
+
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
           rootPath: kPlaylistDownloadRootPathWindows,
         );
-    });
+      });
       test('''sort by - chapter title number. Example: ... 1-1 ..., ... 1-2 ...,
             ... 2-1 ...''', () {
         final Audio avantPropos = Audio.fullConstructor(
@@ -4386,13 +4386,13 @@ void main() {
             equals(expectedResultForTitleDesc
                 .map((audio) => audio.validVideoTitle)
                 .toList()));
- 
+
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
           rootPath: kPlaylistDownloadRootPathWindows,
         );
-     });
+      });
       test('''sort by / chapter title number. Example: ... 1/1 ..., ... 1/2 ...,
             ... 2/1 ...''', () {
         final Audio avantPropos = Audio.fullConstructor(
@@ -5087,13 +5087,13 @@ void main() {
             equals(expectedResultForTitleDesc
                 .map((audio) => audio.validVideoTitle)
                 .toList()));
- 
+
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
           rootPath: kPlaylistDownloadRootPathWindows,
         );
-     });
+      });
       test('''sort by : chapter title number. Example: ... 1:1 ..., ... 1:2 ...,
             ... 2:1 ...''', () {
         final Audio avantPropos = Audio.fullConstructor(
@@ -5788,13 +5788,13 @@ void main() {
             equals(expectedResultForTitleDesc
                 .map((audio) => audio.validVideoTitle)
                 .toList()));
- 
+
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
           rootPath: kPlaylistDownloadRootPathWindows,
         );
-     });
+      });
       test('''sort by _ chapter title number. The order of the list of audio to
             sort (included in the variable audioList below) was modified.''',
           () {
@@ -7894,13 +7894,13 @@ void main() {
             equals(expectedResultForTitleDesc
                 .map((audio) => audio.validVideoTitle)
                 .toList()));
- 
+
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
           rootPath: kPlaylistDownloadRootPathWindows,
         );
-     });
+      });
       test('''sort by : chapter title number. Example: ... 1:1 ..., ... 1:2 ...,
             ... 2:1 ... . The order of the list of audio to sort (included in the
             variable audioList below) was modified.''', () {
@@ -8596,13 +8596,13 @@ void main() {
             equals(expectedResultForTitleDesc
                 .map((audio) => audio.validVideoTitle)
                 .toList()));
- 
+
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
           rootPath: kPlaylistDownloadRootPathWindows,
         );
-     });
+      });
       test('''sort by chapter title number. The valid video title of the audio
             contained in the 'Gary Renard - Et l'univers disparaîtra imported'
             json file are original and so not modified.''', () {
@@ -8693,13 +8693,207 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindows,
         );
       });
- 
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindows,
-        );
-   });
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindows,
+      );
+    });
+    test('''sort by ' à ' chapter title number. Example: chapitre 1 à 5,
+            Chapitre 6 à 10, chapitre 11 à 15''', () {
+      final Audio one = Audio.fullConstructor(
+          enclosingPlaylist: audioPlaylist,
+          audioDownloadDateTime: DateTime(2025, 03, 01, 20, 15, 58),
+          audioDownloadDuration: const Duration(milliseconds: 10503),
+          audioDownloadSpeed: 474501,
+          audioDuration: const Duration(milliseconds: 817203),
+          audioFileName:
+              "250301-201558-Livre Audio Imitation du Christ Livre 1 Chapitre 1 \u00e0 5 23-08-27.mp3",
+          audioFileSize: 4983815,
+          audioPausedDateTime: null,
+          audioPlaySpeed: 1.0,
+          audioPlayVolume: 0.5,
+          audioPositionSeconds: 0,
+          compactVideoDescription:
+              "La voie de Dieu par la voix des saints\n\nChapitre 1: Qu'il faut imiter J\u00e9sus-Christ, et m\u00e9priser toutes les vanit\u00e9s du monde.\nChapitre 2: Avoir d'humble sentiments de soi-m\u00eame.\nChapitre 3: De la doctrine de la v\u00e9rit\u00e9. ...",
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          isAudioImported: false,
+          isAudioMusicQuality: false,
+          isPaused: true,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          originalVideoTitle:
+              "Livre Audio Imitation du Christ Livre 1 Chapitre 1 \u00e0 5",
+          validVideoTitle:
+              "Livre Audio l'Imitation de Christ Livre 1 chapitre 1 \u00e0 5",
+          videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
+          videoUrl: "https://www.youtube.com/watch?v=ZkMs8aGzUaU",
+          youtubeVideoChannel: "La voie de Dieu par la voix des saints");
+      final Audio two = Audio.fullConstructor(
+          enclosingPlaylist: audioPlaylist,
+          audioDownloadDateTime: DateTime(2025, 03, 01, 20, 15, 58),
+          audioDownloadDuration: const Duration(milliseconds: 10503),
+          audioDownloadSpeed: 474501,
+          audioDuration: const Duration(milliseconds: 863411),
+          audioFileName:
+              "250301-201610-LIvre audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 11 \u00e0 15 23-08-27.mp3",
+          audioFileSize: 5265772,
+          audioPausedDateTime: null,
+          audioPlaySpeed: 1.0,
+          audioPlayVolume: 0.5,
+          audioPositionSeconds: 0,
+          compactVideoDescription:
+              "La voie de Dieu par la voix des saints\n\nChapitre 11:  Des moyens d'acqu\u00e9rir la paix int\u00e9rieure et du soin d'avancer dans la vertu.\nChapitre 12: De l'avantage de l'adversit\u00e9.\nChapitre 13 :  De la r\u00e9sistance aux tentations. ...\n\nChapitre14: Eviter, Chapitre15: Des",
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          isAudioImported: false,
+          isAudioMusicQuality: false,
+          isPaused: true,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          originalVideoTitle:
+              "LIvre audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 11 \u00e0 15",
+          validVideoTitle:
+              "LIvre audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 11 \u00e0 15",
+          videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
+          videoUrl: "https://www.youtube.com/watch?v=ezC10g8xnPo",
+          youtubeVideoChannel: "La voie de Dieu par la voix des saints");
+      final Audio three = Audio.fullConstructor(
+          enclosingPlaylist: audioPlaylist,
+          audioDownloadDateTime: DateTime(2025, 03, 01, 20, 15, 58),
+          audioDownloadDuration: const Duration(milliseconds: 10503),
+          audioDownloadSpeed: 474501,
+          audioDuration: const Duration(milliseconds: 1444281),
+          audioFileName:
+              "250301-201621-Livre audio L imitation de J\u00e9sus Christ Livre 1 chapitre 16 \u00e0 21 23-08-27.mp3",
+          audioFileSize: 8807603,
+          audioPausedDateTime: null,
+          audioPlaySpeed: 1.0,
+          audioPlayVolume: 0.5,
+          audioPositionSeconds: 0,
+          compactVideoDescription:
+              "La voie de Dieu par la voix des saints\n\nChapitre 16: Qu'il faut supporter les d\u00e9fauts d'autrui.\nChapitre17: De la vie religieuse.\nChapitre 18: De l'exemple des saints. ...",
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          isAudioImported: false,
+          isAudioMusicQuality: false,
+          isPaused: true,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          originalVideoTitle:
+              "Livre audio L imitation de J\u00e9sus Christ Livre 1 chapitre 16 \u00e0 21",
+          validVideoTitle:
+              "Livre audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 16 \u00e0 21",
+          videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
+          videoUrl: "https://www.youtube.com/watch?v=BTHUIqDUBTI",
+          youtubeVideoChannel: "La voie de Dieu par la voix des saints");
+      final Audio four = Audio.fullConstructor(
+          enclosingPlaylist: audioPlaylist,
+          audioDownloadDateTime: DateTime(2025, 03, 01, 20, 15, 58),
+          audioDownloadDuration: const Duration(milliseconds: 10503),
+          audioDownloadSpeed: 474501,
+          audioDuration: const Duration(milliseconds: 1642487),
+          audioFileName:
+              "250301-201628-Livre audio l imitation de J\u00e9sus Christ Livre 1 chapitre 22 \u00e0 25 23-08-27.mp3",
+          audioFileSize: 10016268,
+          audioPausedDateTime: null,
+          audioPlaySpeed: 1.0,
+          audioPlayVolume: 0.5,
+          audioPositionSeconds: 0,
+          compactVideoDescription:
+              "La voie de Dieu par la voix des saints\n\nChapitre 22: De la consid\u00e9ration de la mis\u00e8re humaine.\nChapitre 23: De la m\u00e9ditation de la mort.\nChapitre 24: Du jugement et des peines des p\u00e9cheurs. ...",
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          isAudioImported: false,
+          isAudioMusicQuality: false,
+          isPaused: true,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          originalVideoTitle:
+              "Livre audio l imitation de J\u00e9sus Christ Livre 1 chapitre 22 \u00e0 25",
+          validVideoTitle:
+              "Livre audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 22 \u00e0 25",
+          videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
+          videoUrl: "https://www.youtube.com/watch?v=7dkWTWTi8A8",
+          youtubeVideoChannel: "La voie de Dieu par la voix des saints");
+      final Audio five = Audio.fullConstructor(
+          enclosingPlaylist: audioPlaylist,
+          audioDownloadDateTime: DateTime(2025, 03, 01, 20, 15, 58),
+          audioDownloadDuration: const Duration(milliseconds: 10503),
+          audioDownloadSpeed: 474501,
+          audioDuration: const Duration(milliseconds: 475870),
+          audioFileName:
+              "250301-201546-Livre Audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 6 \u00e0 10 23-08-27.mp3",
+          audioFileSize: 2902447,
+          audioPausedDateTime: null,
+          audioPlaySpeed: 1.0,
+          audioPlayVolume: 0.5,
+          audioPositionSeconds: 0,
+          compactVideoDescription:
+              "La voie de Dieu par la voix des saints\n\nChapitre 6: Des affections d\u00e9r\u00e9gl\u00e9s.\nChapitre 7: Qu'il faut fuir l'orgueil et les vaines esp\u00e9rances.\nChapitre 8: Eviter la pop grande familiarit\u00e9. ...",
+          copiedFromPlaylistTitle: null,
+          copiedToPlaylistTitle: null,
+          isAudioImported: false,
+          isAudioMusicQuality: false,
+          isPaused: true,
+          isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+          movedFromPlaylistTitle: null,
+          movedToPlaylistTitle: null,
+          originalVideoTitle:
+              "Livre Audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 6 \u00e0 10",
+          validVideoTitle:
+              "Livre Audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 6 \u00e0 10",
+          videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
+          videoUrl: "https://www.youtube.com/watch?v=FUFz3R4PX6Q",
+          youtubeVideoChannel: "La voie de Dieu par la voix des saints");
+
+      List<Audio> audioList = [
+        one,
+        two,
+        three,
+        four,
+        five,
+      ];
+
+      List<Audio> expectedResultForTitleAsc = [
+        one,
+        five,
+        two,
+        three,
+        four,
+      ];
+
+      final List<SortingItem> selectedSortItemLstAsc = [
+        SortingItem(
+          sortingOption: SortingOption.chapterAudioTitle,
+          isAscending: true,
+        ),
+      ];
+
+      List<Audio> sortedByTitleAsc =
+          audioSortFilterService.sortAudioLstBySortingOptions(
+        audioLst: audioList,
+        selectedSortItemLst: selectedSortItemLstAsc,
+      );
+
+      expect(
+          sortedByTitleAsc.map((audio) => audio.validVideoTitle).toList(),
+          equals(expectedResultForTitleAsc
+              .map((audio) => audio.validVideoTitle)
+              .toList()));
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindows,
+      );
+    });
   });
   group("sort audio lst by multiple SortingOption's", () {
     late AudioSortFilterService audioSortFilterService;
@@ -8883,13 +9077,13 @@ void main() {
           equals(expectedResultForDurationDescAndTitleDesc
               .map((audio) => audio.validVideoTitle)
               .toList()));
-  
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindows,
-        );
-  });
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindows,
+      );
+    });
   });
   group('filterAndSortAudioLst by title and description', () {
     late AudioSortFilterService audioSortFilterService;
@@ -9157,13 +9351,13 @@ void main() {
           equals(expectedResultForFilterSortTitleDesc
               .map((audio) => audio.validVideoTitle)
               .toList()));
- 
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindows,
-        );
-   });
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindows,
+      );
+    });
     test('with search word present in compact description only', () {
       final Audio zebra1 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
@@ -9384,11 +9578,11 @@ void main() {
               .map((audio) => audio.validVideoTitle)
               .toList()));
 
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindows,
-        );
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindows,
+      );
     });
     test('with search word in title and in compact description', () {
       final Audio zebra1 = Audio.fullConstructor(
@@ -9613,11 +9807,11 @@ void main() {
               .map((audio) => audio.validVideoTitle)
               .toList()));
 
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindows,
-        );
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindows,
+      );
     });
   });
   group('filterAndSortAudioLst by title only', () {
@@ -10881,13 +11075,13 @@ void main() {
       playlistListVM.getUpToDateSelectablePlaylists();
 
       audioSortFilterService = AudioSortFilterService();
- 
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindows,
-        );
-   });
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindows,
+      );
+    });
     test('filter not listened audio only', () {
       List<Audio> audioList = playlistListVM
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
@@ -11099,7 +11293,7 @@ void main() {
       playlistListVM.getUpToDateSelectablePlaylists();
 
       audioSortFilterService = AudioSortFilterService();
-   });
+    });
     test('filter commented or not commented audio', () {
       List<Audio> audioList = playlistListVM
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
@@ -11343,13 +11537,13 @@ void main() {
       playlistListVM.getUpToDateSelectablePlaylists();
 
       audioSortFilterService = AudioSortFilterService();
- 
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindows,
-        );
-   });
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindows,
+      );
+    });
     test(
         'filter by no word in audio title or video compact description and sort by download date descending',
         () {
@@ -12427,13 +12621,13 @@ void main() {
         playlistListVM.getUpToDateSelectablePlaylists();
 
         audioSortFilterService = AudioSortFilterService();
- 
+
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
           rootPath: kPlaylistDownloadRootPathWindows,
         );
-     });
+      });
       test('''Set start + end audio filesize and verify filtered audio list''',
           () {
         List<Audio> audioNotFilteredLst = playlistListVM
