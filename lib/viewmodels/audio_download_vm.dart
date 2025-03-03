@@ -113,7 +113,7 @@ class AudioDownloadVM extends ChangeNotifier {
       excludeDirName: kCommentDirName,
     );
 
-    // Removing settings.json fromm the list of playlist json files if
+    // Removing settings.json from the list of playlist json files if
     // it is present in the list.
     playlistPathFileNameLst.removeWhere(
       (filePath) => filePath.contains(kSettingsFileName),
