@@ -169,7 +169,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
           _updatePlaylistRootPathIfNecessary(
             playlist: currentPlaylist,
-            isPlaylistWindowsRootPath: arePlaylistsRestoredFromAndroidToWindows,
+            isPlaylistsRestoredFromAndroidToWindows: arePlaylistsRestoredFromAndroidToWindows,
             playlistWindowsDownloadRootPath: playlistWindowsDownloadRootPath,
           );
 
@@ -318,12 +318,13 @@ class AudioDownloadVM extends ChangeNotifier {
     }
   }
 
+  // This method is only called in the situation of restoring from a zip file.
   void _updatePlaylistRootPathIfNecessary({
     required Playlist playlist,
-    required bool isPlaylistWindowsRootPath,
+    required bool isPlaylistsRestoredFromAndroidToWindows,
     required String playlistWindowsDownloadRootPath,
   }) {
-    if (isPlaylistWindowsRootPath) {
+    if (isPlaylistsRestoredFromAndroidToWindows) {
       if (playlist.downloadPath.contains(kPlaylistDownloadRootPath)) {
         playlist.downloadPath = playlist.downloadPath
             .replaceFirst(
@@ -333,14 +334,14 @@ class AudioDownloadVM extends ChangeNotifier {
             .trim(); // trim() is necessary since the path is used in
         //              the JsonDataService.saveToFile constructor and
         //              the path must not contain any trailing spaces
-        //              on Windows.
+        //              on Windows or Android.
       }
     } else {
       playlist.downloadPath = playlist.downloadPath
           .trim(); // trim() is necessary since the path is used in
       //              the JsonDataService.saveToFile constructor and
       //              the path must not contain any trailing spaces
-      //              on Android.
+      //              on Windows or Android.
     }
 
     JsonDataService.saveToFile(

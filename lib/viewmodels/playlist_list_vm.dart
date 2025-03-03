@@ -177,10 +177,11 @@ class PlaylistListVM extends ChangeNotifier {
   /// When the user modifies the application settings, unselecting added playlist
   /// is not adequate since no playlist was manually added.
   ///
-  /// For restoring, the method is called by the method
+  /// For restoring from zip file, the method is called by the method
   /// restorePlaylistsCommentsAndSettingsJsonFilesFromZip(). In this case,
   /// [restoringPlaylistsCommentsAndSettingsJsonFilesFromZip] is set to true.
-  ///
+  /// The application settings won't be updated since they were correctly adapted
+  /// in the method _mergeRestoredFromZipSettingsWithCurrentAppSettings().
   void updateSettingsAndPlaylistJsonFiles({
     bool unselectAddedPlaylist = true,
     bool updatePlaylistPlayableAudioList = true,
@@ -266,6 +267,10 @@ class PlaylistListVM extends ChangeNotifier {
       );
     }
 
+    // If restoringPlaylistsCommentsAndSettingsJsonFilesFromZip is
+    // true, the settings json file is not updated since tit was
+    // correctly adapted in the method
+    // _mergeRestoredFromZipSettingsWithCurrentAppSettings().
     if (!restoringPlaylistsCommentsAndSettingsJsonFilesFromZip) {
       _updateAndSavePlaylistOrder(
         addExistingSettingsAudioSortFilterData:
@@ -2687,7 +2692,7 @@ class PlaylistListVM extends ChangeNotifier {
       zipFilePathName: zipFilePathName,
     );
 
-    await mergeRestoredFromZipSettingsWithCurrentAppSettings();
+    await _mergeRestoredFromZipSettingsWithCurrentAppSettings();
 
     updateSettingsAndPlaylistJsonFiles(
       updatePlaylistPlayableAudioList: false,
@@ -2726,7 +2731,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// the restoration from the zip file was already loaded and is in the private
   /// variable _settingsDataService. Now, the app settings file is the settings
   /// file restored from the zip file.
-  Future<void> mergeRestoredFromZipSettingsWithCurrentAppSettings() async {
+  Future<void> _mergeRestoredFromZipSettingsWithCurrentAppSettings() async {
     final SettingsDataService settingsDataServiceZipVersion =
         SettingsDataService(
       sharedPreferences: await SharedPreferences.getInstance(),
