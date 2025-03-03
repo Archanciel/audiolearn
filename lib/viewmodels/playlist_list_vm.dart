@@ -2758,12 +2758,14 @@ class PlaylistListVM extends ChangeNotifier {
     ) as List<dynamic>)
         .cast<String>();
 
-    if (currentPlaylistTitleOrder.isNotEmpty &&
-        restoredPlaylistTitleOrder.isNotEmpty) {
-      // Combine both lists while preserving uniqueness and order
-      List<String> mergedPlaylistTitleOrder =
-          List.from(currentPlaylistTitleOrder);
+    List<String> mergedPlaylistTitleOrder = [];
 
+    if (currentPlaylistTitleOrder.isNotEmpty) {
+      mergedPlaylistTitleOrder = List.from(currentPlaylistTitleOrder);
+    }
+
+    if (restoredPlaylistTitleOrder.isNotEmpty) {
+      // Combine both lists while preserving uniqueness and order
       for (String playlistTitle in restoredPlaylistTitleOrder) {
         if (!mergedPlaylistTitleOrder.contains(playlistTitle)) {
           mergedPlaylistTitleOrder.add(playlistTitle);
