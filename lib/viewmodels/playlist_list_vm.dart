@@ -2719,7 +2719,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// map and the unnamed sort/filter history list of the restored app settings
   /// zip version to the corresponding list or map of the current app settings
   /// version.
-  /// 
+  ///
   /// When this method is called, the application settings version before executing
   /// the restoration from the zip file was already loaded and is in the private
   /// variable _settingsDataService. Now, the app settings file is the settings
@@ -2738,27 +2738,35 @@ class PlaylistListVM extends ChangeNotifier {
     );
 
     // Merge the playlist order list
-    List<dynamic>? restoredPlaylistOrder = settingsDataServiceZipVersion.get(
+    List<String> restoredPlaylistTitleOrder =
+        (settingsDataServiceZipVersion.get(
       settingType: SettingType.playlists,
       settingSubType: Playlists.orderedTitleLst,
-    );
+    ) as List<dynamic>)
+            .cast<String>();
 
-    List<dynamic>? currentPlaylistOrder = _settingsDataService.get(
+    List<String> currentPlaylistTitleOrder = (_settingsDataService.get(
       settingType: SettingType.playlists,
       settingSubType: Playlists.orderedTitleLst,
-    );
+    ) as List<dynamic>)
+        .cast<String>();
 
-    if (currentPlaylistOrder != null && restoredPlaylistOrder != null) {
+    if (currentPlaylistTitleOrder.isNotEmpty &&
+        restoredPlaylistTitleOrder.isNotEmpty) {
       // Combine both lists while preserving uniqueness and order
-      Set<dynamic> mergedPlaylistOrder = {
-        ...currentPlaylistOrder,
-        ...restoredPlaylistOrder
-      };
+      List<String> mergedPlaylistTitleOrder =
+          List.from(currentPlaylistTitleOrder);
+
+      for (String playlistTitle in restoredPlaylistTitleOrder) {
+        if (!mergedPlaylistTitleOrder.contains(playlistTitle)) {
+          mergedPlaylistTitleOrder.add(playlistTitle);
+        }
+      }
 
       _settingsDataService.set(
         settingType: SettingType.playlists,
         settingSubType: Playlists.orderedTitleLst,
-        value: mergedPlaylistOrder.toList(),
+        value: mergedPlaylistTitleOrder,
       );
     }
 
