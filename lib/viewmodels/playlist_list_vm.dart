@@ -268,7 +268,7 @@ class PlaylistListVM extends ChangeNotifier {
     }
 
     // If restoringPlaylistsCommentsAndSettingsJsonFilesFromZip is
-    // true, the settings json file is not updated since tit was
+    // true, the settings json file is not updated since it was
     // correctly adapted in the method
     // _mergeRestoredFromZipSettingsWithCurrentAppSettings().
     if (!restoringPlaylistsCommentsAndSettingsJsonFilesFromZip) {
@@ -387,14 +387,14 @@ class PlaylistListVM extends ChangeNotifier {
       _listOfSelectablePlaylists = [];
 
       for (String playlistTitle in orderedPlaylistTitleLst) {
-        try {
-          _listOfSelectablePlaylists.add(audioDownloadVMlistOfPlaylist
-              .firstWhere((playlist) => playlist.title == playlistTitle));
-        } catch (_) {
-          // If the playlist with this title is not found, it means that
-          // the playlist json file has been deleted. So, we don't add it
-          // to the selectable playlist list and we will remove it from
-          // the ordered playlist title list and update the settings data.
+        Playlist? foundPlaylist = audioDownloadVMlistOfPlaylist
+            .where((playlist) => playlist.title == playlistTitle)
+            .firstOrNull; // Extension method from collection package
+
+        if (foundPlaylist != null) {
+          _listOfSelectablePlaylists.add(foundPlaylist);
+        } else {
+          // The playlist is missing, so update settings accordingly
           doUpdateSettings = true;
         }
       }
