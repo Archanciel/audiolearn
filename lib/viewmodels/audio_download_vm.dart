@@ -133,14 +133,18 @@ class AudioDownloadVM extends ChangeNotifier {
           if (!arePlaylistsRestoredFromAndroidToWindows) {
             // If arePlaylistsRestoredFromAndroidToWindows is false,
             // then the playlists root path is the same as the one
-            // used on Android. The playlists root path is must be
-            // updated if the playlists are restored from Android to
-            // Windows.
+            // used on Android. The playlists root path must be
+            // updated only if the playlists are restored from Android
+            // to Windows.
             arePlaylistsRestoredFromAndroidToWindows = _playlistsRootPath
                     .contains('C:\\') &&
                 currentPlaylist.downloadPath.contains('/storage/emulated/0');
 
             if (arePlaylistsRestoredFromAndroidToWindows) {
+              // This test avoids that the playlists root path is
+              // determined for each playlist since the playlists
+              // root path is the same for all playlists restored
+              // from Android.
               List<String> playlistRootPathElementsLst =
                   currentPlaylist.downloadPath.split('/');
 
