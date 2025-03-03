@@ -164,23 +164,23 @@ class PlaylistListVM extends ChangeNotifier {
   }
 
   /// Method called when the user chooses the "Update playlist JSON files" menu
-  /// item. The method is also executed when the user modifies the application
-  /// settings through the ApplicationSettingsDialog opened by clicking on the
-  /// Application settings menu item. Finally, the method is also called when the
-  /// user clicks on the 'Restore Playlist and Comments from Zip File' menu item
-  /// located in the appbar leading popup menu.
+  /// item after having manually added playlists in the playlist root dir. The
+  /// method is also executed when the user modifies the application settings
+  /// through the ApplicationSettingsDialog opened by clicking on the Application
+  /// settings menu item. Finally, the method is also called when the user clicks
+  /// on the 'Restore Playlist and Comments from Zip File' menu item located in
+  /// the appbar leading popup menu.
   ///
-  /// When the user changes the "Update playlist JSON files", the added playlists
-  /// are unselected by default.
+  /// When the user selects the "Update playlist JSON files" menu, the playlists
+  /// which were manually added to the playlist root dir are unselected by default.
   ///
   /// When the user modifies the application settings, unselecting added playlist
-  /// is not adequate.
+  /// is not adequate since no playlist was manually added.
   ///
-  /// For restoring, the method is called by
-  /// restorePlaylistsCommentsAndSettingsJsonFilesFromZip().
+  /// For restoring, the method is called by the method
+  /// restorePlaylistsCommentsAndSettingsJsonFilesFromZip(). In this case,
+  /// [restoringPlaylistsCommentsAndSettingsJsonFilesFromZip] is set to true.
   ///
-  /// In this case, [restoringPlaylistsCommentsAndSettingsJsonFilesFromZip] is set
-  /// to true.
   void updateSettingsAndPlaylistJsonFiles({
     bool unselectAddedPlaylist = true,
     bool updatePlaylistPlayableAudioList = true,
@@ -266,10 +266,12 @@ class PlaylistListVM extends ChangeNotifier {
       );
     }
 
-    _updateAndSavePlaylistOrder(
-      addExistingSettingsAudioSortFilterData:
-          restoringPlaylistsCommentsAndSettingsJsonFilesFromZip,
-    );
+    if (!restoringPlaylistsCommentsAndSettingsJsonFilesFromZip) {
+      _updateAndSavePlaylistOrder(
+        addExistingSettingsAudioSortFilterData:
+            restoringPlaylistsCommentsAndSettingsJsonFilesFromZip,
+      );
+    }
 
     notifyListeners();
   }
