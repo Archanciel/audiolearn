@@ -2688,7 +2688,7 @@ class PlaylistListVM extends ChangeNotifier {
     // from the zip file. The dynamic list restoredInfoLst list
     // contains the list of restored playlist titles and the number
     // of restored comments.
-    List<dynamic> restoredInfoLst = await _restoreFromZip(
+    List<dynamic> restoredInfoLst = await _restoreFilesFromZip(
       zipFilePathName: zipFilePathName,
     );
 
@@ -2805,7 +2805,7 @@ class PlaylistListVM extends ChangeNotifier {
   ///
   /// The returned list contains the list of restored playlist titles and the number
   /// of restored comments.
-  Future<List<dynamic>> _restoreFromZip({
+  Future<List<dynamic>> _restoreFilesFromZip({
     required String zipFilePathName,
   }) async {
     List<dynamic> restoredInfoLst = [];
@@ -2862,6 +2862,14 @@ class PlaylistListVM extends ChangeNotifier {
 
       // Write the file's bytes to the computed destination.
       final File outputFile = File(destinationPathFileName);
+
+      if (destinationPathFileName.contains(kCommentDirName) &&
+          outputFile.existsSync()) {
+        // If the comment file already exists, skip it. This useful
+        // if a new comment was added before the restoration from the
+        // zip file.
+        continue;
+      }
 
       await outputFile.writeAsBytes(
         archiveFile.content as List<int>,
