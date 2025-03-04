@@ -216,7 +216,7 @@ class AudioPlayerVM extends ChangeNotifier {
   /// the close button of the comment list add dialog. In this case,
   /// maintening the undo/redo lists is useful to enable the user to
   /// undo the audio position change.
-  /// 
+  ///
   /// If the audio was redownloaded, setting the current audio even
   /// if _currentAudio == audio prevents that the audio slider and the
   /// audio position fields in the audio player view are not updated
@@ -289,7 +289,7 @@ class AudioPlayerVM extends ChangeNotifier {
   /// the AudioPlayerView screen without playing the selected playlist
   /// current or last played audio which is displayed correctly in the
   /// AudioPlayerView screen.
-  /// 
+  ///
   /// Read below the usefullness of the [audioWasRedownloaded] parameter.
   Future<void> _setCurrentAudio({
     required Audio audio,
@@ -362,16 +362,16 @@ class AudioPlayerVM extends ChangeNotifier {
     // end Main version
 
     // audioplayers_5_2_1_ALL_TESTS_PASS version
-    if (_audioPlayer != null) {
+    if (_audioPlayer != null && File(audio.filePathName).existsSync()) {
       // necessary to avoid unit test failure
       await _audioPlayer!.setVolume(
         audio.audioPlayVolume,
       );
-    }
 
-    await modifyAudioPlayerPosition(
-      durationPosition: _currentAudioPosition,
-    );
+      await modifyAudioPlayerPosition(
+        durationPosition: _currentAudioPosition,
+      );
+    }
   }
 
   // /// Method defined as public since it is redefined in the mock subclass
@@ -952,6 +952,17 @@ class AudioPlayerVM extends ChangeNotifier {
       addUndoCommand(
         newDurationPosition: newAudioPosition,
       );
+    }
+
+    if (!File(_currentAudio!.filePathName).existsSync()) {
+      // If File(audioFilePathName).existsSync() is false, this means
+      // that the audio file was deleted. This can happen when the user
+      // deletes the audio file in the file explorer or when the user
+      // executes the 'Restore Playlists, Comments and Settings' menu.
+      // In this situation, the displayed playlist audio's are not
+      // playable (no mp3 file available).
+      
+      return;
     }
 
     _currentAudioPosition = newAudioPosition;
