@@ -168,8 +168,8 @@ class PlaylistListVM extends ChangeNotifier {
   /// method is also executed when the user modifies the application settings
   /// through the ApplicationSettingsDialog opened by clicking on the Application
   /// settings menu item. Finally, the method is also called when the user clicks
-  /// on the 'Restore Playlist and Comments from Zip File' menu item located in
-  /// the appbar leading popup menu.
+  /// on the 'Restore Playlist, Comments and Settings from Zip File' menu item
+  /// located in the appbar leading popup menu.
   ///
   /// When the user selects the "Update playlist JSON files" menu, the playlists
   /// which were manually added to the playlist root dir are unselected by default.
@@ -2673,8 +2673,8 @@ class PlaylistListVM extends ChangeNotifier {
     return zipFilePathName;
   }
 
-  /// Method called when the user clicks on the 'Restore Playlist and Comments from
-  /// Zip File' menu item located in the appbar leading popup menu.
+  /// Method called when the user clicks on the 'Restore Playlist, Comments and
+  /// Settings from Zip File' menu item located in the appbar leading popup menu.
   ///
   /// Returns the zip file path name from which the playlist, comments and the
   /// application settings will be restored, '' if the zip file does not exist.
@@ -2708,6 +2708,13 @@ class PlaylistListVM extends ChangeNotifier {
           playlist.isSelected = false;
         }
       }
+    }
+
+    // Necessary so that in the playlist download view in situation
+    // where the playlists are not expanded the selected playlist SF
+    // parms name is displayed in the SF parms dropdown button.
+    if (!_isPlaylistListExpanded) {
+      getUpToDateSelectablePlaylists();
     }
 
     // Display a confirmation message to the user.
@@ -2799,9 +2806,10 @@ class PlaylistListVM extends ChangeNotifier {
     _settingsDataService.saveSettings();
   }
 
-  /// Method called when the user clicks on the 'Restore Playlist and Comments from
-  /// Zip File' menu. It extracts the playlist json files as well as the comment
-  /// json files of the playlists and writes them to the playlists root path.
+  /// Method called when the user clicks on the 'Restore Playlist, Comments and
+  /// Settings from Zip File' menu. It extracts the playlist json files as well
+  /// as the commen json files of the playlists and writes them to the playlists
+  /// root path.
   ///
   /// The returned list contains the list of restored playlist titles and the number
   /// of restored comments.
