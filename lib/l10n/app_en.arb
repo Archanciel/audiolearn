@@ -131,7 +131,7 @@
       "title": {}
     }
   },
-  "downloadAudioYoutubeError": "Downloading the audio of the video \"{videoTitle}\" from Youtube failed: \"{exceptionMessage}\"",
+  "downloadAudioYoutubeError": "Downloading the audio of the video \"{videoTitle}\" from Youtube FAILED: \"{exceptionMessage}\"",
   "@downloadAudioYoutubeError": {
     "description": "Warning announcing that downloading the audio's from Youtube failed.",
     "placeholders": {
