@@ -348,22 +348,29 @@ class AudioPlayerVM extends ChangeNotifier {
     final String audioFilePathName = _currentAudio?.filePathName ?? '';
 
     if (audioFilePathName.isNotEmpty && File(audioFilePathName).existsSync()) {
+      // If File(audioFilePathName).existsSync() is false, this means
+      // that the audio file was deleted. This can happen when the user
+      // deletes the audio file in the file explorer or when the user
+      // executes the 'Restore Playlists, Comments and Settings' menu.
+      // In this situation, the displayed playlist audio's are not
+      // playable (no mp3 file available).
+
       await audioPlayerSetSource(audioFilePathName);
 
       // Setting the value to false avoid that the audioplayers source
       // is set again when the user clicks on another position button or
       // on the audio slider.
       _wasAudioPlayersStopped = false;
+
+      await _audioPlayer!.setVolume(
+        audio.audioPlayVolume,
+      );
+      // end Main version
+
+      await modifyAudioPlayerPosition(
+        durationPosition: _currentAudioPosition,
+      );
     }
-
-    await _audioPlayer!.setVolume(
-      audio.audioPlayVolume,
-    );
-    // end Main version
-
-    await modifyAudioPlayerPosition(
-      durationPosition: _currentAudioPosition,
-    );
   }
 
   /// Method defined as public since it is redefined in the mock subclass
@@ -1059,6 +1066,17 @@ class AudioPlayerVM extends ChangeNotifier {
       addUndoCommand(
         newDurationPosition: durationPosition,
       );
+    }
+
+    if (!File(_currentAudio!.filePathName).existsSync()) {
+      // If File(audioFilePathName).existsSync() is false, this means
+      // that the audio file was deleted. This can happen when the user
+      // deletes the audio file in the file explorer or when the user
+      // executes the 'Restore Playlists, Comments and Settings' menu.
+      // In this situation, the displayed playlist audio's are not
+      // playable (no mp3 file available).
+      
+      return;
     }
 
     if (_wasAudioPlayersStopped) {
