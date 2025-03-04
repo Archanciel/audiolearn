@@ -184,8 +184,8 @@ enum WarningMessageType {
   // appbar leading popup menu.
 
   restoreAppDataFromZip, // The case if the user clicks on the
-  // 'Restore Playlist and Comments from Zip File' menu item located
-  // in the appbar leading popup menu.
+  // 'Restore Playlist, Comments and Settings from Zip File' menu
+  // item located in the appbar leading popup menu.
 
   audioNotImportedToPlaylist, // The case if the user clicks on
   // the import audio to playlist menu item and the audio was not
