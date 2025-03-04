@@ -707,6 +707,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
     await audioPlayerVMlistenFalse.setCurrentAudio(
       audio: audio,
     );
+    
     await audioPlayerVMlistenFalse.goToAudioPlayPosition(
       durationPosition: Duration(
         seconds: audio.audioPositionSeconds,
