@@ -256,6 +256,24 @@ void main() {
       expect(loadedNewPlaylist.isSelected, false);
       expect(loadedNewPlaylist.downloadPath, newPlaylistPath);
 
+      final settingsPathFileName = path.join(
+        kPlaylistDownloadRootPathWindows,
+        'settings.json',
+      );
+
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName: settingsPathFileName);
+
+      // Chek that adding a playlist sets the arePlaylistsDisplayed
+      // InPlaylistDownloadView to true
+      expect(
+          settingsDataService.get(
+            settingType: SettingType.playlists,
+            settingSubType:
+                Playlists.arePlaylistsDisplayedInPlaylistDownloadView,
+          ),
+          true);
+
       // Check that the ordered playlist titles list in the settings
       // data service contains the added playlist title
       expect(
@@ -1267,6 +1285,16 @@ void main() {
 
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName: settingsPathFileName);
+
+      // Chek that adding a playlist sets the arePlaylistsDisplayed
+      // InPlaylistDownloadView to true
+      expect(
+          settingsDataService.get(
+            settingType: SettingType.playlists,
+            settingSubType:
+                Playlists.arePlaylistsDisplayedInPlaylistDownloadView,
+          ),
+          true);
 
       // Check that the ordered playlist titles list in the settings
       // data service contains the added playlist title
