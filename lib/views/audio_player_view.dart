@@ -899,7 +899,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
 
     // Adjust size based on orientation
     double circleAvatarRadius =
-        isLandscape ? screenSize.width * 0.25 : screenSize.width * 0.34;
+        isLandscape ? screenSize.width * 0.131 : screenSize.width * 0.34;
     double imageWidthHeight = circleAvatarRadius * 2;
 
     return Padding(
