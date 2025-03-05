@@ -723,6 +723,99 @@ void main() {
       );
     });
   });
+  group('Add valid paylist', () {
+    late PlaylistListVM playlistListVM;
+
+    setUp(() async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindows,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}playlist_list_vm_add_playlist_to_empty_app_test",
+        destinationRootPath: kPlaylistDownloadRootPathWindows,
+      );
+
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+
+      WarningMessageVM warningMessageVM = WarningMessageVM();
+
+      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+      );
+
+      playlistListVM = PlaylistListVM(
+        warningMessageVM: warningMessageVM,
+        audioDownloadVM: audioDownloadVM,
+        commentVM: CommentVM(),
+        settingsDataService: settingsDataService,
+      );
+
+      // calling getUpToDateSelectablePlaylists() loads all the
+      // playlist json files from the app dir and so enables
+      // playlistListVM to know which playlists are
+      // selected and which are not
+      playlistListVM.getUpToDateSelectablePlaylists();
+    });
+
+    test('Add local playlist', () async {
+      const String localPlaylistTitle = 'local playlist';
+
+      await playlistListVM.addPlaylist(
+        playlistQuality: PlaylistQuality.voice,
+        playlistUrl: '',
+        localPlaylistTitle: localPlaylistTitle,
+      );
+
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+      );
+
+      final settingsPathFileName = path.join(
+        kPlaylistDownloadRootPathWindows,
+        'settings.json',
+      );
+
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName: settingsPathFileName);
+
+      expect(
+          settingsDataService.get(
+            settingType: SettingType.playlists,
+            settingSubType:
+                Playlists.arePlaylistsDisplayedInPlaylistDownloadView,
+          ),
+          true);
+
+      expect(
+          settingsDataService.get(
+            settingType: SettingType.playlists,
+            settingSubType: Playlists.orderedTitleLst,
+          ),
+          [localPlaylistTitle]);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindows,
+      );
+    });
+  });
   group('Add invalid paylist', () {
     late PlaylistListVM playlistListVM;
 
