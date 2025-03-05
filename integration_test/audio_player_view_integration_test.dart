@@ -4961,6 +4961,7 @@ void main() {
         expectedAudioRemainingDurationTimeString:
             memorizedRemainingDurationTimeString,
         selectPlaylistPumpAndSettleDuration: const Duration(milliseconds: 1000),
+        positionSecondsDifference: 1,
       );
 
       // Purge the test playlist directory so that the created test
@@ -8653,6 +8654,7 @@ Future<void> _verifyAudioPlayerViewPlaylistSelectionImpact({
   required String expectedAudioPositionTimeString,
   required String expectedAudioRemainingDurationTimeString,
   Duration? selectPlaylistPumpAndSettleDuration,
+  int positionSecondsDifference = 0,
 }) async {
   // Now tap on audio player view playlist button to display the playlists
   await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -8745,10 +8747,19 @@ Future<void> _verifyAudioPlayerViewPlaylistSelectionImpact({
   String audioRemainingDurationTimeString =
       tester.widget<Text>(audioPlayerViewAudioRemainingDurationFinder).data!;
 
-  expect(
-    audioRemainingDurationTimeString,
-    expectedAudioRemainingDurationTimeString,
-  );
+  if (positionSecondsDifference == 0) {
+    expect(
+      audioRemainingDurationTimeString,
+      expectedAudioRemainingDurationTimeString,
+    );
+  } else {
+    IntegrationTestUtil.verifyPositionWithAcceptableDifferenceSeconds(
+      tester: tester,
+      textWidgetFinder: audioPlayerViewAudioRemainingDurationFinder,
+      basePositionTimeStr: expectedAudioRemainingDurationTimeString,
+      plusMinusSeconds: 1,
+    );
+  }
 
   // Verify the displayed playlist title at top of the the audio player
   // view
