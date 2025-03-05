@@ -123,6 +123,7 @@ class IntegrationTestUtil {
           "Acceptable position between $minPositionTimeStr and $maxPositionTimeStr is $actualPositionTimeString",
     );
   }
+
   /// Verify that the position displayed in the {textWidgetFinder} text
   /// widget is between - or equal to - the minimum and maximum position
   /// time strings.
@@ -130,7 +131,7 @@ class IntegrationTestUtil {
     required WidgetTester tester,
     required final Finder textWidgetFinder,
     required String basePositionTimeStr,
-    required int plusMinusSeconds, 
+    required int plusMinusSeconds,
   }) {
     String actualPositionTimeString =
         tester.widget<Text>(textWidgetFinder).data!;
@@ -138,9 +139,10 @@ class IntegrationTestUtil {
       timeString: actualPositionTimeString,
     );
 
-    int convertedBasePositionToTenthsOfSeconds = DateTimeUtil.convertToTenthsOfSeconds(timeString: basePositionTimeStr);
+    int convertedBasePositionToTenthsOfSeconds =
+        DateTimeUtil.convertToTenthsOfSeconds(timeString: basePositionTimeStr);
     int expectedMinPositionTenthSeconds =
-        convertedBasePositionToTenthsOfSeconds - plusMinusSeconds ;
+        convertedBasePositionToTenthsOfSeconds - plusMinusSeconds;
     int expectedMaxPositionTenthSeconds =
         convertedBasePositionToTenthsOfSeconds + plusMinusSeconds;
 
@@ -1637,9 +1639,17 @@ class IntegrationTestUtil {
     required List<String> expectedAudioFiles,
     required List<String> expectedCommentFiles,
     required List<String> expectedPictureFiles,
+    String playlistRootDir = '',
   }) {
-    String playlistDir =
+    String playlistDir;
+
+    if (playlistRootDir.isEmpty) {
+     playlistDir =
         "$kApplicationPathWindows${path.separator}$playlistTitle";
+    } else {
+      playlistDir = "$kApplicationPathWindows${path.separator}$playlistRootDir${path.separator}$playlistTitle";
+    }
+    
     String commentsDir = "$playlistDir${path.separator}comments";
     String picturesDir = "$playlistDir${path.separator}pictures";
 

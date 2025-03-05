@@ -10443,7 +10443,7 @@ void main() {
       );
 
       const String restorableZipFileName =
-          'audioLearn_audio_comment_zip_test_2025-02-15_14_40.zip';
+          'audioLearn_audio_comment_zip_test_2025-03-02_21_48.zip';
 
       // Copy the integration test data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
@@ -10520,6 +10520,8 @@ void main() {
         dateFormatVM: dateFormatVM,
       );
 
+      const String playlistRootDirName = 'playlists';
+
       // Verify the content of the 'A restaurer' playlist dir
       // and comments and pictures dir before restoring.
       IntegrationTestUtil.verifyPlaylistDirectoryContents(
@@ -10541,6 +10543,7 @@ void main() {
           "250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12.jpg",
           "250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.jpg",
         ],
+        playlistRootDir:playlistRootDirName,
       );
 
       // Verify the content of the 'local' playlist dir
@@ -10556,6 +10559,7 @@ void main() {
         expectedPictureFiles: [
           "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.jpg"
         ],
+        playlistRootDir:playlistRootDirName,
       );
 
       // Replace the platform instance with your mock
@@ -10584,7 +10588,7 @@ void main() {
       await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            'Restored 4 playlist and 3 comment json files as well as the application settings from "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio\\audioLearn_audio_comment_zip_test_2025-02-15_14_40.zip".',
+            'Restored 5 playlist and 5 comment json files as well as the application settings from "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio\\audioLearn_audio_comment_zip_test_2025-03-02_21_48.zip".',
         isWarningConfirming: true,
         warningTitle: 'CONFIRMATION',
       );
@@ -10598,6 +10602,7 @@ void main() {
         "local",
         "Empty",
         "local_comment",
+        "local_delete_comment",
         "S8 audio",
       ];
 
@@ -10655,16 +10660,16 @@ void main() {
       // Now verify 'S8 audio' playlist as well !
 
       audioTitles = [
-        "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
         "Quand Aurélien Barrau va dans une école de management",
         "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...",
+        "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
         "La surpopulation mondiale par Jancovici et Barrau",
       ];
 
       audioSubTitles = [
-        "0:06:29.0. 5.80 MB at 495 KB/sec on 15/02/2025 at 14:29.",
         "0:17:59.0. 6.58 MB at 1.80 MB/sec on 22/07/2024 at 08:11.",
         "1:17:54.0. 28.50 MB at 1.63 MB/sec on 28/05/2024 at 13:06.",
+        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
         "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
       ];
 
@@ -10702,6 +10707,7 @@ void main() {
           "250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12.jpg",
           "250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.jpg",
         ],
+        playlistRootDir:playlistRootDirName,
       );
 
       // Verify the content of the 'local' playlist dir
@@ -10717,6 +10723,7 @@ void main() {
         expectedPictureFiles: [
           "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.jpg"
         ],
+        playlistRootDir:playlistRootDirName,
       );
 
       // Verify the content of the 'S8 audio' playlist dir
@@ -10730,6 +10737,7 @@ void main() {
           "240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.json",
         ],
         expectedPictureFiles: [],
+        playlistRootDir:playlistRootDirName,
       );
 
       const String playlistToRedownloadTitle = 'S8 audio';
