@@ -894,10 +894,12 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     }
 
     // Get screen size
-    double screenWidth = MediaQuery.of(context).size.width;
+    Size screenSize = MediaQuery.of(context).size;
+    bool isLandscape = screenSize.width > screenSize.height;
 
-    // Set sizes relative to the screen width
-    double circleAvatarRadius = screenWidth * 0.34; // 40% of screen width
+    // Adjust size based on orientation
+    double circleAvatarRadius =
+        isLandscape ? screenSize.width * 0.25 : screenSize.width * 0.34;
     double imageWidthHeight = circleAvatarRadius * 2;
 
     return Padding(
