@@ -8615,6 +8615,7 @@ void main() {
         widgetTester: tester,
       );
 
+      // Now, select the playlist
       await tester.tap(youtubePlaylistListTileCheckboxWidgetFinder);
       await tester.pumpAndSettle();
 
