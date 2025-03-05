@@ -525,6 +525,14 @@ class PlaylistListVM extends ChangeNotifier {
       // displayed
       if (!_isPlaylistListExpanded) {
         togglePlaylistsList();
+
+        _settingsDataService.set(
+            settingType: SettingType.playlists,
+            settingSubType:
+                Playlists.arePlaylistsDisplayedInPlaylistDownloadView,
+            value: true);
+
+        _settingsDataService.saveSettings();
       }
 
       notifyListeners();
@@ -542,6 +550,8 @@ class PlaylistListVM extends ChangeNotifier {
   /// Method called when the user clicks on the "Playlists" button of the
   /// PlaylistDownloadView screen. This method display or hide the list
   /// of playlists.
+  ///
+  /// The method isalso called when the user add a playlist.
   void togglePlaylistsList() {
     _isPlaylistListExpanded = !_isPlaylistListExpanded;
 
@@ -551,7 +561,9 @@ class PlaylistListVM extends ChangeNotifier {
       if (isSearchSentenceApplied) {
         _listOfSelectablePlaylists = getUpToDateSelectablePlaylists();
       }
+
       int selectedPlaylistIndex = _getSelectedPlaylistIndex();
+
       if (selectedPlaylistIndex != -1) {
         _setPlaylistButtonsStateIfOnePlaylistIsSelected(
           selectedPlaylist: _listOfSelectablePlaylists[selectedPlaylistIndex],
