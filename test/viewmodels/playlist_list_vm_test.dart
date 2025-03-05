@@ -773,6 +773,48 @@ void main() {
       playlistListVM.getUpToDateSelectablePlaylists();
     });
 
+    test('Add Youtube playlist', () async {
+      const String localPlaylistTitle = 'Essai to rename old';
+
+      await playlistListVM.addPlaylist(
+        playlistQuality: PlaylistQuality.voice,
+        playlistUrl: 'https://youtube.com/playlist?list=PLzwWSJNcZTMTZ_Jztjs3M_CEfzlfXtzxu&si=6aQxQZVdMRA8-yJI',
+        localPlaylistTitle: '',
+      );
+
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+      );
+
+      final settingsPathFileName = path.join(
+        kPlaylistDownloadRootPathWindows,
+        'settings.json',
+      );
+
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName: settingsPathFileName);
+
+      expect(
+          settingsDataService.get(
+            settingType: SettingType.playlists,
+            settingSubType:
+                Playlists.arePlaylistsDisplayedInPlaylistDownloadView,
+          ),
+          true);
+
+      expect(
+          settingsDataService.get(
+            settingType: SettingType.playlists,
+            settingSubType: Playlists.orderedTitleLst,
+          ),
+          [localPlaylistTitle]);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindows,
+      );
+    });
     test('Add local playlist', () async {
       const String localPlaylistTitle = 'local playlist';
 
