@@ -417,7 +417,7 @@ class MockAudioDownloadVM extends AudioDownloadVM {
     }
 
     String playlistRootPath =
-        "$kApplicationPathWindows${path.separator}$appPlaylistDirName";
+        "$kApplicationPathWindows${path.separator}playlists${path.separator}$appPlaylistDirName";
     final String mockSourceFileDir =
         "$kApplicationPathWindows${path.separator}downloadedMockFileDir${path.separator}${audioEnclosingPlaylist.title}";
     List<String> audioFileNamesContainedInMockSourceFileDirLst =
