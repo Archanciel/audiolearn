@@ -10435,7 +10435,9 @@ void main() {
   group('Restore playlist, comments and settings from zip file menu test', () {
     testWidgets(
         '''Sel playlist. Restore Windows zip to Windows application in which
-           an existing playlist is selected.''', (tester) async {
+           an existing playlist is selected. Then, select a SF parm and redownload
+           the filtered audio. Finally, redownload an individual not playable
+           audio.''', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
