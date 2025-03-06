@@ -382,27 +382,6 @@ class MockAudioDownloadVM extends AudioDownloadVM {
     notifyListeners();
   }
 
-  /// Downloads the audio file from the Youtube video and saves it to the enclosing
-  /// playlist directory. Returns true if the audio file was successfully downloaded,
-  /// false otherwise.
-  ///
-  /// The method is also called when the user selects the 'Redownload deleted Audio'
-  /// menu item of audio list item or the audio player view left appbar. In this
-  /// case, [redownloading] is set to true and [audio] is _currentDownloadingAudio
-  /// which was set in the AudioDownloadVM.redownloadPlaylistFilteredAudio()
-  /// method.
-  ///
-  /// Is not private since it is redefined by the MockAudioDownloadVM.
-  Future<bool> downloadAudioFile({
-    required yt.VideoId youtubeVideoId,
-    required Audio audio,
-    bool redownloading = false,
-  }) async {
-    await redownloadSingleVideoAudio();
-
-    return true;
-  }
-
   @override
   Future<ErrorType> redownloadSingleVideoAudio({
     bool displayWarningIfAudioAlreadyExists = false,

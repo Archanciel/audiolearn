@@ -744,7 +744,7 @@ class AudioDownloadVM extends ChangeNotifier {
       );
 
       try {
-        await downloadAudioFile(
+        await _downloadAudioFile(
           youtubeVideoId: youtubeVideo.id,
           audio: audio,
         );
@@ -1152,7 +1152,7 @@ class AudioDownloadVM extends ChangeNotifier {
     }
 
     try {
-      if (!await downloadAudioFile(
+      if (!await _downloadAudioFile(
         youtubeVideoId: youtubeVideo.id,
         audio: audio,
       )) {
@@ -1273,7 +1273,7 @@ class AudioDownloadVM extends ChangeNotifier {
       // _downloadAudioFile() method was set in the AudioDownloadVM.
       // redownloadPlaylistFilteredAudio() method which calls this
       // method.
-      if (!await downloadAudioFile(
+      if (!await _downloadAudioFile(
           youtubeVideoId: youtubeVideo.id,
           audio: _currentDownloadingAudio,
           redownloading: true)) {
@@ -2129,9 +2129,7 @@ class AudioDownloadVM extends ChangeNotifier {
   /// case, [redownloading] is set to true and [audio] is _currentDownloadingAudio
   /// which was set in the AudioDownloadVM.redownloadPlaylistFilteredAudio()
   /// method.
-  ///
-  /// Is not private since it is redefined by the MockAudioDownloadVM.
-  Future<bool> downloadAudioFile({
+  Future<bool> _downloadAudioFile({
     required yt.VideoId youtubeVideoId,
     required Audio audio,
     bool redownloading = false,
