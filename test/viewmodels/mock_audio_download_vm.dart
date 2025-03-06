@@ -8,6 +8,7 @@ import 'package:audiolearn/models/playlist.dart';
 import 'package:audiolearn/viewmodels/audio_download_vm.dart';
 import 'package:audiolearn/viewmodels/warning_message_vm.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart' as yt;
 
 /// The MockAudioDownloadVM inherits from AudioDownloadVM.
 /// It exists because when executing integration tests, using
@@ -381,25 +382,32 @@ class MockAudioDownloadVM extends AudioDownloadVM {
     notifyListeners();
   }
 
+  /// Downloads the audio file from the Youtube video and saves it to the enclosing
+  /// playlist directory. Returns true if the audio file was successfully downloaded,
+  /// false otherwise.
+  ///
+  /// The method is also called when the user selects the 'Redownload deleted Audio'
+  /// menu item of audio list item or the audio player view left appbar. In this
+  /// case, [redownloading] is set to true and [audio] is _currentDownloadingAudio
+  /// which was set in the AudioDownloadVM.redownloadPlaylistFilteredAudio()
+  /// method.
+  ///
+  /// Is not private since it is redefined by the MockAudioDownloadVM.
+  Future<bool> downloadAudioFile({
+    required yt.VideoId youtubeVideoId,
+    required Audio audio,
+    bool redownloading = false,
+  }) async {
+    await redownloadSingleVideoAudio();
+
+    return true;
+  }
+
   @override
   Future<ErrorType> redownloadSingleVideoAudio({
     bool displayWarningIfAudioAlreadyExists = false,
   }) async {
     Audio audio = currentDownloadingAudio;
-    // int audioFileSize = audio.audioFileSize;
-
-    // int downloadSpeedPerSecond = audioFileSize ~/ 5;
-    // double downloadSpeedPerSecondDouble = audioFileSize / 5;
-
-    // for (int i = 0; i < audioFileSize; i += downloadSpeedPerSecond) {
-    //   updateDownloadProgress(
-    //       progress: i * downloadSpeedPerSecondDouble,
-    //       lastSecondDownloadSpeed: downloadSpeedPerSecond);
-
-    //   // Simulating re-download process
-    //   await Future.delayed(Duration(milliseconds: 1000));
-    // }
-
     Playlist audioEnclosingPlaylist = audio.enclosingPlaylist!;
     String audioPlaylistDownloadPath = audioEnclosingPlaylist.downloadPath;
     List<String> playlistRootPathElementsLst;
@@ -433,9 +441,12 @@ class MockAudioDownloadVM extends AudioDownloadVM {
     String audioFilePathName =
         "$mockSourceFileDir${path.separator}$correspondingAudioFileName";
 
+    // Copy the mock source audio file to the playlist directory with
+    // setting the target file name to the original audio file name.
     DirUtil.copyFileToDirectorySync(
       sourceFilePathName: audioFilePathName,
       targetDirectoryPath: playlistRootPath,
+      targetFileName: audio.audioFileName,
     );
 
     return ErrorType.noError;
