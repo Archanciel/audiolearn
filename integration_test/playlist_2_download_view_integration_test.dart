@@ -10751,10 +10751,10 @@ void main() {
       // Now tap on the current dropdown button item to open the dropdown
       // button items list
 
-      final Finder dropDownButtonFinder =
+      Finder dropDownButtonFinder =
           find.byKey(const Key('sort_filter_parms_dropdown_button'));
 
-      final Finder dropDownButtonTextFinder = find.descendant(
+      Finder dropDownButtonTextFinder = find.descendant(
         of: dropDownButtonFinder,
         matching: find.byType(Text),
       );
@@ -10763,7 +10763,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // And find the 'commented_7MB' sort/filter item
-      final Finder titleAscDropDownTextFinder = find.text('commented_7MB').last;
+      Finder titleAscDropDownTextFinder = find.text('commented_7MB').last;
       await tester.tap(titleAscDropDownTextFinder);
       await tester.pumpAndSettle();
 
@@ -10780,12 +10780,84 @@ void main() {
         playlistSubMenuKeyStr: 'popup_menu_redownload_filtered_audio',
       );
 
+      // Verifying and closing the confirm dialog
+
+      // await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
+      //   tester: tester,
+      //   confirmDialogTitleOne:
+      //       "Delete audio's filtered by \"\" parms from playlist \"\"",
+      //   confirmDialogMessage:
+      //       "Audio's to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.",
+      //   confirmOrCancelAction: true, // Confirm button is tapped
+      // );
+
+      // Tap the 'Toggle List' button to hide the playlist list.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Now, select the 'default' filter parms using the drop down button.
+
+      // Now tap on the current dropdown button item to open the dropdown
+      // button items list
+
+      dropDownButtonFinder =
+          find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+      dropDownButtonTextFinder = find.descendant(
+        of: dropDownButtonFinder,
+        matching: find.byType(Text),
+      );
+
+      await tester.tap(dropDownButtonTextFinder);
+      await tester.pumpAndSettle();
+
+      // And find the 'default' sort/filter item
+      titleAscDropDownTextFinder = find.text('default').last;
+      await tester.tap(titleAscDropDownTextFinder);
+      await tester.pumpAndSettle();
+
+      // Now we want to tap the popup menu of the Audio ListTile
+      // "audio learn test short video one"
+
+      // First, find the Audio sublist ListTile Text widget
+      final Finder targetAudioListTileTextWidgetFinder = find.text(
+          'Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...');
+
+      // Then obtain the Audio ListTile widget enclosing the Text widget by
+      // finding its ancestor
+      final Finder targetAudioListTileWidgetFinder = find.ancestor(
+        of: targetAudioListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the leading menu icon button of the Audio ListTile and tap
+      // on it
+      final Finder targetAudioListTileLeadingMenuIconButton = find.descendant(
+        of: targetAudioListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(targetAudioListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the popup menu item and tap on it
+      final Finder popupDisplayAudioInfoMenuItemFinder =
+          find.byKey(const Key("popup_menu_redownload_delete_audio"));
+
+      await tester.tap(popupDisplayAudioInfoMenuItemFinder);
+      await tester.pumpAndSettle();
+
       // Verify the content of the 'S8 audio' playlist dir
       // and comments and pictures dir after redownloading
-      // filtered audio's by 'commented_7MB' SF parms.
+      // filtered audio's by 'commented_7MB' SF parms as well
+      // as redownloading single audio 'Interview de Chat GPT
+      // - IA, intelligence, philosophie, géopolitique,
+      // post-vérité...'.
       IntegrationTestUtil.verifyPlaylistDirectoryContents(
         playlistTitle: 'S8 audio',
         expectedAudioFiles: [
+          "240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.mp3",
           "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
           "240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.mp3",
         ],
@@ -10798,23 +10870,6 @@ void main() {
         expectedPictureFiles: [],
         playlistRootDir: playlistRootDirName,
       );
-
-      // Verifying and closing the confirm dialog
-
-      // await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
-      //   tester: tester,
-      //   confirmDialogTitleOne:
-      //       "Delete audio's filtered by \"\" parms from playlist \"\"",
-      //   confirmDialogMessage:
-      //       "Audio's to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.",
-      //   confirmOrCancelAction: true, // Confirm button is tapped
-      // );
-
-      // Tap the 'Toggle List' button to display the playlist list. If the list
-      // is not opened, checking that a ListTile with the title of
-      // the playlist was added to the list will fail
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-      await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
