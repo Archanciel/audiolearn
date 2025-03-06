@@ -744,7 +744,7 @@ class AudioDownloadVM extends ChangeNotifier {
       );
 
       try {
-        await _downloadAudioFile(
+        await downloadAudioFile(
           youtubeVideoId: youtubeVideo.id,
           audio: audio,
         );
@@ -1152,7 +1152,7 @@ class AudioDownloadVM extends ChangeNotifier {
     }
 
     try {
-      if (!await _downloadAudioFile(
+      if (!await downloadAudioFile(
         youtubeVideoId: youtubeVideo.id,
         audio: audio,
       )) {
@@ -1273,10 +1273,10 @@ class AudioDownloadVM extends ChangeNotifier {
       // _downloadAudioFile() method was set in the AudioDownloadVM.
       // redownloadPlaylistFilteredAudio() method which calls this
       // method.
-      if (!await _downloadAudioFile(
+      if (!await downloadAudioFile(
           youtubeVideoId: youtubeVideo.id,
           audio: _currentDownloadingAudio,
-          notRedownloading: false)) {
+          redownloading: true)) {
         // Before this improvement, the failed downloaded audio was
         // added to the target playlist.
         //
@@ -2126,15 +2126,20 @@ class AudioDownloadVM extends ChangeNotifier {
   ///
   /// The method is also called when the user selects the 'Redownload deleted Audio'
   /// menu item of audio list item or the audio player view left appbar. In this
-  /// case, [notRedownloading] is set to false and [audio] is _currentDownloadingAudio
+  /// case, [redownloading] is set to true and [audio] is _currentDownloadingAudio
   /// which was set in the AudioDownloadVM.redownloadPlaylistFilteredAudio()
   /// method.
-  Future<bool> _downloadAudioFile({
+  ///
+  /// Is not private since it is redefined by the MockAudioDownloadVM.
+  Future<bool> downloadAudioFile({
     required yt.VideoId youtubeVideoId,
     required Audio audio,
-    bool notRedownloading = true,
+    bool redownloading = false,
   }) async {
-    if (notRedownloading) {
+    if (!redownloading) {
+      // _currentDownloadingAudio must be set to passed audio since
+      // contrary to the redownloading situation, it was not
+      // previously set
       _currentDownloadingAudio = audio;
     }
 
@@ -2158,7 +2163,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
     if (isHighQuality) {
       audioStreamInfo = streamManifest.audioOnly.withHighestBitrate();
-      if (notRedownloading) {
+      if (redownloading) {
         audio.setAudioToMusicQuality();
       }
     } else {
@@ -2168,7 +2173,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
     final int audioFileSize = audioStreamInfo.size.totalBytes;
 
-    if (notRedownloading) {
+    if (redownloading) {
       audio.audioFileSize = audioFileSize;
     }
 
