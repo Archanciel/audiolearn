@@ -2127,7 +2127,7 @@ class AudioDownloadVM extends ChangeNotifier {
   /// The method is also called when the user selects the 'Redownload deleted Audio'
   /// menu item of audio list item or the audio player view left appbar. In this
   /// case, [notRedownloading] is set to false and [audio] is _currentDownloadingAudio
-  /// which was set set in the AudioDownloadVM.redownloadPlaylistFilteredAudio()
+  /// which was set in the AudioDownloadVM.redownloadPlaylistFilteredAudio()
   /// method.
   Future<bool> _downloadAudioFile({
     required yt.VideoId youtubeVideoId,
