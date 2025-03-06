@@ -29,77 +29,77 @@ import 'dart:async' as _i6;
 
 class _FakeVideoClient_0 extends _i1.SmartFake implements _i2.VideoClient {
   _FakeVideoClient_0(Object parent, Invocation parentInvocation)
-    : super(parent, parentInvocation);
+      : super(parent, parentInvocation);
 }
 
 class _FakePlaylistClient_1 extends _i1.SmartFake
     implements _i2.PlaylistClient {
   _FakePlaylistClient_1(Object parent, Invocation parentInvocation)
-    : super(parent, parentInvocation);
+      : super(parent, parentInvocation);
 }
 
 class _FakeChannelClient_2 extends _i1.SmartFake implements _i2.ChannelClient {
   _FakeChannelClient_2(Object parent, Invocation parentInvocation)
-    : super(parent, parentInvocation);
+      : super(parent, parentInvocation);
 }
 
 class _FakeSearchClient_3 extends _i1.SmartFake implements _i2.SearchClient {
   _FakeSearchClient_3(Object parent, Invocation parentInvocation)
-    : super(parent, parentInvocation);
+      : super(parent, parentInvocation);
 }
 
 class _FakeVideoId_4 extends _i1.SmartFake implements _i2.VideoId {
   _FakeVideoId_4(Object parent, Invocation parentInvocation)
-    : super(parent, parentInvocation);
+      : super(parent, parentInvocation);
 }
 
 class _FakeChannelId_5 extends _i1.SmartFake implements _i2.ChannelId {
   _FakeChannelId_5(Object parent, Invocation parentInvocation)
-    : super(parent, parentInvocation);
+      : super(parent, parentInvocation);
 }
 
 class _FakeThumbnailSet_6 extends _i1.SmartFake implements _i2.ThumbnailSet {
   _FakeThumbnailSet_6(Object parent, Invocation parentInvocation)
-    : super(parent, parentInvocation);
+      : super(parent, parentInvocation);
 }
 
 class _FakeUnmodifiableListView_7<E> extends _i1.SmartFake
     implements _i3.UnmodifiableListView<E> {
   _FakeUnmodifiableListView_7(Object parent, Invocation parentInvocation)
-    : super(parent, parentInvocation);
+      : super(parent, parentInvocation);
 }
 
 class _FakeEngagement_8 extends _i1.SmartFake implements _i2.Engagement {
   _FakeEngagement_8(Object parent, Invocation parentInvocation)
-    : super(parent, parentInvocation);
+      : super(parent, parentInvocation);
 }
 
 class _Fake$VideoCopyWith_9<$Res> extends _i1.SmartFake
     implements _i2.$VideoCopyWith<$Res> {
   _Fake$VideoCopyWith_9(Object parent, Invocation parentInvocation)
-    : super(parent, parentInvocation);
+      : super(parent, parentInvocation);
 }
 
 class _FakeStreamClient_10 extends _i1.SmartFake implements _i2.StreamClient {
   _FakeStreamClient_10(Object parent, Invocation parentInvocation)
-    : super(parent, parentInvocation);
+      : super(parent, parentInvocation);
 }
 
 class _FakeClosedCaptionClient_11 extends _i1.SmartFake
     implements _i2.ClosedCaptionClient {
   _FakeClosedCaptionClient_11(Object parent, Invocation parentInvocation)
-    : super(parent, parentInvocation);
+      : super(parent, parentInvocation);
 }
 
 class _FakeCommentsClient_12 extends _i1.SmartFake
     implements _i2.CommentsClient {
   _FakeCommentsClient_12(Object parent, Invocation parentInvocation)
-    : super(parent, parentInvocation);
+      : super(parent, parentInvocation);
 }
 
 class _FakeVideo_13 extends _i1.SmartFake implements _i2.Video {
   _FakeVideo_13(Object parent, Invocation parentInvocation)
-    : super(parent, parentInvocation);
+      : super(parent, parentInvocation);
 }
 
 /// A class which mocks [YoutubeExplode].
@@ -111,72 +111,64 @@ class MockYoutubeExplode extends _i1.Mock implements _i4.YoutubeExplode {
   }
 
   @override
-  _i2.VideoClient get videos =>
-      (super.noSuchMethod(
-            Invocation.getter(#videos),
-            returnValue: _FakeVideoClient_0(this, Invocation.getter(#videos)),
-          )
-          as _i2.VideoClient);
+  _i2.VideoClient get videos => (super.noSuchMethod(
+        Invocation.getter(#videos),
+        returnValue: _FakeVideoClient_0(this, Invocation.getter(#videos)),
+      ) as _i2.VideoClient);
 
   @override
   set videos(_i2.VideoClient? _videos) => super.noSuchMethod(
-    Invocation.setter(#videos, _videos),
-    returnValueForMissingStub: null,
-  );
+        Invocation.setter(#videos, _videos),
+        returnValueForMissingStub: null,
+      );
 
   @override
-  _i2.PlaylistClient get playlists =>
-      (super.noSuchMethod(
-            Invocation.getter(#playlists),
-            returnValue: _FakePlaylistClient_1(
-              this,
-              Invocation.getter(#playlists),
-            ),
-          )
-          as _i2.PlaylistClient);
+  _i2.PlaylistClient get playlists => (super.noSuchMethod(
+        Invocation.getter(#playlists),
+        returnValue: _FakePlaylistClient_1(
+          this,
+          Invocation.getter(#playlists),
+        ),
+      ) as _i2.PlaylistClient);
 
   @override
   set playlists(_i2.PlaylistClient? _playlists) => super.noSuchMethod(
-    Invocation.setter(#playlists, _playlists),
-    returnValueForMissingStub: null,
-  );
+        Invocation.setter(#playlists, _playlists),
+        returnValueForMissingStub: null,
+      );
 
   @override
-  _i2.ChannelClient get channels =>
-      (super.noSuchMethod(
-            Invocation.getter(#channels),
-            returnValue: _FakeChannelClient_2(
-              this,
-              Invocation.getter(#channels),
-            ),
-          )
-          as _i2.ChannelClient);
+  _i2.ChannelClient get channels => (super.noSuchMethod(
+        Invocation.getter(#channels),
+        returnValue: _FakeChannelClient_2(
+          this,
+          Invocation.getter(#channels),
+        ),
+      ) as _i2.ChannelClient);
 
   @override
   set channels(_i2.ChannelClient? _channels) => super.noSuchMethod(
-    Invocation.setter(#channels, _channels),
-    returnValueForMissingStub: null,
-  );
+        Invocation.setter(#channels, _channels),
+        returnValueForMissingStub: null,
+      );
 
   @override
-  _i2.SearchClient get search =>
-      (super.noSuchMethod(
-            Invocation.getter(#search),
-            returnValue: _FakeSearchClient_3(this, Invocation.getter(#search)),
-          )
-          as _i2.SearchClient);
+  _i2.SearchClient get search => (super.noSuchMethod(
+        Invocation.getter(#search),
+        returnValue: _FakeSearchClient_3(this, Invocation.getter(#search)),
+      ) as _i2.SearchClient);
 
   @override
   set search(_i2.SearchClient? _search) => super.noSuchMethod(
-    Invocation.setter(#search, _search),
-    returnValueForMissingStub: null,
-  );
+        Invocation.setter(#search, _search),
+        returnValueForMissingStub: null,
+      );
 
   @override
   void close() => super.noSuchMethod(
-    Invocation.method(#close, []),
-    returnValueForMissingStub: null,
-  );
+        Invocation.method(#close, []),
+        returnValueForMissingStub: null,
+      );
 }
 
 /// A class which mocks [YoutubeVideo].
@@ -188,12 +180,10 @@ class MockYoutubeVideo extends _i1.Mock implements _i4.YoutubeVideo {
   }
 
   @override
-  String get url =>
-      (super.noSuchMethod(
-            Invocation.getter(#url),
-            returnValue: _i5.dummyValue<String>(this, Invocation.getter(#url)),
-          )
-          as String);
+  String get url => (super.noSuchMethod(
+        Invocation.getter(#url),
+        returnValue: _i5.dummyValue<String>(this, Invocation.getter(#url)),
+      ) as String);
 
   @override
   bool get hasWatchPage =>
@@ -201,86 +191,70 @@ class MockYoutubeVideo extends _i1.Mock implements _i4.YoutubeVideo {
           as bool);
 
   @override
-  _i2.VideoId get id =>
-      (super.noSuchMethod(
-            Invocation.getter(#id),
-            returnValue: _FakeVideoId_4(this, Invocation.getter(#id)),
-          )
-          as _i2.VideoId);
+  _i2.VideoId get id => (super.noSuchMethod(
+        Invocation.getter(#id),
+        returnValue: _FakeVideoId_4(this, Invocation.getter(#id)),
+      ) as _i2.VideoId);
 
   @override
-  String get title =>
-      (super.noSuchMethod(
-            Invocation.getter(#title),
-            returnValue: _i5.dummyValue<String>(
-              this,
-              Invocation.getter(#title),
-            ),
-          )
-          as String);
+  String get title => (super.noSuchMethod(
+        Invocation.getter(#title),
+        returnValue: _i5.dummyValue<String>(
+          this,
+          Invocation.getter(#title),
+        ),
+      ) as String);
 
   @override
-  String get author =>
-      (super.noSuchMethod(
-            Invocation.getter(#author),
-            returnValue: _i5.dummyValue<String>(
-              this,
-              Invocation.getter(#author),
-            ),
-          )
-          as String);
+  String get author => (super.noSuchMethod(
+        Invocation.getter(#author),
+        returnValue: _i5.dummyValue<String>(
+          this,
+          Invocation.getter(#author),
+        ),
+      ) as String);
 
   @override
-  _i2.ChannelId get channelId =>
-      (super.noSuchMethod(
-            Invocation.getter(#channelId),
-            returnValue: _FakeChannelId_5(this, Invocation.getter(#channelId)),
-          )
-          as _i2.ChannelId);
+  _i2.ChannelId get channelId => (super.noSuchMethod(
+        Invocation.getter(#channelId),
+        returnValue: _FakeChannelId_5(this, Invocation.getter(#channelId)),
+      ) as _i2.ChannelId);
 
   @override
-  String get description =>
-      (super.noSuchMethod(
-            Invocation.getter(#description),
-            returnValue: _i5.dummyValue<String>(
-              this,
-              Invocation.getter(#description),
-            ),
-          )
-          as String);
+  String get description => (super.noSuchMethod(
+        Invocation.getter(#description),
+        returnValue: _i5.dummyValue<String>(
+          this,
+          Invocation.getter(#description),
+        ),
+      ) as String);
 
   @override
-  _i2.ThumbnailSet get thumbnails =>
-      (super.noSuchMethod(
-            Invocation.getter(#thumbnails),
-            returnValue: _FakeThumbnailSet_6(
-              this,
-              Invocation.getter(#thumbnails),
-            ),
-          )
-          as _i2.ThumbnailSet);
+  _i2.ThumbnailSet get thumbnails => (super.noSuchMethod(
+        Invocation.getter(#thumbnails),
+        returnValue: _FakeThumbnailSet_6(
+          this,
+          Invocation.getter(#thumbnails),
+        ),
+      ) as _i2.ThumbnailSet);
 
   @override
-  _i3.UnmodifiableListView<String> get keywords =>
-      (super.noSuchMethod(
-            Invocation.getter(#keywords),
-            returnValue: _FakeUnmodifiableListView_7<String>(
-              this,
-              Invocation.getter(#keywords),
-            ),
-          )
-          as _i3.UnmodifiableListView<String>);
+  _i3.UnmodifiableListView<String> get keywords => (super.noSuchMethod(
+        Invocation.getter(#keywords),
+        returnValue: _FakeUnmodifiableListView_7<String>(
+          this,
+          Invocation.getter(#keywords),
+        ),
+      ) as _i3.UnmodifiableListView<String>);
 
   @override
-  _i2.Engagement get engagement =>
-      (super.noSuchMethod(
-            Invocation.getter(#engagement),
-            returnValue: _FakeEngagement_8(
-              this,
-              Invocation.getter(#engagement),
-            ),
-          )
-          as _i2.Engagement);
+  _i2.Engagement get engagement => (super.noSuchMethod(
+        Invocation.getter(#engagement),
+        returnValue: _FakeEngagement_8(
+          this,
+          Invocation.getter(#engagement),
+        ),
+      ) as _i2.Engagement);
 
   @override
   bool get isLive =>
@@ -288,15 +262,13 @@ class MockYoutubeVideo extends _i1.Mock implements _i4.YoutubeVideo {
           as bool);
 
   @override
-  _i2.$VideoCopyWith<_i2.Video> get copyWith =>
-      (super.noSuchMethod(
-            Invocation.getter(#copyWith),
-            returnValue: _Fake$VideoCopyWith_9<_i2.Video>(
-              this,
-              Invocation.getter(#copyWith),
-            ),
-          )
-          as _i2.$VideoCopyWith<_i2.Video>);
+  _i2.$VideoCopyWith<_i2.Video> get copyWith => (super.noSuchMethod(
+        Invocation.getter(#copyWith),
+        returnValue: _Fake$VideoCopyWith_9<_i2.Video>(
+          this,
+          Invocation.getter(#copyWith),
+        ),
+      ) as _i2.$VideoCopyWith<_i2.Video>);
 }
 
 /// A class which mocks [VideoClient].
@@ -308,82 +280,98 @@ class MockVideoClient extends _i1.Mock implements _i4.VideoClient {
   }
 
   @override
-  _i2.StreamClient get streamsClient =>
-      (super.noSuchMethod(
-            Invocation.getter(#streamsClient),
-            returnValue: _FakeStreamClient_10(
-              this,
-              Invocation.getter(#streamsClient),
-            ),
-          )
-          as _i2.StreamClient);
+  _i2.StreamClient get streamsClient => (super.noSuchMethod(
+        Invocation.getter(#streamsClient),
+        returnValue: _FakeStreamClient_10(
+          this,
+          Invocation.getter(#streamsClient),
+        ),
+      ) as _i2.StreamClient);
 
   @override
-  _i2.ClosedCaptionClient get closedCaptions =>
-      (super.noSuchMethod(
-            Invocation.getter(#closedCaptions),
-            returnValue: _FakeClosedCaptionClient_11(
-              this,
-              Invocation.getter(#closedCaptions),
-            ),
-          )
-          as _i2.ClosedCaptionClient);
+  _i2.ClosedCaptionClient get closedCaptions => (super.noSuchMethod(
+        Invocation.getter(#closedCaptions),
+        returnValue: _FakeClosedCaptionClient_11(
+          this,
+          Invocation.getter(#closedCaptions),
+        ),
+      ) as _i2.ClosedCaptionClient);
 
   @override
-  _i2.CommentsClient get commentsClient =>
-      (super.noSuchMethod(
-            Invocation.getter(#commentsClient),
-            returnValue: _FakeCommentsClient_12(
-              this,
-              Invocation.getter(#commentsClient),
-            ),
-          )
-          as _i2.CommentsClient);
+  _i2.CommentsClient get commentsClient => (super.noSuchMethod(
+        Invocation.getter(#commentsClient),
+        returnValue: _FakeCommentsClient_12(
+          this,
+          Invocation.getter(#commentsClient),
+        ),
+      ) as _i2.CommentsClient);
 
   @override
-  _i2.StreamClient get streams =>
-      (super.noSuchMethod(
-            Invocation.getter(#streams),
-            returnValue: _FakeStreamClient_10(
-              this,
-              Invocation.getter(#streams),
-            ),
-          )
-          as _i2.StreamClient);
+  _i2.StreamClient get streams => (super.noSuchMethod(
+        Invocation.getter(#streams),
+        returnValue: _FakeStreamClient_10(
+          this,
+          Invocation.getter(#streams),
+        ),
+      ) as _i2.StreamClient);
 
   @override
-  _i2.CommentsClient get comments =>
-      (super.noSuchMethod(
-            Invocation.getter(#comments),
-            returnValue: _FakeCommentsClient_12(
-              this,
-              Invocation.getter(#comments),
-            ),
-          )
-          as _i2.CommentsClient);
+  _i2.CommentsClient get comments => (super.noSuchMethod(
+        Invocation.getter(#comments),
+        returnValue: _FakeCommentsClient_12(
+          this,
+          Invocation.getter(#comments),
+        ),
+      ) as _i2.CommentsClient);
 
   @override
-  _i6.Future<_i2.Video> get(dynamic videoId) =>
-      (super.noSuchMethod(
-            Invocation.method(#get, [videoId]),
-            returnValue: _i6.Future<_i2.Video>.value(
-              _FakeVideo_13(this, Invocation.method(#get, [videoId])),
-            ),
-          )
-          as _i6.Future<_i2.Video>);
+  _i6.Future<_i2.Video> get(dynamic videoId) => (super.noSuchMethod(
+        Invocation.method(#get, [videoId]),
+        returnValue: _i6.Future<_i2.Video>.value(
+          _FakeVideo_13(this, Invocation.method(#get, [videoId])),
+        ),
+      ) as _i6.Future<_i2.Video>);
 
   @override
   _i6.Future<_i2.RelatedVideosList?> getRelatedVideos(_i2.Video? video) =>
       (super.noSuchMethod(
-            Invocation.method(#getRelatedVideos, [video]),
-            returnValue: _i6.Future<_i2.RelatedVideosList?>.value(),
-          )
-          as _i6.Future<_i2.RelatedVideosList?>);
+        Invocation.method(#getRelatedVideos, [video]),
+        returnValue: _i6.Future<_i2.RelatedVideosList?>.value(),
+      ) as _i6.Future<_i2.RelatedVideosList?>);
+}
+
+class CustomMockStreamClient extends _i1.Mock implements _i2.StreamClient {
+  @override
+  Future<_i2.StreamManifest> getManifest(
+    dynamic videoId, {
+    // Change VideoId to dynamic
+    bool fullManifest = false,
+    bool requireWatchPage = false,
+    List<_i2.YoutubeApiClient>? ytClients,
+  }) async {
+    return _i2.StreamManifest([
+      _i2.AudioOnlyStreamInfo(
+        _i2.Itag(140), // AAC 128kbps (standard Itag for YouTube audio)
+        _i2.StreamFormat(
+          url: Uri.parse(
+              "file:///${kPlaylistDownloadRootPathWindows}/test_audio.mp3"),
+          contentLength: 500000, // Dummy size
+          bitrate: _i2.Bitrate(128000), // 128kbps
+          container: _i2.StreamContainer.m4a, // M4A format
+        ),
+      ),
+    ]);
+  }
 }
 
 /// This class extends the MockVideoClient class generated by
 /// the build_runner package based on mock_youtube.dart definitions.
 class CustomMockVideoClient extends MockVideoClient {
+  final CustomMockStreamClient _mockStreamClient = CustomMockStreamClient();
+
+  @override
+  _i2.StreamClient get streamsClient => _mockStreamClient;
+
   @override
   Future<_i2.Video> get(dynamic id) async {
     List<String> keywords = ['keyword 1', 'keyword 2', 'keyword 3'];
@@ -393,92 +381,68 @@ class CustomMockVideoClient extends MockVideoClient {
     switch (id.value) {
       case 'invalid_url':
         {
-          // if the video url is invalid, instanciating the _i2.VideoId
-          // in unit test will not throw an ArgumentError, but will return
-          // a _i2.VideoId instance with a value of 'invalid_url'.
-          //
-          // So, in order to test the error handling if the video url is
-          // invalid, we need to set a channel id that is invalid.
-
           String nowStr = englishDateTimeFormat.format(DateTime.now());
           nowStr.replaceAll('/', '_');
 
           returnedVideo = _i2.Video(
-            _i2.VideoId('invalid_url'), // Assuming 'id' is a valid video ID
+            _i2.VideoId('invalid_url'),
             'Invalid URL video title',
             'Invalid URL author',
-            // 'invalid channel id' causes an Exception to be thrown, which
-            // causes the false to be returned by
-            // AudioDownloadVM.downloadSingleVideoAudio().
             _i2.ChannelId('invalid channel id'),
             DateTime.now(),
             nowStr,
             DateTime.now(),
             'Invalid URL video description',
             const Duration(minutes: 50),
-            _i2.ThumbnailSet(id.toString()), // Thumbnails
+            _i2.ThumbnailSet(id.toString()),
             keywords,
             const _i2.Engagement(200, 15, 3),
             false,
-            // Add other required fields as necessary
           );
-
           break;
         }
+
       case 'v7PWb7f_P8M':
         {
-          // if the video url is invalid, instanciating the _i2.VideoId
-          // in unit test will not throw an ArgumentError, but will return
-          // a _i2.VideoId instance with a value of 'invalid_url'.
-          //
-          // So, in order to test the error handling if the video url is
-          // invalid, we need to set a channel id that is invalid.
-
           DateFormat mockEnglishDateTimeFormat = DateFormat("yyyy-MM-dd HH:mm");
           DateTime uploadAndPublishDate =
               mockEnglishDateTimeFormat.parse('2023-06-10 00:00');
-          
+
           returnedVideo = _i2.Video(
-            _i2.VideoId(id.value), // Assuming 'id' is a valid video ID
+            _i2.VideoId(id.value),
             'audio learn test short video one',
             'Jean-Pierre Schnyder',
             _i2.ChannelId('UCd11FV1u3nj3RvOgH_s_ckQ'),
             uploadAndPublishDate,
             '2023-06-10 00:00',
             uploadAndPublishDate,
-            'Jean-Pierre Schnyder\n\nCette vid\u00e9o me sert \u00e0 tester AudioLearn, l\'app Android que je d\u00e9veloppe et dont le code est disponible sur GitHub. ...',
+            'Jean-Pierre Schnyder\n\nCette vidéo me sert à tester AudioLearn...',
             const Duration(milliseconds: 24000),
-            _i2.ThumbnailSet(id.toString()), // Thumbnails
+            _i2.ThumbnailSet(id.toString()),
             keywords,
             const _i2.Engagement(100, 10, 2),
             false,
-            // Add other required fields as necessary
           );
-
           break;
         }
+
       default:
         {
           returnedVideo = _i2.Video(
-            _i2.VideoId('invalid_url'), // Assuming 'id' is a valid video ID
+            _i2.VideoId('invalid_url'),
             'Invalid URL video title',
             'Invalid URL author',
-            // 'invalid channel id' causes an Exception to be thrown, which
-            // causes the false to be returned by
-            // AudioDownloadVM.downloadSingleVideoAudio().
             _i2.ChannelId('invalid channel id'),
             DateTime.now(),
             englishDateTimeFormat.format(DateTime.now()),
             DateTime.now(),
             'Invalid URL video description',
             const Duration(minutes: 50),
-            _i2.ThumbnailSet(id.toString()), // Thumbnails
+            _i2.ThumbnailSet(id.toString()),
             keywords,
             const _i2.Engagement(200, 15, 3),
             false,
-            // Add other required fields as necessary
           );
-
           break;
         }
     }
