@@ -10543,7 +10543,7 @@ void main() {
           "250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12.jpg",
           "250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.jpg",
         ],
-        playlistRootDir:playlistRootDirName,
+        playlistRootDir: playlistRootDirName,
       );
 
       // Verify the content of the 'local' playlist dir
@@ -10559,7 +10559,7 @@ void main() {
         expectedPictureFiles: [
           "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.jpg"
         ],
-        playlistRootDir:playlistRootDirName,
+        playlistRootDir: playlistRootDirName,
       );
 
       // Replace the platform instance with your mock
@@ -10707,7 +10707,7 @@ void main() {
           "250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12.jpg",
           "250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.jpg",
         ],
-        playlistRootDir:playlistRootDirName,
+        playlistRootDir: playlistRootDirName,
       );
 
       // Verify the content of the 'local' playlist dir
@@ -10723,7 +10723,7 @@ void main() {
         expectedPictureFiles: [
           "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.jpg"
         ],
-        playlistRootDir:playlistRootDirName,
+        playlistRootDir: playlistRootDirName,
       );
 
       // Verify the content of the 'S8 audio' playlist dir
@@ -10737,7 +10737,7 @@ void main() {
           "240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.json",
         ],
         expectedPictureFiles: [],
-        playlistRootDir:playlistRootDirName,
+        playlistRootDir: playlistRootDirName,
       );
 
       const String playlistToRedownloadTitle = 'S8 audio';
@@ -10786,16 +10786,17 @@ void main() {
       IntegrationTestUtil.verifyPlaylistDirectoryContents(
         playlistTitle: 'S8 audio',
         expectedAudioFiles: [
-          "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.mp3",
-          "250215-142936-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
+          "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
           "240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.mp3",
         ],
         expectedCommentFiles: [
-          "New file name.json",
-          "240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.json",
           "240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.json",
+          "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json",
+          "240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.json",
+          "New file name.json",
         ],
         expectedPictureFiles: [],
+        playlistRootDir: playlistRootDirName,
       );
 
       // Verifying and closing the confirm dialog
