@@ -169,7 +169,8 @@ class AudioDownloadVM extends ChangeNotifier {
 
           _updatePlaylistRootPathIfNecessary(
             playlist: currentPlaylist,
-            isPlaylistsRestoredFromAndroidToWindows: arePlaylistsRestoredFromAndroidToWindows,
+            isPlaylistsRestoredFromAndroidToWindows:
+                arePlaylistsRestoredFromAndroidToWindows,
             playlistWindowsDownloadRootPath: playlistWindowsDownloadRootPath,
           );
 
@@ -223,6 +224,8 @@ class AudioDownloadVM extends ChangeNotifier {
     );
 
     if (audioFilePathNameLst.isEmpty) {
+      // In this case, the redownloaded playlist was not created before
+      // the redownload and so has no audio files to rename.
       return;
     }
 
@@ -236,18 +239,18 @@ class AudioDownloadVM extends ChangeNotifier {
           audioToRenameFilePathName.split(Platform.pathSeparator).last;
 
       final match = regex.firstMatch(audioToRenameFileName);
-      String audioFileToRenameAudioTitle = '';
+      String audioTitleInAudioToRenameFileName = '';
 
       if (match != null && match.groupCount >= 1) {
         // Extract the title part
-        audioFileToRenameAudioTitle = match.group(1)!;
+        audioTitleInAudioToRenameFileName = match.group(1)!;
       }
 
       Audio? audio;
 
-      if (audioFileToRenameAudioTitle != '') {
+      if (audioTitleInAudioToRenameFileName != '') {
         audio = restoredPlaylist.playableAudioLst.firstWhereOrNull(
-          (audio) => audio.validVideoTitle == audioFileToRenameAudioTitle,
+          (audio) => audio.validVideoTitle == audioTitleInAudioToRenameFileName,
         );
       }
 
@@ -308,11 +311,16 @@ class AudioDownloadVM extends ChangeNotifier {
         // playlist which corresponds to the audio file is added to the
         // restored playlist.
         Audio? audio = initialPlaylist.playableAudioLst.firstWhereOrNull(
-          (audio) => audio.validVideoTitle == audioFileToRenameAudioTitle,
+          (audio) => audio.validVideoTitle == audioTitleInAudioToRenameFileName,
         );
 
         if (audio != null) {
           restoredPlaylist.addDownloadedAudio(audio);
+
+          JsonDataService.saveToFile(
+            path: restoredPlaylist.getPlaylistDownloadFilePathName(),
+            model: restoredPlaylist,
+          );
         }
       }
     }
