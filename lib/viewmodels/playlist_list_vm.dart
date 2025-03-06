@@ -1092,6 +1092,7 @@ class PlaylistListVM extends ChangeNotifier {
         audio: audio,
         audioWasRedownloaded: true,
       );
+      
       return 1 - resultLst[0] as int;
     }
   }
