@@ -62,3 +62,6 @@ macos/Flutter/GeneratedPluginRegistrant.swift
 *.cc
 *.swift
 *.cmake
+*.cmake
+*.swift
+*.cc
