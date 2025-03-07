@@ -229,44 +229,6 @@ class MockAudioDownloadVM extends AudioDownloadVM {
     return addedPlaylist;
   }
 
-  @override
-  Future<ErrorType> downloadSingleVideoAudio({
-    required String videoUrl,
-    required Playlist singleVideoTargetPlaylist,
-    bool downloadAtMusicQuality = false,
-    bool displayWarningIfAudioAlreadyExists = true,
-    String predefinedAudioFileName = '',
-  }) async {
-    if (videoUrl.contains('invalid')) {
-      warningMessageVM.isSingleVideoUrlInvalid = true;
-
-      return ErrorType.downloadAudioYoutubeError;
-    }
-
-    try {
-      Audio existingSingleVideoAudio = singleVideoTargetPlaylist
-          .downloadedAudioLst
-          .firstWhere((audio) => audio.videoUrl == videoUrl);
-
-      String existingAudioFileName = existingSingleVideoAudio.audioFileName;
-
-      notifyDownloadError(
-        errorType: ErrorType.downloadAudioFileAlreadyOnAudioDirectory,
-        errorArgOne: existingSingleVideoAudio.validVideoTitle,
-        errorArgTwo: existingAudioFileName,
-        errorArgThree: singleVideoTargetPlaylist.title,
-      );
-
-      return ErrorType.downloadAudioFileAlreadyOnAudioDirectory;
-    } catch (e) {
-      // file was not found in the downloaded audio directory
-    }
-
-    notifyListeners();
-
-    return ErrorType.noError;
-  }
-
   /// This method is redifined in the MockAudioDownloadVM so that the
   /// AudioDownloadVM.importAudioFilesInPlaylist() method can be unit
   /// tested.
@@ -391,6 +353,85 @@ class MockAudioDownloadVM extends AudioDownloadVM {
     String audioPlaylistDownloadPath = audioEnclosingPlaylist.downloadPath;
     List<String> playlistRootPathElementsLst;
     String appPlaylistDirName;
+
+    if (audioPlaylistDownloadPath.contains('/')) {
+      playlistRootPathElementsLst = audioPlaylistDownloadPath.split('/');
+      // This name may have been changed by the user on Android.
+      appPlaylistDirName =
+          playlistRootPathElementsLst[playlistRootPathElementsLst.length - 2];
+    } else {
+      playlistRootPathElementsLst = audioPlaylistDownloadPath.split('\\');
+      appPlaylistDirName =
+          playlistRootPathElementsLst[playlistRootPathElementsLst.length - 1];
+    }
+
+    String playlistRootPath =
+        "$kApplicationPathWindows${path.separator}playlists${path.separator}$appPlaylistDirName";
+    final String mockSourceFileDir =
+        "$kApplicationPathWindows${path.separator}downloadedMockFileDir${path.separator}${audioEnclosingPlaylist.title}";
+    List<String> audioFileNamesContainedInMockSourceFileDirLst =
+        DirUtil.listFileNamesInDir(
+      directoryPath: mockSourceFileDir,
+      fileExtension: 'mp3',
+    );
+    String correspondingAudioFileName =
+        audioFileNamesContainedInMockSourceFileDirLst.firstWhere(
+      (audioFileName) => audioFileName.contains(audio.validVideoTitle),
+      orElse: () => '',
+    );
+    String audioFilePathName =
+        "$mockSourceFileDir${path.separator}$correspondingAudioFileName";
+
+    // Copy the mock source audio file to the playlist directory with
+    // setting the target file name to the original audio file name.
+    DirUtil.copyFileToDirectorySync(
+      sourceFilePathName: audioFilePathName,
+      targetDirectoryPath: playlistRootPath,
+      targetFileName: audio.audioFileName,
+    );
+
+    return ErrorType.noError;
+  }
+
+  @override
+  Future<ErrorType> downloadSingleVideoAudio({
+    required Playlist singleVideoTargetPlaylist,
+    required String videoUrl,
+    bool downloadAtMusicQuality = false,
+    bool displayWarningIfAudioAlreadyExists = true,
+  }) async {
+    Audio audio = currentDownloadingAudio;
+    Playlist audioEnclosingPlaylist = audio.enclosingPlaylist!;
+    String audioPlaylistDownloadPath = audioEnclosingPlaylist.downloadPath;
+    List<String> playlistRootPathElementsLst;
+    String appPlaylistDirName;
+
+    if (videoUrl.contains('invalid')) {
+      warningMessageVM.isSingleVideoUrlInvalid = true;
+
+      return ErrorType.downloadAudioYoutubeError;
+    }
+
+    try {
+      Audio existingSingleVideoAudio = singleVideoTargetPlaylist
+          .downloadedAudioLst
+          .firstWhere((audio) => audio.videoUrl == videoUrl);
+
+      String existingAudioFileName = existingSingleVideoAudio.audioFileName;
+
+      notifyDownloadError(
+        errorType: ErrorType.downloadAudioFileAlreadyOnAudioDirectory,
+        errorArgOne: existingSingleVideoAudio.validVideoTitle,
+        errorArgTwo: existingAudioFileName,
+        errorArgThree: singleVideoTargetPlaylist.title,
+      );
+
+      return ErrorType.downloadAudioFileAlreadyOnAudioDirectory;
+    } catch (e) {
+      // file was not found in the downloaded audio directory
+    }
+
+    notifyListeners();
 
     if (audioPlaylistDownloadPath.contains('/')) {
       playlistRootPathElementsLst = audioPlaylistDownloadPath.split('/');
