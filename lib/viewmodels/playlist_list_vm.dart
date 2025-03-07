@@ -1092,7 +1092,7 @@ class PlaylistListVM extends ChangeNotifier {
         audio: audio,
         audioWasRedownloaded: true,
       );
-      
+
       return 1 - resultLst[0] as int;
     }
   }
@@ -2928,8 +2928,14 @@ class PlaylistListVM extends ChangeNotifier {
   }) {
     int rewindedAudioNumber = playlist.rewindPlayableAudioToStart();
 
-    if (playlist.currentOrPastPlayableAudioIndex != -1) {
-      audioPlayerVMlistenFalse.skipToStart();
+    if (playlist.currentOrPastPlayableAudioIndex != -1 &&
+        audioPlayerVMlistenFalse.currentAudio != null) {
+      audioPlayerVMlistenFalse.skipToStart(
+        // This parameter value avoids that the current audio is
+        // set the previous audio position after rewinding the
+        // current audio to start position.
+        isAfterRewindingAudioPosition: true,
+      );
     }
 
     if (rewindedAudioNumber > 0) {
