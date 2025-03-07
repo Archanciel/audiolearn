@@ -961,7 +961,7 @@ class AudioPlayerVM extends ChangeNotifier {
       // executes the 'Restore Playlists, Comments and Settings' menu.
       // In this situation, the displayed playlist audio's are not
       // playable (no mp3 file available).
-      
+
       return;
     }
 
@@ -1141,6 +1141,7 @@ class AudioPlayerVM extends ChangeNotifier {
   Future<void> skipToStart({
     bool isUndoRedo = false,
     bool isFromAudioPlayerView = false,
+    bool isAfterRewindingAudioPosition = false,
   }) async {
     if (isFromAudioPlayerView && _wasAudioPlayersStopped) {
       // Set the source again since clicking on the pause icon
@@ -1154,7 +1155,9 @@ class AudioPlayerVM extends ChangeNotifier {
       _wasAudioPlayersStopped = false;
     }
 
-    if (_currentAudioPosition.inSeconds == 0) {
+    if (!isAfterRewindingAudioPosition && // in rewinding situation, setting
+        // the current audio to the previous audio is an error
+        _currentAudioPosition.inSeconds == 0) {
       // situation when the user clicks on |< when the audio
       // position is at audio start. The case if the user clicked
       // twice on the |< icon. In this case, the previous audio
