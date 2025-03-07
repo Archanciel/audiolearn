@@ -2852,6 +2852,56 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindows,
       );
     });
+    testWidgets('''After rewinding playlist audio for selected playlist, play
+        then pause an audio, then select another audio and rewind again. Ensure
+        the last selected audio remains being the current aidio. Bug fix check.''',
+        (tester) async {
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'sort_and_filter_audio_dialog_widget_test',
+        tapOnPlaylistToggleButton: true,
+      );
+
+      const String youtubePlaylistToRewindTitle = 'S8 audio';
+
+      // Rewind all 'S8 audio" playlist audio's to start position
+      await _tapOnRewindPlaylistAudioToStartPositionMenu(
+        tester: tester,
+        playlistToRewindTitle: youtubePlaylistToRewindTitle,
+        numberOfRewindedAudio: 4,
+      );
+
+      // Tap the 'Toggle List' button to reduce the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      Finder appScreenNavigationButton =
+          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+
+      // Now play then pause "Ce qui va vraiment sauver notre espèce
+      // par Jancovici et Barrau" before rewinding the playlist audio
+      // to start position after having clicked on another audio item.
+      await _rewindPlaylistAfterPlayThenPauseAnAudio(
+        tester: tester,
+        appScreenNavigationButton: appScreenNavigationButton,
+        doExpandPlaylistList: false,
+        playlistToRewindTitle: youtubePlaylistToRewindTitle,
+        audioToPlayTitle:
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        audioToPlayTitleAndDuration:
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n6:29",
+        otherAudioTitleToTapOnBeforeRewinding:
+            "Les besoins artificiels par R.Keucheyan",
+        otherAudioTitleToTapOnBeforeRewindingDuration:
+            "Les besoins artificiels par R.Keucheyan\n19:05",
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindows,
+      );
+    });
     testWidgets(
         '''Rewind playlist audio for unselected playlist. No other playlist
         is selected.''', (tester) async {
@@ -12358,6 +12408,10 @@ Future<void> _rewindPlaylistAfterPlayThenPauseAnAudio({
     await tester.tap(appScreenNavigationButton);
     await tester.pumpAndSettle(const Duration(milliseconds: 200));
   }
+
+  // Tap the 'Toggle List' button to display the list of playlist's.
+  await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+  await tester.pumpAndSettle();
 
   // Rewind all playlist audio to start position
   await _tapOnRewindPlaylistAudioToStartPositionMenu(
