@@ -965,7 +965,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   }
 
   /// Method called when the user select a sort/filter parameters in the
-  /// sort/filter dropdown button list. The selected sort/ilter parameters
+  /// sort/filter dropdown button list. The selected sort/filter parameters
   /// are applied to the selected playlist audio list.
   String _applySortFilterParmsNameChange({
     required PlaylistListVM playlistListVMlistenFalseOrTrue,
@@ -992,7 +992,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
         playlistListVMlistenTrue: playlistListVMlistenFalseOrTrue,
         searchSentence: searchSentence,
         notifyListeners: notifyListeners); // If true, causes displayed audio
-    //                                    list update.
+    //                                        list update.
     //                         If false, avoids rebuilding the widget and
     //                         avoids integration test failure
 
@@ -1801,6 +1801,12 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                     // correctly downloaded, then the playlistUrl
                     // field is cleared
                     _playlistUrlOrSearchController.clear();
+
+                    _applySortFilterParmsNameChange(
+                      playlistListVMlistenFalseOrTrue:
+                          playlistListVMlistenFalse,
+                      notifyListeners: true,
+                    );
                   }
                 }
               });
