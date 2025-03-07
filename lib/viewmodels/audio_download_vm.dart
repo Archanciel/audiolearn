@@ -2206,6 +2206,10 @@ class AudioDownloadVM extends ChangeNotifier {
     int totalBytesDownloaded = 0;
     int previousSecondBytesDownloaded = 0;
 
+    // This avoid that when downloading a next audio file, the displayed
+    // download progress starts at 100 % !
+    _downloadProgress = 0.0;
+
     Duration updateInterval = const Duration(seconds: 1);
     DateTime lastUpdate = DateTime.now();
     Timer timer = Timer.periodic(updateInterval, (timer) {
@@ -2254,9 +2258,6 @@ class AudioDownloadVM extends ChangeNotifier {
     await audioFileSink.flush();
     await audioFileSink.close();
 
-    // This avoid that when downloading a next audio file, the displayed
-    // download progress starts at 100 % !
-    _downloadProgress = 0.0;
     _lastSecondDownloadSpeed = 0;
   }
 
