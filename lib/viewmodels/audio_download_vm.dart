@@ -2169,7 +2169,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
     if (isHighQuality) {
       audioStreamInfo = streamManifest.audioOnly.withHighestBitrate();
-      if (redownloading) {
+      if (!redownloading) { // if redownloading, the audio quality is already set
         audio.setAudioToMusicQuality();
       }
     } else {
@@ -2179,7 +2179,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
     final int audioFileSize = audioStreamInfo.size.totalBytes;
 
-    if (redownloading) {
+    if (!redownloading) { // if redownloading, the audio file size is already set
       audio.audioFileSize = audioFileSize;
     }
 
