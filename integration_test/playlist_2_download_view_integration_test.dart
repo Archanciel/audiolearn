@@ -2754,7 +2754,7 @@ void main() {
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
-      // Rewind all playlist audio to start position
+      // Rewind all 'S8 audio" playlist audio's to start position
       await _tapOnRewindPlaylistAudioToStartPositionMenu(
         tester: tester,
         playlistToRewindTitle: youtubePlaylistToRewindTitle,
@@ -2802,7 +2802,7 @@ void main() {
 
       // Now play then pause "Ce qui va vraiment sauver notre espèce
       // par Jancovici et Barrau" before rewinding the playlist audio
-      // to start position
+      // to start position after having clicked on another audio item.
       await _rewindPlaylistAfterPlayThenPauseAnAudio(
         tester: tester,
         appScreenNavigationButton: appScreenNavigationButton,
@@ -2812,10 +2812,30 @@ void main() {
             "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         audioToPlayTitleAndDuration:
             "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n6:29",
-        // otherAudioTitleToTapOnBeforeRewinding:
-        //     "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-        // otherAudioTitleToTapOnBeforeRewindingDuration:
-        //     "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n6:29",
+        otherAudioTitleToTapOnBeforeRewinding:
+            "Les besoins artificiels par R.Keucheyan",
+        otherAudioTitleToTapOnBeforeRewindingDuration:
+            "Les besoins artificiels par R.Keucheyan\n19:05",
+      );
+
+      // Now play then pause "Ce qui va vraiment sauver notre espèce
+      // par Jancovici et Barrau" before rewinding the playlist audio
+      // to start position after having clicked on the same audio item,
+      // which sets its position to 0 and so causes the rewind number
+      // to be 0.
+      await _rewindPlaylistAfterPlayThenPauseAnAudio(
+        tester: tester,
+        appScreenNavigationButton: appScreenNavigationButton,
+        doExpandPlaylistList: false,
+        playlistToRewindTitle: youtubePlaylistToRewindTitle,
+        audioToPlayTitle:
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        audioToPlayTitleAndDuration:
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n6:29",
+        otherAudioTitleToTapOnBeforeRewinding:
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        otherAudioTitleToTapOnBeforeRewindingDuration:
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n6:29",
       );
 
       // Rewind again all playlist audio to start position. Since
@@ -12284,6 +12304,7 @@ Future<void> _rewindPlaylistAfterPlayThenPauseAnAudio({
   required String audioToPlayTitleAndDuration,
   String? otherAudioTitleToTapOnBeforeRewinding,
   String? otherAudioTitleToTapOnBeforeRewindingDuration,
+  int audioRewindedNumber = 1,
 }) async {
   // Now play then pause audioToPlayTitle
 
@@ -12314,7 +12335,7 @@ Future<void> _rewindPlaylistAfterPlayThenPauseAnAudio({
   await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
   if (doExpandPlaylistList) {
-    // Tap the 'Toggle List' button to show the list of playlist's.
+    // Tap the 'Toggle List' button to display the list of playlist's.
     await tester.tap(find.byKey(const Key('playlist_toggle_button')));
     await tester.pumpAndSettle();
   }
@@ -12342,7 +12363,7 @@ Future<void> _rewindPlaylistAfterPlayThenPauseAnAudio({
   await _tapOnRewindPlaylistAudioToStartPositionMenu(
     tester: tester,
     playlistToRewindTitle: playlistToRewindTitle,
-    numberOfRewindedAudio: 1,
+    numberOfRewindedAudio: audioRewindedNumber,
   );
 
   // Return to audio player view to verify the playlist current
