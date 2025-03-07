@@ -1799,13 +1799,13 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                   if (errorType == ErrorType.noError) {
                     // if the single video audio has been
                     // correctly downloaded, then the playlistUrl
-                    // field is cleared
+                    // field is cleared.
                     _playlistUrlOrSearchController.clear();
 
-                    _applySortFilterParmsNameChange(
-                      playlistListVMlistenFalseOrTrue:
-                          playlistListVMlistenFalse,
-                      notifyListeners: true,
+                    // Required, otherwise the audio list is not
+                    // updated with the newly downloaded audio. 
+                    _updatePlaylistSortedFilteredAudioList(
+                      playlistListVMlistenTrue: playlistListVMlistenFalse,
                     );
                   }
                 }
