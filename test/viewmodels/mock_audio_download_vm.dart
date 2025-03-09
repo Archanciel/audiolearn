@@ -8,7 +8,6 @@ import 'package:audiolearn/models/playlist.dart';
 import 'package:audiolearn/viewmodels/audio_download_vm.dart';
 import 'package:audiolearn/viewmodels/warning_message_vm.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:youtube_explode_dart/youtube_explode_dart.dart' as yt;
 
 /// The MockAudioDownloadVM inherits from AudioDownloadVM.
 /// It exists because when executing integration tests, using

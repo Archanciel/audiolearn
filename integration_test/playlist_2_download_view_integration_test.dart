@@ -10582,7 +10582,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchMockableApplication(
+      await IntegrationTestUtil.launchIntegrTestApplication(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
