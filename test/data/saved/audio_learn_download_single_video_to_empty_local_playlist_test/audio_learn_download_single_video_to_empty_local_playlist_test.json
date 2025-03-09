@@ -1,1 +1,13 @@
-{"downloadedAudioLst":[],"downloadPath":"C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio\\audio_learn_download_single_video_to_empty_local_playlist_test","id":"audio_learn_download_single_video_to_empty_local_playlist_test","isSelected":false,"playableAudioLst":[],"playlistQuality":"voice","playlistType":"local","title":"audio_learn_download_single_video_to_empty_local_playlist_test","url":""}
+{
+    "downloadedAudioLst": [
+    ],
+    "downloadPath": "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio\\audio_learn_download_single_video_to_empty_local_playlist_test",
+    "id": "audio_learn_download_single_video_to_empty_local_playlist_test",
+    "isSelected": false,
+    "playableAudioLst": [
+    ],
+    "playlistQuality": "voice",
+    "playlistType": "local",
+    "title": "audio_learn_download_single_video_to_empty_local_playlist_test",
+    "url": ""
+}
