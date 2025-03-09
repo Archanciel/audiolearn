@@ -55,3 +55,7 @@ windows/flutter/generated_plugins.cmake
 *.swift
 /android/app/.cxx
 /test/data/audio
+*.cc
+*.h
+*.cmake
+*.swift
