@@ -1,4 +1,8 @@
 import 'dart:io';
+import 'package:audiolearn/viewmodels/audio_player_vm.dart';
+import 'package:audiolearn/viewmodels/comment_vm.dart';
+import 'package:audiolearn/viewmodels/date_format_vm.dart';
+import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -547,6 +551,229 @@ Future<void> main() async {
           .byKey(const Key('downloadSingleVideoAudioInAudioQualityButton')));
       await tester.pumpAndSettle();
 
+      // Add a delay to allow the download to finish. 5 seconds is ok
+      // when running the audio_download_vm_test only.
+      // Waiting 5 seconds only causes MissingPluginException
+      // 'No implementation found for method $method on channel $name'
+      // when all tsts are run. 7 seconds solve the problem.
+      await Future.delayed(const Duration(seconds: secondsDelay));
+      await tester.pumpAndSettle();
+
+      Playlist singleVideoDownloadedPlaylist =
+          audioDownloadVM.listOfPlaylist[0];
+
+      checkDownloadedPlaylist(
+        downloadedPlaylist: singleVideoDownloadedPlaylist,
+        playlistId: localTargetPlaylistTitle,
+        playlistTitle: localTargetPlaylistTitle,
+        playlistUrl: '',
+        playlistDir: localTestPlaylistDir,
+      );
+
+      // this check fails if the secondsDelay value is too small
+      expect(audioDownloadVM.isDownloading, false);
+
+      expect(audioDownloadVM.downloadProgress, 1.0);
+      expect(audioDownloadVM.lastSecondDownloadSpeed, 0);
+      expect(audioDownloadVM.isHighQuality, false);
+
+      // Checking the data of the single video audio contained in the
+      // target playlist in which the audio was downloaded
+      checkDownloadedAudioShortVideoTwo(
+        downloadedAudioTwo: singleVideoDownloadedPlaylist.downloadedAudioLst[0],
+        audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
+        downloadedAtMusicQuality: false,
+      );
+
+      // Checking if there are 2 files in the directory (1 mp3 and 1 json)
+      final List<FileSystemEntity> files =
+          directory.listSync(recursive: false, followLinks: false);
+
+      expect(files.length, 2);
+
+      // Checking if the playlist json file has been updated with the
+      // downloaded audio data
+
+      String playlistPathFileName =
+          '$localTestPlaylistDir${path.separator}$localTargetPlaylistTitle.json';
+
+      Playlist loadedPlaylist = JsonDataService.loadFromFile(
+          jsonPathFileName: playlistPathFileName, type: Playlist);
+
+      compareDeserializedWithOriginalPlaylist(
+        deserializedPlaylist: loadedPlaylist,
+        originalPlaylist: singleVideoDownloadedPlaylist,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindows,
+      );
+    });
+    testWidgets(
+        '''Using integr test application. Download single video in audio (speak)
+           quality to a target local playlist containing no audio''',
+        (WidgetTester tester) async {
+      late AudioDownloadVM audioDownloadVM;
+      String localTargetPlaylistTitle = 'audio_learn_download_single_video';
+      String localTestPlaylistDir =
+          "$kPlaylistDownloadRootPathWindows${path.separator}$localTargetPlaylistTitle";
+      String savedTestPlaylistDir =
+          "$kDownloadAppTestSavedDataDir${path.separator}audio_learn_download_single_video_to_empty_local_playlist_improved_test";
+
+      final Directory directory = Directory(localTestPlaylistDir);
+
+      // necessary in case the previous test failed and so did not
+      // delete the its playlist dir
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindows,
+      );
+
+      // Copying the initial local playlist json file with no audio
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath: savedTestPlaylistDir,
+        destinationRootPath: kPlaylistDownloadRootPathWindows,
+      );
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+      );
+
+      // load settings from file which does not exist. This
+      // will ensure that the default playlist root path is set
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindows${path.separator}settings.json");
+
+      final WarningMessageVM warningMessageVM = WarningMessageVM();
+
+      audioDownloadVM = AudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+      );
+
+      PlaylistListVM playlistListVM = PlaylistListVM(
+        warningMessageVM: warningMessageVM,
+        audioDownloadVM: audioDownloadVM,
+        commentVM: CommentVM(),
+        settingsDataService: settingsDataService,
+      );
+
+      // calling getUpToDateSelectablePlaylists() loads all the
+      // playlist json files from the app dir and so enables
+      // playlistListVM to know which playlists are
+      // selected and which are not
+      playlistListVM.getUpToDateSelectablePlaylists();
+
+      AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+        settingsDataService: settingsDataService,
+        playlistListVM: playlistListVM,
+        commentVM: CommentVM(),
+      );
+
+      DateFormatVM dateFormatVM = DateFormatVM(
+        settingsDataService: settingsDataService,
+      );
+
+      await IntegrationTestUtil.launchIntegrTestApplication(
+        tester: tester,
+        audioDownloadVM: audioDownloadVM,
+        settingsDataService: settingsDataService,
+        playlistListVM: playlistListVM,
+        warningMessageVM: warningMessageVM,
+        audioPlayerVM: audioPlayerVM,
+        dateFormatVM: dateFormatVM,
+        forcedLocale: const Locale('en'),
+      );
+
+      // Building and displaying the DownloadPlaylistPage integration test
+      // application.
+      // await tester.pumpWidget(ChangeNotifierProvider(
+      //   create: (BuildContext context) {
+      //     final WarningMessageVM warningMessageVM = WarningMessageVM();
+      //     audioDownloadVM = AudioDownloadVM(
+      //       warningMessageVM: warningMessageVM,
+      //       settingsDataService: settingsDataService,
+      //     );
+      //     return audioDownloadVM;
+      //   },
+      //   child: MaterialApp(
+      //     // forcing dark theme
+      //     theme: ScreenMixin.themeDataDark,
+      //     home: const DownloadPlaylistPage(
+      //       // integration test opened application
+      //       playlistUrl: globalTestPlaylistUrl,
+      //     ),
+      //   ),
+      // ));
+
+      String singleVideoUrl = 'https://youtu.be/uv3VQoWSjBE';
+
+      // await tester.enterText(
+      //   find.byKey(const Key('playlistUrlTextField')),
+      //   singleVideoUrl,
+      // );
+      // await tester.pumpAndSettle();
+
+      // // tapping on the downl single video button in the app which
+      // // calls the AudioDownloadVM.downloadSingleVideoAudio(videoUrl,
+      // // singleVideoTargetPlaylist, downloadAtMusicQuality) method.
+      // //
+      // // In this case, the downloadAtMusicQuality is set to true.
+      // await tester.tap(find
+      //     .byKey(const Key('downloadSingleVideoAudioInAudioQualityButton')));
+      // await tester.pumpAndSettle();
+      await tester.enterText(
+        find.byKey(
+          const Key('youtubeUrlOrSearchTextField'),
+        ),
+        singleVideoUrl,
+      );
+      await tester.pumpAndSettle();
+
+      // Ensure the url text field contains the entered url
+      TextField urlTextField = tester.widget(find.byKey(
+        const Key('youtubeUrlOrSearchTextField'),
+      ));
+      expect(urlTextField.controller!.text, singleVideoUrl);
+
+      // Open the target playlist selection dialog by tapping the
+      // download single video button
+      await tester.tap(find.byKey(const Key('downloadSingleVideoButton')));
+      await tester.pumpAndSettle();
+
+      // Ensure the dialog is shown
+      expect(find.byType(AlertDialog), findsOneWidget);
+
+      // Check the value of the select one playlist AlertDialog
+      // dialog title
+      Text alertDialogTitle = tester
+          .widget(find.byKey(const Key('playlistOneSelectableDialogTitleKey')));
+      expect(alertDialogTitle.data, 'Select a playlist');
+
+      // Find the RadioListTile target playlist to which the audio
+      // will be downloaded
+
+      final Finder radioListTile = find.byWidgetPredicate(
+        (Widget widget) =>
+            widget is RadioListTile &&
+            widget.title is Text &&
+            (widget.title as Text).data == localTargetPlaylistTitle,
+      );
+
+      // Tap the target playlist RadioListTile to select it
+      await tester.tap(radioListTile);
+      await tester.pumpAndSettle();
+
+      // Now find the confirm button and tap on it
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pumpAndSettle();
+
+      // Now find the ok button of the confirm warning dialog
+      // and tap on it
+      await tester.tap(find.byKey(const Key('okButtonKey')));
+      await tester.pumpAndSettle();
       // Add a delay to allow the download to finish. 5 seconds is ok
       // when running the audio_download_vm_test only.
       // Waiting 5 seconds only causes MissingPluginException
