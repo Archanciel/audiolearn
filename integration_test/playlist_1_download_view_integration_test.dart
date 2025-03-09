@@ -124,7 +124,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchMockableApplication(
+      await IntegrationTestUtil.launchIntegrTestApplication(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -407,7 +407,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchMockableApplication(
+      await IntegrationTestUtil.launchIntegrTestApplication(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -558,7 +558,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchMockableApplication(
+      await IntegrationTestUtil.launchIntegrTestApplication(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -815,7 +815,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchMockableApplication(
+      await IntegrationTestUtil.launchIntegrTestApplication(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -1601,7 +1601,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchMockableApplication(
+      await IntegrationTestUtil.launchIntegrTestApplication(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -1833,7 +1833,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchMockableApplication(
+      await IntegrationTestUtil.launchIntegrTestApplication(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -1939,7 +1939,7 @@ void main() {
       // now close the app and then restart it in order to load the
       // copied youtube playlist
 
-      await IntegrationTestUtil.launchMockableApplication(
+      await IntegrationTestUtil.launchIntegrTestApplication(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -2023,7 +2023,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchMockableApplication(
+      await IntegrationTestUtil.launchIntegrTestApplication(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -2173,7 +2173,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchMockableApplication(
+      await IntegrationTestUtil.launchIntegrTestApplication(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -2319,7 +2319,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchMockableApplication(
+      await IntegrationTestUtil.launchIntegrTestApplication(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -2465,7 +2465,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchMockableApplication(
+      await IntegrationTestUtil.launchIntegrTestApplication(
         tester: tester,
         audioDownloadVM: mockAudioDownloadVM,
         settingsDataService: settingsDataService,
@@ -2952,7 +2952,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchMockableApplication(
+      await IntegrationTestUtil.launchIntegrTestApplication(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -3135,7 +3135,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchMockableApplication(
+      await IntegrationTestUtil.launchIntegrTestApplication(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -3354,7 +3354,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchMockableApplication(
+      await IntegrationTestUtil.launchIntegrTestApplication(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -3365,8 +3365,7 @@ void main() {
         forcedLocale: const Locale('en'),
       );
 
-      const String localAudioTargetPlaylistTitle =
-          'local_3';
+      const String localAudioTargetPlaylistTitle = 'local_3';
       const String downloadedSingleVideoAudioTitle =
           'audio learn test short video one';
 
@@ -3451,8 +3450,7 @@ void main() {
         (Widget widget) =>
             widget is RadioListTile &&
             widget.title is Text &&
-            (widget.title as Text).data ==
-                localAudioTargetPlaylistTitle,
+            (widget.title as Text).data == localAudioTargetPlaylistTitle,
       );
 
       // Tap the target playlist RadioListTile to select it
