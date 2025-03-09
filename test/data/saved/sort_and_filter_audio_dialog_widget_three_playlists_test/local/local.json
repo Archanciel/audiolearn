@@ -30,7 +30,7 @@
             "videoUrl": "https://www.youtube.com/watch?v=BJEKtchJLes"
         }
     ],
-    "downloadPath": "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio\\local",
+    "downloadPath": "C:\\Development\\Flutter\\audiolearn\\test\\data\\audio\\local",
     "id": "local",
     "isSelected": false,
     "playableAudioLst": [

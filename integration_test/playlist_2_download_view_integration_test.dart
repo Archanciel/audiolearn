@@ -10660,7 +10660,7 @@ void main() {
       await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            'Restored 5 playlist and 5 comment json files as well as the application settings from "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio\\audioLearn_audio_comment_zip_test_2025-03-02_21_48.zip".',
+            'Restored 5 playlist and 5 comment json files as well as the application settings from "C:\\Development\\Flutter\\audiolearn\\test\\data\\audio\\audioLearn_audio_comment_zip_test_2025-03-02_21_48.zip".',
         isWarningConfirming: true,
         warningTitle: 'CONFIRMATION',
       );

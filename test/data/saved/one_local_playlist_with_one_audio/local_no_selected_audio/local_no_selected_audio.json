@@ -32,7 +32,7 @@
             "youtubeVideoChannel": ""
         }
     ],
-    "downloadPath": "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio\\local_no_selected_audio",
+    "downloadPath": "C:\\Development\\Flutter\\audiolearn\\test\\data\\audio\\local_no_selected_audio",
     "id": "local_no_selected_audio",
     "isSelected": false,
     "playableAudioLst": [

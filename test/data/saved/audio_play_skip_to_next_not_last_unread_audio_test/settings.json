@@ -6,8 +6,8 @@
         "SettingType.appTheme": "AppTheme.dark"
     },
     "SettingType.dataLocation": {
-        "DataLocation.appSettingsPath": "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio",
-        "DataLocation.playlistRootPath": "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio"
+        "DataLocation.appSettingsPath": "C:\\Development\\Flutter\\audiolearn\\test\\data\\audio",
+        "DataLocation.playlistRootPath": "C:\\Development\\Flutter\\audiolearn\\test\\data\\audio"
     },
     "SettingType.language": {
         "SettingType.language": "Language.english"
