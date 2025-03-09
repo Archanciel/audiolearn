@@ -47,7 +47,7 @@ void main() async {
 
   // Define the path to the file in the test directory
   String filePath =
-      "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\viewmodels\\mock_app_localizations.dart";
+      "C:\\Development\\Flutter\\audiolearn\\test\\viewmodels\\mock_app_localizations.dart";
 
   // Insert the generated class into the file
   await insertIntoFile(filePath, dartClass);

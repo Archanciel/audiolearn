@@ -80,12 +80,12 @@ void main() {
           settingsDataService.get(
               settingType: SettingType.dataLocation,
               settingSubType: DataLocation.appSettingsPath),
-          "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio");
+          "C:\\Development\\Flutter\\audiolearn\\test\\data\\audio");
       expect(
           settingsDataService.get(
               settingType: SettingType.dataLocation,
               settingSubType: DataLocation.playlistRootPath),
-          "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio");
+          "C:\\Development\\Flutter\\audiolearn\\test\\data\\audio");
       expect(
           settingsDataService.get(
               settingType: SettingType.formatOfDate,
@@ -134,13 +134,12 @@ void main() {
       settingsDataService.set(
           settingType: SettingType.dataLocation,
           settingSubType: DataLocation.appSettingsPath,
-          value:
-              "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\new_audio");
+          value: "C:\\Development\\Flutter\\audiolearn\\test\\data\\new_audio");
       settingsDataService.set(
           settingType: SettingType.dataLocation,
           settingSubType: DataLocation.playlistRootPath,
           value:
-              "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\new_audio\\playlists");
+              "C:\\Development\\Flutter\\audiolearn\\test\\data\\new_audio\\playlists");
       settingsDataService.set(
           settingType: SettingType.formatOfDate,
           settingSubType: FormatOfDate.formatOfDate,
@@ -190,12 +189,12 @@ void main() {
           loadedSettings.get(
               settingType: SettingType.dataLocation,
               settingSubType: DataLocation.appSettingsPath),
-          "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\new_audio");
+          "C:\\Development\\Flutter\\audiolearn\\test\\data\\new_audio");
       expect(
           loadedSettings.get(
               settingType: SettingType.dataLocation,
               settingSubType: DataLocation.playlistRootPath),
-          "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\new_audio\\playlists");
+          "C:\\Development\\Flutter\\audiolearn\\test\\data\\new_audio\\playlists");
       expect(
           loadedSettings.get(
               settingType: SettingType.formatOfDate,

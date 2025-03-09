@@ -1,7 +1,7 @@
 {
     "downloadedAudioLst": [
     ],
-    "downloadPath": "C:\\Users\\Jean-Pierre\\Development\\Flutter\\audiolearn\\test\\data\\audio\\audio_learn_download_single_video",
+    "downloadPath": "C:\\Development\\Flutter\\audiolearn\\test\\data\\audio\\audio_learn_download_single_video",
     "id": "audio_learn_download_single_video",
     "isSelected": false,
     "playableAudioLst": [
