@@ -89,6 +89,8 @@ class SettingsDataService {
     ...FormatOfDate.values,
   ];
 
+  final bool _isTest;
+
   // This map contains the named AudioSortFilterParameters. The
   // AudioSortFilterParameters by default is named 'default'
   final Map<String, AudioSortFilterParameters>
@@ -117,7 +119,9 @@ class SettingsDataService {
 
   SettingsDataService({
     required SharedPreferences sharedPreferences,
-  }) : _sharedPreferences = sharedPreferences;
+    bool isTest = false,
+  })  : _isTest = isTest,
+        _sharedPreferences = sharedPreferences;
 
   dynamic get({
     required SettingType settingType,
@@ -200,7 +204,10 @@ class SettingsDataService {
         playlistOrder;
 
     // Retrieve the current settings file path
-    final String applicationPath = DirUtil.getApplicationPath();
+    
+    final String applicationPath = DirUtil.getApplicationPath(
+      isTest: _isTest,
+    );
     final String settingsFilePath =
         "$applicationPath${Platform.pathSeparator}$kSettingsFileName";
     final File settingsFile = File(settingsFilePath);
@@ -284,10 +291,12 @@ class SettingsDataService {
     // tests fail due to the fact that flutter_test.exe remains active
     // and blocks the possibility for DirUtil to delete the test data
     // once a unit test is completed.
-    await _checkFirstRun(
-      settingsJsonFile: file,
-      settingsJsonFileExist: settingsJsonFileExist,
-    );
+    if (!_isTest) {
+      await _checkFirstRun(
+        settingsJsonFile: file,
+        settingsJsonFileExist: settingsJsonFileExist,
+      );
+    }
 
     try {
       if (settingsJsonFileExist) {
@@ -338,7 +347,9 @@ class SettingsDataService {
       set(
         settingType: SettingType.dataLocation,
         settingSubType: DataLocation.appSettingsPath,
-        value: DirUtil.getApplicationPath(),
+        value: DirUtil.getApplicationPath(
+          isTest: _isTest,
+        ),
       );
     }
 
@@ -491,7 +502,9 @@ class SettingsDataService {
   }
 
   void _saveSettings() {
-    String applicationPath = DirUtil.getApplicationPath();
+    String applicationPath = DirUtil.getApplicationPath(
+      isTest: _isTest,
+    );
     saveSettingsToFile(
         jsonPathFileName:
             "$applicationPath${Platform.pathSeparator}$kSettingsFileName");
@@ -683,7 +696,7 @@ Future<void> usageExample() async {
   initialSettings.set(
       settingType: SettingType.dataLocation,
       settingSubType: DataLocation.playlistRootPath,
-      value: kPlaylistDownloadRootPathWindows);
+      value: kPlaylistDownloadRootPathWindowsTest);
 
   initialSettings.set(
       settingType: SettingType.playlists,

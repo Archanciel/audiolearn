@@ -311,7 +311,7 @@ class IntegrationTestUtil {
     // Purge the test playlist directory if it exists so that the
     // playlist list is empty
     DirUtil.deleteFilesInDirAndSubDirs(
-      rootPath: kPlaylistDownloadRootPathWindows,
+      rootPath: kPlaylistDownloadRootPathWindowsTest,
     );
 
     if (savedTestDataDirName != null) {
@@ -319,14 +319,14 @@ class IntegrationTestUtil {
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}$savedTestDataDirName",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     }
 
     if (replacePlaylistJsonFileName != null) {
       // Copy the test initial audio data to the app dir
       final String playlistPath =
-          "$kPlaylistDownloadRootPathWindows${path.separator}$selectedPlaylistTitle${path.separator}";
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}";
       final String playlistJsonFileName = '$selectedPlaylistTitle.json';
       DirUtil.deleteFileIfExist(
         pathFileName: '$playlistPath$playlistJsonFileName',
@@ -338,6 +338,7 @@ class IntegrationTestUtil {
     }
     final SettingsDataService settingsDataService = SettingsDataService(
       sharedPreferences: await SharedPreferences.getInstance(),
+      isTest: true,
     );
 
     // load settings from file which does not exist. This
@@ -351,7 +352,7 @@ class IntegrationTestUtil {
     // playlists available in the download app test dir
     await settingsDataService.loadSettingsFromFile(
         settingsJsonPathFileName:
-            "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
     await app.main(['test']);
     await tester.pumpAndSettle();
@@ -429,7 +430,7 @@ class IntegrationTestUtil {
     int modifiedAudioPositionSeconds = 0,
   }) async {
     final String selectedPlaylistPath = path.join(
-      kPlaylistDownloadRootPathWindows,
+      kPlaylistDownloadRootPathWindowsTest,
       playlistTitle,
     );
 
@@ -965,7 +966,7 @@ class IntegrationTestUtil {
     required double expectedAudioPlaySpeed,
   }) {
     final String selectedPlaylistPath = path.join(
-      kPlaylistDownloadRootPathWindows,
+      kPlaylistDownloadRootPathWindowsTest,
       selectedPlaylistTitle,
     );
 
@@ -1182,7 +1183,7 @@ class IntegrationTestUtil {
     required DateTime? audioPausedDateTime,
   }) {
     final String selectedPlaylistPath = path.join(
-      kPlaylistDownloadRootPathWindows,
+      kPlaylistDownloadRootPathWindowsTest,
       audioPlayerSelectedPlaylistTitle,
     );
 
@@ -1246,7 +1247,7 @@ class IntegrationTestUtil {
     AudioPlayingOrder audioPlayingOrder = AudioPlayingOrder.ascending,
   }) {
     final String selectedPlaylistPath = path.join(
-      kPlaylistDownloadRootPathWindows,
+      kPlaylistDownloadRootPathWindowsTest,
       selectedPlaylistTitle,
     );
 
@@ -1644,10 +1645,11 @@ class IntegrationTestUtil {
     String playlistDir;
 
     if (playlistRootDir.isEmpty) {
-      playlistDir = "$kApplicationPathWindows${path.separator}$playlistTitle";
+      playlistDir =
+          "$kApplicationPathWindowsTest${path.separator}$playlistTitle";
     } else {
       playlistDir =
-          "$kApplicationPathWindows${path.separator}$playlistRootDir${path.separator}$playlistTitle";
+          "$kApplicationPathWindowsTest${path.separator}$playlistRootDir${path.separator}$playlistTitle";
     }
 
     String commentsDir = "$playlistDir${path.separator}comments";

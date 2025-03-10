@@ -76,7 +76,7 @@ class _FilePickerScreenState extends State<FilePickerScreen> {
       type: FileType.custom,
       allowedExtensions: ['mp3'],
       allowMultiple: true,
-      initialDirectory: '$kApplicationPathWindows${path.separator}S8 audio',
+      initialDirectory: '$kApplicationPathWindowsTest${path.separator}S8 audio',
     );
 
     if (result != null) {
@@ -90,7 +90,7 @@ class _FilePickerScreenState extends State<FilePickerScreen> {
 
   Future<void> _filePickerSelectTargetDirectory() async {
     String? directoryPath = await FilePicker.platform.getDirectoryPath(
-      initialDirectory: kApplicationPathWindows,
+      initialDirectory: kApplicationPathWindowsTest,
     );
 
     if (directoryPath != null) {
