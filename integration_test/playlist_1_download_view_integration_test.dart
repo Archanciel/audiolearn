@@ -71,7 +71,8 @@ void main() {
       // of a mock class. So we have to start the app by hand.
 
       final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(), isTest: true,
+        sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // load settings from file which does not exist. This
@@ -352,6 +353,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // load settings from file which does not exist. This
@@ -500,6 +502,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // setting default playlist audio play speed to 1.25
@@ -763,6 +766,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // load settings from file which does not exist. This
@@ -1038,6 +1042,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       final settingsPathFileName = path.join(
@@ -1134,6 +1139,7 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // load settings from file which does not exist. This
@@ -1276,6 +1282,7 @@ void main() {
 
       settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       final settingsPathFileName = path.join(
@@ -1549,6 +1556,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // load settings from file which does not exist. This
@@ -1781,6 +1789,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // load settings from file which does not exist. This
@@ -1971,6 +1980,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // load settings from file which does not exist. This
@@ -2121,6 +2131,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // load settings from file which does not exist. This
@@ -2267,6 +2278,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // load settings from file which does not exist. This
@@ -2424,6 +2436,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // load settings from file which does not exist. This
@@ -2891,6 +2904,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -3082,6 +3096,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -3301,6 +3316,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -3497,6 +3513,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -3700,6 +3717,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -4318,6 +4336,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -4700,6 +4719,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -5049,6 +5069,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -5354,6 +5375,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -5663,6 +5685,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -5793,6 +5816,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -5977,6 +6001,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -6422,6 +6447,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -6551,6 +6577,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -6681,6 +6708,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -6866,6 +6894,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -7277,6 +7306,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -7630,6 +7660,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -7835,6 +7866,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -8031,6 +8063,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -8213,6 +8246,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -8391,6 +8425,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -8620,6 +8655,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -8747,6 +8783,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -8877,6 +8914,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -8958,6 +8996,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -9088,6 +9127,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -9242,6 +9282,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -9390,6 +9431,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -9544,6 +9586,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -9686,6 +9729,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -11641,6 +11685,7 @@ void main() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -11805,6 +11850,7 @@ void main() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -11949,6 +11995,7 @@ void main() {
 
         final SettingsDataService settingsDataService = SettingsDataService(
           sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
         );
 
         // Load the settings from the json file. This is necessary
@@ -12133,6 +12180,7 @@ void main() {
 
         final SettingsDataService settingsDataService = SettingsDataService(
           sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
         );
 
         // Load the settings from the json file. This is necessary
@@ -12315,6 +12363,7 @@ void main() {
 
         final SettingsDataService settingsDataService = SettingsDataService(
           sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
         );
 
         // Load the settings from the json file. This is necessary
@@ -12487,6 +12536,7 @@ void main() {
 
         final SettingsDataService settingsDataService = SettingsDataService(
           sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
         );
 
         // Load the settings from the json file. This is necessary
@@ -12654,6 +12704,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -12719,6 +12770,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -12858,6 +12910,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -12942,6 +12995,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -13117,6 +13171,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -13281,6 +13336,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -13449,6 +13505,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -13620,6 +13677,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -13790,6 +13848,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -13971,6 +14030,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -14018,6 +14078,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -14103,6 +14164,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -14188,6 +14250,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -14263,6 +14326,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -14338,6 +14402,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -14483,6 +14548,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -14622,6 +14688,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -14739,6 +14806,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -14858,6 +14926,7 @@ void main() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -14900,6 +14969,7 @@ void main() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -14952,6 +15022,7 @@ void main() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -15003,6 +15074,7 @@ void main() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -15057,6 +15129,7 @@ void main() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -15109,6 +15182,7 @@ void main() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -15171,6 +15245,7 @@ void main() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary
@@ -15232,6 +15307,7 @@ void main() {
 
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
           );
 
           // Load the settings from the json file. This is necessary

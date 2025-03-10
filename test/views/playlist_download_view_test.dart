@@ -46,6 +46,7 @@ void main() async {
         (WidgetTester tester) async {
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
       WarningMessageVM warningMessageVM = WarningMessageVM();
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
@@ -86,6 +87,7 @@ void main() async {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -152,6 +154,7 @@ void main() async {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -267,6 +270,7 @@ void main() async {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -401,6 +405,7 @@ void main() async {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -547,6 +552,7 @@ void main() async {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -731,6 +737,7 @@ void main() async {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -827,6 +834,7 @@ void main() async {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -924,6 +932,7 @@ void main() async {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -1021,6 +1030,7 @@ void main() async {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -1117,6 +1127,7 @@ void main() async {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary

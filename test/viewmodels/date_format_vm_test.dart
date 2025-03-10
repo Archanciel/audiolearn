@@ -29,6 +29,7 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       await settingsDataService.loadSettingsFromFile(
@@ -144,6 +145,7 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       await settingsDataService.loadSettingsFromFile(
@@ -213,6 +215,7 @@ void main() {
 
       SettingsDataService reloadedSettingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       await reloadedSettingsDataService.loadSettingsFromFile(
@@ -281,6 +284,7 @@ void main() {
       SettingsDataService secondReloadedSettingsDataService =
           SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       await secondReloadedSettingsDataService.loadSettingsFromFile(
