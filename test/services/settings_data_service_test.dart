@@ -25,6 +25,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       // load settings from file which does not exist. This
@@ -158,6 +159,7 @@ void main() {
       // Load from file
       final SettingsDataService loadedSettings = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
       await loadedSettings.loadSettingsFromFile(
         settingsJsonPathFileName: testSettingsPathFileName,
@@ -240,6 +242,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       // load settings from file which does not exist. This
@@ -287,6 +290,7 @@ void main() {
       // Load from file
       final SettingsDataService loadedSettings = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
       await loadedSettings.loadSettingsFromFile(
         settingsJsonPathFileName: testSettingsPathFileName,
@@ -358,6 +362,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       // load settings from file which does not exist. This
@@ -415,6 +420,7 @@ void main() {
       // Load from file
       final SettingsDataService loadedSettings = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
       await loadedSettings.loadSettingsFromFile(
         settingsJsonPathFileName: testSettingsPathFileName,
@@ -507,6 +513,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       // Save settings to file
@@ -522,6 +529,7 @@ void main() {
       // Load from file
       final SettingsDataService loadedSettings = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       await loadedSettings.loadSettingsFromFile(
@@ -563,6 +571,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       // load settings from file which does not exist. This
@@ -627,6 +636,7 @@ void main() {
       // Load from file
       SettingsDataService loadedSettings = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       await loadedSettings.loadSettingsFromFile(
@@ -659,6 +669,7 @@ void main() {
       // Load from file
       loadedSettings = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       await loadedSettings.loadSettingsFromFile(
@@ -700,6 +711,7 @@ void main() {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       // load settings from file which does not exist. This
@@ -764,6 +776,7 @@ void main() {
       // Load from file
       SettingsDataService loadedSettings = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       await loadedSettings.loadSettingsFromFile(
@@ -803,6 +816,7 @@ void main() {
       // Load from file
       loadedSettings = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       await loadedSettings.loadSettingsFromFile(

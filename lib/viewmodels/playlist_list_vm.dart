@@ -2635,7 +2635,10 @@ class PlaylistListVM extends ChangeNotifier {
     String playlistsRootPath = _settingsDataService.get(
         settingType: SettingType.dataLocation,
         settingSubType: DataLocation.playlistRootPath);
-    String applicationPath = DirUtil.getApplicationPath();
+    String applicationPath = _settingsDataService.get(
+      settingType: SettingType.dataLocation,
+      settingSubType: DataLocation.appSettingsPath,
+    );
 
     Directory sourceDir = Directory(playlistsRootPath);
 
@@ -2759,9 +2762,13 @@ class PlaylistListVM extends ChangeNotifier {
 
     // Load the restored settings whose corresponding list or map will
     // be merged with the current app settings.
+    String applicationPath = _settingsDataService.get(
+      settingType: SettingType.dataLocation,
+      settingSubType: DataLocation.appSettingsPath,
+    );
     await settingsDataServiceZipVersion.loadSettingsFromFile(
       settingsJsonPathFileName:
-          '${DirUtil.getApplicationPath()}${Platform.pathSeparator}$kSettingsFileName',
+          '$applicationPath${Platform.pathSeparator}$kSettingsFileName',
     );
 
     // Merge the playlist order list
@@ -2846,7 +2853,10 @@ class PlaylistListVM extends ChangeNotifier {
     }
 
     // Retrieve the application path.
-    final String applicationPath = DirUtil.getApplicationPath();
+    final String applicationPath = _settingsDataService.get(
+      settingType: SettingType.dataLocation,
+      settingSubType: DataLocation.appSettingsPath,
+    );
 
     // Read the entire zip file as bytes.
     final List<int> zipBytes = await zipFile.readAsBytes();

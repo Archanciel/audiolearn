@@ -37,6 +37,7 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -248,6 +249,7 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -317,6 +319,7 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -389,6 +392,7 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -458,6 +462,7 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -534,6 +539,7 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -601,6 +607,7 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -673,6 +680,7 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -742,6 +750,7 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -785,6 +794,7 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       final settingsPathFileName = path.join(
@@ -827,6 +837,7 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       final settingsPathFileName = path.join(
@@ -878,6 +889,7 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -945,6 +957,7 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -1030,6 +1043,7 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -1115,6 +1129,7 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -1296,6 +1311,7 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -1507,6 +1523,7 @@ void main() {
 
     SettingsDataService settingsDataService = SettingsDataService(
       sharedPreferences: MockSharedPreferences(),
+      isTest: true,
     );
 
     // Load the settings from the json file. This is necessary
@@ -1633,6 +1650,7 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -1725,6 +1743,7 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
@@ -1820,6 +1839,7 @@ void main() {
 
       SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: MockSharedPreferences(),
+        isTest: true,
       );
 
       // Load the settings from the json file. This is necessary
