@@ -77,7 +77,6 @@ Future<void> main(List<String> args) async {
   // Run the app
   runApp(MainApp(
     settingsDataService: settingsDataService,
-    isTest: isTest,
   ));
 }
 
@@ -112,14 +111,11 @@ Future<void> _setWindowsAppSizeAndPosition({
 
 class MainApp extends StatelessWidget with ScreenMixin {
   final SettingsDataService _settingsDataService;
-  final bool _isTest;
 
   MainApp({
     required SettingsDataService settingsDataService,
-    bool isTest = false,
     super.key,
-  })  : _isTest = isTest,
-        _settingsDataService = settingsDataService;
+  }) : _settingsDataService = settingsDataService;
 
   @override
   Widget build(BuildContext context) {
