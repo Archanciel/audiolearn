@@ -71,7 +71,7 @@ void main() {
       // of a mock class. So we have to start the app by hand.
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
+          sharedPreferences: await SharedPreferences.getInstance(), isTest: true,
       );
 
       // load settings from file which does not exist. This
