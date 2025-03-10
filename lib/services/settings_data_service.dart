@@ -204,7 +204,7 @@ class SettingsDataService {
         playlistOrder;
 
     // Retrieve the current settings file path
-    
+
     final String applicationPath = DirUtil.getApplicationPath(
       isTest: _isTest,
     );
@@ -362,7 +362,9 @@ class SettingsDataService {
       set(
         settingType: SettingType.dataLocation,
         settingSubType: DataLocation.playlistRootPath,
-        value: await DirUtil.getPlaylistDownloadRootPath(),
+        value: await DirUtil.getPlaylistDownloadRootPath(
+          isTest: _isTest,
+        ),
       );
     }
   }
