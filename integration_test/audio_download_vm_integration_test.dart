@@ -34,7 +34,7 @@ const String globalTestPlaylistUrl =
 const String globalTestPlaylistTitle =
     'audio_learn_test_download_2_small_videos';
 final String globalTestPlaylistDir =
-    '$kPlaylistDownloadRootPathWindows${path.separator}$globalTestPlaylistTitle';
+    '$kPlaylistDownloadRootPathWindowsTest${path.separator}$globalTestPlaylistTitle';
 
 Future<void> main() async {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -44,7 +44,7 @@ Future<void> main() async {
   group('Download 1 playlist with short audio', () {
     test('Check initial values', () async {
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       final WarningMessageVM warningMessageVM = WarningMessageVM();
@@ -75,7 +75,7 @@ Future<void> main() async {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
 
@@ -87,7 +87,7 @@ Future<void> main() async {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
@@ -181,7 +181,7 @@ Future<void> main() async {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets(
@@ -193,7 +193,7 @@ Future<void> main() async {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       await DirUtil.createDirIfNotExist(pathStr: globalTestPlaylistDir);
@@ -339,7 +339,7 @@ Future<void> main() async {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
   });
@@ -350,7 +350,7 @@ Future<void> main() async {
       String localTestPlaylistTitle =
           'audio_learn_download_single_video_to_empty_local_playlist_test';
       String localTestPlaylistDir =
-          "$kPlaylistDownloadRootPathWindows${path.separator}$localTestPlaylistTitle";
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$localTestPlaylistTitle";
       String savedTestPlaylistDir =
           "$kDownloadAppTestSavedDataDir${path.separator}$localTestPlaylistTitle";
 
@@ -359,7 +359,7 @@ Future<void> main() async {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       await DirUtil.createDirIfNotExist(pathStr: localTestPlaylistDir);
@@ -472,7 +472,7 @@ Future<void> main() async {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets(
@@ -483,7 +483,7 @@ Future<void> main() async {
       String localTargetPlaylistTitle =
           'audio_learn_download_single_video_to_empty_local_playlist_test';
       String localTestPlaylistDir =
-          "$kPlaylistDownloadRootPathWindows${path.separator}$localTargetPlaylistTitle";
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$localTargetPlaylistTitle";
       String savedTestPlaylistDir =
           "$kDownloadAppTestSavedDataDir${path.separator}$localTargetPlaylistTitle";
 
@@ -492,7 +492,7 @@ Future<void> main() async {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       await DirUtil.createDirIfNotExist(pathStr: localTestPlaylistDir);
@@ -608,7 +608,7 @@ Future<void> main() async {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets(
@@ -618,7 +618,7 @@ Future<void> main() async {
       late AudioDownloadVM audioDownloadVM;
       String localTargetPlaylistTitle = 'audio_learn_download_single_video';
       String localTestPlaylistDir =
-          "$kPlaylistDownloadRootPathWindows${path.separator}$localTargetPlaylistTitle";
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$localTargetPlaylistTitle";
       String savedTestPlaylistDir =
           "$kDownloadAppTestSavedDataDir${path.separator}audio_learn_download_single_video_to_empty_local_playlist_improved_test";
 
@@ -627,13 +627,13 @@ Future<void> main() async {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copying the initial local playlist json file with no audio
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath: savedTestPlaylistDir,
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
@@ -644,7 +644,7 @@ Future<void> main() async {
       // will ensure that the default playlist root path is set
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}settings.json");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}settings.json");
 
       final WarningMessageVM warningMessageVM = WarningMessageVM();
 
@@ -831,7 +831,7 @@ Future<void> main() async {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('''Download single video in musical quality to a target local
@@ -841,7 +841,7 @@ Future<void> main() async {
       String localTargetPlaylistTitle =
           'audio_learn_download_single_video_to_empty_local_playlist_test';
       String localTestPlaylistDir =
-          "$kPlaylistDownloadRootPathWindows${path.separator}$localTargetPlaylistTitle";
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$localTargetPlaylistTitle";
       String savedTestPlaylistDir =
           "$kDownloadAppTestSavedDataDir${path.separator}$localTargetPlaylistTitle";
 
@@ -850,7 +850,7 @@ Future<void> main() async {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       await DirUtil.createDirIfNotExist(pathStr: localTestPlaylistDir);
@@ -966,7 +966,7 @@ Future<void> main() async {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('Local playlist containing one audio',
@@ -975,7 +975,7 @@ Future<void> main() async {
       String localTestPlaylistTitle =
           'audio_learn_download_single_video_to_not_empty_local_playlist_test';
       String localTestPlaylistDir =
-          "$kPlaylistDownloadRootPathWindows${path.separator}$localTestPlaylistTitle";
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$localTestPlaylistTitle";
       String savedTestPlaylistDir =
           "$kDownloadAppTestSavedDataDir${path.separator}$localTestPlaylistTitle";
 
@@ -984,7 +984,7 @@ Future<void> main() async {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       await DirUtil.createDirIfNotExist(pathStr: localTestPlaylistDir);
@@ -1111,7 +1111,7 @@ Future<void> main() async {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
   });
@@ -1132,7 +1132,7 @@ Future<void> main() async {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       await DirUtil.createDirIfNotExist(pathStr: globalTestPlaylistDir);
@@ -1335,7 +1335,7 @@ Future<void> main() async {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
   });

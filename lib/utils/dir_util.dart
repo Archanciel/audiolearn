@@ -25,9 +25,15 @@ class DirUtil {
 
   /// Returns the path of the application directory. If the application directory
   /// does not exist, it is created. The path returned depends on the platform.
-  static String getApplicationPath() {
+  static String getApplicationPath({
+    bool isTest = false,
+  }) {
     if (Platform.isWindows) {
-      return kApplicationPathWindows;
+      if (isTest) {
+        return kApplicationPathWindowsTest;
+      } else {
+        return kApplicationPathWindows;
+      }
     } else {
       // On Android or mobile emulator
       // avoids that the application can not be run after it was
@@ -47,23 +53,30 @@ class DirUtil {
     }
   }
 
-  static Future<String> getPlaylistDownloadRootPath() async {
+  static Future<String> getPlaylistDownloadRootPath({
+    bool isTest = false,
+  }) async {
     if (Platform.isWindows) {
+      if (isTest) {
+        return kPlaylistDownloadRootPathWindowsTest;
+      } else {
         return kPlaylistDownloadRootPathWindows;
+      }
     } else {
-        Directory dir = Directory(kPlaylistDownloadRootPath);
+      // On Android or mobile emulator
+      Directory dir = Directory(kPlaylistDownloadRootPath);
 
-        if (!await dir.exists()) {
-          try {
-            // now create the playlist dir
-            await dir.create();
-          } catch (e) {
-            // Handle the exception, e.g., directory not created
-            print('Directory could not be created: $e');
-          }
+      if (!await dir.exists()) {
+        try {
+          // now create the playlist dir
+          await dir.create();
+        } catch (e) {
+          // Handle the exception, e.g., directory not created
+          print('Directory could not be created: $e');
         }
+      }
 
-        return kPlaylistDownloadRootPath;
+      return kPlaylistDownloadRootPath;
     }
   }
 

@@ -83,6 +83,12 @@ class AudioDownloadVM extends ChangeNotifier {
 
   final SettingsDataService _settingsDataService;
 
+  /// Passing true for {isTest} has the effect that the windows
+  /// test directory is used as playlist root directory. This
+  /// directory is located in the test directory of the project.
+  ///
+  /// Otherwise, the windows or smartphone audio root directory
+  /// is used.
   AudioDownloadVM({
     required this.warningMessageVM,
     required SettingsDataService settingsDataService,
@@ -154,7 +160,7 @@ class AudioDownloadVM extends ChangeNotifier {
                   playlistRootPathElementsLst.length - 2];
 
               _playlistsRootPath =
-                  "$kApplicationPathWindows${path.separator}$androidAppPlaylistDirName";
+                  "$kApplicationPathWindowsTest${path.separator}$androidAppPlaylistDirName";
               _settingsDataService.set(
                   settingType: SettingType.dataLocation,
                   settingSubType: DataLocation.playlistRootPath,
@@ -2169,7 +2175,8 @@ class AudioDownloadVM extends ChangeNotifier {
 
     if (isHighQuality) {
       audioStreamInfo = streamManifest.audioOnly.withHighestBitrate();
-      if (!redownloading) { // if redownloading, the audio quality is already set
+      if (!redownloading) {
+        // if redownloading, the audio quality is already set
         audio.setAudioToMusicQuality();
       }
     } else {
@@ -2179,7 +2186,8 @@ class AudioDownloadVM extends ChangeNotifier {
 
     final int audioFileSize = audioStreamInfo.size.totalBytes;
 
-    if (!redownloading) { // if redownloading, the audio file size is already set
+    if (!redownloading) {
+      // if redownloading, the audio file size is already set
       audio.audioFileSize = audioFileSize;
     }
 

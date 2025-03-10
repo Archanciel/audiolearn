@@ -298,7 +298,7 @@ class MockAudioDownloadVM extends AudioDownloadVM {
         '$mockPlaylistDirectory${path.separator}audioFiles${path.separator}${playlist.title}';
 
     if (mockPlaylistDirectory.isEmpty) {
-      filesPath = kApplicationPathWindows;
+      filesPath = kApplicationPathWindowsTest;
     }
 
     final mockFiles = Directory(filesPath)
@@ -365,9 +365,9 @@ class MockAudioDownloadVM extends AudioDownloadVM {
     }
 
     String playlistRootPath =
-        "$kApplicationPathWindows${path.separator}playlists${path.separator}$appPlaylistDirName";
+        "$kApplicationPathWindowsTest${path.separator}playlists${path.separator}$appPlaylistDirName";
     final String mockSourceFileDir =
-        "$kApplicationPathWindows${path.separator}downloadedMockFileDir${path.separator}${audioEnclosingPlaylist.title}";
+        "$kApplicationPathWindowsTest${path.separator}downloadedMockFileDir${path.separator}${audioEnclosingPlaylist.title}";
     List<String> audioFileNamesContainedInMockSourceFileDirLst =
         DirUtil.listFileNamesInDir(
       directoryPath: mockSourceFileDir,
@@ -444,9 +444,9 @@ class MockAudioDownloadVM extends AudioDownloadVM {
     }
 
     String playlistRootPath =
-        "$kApplicationPathWindows${path.separator}playlists${path.separator}$appPlaylistDirName";
+        "$kApplicationPathWindowsTest${path.separator}playlists${path.separator}$appPlaylistDirName";
     final String mockSourceFileDir =
-        "$kApplicationPathWindows${path.separator}downloadedMockFileDir${path.separator}${audioEnclosingPlaylist.title}";
+        "$kApplicationPathWindowsTest${path.separator}downloadedMockFileDir${path.separator}${audioEnclosingPlaylist.title}";
     List<String> audioFileNamesContainedInMockSourceFileDirLst =
         DirUtil.listFileNamesInDir(
       directoryPath: mockSourceFileDir,

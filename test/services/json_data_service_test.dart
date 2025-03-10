@@ -741,9 +741,9 @@ void main() {
       // Create a temporary directory to store the serialized SortingItem
       // object
       String testPathStr =
-          '$kPlaylistDownloadRootPathWindows\\audiolearn_test_comment';
+          '$kPlaylistDownloadRootPathWindowsTest\\audiolearn_test_comment';
       const String commentFilePathName =
-          '$kPlaylistDownloadRootPathWindows\\audiolearn_test_comment\\comment.json';
+          '$kPlaylistDownloadRootPathWindowsTest\\audiolearn_test_comment\\comment.json';
       await DirUtil.createDirIfNotExist(pathStr: testPathStr);
 
       Comment testComment = Comment(

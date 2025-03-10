@@ -53,7 +53,7 @@ void main() {
       'audio_learn_new_youtube_playlist_test';
 
   const String testPlaylistDir =
-      '$kPlaylistDownloadRootPathWindows\\audio_learn_new_youtube_playlist_test';
+      '$kPlaylistDownloadRootPathWindowsTest\\audio_learn_new_youtube_playlist_test';
 
   group('Add or delete Youtube or local Playlist tests', () {
     testWidgets('Youtube playlist audio quality addition and then delete it ',
@@ -61,7 +61,7 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Since we have to use a mock AudioDownloadVM to add the
@@ -230,7 +230,7 @@ void main() {
       // Check the saved local playlist values in the json file
 
       final String newPlaylistPath = path.join(
-        kPlaylistDownloadRootPathWindows,
+        kPlaylistDownloadRootPathWindowsTest,
         youtubeNewPlaylistTitle,
       );
 
@@ -257,7 +257,7 @@ void main() {
       expect(loadedNewPlaylist.downloadPath, newPlaylistPath);
 
       final settingsPathFileName = path.join(
-        kPlaylistDownloadRootPathWindows,
+        kPlaylistDownloadRootPathWindowsTest,
         'settings.json',
       );
 
@@ -334,14 +334,14 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('Add with comma titled Youtube playlist', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Since we have to use a mock AudioDownloadVM to add the
@@ -480,7 +480,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets(
@@ -489,7 +489,7 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Since we have to use a mock AudioDownloadVM to add the
@@ -638,7 +638,7 @@ void main() {
       // Check the saved Youtube playlist values in the json file
 
       final String newPlaylistPath = path.join(
-        kPlaylistDownloadRootPathWindows,
+        kPlaylistDownloadRootPathWindowsTest,
         youtubeNewPlaylistTitle,
       );
 
@@ -739,7 +739,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
 
@@ -752,7 +752,7 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Since we have to use a mock AudioDownloadVM to add the
@@ -889,7 +889,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets(
@@ -898,7 +898,7 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       const String localPlaylistTitle = 'audio_learn_local_playlist_test';
@@ -1010,7 +1010,7 @@ void main() {
       // Check the saved local playlist values in the json file
 
       final String newPlaylistPath = path.join(
-        kPlaylistDownloadRootPathWindows,
+        kPlaylistDownloadRootPathWindowsTest,
         localPlaylistTitle,
       );
 
@@ -1041,7 +1041,7 @@ void main() {
       );
 
       final settingsPathFileName = path.join(
-        kPlaylistDownloadRootPathWindows,
+        kPlaylistDownloadRootPathWindowsTest,
         'settings.json',
       );
 
@@ -1118,7 +1118,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets(
@@ -1127,7 +1127,7 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       const String localPlaylistTitle = 'audio_learn_local_playlist_test';
@@ -1248,7 +1248,7 @@ void main() {
       // Check the saved local playlist values in the json file
 
       final String newPlaylistPath = path.join(
-        kPlaylistDownloadRootPathWindows,
+        kPlaylistDownloadRootPathWindowsTest,
         localPlaylistTitle,
       );
 
@@ -1279,7 +1279,7 @@ void main() {
       );
 
       final settingsPathFileName = path.join(
-        kPlaylistDownloadRootPathWindows,
+        kPlaylistDownloadRootPathWindowsTest,
         'settings.json',
       );
 
@@ -1366,7 +1366,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets(
@@ -1375,7 +1375,7 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       const String localPlaylistTitle = 'audio_learn_local_playlist_test';
@@ -1453,7 +1453,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('Add local playlist with invalid title containing a comma',
@@ -1461,7 +1461,7 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       const String invalidLocalPlaylistTitle = 'local, with comma';
@@ -1529,7 +1529,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets(
@@ -1538,7 +1538,7 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Since we have to use a mock AudioDownloadVM to add the
@@ -1677,7 +1677,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('''Open the add playlist dialog to add a local playlist and then
@@ -1685,7 +1685,7 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       const String localPlaylistTitle = 'audio_learn_local_playlist_test';
@@ -1760,7 +1760,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('''Add Youtube and local playlist, download the Youtube playlist
@@ -1768,7 +1768,7 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Since we have to use a mock AudioDownloadVM to add the
@@ -1952,7 +1952,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('Add Youtube playlist with invalid URL containing list=',
@@ -1960,7 +1960,7 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Since we have to use a mock AudioDownloadVM to add the
@@ -2103,14 +2103,14 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('Add Youtube playlist with invalid URL', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Since we have to use a mock AudioDownloadVM to add the
@@ -2249,14 +2249,14 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('Add private Youtube playlist', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Since we have to use a mock AudioDownloadVM to add the
@@ -2396,7 +2396,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('''Add and download 2 Youtube playlists using audio download VM
@@ -2404,14 +2404,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}simulate_creating_and_downloading_youtube_playlist_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Since we have to use a mock AudioDownloadVM to add the
@@ -2441,7 +2441,7 @@ void main() {
       MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
-        mockPlaylistDirectory: kApplicationPathWindows,
+        mockPlaylistDirectory: kApplicationPathWindowsTest,
       );
 
       // using the mockAudioDownloadVM to add the playlist
@@ -2644,7 +2644,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
   });
@@ -2655,7 +2655,7 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       await app.main(['test']);
@@ -2713,7 +2713,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
 
@@ -2725,7 +2725,7 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       const String localPlaylistTitle = 'audio_learn_local_playlist_test';
@@ -2778,7 +2778,7 @@ void main() {
       // before the playlist will be selected
 
       final String newPlaylistPath = path.join(
-        kPlaylistDownloadRootPathWindows,
+        kPlaylistDownloadRootPathWindowsTest,
         localPlaylistTitle,
       );
 
@@ -2870,21 +2870,21 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('Download single video audio with invalid URL', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}copy_move_audio_integr_test_data",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       const String localAudioPlaylistTitle = 'local_audio_playlist_2';
@@ -2899,7 +2899,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       // setting default playlist audio play speed to 1.25
       settingsDataService.set(
@@ -3053,7 +3053,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
   });
@@ -3070,14 +3070,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}copy_move_audio_integr_test_data",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
@@ -3090,7 +3090,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       // Since we have to use a mock AudioDownloadVM to add the
       // youtube playlist, we can not use app.main() to start the
@@ -3280,7 +3280,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets(
@@ -3289,14 +3289,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}copy_move_audio_integr_test_data",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
@@ -3309,7 +3309,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       // Since we have to use a mock AudioDownloadVM to add the
       // youtube playlist, we can not use app.main() to start the
@@ -3476,7 +3476,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
   });
@@ -3485,14 +3485,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}settings_update_test_initial_audio_data",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
@@ -3505,7 +3505,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       expect(
           settingsDataService.get(
@@ -3581,7 +3581,7 @@ void main() {
       // Check the saved local playlist values in the json file
 
       final String newPlaylistPath = path.join(
-        kPlaylistDownloadRootPathWindows,
+        kPlaylistDownloadRootPathWindowsTest,
         localAudioPlaylistTitle,
       );
 
@@ -3611,7 +3611,7 @@ void main() {
 
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       expect(
           settingsDataService.get(
@@ -3651,7 +3651,7 @@ void main() {
 
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       expect(
           settingsDataService.get(
@@ -3667,7 +3667,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
   });
@@ -3682,14 +3682,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}copy_move_audio_integr_test_data",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       const String youtubeAudioSourcePlaylistTitle =
@@ -3708,7 +3708,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -3853,7 +3853,7 @@ void main() {
 
       List<String> sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$youtubeAudioSourcePlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -3867,7 +3867,7 @@ void main() {
 
       List<String> sourcePlaylistCommentLst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$kCommentDirName',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$kCommentDirName',
         fileExtension: 'json',
       );
 
@@ -3881,7 +3881,7 @@ void main() {
 
       List<String> sourcePlaylistPictureLst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$kPictureDirName',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$kPictureDirName',
         fileExtension: 'jpg',
       );
 
@@ -3893,7 +3893,7 @@ void main() {
       // contains the audio file copied from the source playlist
       List<String> targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$localAudioTargetPlaylistTitleTwo',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitleTwo',
         fileExtension: 'mp3',
       );
 
@@ -3904,7 +3904,7 @@ void main() {
       // the audio comment file copied from the source playlist
       List<String> targetPlaylistCommentLst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$localAudioTargetPlaylistTitleTwo${path.separator}$kCommentDirName',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitleTwo${path.separator}$kCommentDirName',
         fileExtension: 'json',
       );
 
@@ -3915,7 +3915,7 @@ void main() {
       // the audio picture file copied from the source playlist
       List<String> targetPlaylistPictureLst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$localAudioTargetPlaylistTitleTwo${path.separator}$kPictureDirName',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitleTwo${path.separator}$kPictureDirName',
         fileExtension: 'jpg',
       );
 
@@ -4220,7 +4220,7 @@ void main() {
       // contains the audio file copied to the target playlist
       sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$youtubeAudioSourcePlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -4234,7 +4234,7 @@ void main() {
 
       sourcePlaylistCommentLst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$kCommentDirName',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$kCommentDirName',
         fileExtension: 'json',
       );
 
@@ -4248,7 +4248,7 @@ void main() {
 
       sourcePlaylistPictureLst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$kPictureDirName',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$kPictureDirName',
         fileExtension: 'jpg',
       );
 
@@ -4260,7 +4260,7 @@ void main() {
       // contains the audio file copied from the source playlist
       targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$localAudioTargetPlaylistTitleThree',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitleThree',
         fileExtension: 'mp3',
       );
 
@@ -4270,7 +4270,7 @@ void main() {
       // the audio comment file copied from the source playlist
       targetPlaylistCommentLst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$localAudioTargetPlaylistTitleThree${path.separator}$kCommentDirName',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitleThree${path.separator}$kCommentDirName',
         fileExtension: 'json',
       );
 
@@ -4280,7 +4280,7 @@ void main() {
       // the audio picture file copied from the source playlist
       targetPlaylistPictureLst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$localAudioTargetPlaylistTitleThree${path.separator}$kPictureDirName',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitleThree${path.separator}$kPictureDirName',
         fileExtension: 'jpg',
       );
 
@@ -4289,7 +4289,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets(
@@ -4300,14 +4300,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}copy_move_audio_integr_test_data",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       const String youtubeAudioSourcePlaylistTitle =
@@ -4326,7 +4326,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -4410,7 +4410,7 @@ void main() {
       // contains the audio file copied to the target playlist
       List<String> sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$youtubeAudioSourcePlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -4423,7 +4423,7 @@ void main() {
       // contains the audio file copied from the source playlist
       List<String> targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$localAudioTargetPlaylistTitleTwo',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitleTwo',
         fileExtension: 'mp3',
       );
 
@@ -4649,7 +4649,7 @@ void main() {
       // playlist
       sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$youtubeAudioSourcePlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -4662,7 +4662,7 @@ void main() {
       // contains the audio file copied from the source playlist
       targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$localAudioTargetPlaylistTitleThree',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitleThree',
         fileExtension: 'mp3',
       );
 
@@ -4671,7 +4671,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets(
@@ -4683,14 +4683,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}copy_move_audio_integr_test_data",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       const String youtubeAudioSourcePlaylistTitle =
@@ -4708,7 +4708,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -4791,7 +4791,7 @@ void main() {
       // contains the audio file copied to the target playlist
       List<String> sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$youtubeAudioSourcePlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -4805,7 +4805,7 @@ void main() {
       // playlist
       List<String> sourcePlaylistCommentFileLst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$kCommentDirName',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$kCommentDirName',
         fileExtension: 'json',
       );
 
@@ -4818,7 +4818,7 @@ void main() {
       // contains the audio file copied from the source playlist
       List<String> targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$localAudioTargetPlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -4829,7 +4829,7 @@ void main() {
       // the comment file of the audio copied from the source playlist
       List<String> targetPlaylistJsonLst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$localAudioTargetPlaylistTitle${path.separator}$kCommentDirName',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitle${path.separator}$kCommentDirName',
         fileExtension: 'json',
       );
 
@@ -4916,7 +4916,7 @@ void main() {
       // contains the audio file copied from the source playlist
       targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$localAudioTargetPlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -4927,7 +4927,7 @@ void main() {
       // source playlist
       targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$localAudioTargetPlaylistTitle${path.separator}$kCommentDirName',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitle${path.separator}$kCommentDirName',
         fileExtension: 'json',
       );
 
@@ -5019,7 +5019,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets(
@@ -5032,14 +5032,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}copy_move_audio_integr_test_data",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       const String youtubeAudioSourcePlaylistTitle =
@@ -5057,7 +5057,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -5140,7 +5140,7 @@ void main() {
       // contains the audio file copied to the target playlist
       List<String> sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$youtubeAudioSourcePlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -5153,7 +5153,7 @@ void main() {
       // contains the audio file copied from the source playlist
       List<String> targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$localAudioTargetPlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -5234,7 +5234,7 @@ void main() {
       // contains the audio file copied from the source playlist
       targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$localAudioTargetPlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -5324,7 +5324,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets(
@@ -5336,14 +5336,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}copy_move_audio_integr_test_data",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       const String youtubeAudioSourcePlaylistTitle =
@@ -5362,7 +5362,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -5455,13 +5455,13 @@ void main() {
 
       List<String> sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$youtubeAudioSourcePlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle',
         fileExtension: 'mp3',
       );
 
       List<String> targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$localAudioTargetOnePlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetOnePlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -5628,7 +5628,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets(
@@ -5641,14 +5641,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}copy_move_audio_integr_test_data",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       const String youtubeAudioSourcePlaylistTitle =
@@ -5671,7 +5671,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -5680,11 +5680,11 @@ void main() {
       // to the 'local3' playlist dir.
 
       String targetPlaylistLocalDir =
-          "$kPlaylistDownloadRootPathWindows${path.separator}$localAudioTargetPlaylistTitleThree";
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitleThree";
 
       DirUtil.copyFileToDirectorySync(
         sourceFilePathName:
-            "$kPlaylistDownloadRootPathWindows${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$copiedCommentedAudioFileName",
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$copiedCommentedAudioFileName",
         targetDirectoryPath: targetPlaylistLocalDir,
       );
 
@@ -5768,7 +5768,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets(
@@ -5778,14 +5778,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}copy_move_audio_integr_test_data",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       const String newLocalAudioTargetPlaylistTitle = 'new_local';
@@ -5801,7 +5801,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -5888,7 +5888,7 @@ void main() {
       // contains the audio file copied from the source playlist
       List<String> targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$newLocalAudioTargetPlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$newLocalAudioTargetPlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -5944,7 +5944,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
   });
@@ -5960,14 +5960,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}copy_move_audio_integr_test_data",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       const String youtubeAudioSourcePlaylistTitle =
@@ -5985,7 +5985,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -6078,13 +6078,13 @@ void main() {
 
       List<String> sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$youtubeAudioSourcePlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle',
         fileExtension: 'mp3',
       );
 
       List<String> targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$localAudioTargetPlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -6101,13 +6101,13 @@ void main() {
 
       List<String> sourcePlaylistCommentLst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$kCommentDirName',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$kCommentDirName',
         fileExtension: 'json',
       );
 
       List<String> targetPlaylistCommentLst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$localAudioTargetPlaylistTitle${path.separator}$kCommentDirName',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitle${path.separator}$kCommentDirName',
         fileExtension: 'json',
       );
 
@@ -6124,13 +6124,13 @@ void main() {
 
       List<String> sourcePlaylistPictureLst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$kPictureDirName',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$kPictureDirName',
         fileExtension: 'jpg',
       );
 
       List<String> targetPlaylistPictureLst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$localAudioTargetPlaylistTitle${path.separator}$kPictureDirName',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitle${path.separator}$kPictureDirName',
         fileExtension: 'jpg',
       );
 
@@ -6395,7 +6395,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets(
@@ -6407,14 +6407,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}copy_move_audio_integr_test_data",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       const String localAudioPlaylistTitle = 'local_audio_playlist_2';
@@ -6430,7 +6430,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -6516,7 +6516,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets(
@@ -6529,14 +6529,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}copy_move_audio_integr_test_data",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       const String youtubeAudioSourcePlaylistTitle =
@@ -6559,7 +6559,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -6568,11 +6568,11 @@ void main() {
       // to the 'local3' playlist dir.
 
       String targetPlaylistLocalDir =
-          "$kPlaylistDownloadRootPathWindows${path.separator}$localAudioTargetPlaylistTitleThree";
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitleThree";
 
       DirUtil.copyFileToDirectorySync(
         sourceFilePathName:
-            "$kPlaylistDownloadRootPathWindows${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$movedCommentedAudioFileName",
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$movedCommentedAudioFileName",
         targetDirectoryPath: targetPlaylistLocalDir,
       );
 
@@ -6656,7 +6656,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets(
@@ -6666,14 +6666,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}copy_move_audio_integr_test_data",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       const String newLocalAudioTargetPlaylistTitle = 'new_local';
@@ -6689,7 +6689,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -6776,7 +6776,7 @@ void main() {
       // contains the audio file moved from the source playlist
       List<String> targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$newLocalAudioTargetPlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$newLocalAudioTargetPlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -6832,7 +6832,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
   });
@@ -6846,14 +6846,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}2_youtube_2_local_playlists_integr_test_data",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       const String youtubeAudioSourcePlaylistTitle =
@@ -6874,7 +6874,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -6985,13 +6985,13 @@ void main() {
 
       List<String> sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$youtubeAudioSourcePlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle',
         fileExtension: 'mp3',
       );
 
       List<String> targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$localAudioTargetSourcePlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetSourcePlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -7116,13 +7116,13 @@ void main() {
 
       sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$localAudioTargetSourcePlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetSourcePlaylistTitle',
         fileExtension: 'mp3',
       );
 
       targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$youtubeAudioTargetPlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioTargetPlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -7142,7 +7142,7 @@ void main() {
 
       List<String> targetPlaylistPictureLst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$youtubeAudioTargetPlaylistTitle${path.separator}$kPictureDirName',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioTargetPlaylistTitle${path.separator}$kPictureDirName',
         fileExtension: 'jpg',
       );
 
@@ -7220,7 +7220,7 @@ void main() {
 
       targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$youtubeAudioTargetPlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioTargetPlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -7236,7 +7236,7 @@ void main() {
 
       targetPlaylistPictureLst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$youtubeAudioTargetPlaylistTitle${path.separator}$kPictureDirName',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioTargetPlaylistTitle${path.separator}$kPictureDirName',
         fileExtension: 'jpg',
       );
 
@@ -7245,7 +7245,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('''Delete an audio which was first moved from Youtube to local
@@ -7257,14 +7257,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}2_youtube_2_local_playlists_integr_test_data",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       const String youtubeAudioSourcePlaylistTitle =
@@ -7285,7 +7285,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -7396,13 +7396,13 @@ void main() {
 
       List<String> sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$youtubeAudioSourcePlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle',
         fileExtension: 'mp3',
       );
 
       List<String> targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$localAudioTargetSourcePlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetSourcePlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -7512,13 +7512,13 @@ void main() {
 
       sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$localAudioTargetSourcePlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetSourcePlaylistTitle',
         fileExtension: 'mp3',
       );
 
       targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$youtubeAudioTargetPlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioTargetPlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -7592,7 +7592,7 @@ void main() {
 
       targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindows${path.separator}$youtubeAudioTargetPlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioTargetPlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -7605,7 +7605,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
   });
@@ -7616,14 +7616,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}manually_deleting_audios_and_updating_playlists",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       const String youtubePlaylistTitle = 'S8 audio';
@@ -7638,13 +7638,13 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
 
       String youtubePlaylistPath =
-          '$kPlaylistDownloadRootPathWindows${path.separator}$youtubePlaylistTitle';
+          '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubePlaylistTitle';
 
       List<String> youtubePlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath: youtubePlaylistPath,
@@ -7813,7 +7813,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('Manually delete all audio in local playlist directory.',
@@ -7821,14 +7821,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}manually_deleting_audios_and_updating_playlists",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       const String localPlaylistTitle = 'Local_2_audios';
@@ -7843,13 +7843,13 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
 
       String localPlaylistPath =
-          '$kPlaylistDownloadRootPathWindows${path.separator}$localPlaylistTitle';
+          '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localPlaylistTitle';
 
       // Obtaining the list of audio files in order to use it to
       // verify the displayed audio list before updating the
@@ -8009,7 +8009,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('Manually delete some audio in Youtube playlist directory.',
@@ -8017,14 +8017,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}manually_deleting_audios_and_updating_playlists",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       const String youtubePlaylistTitle = 'S8 audio';
@@ -8039,13 +8039,13 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
 
       String youtubePlaylistPath =
-          '$kPlaylistDownloadRootPathWindows${path.separator}$youtubePlaylistTitle';
+          '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubePlaylistTitle';
 
       List<String> youtubePlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath: youtubePlaylistPath,
@@ -8191,7 +8191,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('Manually delete some audio in local playlist directory.',
@@ -8199,14 +8199,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}manually_deleting_audios_and_updating_playlists",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       const String localPlaylistTitle = 'Local_2_audios';
@@ -8221,13 +8221,13 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
 
       String localPlaylistPath =
-          '$kPlaylistDownloadRootPathWindows${path.separator}$localPlaylistTitle';
+          '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localPlaylistTitle';
 
       List<String> localPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath: localPlaylistPath,
@@ -8364,7 +8364,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
   });
@@ -8377,14 +8377,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}manually_deleting_audios_and_updating_playlists",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       const String s8AudioYoutubePlaylistTitle = 'S8 audio';
@@ -8399,7 +8399,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -8428,7 +8428,7 @@ void main() {
       await tester.pumpAndSettle();
 
       String s8AudioYoutubePlaylistPath =
-          '$kPlaylistDownloadRootPathWindows${path.separator}$s8AudioYoutubePlaylistTitle';
+          '$kPlaylistDownloadRootPathWindowsTest${path.separator}$s8AudioYoutubePlaylistTitle';
 
       List<String> s8AudioYoutubePlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath: s8AudioYoutubePlaylistPath,
@@ -8481,7 +8481,7 @@ void main() {
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}manually_added_playlist_dir",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // *** Now execute Updating playlist JSON file menu item
@@ -8564,7 +8564,7 @@ void main() {
       // are listed
 
       String urgentActusyoutubeplaylistpath =
-          '$kPlaylistDownloadRootPathWindows${path.separator}$urgentActusyoutubeplaylisttitle';
+          '$kPlaylistDownloadRootPathWindowsTest${path.separator}$urgentActusyoutubeplaylisttitle';
 
       List<String> urgentActusyoutubeplaylistmp3lst =
           DirUtil.listFileNamesInDir(
@@ -8600,7 +8600,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('Manually add copied smartphone local playlist directory.',
@@ -8608,14 +8608,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}manually_deleting_audios_and_updating_playlists",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
@@ -8628,7 +8628,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -8638,7 +8638,7 @@ void main() {
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}manually_added_smartphone_local_playlist_dir",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // *** Execute Updating playlist JSON file menu item
@@ -8691,7 +8691,7 @@ void main() {
       // listed
 
       String testLocalPlaylistPath =
-          '$kPlaylistDownloadRootPathWindows${path.separator}$testLocalPlaylistTitle';
+          '$kPlaylistDownloadRootPathWindowsTest${path.separator}$testLocalPlaylistTitle';
 
       List<String> testLocalPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath: testLocalPlaylistPath,
@@ -8727,7 +8727,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('Manually add copied smartphone Youtube playlist directory.',
@@ -8735,14 +8735,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}manually_deleting_audios_and_updating_playlists",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
@@ -8755,7 +8755,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -8765,7 +8765,7 @@ void main() {
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}manually_added_smartphone_Youtube_playlist_dir",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // *** Execute Updating playlist JSON file menu item
@@ -8820,7 +8820,7 @@ void main() {
       // are listed
 
       String testYoutubePlaylistPath =
-          '$kPlaylistDownloadRootPathWindows${path.separator}$testYoutubePlaylistTitle';
+          '$kPlaylistDownloadRootPathWindowsTest${path.separator}$testYoutubePlaylistTitle';
 
       List<String> testYoutubePlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath: testYoutubePlaylistPath,
@@ -8856,7 +8856,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets(
@@ -8865,14 +8865,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}manually_deleting_audios_and_updating_playlists",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
@@ -8885,7 +8885,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -8904,7 +8904,7 @@ void main() {
       // Now manually delete all application data including the settings.json
       // file
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // *** Execute Updating playlist JSON file menu item
@@ -8938,7 +8938,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('''Manually delete Youtube playlist directory after adding it
@@ -8946,14 +8946,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}manually_deleting_audios_and_updating_playlists",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
@@ -8966,7 +8966,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -8975,7 +8975,7 @@ void main() {
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}manually_added_playlist_dir",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // *** Execute Updating playlist JSON file menu item
@@ -9026,7 +9026,7 @@ void main() {
       // are listed
 
       String urgentActusyoutubeplaylistpath =
-          '$kPlaylistDownloadRootPathWindows${path.separator}$urgentActusyoutubeplaylisttitle';
+          '$kPlaylistDownloadRootPathWindowsTest${path.separator}$urgentActusyoutubeplaylisttitle';
 
       List<String> urgentActusyoutubeplaylistmp3lst =
           DirUtil.listFileNamesInDir(
@@ -9067,7 +9067,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets(
@@ -9076,14 +9076,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}manually_deleting_audios_and_updating_playlists",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
@@ -9096,7 +9096,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -9105,7 +9105,7 @@ void main() {
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}manually_added_playlist_dir",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // *** Execute Updating playlist JSON file menu item
@@ -9156,7 +9156,7 @@ void main() {
       // are listed
 
       String urgentActusyoutubeplaylistpath =
-          '$kPlaylistDownloadRootPathWindows${path.separator}$urgentActusyoutubeplaylisttitle';
+          '$kPlaylistDownloadRootPathWindowsTest${path.separator}$urgentActusyoutubeplaylisttitle';
 
       List<String> urgentActusyoutubeplaylistmp3lst =
           DirUtil.listFileNamesInDir(
@@ -9217,7 +9217,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets(
@@ -9228,14 +9228,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       const String s8AudioYoutubePlaylistTitle = 'S8 audio';
@@ -9250,7 +9250,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -9293,7 +9293,7 @@ void main() {
 
       // Now delete all the files in the app audio directory
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // *** Execute Updating playlist JSON file menu item
@@ -9327,7 +9327,7 @@ void main() {
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // *** Execute again Updating playlist JSON file menu item
@@ -9365,7 +9365,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets(
@@ -9376,14 +9376,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       const String s8AudioYoutubePlaylistTitle = 'S8 audio';
@@ -9398,7 +9398,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -9447,7 +9447,7 @@ void main() {
 
       // Now delete all the files in the app audio directory
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // *** Execute Updating playlist JSON file menu item
@@ -9481,7 +9481,7 @@ void main() {
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // *** Execute again Updating playlist JSON file menu item
@@ -9519,7 +9519,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets(
@@ -9530,14 +9530,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_empty_selected_playlist_widget_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       const String s8AudioYoutubeEmptyPlaylistTitle = 'S8 audio';
@@ -9552,7 +9552,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -9595,7 +9595,7 @@ void main() {
 
       // Now delete all the files in the app audio directory
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // *** Execute Updating playlist JSON file menu item
@@ -9629,7 +9629,7 @@ void main() {
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_empty_selected_playlist_widget_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // *** Execute again Updating playlist JSON file menu item
@@ -9662,7 +9662,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('''With Playlist list not displayed and selected playlist empty,
@@ -9672,14 +9672,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_empty_selected_playlist_widget_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       const String s8AudioYoutubeEmptyPlaylistTitle = 'S8 audio';
@@ -9694,7 +9694,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -9743,7 +9743,7 @@ void main() {
 
       // Now delete all the files in the app audio directory
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // *** Execute Updating playlist JSON file menu item
@@ -9777,7 +9777,7 @@ void main() {
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_empty_selected_playlist_widget_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // *** Execute again Updating playlist JSON file menu item
@@ -9810,7 +9810,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('''After copying playlist json file over the playlist json
@@ -9869,7 +9869,7 @@ void main() {
       // will not be updated.
 
       String playlistS8audioDir =
-          "$kPlaylistDownloadRootPathWindows${path.separator}S8 audio";
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio";
 
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: playlistS8audioDir,
@@ -9927,7 +9927,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
   });
@@ -9959,7 +9959,7 @@ void main() {
 
           List<String> listMp3FileNames = DirUtil.listFileNamesInDir(
             directoryPath:
-                "$kPlaylistDownloadRootPathWindows${path.separator}S8 audio",
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
             fileExtension: 'mp3',
           );
 
@@ -9976,7 +9976,7 @@ void main() {
 
           List<String> listCommentJsonFileNames = DirUtil.listFileNamesInDir(
             directoryPath:
-                "$kPlaylistDownloadRootPathWindows${path.separator}S8 audio${path.separator}$kCommentDirName",
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kCommentDirName",
             fileExtension: 'json',
           );
 
@@ -10058,7 +10058,7 @@ void main() {
 
           listMp3FileNames = DirUtil.listFileNamesInDir(
             directoryPath:
-                "$kPlaylistDownloadRootPathWindows${path.separator}S8 audio",
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
             fileExtension: 'mp3',
           );
 
@@ -10071,7 +10071,7 @@ void main() {
 
           listCommentJsonFileNames = DirUtil.listFileNamesInDir(
             directoryPath:
-                "$kPlaylistDownloadRootPathWindows${path.separator}S8 audio${path.separator}$kCommentDirName",
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kCommentDirName",
             fileExtension: 'json',
           );
 
@@ -10121,7 +10121,7 @@ void main() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindows,
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
           );
         });
         testWidgets(
@@ -10151,7 +10151,7 @@ void main() {
 
           List<String> listMp3FileNames = DirUtil.listFileNamesInDir(
             directoryPath:
-                "$kPlaylistDownloadRootPathWindows${path.separator}S8 audio",
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
             fileExtension: 'mp3',
           );
 
@@ -10211,7 +10211,7 @@ void main() {
 
           listMp3FileNames = DirUtil.listFileNamesInDir(
             directoryPath:
-                "$kPlaylistDownloadRootPathWindows${path.separator}S8 audio",
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
             fileExtension: 'mp3',
           );
 
@@ -10261,7 +10261,7 @@ void main() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindows,
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
           );
         });
         testWidgets(
@@ -10344,7 +10344,7 @@ void main() {
 
           List<String> listMp3FileNames = DirUtil.listFileNamesInDir(
             directoryPath:
-                "$kPlaylistDownloadRootPathWindows${path.separator}S8 audio",
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
             fileExtension: 'mp3',
           );
 
@@ -10361,7 +10361,7 @@ void main() {
 
           List<String> listCommentJsonFileNames = DirUtil.listFileNamesInDir(
             directoryPath:
-                "$kPlaylistDownloadRootPathWindows${path.separator}S8 audio${path.separator}$kCommentDirName",
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kCommentDirName",
             fileExtension: 'json',
           );
 
@@ -10453,7 +10453,7 @@ void main() {
 
           listMp3FileNames = DirUtil.listFileNamesInDir(
             directoryPath:
-                "$kPlaylistDownloadRootPathWindows${path.separator}S8 audio",
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
             fileExtension: 'mp3',
           );
 
@@ -10466,7 +10466,7 @@ void main() {
 
           listCommentJsonFileNames = DirUtil.listFileNamesInDir(
             directoryPath:
-                "$kPlaylistDownloadRootPathWindows${path.separator}S8 audio${path.separator}$kCommentDirName",
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kCommentDirName",
             fileExtension: 'json',
           );
 
@@ -10516,7 +10516,7 @@ void main() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindows,
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
           );
         });
         testWidgets(
@@ -10600,7 +10600,7 @@ void main() {
 
           List<String> listMp3FileNames = DirUtil.listFileNamesInDir(
             directoryPath:
-                "$kPlaylistDownloadRootPathWindows${path.separator}S8 audio",
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
             fileExtension: 'mp3',
           );
 
@@ -10670,7 +10670,7 @@ void main() {
 
           listMp3FileNames = DirUtil.listFileNamesInDir(
             directoryPath:
-                "$kPlaylistDownloadRootPathWindows${path.separator}S8 audio",
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
             fileExtension: 'mp3',
           );
 
@@ -10720,7 +10720,7 @@ void main() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindows,
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
           );
         });
       });
@@ -10752,7 +10752,7 @@ void main() {
 
           List<String> listMp3FileNames = DirUtil.listFileNamesInDir(
             directoryPath:
-                "$kPlaylistDownloadRootPathWindows${path.separator}S8 audio",
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
             fileExtension: 'mp3',
           );
 
@@ -10769,7 +10769,7 @@ void main() {
 
           List<String> listCommentJsonFileNames = DirUtil.listFileNamesInDir(
             directoryPath:
-                "$kPlaylistDownloadRootPathWindows${path.separator}S8 audio${path.separator}$kCommentDirName",
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kCommentDirName",
             fileExtension: 'json',
           );
 
@@ -10860,7 +10860,7 @@ void main() {
 
           listMp3FileNames = DirUtil.listFileNamesInDir(
             directoryPath:
-                "$kPlaylistDownloadRootPathWindows${path.separator}S8 audio",
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
             fileExtension: 'mp3',
           );
 
@@ -10873,7 +10873,7 @@ void main() {
 
           listCommentJsonFileNames = DirUtil.listFileNamesInDir(
             directoryPath:
-                "$kPlaylistDownloadRootPathWindows${path.separator}S8 audio${path.separator}$kCommentDirName",
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kCommentDirName",
             fileExtension: 'json',
           );
 
@@ -10923,7 +10923,7 @@ void main() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindows,
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
           );
         });
         testWidgets(
@@ -10953,7 +10953,7 @@ void main() {
 
           List<String> listMp3FileNames = DirUtil.listFileNamesInDir(
             directoryPath:
-                "$kPlaylistDownloadRootPathWindows${path.separator}S8 audio",
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
             fileExtension: 'mp3',
           );
 
@@ -11022,7 +11022,7 @@ void main() {
 
           listMp3FileNames = DirUtil.listFileNamesInDir(
             directoryPath:
-                "$kPlaylistDownloadRootPathWindows${path.separator}S8 audio",
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
             fileExtension: 'mp3',
           );
 
@@ -11072,7 +11072,7 @@ void main() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindows,
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
           );
         });
         testWidgets(
@@ -11188,7 +11188,7 @@ void main() {
 
           List<String> listMp3FileNames = DirUtil.listFileNamesInDir(
             directoryPath:
-                "$kPlaylistDownloadRootPathWindows${path.separator}S8 audio",
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
             fileExtension: 'mp3',
           );
 
@@ -11205,7 +11205,7 @@ void main() {
 
           List<String> listCommentJsonFileNames = DirUtil.listFileNamesInDir(
             directoryPath:
-                "$kPlaylistDownloadRootPathWindows${path.separator}S8 audio${path.separator}$kCommentDirName",
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kCommentDirName",
             fileExtension: 'json',
           );
 
@@ -11306,7 +11306,7 @@ void main() {
 
           listMp3FileNames = DirUtil.listFileNamesInDir(
             directoryPath:
-                "$kPlaylistDownloadRootPathWindows${path.separator}S8 audio",
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
             fileExtension: 'mp3',
           );
 
@@ -11319,7 +11319,7 @@ void main() {
 
           listCommentJsonFileNames = DirUtil.listFileNamesInDir(
             directoryPath:
-                "$kPlaylistDownloadRootPathWindows${path.separator}S8 audio${path.separator}$kCommentDirName",
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kCommentDirName",
             fileExtension: 'json',
           );
 
@@ -11369,7 +11369,7 @@ void main() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindows,
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
           );
         });
         testWidgets(
@@ -11486,7 +11486,7 @@ void main() {
 
           List<String> listMp3FileNames = DirUtil.listFileNamesInDir(
             directoryPath:
-                "$kPlaylistDownloadRootPathWindows${path.separator}S8 audio",
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
             fileExtension: 'mp3',
           );
 
@@ -11565,7 +11565,7 @@ void main() {
 
           listMp3FileNames = DirUtil.listFileNamesInDir(
             directoryPath:
-                "$kPlaylistDownloadRootPathWindows${path.separator}S8 audio",
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
             fileExtension: 'mp3',
           );
 
@@ -11615,7 +11615,7 @@ void main() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindows,
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
           );
         });
       });
@@ -11626,14 +11626,14 @@ void main() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindows,
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}one_local_playlist_with_one_audio",
-            destinationRootPath: kPlaylistDownloadRootPathWindows,
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
           );
 
           const String localAudioPlaylistTitle = 'local_audio_playlist_2';
@@ -11649,7 +11649,7 @@ void main() {
           // playlists available in the download app test dir
           await settingsDataService.loadSettingsFromFile(
               settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
           await app.main(['test']);
           await tester.pumpAndSettle();
@@ -11671,7 +11671,7 @@ void main() {
 
           List<String> localPlaylistPictureLst = DirUtil.listFileNamesInDir(
             directoryPath:
-                '$kPlaylistDownloadRootPathWindows${path.separator}$localAudioPlaylistTitle${path.separator}$kPictureDirName',
+                '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioPlaylistTitle${path.separator}$kPictureDirName',
             fileExtension: 'jpg',
           );
 
@@ -11727,7 +11727,7 @@ void main() {
 
           List<String> localPlaylistMp3Lst = DirUtil.listFileNamesInDir(
             directoryPath:
-                '$kPlaylistDownloadRootPathWindows${path.separator}$localAudioPlaylistTitle',
+                '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioPlaylistTitle',
             fileExtension: 'mp3',
           );
 
@@ -11739,7 +11739,7 @@ void main() {
 
           localPlaylistPictureLst = DirUtil.listFileNamesInDir(
             directoryPath:
-                '$kPlaylistDownloadRootPathWindows${path.separator}$localAudioPlaylistTitle${path.separator}$kPictureDirName',
+                '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioPlaylistTitle${path.separator}$kPictureDirName',
             fileExtension: 'jpg',
           );
 
@@ -11781,7 +11781,7 @@ void main() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindows,
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
           );
         });
         testWidgets(
@@ -11790,14 +11790,14 @@ void main() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindows,
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}one_local_playlist_with_one_audio",
-            destinationRootPath: kPlaylistDownloadRootPathWindows,
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
           );
 
           const String localAudioPlaylistTitle = 'local_audio_playlist_2';
@@ -11813,7 +11813,7 @@ void main() {
           // playlists available in the download app test dir
           await settingsDataService.loadSettingsFromFile(
               settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
           await app.main(['test']);
           await tester.pumpAndSettle();
@@ -11882,7 +11882,7 @@ void main() {
 
           List<String> localPlaylistMp3Lst = DirUtil.listFileNamesInDir(
             directoryPath:
-                '$kPlaylistDownloadRootPathWindows${path.separator}$localAudioPlaylistTitle',
+                '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioPlaylistTitle',
             fileExtension: 'mp3',
           );
 
@@ -11925,7 +11925,7 @@ void main() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindows,
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
           );
         });
       });
@@ -11935,14 +11935,14 @@ void main() {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindows,
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
 
         // Copy the test initial audio data to the app dir
         DirUtil.copyFilesFromDirAndSubDirsToDirectory(
           sourceRootPath:
               "$kDownloadAppTestSavedDataDir${path.separator}one_local_playlist_with_one_audio",
-          destinationRootPath: kPlaylistDownloadRootPathWindows,
+          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
         );
 
         const String localAudioPlaylistTitle = 'local_audio_playlist_2';
@@ -11957,7 +11957,7 @@ void main() {
         // playlists available in the download app test dir
         await settingsDataService.loadSettingsFromFile(
             settingsJsonPathFileName:
-                "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
         await app.main(['test']);
         await tester.pumpAndSettle();
@@ -11980,7 +11980,7 @@ void main() {
 
         List<String> localPlaylistPictureLst = DirUtil.listFileNamesInDir(
           directoryPath:
-              '$kPlaylistDownloadRootPathWindows${path.separator}$localAudioPlaylistTitle${path.separator}$kPictureDirName',
+              '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioPlaylistTitle${path.separator}$kPictureDirName',
           fileExtension: 'jpg',
         );
 
@@ -12056,7 +12056,7 @@ void main() {
 
         List<String> localPlaylistMp3Lst = DirUtil.listFileNamesInDir(
           directoryPath:
-              '$kPlaylistDownloadRootPathWindows${path.separator}$localAudioPlaylistTitle',
+              '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioPlaylistTitle',
           fileExtension: 'mp3',
         );
 
@@ -12068,7 +12068,7 @@ void main() {
 
         localPlaylistPictureLst = DirUtil.listFileNamesInDir(
           directoryPath:
-              '$kPlaylistDownloadRootPathWindows${path.separator}$localAudioPlaylistTitle${path.separator}$kPictureDirName',
+              '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioPlaylistTitle${path.separator}$kPictureDirName',
           fileExtension: 'jpg',
         );
 
@@ -12109,7 +12109,7 @@ void main() {
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindows,
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
       testWidgets('''On no selected playlist, delete unique audio mp3 only.''',
@@ -12117,14 +12117,14 @@ void main() {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindows,
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
 
         // Copy the test initial audio data to the app dir
         DirUtil.copyFilesFromDirAndSubDirsToDirectory(
           sourceRootPath:
               "$kDownloadAppTestSavedDataDir${path.separator}one_local_playlist_with_one_audio",
-          destinationRootPath: kPlaylistDownloadRootPathWindows,
+          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
         );
 
         const String localAudioPlaylistTitle = 'local_no_selected_audio';
@@ -12141,7 +12141,7 @@ void main() {
         // playlists available in the download app test dir
         await settingsDataService.loadSettingsFromFile(
             settingsJsonPathFileName:
-                "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
         await app.main(['test']);
         await tester.pumpAndSettle();
@@ -12252,7 +12252,7 @@ void main() {
 
         List<String> localPlaylistMp3Lst = DirUtil.listFileNamesInDir(
           directoryPath:
-              '$kPlaylistDownloadRootPathWindows${path.separator}$localAudioPlaylistTitle',
+              '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioPlaylistTitle',
           fileExtension: 'mp3',
         );
 
@@ -12294,21 +12294,21 @@ void main() {
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindows,
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
       testWidgets('''Delete unique playing audio mp3 only.''', (tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindows,
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
 
         // Copy the test initial audio data to the app dir
         DirUtil.copyFilesFromDirAndSubDirsToDirectory(
           sourceRootPath:
               "$kDownloadAppTestSavedDataDir${path.separator}one_local_playlist_with_one_audio",
-          destinationRootPath: kPlaylistDownloadRootPathWindows,
+          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
         );
 
         const String localAudioPlaylistTitle = 'local_audio_playlist_2';
@@ -12323,7 +12323,7 @@ void main() {
         // playlists available in the download app test dir
         await settingsDataService.loadSettingsFromFile(
             settingsJsonPathFileName:
-                "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
         await app.main(['test']);
         await tester.pumpAndSettle();
@@ -12423,7 +12423,7 @@ void main() {
 
         List<String> localPlaylistMp3Lst = DirUtil.listFileNamesInDir(
           directoryPath:
-              '$kPlaylistDownloadRootPathWindows${path.separator}$localAudioPlaylistTitle',
+              '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioPlaylistTitle',
           fileExtension: 'mp3',
         );
 
@@ -12465,7 +12465,7 @@ void main() {
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindows,
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
       testWidgets('''From playlist as well, delete unique audio mp3.''',
@@ -12473,14 +12473,14 @@ void main() {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindows,
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
 
         // Copy the test initial audio data to the app dir
         DirUtil.copyFilesFromDirAndSubDirsToDirectory(
           sourceRootPath:
               "$kDownloadAppTestSavedDataDir${path.separator}one_local_playlist_with_one_audio",
-          destinationRootPath: kPlaylistDownloadRootPathWindows,
+          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
         );
 
         const String localAudioPlaylistTitle = 'local_audio_playlist_2';
@@ -12495,7 +12495,7 @@ void main() {
         // playlists available in the download app test dir
         await settingsDataService.loadSettingsFromFile(
             settingsJsonPathFileName:
-                "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
         await app.main(['test']);
         await tester.pumpAndSettle();
@@ -12587,7 +12587,7 @@ void main() {
 
         List<String> localPlaylistMp3Lst = DirUtil.listFileNamesInDir(
           directoryPath:
-              '$kPlaylistDownloadRootPathWindows${path.separator}$localAudioPlaylistTitle',
+              '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioPlaylistTitle',
           fileExtension: 'mp3',
         );
 
@@ -12629,7 +12629,7 @@ void main() {
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindows,
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
     });
@@ -12640,14 +12640,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}copy_move_audio_integr_test_data",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       String singleVideoUrl = 'https://youtu.be/uv3VQoWSjBE';
@@ -12662,7 +12662,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -12695,7 +12695,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('''Verifying execution of "Delete audio from playlist as well"
@@ -12703,14 +12703,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}delete_audio_from_audio_learn_short_data",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       const String youtubeAudioPlaylistTitle = 'audio_learn_short';
@@ -12727,7 +12727,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -12790,7 +12790,7 @@ void main() {
       // Check the saved youtube audio playlist values in the json file
 
       final youtubeAudioPlaylistPath = path.join(
-        kPlaylistDownloadRootPathWindows,
+        kPlaylistDownloadRootPathWindowsTest,
         youtubeAudioPlaylistTitle,
       );
 
@@ -12838,7 +12838,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('Click on download at musical quality checkbox bug fix',
@@ -12846,14 +12846,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}playlist_download_view_button_state_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
@@ -12866,7 +12866,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -12918,7 +12918,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
   });
@@ -12927,14 +12927,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}2_youtube_2_local_playlists_delete_integr_test_data",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       const String youtubePlaylistToDeleteTitle =
@@ -12950,7 +12950,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -13026,7 +13026,7 @@ void main() {
       // Reload the settings from the json file.
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       // Check that the deleted playlist title is no longer in the
       // playlist titles list of the settings data service
@@ -13042,7 +13042,7 @@ void main() {
           ]);
 
       final String youtubePlaylistToDeletePath = path.join(
-        kPlaylistDownloadRootPathWindows,
+        kPlaylistDownloadRootPathWindowsTest,
         youtubePlaylistToDeleteTitle,
       );
 
@@ -13095,21 +13095,21 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('Cancel delete selected Youtube playlist', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}2_youtube_2_local_playlists_delete_integr_test_data",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       const String youtubePlaylistToDeleteTitle =
@@ -13125,7 +13125,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -13190,7 +13190,7 @@ void main() {
       // Reload the settings from the json file.
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       // Check that the deleted playlist title is still in the
       // playlist titles list of the settings data service
@@ -13207,7 +13207,7 @@ void main() {
           ]);
 
       final String youtubePlaylistToDeletePath = path.join(
-        kPlaylistDownloadRootPathWindows,
+        kPlaylistDownloadRootPathWindowsTest,
         youtubePlaylistToDeleteTitle,
       );
 
@@ -13260,21 +13260,21 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('Delete selected local playlist', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}2_youtube_2_local_playlists_delete_integr_test_data",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       const String localPlaylistToDeleteTitle = 'local_audio_playlist_2';
@@ -13289,7 +13289,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -13359,7 +13359,7 @@ void main() {
       // Reload the settings from the json file.
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       // Check that the deleted playlist title is no longer in the
       // playlist titles list of the settings data service
@@ -13375,7 +13375,7 @@ void main() {
           ]);
 
       final String localPlaylistToDeletePath = path.join(
-        kPlaylistDownloadRootPathWindows,
+        kPlaylistDownloadRootPathWindowsTest,
         localPlaylistToDeleteTitle,
       );
 
@@ -13428,21 +13428,21 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('Cancel delete selected local playlist', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}2_youtube_2_local_playlists_delete_integr_test_data",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       const String localPlaylistToDeleteTitle = 'local_audio_playlist_2';
@@ -13457,7 +13457,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -13522,7 +13522,7 @@ void main() {
       // Reload the settings from the json file.
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       // Check that the cancelled deleting playlist title is still in the
       // playlist titles list of the settings data service
@@ -13539,7 +13539,7 @@ void main() {
           ]);
 
       final String localPlaylistToDeletePath = path.join(
-        kPlaylistDownloadRootPathWindows,
+        kPlaylistDownloadRootPathWindowsTest,
         localPlaylistToDeleteTitle,
       );
 
@@ -13594,7 +13594,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('''Delete non selected Youtube playlist while another Youtube
@@ -13602,14 +13602,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}2_youtube_2_local_playlists_delete_integr_test_data",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       const String youtubePlaylistToDeleteTitle =
@@ -13628,7 +13628,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -13714,7 +13714,7 @@ void main() {
       // Reload the settings from the json file.
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       // Check that the deleted playlist title is no longer in the
       // playlist titles list of the settings data service
@@ -13730,7 +13730,7 @@ void main() {
           ]);
 
       final String newPlaylistPath = path.join(
-        kPlaylistDownloadRootPathWindows,
+        kPlaylistDownloadRootPathWindowsTest,
         youtubeNewPlaylistTitle,
       );
 
@@ -13764,7 +13764,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets(
@@ -13773,14 +13773,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}2_youtube_2_local_playlists_delete_integr_test_data",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       const String youtubePlaylistToDeleteTitle =
@@ -13798,7 +13798,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -13884,7 +13884,7 @@ void main() {
       // Reload the settings from the json file.
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       // Check that the deleted playlist title is no longer in the
       // playlist titles list of the settings data service
@@ -13900,7 +13900,7 @@ void main() {
           ]);
 
       final String newPlaylistPath = path.join(
-        kPlaylistDownloadRootPathWindows,
+        kPlaylistDownloadRootPathWindowsTest,
         youtubeNewPlaylistTitle,
       );
 
@@ -13949,7 +13949,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
   });
@@ -13959,14 +13959,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}playlist_download_view_button_state_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
@@ -13979,7 +13979,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -13999,21 +13999,21 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('Select a local playlist with no audio', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}playlist_download_view_button_state_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
@@ -14026,7 +14026,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -14084,21 +14084,21 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('Select a Youtube playlist with no audio', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}playlist_download_view_button_state_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
@@ -14111,7 +14111,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -14169,21 +14169,21 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('Select a local playlist with audio', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}playlist_download_view_button_state_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
@@ -14196,7 +14196,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -14244,21 +14244,21 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('Select a Youtube playlist with audio', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}playlist_download_view_button_state_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
@@ -14271,7 +14271,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -14319,21 +14319,21 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('Delete a Youtube playlist with audio', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}playlist_download_view_button_state_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
@@ -14346,7 +14346,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -14464,21 +14464,21 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('Delete a local playlist with 1 audio', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}playlist_download_view_button_state_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
@@ -14491,7 +14491,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -14603,21 +14603,21 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('Delete a unique audio in a local playlist', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}playlist_download_view_button_state_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
@@ -14630,7 +14630,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -14720,21 +14720,21 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('Delete a unique audio in a Youtube playlist', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}playlist_download_view_button_state_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindows,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
@@ -14747,7 +14747,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main(['test']);
       await tester.pumpAndSettle();
@@ -14837,7 +14837,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     group('Open app with or without selected playlist', () {
@@ -14846,14 +14846,14 @@ void main() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindows,
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}playlist_download_view_button_state_at_app_start_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindows,
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
@@ -14866,7 +14866,7 @@ void main() {
           // playlists available in the download app test dir
           await settingsDataService.loadSettingsFromFile(
               settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
           await app.main(['test']);
           await tester.pumpAndSettle();
@@ -14881,21 +14881,21 @@ void main() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindows,
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
           );
         });
         testWidgets('Selected Youtube playlist with no audio', (tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindows,
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}playlist_download_view_button_state_at_app_start_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindows,
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
@@ -14908,7 +14908,7 @@ void main() {
           // playlists available in the download app test dir
           await settingsDataService.loadSettingsFromFile(
               settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
           const String initiallySelectedPlaylistTitle =
               'local_audio_playlist_2';
@@ -14933,21 +14933,21 @@ void main() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindows,
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
           );
         });
         testWidgets('Selected Local playlist with audio', (tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindows,
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}playlist_download_view_button_state_at_app_start_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindows,
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
@@ -14960,7 +14960,7 @@ void main() {
           // playlists available in the download app test dir
           await settingsDataService.loadSettingsFromFile(
               settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
           const String initiallySelectedPlaylistTitle =
               'local_audio_playlist_2';
@@ -14984,21 +14984,21 @@ void main() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindows,
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
           );
         });
         testWidgets('Selected Youtube playlist with audio', (tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindows,
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}playlist_download_view_button_state_at_app_start_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindows,
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
@@ -15011,7 +15011,7 @@ void main() {
           // playlists available in the download app test dir
           await settingsDataService.loadSettingsFromFile(
               settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
           const String initiallySelectedPlaylistTitle =
               'local_audio_playlist_2';
@@ -15036,7 +15036,7 @@ void main() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindows,
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
           );
         });
       });
@@ -15045,14 +15045,14 @@ void main() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindows,
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}playlist_download_view_button_state_at_app_start_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindows,
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
@@ -15065,7 +15065,7 @@ void main() {
           // playlists available in the download app test dir
           await settingsDataService.loadSettingsFromFile(
               settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
           // Changing the playlists list display before starting the
           // application
@@ -15090,21 +15090,21 @@ void main() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindows,
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
           );
         });
         testWidgets('Selected Youtube playlist with no audio', (tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindows,
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}playlist_download_view_button_state_at_app_start_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindows,
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
@@ -15117,7 +15117,7 @@ void main() {
           // playlists available in the download app test dir
           await settingsDataService.loadSettingsFromFile(
               settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
           // Changing the playlists list display before starting the
           // application
@@ -15152,21 +15152,21 @@ void main() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindows,
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
           );
         });
         testWidgets('Selected Local playlist with audio', (tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindows,
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}playlist_download_view_button_state_at_app_start_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindows,
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
@@ -15179,7 +15179,7 @@ void main() {
           // playlists available in the download app test dir
           await settingsDataService.loadSettingsFromFile(
               settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
           // Changing the playlists list display before starting the
           // application
@@ -15213,21 +15213,21 @@ void main() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindows,
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
           );
         });
         testWidgets('Selected Youtube playlist with audio', (tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindows,
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}playlist_download_view_button_state_at_app_start_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindows,
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
@@ -15240,7 +15240,7 @@ void main() {
           // playlists available in the download app test dir
           await settingsDataService.loadSettingsFromFile(
               settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindows${path.separator}$kSettingsFileName");
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
           // Changing the playlists list display before starting the
           // application
@@ -15275,7 +15275,7 @@ void main() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindows,
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
           );
         });
       });
@@ -15297,7 +15297,7 @@ void main() {
       // Deletion of comment file used by another test, but not needed
       // for this test
       final String commentFilePath =
-          "$kPlaylistDownloadRootPathWindows${path.separator}$youtubePlaylistTitle${path.separator}$kCommentDirName${path.separator}231117-002826-Really short video 23-07-01.json";
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubePlaylistTitle${path.separator}$kCommentDirName${path.separator}231117-002826-Really short video 23-07-01.json";
       DirUtil.deleteFileIfExist(pathFileName: commentFilePath);
 
       // First, find the audio sublist ListTile Text widget
@@ -15391,7 +15391,7 @@ void main() {
 
       // Verify that the renamed file exists
       final String renamedAudioFilePath =
-          "$kPlaylistDownloadRootPathWindows${path.separator}$youtubePlaylistTitle${path.separator}$newFileName";
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubePlaylistTitle${path.separator}$newFileName";
       expect(File(renamedAudioFilePath).existsSync(), true);
 
       // Check the new file name in the audio info dialog
@@ -15421,7 +15421,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('''Not existing new audio file name and not existing new comment
@@ -15546,7 +15546,7 @@ void main() {
 
       // Verify that the renamed file exists
       final String renamedAudioFilePath =
-          "$kPlaylistDownloadRootPathWindows${path.separator}$youtubePlaylistTitle${path.separator}$newMp3FileName";
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubePlaylistTitle${path.separator}$newMp3FileName";
       expect(File(renamedAudioFilePath).existsSync(), true);
 
       // Check the new file name in the audio info dialog
@@ -15583,7 +15583,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets(
@@ -15685,7 +15685,7 @@ void main() {
 
       // Verify that the old name file exists
       final String renamedAudioFilePath =
-          "$kPlaylistDownloadRootPathWindows${path.separator}$youtubePlaylistTitle${path.separator}$initialFileName";
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubePlaylistTitle${path.separator}$initialFileName";
       expect(File(renamedAudioFilePath).existsSync(), true);
 
       // Check the old file name in the audio info dialog
@@ -15715,7 +15715,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets(
@@ -15813,7 +15813,7 @@ void main() {
 
       // Verify that the old name file exists
       final String renamedAudioFilePath =
-          "$kPlaylistDownloadRootPathWindows${path.separator}$youtubePlaylistTitle${path.separator}$initialFileName";
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubePlaylistTitle${path.separator}$initialFileName";
       expect(File(renamedAudioFilePath).existsSync(), true);
 
       // Check the old file name in the audio info dialog
@@ -15843,7 +15843,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('''Not existing new audio file name and existing new comment
@@ -15967,7 +15967,7 @@ void main() {
       const String initialFileName =
           "240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.mp3";
       final String renamedAudioFilePath =
-          "$kPlaylistDownloadRootPathWindows${path.separator}$youtubePlaylistTitle${path.separator}$initialFileName";
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubePlaylistTitle${path.separator}$initialFileName";
       expect(File(renamedAudioFilePath).existsSync(), true);
 
       // Check the old file name in the audio info dialog
@@ -15997,7 +15997,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
   });
@@ -16147,7 +16147,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('Imported audio change audio title',
@@ -16297,7 +16297,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('Downl audio chng title', (WidgetTester tester) async {
@@ -16447,7 +16447,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('Downl audio chng title and comments',
@@ -16603,7 +16603,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
   });
@@ -16677,7 +16677,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     testWidgets('''Playlist comments color verification.''',
@@ -16754,7 +16754,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindows,
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
     group('Playing one comment, fully played audio', () {
@@ -16841,7 +16841,7 @@ void main() {
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindows,
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
       testWidgets(
@@ -16928,7 +16928,7 @@ void main() {
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindows,
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
       testWidgets(
@@ -17023,7 +17023,7 @@ void main() {
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindows,
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
     });
@@ -17111,7 +17111,7 @@ void main() {
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindows,
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
       testWidgets(
@@ -17198,7 +17198,7 @@ void main() {
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindows,
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
       testWidgets(
@@ -17293,7 +17293,7 @@ void main() {
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindows,
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
     });
@@ -17385,7 +17385,7 @@ void main() {
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindows,
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
       testWidgets(
@@ -17476,7 +17476,7 @@ void main() {
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindows,
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
       testWidgets(
@@ -17571,7 +17571,7 @@ void main() {
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindows,
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
     });
@@ -17745,7 +17745,7 @@ void main() {
 Playlist _loadPlaylist(String playListOneName) {
   return JsonDataService.loadFromFile(
       jsonPathFileName:
-          "$kPlaylistDownloadRootPathWindows${path.separator}$playListOneName${path.separator}$playListOneName.json",
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$playListOneName${path.separator}$playListOneName.json",
       type: Playlist);
 }
 
@@ -17754,7 +17754,7 @@ void _modifySelectedPlaylistBeforeStartingApplication({
   required String playlistToSelectTitle,
 }) {
   final initiallySelectedPlaylistPath = path.join(
-    kPlaylistDownloadRootPathWindows,
+    kPlaylistDownloadRootPathWindowsTest,
     playlistToUnselectTitle,
   );
 
@@ -17777,7 +17777,7 @@ void _modifySelectedPlaylistBeforeStartingApplication({
   );
 
   final nowSelectedPlaylistPath = path.join(
-    kPlaylistDownloadRootPathWindows,
+    kPlaylistDownloadRootPathWindowsTest,
     playlistToSelectTitle,
   );
 

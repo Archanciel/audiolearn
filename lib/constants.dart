@@ -38,13 +38,17 @@ const String kPlaylistDownloadRootPath =
 const String kSettingsFileName = 'settings.json';
 const String kOrderedPlaylistTitlesFileName = 'savedOrderedPlaylistTitles.txt';
 
-const String kApplicationPathWindows =
+const String kApplicationPathWindowsTest =
     "C:\\Development\\Flutter\\audiolearn\\test\\data\\audio";
-const String kPlaylistDownloadRootPathWindows =
+const String kPlaylistDownloadRootPathWindowsTest =
     "C:\\Development\\Flutter\\audiolearn\\test\\data\\audio";
-
 const String kDownloadAppTestSavedDataDir =
     "C:\\Development\\Flutter\\audiolearn\\test\\data\\saved";
+
+const String kApplicationPathWindows =
+    "C:\\Program Files\\audiolearn";
+const String kPlaylistDownloadRootPathWindows =
+    "C:\\Program Files\\audiolearn\\playlists";
 
 const String kCommentDirName = 'comments';
 const String kPictureDirName = 'pictures';
