@@ -38,6 +38,7 @@ const String kPlaylistDownloadRootPath =
 const String kSettingsFileName = 'settings.json';
 const String kOrderedPlaylistTitlesFileName = 'savedOrderedPlaylistTitles.txt';
 
+// Used for testing and debugging
 const String kApplicationPathWindowsTest =
     "C:\\Development\\Flutter\\audiolearn\\test\\data\\audio";
 const String kPlaylistDownloadRootPathWindowsTest =
@@ -45,10 +46,11 @@ const String kPlaylistDownloadRootPathWindowsTest =
 const String kDownloadAppTestSavedDataDir =
     "C:\\Development\\Flutter\\audiolearn\\test\\data\\saved";
 
+// Used for Windows installation
 const String kApplicationPathWindows =
-    "C:\\Program Files\\audiolearn";
+    "C:\\audiolearn";
 const String kPlaylistDownloadRootPathWindows =
-    "C:\\Program Files\\audiolearn\\playlists";
+    "C:\\audiolearn\\playlists";
 
 const String kCommentDirName = 'comments';
 const String kPictureDirName = 'pictures';

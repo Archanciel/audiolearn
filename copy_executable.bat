@@ -10,7 +10,7 @@ if %errorlevel% neq 0 (
 :: Define variables
 set "PROJECT_DIR=%~dp0"
 set "SOURCE_DIR=%PROJECT_DIR%build\windows\x64\runner\Release"
-set "DEST_DIR=C:\Program Files\audiolearn"
+set "DEST_DIR=C:\audiolearn"
 
 :: Navigate to the project directory
 cd /d "%PROJECT_DIR%"
