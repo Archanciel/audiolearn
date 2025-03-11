@@ -40,7 +40,7 @@ class IntegrationTestUtil {
   static String audioplayersVersion = '';
 
   /// This method is necessary due to replacing audioplayers 5.2.1 by
-  /// audioplayers 6.1.0.
+  /// audioplayers 6.1.0 or next.
   static Future<void> pumpAndSettleDueToAudioPlayers({
     required WidgetTester tester,
     int additionalMilliseconds = 0,
