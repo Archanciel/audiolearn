@@ -25,7 +25,7 @@ Future<void> main() async {
   WidgetsFlutterBinding
       .ensureInitialized(); // Ensure Flutter bindings are initialized.
 
-  bool isTest = false; // Has no effect on Android app !
+  bool isTest = true; // Has no effect on Android app !
   
   // bool deleteAppDir = kDeleteAppDirOnEmulator;
 
