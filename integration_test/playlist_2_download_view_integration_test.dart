@@ -3394,7 +3394,7 @@ void main() {
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       // Restarting the app
-      await app.main(['test']);
+      await app.main();
       await tester.pumpAndSettle();
 
       DateTime now = DateTime.now();
@@ -3486,7 +3486,7 @@ void main() {
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       // Restarting the app
-      await app.main(['test']);
+      await app.main();
       await tester.pumpAndSettle();
 
       DateTime now = DateTime.now();
@@ -3578,7 +3578,7 @@ void main() {
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
       // Restarting the app
-      await app.main(['test']);
+      await app.main();
       await tester.pumpAndSettle();
 
       DateTime now = DateTime.now();
@@ -10145,7 +10145,7 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      await app.main(['test']);
+      await app.main();
       await tester.pumpAndSettle();
 
       // Tap the appbar leading popup menu button
@@ -10208,7 +10208,7 @@ void main() {
       MockFilePicker mockFilePicker = MockFilePicker();
       FilePicker.platform = mockFilePicker;
 
-      await app.main(['test']);
+      await app.main();
       await tester.pumpAndSettle();
 
       // Create a new directory containing playlists to which the playlist
@@ -10364,7 +10364,7 @@ void main() {
       MockFilePicker mockFilePicker = MockFilePicker();
       FilePicker.platform = mockFilePicker;
 
-      await app.main(['test']);
+      await app.main();
       await tester.pumpAndSettle();
 
       // Create a new directory to which the zip file will be saved
@@ -10462,7 +10462,7 @@ void main() {
       MockFilePicker mockFilePicker = MockFilePicker();
       FilePicker.platform = mockFilePicker;
 
-      await app.main(['test']);
+      await app.main();
       await tester.pumpAndSettle();
 
       // Create a new directory to which the zip file will be saved

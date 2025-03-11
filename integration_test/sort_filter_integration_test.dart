@@ -225,7 +225,7 @@ void audioPlayerViewSortFilterIntegrationTest() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      await app.main(['test']);
+      await app.main();
       await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // Now tap on the current dropdown button item to open the dropdown
@@ -516,7 +516,7 @@ void audioPlayerViewSortFilterIntegrationTest() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-      await app.main(['test']);
+      await app.main();
       await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // Now tap on the current dropdown button item to open the dropdown
@@ -678,7 +678,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               settingsJsonPathFileName:
                   "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-          await app.main(['test']);
+          await app.main();
           await tester.pumpAndSettle();
 
           // Tap the 'Toggle List' button to avoid displaying the list
@@ -765,7 +765,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               settingsJsonPathFileName:
                   "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-          await app.main(['test']);
+          await app.main();
           await tester.pumpAndSettle();
 
           // Tap the 'Toggle List' button to avoid displaying the list
@@ -963,7 +963,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               settingsJsonPathFileName:
                   "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-          await app.main(['test']);
+          await app.main();
           await tester.pumpAndSettle();
 
           // Now tap on the current dropdown button item to open the dropdown
@@ -1058,7 +1058,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               settingsJsonPathFileName:
                   "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-          await app.main(['test']);
+          await app.main();
           await tester.pumpAndSettle();
 
           // Now tap on the current dropdown button item to open the dropdown
@@ -1161,7 +1161,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               settingsJsonPathFileName:
                   "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-          await app.main(['test']);
+          await app.main();
           await tester.pumpAndSettle();
 
           // Now open the audio popup menu
@@ -1314,7 +1314,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               settingsJsonPathFileName:
                   "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-          await app.main(['test']);
+          await app.main();
           await tester.pumpAndSettle();
 
           // Now open the audio popup menu
@@ -1537,7 +1537,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               settingsJsonPathFileName:
                   "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-          await app.main(['test']);
+          await app.main();
           await tester.pumpAndSettle();
 
           // Now open the audio popup menu
@@ -1647,7 +1647,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               settingsJsonPathFileName:
                   "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-          await app.main(['test']);
+          await app.main();
           await tester.pumpAndSettle();
 
           // Now open the audio popup menu
@@ -1765,7 +1765,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                 settingsJsonPathFileName:
                     "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-            await app.main(['test']);
+            await app.main();
             await tester.pumpAndSettle();
 
             const String saveAsTitle = 'Title asc';
@@ -2041,7 +2041,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                 settingsJsonPathFileName:
                     "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-            await app.main(['test']);
+            await app.main();
             await tester.pumpAndSettle();
 
             const String saveAsTitle = 'Title asc';
@@ -2127,7 +2127,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                 settingsJsonPathFileName:
                     "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-            await app.main(['test']);
+            await app.main();
             await tester.pumpAndSettle();
 
             const String saveAsTitle = 'Title asc';
@@ -2218,7 +2218,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                 settingsJsonPathFileName:
                     "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-            await app.main(['test']);
+            await app.main();
             await tester.pumpAndSettle();
 
             const String saveAsTitle = 'Title asc';
@@ -2310,7 +2310,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                 settingsJsonPathFileName:
                     "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-            await app.main(['test']);
+            await app.main();
             await tester.pumpAndSettle();
 
             const String saveAsTitle = 'Title asc';
@@ -2442,7 +2442,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                 settingsJsonPathFileName:
                     "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-            await app.main(['test']);
+            await app.main();
             await tester.pumpAndSettle();
 
             const String saveAsTitle = 'Title asc';
@@ -2576,7 +2576,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                 settingsJsonPathFileName:
                     "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-            await app.main(['test']);
+            await app.main();
             await tester.pumpAndSettle();
 
             const String saveAsTitle = 'Title asc';
@@ -2705,7 +2705,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                 settingsJsonPathFileName:
                     "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-            await app.main(['test']);
+            await app.main();
             await tester.pumpAndSettle();
 
             const String saveAsTitle = 'Title asc';
@@ -2832,7 +2832,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                 settingsJsonPathFileName:
                     "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-            await app.main(['test']);
+            await app.main();
             await tester.pumpAndSettle();
 
             const String saveAsTitle = 'for test';
@@ -2962,7 +2962,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                 settingsJsonPathFileName:
                     "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-            await app.main(['test']);
+            await app.main();
             await tester.pumpAndSettle();
 
             const String saveAsTitle = 'for test 2';
@@ -3059,7 +3059,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                 settingsJsonPathFileName:
                     "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-            await app.main(['test']);
+            await app.main();
             await tester.pumpAndSettle();
 
             const String saveAsTitle = 'Title asc';
@@ -3348,7 +3348,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                 settingsJsonPathFileName:
                     "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-            await app.main(['test']);
+            await app.main();
             await tester.pumpAndSettle();
 
             const String saveAsTitle = 'Title asc';
@@ -3445,7 +3445,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                 settingsJsonPathFileName:
                     "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-            await app.main(['test']);
+            await app.main();
             await tester.pumpAndSettle();
 
             const String saveAsTitle = 'Title asc';
@@ -3541,7 +3541,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                 settingsJsonPathFileName:
                     "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-            await app.main(['test']);
+            await app.main();
             await tester.pumpAndSettle();
 
             const String saveAsTitle = 'Title asc';
@@ -3678,7 +3678,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                 settingsJsonPathFileName:
                     "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-            await app.main(['test']);
+            await app.main();
             await tester.pumpAndSettle();
 
             const String saveAsTitle = 'Title asc';
@@ -3817,7 +3817,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                 settingsJsonPathFileName:
                     "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-            await app.main(['test']);
+            await app.main();
             await tester.pumpAndSettle();
 
             const String saveAsTitle = 'Title asc';
@@ -3951,7 +3951,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                 settingsJsonPathFileName:
                     "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-            await app.main(['test']);
+            await app.main();
             await tester.pumpAndSettle();
 
             const String saveAsTitle = 'Title asc';
@@ -4083,7 +4083,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                 settingsJsonPathFileName:
                     "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-            await app.main(['test']);
+            await app.main();
             await tester.pumpAndSettle();
 
             const String saveAsTitle = 'for test';
@@ -4219,7 +4219,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                 settingsJsonPathFileName:
                     "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-            await app.main(['test']);
+            await app.main();
             await tester.pumpAndSettle();
 
             const String saveAsTitle = 'for test 2';
@@ -4329,7 +4329,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             settingsJsonPathFileName:
                 "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-        await app.main(['test']);
+        await app.main();
         await tester.pumpAndSettle();
 
         // Now open the audio popup menu
@@ -4623,7 +4623,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             settingsJsonPathFileName:
                 "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-        await app.main(['test']);
+        await app.main();
         await tester.pumpAndSettle();
 
         final Finder dropDownButtonFinder =
@@ -4789,7 +4789,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             settingsJsonPathFileName:
                 "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-        await app.main(['test']);
+        await app.main();
         await tester.pumpAndSettle();
 
         String defaultEnglishTitle = 'default';
@@ -4905,7 +4905,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             settingsJsonPathFileName:
                 "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-        await app.main(['test']);
+        await app.main();
         await tester.pumpAndSettle();
 
         // Now open the audio popup menu
@@ -5153,7 +5153,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             settingsJsonPathFileName:
                 "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-        await app.main(['test']);
+        await app.main();
         await tester.pumpAndSettle();
 
         // Now open the audio popup menu
@@ -5283,7 +5283,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             settingsJsonPathFileName:
                 "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-        await app.main(['test']);
+        await app.main();
         await tester.pumpAndSettle();
 
         // Now tap on the current dropdown button item to open the dropdown
@@ -5555,7 +5555,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             settingsJsonPathFileName:
                 "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-        await app.main(['test']);
+        await app.main();
         await tester.pumpAndSettle();
 
         // Now open the audio popup menu
@@ -5863,7 +5863,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               settingsJsonPathFileName:
                   "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-          await app.main(['test']);
+          await app.main();
           await tester.pumpAndSettle();
 
           // Now open the audio popup menu
@@ -6168,7 +6168,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               settingsJsonPathFileName:
                   "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-          await app.main(['test']);
+          await app.main();
           await tester.pumpAndSettle();
 
           // Now open the audio popup menu
@@ -6557,7 +6557,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               settingsJsonPathFileName:
                   "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-          await app.main(['test']);
+          await app.main();
           await tester.pumpAndSettle();
 
           final Finder dropDownButtonFinder =
@@ -6717,7 +6717,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               settingsJsonPathFileName:
                   "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-          await app.main(['test']);
+          await app.main();
           await tester.pumpAndSettle();
 
           String defaultEnglishTitle = 'default';
@@ -6832,7 +6832,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               settingsJsonPathFileName:
                   "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-          await app.main(['test']);
+          await app.main();
           await tester.pumpAndSettle();
 
           // Now open the audio popup menu
@@ -7153,7 +7153,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                 settingsJsonPathFileName:
                     "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-            await app.main(['test']);
+            await app.main();
             await tester.pumpAndSettle();
 
             // Defining an unamed (applied) sort/filter parms
@@ -7230,7 +7230,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                     "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
             // Restarting the app
-            await app.main(['test']);
+            await app.main();
             await tester.pumpAndSettle();
 
             // The app was restarted. Since the in previous test defined and
@@ -7331,7 +7331,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               settingsJsonPathFileName:
                   "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-          await app.main(['test']);
+          await app.main();
           await tester.pumpAndSettle();
 
           // First, set the application language to French
@@ -7629,7 +7629,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               settingsJsonPathFileName:
                   "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-          await app.main(['test']);
+          await app.main();
           await tester.pumpAndSettle();
 
           // First, set the application language to French
@@ -8024,7 +8024,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               settingsJsonPathFileName:
                   "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-          await app.main(['test']);
+          await app.main();
           await tester.pumpAndSettle();
 
           // First, set the application language to French
@@ -8202,7 +8202,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             settingsJsonPathFileName:
                 "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-        await app.main(['test']);
+        await app.main();
         await tester.pumpAndSettle();
 
         // Now tap on the current dropdown button item to open the dropdown
@@ -8350,7 +8350,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               settingsJsonPathFileName:
                   "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-          await app.main(['test']);
+          await app.main();
           await tester.pumpAndSettle();
 
           const String descListenedSortFilterName = 'desc listened';
@@ -8486,7 +8486,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               settingsJsonPathFileName:
                   "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-          await app.main(['test']);
+          await app.main();
           await tester.pumpAndSettle();
 
           const String descListenedSortFilterName = 'desc listened';
@@ -8615,7 +8615,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               settingsJsonPathFileName:
                   "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-          await app.main(['test']);
+          await app.main();
           await tester.pumpAndSettle();
 
           // Tap on the current dropdown button item to open the dropdown
@@ -8781,7 +8781,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               settingsJsonPathFileName:
                   "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-          await app.main(['test']);
+          await app.main();
           await tester.pumpAndSettle();
 
           const String titleAscSortFilterName = 'Title asc';
@@ -9123,7 +9123,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               settingsJsonPathFileName:
                   "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-          await app.main(['test']);
+          await app.main();
           await tester.pumpAndSettle();
 
           const String titleAscSortFilterName = 'Title asc';
@@ -9297,7 +9297,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               settingsJsonPathFileName:
                   "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-          await app.main(['test']);
+          await app.main();
           await tester.pumpAndSettle();
 
           const String titleAscSortFilterName = 'Title asc';
@@ -9448,7 +9448,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               settingsJsonPathFileName:
                   "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-          await app.main(['test']);
+          await app.main();
           await tester.pumpAndSettle();
 
           const String titleAscSortFilterName = 'Title asc';
@@ -9554,7 +9554,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               settingsJsonPathFileName:
                   "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-          await app.main(['test']);
+          await app.main();
           await tester.pumpAndSettle();
 
           const String playlistTitle = "Conversation avec Dieu";
@@ -9744,7 +9744,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               settingsJsonPathFileName:
                   "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-          await app.main(['test']);
+          await app.main();
           await tester.pumpAndSettle();
 
           const String playlistTitle = "Conversation avec Dieu";
@@ -9885,7 +9885,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               settingsJsonPathFileName:
                   "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-          await app.main(['test']);
+          await app.main();
           await tester.pumpAndSettle();
 
           const String playlistTitle = "Conversation avec Dieu";
@@ -10034,7 +10034,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             settingsJsonPathFileName:
                 "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-        await app.main(['test']);
+        await app.main();
         await tester.pumpAndSettle();
 
         // Now open the audio popup menu
@@ -10183,7 +10183,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             settingsJsonPathFileName:
                 "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-        await app.main(['test']);
+        await app.main();
         await tester.pumpAndSettle();
 
         // Now open the audio popup menu
@@ -10320,7 +10320,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             settingsJsonPathFileName:
                 "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-        await app.main(['test']);
+        await app.main();
         await tester.pumpAndSettle();
 
         // Now open the audio popup menu
@@ -10474,7 +10474,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             settingsJsonPathFileName:
                 "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-        await app.main(['test']);
+        await app.main();
         await tester.pumpAndSettle();
 
         // Now open the audio popup menu
@@ -10624,7 +10624,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             settingsJsonPathFileName:
                 "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-        await app.main(['test']);
+        await app.main();
         await tester.pumpAndSettle();
 
         // Now open the audio popup menu
@@ -10758,7 +10758,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             settingsJsonPathFileName:
                 "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-        await app.main(['test']);
+        await app.main();
         await tester.pumpAndSettle();
 
         // Now open the audio popup menu
@@ -10894,7 +10894,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             settingsJsonPathFileName:
                 "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-        await app.main(['test']);
+        await app.main();
         await tester.pumpAndSettle();
 
         // Now open the audio popup menu

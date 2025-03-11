@@ -354,7 +354,7 @@ class IntegrationTestUtil {
         settingsJsonPathFileName:
             "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-    await app.main(['test']);
+    await app.main();
     await tester.pumpAndSettle();
 
     if (tapOnPlaylistToggleButton) {

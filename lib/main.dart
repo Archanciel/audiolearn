@@ -21,16 +21,12 @@ import 'utils/dir_util.dart';
 import 'views/my_home_page.dart';
 import 'views/screen_mixin.dart';
 
-Future<void> main(List<String> args) async {
+Future<void> main() async {
   WidgetsFlutterBinding
       .ensureInitialized(); // Ensure Flutter bindings are initialized.
 
-  List<String> myArgs = args.isNotEmpty ? args : [];
-
-  bool isTest = false;
-
-  isTest = myArgs.contains("test");
-
+  bool isTest = false; // Has no effect on Android app !
+  
   // bool deleteAppDir = kDeleteAppDirOnEmulator;
 
   // Parse command line arguments in integration tests
