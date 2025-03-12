@@ -8937,7 +8937,7 @@ void main() {
       // Obtains all the ListTile widgets present in the playlist
       // download view (2 playlist items + 4 audio items)
       Finder listTilesFinder = find.byType(ListTile);
-      expect(listTilesFinder, findsNWidgets(5));
+      expect(listTilesFinder, findsNWidgets(6));
 
       // Now manually delete all application data including the settings.json
       // file

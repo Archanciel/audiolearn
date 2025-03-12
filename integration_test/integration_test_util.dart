@@ -841,10 +841,10 @@ class IntegrationTestUtil {
 
     if (tapTwiceOnOkButton) {
       await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      await tester.pumpAndSettle(const Duration(milliseconds: 400));
 
       await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      await tester.pumpAndSettle(const Duration(milliseconds: 400));
     } else {
       await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
       await tester.pumpAndSettle();
@@ -1621,7 +1621,7 @@ class IntegrationTestUtil {
 
         // Définissez la largeur et la hauteur de votre fenêtre
         double windowWidth = (isTest) ? 900 : 730;
-        double windowHeight = (isTest) ? 1400 : 1300;
+        double windowHeight = (isTest) ? 1700 : 1300;
 
         // Calculez la position X pour placer la fenêtre sur le côté droit de l'écran
         final double posX = screenRect.right - windowWidth + 10;
