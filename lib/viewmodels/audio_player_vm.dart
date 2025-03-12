@@ -889,7 +889,7 @@ class AudioPlayerVM extends ChangeNotifier {
     //
     // This fixes the bug when clicking on >> after having clicked
     // on >| or clicking on << after having clicked on |<.
-
+    //
     // Total duration of audio
     Duration currentAudioDuration = _currentAudio!.audioDuration;
 
