@@ -1,0 +1,13 @@
+{
+    "downloadedAudioLst": [
+    ],
+    "downloadPath": "C:\\Development\\Flutter\\audiolearn\\test\\data\\audio\\audio_learn_download_single_video_empty",
+    "id": "audio_learn_download_single_video_empty",
+    "isSelected": false,
+    "playableAudioLst": [
+    ],
+    "playlistQuality": "voice",
+    "playlistType": "local",
+    "title": "audio_learn_download_single_video_empty",
+    "url": ""
+}
