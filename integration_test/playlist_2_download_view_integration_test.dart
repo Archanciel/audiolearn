@@ -1282,10 +1282,10 @@ void main() {
         // verify the newly selected playlist audio titles
 
         List<String> audioTitles = [
+          "Really short video",
           "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
           "La résilience insulaire par Fiona Roche",
           "Les besoins artificiels par R.Keucheyan",
-          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
         IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
@@ -1368,10 +1368,10 @@ void main() {
         ];
 
         List<String> audioTitles = [
+          "Really short video",
           "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
           "La résilience insulaire par Fiona Roche",
           "Les besoins artificiels par R.Keucheyan",
-          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
         IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
@@ -12668,10 +12668,10 @@ Future<List<String>> enteringFirstAndSecondLetterOfYoutubePlaylistSearchWord({
   ];
 
   List<String> audioTitles = [
+    "Really short video",
     "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
     "La résilience insulaire par Fiona Roche",
     "Les besoins artificiels par R.Keucheyan",
-    "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
   ];
 
   IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
