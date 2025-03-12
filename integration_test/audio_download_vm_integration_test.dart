@@ -23,7 +23,7 @@ import 'package:audiolearn/viewmodels/warning_message_vm.dart';
 
 import 'integration_test_util.dart';
 
-const int secondsDelay = 15; // 7 works, but 10 is safer and 15 solves
+const int secondsDelay = 5; // 7 works, but 10 is safer and 15 solves
 //                              the problems of running the integr tests
 const String existingAudioDateOnlyFileNamePrefix = '230610';
 final String todayDownloadDateOnlyFileNamePrefix =

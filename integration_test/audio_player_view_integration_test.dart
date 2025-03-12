@@ -155,7 +155,7 @@ void main() {
       // method called below.
 
       // Since the playlist json file is updated every 30 seconds,
-      // after playing diring 5 seconds, it will not be updated.
+      // after playing during 5 seconds, it will not be updated.
       IntegrationTestUtil.verifyAudioDataElementsUpdatedInPlaylistJsonFile(
         audioPlayerSelectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         playableAudioLstAudioIndex: 0,
@@ -636,8 +636,8 @@ void main() {
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '8:53',
-        maxPositionTimeStr: '8:57',
+        minPositionTimeStr: '8:52',
+        maxPositionTimeStr: '8:56',
       );
 
       // Purge the test playlist directory so that the created test

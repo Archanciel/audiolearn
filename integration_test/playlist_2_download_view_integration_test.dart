@@ -2809,13 +2809,13 @@ void main() {
         doExpandPlaylistList: false,
         playlistToRewindTitle: youtubePlaylistToRewindTitle,
         audioToPlayTitle:
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-        audioToPlayTitleAndDuration:
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n6:29",
-        otherAudioTitleToTapOnBeforeRewinding:
             "Les besoins artificiels par R.Keucheyan",
-        otherAudioTitleToTapOnBeforeRewindingDuration:
+        audioToPlayTitleAndDuration:
             "Les besoins artificiels par R.Keucheyan\n19:05",
+        otherAudioTitleToTapOnBeforeRewinding:
+        "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+        otherAudioTitleToTapOnBeforeRewindingDuration:
+        "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)\n20:32",
       );
 
       // Now play then pause "Ce qui va vraiment sauver notre espèce
@@ -2884,7 +2884,7 @@ void main() {
       await _rewindPlaylistAfterPlayThenPauseAnAudio(
         tester: tester,
         appScreenNavigationButton: appScreenNavigationButton,
-        doExpandPlaylistList: false,
+        doExpandPlaylistList: true,
         playlistToRewindTitle: youtubePlaylistToRewindTitle,
         audioToPlayTitle:
             "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
@@ -12418,10 +12418,6 @@ Future<void> _rewindPlaylistAfterPlayThenPauseAnAudio({
     await tester.tap(appScreenNavigationButton);
     await tester.pumpAndSettle(const Duration(milliseconds: 200));
   }
-
-  // Tap the 'Toggle List' button to display the list of playlist's.
-  await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-  await tester.pumpAndSettle();
 
   // Rewind all playlist audio to start position
   await _tapOnRewindPlaylistAudioToStartPositionMenu(
