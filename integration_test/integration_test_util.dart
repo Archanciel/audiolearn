@@ -987,6 +987,10 @@ class IntegrationTestUtil {
         expectedAudioPlaySpeed);
   }
 
+  // Method used to verify the listed playlist titles or the listed audio
+  // titles in the audio player view. Is the audio list is verifyed, the
+  // firstAudioListTileIndex is equal to the number of playlist titles
+  // in the list of playlist in case this list is expanded.
   static void checkAudioOrPlaylistTitlesOrderInListTile({
     required WidgetTester tester,
     required List<String> audioOrPlaylistTitlesOrderedLst,

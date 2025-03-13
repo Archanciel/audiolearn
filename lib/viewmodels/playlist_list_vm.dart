@@ -526,7 +526,7 @@ class PlaylistListVM extends ChangeNotifier {
         // and so must be added to the playlist list the settings playlist
         // order must be updated and saved.
         //
-        // Else, the playlist was already in the list of selectable playlists
+        // Else, the playlist is already in the list of selectable playlists
         // but its url was updated. This the case when a new playlist with the
         // same title is created on Youtube in order to replace the old one
         // which contains too many videos.
@@ -550,7 +550,7 @@ class PlaylistListVM extends ChangeNotifier {
 
       notifyListeners();
 
-      return true;
+      return true; // the playlist URL TextField will be cleared
     } else {
       // If addedPlaylist is null, it means that the passed
       // url is not a valid playlist url. It is useful to not
