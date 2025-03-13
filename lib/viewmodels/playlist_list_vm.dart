@@ -518,21 +518,34 @@ class PlaylistListVM extends ChangeNotifier {
     );
 
     if (addedPlaylist != null) {
-      _listOfSelectablePlaylists.add(addedPlaylist);
-      _updateAndSavePlaylistOrder();
+      int playlistIndex = _listOfSelectablePlaylists
+          .indexWhere((playlist) => playlist.title == addedPlaylist.title);
 
-      // This method ensures that the list of playlists is
-      // displayed
-      if (!_isPlaylistListExpanded) {
-        togglePlaylistsList();
+      if (playlistIndex == -1) {
+        // In this situation, the playlist was added to the application
+        // and so must be added to the playlist list the settings playlist
+        // order must be updated and saved.
+        //
+        // Else, the playlist was already in the list of selectable playlists
+        // but its url was updated. This the case when a new playlist with the
+        // same title is created on Youtube in order to replace the old one
+        // which contains too many videos.
+        _listOfSelectablePlaylists.add(addedPlaylist);
+        _updateAndSavePlaylistOrder();
 
-        _settingsDataService.set(
-            settingType: SettingType.playlists,
-            settingSubType:
-                Playlists.arePlaylistsDisplayedInPlaylistDownloadView,
-            value: true);
+        // This method ensures that the list of playlists is
+        // displayed
+        if (!_isPlaylistListExpanded) {
+          togglePlaylistsList();
 
-        _settingsDataService.saveSettings();
+          _settingsDataService.set(
+              settingType: SettingType.playlists,
+              settingSubType:
+                  Playlists.arePlaylistsDisplayedInPlaylistDownloadView,
+              value: true);
+
+          _settingsDataService.saveSettings();
+        }
       }
 
       notifyListeners();

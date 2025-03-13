@@ -540,19 +540,18 @@ class AudioDownloadVM extends ChangeNotifier {
         // playlist with the same title is created in order
         // to replace the old one which contains too many
         // videos.
-        _updateYoutubePlaylisrUrl(
+        Playlist updatedPlaylist = _updateYoutubePlaylisrUrl(
           playlistIndex: playlistIndex,
           playlistId: playlistId,
           playlistUrl: playlistUrl,
           playlistTitle: playlistTitle,
         );
 
-        // since the playlist was not added, but updated, null
-        // is returned to avoid that the playlist is added to
-        // the orderedTitleLst in the SettingsDataService json
-        // file, which will cause a bug when filtering audio
-        // of a playlist
-        return null;
+        // since the updated playlist is returned. Since its title
+        // is not new, it will not be added to the orderedTitleLst 
+        // in the SettingsDataService json file, which would cause
+        // a bug when filtering audio's of a playlist
+        return updatedPlaylist;
       }
 
       // Adding the Youtube playlist to the application
@@ -592,7 +591,9 @@ class AudioDownloadVM extends ChangeNotifier {
   /// where the new Youtube playlist has the same title than the deleted
   /// or renamed Youtube playlist. In this case, the existing application
   /// playlist is updated with the new Youtube playlist url and id.
-  void _updateYoutubePlaylisrUrl({
+  /// 
+  /// The updated playlist is returned by the method.
+  Playlist _updateYoutubePlaylisrUrl({
     required int playlistIndex,
     required String playlistId,
     required String playlistUrl,
@@ -607,6 +608,8 @@ class AudioDownloadVM extends ChangeNotifier {
       model: updatedPlaylist,
       path: updatedPlaylist.getPlaylistDownloadFilePathName(),
     );
+
+    return updatedPlaylist;
   }
 
   /// Downloads the audio of the videos referenced in the passed playlist url. If
