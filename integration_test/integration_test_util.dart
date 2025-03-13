@@ -129,22 +129,20 @@ class IntegrationTestUtil {
   /// time strings.
   static void verifyPositionWithAcceptableDifferenceSeconds({
     required WidgetTester tester,
-    required final Finder textWidgetFinder,
+    required String actualPositionTimeStr,
     required String basePositionTimeStr,
     required int plusMinusSeconds,
   }) {
-    String actualPositionTimeString =
-        tester.widget<Text>(textWidgetFinder).data!;
     int actualPositionTenthOfSeconds = DateTimeUtil.convertToTenthsOfSeconds(
-      timeString: actualPositionTimeString,
+      timeString: actualPositionTimeStr,
     );
 
     int convertedBasePositionToTenthsOfSeconds =
         DateTimeUtil.convertToTenthsOfSeconds(timeString: basePositionTimeStr);
     int expectedMinPositionTenthSeconds =
-        convertedBasePositionToTenthsOfSeconds - plusMinusSeconds;
+        convertedBasePositionToTenthsOfSeconds - plusMinusSeconds * 10;
     int expectedMaxPositionTenthSeconds =
-        convertedBasePositionToTenthsOfSeconds + plusMinusSeconds;
+        convertedBasePositionToTenthsOfSeconds + plusMinusSeconds * 10;
 
     IntegrationTestUtil.expectWithSuccessMessage(
       actual: actualPositionTenthOfSeconds,

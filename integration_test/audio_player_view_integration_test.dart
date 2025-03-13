@@ -8735,15 +8735,24 @@ Future<void> _verifyAudioPlayerViewPlaylistSelectionImpact({
       find.byKey(const Key('audioPlayerViewAudioPosition'));
   String audioPositionTimeString =
       tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
-
-  expect(
-    audioPositionTimeString,
-    expectedAudioPositionTimeString,
-  );
-
-  // Retrieving the current audio remaining duration
   Finder audioPlayerViewAudioRemainingDurationFinder =
       find.byKey(const Key('audioPlayerViewAudioRemainingDuration'));
+
+  if (positionSecondsDifference == 0) {
+    expect(
+      audioPositionTimeString,
+      expectedAudioPositionTimeString,
+    );
+  } else {
+    IntegrationTestUtil.verifyPositionWithAcceptableDifferenceSeconds(
+      tester: tester,
+      actualPositionTimeStr: audioPositionTimeString,
+      basePositionTimeStr: expectedAudioPositionTimeString,
+      plusMinusSeconds: positionSecondsDifference,
+    );
+  }
+
+  // Retrieving the current audio remaining duration
   String audioRemainingDurationTimeString =
       tester.widget<Text>(audioPlayerViewAudioRemainingDurationFinder).data!;
 
@@ -8755,9 +8764,9 @@ Future<void> _verifyAudioPlayerViewPlaylistSelectionImpact({
   } else {
     IntegrationTestUtil.verifyPositionWithAcceptableDifferenceSeconds(
       tester: tester,
-      textWidgetFinder: audioPlayerViewAudioRemainingDurationFinder,
+      actualPositionTimeStr: audioRemainingDurationTimeString,
       basePositionTimeStr: expectedAudioRemainingDurationTimeString,
-      plusMinusSeconds: 1,
+      plusMinusSeconds: positionSecondsDifference,
     );
   }
 

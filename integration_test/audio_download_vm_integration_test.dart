@@ -1270,8 +1270,6 @@ Future<void> main() async {
         forcedLocale: const Locale('en'),
       );
 
-      const String youtubePlaylistTitle =
-          'audio_learn_test_download_2_small_videos';
       const String recreatedPlaylistUrl =
           'https://youtube.com/playlist?list=PLzwWSJNcZTMSwrDOAZEPf0u6YvrKGNnvC';
 
@@ -1422,8 +1420,6 @@ Future<void> main() async {
         forcedLocale: const Locale('en'),
       );
 
-      const String youtubePlaylistTitle =
-          'audio_learn_test_download_2_small_videos';
       const String recreatedPlaylistUrl =
           'https://youtube.com/playlist?list=PLzwWSJNcZTMSwrDOAZEPf0u6YvrKGNnvC';
 
