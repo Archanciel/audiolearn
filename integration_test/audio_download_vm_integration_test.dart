@@ -379,6 +379,195 @@ Future<void> main() async {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}settings.json");
 
+      final WarningMessageVM warningMessageVM = WarningMessageVM();
+
+      audioDownloadVM = AudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+      );
+
+      PlaylistListVM playlistListVM = PlaylistListVM(
+        warningMessageVM: warningMessageVM,
+        audioDownloadVM: audioDownloadVM,
+        commentVM: CommentVM(),
+        settingsDataService: settingsDataService,
+      );
+
+      // calling getUpToDateSelectablePlaylists() loads all the
+      // playlist json files from the app dir and so enables
+      // playlistListVM to know which playlists are
+      // selected and which are not
+      playlistListVM.getUpToDateSelectablePlaylists();
+
+      AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+        settingsDataService: settingsDataService,
+        playlistListVM: playlistListVM,
+        commentVM: CommentVM(),
+      );
+
+      DateFormatVM dateFormatVM = DateFormatVM(
+        settingsDataService: settingsDataService,
+      );
+
+      await IntegrationTestUtil.launchIntegrTestApplication(
+        tester: tester,
+        audioDownloadVM: audioDownloadVM,
+        settingsDataService: settingsDataService,
+        playlistListVM: playlistListVM,
+        warningMessageVM: warningMessageVM,
+        audioPlayerVM: audioPlayerVM,
+        dateFormatVM: dateFormatVM,
+        forcedLocale: const Locale('en'),
+      );
+
+      String singleVideoUrl = 'https://youtu.be/uv3VQoWSjBE';
+
+      // Entering the single video URL in the Youtube URL or search text field
+      // of the app
+      await tester.enterText(
+        find.byKey(
+          const Key('youtubeUrlOrSearchTextField'),
+        ),
+        singleVideoUrl,
+      );
+      await tester.pumpAndSettle();
+
+      // Ensure the url text field contains the entered url
+      TextField urlTextField = tester.widget(find.byKey(
+        const Key('youtubeUrlOrSearchTextField'),
+      ));
+      expect(urlTextField.controller!.text, singleVideoUrl);
+
+      // Open the target playlist selection dialog by tapping the
+      // download single video button
+      await tester.tap(find.byKey(const Key('downloadSingleVideoButton')));
+      await tester.pumpAndSettle();
+
+      // Ensure the dialog is shown
+      expect(find.byType(AlertDialog), findsOneWidget);
+
+      // Check the value of the select one playlist AlertDialog
+      // dialog title
+      Text alertDialogTitle = tester
+          .widget(find.byKey(const Key('playlistOneSelectableDialogTitleKey')));
+      expect(alertDialogTitle.data, 'Select a playlist');
+
+      // Find the RadioListTile target playlist to which the audio
+      // will be downloaded
+
+      final Finder radioListTile = find.byWidgetPredicate(
+        (Widget widget) =>
+            widget is RadioListTile &&
+            widget.title is Text &&
+            (widget.title as Text).data == emptyLocalTestPlaylistTitle,
+      );
+
+      // Tap the target playlist RadioListTile to select it
+      await tester.tap(radioListTile);
+      await tester.pumpAndSettle();
+
+      // Now find the confirm button and tap on it
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pumpAndSettle();
+
+      // Now find the ok button of the confirm warning dialog
+      // and tap on it
+      await tester.tap(find.byKey(const Key('okButtonKey')));
+      await tester.pumpAndSettle();
+
+      // Add a delay to allow the download to finish. 5 seconds is ok
+      // when running the audio_download_vm_test only.
+      // Waiting 5 seconds only causes MissingPluginException
+      // 'No implementation found for method $method on channel $name'
+      // when all tsts are run. 7 seconds solve the problem.
+      await Future.delayed(const Duration(seconds: secondsDelay));
+      await tester.pumpAndSettle();
+
+      Playlist singleVideoDownloadedPlaylist =
+          audioDownloadVM.listOfPlaylist[0];
+
+      checkDownloadedPlaylist(
+        downloadedPlaylist: singleVideoDownloadedPlaylist,
+        playlistId: emptyLocalTestPlaylistTitle,
+        playlistTitle: emptyLocalTestPlaylistTitle,
+        playlistUrl: '',
+        playlistDir: localTestPlaylistDir,
+      );
+
+      // this check fails if the secondsDelay value is too small
+      expect(audioDownloadVM.isDownloading, false);
+
+      expect(audioDownloadVM.downloadProgress, 1.0);
+      expect(audioDownloadVM.lastSecondDownloadSpeed, 0);
+      expect(audioDownloadVM.isHighQuality, false);
+
+      // Checking the data of the audio contained in the downloaded
+      // audio list
+      checkDownloadedAudioShortVideoTwo(
+        downloadedAudioTwo: singleVideoDownloadedPlaylist.downloadedAudioLst[0],
+        audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
+      );
+
+      // Checking if there are 2 files in the directory (1 mp3 and 1 json)
+      final List<FileSystemEntity> files =
+          directory.listSync(recursive: false, followLinks: false);
+
+      expect(files.length, 2);
+
+      // Checking if the playlist json file has been updated with the
+      // downloaded audio data
+
+      String playlistPathFileName =
+          '$localTestPlaylistDir${path.separator}$emptyLocalTestPlaylistTitle.json';
+
+      Playlist loadedPlaylist = JsonDataService.loadFromFile(
+          jsonPathFileName: playlistPathFileName, type: Playlist);
+
+      compareDeserializedWithOriginalPlaylist(
+        deserializedPlaylist: loadedPlaylist,
+        originalPlaylist: singleVideoDownloadedPlaylist,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Download single audio in local playlist containing no audio. Using integr test
+           application.''', (WidgetTester tester) async {
+      late AudioDownloadVM audioDownloadVM;
+      String emptyLocalTestPlaylistTitle =
+          'audio_learn_download_single_video_empty';
+      String localTestPlaylistDir =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$emptyLocalTestPlaylistTitle";
+      String savedTestPlaylistDir =
+          "$kDownloadAppTestSavedDataDir${path.separator}audio_learn_download_single_video_to_new_empty_local_playlist_test";
+
+      final Directory directory = Directory(localTestPlaylistDir);
+
+      // necessary in case the previous test failed and so did not
+      // delete the its playlist dir
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copying the initial local playlist json file with no audio
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath: savedTestPlaylistDir,
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+      );
+
+      // load settings from file which does not exist. This
+      // will ensure that the default playlist root path is set
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}settings.json");
 
       final WarningMessageVM warningMessageVM = WarningMessageVM();
 
@@ -475,7 +664,7 @@ Future<void> main() async {
       // and tap on it
       await tester.tap(find.byKey(const Key('okButtonKey')));
       await tester.pumpAndSettle();
-      
+
       // Add a delay to allow the download to finish. 5 seconds is ok
       // when running the audio_download_vm_test only.
       // Waiting 5 seconds only causes MissingPluginException
@@ -1008,6 +1197,144 @@ Future<void> main() async {
     });
   });
   group('Download recreated playlist with short audio', () {
+    testWidgets(
+        '''Adding recreated playlist with 2 new short audio: the initial playlist
+           has 1st and 2nd audio's already downloaded. This test is used to test
+           recreating the playlist with the same name. Recreating a playlist with
+           an identical name avoids to loose time removing from the original
+           playlist the referenced videos. The recreated playlist audio's are
+           downloaded in the same dir than the original playlist. The original
+           playlist json file is updated with the recreated playlist id and url
+           as well as with the newly downloaded audio.''',
+        (WidgetTester tester) async {
+      // Necessary in case the previous test failed and so did not
+      // delete the its playlist dir
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}audio_learn_download_test_recreate",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+      );
+
+      // load settings from file which does not exist. This
+      // will ensure that the default playlist root path is set
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}settings.json");
+
+      final WarningMessageVM warningMessageVM = WarningMessageVM();
+
+      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+      );
+
+      PlaylistListVM playlistListVM = PlaylistListVM(
+        warningMessageVM: warningMessageVM,
+        audioDownloadVM: audioDownloadVM,
+        commentVM: CommentVM(),
+        settingsDataService: settingsDataService,
+      );
+
+      // Calling getUpToDateSelectablePlaylists() loads all the
+      // playlist json files from the app dir and so enables
+      // playlistListVM to know which playlists are
+      // selected and which are not
+      playlistListVM.getUpToDateSelectablePlaylists();
+
+      AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+        settingsDataService: settingsDataService,
+        playlistListVM: playlistListVM,
+        commentVM: CommentVM(),
+      );
+
+      DateFormatVM dateFormatVM = DateFormatVM(
+        settingsDataService: settingsDataService,
+      );
+
+      await IntegrationTestUtil.launchIntegrTestApplication(
+        tester: tester,
+        audioDownloadVM: audioDownloadVM,
+        settingsDataService: settingsDataService,
+        playlistListVM: playlistListVM,
+        warningMessageVM: warningMessageVM,
+        audioPlayerVM: audioPlayerVM,
+        dateFormatVM: dateFormatVM,
+        forcedLocale: const Locale('en'),
+      );
+
+      const String youtubePlaylistTitle =
+          'audio_learn_test_download_2_small_videos';
+      const String recreatedPlaylistUrl =
+          'https://youtube.com/playlist?list=PLzwWSJNcZTMSwrDOAZEPf0u6YvrKGNnvC';
+
+      // Entering the single video URL in the Youtube URL or search text field
+      // of the app
+      await tester.enterText(
+        find.byKey(
+          const Key('youtubeUrlOrSearchTextField'),
+        ),
+        recreatedPlaylistUrl,
+      );
+      await tester.pumpAndSettle();
+
+      // Open the add playlist dialog by tapping the add playlist
+      // button
+      await tester.tap(find.byKey(const Key('addPlaylistButton')));
+      await tester.pumpAndSettle();
+
+      // Ensure the dialog is shown
+      expect(find.byType(AlertDialog), findsOneWidget);
+
+      // Confirm the addition by tapping the 'Add' button in
+      // the AlertDialog and then on the 'OK' button of the
+      // confirm dialog
+      await tester
+          .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
+      await tester.pumpAndSettle();
+
+      // Add a delay to allow the download to finish. 5 seconds is ok
+      // when running the audio_download_vm_test only.
+      // Waiting 5 seconds only causes MissingPluginException
+      // 'No implementation found for method $method on channel $name'
+      // when all tsts are run. 7 seconds solve the problem.
+      await Future.delayed(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+      await tester.pumpAndSettle();
+
+      // await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      //   tester: tester,
+      //   warningDialogMessage:
+      //       'Playlist "$youtubePlaylistTitle" URL was updated. The playlist can be downloaded with its new URL.',
+      //   isWarningConfirming: false,
+      // );
+
+      // Ensure the URL TextField was emptied
+
+      expect(
+        tester
+            .widget<TextField>(find.byKey(
+              const Key('youtubeUrlOrSearchTextField'),
+            ))
+            .controller!
+            .text,
+        '',
+      );
+
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
     testWidgets(
         '''Recreated playlist with 2 new short audio: initial playlist 1st and
            2nd audio already downloaded and deleted. This test is used to test
