@@ -732,8 +732,6 @@ Future<void> main() async {
       String localTargetPlaylistTitle = 'audio_learn_download_single_video';
       String localTestPlaylistDir =
           "$kPlaylistDownloadRootPathWindowsTest${path.separator}$localTargetPlaylistTitle";
-      String savedTestPlaylistDir =
-          "$kDownloadAppTestSavedDataDir${path.separator}audio_learn_download_single_video_to_empty_local_playlist_test";
 
       final Directory directory = Directory(localTestPlaylistDir);
 
@@ -745,7 +743,8 @@ Future<void> main() async {
 
       // Copying the initial local playlist json file with no audio
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-        sourceRootPath: savedTestPlaylistDir,
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}audio_learn_download_single_video_to_empty_local_playlist_test",
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 

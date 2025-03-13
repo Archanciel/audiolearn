@@ -48,7 +48,7 @@
         "SettingType.language": "Language.english"
     },
     "SettingType.playlists": {
-        "Playlists.arePlaylistsDisplayedInPlaylistDownloadView": "false",
+        "Playlists.arePlaylistsDisplayedInPlaylistDownloadView": "true",
         "Playlists.isMusicQualityByDefault": "false",
         "Playlists.orderedTitleLst": "[audio_learn_download_single_video]",
         "Playlists.playSpeed": "1.0"
