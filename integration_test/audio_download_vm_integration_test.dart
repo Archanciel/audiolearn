@@ -1196,16 +1196,16 @@ Future<void> main() async {
       );
     });
   });
-  group('Download recreated playlist with short audio', () {
-    testWidgets(
-        '''Adding recreated playlist with 2 new short audio: the initial playlist
-           has 1st and 2nd audio's already downloaded. This test is used to test
-           recreating the playlist with the same name. Recreating a playlist with
-           an identical name avoids to loose time removing from the original
+  group('''Download recreated playlist with short audio. Those tests are used to
+           test recreating the playlist with the same name. Recreating a playlist
+           with an identical name avoids to loose time removing from the original
            playlist the referenced videos. The recreated playlist audio's are
            downloaded in the same dir than the original playlist. The original
            playlist json file is updated with the recreated playlist id and url
-           as well as with the newly downloaded audio.''',
+           as well as with the newly downloaded audio.''', () {
+    testWidgets(
+        '''Adding recreated playlist with 2 new short audio: the initial playlist
+           has 1st and 2nd audio's already downloaded.''',
         (WidgetTester tester) async {
       // Necessary in case the previous test failed and so did not
       // delete the its playlist dir
@@ -1300,25 +1300,13 @@ Future<void> main() async {
           .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
       await tester.pumpAndSettle();
 
-      // Add a delay to allow the download to finish. 5 seconds is ok
-      // when running the audio_download_vm_test only.
-      // Waiting 5 seconds only causes MissingPluginException
-      // 'No implementation found for method $method on channel $name'
-      // when all tsts are run. 7 seconds solve the problem.
+      // Add a delay to allow the update playlist URL to finish. 1
+      // second is ok
       await Future.delayed(const Duration(seconds: 1));
       await tester.pumpAndSettle();
 
       await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
       await tester.pumpAndSettle();
-
-      // await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
-      //   tester: tester,
-      //   warningDialogMessage:
-      //       'Playlist "$youtubePlaylistTitle" URL was updated. The playlist can be downloaded with its new URL.',
-      //   isWarningConfirming: false,
-      // );
-
-      // Ensure the URL TextField was emptied
 
       expect(
         tester
@@ -1327,7 +1315,38 @@ Future<void> main() async {
             ))
             .controller!
             .text,
-        '',
+        '', // 'Youtube Link or Search' displayed in the TextField
+        //     is a hint text and not the actual text !
+      );
+
+      // Now typing on the download playlist button to download the
+      // new video audio's present the recreated playlist.
+      await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
+      await tester.pumpAndSettle();
+
+      // Add a delay to allow the download to finish. 5 seconds is ok
+      // when running the audio_download_vm_test only.
+      // Waiting 5 seconds only causes MissingPluginException
+      // 'No implementation found for method $method on channel $name'
+      // when all tsts are run. 7 seconds solve the problem.
+      for (int i = 0; i < 5; i++) {
+        await Future.delayed(const Duration(seconds: 2));
+        await tester.pumpAndSettle();
+      }
+
+      List<String>
+          audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
+        "morning _ cinematic video",
+        "Really short video",
+        "audio learn test short video two",
+        "audio learn test short video one",
+      ];
+
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst:
+            audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+        firstAudioListTileIndex: 1,
       );
 
       // files are not uploaded to GitHub
@@ -1336,35 +1355,20 @@ Future<void> main() async {
       );
     });
     testWidgets(
-        '''Recreated playlist with 2 new short audio: initial playlist 1st and
-           2nd audio already downloaded and deleted. This test is used to test
-           recreating the playlist with the same name. Recreating a playlist
-           with an identical name avoids to loose time removing from the original
-           playlist the referenced videos. The recreated playlist audio are
-           downloaded in the same dir than the original playlist, The original
-           playlist json file is updated with the recreated playlist id and url
-           as well as with the newly downloaded audio.''',
-        (WidgetTester tester) async {
-      late AudioDownloadVM audioDownloadVM;
-      final Directory directory = Directory(globalTestPlaylistDir);
-
-      // necessary in case the previous test failed and so did not
+        '''Adding recreated playlist with 2 new short audio. In the initial playlist,
+           the 1st audio was deleted from playlist as well, the 2nd audio was simply
+           deleted. None of the deleted audio's will be redownloadable since they are
+           not in the recreated playlist.''', (WidgetTester tester) async {
+      // Necessary in case the previous test failed and so did not
       // delete the its playlist dir
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      await DirUtil.createDirIfNotExist(pathStr: globalTestPlaylistDir);
-
-      // Copying the initial playlist json file with the 1st and 2nd
-      // audio whose mp3 were deleted from the playlist dir. A
-      // replacing new Youtube playlist with the same title was created
-      // with 2 new audio referenced in it. The new playlist id and url
-      // are of course different from the initial playlist id and url.
-      await DirUtil.copyFileToDirectory(
-        sourceFilePathName:
-            "$kDownloadAppTestSavedDataDir${path.separator}$globalTestPlaylistTitle${path.separator}$globalTestPlaylistTitle.json",
-        targetDirectoryPath: globalTestPlaylistDir,
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}audio_learn_download_test_recreate_audio_deleted",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
@@ -1374,88 +1378,102 @@ Future<void> main() async {
       // load settings from file which does not exist. This
       // will ensure that the default playlist root path is set
       await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName: "temp\\wrong.json");
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}settings.json");
 
       final WarningMessageVM warningMessageVM = WarningMessageVM();
-      final AudioDownloadVM audioDownloadVMbeforeDownload = AudioDownloadVM(
+
+      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
       );
-      Playlist existingPlaylistBeforeDownloadingRecreatedPlaylistWithSameTitle =
-          audioDownloadVMbeforeDownload.listOfPlaylist[0];
 
-      checkDownloadedPlaylist(
-        downloadedPlaylist:
-            existingPlaylistBeforeDownloadingRecreatedPlaylistWithSameTitle,
-        playlistId: globalTestPlaylistId,
-        playlistTitle: globalTestPlaylistTitle,
-        playlistUrl: globalTestPlaylistUrl,
-        playlistDir: globalTestPlaylistDir,
+      PlaylistListVM playlistListVM = PlaylistListVM(
+        warningMessageVM: warningMessageVM,
+        audioDownloadVM: audioDownloadVM,
+        commentVM: CommentVM(),
+        settingsDataService: settingsDataService,
       );
 
-      List<Audio> downloadedAudioLstBeforeDownload =
-          existingPlaylistBeforeDownloadingRecreatedPlaylistWithSameTitle
-              .downloadedAudioLst;
-      List<Audio> playableAudioLstBeforeDownload =
-          existingPlaylistBeforeDownloadingRecreatedPlaylistWithSameTitle
-              .playableAudioLst;
+      // Calling getUpToDateSelectablePlaylists() loads all the
+      // playlist json files from the app dir and so enables
+      // playlistListVM to know which playlists are
+      // selected and which are not
+      playlistListVM.getUpToDateSelectablePlaylists();
 
-      // Checking the data of the audio contained in the already
-      // downloaded audio list
-      //
-      // downloadedAudioLst contains Audio's added at list end
-      checkPlaylistDownloadedAudios(
-        downloadedAudioOne: downloadedAudioLstBeforeDownload[0],
-        downloadedAudioTwo: downloadedAudioLstBeforeDownload[1],
-        audioOneFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
-        audioTwoFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
+      AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+        settingsDataService: settingsDataService,
+        playlistListVM: playlistListVM,
+        commentVM: CommentVM(),
       );
 
-      // Checking the data of the  already downloaded audio contained
-      // in the playable audio list;
-      //
-      // playableAudioLst contains Audio's inserted at list start
-      checkPlaylistDownloadedAudios(
-        downloadedAudioOne: playableAudioLstBeforeDownload[1],
-        downloadedAudioTwo: playableAudioLstBeforeDownload[0],
-        audioOneFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
-        audioTwoFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
+      DateFormatVM dateFormatVM = DateFormatVM(
+        settingsDataService: settingsDataService,
       );
 
-      // Building and displaying the DownloadPlaylistPage integration test
-      // application.
-      await tester.pumpWidget(ChangeNotifierProvider(
-        create: (BuildContext context) {
-          final WarningMessageVM warningMessageVM = WarningMessageVM();
-          audioDownloadVM = AudioDownloadVM(
-            warningMessageVM: warningMessageVM,
-            settingsDataService: settingsDataService,
-          );
-          return audioDownloadVM;
-        },
-        child: MaterialApp(
-          // forcing dark theme
-          theme: ScreenMixin.themeDataDark,
-          home: const DownloadPlaylistPage(
-            // integration test opened application
-            playlistUrl: globalTestPlaylistUrl,
-          ),
-        ),
-      ));
+      await IntegrationTestUtil.launchIntegrTestApplication(
+        tester: tester,
+        audioDownloadVM: audioDownloadVM,
+        settingsDataService: settingsDataService,
+        playlistListVM: playlistListVM,
+        warningMessageVM: warningMessageVM,
+        audioPlayerVM: audioPlayerVM,
+        dateFormatVM: dateFormatVM,
+        forcedLocale: const Locale('en'),
+      );
 
-      const String recreatedPlaylistId = 'PLzwWSJNcZTMSwrDOAZEPf0u6YvrKGNnvC';
-      const String recreatedPlaylistWithSameTitleUrl =
+      const String youtubePlaylistTitle =
+          'audio_learn_test_download_2_small_videos';
+      const String recreatedPlaylistUrl =
           'https://youtube.com/playlist?list=PLzwWSJNcZTMSwrDOAZEPf0u6YvrKGNnvC';
 
+      // Entering the single video URL in the Youtube URL or search text field
+      // of the app
       await tester.enterText(
-        find.byKey(const Key('playlistUrlTextField')),
-        recreatedPlaylistWithSameTitleUrl,
+        find.byKey(
+          const Key('youtubeUrlOrSearchTextField'),
+        ),
+        recreatedPlaylistUrl,
       );
       await tester.pumpAndSettle();
 
-      // tapping on the downl playlist button in the app which calls the
-      // AudioDownloadVM.downloadPlaylistAudios(playlistUrl) method
-      await tester.tap(find.byKey(const Key('downloadPlaylistAudiosButton')));
+      // Open the add playlist dialog by tapping the add playlist
+      // button
+      await tester.tap(find.byKey(const Key('addPlaylistButton')));
+      await tester.pumpAndSettle();
+
+      // Ensure the dialog is shown
+      expect(find.byType(AlertDialog), findsOneWidget);
+
+      // Confirm the addition by tapping the 'Add' button in
+      // the AlertDialog and then on the 'OK' button of the
+      // confirm dialog
+      await tester
+          .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
+      await tester.pumpAndSettle();
+
+      // Add a delay to allow the update playlist URL to finish. 1
+      // second is ok
+      await Future.delayed(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+      await tester.pumpAndSettle();
+
+      expect(
+        tester
+            .widget<TextField>(find.byKey(
+              const Key('youtubeUrlOrSearchTextField'),
+            ))
+            .controller!
+            .text,
+        '', // 'Youtube Link or Search' displayed in the TextField
+        //     is a hint text and not the actual text !
+      );
+
+      // Now typing on the download playlist button to download the
+      // new video audio's present the recreated playlist.
+      await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
       await tester.pumpAndSettle();
 
       // Add a delay to allow the download to finish. 5 seconds is ok
@@ -1463,95 +1481,24 @@ Future<void> main() async {
       // Waiting 5 seconds only causes MissingPluginException
       // 'No implementation found for method $method on channel $name'
       // when all tsts are run. 7 seconds solve the problem.
-      await Future.delayed(const Duration(seconds: secondsDelay));
-      await tester.pumpAndSettle();
+      for (int i = 0; i < 5; i++) {
+        await Future.delayed(const Duration(seconds: 2));
+        await tester.pumpAndSettle();
+      }
 
-      Playlist addedPlaylistAfterDownloadingRecreatedPlaylistWithSameTitle =
-          audioDownloadVM.listOfPlaylist[0];
+      List<String>
+          audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
+        "morning _ cinematic video",
+        "Really short video",
+      ];
 
-      // The initial playlist json file was updated with the recreated
-      // playlist id and url as well as with the newly downloaded audio
-      compareNewRecreatedPlaylistToPreviouslyExistingPlaylist(
-        newRecreatedPlaylistWithSameTitle:
-            addedPlaylistAfterDownloadingRecreatedPlaylistWithSameTitle,
-        previouslyExistingPlaylist:
-            existingPlaylistBeforeDownloadingRecreatedPlaylistWithSameTitle,
-        newRecreatedPlaylistWithSameTitleId: recreatedPlaylistId,
-        newRecreatedPlaylistWithSameTitleUrl: recreatedPlaylistWithSameTitleUrl,
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst:
+            audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+        firstAudioListTileIndex: 1,
       );
 
-      // this check fails if the secondsDelay value is too small
-      expect(audioDownloadVM.isDownloading, false);
-
-      expect(audioDownloadVM.downloadProgress, 1.0);
-      expect(audioDownloadVM.lastSecondDownloadSpeed, 0);
-      expect(audioDownloadVM.isHighQuality, false);
-
-      // downloadedAudioLst contains added Audio's. Checking the
-      // values of the 1st and 2nd audio still in the playlist json
-      // file and deleted from the playlist dir ...
-      checkPlaylistDownloadedAudios(
-        downloadedAudioOne:
-            addedPlaylistAfterDownloadingRecreatedPlaylistWithSameTitle
-                .downloadedAudioLst[0],
-        downloadedAudioTwo:
-            addedPlaylistAfterDownloadingRecreatedPlaylistWithSameTitle
-                .downloadedAudioLst[1],
-        audioOneFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
-        audioTwoFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
-      );
-
-      // ... and the values of the 3rd and 4th audio newly downloaded
-      // and added to the playlist downloaded audio lst ...
-
-      checkPlaylistNewDownloadedAudios(
-        downloadedAudioOne:
-            addedPlaylistAfterDownloadingRecreatedPlaylistWithSameTitle
-                .downloadedAudioLst[2],
-        downloadedAudioTwo:
-            addedPlaylistAfterDownloadingRecreatedPlaylistWithSameTitle
-                .downloadedAudioLst[3],
-      );
-
-      // playableAudioLst contains Audio's inserted at list start.
-      // Checking the values of the 1st and 2nd audio still in the
-      // playlist json file and deleted from the playlist dir ...
-
-      checkPlaylistDownloadedAudios(
-        downloadedAudioOne:
-            addedPlaylistAfterDownloadingRecreatedPlaylistWithSameTitle
-                .playableAudioLst[3],
-        downloadedAudioTwo:
-            addedPlaylistAfterDownloadingRecreatedPlaylistWithSameTitle
-                .playableAudioLst[2],
-        audioOneFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
-        audioTwoFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
-      );
-
-      // ... and the values of the 3rd and 4th audio newly downloaded
-      // and inserted at start of to the playlist playable audio list
-      // ...
-
-      // Checking the data of the audio contained in the playable
-      // audio list;
-      //
-      // playableAudioLst contains Audio's inserted at list start
-      checkPlaylistNewDownloadedAudios(
-        downloadedAudioOne:
-            addedPlaylistAfterDownloadingRecreatedPlaylistWithSameTitle
-                .playableAudioLst[1],
-        downloadedAudioTwo:
-            addedPlaylistAfterDownloadingRecreatedPlaylistWithSameTitle
-                .playableAudioLst[0],
-      );
-
-      // Checking if there are 3 files in the directory (2 mp3 and 1 json)
-      final List<FileSystemEntity> files =
-          directory.listSync(recursive: false, followLinks: false);
-
-      expect(files.length, 3);
-
-      // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
