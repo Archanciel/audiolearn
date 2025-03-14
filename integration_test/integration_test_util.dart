@@ -1556,7 +1556,7 @@ class IntegrationTestUtil {
   /// Passing a [forcedLocale] will force the locale to be used in the test. If
   /// [forcedLocale] is null, the language defined in settings.json will be used.
   /// [forcedLocale] can be const Locale('en') or const Locale('fr').
-  static Future<void> launchIntegrTestApplication({
+  static Future<AudioDownloadVM> launchIntegrTestApplication({
     required tester,
     Locale? forcedLocale,
   }) async {
@@ -1640,7 +1640,10 @@ class IntegrationTestUtil {
         ),
       ),
     );
+
     await tester.pumpAndSettle();
+
+    return audioDownloadVM;
   }
 
   /// This method is used as an alternative to calling app.main(). Since we maybe
