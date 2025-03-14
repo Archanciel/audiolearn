@@ -365,7 +365,7 @@ Future<void> main() async {
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      await IntegrationTestUtil.launchIntegrTestApplication(
+      AudioDownloadVM audioDownloadVM = await IntegrationTestUtil.launchIntegrTestApplication(
         tester: tester,
         forcedLocale: const Locale('en'),
       );
@@ -433,23 +433,6 @@ Future<void> main() async {
       await Future.delayed(const Duration(seconds: secondsDelay));
       await tester.pumpAndSettle();
 
-      final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
-      );
-
-      // load settings from file which does not exist. This
-      // will ensure that the default playlist root path is set
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}settings.json");
-
-      final WarningMessageVM warningMessageVM = WarningMessageVM();
-
-      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
-        warningMessageVM: warningMessageVM,
-        settingsDataService: settingsDataService,
-      );
-
       Playlist singleVideoDownloadedPlaylist =
           audioDownloadVM.listOfPlaylist[0];
 
@@ -465,7 +448,7 @@ Future<void> main() async {
       // this check fails if the secondsDelay value is too small
       expect(audioDownloadVM.isDownloading, false);
 
-      // expect(audioDownloadVM.downloadProgress, 1.0);
+      expect(audioDownloadVM.downloadProgress, 1.0);
       expect(audioDownloadVM.lastSecondDownloadSpeed, 0);
       expect(audioDownloadVM.isHighQuality, false);
 
@@ -524,7 +507,7 @@ Future<void> main() async {
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      await IntegrationTestUtil.launchIntegrTestApplication(
+      AudioDownloadVM audioDownloadVM = await IntegrationTestUtil.launchIntegrTestApplication(
         tester: tester,
         forcedLocale: const Locale('en'),
       );
@@ -576,8 +559,7 @@ Future<void> main() async {
       await tester.pumpAndSettle();
 
       // Tap the music quality checkbox to select it
-      await tester.tap(find.byKey(
-          const Key('downloadSingleVideoAudioAtMusicQualityCheckboxKey')));
+      await tester.tap(find.byKey(const Key('downloadSingleVideoAudioAtMusicQualityCheckboxKey')));
       await tester.pumpAndSettle();
 
       // Now find the confirm button and tap on it
@@ -597,23 +579,6 @@ Future<void> main() async {
       await Future.delayed(const Duration(seconds: secondsDelay));
       await tester.pumpAndSettle();
 
-      final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
-      );
-
-      // load settings from file which does not exist. This
-      // will ensure that the default playlist root path is set
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}settings.json");
-
-      final WarningMessageVM warningMessageVM = WarningMessageVM();
-
-      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
-        warningMessageVM: warningMessageVM,
-        settingsDataService: settingsDataService,
-      );
-
       Playlist singleVideoDownloadedPlaylist =
           audioDownloadVM.listOfPlaylist[0];
 
@@ -624,17 +589,6 @@ Future<void> main() async {
         playlistUrl: '',
         playlistDir: localTestPlaylistDir,
         isPlaylistSelected: true,
-      );
-
-      // load settings from file which does not exist. This
-      // will ensure that the default playlist root path is set
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}settings.json");
-
-      audioDownloadVM = AudioDownloadVM(
-        warningMessageVM: warningMessageVM,
-        settingsDataService: settingsDataService,
       );
 
       // this check fails if the secondsDelay value is too small
@@ -701,7 +655,7 @@ Future<void> main() async {
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      await IntegrationTestUtil.launchIntegrTestApplication(
+      AudioDownloadVM audioDownloadVM = await IntegrationTestUtil.launchIntegrTestApplication(
         tester: tester,
         forcedLocale: const Locale('en'),
       );
@@ -765,23 +719,6 @@ Future<void> main() async {
         await Future.delayed(const Duration(seconds: 1));
         await tester.pumpAndSettle();
       }
-
-      final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
-      );
-
-      // load settings from file which does not exist. This
-      // will ensure that the default playlist root path is set
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}settings.json");
-
-      final WarningMessageVM warningMessageVM = WarningMessageVM();
-
-      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
-        warningMessageVM: warningMessageVM,
-        settingsDataService: settingsDataService,
-      );
 
       Playlist singleVideoDownloadedPlaylist =
           audioDownloadVM.listOfPlaylist[0];
@@ -1006,7 +943,7 @@ Future<void> main() async {
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      await IntegrationTestUtil.launchIntegrTestApplication(
+      AudioDownloadVM audioDownloadVM = await IntegrationTestUtil.launchIntegrTestApplication(
         tester: tester,
         forcedLocale: const Locale('en'),
       );
@@ -1110,7 +1047,7 @@ Future<void> main() async {
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      await IntegrationTestUtil.launchIntegrTestApplication(
+      AudioDownloadVM audioDownloadVM = await IntegrationTestUtil.launchIntegrTestApplication(
         tester: tester,
         forcedLocale: const Locale('en'),
       );
