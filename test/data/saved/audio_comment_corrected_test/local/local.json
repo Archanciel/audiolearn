@@ -7,7 +7,7 @@
     "currentOrPastPlayableAudioIndex": 2,
     "downloadedAudioLst": [
     ],
-    "downloadPath": "C:\\Development\\Flutter\\audiolearn\\test\\data\\audio\\local",
+    "downloadPath": "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\local",
     "id": "local",
     "isSelected": false,
     "playableAudioLst": [

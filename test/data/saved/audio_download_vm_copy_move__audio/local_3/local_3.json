@@ -71,7 +71,7 @@
             "videoUrl": "https://www.youtube.com/watch?v=uv3VQoWSjBE"
         }
     ],
-    "downloadPath": "C:\\Development\\Flutter\\audiolearn\\test\\data\\audio\\local_3",
+    "downloadPath": "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\local_3",
     "id": "local_3",
     "isSelected": false,
     "playableAudioLst": [

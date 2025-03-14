@@ -8,7 +8,7 @@ import 'package:path/path.dart' as path;
 void main() {
   group('DirUtil test)', () {
     test(
-      'replacing "/storage/emulated/0/Download/audiolear" by "C:\\Development\\Flutter\\audiolearn\\test\\data\\audio"',
+      'replacing "/storage/emulated/0/Download/audiolear" by "C:\\development\\flutter\\audiolearn\\test\\data\\audio"',
       () {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
@@ -25,10 +25,10 @@ void main() {
 
         DirUtil.replacePlaylistRootPathInSettingsJsonFiles(
             directoryPath:
-                "C:\\Development\\Flutter\\audiolearn\\test\\data\\audio",
+                "C:\\development\\flutter\\audiolearn\\test\\data\\audio",
             oldRootPath: '/storage/emulated/0/Download/audiolear',
             newRootPath:
-                "C:\\Development\\Flutter\\audiolearn\\test\\data\\audio");
+                "C:\\development\\flutter\\audiolearn\\test\\data\\audio");
 
         File expectedFile = File(
             "$kPlaylistDownloadRootPathWindowsTest${path.separator}test_result.json");

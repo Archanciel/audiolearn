@@ -12,7 +12,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 ///
 /// The relevant error-causing widget was:
 /// Row
-/// Row:file:///C:/Users/Jean-Pierre/Development/Flutter/
+/// Row:file:///C:/Users/Jean-Pierre/development/flutter/
 /// audiolearn/lib/views/playlist_download_view.dart:510:28 ...
 class MockAppLocalizations extends AppLocalizations {
   MockAppLocalizations() : super('en');

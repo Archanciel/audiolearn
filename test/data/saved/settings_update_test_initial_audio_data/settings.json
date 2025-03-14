@@ -7,7 +7,7 @@
     },
     "SettingType.dataLocation": {
         "DataLocation.appSettingsPath": "",
-        "DataLocation.playlistRootPath": "C:\\Development\\Flutter\\audiolearn\\test\\data\\audio"
+        "DataLocation.playlistRootPath": "C:\\development\\flutter\\audiolearn\\test\\data\\audio"
     },
     "SettingType.language": {
         "SettingType.language": "Language.english"

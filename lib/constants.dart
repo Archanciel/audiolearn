@@ -40,11 +40,11 @@ const String kOrderedPlaylistTitlesFileName = 'savedOrderedPlaylistTitles.txt';
 
 // Used for testing and debugging
 const String kApplicationPathWindowsTest =
-    "C:\\Development\\Flutter\\audiolearn\\test\\data\\audio";
+    "C:\\development\\flutter\\audiolearn\\test\\data\\audio";
 const String kPlaylistDownloadRootPathWindowsTest =
-    "C:\\Development\\Flutter\\audiolearn\\test\\data\\audio";
+    "C:\\development\\flutter\\audiolearn\\test\\data\\audio";
 const String kDownloadAppTestSavedDataDir =
-    "C:\\Development\\Flutter\\audiolearn\\test\\data\\saved";
+    "C:\\development\\flutter\\audiolearn\\test\\data\\saved";
 
 // Used for Windows installation
 const String kApplicationPathWindows =
