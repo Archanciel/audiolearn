@@ -1558,6 +1558,101 @@ class IntegrationTestUtil {
   /// [forcedLocale] can be const Locale('en') or const Locale('fr').
   static Future<void> launchIntegrTestApplication({
     required tester,
+    Locale? forcedLocale,
+  }) async {
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+      );
+
+      // load settings from file which does not exist. This
+      // will ensure that the default playlist root path is set
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}settings.json");
+
+      final WarningMessageVM warningMessageVM = WarningMessageVM();
+
+      final AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+      );
+
+      final PlaylistListVM playlistListVM = PlaylistListVM(
+        warningMessageVM: warningMessageVM,
+        audioDownloadVM: audioDownloadVM,
+        commentVM: CommentVM(),
+        settingsDataService: settingsDataService,
+      );
+
+      // calling getUpToDateSelectablePlaylists() loads all the
+      // playlist json files from the app dir and so enables
+      // playlistListVM to know which playlists are
+      // selected and which are not
+      playlistListVM.getUpToDateSelectablePlaylists();
+
+      final AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+        settingsDataService: settingsDataService,
+        playlistListVM: playlistListVM,
+        commentVM: CommentVM(),
+      );
+
+      final DateFormatVM dateFormatVM = DateFormatVM(
+        settingsDataService: settingsDataService,
+      );
+
+    await setWindowsAppSizeAndPosition(isTest: true);
+
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => audioDownloadVM),
+          ChangeNotifierProvider(
+              create: (_) => ThemeProviderVM(
+                    appSettings: settingsDataService,
+                  )),
+          ChangeNotifierProvider(
+              create: (_) => LanguageProviderVM(
+                    settingsDataService: settingsDataService,
+                  )),
+          ChangeNotifierProvider(create: (_) => playlistListVM),
+          ChangeNotifierProvider(create: (_) => warningMessageVM),
+          ChangeNotifierProvider(create: (_) => audioPlayerVM),
+          ChangeNotifierProvider(create: (_) => dateFormatVM),
+          ChangeNotifierProvider(create: (_) => CommentVM()),
+        ],
+        child: Consumer2<ThemeProviderVM, LanguageProviderVM>(
+          builder: (context, themeProvider, languageProvider, child) {
+            return MaterialApp(
+              title: 'AudioLearn',
+              locale: (forcedLocale == null)
+                  ? languageProvider.currentLocale
+                  : forcedLocale,
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales:
+                  AppLocalizations.supportedLocales, // French only
+              theme: ScreenMixin.themeDataDark,
+              home: MyHomePage(
+                settingsDataService: settingsDataService,
+              ),
+            );
+          },
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+  }
+
+  /// This method is used as an alternative to calling app.main(). Since we maybe
+  /// have to use a mock AudioDownloadVM we can not use app.main() to start the app
+  /// because app.main() uses the real AudioDownloadVM and we don't want to make
+  /// the main.dart file dependent off a mock class.
+  ///
+  /// Passing a [forcedLocale] will force the locale to be used in the test. If
+  /// [forcedLocale] is null, the language defined in settings.json will be used.
+  /// [forcedLocale] can be const Locale('en') or const Locale('fr').
+  static Future<void> launchIntegrTestApplicationWithMock({
+    required tester,
     required AudioDownloadVM audioDownloadVM,
     required SettingsDataService settingsDataService,
     required PlaylistListVM playlistListVM,
