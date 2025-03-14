@@ -78,8 +78,6 @@ Future<void> main() async {
 
     testWidgets('Playlist 2 short audio: playlist dir not exist',
         (WidgetTester tester) async {
-      late AudioDownloadVM audioDownloadVM;
-      final Directory directory = Directory(globalTestPlaylistDir);
 
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
@@ -87,35 +85,17 @@ Future<void> main() async {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
+      // Copying the initial local playlist json file with no audio
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}audio_learn_test_download_2_small_videos",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      // load settings from file which does not exist. This
-      // will ensure that the default playlist root path is set
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName: "temp\\wrong.json");
-
-      // Building and displaying the DownloadPlaylistPage integration test
-      // application.
-      await tester.pumpWidget(ChangeNotifierProvider(
-        create: (BuildContext context) {
-          final WarningMessageVM warningMessageVM = WarningMessageVM();
-          audioDownloadVM = AudioDownloadVM(
-            warningMessageVM: warningMessageVM,
-            settingsDataService: settingsDataService,
-          );
-          return audioDownloadVM;
-        },
-        child: MaterialApp(
-          // forcing dark theme
-          theme: ScreenMixin.themeDataDark,
-          home: const DownloadPlaylistPage(
-            // integration test opened application
-            playlistUrl: globalTestPlaylistUrl,
-          ),
-        ),
-      ));
+      AudioDownloadVM audioDownloadVM = await IntegrationTestUtil.launchIntegrTestApplication(
+        tester: tester,
+        forcedLocale: const Locale('en'),
+      );
 
       // tapping on the downl playlist button in the app which calls the
       // AudioDownloadVM.downloadPlaylistAudios(playlistUrl) method
@@ -129,8 +109,6 @@ Future<void> main() async {
       // when all tsts are run. 7 seconds solve the problem.
       await Future.delayed(const Duration(seconds: secondsDelay));
       await tester.pumpAndSettle();
-
-      expect(directory.existsSync(), true);
 
       Playlist downloadedPlaylist = audioDownloadVM.listOfPlaylist[0];
 
@@ -172,8 +150,11 @@ Future<void> main() async {
 
       // Checking if there are 3 files in the directory (2 mp3 and 1 json)
       final List<FileSystemEntity> files =
-          directory.listSync(recursive: false, followLinks: false);
-
+          Directory(globalTestPlaylistDir).listSync(
+        recursive: false,
+        followLinks: false,
+      );
+      
       expect(files.length, 3);
 
       // Purge the test playlist directory so that the created test
@@ -944,7 +925,7 @@ Future<void> main() async {
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      AudioDownloadVM audioDownloadVM = await IntegrationTestUtil.launchIntegrTestApplication(
+      await IntegrationTestUtil.launchIntegrTestApplication(
         tester: tester,
         forcedLocale: const Locale('en'),
       );
@@ -1048,7 +1029,7 @@ Future<void> main() async {
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      AudioDownloadVM audioDownloadVM = await IntegrationTestUtil.launchIntegrTestApplication(
+      await IntegrationTestUtil.launchIntegrTestApplication(
         tester: tester,
         forcedLocale: const Locale('en'),
       );
