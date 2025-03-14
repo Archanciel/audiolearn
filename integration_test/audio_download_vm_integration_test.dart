@@ -30,7 +30,7 @@ const String globalTestPlaylistUrl =
 const String globalTestPlaylistTitle =
     'audio_learn_test_download_2_small_videos';
 final String globalTestPlaylistDir =
-    '$kPlaylistDownloadRootPathWindowsTest${path.separator}$globalTestPlaylistTitle';
+    '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$globalTestPlaylistTitle';
 
 Future<void> main() async {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -78,7 +78,6 @@ Future<void> main() async {
 
     testWidgets('Playlist 2 short audio: playlist dir not exist',
         (WidgetTester tester) async {
-
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -88,18 +87,67 @@ Future<void> main() async {
       // Copying the initial local playlist json file with no audio
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}audio_learn_test_download_2_small_videos",
+            "$kDownloadAppTestSavedDataDir${path.separator}audio_learn_test_download_2_small_videos_empty_dir",
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      AudioDownloadVM audioDownloadVM = await IntegrationTestUtil.launchIntegrTestApplication(
+      AudioDownloadVM audioDownloadVM =
+          await IntegrationTestUtil.launchIntegrTestApplication(
         tester: tester,
         forcedLocale: const Locale('en'),
       );
 
-      // tapping on the downl playlist button in the app which calls the
-      // AudioDownloadVM.downloadPlaylistAudios(playlistUrl) method
-      await tester.tap(find.byKey(const Key('downloadPlaylistAudiosButton')));
+      // Entering the recreated playlist URL in the Youtube URL or search
+      // text field of the app
+      await tester.enterText(
+        find.byKey(
+          const Key('youtubeUrlOrSearchTextField'),
+        ),
+        globalTestPlaylistUrl,
+      );
+      await tester.pumpAndSettle();
+
+      // Open the add playlist dialog by tapping the add playlist
+      // button
+      await tester.tap(find.byKey(const Key('addPlaylistButton')));
+      await tester.pumpAndSettle();
+
+      // Confirm the addition by tapping the 'Add' button in
+      // the AlertDialog and then on the 'OK' button of the
+      // confirm dialog
+      await tester
+          .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
+      await tester.pumpAndSettle();
+
+      // Add a delay to allow the update playlist URL to finish. 1
+      // second is ok
+      await Future.delayed(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+      await tester.pumpAndSettle();
+
+      expect(
+        tester
+            .widget<TextField>(find.byKey(
+              const Key('youtubeUrlOrSearchTextField'),
+            ))
+            .controller!
+            .text,
+        '', // 'Youtube Link or Search' displayed in the TextField
+        //     is a hint text and not the actual text !
+      );
+
+      // Now selecting the created playlist by tapping on the
+      // playlist checkbox
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: globalTestPlaylistTitle,
+      );
+
+      // Now typing on the download playlist button to download the
+      // new video audio's present the recreated playlist.
+      await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
       await tester.pumpAndSettle();
 
       // Add a delay to allow the download to finish. 5 seconds is ok
@@ -107,18 +155,20 @@ Future<void> main() async {
       // Waiting 5 seconds only causes MissingPluginException
       // 'No implementation found for method $method on channel $name'
       // when all tsts are run. 7 seconds solve the problem.
-      await Future.delayed(const Duration(seconds: secondsDelay));
-      await tester.pumpAndSettle();
+      for (int i = 0; i < 5; i++) {
+        await Future.delayed(const Duration(seconds: 2));
+        await tester.pumpAndSettle();
+      }
 
       Playlist downloadedPlaylist = audioDownloadVM.listOfPlaylist[0];
 
-      checkDownloadedPlaylist(
+      _checkDownloadedPlaylist(
         downloadedPlaylist: downloadedPlaylist,
         playlistId: globalTestPlaylistId,
         playlistTitle: globalTestPlaylistTitle,
         playlistUrl: globalTestPlaylistUrl,
         playlistDir: globalTestPlaylistDir,
-        isPlaylistSelected: false,
+        isPlaylistSelected: true,
       );
 
       // this check fails if the secondsDelay value is too small
@@ -130,7 +180,7 @@ Future<void> main() async {
 
       // Checking the data of the audio contained in the downloaded
       // audio list which contains 2 downloaded Audio's
-      checkPlaylistDownloadedAudios(
+      _checkPlaylistDownloadedAudios(
         downloadedAudioOne: downloadedPlaylist.downloadedAudioLst[0],
         downloadedAudioTwo: downloadedPlaylist.downloadedAudioLst[1],
         audioOneFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
@@ -141,7 +191,7 @@ Future<void> main() async {
       // audio list;
       //
       // playableAudioLst contains Audio's inserted at list start
-      checkPlaylistDownloadedAudios(
+      _checkPlaylistDownloadedAudios(
         downloadedAudioOne: downloadedPlaylist.playableAudioLst[1],
         downloadedAudioTwo: downloadedPlaylist.playableAudioLst[0],
         audioOneFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
@@ -154,7 +204,7 @@ Future<void> main() async {
         recursive: false,
         followLinks: false,
       );
-      
+
       expect(files.length, 3);
 
       // Purge the test playlist directory so that the created test
@@ -208,7 +258,7 @@ Future<void> main() async {
       // Verifying the data of the copied playlist before downloading
       // the playlist
 
-      checkDownloadedPlaylist(
+      _checkDownloadedPlaylist(
         downloadedPlaylist: existingPlaylistBeforeNewDownload,
         playlistId: globalTestPlaylistId,
         playlistTitle: globalTestPlaylistTitle,
@@ -227,14 +277,14 @@ Future<void> main() async {
 
       // Checking the data of the audio contained in the downloaded
       // audio list
-      checkDownloadedAudioShortVideoTwo(
+      _checkDownloadedAudioShortVideoTwo(
         downloadedAudioTwo: downloadedAudioLstBeforeDownload[0],
         audioTwoFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
       );
 
       // Checking the data of the audio contained in the playable
       // audio list
-      checkDownloadedAudioShortVideoTwo(
+      _checkDownloadedAudioShortVideoTwo(
         downloadedAudioTwo: playableAudioLstBeforeDownload[0],
         audioTwoFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
       );
@@ -279,7 +329,7 @@ Future<void> main() async {
 
       Playlist downloadedPlaylist = audioDownloadVM.listOfPlaylist[0];
 
-      checkDownloadedPlaylist(
+      _checkDownloadedPlaylist(
         downloadedPlaylist: downloadedPlaylist,
         playlistId: globalTestPlaylistId,
         playlistTitle: globalTestPlaylistTitle,
@@ -296,7 +346,7 @@ Future<void> main() async {
       expect(audioDownloadVM.isHighQuality, false);
 
       // downloadedAudioLst contains added Audio's
-      checkPlaylistDownloadedAudios(
+      _checkPlaylistDownloadedAudios(
         downloadedAudioOne: downloadedPlaylist.downloadedAudioLst[1],
         downloadedAudioTwo: downloadedPlaylist.downloadedAudioLst[0],
         audioOneFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
@@ -304,7 +354,7 @@ Future<void> main() async {
       );
 
       // playableAudioLst contains Audio's inserted at list start
-      checkPlaylistDownloadedAudios(
+      _checkPlaylistDownloadedAudios(
         downloadedAudioOne: downloadedPlaylist.playableAudioLst[0],
         downloadedAudioTwo: downloadedPlaylist.playableAudioLst[1],
         audioOneFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
@@ -347,7 +397,8 @@ Future<void> main() async {
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      AudioDownloadVM audioDownloadVM = await IntegrationTestUtil.launchIntegrTestApplication(
+      AudioDownloadVM audioDownloadVM =
+          await IntegrationTestUtil.launchIntegrTestApplication(
         tester: tester,
         forcedLocale: const Locale('en'),
       );
@@ -418,7 +469,7 @@ Future<void> main() async {
       Playlist singleVideoDownloadedPlaylist =
           audioDownloadVM.listOfPlaylist[0];
 
-      checkDownloadedPlaylist(
+      _checkDownloadedPlaylist(
         downloadedPlaylist: singleVideoDownloadedPlaylist,
         playlistId: emptyLocalTestPlaylistTitle,
         playlistTitle: emptyLocalTestPlaylistTitle,
@@ -436,7 +487,7 @@ Future<void> main() async {
 
       // Checking the data of the audio contained in the downloaded
       // audio list
-      checkDownloadedAudioShortVideoTwo(
+      _checkDownloadedAudioShortVideoTwo(
         downloadedAudioTwo: singleVideoDownloadedPlaylist.downloadedAudioLst[0],
         audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
       );
@@ -489,7 +540,8 @@ Future<void> main() async {
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      AudioDownloadVM audioDownloadVM = await IntegrationTestUtil.launchIntegrTestApplication(
+      AudioDownloadVM audioDownloadVM =
+          await IntegrationTestUtil.launchIntegrTestApplication(
         tester: tester,
         forcedLocale: const Locale('en'),
       );
@@ -541,7 +593,8 @@ Future<void> main() async {
       await tester.pumpAndSettle();
 
       // Tap the music quality checkbox to select it
-      await tester.tap(find.byKey(const Key('downloadSingleVideoAudioAtMusicQualityCheckboxKey')));
+      await tester.tap(find.byKey(
+          const Key('downloadSingleVideoAudioAtMusicQualityCheckboxKey')));
       await tester.pumpAndSettle();
 
       // Now find the confirm button and tap on it
@@ -564,7 +617,7 @@ Future<void> main() async {
       Playlist singleVideoDownloadedPlaylist =
           audioDownloadVM.listOfPlaylist[0];
 
-      checkDownloadedPlaylist(
+      _checkDownloadedPlaylist(
         downloadedPlaylist: singleVideoDownloadedPlaylist,
         playlistId: emptyLocalTestPlaylistTitle,
         playlistTitle: emptyLocalTestPlaylistTitle,
@@ -582,7 +635,7 @@ Future<void> main() async {
 
       // Checking the data of the audio contained in the downloaded
       // audio list
-      checkDownloadedAudioShortVideoTwo(
+      _checkDownloadedAudioShortVideoTwo(
         downloadedAudioTwo: singleVideoDownloadedPlaylist.downloadedAudioLst[0],
         audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
         downloadedAtMusicQuality: true,
@@ -637,7 +690,8 @@ Future<void> main() async {
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      AudioDownloadVM audioDownloadVM = await IntegrationTestUtil.launchIntegrTestApplication(
+      AudioDownloadVM audioDownloadVM =
+          await IntegrationTestUtil.launchIntegrTestApplication(
         tester: tester,
         forcedLocale: const Locale('en'),
       );
@@ -705,7 +759,7 @@ Future<void> main() async {
       Playlist singleVideoDownloadedPlaylist =
           audioDownloadVM.listOfPlaylist[0];
 
-      checkDownloadedPlaylist(
+      _checkDownloadedPlaylist(
         downloadedPlaylist: singleVideoDownloadedPlaylist,
         playlistId: localTargetPlaylistTitle,
         playlistTitle: localTargetPlaylistTitle,
@@ -723,7 +777,7 @@ Future<void> main() async {
 
       // Checking the data of the single video audio contained in the
       // target playlist in which the audio was downloaded
-      checkDownloadedAudioShortVideoTwo(
+      _checkDownloadedAudioShortVideoTwo(
         downloadedAudioTwo: singleVideoDownloadedPlaylist.downloadedAudioLst[0],
         audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
         downloadedAtMusicQuality: false,
@@ -835,7 +889,7 @@ Future<void> main() async {
       Playlist singleVideoDownloadedPlaylist =
           audioDownloadVM.listOfPlaylist[0];
 
-      checkDownloadedPlaylist(
+      _checkDownloadedPlaylist(
         downloadedPlaylist: singleVideoDownloadedPlaylist,
         playlistId: localTestPlaylistTitle,
         playlistTitle: localTestPlaylistTitle,
@@ -854,7 +908,7 @@ Future<void> main() async {
       // downloadedAudioLst contains added Audio's. Checking the
       // values of the 1st and 2nd audio still in the playlist json
       // file and deleted from the playlist dir ...
-      checkPlaylistDownloadedAudios(
+      _checkPlaylistDownloadedAudios(
         downloadedAudioOne: singleVideoDownloadedPlaylist.downloadedAudioLst[0],
         downloadedAudioTwo: singleVideoDownloadedPlaylist.downloadedAudioLst[1],
         audioOneFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
@@ -868,7 +922,7 @@ Future<void> main() async {
       // Checking the values of the 1st and 2nd audio still in the
       // playlist json file and deleted from the playlist dir ...
 
-      checkPlaylistDownloadedAudios(
+      _checkPlaylistDownloadedAudios(
         downloadedAudioOne: singleVideoDownloadedPlaylist.playableAudioLst[1],
         downloadedAudioTwo: singleVideoDownloadedPlaylist.playableAudioLst[0],
         audioOneFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
@@ -933,8 +987,8 @@ Future<void> main() async {
       const String recreatedPlaylistUrl =
           'https://youtube.com/playlist?list=PLzwWSJNcZTMSwrDOAZEPf0u6YvrKGNnvC';
 
-      // Entering the single video URL in the Youtube URL or search text field
-      // of the app
+      // Entering the recreated playlist URL in the Youtube URL or search
+      // text field of the app
       await tester.enterText(
         find.byKey(
           const Key('youtubeUrlOrSearchTextField'),
@@ -1037,8 +1091,8 @@ Future<void> main() async {
       const String recreatedPlaylistUrl =
           'https://youtube.com/playlist?list=PLzwWSJNcZTMSwrDOAZEPf0u6YvrKGNnvC';
 
-      // Entering the single video URL in the Youtube URL or search text field
-      // of the app
+      // Entering the recreated playlist URL in the Youtube URL or search
+      // text field of the app
       await tester.enterText(
         find.byKey(
           const Key('youtubeUrlOrSearchTextField'),
@@ -1117,7 +1171,7 @@ Future<void> main() async {
   });
 }
 
-void checkDownloadedPlaylist({
+void _checkDownloadedPlaylist({
   required Playlist downloadedPlaylist,
   required String playlistId,
   required String playlistTitle,
@@ -1136,25 +1190,25 @@ void checkDownloadedPlaylist({
 }
 
 // Verify the values of the Audio's extracted from a playlist
-void checkPlaylistDownloadedAudios({
+void _checkPlaylistDownloadedAudios({
   required Audio downloadedAudioOne,
   required Audio downloadedAudioTwo,
   required String audioOneFileNamePrefix,
   required String audioTwoFileNamePrefix,
 }) {
-  checkDownloadedAudioShortVideoOne(
+  _checkDownloadedAudioShortVideoOne(
     downloadedAudioOne: downloadedAudioOne,
     audioOneFileNamePrefix: audioOneFileNamePrefix,
   );
 
-  checkDownloadedAudioShortVideoTwo(
+  _checkDownloadedAudioShortVideoTwo(
     downloadedAudioTwo: downloadedAudioTwo,
     audioTwoFileNamePrefix: audioTwoFileNamePrefix,
   );
 }
 
 // Verify the values of the Audio's extracted from a playlist
-void compareNewRecreatedPlaylistToPreviouslyExistingPlaylist({
+void _compareNewRecreatedPlaylistToPreviouslyExistingPlaylist({
   required Playlist newRecreatedPlaylistWithSameTitle,
   required Playlist previouslyExistingPlaylist,
   required String newRecreatedPlaylistWithSameTitleId,
@@ -1194,7 +1248,7 @@ void compareNewRecreatedPlaylistToPreviouslyExistingPlaylist({
 
 /// Verify the values of the "audio learn test short video one" downloaded
 /// audio.
-void checkDownloadedAudioShortVideoOne({
+void _checkDownloadedAudioShortVideoOne({
   required Audio downloadedAudioOne,
   required String audioOneFileNamePrefix,
   bool downloadedAtMusicQuality = false,
@@ -1225,7 +1279,7 @@ void checkDownloadedAudioShortVideoOne({
 
 /// Verify the values of the "audio learn test short video two" downloaded
 /// audio.
-void checkDownloadedAudioShortVideoTwo({
+void _checkDownloadedAudioShortVideoTwo({
   required Audio downloadedAudioTwo,
   required String audioTwoFileNamePrefix,
   bool downloadedAtMusicQuality = false,
