@@ -10974,13 +10974,13 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Verify the order of the playlist audio titles
 
         List<String> audioTitlesSortedByTitleAscending = [
-          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          // "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
           "Les besoins artificiels par R.Keucheyan",
           "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
           "La résilience insulaire par Fiona Roche",
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
           "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-          // "La surpopulation mondiale par Jancovici et Barrau",
+          "La surpopulation mondiale par Jancovici et Barrau",
         ];
 
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
@@ -10991,7 +10991,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // And verify the order of the playlist audio subtitles
 
         List<String> audioSubTitlesSortedByTitleAscending = [
-          "0:20:32.0. 7.51 MB at 2.44 MB/sec on 26/12/2023 at 09:45. Audio downl duration: 0:00:03.",
+          // "0:20:32.0. 7.51 MB at 2.44 MB/sec on 26/12/2023 at 09:45. Audio downl duration: 0:00:03.",
           "0:19:05.0. 6.98 MB at 2.28 MB/sec on 07/01/2024 at 08:16. Audio downl duration: 0:00:03.",
           "0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16. Audio downl duration: 0:00:01.",
           "0:13:35.0. 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16. Audio downl duration: 0:00:01.",

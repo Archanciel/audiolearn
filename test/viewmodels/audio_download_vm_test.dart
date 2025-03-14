@@ -134,21 +134,21 @@ void main() {
       // Load Playlist from the file
       Playlist loadedPlaylistOne = loadPlaylist(playListOneName);
       expect(loadedPlaylistOne.downloadPath,
-          "C:\\Development\\Flutter\\audiolearn\\test\\data\\previous_audio\\playlist_downloaded\\audio_learn_test_download_2_small_videos");
+          "C:\\development\\flutter\\audiolearn\\test\\data\\previous_audio\\playlist_downloaded\\audio_learn_test_download_2_small_videos");
 
       const String playListTwoName = "audio_player_view_2_shorts_test";
 
       // Load Playlist from the file
       Playlist loadedPlaylistTwo = loadPlaylist(playListTwoName);
       expect(loadedPlaylistTwo.downloadPath,
-          "C:\\Development\\Flutter\\audiolearn\\test\\data\\other_audio\\playlist_downloaded\\audio_player_view_2_shorts_test");
+          "C:\\development\\flutter\\audiolearn\\test\\data\\other_audio\\playlist_downloaded\\audio_player_view_2_shorts_test");
 
       const String playListThreeName = "local_3";
 
       // Load Playlist from the file
       Playlist loadedPlaylistThree = loadPlaylist(playListThreeName);
       expect(loadedPlaylistThree.downloadPath,
-          "C:\\Development\\Flutter\\audiolearn\\test\\data\\previous_audio\\playlist_downloaded\\local_3");
+          "C:\\development\\flutter\\audiolearn\\test\\data\\previous_audio\\playlist_downloaded\\local_3");
 
       WarningMessageVM warningMessageVM = WarningMessageVM();
       SettingsDataService settingsDataService = SettingsDataService(
@@ -174,19 +174,19 @@ void main() {
       // download path was updated correctly
       loadedPlaylistOne = loadPlaylist(playListOneName);
       expect(loadedPlaylistOne.downloadPath,
-          "C:\\Development\\Flutter\\audiolearn\\test\\data\\audio\\audio_learn_test_download_2_small_videos");
+          "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\audio_learn_test_download_2_small_videos");
 
       // reLoad Playlist from the file and check that the
       // download path was updated correctly
       loadedPlaylistTwo = loadPlaylist(playListTwoName);
       expect(loadedPlaylistTwo.downloadPath,
-          "C:\\Development\\Flutter\\audiolearn\\test\\data\\audio\\audio_player_view_2_shorts_test");
+          "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\audio_player_view_2_shorts_test");
 
       // reLoad Playlist from the file and check that the
       // download path was updated correctly
       loadedPlaylistThree = loadPlaylist(playListThreeName);
       expect(loadedPlaylistThree.downloadPath,
-          "C:\\Development\\Flutter\\audiolearn\\test\\data\\audio\\local_3");
+          "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\local_3");
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub

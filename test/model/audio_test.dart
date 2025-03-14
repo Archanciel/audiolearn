@@ -67,9 +67,9 @@ void main() {
 
     test('Test replace double slash char', () {
       const String videoTitle =
-          '9 Dart concepts to know before you jump into Flutter // for super beginners in Flutter';
+          '9 Dart concepts to know before you jump into flutter // for super beginners in flutter';
       const String expectedValidVideoTitle =
-          '9 Dart concepts to know before you jump into Flutter _ for super beginners in Flutter';
+          '9 Dart concepts to know before you jump into flutter _ for super beginners in flutter';
 
       final String actualValidVideoTitle =
           Audio.createValidVideoTitle(videoTitle);

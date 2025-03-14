@@ -353,8 +353,8 @@
         "SettingType.appTheme": "AppTheme.dark"
     },
     "SettingType.dataLocation": {
-        "DataLocation.appSettingsPath": "C:\\Development\\Flutter\\audiolearn\\test\\data\\audio",
-        "DataLocation.playlistRootPath": "C:\\Development\\Flutter\\audiolearn\\test\\data\\audio"
+        "DataLocation.appSettingsPath": "C:\\development\\flutter\\audiolearn\\test\\data\\audio",
+        "DataLocation.playlistRootPath": "C:\\development\\flutter\\audiolearn\\test\\data\\audio"
     },
     "SettingType.formatOfDate": {
         "FormatOfDate.formatOfDate": "dd/MM/yyyy"
