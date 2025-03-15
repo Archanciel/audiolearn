@@ -24,7 +24,8 @@ const String existingAudioDateOnlyFileNamePrefix = '230610';
 final String todayDownloadDateOnlyFileNamePrefix =
     Audio.downloadDatePrefixFormatter.format(DateTime.now());
 const String globalTestPlaylistId = 'PLzwWSJNcZTMRB9ILve6fEIS_OHGrV5R2o';
-const String globalTestPlaylistOneAudioId = 'PLzwWSJNcZTMRB9ILve6fEIS_OHGrV5R2o';
+const String globalTestPlaylistOneAudioId =
+    'PLzwWSJNcZTMRB9ILve6fEIS_OHGrV5R2o';
 const String globalTestPlaylistUrl =
     'https://youtube.com/playlist?list=PLzwWSJNcZTMRB9ILve6fEIS_OHGrV5R2o';
 const String globalTestPlaylistTitle =
@@ -82,7 +83,6 @@ Future<void> main() async {
 
     testWidgets('Playlist 2 short audio: playlist dir not exist',
         (WidgetTester tester) async {
-
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -129,8 +129,12 @@ Future<void> main() async {
       await Future.delayed(const Duration(seconds: 1));
       await tester.pumpAndSettle();
 
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
-      await tester.pumpAndSettle();
+      // Verify the displayed warning dialog
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Youtube playlist \"$globalTestPlaylistTitle\" of audio quality added at end of list of playlists.",
+      );
 
       expect(
         tester
@@ -221,7 +225,6 @@ Future<void> main() async {
     testWidgets(
         '''Playlist 2 short audio: playlist 2nd audio was already downloaded and 
            was deleted''', (WidgetTester tester) async {
-
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -430,10 +433,12 @@ Future<void> main() async {
       await tester.tap(find.byKey(const Key('confirmButton')));
       await tester.pumpAndSettle();
 
-      // Now find the ok button of the confirm warning dialog
-      // and tap on it
-      await tester.tap(find.byKey(const Key('okButtonKey')));
-      await tester.pumpAndSettle();
+      // Verify the displayed alert dialog
+      await IntegrationTestUtil.verifyAlertDisplayAndCloseIt(
+        tester: tester,
+        alertDialogMessage:
+            "Confirm target playlist \"$emptyLocalTestPlaylistTitle\" for downloading single video audio at spoken quality.",
+      );
 
       // Add a delay to allow the download to finish. 5 seconds is ok
       // when running the audio_download_vm_test only.
@@ -578,10 +583,12 @@ Future<void> main() async {
       await tester.tap(find.byKey(const Key('confirmButton')));
       await tester.pumpAndSettle();
 
-      // Now find the ok button of the confirm warning dialog
-      // and tap on it
-      await tester.tap(find.byKey(const Key('okButtonKey')));
-      await tester.pumpAndSettle();
+      // Verify the displayed alert dialog
+      await IntegrationTestUtil.verifyAlertDisplayAndCloseIt(
+        tester: tester,
+        alertDialogMessage:
+            "Confirm target playlist \"$emptyLocalTestPlaylistTitle\" for downloading single video audio at music quality.",
+      );
 
       // Add a delay to allow the download to finish. 5 seconds is ok
       // when running the audio_download_vm_test only.
@@ -644,10 +651,11 @@ Future<void> main() async {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-      testWidgets(
+    testWidgets(
         '''Download single audio in spoken quality in local playlist containing one audio.
            Using integr test application.''', (WidgetTester tester) async {
-      String localTestPlaylistTitle = 'audio_learn_download_single_video_to_not_empty_local_playlist_test';
+      String localTestPlaylistTitle =
+          'audio_learn_download_single_video_to_not_empty_local_playlist_test';
       String localTestPlaylistsPlaylistDir =
           "$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$localTestPlaylistTitle";
 
@@ -795,7 +803,7 @@ Future<void> main() async {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-});
+  });
   group('''Download recreated playlist with short audio. Those tests are used to
            test recreating the playlist with the same name. Recreating a playlist
            with an identical name avoids to loose time removing from the original
