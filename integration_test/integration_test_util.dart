@@ -1563,6 +1563,7 @@ class IntegrationTestUtil {
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
       );
 
       // load settings from file which does not exist. This
