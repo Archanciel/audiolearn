@@ -10,7 +10,6 @@ import 'package:audiolearn/services/json_data_service.dart';
 import 'package:audiolearn/services/settings_data_service.dart';
 import 'package:audiolearn/utils/date_time_parser.dart';
 import 'package:audiolearn/utils/dir_util.dart';
-import 'package:audiolearn/views/screen_mixin.dart';
 import 'package:audiolearn/constants.dart';
 import 'package:audiolearn/models/audio.dart';
 import 'package:audiolearn/models/playlist.dart';
@@ -354,8 +353,8 @@ Future<void> main() async {
   });
   group('Download short audio of 1 single video', () {
     testWidgets(
-        '''Download single audio in local playlist containing no audio. Using integr test
-           application.''', (WidgetTester tester) async {
+        '''Download single audio in spoken quality in local playlist containing no audio.
+           Using integr test application.''', (WidgetTester tester) async {
       String emptyLocalTestPlaylistTitle = 'audio_learn_download_single_video';
       String localTestPlaylistDir =
           "$kPlaylistDownloadRootPathWindowsTest${path.separator}$emptyLocalTestPlaylistTitle";
@@ -645,15 +644,14 @@ Future<void> main() async {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets(
-        '''Using integr test application. Download single video in audio (speak)
-           quality to a target local playlist containing no audio''',
-        (WidgetTester tester) async {
-      String localTargetPlaylistTitle = 'audio_learn_download_single_video';
-      String localTestPlaylistDir =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$localTargetPlaylistTitle";
+      testWidgets(
+        '''Download single audio in spoken quality in local playlist containing one audio.
+           Using integr test application.''', (WidgetTester tester) async {
+      String localTestPlaylistTitle = 'audio_learn_download_single_video_to_not_empty_local_playlist_test';
+      String localTestPlaylistsPlaylistDir =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$localTestPlaylistTitle";
 
-      final Directory directory = Directory(localTestPlaylistDir);
+      final Directory directory = Directory(localTestPlaylistsPlaylistDir);
 
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
@@ -664,7 +662,7 @@ Future<void> main() async {
       // Copying the initial local playlist json file with no audio
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}audio_learn_download_single_video_to_empty_local_playlist_test",
+            "$kDownloadAppTestSavedDataDir${path.separator}audio_learn_download_single_video_to_not_empty_local_pl_test",
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
@@ -713,7 +711,7 @@ Future<void> main() async {
         (Widget widget) =>
             widget is RadioListTile &&
             widget.title is Text &&
-            (widget.title as Text).data == localTargetPlaylistTitle,
+            (widget.title as Text).data == localTestPlaylistTitle,
       );
 
       // Tap the target playlist RadioListTile to select it
@@ -729,6 +727,11 @@ Future<void> main() async {
       await tester.tap(find.byKey(const Key('okButtonKey')));
       await tester.pumpAndSettle();
 
+      // Add a delay to allow the download to finish. 5 seconds is ok
+      // when running the audio_download_vm_test only.
+      // Waiting 5 seconds only causes MissingPluginException
+      // 'No implementation found for method $method on channel $name'
+      // when all tsts are run. 7 seconds solve the problem.
       for (int i = 0; i < 5; i++) {
         await Future.delayed(const Duration(seconds: 1));
         await tester.pumpAndSettle();
@@ -739,141 +742,10 @@ Future<void> main() async {
 
       _checkDownloadedPlaylist(
         downloadedPlaylist: singleVideoDownloadedPlaylist,
-        playlistId: localTargetPlaylistTitle,
-        playlistTitle: localTargetPlaylistTitle,
-        playlistUrl: '',
-        playlistDir: localTestPlaylistDir,
-        isPlaylistSelected: false,
-      );
-
-      // this check fails if the secondsDelay value is too small
-      expect(audioDownloadVM.isDownloading, false);
-
-      expect(audioDownloadVM.downloadProgress, 1.0);
-      expect(audioDownloadVM.lastSecondDownloadSpeed, 0);
-      expect(audioDownloadVM.isHighQuality, false);
-
-      // Checking the data of the single video audio contained in the
-      // target playlist in which the audio was downloaded
-      _checkDownloadedAudioShortVideoTwo(
-        downloadedAudioTwo: singleVideoDownloadedPlaylist.downloadedAudioLst[0],
-        audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
-        downloadedAtMusicQuality: false,
-      );
-
-      // Checking if there are 2 files in the directory (1 mp3 and 1 json)
-      final List<FileSystemEntity> files =
-          directory.listSync(recursive: false, followLinks: false);
-
-      expect(files.length, 2);
-
-      // Checking if the playlist json file has been updated with the
-      // downloaded audio data
-
-      String playlistPathFileName =
-          '$localTestPlaylistDir${path.separator}$localTargetPlaylistTitle.json';
-
-      Playlist loadedPlaylist = JsonDataService.loadFromFile(
-          jsonPathFileName: playlistPathFileName, type: Playlist);
-
-      compareDeserializedWithOriginalPlaylist(
-        deserializedPlaylist: loadedPlaylist,
-        originalPlaylist: singleVideoDownloadedPlaylist,
-      );
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
-      );
-    });
-    testWidgets('Local playlist containing one audio',
-        (WidgetTester tester) async {
-      late AudioDownloadVM audioDownloadVM;
-      String localTestPlaylistTitle =
-          'audio_learn_download_single_video_to_not_empty_local_playlist_test';
-      String localTestPlaylistDir =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$localTestPlaylistTitle";
-      String savedTestPlaylistDir =
-          "$kDownloadAppTestSavedDataDir${path.separator}$localTestPlaylistTitle";
-
-      final Directory directory = Directory(localTestPlaylistDir);
-
-      // necessary in case the previous test failed and so did not
-      // delete the its playlist dir
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
-      );
-
-      await DirUtil.createDirIfNotExist(pathStr: localTestPlaylistDir);
-
-      // Copying the initial local playlist json file with no audio
-      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-        sourceRootPath: savedTestPlaylistDir,
-        destinationRootPath: localTestPlaylistDir,
-      );
-
-      final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
-      );
-
-      // load settings from file which does not exist. This
-      // will ensure that the default playlist root path is set
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName: "temp\\wrong.json");
-
-      // Building and displaying the DownloadPlaylistPage integration test
-      // application.
-      await tester.pumpWidget(ChangeNotifierProvider(
-        create: (BuildContext context) {
-          final WarningMessageVM warningMessageVM = WarningMessageVM();
-          audioDownloadVM = AudioDownloadVM(
-            warningMessageVM: warningMessageVM,
-            settingsDataService: settingsDataService,
-          );
-          return audioDownloadVM;
-        },
-        child: MaterialApp(
-          // forcing dark theme
-          theme: ScreenMixin.themeDataDark,
-          home: const DownloadPlaylistPage(
-            // integration test opened application
-            playlistUrl: globalTestPlaylistUrl,
-          ),
-        ),
-      ));
-
-      String singleVideoUrl = 'https://youtu.be/uv3VQoWSjBE';
-
-      await tester.enterText(
-        find.byKey(const Key('playlistUrlTextField')),
-        singleVideoUrl,
-      );
-      await tester.pumpAndSettle();
-
-      // tapping on the downl single video button in the app which
-      // calls the AudioDownloadVM.downloadPlaylistAudios() method
-      await tester.tap(find.byKey(const Key('downloadSingleVideoAudioButton')));
-      await tester.pumpAndSettle();
-
-      // Add a delay to allow the download to finish. 5 seconds is ok
-      // when running the audio_download_vm_test only.
-      // Waiting 5 seconds only causes MissingPluginException
-      // 'No implementation found for method $method on channel $name'
-      // when all tsts are run. 7 seconds solve the problem.
-      await Future.delayed(const Duration(seconds: secondsDelay));
-      await tester.pumpAndSettle();
-
-      Playlist singleVideoDownloadedPlaylist =
-          audioDownloadVM.listOfPlaylist[0];
-
-      _checkDownloadedPlaylist(
-        downloadedPlaylist: singleVideoDownloadedPlaylist,
         playlistId: localTestPlaylistTitle,
         playlistTitle: localTestPlaylistTitle,
         playlistUrl: '',
-        playlistDir: localTestPlaylistDir,
+        playlistDir: localTestPlaylistsPlaylistDir,
         isPlaylistSelected: false,
       );
 
@@ -884,41 +756,30 @@ Future<void> main() async {
       expect(audioDownloadVM.lastSecondDownloadSpeed, 0);
       expect(audioDownloadVM.isHighQuality, false);
 
-      // downloadedAudioLst contains added Audio's. Checking the
-      // values of the 1st and 2nd audio still in the playlist json
-      // file and deleted from the playlist dir ...
-      _checkPlaylistDownloadedAudios(
-        downloadedAudioOne: singleVideoDownloadedPlaylist.downloadedAudioLst[0],
+      // Checking the data of the audio contained in the downloaded
+      // audio list
+      _checkDownloadedAudioShortVideoTwo(
         downloadedAudioTwo: singleVideoDownloadedPlaylist.downloadedAudioLst[1],
-        audioOneFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
         audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
       );
 
-      // ... and the values of the 3rd and 4th audio newly downloaded
-      // and added to the playlist downloaded audio lst ...
-
-      // playableAudioLst contains Audio's inserted at list start.
-      // Checking the values of the 1st and 2nd audio still in the
-      // playlist json file and deleted from the playlist dir ...
-
-      _checkPlaylistDownloadedAudios(
-        downloadedAudioOne: singleVideoDownloadedPlaylist.playableAudioLst[1],
+      // Checking the data of the audio contained in the playable
+      // audio list
+      _checkDownloadedAudioShortVideoTwo(
         downloadedAudioTwo: singleVideoDownloadedPlaylist.playableAudioLst[0],
-        audioOneFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
         audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
       );
 
       // Checking if there are 3 files in the directory (2 mp3 and 1 json)
       final List<FileSystemEntity> files =
           directory.listSync(recursive: false, followLinks: false);
-
       expect(files.length, 3);
 
       // Checking if the playlist json file has been updated with the
       // downloaded audio data
 
       String playlistPathFileName =
-          '$localTestPlaylistDir${path.separator}$localTestPlaylistTitle.json';
+          '$localTestPlaylistsPlaylistDir${path.separator}$localTestPlaylistTitle.json';
 
       Playlist loadedPlaylist = JsonDataService.loadFromFile(
           jsonPathFileName: playlistPathFileName, type: Playlist);
@@ -934,7 +795,7 @@ Future<void> main() async {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-  });
+});
   group('''Download recreated playlist with short audio. Those tests are used to
            test recreating the playlist with the same name. Recreating a playlist
            with an identical name avoids to loose time removing from the original
