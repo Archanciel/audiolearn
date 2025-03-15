@@ -849,6 +849,45 @@ class IntegrationTestUtil {
     }
   }
 
+  static Future<void> verifyAlertDisplayAndCloseIt({
+    required WidgetTester tester,
+    required String alertDialogMessage,
+    bool tapTwiceOnOkButton = false,
+  }) async {
+    // Ensure the alert dialog is shown
+    final Finder alertDialogDisplayDialogFinder =
+        find.byType(AlertDialog);
+    expect(alertDialogDisplayDialogFinder, findsOneWidget);
+
+    // Check the value of the alert dialog title
+
+    Text alertDialogTitle =
+        tester.widget(find.byKey(const Key('confirmationDialogTitleKey')).last);
+
+      expect(alertDialogTitle.data, 'CONFIRMATION');
+
+    // Check the value of the alert dialog message
+    expect(
+      tester
+          .widget<Text>(find.byKey(const Key('confirmationDialogMessageKey')).last)
+          .data,
+      alertDialogMessage,
+    );
+
+    // Close the warning dialog by tapping on the Ok button
+
+    if (tapTwiceOnOkButton) {
+      await tester.tap(find.byKey(const Key('okButtonKey')).last);
+      await tester.pumpAndSettle(const Duration(milliseconds: 400));
+
+      await tester.tap(find.byKey(const Key('okButtonKey')).last);
+      await tester.pumpAndSettle(const Duration(milliseconds: 400));
+    } else {
+      await tester.tap(find.byKey(const Key('okButtonKey')).last);
+      await tester.pumpAndSettle();
+    }
+  }
+
   static Future<void> selectPlaylist({
     required WidgetTester tester,
     required String playlistToSelectTitle,
