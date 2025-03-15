@@ -8166,7 +8166,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Now verifying the warning dialog
-        await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
           tester: tester,
           warningDialogMessage:
               'Since "default" Sort/Filter parms is selected, no audio can be moved from Youtube playlist "$sourcePlaylistTitle" to local playlist "$targetPlaylistTitle". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...',
@@ -9849,7 +9849,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Now verifying the warning dialog
-        await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
           tester: tester,
           warningDialogMessage:
               'Since "default" Sort/Filter parms is selected, no audio can be copied from Youtube playlist "$sourcePlaylistTitle" to local playlist "$targetPlaylistTitle". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...',
@@ -10391,7 +10391,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify the displayed warning dialog
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             "Saved playlist and comment json files as well as application settings to \"$saveZipFilePath${path.separator}audioLearn_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip\".",
@@ -10490,7 +10490,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify the displayed warning dialog
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             "Playlist and comment json files as well as application settings could not be saved to zip.",
@@ -10667,7 +10667,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             'Restored 5 playlist and 5 comment json files as well as the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
@@ -12497,7 +12497,7 @@ Future<void> _tapOnRewindPlaylistAudioToStartPositionMenu({
   await tester.tap(popupDeletePlaylistMenuItem);
   await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-  await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+  await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
     tester: tester,
     warningDialogMessage:
         "$numberOfRewindedAudio playlist audio's were repositioned to start.",

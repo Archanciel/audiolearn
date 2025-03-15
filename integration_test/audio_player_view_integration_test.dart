@@ -13,7 +13,6 @@ import 'package:audiolearn/views/widgets/comment_add_edit_dialog.dart';
 import 'package:audiolearn/views/widgets/comment_list_add_dialog.dart';
 import 'package:audiolearn/views/widgets/playlist_comment_list_dialog.dart';
 import 'package:audiolearn/views/widgets/set_value_to_target_dialog.dart';
-import 'package:audiolearn/views/widgets/warning_message_display.dart';
 import 'package:path/path.dart' as path;
 import 'package:audiolearn/constants.dart';
 import 'package:audiolearn/utils/dir_util.dart';
@@ -5217,26 +5216,13 @@ void main() {
       await tester.tap(find.byKey(const Key('confirmButton')));
       await tester.pumpAndSettle();
 
-      // Ensure the warning dialog is shown
-      expect(find.byType(WarningMessageDisplayDialog), findsOneWidget);
-
-      // Check the value of the Confirm dialog title
-      Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'CONFIRMATION');
-
-      // Now verifying the confirm dialog message
-
-      Text warningDialogMessageTextWidget =
-          tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
-
-      expect(warningDialogMessageTextWidget.data,
-          'Audio "La surpopulation mondiale par Jancovici et Barrau" moved from Youtube playlist "S8 audio" to local playlist "Empty".');
-
-      // Now find the ok button of the confirm dialog
-      // and tap on it
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
+      // Verify the displayed warning or confirn dialog
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            'Audio "La surpopulation mondiale par Jancovici et Barrau" moved from Youtube playlist "S8 audio" to local playlist "Empty".',
+        isWarningConfirming: true,
+      );
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -7782,27 +7768,13 @@ void main() {
 
       // Since no checkbox was checked, a warning will be displayed ...
 
-      // Ensure the warning dialog is shown
-      Finder warningMessageDisplayDialogFinder =
-          find.byType(WarningMessageDisplayDialog);
-      expect(warningMessageDisplayDialogFinder, findsOneWidget);
-
-      // Check the value of the warning dialog title
-      Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')));
-      expect(warningDialogTitle.data, 'WARNING');
-
-      // Check the value of the warning dialog message
-      expect(
-          tester
-              .widget<Text>(find.byKey(const Key('warningDialogMessage')))
-              .data,
-          "No checkbox selected. Please select one checkbox before clicking 'Ok', or click 'Cancel' to exit.");
-
-      // Close the warning dialog by tapping on the Ok button. Does not
-      // work. I lost so many hours trying to fix this problem ...
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-      await tester.pumpAndSettle();
+      // Verify the displayed warning or confirn dialog
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "No checkbox selected. Please select one checkbox before clicking 'Ok', or click 'Cancel' to exit.",
+        isWarningConfirming: false,
+      );
 
       await simulateEnteringTooBigAndTooSmallAudioPosition(
           tester: tester,
@@ -7970,24 +7942,13 @@ Future<void> simulateEnteringTooBigAndTooSmallAudioPosition({
   // a warning will be displayed, even if no start or end checkbox
   // was checked ...
 
-  // Ensure the warning dialog is shown
-  Finder warningMessageDisplayDialogFinder =
-      find.byType(WarningMessageDisplayDialog);
-  expect(warningMessageDisplayDialogFinder, findsOneWidget);
-
-  // Check the value of the warning dialog title
-  Text warningDialogTitle =
-      tester.widget(find.byKey(const Key('warningDialogTitle')));
-  expect(warningDialogTitle.data, 'WARNING');
-
-  // Check the value of the warning dialog message
-  expect(
-      tester.widget<Text>(find.byKey(const Key('warningDialogMessage'))).data,
-      "The entered value exceeds the maximal value (1:17:53.7). Please correct it and retry ...");
-
-  // Close the warning dialog by tapping on the Ok button
-  await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-  await tester.pumpAndSettle();
+  // Verify the displayed warning or confirn dialog
+  await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+    tester: tester,
+    warningDialogMessage:
+        "The entered value exceeds the maximal value (1:17:53.7). Please correct it and retry ...",
+    isWarningConfirming: false,
+  );
 
   // Check that the too big invalid value in the set value to target
   // dialog was replaced by the maximum possible value, i.e. the
@@ -8027,23 +7988,13 @@ Future<void> simulateEnteringTooBigAndTooSmallAudioPosition({
   // position (0:00), a warning will be displayed, even if no start
   // or end checkbox was checked ...
 
-  // Ensure the warning dialog is shown
-  warningMessageDisplayDialogFinder = find.byType(WarningMessageDisplayDialog);
-  expect(warningMessageDisplayDialogFinder, findsOneWidget);
-
-  // Check the value of the warning dialog title
-  warningDialogTitle =
-      tester.widget(find.byKey(const Key('warningDialogTitle')));
-  expect(warningDialogTitle.data, 'WARNING');
-
-  // Check the value of the warning dialog message
-  expect(
-      tester.widget<Text>(find.byKey(const Key('warningDialogMessage'))).data,
-      "The entered value is below the minimal value (0:00.0). Please correct it and retry ...");
-
-  // Close the warning dialog by tapping on the Ok button
-  await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-  await tester.pumpAndSettle();
+  // Verify the displayed warning or confirn dialog
+  await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+    tester: tester,
+    warningDialogMessage:
+        "The entered value is below the minimal value (0:00.0). Please correct it and retry ...",
+    isWarningConfirming: false,
+  );
 
   // Check that the too small invalid value in the set value to target
   // dialog was replaced by the minimum possible value, i.e. the
