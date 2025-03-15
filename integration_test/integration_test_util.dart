@@ -803,7 +803,7 @@ class IntegrationTestUtil {
     }
   }
 
-  static Future<void> verifyDisplayedWarningAndCloseIt({
+  static Future<void> verifyWarningDisplayAndCloseIt({
     required WidgetTester tester,
     required String warningDialogMessage,
     bool isWarningConfirming = false,

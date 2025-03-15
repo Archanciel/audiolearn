@@ -5217,7 +5217,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify the displayed warning or confirn dialog
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             'Audio "La surpopulation mondiale par Jancovici et Barrau" moved from Youtube playlist "S8 audio" to local playlist "Empty".',
@@ -7769,7 +7769,7 @@ void main() {
       // Since no checkbox was checked, a warning will be displayed ...
 
       // Verify the displayed warning or confirn dialog
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             "No checkbox selected. Please select one checkbox before clicking 'Ok', or click 'Cancel' to exit.",
@@ -7943,7 +7943,7 @@ Future<void> simulateEnteringTooBigAndTooSmallAudioPosition({
   // was checked ...
 
   // Verify the displayed warning or confirn dialog
-  await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+  await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
     tester: tester,
     warningDialogMessage:
         "The entered value exceeds the maximal value (1:17:53.7). Please correct it and retry ...",
@@ -7989,7 +7989,7 @@ Future<void> simulateEnteringTooBigAndTooSmallAudioPosition({
   // or end checkbox was checked ...
 
   // Verify the displayed warning or confirn dialog
-  await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+  await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
     tester: tester,
     warningDialogMessage:
         "The entered value is below the minimal value (0:00.0). Please correct it and retry ...",

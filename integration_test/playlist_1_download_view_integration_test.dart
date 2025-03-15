@@ -466,7 +466,7 @@ void main() {
           .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
       await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             'The Youtube playlist title "$invalidYoutubePlaylistTitle" can not contain any comma. Please correct the title and retry ...',
@@ -726,7 +726,7 @@ void main() {
           .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
       await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             'Playlist "$youtubeNewPlaylistTitle" with this URL "$youtubePlaylistUrl" is already in the list of playlists and so won\'t be recreated.',
@@ -1450,7 +1450,7 @@ void main() {
           .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
       await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             "Local playlist \"$localPlaylistTitle\" already exists in the list of playlists. Therefore, the local playlist with this title won't be created.",
@@ -1504,7 +1504,7 @@ void main() {
           .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
       await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             "The local playlist title \"$invalidLocalPlaylistTitle\" can not contain any comma. Please correct the title and retry ...",
@@ -1675,7 +1675,7 @@ void main() {
           .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
       await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             "Youtube playlist \"$localPlaylistTitle\" already exists in the list of playlists. Therefore, the local playlist with this title won't be created.",
@@ -2094,7 +2094,7 @@ void main() {
           .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
       await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             'Playlist with invalid URL "$invalidYoutubePlaylistUrl" neither added nor modified.',
@@ -2241,7 +2241,7 @@ void main() {
           .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
       await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             'Playlist with invalid URL "$invalidYoutubePlaylistUrl" neither added nor modified.',
@@ -2389,7 +2389,7 @@ void main() {
           .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
       await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             "Trying to add a private Youtube playlist is not possible since the audio's of a private playlist can not be downloaded. To solve the problem, edit the playlist on Youtube and change its visibility from \"Private\" to \"Unlisted\" or to \"Public\" and then re-add it to the application.",
@@ -2520,7 +2520,7 @@ void main() {
           .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
       await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             'Youtube playlist "Essai" of audio quality added at end of list of playlists.',
@@ -2590,7 +2590,7 @@ void main() {
           .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
       await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             'Youtube playlist "audio_player_view_2_shorts_test" of audio quality added at end of list of playlists.',
@@ -3050,7 +3050,7 @@ void main() {
       await tester.tap(find.byKey(const Key('okButtonKey')));
       await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             'The URL "$invalidSingleVideoUrl" supposed to point to a unique video is invalid. Therefore, no video has been downloaded.',
@@ -3278,7 +3278,7 @@ void main() {
       await tester.tap(find.byKey(const Key('okButtonKey')));
       await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             'Audio "$downloadedSingleVideoAudioTitle" is contained in file "230628-033811-audio learn test short video one 23-06-10.mp3" present in the target playlist "$youtubeAudioSourceAndTargetPlaylistTitle" directory and so won\'t be redownloaded.',
@@ -3791,7 +3791,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Now verifying the confirm dialog message
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             'Audio "audio learn test short video one" copié de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".',
@@ -4104,7 +4104,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Now verifying the warning dialog
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             "L'audio \"audio learn test short video one\" n'a pas été copié de la playlist Youtube \"audio_learn_test_download_2_small_videos\" vers la playlist locale \"local_audio_playlist_2\" car il est déjà présent dans cette playlist.",
@@ -4410,7 +4410,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Check the value of the Confirm dialog title
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             'Audio "audio learn test short video one" copié de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".',
@@ -4589,7 +4589,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Now verifying the warning dialog
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             "L'audio \"audio learn test short video one\" n'a pas été déplacé de la playlist Youtube \"audio_learn_test_download_2_small_videos\" vers la playlist locale \"local_audio_playlist_2\" car il est déjà présent dans cette playlist.",
@@ -4792,7 +4792,7 @@ void main() {
       await tester.tap(find.byKey(const Key('confirmButton')));
       await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             'Audio "audio learn test short video one" copié de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".',
@@ -5021,7 +5021,7 @@ void main() {
       await tester.tap(find.byKey(const Key('confirmButton')));
       await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             'Audio "audio learn test short video one" déplacé de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".',
@@ -5142,7 +5142,7 @@ void main() {
       await tester.tap(find.byKey(const Key('confirmButton')));
       await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             'Audio "audio learn test short video one" copié de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".',
@@ -5327,7 +5327,7 @@ void main() {
       await tester.tap(find.byKey(const Key('confirmButton')));
       await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             'Audio "audio learn test short video one" copié de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".',
@@ -5772,7 +5772,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Now verifying the warning dialog
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             "L'audio \"audio learn test short video one\" n'a pas été copié de la playlist Youtube \"audio_learn_test_download_2_small_videos\" vers la playlist locale \"local_3\" car il est déjà présent dans cette playlist.",
@@ -6664,7 +6664,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Now verifying the warning dialog
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             "L'audio \"audio learn test short video one\" n'a pas été déplacé de la playlist Youtube \"audio_learn_test_download_2_small_videos\" vers la playlist locale \"local_3\" car il est déjà présent dans cette playlist.",
@@ -7769,7 +7769,7 @@ void main() {
 
       // Now verifying the warning dialog
 
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             'Playable audio list for playlist "$youtubePlaylistTitle" was updated. 4 audio(s) were removed.',
@@ -7966,7 +7966,7 @@ void main() {
 
       // Now verifying the warning dialog
 
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             'Playable audio list for playlist "$localPlaylistTitle" was updated. 2 audio(s) were removed.',
@@ -8171,7 +8171,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Now verifying the warning dialog
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             'Playable audio list for playlist "$youtubePlaylistTitle" was updated. 1 audio(s) were removed.',
@@ -8343,7 +8343,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Now verifying the warning dialog
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             'Playable audio list for playlist "$localPlaylistTitle" was updated. 1 audio(s) were removed.',
@@ -10882,7 +10882,7 @@ void main() {
           await tester.pumpAndSettle();
 
           // Now verifying the warning dialog
-          await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
                 'If the deleted audio video "$commentedAudioTitleToDelete" remains in the "$youtubePlaylistTitle" Youtube playlist, it will be downloaded again the next time you download the playlist !',
@@ -11044,7 +11044,7 @@ void main() {
           await tester.pumpAndSettle();
 
           // Now verifying the warning dialog
-          await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
                 'If the deleted audio video "$uncommentedAudioTitleToDelete" remains in the "$youtubePlaylistTitle" Youtube playlist, it will be downloaded again the next time you download the playlist !',
@@ -11327,7 +11327,7 @@ void main() {
           await tester.pumpAndSettle();
 
           // Now verifying the warning dialog
-          await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
                 'If the deleted audio video "$commentedAudioTitleToDelete" remains in the "$youtubePlaylistTitle" Youtube playlist, it will be downloaded again the next time you download the playlist !',
@@ -11586,7 +11586,7 @@ void main() {
           await tester.pumpAndSettle();
 
           // Now verifying the warning dialog
-          await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
                 'If the deleted audio video "$uncommentedAudioTitleToDelete" remains in the "$youtubePlaylistTitle" Youtube playlist, it will be downloaded again the next time you download the playlist !',
@@ -12832,7 +12832,7 @@ void main() {
       expect(find.byType(WarningMessageDisplayDialog), findsOneWidget);
 
       // Now verifying the warning dialog
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             'If the deleted audio video "$audioToDeleteTitle" remains in the "$youtubeAudioPlaylistTitle" Youtube playlist, it will be downloaded again the next time you download the playlist !',
@@ -15458,7 +15458,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure the warning dialog is displayed
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             "Audio file \"$oldFileName\" renamed to \"$newFileName\".",
@@ -15613,7 +15613,7 @@ void main() {
       final String oldJsonFileName = oldMp3FileName.replaceAll('mp3', 'json');
       final String newJsonFileName = newMp3FileName.replaceAll('mp3', 'json');
 
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             "Audio file \"$oldMp3FileName\" renamed to \"$newMp3FileName\" as well as comment file \"$oldJsonFileName\" renamed to \"$newJsonFileName\".",
@@ -15753,7 +15753,7 @@ void main() {
       // directory, a warning will be displayed ...
 
       // Ensure the warning dialog is shown
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             "The file name \"$fileNameOfExistingFile\" already exists in the same directory and cannot be used.",
@@ -15881,7 +15881,7 @@ void main() {
       // Since file name has no mp3 extension a warning will be displayed ...
 
       // Ensure the warning dialog is displayed
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             "The audio file name \"$fileNameOfExistingFile\" has no mp3 extension and so is invalid.",
@@ -16033,7 +16033,7 @@ void main() {
       // audio comment directory, a warning will be displayed ...
 
       // Ensure the warning dialog is displayed
-      await IntegrationTestUtil.verifyDisplayedWarningAndCloseIt(
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
             "The comment file name \"${newFileName.substring(0, newFileName.length - 4)}.json\" already exists in the comment directory and so renaming the audio file with the name \"$newFileName\" is not possible.",
