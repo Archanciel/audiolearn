@@ -79,7 +79,7 @@
       "title": {}
     }
   },
-  "addYoutubePlaylistTitle": "Youtube playlist \"{title}\" of {quality} quality added at end of list of playlists.",
+  "addYoutubePlaylistTitle": "Youtube playlist \"{title}\" with {quality} quality added to the end of the playlist list.",
   "@addYoutubePlaylistTitle": {
     "description": "Warning announcing that the playlist was added at end of list of playlists.",
     "placeholders": {
@@ -247,8 +247,8 @@
   "allHistoricalSortFilterParametersDeleteConfirmation": "Deleting all historical sort/filter parameters.",
   "playlistRootPathNotExistWarning": "The defined path \"{playlistRootPath}\" does not exist. Please enter a valid playlist root path and retry ...",
   "confirmDialogTitle": "CONFIRMATION",
-  "confirmSingleVideoAudioPlaylistTitle": "Confirm target playlist \"{title}\" for downloading single video audio.",
-  "confirmSingleVideoAudioAtMusicQualityPlaylistTitle": "Confirm target playlist \"{title}\" for downloading single video audio at music quality.",
+  "confirmSingleVideoAudioPlaylistTitle": "Confirm target playlist \"{title}\" for downloading single video audio in spoken quality.",
+  "confirmSingleVideoAudioAtMusicQualityPlaylistTitle": "Confirm target playlist \"{title}\" for downloading single video audio in high-quality music format.",
   "playlistJsonFileSizeLabel": "JSON file size",
   "playlistOneSelectedDialogTitle": "Select a playlist",
   "confirmButton": "Confirm",
