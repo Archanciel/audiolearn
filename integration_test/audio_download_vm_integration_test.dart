@@ -81,7 +81,7 @@ Future<void> main() async {
       );
     });
 
-    testWidgets('Playlist 2 short audio: playlist dir not exist',
+    testWidgets('Playlist 2 short audio in spoken quality: playlist dir not exist',
         (WidgetTester tester) async {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
@@ -102,7 +102,7 @@ Future<void> main() async {
         forcedLocale: const Locale('en'),
       );
 
-      // Entering the recreated playlist URL in the Youtube URL or search
+      // Entering the created playlist URL in the Youtube URL or search
       // text field of the app
       await tester.enterText(
         find.byKey(
@@ -116,6 +116,16 @@ Future<void> main() async {
       // button
       await tester.tap(find.byKey(const Key('addPlaylistButton')));
       await tester.pumpAndSettle();
+
+      // Check the value of the AlertDialog dialog title
+      Text alertDialogTitle =
+          tester.widget(find.byKey(const Key('playlistConfirmDialogTitleKey')));
+      expect(alertDialogTitle.data, 'Add Youtube Playlist');
+
+      // Check the value of the AlertDialog url Text
+      Text confirmUrlText =
+          tester.widget(find.byKey(const Key('playlistUrlConfirmDialogText')));
+      expect(confirmUrlText.data, globalTestPlaylistUrl);
 
       // Confirm the addition by tapping the 'Add' button in
       // the AlertDialog and then on the 'OK' button of the
@@ -133,7 +143,7 @@ Future<void> main() async {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Youtube playlist \"$globalTestPlaylistTitle\" of audio quality added at end of list of playlists.",
+            "Youtube playlist \"$globalTestPlaylistTitle\" with audio quality added to the end of the playlist list.",
       );
 
       expect(
@@ -205,6 +215,165 @@ Future<void> main() async {
         downloadedAudioTwo: downloadedPlaylist.playableAudioLst[0],
         audioOneFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
         audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
+      );
+
+      // Checking if there are 3 files in the directory (2 mp3 and 1 json)
+      final List<FileSystemEntity> files =
+          Directory(globalTestPlaylistDir).listSync(
+        recursive: false,
+        followLinks: false,
+      );
+
+      expect(files.length, 3);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets('Playlist 2 short audio in music quality: playlist dir not exist',
+        (WidgetTester tester) async {
+      // necessary in case the previous test failed and so did not
+      // delete the its playlist dir
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copying the initial local playlist json file with no audio
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}audio_learn_download_2_small_videos_empty_dir_test",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      AudioDownloadVM audioDownloadVM =
+          await IntegrationTestUtil.launchIntegrTestApplication(
+        tester: tester,
+        forcedLocale: const Locale('en'),
+      );
+
+      // Entering the created playlist URL in the Youtube URL or search
+      // text field of the app
+      await tester.enterText(
+        find.byKey(
+          const Key('youtubeUrlOrSearchTextField'),
+        ),
+        globalTestPlaylistUrl,
+      );
+      await tester.pumpAndSettle();
+
+      // Open the add playlist dialog by tapping the add playlist
+      // button
+      await tester.tap(find.byKey(const Key('addPlaylistButton')));
+      await tester.pumpAndSettle();
+
+      // Check the value of the AlertDialog dialog title
+      Text alertDialogTitle =
+          tester.widget(find.byKey(const Key('playlistConfirmDialogTitleKey')));
+      expect(alertDialogTitle.data, 'Add Youtube Playlist');
+
+      // Check the value of the AlertDialog url Text
+      Text confirmUrlText =
+          tester.widget(find.byKey(const Key('playlistUrlConfirmDialogText')));
+      expect(confirmUrlText.data, globalTestPlaylistUrl);
+
+      // Set the music quality checkbox to true
+      await tester.tap(find.byKey(
+          const Key('playlistQualityConfirmDialogCheckBox')));
+      await tester.pumpAndSettle();
+
+      // Confirm the addition by tapping the 'Add' button in
+      // the AlertDialog and then on the 'OK' button of the
+      // confirm dialog
+      await tester
+          .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
+      await tester.pumpAndSettle();
+
+      // Add a delay to allow the update playlist URL to finish. 1
+      // second is ok
+      await Future.delayed(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
+
+      // Verify the displayed warning dialog
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Youtube playlist \"$globalTestPlaylistTitle\" with music quality added to the end of the playlist list.",
+      );
+
+      expect(
+        tester
+            .widget<TextField>(find.byKey(
+              const Key('youtubeUrlOrSearchTextField'),
+            ))
+            .controller!
+            .text,
+        '', // 'Youtube Link or Search' displayed in the TextField
+        //     is a hint text and not the actual text !
+      );
+
+      // Now selecting the created playlist by tapping on the
+      // playlist checkbox
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: globalTestPlaylistTitle,
+      );
+
+      // Now typing on the download playlist button to download the
+      // 2 video audio's present the created playlist.
+      await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
+      await tester.pumpAndSettle();
+
+      // Add a delay to allow the download to finish. 5 seconds is ok
+      // when running the audio_download_vm_test only.
+      // Waiting 5 seconds only causes MissingPluginException
+      // 'No implementation found for method $method on channel $name'
+      // when all tsts are run. 7 seconds solve the problem.
+      for (int i = 0; i < 5; i++) {
+        await Future.delayed(const Duration(seconds: 2));
+        await tester.pumpAndSettle();
+      }
+
+      Playlist downloadedPlaylist = audioDownloadVM.listOfPlaylist[0];
+
+      _checkDownloadedPlaylist(
+        downloadedPlaylist: downloadedPlaylist,
+        playlistId: globalTestPlaylistId,
+        playlistTitle: globalTestPlaylistTitle,
+        playlistUrl: globalTestPlaylistUrl,
+        playlistDir: globalTestPlaylistDir,
+        isPlaylistSelected: true,
+        isPlaylistAtVoiceQuality: false,
+      );
+
+      // this check fails if the secondsDelay value is too small
+      expect(audioDownloadVM.isDownloading, false);
+
+      expect(audioDownloadVM.downloadProgress, 1.0);
+      expect(audioDownloadVM.lastSecondDownloadSpeed, 0);
+      expect(audioDownloadVM.isHighQuality, true);
+
+      // Checking the data of the audio contained in the downloaded
+      // audio list which contains 2 downloaded Audio's
+      _checkPlaylistDownloadedAudios(
+        downloadedAudioOne: downloadedPlaylist.downloadedAudioLst[0],
+        downloadedAudioTwo: downloadedPlaylist.downloadedAudioLst[1],
+        audioOneFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
+        audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
+        downloadedAtMusicQuality: true,
+      );
+
+      // Checking the data of the audio contained in the playable
+      // audio list;
+      //
+      // playableAudioLst contains Audio's inserted at list start
+      _checkPlaylistDownloadedAudios(
+        downloadedAudioOne: downloadedPlaylist.playableAudioLst[1],
+        downloadedAudioTwo: downloadedPlaylist.playableAudioLst[0],
+        audioOneFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
+        audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
+        downloadedAtMusicQuality: true,
       );
 
       // Checking if there are 3 files in the directory (2 mp3 and 1 json)
@@ -437,7 +606,7 @@ Future<void> main() async {
       await IntegrationTestUtil.verifyAlertDisplayAndCloseIt(
         tester: tester,
         alertDialogMessage:
-            "Confirm target playlist \"$emptyLocalTestPlaylistTitle\" for downloading single video audio at spoken quality.",
+            "Confirm target playlist \"$emptyLocalTestPlaylistTitle\" for downloading single video audio in spoken quality.",
       );
 
       // Add a delay to allow the download to finish. 5 seconds is ok
@@ -587,7 +756,7 @@ Future<void> main() async {
       await IntegrationTestUtil.verifyAlertDisplayAndCloseIt(
         tester: tester,
         alertDialogMessage:
-            "Confirm target playlist \"$emptyLocalTestPlaylistTitle\" for downloading single video audio at music quality.",
+            "Confirm target playlist \"$emptyLocalTestPlaylistTitle\" for downloading single video audio in high-quality music format.",
       );
 
       // Add a delay to allow the download to finish. 5 seconds is ok
@@ -1026,12 +1195,13 @@ void _checkDownloadedPlaylist({
   required String playlistUrl,
   required String playlistDir,
   required isPlaylistSelected,
+  bool isPlaylistAtVoiceQuality = true,
 }) {
   expect(downloadedPlaylist.id, playlistId);
   expect(downloadedPlaylist.title, playlistTitle);
   expect(downloadedPlaylist.url, playlistUrl);
   expect(downloadedPlaylist.downloadPath, playlistDir);
-  expect(downloadedPlaylist.playlistQuality, PlaylistQuality.voice);
+  expect(downloadedPlaylist.playlistQuality, (isPlaylistAtVoiceQuality) ? PlaylistQuality.voice : PlaylistQuality.music);
   expect(downloadedPlaylist.playlistType,
       (playlistUrl.isNotEmpty) ? PlaylistType.youtube : PlaylistType.local);
   expect(downloadedPlaylist.isSelected, isPlaylistSelected);
@@ -1043,15 +1213,18 @@ void _checkPlaylistDownloadedAudios({
   required Audio downloadedAudioTwo,
   required String audioOneFileNamePrefix,
   required String audioTwoFileNamePrefix,
+  bool downloadedAtMusicQuality = false,
 }) {
   _checkDownloadedAudioShortVideoOne(
     downloadedAudioOne: downloadedAudioOne,
     audioOneFileNamePrefix: audioOneFileNamePrefix,
+    downloadedAtMusicQuality: downloadedAtMusicQuality,
   );
 
   _checkDownloadedAudioShortVideoTwo(
     downloadedAudioTwo: downloadedAudioTwo,
     audioTwoFileNamePrefix: audioTwoFileNamePrefix,
+    downloadedAtMusicQuality: downloadedAtMusicQuality,
   );
 }
 
