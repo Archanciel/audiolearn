@@ -16,7 +16,7 @@
 			"youtubeVideoChannel": "Jean-Pierre Schnyder"
         }
     ],
-    "downloadPath": "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\audio_learn_download_single_video_to_not_empty_local_playlist_test",
+    "downloadPath": "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\playlists\\audio_learn_download_single_video_to_not_empty_local_playlist_test",
     "id": "audio_learn_download_single_video_to_not_empty_local_playlist_test",
     "isSelected": false,
     "playableAudioLst": [
