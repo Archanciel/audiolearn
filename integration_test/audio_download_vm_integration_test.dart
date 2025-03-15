@@ -25,13 +25,13 @@ const String existingAudioDateOnlyFileNamePrefix = '230610';
 final String todayDownloadDateOnlyFileNamePrefix =
     Audio.downloadDatePrefixFormatter.format(DateTime.now());
 const String globalTestPlaylistId = 'PLzwWSJNcZTMRB9ILve6fEIS_OHGrV5R2o';
-const String globalTestPlaylistOneAudioId = 'PLzwWSJNcZTMRB9ILve6fEIS_OHGrV5R2o_';
+const String globalTestPlaylistOneAudioId = 'PLzwWSJNcZTMRB9ILve6fEIS_OHGrV5R2o';
 const String globalTestPlaylistUrl =
     'https://youtube.com/playlist?list=PLzwWSJNcZTMRB9ILve6fEIS_OHGrV5R2o';
 const String globalTestPlaylistTitle =
     'audio_learn_test_download_2_small_videos';
 const String globalTestPlaylistOneAudioTitle =
-    'audio_learn_test_download_2_small_videos_1_audio';
+    'audio_learn_test_download_2_small_vid_1a';
 final String globalTestPlaylistDir =
     '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$globalTestPlaylistTitle';
 final String globalTestPlaylistOneAudioDir =
@@ -152,7 +152,7 @@ Future<void> main() async {
       );
 
       // Now typing on the download playlist button to download the
-      // new video audio's present the recreated playlist.
+      // 2 video audio's present the created playlist.
       await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
       await tester.pumpAndSettle();
 
@@ -243,7 +243,7 @@ Future<void> main() async {
       );
 
       Playlist existingPlaylistBeforeNewDownload =
-          audioDownloadVM.listOfPlaylist[1];
+          audioDownloadVM.listOfPlaylist[0];
 
       // Verifying the data of the copied playlist before downloading
       // the playlist
@@ -279,9 +279,16 @@ Future<void> main() async {
         audioTwoFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
       );
 
-      // tapping on the downl playlist button in the app which calls the
-      // AudioDownloadVM.downloadPlaylistAudios(playlistUrl) method
-      await tester.tap(find.byKey(const Key('downloadPlaylistAudiosButton')));
+      // Now selecting the existing playlist by tapping on the
+      // playlist checkbox
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: globalTestPlaylistOneAudioTitle,
+      );
+
+      // Now typing on the download playlist button to download the
+      // new video audio's present the recreated playlist.
+      await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
       await tester.pumpAndSettle();
 
       // Add a delay to allow the download to finish. 5 seconds is ok
@@ -289,8 +296,10 @@ Future<void> main() async {
       // Waiting 5 seconds only causes MissingPluginException
       // 'No implementation found for method $method on channel $name'
       // when all tsts are run. 7 seconds solve the problem.
-      await Future.delayed(const Duration(seconds: secondsDelay));
-      await tester.pumpAndSettle();
+      for (int i = 0; i < 8; i++) {
+        await Future.delayed(const Duration(seconds: 1));
+        await tester.pumpAndSettle();
+      }
 
       // expect(directory.existsSync(), true);
 
@@ -299,12 +308,12 @@ Future<void> main() async {
       Playlist downloadedPlaylist = audioDownloadVM.listOfPlaylist[0];
 
       _checkDownloadedPlaylist(
-        downloadedPlaylist: downloadedPlaylist,
-        playlistId: globalTestPlaylistId,
-        playlistTitle: globalTestPlaylistTitle,
+        downloadedPlaylist: existingPlaylistBeforeNewDownload,
+        playlistId: globalTestPlaylistOneAudioId,
+        playlistTitle: globalTestPlaylistOneAudioTitle,
         playlistUrl: globalTestPlaylistUrl,
-        playlistDir: globalTestPlaylistDir,
-        isPlaylistSelected: false,
+        playlistDir: globalTestPlaylistOneAudioDir,
+        isPlaylistSelected: true,
       );
 
       // this check fails if the secondsDelay value is too small

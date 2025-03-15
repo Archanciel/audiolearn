@@ -6,7 +6,7 @@
         "SettingType.language": "Language.english"
     },
     "SettingType.playlists": {
-        "Playlists.orderedTitleLst": "[audio_learn_test_download_2_small_videos, audio_learn_test_download_2_small_videos_1_audio]",
+        "Playlists.orderedTitleLst": "[audio_learn_test_download_2_small_vid_1a]",
         "Playlists.isMusicQualityByDefault": "false",
         "Playlists.playSpeed": "1.0",
         "Playlists.arePlaylistsDisplayedInPlaylistDownloadView": "true"
