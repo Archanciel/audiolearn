@@ -9,6 +9,10 @@ import '../../viewmodels/language_provider_vm.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 import '../screen_mixin.dart';
 
+/// This dialog is displayed when the user selects the battery settings menu item
+/// from the application left appbar popup menu. It contains informations to enable
+/// the user to correctly set the Android Battery option to "Unrestricted", which
+/// enables the app to automatically play the next audio in the current playlist.
 class BatterySettingsDialog extends StatelessWidget with ScreenMixin {
   BatterySettingsDialog({
     super.key,
