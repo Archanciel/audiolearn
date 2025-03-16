@@ -30,7 +30,7 @@ class _SimpleExampleAppState extends State<_SimpleExampleApp> {
 
     // Start the player as soon as the app is displayed.
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await player.setSource(DeviceFileSource("C:${path.separator}temp${path.separator}Organ_Voluntary_in_G_Major,_Op._7,_No._9-_I._Largo_Staccato.MP3"));
+      await player.setSource(DeviceFileSource("C:${path.separator}temp${path.separator}Rumanian folk dances, Pe Loc - sonnerie.mp3"));
       await player.resume();
     });
   }
