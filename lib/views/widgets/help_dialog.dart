@@ -9,6 +9,8 @@ import '../../services/settings_data_service.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 import '../screen_mixin.dart';
 
+/// This dialog is displayed when the user sclicks on the help icon button
+/// which is present in some dialogs.
 class HelpDialog extends StatelessWidget with ScreenMixin {
   final List<HelpItem> helpItemsLst;
   final FocusNode focusNodeDialog = FocusNode();

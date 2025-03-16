@@ -15,6 +15,8 @@ enum InvalidValueState {
   tooSmall,
 }
 
+/// A dialog that allows the user to enter a value and select one or more
+/// checkboxes which define to which target the entered value will be set.
 class SetValueToTargetDialog extends StatefulWidget {
   final String dialogTitle;
   final String dialogCommentStr;

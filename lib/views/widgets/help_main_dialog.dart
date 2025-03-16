@@ -3,6 +3,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../constants.dart';
 
+/// This dialog is displayed when the user selects the help menu item
+/// from the application right appbar popup menu. It contains a list
+/// of app help topics.
 class HelpMainDialog extends StatelessWidget {
   const HelpMainDialog({super.key});
 
