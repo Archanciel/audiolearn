@@ -20,7 +20,6 @@ import 'services/settings_data_service.dart';
 import 'utils/dir_util.dart';
 import 'views/my_home_page.dart';
 import 'views/screen_mixin.dart';
-
 Future<void> main() async {
   WidgetsFlutterBinding
       .ensureInitialized(); // Ensure Flutter bindings are initialized.
