@@ -10326,6 +10326,7 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
+
     group('App settings set speed test', () {
       // TODO: add integr test
     });
