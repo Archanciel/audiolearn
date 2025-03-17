@@ -6536,10 +6536,44 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(find.byKey(const Key('playlist_toggle_button')));
           await tester.pumpAndSettle();
 
+          // Now, selecting 'applied' dropdown button item to apply the
+          // default sort/filter parms
+          final Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
 
+          final Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
 
+          // Tap on the current dropdown button item to open the dropdown
+          // button items list
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
 
+          // And select the applied sort/filter item
+          String appliedTitle = 'applied';
+          final Finder defaultDropDownTextFinder = find.text(appliedTitle);
+          await tester.tap(defaultDropDownTextFinder);
+          await tester.pumpAndSettle();
 
+          // Now verify the playlist download view state with the 'applied'
+          // sort/filter parms applied
+
+          // Verify that the dropdown button has been updated with the
+          // 'applied' sort/filter parms selected
+          IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+            tester: tester,
+            dropdownButtonSelectedTitle: appliedTitle,
+          );
+
+          // And verify the order of the playlist audio titles
+
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst:
+                audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+          );
 
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
