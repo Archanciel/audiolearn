@@ -3242,7 +3242,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // The list has been moved down so that the current audio is
-      // displayed at the botom of the list
+      // displayed at the bottom of the list
       await IntegrationTestUtil.checkAudioTextColor(
         tester: tester,
         audioTitleOrSubTitle: thirdDownloadedNotPlayedAudioTitle,
