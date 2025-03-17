@@ -799,6 +799,9 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                         returnedAudioList,
                     audioSortFilterParms: audioSortFilterParameters,
                     audioSortFilterParmsName: audioSortFilterParametersName,
+                    translatedAppliedSortFilterParmsName:
+                        AppLocalizations.of(context)!
+                            .sortFilterParametersAppliedName,
                   );
                 }
               });

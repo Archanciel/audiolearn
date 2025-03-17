@@ -1437,11 +1437,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                         returnedAudioList,
                     audioSortFilterParms: audioSortFilterParameters,
                     audioSortFilterParmsName: audioSortFilterParametersName,
-                  );
-                  widget.settingsDataService
-                      .addOrReplaceNamedAudioSortFilterParameters(
-                    audioSortFilterParametersName: audioSortFilterParametersName,
-                    audioSortFilterParameters: audioSortFilterParameters,
+                    translatedAppliedSortFilterParmsName:
+                        AppLocalizations.of(context)!
+                            .sortFilterParametersAppliedName,
                   );
                   _wasSortFilterAudioSettingsApplied = true;
                 }
@@ -1808,7 +1806,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                     _playlistUrlOrSearchController.clear();
 
                     // Required, otherwise the audio list is not
-                    // updated with the newly downloaded audio. 
+                    // updated with the newly downloaded audio.
                     _updatePlaylistSortedFilteredAudioList(
                       playlistListVMlistenTrue: playlistListVMlistenFalse,
                     );
