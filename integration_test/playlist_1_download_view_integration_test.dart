@@ -2523,7 +2523,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            'Youtube playlist "Essai" of audio quality added at end of list of playlists.',
+            'Youtube playlist "Essai" with audio quality added to the end of the playlist list.',
         isWarningConfirming: false,
       );
 
@@ -2593,7 +2593,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            'Youtube playlist "audio_player_view_2_shorts_test" of audio quality added at end of list of playlists.',
+            'Youtube playlist "audio_player_view_2_shorts_test" with audio quality added to the end of the playlist list.',
         isWarningConfirming: false,
       );
 
@@ -2886,7 +2886,7 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets('Download single video audio with invalid URL', (tester) async {
+    testWidgets('Download single video audio in spoken quality with invalid URL', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -3044,7 +3044,195 @@ void main() {
           .widget<Text>(find.byKey(const Key('confirmationDialogMessageKey')));
 
       expect(confirmationDialogMessageTextWidget.data,
-          'Confirm target playlist "$localAudioPlaylistTitle" for downloading single video audio.');
+          'Confirm target playlist "$localAudioPlaylistTitle" for downloading single video audio in spoken quality.');
+
+      // Now find the ok button of the confirm dialog and tap on it
+      await tester.tap(find.byKey(const Key('okButtonKey')));
+      await tester.pumpAndSettle();
+
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            'The URL "$invalidSingleVideoUrl" supposed to point to a unique video is invalid. Therefore, no video has been downloaded.',
+        isWarningConfirming: false,
+      );
+
+      // Ensure the URL TextField containing the invalid single
+      // video URL was not emptied
+      urlTextField = tester.widget(find.byKey(
+        const Key('youtubeUrlOrSearchTextField'),
+      ));
+      expect(urlTextField.controller!.text, invalidSingleVideoUrl);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets('Download single video audio in music quality with invalid URL', (tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}copy_move_audio_integr_test_data",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      const String localAudioPlaylistTitle = 'local_audio_playlist_2';
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+      // setting default playlist audio play speed to 1.25
+      settingsDataService.set(
+          settingType: SettingType.playlists,
+          settingSubType: Playlists.playSpeed,
+          value: 1.25);
+
+      // Since we have to use a mock AudioDownloadVM to add the
+      // youtube playlist, we can not use app.main() to start the
+      // app because app.main() uses the real AudioDownloadVM
+      // and we don't want to make the main.dart file dependent
+      // of a mock class. So we have to start the app by hand.
+
+      WarningMessageVM warningMessageVM = WarningMessageVM();
+      MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+      );
+      mockAudioDownloadVM.youtubePlaylistTitle = youtubeNewPlaylistTitle;
+
+      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+      );
+
+      // using the mockAudioDownloadVM to add the playlist
+      // because YoutubeExplode can not access to internet
+      // in integration tests in order to download the playlist
+      // and so obtain the playlist title
+      PlaylistListVM playlistListVM = PlaylistListVM(
+        warningMessageVM: warningMessageVM,
+        audioDownloadVM: mockAudioDownloadVM,
+        commentVM: CommentVM(),
+        settingsDataService: settingsDataService,
+      );
+
+      // calling getUpToDateSelectablePlaylists() loads all the
+      // playlist json files from the app dir and so enables
+      // playlistListVM to know which playlists are
+      // selected and which are not
+      playlistListVM.getUpToDateSelectablePlaylists();
+
+      AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+        settingsDataService: settingsDataService,
+        playlistListVM: playlistListVM,
+        commentVM: CommentVM(),
+      );
+
+      DateFormatVM dateFormatVM = DateFormatVM(
+        settingsDataService: settingsDataService,
+      );
+
+      await IntegrationTestUtil.launchIntegrTestApplicationWithMock(
+        tester: tester,
+        audioDownloadVM: audioDownloadVM,
+        settingsDataService: settingsDataService,
+        playlistListVM: playlistListVM,
+        warningMessageVM: warningMessageVM,
+        audioPlayerVM: audioPlayerVM,
+        dateFormatVM: dateFormatVM,
+        forcedLocale: const Locale('en'),
+      );
+
+      const String invalidSingleVideoUrl = 'invalid';
+
+      // Tap the 'Toggle List' button to display the playlist list. If the list
+      // is not opened, checking that a ListTile with the title of
+      // the playlist was added to the list will fail
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Enter the invalid single video URL into the url text
+      // field
+      await tester.enterText(
+        find.byKey(
+          const Key('youtubeUrlOrSearchTextField'),
+        ),
+        invalidSingleVideoUrl,
+      );
+
+      // Ensure the url text field contains the entered url
+      TextField urlTextField = tester.widget(find.byKey(
+        const Key('youtubeUrlOrSearchTextField'),
+      ));
+      expect(urlTextField.controller!.text, invalidSingleVideoUrl);
+
+      // Open the target playlist selection dialog by tapping the
+      // download single video button
+      await tester.tap(find.byKey(const Key('downloadSingleVideoButton')));
+      await tester.pumpAndSettle();
+
+      // Ensure the dialog is shown
+      expect(find.byType(AlertDialog), findsOneWidget);
+
+      // Check the value of the select one playlist AlertDialog
+      // dialog title
+      Text alertDialogTitle = tester
+          .widget(find.byKey(const Key('playlistOneSelectableDialogTitleKey')));
+      expect(alertDialogTitle.data, 'Select a playlist');
+
+      // Find the RadioListTile target playlist in which the audio
+      // will be downloaded
+
+      final Finder radioListTile = find.byWidgetPredicate(
+        (Widget widget) =>
+            widget is RadioListTile &&
+            widget.title is Text &&
+            (widget.title as Text).data == localAudioPlaylistTitle,
+      );
+
+      // Tap the target playlist RadioListTile to select it
+      await tester.tap(radioListTile);
+      await tester.pumpAndSettle();
+
+      // Set the audio quality to music
+      await tester.tap(find.byKey(const Key('downloadSingleVideoAudioAtMusicQualityCheckboxKey')));
+      await tester.pumpAndSettle();
+
+      // Now find the confirm button and tap on it
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pumpAndSettle();
+
+      // Now verifying the confirm warning dialog message
+
+      // Check the value of the select one playlist
+      // confirmation dialog title
+      Text confirmationDialogTitle =
+          tester.widget(find.byKey(const Key('confirmationDialogTitleKey')));
+      expect(confirmationDialogTitle.data, 'CONFIRMATION');
+
+      final Text confirmationDialogMessageTextWidget = tester
+          .widget<Text>(find.byKey(const Key('confirmationDialogMessageKey')));
+
+      expect(confirmationDialogMessageTextWidget.data,
+          'Confirm target playlist "$localAudioPlaylistTitle" for downloading single video audio in high-quality music format.');
 
       // Now find the ok button of the confirm dialog and tap on it
       await tester.tap(find.byKey(const Key('okButtonKey')));
@@ -3271,7 +3459,7 @@ void main() {
           .widget<Text>(find.byKey(const Key('confirmationDialogMessageKey')));
 
       expect(confirmationDialogMessageTextWidget.data,
-          'Confirm target playlist "$youtubeAudioSourceAndTargetPlaylistTitle" for downloading single video audio.');
+          'Confirm target playlist "$youtubeAudioSourceAndTargetPlaylistTitle" for downloading single video audio in spoken quality.');
 
       // Now find the ok button of the confirm warning dialog
       // and tap on it
@@ -3581,7 +3769,7 @@ void main() {
       Text warningDialogMessage =
           tester.widget(find.byKey(const Key('warningDialogMessage')));
       expect(warningDialogMessage.data,
-          'Local playlist "$localAudioPlaylistTitle" of audio quality added at end of list of playlists.');
+          'Local playlist "$localAudioPlaylistTitle" of audio quality added to the end of list of playlists.');
 
       // Close the warning dialog by tapping on the Ok button
       await tester.tap(find.byKey(const Key('warningDialogOkButton')));
@@ -10438,16 +10626,6 @@ void main() {
             matching: find.byIcon(Icons.menu),
           );
 
-          // Scrolling down the audios list in order to display the commented
-          // audio title to delete
-
-          // Find the audio list widget using its key
-          final Finder listFinder = find.byKey(const Key('audio_list'));
-
-          // Perform the scroll action
-          await tester.drag(listFinder, const Offset(0, -1000));
-          await tester.pumpAndSettle();
-
           // Tap the leading menu icon button to open the popup menu
           await tester
               .tap(commentedAudioTitleToDeleteListTileLeadingMenuIconButton);
@@ -10545,9 +10723,9 @@ void main() {
 
           // Setting to this variables the currently selected audio title/subTitle
           // of the 'S8 audio' playlist
-          String currentAudioTitle = "La résilience insulaire par Fiona Roche";
+          String currentAudioTitle = "La surpopulation mondiale par Jancovici et Barrau";
           String currentAudioSubTitle =
-              "0:13:35.0. 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16.";
+              "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.";
 
           // Verify that the current audio is displayed with the correct
           // title and subtitle color
@@ -10568,7 +10746,7 @@ void main() {
            uncommented audio "Les besoins artificiels par R.Keucheyan" and select
            'Delete Audio ...'. Verify the suppression of the audio mp3. Verify
            also the updated playlist playable audio list and the new not totally
-           played selected audio and the new not totally played selected audio.''',
+           played selected audio.''',
             (tester) async {
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
@@ -10749,9 +10927,9 @@ void main() {
 
           // Setting to this variables the currently selected audio title/subTitle
           // of the 'S8 audio' playlist
-          String currentAudioTitle = "La résilience insulaire par Fiona Roche";
+          String currentAudioTitle = "La surpopulation mondiale par Jancovici et Barrau";
           String currentAudioSubTitle =
-              "0:13:35.0. 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16.";
+              "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.";
 
           // Verify that the current audio is displayed with the correct
           // title and subtitle color
@@ -18222,10 +18400,10 @@ Future<void> _checkWarningDialog({
 
   if (playlistType == PlaylistType.youtube) {
     expect(warningDialogMessage.data,
-        'Youtube playlist "$playlistTitle" of ${isMusicQuality ? 'music' : 'audio'} quality added at end of list of playlists.');
+        'Youtube playlist "$playlistTitle" with ${isMusicQuality ? 'music' : 'audio'} quality added to the end of the playlist list.');
   } else {
     expect(warningDialogMessage.data,
-        'Local playlist "$playlistTitle" of ${isMusicQuality ? 'music' : 'audio'} quality added at end of list of playlists.');
+        'Local playlist "$playlistTitle" with ${isMusicQuality ? 'music' : 'audio'} quality added to the end of the playlist list.');
   }
 
   // Close the warning dialog by tapping on the Ok button
