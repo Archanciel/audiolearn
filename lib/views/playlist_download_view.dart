@@ -947,6 +947,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 //        and its name to be displayed
                 : _applySortFilterParmsNameChange(
                     playlistListVMlistenFalseOrTrue: playlistListVMlistenTrue,
+                    dropdownMenuItemLst: dropdownMenuItems,
                   ),
             items: dropdownMenuItems,
             onChanged: (value) {
@@ -967,8 +968,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   /// Method called when the user select a sort/filter parameters in the
   /// sort/filter dropdown button list. The selected sort/filter parameters
   /// are applied to the selected playlist audio list.
-  String _applySortFilterParmsNameChange({
+  String? _applySortFilterParmsNameChange({
     required PlaylistListVM playlistListVMlistenFalseOrTrue,
+    List<DropdownMenuItem<String>> dropdownMenuItemLst = const [],
     notifyListeners = false,
   }) {
     _selectedSortFilterParametersName = playlistListVMlistenFalseOrTrue
@@ -977,6 +979,13 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       translatedAppliedSortFilterParmsName:
           AppLocalizations.of(context)!.sortFilterParametersAppliedName,
     );
+
+    // Ensuring _selectedSortFilterParametersName exists in
+    // the dropdown items, otherwise, null is returned.
+    if (!dropdownMenuItemLst
+        .any((item) => item.value == _selectedSortFilterParametersName)) {
+      return null;
+    }
 
     String searchSentence = '';
 
@@ -1803,7 +1812,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                     _playlistUrlOrSearchController.clear();
 
                     // Required, otherwise the audio list is not
-                    // updated with the newly downloaded audio. 
+                    // updated with the newly downloaded audio.
                     _updatePlaylistSortedFilteredAudioList(
                       playlistListVMlistenTrue: playlistListVMlistenFalse,
                     );
