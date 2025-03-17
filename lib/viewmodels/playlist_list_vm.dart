@@ -1554,9 +1554,22 @@ class PlaylistListVM extends ChangeNotifier {
     required List<Audio> sortFilteredSelectedPlaylistPlayableAudio,
     required AudioSortFilterParameters audioSortFilterParms,
     required String audioSortFilterParmsName,
+    String translatedAppliedSortFilterParmsName = '',
     String searchSentence = '',
     bool doNotifyListeners = true,
   }) {
+    if (audioSortFilterParmsName != '' &&
+        audioSortFilterParmsName == translatedAppliedSortFilterParmsName) {
+      // This is required to avoid that if an applied SF parm was
+      // defined in the playlist download view in the situation where
+      // the list of playlists was expanded and then the user clicks
+      // on the playlists button to hide the list of playlists, the
+      // application fails due to a SF parms dropdown button exception.
+      _settingsDataService.addOrReplaceNamedAudioSortFilterParameters(
+        audioSortFilterParametersName: audioSortFilterParmsName,
+        audioSortFilterParameters: audioSortFilterParms,
+      );
+    }
     _sortedFilteredSelectedPlaylistPlayableAudioLst =
         sortFilteredSelectedPlaylistPlayableAudio;
     _audioSortFilterParameters = audioSortFilterParms;
