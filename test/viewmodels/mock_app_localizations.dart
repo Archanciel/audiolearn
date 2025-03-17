@@ -1550,14 +1550,14 @@ class MockAppLocalizations extends AppLocalizations {
     Object title,
     Object quality,
   ) =>
-      "Youtube playlist \"$title\" of $quality quality added at end of list of playlists.";
+      "Youtube playlist \"$title\" of $quality quality added to the end of list of playlists.";
 
   @override
   String addLocalPlaylistTitle(
     Object title,
     Object quality,
   ) =>
-      "Local playlist \"$title\" of $quality quality added at end of list of playlists.";
+      "Local playlist \"$title\" of $quality quality added to the end of list of playlists.";
 
   @override
   String defaultSFPNotApplyedToCopyAudioFromLocalToLocalPlaylistWarning(
