@@ -6131,457 +6131,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
         });
         testWidgets(
-            '''In playlist expanded situation, define an unamed SF parm with a filter
-               string value and apply it. Several audio's are selected and the audio list is
-               not empty. Then click on the "Playlist" button to shrink the list of playlists.
-               This caused a bug.''', (WidgetTester tester) async {
-          // Purge the test playlist directory if it exists so that the
-          // playlist list is empty
-          DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
-          );
-
-          // Copy the test initial audio data to the app dir
-          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-            sourceRootPath:
-                "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
-          );
-
-          final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
-          );
-
-          // Load the settings from the json file. This is necessary
-          // otherwise the ordered playlist titles will remain empty
-          // and the playlist list will not be filled with the
-          // playlists available in the download app test dir
-          await settingsDataService.loadSettingsFromFile(
-              settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
-
-          await app.main();
-          await tester.pumpAndSettle();
-
-          // Tap the 'Toggle List' button to show the list of playlist's.
-          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-          await tester.pumpAndSettle();
-
-          // Now open the audio popup menu
-          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-          await tester.pumpAndSettle();
-
-          // Find the sort/filter audio menu item and tap on it to
-          // open the audio sort filter dialog
-          await tester.tap(
-              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
-          await tester.pumpAndSettle();
-
-          // Type "janco" in the audio title search sentence TextField
-          await tester.enterText(
-              find.byKey(const Key('audioTitleSearchSentenceTextField')),
-              'janco');
-          await tester.pumpAndSettle();
-
-          // Click on the "+" icon button
-          await tester.tap(find.byKey(const Key('addSentenceIconButton')));
-          await tester.pumpAndSettle();
-
-          // Click on the "Apply" button. This closes the sort/filter dialog
-          // and updates the sort/filter playlist download view dropdown
-          // button with the newly created sort/filter parms
-          await tester
-              .tap(find.byKey(const Key('applySortFilterOptionsTextButton')));
-          await tester.pumpAndSettle();
-
-          // Tap the 'Toggle List' button to hide the list of playlist's.
-          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-          await tester.pumpAndSettle();
-
-          // Purge the test playlist directory so that the created test
-          // files are not uploaded to GitHub
-          DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
-          );
-        });
-        testWidgets(
-            '''In playlist expanded situation, define an unamed SF parm with a filter
-               string value and apply it. No audio's are selected and the audio list is
-               empty. Then click on the "Playlist" button to shrink the list of playlists.
-               This caused a bug.''', (WidgetTester tester) async {
-          // Purge the test playlist directory if it exists so that the
-          // playlist list is empty
-          DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
-          );
-
-          // Copy the test initial audio data to the app dir
-          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-            sourceRootPath:
-                "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
-          );
-
-          final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
-          );
-
-          // Load the settings from the json file. This is necessary
-          // otherwise the ordered playlist titles will remain empty
-          // and the playlist list will not be filled with the
-          // playlists available in the download app test dir
-          await settingsDataService.loadSettingsFromFile(
-              settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
-
-          await app.main();
-          await tester.pumpAndSettle();
-
-          // Tap the 'Toggle List' button to show the list of playlist's.
-          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-          await tester.pumpAndSettle();
-
-          // Now open the audio popup menu
-          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-          await tester.pumpAndSettle();
-
-          // Find the sort/filter audio menu item and tap on it to
-          // open the audio sort filter dialog
-          await tester.tap(
-              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
-          await tester.pumpAndSettle();
-
-          // Type "not exist, really not" in the audio title search sentence TextField
-          await tester.enterText(
-              find.byKey(const Key('audioTitleSearchSentenceTextField')),
-              'not exist, really not');
-          await tester.pumpAndSettle();
-
-          // Click on the "+" icon button
-          await tester.tap(find.byKey(const Key('addSentenceIconButton')));
-          await tester.pumpAndSettle();
-
-          // Click on the "Apply" button. This closes the sort/filter dialog
-          // and updates the sort/filter playlist download view dropdown
-          // button with the newly created sort/filter parms
-          await tester
-              .tap(find.byKey(const Key('applySortFilterOptionsTextButton')));
-          await tester.pumpAndSettle();
-
-          // Tap the 'Toggle List' button to hide the list of playlist's.
-          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-          await tester.pumpAndSettle();
-
-          // Purge the test playlist directory so that the created test
-          // files are not uploaded to GitHub
-          DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
-          );
-        });
-        testWidgets(
-            '''In playlist expanded situation, define a named SF parm with a filter
-               string value and apply it. Several audio's are selected and the audio list is
-               not empty. Then click on the "Playlist" button to shrink the list of playlists.
-               This caused a bug.''', (WidgetTester tester) async {
-          // Purge the test playlist directory if it exists so that the
-          // playlist list is empty
-          DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
-          );
-
-          // Copy the test initial audio data to the app dir
-          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-            sourceRootPath:
-                "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
-          );
-
-          final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
-          );
-
-          // Load the settings from the json file. This is necessary
-          // otherwise the ordered playlist titles will remain empty
-          // and the playlist list will not be filled with the
-          // playlists available in the download app test dir
-          await settingsDataService.loadSettingsFromFile(
-              settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
-
-          await app.main();
-          await tester.pumpAndSettle();
-
-          // Tap the 'Toggle List' button to show the list of playlist's.
-          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-          await tester.pumpAndSettle();
-
-          // Now open the audio popup menu
-          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-          await tester.pumpAndSettle();
-
-          // Find the sort/filter audio menu item and tap on it to
-          // open the audio sort filter dialog
-          await tester.tap(
-              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
-          await tester.pumpAndSettle();
-
-          // Type "janco SF" in the SF name TextField
-          await tester.enterText(
-              find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
-              'janco SF');
-          await tester.pumpAndSettle();
-
-          // Type "janco" in the audio title search sentence TextField
-          await tester.enterText(
-              find.byKey(const Key('audioTitleSearchSentenceTextField')),
-              'janco');
-          await tester.pumpAndSettle();
-
-          // Click on the "+" icon button
-          await tester.tap(find.byKey(const Key('addSentenceIconButton')));
-          await tester.pumpAndSettle();
-
-          // Click on the "Save" button. This closes the sort/filter dialog
-          // and updates the sort/filter playlist download view dropdown
-          // button with the newly created sort/filter parms
-          await tester
-              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
-          await tester.pumpAndSettle();
-
-          // Tap the 'Toggle List' button to hide the list of playlist's.
-          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-          await tester.pumpAndSettle();
-
-          // Purge the test playlist directory so that the created test
-          // files are not uploaded to GitHub
-          DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
-          );
-        });
-        testWidgets(
-            '''In playlist expanded situation, define a named SF parm with a filter
-               string value and apply it. No audio's are selected and the audio list is
-               empty. Then click on the "Playlist" button to shrink the list of playlists.
-               This caused a bug.''', (WidgetTester tester) async {
-          // Purge the test playlist directory if it exists so that the
-          // playlist list is empty
-          DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
-          );
-
-          // Copy the test initial audio data to the app dir
-          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-            sourceRootPath:
-                "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
-          );
-
-          final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
-          );
-
-          // Load the settings from the json file. This is necessary
-          // otherwise the ordered playlist titles will remain empty
-          // and the playlist list will not be filled with the
-          // playlists available in the download app test dir
-          await settingsDataService.loadSettingsFromFile(
-              settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
-
-          await app.main();
-          await tester.pumpAndSettle();
-
-          // Tap the 'Toggle List' button to show the list of playlist's.
-          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-          await tester.pumpAndSettle();
-
-          // Now open the audio popup menu
-          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-          await tester.pumpAndSettle();
-
-          // Find the sort/filter audio menu item and tap on it to
-          // open the audio sort filter dialog
-          await tester.tap(
-              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
-          await tester.pumpAndSettle();
-
-          // Type "janco SF" in the SF name TextField
-          await tester.enterText(
-              find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
-              'Not exist, really not SF');
-          await tester.pumpAndSettle();
-
-          // Type "not exist, really not" in the audio title search sentence TextField
-          await tester.enterText(
-              find.byKey(const Key('audioTitleSearchSentenceTextField')),
-              'not exist, really not');
-          await tester.pumpAndSettle();
-
-          // Click on the "+" icon button
-          await tester.tap(find.byKey(const Key('addSentenceIconButton')));
-          await tester.pumpAndSettle();
-
-          // Click on the "Save" button. This closes the sort/filter dialog
-          // and updates the sort/filter playlist download view dropdown
-          // button with the newly created sort/filter parms
-          await tester
-              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
-          await tester.pumpAndSettle();
-
-          // Tap the 'Toggle List' button to hide the list of playlist's.
-          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-          await tester.pumpAndSettle();
-
-          // Purge the test playlist directory so that the created test
-          // files are not uploaded to GitHub
-          DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
-          );
-        });
-        testWidgets(
-            '''In audio player view, define an unamed SF parm with a filter string value and
-               apply it. Verify the selected audio's in the playable audio list dialog. then
-               go to the playlist download view whosevplaylist list is expanded and thrink the
-               playlist list. Then select the "applied" SF parms and verify the selected audio's''',
-            (WidgetTester tester) async {
-          // Purge the test playlist directory if it exists so that the
-          // playlist list is empty
-          DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
-          );
-
-          // Copy the test initial audio data to the app dir
-          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-            sourceRootPath:
-                "$kDownloadAppTestSavedDataDir${path.separator}restore_Android_zip_on_Windows_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
-          );
-
-          final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
-          );
-
-          // Load the settings from the json file. This is necessary
-          // otherwise the ordered playlist titles will remain empty
-          // and the playlist list will not be filled with the
-          // playlists available in the download app test dir
-          await settingsDataService.loadSettingsFromFile(
-              settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
-
-          await app.main();
-          await tester.pumpAndSettle();
-
-          // Type on the audio player view icon button to go to the audio player view
-          await tester.tap(find.byKey(const Key('audioPlayerViewIconButton')));
-          await tester.pumpAndSettle();
-
-          // Now open the audio popup menu
-          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-          await tester.pumpAndSettle();
-
-          // Find the sort/filter audio menu item and tap on it to
-          // open the audio sort filter dialog
-          await tester.tap(
-              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
-          await tester.pumpAndSettle();
-
-          // Type "musk" in the audio title search sentence TextField
-          await tester.enterText(
-              find.byKey(const Key('audioTitleSearchSentenceTextField')),
-              'musk');
-          await tester.pumpAndSettle();
-
-          // Click on the "+" icon button
-          await tester.tap(find.byKey(const Key('addSentenceIconButton')));
-          await tester.pumpAndSettle();
-
-          // Click on the "Apply" button. This closes the sort/filter dialog.
-          await tester
-              .tap(find.byKey(const Key('applySortFilterOptionsTextButton')));
-          await tester.pumpAndSettle();
-
-          // Now we open the AudioPlayableListDialog and verify the the
-          // displayed audio titles
-
-          await tester.tap(find.text(
-              "Cette IA PENSE mieux que NOUS et personne ne veut en parler !\n23:60"));
-          await tester.pumpAndSettle();
-
-          List<String>
-              audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
-            "Interview CHOC d'Elon Musk  - 'L'IA va probablement tous nous tuer'",
-          ];
-
-          IntegrationTestUtil.checkAudioTitlesOrderInListBody(
-            tester: tester,
-            audioTitlesOrderLst:
-                audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
-          );
-
-          // Tap on the Close button to close the AudioPlayableListDialog
-          await tester.tap(find.byKey(const Key('closeTextButton')));
-          await tester.pumpAndSettle();
-
-          // Now return to the playlist download view
-          await tester.tap(find.byKey(const Key('playlistDownloadViewIconButton')));
-          await tester.pumpAndSettle();
-
-          // Tap the 'Toggle List' button to hide the list of playlist's.
-          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-          await tester.pumpAndSettle();
-
-          // Now, selecting 'applied' dropdown button item to apply the
-          // default sort/filter parms
-          final Finder dropDownButtonFinder =
-              find.byKey(const Key('sort_filter_parms_dropdown_button'));
-
-          final Finder dropDownButtonTextFinder = find.descendant(
-            of: dropDownButtonFinder,
-            matching: find.byType(Text),
-          );
-
-          // Tap on the current dropdown button item to open the dropdown
-          // button items list
-          await tester.tap(dropDownButtonTextFinder);
-          await tester.pumpAndSettle();
-
-          // And select the applied sort/filter item
-          String appliedTitle = 'applied';
-          final Finder defaultDropDownTextFinder = find.text(appliedTitle);
-          await tester.tap(defaultDropDownTextFinder);
-          await tester.pumpAndSettle();
-
-          // Now verify the playlist download view state with the 'applied'
-          // sort/filter parms applied
-
-          // Verify that the dropdown button has been updated with the
-          // 'applied' sort/filter parms selected
-          IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
-            tester: tester,
-            dropdownButtonSelectedTitle: appliedTitle,
-          );
-
-          // And verify the order of the playlist audio titles
-
-          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-            tester: tester,
-            audioOrPlaylistTitlesOrderedLst:
-                audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
-          );
-
-          // Purge the test playlist directory so that the created test
-          // files are not uploaded to GitHub
-          DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
-          );
-        });
-        testWidgets(
             '''Click on 'Sort/filter audio' menu item of Audio popup menu to
              open sort filter audio dialog. Then creating an ascending unamed
              sort/filter parms and apply it. Then verifying that a Sort/filter
@@ -7569,6 +7118,612 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           DirUtil.deleteFilesInDirAndSubDirs(
             rootPath: kPlaylistDownloadRootPathWindowsTest,
           );
+        });
+        group('''Bug fix tests''', () {
+          testWidgets(
+              '''In playlist expanded situation, define an unamed SF parm with a filter
+               string value and apply it. Several audio's are selected and the audio list is
+               not empty. Then click on the "Playlist" button to shrink the list of playlists.
+               This caused a bug.''', (WidgetTester tester) async {
+            // Purge the test playlist directory if it exists so that the
+            // playlist list is empty
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kPlaylistDownloadRootPathWindowsTest,
+            );
+
+            // Copy the test initial audio data to the app dir
+            DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+              sourceRootPath:
+                  "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
+              destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+            );
+
+            final SettingsDataService settingsDataService = SettingsDataService(
+              sharedPreferences: await SharedPreferences.getInstance(),
+              isTest: true,
+            );
+
+            // Load the settings from the json file. This is necessary
+            // otherwise the ordered playlist titles will remain empty
+            // and the playlist list will not be filled with the
+            // playlists available in the download app test dir
+            await settingsDataService.loadSettingsFromFile(
+                settingsJsonPathFileName:
+                    "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+            await app.main();
+            await tester.pumpAndSettle();
+
+            // Tap the 'Toggle List' button to show the list of playlist's.
+            await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+            await tester.pumpAndSettle();
+
+            // Now open the audio popup menu
+            await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+            await tester.pumpAndSettle();
+
+            // Find the sort/filter audio menu item and tap on it to
+            // open the audio sort filter dialog
+            await tester.tap(find
+                .byKey(const Key('define_sort_and_filter_audio_menu_item')));
+            await tester.pumpAndSettle();
+
+            // Type "janco" in the audio title search sentence TextField
+            await tester.enterText(
+                find.byKey(const Key('audioTitleSearchSentenceTextField')),
+                'janco');
+            await tester.pumpAndSettle();
+
+            // Click on the "+" icon button
+            await tester.tap(find.byKey(const Key('addSentenceIconButton')));
+            await tester.pumpAndSettle();
+
+            // Click on the "Apply" button. This closes the sort/filter dialog
+            // and updates the sort/filter playlist download view dropdown
+            // button with the newly created sort/filter parms
+            await tester
+                .tap(find.byKey(const Key('applySortFilterOptionsTextButton')));
+            await tester.pumpAndSettle();
+
+            // Tap the 'Toggle List' button to hide the list of playlist's.
+            await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+            await tester.pumpAndSettle();
+
+            // Purge the test playlist directory so that the created test
+            // files are not uploaded to GitHub
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kPlaylistDownloadRootPathWindowsTest,
+            );
+          });
+          testWidgets(
+              '''In playlist expanded situation, define an unamed SF parm with a filter
+               string value and apply it. No audio's are selected and the audio list is
+               empty. Then click on the "Playlist" button to shrink the list of playlists.
+               This caused a bug.''', (WidgetTester tester) async {
+            // Purge the test playlist directory if it exists so that the
+            // playlist list is empty
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kPlaylistDownloadRootPathWindowsTest,
+            );
+
+            // Copy the test initial audio data to the app dir
+            DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+              sourceRootPath:
+                  "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
+              destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+            );
+
+            final SettingsDataService settingsDataService = SettingsDataService(
+              sharedPreferences: await SharedPreferences.getInstance(),
+              isTest: true,
+            );
+
+            // Load the settings from the json file. This is necessary
+            // otherwise the ordered playlist titles will remain empty
+            // and the playlist list will not be filled with the
+            // playlists available in the download app test dir
+            await settingsDataService.loadSettingsFromFile(
+                settingsJsonPathFileName:
+                    "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+            await app.main();
+            await tester.pumpAndSettle();
+
+            // Tap the 'Toggle List' button to show the list of playlist's.
+            await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+            await tester.pumpAndSettle();
+
+            // Now open the audio popup menu
+            await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+            await tester.pumpAndSettle();
+
+            // Find the sort/filter audio menu item and tap on it to
+            // open the audio sort filter dialog
+            await tester.tap(find
+                .byKey(const Key('define_sort_and_filter_audio_menu_item')));
+            await tester.pumpAndSettle();
+
+            // Type "not exist, really not" in the audio title search sentence TextField
+            await tester.enterText(
+                find.byKey(const Key('audioTitleSearchSentenceTextField')),
+                'not exist, really not');
+            await tester.pumpAndSettle();
+
+            // Click on the "+" icon button
+            await tester.tap(find.byKey(const Key('addSentenceIconButton')));
+            await tester.pumpAndSettle();
+
+            // Click on the "Apply" button. This closes the sort/filter dialog
+            // and updates the sort/filter playlist download view dropdown
+            // button with the newly created sort/filter parms
+            await tester
+                .tap(find.byKey(const Key('applySortFilterOptionsTextButton')));
+            await tester.pumpAndSettle();
+
+            // Tap the 'Toggle List' button to hide the list of playlist's.
+            await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+            await tester.pumpAndSettle();
+
+            // Purge the test playlist directory so that the created test
+            // files are not uploaded to GitHub
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kPlaylistDownloadRootPathWindowsTest,
+            );
+          });
+          testWidgets(
+              '''In playlist expanded situation, define a named SF parm with a filter
+               string value and apply it. Several audio's are selected and the audio list is
+               not empty. Then click on the "Playlist" button to shrink the list of playlists.
+               This caused a bug.''', (WidgetTester tester) async {
+            // Purge the test playlist directory if it exists so that the
+            // playlist list is empty
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kPlaylistDownloadRootPathWindowsTest,
+            );
+
+            // Copy the test initial audio data to the app dir
+            DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+              sourceRootPath:
+                  "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
+              destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+            );
+
+            final SettingsDataService settingsDataService = SettingsDataService(
+              sharedPreferences: await SharedPreferences.getInstance(),
+              isTest: true,
+            );
+
+            // Load the settings from the json file. This is necessary
+            // otherwise the ordered playlist titles will remain empty
+            // and the playlist list will not be filled with the
+            // playlists available in the download app test dir
+            await settingsDataService.loadSettingsFromFile(
+                settingsJsonPathFileName:
+                    "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+            await app.main();
+            await tester.pumpAndSettle();
+
+            // Tap the 'Toggle List' button to show the list of playlist's.
+            await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+            await tester.pumpAndSettle();
+
+            // Now open the audio popup menu
+            await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+            await tester.pumpAndSettle();
+
+            // Find the sort/filter audio menu item and tap on it to
+            // open the audio sort filter dialog
+            await tester.tap(find
+                .byKey(const Key('define_sort_and_filter_audio_menu_item')));
+            await tester.pumpAndSettle();
+
+            // Type "janco SF" in the SF name TextField
+            await tester.enterText(
+                find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+                'janco SF');
+            await tester.pumpAndSettle();
+
+            // Type "janco" in the audio title search sentence TextField
+            await tester.enterText(
+                find.byKey(const Key('audioTitleSearchSentenceTextField')),
+                'janco');
+            await tester.pumpAndSettle();
+
+            // Click on the "+" icon button
+            await tester.tap(find.byKey(const Key('addSentenceIconButton')));
+            await tester.pumpAndSettle();
+
+            // Click on the "Save" button. This closes the sort/filter dialog
+            // and updates the sort/filter playlist download view dropdown
+            // button with the newly created sort/filter parms
+            await tester
+                .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+            await tester.pumpAndSettle();
+
+            // Tap the 'Toggle List' button to hide the list of playlist's.
+            await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+            await tester.pumpAndSettle();
+
+            // Purge the test playlist directory so that the created test
+            // files are not uploaded to GitHub
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kPlaylistDownloadRootPathWindowsTest,
+            );
+          });
+          testWidgets(
+              '''In playlist expanded situation, define a named SF parm with a filter
+               string value and apply it. No audio's are selected and the audio list is
+               empty. Then click on the "Playlist" button to shrink the list of playlists.
+               This caused a bug.''', (WidgetTester tester) async {
+            // Purge the test playlist directory if it exists so that the
+            // playlist list is empty
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kPlaylistDownloadRootPathWindowsTest,
+            );
+
+            // Copy the test initial audio data to the app dir
+            DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+              sourceRootPath:
+                  "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
+              destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+            );
+
+            final SettingsDataService settingsDataService = SettingsDataService(
+              sharedPreferences: await SharedPreferences.getInstance(),
+              isTest: true,
+            );
+
+            // Load the settings from the json file. This is necessary
+            // otherwise the ordered playlist titles will remain empty
+            // and the playlist list will not be filled with the
+            // playlists available in the download app test dir
+            await settingsDataService.loadSettingsFromFile(
+                settingsJsonPathFileName:
+                    "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+            await app.main();
+            await tester.pumpAndSettle();
+
+            // Tap the 'Toggle List' button to show the list of playlist's.
+            await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+            await tester.pumpAndSettle();
+
+            // Now open the audio popup menu
+            await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+            await tester.pumpAndSettle();
+
+            // Find the sort/filter audio menu item and tap on it to
+            // open the audio sort filter dialog
+            await tester.tap(find
+                .byKey(const Key('define_sort_and_filter_audio_menu_item')));
+            await tester.pumpAndSettle();
+
+            // Type "Not exist, really not SF" in the SF name TextField
+            await tester.enterText(
+                find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+                'Not exist, really not SF');
+            await tester.pumpAndSettle();
+
+            // Type "not exist, really not" in the audio title search sentence TextField
+            await tester.enterText(
+                find.byKey(const Key('audioTitleSearchSentenceTextField')),
+                'not exist, really not');
+            await tester.pumpAndSettle();
+
+            // Click on the "+" icon button
+            await tester.tap(find.byKey(const Key('addSentenceIconButton')));
+            await tester.pumpAndSettle();
+
+            // Click on the "Save" button. This closes the sort/filter dialog
+            // and updates the sort/filter playlist download view dropdown
+            // button with the newly created sort/filter parms
+            await tester
+                .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+            await tester.pumpAndSettle();
+
+            // Tap the 'Toggle List' button to hide the list of playlist's.
+            await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+            await tester.pumpAndSettle();
+
+            // Purge the test playlist directory so that the created test
+            // files are not uploaded to GitHub
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kPlaylistDownloadRootPathWindowsTest,
+            );
+          });
+          testWidgets(
+              '''In audio player view, define an unamed SF parm with a filter string value and
+               apply it. Verify the selected audio's in the playable audio list dialog. then
+               go to the playlist download view whosevplaylist list is expanded and thrink the
+               playlist list. Then select the "applied" SF parms and verify the selected audio's''',
+              (WidgetTester tester) async {
+            // Purge the test playlist directory if it exists so that the
+            // playlist list is empty
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kPlaylistDownloadRootPathWindowsTest,
+            );
+
+            // Copy the test initial audio data to the app dir
+            DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+              sourceRootPath:
+                  "$kDownloadAppTestSavedDataDir${path.separator}restore_Android_zip_on_Windows_test",
+              destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+            );
+
+            final SettingsDataService settingsDataService = SettingsDataService(
+              sharedPreferences: await SharedPreferences.getInstance(),
+              isTest: true,
+            );
+
+            // Load the settings from the json file. This is necessary
+            // otherwise the ordered playlist titles will remain empty
+            // and the playlist list will not be filled with the
+            // playlists available in the download app test dir
+            await settingsDataService.loadSettingsFromFile(
+                settingsJsonPathFileName:
+                    "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+            await app.main();
+            await tester.pumpAndSettle();
+
+            // Type on the audio player view icon button to go to the audio player view
+            await tester
+                .tap(find.byKey(const Key('audioPlayerViewIconButton')));
+            await tester.pumpAndSettle();
+
+            // Now open the audio popup menu
+            await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+            await tester.pumpAndSettle();
+
+            // Find the sort/filter audio menu item and tap on it to
+            // open the audio sort filter dialog
+            await tester.tap(find
+                .byKey(const Key('define_sort_and_filter_audio_menu_item')));
+            await tester.pumpAndSettle();
+
+            // Type "musk" in the audio title search sentence TextField
+            await tester.enterText(
+                find.byKey(const Key('audioTitleSearchSentenceTextField')),
+                'musk');
+            await tester.pumpAndSettle();
+
+            // Click on the "+" icon button
+            await tester.tap(find.byKey(const Key('addSentenceIconButton')));
+            await tester.pumpAndSettle();
+
+            // Click on the "Apply" button. This closes the sort/filter dialog.
+            await tester
+                .tap(find.byKey(const Key('applySortFilterOptionsTextButton')));
+            await tester.pumpAndSettle();
+
+            // Now we open the AudioPlayableListDialog and verify the the
+            // displayed audio titles
+
+            await tester.tap(find.text(
+                "Cette IA PENSE mieux que NOUS et personne ne veut en parler !\n23:60"));
+            await tester.pumpAndSettle();
+
+            List<String>
+                audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms =
+                [
+              "Interview CHOC d'Elon Musk  - 'L'IA va probablement tous nous tuer'",
+            ];
+
+            IntegrationTestUtil.checkAudioTitlesOrderInListBody(
+              tester: tester,
+              audioTitlesOrderLst:
+                  audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+            );
+
+            // Tap on the Close button to close the AudioPlayableListDialog
+            await tester.tap(find.byKey(const Key('closeTextButton')));
+            await tester.pumpAndSettle();
+
+            // Now return to the playlist download view
+            await tester
+                .tap(find.byKey(const Key('playlistDownloadViewIconButton')));
+            await tester.pumpAndSettle();
+
+            // Tap the 'Toggle List' button to hide the list of playlist's.
+            await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+            await tester.pumpAndSettle();
+
+            // Now, selecting 'applied' dropdown button item to apply the
+            // default sort/filter parms
+            final Finder dropDownButtonFinder =
+                find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+            final Finder dropDownButtonTextFinder = find.descendant(
+              of: dropDownButtonFinder,
+              matching: find.byType(Text),
+            );
+
+            // Tap on the current dropdown button item to open the dropdown
+            // button items list
+            await tester.tap(dropDownButtonTextFinder);
+            await tester.pumpAndSettle();
+
+            // And select the applied sort/filter item
+            String appliedTitle = 'applied';
+            final Finder defaultDropDownTextFinder = find.text(appliedTitle);
+            await tester.tap(defaultDropDownTextFinder);
+            await tester.pumpAndSettle();
+
+            // Now verify the playlist download view state with the 'applied'
+            // sort/filter parms applied
+
+            // Verify that the dropdown button has been updated with the
+            // 'applied' sort/filter parms selected
+            IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+              tester: tester,
+              dropdownButtonSelectedTitle: appliedTitle,
+            );
+
+            // And verify the order of the playlist audio titles
+
+            IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+              tester: tester,
+              audioOrPlaylistTitlesOrderedLst:
+                  audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+            );
+
+            // Purge the test playlist directory so that the created test
+            // files are not uploaded to GitHub
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kPlaylistDownloadRootPathWindowsTest,
+            );
+          });
+          testWidgets(
+              '''In audio player view, define a named SF parm with a filter string value and
+               save it. Verify the selected audio's in the playable audio list dialog. then
+               go to the playlist download view whosevplaylist list is expanded and thrink the
+               playlist list. Then select the "Musk" SF parms and verify the selected audio's''',
+              (WidgetTester tester) async {
+            // Purge the test playlist directory if it exists so that the
+            // playlist list is empty
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kPlaylistDownloadRootPathWindowsTest,
+            );
+
+            // Copy the test initial audio data to the app dir
+            DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+              sourceRootPath:
+                  "$kDownloadAppTestSavedDataDir${path.separator}restore_Android_zip_on_Windows_test",
+              destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+            );
+
+            final SettingsDataService settingsDataService = SettingsDataService(
+              sharedPreferences: await SharedPreferences.getInstance(),
+              isTest: true,
+            );
+
+            // Load the settings from the json file. This is necessary
+            // otherwise the ordered playlist titles will remain empty
+            // and the playlist list will not be filled with the
+            // playlists available in the download app test dir
+            await settingsDataService.loadSettingsFromFile(
+                settingsJsonPathFileName:
+                    "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+            await app.main();
+            await tester.pumpAndSettle();
+
+            // Type on the audio player view icon button to go to the audio player view
+            await tester
+                .tap(find.byKey(const Key('audioPlayerViewIconButton')));
+            await tester.pumpAndSettle();
+
+            // Now open the audio popup menu
+            await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+            await tester.pumpAndSettle();
+
+            // Find the sort/filter audio menu item and tap on it to
+            // open the audio sort filter dialog
+            await tester.tap(find
+                .byKey(const Key('define_sort_and_filter_audio_menu_item')));
+            await tester.pumpAndSettle();
+
+            // Type "Musk" in the SF name TextField
+            await tester.enterText(
+                find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+                'Musk');
+            await tester.pumpAndSettle();
+
+            // Type "musk" in the audio title search sentence TextField
+            await tester.enterText(
+                find.byKey(const Key('audioTitleSearchSentenceTextField')),
+                'musk');
+            await tester.pumpAndSettle();
+
+            // Click on the "+" icon button
+            await tester.tap(find.byKey(const Key('addSentenceIconButton')));
+            await tester.pumpAndSettle();
+
+            // Click on the "Save" button. This closes the sort/filter dialog
+            // and updates the sort/filter playlist download view dropdown
+            // button with the newly created sort/filter parms
+            await tester
+                .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+            await tester.pumpAndSettle();
+
+            // Now we open the AudioPlayableListDialog and verify the the
+            // displayed audio titles
+
+            await tester.tap(find.text(
+                "Cette IA PENSE mieux que NOUS et personne ne veut en parler !\n23:60"));
+            await tester.pumpAndSettle();
+
+            List<String>
+                audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms =
+                [
+              "Interview CHOC d'Elon Musk  - 'L'IA va probablement tous nous tuer'",
+            ];
+
+            IntegrationTestUtil.checkAudioTitlesOrderInListBody(
+              tester: tester,
+              audioTitlesOrderLst:
+                  audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+            );
+
+            // Tap on the Close button to close the AudioPlayableListDialog
+            await tester.tap(find.byKey(const Key('closeTextButton')));
+            await tester.pumpAndSettle();
+
+            // Now return to the playlist download view
+            await tester
+                .tap(find.byKey(const Key('playlistDownloadViewIconButton')));
+            await tester.pumpAndSettle();
+
+            // Tap the 'Toggle List' button to hide the list of playlist's.
+            await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+            await tester.pumpAndSettle();
+
+            // Now, selecting 'Musk' dropdown button item to apply the
+            // 'musk' sort/filter parms
+            final Finder dropDownButtonFinder =
+                find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+            final Finder dropDownButtonTextFinder = find.descendant(
+              of: dropDownButtonFinder,
+              matching: find.byType(Text),
+            );
+
+            // Tap on the current dropdown button item to open the dropdown
+            // button items list
+            await tester.tap(dropDownButtonTextFinder);
+            await tester.pumpAndSettle();
+
+            // And select the Musk sort/filter item
+            String muskSfTitle = 'Musk';
+            final Finder defaultDropDownTextFinder = find.text(muskSfTitle);
+            await tester.tap(defaultDropDownTextFinder);
+            await tester.pumpAndSettle();
+
+            // Now verify the playlist download view state with the 'applied'
+            // sort/filter parms applied
+
+            // Verify that the dropdown button has been updated with the
+            // 'Musk' sort/filter parms selected
+            IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+              tester: tester,
+              dropdownButtonSelectedTitle: muskSfTitle,
+            );
+
+            // And verify the order of the playlist audio titles
+
+            IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+              tester: tester,
+              audioOrPlaylistTitlesOrderedLst:
+                  audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+            );
+
+            // Purge the test playlist directory so that the created test
+            // files are not uploaded to GitHub
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kPlaylistDownloadRootPathWindowsTest,
+            );
+          });
         });
         group('Restarting app without saving applied sort/filter parms', () {
           testWidgets(
