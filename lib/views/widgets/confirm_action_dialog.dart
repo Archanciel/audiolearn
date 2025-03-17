@@ -87,7 +87,6 @@ class _ConfirmActionDialogState extends State<ConfirmActionDialog>
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // First row: first two lines of the title and help icon
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -125,40 +124,24 @@ class _ConfirmActionDialogState extends State<ConfirmActionDialog>
                   ),
               ],
             ),
-            // Second row: remaining title lines
-            (widget.dialogTitleTwo.isNotEmpty)
-                ? Row(
-                    children: [
-                      Flexible(
-                        child: Text(
-                          widget.dialogTitleTwo,
-                          key: const Key('confirmDialogTitleTwoKey'),
-                          style: Theme.of(context).textTheme.headlineSmall,
-                        ),
-                      ),
-                    ],
-                  )
-                : Container(),
+            if (widget.dialogTitleTwo.isNotEmpty)
+              Text(
+                widget.dialogTitleTwo,
+                key: const Key('confirmDialogTitleTwoKey'),
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
           ],
         ),
-        content: SizedBox(
-          width: double.maxFinite,
-          height: 800,
-          child: DraggableScrollableSheet(
-            initialChildSize: 1,
-            minChildSize: 1,
-            maxChildSize: 1,
-            builder: (
-              BuildContext context,
-              ScrollController scrollController,
-            ) {
-              return SingleChildScrollView(
-                child: Text(
-                  widget.dialogContent,
-                  key: const Key('confirmationDialogMessageKey'),
-                ),
-              );
-            },
+        content: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height *
+                0.5, // Limits height to 50% of screen
+          ),
+          child: SingleChildScrollView(
+            child: Text(
+              widget.dialogContent,
+              key: const Key('confirmationDialogMessageKey'),
+            ),
           ),
         ),
         actions: <Widget>[
@@ -167,23 +150,12 @@ class _ConfirmActionDialogState extends State<ConfirmActionDialog>
             onPressed: () {
               _applyConfirm(context);
             },
-            child: Text(
-              AppLocalizations.of(context)!.confirmButton,
-              style: (themeProviderVM.currentTheme == AppTheme.dark)
-                  ? kTextButtonStyleDarkMode
-                  : kTextButtonStyleLightMode,
-            ),
+            child: Text(AppLocalizations.of(context)!.confirmButton),
           ),
           TextButton(
             key: const Key('cancelButtonKey'),
-            onPressed: () => Navigator.of(context)
-                .pop(ConfirmAction.cancel), // Cancel the action
-            child: Text(
-              AppLocalizations.of(context)!.cancelButton,
-              style: (themeProviderVM.currentTheme == AppTheme.dark)
-                  ? kTextButtonStyleDarkMode
-                  : kTextButtonStyleLightMode,
-            ),
+            onPressed: () => Navigator.of(context).pop(ConfirmAction.cancel),
+            child: Text(AppLocalizations.of(context)!.cancelButton),
           ),
         ],
       ),
