@@ -10497,8 +10497,8 @@ void main() {
           );
         });
         testWidgets(
-            '''Defined SF parms 'applied' is applied. Then, click on the menu icon of the
-           commented audio "Les besoins artificiels par R.Keucheyan" and select
+            '''Defined SF parms 'applied' is applied. Then, click on the menu icon of
+           the commented audio "Les besoins artificiels par R.Keucheyan" and select
            'Delete Audio ...'. Verify the displayed warning. Then click on the
            'Confirm' button. Verify the suppression of the audio mp3 file as well
            as its comment file. Verify also the updated playlist playable audio
