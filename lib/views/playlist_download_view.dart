@@ -1438,6 +1438,11 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                     audioSortFilterParms: audioSortFilterParameters,
                     audioSortFilterParmsName: audioSortFilterParametersName,
                   );
+                  widget.settingsDataService
+                      .addOrReplaceNamedAudioSortFilterParameters(
+                    audioSortFilterParametersName: audioSortFilterParametersName,
+                    audioSortFilterParameters: audioSortFilterParameters,
+                  );
                   _wasSortFilterAudioSettingsApplied = true;
                 }
               });
